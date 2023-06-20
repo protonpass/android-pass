@@ -51,6 +51,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
+import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager

@@ -47,8 +47,8 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
-import proton.android.pass.featureitemcreate.impl.login.ShareError
-import proton.android.pass.featureitemcreate.impl.login.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.ShareError
+import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemCreationError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteCreated
 import proton.android.pass.log.api.PassLogger

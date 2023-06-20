@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.login
+package proton.android.pass.featureitemcreate.impl.common
 
 import proton.pass.domain.VaultWithItemCount
 

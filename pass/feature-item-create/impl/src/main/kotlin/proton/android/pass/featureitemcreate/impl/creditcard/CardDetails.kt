@@ -19,11 +19,10 @@
 package proton.android.pass.featureitemcreate.impl.creditcard
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.pass.domain.ItemContents
 
 @Composable
@@ -33,17 +32,18 @@ fun CardDetails(
     onNameChanged: (String) -> Unit,
     onNumberChanged: (String) -> Unit,
     onCVVChanged: (String) -> Unit,
-    onExpirationDateChanged: (String) -> Unit
+    onExpirationDateChanged: (String) -> Unit,
+    onCVVFocusChange: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
         CardHolderNameInput(value = content.cardHolder, onChange = onNameChanged)
-        Divider(color = PassTheme.colors.inputBorderNorm)
+        PassDivider()
         CardNumberInput(value = content.number, onChange = onNumberChanged)
-        Divider(color = PassTheme.colors.inputBorderNorm)
-        CardCVVInput(value = content.cvv, onChange = onCVVChanged)
-        Divider(color = PassTheme.colors.inputBorderNorm)
+        PassDivider()
+        CardCVVInput(value = content.cvv, onChange = onCVVChanged, onFocusChange = onCVVFocusChange)
+        PassDivider()
         CardExpirationDateInput(value = content.expirationDate, onChange = onExpirationDateChanged)
     }
 }

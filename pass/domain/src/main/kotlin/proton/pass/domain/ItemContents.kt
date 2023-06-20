@@ -119,7 +119,23 @@ sealed class ItemContents {
         val cvv: HiddenState,
         val pin: HiddenState,
         val expirationDate: String,
-    ) : ItemContents()
+    ) : ItemContents() {
+        companion object {
+            fun default(
+                cvv: HiddenState,
+                pin: HiddenState
+            ) = CreditCard(
+                title = "",
+                cardHolder = "",
+                type = CreditCardType.Other,
+                number = "",
+                cvv = cvv,
+                pin = pin,
+                expirationDate = "",
+                note = ""
+            )
+        }
+    }
 
     @Serializable
     data class Unknown(

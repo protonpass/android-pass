@@ -18,7 +18,6 @@
 
 package proton.android.pass.featurehome.impl
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +28,6 @@ import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,11 +40,13 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -115,8 +115,7 @@ import proton.pass.domain.ShareSelection
 import proton.pass.domain.Vault
 import javax.inject.Inject
 
-@Suppress("LongParameterList")
-@ExperimentalMaterialApi
+@Suppress("LongParameterList", "LargeClass")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val trashItem: TrashItem,
@@ -139,7 +138,8 @@ class HomeViewModel @Inject constructor(
     observeItems: ObserveItems,
     itemSyncStatusRepository: ItemSyncStatusRepository,
     preferencesRepository: UserPreferencesRepository,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    appDispatchers: AppDispatchers
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -165,6 +165,12 @@ class HomeViewModel @Inject constructor(
     private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
         MutableStateFlow(IsProcessingSearchState.NotLoading)
     private val hasChangedVaultState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    @OptIn(FlowPreview::class)
+    private val debouncedSearchQueryState = searchQueryState
+        .debounce(DEBOUNCE_TIMEOUT)
+        .onStart { emit("") }
+        .distinctUntilChanged()
 
     private val vaultSelectionFlow: Flow<VaultSelectionOption> = searchOptionsRepository
         .observeVaultSelectionOption()
@@ -304,10 +310,9 @@ class HomeViewModel @Inject constructor(
         }
     }.distinctUntilChanged()
 
-    @OptIn(FlowPreview::class)
     private val textFilterListItemFlow = combine(
         sortedListItemFlow,
-        searchQueryState.debounce(DEBOUNCE_TIMEOUT),
+        debouncedSearchQueryState,
         isInSearchModeState
     ) { result, searchQuery, isInSearchMode ->
         isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
@@ -318,7 +323,7 @@ class HomeViewModel @Inject constructor(
         } else {
             result
         }
-    }.flowOn(Dispatchers.Default)
+    }.flowOn(appDispatchers.default)
 
     private val resultsFlow = combine(
         filteredSearchEntriesFlow,
@@ -343,7 +348,7 @@ class HomeViewModel @Inject constructor(
                     .toImmutableList()
             }
         }
-    }.flowOn(Dispatchers.Default)
+    }.flowOn(appDispatchers.default)
 
     private val refreshingLoadingFlow = combine(
         isRefreshing,

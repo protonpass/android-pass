@@ -67,6 +67,9 @@ sealed interface CreditCardContentEvent {
     value class OnCVVChange(val value: String) : CreditCardContentEvent
 
     @JvmInline
+    value class OnCVVFocusChange(val isFocused: Boolean) : CreditCardContentEvent
+
+    @JvmInline
     value class OnExpirationDateChange(val value: String) : CreditCardContentEvent
 
     @JvmInline

@@ -19,21 +19,28 @@
 package proton.android.pass.featureitemcreate.impl.creditcard
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.ThemedHiddenStatePreviewProvider
 import proton.android.pass.featureitemcreate.impl.login.PASSWORD_CONCEALED_LENGTH
 import proton.pass.domain.HiddenState
 
@@ -41,7 +48,8 @@ import proton.pass.domain.HiddenState
 internal fun CardCVVInput(
     modifier: Modifier = Modifier,
     value: HiddenState,
-    onChange: (String) -> Unit
+    onChange: (String) -> Unit,
+    onFocusChange: (Boolean) -> Unit
 ) {
     val (text, visualTransformation) = when (value) {
         is HiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
@@ -54,13 +62,14 @@ internal fun CardCVVInput(
         onChange = onChange,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         editable = true,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_card_cvv_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_card_cvv_hint)) },
         visualTransformation = visualTransformation,
         leadingIcon = {
             Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_shield),
+                painter = painterResource(R.drawable.ic_verified),
                 contentDescription = null,
                 tint = ProtonTheme.colors.iconWeak
             )
@@ -69,6 +78,23 @@ internal fun CardCVVInput(
             if (text.isNotEmpty()) {
                 SmallCrossIconButton(enabled = true) { onChange("") }
             }
-        }
+        },
+        onFocusChange = onFocusChange
     )
+}
+
+@Preview
+@Composable
+fun CardCVVInputPreview(
+    @PreviewParameter(ThemedHiddenStatePreviewProvider::class) input: Pair<Boolean, HiddenState>
+) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            CardCVVInput(
+                value = input.second,
+                onChange = {},
+                onFocusChange = {}
+            )
+        }
+    }
 }

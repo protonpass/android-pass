@@ -25,6 +25,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents

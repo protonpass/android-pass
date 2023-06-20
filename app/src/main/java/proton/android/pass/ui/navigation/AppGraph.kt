@@ -53,6 +53,10 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottom
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
+import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation
+import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCard
+import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCardNavigation
+import proton.android.pass.featureitemcreate.impl.creditcard.createCreditCardGraph
 import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
@@ -152,6 +156,7 @@ fun NavGraphBuilder.appGraph(
                             GeneratePasswordBottomsheet to GeneratePasswordBottomsheet.buildRoute(
                                 mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
                             )
+
                         ItemTypeUiState.CreditCard -> throw NotImplementedError()
                     }
 
@@ -223,26 +228,23 @@ fun NavGraphBuilder.appGraph(
         mode = CreateItemBottomSheetMode.Full,
         onNavigate = {
             when (it) {
-                is CreateItemBottomsheetNavigation.CreateAlias -> {
+                is CreateItemBottomsheetNavigation.CreateAlias ->
                     appNavigator.navigate(
                         CreateAlias,
                         CreateAlias.createNavRoute(it.shareId)
                     )
-                }
 
-                is CreateItemBottomsheetNavigation.CreateLogin -> {
+                is CreateItemBottomsheetNavigation.CreateLogin ->
                     appNavigator.navigate(
                         CreateLogin,
                         CreateLogin.createNavRoute(it.shareId)
                     )
-                }
 
-                is CreateItemBottomsheetNavigation.CreateNote -> {
+                is CreateItemBottomsheetNavigation.CreateNote ->
                     appNavigator.navigate(
                         CreateNote,
                         CreateNote.createNavRoute(it.shareId)
                     )
-                }
 
                 CreateItemBottomsheetNavigation.CreatePassword -> {
                     val backDestination = when {
@@ -259,7 +261,11 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is CreateItemBottomsheetNavigation.CreateCreditCard -> {}
+                is CreateItemBottomsheetNavigation.CreateCreditCard ->
+                    appNavigator.navigate(
+                        CreateCreditCard,
+                        CreateCreditCard.createNavRoute(it.shareId)
+                    )
             }
         },
     )
@@ -505,6 +511,21 @@ fun NavGraphBuilder.appGraph(
         },
         onBackClick = { appNavigator.onBackClick() }
     )
+    createCreditCardGraph {
+        when (it) {
+            BaseCreditCardNavigation.Close -> appNavigator.onBackClick()
+            is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
+                destination = SelectVaultBottomsheet,
+                route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+            )
+
+            BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+            is CreateCreditCardNavigation.ItemCreated -> {
+                // navigate to card detail
+                appNavigator.onBackClick()
+            }
+        }
+    }
     createAliasGraph(
         onNavigate = {
             when (it) {

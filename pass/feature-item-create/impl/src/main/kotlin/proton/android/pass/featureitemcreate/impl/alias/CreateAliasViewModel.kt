@@ -59,8 +59,8 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
-import proton.android.pass.featureitemcreate.impl.login.ShareError
-import proton.android.pass.featureitemcreate.impl.login.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.ShareError
+import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher

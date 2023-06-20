@@ -44,9 +44,9 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.VaultSelector
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.featureitemcreate.impl.login.ShareError.EmptyShareList
-import proton.android.pass.featureitemcreate.impl.login.ShareError.SharesNotAvailable
-import proton.android.pass.featureitemcreate.impl.login.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
+import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
+import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.note.CNActionAfterHideKeyboard.SelectVault
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon

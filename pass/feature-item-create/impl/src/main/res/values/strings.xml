@@ -93,7 +93,19 @@
     <!-- Create note -->
     <string name="note_hint">Note</string>
 
-    <!--  Create password  -->
+    <!-- Create Credit Card -->
+    <string name="title_create_credit_card">Create credit card</string>
+    <string name="field_cardholder_name_title">Cardholder name</string>
+    <string name="field_cardholder_name_hint">Full name</string>
+    <string name="field_card_number_title">Card number</string>
+    <string name="field_card_number_hint">1234 1234 1234 1234</string>
+    <string name="field_card_cvv_title">Verification number</string>
+    <string name="field_card_cvv_hint">Add password</string>
+    <string name="field_card_expiration_date_title">Expires on</string>
+    <string name="field_card_expiration_date_hint">MM / YYYY</string>
+
+    <string name="create_credit_card_item_creation_error">Could not create credit card</string>
+    <string name="create_credit_card_item_creation_success">Credit card created</string>
 
     <!--  Common create items  -->
     <string name="changes_saved">Changes saved</string>

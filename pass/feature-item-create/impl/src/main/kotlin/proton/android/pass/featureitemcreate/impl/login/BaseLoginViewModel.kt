@@ -232,10 +232,12 @@ abstract class BaseLoginViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = BaseLoginUiState.create(
-                HiddenState.Empty(""),
-                HiddenState.Empty("")
-            )
+            initialValue = encryptionContextProvider.withEncryptionContext {
+                BaseLoginUiState.create(
+                    password = HiddenState.Empty(encrypt("")),
+                    primaryTotp = HiddenState.Empty(encrypt("")),
+                )
+            }
         )
 
     fun onTitleChange(value: String) {

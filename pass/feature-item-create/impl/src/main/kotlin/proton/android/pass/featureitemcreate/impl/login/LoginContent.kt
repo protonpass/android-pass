@@ -34,13 +34,11 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
+import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors.InvalidUrl
-import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
 private enum class ActionAfterHideKeyboard {
@@ -180,23 +178,6 @@ internal fun LoginContent(
             onSuccess = { shareId, itemId, model ->
                 onEvent(LoginContentEvent.Success(shareId, itemId, model))
             }
-        )
-    }
-}
-
-@Composable
-private fun ItemSavedLaunchedEffect(
-    isItemSaved: ItemSavedState,
-    selectedShareId: ShareId?,
-    onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit
-) {
-    if (isItemSaved !is ItemSavedState.Success) return
-    selectedShareId ?: return
-    LaunchedEffect(Unit) {
-        onSuccess(
-            selectedShareId,
-            isItemSaved.itemId,
-            isItemSaved.item
         )
     }
 }

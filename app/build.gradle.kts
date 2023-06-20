@@ -283,6 +283,7 @@ dependencies {
     implementation(projects.pass.biometry.impl)
     implementation(projects.pass.clipboard.impl)
     implementation(projects.pass.common.api)
+    implementation(projects.pass.common.impl)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.commonUiModels.api)

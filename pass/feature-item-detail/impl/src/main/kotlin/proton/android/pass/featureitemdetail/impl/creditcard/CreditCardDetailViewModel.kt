@@ -124,7 +124,8 @@ class CreditCardDetailViewModel @Inject constructor(
                     var contents = model.contents as ItemContents.CreditCard
 
                     val cardNumber = if (fieldVisibility.cardNumber) {
-                        CardNumberState.Visible(contents.number)
+                        val withSpaces = contents.number.chunked(4).joinToString(" ")
+                        CardNumberState.Visible(withSpaces)
                     } else {
                         val start = contents.number.take(4)
                         val end = contents.number.takeLast(4)

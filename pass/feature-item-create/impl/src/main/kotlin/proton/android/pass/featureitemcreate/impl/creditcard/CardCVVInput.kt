@@ -43,6 +43,7 @@ import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ThemedHiddenStatePreviewProvider
 import proton.android.pass.featureitemcreate.impl.login.PASSWORD_CONCEALED_LENGTH
 import proton.pass.domain.HiddenState
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun CardCVVInput(
@@ -69,7 +70,7 @@ internal fun CardCVVInput(
         visualTransformation = visualTransformation,
         leadingIcon = {
             Icon(
-                painter = painterResource(R.drawable.ic_verified),
+                painter = painterResource(CompR.drawable.ic_verified),
                 contentDescription = null,
                 tint = ProtonTheme.colors.iconWeak
             )

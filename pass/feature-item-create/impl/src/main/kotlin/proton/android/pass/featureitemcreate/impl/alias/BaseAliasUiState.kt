@@ -21,7 +21,7 @@ package proton.android.pass.featureitemcreate.impl.alias
 import androidx.compose.runtime.Immutable
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.featureitemcreate.impl.login.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.pass.domain.ShareId
 
 @Immutable

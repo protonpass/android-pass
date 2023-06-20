@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureitemdetail.impl.alias.AliasDetail
+import proton.android.pass.featureitemdetail.impl.creditcard.CreditCardDetail
 import proton.android.pass.featureitemdetail.impl.login.LoginDetail
 import proton.android.pass.featureitemdetail.impl.note.NoteDetail
 
@@ -51,6 +52,10 @@ fun ItemDetailContent(
                 onNavigate = onNavigate
             )
             ItemTypeUiState.Alias -> AliasDetail(
+                moreInfoUiState = uiState.moreInfoUiState,
+                onNavigate = onNavigate
+            )
+            ItemTypeUiState.CreditCard -> CreditCardDetail(
                 moreInfoUiState = uiState.moreInfoUiState,
                 onNavigate = onNavigate
             )

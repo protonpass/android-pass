@@ -28,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.CloseScreenEvent
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
-import proton.android.pass.featureitemcreate.impl.login.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable

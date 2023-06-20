@@ -127,9 +127,14 @@ class CreditCardDetailViewModel @Inject constructor(
                         val withSpaces = contents.number.chunked(4).joinToString(" ")
                         CardNumberState.Visible(withSpaces)
                     } else {
-                        val start = contents.number.take(4)
-                        val end = contents.number.takeLast(4)
-                        CardNumberState.Masked("$start •••• •••• $end")
+                        val content = if (contents.number.isNotBlank()) {
+                            val start = contents.number.take(4)
+                            val end = contents.number.takeLast(4)
+                            "$start •••• •••• $end"
+                        } else {
+                            ""
+                        }
+                        CardNumberState.Masked(content)
                     }
 
                     contents = contents.copy(

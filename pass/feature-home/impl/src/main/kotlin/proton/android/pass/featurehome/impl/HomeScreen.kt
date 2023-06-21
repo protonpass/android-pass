@@ -216,10 +216,6 @@ fun HomeScreen(
                         scope.launch { bottomSheetState.hide() }
                         homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardNumber)
                     },
-                    onCopyPin = {
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardPin)
-                    },
                     onCopyCvv = {
                         scope.launch { bottomSheetState.hide() }
                         homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardCvv)

@@ -96,6 +96,20 @@ abstract class BaseCreditCardViewModel(
         }
     }
 
+    fun onPinChanged(value: String) {
+        val sanitisedValue = value.replace(nonDigitRegex, "").take(4)
+        onUserEditedContent()
+        encryptionContextProvider.withEncryptionContext {
+            itemContentState.update {
+                if (sanitisedValue.isNotBlank()) {
+                    it.copy(pin = HiddenState.Revealed(encrypt(sanitisedValue), sanitisedValue))
+                } else {
+                    it.copy(pin = HiddenState.Empty(encrypt(sanitisedValue)))
+                }
+            }
+        }
+    }
+
     fun onExpirationDateChanged(value: String) {
         val sanitisedValue = value.replace(nonDigitRegex, "").take(6)
         val converted = adaptToProtoFormat(sanitisedValue)
@@ -148,6 +162,25 @@ abstract class BaseCreditCardViewModel(
                     )
 
                     else -> it.copy(cvv = HiddenState.Concealed(it.cvv.encrypted))
+                }
+            }
+        }
+    }
+
+    fun onPinFocusChanged(isFocused: Boolean) {
+        encryptionContextProvider.withEncryptionContext {
+            itemContentState.update {
+                val decryptedByteArray = decrypt(it.pin.encrypted.toEncryptedByteArray())
+                when {
+                    decryptedByteArray.isEmpty() -> it.copy(pin = HiddenState.Empty(it.pin.encrypted))
+                    isFocused -> it.copy(
+                        pin = HiddenState.Revealed(
+                            encrypted = it.pin.encrypted,
+                            clearText = decryptedByteArray.decodeToString()
+                        )
+                    )
+
+                    else -> it.copy(pin = HiddenState.Concealed(it.pin.encrypted))
                 }
             }
         }

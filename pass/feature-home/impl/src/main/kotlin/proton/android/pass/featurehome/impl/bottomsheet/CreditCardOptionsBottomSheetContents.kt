@@ -37,7 +37,6 @@ fun CreditCardOptionsBottomSheetContents(
     itemUiModel: ItemUiModel,
     isRecentSearch: Boolean = false,
     onCopyNumber: (String) -> Unit,
-    onCopyPin: (EncryptedString) -> Unit,
     onCopyCvv: (EncryptedString) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
@@ -54,7 +53,6 @@ fun CreditCardOptionsBottomSheetContents(
         )
         val list = mutableListOf(
             copyNumber { onCopyNumber(contents.number) },
-            copyPin { onCopyPin(contents.pin.encrypted) },
             copyCvv { onCopyCvv(contents.cvv.encrypted) },
             edit(itemUiModel, onEdit),
             moveToTrash(itemUiModel, onMoveToTrash)
@@ -71,12 +69,6 @@ fun CreditCardOptionsBottomSheetContents(
 @Composable
 private fun copyNumber(onClick: () -> Unit) = copyItem(
     stringResource(id = R.string.bottomsheet_copy_number),
-    onClick
-)
-
-@Composable
-private fun copyPin(onClick: () -> Unit) = copyItem(
-    stringResource(id = R.string.bottomsheet_copy_pin),
     onClick
 )
 
@@ -131,7 +123,6 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                 ),
                 isRecentSearch = input.second,
                 onCopyNumber = {},
-                onCopyPin = {},
                 onCopyCvv = {},
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},

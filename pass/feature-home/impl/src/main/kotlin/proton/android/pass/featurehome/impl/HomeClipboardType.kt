@@ -24,6 +24,5 @@ enum class HomeClipboardType {
     Password,
     Username,
     CreditCardNumber,
-    CreditCardPin,
     CreditCardCvv
 }

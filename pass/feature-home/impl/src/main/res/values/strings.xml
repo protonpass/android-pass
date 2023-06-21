@@ -33,7 +33,6 @@
     <string name="bottomsheet_copy_alias">Copy email address</string>
     <string name="bottomsheet_copy_number">Copy number</string>
     <string name="bottomsheet_copy_cvv">Copy CVV</string>
-    <string name="bottomsheet_copy_pin">Copy PIN</string>
     <string name="bottomsheet_copy_note">Copy note</string>
     <string name="bottomsheet_edit">Edit</string>
 

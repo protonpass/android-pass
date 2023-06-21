@@ -18,19 +18,17 @@
 
 package proton.android.pass.featureitemdetail.impl.creditcard
 
-import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
-import proton.android.pass.featureitemdetail.impl.common.HiddenContentRow
 import proton.pass.domain.HiddenState
 import proton.android.pass.composecomponents.impl.R as CompR
-
-private const val CHAR_AMOUNT = 4
 
 @Composable
 fun CardCvvRow(
@@ -39,29 +37,29 @@ fun CardCvvRow(
     onToggle: () -> Unit,
     onClick: () -> Unit
 ) {
-    val (sectionContent, isContentVisible) = when (cvv) {
-        is HiddenState.Concealed -> "•".repeat(CHAR_AMOUNT) to false
-        is HiddenState.Revealed -> cvv.clearText to true
-        is HiddenState.Empty -> "" to false
-    }
-
-    HiddenContentRow(
+    CardHiddenRow(
         modifier = modifier,
-        sectionContent = AnnotatedString(sectionContent),
         label = stringResource(R.string.credit_card_cvv_field_name),
-        isContentVisible = isContentVisible,
-        toggleIconBackground = PassTheme.colors.cardInteractionNormMinor1,
-        toggleIconForeground = PassTheme.colors.cardInteractionNormMajor2,
-        icon = {
-            Icon(
-                painter = painterResource(CompR.drawable.ic_verified),
-                contentDescription = null,
-                tint = PassTheme.colors.cardInteractionNorm
-            )
-        },
-        revealAction = stringResource(R.string.action_reveal_number),
-        concealAction = stringResource(R.string.action_conceal_number),
-        onToggleClick = onToggle,
-        onRowClick = onClick
+        value = cvv,
+        icon = CompR.drawable.ic_verified,
+        onToggle = onToggle,
+        onClick = onClick
     )
+}
+
+@Preview
+@Composable
+fun CardCvvRowPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val cvv = if (input.second) HiddenState.Revealed("", "1234") else HiddenState.Concealed("")
+    PassTheme(isDark = input.first) {
+        Surface {
+            CardCvvRow(
+                cvv = cvv,
+                onToggle = {},
+                onClick = {}
+            )
+        }
+    }
 }

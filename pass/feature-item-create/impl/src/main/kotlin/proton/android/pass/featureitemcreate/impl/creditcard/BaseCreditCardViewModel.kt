@@ -23,7 +23,7 @@ abstract class BaseCreditCardViewModel(
 
     protected val isLoadingState: MutableStateFlow<IsLoadingState> = MutableStateFlow(NotLoading)
     private val hasUserEditedContentState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val creditCardValidationErrorsState: MutableStateFlow<Set<CreditCardValidationErrors>> =
+    private val validationErrorsState: MutableStateFlow<Set<CreditCardValidationErrors>> =
         MutableStateFlow(emptySet())
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
@@ -40,14 +40,14 @@ abstract class BaseCreditCardViewModel(
     val baseState: StateFlow<BaseCreditCardUiState> = combine(
         isLoadingState,
         hasUserEditedContentState,
-        creditCardValidationErrorsState,
+        validationErrorsState,
         isItemSavedState,
         itemContentState
-    ) { isLoading, hasUserEditedContent, creditCardValidationErrors, isItemSaved, itemContent ->
+    ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, itemContent ->
         BaseCreditCardUiState(
             isLoading = isLoading.value(),
             hasUserEditedContent = hasUserEditedContent,
-            validationErrors = creditCardValidationErrors.toPersistentSet(),
+            validationErrors = validationErrors.toPersistentSet(),
             isItemSaved = isItemSaved,
             contents = itemContent
         )
@@ -66,7 +66,7 @@ abstract class BaseCreditCardViewModel(
     fun onTitleChange(value: String) {
         onUserEditedContent()
         itemContentState.update { itemContentState.value.copy(title = value) }
-        creditCardValidationErrorsState.update {
+        validationErrorsState.update {
             it.toMutableSet().apply { remove(CreditCardValidationErrors.BlankTitle) }
         }
     }
@@ -110,7 +110,7 @@ abstract class BaseCreditCardViewModel(
     protected fun validateItem(): Boolean {
         val validationErrors = itemContentState.value.validate()
         if (validationErrors.isNotEmpty()) {
-            creditCardValidationErrorsState.update { validationErrors }
+            validationErrorsState.update { validationErrors }
             return false
         }
         return true

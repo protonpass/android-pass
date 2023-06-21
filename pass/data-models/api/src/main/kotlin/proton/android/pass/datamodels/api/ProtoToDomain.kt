@@ -55,7 +55,7 @@ fun ItemType.Companion.fromParsed(
             ItemType.CreditCard(
                 cardHolder = content.cardholderName,
                 number = context.encrypt(content.number),
-                cvv = context.encrypt(content.cvv),
+                cvv = context.encrypt(content.verificationNumber),
                 pin = context.encrypt(content.pin),
                 creditCardType = content.cardType.toDomain(),
                 expirationDate = content.expirationDate

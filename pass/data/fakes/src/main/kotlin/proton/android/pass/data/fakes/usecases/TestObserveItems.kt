@@ -29,6 +29,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
+import proton.pass.domain.CreditCardType
 import proton.pass.domain.HiddenState
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
@@ -152,6 +153,31 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             itemContents = ItemContents.Note(
                 title = title,
                 note = note,
+            )
+        )
+
+        fun createCreditCard(
+            shareId: ShareId = ShareId("share-123"),
+            itemId: ItemId = ItemId("item-123"),
+            title: String = "note-item",
+            note: String = "note",
+            holder: String = "Card holder",
+            number: String = "1234123412341234",
+            pin: String = "0000",
+            verificationNumber: String = "000",
+            expirationDate: String = "2030-01"
+        ) = createItem(
+            shareId = shareId,
+            itemId = itemId,
+            itemContents = ItemContents.CreditCard(
+                title = title,
+                note = note,
+                cardHolder = holder,
+                type = CreditCardType.Other,
+                number = number,
+                cvv = HiddenState.Concealed(TestEncryptionContext.encrypt(verificationNumber)),
+                pin = HiddenState.Concealed(TestEncryptionContext.encrypt(pin)),
+                expirationDate = expirationDate
             )
         )
     }

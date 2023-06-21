@@ -20,6 +20,8 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,34 +41,59 @@ internal fun AliasRow(
     vaultIcon: Int? = null
 ) {
     val content = item.contents as ItemContents.Alias
-    var title = AnnotatedString(content.title)
-    var aliasEmail = AnnotatedString(content.aliasEmail)
-    var note: AnnotatedString? = null
-    if (highlight.isNotBlank()) {
-        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
-        val titleMatches = regex.findAll(content.title)
-        if (titleMatches.any()) {
-            title = content.title.highlight(titleMatches)
-        }
-        val aliasEmailMatches = regex.findAll(content.aliasEmail)
-        if (aliasEmailMatches.any()) {
-            aliasEmail = content.aliasEmail.highlight(aliasEmailMatches)
-        }
-        val cleanNote = content.note.replace("\n", " ")
-        val noteMatches = regex.findAll(cleanNote)
-        if (noteMatches.any()) {
-            note = cleanNote.highlight(noteMatches)
-        }
+
+    val fields = remember(content.title, content.aliasEmail, content.note, highlight) {
+        getHighlightedFields(content.title, content.aliasEmail, content.note, highlight)
     }
 
     ItemRow(
         modifier = modifier,
         icon = { AliasIcon() },
-        title = title,
-        subtitles = listOfNotNull(aliasEmail, note).toImmutableList(),
+        title = fields.title,
+        subtitles = listOfNotNull(fields.aliasEmail, fields.note).toImmutableList(),
         vaultIcon = vaultIcon
     )
 }
+
+private fun getHighlightedFields(
+    title: String,
+    aliasEmail: String,
+    note: String,
+    highlight: String
+): AliasHighlightFields {
+    var annotatedTitle = AnnotatedString(title)
+    var annotatedAliasEmail = AnnotatedString(aliasEmail)
+    var annotatedNote: AnnotatedString? = null
+    if (highlight.isNotBlank()) {
+        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
+        val titleMatches = regex.findAll(title)
+        if (titleMatches.any()) {
+            annotatedTitle = title.highlight(titleMatches)
+        }
+        val aliasEmailMatches = regex.findAll(aliasEmail)
+        if (aliasEmailMatches.any()) {
+            annotatedAliasEmail = aliasEmail.highlight(aliasEmailMatches)
+        }
+        val cleanNote = note.replace("\n", " ")
+        val noteMatches = regex.findAll(cleanNote)
+        if (noteMatches.any()) {
+            annotatedNote = cleanNote.highlight(noteMatches)
+        }
+    }
+
+    return AliasHighlightFields(
+        title = annotatedTitle,
+        aliasEmail = annotatedAliasEmail,
+        note = annotatedNote
+    )
+}
+
+@Stable
+private data class AliasHighlightFields(
+    val title: AnnotatedString,
+    val aliasEmail: AnnotatedString,
+    val note: AnnotatedString?,
+)
 
 class ThemedAliasItemPreviewProvider :
     ThemePairPreviewProvider<AliasRowParameter>(AliasRowPreviewProvider())

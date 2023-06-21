@@ -36,6 +36,8 @@ import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEv
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnNameChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnNoteChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnNumberChange
+import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnPinChange
+import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnPinFocusChange
 import proton.pass.domain.ItemContents
 
 @Composable
@@ -62,8 +64,10 @@ fun CreditCardItemForm(
             onNameChanged = { onEvent(OnNameChange(it)) },
             onNumberChanged = { onEvent(OnNumberChange(it)) },
             onCVVChanged = { onEvent(OnCVVChange(it)) },
+            onPinChanged = { onEvent(OnPinChange(it)) },
             onExpirationDateChanged = { onEvent(OnExpirationDateChange(it)) },
-            onCVVFocusChange = { onEvent(OnCVVFocusChange(it)) }
+            onCVVFocusChange = { onEvent(OnCVVFocusChange(it)) },
+            onPinFocusChange = { onEvent(OnPinFocusChange(it)) },
         )
         SimpleNoteSection(
             value = content.note,

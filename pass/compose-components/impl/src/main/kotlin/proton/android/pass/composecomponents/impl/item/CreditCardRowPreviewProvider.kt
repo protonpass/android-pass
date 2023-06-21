@@ -29,6 +29,13 @@ class CreditCardRowPreviewProvider : PreviewParameterProvider<CreditCardRowParam
                 cardHolder = "some cardholder",
                 number = "0000000000000000",
                 highlight = "some"
+            ),
+            with(
+                title = "An empty credit card",
+                note = "",
+                cardHolder = "",
+                number = "",
+                highlight = ""
             )
         )
 

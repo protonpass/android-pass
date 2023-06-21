@@ -45,6 +45,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection.Aliases
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection.AllItems
+import proton.android.pass.featurehome.impl.HomeItemTypeSelection.CreditCards
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection.Logins
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection.Notes
 import me.proton.core.presentation.R as CoreR
@@ -56,6 +57,8 @@ fun ItemTypeFilterList(
     loginCount: Int,
     aliasCount: Int,
     noteCount: Int,
+    creditCardCount: Int,
+    showCreditCards: Boolean,
     onItemTypeClick: (HomeItemTypeSelection) -> Unit
 ) {
     Row(
@@ -66,12 +69,15 @@ fun ItemTypeFilterList(
         ItemTypeButton(
             AllItems,
             selected == AllItems,
-            loginCount + aliasCount + noteCount,
+            loginCount + aliasCount + noteCount + creditCardCount,
             onItemTypeClick
         )
         ItemTypeButton(Logins, selected == Logins, loginCount, onItemTypeClick)
         ItemTypeButton(Aliases, selected == Aliases, aliasCount, onItemTypeClick)
         ItemTypeButton(Notes, selected == Notes, noteCount, onItemTypeClick)
+        if (showCreditCards) {
+            ItemTypeButton(CreditCards, selected == CreditCards, creditCardCount, onItemTypeClick)
+        }
     }
 }
 
@@ -102,6 +108,7 @@ private fun ItemTypeButton(
                     Logins -> painterResource(CoreR.drawable.ic_proton_user)
                     Aliases -> painterResource(CoreR.drawable.ic_proton_alias)
                     Notes -> painterResource(CoreR.drawable.ic_proton_file_lines)
+                    CreditCards -> painterResource(CoreR.drawable.ic_proton_credit_card)
                 },
                 contentDescription = stringResource(R.string.item_type_filter_list_icon_content_description),
                 tint = if (isSelected) {
@@ -116,6 +123,7 @@ private fun ItemTypeButton(
                     Logins -> stringResource(R.string.item_type_filter_login)
                     Aliases -> stringResource(R.string.item_type_filter_alias)
                     Notes -> stringResource(R.string.item_type_filter_note)
+                    CreditCards -> stringResource(R.string.item_type_filter_credit_card)
                 },
                 style = ProtonTheme.typography.defaultSmallNorm,
                 color = PassTheme.colors.textNorm
@@ -141,6 +149,8 @@ fun ItemTypeFilterListPreview(
                 loginCount = 2,
                 aliasCount = 4,
                 noteCount = 1,
+                creditCardCount = 3,
+                showCreditCards = false,
                 onItemTypeClick = {}
             )
         }

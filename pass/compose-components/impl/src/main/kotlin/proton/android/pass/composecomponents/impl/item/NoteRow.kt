@@ -65,7 +65,7 @@ private fun getHighlightedFields(
     var annotatedTitle = AnnotatedString(title)
     val annotatedNote = if (highlight.isNotBlank()) {
         val processedText = note.replace("\n", " ")
-        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
+        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
         val titleMatches = regex.findAll(title)
         if (titleMatches.any()) {
             annotatedTitle = title.highlight(titleMatches)

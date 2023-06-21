@@ -28,6 +28,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.PersistentSet
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVFocusChange
@@ -42,6 +43,7 @@ fun CreditCardItemForm(
     modifier: Modifier = Modifier,
     content: ItemContents.CreditCard,
     enabled: Boolean,
+    validationErrors: PersistentSet<CreditCardValidationErrors>,
     titleSection: @Composable (ColumnScope.() -> Unit),
     onEvent: (CreditCardContentEvent) -> Unit
 ) {
@@ -56,6 +58,7 @@ fun CreditCardItemForm(
         CardDetails(
             content = content,
             enabled = enabled,
+            validationErrors = validationErrors,
             onNameChanged = { onEvent(OnNameChange(it)) },
             onNumberChanged = { onEvent(OnNumberChange(it)) },
             onCVVChanged = { onEvent(OnCVVChange(it)) },

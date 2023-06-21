@@ -103,6 +103,7 @@
     <string name="field_card_cvv_hint">Add password</string>
     <string name="field_card_expiration_date_title">Expires on</string>
     <string name="field_card_expiration_date_hint">MM / YYYY</string>
+    <string name="field_card_expiration_date_error">The expiration date is not valid</string>
 
     <string name="create_credit_card_item_creation_error">Could not create credit card</string>
     <string name="create_credit_card_item_creation_success">Credit card created</string>

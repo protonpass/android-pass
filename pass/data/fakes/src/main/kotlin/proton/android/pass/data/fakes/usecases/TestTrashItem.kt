@@ -28,10 +28,21 @@ class TestTrashItem @Inject constructor() : TrashItem {
 
     private var result: Result<Unit> = Result.failure(IllegalStateException("TestTrashItem.result not set"))
 
+    private val memory = mutableListOf<Payload>()
+    fun getMemory(): List<Payload> = memory
+
     fun setResult(result: Result<Unit>) {
         this.result = result
     }
 
-    override suspend fun invoke(userId: UserId?, shareId: ShareId, itemId: ItemId) =
+    override suspend fun invoke(userId: UserId?, shareId: ShareId, itemId: ItemId) {
+        memory.add(Payload(userId, shareId, itemId))
         result.getOrThrow()
+    }
+
+    data class Payload(
+        val userId: UserId?,
+        val shareId: ShareId,
+        val itemId: ItemId
+    )
 }

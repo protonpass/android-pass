@@ -162,6 +162,8 @@ internal fun HomeContent(
                     loginCount = uiState.searchUiState.itemTypeCount.loginCount,
                     aliasCount = uiState.searchUiState.itemTypeCount.aliasCount,
                     noteCount = uiState.searchUiState.itemTypeCount.noteCount,
+                    creditCardCount = uiState.searchUiState.itemTypeCount.creditCardCount,
+                    showCreditCards = uiState.searchUiState.showCreditCards,
                     onItemTypeClick = onItemTypeSelected
                 )
             }

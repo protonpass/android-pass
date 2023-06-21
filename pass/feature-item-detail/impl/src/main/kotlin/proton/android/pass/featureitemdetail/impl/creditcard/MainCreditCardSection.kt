@@ -35,11 +35,7 @@ fun MainCreditCardSection(
     expirationDate: String,
     onEvent: (CreditCardDetailEvent) -> Unit
 ) {
-<<<<<<< HEAD
-    if (!canShowSection(cardHolder, number, cvv, expirationDate)) return
-=======
     if (!canShowSection(cardHolder, number, pin, cvv)) return
->>>>>>> bf9ff2c3c (feat(item-detail): show credit card pin in details)
 
     val sections = mutableListOf<@Composable () -> Unit>()
     if (cardHolder.isNotBlank()) {

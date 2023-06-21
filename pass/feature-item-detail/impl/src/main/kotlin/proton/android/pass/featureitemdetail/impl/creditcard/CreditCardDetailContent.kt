@@ -53,6 +53,7 @@ fun CreditCardDetailContent(
             cardHolder = model.cardHolder,
             number = contents.cardNumber,
             cvv = model.cvv,
+            pin = model.pin,
             expirationDate = model.expirationDate,
             onEvent = onEvent
         )

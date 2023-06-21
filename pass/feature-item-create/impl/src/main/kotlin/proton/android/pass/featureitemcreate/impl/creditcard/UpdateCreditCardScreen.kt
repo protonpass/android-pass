@@ -25,6 +25,7 @@ import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavig
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardValidationErrors.BlankTitle
 
+@Suppress("ComplexMethod")
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun UpdateCreditCardScreen(
@@ -88,11 +89,16 @@ fun UpdateCreditCardScreen(
                             is CreditCardContentEvent.OnNumberChange ->
                                 viewModel.onNumberChanged(event.value)
 
+                            is CreditCardContentEvent.OnPinChange ->
+                                viewModel.onPinChanged(event.value)
+
                             is CreditCardContentEvent.Submit -> viewModel.update()
                             CreditCardContentEvent.Up -> onExit()
                             CreditCardContentEvent.Upgrade -> onNavigate(Upgrade)
                             is CreditCardContentEvent.OnCVVFocusChange ->
                                 viewModel.onCVVFocusChanged(event.isFocused)
+                            is CreditCardContentEvent.OnPinFocusChange ->
+                                viewModel.onPinFocusChanged(event.isFocused)
                         }
                     }
                 )

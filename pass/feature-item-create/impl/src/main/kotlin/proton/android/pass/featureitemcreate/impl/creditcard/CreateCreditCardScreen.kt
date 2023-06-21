@@ -124,12 +124,16 @@ fun CreateCreditCardScreen(
 
                             is CreditCardContentEvent.OnNumberChange ->
                                 viewModel.onNumberChanged(event.value)
+                            is CreditCardContentEvent.OnPinChange ->
+                                viewModel.onPinChanged(event.value)
 
                             is CreditCardContentEvent.Submit -> viewModel.createItem()
                             CreditCardContentEvent.Up -> onExit()
                             CreditCardContentEvent.Upgrade -> onNavigate(Upgrade)
                             is CreditCardContentEvent.OnCVVFocusChange ->
                                 viewModel.onCVVFocusChanged(event.isFocused)
+                            is CreditCardContentEvent.OnPinFocusChange ->
+                                viewModel.onPinFocusChanged(event.isFocused)
                         }
                     }
                 )

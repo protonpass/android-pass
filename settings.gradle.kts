@@ -19,7 +19,7 @@ data class ProtosConfig(
     val branchTag: BranchOrTag
 )
 
-val PROTOBUF_TAG = "1.0.0"
+val PROTOBUF_TAG = "1.0.1"
 
 fun getProtosConfig(): ProtosConfig {
     val isCI = System.getenv("CI").toBoolean()

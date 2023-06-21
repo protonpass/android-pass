@@ -65,10 +65,12 @@
     <string name="credit_card_cardholder_field_name">Cardholder name</string>
     <string name="credit_card_number_field_name">Card number</string>
     <string name="credit_card_cvv_field_name">Verification number</string>
+    <string name="credit_card_pin_field_name">PIN number</string>
     <string name="credit_card_expiration_date_field_name">Expires on</string>
     <string name="credit_card_cardholder_copied_to_clipboard">Cardholder copied to clipboard</string>
     <string name="credit_card_number_copied_to_clipboard">Card number copied to clipboard</string>
     <string name="credit_card_verifcation_number_copied_to_clipboard">Verification number copied to clipboard</string>
+    <string name="credit_card_pin_copied_to_clipboard">PIN copied to clipboard</string>
 
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>

@@ -34,7 +34,7 @@ fun MainCreditCardSection(
     expirationDate: String,
     onEvent: (CreditCardDetailEvent) -> Unit
 ) {
-    if (!canShowSection(cardHolder, number, cvv)) return
+    if (!canShowSection(cardHolder, number, cvv, expirationDate)) return
 
     val sections = mutableListOf<@Composable () -> Unit>()
     if (cardHolder.isNotBlank()) {
@@ -86,10 +86,8 @@ fun MainCreditCardSection(
 private fun canShowSection(
     cardHolder: String,
     number: CardNumberState,
-    cvv: HiddenState
-): Boolean {
-    if (cardHolder.isBlank() && !number.hasContent() && cvv is HiddenState.Empty) return false
-
-    return true
-}
+    cvv: HiddenState,
+    expirationDate: String
+): Boolean =
+    !(cardHolder.isBlank() && expirationDate.isBlank() && !number.hasContent() && cvv is HiddenState.Empty)
 

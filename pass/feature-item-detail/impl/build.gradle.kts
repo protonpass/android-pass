@@ -83,6 +83,7 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.datetime)
+    testImplementation(projects.pass.clipboard.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.crypto.fakes)

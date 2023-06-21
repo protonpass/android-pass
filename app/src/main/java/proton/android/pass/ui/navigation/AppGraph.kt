@@ -56,7 +56,10 @@ import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCard
 import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCardNavigation
+import proton.android.pass.featureitemcreate.impl.creditcard.EditCreditCard
+import proton.android.pass.featureitemcreate.impl.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.createCreditCardGraph
+import proton.android.pass.featureitemcreate.impl.creditcard.updateCreditCardGraph
 import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
@@ -187,6 +190,10 @@ fun NavGraphBuilder.appGraph(
                         EditNote.createNavRoute(it.shareId, it.itemId)
                     )
                 }
+                is HomeNavigation.EditCreditCard -> appNavigator.navigate(
+                    EditCreditCard,
+                    EditCreditCard.createNavRoute(it.shareId, it.itemId)
+                )
 
                 is HomeNavigation.ItemDetail -> {
                     appNavigator.navigate(
@@ -514,16 +521,33 @@ fun NavGraphBuilder.appGraph(
     createCreditCardGraph {
         when (it) {
             BaseCreditCardNavigation.Close -> appNavigator.onBackClick()
-            is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
-                destination = SelectVaultBottomsheet,
-                route = SelectVaultBottomsheet.createNavRoute(it.shareId)
-            )
+            is CreateCreditCardNavigation -> when (it) {
+                is CreateCreditCardNavigation.ItemCreated -> appNavigator.onBackClick()
+                is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
+                    destination = SelectVaultBottomsheet,
+                    route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                )
+            }
 
             BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-            is CreateCreditCardNavigation.ItemCreated -> {
-                // navigate to card detail
-                appNavigator.onBackClick()
+            is UpdateCreditCardNavigation -> {}
+        }
+    }
+    updateCreditCardGraph {
+        when (it) {
+            BaseCreditCardNavigation.Close -> appNavigator.onBackClick()
+            is CreateCreditCardNavigation -> {}
+            is UpdateCreditCardNavigation -> {
+                when (it) {
+                    is UpdateCreditCardNavigation.ItemUpdated -> appNavigator.navigate(
+                        destination = ViewItem,
+                        route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                        backDestination = Home
+                    )
+                }
             }
+
+            BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
         }
     }
     createAliasGraph(
@@ -589,7 +613,7 @@ fun NavGraphBuilder.appGraph(
                         is ItemContents.Login -> EditLogin
                         is ItemContents.Note -> EditNote
                         is ItemContents.Alias -> EditAlias
-                        is ItemContents.CreditCard -> null
+                        is ItemContents.CreditCard -> EditCreditCard
                         is ItemContents.Unknown -> null
                     }
                     val route = when (it.itemUiModel.contents) {
@@ -608,7 +632,10 @@ fun NavGraphBuilder.appGraph(
                             it.itemUiModel.id
                         )
 
-                        is ItemContents.CreditCard -> null
+                        is ItemContents.CreditCard -> EditCreditCard.createNavRoute(
+                            it.itemUiModel.shareId,
+                            it.itemUiModel.id
+                        )
 
                         is ItemContents.Unknown -> null
                     }

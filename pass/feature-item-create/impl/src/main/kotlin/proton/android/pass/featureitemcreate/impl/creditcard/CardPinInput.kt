@@ -28,10 +28,10 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ThemedHiddenStatePreviewProvider
 import proton.pass.domain.HiddenState
-import proton.android.pass.composecomponents.impl.R as CompR
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun CardCVVInput(
+internal fun CardPinInput(
     modifier: Modifier = Modifier,
     value: HiddenState,
     enabled: Boolean,
@@ -42,9 +42,9 @@ internal fun CardCVVInput(
         modifier = modifier,
         value = value,
         enabled = enabled,
-        label = stringResource(id = R.string.field_card_cvv_title),
-        placeholder = stringResource(id = R.string.field_card_cvv_hint),
-        icon = CompR.drawable.ic_verified,
+        label = stringResource(id = R.string.field_card_pin_title),
+        placeholder = stringResource(id = R.string.field_card_pin_hint),
+        icon = CoreR.drawable.ic_proton_grid_3,
         onChange = onChange,
         onFocusChange = onFocusChange
     )
@@ -52,12 +52,12 @@ internal fun CardCVVInput(
 
 @Preview
 @Composable
-fun CardCVVInputPreview(
+fun CardPinInputPreview(
     @PreviewParameter(ThemedHiddenStatePreviewProvider::class) input: Pair<Boolean, HiddenState>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            CardCVVInput(
+            CardPinInput(
                 value = input.second,
                 enabled = true,
                 onChange = {},

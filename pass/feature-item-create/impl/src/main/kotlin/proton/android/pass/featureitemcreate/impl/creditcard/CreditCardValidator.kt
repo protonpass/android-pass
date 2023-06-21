@@ -23,9 +23,14 @@ import proton.pass.domain.ItemContents
 fun ItemContents.CreditCard.validate(): Set<CreditCardValidationErrors> {
     val mutableSet = mutableSetOf<CreditCardValidationErrors>()
     if (title.isBlank()) mutableSet.add(CreditCardValidationErrors.BlankTitle)
+    if (expirationDate.isNotBlank() && !expirationDateRegex.matches(expirationDate))
+        mutableSet.add(CreditCardValidationErrors.InvalidExpirationDate)
     return mutableSet.toSet()
 }
 
+private val expirationDateRegex = Regex("^\\d{4}-\\d{2}$")
+
 sealed interface CreditCardValidationErrors {
     object BlankTitle : CreditCardValidationErrors
+    object InvalidExpirationDate : CreditCardValidationErrors
 }

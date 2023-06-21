@@ -565,14 +565,6 @@ class HomeViewModel @Inject constructor(
                     snackbarDispatcher(HomeSnackbarMessage.CreditCardNumberCopied)
                 }
 
-                HomeClipboardType.CreditCardPin -> {
-                    clipboardManager.copyToClipboard(
-                        text = encryptionContextProvider.withEncryptionContext { decrypt(text) },
-                        isSecure = true
-                    )
-                    snackbarDispatcher(HomeSnackbarMessage.CreditCardPinCopied)
-                }
-
                 HomeClipboardType.CreditCardCvv -> {
                     clipboardManager.copyToClipboard(
                         text = encryptionContextProvider.withEncryptionContext { decrypt(text) },

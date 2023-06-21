@@ -98,9 +98,22 @@ abstract class BaseCreditCardViewModel(
 
     fun onExpirationDateChanged(value: String) {
         val sanitisedValue = value.replace(nonDigitRegex, "").take(6)
+        val converted = adaptToProtoFormat(sanitisedValue)
         onUserEditedContent()
-        itemContentState.update { itemContentState.value.copy(expirationDate = sanitisedValue) }
+        itemContentState.update { itemContentState.value.copy(expirationDate = converted) }
+        validationErrorsState.update {
+            it.toMutableSet().apply { remove(CreditCardValidationErrors.InvalidExpirationDate) }
+        }
     }
+
+    private fun adaptToProtoFormat(value: String): String =
+        if (value.length < 2) {
+            value
+        } else {
+            val firstPart = value.substring(0, 2)
+            val secondPart = value.substring(2)
+            "$secondPart-$firstPart"
+        }
 
     fun onNoteChanged(value: String) {
         onUserEditedContent()

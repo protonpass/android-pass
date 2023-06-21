@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -48,15 +48,18 @@ internal fun CardExpirationDateInput(
     modifier: Modifier = Modifier,
     value: String,
     enabled: Boolean,
+    hasError: Boolean,
     onChange: (String) -> Unit
 ) {
     ProtonTextField(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-        value = value,
+        value = convert(value),
         onChange = onChange,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        isError = hasError,
+        errorMessage = stringResource(id = R.string.field_card_expiration_date_error),
         visualTransformation = { text ->
             if (text.length <= 2)
                 return@ProtonTextField TransformedText(text, OffsetMapping.Identity)
@@ -65,7 +68,12 @@ internal fun CardExpirationDateInput(
             TransformedText(AnnotatedString("$part1 / $part2"), DateOffsetMapping)
         },
         editable = enabled,
-        label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_card_expiration_date_title)) },
+        label = {
+            ProtonTextFieldLabel(
+                text = stringResource(id = R.string.field_card_expiration_date_title),
+                isError = hasError
+            )
+        },
         placeholder = {
             ProtonTextFieldPlaceHolder(
                 text = stringResource(id = R.string.field_card_expiration_date_hint)
@@ -86,31 +94,43 @@ internal fun CardExpirationDateInput(
     )
 }
 
+private fun convert(value: String): String {
+    val split = value.split("-")
+    val join = if (split.size == 2) {
+        split[1] + split[0]
+    } else {
+        value
+    }
+    return join
+}
+
 
 private val DateOffsetMapping: OffsetMapping = object : OffsetMapping {
+    private val OFFSET_SPACES = 3
     override fun originalToTransformed(offset: Int): Int = if (offset <= 2) {
         offset
     } else {
-        offset + 3 // Account for the added spaces
+        offset + OFFSET_SPACES
     }
 
     override fun transformedToOriginal(offset: Int): Int = if (offset <= 2) {
         offset
     } else {
-        offset - 3 // Account for the added spaces
+        offset - OFFSET_SPACES
     }
 }
 
 @Preview
 @Composable
 fun CardExpirationDateInputPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = input.first) {
         Surface {
             CardExpirationDateInput(
                 value = "122048",
                 enabled = true,
+                hasError = input.second,
                 onChange = {}
             )
         }

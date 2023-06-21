@@ -45,6 +45,7 @@ fun CreditCardContent(
             modifier = Modifier.padding(padding),
             content = state.contents,
             enabled = !state.isLoading,
+            validationErrors = state.validationErrors,
             titleSection = titleSection,
             onEvent = onEvent
         )

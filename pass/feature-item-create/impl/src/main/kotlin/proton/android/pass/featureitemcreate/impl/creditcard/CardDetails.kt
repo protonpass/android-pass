@@ -35,8 +35,10 @@ fun CardDetails(
     onNameChanged: (String) -> Unit,
     onNumberChanged: (String) -> Unit,
     onCVVChanged: (String) -> Unit,
+    onPinChanged: (String) -> Unit,
     onExpirationDateChanged: (String) -> Unit,
     onCVVFocusChange: (Boolean) -> Unit,
+    onPinFocusChange: (Boolean) -> Unit,
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -50,6 +52,13 @@ fun CardDetails(
             enabled = enabled,
             onChange = onCVVChanged,
             onFocusChange = onCVVFocusChange
+        )
+        PassDivider()
+        CardPinInput(
+            value = content.pin,
+            enabled = enabled,
+            onChange = onPinChanged,
+            onFocusChange = onPinFocusChange
         )
         PassDivider()
         CardExpirationDateInput(

@@ -29,21 +29,31 @@ import proton.pass.domain.ItemContents
 fun CardDetails(
     modifier: Modifier = Modifier,
     content: ItemContents.CreditCard,
+    enabled: Boolean,
     onNameChanged: (String) -> Unit,
     onNumberChanged: (String) -> Unit,
     onCVVChanged: (String) -> Unit,
     onExpirationDateChanged: (String) -> Unit,
-    onCVVFocusChange: (Boolean) -> Unit
+    onCVVFocusChange: (Boolean) -> Unit,
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
-        CardHolderNameInput(value = content.cardHolder, onChange = onNameChanged)
+        CardHolderNameInput(value = content.cardHolder, enabled = enabled, onChange = onNameChanged)
         PassDivider()
-        CardNumberInput(value = content.number, onChange = onNumberChanged)
+        CardNumberInput(value = content.number, enabled = enabled, onChange = onNumberChanged)
         PassDivider()
-        CardCVVInput(value = content.cvv, onChange = onCVVChanged, onFocusChange = onCVVFocusChange)
+        CardCVVInput(
+            value = content.cvv,
+            enabled = enabled,
+            onChange = onCVVChanged,
+            onFocusChange = onCVVFocusChange
+        )
         PassDivider()
-        CardExpirationDateInput(value = content.expirationDate, onChange = onExpirationDateChanged)
+        CardExpirationDateInput(
+            value = content.expirationDate,
+            enabled = enabled,
+            onChange = onExpirationDateChanged
+        )
     }
 }

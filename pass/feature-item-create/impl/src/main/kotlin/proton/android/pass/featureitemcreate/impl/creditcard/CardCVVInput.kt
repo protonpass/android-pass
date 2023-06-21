@@ -49,6 +49,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun CardCVVInput(
     modifier: Modifier = Modifier,
     value: HiddenState,
+    enabled: Boolean,
     onChange: (String) -> Unit,
     onFocusChange: (Boolean) -> Unit
 ) {
@@ -64,7 +65,7 @@ internal fun CardCVVInput(
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        editable = true,
+        editable = enabled,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_card_cvv_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_card_cvv_hint)) },
         visualTransformation = visualTransformation,
@@ -93,6 +94,7 @@ fun CardCVVInputPreview(
         Surface {
             CardCVVInput(
                 value = input.second,
+                enabled = true,
                 onChange = {},
                 onFocusChange = {}
             )

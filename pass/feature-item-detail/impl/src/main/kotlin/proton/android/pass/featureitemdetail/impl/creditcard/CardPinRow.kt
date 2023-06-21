@@ -28,20 +28,20 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
 import proton.pass.domain.HiddenState
-import proton.android.pass.composecomponents.impl.R as CompR
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun CardCvvRow(
+fun CardPinRow(
     modifier: Modifier = Modifier,
-    cvv: HiddenState,
+    pin: HiddenState,
     onToggle: () -> Unit,
     onClick: () -> Unit
 ) {
     CardHiddenRow(
         modifier = modifier,
-        label = stringResource(R.string.credit_card_cvv_field_name),
-        value = cvv,
-        icon = CompR.drawable.ic_verified,
+        label = stringResource(R.string.credit_card_pin_field_name),
+        value = pin,
+        icon = CoreR.drawable.ic_proton_grid_3,
         onToggle = onToggle,
         onClick = onClick
     )
@@ -49,14 +49,14 @@ fun CardCvvRow(
 
 @Preview
 @Composable
-fun CardCvvRowPreview(
+fun CardPinRowPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    val cvv = if (input.second) HiddenState.Revealed("", "1234") else HiddenState.Concealed("")
+    val pin = if (input.second) HiddenState.Revealed("", "1234") else HiddenState.Concealed("")
     PassTheme(isDark = input.first) {
         Surface {
-            CardCvvRow(
-                cvv = cvv,
+            CardPinRow(
+                pin = pin,
                 onToggle = {},
                 onClick = {}
             )

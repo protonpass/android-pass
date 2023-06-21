@@ -24,5 +24,7 @@ sealed interface CreditCardDetailEvent {
     object OnNumberClick : CreditCardDetailEvent
     object OnToggleCvvClick : CreditCardDetailEvent
     object OnCvvClick : CreditCardDetailEvent
+    object OnTogglePinClick : CreditCardDetailEvent
+    object OnPinClick : CreditCardDetailEvent
     object OnUpgradeClick : CreditCardDetailEvent
 }

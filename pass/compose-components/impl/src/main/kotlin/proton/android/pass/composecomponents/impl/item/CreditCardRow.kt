@@ -22,33 +22,61 @@ fun CreditCardRow(
     vaultIcon: Int? = null
 ) {
     val content = item.contents as ItemContents.CreditCard
-    var title = AnnotatedString(content.title)
     val maskedNumber = remember(content.number) {
         val start = content.number.take(4)
         val end = content.number.takeLast(4)
         AnnotatedString("$start •••• •••• $end")
     }
-    var note: AnnotatedString? = null
-    if (highlight.isNotBlank()) {
-        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
-        val titleMatches = regex.findAll(content.title)
-        if (titleMatches.any()) {
-            title = content.title.highlight(titleMatches)
-        }
-        val cleanNote = content.note.replace("\n", " ")
-        val noteMatches = regex.findAll(cleanNote)
-        if (noteMatches.any()) {
-            note = cleanNote.highlight(noteMatches)
-        }
+
+    val (title, note, cardHolder) = remember(content.title, content.note, content.cardHolder, highlight) {
+        getHighlightedFields(content.title, content.note, content.cardHolder, highlight)
     }
 
     ItemRow(
         modifier = modifier,
         icon = { CreditCardIcon() },
         title = title,
-        subtitles = listOfNotNull(maskedNumber, note).toPersistentList(),
+        subtitles = listOfNotNull(maskedNumber, note, cardHolder).toPersistentList(),
         vaultIcon = vaultIcon
     )
+}
+
+private fun getHighlightedFields(
+    title: String,
+    note: String,
+    cardHolder: String,
+    highlight: String
+): Fields {
+    var annotatedTitle = AnnotatedString(title)
+    var annotatedNote: AnnotatedString? = null
+    var annotatedCardHolder: AnnotatedString? = null
+    if (highlight.isNotBlank()) {
+        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
+        val titleMatches = regex.findAll(title)
+        if (titleMatches.any()) {
+            annotatedTitle = title.highlight(titleMatches)
+        }
+        annotatedNote = highlightIfNeeded(regex, note)
+        annotatedCardHolder = highlightIfNeeded(regex, cardHolder)
+    }
+
+    return Fields(
+        title = annotatedTitle,
+        note = annotatedNote,
+        cardHolder = annotatedCardHolder
+    )
+}
+
+private data class Fields(
+    val title: AnnotatedString,
+    val note: AnnotatedString?,
+    val cardHolder: AnnotatedString?
+)
+
+private fun highlightIfNeeded(regex: Regex, field: String): AnnotatedString? {
+    val cleanField = field.replace("\n", " ")
+    val matches = regex.findAll(cleanField)
+    return if (matches.any()) cleanField.highlight(matches) else null
 }
 
 class ThemedCreditCardPreviewProvider : ThemePairPreviewProvider<CreditCardRowParameter>(

@@ -20,6 +20,8 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,23 +43,9 @@ fun NoteRow(
     vaultIcon: Int? = null
 ) {
     val content = item.contents as ItemContents.Note
-    var title = AnnotatedString(content.title)
-    val note = if (highlight.isNotBlank()) {
-        val processedText = content.note.replace("\n", " ")
-        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
-        val titleMatches = regex.findAll(content.title)
-        if (titleMatches.any()) {
-            title = content.title.highlight(titleMatches)
-        }
-        val noteMatches = regex.findAll(processedText)
-        if (noteMatches.any()) {
-            processedText.highlight(noteMatches)
-        } else {
-            AnnotatedString(processedText)
-        }
-    } else {
-        val firstLines = content.note.lines().take(MAX_LINES_NOTE_DETAIL)
-        AnnotatedString(firstLines.joinToString(" "))
+
+    val (title, note) = remember(content.title, content.note, highlight) {
+        getHighlightedFields(content.title, content.note, highlight)
     }
 
     ItemRow(
@@ -68,6 +56,39 @@ fun NoteRow(
         vaultIcon = vaultIcon
     )
 }
+
+private fun getHighlightedFields(
+    title: String,
+    note: String,
+    highlight: String
+): NoteHighlightFields {
+    var annotatedTitle = AnnotatedString(title)
+    val annotatedNote = if (highlight.isNotBlank()) {
+        val processedText = note.replace("\n", " ")
+        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
+        val titleMatches = regex.findAll(title)
+        if (titleMatches.any()) {
+            annotatedTitle = title.highlight(titleMatches)
+        }
+        val noteMatches = regex.findAll(processedText)
+        if (noteMatches.any()) {
+            processedText.highlight(noteMatches)
+        } else {
+            AnnotatedString(processedText)
+        }
+    } else {
+        val firstLines = note.lines().take(MAX_LINES_NOTE_DETAIL)
+        AnnotatedString(firstLines.joinToString(" "))
+    }
+
+    return NoteHighlightFields(annotatedTitle, annotatedNote)
+}
+
+@Stable
+private data class NoteHighlightFields(
+    val title: AnnotatedString,
+    val note: AnnotatedString
+)
 
 class ThemedNoteItemPreviewProvider :
     ThemePairPreviewProvider<NoteRowParameter>(NoteRowPreviewProvider())

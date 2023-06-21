@@ -103,6 +103,8 @@ import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
@@ -139,7 +141,8 @@ class HomeViewModel @Inject constructor(
     itemSyncStatusRepository: ItemSyncStatusRepository,
     preferencesRepository: UserPreferencesRepository,
     getUserPlan: GetUserPlan,
-    appDispatchers: AppDispatchers
+    appDispatchers: AppDispatchers,
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -359,26 +362,28 @@ class HomeViewModel @Inject constructor(
 
     private val itemTypeCountFlow = textFilterListItemFlow.map { result ->
         when (result) {
-            is LoadingResult.Error -> ItemTypeCount(loginCount = 0, aliasCount = 0, noteCount = 0)
-            LoadingResult.Loading -> ItemTypeCount(loginCount = 0, aliasCount = 0, noteCount = 0)
+            is LoadingResult.Error -> ItemTypeCount.Initial
+            LoadingResult.Loading -> ItemTypeCount.Initial
             is LoadingResult.Success -> {
                 result.data.map { it.items }.flatten().let { list ->
                     ItemTypeCount(
                         loginCount = list.count { it.contents is ItemContents.Login },
                         aliasCount = list.count { it.contents is ItemContents.Alias },
-                        noteCount = list.count { it.contents is ItemContents.Note }
+                        noteCount = list.count { it.contents is ItemContents.Note },
+                        creditCardCount = list.count { it.contents is ItemContents.CreditCard }
                     )
                 }
             }
         }
     }.distinctUntilChanged()
 
-    private val searchUiStateFlow = combine(
+    private val searchUiStateFlow = combineN(
         searchQueryState,
         isProcessingSearchState,
         isInSearchModeState,
         isInSuggestionsModeState,
         itemTypeCountFlow,
+        ffRepo[FeatureFlag.CREDIT_CARDS_ENABLED],
         ::SearchUiState
     )
 
@@ -685,6 +690,7 @@ class HomeViewModel @Inject constructor(
             HomeItemTypeSelection.Aliases -> item.contents is ItemContents.Alias
             HomeItemTypeSelection.Logins -> item.contents is ItemContents.Login
             HomeItemTypeSelection.Notes -> item.contents is ItemContents.Note
+            HomeItemTypeSelection.CreditCards -> item.contents is ItemContents.CreditCard
         }
     }
 

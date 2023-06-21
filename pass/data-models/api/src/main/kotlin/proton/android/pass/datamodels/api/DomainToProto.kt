@@ -125,7 +125,7 @@ fun ItemContents.serializeToProto(
                 CreditCardType.MasterCard -> ItemV1.CardType.Mastercard
                 CreditCardType.AmericanExpress -> ItemV1.CardType.AmericanExpress
             }
-            itemBuilder.cvv = encryptionContext.decrypt(cvv.encrypted)
+            itemBuilder.verificationNumber = encryptionContext.decrypt(cvv.encrypted)
             itemBuilder.pin = encryptionContext.decrypt(pin.encrypted)
             itemBuilder.expirationDate = expirationDate
             contentBuilder.setCreditCard(itemBuilder.build())

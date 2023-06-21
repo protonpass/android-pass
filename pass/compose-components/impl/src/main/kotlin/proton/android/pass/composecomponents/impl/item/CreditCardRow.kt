@@ -2,6 +2,7 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
@@ -28,15 +29,15 @@ fun CreditCardRow(
         AnnotatedString("$start •••• •••• $end")
     }
 
-    val (title, note, cardHolder) = remember(content.title, content.note, content.cardHolder, highlight) {
+    val fields = remember(content.title, content.note, content.cardHolder, highlight) {
         getHighlightedFields(content.title, content.note, content.cardHolder, highlight)
     }
 
     ItemRow(
         modifier = modifier,
         icon = { CreditCardIcon() },
-        title = title,
-        subtitles = listOfNotNull(maskedNumber, note, cardHolder).toPersistentList(),
+        title = fields.title,
+        subtitles = listOfNotNull(maskedNumber, fields.note, fields.cardHolder).toPersistentList(),
         vaultIcon = vaultIcon
     )
 }
@@ -46,7 +47,7 @@ private fun getHighlightedFields(
     note: String,
     cardHolder: String,
     highlight: String
-): Fields {
+): CreditCardHighlightFields {
     var annotatedTitle = AnnotatedString(title)
     var annotatedNote: AnnotatedString? = null
     var annotatedCardHolder: AnnotatedString? = null
@@ -60,14 +61,15 @@ private fun getHighlightedFields(
         annotatedCardHolder = highlightIfNeeded(regex, cardHolder)
     }
 
-    return Fields(
+    return CreditCardHighlightFields(
         title = annotatedTitle,
         note = annotatedNote,
         cardHolder = annotatedCardHolder
     )
 }
 
-private data class Fields(
+@Stable
+private data class CreditCardHighlightFields(
     val title: AnnotatedString,
     val note: AnnotatedString?,
     val cardHolder: AnnotatedString?

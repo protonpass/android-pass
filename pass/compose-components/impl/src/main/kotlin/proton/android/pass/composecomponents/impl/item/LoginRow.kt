@@ -20,6 +20,8 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,48 +42,76 @@ fun LoginRow(
     canLoadExternalImages: Boolean,
 ) {
     val content = item.contents as ItemContents.Login
-    var title = AnnotatedString(content.title)
-    var username = AnnotatedString(content.username)
-    var note: AnnotatedString? = null
-    val websites: MutableList<AnnotatedString> = mutableListOf()
-    if (highlight.isNotBlank()) {
-        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
-        val titleMatches = regex.findAll(content.title)
-        if (titleMatches.any()) {
-            title = content.title.highlight(titleMatches)
-        }
-        val usernameMatches = regex.findAll(content.username)
-        if (usernameMatches.any()) {
-            username = content.username.highlight(usernameMatches)
-        }
-        val cleanNote = content.note.replace("\n", " ")
-        val noteMatches = regex.findAll(cleanNote)
-        if (noteMatches.any()) {
-            note = cleanNote.highlight(noteMatches)
-        }
-        content.urls.forEach {
-            val websiteMatch = regex.findAll(it)
-            if (websiteMatch.any()) {
-                websites.add(it.highlight(websiteMatch))
-            }
-            if (websites.size >= 2) return@forEach
-        }
+
+    val fields = remember(content.title, content.username, content.note, content.urls, highlight) {
+        getHighlightedFields(content.title, content.username, content.note, content.urls, highlight)
     }
 
     ItemRow(
         modifier = modifier,
         icon = {
             LoginIcon(
-                text = title.text,
+                text = fields.title.text,
                 content = content,
                 canLoadExternalImages = canLoadExternalImages
             )
         },
-        title = title,
-        subtitles = (listOfNotNull(username, note) + websites).toImmutableList(),
+        title = fields.title,
+        subtitles = (listOfNotNull(fields.username, fields.note) + fields.websites).toImmutableList(),
         vaultIcon = vaultIcon
     )
 }
+
+private fun getHighlightedFields(
+    title: String,
+    username: String,
+    note: String,
+    urls: List<String>,
+    highlight: String
+): LoginHighlightFields {
+    var annotatedTitle = AnnotatedString(title)
+    var annotatedUsername = AnnotatedString(username)
+    var annotatedNote: AnnotatedString? = null
+    val annotatedWebsites: MutableList<AnnotatedString> = mutableListOf()
+    if (highlight.isNotBlank()) {
+        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
+        val titleMatches = regex.findAll(title)
+        if (titleMatches.any()) {
+            annotatedTitle = title.highlight(titleMatches)
+        }
+        val usernameMatches = regex.findAll(username)
+        if (usernameMatches.any()) {
+            annotatedUsername = username.highlight(usernameMatches)
+        }
+        val cleanNote = note.replace("\n", " ")
+        val noteMatches = regex.findAll(cleanNote)
+        if (noteMatches.any()) {
+            annotatedNote = cleanNote.highlight(noteMatches)
+        }
+        urls.forEach {
+            val websiteMatch = regex.findAll(it)
+            if (websiteMatch.any()) {
+                annotatedWebsites.add(it.highlight(websiteMatch))
+            }
+            if (annotatedWebsites.size >= 2) return@forEach
+        }
+    }
+
+    return LoginHighlightFields(
+        title = annotatedTitle,
+        note = annotatedNote,
+        username = annotatedUsername,
+        websites = annotatedWebsites
+    )
+}
+
+@Stable
+private data class LoginHighlightFields(
+    val title: AnnotatedString,
+    val note: AnnotatedString?,
+    val username: AnnotatedString,
+    val websites: List<AnnotatedString>
+)
 
 class ThemedLoginItemPreviewProvider : ThemePairPreviewProvider<LoginRowParameter>(
     LoginRowPreviewProvider()

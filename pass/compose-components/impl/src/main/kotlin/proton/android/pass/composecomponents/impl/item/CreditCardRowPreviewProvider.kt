@@ -22,32 +22,44 @@ class CreditCardRowPreviewProvider : PreviewParameterProvider<CreditCardRowParam
                 note = "Example credit card",
                 number = "0000000000000000",
                 highlight = "credit"
+            ),
+            with(
+                title = "A credit card",
+                note = "some credit card note",
+                cardHolder = "some cardholder",
+                number = "0000000000000000",
+                highlight = "some"
             )
         )
 
     companion object {
-        private fun with(title: String, note: String = "", number: String, highlight: String = "") =
-            CreditCardRowParameter(
-                model = ItemUiModel(
-                    id = ItemId("123"),
-                    shareId = ShareId("456"),
-                    contents = ItemContents.CreditCard(
-                        title = title,
-                        note = note,
-                        number = number,
-                        cardHolder = "Name",
-                        expirationDate = "2030-01",
-                        pin = HiddenState.Concealed(""),
-                        cvv = HiddenState.Concealed(""),
-                        type = CreditCardType.Visa
-                    ),
-                    state = 0,
-                    createTime = Clock.System.now(),
-                    modificationTime = Clock.System.now(),
-                    lastAutofillTime = Clock.System.now()
+        private fun with(
+            title: String,
+            note: String = "",
+            number: String,
+            cardHolder: String = "",
+            highlight: String = ""
+        ) = CreditCardRowParameter(
+            model = ItemUiModel(
+                id = ItemId("123"),
+                shareId = ShareId("456"),
+                contents = ItemContents.CreditCard(
+                    title = title,
+                    note = note,
+                    number = number,
+                    cardHolder = cardHolder,
+                    expirationDate = "2030-01",
+                    pin = HiddenState.Concealed(""),
+                    cvv = HiddenState.Concealed(""),
+                    type = CreditCardType.Visa
                 ),
-                highlight = highlight
-            )
+                state = 0,
+                createTime = Clock.System.now(),
+                modificationTime = Clock.System.now(),
+                lastAutofillTime = Clock.System.now()
+            ),
+            highlight = highlight
+        )
     }
 }
 

@@ -32,11 +32,6 @@ object CreateCreditCard : NavItem(
     }
 }
 
-sealed interface BaseCreditCardNavigation {
-    object Upgrade : BaseCreditCardNavigation
-    object Close : BaseCreditCardNavigation
-}
-
 sealed interface CreateCreditCardNavigation : BaseCreditCardNavigation {
     @JvmInline
     value class ItemCreated(val itemUiModel: ItemUiModel) : CreateCreditCardNavigation

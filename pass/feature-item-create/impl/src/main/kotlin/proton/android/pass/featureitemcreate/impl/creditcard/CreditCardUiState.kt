@@ -25,6 +25,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
+import proton.pass.domain.ShareId
 
 @Immutable
 data class BaseCreditCardUiState(
@@ -60,4 +61,21 @@ sealed interface CreateCreditCardUiState {
         val shareUiState: ShareUiState,
         val baseState: BaseCreditCardUiState
     ) : CreateCreditCardUiState
+}
+
+sealed interface UpdateCreditCardUiState {
+    @Immutable
+    object NotInitialised : UpdateCreditCardUiState
+
+    @Immutable
+    object Loading : UpdateCreditCardUiState
+
+    @Immutable
+    object Error : UpdateCreditCardUiState
+
+    @Immutable
+    data class Success(
+        val selectedShareId: ShareId?,
+        val baseState: BaseCreditCardUiState
+    ) : UpdateCreditCardUiState
 }

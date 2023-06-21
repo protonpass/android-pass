@@ -47,6 +47,7 @@ import proton.android.pass.featureitemcreate.impl.R
 internal fun CardExpirationDateInput(
     modifier: Modifier = Modifier,
     value: String,
+    enabled: Boolean,
     onChange: (String) -> Unit
 ) {
     ProtonTextField(
@@ -63,7 +64,7 @@ internal fun CardExpirationDateInput(
             val part2 = text.substring(2, text.length)
             TransformedText(AnnotatedString("$part1 / $part2"), DateOffsetMapping)
         },
-        editable = true,
+        editable = enabled,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_card_expiration_date_title)) },
         placeholder = {
             ProtonTextFieldPlaceHolder(
@@ -107,7 +108,11 @@ fun CardExpirationDateInputPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            CardExpirationDateInput(value = "122048", onChange = {})
+            CardExpirationDateInput(
+                value = "122048",
+                enabled = true,
+                onChange = {}
+            )
         }
     }
 }

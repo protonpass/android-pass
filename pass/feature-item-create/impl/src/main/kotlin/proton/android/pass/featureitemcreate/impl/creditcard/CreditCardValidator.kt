@@ -28,7 +28,7 @@ fun ItemContents.CreditCard.validate(): Set<CreditCardValidationErrors> {
     return mutableSet.toSet()
 }
 
-private val expirationDateRegex = Regex("^\\d{4}-\\d{2}$")
+private val expirationDateRegex = Regex("^\\d{4}-(0[1-9]|1[0-2])\$")
 
 sealed interface CreditCardValidationErrors {
     object BlankTitle : CreditCardValidationErrors

@@ -42,6 +42,7 @@ import proton.android.pass.featureitemcreate.impl.R
 internal fun CardHolderNameInput(
     modifier: Modifier = Modifier,
     value: String,
+    enabled: Boolean,
     onChange: (String) -> Unit
 ) {
     ProtonTextField(
@@ -50,7 +51,7 @@ internal fun CardHolderNameInput(
         onChange = onChange,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm,
-        editable = true,
+        editable = enabled,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_cardholder_name_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_cardholder_name_hint)) },
         leadingIcon = {
@@ -76,7 +77,7 @@ fun CardHolderNameInputPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            CardHolderNameInput(value = "John Doe", onChange = {})
+            CardHolderNameInput(value = "John Doe", enabled = true, onChange = {})
         }
     }
 }

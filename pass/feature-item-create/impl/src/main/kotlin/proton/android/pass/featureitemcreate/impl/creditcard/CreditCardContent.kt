@@ -44,6 +44,7 @@ fun CreditCardContent(
         CreditCardItemForm(
             modifier = Modifier.padding(padding),
             content = state.contents,
+            enabled = !state.isLoading,
             titleSection = titleSection,
             onEvent = onEvent
         )

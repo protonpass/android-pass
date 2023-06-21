@@ -222,7 +222,7 @@ fun HomeScreen(
                     },
                     onEdit = { shareId, itemId ->
                         scope.launch { bottomSheetState.hide() }
-                        onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
+                        onNavigateEvent(HomeNavigation.EditCreditCard(shareId, itemId))
                     },
                     onMoveToTrash = {
                         scope.launch {

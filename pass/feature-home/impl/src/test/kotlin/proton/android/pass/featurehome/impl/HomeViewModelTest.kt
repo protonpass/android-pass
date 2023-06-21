@@ -55,6 +55,7 @@ import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuresearchoptions.fakes.TestSearchOptionsRepository
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
@@ -142,7 +143,8 @@ class HomeViewModelTest {
             itemSyncStatusRepository = itemSyncStatusRepository,
             preferencesRepository = preferencesRepository,
             getUserPlan = getUserPlan,
-            appDispatchers = TestAppDispatchers()
+            appDispatchers = TestAppDispatchers(),
+            ffRepo = TestFeatureFlagsPreferenceRepository()
         )
     }
 

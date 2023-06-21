@@ -41,6 +41,7 @@ import proton.pass.domain.ItemContents
 fun CreditCardItemForm(
     modifier: Modifier = Modifier,
     content: ItemContents.CreditCard,
+    enabled: Boolean,
     titleSection: @Composable (ColumnScope.() -> Unit),
     onEvent: (CreditCardContentEvent) -> Unit
 ) {
@@ -54,6 +55,7 @@ fun CreditCardItemForm(
         titleSection()
         CardDetails(
             content = content,
+            enabled = enabled,
             onNameChanged = { onEvent(OnNameChange(it)) },
             onNumberChanged = { onEvent(OnNumberChange(it)) },
             onCVVChanged = { onEvent(OnCVVChange(it)) },
@@ -62,7 +64,7 @@ fun CreditCardItemForm(
         )
         SimpleNoteSection(
             value = content.note,
-            enabled = true,
+            enabled = enabled,
             onChange = { onEvent(OnNoteChange(it)) }
         )
     }

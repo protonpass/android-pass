@@ -47,6 +47,7 @@ import proton.android.pass.featureitemcreate.impl.R
 internal fun CardNumberInput(
     modifier: Modifier = Modifier,
     value: String,
+    enabled: Boolean,
     onChange: (String) -> Unit
 ) {
     ProtonTextField(
@@ -96,6 +97,7 @@ fun CardNumberInputPreview(
         Surface {
             CardNumberInput(
                 value = "1234567891234567",
+                enabled = true,
                 onChange = {}
             )
         }

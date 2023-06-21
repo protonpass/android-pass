@@ -24,9 +24,13 @@ fun CreditCardRow(
 ) {
     val content = item.contents as ItemContents.CreditCard
     val maskedNumber = remember(content.number) {
-        val start = content.number.take(4)
-        val end = content.number.takeLast(4)
-        AnnotatedString("$start •••• •••• $end")
+        if (content.number.isBlank()) {
+            null
+        } else {
+            val start = content.number.take(4)
+            val end = content.number.takeLast(4)
+            AnnotatedString("$start •••• •••• $end")
+        }
     }
 
     val fields = remember(content.title, content.note, content.cardHolder, highlight) {

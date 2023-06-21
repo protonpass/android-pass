@@ -58,9 +58,9 @@ fun HiddenContentRow(
     onRowClick: () -> Unit
 ) {
     val (actionIcon, actionContent) = if (isContentVisible) {
-        CoreR.drawable.ic_proton_eye_slash to revealAction
+        CoreR.drawable.ic_proton_eye_slash to concealAction
     } else {
-        CoreR.drawable.ic_proton_eye to concealAction
+        CoreR.drawable.ic_proton_eye to revealAction
     }
 
     Row(

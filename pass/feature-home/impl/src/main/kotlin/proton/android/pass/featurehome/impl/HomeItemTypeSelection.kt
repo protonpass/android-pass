@@ -25,5 +25,6 @@ enum class HomeItemTypeSelection {
     AllItems,
     Logins,
     Aliases,
-    Notes;
+    Notes,
+    CreditCards;
 }

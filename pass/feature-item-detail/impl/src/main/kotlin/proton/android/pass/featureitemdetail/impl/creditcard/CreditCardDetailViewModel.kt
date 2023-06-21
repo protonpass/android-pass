@@ -103,6 +103,7 @@ class CreditCardDetailViewModel @Inject constructor(
     private data class FieldVisibility(
         val cardNumber: Boolean = false,
         val cvv: Boolean = false,
+        val pin: Boolean = false,
     )
 
     private data class CreditCardItemInfo(
@@ -142,15 +143,9 @@ class CreditCardDetailViewModel @Inject constructor(
                     )
 
                     if (canShowFields) {
-                        val cvv = if (fieldVisibility.cvv) {
-                            HiddenState.Revealed(
-                                encrypted = contents.cvv.encrypted,
-                                clearText = decrypt(contents.cvv.encrypted)
-                            )
-                        } else {
-                            encryptedOrEmpty(contents.cvv, this)
-                        }
-                        contents = contents.copy(cvv = cvv)
+                        val cvv = fieldHiddenStateValue(contents.cvv, fieldVisibility.cvv, this)
+                        val pin = fieldHiddenStateValue(contents.pin, fieldVisibility.pin, this)
+                        contents = contents.copy(cvv = cvv, pin = pin)
                     }
 
                     model.copy(contents = contents) to cardNumber
@@ -287,6 +282,22 @@ class CreditCardDetailViewModel @Inject constructor(
         }
     }
 
+    fun copyPin() = viewModelScope.launch {
+        modelFromState()?.let {
+            val pin = when (val content = it.pin) {
+                is HiddenState.Empty -> return@let
+                is HiddenState.Concealed -> {
+                    encryptionContextProvider.withEncryptionContext {
+                        decrypt(content.encrypted)
+                    }
+                }
+                is HiddenState.Revealed -> content.clearText
+            }
+            clipboardManager.copyToClipboard(pin, isSecure = true)
+            snackbarDispatcher(DetailSnackbarMessages.CardPinCopiedToClipboard)
+        }
+    }
+
     fun copyNumber() = viewModelScope.launch {
         modelFromState()?.let {
             clipboardManager.copyToClipboard(it.number)
@@ -302,6 +313,10 @@ class CreditCardDetailViewModel @Inject constructor(
         fieldVisibilityFlow.update { it.copy(cardNumber = !it.cardNumber) }
     }
 
+    fun togglePin() = viewModelScope.launch {
+        fieldVisibilityFlow.update { it.copy(pin = !it.pin) }
+    }
+
     private fun modelFromState(): ItemContents.CreditCard? {
         val state = uiState.value
         return if (state is CreditCardDetailUiState.Success) {
@@ -310,6 +325,20 @@ class CreditCardDetailViewModel @Inject constructor(
             null
         }
     }
+
+    private fun fieldHiddenStateValue(
+        state: HiddenState,
+        isVisible: Boolean,
+        context: EncryptionContext
+    ): HiddenState = if (isVisible) {
+        HiddenState.Revealed(
+            encrypted = state.encrypted,
+            clearText = context.decrypt(state.encrypted)
+        )
+    } else {
+        encryptedOrEmpty(state, context)
+    }
+
 
     private fun encryptedOrEmpty(state: HiddenState, context: EncryptionContext): HiddenState {
         val isEmpty = context.decrypt(state.encrypted.toEncryptedByteArray()).isEmpty()

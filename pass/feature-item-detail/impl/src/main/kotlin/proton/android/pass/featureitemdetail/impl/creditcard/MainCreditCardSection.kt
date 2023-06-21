@@ -30,11 +30,16 @@ fun MainCreditCardSection(
     modifier: Modifier = Modifier,
     cardHolder: String,
     number: CardNumberState,
+    pin: HiddenState,
     cvv: HiddenState,
     expirationDate: String,
     onEvent: (CreditCardDetailEvent) -> Unit
 ) {
+<<<<<<< HEAD
     if (!canShowSection(cardHolder, number, cvv, expirationDate)) return
+=======
+    if (!canShowSection(cardHolder, number, pin, cvv)) return
+>>>>>>> bf9ff2c3c (feat(item-detail): show credit card pin in details)
 
     val sections = mutableListOf<@Composable () -> Unit>()
     if (cardHolder.isNotBlank()) {
@@ -65,6 +70,16 @@ fun MainCreditCardSection(
         }
     }
 
+    if (pin !is HiddenState.Empty) {
+        sections += {
+            CardPinRow(
+                pin = pin,
+                onToggle = { onEvent(CreditCardDetailEvent.OnTogglePinClick) },
+                onClick = { onEvent(CreditCardDetailEvent.OnPinClick) }
+            )
+        }
+    }
+
     if (expirationDate.isNotBlank()) {
         sections += {
             CardExpirationDateRow(expirationDate = expirationDate)
@@ -86,8 +101,15 @@ fun MainCreditCardSection(
 private fun canShowSection(
     cardHolder: String,
     number: CardNumberState,
-    cvv: HiddenState,
-    expirationDate: String
-): Boolean =
-    !(cardHolder.isBlank() && expirationDate.isBlank() && !number.hasContent() && cvv is HiddenState.Empty)
+    pin: HiddenState,
+    cvv: HiddenState
+): Boolean {
+    if (cardHolder.isBlank() &&
+        !number.hasContent() &&
+        pin is HiddenState.Empty &&
+        cvv is HiddenState.Empty
+    ) return false
+
+    return true
+}
 

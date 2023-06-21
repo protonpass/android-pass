@@ -40,6 +40,11 @@ enum class DetailSnackbarMessages(
         type = SnackbarType.NORM,
         isClipboard = true
     ),
+    CardPinCopiedToClipboard(
+        id = R.string.credit_card_pin_copied_to_clipboard,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
     FieldCopiedToClipboard(R.string.field_copied_to_clipboard, SnackbarType.NORM, true),
     ItemMovedToTrash(R.string.move_item_to_trash_message, SnackbarType.NORM),
     ItemNotMovedToTrash(R.string.error_move_item_to_trash_message, SnackbarType.ERROR),

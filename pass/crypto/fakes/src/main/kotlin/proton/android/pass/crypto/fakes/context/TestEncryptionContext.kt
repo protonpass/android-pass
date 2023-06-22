@@ -50,11 +50,19 @@ object TestEncryptionContext : EncryptionContext {
     }
 
     override fun decrypt(content: EncryptedByteArray, tag: EncryptionTag?): ByteArray =
-        runCatching {
-            decode(content.array)
-        }.fold(
+        runCatching { decode(content.array) }.fold(
             onSuccess = { it },
-            onFailure = { Base64.decodeBase64(content.array) }
+            onFailure = {
+                // Check if the content is already decrypted
+                val suffix = ENCRYPTED_SUFFIX.encodeToByteArray()
+                val endsWithSuffix = content.array.takeLast(suffix.size) == suffix.toList()
+                return if (endsWithSuffix) {
+                    // It is an encrypted string. Convert it and run a decrypt(string)
+                    decrypt(Base64.encodeBase64String(content.array)).encodeToByteArray()
+                } else {
+                    Base64.decodeBase64(content.array)
+                }
+            }
         )
 
     private fun decode(byteArray: ByteArray): ByteArray {

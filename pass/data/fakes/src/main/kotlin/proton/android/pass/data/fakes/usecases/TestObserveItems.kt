@@ -96,7 +96,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     note = encrypt(itemContents.note),
                     content = encrypt(asProto.toByteArray()),
                     packageInfoSet = emptySet(),
-                    state = 0,
+                    state = ItemState.Active.value,
                     modificationTime = now,
                     createTime = now,
                     lastAutofillTime = None
@@ -175,8 +175,16 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 cardHolder = holder,
                 type = CreditCardType.Other,
                 number = number,
-                cvv = HiddenState.Concealed(TestEncryptionContext.encrypt(verificationNumber)),
-                pin = HiddenState.Concealed(TestEncryptionContext.encrypt(pin)),
+                cvv = if (verificationNumber.isBlank()) {
+                    HiddenState.Empty(TestEncryptionContext.encrypt(verificationNumber))
+                } else {
+                    HiddenState.Concealed(TestEncryptionContext.encrypt(verificationNumber))
+                },
+                pin = if (pin.isBlank()) {
+                    HiddenState.Empty(TestEncryptionContext.encrypt(pin))
+                } else {
+                    HiddenState.Concealed(TestEncryptionContext.encrypt(pin))
+                },
                 expirationDate = expirationDate
             )
         )

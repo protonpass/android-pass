@@ -30,6 +30,10 @@ class TestUpdateItem @Inject constructor() : UpdateItem {
     private var result: Result<Item> =
         Result.failure(IllegalStateException("TestUpdateItem result not set"))
 
+    private val memory = mutableListOf<Payload>()
+
+    fun getMemory(): List<Payload> = memory
+
     fun setResult(result: Result<Item>) {
         this.result = result
     }
@@ -39,5 +43,15 @@ class TestUpdateItem @Inject constructor() : UpdateItem {
         shareId: ShareId,
         item: Item,
         contents: ItemContents
-    ): Item = result.getOrThrow()
+    ): Item {
+        memory.add(Payload(userId, shareId, item, contents))
+        return result.getOrThrow()
+    }
+
+    data class Payload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val item: Item,
+        val contents: ItemContents
+    )
 }

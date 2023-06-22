@@ -60,6 +60,7 @@ import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
 import proton.pass.domain.HiddenState
+import proton.pass.domain.ItemState
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
@@ -194,7 +195,7 @@ internal class CreateLoginViewModelTest {
                             shareId = item.shareId,
                             contents = item.toItemContents(TestEncryptionContext),
                             createTime = item.createTime,
-                            state = 0,
+                            state = ItemState.Active.value,
                             modificationTime = item.modificationTime,
                             lastAutofillTime = item.lastAutofillTime.value()
                         )

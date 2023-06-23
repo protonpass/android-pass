@@ -21,7 +21,7 @@ package proton.android.pass.test
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
-import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextReplacement
 
 private const val WAIT_UNTIL_TIMEOUT = 1_000L
 
@@ -46,7 +46,7 @@ fun ComposeContentTestRule.writeTextAndWait(
     expectedText: String = text,
     timeoutMillis: Long = WAIT_UNTIL_TIMEOUT
 ) {
-    onNode(matcher).performTextInput(text)
+    onNode(matcher).performTextReplacement(text)
     waitUntilExists(matcher.and(hasText(expectedText)), timeoutMillis)
 }
 

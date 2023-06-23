@@ -27,5 +27,8 @@ interface InternalSettingsRepository {
     suspend fun setLastUnlockedTime(time: Instant): Result<Unit>
     fun getLastUnlockedTime(): Flow<Option<Instant>>
 
+    suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit>
+    fun getDeclinedUpdateVersion(): Flow<String>
+
     suspend fun clearSettings(): Result<Unit>
 }

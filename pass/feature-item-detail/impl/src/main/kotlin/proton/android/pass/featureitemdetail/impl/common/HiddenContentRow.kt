@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import me.proton.core.presentation.R as CoreR
@@ -55,7 +56,7 @@ fun HiddenContentRow(
     revealAction: String,
     concealAction: String,
     onToggleClick: () -> Unit,
-    onRowClick: () -> Unit
+    onRowClick: (() -> Unit)?
 ) {
     val (actionIcon, actionContent) = if (isContentVisible) {
         CoreR.drawable.ic_proton_eye_slash to concealAction
@@ -66,7 +67,12 @@ fun HiddenContentRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onRowClick() }
+            .applyIf(
+                condition = onRowClick != null,
+                ifTrue = {
+                    clickable(onClick = onRowClick!!)
+                }
+            )
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

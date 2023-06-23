@@ -25,9 +25,10 @@ object TestUser {
 
     fun create(
         email: String? = null,
-        name: String? = null
+        name: String? = null,
+        userId: UserId = UserId("12345")
     ): User = User(
-        userId = UserId("12345"),
+        userId = userId,
         email = email,
         name = name,
         displayName = null,

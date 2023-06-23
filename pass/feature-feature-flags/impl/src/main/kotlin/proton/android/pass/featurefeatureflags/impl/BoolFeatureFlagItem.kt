@@ -18,6 +18,7 @@
 
 package proton.android.pass.featurefeatureflags.impl
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -35,7 +36,13 @@ fun BoolFeatureFlagItem(
     value: Boolean,
     onToggle: (FeatureFlag, Boolean) -> Unit
 ) {
-    Row(modifier.padding(16.dp)) {
+    Row(
+        modifier = modifier
+            .clickable {
+                onToggle(featureFlag, !value)
+            }
+            .padding(16.dp)
+    ) {
         Column(modifier.weight(1f)) {
             Text(text = featureFlag.title)
             Text(text = featureFlag.description)

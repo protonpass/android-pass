@@ -29,12 +29,17 @@ import javax.inject.Singleton
 class TestTotpManager @Inject constructor() : TotpManager {
 
     private var parseResult: Result<TotpSpec> = Result.failure(NotImplementedError())
+    private var generatedUri = ""
 
     fun setParseResult(result: Result<TotpSpec>) {
         parseResult = result
     }
 
-    override fun generateUri(spec: TotpSpec): String = ""
+    fun setGeneratedUri(uri: String) {
+        generatedUri = uri
+    }
+
+    override fun generateUri(spec: TotpSpec): String = generatedUri
 
     override fun generateUriWithDefaults(secret: String): Result<String> = Result.success("")
 

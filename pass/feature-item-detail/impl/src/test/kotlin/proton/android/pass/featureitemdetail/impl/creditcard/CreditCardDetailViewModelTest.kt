@@ -279,49 +279,6 @@ class CreditCardDetailViewModelTest {
     }
 
     @Test
-    fun `copy pin not toggled`() = runTest {
-        val pin = "7789"
-        val itemWithVaultInfo = ItemWithVaultInfo(
-            item = TestObserveItems.createCreditCard(
-                itemId = ItemId(ITEM_ID),
-                shareId = ShareId(SHARE_ID),
-                pin = pin,
-            ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
-        )
-        getItem.emitValue(Result.success(itemWithVaultInfo))
-
-        instance.uiState.test {
-            skipItems(1)
-            instance.copyPin()
-            assertThat(clipboardManager.getContents()).isEqualTo(pin)
-        }
-    }
-
-    @Test
-    fun `copy pin toggled`() = runTest {
-        val pin = "4455"
-        val itemWithVaultInfo = ItemWithVaultInfo(
-            item = TestObserveItems.createCreditCard(
-                itemId = ItemId(ITEM_ID),
-                shareId = ShareId(SHARE_ID),
-                pin = pin,
-            ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
-        )
-        getItem.emitValue(Result.success(itemWithVaultInfo))
-        instance.togglePin()
-
-        instance.uiState.test {
-            skipItems(1)
-            instance.copyPin()
-            assertThat(clipboardManager.getContents()).isEqualTo(pin)
-        }
-    }
-
-    @Test
     fun `copy verification number not toggled`() = runTest {
         val cvv = "012"
         val itemWithVaultInfo = ItemWithVaultInfo(

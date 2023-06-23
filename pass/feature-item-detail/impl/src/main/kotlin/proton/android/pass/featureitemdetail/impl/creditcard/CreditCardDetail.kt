@@ -167,9 +167,6 @@ fun CreditCardDetail(
                                 CreditCardDetailEvent.OnTogglePinClick -> {
                                     viewModel.togglePin()
                                 }
-                                CreditCardDetailEvent.OnPinClick -> {
-                                    viewModel.copyPin()
-                                }
                                 CreditCardDetailEvent.OnUpgradeClick -> {
                                     onNavigate(ItemDetailNavigation.Upgrade)
                                 }

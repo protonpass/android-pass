@@ -44,6 +44,7 @@ core = "10.7.1"
 dagger = "2.44.2"
 # Google
 protobuf = "3.21.12"
+app-update = "2.1.0"
 # Gradle
 gradlePlugin-android = "7.4.2"
 gradlePlugin-dependency-analysis = "1.19.0"
@@ -237,6 +238,7 @@ dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref
 # Google
 google-protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
 google-protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
+google-inAppUpdate = { module = "com.google.android.play:app-update-ktx", version.ref = "app-update" }
 
 # JakeWharton
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }

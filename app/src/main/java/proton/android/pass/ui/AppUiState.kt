@@ -21,6 +21,7 @@ package proton.android.pass.ui
 import androidx.compose.runtime.Immutable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.preferences.ThemePreference
@@ -30,14 +31,16 @@ data class AppUiState(
     val snackbarMessage: Option<SnackbarMessage>,
     val theme: ThemePreference,
     val networkStatus: NetworkStatus,
-    val needsAuth: Boolean
+    val needsAuth: Boolean,
+    val inAppUpdateState: InAppUpdateState,
 ) {
     companion object {
         fun default(theme: ThemePreference, needsAuth: Boolean) = AppUiState(
             snackbarMessage = None,
             theme = theme,
             networkStatus = NetworkStatus.Online,
-            needsAuth = needsAuth
+            needsAuth = needsAuth,
+            inAppUpdateState = InAppUpdateState.Idle
         )
     }
 }

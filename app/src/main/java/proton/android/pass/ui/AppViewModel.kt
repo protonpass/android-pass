@@ -39,6 +39,7 @@ import kotlinx.coroutines.runBlocking
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
@@ -53,6 +54,7 @@ class AppViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val needsBiometricAuth: NeedsBiometricAuth,
+    private val inAppUpdatesManager: InAppUpdatesManager,
     networkMonitor: NetworkMonitor,
 ) : ViewModel() {
 
@@ -78,13 +80,15 @@ class AppViewModel @Inject constructor(
         themePreference,
         networkStatus,
         needsBiometricAuth(),
+        inAppUpdatesManager.observeInAppUpdateState(),
         ::AppUiState
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = run {
             val (theme, needsAuth) = runBlocking {
-                preferenceRepository.getThemePreference().first() to needsBiometricAuth().first()
+                preferenceRepository.getThemePreference()
+                    .first() to needsBiometricAuth().first()
             }
             AppUiState.default(theme, needsAuth)
         }
@@ -92,12 +96,17 @@ class AppViewModel @Inject constructor(
 
     fun onStop() = viewModelScope.launch {
         preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+        inAppUpdatesManager.completeUpdate()
     }
 
     fun onStart() = viewModelScope.launch {
         if (!appUiState.value.needsAuth) {
             preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
         }
+    }
+
+    fun onResume() = viewModelScope.launch {
+        inAppUpdatesManager.checkUpdateStalled()
     }
 
     fun onSnackbarMessageDelivered() {
@@ -115,6 +124,10 @@ class AppViewModel @Inject constructor(
                 ThemePreference.System
             }
         }
+
+    fun onCompleteUpdate() {
+        inAppUpdatesManager.completeUpdate()
+    }
 
     companion object {
         private const val TAG = "AppViewModel"

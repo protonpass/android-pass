@@ -46,7 +46,8 @@ fun PassApp(
 
     LifecycleEffect(
         onStop = { appViewModel.onStop() },
-        onStart = { appViewModel.onStart() }
+        onStart = { appViewModel.onStart() },
+        onResume = { appViewModel.onResume() }
     )
     PassTheme(isDark = isDark) {
         ProvideWindowInsets {
@@ -62,7 +63,8 @@ fun PassApp(
                     }
                     onNavigate(it)
                 },
-                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() }
+                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
+                onCompleteUpdate = { appViewModel.onCompleteUpdate() }
             )
         }
     }

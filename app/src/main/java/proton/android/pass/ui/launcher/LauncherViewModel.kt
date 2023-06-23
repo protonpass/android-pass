@@ -38,6 +38,8 @@ package proton.android.pass.ui.launcher
 
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.IntentSenderRequest
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -77,6 +79,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
+import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -97,7 +100,8 @@ class LauncherViewModel @Inject constructor(
     private val userPlanWorkerLauncher: UserPlanWorkerLauncher,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val clearUserData: ClearUserData,
-    private val refreshPlan: RefreshPlan
+    private val refreshPlan: RefreshPlan,
+    private val inAppUpdatesManager: InAppUpdatesManager
 ) : ViewModel() {
 
     val state: StateFlow<State> = accountManager.getAccounts()
@@ -247,6 +251,18 @@ class LauncherViewModel @Inject constructor(
 
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()
     private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
+
+    fun checkForUpdates(updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>) {
+        inAppUpdatesManager.checkForUpdates(updateResultLauncher)
+    }
+
+    fun cancelUpdateListener() {
+        inAppUpdatesManager.tearDown()
+    }
+
+    fun declineUpdate() {
+        inAppUpdatesManager.declineUpdate()
+    }
 
     enum class State { Processing, AccountNeeded, PrimaryExist, StepNeeded }
 

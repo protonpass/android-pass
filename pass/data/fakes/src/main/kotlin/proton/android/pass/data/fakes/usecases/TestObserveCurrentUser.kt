@@ -24,7 +24,9 @@ import me.proton.core.user.domain.entity.User
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestObserveCurrentUser @Inject constructor() : ObserveCurrentUser {
 
     private val observeVaultsFlow: MutableSharedFlow<User> = testFlow()

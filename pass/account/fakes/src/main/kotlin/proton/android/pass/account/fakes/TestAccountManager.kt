@@ -30,7 +30,9 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestAccountManager @Inject constructor() : AccountManager(Product.Drive) {
 
     private val primaryUserIdFlow: MutableSharedFlow<UserId?> =

@@ -39,7 +39,7 @@ fun CardHiddenRow(
     label: String,
     @DrawableRes icon: Int,
     onToggle: () -> Unit,
-    onClick: () -> Unit
+    onClick: (() -> Unit)?
 ) {
     val (sectionContent, isContentVisible) = when (value) {
         is HiddenState.Concealed -> "•".repeat(CHAR_AMOUNT) to false

@@ -20,6 +20,7 @@ package proton.android.pass.featureprofile.impl
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,6 +41,13 @@ fun ProfileScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+
+    LaunchedEffect(state.event) {
+        if (state.event == ProfileEvent.OpenFeatureFlags) {
+            onNavigateEvent(ProfileNavigation.FeatureFlags)
+        }
+    }
+
     ProfileContent(
         modifier = modifier,
         state = state,
@@ -56,6 +64,7 @@ fun ProfileScreen(
         onListClick = { onNavigateEvent(ProfileNavigation.List) },
         onCreateItemClick = { onNavigateEvent(ProfileNavigation.CreateItem) },
         onCopyAppVersionClick = { viewModel.copyAppVersion(state.appVersion) },
+        onAppVersionLongClick = { viewModel.onAppVersionLongClick() }
     )
 }
 

@@ -35,7 +35,6 @@ fun CardPinRow(
     modifier: Modifier = Modifier,
     pin: HiddenState,
     onToggle: () -> Unit,
-    onClick: () -> Unit
 ) {
     CardHiddenRow(
         modifier = modifier,
@@ -43,7 +42,7 @@ fun CardPinRow(
         value = pin,
         icon = CoreR.drawable.ic_proton_grid_3,
         onToggle = onToggle,
-        onClick = onClick
+        onClick = null
     )
 }
 
@@ -57,8 +56,7 @@ fun CardPinRowPreview(
         Surface {
             CardPinRow(
                 pin = pin,
-                onToggle = {},
-                onClick = {}
+                onToggle = {}
             )
         }
     }

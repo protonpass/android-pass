@@ -233,27 +233,6 @@ class CreditCardDetailScreenTest {
     }
 
     @Test
-    fun canCopyPin() {
-        val pin = "1234"
-        val title = performSetup(pin = pin)
-        composeTestRule.apply {
-            setContent {
-                PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
-                    )
-                }
-            }
-            waitUntilExists(hasText(title))
-
-            val fieldName = activity.getString(R.string.credit_card_pin_field_name)
-            onNode(hasText(fieldName)).performClick()
-        }
-
-        assertEquals(pin, clipboardManager.getContents())
-    }
-
-    @Test
     fun canCopyVerificationNumber() {
         val verificationNumber = "745"
         val title = performSetup(verificationNumber = verificationNumber)

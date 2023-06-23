@@ -282,22 +282,6 @@ class CreditCardDetailViewModel @Inject constructor(
         }
     }
 
-    fun copyPin() = viewModelScope.launch {
-        modelFromState()?.let {
-            val pin = when (val content = it.pin) {
-                is HiddenState.Empty -> return@let
-                is HiddenState.Concealed -> {
-                    encryptionContextProvider.withEncryptionContext {
-                        decrypt(content.encrypted)
-                    }
-                }
-                is HiddenState.Revealed -> content.clearText
-            }
-            clipboardManager.copyToClipboard(pin, isSecure = true)
-            snackbarDispatcher(DetailSnackbarMessages.CardPinCopiedToClipboard)
-        }
-    }
-
     fun copyNumber() = viewModelScope.launch {
         modelFromState()?.let {
             clipboardManager.copyToClipboard(it.number)

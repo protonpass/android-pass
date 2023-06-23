@@ -24,7 +24,9 @@ import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestUpdateItem @Inject constructor() : UpdateItem {
 
     private var result: Result<Item> =

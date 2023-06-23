@@ -32,6 +32,7 @@ import javax.inject.Singleton
 class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRepository {
 
     private val lastUnlockedTimeFlow = MutableStateFlow<Option<Instant>>(None)
+    private val declinedUpdateVersionFlow = MutableStateFlow<String>("")
 
     override suspend fun setLastUnlockedTime(time: Instant): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -39,6 +40,13 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun getLastUnlockedTime(): Flow<Option<Instant>> = lastUnlockedTimeFlow
+
+    override suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit> {
+        declinedUpdateVersionFlow.update { versionDeclined }
+        return Result.success(Unit)
+    }
+
+    override fun getDeclinedUpdateVersion(): Flow<String> = declinedUpdateVersionFlow
 
     override suspend fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

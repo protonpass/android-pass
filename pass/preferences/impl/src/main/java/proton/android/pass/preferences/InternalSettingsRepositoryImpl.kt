@@ -43,7 +43,6 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         return@runCatching
     }
 
-
     override fun getLastUnlockedTime(): Flow<Option<Instant>> = dataStore.data
         .catch { exception -> handleExceptions(exception) }
         .map { settings ->
@@ -54,6 +53,20 @@ class InternalSettingsRepositoryImpl @Inject constructor(
                 Some(parsed)
             }
         }
+
+    override suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setDeclinedUpdateVersion(versionDeclined)
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getDeclinedUpdateVersion(): Flow<String> = dataStore.data
+        .catch { exception -> handleExceptions(exception) }
+        .map { settings -> settings.declinedUpdateVersion }
 
     override suspend fun clearSettings(): Result<Unit> = runCatching {
         dataStore.updateData {

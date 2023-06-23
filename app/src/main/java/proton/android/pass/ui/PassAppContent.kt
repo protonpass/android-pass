@@ -21,10 +21,14 @@ package proton.android.pass.ui
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -35,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import proton.android.pass.R
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
@@ -43,10 +48,12 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
+import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
 import proton.android.pass.ui.internal.rememberInternalDrawerState
@@ -60,7 +67,8 @@ fun PassAppContent(
     modifier: Modifier = Modifier,
     appUiState: AppUiState,
     onNavigate: (AppNavigation) -> Unit,
-    onSnackbarMessageDelivered: () -> Unit
+    onSnackbarMessageDelivered: () -> Unit,
+    onCompleteUpdate: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -77,6 +85,23 @@ fun PassAppContent(
         passSnackbarHostState,
         onSnackbarMessageDelivered
     )
+
+    if (appUiState.inAppUpdateState is InAppUpdateState.Downloaded) {
+        val snackbarMessage = stringResource(R.string.restart_to_complete_the_update)
+        val snackbarAction = stringResource(R.string.action_restart)
+        LaunchedEffect(Unit) {
+            val result = passSnackbarHostState.showSnackbar(
+                message = snackbarMessage,
+                actionLabel = snackbarAction,
+                type = SnackbarType.NORM,
+                duration = SnackbarDuration.Indefinite
+            )
+            when (result) {
+                SnackbarResult.ActionPerformed -> onCompleteUpdate()
+                SnackbarResult.Dismissed -> {}
+            }
+        }
+    }
     val internalDrawerState: InternalDrawerState =
         rememberInternalDrawerState(InternalDrawerValue.Closed)
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
@@ -96,6 +121,13 @@ fun PassAppContent(
                     AnimatedVisibility(visible = appUiState.networkStatus == NetworkStatus.Offline) {
                         OfflineIndicator()
                     }
+                    AnimatedVisibility(visible = appUiState.inAppUpdateState is InAppUpdateState.Downloading) {
+                        if (appUiState.inAppUpdateState !is InAppUpdateState.Downloading) return@AnimatedVisibility
+                        LinearProgressIndicator(
+                            modifier = Modifier.fillMaxWidth(),
+                            progress = appUiState.inAppUpdateState.progress
+                        )
+                    }
                     PassModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {
                         if (appUiState.needsAuth) {
                             BackHandler { onNavigate(AppNavigation.Finish) }
@@ -104,8 +136,10 @@ fun PassAppContent(
                                     when (it) {
                                         AuthNavigation.Dismissed,
                                         AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
+
                                         AuthNavigation.Success,
-                                        AuthNavigation.Failed -> {}
+                                        AuthNavigation.Failed -> {
+                                        }
                                     }
                                 }
                             )

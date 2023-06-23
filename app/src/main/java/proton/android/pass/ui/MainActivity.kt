@@ -21,8 +21,13 @@ package proton.android.pass.ui
 import android.os.Bundle
 import android.view.autofill.AutofillManager
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -49,6 +54,14 @@ import proton.android.pass.ui.launcher.LauncherViewModel.State.StepNeeded
 class MainActivity : FragmentActivity() {
 
     private val launcherViewModel: LauncherViewModel by viewModels()
+
+    private val updateResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result: ActivityResult ->
+            when (result.resultCode) {
+                RESULT_CANCELED -> launcherViewModel.declineUpdate()
+                else -> {}
+            }
+        }
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,7 +92,11 @@ class MainActivity : FragmentActivity() {
 
                 Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
-                PrimaryExist ->
+                PrimaryExist -> {
+                    DisposableEffect(Unit) {
+                        launcherViewModel.checkForUpdates(updateResultLauncher)
+                        onDispose { launcherViewModel.cancelUpdateListener() }
+                    }
                     PassApp(
                         onNavigate = {
                             when (it) {
@@ -92,6 +109,7 @@ class MainActivity : FragmentActivity() {
                             }
                         }
                     )
+                }
             }
         }
     }
@@ -108,7 +126,10 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun setSecureMode() {
-        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceEntryPoint::class.java)
+        val factory = EntryPointAccessors.fromApplication(
+            context = this,
+            entryPoint = UserPreferenceEntryPoint::class.java
+        )
         val repository = factory.getRepository()
         val setting = runBlocking {
             repository.getAllowScreenshotsPreference()

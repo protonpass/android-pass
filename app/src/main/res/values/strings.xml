@@ -6,4 +6,8 @@
     <string name="twenty_vaults">20 vaults</string>
     <string name="unlimited_email_alias">Unlimited email aliases</string>
     <string name="custom_fields">Custom fields</string>
+
+    <string name="updated_downloaded">Update downloaded</string>
+    <string name="restart_to_complete_the_update">Restart to complete the update</string>
+    <string name="action_restart">Restart</string>
 </resources>

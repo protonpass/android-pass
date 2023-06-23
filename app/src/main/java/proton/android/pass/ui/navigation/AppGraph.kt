@@ -35,6 +35,7 @@ import proton.android.pass.featureaccount.impl.accountGraph
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeNavigation
@@ -344,6 +345,7 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
                 ProfileNavigation.AppLock -> appNavigator.navigate(AppLockBottomsheet)
                 ProfileNavigation.Report -> onNavigate(AppNavigation.Report)
+                ProfileNavigation.FeatureFlags -> appNavigator.navigate(FeatureFlagRoute)
             }
         }
     )

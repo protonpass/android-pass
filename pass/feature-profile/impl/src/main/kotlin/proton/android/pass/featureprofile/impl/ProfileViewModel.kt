@@ -21,6 +21,7 @@ package proton.android.pass.featureprofile.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
@@ -38,6 +40,7 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
@@ -82,6 +85,8 @@ class ProfileViewModel @Inject constructor(
         .getAutofillStatus()
         .distinctUntilChanged()
 
+    private val eventFlow: MutableStateFlow<ProfileEvent> = MutableStateFlow(ProfileEvent.Unknown)
+
     private val itemSummaryUiStateFlow = combine(
         observeItemCount(itemState = null).asLoadingResult(),
         observeMFACount(),
@@ -109,13 +114,14 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    val state: StateFlow<ProfileUiState> = combine(
+    val state: StateFlow<ProfileUiState> = combineN(
         biometricLockState,
         flowOf(biometryManager.getBiometryStatus()),
         autofillStatusFlow,
         itemSummaryUiStateFlow,
-        getUserPlan().asLoadingResult()
-    ) { biometricLock, biometryStatus, autofillStatus, itemSummaryUiState, userPlan ->
+        getUserPlan().asLoadingResult(),
+        eventFlow
+    ) { biometricLock, biometryStatus, autofillStatus, itemSummaryUiState, userPlan, event ->
         val fingerprintSection = when (biometryStatus) {
             BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
             BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
@@ -146,7 +152,8 @@ class ProfileViewModel @Inject constructor(
             autofillStatus = autofillStatus,
             itemSummaryUiState = itemSummaryUiState,
             appVersion = appConfig.versionName,
-            accountType = accountType
+            accountType = accountType,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
@@ -209,6 +216,12 @@ class ProfileViewModel @Inject constructor(
     fun copyAppVersion(appVersion: String) = viewModelScope.launch {
         clipboardManager.copyToClipboard(appVersion)
         snackbarDispatcher(AppVersionCopied)
+    }
+
+    fun onAppVersionLongClick() = viewModelScope.launch {
+        if (appConfig.flavor is BuildFlavor.Alpha) {
+            eventFlow.emit(ProfileEvent.OpenFeatureFlags)
+        }
     }
 
     companion object {

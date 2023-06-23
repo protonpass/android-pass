@@ -18,8 +18,9 @@
 
 package proton.android.pass.featureprofile.impl
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,6 +48,7 @@ import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
 import proton.android.pass.composecomponents.impl.uievents.value
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProfileContent(
     modifier: Modifier = Modifier,
@@ -61,7 +63,8 @@ fun ProfileContent(
     onFeedbackClick: () -> Unit,
     onImportExportClick: () -> Unit,
     onRateAppClick: () -> Unit,
-    onCopyAppVersionClick: () -> Unit
+    onCopyAppVersionClick: () -> Unit,
+    onAppVersionLongClick: () -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -130,7 +133,10 @@ fun ProfileContent(
                 )
                 Box(
                     modifier = Modifier
-                        .clickable { onCopyAppVersionClick() }
+                        .combinedClickable(
+                            onClick = onCopyAppVersionClick,
+                            onLongClick = onAppVersionLongClick
+                        )
                         .fillMaxWidth()
                         .padding(32.dp),
                     contentAlignment = Alignment.Center

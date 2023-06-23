@@ -294,6 +294,8 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.image.api)
     implementation(projects.pass.image.impl)
+    implementation(projects.pass.inAppUpdates.api)
+    implementation(projects.pass.inAppUpdates.impl)
     implementation(projects.pass.featureAccount.impl)
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureFeatureFlags.impl)

@@ -33,6 +33,7 @@ fun CreditCardContent(
                 iconColor = PassTheme.colors.cardInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
                 onCloseClick = { onEvent(Up) },
+                showUpgrade = state.isDowngradedMode,
                 onActionClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
                     onEvent(Submit(selectedShareId))

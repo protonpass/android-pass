@@ -308,19 +308,25 @@ open class CreateAliasViewModel @Inject constructor(
 
     fun createAlias(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val aliasItem = createAliasUiState.value.baseAliasUiState.aliasItem
-        if (aliasItem.selectedSuffix == null) return@launch
+        if (aliasItem.selectedSuffix == null) {
+            PassLogger.w(TAG, "Cannot create alias as SelectedSuffix is null")
+            return@launch
+        }
 
         val mailboxes = aliasItem.mailboxes.filter { it.selected }.map { it.model }
         val aliasItemValidationErrors = aliasItem.validate(allowEmptyTitle = isDraft)
         if (aliasItemValidationErrors.isNotEmpty()) {
+            PassLogger.w(TAG, "Cannot create alias as there are validation errors: $aliasItemValidationErrors")
             aliasItemValidationErrorsState.update { aliasItemValidationErrors }
             return@launch
         }
 
         if (isDraft) {
+            PassLogger.d(TAG, "Creating draft alias")
             draftRepository.save(KEY_DRAFT_ALIAS, aliasItem)
             isAliasDraftSavedState.tryEmit(AliasDraftSavedState.Success(shareId, aliasItem))
         } else {
+            PassLogger.d(TAG, "Performing create alias")
             isLoadingState.update { IsLoadingState.Loading }
             performCreateAlias(shareId, aliasItem, aliasItem.selectedSuffix, mailboxes)
             isLoadingState.update { IsLoadingState.NotLoading }

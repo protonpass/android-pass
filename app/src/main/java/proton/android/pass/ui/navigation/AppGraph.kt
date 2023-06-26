@@ -220,6 +220,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.TrialInfo -> appNavigator.navigate(TrialScreen)
+                HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
             }
         }
     )
@@ -347,6 +348,7 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.Report -> onNavigate(AppNavigation.Report)
                 ProfileNavigation.FeatureFlags -> appNavigator.navigate(FeatureFlagRoute)
                 ProfileNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                ProfileNavigation.Finish -> onNavigate(AppNavigation.Finish)
             }
         }
     )
@@ -730,7 +732,7 @@ fun NavGraphBuilder.appGraph(
         }
     )
     onBoardingGraph(
-        onOnBoardingFinished = { appNavigator.onBackClick() },
+        onOnBoardingFinished = { appNavigator.navigate(Home) },
         onNavigateBack = { onNavigate(AppNavigation.Finish) }
     )
     featureFlagsGraph()

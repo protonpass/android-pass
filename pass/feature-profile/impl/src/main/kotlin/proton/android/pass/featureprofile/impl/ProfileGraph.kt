@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureprofile.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featureprofile.impl.applock.AppLockBottomsheet
@@ -46,6 +47,7 @@ sealed interface ProfileNavigation {
     object Report : ProfileNavigation
     object FeatureFlags : ProfileNavigation
     object Upgrade : ProfileNavigation
+    object Finish : ProfileNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -54,6 +56,7 @@ fun NavGraphBuilder.profileGraph(
     onNavigateEvent: (ProfileNavigation) -> Unit
 ) {
     composable(Profile) {
+        BackHandler { onNavigateEvent(ProfileNavigation.Finish) }
         ProfileScreen(onNavigateEvent = onNavigateEvent)
     }
 

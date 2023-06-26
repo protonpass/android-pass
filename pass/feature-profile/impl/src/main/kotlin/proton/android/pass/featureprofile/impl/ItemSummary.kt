@@ -44,6 +44,7 @@ import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.MFAIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
@@ -61,12 +62,13 @@ fun ItemSummary(
     ) {
         Spacer(modifier = Modifier.width(8.dp))
         ItemTypeBox(type = SummaryItemType.Logins, count = itemSummaryUiState.loginCount)
-        ItemTypeBox(type = SummaryItemType.Notes, count = itemSummaryUiState.notesCount)
         ItemTypeBox(
             type = SummaryItemType.Alias,
             count = itemSummaryUiState.aliasCount,
             limit = itemSummaryUiState.aliasLimit
         )
+        ItemTypeBox(type = SummaryItemType.CreditCards, count = itemSummaryUiState.creditCardsCount)
+        ItemTypeBox(type = SummaryItemType.Notes, count = itemSummaryUiState.notesCount)
         ItemTypeBox(
             type = SummaryItemType.MFA,
             count = itemSummaryUiState.mfaCount,
@@ -94,6 +96,7 @@ fun RowScope.ItemTypeBox(
         when (type) {
             SummaryItemType.Logins -> LoginIcon(shape = CircleShape)
             SummaryItemType.Notes -> NoteIcon(shape = CircleShape)
+            SummaryItemType.CreditCards -> CreditCardIcon(shape = CircleShape)
             SummaryItemType.Alias -> AliasIcon(shape = CircleShape)
             SummaryItemType.MFA -> MFAIcon(shape = CircleShape)
         }
@@ -113,7 +116,7 @@ fun RowScope.ItemTypeBox(
 }
 
 enum class SummaryItemType {
-    Logins, Notes, Alias, MFA
+    Logins, Notes, CreditCards, Alias, MFA
 }
 
 @Preview

@@ -24,11 +24,17 @@ import proton.pass.domain.Item
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewAlias
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestCreateAlias @Inject constructor() : CreateAlias {
 
     private var result: Result<Item> =
         Result.failure(IllegalStateException("TestCreateAlias.result not set"))
+
+    private val memory = mutableListOf<Payload>()
+
+    fun getMemory(): List<Payload> = memory
 
     fun setResult(result: Result<Item>) {
         this.result = result
@@ -38,5 +44,14 @@ class TestCreateAlias @Inject constructor() : CreateAlias {
         userId: UserId,
         shareId: ShareId,
         newAlias: NewAlias
-    ): Item = result.getOrThrow()
+    ): Item {
+        memory.add(Payload(userId, shareId, newAlias))
+        return result.getOrThrow()
+    }
+
+    data class Payload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val newAlias: NewAlias
+    )
 }

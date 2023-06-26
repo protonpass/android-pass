@@ -33,6 +33,7 @@ fun MainCreditCardSection(
     pin: HiddenState,
     cvv: HiddenState,
     expirationDate: String,
+    isDowngradedMode: Boolean,
     onEvent: (CreditCardDetailEvent) -> Unit
 ) {
     if (!canShowSection(cardHolder, number, pin, cvv)) return
@@ -42,7 +43,9 @@ fun MainCreditCardSection(
         sections += {
             CardHolderRow(
                 name = cardHolder,
-                onClick = { onEvent(CreditCardDetailEvent.OnCardHolderClick) }
+                isDowngradedMode = isDowngradedMode,
+                onClick = { onEvent(CreditCardDetailEvent.OnCardHolderClick) },
+                onUpgradeClick = { onEvent(CreditCardDetailEvent.OnUpgradeClick) }
             )
         }
     }
@@ -50,8 +53,10 @@ fun MainCreditCardSection(
         sections += {
             CardNumberRow(
                 number = number,
+                isDowngradedMode = isDowngradedMode,
                 onToggle = { onEvent(CreditCardDetailEvent.OnToggleNumberClick) },
-                onClick = { onEvent(CreditCardDetailEvent.OnNumberClick) }
+                onClick = { onEvent(CreditCardDetailEvent.OnNumberClick) },
+                onUpgradeClick = { onEvent(CreditCardDetailEvent.OnUpgradeClick) }
             )
         }
     }
@@ -60,8 +65,10 @@ fun MainCreditCardSection(
         sections += {
             CardCvvRow(
                 cvv = cvv,
+                isDowngradedMode = isDowngradedMode,
                 onToggle = { onEvent(CreditCardDetailEvent.OnToggleCvvClick) },
-                onClick = { onEvent(CreditCardDetailEvent.OnCvvClick) }
+                onClick = { onEvent(CreditCardDetailEvent.OnCvvClick) },
+                onUpgradeClick = { onEvent(CreditCardDetailEvent.OnUpgradeClick) }
             )
         }
     }
@@ -70,14 +77,20 @@ fun MainCreditCardSection(
         sections += {
             CardPinRow(
                 pin = pin,
-                onToggle = { onEvent(CreditCardDetailEvent.OnTogglePinClick) }
+                isDowngradedMode = isDowngradedMode,
+                onToggle = { onEvent(CreditCardDetailEvent.OnTogglePinClick) },
+                onUpgradeClick = { onEvent(CreditCardDetailEvent.OnUpgradeClick) }
             )
         }
     }
 
     if (expirationDate.isNotBlank()) {
         sections += {
-            CardExpirationDateRow(expirationDate = expirationDate)
+            CardExpirationDateRow(
+                expirationDate = expirationDate,
+                isDowngradedMode = isDowngradedMode,
+                onUpgradeClick = { onEvent(CreditCardDetailEvent.OnUpgradeClick) }
+            )
         }
     }
 

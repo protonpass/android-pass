@@ -39,13 +39,12 @@ import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
-import proton.android.pass.common.api.map
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -73,8 +72,7 @@ class ProfileViewModel @Inject constructor(
     private val appConfig: AppConfig,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
-    observeUpgradeInfo: ObserveUpgradeInfo,
-    getUserPlan: GetUserPlan
+    observeUpgradeInfo: ObserveUpgradeInfo
 ) : ViewModel() {
 
     private val biometricLockState = preferencesRepository
@@ -87,10 +85,12 @@ class ProfileViewModel @Inject constructor(
 
     private val eventFlow: MutableStateFlow<ProfileEvent> = MutableStateFlow(ProfileEvent.Unknown)
 
+    private val upgradeInfoFlow = observeUpgradeInfo().asLoadingResult()
+
     private val itemSummaryUiStateFlow = combine(
         observeItemCount(itemState = null).asLoadingResult(),
         observeMFACount(),
-        observeUpgradeInfo().asLoadingResult()
+        upgradeInfoFlow
     ) { itemCountResult, mfaCount, upgradeInfoResult ->
         val itemCount = itemCountResult.getOrNull()
         val upgradeInfo = upgradeInfoResult.getOrNull()
@@ -119,9 +119,9 @@ class ProfileViewModel @Inject constructor(
         flowOf(biometryManager.getBiometryStatus()),
         autofillStatusFlow,
         itemSummaryUiStateFlow,
-        getUserPlan().asLoadingResult(),
+        upgradeInfoFlow,
         eventFlow
-    ) { biometricLock, biometryStatus, autofillStatus, itemSummaryUiState, userPlan, event ->
+    ) { biometricLock, biometryStatus, autofillStatus, itemSummaryUiState, upgradeInfo, event ->
         val fingerprintSection = when (biometryStatus) {
             BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
             BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
@@ -134,18 +134,26 @@ class ProfileViewModel @Inject constructor(
             }
         }
 
-        val accountType = userPlan.map {
-            when (val plan = it.planType) {
-                PlanType.Free -> PlanInfo.Hide
-                is PlanType.Paid -> PlanInfo.Unlimited(
-                    planName = plan.humanReadable,
-                    accountType = AccountType.Unlimited
-                )
-
-                is PlanType.Trial -> PlanInfo.Trial
-                is PlanType.Unknown -> PlanInfo.Hide
+        val (accountType, showUpgradeButton) = when (upgradeInfo) {
+            LoadingResult.Loading -> PlanInfo.Hide to false
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, upgradeInfo.exception, "Error getting upgradeInfo")
+                PlanInfo.Hide to false
             }
-        }.getOrNull() ?: PlanInfo.Hide
+            is LoadingResult.Success -> {
+                val info = upgradeInfo.data
+                when (val plan = info.plan.planType) {
+                    PlanType.Free -> PlanInfo.Hide to info.isUpgradeAvailable
+                    is PlanType.Paid -> PlanInfo.Unlimited(
+                        planName = plan.humanReadable,
+                        accountType = AccountType.Unlimited
+                    ) to false
+
+                    is PlanType.Trial -> PlanInfo.Trial to info.isUpgradeAvailable
+                    is PlanType.Unknown -> PlanInfo.Hide to info.isUpgradeAvailable
+                }
+            }
+        }
 
         ProfileUiState(
             fingerprintSection = fingerprintSection,
@@ -153,7 +161,8 @@ class ProfileViewModel @Inject constructor(
             itemSummaryUiState = itemSummaryUiState,
             appVersion = appConfig.versionName,
             accountType = accountType,
-            event = event
+            event = event,
+            showUpgradeButton = showUpgradeButton
         )
     }.stateIn(
         scope = viewModelScope,

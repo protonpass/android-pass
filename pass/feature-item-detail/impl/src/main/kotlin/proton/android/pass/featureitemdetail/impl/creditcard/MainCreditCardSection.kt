@@ -77,20 +77,14 @@ fun MainCreditCardSection(
         sections += {
             CardPinRow(
                 pin = pin,
-                isDowngradedMode = isDowngradedMode,
                 onToggle = { onEvent(CreditCardDetailEvent.OnTogglePinClick) },
-                onUpgradeClick = { onEvent(CreditCardDetailEvent.OnUpgradeClick) }
             )
         }
     }
 
     if (expirationDate.isNotBlank()) {
         sections += {
-            CardExpirationDateRow(
-                expirationDate = expirationDate,
-                isDowngradedMode = isDowngradedMode,
-                onUpgradeClick = { onEvent(CreditCardDetailEvent.OnUpgradeClick) }
-            )
+            CardExpirationDateRow(expirationDate = expirationDate)
         }
     }
 

@@ -35,7 +35,6 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
-import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -115,49 +114,42 @@ class CreditCardDetailViewModel @Inject constructor(
 
     private val itemInfoFlow: Flow<LoadingResult<CreditCardItemInfo>> = combine(
         getItemByIdWithVault(shareId, itemId).take(1).asLoadingResult(),
-        canPerformPaidActionFlow,
         fieldVisibilityFlow
-    ) { detailsResult, paidActionResult, fieldVisibility ->
-        paidActionResult.flatMap { canShowFields ->
-            detailsResult.map { details ->
-                val (itemUiModel, cardNumber) = encryptionContextProvider.withEncryptionContext {
-                    val model = details.item.toUiModel(this)
-                    var contents = model.contents as ItemContents.CreditCard
+    ) { detailsResult, fieldVisibility ->
+        detailsResult.map { details ->
+            val (itemUiModel, cardNumber) = encryptionContextProvider.withEncryptionContext {
+                val model = details.item.toUiModel(this)
+                var contents = model.contents as ItemContents.CreditCard
 
-                    val cardNumber = if (fieldVisibility.cardNumber) {
-                        val withSpaces = contents.number.chunked(4).joinToString(" ")
-                        CardNumberState.Visible(withSpaces)
+                val cardNumber = if (fieldVisibility.cardNumber) {
+                    val withSpaces = contents.number.chunked(4).joinToString(" ")
+                    CardNumberState.Visible(withSpaces)
+                } else {
+                    val content = if (contents.number.isNotBlank()) {
+                        val start = contents.number.take(4)
+                        val end = contents.number.takeLast(4)
+                        "$start •••• •••• $end"
                     } else {
-                        val content = if (contents.number.isNotBlank()) {
-                            val start = contents.number.take(4)
-                            val end = contents.number.takeLast(4)
-                            "$start •••• •••• $end"
-                        } else {
-                            ""
-                        }
-                        CardNumberState.Masked(content)
+                        ""
                     }
-
-                    contents = contents.copy(
-                        expirationDate = adaptExpirationDate(contents.expirationDate)
-                    )
-
-                    if (canShowFields) {
-                        val cvv = fieldHiddenStateValue(contents.cvv, fieldVisibility.cvv, this)
-                        val pin = fieldHiddenStateValue(contents.pin, fieldVisibility.pin, this)
-                        contents = contents.copy(cvv = cvv, pin = pin)
-                    }
-
-                    model.copy(contents = contents) to cardNumber
+                    CardNumberState.Masked(content)
                 }
 
-                CreditCardItemInfo(
-                    itemUiModel = itemUiModel,
-                    vault = details.vault,
-                    cardNumberState = cardNumber,
-                    hasMoreThanOneVault = details.hasMoreThanOneVault
+                contents = contents.copy(
+                    expirationDate = adaptExpirationDate(contents.expirationDate),
+                    cvv = fieldHiddenStateValue(contents.cvv, fieldVisibility.cvv, this),
+                    pin = fieldHiddenStateValue(contents.pin, fieldVisibility.pin, this)
                 )
+
+                model.copy(contents = contents) to cardNumber
             }
+
+            CreditCardItemInfo(
+                itemUiModel = itemUiModel,
+                vault = details.vault,
+                cardNumberState = cardNumber,
+                hasMoreThanOneVault = details.hasMoreThanOneVault
+            )
         }
 
     }.distinctUntilChanged()

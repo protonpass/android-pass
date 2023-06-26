@@ -43,11 +43,15 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
+import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -56,6 +60,7 @@ import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
+import proton.pass.domain.AliasSuffix
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
@@ -79,6 +84,9 @@ class CreateLoginScreenTest {
 
     @Inject
     lateinit var createItem: TestCreateItem
+
+    @Inject
+    lateinit var createItemAndAlias: TestCreateItemAndAlias
 
     @Inject
     lateinit var accountManager: TestAccountManager
@@ -510,6 +518,58 @@ class CreateLoginScreenTest {
 
             waitUntil { checker.isCalled }
         }
+    }
+
+    @Test
+    fun callsCreateItemAliasIfAliasIsToBeCreated() {
+        val title = "Item title"
+        val checker = CallChecker<Unit>()
+
+        val aliasItem = AliasItem(
+            selectedSuffix = AliasSuffixUiModel(
+                aliasSuffix = AliasSuffix(
+                    suffix = "some.suffix@test.random",
+                    signedSuffix = "",
+                    isCustom = false,
+                    domain = "test.random"
+                )
+            )
+        )
+
+        draftRepository.save(CreateAliasViewModel.KEY_DRAFT_ALIAS, aliasItem)
+        createItemAndAlias.setResult(Result.success(TestObserveItems.createLogin()))
+
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    CreateLoginScreen(
+                        selectVault = null,
+                        clearAlias = false,
+                        onNavigate = {
+                            if (it is BaseLoginNavigation.OnCreateLoginEvent &&
+                                it.event is CreateLoginNavigation.LoginCreated
+                            ) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+
+            val buttonText = activity.getString(R.string.title_create_login)
+            waitUntilExists(hasText(buttonText))
+
+            val titleText = activity.getString(CompR.string.field_title_title)
+            onNode(hasText(titleText)).performClick().performScrollTo()
+            writeTextAndWait(hasText(titleText), title)
+
+            onNode(hasText(buttonText)).performClick()
+
+            waitUntil { checker.isCalled }
+        }
+
+        assertThat(createItemAndAlias.hasBeenInvoked()).isTrue()
+        assertThat(createItem.memory()).isEmpty()
     }
 
     private fun setupPlan(plan: PlanType, totpLimit: PlanLimit = PlanLimit.Unlimited) {

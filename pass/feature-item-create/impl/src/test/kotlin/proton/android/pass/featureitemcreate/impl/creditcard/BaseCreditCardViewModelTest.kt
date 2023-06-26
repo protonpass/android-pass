@@ -26,6 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.test.MainDispatcherRule
 import proton.pass.domain.HiddenState
 
@@ -35,6 +36,7 @@ class BaseCreditCardViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var instance: BaseCreditCardViewModel
+    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
 
     private val initial = BaseCreditCardUiState.default(
         cvv = HiddenState.Empty(TestEncryptionContext.encrypt("")),
@@ -43,7 +45,13 @@ class BaseCreditCardViewModelTest {
 
     @Before
     fun setUp() {
-        instance = object : BaseCreditCardViewModel(TestEncryptionContextProvider()) {}
+        canPerformPaidAction = TestCanPerformPaidAction().apply {
+            setResult(true)
+        }
+        instance = object : BaseCreditCardViewModel(
+            encryptionContextProvider = TestEncryptionContextProvider(),
+            canPerformPaidAction = canPerformPaidAction
+        ) {}
     }
 
     @Test
@@ -200,6 +208,14 @@ class BaseCreditCardViewModelTest {
         instance.onPinFocusChanged(false)
         instance.baseState.test {
             assertThat(awaitItem().contents.pin).isInstanceOf(HiddenState.Empty::class.java)
+        }
+    }
+
+    @Test
+    fun `emits downgraded mode if cannot perform paid action`() = runTest {
+        canPerformPaidAction.setResult(false)
+        instance.baseState.test {
+            assertThat(awaitItem().isDowngradedMode).isTrue()
         }
     }
 }

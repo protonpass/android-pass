@@ -6,19 +6,21 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.combineN
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState.NotLoading
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
 
 abstract class BaseCreditCardViewModel(
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    canPerformPaidAction: CanPerformPaidAction
 ) : ViewModel() {
 
     protected val isLoadingState: MutableStateFlow<IsLoadingState> = MutableStateFlow(NotLoading)
@@ -37,19 +39,22 @@ abstract class BaseCreditCardViewModel(
             }
         )
 
-    val baseState: StateFlow<BaseCreditCardUiState> = combine(
+    val baseState: StateFlow<BaseCreditCardUiState> = combineN(
         isLoadingState,
         hasUserEditedContentState,
         validationErrorsState,
         isItemSavedState,
-        itemContentState
-    ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, itemContent ->
+        itemContentState,
+        canPerformPaidAction()
+    ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved,
+        itemContent, canPerformPaidAction ->
         BaseCreditCardUiState(
             isLoading = isLoading.value(),
             hasUserEditedContent = hasUserEditedContent,
             validationErrors = validationErrors.toPersistentSet(),
             isItemSaved = isItemSaved,
-            contents = itemContent
+            contents = itemContent,
+            isDowngradedMode = !canPerformPaidAction
         )
     }
         .stateIn(

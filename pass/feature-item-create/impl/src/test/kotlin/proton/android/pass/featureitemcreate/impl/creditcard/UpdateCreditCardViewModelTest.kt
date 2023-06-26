@@ -31,6 +31,7 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
@@ -74,7 +75,8 @@ class UpdateCreditCardViewModelTest {
             encryptionContextProvider = TestEncryptionContextProvider(),
             telemetryManager = telemetryManager,
             getItemById = getItemById,
-            updateItem = updateItem
+            updateItem = updateItem,
+            canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) }
         )
     }
 

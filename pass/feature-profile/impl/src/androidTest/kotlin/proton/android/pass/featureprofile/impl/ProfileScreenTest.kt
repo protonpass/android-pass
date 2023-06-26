@@ -19,6 +19,7 @@
 package proton.android.pass.featureprofile.impl
 
 import android.content.Intent
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -29,11 +30,26 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.espresso.intent.rule.IntentsRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.autofill.api.AutofillStatus
+import proton.android.pass.autofill.api.AutofillSupportedStatus
+import proton.android.pass.autofill.fakes.TestAutofillManager
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveItemCount
+import proton.android.pass.data.fakes.usecases.TestObserveMFACount
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.waitUntilExists
+import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
+import proton.pass.domain.PlanType
+import javax.inject.Inject
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @HiltAndroidTest
 class ProfileScreenTest {
@@ -46,6 +62,27 @@ class ProfileScreenTest {
 
     @get:Rule(order = 2)
     val intentsRule = IntentsRule()
+
+    @Inject
+    lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+
+    @Inject
+    lateinit var autofillManager: TestAutofillManager
+
+    @Inject
+    lateinit var observeItemCount: TestObserveItemCount
+
+    @Inject
+    lateinit var observeMfaCount: TestObserveMFACount
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+        setupPlan(PlanType.Paid("", ""), true)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
+        observeItemCount.sendResult(Result.success(ItemCountSummary(0, 0, 0, 0)))
+        observeMfaCount.emitResult(0)
+    }
 
     @Test
     fun onAccountClickCalled() {
@@ -90,6 +127,103 @@ class ProfileScreenTest {
             onNodeWithText(activity.getString(R.string.profile_option_settings)).performClick()
 
             waitUntil { checker.isCalled }
+        }
+    }
+
+    @Test
+    fun showsUpgradeButtonIfPlanIsFreeAndUpgradeIsAvailable() {
+        setupPlan(PlanType.Free, true)
+
+        val checker = CallChecker<Unit>()
+
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ProfileScreen(
+                        onNavigateEvent = {
+                            if (it == ProfileNavigation.Upgrade) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+
+            onNodeWithText(activity.getString(CompR.string.upgrade)).assertExists().performClick()
+            waitUntil { checker.isCalled }
+
+        }
+    }
+
+    @Test
+    fun doesNotShowUpgradeButtonIfPlanIsFreeAndUpgradeIsNotAvailable() {
+        setupPlan(PlanType.Free, false)
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ProfileScreen(
+                        onNavigateEvent = {}
+                    )
+                }
+            }
+
+            onNodeWithText(activity.getString(CompR.string.upgrade)).assertDoesNotExist()
+        }
+    }
+
+    @Test
+    fun showsUpgradeButtonIfPlanIsTrialAndUpgradeIsAvailable() {
+        setupPlan(PlanType.Trial("", "", 1), true)
+
+        val checker = CallChecker<Unit>()
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ProfileScreen(
+                        onNavigateEvent = {
+                            if (it == ProfileNavigation.Upgrade) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+            waitUntilExists(hasText(activity.getString(R.string.profile_screen_title)))
+            onNodeWithText(activity.getString(CompR.string.upgrade)).assertExists().performClick()
+
+            waitUntil { checker.isCalled }
+        }
+    }
+
+    @Test
+    fun doesNotShowUpgradeButtonIfPlanIsTrialAndUpgradeIsNotAvailable() {
+        setupPlan(PlanType.Trial("", "", 1), false)
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ProfileScreen(
+                        onNavigateEvent = {}
+                    )
+                }
+            }
+
+            onNodeWithText(activity.getString(CompR.string.upgrade)).assertDoesNotExist()
+        }
+    }
+
+    @Test
+    fun doesNotShowUpgradeButtonIfPlanIsPaidAndUpgradeIsAvailable() {
+        setupPlan(PlanType.Paid("", ""), true)
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ProfileScreen(
+                        onNavigateEvent = {}
+                    )
+                }
+            }
+
+            onNodeWithText(activity.getString(CompR.string.upgrade)).assertDoesNotExist()
         }
     }
 
@@ -151,5 +285,24 @@ class ProfileScreenTest {
 
         intended(hasAction(Intent.ACTION_VIEW))
         intended(hasData(PASS_IMPORT))
+    }
+
+    private fun setupPlan(planType: PlanType, isUpgradeAvailable: Boolean) {
+        val plan = Plan(
+            planType = planType,
+            hideUpgrade = false,
+            vaultLimit = PlanLimit.Unlimited,
+            aliasLimit = PlanLimit.Unlimited,
+            totpLimit = PlanLimit.Unlimited,
+            updatedAt = 123
+        )
+        val upgradeInfo = UpgradeInfo(
+            isUpgradeAvailable = isUpgradeAvailable,
+            plan = plan,
+            totalVaults = 0,
+            totalAlias = 0,
+            totalTotp = 0
+        )
+        observeUpgradeInfo.setResult(upgradeInfo)
     }
 }

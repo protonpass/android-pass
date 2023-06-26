@@ -22,9 +22,15 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestObserveMFACount @Inject constructor() : ObserveMFACount {
     private val observeMFAFlow = testFlow<Int>()
+
+    fun emitResult(value: Int) {
+        observeMFAFlow.tryEmit(value)
+    }
 
     override fun invoke(): Flow<Int> = observeMFAFlow
 }

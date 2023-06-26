@@ -25,7 +25,9 @@ import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewAlias
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestCreateItemAndAlias @Inject constructor() : CreateItemAndAlias {
 
     private var result: Result<Item> = Result.failure(IllegalStateException("Result not set"))

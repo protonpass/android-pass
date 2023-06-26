@@ -32,6 +32,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import java.lang.ref.WeakReference
 
+@Suppress("CyclomaticComplexMethod", "ComplexMethod")
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun ProfileScreen(
@@ -52,20 +53,28 @@ fun ProfileScreen(
     ProfileContent(
         modifier = modifier,
         state = state,
-        onFingerprintClicked = {
-            viewModel.onFingerprintToggle(ContextHolder(WeakReference(context).toOption()), it)
-        },
-        onAutofillClicked = { viewModel.onToggleAutofill(it) },
-        onAppLockClick = { onNavigateEvent(ProfileNavigation.AppLock) },
-        onAccountClick = { onNavigateEvent(ProfileNavigation.Account) },
-        onSettingsClick = { onNavigateEvent(ProfileNavigation.Settings) },
-        onFeedbackClick = { onNavigateEvent(ProfileNavigation.Feedback) },
-        onImportExportClick = { openWebsite(context, PASS_IMPORT) },
-        onRateAppClick = { openWebsite(context, PASS_STORE) },
-        onListClick = { onNavigateEvent(ProfileNavigation.List) },
-        onCreateItemClick = { onNavigateEvent(ProfileNavigation.CreateItem) },
-        onCopyAppVersionClick = { viewModel.copyAppVersion(state.appVersion) },
-        onAppVersionLongClick = { viewModel.onAppVersionLongClick() }
+        onEvent = {
+            when (it) {
+                ProfileUiEvent.OnAccountClick -> onNavigateEvent(ProfileNavigation.Account)
+                ProfileUiEvent.OnAppLockClick -> onNavigateEvent(ProfileNavigation.AppLock)
+                ProfileUiEvent.OnAppVersionLongClick -> viewModel.onAppVersionLongClick()
+                is ProfileUiEvent.OnAutofillClicked -> viewModel.onToggleAutofill(it.value)
+                ProfileUiEvent.OnCopyAppVersionClick -> viewModel.copyAppVersion(state.appVersion)
+                ProfileUiEvent.OnCreateItemClick -> onNavigateEvent(ProfileNavigation.CreateItem)
+                ProfileUiEvent.OnFeedbackClick -> onNavigateEvent(ProfileNavigation.Feedback)
+                is ProfileUiEvent.OnFingerprintClicked -> {
+                    viewModel.onFingerprintToggle(
+                        contextHolder = ContextHolder(WeakReference(context).toOption()),
+                        value = it.value
+                    )
+                }
+                ProfileUiEvent.OnImportExportClick -> openWebsite(context, PASS_IMPORT)
+                ProfileUiEvent.OnListClick -> onNavigateEvent(ProfileNavigation.List)
+                ProfileUiEvent.OnRateAppClick -> openWebsite(context, PASS_STORE)
+                ProfileUiEvent.OnSettingsClick -> onNavigateEvent(ProfileNavigation.Settings)
+                ProfileUiEvent.OnUpgradeClick -> onNavigateEvent(ProfileNavigation.Upgrade)
+            }
+        }
     )
 }
 

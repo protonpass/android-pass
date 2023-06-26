@@ -46,6 +46,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
+import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.uievents.value
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -53,18 +54,7 @@ import proton.android.pass.composecomponents.impl.uievents.value
 fun ProfileContent(
     modifier: Modifier = Modifier,
     state: ProfileUiState,
-    onListClick: () -> Unit,
-    onCreateItemClick: () -> Unit,
-    onFingerprintClicked: (Boolean) -> Unit,
-    onAppLockClick: () -> Unit,
-    onAutofillClicked: (Boolean) -> Unit,
-    onAccountClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onFeedbackClick: () -> Unit,
-    onImportExportClick: () -> Unit,
-    onRateAppClick: () -> Unit,
-    onCopyAppVersionClick: () -> Unit,
-    onAppVersionLongClick: () -> Unit
+    onEvent: (ProfileUiEvent) -> Unit,
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -76,6 +66,11 @@ fun ProfileContent(
                         text = stringResource(R.string.profile_screen_title),
                         style = PassTypography.hero
                     )
+                },
+                actions = {
+                    if (state.showUpgradeButton) {
+                        UpgradeButton(onUpgradeClick = { onEvent(ProfileUiEvent.OnUpgradeClick) })
+                    }
                 }
             )
         },
@@ -83,8 +78,8 @@ fun ProfileContent(
             BottomBar(
                 bottomBarSelected = BottomBarSelected.Profile,
                 accountType = state.accountType.accountType,
-                onListClick = onListClick,
-                onCreateClick = onCreateItemClick,
+                onListClick = { onEvent(ProfileUiEvent.OnListClick) },
+                onCreateClick = { onEvent(ProfileUiEvent.OnCreateItemClick) },
                 onProfileClick = {}
             )
         }
@@ -111,31 +106,31 @@ fun ProfileContent(
                 if (state.fingerprintSection is FingerprintSectionState.Available) {
                     FingerprintProfileSection(
                         isFingerprintEnabled = state.fingerprintSection.enabled.value(),
-                        onFingerprintToggle = onFingerprintClicked,
-                        onAppLockClick = onAppLockClick
+                        onFingerprintToggle = { onEvent(ProfileUiEvent.OnFingerprintClicked(it)) },
+                        onAppLockClick = { onEvent(ProfileUiEvent.OnAppLockClick) }
                     )
                 }
                 if (state.autofillStatus is AutofillSupportedStatus.Supported) {
                     AutofillProfileSection(
                         isChecked = state.autofillStatus.status is AutofillStatus.EnabledByOurService,
-                        onClick = onAutofillClicked
+                        onClick = { onEvent(ProfileUiEvent.OnAutofillClicked(it)) }
                     )
                 }
                 AccountProfileSection(
                     planInfo = state.accountType,
-                    onAccountClick = onAccountClick,
-                    onSettingsClick = onSettingsClick
+                    onAccountClick = { onEvent(ProfileUiEvent.OnAccountClick) },
+                    onSettingsClick = { onEvent(ProfileUiEvent.OnSettingsClick) }
                 )
                 HelpCenterProfileSection(
-                    onFeedbackClick = onFeedbackClick,
-                    onImportExportClick = onImportExportClick,
-                    onRateAppClick = onRateAppClick
+                    onFeedbackClick = { onEvent(ProfileUiEvent.OnFeedbackClick) },
+                    onImportExportClick = { onEvent(ProfileUiEvent.OnImportExportClick) },
+                    onRateAppClick = { onEvent(ProfileUiEvent.OnRateAppClick) },
                 )
                 Box(
                     modifier = Modifier
                         .combinedClickable(
-                            onClick = onCopyAppVersionClick,
-                            onLongClick = onAppVersionLongClick
+                            onClick = { onEvent(ProfileUiEvent.OnCopyAppVersionClick) },
+                            onLongClick = { onEvent(ProfileUiEvent.OnAppVersionLongClick) }
                         )
                         .fillMaxWidth()
                         .padding(32.dp),

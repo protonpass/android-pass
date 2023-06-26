@@ -36,7 +36,8 @@ data class ProfileUiState(
     val itemSummaryUiState: ItemSummaryUiState,
     val appVersion: String,
     val accountType: PlanInfo,
-    val event: ProfileEvent
+    val event: ProfileEvent,
+    val showUpgradeButton: Boolean
 ) {
     companion object {
         fun getInitialState(appVersion: String) = ProfileUiState(
@@ -45,7 +46,8 @@ data class ProfileUiState(
             itemSummaryUiState = ItemSummaryUiState(),
             appVersion = appVersion,
             accountType = PlanInfo.Hide,
-            event = ProfileEvent.Unknown
+            event = ProfileEvent.Unknown,
+            showUpgradeButton = false
         )
     }
 }

@@ -20,10 +20,12 @@ package proton.android.pass.featureitemdetail.impl.creditcard
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.test.filterToOne
+import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onChildren
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.Module
 import dagger.Provides
@@ -177,10 +179,11 @@ class CreditCardDetailScreenTest {
             waitUntilExists(hasText(title))
 
             val fieldName = activity.getString(R.string.credit_card_pin_field_name)
-            val contentDescription = activity.getString(R.string.action_reveal_number)
+            onNodeWithText(fieldName).assertExists()
 
-            onNode(hasText(fieldName)).onChildren()
-                .filterToOne(hasContentDescription(contentDescription))
+            val contentDescription = activity.getString(R.string.action_reveal_number)
+            onAllNodes(hasContentDescription(contentDescription))
+                .filterToOne(hasAnySibling(hasText(fieldName)))
                 .performClick()
 
             onNode(hasText(pin)).assertExists()

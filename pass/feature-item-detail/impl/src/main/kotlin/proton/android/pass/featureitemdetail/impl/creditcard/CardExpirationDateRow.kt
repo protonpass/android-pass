@@ -36,20 +36,34 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun CardExpirationDateRow(
     modifier: Modifier = Modifier,
-    expirationDate: String
+    expirationDate: String,
+    isDowngradedMode: Boolean,
+    onUpgradeClick: () -> Unit
 ) {
-    IconLabelTextRow(
-        modifier = modifier,
-        icon = {
-            Icon(
-                painter = painterResource(CoreR.drawable.ic_proton_calendar_day),
-                contentDescription = null,
-                tint = PassTheme.colors.cardInteractionNorm
-            )
-        },
-        label = stringResource(R.string.credit_card_expiration_date_field_name),
-        content = expirationDate.asAnnotatedString()
-    )
+    val label = stringResource(R.string.credit_card_expiration_date_field_name)
+    val icon = CoreR.drawable.ic_proton_calendar_day
+
+    if (isDowngradedMode) {
+        UpgradeRow(
+            modifier = modifier,
+            label = label,
+            icon = icon,
+            onUpgrade = onUpgradeClick
+        )
+    } else {
+        IconLabelTextRow(
+            modifier = modifier,
+            icon = {
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = null,
+                    tint = PassTheme.colors.cardInteractionNorm
+                )
+            },
+            label = label,
+            content = expirationDate.asAnnotatedString()
+        )
+    }
 }
 
 @Preview
@@ -60,7 +74,9 @@ fun CardExpirationDateRowPreview(
     PassTheme(isDark = isDark) {
         Surface {
             CardExpirationDateRow(
-                expirationDate = "12 / 2023"
+                expirationDate = "12 / 2023",
+                isDowngradedMode = false,
+                onUpgradeClick = {}
             )
         }
     }

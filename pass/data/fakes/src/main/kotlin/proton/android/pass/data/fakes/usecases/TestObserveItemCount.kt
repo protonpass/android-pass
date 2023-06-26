@@ -25,7 +25,9 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.pass.domain.ItemState
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestObserveItemCount @Inject constructor() : ObserveItemCount {
 
     private val observeVaultsFlow = testFlow<Result<ItemCountSummary>>()

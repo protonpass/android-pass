@@ -26,6 +26,7 @@ import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onChildren
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.Module
@@ -268,7 +269,14 @@ class CreditCardDetailScreenTest {
     @Test
     fun canHandleDowngradedMode() {
         canPerformPaidAction.setResult(false)
-        val title = performSetup()
+
+        val pin = "6543"
+        val expirationDate = "2010-02"
+        val formattedExpirationDate = "02 / 2010"
+        val title = performSetup(
+            expirationDate = expirationDate,
+            pin = pin
+        )
         val checker = CallChecker<Unit>()
         composeTestRule.apply {
             setContent {
@@ -286,12 +294,22 @@ class CreditCardDetailScreenTest {
 
             val upgrade = activity.getString(CompR.string.upgrade)
 
-            // Cardholder, number, cvv, pin, expiration
-            onAllNodes(hasText(upgrade)).assertCountEquals(5)
+            // Cardholder, number, cvv should show upgrade
+            onAllNodes(hasText(upgrade)).assertCountEquals(3)
 
+            // Expiration date is there
+            onNodeWithText(formattedExpirationDate).assertExists()
+
+            // Pin can be revealed
+            val contentDescription = activity.getString(R.string.action_reveal_number)
+            onNodeWithText("••••").assertExists()
+            onNodeWithContentDescription(contentDescription).performClick()
+            onNodeWithText(pin).assertExists()
+            onNodeWithText("••••").assertDoesNotExist()
+
+            // Can go to upgrade
             onAllNodes(hasText(upgrade))[0].performClick()
-
-            waitUntil { checker.isCalled}
+            waitUntil { checker.isCalled }
         }
     }
 

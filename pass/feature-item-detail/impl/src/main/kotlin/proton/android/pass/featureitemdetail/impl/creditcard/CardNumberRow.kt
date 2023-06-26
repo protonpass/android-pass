@@ -45,50 +45,63 @@ import me.proton.core.presentation.R as CoreR
 fun CardNumberRow(
     modifier: Modifier = Modifier,
     number: CardNumberState,
+    isDowngradedMode: Boolean,
     onClick: () -> Unit,
-    onToggle: () -> Unit
+    onToggle: () -> Unit,
+    onUpgradeClick: () -> Unit
 ) {
-    val (sectionContent, icon, actionContent) = when (number) {
-        is CardNumberState.Masked -> CardNumberUIState(
-            sectionContent = number.number,
-            icon = CoreR.drawable.ic_proton_eye,
-            actionContent = R.string.action_reveal_number
-        )
+    val icon = CoreR.drawable.ic_proton_credit_card
+    val label = stringResource(R.string.credit_card_number_field_name)
 
-        is CardNumberState.Visible -> CardNumberUIState(
-            sectionContent = number.number,
-            icon = CoreR.drawable.ic_proton_eye_slash,
-            actionContent = R.string.action_conceal_number
+    if (isDowngradedMode) {
+        UpgradeRow(
+            modifier = modifier,
+            label = label,
+            icon = icon,
+            onUpgrade = onUpgradeClick
         )
-    }
+    } else {
+        val (sectionContent, actionIcon, actionContent) = when (number) {
+            is CardNumberState.Masked -> CardNumberUIState(
+                sectionContent = number.number,
+                icon = CoreR.drawable.ic_proton_eye,
+                actionContent = R.string.action_reveal_number
+            )
 
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(CoreR.drawable.ic_proton_credit_card),
-            contentDescription = null,
-            tint = PassTheme.colors.cardInteractionNorm
-        )
-        Spacer(modifier = Modifier.width(16.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            SectionTitle(text = stringResource(R.string.credit_card_number_field_name))
-            Spacer(modifier = Modifier.height(8.dp))
-            SectionSubtitle(text = sectionContent.asAnnotatedString())
+            is CardNumberState.Visible -> CardNumberUIState(
+                sectionContent = number.number,
+                icon = CoreR.drawable.ic_proton_eye_slash,
+                actionContent = R.string.action_conceal_number
+            )
         }
-        Circle(
-            backgroundColor = PassTheme.colors.cardInteractionNormMinor1,
-            onClick = { onToggle() }
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .clickable { onClick() }
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(icon),
-                contentDescription = stringResource(actionContent),
-                tint = PassTheme.colors.cardInteractionNormMajor2
+                contentDescription = null,
+                tint = PassTheme.colors.cardInteractionNorm
             )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                SectionTitle(text = label)
+                Spacer(modifier = Modifier.height(8.dp))
+                SectionSubtitle(text = sectionContent.asAnnotatedString())
+            }
+            Circle(
+                backgroundColor = PassTheme.colors.cardInteractionNormMinor1,
+                onClick = { onToggle() }
+            ) {
+                Icon(
+                    painter = painterResource(actionIcon),
+                    contentDescription = stringResource(actionContent),
+                    tint = PassTheme.colors.cardInteractionNormMajor2
+                )
+            }
         }
     }
 }

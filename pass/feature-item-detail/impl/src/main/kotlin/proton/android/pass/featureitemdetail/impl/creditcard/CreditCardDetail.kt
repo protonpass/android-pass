@@ -147,6 +147,7 @@ fun CreditCardDetail(
                         contents = state.itemContent,
                         vault = state.vault,
                         moreInfoUiState = moreInfoUiState,
+                        isDowngradedMode = state.isDowngradedMode,
                         onEvent = {
                             when (it) {
                                 CreditCardDetailEvent.OnCardHolderClick -> {

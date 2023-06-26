@@ -45,6 +45,7 @@ fun ProfileScreen(
     LaunchedEffect(state.event) {
         if (state.event == ProfileEvent.OpenFeatureFlags) {
             onNavigateEvent(ProfileNavigation.FeatureFlags)
+            viewModel.clearEvent()
         }
     }
 

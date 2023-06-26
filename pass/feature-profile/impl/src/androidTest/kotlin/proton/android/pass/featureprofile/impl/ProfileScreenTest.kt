@@ -80,7 +80,7 @@ class ProfileScreenTest {
         hiltRule.inject()
         setupPlan(PlanType.Paid("", ""), true)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
-        observeItemCount.sendResult(Result.success(ItemCountSummary(0, 0, 0, 0)))
+        observeItemCount.sendResult(Result.success(ItemCountSummary.Initial))
         observeMfaCount.emitResult(0)
     }
 

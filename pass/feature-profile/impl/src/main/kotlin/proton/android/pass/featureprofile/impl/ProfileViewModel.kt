@@ -224,6 +224,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun clearEvent() = viewModelScope.launch {
+        eventFlow.emit(ProfileEvent.Unknown)
+    }
+
     companion object {
         private const val TAG = "ProfileViewModel"
     }

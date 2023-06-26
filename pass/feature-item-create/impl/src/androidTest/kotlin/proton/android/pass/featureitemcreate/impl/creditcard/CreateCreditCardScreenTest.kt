@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.creditcard
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.espresso.Espresso
@@ -34,6 +35,7 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
@@ -74,6 +76,9 @@ class CreateCreditCardScreenTest {
     @Inject
     lateinit var observeVaults: TestObserveVaultsWithItemCount
 
+    @Inject
+    lateinit var canPerformPaidAction: TestCanPerformPaidAction
+
     @Before
     fun setup() {
         hiltRule.inject()
@@ -92,6 +97,7 @@ class CreateCreditCardScreenTest {
             trashedItemCount = 0
         )
         observeVaults.sendResult(Result.success(listOf(vault)))
+        canPerformPaidAction.setResult(true)
     }
 
     @Test
@@ -307,6 +313,32 @@ class CreateCreditCardScreenTest {
 
             val closeContentDescription = activity.getString(R.string.close_scree_icon_content_description)
             onNode(hasContentDescription(closeContentDescription)).performClick()
+
+            waitUntil { checker.isCalled }
+        }
+    }
+
+    @Test
+    fun canHandleDowngradedMode() {
+        canPerformPaidAction.setResult(false)
+        val checker = CallChecker<Unit>()
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    CreateCreditCardScreen(
+                        selectVault = null,
+                        onNavigate = {
+                            if (it == BaseCreditCardNavigation.Upgrade) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+
+            val buttonText = activity.getString(R.string.upgrade)
+            waitUntilExists(hasText(buttonText))
+            onNodeWithText(buttonText).performClick()
 
             waitUntil { checker.isCalled }
         }

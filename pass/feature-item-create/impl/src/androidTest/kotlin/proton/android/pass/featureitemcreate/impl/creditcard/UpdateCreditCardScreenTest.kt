@@ -37,6 +37,7 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
@@ -77,6 +78,9 @@ class UpdateCreditCardScreenTest {
     @Inject
     lateinit var getItemById: TestGetItemById
 
+    @Inject
+    lateinit var canPerformPaidAction: TestCanPerformPaidAction
+
     lateinit var initialItem: Item
 
     @Before
@@ -100,6 +104,7 @@ class UpdateCreditCardScreenTest {
         )
         getItemById.emitValue(Result.success(initialItem))
         updateItem.setResult(Result.success(initialItem))
+        canPerformPaidAction.setResult(true)
     }
 
     @Test
@@ -286,6 +291,31 @@ class UpdateCreditCardScreenTest {
 
             val closeContentDescription = activity.getString(R.string.close_scree_icon_content_description)
             onNode(hasContentDescription(closeContentDescription)).performClick()
+
+            waitUntil { checker.isCalled }
+        }
+    }
+
+    @Test
+    fun canHandleDowngradedMode() {
+        canPerformPaidAction.setResult(false)
+        val checker = CallChecker<Unit>()
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    UpdateCreditCardScreen(
+                        onNavigate = {
+                            if (it == BaseCreditCardNavigation.Upgrade) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+
+            val buttonText = activity.getString(R.string.upgrade)
+            waitUntilExists(hasText(buttonText))
+            onNodeWithText(buttonText).performClick()
 
             waitUntil { checker.isCalled }
         }

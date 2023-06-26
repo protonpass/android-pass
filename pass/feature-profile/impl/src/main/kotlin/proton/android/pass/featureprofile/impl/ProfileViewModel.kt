@@ -108,6 +108,7 @@ class ProfileViewModel @Inject constructor(
             loginCount = itemCount?.login?.toInt() ?: 0,
             notesCount = itemCount?.note?.toInt() ?: 0,
             aliasCount = itemCount?.alias?.toInt() ?: 0,
+            creditCardsCount = itemCount?.creditCard?.toInt() ?: 0,
             mfaCount = mfaCount,
             aliasLimit = aliasLimit,
             mfaLimit = mfaLimit

@@ -18,8 +18,8 @@
 
 package proton.android.pass.featurehome.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavGraphBuilder
@@ -31,13 +31,14 @@ import proton.android.pass.navigation.api.composable
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
-object Home : NavItem(baseRoute = "home", isTopLevel = true, noHistory = true)
+object Home : NavItem(baseRoute = "home", isTopLevel = true)
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.homeGraph(
     onNavigateEvent: (HomeNavigation) -> Unit,
 ) {
     composable(Home) {
+        BackHandler { onNavigateEvent(HomeNavigation.Finish) }
         HomeScreen(
             modifier = Modifier.testTag(HomeScreenTestTag.screen),
             onNavigateEvent = onNavigateEvent
@@ -61,4 +62,5 @@ sealed interface HomeNavigation {
     data class VaultOptions(val shareId: ShareId) : HomeNavigation
     data class SortingBottomsheet(val searchSortingType: SearchSortingType) : HomeNavigation
     object TrialInfo : HomeNavigation
+    object Finish : HomeNavigation
 }

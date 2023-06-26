@@ -28,6 +28,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.pass.domain.ITEM_TYPE_ALIAS
+import proton.pass.domain.ITEM_TYPE_CREDIT_CARD
 import proton.pass.domain.ITEM_TYPE_LOGIN
 import proton.pass.domain.ITEM_TYPE_NOTE
 import proton.pass.domain.ItemId
@@ -94,11 +95,13 @@ class LocalItemDataSourceImpl @Inject constructor(
                 val logins = values.firstOrNull { it.itemKind == ITEM_TYPE_LOGIN }?.itemCount ?: 0
                 val aliases = values.firstOrNull { it.itemKind == ITEM_TYPE_ALIAS }?.itemCount ?: 0
                 val notes = values.firstOrNull { it.itemKind == ITEM_TYPE_NOTE }?.itemCount ?: 0
+                val creditCards = values.firstOrNull { it.itemKind == ITEM_TYPE_CREDIT_CARD }?.itemCount ?: 0
                 ItemCountSummary(
                     total = logins + aliases + notes,
                     login = logins,
                     alias = aliases,
-                    note = notes
+                    note = notes,
+                    creditCard = creditCards
                 )
             }
 

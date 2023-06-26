@@ -38,6 +38,7 @@ sealed interface CreditCardDetailUiState {
         val isPermanentlyDeleted: Boolean,
         val isRestoredFromTrash: Boolean,
         val canMigrate: Boolean,
+        val isDowngradedMode: Boolean
     ) : CreditCardDetailUiState
 
     @Stable

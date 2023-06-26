@@ -36,21 +36,34 @@ import proton.android.pass.featureitemdetail.impl.common.IconLabelTextRow
 fun CardHolderRow(
     modifier: Modifier = Modifier,
     name: String,
-    onClick: () -> Unit
+    isDowngradedMode: Boolean,
+    onClick: () -> Unit,
+    onUpgradeClick: () -> Unit
 ) {
-    IconLabelTextRow(
-        modifier = modifier,
-        icon = {
-            Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_user),
-                contentDescription = null,
-                tint = PassTheme.colors.cardInteractionNorm
-            )
-        },
-        label = stringResource(R.string.credit_card_cardholder_field_name),
-        content = name.asAnnotatedString(),
-        onClick = onClick
-    )
+    val icon = me.proton.core.presentation.R.drawable.ic_proton_user
+    val label = stringResource(R.string.credit_card_cardholder_field_name)
+    if (isDowngradedMode) {
+        UpgradeRow(
+            modifier = modifier,
+            icon = icon,
+            label = label,
+            onUpgrade = onUpgradeClick
+        )
+    } else {
+        IconLabelTextRow(
+            modifier = modifier,
+            icon = {
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = null,
+                    tint = PassTheme.colors.cardInteractionNorm
+                )
+            },
+            label = label,
+            content = name.asAnnotatedString(),
+            onClick = onClick
+        )
+    }
 }
 
 
@@ -65,6 +78,8 @@ fun CardHolderRowPreview(
         Surface {
             CardHolderRow(
                 name = name,
+                isDowngradedMode = false,
+                onUpgradeClick = {},
                 onClick = {}
             )
         }

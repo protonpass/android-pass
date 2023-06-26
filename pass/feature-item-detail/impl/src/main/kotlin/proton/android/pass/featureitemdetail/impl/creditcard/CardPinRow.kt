@@ -34,16 +34,30 @@ import me.proton.core.presentation.R as CoreR
 fun CardPinRow(
     modifier: Modifier = Modifier,
     pin: HiddenState,
+    isDowngradedMode: Boolean,
     onToggle: () -> Unit,
+    onUpgradeClick: () -> Unit
 ) {
-    CardHiddenRow(
-        modifier = modifier,
-        label = stringResource(R.string.credit_card_pin_field_name),
-        value = pin,
-        icon = CoreR.drawable.ic_proton_grid_3,
-        onToggle = onToggle,
-        onClick = null
-    )
+    val label = stringResource(R.string.credit_card_pin_field_name)
+    val icon = CoreR.drawable.ic_proton_grid_3
+
+    if (isDowngradedMode) {
+        UpgradeRow(
+            modifier = modifier,
+            label = label,
+            icon = icon,
+            onUpgrade = onUpgradeClick
+        )
+    } else {
+        CardHiddenRow(
+            modifier = modifier,
+            label = label,
+            value = pin,
+            icon = icon,
+            onToggle = onToggle,
+            onClick = null
+        )
+    }
 }
 
 @Preview
@@ -56,7 +70,9 @@ fun CardPinRowPreview(
         Surface {
             CardPinRow(
                 pin = pin,
-                onToggle = {}
+                isDowngradedMode = false,
+                onToggle = {},
+                onUpgradeClick = {}
             )
         }
     }

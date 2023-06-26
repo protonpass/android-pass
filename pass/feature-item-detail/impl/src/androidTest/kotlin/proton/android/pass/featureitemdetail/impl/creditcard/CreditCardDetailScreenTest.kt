@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemdetail.impl.creditcard
 
 import androidx.annotation.DrawableRes
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasContentDescription
@@ -41,12 +42,15 @@ import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import proton.pass.domain.ItemId
@@ -54,6 +58,7 @@ import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import javax.inject.Inject
 import kotlin.test.assertEquals
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @HiltAndroidTest
 class CreditCardDetailScreenTest {
@@ -76,6 +81,9 @@ class CreditCardDetailScreenTest {
     @Inject
     lateinit var clipboardManager: TestClipboardManager
 
+    @Inject
+    lateinit var canPerformPaidAction: TestCanPerformPaidAction
+
     @Before
     fun setup() {
         hiltRule.inject()
@@ -83,6 +91,7 @@ class CreditCardDetailScreenTest {
             set(CommonNavArgId.ShareId.key, SHARE_ID)
             set(CommonNavArgId.ItemId.key, ITEM_ID)
         }
+        canPerformPaidAction.setResult(true)
     }
 
     @Test
@@ -254,6 +263,36 @@ class CreditCardDetailScreenTest {
         }
 
         assertEquals(verificationNumber, clipboardManager.getContents())
+    }
+
+    @Test
+    fun canHandleDowngradedMode() {
+        canPerformPaidAction.setResult(false)
+        val title = performSetup()
+        val checker = CallChecker<Unit>()
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ItemDetailScreen(
+                        onNavigate = {
+                            if (it == ItemDetailNavigation.Upgrade) {
+                                checker.call(Unit)
+                            }
+                        }
+                    )
+                }
+            }
+            waitUntilExists(hasText(title))
+
+            val upgrade = activity.getString(CompR.string.upgrade)
+
+            // Cardholder, number, cvv, pin, expiration
+            onAllNodes(hasText(upgrade)).assertCountEquals(5)
+
+            onAllNodes(hasText(upgrade))[0].performClick()
+
+            waitUntil { checker.isCalled}
+        }
     }
 
     private fun testSectionDoesNotExist(title: String, @DrawableRes fieldName: Int) {

@@ -69,4 +69,18 @@ class FeedbackBottomsheetTest {
         intended(hasAction(ACTION_VIEW))
         intended(hasData(PASS_REDDIT))
     }
+
+    @Test
+    fun feedbackUserVoiceCalled() {
+        composeTestRule.apply {
+            setContent {
+                FeedbackBottomsheet { }
+            }
+
+            val text = activity.getString(R.string.feedback_option_vote_new_features)
+            onNodeWithText(text).performClick()
+            intended(hasAction(ACTION_VIEW))
+            intended(hasData(PASS_USERVOICE))
+        }
+    }
 }

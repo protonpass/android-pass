@@ -23,6 +23,7 @@
     <string name="profile_app_version_copied_to_clipboard">App version copied</string>
     <string name="feedback_option_reddit">Check out Proton on Reddit</string>
     <string name="feedback_option_mail">Send us a message</string>
+    <string name="feedback_option_vote_new_features">Vote for new features</string>
 
     <string name="app_lock_immediately">Immediately</string>
     <string name="app_lock_one_minute">After 1 minute</string>

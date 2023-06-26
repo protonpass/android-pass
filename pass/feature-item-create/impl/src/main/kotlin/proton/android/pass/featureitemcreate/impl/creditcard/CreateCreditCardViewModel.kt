@@ -52,7 +52,8 @@ class CreateCreditCardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction,
 ) : BaseCreditCardViewModel(
-    encryptionContextProvider = encryptionContextProvider
+    encryptionContextProvider = encryptionContextProvider,
+    canPerformPaidAction = canPerformPaidAction
 ) {
 
     private val navShareId: Option<ShareId> =

@@ -33,7 +33,8 @@ data class BaseCreditCardUiState(
     val hasUserEditedContent: Boolean,
     val validationErrors: PersistentSet<CreditCardValidationErrors>,
     val isItemSaved: ItemSavedState,
-    val contents: ItemContents.CreditCard
+    val contents: ItemContents.CreditCard,
+    val isDowngradedMode: Boolean
 ) {
     companion object {
         fun default(cvv: HiddenState, pin: HiddenState) = BaseCreditCardUiState(
@@ -41,7 +42,8 @@ data class BaseCreditCardUiState(
             hasUserEditedContent = false,
             validationErrors = persistentSetOf(),
             isItemSaved = ItemSavedState.Unknown,
-            contents = ItemContents.CreditCard.default(cvv = cvv, pin = pin)
+            contents = ItemContents.CreditCard.default(cvv = cvv, pin = pin),
+            isDowngradedMode = false
         )
     }
 }

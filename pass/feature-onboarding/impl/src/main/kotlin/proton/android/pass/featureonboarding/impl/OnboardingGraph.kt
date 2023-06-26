@@ -24,7 +24,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
-object OnBoarding : NavItem(baseRoute = "onboarding")
+object OnBoarding : NavItem(baseRoute = "onboarding", isTopLevel = true)
 
 @OptIn(
     ExperimentalAnimationApi::class

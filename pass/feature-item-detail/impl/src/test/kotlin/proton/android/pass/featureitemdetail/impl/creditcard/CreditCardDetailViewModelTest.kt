@@ -56,6 +56,7 @@ class CreditCardDetailViewModelTest {
     private lateinit var clipboardManager: TestClipboardManager
     private lateinit var trashItem: TestTrashItem
     private lateinit var restoreItem: TestRestoreItem
+    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
 
     @Before
     fun setup() {
@@ -63,6 +64,7 @@ class CreditCardDetailViewModelTest {
         clipboardManager = TestClipboardManager()
         trashItem = TestTrashItem()
         restoreItem = TestRestoreItem()
+        canPerformPaidAction = TestCanPerformPaidAction()
         instance = CreditCardDetailViewModel(
             snackbarDispatcher = TestSnackbarDispatcher(),
             clipboardManager = clipboardManager,
@@ -71,7 +73,7 @@ class CreditCardDetailViewModelTest {
             deleteItem = TestDeleteItem(),
             restoreItem = restoreItem,
             telemetryManager = TestTelemetryManager(),
-            canPerformPaidAction = TestCanPerformPaidAction().apply {
+            canPerformPaidAction = canPerformPaidAction.apply {
                 setResult(true)
             },
             getItemByIdWithVault = getItem,
@@ -367,6 +369,29 @@ class CreditCardDetailViewModelTest {
             itemId = ItemId(ITEM_ID)
         )
         assertThat(memory).isEqualTo(listOf(expected))
+    }
+
+    @Test
+    fun `send isDowngradedMode if in free mode`() = runTest {
+        canPerformPaidAction.setResult(false)
+        val itemWithVaultInfo = ItemWithVaultInfo(
+            item = TestObserveItems.createCreditCard(
+                itemId = ItemId(ITEM_ID),
+                shareId = ShareId(SHARE_ID),
+            ),
+            vault = TEST_VAULT,
+            hasMoreThanOneVault = false
+        )
+        getItem.emitValue(Result.success(itemWithVaultInfo))
+
+        instance.uiState.test {
+            val item = awaitItem()
+            assertThat(item).isInstanceOf(CreditCardDetailUiState.Success::class.java)
+
+            val itemSuccess = item as CreditCardDetailUiState.Success
+            assertThat(itemSuccess.isDowngradedMode).isTrue()
+
+        }
     }
 
     companion object {

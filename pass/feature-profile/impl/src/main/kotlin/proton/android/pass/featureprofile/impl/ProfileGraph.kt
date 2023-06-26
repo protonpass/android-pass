@@ -45,6 +45,7 @@ sealed interface ProfileNavigation {
     object Feedback : ProfileNavigation
     object Report : ProfileNavigation
     object FeatureFlags : ProfileNavigation
+    object Upgrade : ProfileNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)

@@ -86,8 +86,12 @@ class CreateCreditCardViewModel @Inject constructor(
             return@combine ShareUiState.Error(ShareError.EmptyShareList)
         }
         val selectedVault = if (!canSwitchVaults) {
-            allShares.firstOrNull { it.vault.isPrimary }
-                ?: return@combine ShareUiState.Error(ShareError.NoPrimaryVault)
+            val primaryVault = allShares.firstOrNull { it.vault.isPrimary }
+            if (primaryVault == null) {
+                PassLogger.w(TAG, "No primary vault found")
+                return@combine ShareUiState.Error(ShareError.NoPrimaryVault)
+            }
+            primaryVault
         } else {
             allShares
                 .firstOrNull { it.vault.shareId == selectedShareId.value() }

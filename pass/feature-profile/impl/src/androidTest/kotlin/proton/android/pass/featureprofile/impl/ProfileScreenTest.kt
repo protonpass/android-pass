@@ -50,91 +50,85 @@ class ProfileScreenTest {
     @Test
     fun onAccountClickCalled() {
         val checker = CallChecker<Unit>()
-
-        composeTestRule.setContent {
-            PassTheme {
-                ProfileScreen(
-                    onNavigateEvent = {
-                        when (it) {
-                            is ProfileNavigation.Account -> checker.call()
-                            else -> {}
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ProfileScreen(
+                        onNavigateEvent = {
+                            if (it is ProfileNavigation.Account) {
+                                checker.call()
+                            }
                         }
-                    },
-                )
+                    )
+                }
             }
+
+            onNodeWithText(activity.getString(R.string.profile_option_settings)).performScrollTo()
+            onNodeWithText(activity.getString(R.string.profile_option_account)).performClick()
+
+            waitUntil { checker.isCalled }
         }
-        composeTestRule
-            .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_settings))
-            .performScrollTo()
-        composeTestRule
-            .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_account))
-            .performClick()
-        composeTestRule.waitUntil { checker.isCalled }
     }
 
     @Test
     fun onSettingsClickCalled() {
         val checker = CallChecker<Unit>()
-
-        composeTestRule.setContent {
-            PassTheme {
-                ProfileScreen(
-                    onNavigateEvent = {
-                        when (it) {
-                            is ProfileNavigation.Settings -> checker.call()
-                            else -> {}
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ProfileScreen(
+                        onNavigateEvent = {
+                            if (it is ProfileNavigation.Settings) {
+                                checker.call()
+                            }
                         }
-                    },
-                )
+                    )
+                }
             }
+
+            onNodeWithText(activity.getString(R.string.profile_option_feedback)).performScrollTo()
+            onNodeWithText(activity.getString(R.string.profile_option_settings)).performClick()
+
+            waitUntil { checker.isCalled }
         }
-        composeTestRule
-            .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_feedback))
-            .performScrollTo()
-        composeTestRule
-            .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_settings))
-            .performClick()
-        composeTestRule.waitUntil { checker.isCalled }
     }
 
     @Test
     fun onFeedbackClickCalled() {
         val checker = CallChecker<Unit>()
 
-        composeTestRule.setContent {
-            PassTheme {
-                ProfileScreen(
-                    onNavigateEvent = {
-                        when (it) {
-                            is ProfileNavigation.Feedback -> checker.call()
-                            else -> {}
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    ProfileScreen(
+                        onNavigateEvent = {
+                            if (it is ProfileNavigation.Feedback) {
+                                checker.call()
+                            }
                         }
-                    },
-                )
+                    )
+                }
             }
+            onNodeWithText("0.0.0").performScrollTo()
+            onNodeWithText(activity.getString(R.string.profile_option_feedback)).performClick()
+
+            waitUntil { checker.isCalled }
         }
-        composeTestRule.onNodeWithText("0.0.0")
-            .performScrollTo()
-        composeTestRule
-            .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_feedback))
-            .performClick()
-        composeTestRule.waitUntil { checker.isCalled }
     }
 
     @Test
     fun onRateAppClickCalled() {
-        composeTestRule.setContent {
-            PassTheme {
-                ProfileScreen(
-                    onNavigateEvent = {},
-                )
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    ProfileScreen(
+                        onNavigateEvent = {},
+                    )
+                }
             }
+            onNodeWithText("0.0.0").performScrollTo()
+            onNodeWithText(activity.getString(R.string.profile_option_rating)).performClick()
         }
-        composeTestRule.onNodeWithText("0.0.0")
-            .performScrollTo()
-
-        composeTestRule.onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_rating))
-            .performClick()
 
         intended(hasAction(Intent.ACTION_VIEW))
         intended(hasData(PASS_STORE))
@@ -143,20 +137,17 @@ class ProfileScreenTest {
 
     @Test
     fun onImportExportClickCalled() {
-        composeTestRule.setContent {
-            PassTheme {
-                ProfileScreen(
-                    onNavigateEvent = {},
-                )
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    ProfileScreen(
+                        onNavigateEvent = {},
+                    )
+                }
             }
+            onNodeWithText("0.0.0").performScrollTo()
+            onNodeWithText(activity.getString(R.string.profile_option_import_export)).performClick()
         }
-        composeTestRule.onNodeWithText("0.0.0")
-            .performScrollTo()
-
-        composeTestRule.onNodeWithText(
-            composeTestRule.activity.resources.getString(R.string.profile_option_import_export)
-        )
-            .performClick()
 
         intended(hasAction(Intent.ACTION_VIEW))
         intended(hasData(PASS_IMPORT))

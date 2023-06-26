@@ -85,6 +85,7 @@ data class ItemSummaryUiState(
     val notesCount: Int = 0,
     val aliasCount: Int = 0,
     val creditCardsCount: Int = 0,
+    val displayCreditCards: Boolean = false,
     val mfaCount: Int = 0,
     val aliasLimit: Int? = null,
     val mfaLimit: Int? = null

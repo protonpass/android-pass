@@ -25,7 +25,9 @@ import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.pass.domain.AliasOptions
 import proton.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestObserveAliasOptions @Inject constructor() : ObserveAliasOptions {
 
     private val aliasOptionsFlow: MutableSharedFlow<AliasOptions> =

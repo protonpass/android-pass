@@ -20,6 +20,7 @@ import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -45,8 +46,10 @@ class UpdateCreditCardViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
     savedStateHandle: SavedStateHandleProvider,
+    canPerformPaidAction: CanPerformPaidAction
 ) : BaseCreditCardViewModel(
-    encryptionContextProvider = encryptionContextProvider
+    encryptionContextProvider = encryptionContextProvider,
+    canPerformPaidAction = canPerformPaidAction
 ) {
     private val navShareId: ShareId =
         ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))

@@ -37,6 +37,7 @@ fun CreditCardDetailContent(
     contents: CreditCardDetailUiState.ItemContent,
     moreInfoUiState: MoreInfoUiState,
     vault: Vault?,
+    isDowngradedMode: Boolean,
     onEvent: (CreditCardDetailEvent) -> Unit
 ) {
     val model = contents.model.contents as ItemContents.CreditCard
@@ -55,6 +56,7 @@ fun CreditCardDetailContent(
             cvv = model.cvv,
             pin = model.pin,
             expirationDate = model.expirationDate,
+            isDowngradedMode = isDowngradedMode,
             onEvent = onEvent
         )
         NoteSection(

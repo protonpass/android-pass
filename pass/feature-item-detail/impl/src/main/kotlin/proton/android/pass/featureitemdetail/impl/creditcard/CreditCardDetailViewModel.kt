@@ -204,6 +204,7 @@ class CreditCardDetailViewModel @Inject constructor(
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canMigrate = canMigrate,
+                    isDowngradedMode = !isPaid
                 )
             }
         }

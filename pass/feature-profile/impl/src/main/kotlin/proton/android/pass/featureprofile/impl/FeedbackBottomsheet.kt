@@ -32,9 +32,15 @@ fun FeedbackBottomsheet(onNavigateEvent: (ProfileNavigation) -> Unit) {
         },
         onOpenReddit = {
             openWebsite(context, PASS_REDDIT)
+        },
+        onOpenUserVoice = {
+            openWebsite(context, PASS_USERVOICE)
         }
     )
 }
 
 @VisibleForTesting
 const val PASS_REDDIT = "https://www.reddit.com/r/ProtonPass/"
+
+@VisibleForTesting
+const val PASS_USERVOICE = "https://protonmail.uservoice.com/forums/953584-proton-pass"

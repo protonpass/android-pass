@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
+import me.proton.core.presentation.R as CoreR
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -40,12 +41,14 @@ fun FeedbackBottomsheetContent(
     modifier: Modifier = Modifier,
     onSendReport: () -> Unit,
     onOpenReddit: () -> Unit,
+    onOpenUserVoice: () -> Unit
 ) {
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = listOf(
             sendReport(onClick = onSendReport),
             openProtonReddit(onClick = onOpenReddit),
+            openUserVoice(onClick = onOpenUserVoice),
         ).withDividers().toPersistentList()
     )
 }
@@ -59,7 +62,8 @@ fun FeedbackBottomsheetContentPreview(
         Surface {
             FeedbackBottomsheetContent(
                 onSendReport = {},
-                onOpenReddit = {}
+                onOpenReddit = {},
+                onOpenUserVoice = {}
             )
         }
     }
@@ -88,6 +92,21 @@ private fun openProtonReddit(onClick: () -> Unit): BottomSheetItem =
             get() = null
         override val leftIcon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = R.drawable.ic_reddit) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = onClick
+        override val isDivider = false
+    }
+
+private fun openUserVoice(onClick: () -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(R.string.feedback_option_vote_new_features)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_speech_bubble) }
         override val endIcon: (@Composable () -> Unit)?
             get() = null
         override val onClick: () -> Unit

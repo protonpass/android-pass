@@ -346,6 +346,7 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.AppLock -> appNavigator.navigate(AppLockBottomsheet)
                 ProfileNavigation.Report -> onNavigate(AppNavigation.Report)
                 ProfileNavigation.FeatureFlags -> appNavigator.navigate(FeatureFlagRoute)
+                ProfileNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
         }
     )

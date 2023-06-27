@@ -48,11 +48,11 @@ sealed interface ProfileNavigation {
     object FeatureFlags : ProfileNavigation
     object Upgrade : ProfileNavigation
     object Finish : ProfileNavigation
+    object CloseBottomSheet : ProfileNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.profileGraph(
-    dismissBottomSheet: () -> Unit,
     onNavigateEvent: (ProfileNavigation) -> Unit
 ) {
     composable(Profile) {
@@ -65,6 +65,6 @@ fun NavGraphBuilder.profileGraph(
     }
 
     bottomSheet(AppLockBottomsheet) {
-        AppLockBottomsheet(onClose = dismissBottomSheet)
+        AppLockBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
     }
 }

@@ -14,7 +14,7 @@ If you want to contribute to the application, please refer to the [CONTRIBUTING.
 
 ## Help us translate
 
-If you want to help us translating the application, you can learn more about it on [our blog post](https://proton.me/blog/translation-community).
+If you want to help us to translate the application, you can learn more about it on [our blog post](https://proton.me/blog/translation-community).
 
 ## License
 

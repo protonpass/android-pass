@@ -27,5 +27,10 @@ enum class FeatureFlag(
         "Credit cards",
         "Enable credit cards",
         "PassCreditCardsV1"
+    ),
+    AUTOFILL_DEBUG_MODE(
+        title = "Autofill debug mode",
+        description = "Enable autofill debug mode",
+        key = null // Cannot be activated server-side
     )
 }

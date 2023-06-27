@@ -31,9 +31,11 @@ fun FeedbackBottomsheet(onNavigateEvent: (ProfileNavigation) -> Unit) {
             onNavigateEvent(ProfileNavigation.Report)
         },
         onOpenReddit = {
+            onNavigateEvent(ProfileNavigation.CloseBottomSheet)
             openWebsite(context, PASS_REDDIT)
         },
         onOpenUserVoice = {
+            onNavigateEvent(ProfileNavigation.CloseBottomSheet)
             openWebsite(context, PASS_USERVOICE)
         }
     )

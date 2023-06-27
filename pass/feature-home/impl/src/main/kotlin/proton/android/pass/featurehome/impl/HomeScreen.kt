@@ -68,6 +68,7 @@ import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
+import proton.android.pass.featuretrash.impl.ConfirmTrashAliasDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
@@ -97,6 +98,7 @@ fun HomeScreen(
     var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowRestoreAllDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowClearTrashDialog by rememberSaveable { mutableStateOf(false) }
+    var aliasToBeTrashed by rememberSaveable(stateSaver = ItemUiModelSaver) { mutableStateOf(null) }
 
     val actionState = homeUiState.homeListUiState.actionState
     LaunchedEffect(actionState) {
@@ -174,7 +176,7 @@ fun HomeScreen(
                     onMoveToTrash = {
                         scope.launch {
                             bottomSheetState.hide()
-                            homeViewModel.sendItemToTrash(it)
+                            aliasToBeTrashed = it
                         }
                     },
                     onRemoveFromRecentSearch = { shareId, itemId ->
@@ -391,6 +393,15 @@ fun HomeScreen(
                     homeViewModel.deleteItem(itemUiModel)
                 },
                 onDismiss = { shouldShowDeleteItemDialog = false }
+            )
+
+            ConfirmTrashAliasDialog(
+                show = aliasToBeTrashed != null,
+                onConfirm = {
+                    homeViewModel.sendItemToTrash(aliasToBeTrashed)
+                    aliasToBeTrashed = null
+                },
+                onDismiss = { aliasToBeTrashed = null }
             )
         }
     }

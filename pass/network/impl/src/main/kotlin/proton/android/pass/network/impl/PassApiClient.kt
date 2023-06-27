@@ -34,7 +34,7 @@ class PassApiClient @Inject constructor(appConfig: AppConfig) : ApiClient {
         .append("(")
         .append("Android ${Build.VERSION.RELEASE};")
         .append(" ")
-        .append("${Build.MODEL} ${Build.BRAND}")
+        .append("${Build.BRAND} ${Build.MODEL}")
         .append(")")
         .toString()
 

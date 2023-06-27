@@ -56,7 +56,12 @@ fun PassApp(
                     .systemBarsPadding()
                     .imePadding(),
                 appUiState = appUiState,
-                onNavigate = onNavigate,
+                onNavigate = {
+                    if (it is AppNavigation.Finish) {
+                        appViewModel.onStop()
+                    }
+                    onNavigate(it)
+                },
                 onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() }
             )
         }

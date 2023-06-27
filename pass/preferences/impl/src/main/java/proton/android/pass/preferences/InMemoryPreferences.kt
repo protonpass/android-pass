@@ -18,29 +18,23 @@
 
 package proton.android.pass.preferences
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class PreferencesBinderModule {
-    @Binds
-    abstract fun bindUserPreferencesRepository(impl: UserPreferencesRepositoryImpl): UserPreferencesRepository
+interface InMemoryPreferences {
+    fun <T : Any> get(key: String): T?
+    fun <T : Any> set(key: String, value: T)
+}
 
-    @Binds
-    abstract fun bindFeatureFlagsPreferencesRepository(
-        impl: FeatureFlagsPreferencesRepositoryImpl
-    ): FeatureFlagsPreferencesRepository
+@Singleton
+class InMemoryPreferencesImpl @Inject constructor() : InMemoryPreferences {
 
-    @Binds
-    abstract fun bindInternalSettingsRepository(
-        impl: InternalSettingsRepositoryImpl
-    ): InternalSettingsRepository
+    private val map: MutableMap<String, Any> = mutableMapOf()
 
-    @Binds
-    abstract fun bindInMemoryPreferences(
-        impl: InMemoryPreferencesImpl
-    ): InMemoryPreferences
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Any> get(key: String): T? = map[key] as? T
+
+    override fun <T : Any> set(key: String, value: T) {
+        map[key] = value
+    }
 }

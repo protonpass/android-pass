@@ -31,7 +31,8 @@ import javax.inject.Singleton
 @Suppress("TooManyFunctions")
 @Singleton
 class UserPreferencesRepositoryImpl @Inject constructor(
-    private val dataStore: DataStore<UserPreferences>
+    private val dataStore: DataStore<UserPreferences>,
+    private val inMemoryPreferences: InMemoryPreferences
 ) : UserPreferencesRepository {
 
     override suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit> =
@@ -53,6 +54,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> =
         runCatching {
+            inMemoryPreferences.set(HasAuthenticated::class.java.name, state.value())
             dataStore.updateData {
                 it.toBuilder()
                     .setHasAuthenticatedWithBiometry(state.value().toBooleanPrefProto())
@@ -65,7 +67,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         dataStore.data
             .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
-                HasAuthenticated.from(fromBooleanPrefProto(preferences.hasAuthenticatedWithBiometry))
+                inMemoryPreferences.get<Boolean>(HasAuthenticated::class.java.name)
+                    ?.let { HasAuthenticated.from(it) }
+                    ?: HasAuthenticated.from(fromBooleanPrefProto(preferences.hasAuthenticatedWithBiometry))
             }
 
     override suspend fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> =

@@ -19,13 +19,13 @@
 package proton.android.pass.featurehome.impl
 
 import androidx.annotation.StringRes
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.google.common.truth.Truth.assertThat
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,6 +51,7 @@ import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.HasDismissedAutofillBanner
@@ -66,6 +67,8 @@ import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import javax.inject.Inject
+import proton.android.pass.composecomponents.impl.R as CompR
+import proton.android.pass.featuretrash.R as TrashR
 
 @HiltAndroidTest
 class HomeScreenTest {
@@ -94,12 +97,14 @@ class HomeScreenTest {
     @Inject
     lateinit var preferencesRepository: TestPreferenceRepository
 
+    @Inject
+    lateinit var trashItem: TestTrashItem
+
     @Before
     fun setup() {
         hiltRule.inject()
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
     @Test
     fun canNavigateToItemDetail() {
         val shareId = ShareId("shareId")
@@ -135,7 +140,6 @@ class HomeScreenTest {
         assertEquals(loginItem.shareId to items[0].id, checker.memory)
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
     @Test
     fun canNavigateToCreateVault() {
         val checker = CallChecker<Unit>()
@@ -158,7 +162,6 @@ class HomeScreenTest {
         composeTestRule.waitUntil { checker.isCalled }
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
     @Test
     fun canNavigateToCreateItem() {
         setupWithItems()
@@ -203,7 +206,47 @@ class HomeScreenTest {
         testEmptyScreenCreateItem(R.string.home_empty_vault_create_note, ItemTypeUiState.Note)
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
+    @Test
+    fun showsConfirmationDialogBeforeTrashingAlias() {
+        val title = "Some alias"
+        val aliasItem = TestObserveItems.createAlias(title = title)
+        setupWithItems(listOf(aliasItem))
+
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    HomeScreen(
+                        onNavigateEvent = {}
+                    )
+                }
+            }
+
+            waitUntilExists(hasText(title))
+
+            val menuContentDescription = activity.getString(CompR.string.action_content_description_menu)
+            onNodeWithContentDescription(menuContentDescription).performClick()
+
+            val trashItemText = activity.getString(CompR.string.bottomsheet_move_to_trash)
+            waitUntilExists(hasText(trashItemText))
+            onNodeWithText(trashItemText).performClick()
+
+            val confirmDialogText = activity.getString(TrashR.string.alias_dialog_move_to_trash_confirm)
+            waitUntilExists(hasText(confirmDialogText))
+            onNodeWithText(confirmDialogText).performClick()
+
+            waitUntil { trashItem.getMemory().isNotEmpty() }
+
+            onNodeWithText(confirmDialogText).assertDoesNotExist()
+        }
+
+        val memory = trashItem.getMemory()
+        assertThat(memory.size).isEqualTo(1)
+
+        val memoryItem = memory.first()
+        assertThat(memoryItem.itemId).isEqualTo(aliasItem.id)
+        assertThat(memoryItem.shareId).isEqualTo(aliasItem.shareId)
+    }
+
     private fun testEmptyScreenCreateItem(
         @StringRes text: Int,
         itemTypeUiState: ItemTypeUiState

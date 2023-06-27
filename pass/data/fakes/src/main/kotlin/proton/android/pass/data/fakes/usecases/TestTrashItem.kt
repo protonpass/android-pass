@@ -23,7 +23,9 @@ import proton.android.pass.data.api.usecases.TrashItem
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestTrashItem @Inject constructor() : TrashItem {
 
     private var result: Result<Unit> = Result.failure(IllegalStateException("TestTrashItem.result not set"))

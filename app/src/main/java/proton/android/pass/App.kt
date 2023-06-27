@@ -33,6 +33,7 @@ import javax.inject.Provider
 class App : Application(), ImageLoaderFactory {
     @Inject
     lateinit var imageLoader: Provider<ImageLoader>
+
     @Inject
     lateinit var preferenceRepository: UserPreferencesRepository
 

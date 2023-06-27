@@ -336,7 +336,6 @@ fun NavGraphBuilder.appGraph(
         }
     )
     profileGraph(
-        dismissBottomSheet = { dismissBottomSheet { appNavigator.onBackClick() } },
         onNavigateEvent = {
             when (it) {
                 ProfileNavigation.Account -> appNavigator.navigate(Account)
@@ -345,10 +344,15 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheet)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
                 ProfileNavigation.AppLock -> appNavigator.navigate(AppLockBottomsheet)
-                ProfileNavigation.Report -> onNavigate(AppNavigation.Report)
+                ProfileNavigation.Report -> dismissBottomSheet {
+                    onNavigate(AppNavigation.Report)
+                }
                 ProfileNavigation.FeatureFlags -> appNavigator.navigate(FeatureFlagRoute)
                 ProfileNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 ProfileNavigation.Finish -> onNavigate(AppNavigation.Finish)
+                ProfileNavigation.CloseBottomSheet -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
             }
         }
     )

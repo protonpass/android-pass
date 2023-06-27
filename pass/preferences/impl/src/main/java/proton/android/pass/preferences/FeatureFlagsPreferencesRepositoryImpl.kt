@@ -32,6 +32,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CREDIT_CARDS_ENABLED
 import java.io.IOException
 import javax.inject.Inject
@@ -48,12 +49,16 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> =
         when (featureFlag) {
             CREDIT_CARDS_ENABLED -> getFeatureFlag(featureFlag.key) { creditCardsEnabled.value }
+            AUTOFILL_DEBUG_MODE -> getFeatureFlag(featureFlag.key) { autofillDebugModeEnabled.value }
         }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =
         when (featureFlag) {
             CREDIT_CARDS_ENABLED -> setFeatureFlag {
                 creditCardsEnabled = boolFlagPrefProto(value)
+            }
+            AUTOFILL_DEBUG_MODE -> setFeatureFlag {
+                autofillDebugModeEnabled = boolFlagPrefProto(value)
             }
         }
 

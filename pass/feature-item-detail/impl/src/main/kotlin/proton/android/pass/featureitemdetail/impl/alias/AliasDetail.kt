@@ -48,6 +48,7 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
+import proton.android.pass.featuretrash.impl.ConfirmTrashAliasDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemState
 
@@ -69,6 +70,7 @@ fun AliasDetail(
         AliasDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is AliasDetailUiState.Success -> {
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
+            var shouldShowMoveToTrashItemDialog by rememberSaveable { mutableStateOf(false) }
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
                 LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
             }
@@ -95,11 +97,10 @@ fun AliasDetail(
                                 }
                             },
                             onMoveToTrash = {
-                                scope.launch { bottomSheetState.hide() }
-                                viewModel.onMoveToTrash(
-                                    state.itemUiModel.shareId,
-                                    state.itemUiModel.id
-                                )
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    shouldShowMoveToTrashItemDialog = true
+                                }
                             }
                         )
 
@@ -110,8 +111,10 @@ fun AliasDetail(
                                 viewModel.onItemRestore(shareId, itemId)
                             },
                             onDeleteItem = { _, _ ->
-                                scope.launch { bottomSheetState.hide() }
-                                shouldShowDeleteItemDialog = true
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    shouldShowDeleteItemDialog = true
+                                }
                             },
                             icon = { AliasIcon() }
                         )
@@ -152,6 +155,19 @@ fun AliasDetail(
                         }
                     )
                 }
+
+                ConfirmTrashAliasDialog(
+                    show = shouldShowMoveToTrashItemDialog,
+                    onConfirm = {
+                        shouldShowMoveToTrashItemDialog = false
+                        viewModel.onMoveToTrash(
+                            state.itemUiModel.shareId,
+                            state.itemUiModel.id
+                        )
+                    },
+                    onDismiss = { shouldShowMoveToTrashItemDialog = false }
+                )
+
                 ConfirmDeleteItemDialog(
                     isLoading = state.isLoading,
                     show = shouldShowDeleteItemDialog,

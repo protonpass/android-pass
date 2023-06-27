@@ -33,7 +33,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestAccountManager @Inject constructor() : AccountManager(Product.Drive) {
+class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
     private val primaryUserIdFlow: MutableSharedFlow<UserId?> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)

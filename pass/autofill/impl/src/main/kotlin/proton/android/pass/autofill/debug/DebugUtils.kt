@@ -16,10 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.notifications.api
+package proton.android.pass.autofill.debug
 
-interface NotificationManager {
-    fun sendNotification()
-    fun showDebugAutofillNotification()
-    fun hideDebugAutofillNotification()
+import android.content.Context
+import java.io.File
+
+object DebugUtils {
+
+    fun autofillDumpDir(context: Context): File {
+        val dir = File(context.cacheDir, "autofill")
+        dir.mkdirs()
+        return dir
+    }
+
 }

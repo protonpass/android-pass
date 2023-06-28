@@ -42,7 +42,7 @@ val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 val testEnvUrl = System.getenv("TEST_ENV_URL") ?: "api.proton.black"
 
 val jobId: Int = System.getenv("CI_JOB_ID")?.take(3)?.toInt() ?: 0
-val appVersionName: String = "1.5.2"
+val appVersionName: String = "1.5.3"
 val appVersionCode: Int = versionCode(appVersionName)
 val archivesBaseName = "ProtonPass-$appVersionName"
 

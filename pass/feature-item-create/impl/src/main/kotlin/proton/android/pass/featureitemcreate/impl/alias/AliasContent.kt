@@ -107,7 +107,7 @@ internal fun AliasContent(
 
         SelectSuffixDialog(
             show = showSuffixDialog,
-            canUpgrade = uiState.canUpgrade,
+            canUpgrade = false,
             suffixes = uiState.aliasItem.aliasOptions.suffixes.toImmutableList(),
             selectedSuffix = uiState.aliasItem.selectedSuffix,
             color = PassTheme.colors.aliasInteractionNorm,

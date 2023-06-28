@@ -25,4 +25,12 @@ class TestNotificationManager @Inject constructor() : NotificationManager {
     override fun sendNotification() {
         // no op
     }
+
+    override fun showDebugAutofillNotification() {
+        // no op
+    }
+
+    override fun hideDebugAutofillNotification() {
+        // no op
+    }
 }

@@ -25,7 +25,12 @@ import android.service.autofill.FillRequest
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.autofill.debug.AutofillDebugSaver
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -41,11 +46,21 @@ class ProtonPassAutofillService : AutofillService() {
     @Inject
     lateinit var accountManager: AccountManager
 
+    @Inject
+    lateinit var ffRepo: FeatureFlagsPreferencesRepository
+
     override fun onFillRequest(
         request: FillRequest,
         cancellationSignal: CancellationSignal,
         callback: FillCallback,
     ) {
+        runBlocking {
+            val isDebugMode = ffRepo.get<Boolean>(FeatureFlag.AUTOFILL_DEBUG_MODE).first()
+            if (isDebugMode) {
+                AutofillDebugSaver.save(this@ProtonPassAutofillService, request)
+            }
+        }
+
         AutoFillHandler.handleAutofill(
             context = this@ProtonPassAutofillService,
             request = request,

@@ -26,6 +26,6 @@ enum class FeatureFlag(
     CREDIT_CARDS_ENABLED(
         "Credit cards",
         "Enable credit cards",
-        // "PassCreditCardsV1" Temporarily deactivated until we allow FF by version or finish the feature
+        "PassCreditCardsV1"
     )
 }

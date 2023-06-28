@@ -25,13 +25,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class FeatureFlagsViewModel @Inject constructor(
-    private val ffRepository: FeatureFlagsPreferencesRepository
+    private val ffRepository: FeatureFlagsPreferencesRepository,
+    private val notificationManager: NotificationManager
 ) : ViewModel() {
 
     val state = combine(
@@ -46,6 +48,13 @@ class FeatureFlagsViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
     fun <T> override(featureFlag: FeatureFlag, value: T) = viewModelScope.launch {
+        if (featureFlag == FeatureFlag.AUTOFILL_DEBUG_MODE) {
+            if (value is Boolean && value) {
+                notificationManager.showDebugAutofillNotification()
+            } else {
+                notificationManager.hideDebugAutofillNotification()
+            }
+        }
         ffRepository.set(featureFlag = featureFlag, value = value)
     }
 }

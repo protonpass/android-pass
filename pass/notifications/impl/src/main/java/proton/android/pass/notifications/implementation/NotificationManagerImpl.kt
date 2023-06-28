@@ -19,16 +19,20 @@
 package proton.android.pass.notifications.implementation
 
 import android.app.NotificationChannel
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
+import proton.android.pass.notifications.api.AutofillDebugActivityAnnotation
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 import android.app.NotificationManager as AndroidNotificationManager
 
 class NotificationManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
+    @AutofillDebugActivityAnnotation private val autofillDebugActivityClass: Class<*>
 ) : NotificationManager {
 
     override fun sendNotification() {
@@ -42,6 +46,38 @@ class NotificationManagerImpl @Inject constructor(
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         with(NotificationManagerCompat.from(context)) {
             notify(COPY_TO_CLIPBOARD_UNIQUE_ID, builder.build())
+        }
+    }
+
+    override fun showDebugAutofillNotification() {
+        createAutofillNotificationChannel(context)
+        val builder = NotificationCompat.Builder(context, AUTOFILL_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle("Autofill debug")
+            .setContentText("Autofill debug mode is enabled")
+            .setAutoCancel(false)
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setOngoing(true)
+            .setContentIntent(
+                PendingIntent.getActivity(
+                    context,
+                    0,
+                    Intent(context, autofillDebugActivityClass).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    },
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+            )
+
+        with(NotificationManagerCompat.from(context)) {
+            notify(AUTOFILL_DEBUG_MODE_UNIQUE_ID, builder.build())
+        }
+    }
+
+    override fun hideDebugAutofillNotification() {
+        with(NotificationManagerCompat.from(context)) {
+            cancel(AUTOFILL_DEBUG_MODE_UNIQUE_ID)
         }
     }
 
@@ -60,6 +96,7 @@ class NotificationManagerImpl @Inject constructor(
     companion object {
         private const val NOTIFICATION_TIMEOUT = 2000L
         private const val COPY_TO_CLIPBOARD_UNIQUE_ID = 1
+        private const val AUTOFILL_DEBUG_MODE_UNIQUE_ID = 2
         private const val AUTOFILL_CHANNEL_ID = "AUTOFILL"
     }
 }

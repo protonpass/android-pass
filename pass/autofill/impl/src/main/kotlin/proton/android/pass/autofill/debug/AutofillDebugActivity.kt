@@ -16,10 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.notifications.api
+package proton.android.pass.autofill.debug
 
-interface NotificationManager {
-    fun sendNotification()
-    fun showDebugAutofillNotification()
-    fun hideDebugAutofillNotification()
+import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import androidx.fragment.app.FragmentActivity
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class AutofillDebugActivity : FragmentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            AutofillDebugApp(
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
 }

@@ -18,8 +18,8 @@
 
 package proton.android.pass.notifications.api
 
-interface NotificationManager {
-    fun sendNotification()
-    fun showDebugAutofillNotification()
-    fun hideDebugAutofillNotification()
-}
+import javax.inject.Qualifier
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AutofillDebugActivityAnnotation

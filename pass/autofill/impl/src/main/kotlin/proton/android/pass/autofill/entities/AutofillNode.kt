@@ -20,9 +20,11 @@ package proton.android.pass.autofill.entities
 
 import android.text.InputType
 import android.view.autofill.AutofillValue
+import kotlinx.serialization.Serializable
 import proton.android.pass.common.api.Option
 
 @JvmInline
+@Serializable
 value class InputTypeValue(val value: Int) {
 
     fun hasVariations(vararg variations: Int): Boolean =

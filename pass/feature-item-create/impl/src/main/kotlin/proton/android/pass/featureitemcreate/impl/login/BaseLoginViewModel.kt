@@ -688,7 +688,7 @@ abstract class BaseLoginViewModel(
     ) {
         itemContentState.update { loginItem ->
             val customFields = loginItem.customFields.toMutableList()
-            val customFieldContent: CustomFieldContent.Hidden? = customFields[field.index]
+            val customFieldContent: CustomFieldContent.Hidden? = customFields.getOrNull(field.index)
                 as? CustomFieldContent.Hidden
             customFieldContent ?: return@update loginItem
             val hiddenValueByteArray = encryptionContextProvider.withEncryptionContext {

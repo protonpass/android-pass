@@ -19,7 +19,7 @@ android {
     namespace = "proton.android.pass.autofill.e2e"
 
     defaultConfig {
-        applicationId = "me.proton.pass.core.autofill.e2e"
+        applicationId = "proton.android.pass.autofill.e2e"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = appVersionCode
@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.material)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.core.userSettings.domain)
 
     implementation(projects.pass.account.fakes)
     implementation(projects.pass.autofill.impl)
@@ -67,7 +68,9 @@ dependencies {
     implementation(projects.pass.commonUi.fakes)
     implementation(projects.pass.commonTest)
     implementation(projects.pass.crypto.fakes)
+    implementation(projects.pass.data.api)
     implementation(projects.pass.data.fakes)
+    implementation(projects.pass.domain)
     implementation(projects.pass.notifications.fakes)
     implementation(projects.pass.preferences.fakes)
     implementation(projects.pass.telemetry.fakes)

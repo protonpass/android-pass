@@ -20,6 +20,47 @@ package proton.android.pass.autofill.e2e
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
+import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.pass.domain.ItemId
+import javax.inject.Inject
 
 @HiltAndroidApp
-class E2EApp : Application()
+class E2EApp : Application() {
+
+    @Inject
+    lateinit var accountManager: TestAccountManager
+
+    @Inject
+    lateinit var loginItems: TestGetSuggestedLoginItems
+
+    override fun onCreate() {
+        super.onCreate()
+        setupItems()
+        setupAccount()
+    }
+
+    private fun setupItems() {
+        val items = listOf(
+            TestObserveItems.createLogin(
+                itemId = ItemId("item1"),
+                title = "Item1",
+                username = "user1",
+                password = "pass1"
+            ),
+            TestObserveItems.createLogin(
+                itemId = ItemId("item2"),
+                title = "Item2",
+                username = "user2",
+                password = "pass2"
+            )
+        )
+        loginItems.sendValue(Result.success(items))
+    }
+
+    private fun setupAccount() {
+        accountManager.sendPrimaryUserId(UserId("user1"))
+    }
+}

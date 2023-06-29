@@ -20,7 +20,7 @@ package proton.android.pass.password.api
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-import kotlin.random.Random
+import java.security.SecureRandom
 
 class WordPasswordGeneratorTest {
 
@@ -39,7 +39,7 @@ class WordPasswordGeneratorTest {
                 count = 1,
                 separator = PasswordGenerator.WordSeparator.Hyphen
             ),
-            expected = "aloft"
+            expected = "activate"
         )
     }
 
@@ -51,7 +51,7 @@ class WordPasswordGeneratorTest {
                 separator = PasswordGenerator.WordSeparator.Space,
                 capitalise = true
             ),
-            expected = "Aloft Clamp"
+            expected = "Activate Sincere"
         )
     }
 
@@ -63,7 +63,7 @@ class WordPasswordGeneratorTest {
                 separator = PasswordGenerator.WordSeparator.Period,
                 includeNumbers = true
             ),
-            expected = "aloft0.outpour3.tremble8"
+            expected = "activate1.gulf5.impulse6"
         )
     }
 
@@ -76,7 +76,7 @@ class WordPasswordGeneratorTest {
                 capitalise = true,
                 includeNumbers = true
             ),
-            expected = "Aloft0,Outpour3,Tremble8,Sinister6"
+            expected = "Activate1,Gulf5,Impulse6,Prude0"
         )
     }
 
@@ -88,7 +88,7 @@ class WordPasswordGeneratorTest {
                 separator = PasswordGenerator.WordSeparator.Underscore,
                 includeNumbers = true
             ),
-            expected = "aloft0_outpour3_tremble8_sinister6_opposite1"
+            expected = "activate1_gulf5_impulse6_prude0_monday2"
         )
     }
 
@@ -101,7 +101,7 @@ class WordPasswordGeneratorTest {
                 capitalise = true,
                 includeNumbers = true
             ),
-            expected = "Aloft01Outpour38Tremble85Sinister63Opposite15Cotton0"
+            expected = "Activate16Gulf53Impulse62Prude05Monday22Pardon7"
         )
     }
 
@@ -114,7 +114,7 @@ class WordPasswordGeneratorTest {
                 capitalise = true,
                 includeNumbers = true
             ),
-            expected = "Aloft0%Outpour3#Tremble8%Sinister6!Opposite1!Cotton0@Refueling8"
+            expected = "Activate1@Gulf5%Impulse6@Prude06Monday29Pardon77Pancreas3"
         )
     }
 
@@ -124,7 +124,9 @@ class WordPasswordGeneratorTest {
     ) {
         val res = PasswordGenerator.generateWordPassword(
             spec = spec,
-            random = Random(1234)
+            random = SecureRandom.getInstance("SHA1PRNG").apply {
+                setSeed(1234L)
+            }
         )
         assertThat(res).isEqualTo(expected)
     }

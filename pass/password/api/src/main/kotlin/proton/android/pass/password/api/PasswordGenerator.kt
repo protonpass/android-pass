@@ -18,8 +18,8 @@
 
 package proton.android.pass.password.api
 
+import java.security.SecureRandom
 import java.util.Locale
-import kotlin.random.Random
 
 object PasswordGenerator {
     private const val LOWERCASE_LETTERS = "abcdefghjkmnpqrstuvwxyz"
@@ -53,7 +53,7 @@ object PasswordGenerator {
 
     fun generateWordPassword(
         spec: WordPasswordSpec,
-        random: Random = Random
+        random: SecureRandom = SecureRandom()
     ): String {
         if (spec.count == 0) return ""
         val words = (0 until spec.count).map {
@@ -65,7 +65,7 @@ object PasswordGenerator {
             }
 
             if (spec.includeNumbers) {
-                val number = random.nextInt(from = 0, until = 9)
+                val number = random.nextIntInRange(from = 0, until = 9)
                 "${capitalisedWord}$number"
             } else {
                 capitalisedWord
@@ -78,7 +78,7 @@ object PasswordGenerator {
     @Suppress("MagicNumber")
     fun generatePassword(
         spec: RandomPasswordSpec,
-        random: Random = Random
+        random: SecureRandom = SecureRandom()
     ): String {
         if (spec.length == 0) return ""
         val dictionary = getRandomDictionary(spec)
@@ -133,7 +133,7 @@ object PasswordGenerator {
         }
     }
 
-    private fun joinWithSeparator(words: List<String>, separator: WordSeparator, random: Random) =
+    private fun joinWithSeparator(words: List<String>, separator: WordSeparator, random: SecureRandom) =
         buildString {
             if (words.isEmpty()) return@buildString
 
@@ -145,14 +145,14 @@ object PasswordGenerator {
             }
         }
 
-    private fun getSeparator(separator: WordSeparator, random: Random): Char =
+    private fun getSeparator(separator: WordSeparator, random: SecureRandom): Char =
         when (separator) {
             WordSeparator.Hyphen -> '-'
             WordSeparator.Space -> ' '
             WordSeparator.Period -> '.'
             WordSeparator.Comma -> ','
             WordSeparator.Underscore -> '_'
-            WordSeparator.Numbers -> random.nextInt(from = 0, until = 9).digitToChar()
+            WordSeparator.Numbers -> random.nextIntInRange(from = 0, until = 9).digitToChar()
             WordSeparator.NumbersAndSymbols -> {
                 val dictionary = "${NUMBERS}$SYMBOLS"
                 dictionary.random(random)

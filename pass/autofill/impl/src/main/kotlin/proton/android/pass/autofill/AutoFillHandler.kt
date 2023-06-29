@@ -105,7 +105,10 @@ object AutoFillHandler {
         }
 
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
-        if (assistInfo.fields.isEmpty()) return
+        if (assistInfo.fields.isEmpty()) {
+            callback.onSuccess(null)
+            return
+        }
         val packageNameOption = Utils.getApplicationPackageName(windowNode)
             .takeIf { !BROWSERS.contains(it) }
             .toOption()
@@ -125,7 +128,7 @@ object AutoFillHandler {
                 requestOption = request.inlineSuggestionsRequest.toOption()
             )
         } else {
-            listOf(autofillServiceManager.createMenuPresentationDataset(autofillData))
+            autofillServiceManager.createMenuPresentationDataset(autofillData)
         }
         datasetList.forEach {
             responseBuilder.addDataset(it)

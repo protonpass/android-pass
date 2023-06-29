@@ -94,7 +94,11 @@ fun AutofillAppContent(
                     }
                     viewModel.onAutofillItemSelected(source)
                     val mappings = viewModel.getMappings(autofillItem, autofillAppState)
-                    onNavigate(AutofillNavigation.Selected(mappings))
+                    if (mappings.mappings.isNotEmpty()) {
+                        onNavigate(AutofillNavigation.Selected(mappings))
+                    } else {
+                        onNavigate(AutofillNavigation.Cancel)
+                    }
                 },
                 dismissBottomSheet = { callback ->
                     coroutineScope.launch {

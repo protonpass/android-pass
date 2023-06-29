@@ -47,7 +47,6 @@ import proton.android.pass.autofill.ui.autofill.inlinesuggestions.InlineSuggesti
 import proton.android.pass.autofill.ui.autofill.inlinesuggestions.InlineSuggestionsNoUiActivity.Companion.ARG_TITLE
 import proton.android.pass.autofill.ui.autofill.inlinesuggestions.InlineSuggestionsNoUiActivity.Companion.ARG_WEB_DOMAIN
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
@@ -128,9 +127,16 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
             .map { autofillItem ->
                 getMappings(autofillItem, copyTotpToClipboard, autofillAppState)
             }
-        when (mappingsOption) {
-            None -> InlineSuggestionAutofillNoUiState.Error
-            is Some -> InlineSuggestionAutofillNoUiState.Success(mappingsOption.value)
+        if (mappingsOption is Some) {
+            if (mappingsOption.value.mappings.isNotEmpty()) {
+                InlineSuggestionAutofillNoUiState.Success(mappingsOption.value)
+            } else {
+                PassLogger.i(TAG, "Empty mappings")
+                InlineSuggestionAutofillNoUiState.Error
+            }
+        } else {
+            PassLogger.i(TAG, "No mappings found")
+            InlineSuggestionAutofillNoUiState.Error
         }
     }
         .stateIn(

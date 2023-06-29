@@ -23,6 +23,7 @@ import android.graphics.BlendMode
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.autofill.Dataset
+import android.view.View
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.widget.RemoteViews
 import android.widget.inline.InlinePresentationSpec
@@ -31,6 +32,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
+import me.proton.core.util.kotlin.takeIfNotEmpty
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.service.R
 import proton.android.pass.biometry.NeedsBiometricAuth
@@ -47,6 +49,7 @@ import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.value
 import proton.pass.domain.Item
+import proton.pass.domain.ItemType
 import javax.inject.Inject
 import kotlin.math.min
 import proton.android.pass.composecomponents.impl.R as PassR
@@ -114,21 +117,58 @@ class AutofillServiceManager @Inject constructor(
         }
     }
 
-    fun createMenuPresentationDataset(autofillData: AutofillData): Dataset {
-        val pendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
+    suspend fun createMenuPresentationDataset(autofillData: AutofillData): List<Dataset> {
+        val suggestedItemsResult = getSuggestedLoginItems(
+            packageName = autofillData.packageInfo.map { it.packageName.value },
+            url = autofillData.assistInfo.url
+        ).firstOrNull().toOption()
+        val openAppPendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
             context = context,
             autofillData = autofillData,
             intentRequestCode = OPEN_PASS_MENU_REQUEST_CODE
         )
-        val datasetBuilderOptions = DatasetBuilderOptions(
-            authenticateView = getMenuPresentationView(context).toOption(),
-            pendingIntent = pendingIntent.toOption()
+        val openAppRemoteView = RemoteViews(context.packageName, R.layout.autofill_item).apply {
+            setTextViewText(R.id.title, context.getText(R.string.autofill_authenticate_prompt))
+            setViewVisibility(R.id.subtitle, View.GONE)
+        }
+        val openAppDatasetOptions = DatasetBuilderOptions(
+            remoteViewPresentation = openAppRemoteView.some(),
+            pendingIntent = openAppPendingIntent.some()
         )
-        return DatasetUtils.buildDataset(
-            context = context,
-            dsbOptions = datasetBuilderOptions,
+        val openAppDataSet = DatasetUtils.buildDataset(
+            options = openAppDatasetOptions,
             assistFields = autofillData.assistInfo.fields
         )
+        val shouldAuthenticate = runBlocking { needsBiometricAuth().first() }
+
+        return (suggestedItemsResult.value() ?: emptyList())
+            .take(2)
+            .mapIndexed { index, value ->
+                val decryptedTitle = encryptionContextProvider.withEncryptionContext {
+                    decrypt(value.title)
+                }
+                val decryptedUsername = (value.itemType as ItemType.Login).username
+                val pendingIntent = PendingIntentUtils.getInlineSuggestionPendingIntent(
+                    context = context,
+                    autofillData = autofillData,
+                    item = value,
+                    intentRequestCode = index,
+                    shouldAuthenticate = shouldAuthenticate
+                )
+                val view = RemoteViews(context.packageName, R.layout.autofill_item).apply {
+                    setTextViewText(R.id.title, decryptedTitle)
+                    setTextViewText(R.id.subtitle, decryptedUsername.takeIfNotEmpty() ?: "---")
+                }
+                val options = DatasetBuilderOptions(
+                    remoteViewPresentation = view.some(),
+                    pendingIntent = pendingIntent.some()
+                )
+                DatasetUtils.buildDataset(
+                    options = options,
+                    assistFields = autofillData.assistInfo.fields
+                )
+            }
+            .plus(openAppDataSet)
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -161,7 +201,8 @@ class AutofillServiceManager @Inject constructor(
         } else {
             emptyList()
         }
-    }.plus(listOf(openAppDataSet, pinnedOpenApp))
+    }
+        .plus(listOf(openAppDataSet, pinnedOpenApp))
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun EncryptionContext.createItemDataset(
@@ -189,8 +230,7 @@ class AutofillServiceManager @Inject constructor(
             pendingIntent = pendingIntent.toOption()
         )
         return DatasetUtils.buildDataset(
-            context = context,
-            dsbOptions = datasetBuilderOptions,
+            options = datasetBuilderOptions,
             assistFields = autofillData.assistInfo.fields
         )
     }
@@ -217,8 +257,7 @@ class AutofillServiceManager @Inject constructor(
             pendingIntent = pendingIntent.toOption()
         )
         return DatasetUtils.buildDataset(
-            context = context,
-            dsbOptions = builderOptions,
+            options = builderOptions,
             assistFields = autofillData.assistInfo.fields
         )
     }
@@ -244,8 +283,7 @@ class AutofillServiceManager @Inject constructor(
             pendingIntent = pendingIntent.toOption()
         )
         return DatasetUtils.buildDataset(
-            context = context,
-            dsbOptions = builderOptions,
+            options = builderOptions,
             assistFields = autofillData.assistInfo.fields
         )
     }
@@ -258,18 +296,6 @@ class AutofillServiceManager @Inject constructor(
         } else {
             min
         }
-    }
-
-    private fun getMenuPresentationView(context: Context): RemoteViews {
-        val view = RemoteViews(
-            context.packageName,
-            android.R.layout.simple_list_item_1
-        )
-        view.setTextViewText(
-            android.R.id.text1,
-            context.getString(R.string.autofill_authenticate_prompt)
-        )
-        return view
     }
 
     @RequiresApi(Build.VERSION_CODES.R)

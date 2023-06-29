@@ -81,7 +81,11 @@ class AutofillAppViewModel @Inject constructor(
                 autofillItem = autofillItem,
                 androidAutofillFieldIds = autofillAppState.androidAutofillIds,
                 autofillTypes = autofillAppState.fieldTypes
-            )
+            ).also {
+                if (it.mappings.isEmpty()) {
+                    PassLogger.i(TAG, "No mappings found")
+                }
+            }
         }
 
     fun onAutofillItemSelected(source: AutofillTriggerSource) {

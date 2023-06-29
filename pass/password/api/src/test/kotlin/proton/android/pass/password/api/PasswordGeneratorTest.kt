@@ -23,7 +23,7 @@ import org.junit.Test
 import proton.android.pass.password.api.PasswordGenerator.containsCapitalLetters
 import proton.android.pass.password.api.PasswordGenerator.containsNumbers
 import proton.android.pass.password.api.PasswordGenerator.containsSymbols
-import kotlin.random.Random
+import java.security.SecureRandom
 
 class PasswordGeneratorTest {
 
@@ -36,7 +36,7 @@ class PasswordGeneratorTest {
                 hasNumbers = false,
                 hasSymbols = false
             ),
-            expected = "gyuh"
+            expected = "xjsk"
         )
     }
 
@@ -49,7 +49,7 @@ class PasswordGeneratorTest {
                 hasNumbers = false,
                 hasSymbols = false
             ),
-            expected = "Gyuh"
+            expected = "xJSK"
         )
     }
 
@@ -62,7 +62,7 @@ class PasswordGeneratorTest {
                 hasNumbers = true,
                 hasSymbols = false
             ),
-            expected = "b1jd"
+            expected = "f8j3"
         )
     }
 
@@ -75,7 +75,7 @@ class PasswordGeneratorTest {
                 hasNumbers = false,
                 hasSymbols = true
             ),
-            expected = "!%!w"
+            expected = "rgy*"
         )
     }
 
@@ -88,7 +88,7 @@ class PasswordGeneratorTest {
                 hasNumbers = true,
                 hasSymbols = false
             ),
-            expected = "ZG1f"
+            expected = "pJ05"
         )
     }
 
@@ -102,7 +102,7 @@ class PasswordGeneratorTest {
                 hasNumbers = false,
                 hasSymbols = true
             ),
-            expected = "wYV*"
+            expected = "YbK*"
         )
     }
 
@@ -115,18 +115,18 @@ class PasswordGeneratorTest {
                 hasNumbers = true,
                 hasSymbols = true
             ),
-            expected = "ra1*"
+            expected = "b\$0f"
         )
     }
 
     @Test
     fun `multiple characters`() {
         val cases = mapOf(
-            5 to "fN\$9&",
-            6 to "fN\$*8y",
-            7 to "fN\$*&3!",
-            8 to "fN\$*&y5D",
-            9 to "fN\$*&y!1^",
+            5 to "w3S\$^",
+            6 to "w3^K^%",
+            7 to "w3^\$J%5",
+            8 to "w3^\$^B5P",
+            9 to "w3^\$^%SP&",
         )
         cases.forEach { (length, expected) ->
             test(
@@ -145,7 +145,9 @@ class PasswordGeneratorTest {
     private fun test(spec: PasswordGenerator.RandomPasswordSpec, expected: String): String {
         val res = PasswordGenerator.generatePassword(
             spec = spec,
-            random = Random(1234)
+            random = SecureRandom.getInstance("SHA1PRNG").apply {
+                setSeed(1234L)
+            }
         )
         assertThat(res.length).isEqualTo(spec.length)
         assertThat(res).isEqualTo(expected)

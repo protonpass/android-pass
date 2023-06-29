@@ -18,6 +18,7 @@
 
 package proton.android.pass.autofill.ui.autofill
 
+import android.R
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -49,6 +50,7 @@ import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.preferences.AllowScreenshotsPreference
@@ -115,26 +117,19 @@ class AutofillActivity : FragmentActivity() {
         finish()
     }
 
-    private fun prepareAutofillSuccessIntent(autofillMappings: AutofillMappings): Intent {
-        val remoteView = RemoteViews(packageName, android.R.layout.simple_list_item_1).toOption()
-        val datasetBuilderOptions = DatasetBuilderOptions(
-            // Autofill presentations cannot be empty on 33, or it will throw an IllegalStateException
-            authenticateView = remoteView
-        )
-
-        val res = Intent()
-        if (!autofillMappings.mappings.isEmpty()) {
-            val dataset = DatasetUtils.buildDataset(
-                context = this,
-                dsbOptions = datasetBuilderOptions,
-                autofillMappings = autofillMappings.toOption(),
-                assistFields = emptyList()
+    private fun prepareAutofillSuccessIntent(autofillMappings: AutofillMappings): Intent =
+        Intent().apply {
+            // We must send a remote view presentation, otherwise it will crash
+            val notUsed = RemoteViews(packageName, R.layout.simple_list_item_1)
+            val options = DatasetBuilderOptions(
+                remoteViewPresentation = notUsed.some()
             )
-            res.putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
+            val dataset = DatasetUtils.buildDataset(
+                options = options,
+                autofillMappings = autofillMappings.toOption()
+            )
+            putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
         }
-
-        return res
-    }
 
     private fun setSecureMode() {
         val factory = EntryPointAccessors.fromApplication(this, UserPreferenceEntryPoint::class.java)

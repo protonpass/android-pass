@@ -18,7 +18,7 @@ android {
     namespace = "proton.android.pass.autofill.sample"
 
     defaultConfig {
-        applicationId = "me.proton.pass.core.autofill.sample"
+        applicationId = "proton.android.pass.autofill.sample"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = appVersionCode

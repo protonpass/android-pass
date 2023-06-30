@@ -20,6 +20,8 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.notifications.api)
+
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.dagger.hilt.android)
@@ -27,6 +29,4 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.common.api)
-
-    api(projects.pass.notifications.api)
 }

@@ -20,13 +20,14 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.data.api)
+
     implementation(libs.core.user)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(projects.pass.common.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.crypto.fakes)
-    implementation(projects.pass.data.api)
     implementation(projects.pass.dataModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.protos)

@@ -22,7 +22,7 @@ data class ProtosConfig(
 val PROTOBUF_TAG = "1.0.1"
 
 fun getProtosConfig(): ProtosConfig {
-    val isCI = System.getenv("CI").toBoolean()
+    val isCI = System.getenv("GITLAB_CI").toBoolean()
     val customProtosUrl = localProperties.getProperty("protos.url", "")
     return if (isCI) {
         val username = "gitlab-ci-token"

@@ -38,10 +38,10 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.common.api)
+
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.coroutines.test)
-
-    implementation(projects.pass.common.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

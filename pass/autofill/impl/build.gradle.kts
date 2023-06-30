@@ -57,7 +57,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.pass.autofill.api)
+    api(projects.pass.autofill.api)
 
     implementation(libs.accompanist.insets)
     implementation(libs.accompanist.navigation.animation)

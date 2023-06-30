@@ -51,6 +51,8 @@ protobuf {
 }
 
 dependencies {
+    api(projects.pass.preferences.api)
+
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.startup.runtime)
@@ -68,6 +70,4 @@ dependencies {
     implementation(projects.pass.common.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.commonUi.api)
-
-    api(projects.pass.preferences.api)
 }

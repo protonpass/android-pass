@@ -20,6 +20,8 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.totp.api)
+
     implementation(libs.commons.codec)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
@@ -29,7 +31,6 @@ dependencies {
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.log.api)
-    implementation(projects.pass.totp.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

@@ -20,7 +20,7 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(projects.pass.inAppUpdates.api)
+    api(projects.pass.inAppUpdates.api)
 
     implementation(libs.google.inAppUpdate)
     implementation(libs.core.utilKotlin)

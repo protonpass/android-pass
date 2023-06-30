@@ -20,6 +20,8 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.telemetry.api)
+
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.kotlinx.coroutines.core)
@@ -32,7 +34,6 @@ dependencies {
 
     implementation(projects.pass.data.api)
     implementation(projects.pass.log.api)
-    implementation(projects.pass.telemetry.api)
 
     testImplementation(libs.core.test.kotlin)
     testImplementation(libs.junit)

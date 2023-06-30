@@ -35,8 +35,10 @@ import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
+import me.proton.core.notification.data.local.db.NotificationDatabase
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.payment.data.local.db.PaymentDatabase
+import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
@@ -99,4 +101,10 @@ abstract class AppDatabaseBindsModule {
 
     @Binds
     abstract fun provideKeyTransparencyDatabase(db: AppDatabase): KeyTransparencyDatabase
+
+    @Binds
+    abstract fun provideNotificationDatabase(appDatabase: AppDatabase): NotificationDatabase
+
+    @Binds
+    abstract fun providePushDatabase(appDatabase: AppDatabase): PushDatabase
 }

@@ -71,7 +71,7 @@ sentry = "6.18.1"
 # Showkase
 showkase = "1.0.0-beta13"
 # Squareup
-leakCanary = "2.10"
+leakCanary = "2.12"
 okhttp = "4.10.0"
 retrofit = "2.9.0"
 # Test

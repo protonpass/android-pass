@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Proton Pass</string>
 
-    <string name="description_no_pass_scope">Proton Pass is currently in early access and only available to invited users of Proton</string>
-
     <string name="twenty_vaults">20 vaults</string>
     <string name="unlimited_email_alias">Unlimited email aliases</string>
     <string name="custom_fields">Custom fields</string>

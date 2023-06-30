@@ -21,6 +21,7 @@ androidComponents.beforeVariants { variant ->
 
 dependencies {
     api(projects.pass.log.api)
+
     implementation(projects.pass.tracing.impl)
     implementation(projects.pass.appConfig.api)
 

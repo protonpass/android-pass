@@ -21,6 +21,8 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.image.api)
+
     implementation(libs.coil.base)
     implementation(libs.coil.gif)
     implementation(libs.coil.svg)
@@ -31,7 +33,6 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
-    implementation(projects.pass.image.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.preferences.api)
 

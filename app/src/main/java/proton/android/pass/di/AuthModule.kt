@@ -42,11 +42,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.auth.PassUserCheck
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultHelpOptionHandler
+import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.auth.presentation.HelpOptionHandler
 import me.proton.core.auth.presentation.ui.LoginActivity
 import me.proton.core.user.domain.UserManager
@@ -60,12 +59,10 @@ object AuthModule {
     @Singleton
     fun provideUserCheck(
         @ApplicationContext context: Context,
-        sessionManager: SessionManager,
         accountManager: AccountManager,
         userManager: UserManager
-    ): PostLoginAccountSetup.UserCheck = PassUserCheck(
+    ): PostLoginAccountSetup.UserCheck = DefaultUserCheck(
         context,
-        sessionManager,
         accountManager,
         userManager
     )

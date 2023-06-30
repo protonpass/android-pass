@@ -36,6 +36,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -123,6 +124,14 @@ private fun SessionDetailContent(
     }
 }
 
+fun AutofillDebugSaver.DebugAutofillNode.hasEditTextOrUrl(): Boolean {
+    if (className == "android.widget.EditText" || !url.isNullOrBlank()) {
+        return true
+    }
+
+    return children.any { it.hasEditTextOrUrl() }
+}
+
 @Composable
 private fun DebugAutofillNodeView(
     modifier: Modifier = Modifier,
@@ -130,7 +139,7 @@ private fun DebugAutofillNodeView(
     padding: Dp,
     level: Int
 ) {
-    var showContent by remember { mutableStateOf(true) }
+    var showContent by remember { mutableStateOf(content.hasEditTextOrUrl()) }
     Column(modifier = modifier.padding(start = padding, top = 4.dp, bottom = 4.dp)) {
         Row(
             modifier = Modifier
@@ -150,14 +159,17 @@ private fun DebugAutofillNodeView(
                     .background(colorFromLevel(level))
             )
             Column(modifier = Modifier.fillMaxHeight()) {
-                RowText(text = fieldRow("CN", content.className))
+                RowText(
+                    text = fieldRow("CN", content.className),
+                    color = if (content.className == "android.widget.EditText") Color.Red else Color.White
+                )
 
                 if (!content.text.isNullOrBlank()) {
                     RowText(text = fieldRow("Text", content.text))
                 }
 
                 if (!content.url.isNullOrBlank()) {
-                    RowText(text = fieldRow("URL", content.url))
+                    RowText(text = fieldRow("URL", content.url), color = Color.Green)
                 }
 
                 val autofillHints = content.autofillHints.filter { it.isNotBlank() }
@@ -180,7 +192,8 @@ private fun DebugAutofillNodeView(
                     }
                 }
 
-                val htmlAttributes = content.htmlAttributes.filter { it.key.isNotBlank() && it.value.isNotBlank() }
+                val htmlAttributes =
+                    content.htmlAttributes.filter { it.key.isNotBlank() && it.value.isNotBlank() }
                 if (htmlAttributes.isNotEmpty()) {
                     Column {
                         RowText(text = fieldRow("HTML Attrs", ""))
@@ -193,10 +206,20 @@ private fun DebugAutofillNodeView(
                     RowText(text = fieldRow("InputType", "${content.inputType}"))
                 }
 
-                RowText(text = fieldRow("ImportantForAutofill", "${content.isImportantForAutofill}"))
+                RowText(
+                    text = fieldRow(
+                        "ImportantForAutofill",
+                        "${content.isImportantForAutofill}"
+                    )
+                )
 
                 if (content.children.isNotEmpty()) {
                     RowText(text = fieldRow("Children", "${content.children.size} nodes"))
+                    Divider(
+                        modifier = Modifier.width(200.dp),
+                        thickness = 1.dp,
+                        color = Color.White
+                    )
                 }
             }
         }
@@ -217,9 +240,10 @@ private fun DebugAutofillNodeView(
 @Composable
 fun RowText(
     modifier: Modifier = Modifier,
-    text: AnnotatedString
+    text: AnnotatedString,
+    color: Color = Color.White
 ) {
-    Text(modifier = modifier, text = text, fontSize = 12.sp)
+    Text(modifier = modifier, text = text, fontSize = 12.sp, color = color)
 }
 
 fun fieldRow(fieldName: String, fieldValue: String?): AnnotatedString = buildAnnotatedString {

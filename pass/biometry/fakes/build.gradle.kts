@@ -20,9 +20,10 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.biometry.api)
+
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
-    api(projects.pass.biometry.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

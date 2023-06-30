@@ -20,6 +20,8 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.biometry.api)
+
     implementation(libs.androidx.biometric)
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)
@@ -30,7 +32,6 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.common.api)
-    api(projects.pass.biometry.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.preferences.api)
 

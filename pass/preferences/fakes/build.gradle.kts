@@ -20,11 +20,12 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.preferences.api)
+
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
 
     implementation(projects.pass.common.api)
-    api(projects.pass.preferences.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

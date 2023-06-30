@@ -317,6 +317,7 @@ class CreateLoginScreenTest {
             waitUntilExists(hasText(hiddenCustomFieldValue))
 
             draftRepository.save(DRAFT_CUSTOM_FIELD_KEY, totpCustomField)
+            onNode(hasText(totpCustomFieldValue)).performScrollTo()
             waitUntilExists(hasText(totpCustomFieldValue))
 
             // Submit

@@ -51,10 +51,16 @@ import me.proton.core.key.data.entity.PublicAddressKeyEntity
 import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
 import me.proton.core.keytransparency.data.local.entity.AddressChangeEntity
 import me.proton.core.keytransparency.data.local.entity.SelfAuditResultEntity
+import me.proton.core.notification.data.local.db.NotificationConverters
+import me.proton.core.notification.data.local.db.NotificationDatabase
+import me.proton.core.notification.data.local.db.NotificationEntity
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.observability.data.entity.ObservabilityEventEntity
 import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
+import me.proton.core.push.data.local.db.PushConverters
+import me.proton.core.push.data.local.db.PushDatabase
+import me.proton.core.push.data.local.db.PushEntity
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserConverters
 import me.proton.core.user.data.db.UserDatabase
@@ -102,6 +108,8 @@ import proton.android.pass.data.impl.db.entities.TelemetryEntity
         UserEntity::class,
         UserKeyEntity::class,
         UserSettingsEntity::class,
+        NotificationEntity::class,
+        PushEntity::class,
         // Pass
         ItemEntity::class,
         ShareEntity::class,
@@ -135,7 +143,9 @@ import proton.android.pass.data.impl.db.entities.TelemetryEntity
     HumanVerificationConverters::class,
     UserSettingsConverters::class,
     EventManagerConverters::class,
-    ChallengeConverters::class
+    ChallengeConverters::class,
+    NotificationConverters::class,
+    PushConverters::class,
 )
 abstract class AppDatabase :
     BaseDatabase(),
@@ -153,10 +163,12 @@ abstract class AppDatabase :
     PaymentDatabase,
     PublicAddressDatabase,
     UserDatabase,
-    UserSettingsDatabase {
+    UserSettingsDatabase,
+    NotificationDatabase,
+    PushDatabase {
 
     companion object {
-        const val VERSION = 17
+        const val VERSION = 18
 
         const val DB_NAME = "db-passkey"
 
@@ -168,6 +180,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_9_10,
             AppDatabaseMigrations.MIGRATION_14_15,
             AppDatabaseMigrations.MIGRATION_16_17,
+            AppDatabaseMigrations.MIGRATION_17_18,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

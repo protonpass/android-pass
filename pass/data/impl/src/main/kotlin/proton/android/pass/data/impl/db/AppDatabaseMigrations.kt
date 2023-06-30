@@ -26,7 +26,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
+import me.proton.core.notification.data.local.db.NotificationDatabase
 import me.proton.core.observability.data.db.ObservabilityDatabase
+import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
@@ -130,6 +132,14 @@ object AppDatabaseMigrations {
     val MIGRATION_16_17 = object : Migration(16, 17) {
         override fun migrate(database: SupportSQLiteDatabase) {
             UserDatabase.MIGRATION_2.migrate(database)
+        }
+    }
+
+    val MIGRATION_17_18 = object : Migration(17, 18) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            NotificationDatabase.MIGRATION_0.migrate(database)
+            NotificationDatabase.MIGRATION_1.migrate(database)
+            PushDatabase.MIGRATION_0.migrate(database)
         }
     }
 }

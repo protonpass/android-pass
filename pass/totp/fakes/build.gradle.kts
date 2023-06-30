@@ -20,7 +20,8 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(projects.pass.totp.api)
+    api(projects.pass.totp.api)
+
     implementation(projects.pass.common.api)
 
     implementation(libs.dagger.hilt.android)

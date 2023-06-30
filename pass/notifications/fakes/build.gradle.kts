@@ -20,9 +20,9 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(projects.pass.common.api)
-
     api(projects.pass.notifications.api)
+
+    implementation(projects.pass.common.api)
 
     implementation(libs.kotlinx.coroutines.core)
 

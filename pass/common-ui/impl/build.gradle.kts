@@ -20,7 +20,7 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(projects.pass.commonUi.api)
+    api(projects.pass.commonUi.api)
 
     implementation(libs.androidx.lifecycle.process)
 

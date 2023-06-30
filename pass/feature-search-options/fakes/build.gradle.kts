@@ -20,7 +20,7 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(projects.pass.featureSearchOptions.api)
+    api(projects.pass.featureSearchOptions.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

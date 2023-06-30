@@ -49,6 +49,9 @@ android {
 
 dependencies {
     compileOnly(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
+
+    api(projects.pass.data.api)
+
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.runtime.ktx)
@@ -84,7 +87,6 @@ dependencies {
 
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.common.api)
-    implementation(projects.pass.data.api)
     implementation(projects.pass.dataModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)

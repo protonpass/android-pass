@@ -39,10 +39,10 @@ val privateProperties = Properties().apply {
 
 val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
-val testEnvUrl = System.getenv("TEST_ENV_URL") ?: "api.proton.black"
-val prodEnvUrl = System.getenv("PROD_ENV_URL") ?: "pass-api.proton.me"
-val prodHvUrl = if (System.getenv("PROD_ENV_URL").isNullOrBlank()) "verify.proton.me" else "verify.proton.black"
-val useDefaultPins = if (System.getenv("PROD_ENV_URL").isNullOrBlank()) "true" else "false"
+val testEnvUrl: String = System.getenv("TEST_ENV_URL") ?: "api.proton.black"
+val prodEnvUrl: String = System.getenv("PROD_ENV_URL") ?: "pass-api.proton.me"
+val prodHvUrl: String = if (System.getenv("PROD_ENV_URL").isNullOrBlank()) "verify.proton.me" else "verify.proton.black"
+val useDefaultPins: Boolean = if (System.getenv("PROD_ENV_URL").isNullOrBlank()) true else false
 
 val jobId: Int = System.getenv("CI_JOB_ID")?.take(3)?.toInt() ?: 0
 val appVersionName: String = "1.5.4"
@@ -163,7 +163,7 @@ android {
         }
         create("prod") {
             dimension = "env"
-            buildConfigField("Boolean", "USE_DEFAULT_PINS", useDefaultPins.toBuildConfigValue())
+            buildConfigField("Boolean", "USE_DEFAULT_PINS", useDefaultPins.toString())
             buildConfigField("String", "HOST", prodEnvUrl.toBuildConfigValue())
             buildConfigField("String", "HV_HOST", prodHvUrl.toBuildConfigValue())
         }

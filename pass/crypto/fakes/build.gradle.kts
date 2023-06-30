@@ -20,6 +20,8 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    api(projects.pass.crypto.api)
+
     implementation(libs.core.crypto)
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.key)
@@ -30,7 +32,6 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.commonTest)
-    implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.protos)
     implementation(projects.pass.account.fakes)

@@ -20,7 +20,8 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(projects.pass.account.api)
+    api(projects.pass.account.api)
+
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.accountManager.domain)
     implementation(libs.core.payment.domain)

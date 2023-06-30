@@ -52,7 +52,7 @@ fun StringBuilder.appendAndroidLibraryPlugin(namespace: String): StringBuilder =
 fun StringBuilder.appendLibraryDependency(projectAccessor: String): StringBuilder = append(
     """
         dependencies {
-            implementation(projects.$projectAccessor.api)
+            api(projects.$projectAccessor.api)
         }
     """.trimIndent()
 )

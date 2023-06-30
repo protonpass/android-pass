@@ -20,7 +20,7 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(projects.pass.appConfig.api)
+    api(projects.pass.appConfig.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

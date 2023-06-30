@@ -72,7 +72,7 @@ object DatasetUtils {
         if (autofillMappings is Some) {
             datasetBuilder.fillWithMappings(autofillMappings.value)
         } else {
-            datasetBuilder.createDataHolders(assistFields)
+            datasetBuilder.createFieldDataHolders(assistFields)
         }
         return datasetBuilder.build()
     }
@@ -92,7 +92,7 @@ object DatasetUtils {
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun Dataset.Builder.createDataHolders(assistFields: List<AssistField>): Dataset.Builder {
+    private fun Dataset.Builder.createFieldDataHolders(assistFields: List<AssistField>): Dataset.Builder {
         for (field in assistFields) {
             setField(field.id.asAndroid().autofillId, Field.Builder().build())
         }
@@ -119,30 +119,24 @@ object DatasetUtils {
             datasetBuilder.setAuthentication(dsbOptions.pendingIntent.value.intentSender)
         }
 
-        if (dsbOptions.remoteViewPresentation is Some) {
-            if (autofillMappings is Some) {
+        if (autofillMappings is Some) {
+            if (dsbOptions.remoteViewPresentation is Some) {
                 datasetBuilder.fillWithMappings(
                     autofillMappings = autofillMappings.value,
                     remoteView = dsbOptions.remoteViewPresentation.value
                 )
-            } else {
-                datasetBuilder.createDataHolders(
-                    assistFields = assistFields,
-                    remoteView = dsbOptions.remoteViewPresentation.value
-                )
             }
+        } else {
+            datasetBuilder.createValueDataHolders(assistFields)
         }
 
         return datasetBuilder.build()
     }
 
     @Suppress("DEPRECATION")
-    private fun Dataset.Builder.createDataHolders(
-        assistFields: List<AssistField>,
-        remoteView: RemoteViews,
-    ): Dataset.Builder {
+    private fun Dataset.Builder.createValueDataHolders(assistFields: List<AssistField>): Dataset.Builder {
         for (value in assistFields) {
-            setValue(value.id.asAndroid().autofillId, null, remoteView)
+            setValue(value.id.asAndroid().autofillId, null)
         }
         return this
     }

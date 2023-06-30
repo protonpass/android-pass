@@ -21,16 +21,19 @@ package proton.android.pass.autofill.debug
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -46,13 +49,19 @@ object SessionsList : NavItem(baseRoute = "sessionsList")
 fun AutofillDebugSessions(
     modifier: Modifier = Modifier,
     sessions: ImmutableList<AutofillSession>,
-    onSessionClick: (AutofillSession) -> Unit
+    onSessionClick: (AutofillSession) -> Unit,
 ) {
+    val context = LocalContext.current
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar {
                 TopBarTitleView(title = "Autofill Debug")
+                Spacer(modifier = Modifier.weight(1f))
+                Button(onClick = { DebugUtils.autofillDumpDir(context).deleteRecursively() }) {
+                    Text(text = "Clear All")
+                }
             }
         }
     ) { padding ->

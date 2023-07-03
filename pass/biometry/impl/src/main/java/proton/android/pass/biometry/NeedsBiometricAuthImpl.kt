@@ -18,7 +18,6 @@
 
 package proton.android.pass.biometry
 
-import android.os.SystemClock
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -28,7 +27,8 @@ import javax.inject.Inject
 class NeedsBiometricAuthImpl @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val authTimeHolder: BiometryAuthTimeHolder,
-    private val bootCountRetriever: BootCountRetriever
+    private val bootCountRetriever: BootCountRetriever,
+    private val elapsedTimeProvider: ElapsedTimeProvider
 ) : NeedsBiometricAuth {
 
     override fun invoke(): Flow<Boolean> = combine(
@@ -42,7 +42,7 @@ class NeedsBiometricAuthImpl @Inject constructor(
             hasAuthenticated = hasAuthenticated,
             appLockPreference = appLockPreference,
             lastUnlockTime = biometryAuthTime.authTime,
-            now = SystemClock.elapsedRealtime(),
+            now = elapsedTimeProvider.getElapsedTime(),
             lastBootCount = biometryAuthTime.bootCount,
             bootCount = bootCountRetriever.get()
         ).value()

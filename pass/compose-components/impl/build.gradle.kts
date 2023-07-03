@@ -61,4 +61,8 @@ dependencies {
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
+
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.junit)
 }

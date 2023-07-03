@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -43,8 +44,16 @@ fun LoginRow(
 ) {
     val content = item.contents as ItemContents.Login
 
+    val highlightColor = PassTheme.colors.interactionNorm
     val fields = remember(content.title, content.username, content.note, content.urls, highlight) {
-        getHighlightedFields(content.title, content.username, content.note, content.urls, highlight)
+        getHighlightedFields(
+            title = content.title,
+            username = content.username,
+            note = content.note,
+            urls = content.urls,
+            highlight = highlight,
+            highlightColor = highlightColor
+        )
     }
 
     ItemRow(
@@ -57,17 +66,24 @@ fun LoginRow(
             )
         },
         title = fields.title,
-        subtitles = (listOfNotNull(fields.username, fields.note) + fields.websites).toImmutableList(),
+        subtitles = (
+            listOfNotNull(
+                fields.username,
+                fields.note
+            ) + fields.websites
+            ).toImmutableList(),
         vaultIcon = vaultIcon
     )
 }
 
+@Suppress("LongParameterList")
 private fun getHighlightedFields(
     title: String,
     username: String,
     note: String,
     urls: List<String>,
-    highlight: String
+    highlight: String,
+    highlightColor: Color
 ): LoginHighlightFields {
     var annotatedTitle = AnnotatedString(title)
     var annotatedUsername = AnnotatedString(username)
@@ -77,21 +93,21 @@ private fun getHighlightedFields(
         val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
         val titleMatches = regex.findAll(title)
         if (titleMatches.any()) {
-            annotatedTitle = title.highlight(titleMatches)
+            annotatedTitle = title.highlight(titleMatches, highlightColor)
         }
         val usernameMatches = regex.findAll(username)
         if (usernameMatches.any()) {
-            annotatedUsername = username.highlight(usernameMatches)
+            annotatedUsername = username.highlight(usernameMatches, highlightColor)
         }
         val cleanNote = note.replace("\n", " ")
         val noteMatches = regex.findAll(cleanNote)
         if (noteMatches.any()) {
-            annotatedNote = cleanNote.highlight(noteMatches)
+            annotatedNote = cleanNote.highlight(noteMatches, highlightColor)
         }
         urls.forEach {
             val websiteMatch = regex.findAll(it)
             if (websiteMatch.any()) {
-                annotatedWebsites.add(it.highlight(websiteMatch))
+                annotatedWebsites.add(it.highlight(websiteMatch, highlightColor))
             }
             if (annotatedWebsites.size >= 2) return@forEach
         }

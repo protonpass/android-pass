@@ -18,27 +18,13 @@
 
 package proton.android.pass.biometry
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import android.os.SystemClock
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class BiometryBinderModule {
+interface ElapsedTimeProvider {
+    fun getElapsedTime(): Long
+}
 
-    @Binds
-    abstract fun bindBiometryManager(impl: BiometryManagerImpl): BiometryManager
-
-    @Binds
-    abstract fun bindAuthTimeHolder(impl: BiometryAuthTimeHolderImpl): BiometryAuthTimeHolder
-
-    @Binds
-    abstract fun bindNeedsBiometricAuth(impl: NeedsBiometricAuthImpl): NeedsBiometricAuth
-
-    @Binds
-    abstract fun bindBootCountRetriever(impl: BootCountRetrieverImpl): BootCountRetriever
-
-    @Binds
-    abstract fun bindElapsedTimeProvider(impl: ElapsedTimeProviderImpl): ElapsedTimeProvider
+class ElapsedTimeProviderImpl @Inject constructor() : ElapsedTimeProvider {
+    override fun getElapsedTime() = SystemClock.elapsedRealtime()
 }

@@ -270,12 +270,16 @@ class CreditCardDetailScreenTest {
     fun canHandleDowngradedMode() {
         canPerformPaidAction.setResult(false)
 
+        val cardHolder = "Card cardholder"
+        val cvv = "333"
         val pin = "6543"
         val expirationDate = "2010-02"
         val formattedExpirationDate = "02 / 2010"
         val title = performSetup(
+            cardHolder = cardHolder,
             expirationDate = expirationDate,
-            pin = pin
+            pin = pin,
+            verificationNumber = cvv
         )
         val checker = CallChecker<Unit>()
         composeTestRule.apply {
@@ -292,23 +296,33 @@ class CreditCardDetailScreenTest {
             }
             waitUntilExists(hasText(title))
 
-            val upgrade = activity.getString(CompR.string.upgrade)
-
-            // Cardholder, number, cvv should show upgrade
-            onAllNodes(hasText(upgrade)).assertCountEquals(3)
+            // Cardholder is there
+            onNodeWithText(cardHolder).assertExists()
 
             // Expiration date is there
             onNodeWithText(formattedExpirationDate).assertExists()
 
-            // Pin can be revealed
+            // CVV can be revealed
             val contentDescription = activity.getString(R.string.action_reveal_number)
-            onNodeWithText("••••").assertExists()
+            onAllNodes(hasText("••••")).assertCountEquals(2) // CVV and PIN
+
+            // CVV
+            onNode(hasText(cvv)).assertDoesNotExist()
+            onAllNodes(hasText("••••"))[0]
+                .onChildren()
+                .filterToOne(hasContentDescription(contentDescription))
+                .performClick()
+            onNode(hasText(cvv)).assertExists()
+
+            // PIN
+            onNode(hasText(pin)).assertDoesNotExist()
             onNodeWithContentDescription(contentDescription).performClick()
-            onNodeWithText(pin).assertExists()
-            onNodeWithText("••••").assertDoesNotExist()
+            onNode(hasText(pin)).assertExists()
 
             // Can go to upgrade
-            onAllNodes(hasText(upgrade))[0].performClick()
+            val upgrade = activity.getString(CompR.string.upgrade)
+            onAllNodes(hasText(upgrade)).assertCountEquals(1) // CC number
+            onNodeWithText(upgrade).performClick()
             waitUntil { checker.isCalled }
         }
     }

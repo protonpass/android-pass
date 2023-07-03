@@ -21,7 +21,12 @@ package proton.android.pass.biometry
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
 
+data class AuthData(
+    val authTime: Option<Long>,
+    val bootCount: Option<Long>
+)
+
 interface BiometryAuthTimeHolder {
-    fun getBiometryAuthTime(): Flow<Option<Long>>
-    fun storeBiometryAuthTime(instant: Long)
+    fun getBiometryAuthData(): Flow<AuthData>
+    fun storeBiometryAuthData(data: AuthData)
 }

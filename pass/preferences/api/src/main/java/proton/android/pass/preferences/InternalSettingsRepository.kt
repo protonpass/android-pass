@@ -19,13 +19,12 @@
 package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
 
 interface InternalSettingsRepository {
 
-    suspend fun setLastUnlockedTime(time: Instant): Result<Unit>
-    fun getLastUnlockedTime(): Flow<Option<Instant>>
+    suspend fun setLastUnlockedTime(time: Long): Result<Unit>
+    fun getLastUnlockedTime(): Flow<Option<Long>>
 
     suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit>
     fun getDeclinedUpdateVersion(): Flow<String>

@@ -21,18 +21,16 @@ package proton.android.pass.biometry
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.some
 import javax.inject.Inject
 
 class TestBiometryAuthTimeHolder @Inject constructor() : BiometryAuthTimeHolder {
 
-    private val authTimeFlow: MutableStateFlow<Option<Long>> = MutableStateFlow(None)
+    private val authTimeFlow: MutableStateFlow<AuthData> = MutableStateFlow(AuthData(None, None))
 
-    override fun getBiometryAuthTime(): Flow<Option<Long>> = authTimeFlow
+    override fun getBiometryAuthData(): Flow<AuthData> = authTimeFlow
 
-    override fun storeBiometryAuthTime(instant: Long) {
-        authTimeFlow.tryEmit(instant.some())
+    override fun storeBiometryAuthData(data: AuthData) {
+        authTimeFlow.tryEmit(data)
     }
 
 }

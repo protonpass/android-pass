@@ -132,6 +132,7 @@ class AutofillServiceManager @Inject constructor(
             setViewVisibility(R.id.subtitle, View.GONE)
         }
         val openAppDatasetOptions = DatasetBuilderOptions(
+            id = "RemoteView-OpenApp".some(),
             remoteViewPresentation = openAppRemoteView.some(),
             pendingIntent = openAppPendingIntent.some()
         )
@@ -226,6 +227,7 @@ class AutofillServiceManager @Inject constructor(
                 .getLongPressInlinePendingIntent(context)
         )
         val datasetBuilderOptions = DatasetBuilderOptions(
+            id = "InlineSuggestion-$index".some(),
             inlinePresentation = inlinePresentation.toOption(),
             pendingIntent = pendingIntent.toOption()
         )
@@ -253,6 +255,7 @@ class AutofillServiceManager @Inject constructor(
             intentRequestCode = OPEN_PASS_SUGGESTION_REQUEST_CODE
         )
         val builderOptions = DatasetBuilderOptions(
+            id = "InlineSuggestion-OpenApp".some(),
             inlinePresentation = inlinePresentation.toOption(),
             pendingIntent = pendingIntent.toOption()
         )
@@ -279,6 +282,7 @@ class AutofillServiceManager @Inject constructor(
             intentRequestCode = OPEN_PASS_PINNED_REQUEST_CODE
         )
         val builderOptions = DatasetBuilderOptions(
+            id = "InlineSuggestion-PinnedIcon".some(),
             inlinePresentation = inlinePresentation.toOption(),
             pendingIntent = pendingIntent.toOption()
         )

@@ -34,31 +34,17 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun CardCvvRow(
     modifier: Modifier = Modifier,
     cvv: HiddenState,
-    isDowngradedMode: Boolean,
     onToggle: () -> Unit,
-    onClick: () -> Unit,
-    onUpgradeClick: () -> Unit
+    onClick: () -> Unit
 ) {
-    val label = stringResource(R.string.credit_card_cvv_field_name)
-    val icon = CompR.drawable.ic_verified
-
-    if (isDowngradedMode) {
-        UpgradeRow(
-            modifier = modifier,
-            label = label,
-            icon = icon,
-            onUpgrade = onUpgradeClick
-        )
-    } else {
-        CardHiddenRow(
-            modifier = modifier,
-            label = label,
-            value = cvv,
-            icon = icon,
-            onToggle = onToggle,
-            onClick = onClick
-        )
-    }
+    CardHiddenRow(
+        modifier = modifier,
+        label = stringResource(R.string.credit_card_cvv_field_name),
+        value = cvv,
+        icon = CompR.drawable.ic_verified,
+        onToggle = onToggle,
+        onClick = onClick
+    )
 }
 
 @Preview
@@ -71,10 +57,8 @@ fun CardCvvRowPreview(
         Surface {
             CardCvvRow(
                 cvv = cvv,
-                isDowngradedMode = false,
                 onToggle = {},
                 onClick = {},
-                onUpgradeClick = {}
             )
         }
     }

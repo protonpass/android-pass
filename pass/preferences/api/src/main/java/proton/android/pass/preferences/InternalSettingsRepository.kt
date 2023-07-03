@@ -32,5 +32,14 @@ interface InternalSettingsRepository {
     suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit>
     fun getDeclinedUpdateVersion(): Flow<String>
 
+    suspend fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit>
+    fun getHomeSortingOption(): Flow<SortingOptionPreference>
+
+    suspend fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit>
+    fun getAutofillSortingOption(): Flow<SortingOptionPreference>
+
+    suspend fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit>
+    fun getSelectedVault(): Flow<SelectedVaultPreference>
+
     suspend fun clearSettings(): Result<Unit>
 }

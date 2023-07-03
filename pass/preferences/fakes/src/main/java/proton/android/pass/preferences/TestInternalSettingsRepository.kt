@@ -30,9 +30,12 @@ import javax.inject.Singleton
 @Singleton
 class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRepository {
 
-    private val lastUnlockedTimeFlow = MutableStateFlow<Option<Long>>(None)
     private val bootCountFlow = MutableStateFlow<Option<Long>>(None)
+    private val lastUnlockedTimeFlow = MutableStateFlow<Option<Long>>(None)
     private val declinedUpdateVersionFlow = MutableStateFlow("")
+    private val homeSortingFlow = MutableStateFlow(SortingOptionPreference.MostRecent)
+    private val autofillSortingFlow = MutableStateFlow(SortingOptionPreference.MostRecent)
+    private val selectedVaultFlow = MutableStateFlow<SelectedVaultPreference>(SelectedVaultPreference.AllVaults)
 
     override suspend fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -54,6 +57,27 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun getDeclinedUpdateVersion(): Flow<String> = declinedUpdateVersionFlow
+
+    override suspend fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit> {
+        homeSortingFlow.update { sortingOption }
+        return Result.success(Unit)
+    }
+
+    override fun getHomeSortingOption(): Flow<SortingOptionPreference> = homeSortingFlow
+
+    override suspend fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit> {
+        autofillSortingFlow.update { sortingOption }
+        return Result.success(Unit)
+    }
+
+    override fun getAutofillSortingOption(): Flow<SortingOptionPreference> = autofillSortingFlow
+
+    override suspend fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> {
+        selectedVaultFlow.update { selectedVault }
+        return Result.success(Unit)
+    }
+
+    override fun getSelectedVault(): Flow<SelectedVaultPreference> = selectedVaultFlow
 
     override suspend fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

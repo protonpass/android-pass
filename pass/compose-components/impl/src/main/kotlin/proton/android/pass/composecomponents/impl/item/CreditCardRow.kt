@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -33,8 +34,15 @@ fun CreditCardRow(
         }
     }
 
+    val highlightColor = PassTheme.colors.interactionNorm
     val fields = remember(content.title, content.note, content.cardHolder, highlight) {
-        getHighlightedFields(content.title, content.note, content.cardHolder, highlight)
+        getHighlightedFields(
+            title = content.title,
+            note = content.note,
+            cardHolder = content.cardHolder,
+            highlight = highlight,
+            highlightColor = highlightColor
+        )
     }
 
     ItemRow(
@@ -50,7 +58,8 @@ private fun getHighlightedFields(
     title: String,
     note: String,
     cardHolder: String,
-    highlight: String
+    highlight: String,
+    highlightColor: Color
 ): CreditCardHighlightFields {
     var annotatedTitle = AnnotatedString(title)
     var annotatedNote: AnnotatedString? = null
@@ -59,10 +68,10 @@ private fun getHighlightedFields(
         val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
         val titleMatches = regex.findAll(title)
         if (titleMatches.any()) {
-            annotatedTitle = title.highlight(titleMatches)
+            annotatedTitle = title.highlight(titleMatches, highlightColor)
         }
-        annotatedNote = highlightIfNeeded(regex, note)
-        annotatedCardHolder = highlightIfNeeded(regex, cardHolder)
+        annotatedNote = highlightIfNeeded(regex, note, highlightColor)
+        annotatedCardHolder = highlightIfNeeded(regex, cardHolder, highlightColor)
     }
 
     return CreditCardHighlightFields(
@@ -79,10 +88,14 @@ private data class CreditCardHighlightFields(
     val cardHolder: AnnotatedString?
 )
 
-private fun highlightIfNeeded(regex: Regex, field: String): AnnotatedString? {
+private fun highlightIfNeeded(
+    regex: Regex,
+    field: String,
+    highlightColor: Color
+): AnnotatedString? {
     val cleanField = field.replace("\n", " ")
     val matches = regex.findAll(cleanField)
-    return if (matches.any()) cleanField.highlight(matches) else null
+    return if (matches.any()) cleanField.highlight(matches, highlightColor) else null
 }
 
 class ThemedCreditCardPreviewProvider : ThemePairPreviewProvider<CreditCardRowParameter>(

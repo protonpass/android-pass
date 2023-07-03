@@ -35,4 +35,7 @@ abstract class BiometryBinderModule {
 
     @Binds
     abstract fun bindNeedsBiometricAuth(impl: NeedsBiometricAuthImpl): NeedsBiometricAuth
+
+    @Binds
+    abstract fun bindBootCoundRetriever(impl: BootCountRetrieverImpl): BootCountRetriever
 }

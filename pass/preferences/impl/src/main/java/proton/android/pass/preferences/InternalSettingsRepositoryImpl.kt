@@ -52,6 +52,25 @@ class InternalSettingsRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun setBootCount(count: Long): Result<Unit> = runCatching {
+        dataStore.updateData {
+            it.toBuilder()
+                .setBootCount(count)
+                .build()
+        }
+        return@runCatching
+    }
+
+    override fun getBootCount(): Flow<Option<Long>> = dataStore.data
+        .catch { exception -> handleExceptions(exception) }
+        .map { settings ->
+            if (settings.bootCount == 0L) {
+                None
+            } else {
+                settings.bootCount.some()
+            }
+        }
+
     override suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit> =
         runCatching {
             dataStore.updateData {

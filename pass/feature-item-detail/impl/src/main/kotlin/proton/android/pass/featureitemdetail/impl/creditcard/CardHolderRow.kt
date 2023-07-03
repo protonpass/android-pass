@@ -31,39 +31,27 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.IconLabelTextRow
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun CardHolderRow(
     modifier: Modifier = Modifier,
     name: String,
-    isDowngradedMode: Boolean,
-    onClick: () -> Unit,
-    onUpgradeClick: () -> Unit
+    onClick: () -> Unit
 ) {
-    val icon = me.proton.core.presentation.R.drawable.ic_proton_user
-    val label = stringResource(R.string.credit_card_cardholder_field_name)
-    if (isDowngradedMode) {
-        UpgradeRow(
-            modifier = modifier,
-            icon = icon,
-            label = label,
-            onUpgrade = onUpgradeClick
-        )
-    } else {
-        IconLabelTextRow(
-            modifier = modifier,
-            icon = {
-                Icon(
-                    painter = painterResource(icon),
-                    contentDescription = null,
-                    tint = PassTheme.colors.cardInteractionNorm
-                )
-            },
-            label = label,
-            content = name.asAnnotatedString(),
-            onClick = onClick
-        )
-    }
+    IconLabelTextRow(
+        modifier = modifier,
+        icon = {
+            Icon(
+                painter = painterResource(CoreR.drawable.ic_proton_user),
+                contentDescription = null,
+                tint = PassTheme.colors.cardInteractionNorm
+            )
+        },
+        label = stringResource(R.string.credit_card_cardholder_field_name),
+        content = name.asAnnotatedString(),
+        onClick = onClick
+    )
 }
 
 
@@ -78,8 +66,6 @@ fun CardHolderRowPreview(
         Surface {
             CardHolderRow(
                 name = name,
-                isDowngradedMode = false,
-                onUpgradeClick = {},
                 onClick = {}
             )
         }

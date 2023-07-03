@@ -27,21 +27,24 @@ import javax.inject.Inject
 
 class NeedsBiometricAuthImpl @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
-    private val authTimeHolder: BiometryAuthTimeHolder
+    private val authTimeHolder: BiometryAuthTimeHolder,
+    private val bootCountRetriever: BootCountRetriever
 ) : NeedsBiometricAuth {
 
     override fun invoke(): Flow<Boolean> = combine(
         preferencesRepository.getBiometricLockState().distinctUntilChanged(),
         preferencesRepository.getHasAuthenticated().distinctUntilChanged(),
         preferencesRepository.getAppLockPreference().distinctUntilChanged(),
-        authTimeHolder.getBiometryAuthTime().distinctUntilChanged()
+        authTimeHolder.getBiometryAuthData().distinctUntilChanged()
     ) { biometricLock, hasAuthenticated, appLockPreference, biometryAuthTime ->
         NeedsAuthChecker.needsAuth(
             biometricLock = biometricLock,
             hasAuthenticated = hasAuthenticated,
             appLockPreference = appLockPreference,
-            lastUnlockTime = biometryAuthTime,
-            now = SystemClock.elapsedRealtime()
-        )
+            lastUnlockTime = biometryAuthTime.authTime,
+            now = SystemClock.elapsedRealtime(),
+            lastBootCount = biometryAuthTime.bootCount,
+            bootCount = bootCountRetriever.get()
+        ).value()
     }
 }

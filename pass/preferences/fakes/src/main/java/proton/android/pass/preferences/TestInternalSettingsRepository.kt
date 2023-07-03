@@ -21,7 +21,6 @@ package proton.android.pass.preferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Instant
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -31,15 +30,15 @@ import javax.inject.Singleton
 @Singleton
 class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRepository {
 
-    private val lastUnlockedTimeFlow = MutableStateFlow<Option<Instant>>(None)
-    private val declinedUpdateVersionFlow = MutableStateFlow<String>("")
+    private val lastUnlockedTimeFlow = MutableStateFlow<Option<Long>>(None)
+    private val declinedUpdateVersionFlow = MutableStateFlow("")
 
-    override suspend fun setLastUnlockedTime(time: Instant): Result<Unit> {
+    override suspend fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
         return Result.success(Unit)
     }
 
-    override fun getLastUnlockedTime(): Flow<Option<Instant>> = lastUnlockedTimeFlow
+    override fun getLastUnlockedTime(): Flow<Option<Long>> = lastUnlockedTimeFlow
 
     override suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit> {
         declinedUpdateVersionFlow.update { versionDeclined }

@@ -85,6 +85,19 @@ object AutofillDebugSaver {
         }
     }
 
+    @Suppress("unused")
+    private fun getAllUrls(debugAutofillEntry: DebugAutofillEntry): Set<String> {
+        val urls = mutableSetOf<String>()
+
+        fun traverseAutofillNode(node: DebugAutofillNode) {
+            node.url?.let { urls.add(it) }
+            node.children.forEach { traverseAutofillNode(it) }
+        }
+
+        traverseAutofillNode(debugAutofillEntry.rootContent)
+        return urls
+    }
+
     private suspend fun storeFile(
         context: Context,
         packageName: String,

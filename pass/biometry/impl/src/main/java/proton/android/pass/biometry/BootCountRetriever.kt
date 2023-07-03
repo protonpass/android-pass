@@ -16,21 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.preferences
+package proton.android.pass.biometry
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
+import android.content.Context
+import android.provider.Settings
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-interface InternalSettingsRepository {
+interface BootCountRetriever {
+    fun get(): Long
+}
 
-    suspend fun setLastUnlockedTime(time: Long): Result<Unit>
-    fun getLastUnlockedTime(): Flow<Option<Long>>
+class BootCountRetrieverImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : BootCountRetriever {
 
-    suspend fun setBootCount(count: Long): Result<Unit>
-    fun getBootCount(): Flow<Option<Long>>
+    override fun get() = Settings.Global
+        .getInt(context.contentResolver, Settings.Global.BOOT_COUNT)
+        .toLong()
 
-    suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit>
-    fun getDeclinedUpdateVersion(): Flow<String>
-
-    suspend fun clearSettings(): Result<Unit>
 }

@@ -6,4 +6,5 @@ option java_multiple_files = true;
 message InternalSettings {
   int64 last_unlock_time = 1;
   string declined_update_version = 2;
+  int64 boot_count = 3;
 }

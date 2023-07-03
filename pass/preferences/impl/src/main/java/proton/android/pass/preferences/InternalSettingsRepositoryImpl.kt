@@ -23,10 +23,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.Instant
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
 import javax.inject.Inject
@@ -34,23 +33,22 @@ import javax.inject.Inject
 class InternalSettingsRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<InternalSettings>
 ) : InternalSettingsRepository {
-    override suspend fun setLastUnlockedTime(time: Instant): Result<Unit> = runCatching {
+    override suspend fun setLastUnlockedTime(time: Long): Result<Unit> = runCatching {
         dataStore.updateData {
             it.toBuilder()
-                .setLastUnlockTime(time.epochSeconds)
+                .setLastUnlockTime(time)
                 .build()
         }
         return@runCatching
     }
 
-    override fun getLastUnlockedTime(): Flow<Option<Instant>> = dataStore.data
+    override fun getLastUnlockedTime(): Flow<Option<Long>> = dataStore.data
         .catch { exception -> handleExceptions(exception) }
         .map { settings ->
             if (settings.lastUnlockTime == 0L) {
                 None
             } else {
-                val parsed = Instant.fromEpochSeconds(settings.lastUnlockTime)
-                Some(parsed)
+                settings.lastUnlockTime.some()
             }
         }
 

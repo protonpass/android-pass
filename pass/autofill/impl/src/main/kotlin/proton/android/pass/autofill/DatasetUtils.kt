@@ -31,8 +31,10 @@ import proton.android.pass.autofill.entities.asAndroid
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.log.api.PassLogger
 
 object DatasetUtils {
+    private const val TAG = "DatasetUtils"
 
     internal fun buildDataset(
         options: DatasetBuilderOptions,
@@ -66,6 +68,10 @@ object DatasetUtils {
             presentationsBuilder.setInlinePresentation(dsbOptions.inlinePresentation.value)
         }
         val datasetBuilder = Dataset.Builder(presentationsBuilder.build())
+        if (dsbOptions.id is Some) {
+            PassLogger.d(TAG, "id: ${dsbOptions.id.value}")
+            datasetBuilder.setId(dsbOptions.id.value)
+        }
         if (dsbOptions.pendingIntent is Some) {
             datasetBuilder.setAuthentication(dsbOptions.pendingIntent.value.intentSender)
         }
@@ -111,6 +117,11 @@ object DatasetUtils {
             Dataset.Builder()
         }
 
+        if (dsbOptions.id is Some) {
+            PassLogger.d(TAG, "id: ${dsbOptions.id.value}")
+            datasetBuilder.setId(dsbOptions.id.value)
+        }
+
         if (dsbOptions.inlinePresentation is Some && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             datasetBuilder.setInlinePresentation(dsbOptions.inlinePresentation.value)
         }
@@ -136,6 +147,7 @@ object DatasetUtils {
     @Suppress("DEPRECATION")
     private fun Dataset.Builder.createValueDataHolders(assistFields: List<AssistField>): Dataset.Builder {
         for (value in assistFields) {
+            PassLogger.d(TAG, "field id: ${value.id}")
             setValue(value.id.asAndroid().autofillId, null)
         }
         return this
@@ -148,6 +160,7 @@ object DatasetUtils {
     ): Dataset.Builder {
         autofillMappings.mappings
             .forEach { mapping ->
+                PassLogger.d(TAG, "mapping id: ${mapping.autofillFieldId}")
                 setValue(
                     mapping.autofillFieldId.asAndroid().autofillId,
                     AutofillValue.forText(mapping.contents),

@@ -25,6 +25,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 
 data class DatasetBuilderOptions(
+    val id: Option<String> = None,
     val remoteViewPresentation: Option<RemoteViews> = None,
     val inlinePresentation: Option<InlinePresentation> = None,
     val pendingIntent: Option<PendingIntent> = None

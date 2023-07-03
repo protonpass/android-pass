@@ -20,7 +20,6 @@ package proton.android.pass.biometry
 
 import android.content.Context
 import android.os.Build
-import android.os.SystemClock
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
@@ -43,6 +42,7 @@ class BiometryManagerImpl @Inject constructor(
     private val biometricManager: BiometricManager,
     private val biometryAuthTimeHolder: BiometryAuthTimeHolder,
     private val bootCountRetriever: BootCountRetriever,
+    private val elapsedTimeProvider: ElapsedTimeProvider
 ) : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus =
@@ -85,7 +85,7 @@ class BiometryManagerImpl @Inject constructor(
                 trySend(BiometryResult.Success)
                 biometryAuthTimeHolder.storeBiometryAuthData(
                     AuthData(
-                        authTime = SystemClock.elapsedRealtime().some(),
+                        authTime = elapsedTimeProvider.getElapsedTime().some(),
                         bootCount = bootCountRetriever.get().some()
                     )
                 )

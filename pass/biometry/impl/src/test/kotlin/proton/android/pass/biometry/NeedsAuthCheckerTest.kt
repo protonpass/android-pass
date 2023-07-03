@@ -37,7 +37,7 @@ class NeedsAuthCheckerTest {
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockPreference = AppLockPreference.Immediately,
             lastUnlockTime = None,
-            now = Clock.System.now()
+            now = Clock.System.now().epochSeconds
         )
 
         assertThat(res).isFalse()
@@ -50,7 +50,7 @@ class NeedsAuthCheckerTest {
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockPreference = AppLockPreference.Immediately,
             lastUnlockTime = None,
-            now = Clock.System.now()
+            now = Clock.System.now().epochSeconds
         )
 
         assertThat(res).isTrue()
@@ -63,7 +63,7 @@ class NeedsAuthCheckerTest {
             hasAuthenticated = HasAuthenticated.Authenticated,
             appLockPreference = AppLockPreference.Immediately,
             lastUnlockTime = None,
-            now = Clock.System.now()
+            now = Clock.System.now().epochSeconds
         )
 
         assertThat(res).isFalse()
@@ -79,8 +79,8 @@ class NeedsAuthCheckerTest {
             biometricLock = BiometricLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockPreference = AppLockPreference.InTwoMinutes,
-            lastUnlockTime = oneMinuteAgo.some(),
-            now = now
+            lastUnlockTime = oneMinuteAgo.epochSeconds.some(),
+            now = now.epochSeconds
         )
 
         assertThat(res).isFalse()
@@ -96,8 +96,24 @@ class NeedsAuthCheckerTest {
             biometricLock = BiometricLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockPreference = AppLockPreference.InTwoMinutes,
-            lastUnlockTime = threeMinutesAgo.some(),
-            now = now
+            lastUnlockTime = threeMinutesAgo.epochSeconds.some(),
+            now = now.epochSeconds
+        )
+
+        assertThat(res).isTrue()
+    }
+
+    @Test
+    fun `if lock time is in the past, auth is required`() {
+        val now = Clock.System.now()
+        val inThreeMinutes = now.plus(3.minutes)
+
+        val res = NeedsAuthChecker.needsAuth(
+            biometricLock = BiometricLockState.Enabled,
+            hasAuthenticated = HasAuthenticated.NotAuthenticated,
+            appLockPreference = AppLockPreference.InTwoMinutes,
+            lastUnlockTime = inThreeMinutes.epochSeconds.some(),
+            now = now.epochSeconds
         )
 
         assertThat(res).isTrue()

@@ -20,7 +20,6 @@ package proton.android.pass.biometry
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -32,10 +31,10 @@ class BiometryAuthTimeHolderImpl @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository
 ) : BiometryAuthTimeHolder {
 
-    override fun getBiometryAuthTime(): Flow<Option<Instant>> =
+    override fun getBiometryAuthTime(): Flow<Option<Long>> =
         internalSettingsRepository.getLastUnlockedTime()
 
-    override fun storeBiometryAuthTime(instant: Instant) {
+    override fun storeBiometryAuthTime(instant: Long) {
         runBlocking {
             internalSettingsRepository.setLastUnlockedTime(instant)
                 .onFailure {

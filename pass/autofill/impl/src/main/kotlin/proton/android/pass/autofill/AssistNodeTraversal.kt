@@ -32,6 +32,7 @@ import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.log.api.PassLogger
 
 class AssistNodeTraversal {
 
@@ -88,6 +89,15 @@ class AssistNodeTraversal {
         val hasAutofillInfo = nodeHasValidHints(node.autofillHints.toSet()) ||
             nodeHasValidHtmlInfo(node.htmlAttributes) ||
             nodeHasValidInputType(node)
+
+        if (node.className == "android.widget.EditText") {
+            PassLogger.d(TAG, "------------------------------------")
+            PassLogger.d(TAG, "nodeSupportsAutoFill $isImportant - $hasAutofillInfo")
+            PassLogger.d(TAG, "nodeHasValidHints ${nodeHasValidHints(node.autofillHints.toSet())}")
+            PassLogger.d(TAG, "nodeHasValidHtmlInfo ${nodeHasValidHtmlInfo(node.htmlAttributes)}")
+            PassLogger.d(TAG, "nodeHasValidInputType ${nodeHasValidInputType(node)}")
+            PassLogger.d(TAG, "------------------------------------")
+        }
 
         return node.id != null && hasAutofillInfo && isImportant
     }
@@ -181,14 +191,17 @@ class AssistNodeTraversal {
             InputType.TYPE_TEXT_VARIATION_PASSWORD,
             InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
         ) -> FieldType.Password
+
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_PERSON_NAME
         ) -> FieldType.FullName
+
         else -> FieldType.Unknown
     }
 
     companion object {
         const val HINT_CURRENT_PASSWORD = "current-password"
+        const val TAG = "AssistNodeTraversal"
     }
 }
 
@@ -232,6 +245,7 @@ private fun isImportantForAutofill(node: AssistStructure.ViewNode): Boolean =
             View.IMPORTANT_FOR_AUTOFILL_AUTO,
             View.IMPORTANT_FOR_AUTOFILL_YES,
             View.IMPORTANT_FOR_AUTOFILL_YES_EXCLUDE_DESCENDANTS -> true
+
             else -> false
         }
     } else {

@@ -122,6 +122,7 @@ class AutofillActivity : FragmentActivity() {
             // We must send a remote view presentation, otherwise it will crash
             val notUsed = RemoteViews(packageName, R.layout.simple_list_item_1)
             val options = DatasetBuilderOptions(
+                id = "AutofillActivity".some(),
                 remoteViewPresentation = notUsed.some()
             )
             val dataset = DatasetUtils.buildDataset(

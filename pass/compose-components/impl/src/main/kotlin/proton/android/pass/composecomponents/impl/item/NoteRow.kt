@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -34,6 +35,7 @@ import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.pass.domain.ItemContents
 
 private const val MAX_LINES_NOTE_DETAIL = 1
+private const val MAX_NOTE_CHARS_PREVIEW = 128
 
 @Composable
 fun NoteRow(
@@ -44,8 +46,9 @@ fun NoteRow(
 ) {
     val content = item.contents as ItemContents.Note
 
+    val highlightColor = PassTheme.colors.interactionNorm
     val (title, note) = remember(content.title, content.note, highlight) {
-        getHighlightedFields(content.title, content.note, highlight)
+        getHighlightedFields(content.title, content.note, highlight, highlightColor)
     }
 
     ItemRow(
@@ -60,7 +63,8 @@ fun NoteRow(
 private fun getHighlightedFields(
     title: String,
     note: String,
-    highlight: String
+    highlight: String,
+    highlightColor: Color,
 ): NoteHighlightFields {
     var annotatedTitle = AnnotatedString(title)
     val annotatedNote = if (highlight.isNotBlank()) {
@@ -68,17 +72,17 @@ private fun getHighlightedFields(
         val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
         val titleMatches = regex.findAll(title)
         if (titleMatches.any()) {
-            annotatedTitle = title.highlight(titleMatches)
+            annotatedTitle = title.highlight(titleMatches, highlightColor)
         }
         val noteMatches = regex.findAll(processedText)
         if (noteMatches.any()) {
-            processedText.highlight(noteMatches)
+            processedText.highlight(noteMatches, highlightColor)
         } else {
             AnnotatedString(processedText)
         }
     } else {
-        val firstLines = note.lines().take(MAX_LINES_NOTE_DETAIL)
-        AnnotatedString(firstLines.joinToString(" "))
+        val firstLines = note.lines().take(MAX_LINES_NOTE_DETAIL).joinToString(" ")
+        AnnotatedString(firstLines.take(MAX_NOTE_CHARS_PREVIEW))
     }
 
     return NoteHighlightFields(annotatedTitle, annotatedNote)

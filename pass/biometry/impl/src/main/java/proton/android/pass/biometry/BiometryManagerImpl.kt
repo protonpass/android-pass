@@ -33,6 +33,7 @@ import proton.android.pass.biometry.extensions.from
 import proton.android.pass.biometry.implementation.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -40,7 +41,8 @@ import javax.inject.Singleton
 @Singleton
 class BiometryManagerImpl @Inject constructor(
     private val biometricManager: BiometricManager,
-    private val biometryAuthTimeHolder: BiometryAuthTimeHolder
+    private val biometryAuthTimeHolder: BiometryAuthTimeHolder,
+    private val bootCountRetriever: BootCountRetriever,
 ) : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus =
@@ -81,7 +83,12 @@ class BiometryManagerImpl @Inject constructor(
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 PassLogger.i(TAG, "Auth succeeded")
                 trySend(BiometryResult.Success)
-                biometryAuthTimeHolder.storeBiometryAuthTime(SystemClock.elapsedRealtime())
+                biometryAuthTimeHolder.storeBiometryAuthData(
+                    AuthData(
+                        authTime = SystemClock.elapsedRealtime().some(),
+                        bootCount = bootCountRetriever.get().some()
+                    )
+                )
                 close()
             }
         }

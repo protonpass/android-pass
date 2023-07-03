@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -42,8 +43,15 @@ internal fun AliasRow(
 ) {
     val content = item.contents as ItemContents.Alias
 
+    val highlightColor = PassTheme.colors.interactionNorm
     val fields = remember(content.title, content.aliasEmail, content.note, highlight) {
-        getHighlightedFields(content.title, content.aliasEmail, content.note, highlight)
+        getHighlightedFields(
+            title = content.title,
+            aliasEmail = content.aliasEmail,
+            note = content.note,
+            highlight = highlight,
+            highlightColor = highlightColor
+        )
     }
 
     ItemRow(
@@ -59,7 +67,8 @@ private fun getHighlightedFields(
     title: String,
     aliasEmail: String,
     note: String,
-    highlight: String
+    highlight: String,
+    highlightColor: Color
 ): AliasHighlightFields {
     var annotatedTitle = AnnotatedString(title)
     var annotatedAliasEmail = AnnotatedString(aliasEmail)
@@ -68,16 +77,16 @@ private fun getHighlightedFields(
         val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
         val titleMatches = regex.findAll(title)
         if (titleMatches.any()) {
-            annotatedTitle = title.highlight(titleMatches)
+            annotatedTitle = title.highlight(titleMatches, highlightColor)
         }
         val aliasEmailMatches = regex.findAll(aliasEmail)
         if (aliasEmailMatches.any()) {
-            annotatedAliasEmail = aliasEmail.highlight(aliasEmailMatches)
+            annotatedAliasEmail = aliasEmail.highlight(aliasEmailMatches, highlightColor)
         }
         val cleanNote = note.replace("\n", " ")
         val noteMatches = regex.findAll(cleanNote)
         if (noteMatches.any()) {
-            annotatedNote = cleanNote.highlight(noteMatches)
+            annotatedNote = cleanNote.highlight(noteMatches, highlightColor)
         }
     }
 

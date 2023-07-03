@@ -7,4 +7,7 @@ message InternalSettings {
   int64 last_unlock_time = 1;
   string declined_update_version = 2;
   int64 boot_count = 3;
+  int32 home_sorting_option = 4;
+  int32 autofill_sorting_option = 5;
+  string selected_vault = 6;
 }

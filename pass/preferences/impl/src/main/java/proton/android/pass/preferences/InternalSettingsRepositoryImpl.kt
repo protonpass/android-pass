@@ -85,6 +85,54 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         .catch { exception -> handleExceptions(exception) }
         .map { settings -> settings.declinedUpdateVersion }
 
+    override suspend fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setHomeSortingOption(sortingOption.value())
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getHomeSortingOption(): Flow<SortingOptionPreference> = dataStore.data
+        .catch { exception -> handleExceptions(exception) }
+        .map { settings -> SortingOptionPreference.fromValue(settings.homeSortingOption) }
+
+    override suspend fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAutofillSortingOption(sortingOption.value())
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getAutofillSortingOption(): Flow<SortingOptionPreference> = dataStore.data
+        .catch { exception -> handleExceptions(exception) }
+        .map { settings -> SortingOptionPreference.fromValue(settings.autofillSortingOption) }
+
+    override suspend fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+
+                val value = when (selectedVault) {
+                    SelectedVaultPreference.AllVaults -> ""
+                    is SelectedVaultPreference.Vault -> selectedVault.shareId
+                }
+                it.toBuilder()
+                    .setSelectedVault(value)
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getSelectedVault(): Flow<SelectedVaultPreference> = dataStore.data
+        .catch { exception -> handleExceptions(exception) }
+        .map { settings -> SelectedVaultPreference.fromValue(settings.selectedVault) }
+
+
     override suspend fun clearSettings(): Result<Unit> = runCatching {
         dataStore.updateData {
             it.toBuilder()

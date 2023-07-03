@@ -18,47 +18,71 @@
 
 package proton.android.pass.composecomponents.impl.item
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 
-private const val CHARACTER_OFFSET = 20
+private const val CHARACTER_OFFSET = 10
+private const val MAX_RESULTS = 1
 
-fun String.highlight(matches: Sequence<MatchResult>): AnnotatedString {
-    val indexes = matches.map { it.range }.toList()
-    val annotated = buildHighlightedString(this, indexes)
+fun String.highlight(
+    matches: Sequence<MatchResult>,
+    highlightColor: Color = Color.Unspecified
+): AnnotatedString {
+    val indexes = matches.map { it.range }.toList().take(MAX_RESULTS)
+    if (indexes.isEmpty()) return AnnotatedString(this)
+
+    val annotated = buildHighlightedString(this, indexes, highlightColor)
     val offset = indexes.first().first - CHARACTER_OFFSET
     return if (shouldAddVisualOffset(offset)) {
-        AnnotatedString(Typography.ellipsis.toString()) +
-            annotated.subSequence(offset, length)
+        AnnotatedString(Typography.ellipsis.toString()) + annotated
     } else {
         annotated
     }
 }
 
-private fun buildHighlightedString(input: String, indexes: List<IntRange>) =
-    buildAnnotatedString {
-        indexes.fold(0) { start, intRange ->
-            append(input.substring(start, intRange.first))
-            withStyle(
-                style = SpanStyle(
-                    fontWeight = FontWeight.Bold
-                )
-            ) {
-                append(input.substring(intRange))
-            }
-            return@fold intRange.last + 1
-        }
-        if (input.length > indexes.last().last + 1) {
-            append(
-                input.substring(
-                    indexes.last().last + 1,
-                    input.length
-                )
+private fun buildHighlightedString(
+    input: String,
+    matchIndexes: List<IntRange>,
+    highlightColor: Color
+) = buildAnnotatedString {
+    matchIndexes.forEachIndexed { index, span ->
+        // Get CHARACTER_OFFSET characters before the span start
+        val startSubstring = input.substring(
+            startIndex = (span.first - CHARACTER_OFFSET).coerceAtLeast(0),
+            endIndex = span.first
+        )
+        append(startSubstring)
+
+        // Append the highlighted word
+        withStyle(
+            style = SpanStyle(
+                fontWeight = FontWeight.Bold,
+                color = highlightColor
             )
+        ) {
+            append(input.substring(span.first, span.last + 1))
+        }
+
+        // Get CHARACTER_OFFSET characters after the span end
+        val endIndex = (span.last + CHARACTER_OFFSET).coerceAtMost(input.length)
+        val endSubstring = input.substring(
+            startIndex = span.last + 1,
+            endIndex = endIndex
+        )
+        append(endSubstring)
+        if (endIndex < input.length) {
+            append(Typography.ellipsis)
+        }
+
+        if (index == 0 && matchIndexes.size > 1) {
+            append("\n")
         }
     }
+
+}
 
 private fun shouldAddVisualOffset(offset: Int) = offset > 0

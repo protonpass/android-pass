@@ -168,7 +168,7 @@ abstract class AppDatabase :
     PushDatabase {
 
     companion object {
-        const val VERSION = 18
+        const val VERSION = 19
 
         const val DB_NAME = "db-passkey"
 
@@ -181,6 +181,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_14_15,
             AppDatabaseMigrations.MIGRATION_16_17,
             AppDatabaseMigrations.MIGRATION_17_18,
+            AppDatabaseMigrations.MIGRATION_18_19,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

@@ -18,7 +18,6 @@
 
 package proton.android.pass.biometry
 
-import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AppLockPreference
@@ -34,8 +33,8 @@ object NeedsAuthChecker {
         biometricLock: BiometricLockState,
         hasAuthenticated: HasAuthenticated,
         appLockPreference: AppLockPreference,
-        lastUnlockTime: Option<Instant>,
-        now: Instant
+        lastUnlockTime: Option<Long>,
+        now: Long
     ): Boolean {
         // Check for biometric lock. If it's disabled, no auth is needed.
         if (biometricLock is BiometricLockState.Disabled) {
@@ -55,7 +54,16 @@ object NeedsAuthChecker {
         val unlockTime = lastUnlockTime.value() ?: return true
         val appLockDuration = appLockPreference.toDuration()
         val timeSinceLastAuth = now - unlockTime
-        val shouldPerform = appLockDuration < timeSinceLastAuth
+        if (timeSinceLastAuth < 0) {
+            PassLogger.w(
+                TAG,
+                "Time since last auth is negative, reboot has happened. " +
+                    "UnlockTime: $unlockTime | now: $now | timeSinceLastAuth: $timeSinceLastAuth"
+            )
+            return true
+        }
+
+        val shouldPerform = appLockDuration.inWholeMilliseconds < timeSinceLastAuth
         PassLogger.d(
             TAG,
             "timeSinceLastAuth: $timeSinceLastAuth |" +

@@ -32,6 +32,7 @@ import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
+import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
@@ -140,6 +141,12 @@ object AppDatabaseMigrations {
             NotificationDatabase.MIGRATION_0.migrate(database)
             NotificationDatabase.MIGRATION_1.migrate(database)
             PushDatabase.MIGRATION_0.migrate(database)
+        }
+    }
+
+    val MIGRATION_18_19 = object : Migration(18, 19) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            UserSettingsDatabase.MIGRATION_2.migrate(database)
         }
     }
 }

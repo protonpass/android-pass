@@ -42,6 +42,7 @@ import kotlin.time.Duration
 class SyncManagerImpl @Inject constructor(
     private val scopeProvider: CoroutineScopeProvider,
     private val workManager: WorkManager,
+    private val eventWorkerManager: EventWorkerManager,
     private val applyPendingEvents: ApplyPendingEvents,
     appLifecycleProvider: AppLifecycleProvider,
     accountManager: AccountManager
@@ -65,8 +66,8 @@ class SyncManagerImpl @Inject constructor(
             state.collectLatest {
                 if (it.isLoggedIn) {
                     val initialDelay = when (it.appLifecycle) {
-                        AppLifecycleProvider.State.Background -> EventWorkerManager.REPEAT_INTERVAL_BACKGROUND
-                        AppLifecycleProvider.State.Foreground -> EventWorkerManager.REPEAT_INTERVAL_FOREGROUND
+                        AppLifecycleProvider.State.Background -> eventWorkerManager.getRepeatIntervalBackground()
+                        AppLifecycleProvider.State.Foreground -> eventWorkerManager.getRepeatIntervalForeground()
                     }
                     when (it.appLifecycle) {
                         AppLifecycleProvider.State.Foreground -> {
@@ -92,7 +93,7 @@ class SyncManagerImpl @Inject constructor(
     }
 
     private fun enqueueWorker(initialDelay: Duration) {
-        val request = SyncWorker.getRequestFor(initialDelay)
+        val request = SyncWorker.getRequestFor(eventWorkerManager, initialDelay)
         workManager.enqueueUniquePeriodicWork(
             WORKER_UNIQUE_NAME,
             ExistingPeriodicWorkPolicy.KEEP,

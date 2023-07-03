@@ -33,12 +33,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class UserPlanWorkerLauncherImpl @Inject constructor(
-    private val workManager: WorkManager
+    private val workManager: WorkManager,
+    private val eventWorkerManager: EventWorkerManager,
 ) : UserPlanWorkerLauncher {
 
     override fun start() {
         PassLogger.i(TAG, "Starting UserAccessWorker")
-        val backoffDelaySeconds = EventWorkerManager.BACKOFF_DELAY.inWholeSeconds
+        val backoffDelaySeconds = eventWorkerManager.getBackoffDelay().inWholeSeconds
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()

@@ -43,9 +43,7 @@ fun MainCreditCardSection(
         sections += {
             CardHolderRow(
                 name = cardHolder,
-                isDowngradedMode = isDowngradedMode,
-                onClick = { onEvent(CreditCardDetailEvent.OnCardHolderClick) },
-                onUpgradeClick = { onEvent(CreditCardDetailEvent.OnUpgradeClick) }
+                onClick = { onEvent(CreditCardDetailEvent.OnCardHolderClick) }
             )
         }
     }
@@ -65,10 +63,8 @@ fun MainCreditCardSection(
         sections += {
             CardCvvRow(
                 cvv = cvv,
-                isDowngradedMode = isDowngradedMode,
                 onToggle = { onEvent(CreditCardDetailEvent.OnToggleCvvClick) },
-                onClick = { onEvent(CreditCardDetailEvent.OnCvvClick) },
-                onUpgradeClick = { onEvent(CreditCardDetailEvent.OnUpgradeClick) }
+                onClick = { onEvent(CreditCardDetailEvent.OnCvvClick) }
             )
         }
     }

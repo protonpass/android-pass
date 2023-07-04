@@ -36,7 +36,7 @@ class RequestImageImpl @Inject constructor(
     override fun invoke(domain: String): Flow<ImageResponseResult> = flow {
         val parsed = UrlSanitizer.getDomain(domain).getOrThrow()
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
-        fetcher.fetchFavicon(userId, "no-reply@$parsed")
+        fetcher.fetchFavicon(userId, parsed)
             .catch { emit(ImageResponseResult.Error(it)) }
             .collect {
                 if (it == null) {

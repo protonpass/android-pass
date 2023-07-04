@@ -7,7 +7,7 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "proton.android.pass.test"
+    namespace = "proton.android.pass.network.fakes"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
@@ -20,24 +20,15 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.coroutines.test)
-    implementation(libs.kotlinx.datetime)
+    api(projects.pass.network.api)
 
-    implementation(libs.androidx.lifecycle.viewmodel.savedstate)
-    implementation(libs.junit)
-    implementation(libs.core.user.domain)
+    api(libs.core.network.data)
 
     implementation(projects.pass.common.api)
-    implementation(projects.pass.data.api)
-    implementation(projects.pass.domain)
-    implementation(projects.pass.account.fakes)
-    implementation(projects.pass.network.fakes)
+
+    implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
-    api(libs.bundles.test.android) {
-        exclude(module = "protobuf-lite")
-    }
 }

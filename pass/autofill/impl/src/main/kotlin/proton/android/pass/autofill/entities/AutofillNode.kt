@@ -36,6 +36,7 @@ data class AutofillNode(
     val className: String?,
     val isImportantForAutofill: Boolean,
     val text: String?,
+    val isFocused: Boolean,
     val autofillValue: AutofillValue?,
     val inputType: InputTypeValue,
     val autofillHints: List<String>,

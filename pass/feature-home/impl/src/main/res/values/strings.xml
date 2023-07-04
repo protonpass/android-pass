@@ -44,6 +44,7 @@
     <string name="credit_card_number_copied_to_clipboard">Credit card number copied</string>
     <string name="credit_card_pin_copied_to_clipboard">Credit card pin copied</string>
     <string name="credit_card_cvv_copied_to_clipboard">Credit card cvv copied</string>
+    <string name="item_too_long_copied_to_clipboard">Content was too long, partially copied to the clipboard</string>
 
     <!-- Vault drawer -->
     <string name="vault_drawer_vaults_title">Vaults</string>

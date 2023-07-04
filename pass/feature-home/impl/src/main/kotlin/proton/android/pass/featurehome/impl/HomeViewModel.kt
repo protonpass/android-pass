@@ -98,7 +98,7 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsError
-import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
@@ -134,7 +134,7 @@ class HomeViewModel @Inject constructor(
     private val deleteAllSearchEntry: DeleteAllSearchEntry,
     private val observeSearchEntry: ObserveSearchEntry,
     private val telemetryManager: TelemetryManager,
-    private val searchOptionsRepository: SearchOptionsRepository,
+    private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -175,7 +175,7 @@ class HomeViewModel @Inject constructor(
         .onStart { emit("") }
         .distinctUntilChanged()
 
-    private val vaultSelectionFlow: Flow<VaultSelectionOption> = searchOptionsRepository
+    private val vaultSelectionFlow: Flow<VaultSelectionOption> = homeSearchOptionsRepository
         .observeVaultSelectionOption()
         .distinctUntilChanged()
 
@@ -195,7 +195,7 @@ class HomeViewModel @Inject constructor(
     ) { vaultSelection, vaultsResult ->
         val vaults: List<Vault> = vaultsResult.getOrNull() ?: emptyList()
         if (vaults.size == 1 && vaultSelection is VaultSelectionOption.AllVaults) {
-            searchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.Vault(vaults.first().shareId))
+            homeSearchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.Vault(vaults.first().shareId))
         }
         val shares: PersistentMap<ShareId, ShareUiModel> = vaults.associate {
             it.shareId to ShareUiModel.fromVault(it)
@@ -207,8 +207,8 @@ class HomeViewModel @Inject constructor(
                 val match: Option<Vault> = vaults
                     .firstOrNull { it.shareId == vaultSelection.shareId }
                     .toOption()
-                if (match is None) {
-                    searchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.AllVaults)
+                if (match is None && vaults.isNotEmpty()) {
+                    homeSearchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.AllVaults)
                 }
                 match.map { ShareUiModel.fromVault(it) }
             }
@@ -229,7 +229,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private val searchEntryState: StateFlow<List<SearchEntry>> =
-        searchOptionsRepository.observeVaultSelectionOption()
+        homeSearchOptionsRepository.observeVaultSelectionOption()
             .flatMapLatest {
                 when (val vaultSelection = it) {
                     VaultSelectionOption.AllVaults ->
@@ -259,7 +259,7 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(ActionState.Unknown)
 
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
-        searchOptionsRepository.observeVaultSelectionOption()
+        homeSearchOptionsRepository.observeVaultSelectionOption()
             .flatMapLatest { vault ->
                 val (shareSelection, itemState) = when (vault) {
                     VaultSelectionOption.AllVaults -> ShareSelection.AllShares to ItemState.Active
@@ -302,7 +302,7 @@ class HomeViewModel @Inject constructor(
 
     private val sortedListItemFlow = combine(
         itemUiModelFlow,
-        searchOptionsRepository.observeSortingOption()
+        homeSearchOptionsRepository.observeSortingOption()
     ) { result, sortingOption ->
         when (sortingOption.searchSortingType) {
             SearchSortingType.TitleAsc -> result.map { list -> list.sortByTitleAsc() }
@@ -388,7 +388,7 @@ class HomeViewModel @Inject constructor(
     )
 
     private val filtersWrapperFlow = combine(
-        searchOptionsRepository.observeSearchOptions(),
+        homeSearchOptionsRepository.observeSearchOptions(),
         itemTypeSelectionFlow
     ) { searchOptions, itemType ->
         shouldScrollToTopFlow.update { true }
@@ -598,7 +598,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun setVaultSelection(vaultSelection: VaultSelectionOption) {
-        searchOptionsRepository.setVaultSelectionOption(vaultSelection)
+        homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
     }
 
     fun restoreActionState() {

@@ -28,7 +28,9 @@ data class AutofillAppState(
     val fieldTypes: List<FieldType>,
     val packageInfoUi: PackageInfoUi?,
     val webDomain: Option<String>,
-    val title: String
+    val title: String,
+    val fieldIsFocusedList: List<Boolean>,
+    val parentIdList: List<AndroidAutofillFieldId>
 )
 
 fun AutofillAppState.isValid(): Boolean = androidAutofillIds.isEmpty() || fieldTypes.isEmpty()

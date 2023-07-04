@@ -38,6 +38,7 @@ import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.service.R
+import proton.android.pass.autofill.ui.autofill.AutofillActivity
 import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
 import proton.android.pass.autofill.ui.autofill.inlinesuggestions.InlineSuggestionsNoUiActivity.Companion.ARG_APP_NAME
 import proton.android.pass.autofill.ui.autofill.inlinesuggestions.InlineSuggestionsNoUiActivity.Companion.ARG_AUTOFILL_IDS
@@ -94,15 +95,24 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     private val ids = savedStateHandle.get<List<AutofillId>>(ARG_AUTOFILL_IDS)
         .toOption()
         .map { list -> list.map { AndroidAutofillFieldId(it) } }
+    private val fieldIsFocusedList =
+        savedStateHandle.get<List<Boolean>>(AutofillActivity.ARG_AUTOFILL_IS_FOCUSED)
+            .toOption()
+    private val parentIdList =
+        savedStateHandle.get<List<AutofillId>>(AutofillActivity.ARG_AUTOFILL_PARENT_ID)
+            .toOption()
+            .map { list -> list.map { AndroidAutofillFieldId(it) } }
 
     private val autofillAppState: MutableStateFlow<AutofillAppState> =
         MutableStateFlow(
             AutofillAppState(
-                packageInfoUi = packageInfo.value(),
                 androidAutofillIds = ids.value() ?: emptyList(),
                 fieldTypes = types.value() ?: emptyList(),
+                packageInfoUi = packageInfo.value(),
                 webDomain = webDomain,
-                title = title.value() ?: ""
+                title = title.value() ?: "",
+                fieldIsFocusedList = fieldIsFocusedList.value() ?: emptyList(),
+                parentIdList = parentIdList.value() ?: emptyList(),
             )
         )
 
@@ -172,7 +182,9 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
                 encryptionContext = this@withEncryptionContext,
                 autofillItem = autofillItem,
                 androidAutofillFieldIds = autofillAppState.androidAutofillIds,
-                autofillTypes = autofillAppState.fieldTypes
+                autofillTypes = autofillAppState.fieldTypes,
+                fieldIsFocusedList = autofillAppState.fieldIsFocusedList,
+                parentIdList = autofillAppState.parentIdList
             )
         }
 

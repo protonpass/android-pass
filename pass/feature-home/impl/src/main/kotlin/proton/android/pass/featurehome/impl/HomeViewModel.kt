@@ -538,17 +538,18 @@ class HomeViewModel @Inject constructor(
     }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
+        val sanitizedText = text.take(MAX_CLIPBOARD_LENGTH)
         viewModelScope.launch {
-            when (homeClipboardType) {
+            val message = when (homeClipboardType) {
                 HomeClipboardType.Alias -> {
-                    clipboardManager.copyToClipboard(text = text)
-                    snackbarDispatcher(HomeSnackbarMessage.AliasCopied)
+                    clipboardManager.copyToClipboard(text = sanitizedText)
+                    HomeSnackbarMessage.AliasCopied
                 }
 
                 HomeClipboardType.Note -> {
-                    clipboardManager.copyToClipboard(text = text)
+                    clipboardManager.copyToClipboard(text = sanitizedText)
 
-                    snackbarDispatcher(HomeSnackbarMessage.NoteCopied)
+                    HomeSnackbarMessage.NoteCopied
                 }
 
                 HomeClipboardType.Password -> {
@@ -556,20 +557,20 @@ class HomeViewModel @Inject constructor(
                         text = encryptionContextProvider.withEncryptionContext { decrypt(text) },
                         isSecure = true
                     )
-                    snackbarDispatcher(HomeSnackbarMessage.PasswordCopied)
+                    HomeSnackbarMessage.PasswordCopied
                 }
 
                 HomeClipboardType.Username -> {
-                    clipboardManager.copyToClipboard(text = text)
-                    snackbarDispatcher(HomeSnackbarMessage.UsernameCopied)
+                    clipboardManager.copyToClipboard(text = sanitizedText)
+                    HomeSnackbarMessage.UsernameCopied
                 }
 
                 HomeClipboardType.CreditCardNumber -> {
                     clipboardManager.copyToClipboard(
-                        text = text,
+                        text = sanitizedText,
                         isSecure = true
                     )
-                    snackbarDispatcher(HomeSnackbarMessage.CreditCardNumberCopied)
+                    HomeSnackbarMessage.CreditCardNumberCopied
                 }
 
                 HomeClipboardType.CreditCardCvv -> {
@@ -577,9 +578,17 @@ class HomeViewModel @Inject constructor(
                         text = encryptionContextProvider.withEncryptionContext { decrypt(text) },
                         isSecure = true
                     )
-                    snackbarDispatcher(HomeSnackbarMessage.CreditCardCvvCopied)
+                    HomeSnackbarMessage.CreditCardCvvCopied
                 }
             }
+
+            val snackbarMessage = if (text.length > MAX_CLIPBOARD_LENGTH) {
+                HomeSnackbarMessage.ItemTooLongCopied
+            } else {
+                message
+            }
+
+            snackbarDispatcher(snackbarMessage)
         }
     }
 
@@ -707,5 +716,6 @@ class HomeViewModel @Inject constructor(
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L
         private const val TAG = "HomeViewModel"
+        private const val MAX_CLIPBOARD_LENGTH = 2500
     }
 }

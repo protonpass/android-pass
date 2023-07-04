@@ -252,7 +252,7 @@ class ProfileScreenTest {
 
     @Test
     fun onRateAppClickCalled() {
-        if (SHOW_RATING_OPTION) return
+        if (!SHOW_RATING_OPTION) return
         composeTestRule.apply {
             setContent {
                 PassTheme {

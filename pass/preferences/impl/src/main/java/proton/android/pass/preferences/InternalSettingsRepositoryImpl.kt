@@ -116,13 +116,8 @@ class InternalSettingsRepositoryImpl @Inject constructor(
     override suspend fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> =
         runCatching {
             dataStore.updateData {
-
-                val value = when (selectedVault) {
-                    SelectedVaultPreference.AllVaults -> ""
-                    is SelectedVaultPreference.Vault -> selectedVault.shareId
-                }
                 it.toBuilder()
-                    .setSelectedVault(value)
+                    .setSelectedVault(selectedVault.value())
                     .build()
             }
             return@runCatching

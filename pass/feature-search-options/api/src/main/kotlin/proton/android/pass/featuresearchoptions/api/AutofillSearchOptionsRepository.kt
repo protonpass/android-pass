@@ -16,25 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresearchoptions.fakes
+package proton.android.pass.featuresearchoptions.api
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
-import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
+import kotlinx.coroutines.flow.Flow
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FakesSearchOptionsModule {
-
-    @Binds
-    abstract fun bindSearchOptionsRepository(impl: TestHomeSearchOptionsRepository): HomeSearchOptionsRepository
-
-    @Binds
-    abstract fun bindAutofillSearchOptionsRepository(
-        impl: TestAutofillSearchOptionsRepository
-    ): AutofillSearchOptionsRepository
+interface AutofillSearchOptionsRepository {
+    fun observeSortingOption(): Flow<SortingOption>
+    fun setSortingOption(sortingOption: SortingOption)
+    fun clearPreferences()
 }
-

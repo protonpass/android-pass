@@ -23,6 +23,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.featuresearchoptions.impl.SortingLocation
 import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
@@ -118,7 +119,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is SelectItemNavigation.SortingBottomsheet ->
                     appNavigator.navigate(
                         SortingBottomsheet,
-                        SortingBottomsheet.createNavRoute(it.searchSortingType)
+                        SortingBottomsheet.createNavRoute(
+                            sortingType = it.searchSortingType,
+                            location = SortingLocation.Autofill
+                        )
                     )
 
                 is SelectItemNavigation.ItemOptions -> appNavigator.navigate(

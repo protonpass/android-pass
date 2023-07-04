@@ -22,13 +22,19 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class SearchOptionsModule {
 
     @Binds
-    abstract fun bindSearchOptionsRepository(impl: SearchOptionsRepositoryImpl): SearchOptionsRepository
+    abstract fun bindSearchOptionsRepository(impl: HomeSearchOptionsRepositoryImpl): HomeSearchOptionsRepository
+
+    @Binds
+    abstract fun bindAutofillOptionsRepository(
+        impl: AutofillSearchOptionsRepositoryImpl
+    ): AutofillSearchOptionsRepository
 }
 

@@ -21,7 +21,7 @@ package proton.android.pass.featuresearchoptions.api
 import kotlinx.coroutines.flow.Flow
 import proton.pass.domain.ShareId
 
-interface SearchOptionsRepository {
+interface HomeSearchOptionsRepository {
     fun observeSearchOptions(): Flow<SearchOptions>
     fun observeSortingOption(): Flow<SortingOption>
     fun observeVaultSelectionOption(): Flow<VaultSelectionOption>

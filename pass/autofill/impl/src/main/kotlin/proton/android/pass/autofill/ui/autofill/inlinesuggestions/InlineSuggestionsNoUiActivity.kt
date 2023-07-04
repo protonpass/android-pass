@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill.ui.autofill.inlinesuggestions
 
-import android.R
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -86,7 +85,7 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
     private fun prepareAutofillSuccessIntent(autofillMappings: AutofillMappings): Intent =
         Intent().apply {
             // We must send a remote view presentation, otherwise it will crash
-            val notUsed = RemoteViews(packageName, R.layout.simple_list_item_1)
+            val notUsed = RemoteViews(packageName, android.R.layout.simple_list_item_1)
             val options = DatasetBuilderOptions(
                 id = "InlineSuggestionsNoUiActivity".some(),
                 remoteViewPresentation = notUsed.some()
@@ -101,6 +100,8 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
     companion object {
         const val ARG_AUTOFILL_IDS = "arg_autofill_ids"
         const val ARG_AUTOFILL_TYPES = "arg_autofill_types"
+        const val ARG_AUTOFILL_IS_FOCUSED = "arg_autofill_is_focused"
+        const val ARG_AUTOFILL_PARENT_ID = "arg_autofill_parent_id"
         const val ARG_PACKAGE_NAME = "arg_package_name"
         const val ARG_APP_NAME = "arg_app_name"
         const val ARG_WEB_DOMAIN = "arg_web_domain"
@@ -120,6 +121,8 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
                 bundleOf(
                     ARG_AUTOFILL_IDS to fields.map { it.id.asAndroid().autofillId },
                     ARG_AUTOFILL_TYPES to fields.map { it.type?.toString() },
+                    ARG_AUTOFILL_IS_FOCUSED to fields.map { it.isFocused },
+                    ARG_AUTOFILL_PARENT_ID to fields.map { it.parentId.value()?.asAndroid()?.autofillId },
                     ARG_PACKAGE_NAME to data.packageInfo.map { it.packageName.value }.value(),
                     ARG_APP_NAME to data.packageInfo.map { it.appName.value }.value(),
                     ARG_TITLE to Utils.getTitle(

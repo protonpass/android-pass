@@ -40,12 +40,9 @@ enum class HomeSnackbarMessage(
     PasswordCopied(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
     UsernameCopied(R.string.username_copied_to_clipboard, SnackbarType.NORM, true),
     CreditCardNumberCopied(R.string.credit_card_number_copied_to_clipboard, SnackbarType.NORM, true),
-    CreditCardPinCopied(R.string.credit_card_pin_copied_to_clipboard, SnackbarType.NORM, true),
     CreditCardCvvCopied(R.string.credit_card_cvv_copied_to_clipboard, SnackbarType.NORM, true),
 
-    DeleteVaultSuccess(R.string.snackbar_delete_vault_success, SnackbarType.SUCCESS),
-    DeleteVaultError(R.string.snackbar_delete_vault_error, SnackbarType.ERROR),
-    CannotDeleteCurrentVault(R.string.snackbar_cannot_delete_current_vault_error, SnackbarType.ERROR),
+    ItemTooLongCopied(R.string.item_too_long_copied_to_clipboard, SnackbarType.WARNING, false),
 
     ClearTrashError(R.string.trash_error_clearing_trash, SnackbarType.ERROR),
     RestoreItemsError(R.string.trash_error_restoring_items, SnackbarType.ERROR),

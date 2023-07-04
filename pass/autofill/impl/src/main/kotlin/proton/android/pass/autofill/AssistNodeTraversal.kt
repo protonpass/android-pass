@@ -26,12 +26,14 @@ import me.proton.core.util.kotlin.hasFlag
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AssistInfo
+import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
 
 class AssistNodeTraversal {
@@ -59,27 +61,29 @@ class AssistNodeTraversal {
     fun traverse(node: AutofillNode): AssistInfo {
         visitedNodes = 0
         autoFillNodes = mutableListOf()
-        traverseInternal(node)
+        traverseInternal(node, node.id)
         return AssistInfo(
             autoFillNodes,
             detectedUrl
         )
     }
 
-    private fun traverseInternal(node: AutofillNode) {
+    private fun traverseInternal(node: AutofillNode, parentId: AutofillFieldId?) {
         if (detectedUrl is None) {
             detectedUrl = node.url
         }
         if (nodeSupportsAutoFill(node)) {
             val assistField = AssistField(
-                node.id!!,
-                detectFieldType(node),
-                node.autofillValue,
-                node.text.toString()
+                id = node.id!!,
+                type = detectFieldType(node),
+                value = node.autofillValue,
+                text = node.text.toString(),
+                isFocused = node.isFocused,
+                parentId = parentId.toOption(),
             )
             autoFillNodes.add(assistField)
         }
-        node.children.forEach { traverseInternal(it) }
+        node.children.forEach { traverseInternal(it, node.id) }
 
         visitedNodes += 1
     }

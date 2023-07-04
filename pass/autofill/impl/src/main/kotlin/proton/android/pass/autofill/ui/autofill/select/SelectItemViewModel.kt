@@ -89,7 +89,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
-import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -118,7 +118,7 @@ class SelectItemViewModel @Inject constructor(
     getSuggestedLoginItems: GetSuggestedLoginItems,
     telemetryManager: TelemetryManager,
     observeVaults: ObserveVaults,
-    searchOptionsRepository: SearchOptionsRepository,
+    autofillSearchOptionsRepository: AutofillSearchOptionsRepository,
     getUserPlan: GetUserPlan,
     observeUpgradeInfo: ObserveUpgradeInfo,
     clock: Clock,
@@ -136,7 +136,7 @@ class SelectItemViewModel @Inject constructor(
     private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
         MutableStateFlow(IsProcessingSearchState.NotLoading)
     private val shouldScrollToTopFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val sortingSelectionFlow = searchOptionsRepository.observeSortingOption()
+    private val sortingSelectionFlow = autofillSearchOptionsRepository.observeSortingOption()
         .distinctUntilChanged()
         .onEach { shouldScrollToTopFlow.update { true } }
 

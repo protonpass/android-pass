@@ -23,6 +23,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.featuresearchoptions.impl.SortingLocation
 import proton.android.featuresearchoptions.impl.SortingNavigation
 import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.common.api.some
@@ -210,7 +211,10 @@ fun NavGraphBuilder.appGraph(
                 is HomeNavigation.SortingBottomsheet -> {
                     appNavigator.navigate(
                         SortingBottomsheet,
-                        SortingBottomsheet.createNavRoute(it.searchSortingType)
+                        SortingBottomsheet.createNavRoute(
+                            sortingType = it.searchSortingType,
+                            location = SortingLocation.Home
+                        )
                     )
                 }
 

@@ -50,8 +50,10 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTestManifest)
 
-    implementation(projects.pass.navigation.api)
 
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.domain)
+    implementation(projects.pass.navigation.api)
+    implementation(projects.pass.preferences.api)
 }

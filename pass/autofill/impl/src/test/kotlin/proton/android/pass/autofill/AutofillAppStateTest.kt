@@ -31,11 +31,13 @@ class AutofillAppStateTest {
     @Test
     fun `empty androidAutofillIds returns isEmpty true`() {
         val state = AutofillAppState(
-            packageInfoUi = PackageInfoUi("", ""),
             androidAutofillIds = listOf(),
             fieldTypes = listOf(FieldType.Email),
+            packageInfoUi = PackageInfoUi("", ""),
             webDomain = None,
-            title = "123"
+            title = "123",
+            fieldIsFocusedList = fieldIsFocusedList.value() ?: emptyList(),
+            parentIdList = parentIdList.value() ?: emptyList()
         )
         assertThat(state.isValid()).isTrue()
     }

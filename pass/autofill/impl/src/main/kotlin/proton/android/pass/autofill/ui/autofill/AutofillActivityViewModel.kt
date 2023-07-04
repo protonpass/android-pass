@@ -43,6 +43,8 @@ import proton.android.pass.autofill.entities.isValid
 import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_APP_NAME
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_IDS
+import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_IS_FOCUSED
+import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_PARENT_ID
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_TYPES
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_INLINE_SUGGESTION_AUTOFILL_ITEM
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_PACKAGE_NAME
@@ -87,6 +89,11 @@ class AutofillActivityViewModel @Inject constructor(
     private val ids = savedStateHandle.get<List<AutofillId>>(ARG_AUTOFILL_IDS)
         .toOption()
         .map { list -> list.map { AndroidAutofillFieldId(it) } }
+    private val fieldIsFocusedList = savedStateHandle.get<List<Boolean>>(ARG_AUTOFILL_IS_FOCUSED)
+        .toOption()
+    private val parentIdList = savedStateHandle.get<List<AutofillId>>(ARG_AUTOFILL_PARENT_ID)
+        .toOption()
+        .map { list -> list.map { AndroidAutofillFieldId(it) } }
 
     private val autofillAppState: MutableStateFlow<AutofillAppState> =
         MutableStateFlow(
@@ -94,6 +101,8 @@ class AutofillActivityViewModel @Inject constructor(
                 packageInfoUi = packageInfo.value(),
                 androidAutofillIds = ids.value() ?: emptyList(),
                 fieldTypes = types.value() ?: emptyList(),
+                fieldIsFocusedList = fieldIsFocusedList.value() ?: emptyList(),
+                parentIdList = parentIdList.value() ?: emptyList(),
                 webDomain = webDomain,
                 title = title.value() ?: ""
             )

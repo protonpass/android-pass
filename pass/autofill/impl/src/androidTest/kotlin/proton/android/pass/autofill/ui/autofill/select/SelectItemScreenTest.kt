@@ -384,7 +384,9 @@ class SelectItemScreenTest {
         fieldTypes = emptyList(),
         packageInfoUi = null,
         webDomain = None,
-        title = ""
+        title = "",
+        fieldIsFocusedList = fieldIsFocusedList.value() ?: emptyList(),
+        parentIdList = parentIdList.value() ?: emptyList()
     )
 
     data class SetupData(

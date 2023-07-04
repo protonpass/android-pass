@@ -18,16 +18,30 @@
 
 package proton.android.pass.preferences
 
+private const val ALL_VAULTS_VALUE = "AllVaults"
+private const val TRASH_VALUE = "Trash"
+
 sealed interface SelectedVaultPreference {
-    object AllVaults : SelectedVaultPreference
-    data class Vault(val shareId: String) : SelectedVaultPreference
+
+    fun value(): String
+
+    object AllVaults : SelectedVaultPreference {
+        override fun value(): String = ALL_VAULTS_VALUE
+    }
+    object Trash : SelectedVaultPreference {
+        override fun value(): String = TRASH_VALUE
+    }
+    data class Vault(val shareId: String) : SelectedVaultPreference {
+        override fun value(): String = shareId
+    }
 
     companion object
 }
 
 fun SelectedVaultPreference.Companion.fromValue(value: String): SelectedVaultPreference =
-    if (value.isBlank()) {
-        SelectedVaultPreference.AllVaults
-    } else {
-        SelectedVaultPreference.Vault(value)
+    when {
+        value == ALL_VAULTS_VALUE -> SelectedVaultPreference.AllVaults
+        value == TRASH_VALUE -> SelectedVaultPreference.Trash
+        value.isNotBlank() -> SelectedVaultPreference.Vault(value)
+        else -> SelectedVaultPreference.AllVaults
     }

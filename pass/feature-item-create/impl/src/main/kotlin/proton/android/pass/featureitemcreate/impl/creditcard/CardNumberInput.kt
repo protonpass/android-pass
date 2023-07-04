@@ -55,6 +55,7 @@ internal fun CardNumberInput(
         value = value,
         onChange = onChange,
         moveToNextOnEnter = true,
+        editable = enabled,
         textStyle = ProtonTheme.typography.defaultNorm,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = { text ->
@@ -70,7 +71,6 @@ internal fun CardNumberInput(
                 }
             )
         },
-        editable = true,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_card_number_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_card_number_hint)) },
         leadingIcon = {

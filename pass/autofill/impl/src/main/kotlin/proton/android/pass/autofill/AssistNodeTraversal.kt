@@ -153,10 +153,10 @@ class AssistNodeTraversal {
     ): FieldType {
         val typeAttribute = htmlAttributes.firstOrNull { it.first == "type" }
         return when (typeAttribute?.second) {
-            "tel" -> FieldType.Phone
             "email" -> FieldType.Email
             "password" -> FieldType.Password
-            // Forms tend to contain this field, commented to see if we have many issues without it
+            // Support for these fields will be added in the future
+            // "tel" -> FieldType.Phone
             // "text" -> FieldType.Other
             else -> FieldType.Unknown
         }
@@ -164,10 +164,11 @@ class AssistNodeTraversal {
 
     fun detectFieldTypeUsingAutofillHint(autofillHint: String): FieldType = when (autofillHint) {
         View.AUTOFILL_HINT_EMAIL_ADDRESS -> FieldType.Email
-        View.AUTOFILL_HINT_NAME -> FieldType.FullName
         View.AUTOFILL_HINT_USERNAME -> FieldType.Username
         View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> FieldType.Password
-        View.AUTOFILL_HINT_PHONE -> FieldType.Phone
+        // Support for these fields will be added in the future
+        // View.AUTOFILL_HINT_PHONE -> FieldType.Phone
+        // View.AUTOFILL_HINT_NAME -> FieldType.FullName
         else -> FieldType.Unknown
     }
 
@@ -177,25 +178,24 @@ class AssistNodeTraversal {
     }
 
     private fun detectFieldTypeUsingInputType(inputType: InputTypeValue): FieldType = when {
-        inputType.value == InputType.TYPE_CLASS_PHONE -> FieldType.Phone
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
             InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
         ) -> FieldType.Email
-        /*
-        Taken from keepass, we have to either provide the pass type or the username
-        inputType.hasVariations(
-            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-        ) -> FieldType.Username */
+
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_PASSWORD,
             InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
         ) -> FieldType.Password
-
+        /* Support for these fields will be added in the future
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_PERSON_NAME
         ) -> FieldType.FullName
-
+        inputType.value == InputType.TYPE_CLASS_PHONE -> FieldType.Phone
+        inputType.hasVariations(
+            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        ) -> FieldType.Username
+         */
         else -> FieldType.Unknown
     }
 

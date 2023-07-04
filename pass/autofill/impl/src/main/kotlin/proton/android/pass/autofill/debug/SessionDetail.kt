@@ -130,6 +130,7 @@ fun AutofillDebugSaver.DebugAutofillNode.hasEditTextOrUrl(): Boolean {
     return children.any { it.hasEditTextOrUrl() }
 }
 
+@Suppress("ComplexMethod")
 @Composable
 private fun DebugAutofillNodeView(
     modifier: Modifier = Modifier,
@@ -210,7 +211,9 @@ private fun DebugAutofillNodeView(
                         "${content.isImportantForAutofill}"
                     )
                 )
-
+                if (content.isFocused) {
+                    RowText(text = fieldRow("Focused", ""), color = Color.Cyan)
+                }
                 if (content.children.isNotEmpty()) {
                     RowText(text = fieldRow("Children", "${content.children.size} nodes"))
                     Divider(

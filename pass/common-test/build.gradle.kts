@@ -32,6 +32,7 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.account.fakes)
+    implementation(projects.pass.network.fakes)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

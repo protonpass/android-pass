@@ -60,11 +60,13 @@ fun HelpCenterProfileSection(
                 text = stringResource(R.string.profile_option_import_export),
                 onClick = onImportExportClick
             )
-            Divider(color = PassTheme.colors.inputBorderNorm)
-            SettingOption(
-                text = stringResource(R.string.profile_option_rating),
-                onClick = onRateAppClick
-            )
+            if (SHOW_RATING_OPTION) {
+                Divider(color = PassTheme.colors.inputBorderNorm)
+                SettingOption(
+                    text = stringResource(R.string.profile_option_rating),
+                    onClick = onRateAppClick
+                )
+            }
         }
     }
 }
@@ -84,3 +86,5 @@ fun HelpCenterSectionPreview(
         }
     }
 }
+
+const val SHOW_RATING_OPTION = false

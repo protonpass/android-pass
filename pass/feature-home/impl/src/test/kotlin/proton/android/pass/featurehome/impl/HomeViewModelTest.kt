@@ -53,7 +53,7 @@ import proton.android.pass.data.fakes.usecases.TestRestoreItem
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import proton.android.pass.featuresearchoptions.fakes.TestSearchOptionsRepository
+import proton.android.pass.featuresearchoptions.fakes.TestHomeSearchOptionsRepository
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
@@ -88,7 +88,7 @@ class HomeViewModelTest {
     private lateinit var deleteAllSearchEntry: TestDeleteAllSearchEntry
     private lateinit var observeSearchEntry: TestObserveSearchEntry
     private lateinit var telemetryManager: TestTelemetryManager
-    private lateinit var searchOptionsRepository: TestSearchOptionsRepository
+    private lateinit var searchOptionsRepository: TestHomeSearchOptionsRepository
     private lateinit var observeVaults: TestObserveVaults
     private lateinit var clock: FixedClock
     private lateinit var observeItems: TestObserveItems
@@ -113,7 +113,7 @@ class HomeViewModelTest {
         deleteAllSearchEntry = TestDeleteAllSearchEntry()
         observeSearchEntry = TestObserveSearchEntry()
         telemetryManager = TestTelemetryManager()
-        searchOptionsRepository = TestSearchOptionsRepository()
+        searchOptionsRepository = TestHomeSearchOptionsRepository()
         observeVaults = TestObserveVaults()
         clock = FixedClock(Clock.System.now())
         observeItems = TestObserveItems()
@@ -136,7 +136,7 @@ class HomeViewModelTest {
             deleteAllSearchEntry = deleteAllSearchEntry,
             observeSearchEntry = observeSearchEntry,
             telemetryManager = telemetryManager,
-            searchOptionsRepository = searchOptionsRepository,
+            homeSearchOptionsRepository = searchOptionsRepository,
             observeVaults = observeVaults,
             clock = clock,
             observeItems = observeItems,

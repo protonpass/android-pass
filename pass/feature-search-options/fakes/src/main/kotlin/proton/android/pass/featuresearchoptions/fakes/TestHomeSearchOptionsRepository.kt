@@ -16,49 +16,42 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.featuresearchoptions.impl
+package proton.android.pass.featuresearchoptions.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchOptions
-import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SearchOptionsRepositoryImpl @Inject constructor() : SearchOptionsRepository {
+class TestHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsRepository {
 
-    private val _searchOptionsState: MutableStateFlow<SearchOptions> =
-        MutableStateFlow(SearchOptions.Initial)
+    private val searchOptionsFlow = MutableStateFlow(SearchOptions.Initial)
 
-    override fun observeSearchOptions(): Flow<SearchOptions> =
-        _searchOptionsState
+    private val sortingOptionFlow = MutableStateFlow(SearchOptions.Initial.sortingOption)
+    private val vaultSelectionOptionFlow: MutableStateFlow<VaultSelectionOption> =
+        MutableStateFlow(VaultSelectionOption.AllVaults)
 
-    override fun observeSortingOption(): Flow<SortingOption> =
-        _searchOptionsState.map { it.sortingOption }.filterNotNull()
+    override fun observeSearchOptions(): Flow<SearchOptions> = searchOptionsFlow
+
+    override fun observeSortingOption(): Flow<SortingOption> = sortingOptionFlow
 
     override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> =
-        _searchOptionsState.map { it.vaultSelectionOption }.filterNotNull()
-
+        vaultSelectionOptionFlow
 
     override fun setSortingOption(sortingOption: SortingOption) {
-        _searchOptionsState.update {
-            it.copy(sortingOption = sortingOption)
-        }
+        sortingOptionFlow.update { sortingOption }
     }
 
     override fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {
-        _searchOptionsState.update {
-            it.copy(vaultSelectionOption = vaultSelectionOption)
-        }
+        vaultSelectionOptionFlow.update { vaultSelectionOption }
     }
 
     override fun clearSearchOptions() {
-        _searchOptionsState.update { SearchOptions.Initial }
     }
 }

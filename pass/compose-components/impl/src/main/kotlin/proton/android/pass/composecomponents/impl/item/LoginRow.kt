@@ -34,6 +34,8 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.pass.domain.ItemContents
 
+private const val MAX_PREVIEW_LENGTH = 128
+
 @Composable
 fun LoginRow(
     modifier: Modifier = Modifier,
@@ -85,8 +87,8 @@ private fun getHighlightedFields(
     highlight: String,
     highlightColor: Color
 ): LoginHighlightFields {
-    var annotatedTitle = AnnotatedString(title)
-    var annotatedUsername = AnnotatedString(username)
+    var annotatedTitle = AnnotatedString(title.take(MAX_PREVIEW_LENGTH))
+    var annotatedUsername = AnnotatedString(username.take(MAX_PREVIEW_LENGTH))
     var annotatedNote: AnnotatedString? = null
     val annotatedWebsites: MutableList<AnnotatedString> = mutableListOf()
     if (highlight.isNotBlank()) {

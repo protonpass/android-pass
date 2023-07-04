@@ -34,6 +34,8 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.pass.domain.ItemContents
 
+private const val MAX_PREVIEW_LENGTH = 128
+
 @Composable
 internal fun AliasRow(
     modifier: Modifier = Modifier,
@@ -70,7 +72,7 @@ private fun getHighlightedFields(
     highlight: String,
     highlightColor: Color
 ): AliasHighlightFields {
-    var annotatedTitle = AnnotatedString(title)
+    var annotatedTitle = AnnotatedString(title.take(MAX_PREVIEW_LENGTH))
     var annotatedAliasEmail = AnnotatedString(aliasEmail)
     var annotatedNote: AnnotatedString? = null
     if (highlight.isNotBlank()) {

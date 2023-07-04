@@ -21,6 +21,7 @@ package proton.android.pass.biometry
 import android.content.Context
 import android.provider.Settings
 import dagger.hilt.android.qualifiers.ApplicationContext
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 interface BootCountRetriever {
@@ -31,8 +32,16 @@ class BootCountRetrieverImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : BootCountRetriever {
 
-    override fun get() = Settings.Global
-        .getInt(context.contentResolver, Settings.Global.BOOT_COUNT)
-        .toLong()
+    override fun get() = runCatching {
+        Settings.Global
+            .getInt(context.contentResolver, Settings.Global.BOOT_COUNT)
+            .toLong()
+    }.onFailure {
+        PassLogger.e(TAG, it, "Error getting boot count")
+    }.getOrDefault(-1)
+
+    companion object {
+        private const val TAG = "BootCountRetrieverImpl"
+    }
 
 }

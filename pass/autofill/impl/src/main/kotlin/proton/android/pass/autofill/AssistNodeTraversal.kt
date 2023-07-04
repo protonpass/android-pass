@@ -217,6 +217,7 @@ fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {
         className = className,
         isImportantForAutofill = isImportantForAutofill(this),
         text = text?.toString(),
+        isFocused = isFocused,
         autofillValue = autofillValue,
         inputType = InputTypeValue(inputType),
         hintKeywordList = hintKeywordList,

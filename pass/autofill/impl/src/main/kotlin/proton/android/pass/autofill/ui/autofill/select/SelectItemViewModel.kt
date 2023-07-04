@@ -400,7 +400,9 @@ class SelectItemViewModel @Inject constructor(
                         encryptionContext = this@withEncryptionContext,
                         autofillItem = autofillItem,
                         androidAutofillFieldIds = autofillAppState.androidAutofillIds,
-                        autofillTypes = autofillAppState.fieldTypes
+                        autofillTypes = autofillAppState.fieldTypes,
+                        fieldIsFocusedList = autofillAppState.fieldIsFocusedList,
+                        parentIdList = autofillAppState.parentIdList
                     )
                     itemClickedFlow.update {
                         AutofillItemClickedEvent.Clicked(mappings)

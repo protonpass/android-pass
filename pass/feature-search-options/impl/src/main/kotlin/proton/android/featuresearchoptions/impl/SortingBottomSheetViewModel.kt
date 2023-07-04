@@ -18,7 +18,6 @@
 
 package proton.android.featuresearchoptions.impl
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +25,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
-import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
+import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.navigation.api.SortingTypeNavArgId
@@ -34,15 +36,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SortingBottomSheetViewModel @Inject constructor(
-    private val searchOptionsRepository: SearchOptionsRepository,
-    savedStateHandle: SavedStateHandle
+    private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
+    private val autofillSearchOptionsRepository: AutofillSearchOptionsRepository,
+    savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
-    private val sortingType: SearchSortingType =
-        SearchSortingType.valueOf(requireNotNull(savedStateHandle.get<String>(SortingTypeNavArgId.key)))
+    private val sortingType: SearchSortingType = SearchSortingType.valueOf(
+        savedStateHandle.get().require(SortingTypeNavArgId.key)
+    )
+
+    private val sortingLocation: SortingLocation = SortingLocation.valueOf(
+        savedStateHandle.get().require(SortingLocationNavArgId.key)
+    )
+
     val state: StateFlow<SearchSortingType> = MutableStateFlow(sortingType)
         .stateIn(viewModelScope, SharingStarted.Eagerly, sortingType)
 
     fun onSortingTypeChanged(searchSortingType: SearchSortingType) {
-        searchOptionsRepository.setSortingOption(SortingOption(searchSortingType))
+        val value = SortingOption(searchSortingType)
+        when (sortingLocation) {
+            SortingLocation.Home -> homeSearchOptionsRepository.setSortingOption(value)
+            SortingLocation.Autofill -> autofillSearchOptionsRepository.setSortingOption(value)
+        }
     }
 }

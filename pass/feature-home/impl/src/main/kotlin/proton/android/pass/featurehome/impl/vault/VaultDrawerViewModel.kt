@@ -31,7 +31,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -39,12 +39,12 @@ import javax.inject.Inject
 @HiltViewModel
 class VaultDrawerViewModel @Inject constructor(
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
-    private val searchOptionsRepository: SearchOptionsRepository
+    private val homeSearchOptionsRepository: HomeSearchOptionsRepository
 ) : ViewModel() {
 
     val drawerUiState: StateFlow<VaultDrawerUiState> = combine(
         observeVaultsWithItemCount().asLoadingResult(),
-        searchOptionsRepository.observeVaultSelectionOption()
+        homeSearchOptionsRepository.observeVaultSelectionOption()
     ) { shares, selectedVault ->
         when (shares) {
             LoadingResult.Loading -> VaultDrawerUiState(
@@ -95,7 +95,7 @@ class VaultDrawerViewModel @Inject constructor(
     )
 
     fun setVaultSelection(vaultSelection: VaultSelectionOption) =
-        searchOptionsRepository.setVaultSelectionOption(vaultSelection)
+        homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
 
     companion object {
         private const val TAG = "VaultDrawerViewModel"

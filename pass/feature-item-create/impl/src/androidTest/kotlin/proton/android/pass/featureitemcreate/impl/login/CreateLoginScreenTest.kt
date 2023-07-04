@@ -317,7 +317,9 @@ class CreateLoginScreenTest {
             waitUntilExists(hasText(hiddenCustomFieldValue))
 
             draftRepository.save(DRAFT_CUSTOM_FIELD_KEY, totpCustomField)
-            onNode(hasText(totpCustomFieldValue)).performScrollTo()
+            val addCustomFieldText =
+                activity.getString(R.string.create_login_add_custom_field_button)
+            onNodeWithText(addCustomFieldText).performScrollTo()
             waitUntilExists(hasText(totpCustomFieldValue))
 
             // Submit

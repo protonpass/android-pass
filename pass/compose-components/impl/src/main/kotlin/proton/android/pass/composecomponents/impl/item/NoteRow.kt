@@ -66,7 +66,7 @@ private fun getHighlightedFields(
     highlight: String,
     highlightColor: Color,
 ): NoteHighlightFields {
-    var annotatedTitle = AnnotatedString(title)
+    var annotatedTitle = AnnotatedString(title.take(MAX_NOTE_CHARS_PREVIEW))
     val annotatedNote = if (highlight.isNotBlank()) {
         val processedText = note.replace("\n", " ")
         val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))

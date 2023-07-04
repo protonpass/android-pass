@@ -197,9 +197,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     // Favicon
     @GET("core/v4/images/logo")
     suspend fun getFavicon(
-        @Query("Address") address: String,
-        @Query("Size") size: Int = 64,
-        @Query("Mode") mode: String = "dark"
+        @Query("Domain") domain: String,
+        @Query("Size") size: Int = 32,
+        @Query("Mode") mode: String = "light",
+        @Query("MaxScaleUpFactor") maxUpscaleFactor: Int = 4
     ): retrofit2.Response<okhttp3.ResponseBody>
 
     // User access

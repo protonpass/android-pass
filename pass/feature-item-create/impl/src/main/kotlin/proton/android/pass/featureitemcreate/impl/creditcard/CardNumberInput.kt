@@ -57,7 +57,7 @@ internal fun CardNumberInput(
         moveToNextOnEnter = true,
         editable = enabled,
         textStyle = ProtonTheme.typography.defaultNorm,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(autoCorrect = false, keyboardType = KeyboardType.Number),
         visualTransformation = { text ->
             if (text.isEmpty())
                 return@ProtonTextField TransformedText(text, OffsetMapping.Identity)

@@ -17,4 +17,4 @@ fi
 NEW_TAG="${1}"
 OLD_TAG="${2}"
 
-git log --pretty=format:"%s" ${NEW_TAG}...${OLD_TAG} | grep -E -v 'test[:(]|ci[:(]|build[:(]|bump[:(]|refactor[(:]|style[(:]|Bump |update dependency'
+git log --pretty=format:"%s" "${NEW_TAG}"..."${OLD_TAG}" | grep -E -v 'test[:(]|ci[:(]|chore[:(]|build[:(]|bump[:(]|refactor[(:]|style[(:]|Bump |update dependency'

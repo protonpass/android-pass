@@ -26,6 +26,7 @@ import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
+import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
@@ -84,6 +85,7 @@ import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
+import proton.android.pass.data.impl.usecases.CheckMasterPasswordImpl
 import proton.android.pass.data.impl.usecases.ClearTrashImpl
 import proton.android.pass.data.impl.usecases.ClearUserDataImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
@@ -316,4 +318,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRefreshPlan(impl: RefreshPlanImpl): RefreshPlan
+
+    @Binds
+    abstract fun bindCheckMasterPassword(impl: CheckMasterPasswordImpl): CheckMasterPassword
 }

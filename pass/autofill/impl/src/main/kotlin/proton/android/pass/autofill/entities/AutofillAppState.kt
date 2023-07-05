@@ -24,13 +24,13 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 
 @Immutable
 data class AutofillAppState(
-    val androidAutofillIds: List<AndroidAutofillFieldId>,
+    val androidAutofillIds: List<AndroidAutofillFieldId?>,
     val fieldTypes: List<FieldType>,
     val packageInfoUi: PackageInfoUi?,
     val webDomain: Option<String>,
     val title: String,
     val fieldIsFocusedList: List<Boolean>,
-    val parentIdList: List<AndroidAutofillFieldId>
+    val parentIdList: List<AndroidAutofillFieldId?>
 )
 
 fun AutofillAppState.isValid(): Boolean = androidAutofillIds.isEmpty() || fieldTypes.isEmpty()

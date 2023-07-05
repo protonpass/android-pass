@@ -71,7 +71,7 @@ class AutofillActivityViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val packageInfo = savedStateHandle.get<String>(ARG_PACKAGE_NAME)
+    private val packageInfo: Option<PackageInfoUi> = savedStateHandle.get<String>(ARG_PACKAGE_NAME)
         .toOption()
         .map { packageName ->
             PackageInfoUi(
@@ -79,21 +79,25 @@ class AutofillActivityViewModel @Inject constructor(
                 appName = savedStateHandle.get<String>(ARG_APP_NAME) ?: packageName
             )
         }
-    private val webDomain = savedStateHandle.get<String>(ARG_WEB_DOMAIN)
+    private val webDomain: Option<String> = savedStateHandle.get<String>(ARG_WEB_DOMAIN)
         .toOption()
-    private val title = savedStateHandle.get<String>(ARG_TITLE)
+    private val title: Option<String> = savedStateHandle.get<String>(ARG_TITLE)
         .toOption()
-    private val types = savedStateHandle.get<List<String>>(ARG_AUTOFILL_TYPES)
-        .toOption()
-        .map { list -> list.map(FieldType.Companion::from) }
-    private val ids = savedStateHandle.get<List<AutofillId>>(ARG_AUTOFILL_IDS)
-        .toOption()
-        .map { list -> list.map { AndroidAutofillFieldId(it) } }
-    private val fieldIsFocusedList = savedStateHandle.get<List<Boolean>>(ARG_AUTOFILL_IS_FOCUSED)
-        .toOption()
-    private val parentIdList = savedStateHandle.get<List<AutofillId>>(ARG_AUTOFILL_PARENT_ID)
-        .toOption()
-        .map { list -> list.map { AndroidAutofillFieldId(it) } }
+    private val types: Option<List<FieldType>> =
+        savedStateHandle.get<List<String>>(ARG_AUTOFILL_TYPES)
+            .toOption()
+            .map { list -> list.map(FieldType.Companion::from) }
+    private val ids: Option<List<AndroidAutofillFieldId?>> =
+        savedStateHandle.get<List<AutofillId?>>(ARG_AUTOFILL_IDS)
+            .toOption()
+            .map { list -> list.map { item -> item?.let { AndroidAutofillFieldId(it) } } }
+    private val fieldIsFocusedList: Option<List<Boolean>> =
+        savedStateHandle.get<List<Boolean>>(ARG_AUTOFILL_IS_FOCUSED)
+            .toOption()
+    private val parentIdList: Option<List<AndroidAutofillFieldId?>> =
+        savedStateHandle.get<List<AutofillId?>>(ARG_AUTOFILL_PARENT_ID)
+            .toOption()
+            .map { list -> list.map { item -> item?.let { AndroidAutofillFieldId(it) } } }
 
     private val autofillAppState: MutableStateFlow<AutofillAppState> =
         MutableStateFlow(

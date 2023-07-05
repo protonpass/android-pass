@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -47,6 +48,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -109,6 +111,9 @@ internal fun WebsitesSection(
                     errorMessage = stringResource(id = R.string.field_website_address_invalid),
                     value = value,
                     editable = isEditAllowed,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Uri
+                    ),
                     textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
                     moveToNextOnEnter = false,
                     onChange = {

@@ -13,7 +13,7 @@ XML_ROW_TEMPLATE_PATH="${REPO_ROOT}/tools/autofill/templates/xml_row.tpl"
 KT_TEMPLATE_PATH="${REPO_ROOT}/tools/autofill/templates/kt.tpl"
 KT_ROW_TEMPLATE_PATH="${REPO_ROOT}/tools/autofill/templates/kt_row.tpl"
 
-DEST_BASE_PATH="${REPO_ROOT}/pass/autofill/implementation/src/main"
+DEST_BASE_PATH="${REPO_ROOT}/pass/autofill/impl/src/main"
 
 XML_DEST_PATH="${DEST_BASE_PATH}/res/xml/autofill_service.xml"
 KT_DEST_PATH="${DEST_BASE_PATH}/kotlin/proton/android/pass/autofill/BrowserList.kt"

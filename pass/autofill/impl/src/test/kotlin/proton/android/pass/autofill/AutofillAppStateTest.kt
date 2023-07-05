@@ -36,8 +36,8 @@ class AutofillAppStateTest {
             packageInfoUi = PackageInfoUi("", ""),
             webDomain = None,
             title = "123",
-            fieldIsFocusedList = fieldIsFocusedList.value() ?: emptyList(),
-            parentIdList = parentIdList.value() ?: emptyList()
+            fieldIsFocusedList = emptyList(),
+            parentIdList = emptyList()
         )
         assertThat(state.isValid()).isTrue()
     }

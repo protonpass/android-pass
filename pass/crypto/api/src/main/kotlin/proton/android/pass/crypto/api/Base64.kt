@@ -26,9 +26,36 @@ object Base64 {
 
     fun decodeBase64(content: EncryptedString): ByteArray = decodeBase64(content.toByteArray())
 
-    fun encodeBase64(array: ByteArray): ByteArray =
+    fun encodeBase64(array: ByteArray): ByteArray = runCatching {
         org.apache.commons.codec.binary.Base64.encodeBase64(array)
+    }.fold(
+        onSuccess = { it },
+        onFailure = {
+            if (it is NoSuchMethodError) {
+                // This is a workaround for implementations that don't have the proper support for B64
+                Base64Fallback.encodeBase64(array)
+            } else {
+                throw it
+            }
+        }
+    )
 
-    fun decodeBase64(array: ByteArray): ByteArray =
+    fun decodeBase64(array: ByteArray): ByteArray = runCatching {
         org.apache.commons.codec.binary.Base64.decodeBase64(array)
+    }.fold(
+        onSuccess = { it },
+        onFailure = { error ->
+            if (error is NoSuchMethodError) {
+                // This is a workaround for implementations that don't have the proper support for B64
+                Base64Fallback.decodeBase64(array)
+            } else {
+                throw error
+            }
+        }
+    )
+}
+
+object Base64Fallback {
+    fun encodeBase64(array: ByteArray): ByteArray = KotlinBase64.UrlSafe.encodeToByteArray(array)
+    fun decodeBase64(array: ByteArray): ByteArray = KotlinBase64.UrlSafe.decode(array)
 }

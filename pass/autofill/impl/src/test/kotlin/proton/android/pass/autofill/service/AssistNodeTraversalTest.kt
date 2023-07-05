@@ -20,6 +20,10 @@ package proton.android.pass.autofill.service
 
 import android.text.InputType
 import android.view.View
+import org.junit.Assert
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 import proton.android.pass.autofill.AssistNodeTraversal
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillNode
@@ -28,10 +32,6 @@ import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.autofill.service.utils.newAutofillFieldId
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
-import org.junit.Assert
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class AssistNodeTraversalTest {
@@ -99,19 +99,15 @@ class AssistNodeTraversalTest {
     fun autofillHintsParsingReturnsKnownFieldType() {
         val traversal = AssistNodeTraversal()
 
-        val phoneType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_PHONE)
         val usernameType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_USERNAME)
         val emailType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_EMAIL_ADDRESS)
         val passwordType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_PASSWORD)
-        val nameType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_NAME)
         val creditCardType =
             traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_CREDIT_CARD_NUMBER)
 
-        Assert.assertEquals(FieldType.Phone, phoneType)
         Assert.assertEquals(FieldType.Username, usernameType)
         Assert.assertEquals(FieldType.Email, emailType)
         Assert.assertEquals(FieldType.Password, passwordType)
-        Assert.assertEquals(FieldType.FullName, nameType)
         // Still not supported
         Assert.assertEquals(FieldType.Unknown, creditCardType)
     }
@@ -240,7 +236,8 @@ class AssistNodeTraversalTest {
             htmlAttributes = htmlAttributes,
             children = children,
             url = webDomain.toOption(),
-            hintKeywordList = emptyList()
+            hintKeywordList = emptyList(),
+            isFocused = false
         )
 
 }

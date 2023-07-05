@@ -140,7 +140,7 @@ class UpdateCreditCardScreenTest {
         val newExpirationDateMonth = "04"
         val newExpirationDateYear = "6543"
         val newExpirationDate = "${newExpirationDateMonth}${newExpirationDateYear}"
-        val newFormattedExpirationDate = "${newExpirationDateMonth} / ${newExpirationDateYear}"
+        val newFormattedExpirationDate = "$newExpirationDateMonth / $newExpirationDateYear"
         val newItemExpirationDate = "${newExpirationDateYear}-${newExpirationDateMonth}"
         val newNote = "Updated note"
 
@@ -159,19 +159,16 @@ class UpdateCreditCardScreenTest {
             waitUntilExists(hasText(DEFAULT_TITLE))
 
             // Title
-            onNodeWithText(DEFAULT_TITLE).performTextClearance()
             val titleText = activity.getString(CompR.string.field_title_title)
             onNode(hasText(titleText)).performScrollTo()
             writeTextAndWait(hasText(titleText), newTitle)
 
             // Cardholder
-            onNodeWithText(DEFAULT_CARDHOLDER).performTextClearance()
             val cardHolderText = activity.getString(R.string.field_cardholder_name_title)
             onNode(hasText(cardHolderText)).performScrollTo()
             writeTextAndWait(matcher = hasText(cardHolderText), text = newCardHolder)
 
             // Number
-            onNodeWithText(DEFAULT_FORMATTED_NUMBER).performTextClearance()
             val numberText = activity.getString(R.string.field_card_number_title)
             onNode(hasText(numberText)).performScrollTo()
             writeTextAndWait(
@@ -180,25 +177,16 @@ class UpdateCreditCardScreenTest {
                 expectedText = newFormattedNumber
             )
 
-            // CVV
-            onAllNodes(hasText(HIDDEN_FIELD_VALUE)).assertCountEquals(2).apply {
-                get(0).performTextClearance()
-            }
             val cvvText = activity.getString(R.string.field_card_cvv_title)
             onNode(hasText(cvvText)).performScrollTo().performClick()
             writeTextAndWait(hasText(cvvText), newCvv)
 
-
             // PIN
-            onAllNodes(hasText(HIDDEN_FIELD_VALUE)).assertCountEquals(1).apply {
-                get(0).performTextClearance()
-            }
             val pinText = activity.getString(R.string.field_card_pin_title)
             onNode(hasText(pinText)).performScrollTo().performClick()
             writeTextAndWait(hasText(pinText), newPin)
 
             // Expiration date
-            onNodeWithText(FORMATTED_EXPIRATION_DATE).performTextClearance()
             val dateText = activity.getString(R.string.field_card_expiration_date_title)
             onNode(hasText(dateText)).performScrollTo().performClick()
             writeTextAndWait(

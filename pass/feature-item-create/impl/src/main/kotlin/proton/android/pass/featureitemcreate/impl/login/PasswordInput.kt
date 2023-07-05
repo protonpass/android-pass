@@ -20,12 +20,14 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -59,11 +61,16 @@ internal fun PasswordInput(
         is HiddenState.Revealed -> value.clearText to VisualTransformation.None
         is HiddenState.Empty -> "" to VisualTransformation.None
     }
+
     ProtonTextField(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
         value = text,
         editable = isEditAllowed,
         moveToNextOnEnter = true,
+        keyboardOptions = KeyboardOptions(
+            autoCorrect = false,
+            keyboardType = KeyboardType.Password
+        ),
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
         onChange = onChange,
         label = { ProtonTextFieldLabel(text = label) },

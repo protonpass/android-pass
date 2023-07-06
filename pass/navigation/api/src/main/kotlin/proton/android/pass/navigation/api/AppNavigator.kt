@@ -96,10 +96,18 @@ class AppNavigator(
         navController.currentBackStack.value.any { it.destination.route == destination.route }
 
     fun popUpTo(destination: NavItem) {
+        if (!lifecycleIsResumed()) {
+            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+            return
+        }
         navController.popBackStack(route = destination.route, inclusive = false, saveState = false)
     }
 
     fun onBackClick() {
+        if (!lifecycleIsResumed()) {
+            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+            return
+        }
         PassLogger.i(
             TAG,
             "Navigating back to ${navController.previousBackStackEntry?.destination?.route}"
@@ -108,6 +116,10 @@ class AppNavigator(
     }
 
     fun navigateUpWithResult(key: String, value: Any) {
+        if (!lifecycleIsResumed()) {
+            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+            return
+        }
         navController.previousBackStackEntry
             ?.savedStateHandle
             ?.set(key, value)
@@ -115,6 +127,10 @@ class AppNavigator(
     }
 
     fun navigateUpWithResult(values: Map<String, Any>) {
+        if (!lifecycleIsResumed()) {
+            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+            return
+        }
         navController.previousBackStackEntry
             ?.savedStateHandle
             ?.let {

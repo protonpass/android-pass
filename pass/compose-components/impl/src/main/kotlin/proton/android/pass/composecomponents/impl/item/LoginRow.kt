@@ -28,6 +28,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toImmutableList
+import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -93,21 +94,24 @@ private fun getHighlightedFields(
     val annotatedWebsites: MutableList<AnnotatedString> = mutableListOf()
     if (highlight.isNotBlank()) {
         val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
-        val titleMatches = regex.findAll(title)
+        val cleanTitle = title.removeAccents()
+        val titleMatches = regex.findAll(cleanTitle)
         if (titleMatches.any()) {
             annotatedTitle = title.highlight(titleMatches, highlightColor)
         }
-        val usernameMatches = regex.findAll(username)
+        val cleanUsername = username.removeAccents()
+        val usernameMatches = regex.findAll(cleanUsername)
         if (usernameMatches.any()) {
             annotatedUsername = username.highlight(usernameMatches, highlightColor)
         }
-        val cleanNote = note.replace("\n", " ")
+        val cleanNote = note.replace("\n", " ").removeAccents()
         val noteMatches = regex.findAll(cleanNote)
         if (noteMatches.any()) {
             annotatedNote = cleanNote.highlight(noteMatches, highlightColor)
         }
         urls.forEach {
-            val websiteMatch = regex.findAll(it)
+            val cleanWebsite = it.removeAccents()
+            val websiteMatch = regex.findAll(cleanWebsite)
             if (websiteMatch.any()) {
                 annotatedWebsites.add(it.highlight(websiteMatch, highlightColor))
             }

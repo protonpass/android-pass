@@ -18,18 +18,20 @@
 
 package proton.android.pass.commonui.api
 
+import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.pass.domain.ItemContents
 
 object ItemUiFilter {
+
     fun filterByQuery(
         list: List<ItemUiModel>,
         query: String
     ): List<ItemUiModel> =
         if (query.isNotEmpty()) {
             if (query.isNotBlank()) {
-                val lowercaseQuery = query.lowercase()
-                list.filter { it.matchesQuery(lowercaseQuery) }
+                val cleanQuery = query.preprocess()
+                list.filter { it.matchesQuery(cleanQuery) }
             } else {
                 emptyList()
             }
@@ -38,8 +40,8 @@ object ItemUiFilter {
         }
 
     private fun isItemMatch(item: ItemUiModel, query: String): Boolean {
-        if (item.contents.title.lowercase().contains(query)) return true
-        if (item.contents.note.lowercase().contains(query)) return true
+        if (item.contents.title.preprocess().contains(query)) return true
+        if (item.contents.note.preprocess().contains(query)) return true
 
         return when (val contents = item.contents) {
             is ItemContents.Alias -> isAliasMatch(contents, query)
@@ -51,28 +53,31 @@ object ItemUiFilter {
     }
 
     private fun isAliasMatch(content: ItemContents.Alias, query: String): Boolean =
-        content.aliasEmail.lowercase().contains(query)
+        content.aliasEmail.preprocess().contains(query)
 
     private fun isLoginMatch(content: ItemContents.Login, query: String): Boolean {
-        if (content.username.lowercase().contains(query)) return true
+        if (content.username.preprocess().contains(query)) return true
 
-        val anyWebsiteMatches = content.urls.any { it.lowercase().contains(query) }
+        val anyWebsiteMatches = content.urls.any { it.preprocess().contains(query) }
         if (anyWebsiteMatches) return true
 
         return false
     }
 
     private fun isNoteMatch(content: ItemContents.Note, query: String): Boolean =
-        content.note.lowercase().contains(query)
+        content.note.preprocess().contains(query)
 
     private fun isCreditCardMatch(content: ItemContents.CreditCard, query: String): Boolean {
-        if (content.title.lowercase().contains(query)) return true
-        if (content.cardHolder.lowercase().contains(query)) return true
-        if (content.note.lowercase().contains(query)) return true
+        if (content.title.preprocess().contains(query)) return true
+        if (content.cardHolder.preprocess().contains(query)) return true
+        if (content.note.preprocess().contains(query)) return true
 
         return false
     }
 
     private fun ItemUiModel.matchesQuery(query: String): Boolean =
         isItemMatch(this, query)
+
+    private fun String.preprocess(): String =
+        this.lowercase().removeAccents()
 }

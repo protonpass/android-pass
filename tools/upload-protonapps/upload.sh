@@ -1,15 +1,18 @@
 #!/bin/bash
 
-set -u
+set -euo pipefail
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:tools/upload-protonapps::g')
 
 APK_CERT_HASH="DC:C9:43:9E:C1:A6:C6:A8:D0:20:3F:34:23:EE:42:BC:C8:B9:70:62:8E:53:CB:73:A0:39:3F:39:8D:D5:B8:53"
-PROTONAPPS_REPO="git@gitlab.protontech.ch:ProtonMail/download"
-
 GIT_COMMIT_AUTHOR="${GITLAB_USER_NAME}"
 GIT_COMMIT_EMAIL="${GITLAB_USER_EMAIL}"
+
+if [ -z "${PROTONAPPS_REPO}" ]; then
+  echo "PROTONAPPS_REPO is not set."
+  exit 1
+fi
 
 # Check if the script has received an argument and store it as TAG
 if [ $# -eq 0 ]; then
@@ -31,7 +34,7 @@ APK=$(find "${REPO_ROOT}" -name "*prod-release.apk" | head -n 1)
 
 # Clone the download repo to a temporary directory
 tmpDir=$(mktemp -d)
-git clone  --depth 1 "${PROTONAPPS_REPO}" $tmpDir
+git clone --depth 1 "${PROTONAPPS_REPO}" $tmpDir
 
 # Enter the temporary directory
 pushd $tmpDir || exit 1

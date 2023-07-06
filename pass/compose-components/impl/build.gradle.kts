@@ -41,7 +41,6 @@ dependencies {
     implementation(libs.accompanist.placeholder)
     implementation(libs.accompanist.navigation.material)
     implementation(libs.accompanist.systemUiController)
-    implementation(libs.accompanist.swipeRefresh)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.compose.foundation)

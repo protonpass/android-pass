@@ -10,6 +10,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -95,7 +96,7 @@ private fun highlightIfNeeded(
     field: String,
     highlightColor: Color
 ): AnnotatedString? {
-    val cleanField = field.replace("\n", " ")
+    val cleanField = field.replace("\n", " ").removeAccents()
     val matches = regex.findAll(cleanField)
     return if (matches.any()) cleanField.highlight(matches, highlightColor) else null
 }

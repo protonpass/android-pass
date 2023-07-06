@@ -18,7 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.alias
 
-import java.text.Normalizer
+import proton.android.pass.common.api.removeAccents
 
 data class PrefixSuffix(
     val prefix: String,
@@ -34,7 +34,7 @@ object AliasUtils {
         value.replace(" ", SPACE_REPLACEMENT_CHAR.toString())
             .filter { it.isLetterOrDigit() || ALLOWED_SPECIAL_CHARACTERS.contains(it) }
             .lowercase()
-            .removeAccent()
+            .removeAccents()
 
     fun areAllAliasCharactersValid(alias: String): Boolean {
         for (char in alias) {
@@ -85,8 +85,3 @@ object AliasUtils {
         return PrefixSuffix(prefix, suffix)
     }
 }
-
-private fun CharSequence.removeAccent(): String =
-    "\\p{InCombiningDiacriticalMarks}+"
-        .toRegex()
-        .replace(Normalizer.normalize(this, Normalizer.Form.NFD), "")

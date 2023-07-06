@@ -477,7 +477,7 @@ class ItemRepositoryImpl @Inject constructor(
         events: PendingEventList
     ) {
         withContext(Dispatchers.IO) {
-            PassLogger.i(
+            PassLogger.d(
                 TAG,
                 "Applying events: [updates=${events.updatedItems.size}] [deletes=${events.deletedItemIds.size}]"
             )
@@ -501,7 +501,7 @@ class ItemRepositoryImpl @Inject constructor(
                     localItemDataSource.delete(shareId, ItemId(itemId))
                 }
             }
-            PassLogger.i(TAG, "Finishing applying events")
+            PassLogger.d(TAG, "Finishing applying events")
         }
     }
 

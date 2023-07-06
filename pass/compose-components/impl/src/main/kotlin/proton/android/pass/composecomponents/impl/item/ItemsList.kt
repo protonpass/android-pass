@@ -20,6 +20,7 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,14 +30,18 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import me.proton.core.compose.theme.ProtonTheme
@@ -54,12 +59,12 @@ import proton.android.pass.commonui.api.DateFormatUtils.Format.Yesterday
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
 import proton.android.pass.composecomponents.impl.loading.Loading
-import proton.android.pass.composecomponents.impl.loading.PassSwipeRefresh
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
@@ -67,6 +72,7 @@ import proton.pass.domain.ShareId
 
 private const val PLACEHOLDER_ELEMENTS = 40
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ItemsList(
     modifier: Modifier = Modifier,
@@ -100,11 +106,16 @@ fun ItemsList(
         }
     }
 
-    PassSwipeRefresh(
-        modifier = modifier.fillMaxSize(),
-        state = SwipeRefreshState(isRefreshing is IsRefreshingState.Refreshing),
-        swipeEnabled = enableSwipeRefresh,
-        onRefresh = onRefresh
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing.value(),
+        onRefresh = onRefresh,
+        refreshThreshold = 40.dp,
+    )
+
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .applyIf(enableSwipeRefresh, ifTrue = { pullRefresh(pullRefreshState) })
     ) {
         if (isProcessingSearch == IsProcessingSearchState.Loading) {
             Loading(Modifier.fillMaxSize())
@@ -141,6 +152,11 @@ fun ItemsList(
         } else {
             emptyContent()
         }
+        PullRefreshIndicator(
+            refreshing = isRefreshing.value(),
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 

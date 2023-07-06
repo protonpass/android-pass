@@ -87,6 +87,7 @@ object DatasetUtils {
     private fun Dataset.Builder.fillWithMappings(autofillMappings: AutofillMappings): Dataset.Builder {
         autofillMappings.mappings
             .forEach { mapping ->
+                PassLogger.d(TAG, "mapping id: ${mapping.autofillFieldId}")
                 val fieldBuilder = Field.Builder()
                 fieldBuilder.setValue(AutofillValue.forText(mapping.contents))
                 setField(
@@ -100,6 +101,7 @@ object DatasetUtils {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun Dataset.Builder.createFieldDataHolders(assistFields: List<AssistField>): Dataset.Builder {
         for (field in assistFields) {
+            PassLogger.d(TAG, "field id: ${field.id}")
             setField(field.id.asAndroid().autofillId, Field.Builder().build())
         }
         return this

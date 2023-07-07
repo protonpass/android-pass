@@ -57,5 +57,12 @@ object Base64 {
 
 object Base64Fallback {
     fun encodeBase64(array: ByteArray): ByteArray = KotlinBase64.UrlSafe.encodeToByteArray(array)
-    fun decodeBase64(array: ByteArray): ByteArray = KotlinBase64.UrlSafe.decode(array)
+    fun decodeBase64(array: ByteArray): ByteArray = runCatching {
+        KotlinBase64.UrlSafe.decode(array)
+    }.fold(
+        onSuccess = { it },
+        onFailure = {
+            KotlinBase64.decode(array)
+        }
+    )
 }

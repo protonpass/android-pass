@@ -20,6 +20,7 @@ package proton.android.pass.crypto.impl
 
 import org.junit.Test
 import proton.android.pass.crypto.api.Base64
+import proton.android.pass.crypto.api.Base64Fallback
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
@@ -44,6 +45,26 @@ class Base64Test {
         val decoded = Base64.decodeBase64(encoded)
         assertContentEquals(input.toByteArray(), decoded)
         assertEquals(input, String(decoded, Charsets.US_ASCII))
+    }
+
+    @Test
+    fun fallbackDecodeCanDecodeUrlSafe() {
+        val expected = "subjects?_d=1"
+        val input = "c3ViamVjdHM_X2Q9MQ=="
+
+        val decoded = Base64Fallback.decodeBase64(input.encodeToByteArray())
+        assertContentEquals(expected.encodeToByteArray(), decoded)
+        assertEquals(expected, String(decoded, Charsets.US_ASCII))
+    }
+
+    @Test
+    fun fallbackDecodeCanDecodeStandard() {
+        val expected = "subjects?_d=1"
+        val input = "c3ViamVjdHM/X2Q9MQ=="
+
+        val decoded = Base64Fallback.decodeBase64(input.encodeToByteArray())
+        assertContentEquals(expected.encodeToByteArray(), decoded)
+        assertEquals(expected, String(decoded, Charsets.US_ASCII))
     }
 
 }

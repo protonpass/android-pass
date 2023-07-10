@@ -41,5 +41,8 @@ interface InternalSettingsRepository {
     suspend fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit>
     fun getSelectedVault(): Flow<SelectedVaultPreference>
 
+    suspend fun setPinAttemptsCount(count: Int): Result<Unit>
+    fun getPinAttemptsCount(): Flow<Int>
+
     suspend fun clearSettings(): Result<Unit>
 }

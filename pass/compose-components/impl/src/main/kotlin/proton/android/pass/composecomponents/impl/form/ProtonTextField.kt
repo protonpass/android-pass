@@ -61,7 +61,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 @Composable
 fun ProtonTextField(
     modifier: Modifier = Modifier,
-    textFieldModifier: Modifier = Modifier,
+    textFieldModifier: Modifier = Modifier.fillMaxWidth(),
     value: String,
     textStyle: TextStyle,
     label: @Composable (() -> Unit)? = null,
@@ -98,7 +98,6 @@ fun ProtonTextField(
     Column(modifier = modifier, verticalArrangement = verticalArrangement) {
         BasicTextField(
             modifier = textFieldModifier
-                .fillMaxWidth()
                 .onFocusChanged { state ->
                     if (onFocusChange != null && (state.isFocused || hasBeenFocused)) {
                         hasBeenFocused = true

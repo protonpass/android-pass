@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -106,7 +107,7 @@ internal fun WebsitesSection(
                 }
                 ProtonTextField(
                     modifier = Modifier.heightIn(min = 48.dp),
-                    textFieldModifier = textFieldModifier,
+                    textFieldModifier = textFieldModifier.fillMaxWidth(),
                     isError = websitesWithErrors.contains(idx),
                     errorMessage = stringResource(id = R.string.field_website_address_invalid),
                     value = value,

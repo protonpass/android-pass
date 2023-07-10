@@ -35,7 +35,9 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val declinedUpdateVersionFlow = MutableStateFlow("")
     private val homeSortingFlow = MutableStateFlow(SortingOptionPreference.MostRecent)
     private val autofillSortingFlow = MutableStateFlow(SortingOptionPreference.MostRecent)
-    private val selectedVaultFlow = MutableStateFlow<SelectedVaultPreference>(SelectedVaultPreference.AllVaults)
+    private val selectedVaultFlow =
+        MutableStateFlow<SelectedVaultPreference>(SelectedVaultPreference.AllVaults)
+    private val pinAttemptsCountFlow = MutableStateFlow(0)
 
     override suspend fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -78,6 +80,12 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun getSelectedVault(): Flow<SelectedVaultPreference> = selectedVaultFlow
+    override suspend fun setPinAttemptsCount(count: Int): Result<Unit> {
+        pinAttemptsCountFlow.update { count }
+        return Result.success(Unit)
+    }
+
+    override fun getPinAttemptsCount(): Flow<Int> = pinAttemptsCountFlow
 
     override suspend fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

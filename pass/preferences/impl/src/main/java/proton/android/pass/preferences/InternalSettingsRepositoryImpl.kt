@@ -127,6 +127,18 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         .catch { exception -> handleExceptions(exception) }
         .map { settings -> SelectedVaultPreference.fromValue(settings.selectedVault) }
 
+    override suspend fun setPinAttemptsCount(count: Int): Result<Unit> = runCatching {
+        dataStore.updateData {
+            it.toBuilder()
+                .setPinAttempts(count)
+                .build()
+        }
+        return@runCatching
+    }
+
+    override fun getPinAttemptsCount(): Flow<Int> = dataStore.data
+        .catch { exception -> handleExceptions(exception) }
+        .map { settings -> settings.pinAttempts }
 
     override suspend fun clearSettings(): Result<Unit> = runCatching {
         dataStore.updateData {

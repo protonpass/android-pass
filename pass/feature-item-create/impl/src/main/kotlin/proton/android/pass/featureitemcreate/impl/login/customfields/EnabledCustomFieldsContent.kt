@@ -130,12 +130,8 @@ fun EnabledCustomFieldsContent(
         }
     }
 
-    var fieldWithRequestedFocus by remember { mutableStateOf<LoginCustomField?>(null) }
     RequestFocusLaunchedEffect(
         focusRequester = focusRequester,
-        requestFocus = fieldWithRequestedFocus != focusedField,
-        callback = {
-            fieldWithRequestedFocus = focusedField
-        }
+        requestFocus = focusedField != null
     )
 }

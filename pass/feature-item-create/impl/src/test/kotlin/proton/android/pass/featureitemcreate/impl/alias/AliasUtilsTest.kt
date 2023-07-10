@@ -57,4 +57,13 @@ class AliasUtilsTest {
         assertThat(res.prefix).isEqualTo(prefix)
         assertThat(res.suffix).isEqualTo(suffix)
     }
+
+    @Test
+    fun `can extract prefix and suffix from prefix without dot`() {
+        val prefix = "some-random"
+        val suffix = "@domain.tld"
+        val res = AliasUtils.extractPrefixSuffix("${prefix}$suffix")
+        assertThat(res.prefix).isEqualTo(prefix)
+        assertThat(res.suffix).isEqualTo(suffix)
+    }
 }

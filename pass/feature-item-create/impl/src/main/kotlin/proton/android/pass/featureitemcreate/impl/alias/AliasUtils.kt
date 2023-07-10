@@ -48,6 +48,9 @@ object AliasUtils {
     }
 
     fun extractPrefixSuffix(email: String): PrefixSuffix {
+        // Validate it's a proper email.
+        if (!email.contains("@")) return PrefixSuffix("", email)
+
         // Imagine we have some.alias.suffix@domain.tld
 
         // Split by @
@@ -62,6 +65,11 @@ object AliasUtils {
         // prefixParts[1] = alias
         // prefixParts[2] = suffix
         val prefixParts = atSplits[0].split(".")
+
+        // Check if there's only one part of the prefix (eg: some@domain.com)
+        if (prefixParts.size == 1) {
+            return PrefixSuffix(prefix = prefixParts[0], suffix = "@" + atSplits[1])
+        }
 
         // The suffix is composed by:
         // - the last part of the prefixPart

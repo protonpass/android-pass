@@ -55,6 +55,9 @@ interface UserPreferencesRepository {
     suspend fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit>
     fun getAppLockTypePreference(): Flow<AppLockTypePreference>
 
+    suspend fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit>
+    fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference>
+
     suspend fun setPasswordGenerationPreference(preference: PasswordGenerationPreference): Result<Unit>
     fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference>
 

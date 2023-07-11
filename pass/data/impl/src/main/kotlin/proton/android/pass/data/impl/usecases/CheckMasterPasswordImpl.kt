@@ -38,7 +38,11 @@ class CheckMasterPasswordImpl @Inject constructor(
             userId
         }
 
-        val res = userManager.unlockWithPassword(id, PlainByteArray(password.encodeToByteArray()))
+        val res = userManager.unlockWithPassword(
+            userId = id,
+            password = PlainByteArray(password.encodeToByteArray()),
+            refreshKeySalts = false
+        )
         return when (res) {
             is UserManager.UnlockResult.Success -> true
             is UserManager.UnlockResult.Error -> false

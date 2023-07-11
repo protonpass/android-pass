@@ -24,4 +24,5 @@ sealed interface AutofillNavigation {
     data class Selected(val autofillMappings: AutofillMappings) : AutofillNavigation
     object Upgrade : AutofillNavigation
     object Cancel : AutofillNavigation
+    object ForceSignOut : AutofillNavigation
 }

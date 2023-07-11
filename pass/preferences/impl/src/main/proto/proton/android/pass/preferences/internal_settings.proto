@@ -11,4 +11,5 @@ message InternalSettings {
   int32 autofill_sorting_option = 5;
   string selected_vault = 6;
   int32 pin_attempts = 7;
+  int32 master_password_attempts = 8;
 }

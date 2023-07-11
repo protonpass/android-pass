@@ -49,8 +49,11 @@ interface UserPreferencesRepository {
     suspend fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit>
     fun getUseFaviconsPreference(): Flow<UseFaviconsPreference>
 
-    suspend fun setAppLockPreference(preference: AppLockPreference): Result<Unit>
-    fun getAppLockPreference(): Flow<AppLockPreference>
+    suspend fun setAppLockTimePreference(preference: AppLockTimePreference): Result<Unit>
+    fun getAppLockTimePreference(): Flow<AppLockTimePreference>
+
+    suspend fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit>
+    fun getAppLockTypePreference(): Flow<AppLockTypePreference>
 
     suspend fun setPasswordGenerationPreference(preference: PasswordGenerationPreference): Result<Unit>
     fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference>

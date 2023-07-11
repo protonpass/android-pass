@@ -35,6 +35,9 @@ fun AppLockConfigScreen(
     AppLockConfigContent(
         modifier = modifier,
         state = state,
-        onNavigateEvent = onNavigateEvent
+        onNavigateEvent = onNavigateEvent,
+        onToggleBiometricSystemLock = {
+            viewModel.onToggleBiometricSystemLock(it)
+        }
     )
 }

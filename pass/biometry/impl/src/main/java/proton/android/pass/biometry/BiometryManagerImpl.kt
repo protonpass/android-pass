@@ -28,12 +28,17 @@ import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import proton.android.pass.biometry.extensions.from
 import proton.android.pass.biometry.implementation.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.BiometricSystemLockPreference
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -42,7 +47,8 @@ class BiometryManagerImpl @Inject constructor(
     private val biometricManager: BiometricManager,
     private val biometryAuthTimeHolder: BiometryAuthTimeHolder,
     private val bootCountRetriever: BootCountRetriever,
-    private val elapsedTimeProvider: ElapsedTimeProvider
+    private val elapsedTimeProvider: ElapsedTimeProvider,
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus =
@@ -121,47 +127,66 @@ class BiometryManagerImpl @Inject constructor(
         }
 
         PassLogger.i(TAG, "Starting biometry authentication")
-        prompt.authenticate(getPromptInfo(ctx))
+        val biometricSystemLock = userPreferencesRepository.getBiometricSystemLockPreference()
+            .first()
+        prompt.authenticate(getPromptInfo(ctx, biometricSystemLock))
         awaitClose()
     }
 
     private fun canAuthenticate(): BiometryResult {
-        val res = biometricManager.canAuthenticate(getAllowedAuthenticators())
+        val biometricSystemLock = runBlocking {
+            userPreferencesRepository.getBiometricSystemLockPreference().first()
+        }
+        val res = biometricManager.canAuthenticate(getAllowedAuthenticators(biometricSystemLock))
         return BiometryResult.from(res)
     }
 
-    private fun getPromptInfo(context: Context): PromptInfo =
-        PromptInfo.Builder()
-            .setTitle(context.getString(R.string.biometric_prompt_title))
-            .setSubtitle(context.getString(R.string.biometric_prompt_subtitle))
-            .setAllowedAuthenticators(getAllowedAuthenticators())
-            .build()
+    private fun getPromptInfo(
+        context: Context,
+        biometricSystemLock: BiometricSystemLockPreference
+    ): PromptInfo {
+        val builder = PromptInfo.Builder()
+        builder.setTitle(context.getString(R.string.biometric_prompt_title))
+        builder.setSubtitle(context.getString(R.string.biometric_prompt_subtitle))
+        when (biometricSystemLock) {
+            BiometricSystemLockPreference.Enabled -> {
+                builder.setAllowedAuthenticators(getAllowedAuthenticators(biometricSystemLock))
+            }
+
+            BiometricSystemLockPreference.NotEnabled -> {
+                builder.setAllowedAuthenticators(getAllowedAuthenticators(biometricSystemLock))
+                builder.setNegativeButtonText(context.getString(R.string.biometric_prompt_cancel))
+            }
+        }
+        return builder.build()
+    }
+
 
     // https://developer.android.com/reference/kotlin/androidx/biometric/BiometricPrompt.PromptInfo.Builder#setallowedauthenticators
     // BIOMETRIC_STRONG | DEVICE_CREDENTIAL is unsupported on API 28-29.
     // Setting an unsupported value on an affected Android version will result in an error
     // when calling build().
 
-    private fun getAllowedAuthenticators(): Int =
+    private fun getAllowedAuthenticators(biometricSystemLock: BiometricSystemLockPreference): Int =
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q ||
             Build.VERSION.SDK_INT == Build.VERSION_CODES.P
         ) {
             PassLogger.i(TAG, "Allowed authenticators: AUTHENTICATORS_P_OR_Q")
-            AUTHENTICATORS_P_OR_Q
+            BiometricManager.Authenticators.BIOMETRIC_WEAK.orDevice(biometricSystemLock)
         } else {
             PassLogger.i(TAG, "Allowed authenticators: AUTHENTICATORS_NOT_P_NOT_Q")
-            AUTHENTICATORS_NOT_P_NOT_Q
+            BiometricManager.Authenticators.BIOMETRIC_STRONG.orDevice(biometricSystemLock)
         }
 
+    private fun Int.orDevice(biometricSystemLock: BiometricSystemLockPreference): Int =
+        if (biometricSystemLock.value()) {
+            this or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+        } else {
+            this
+        }
 
     companion object {
         private const val TAG = "BiometryLauncherImpl"
-
-        private const val AUTHENTICATORS_NOT_P_NOT_Q =
-            BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
-        private const val AUTHENTICATORS_P_OR_Q =
-            BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL
-
     }
 
 }

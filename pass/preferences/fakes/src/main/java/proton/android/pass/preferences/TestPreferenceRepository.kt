@@ -48,6 +48,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         MutableStateFlow<AllowScreenshotsPreference>(AllowScreenshotsPreference.Disabled)
     private val appLockTimePreference = MutableStateFlow(AppLockTimePreference.InFourHours)
     private val appLockTypePreference = MutableStateFlow(AppLockTypePreference.Biometrics)
+    private val biometricSystemLockPreference: MutableStateFlow<BiometricSystemLockPreference> =
+        MutableStateFlow(BiometricSystemLockPreference.Enabled)
     private val passwordGenerationPreference = MutableStateFlow(
         PasswordGenerationPreference(
             mode = PasswordGenerationMode.Words,
@@ -140,6 +142,14 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     }
 
     override fun getAppLockTypePreference(): Flow<AppLockTypePreference> = appLockTypePreference
+
+    override suspend fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit> {
+        biometricSystemLockPreference.emit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> =
+        biometricSystemLockPreference
 
     override suspend fun setPasswordGenerationPreference(
         preference: PasswordGenerationPreference

@@ -28,11 +28,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
@@ -55,9 +57,13 @@ import proton.android.pass.autofill.ui.autofill.AutofillUiState.StartAutofillUiS
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -67,6 +73,8 @@ import javax.inject.Inject
 class AutofillActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
     private val preferenceRepository: UserPreferencesRepository,
+    private val internalSettingsRepository: InternalSettingsRepository,
+    private val accountManager: AccountManager,
     needsBiometricAuth: NeedsBiometricAuth,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -79,6 +87,9 @@ class AutofillActivityViewModel @Inject constructor(
                 appName = savedStateHandle.get<String>(ARG_APP_NAME) ?: packageName
             )
         }
+
+    private val closeScreenFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
     private val webDomain: Option<String> = savedStateHandle.get<String>(ARG_WEB_DOMAIN)
         .toOption()
     private val title: Option<String> = savedStateHandle.get<String>(ARG_TITLE)
@@ -127,14 +138,16 @@ class AutofillActivityViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
-    val state: StateFlow<AutofillUiState> = combine(
+    val state: StateFlow<AutofillUiState> = combineN(
         themePreferenceState,
         needsBiometricAuth(),
         autofillAppState,
         selectedAutofillItemState,
-        copyTotpToClipboardPreferenceState
-    ) { themePreference, needsAuth, autofillAppState, selectedAutofillItem, copyTotpToClipboard ->
+        copyTotpToClipboardPreferenceState,
+        closeScreenFlow
+    ) { themePreference, needsAuth, autofillAppState, selectedAutofillItem, copyTotpToClipboard, closeScreen ->
         when {
+            closeScreen -> AutofillUiState.CloseScreen
             autofillAppState.isValid() -> NotValidAutofillUiState
             else -> StartAutofillUiState(
                 themePreference = themePreference.value(),
@@ -163,5 +176,24 @@ class AutofillActivityViewModel @Inject constructor(
         runBlocking {
             preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
         }
+    }
+
+    fun signOut() = viewModelScope.launch {
+        val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
+        if (primaryUserId != null) {
+            accountManager.removeAccount(primaryUserId)
+        }
+        preferenceRepository.clearPreferences()
+            .flatMap { internalSettingsRepository.clearSettings() }
+            .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
+            .onFailure {
+                PassLogger.w(TAG, it, "Error clearing preferences")
+            }
+
+        closeScreenFlow.update { true }
+    }
+
+    companion object {
+        private const val TAG = "AutofillActivityViewModel"
     }
 }

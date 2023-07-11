@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill.ui.autofill
 
-import android.R
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -80,6 +79,7 @@ class AutofillActivity : FragmentActivity() {
 
     private fun onStateReceived(autofillUiState: AutofillUiState) {
         when (autofillUiState) {
+            AutofillUiState.CloseScreen -> onAutofillCancel()
             AutofillUiState.NotValidAutofillUiState -> onAutofillCancel()
             is AutofillUiState.StartAutofillUiState -> {
                 WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -92,6 +92,10 @@ class AutofillActivity : FragmentActivity() {
                                 AutofillNavigation.Cancel -> onAutofillCancel()
                                 is AutofillNavigation.Selected -> onAutofillSuccess(it.autofillMappings)
                                 AutofillNavigation.Upgrade -> viewModel.upgrade()
+                                AutofillNavigation.ForceSignOut -> {
+                                    viewModel.signOut()
+                                    disableAutofill()
+                                }
                             }
                         }
                     )
@@ -120,7 +124,7 @@ class AutofillActivity : FragmentActivity() {
     private fun prepareAutofillSuccessIntent(autofillMappings: AutofillMappings): Intent =
         Intent().apply {
             // We must send a remote view presentation, otherwise it will crash
-            val notUsed = RemoteViews(packageName, R.layout.simple_list_item_1)
+            val notUsed = RemoteViews(packageName, android.R.layout.simple_list_item_1)
             val options = DatasetBuilderOptions(
                 id = "AutofillActivity".some(),
                 remoteViewPresentation = notUsed.some()
@@ -141,6 +145,11 @@ class AutofillActivity : FragmentActivity() {
                 ?: AllowScreenshotsPreference.Disabled
         }
         setSecureMode(setting)
+    }
+
+    private fun disableAutofill() {
+        val autofillManager = getSystemService(AutofillManager::class.java)
+        autofillManager.disableAutofillServices()
     }
 
     companion object {

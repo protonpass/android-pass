@@ -26,10 +26,8 @@ import kotlinx.coroutines.flow.map
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @Suppress("TooManyFunctions")
-@Singleton
 class UserPreferencesRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<UserPreferences>,
     private val inMemoryPreferences: InMemoryPreferences
@@ -52,16 +50,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 BiometricLockState.from(fromBooleanPrefProto(preferences.biometricLock))
             }
 
-    override suspend fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> =
-        runCatching {
-            inMemoryPreferences.set(HasAuthenticated::class.java.name, state.value())
-            dataStore.updateData {
-                it.toBuilder()
-                    .setHasAuthenticatedWithBiometry(state.value().toBooleanPrefProto())
-                    .build()
-            }
-            return@runCatching
+    override suspend fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> = runCatching {
+        inMemoryPreferences.set(HasAuthenticated::class.java.name, state.value())
+        dataStore.updateData {
+            it.toBuilder()
+                .setHasAuthenticatedWithBiometry(state.value().toBooleanPrefProto())
+                .build()
         }
+        return@runCatching
+    }
 
     override fun getHasAuthenticated(): Flow<HasAuthenticated> =
         dataStore.data

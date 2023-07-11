@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureprofile.impl.applock
+package proton.android.pass.featureprofile.impl.applocktime
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,13 +29,13 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.featureprofile.impl.R
-import proton.android.pass.preferences.AppLockPreference
+import proton.android.pass.preferences.AppLockTimePreference
 
 @Composable
-fun AppLockBottomsheetContent(
+fun AppLockTimeBottomsheetContent(
     modifier: Modifier = Modifier,
-    state: AppLockUiState,
-    onSelected: (AppLockPreference) -> Unit
+    state: AppLockTimeUiState,
+    onSelected: (AppLockTimePreference) -> Unit
 ) {
     BottomSheetItemList(
         modifier = modifier,
@@ -50,7 +50,7 @@ fun AppLockBottomsheetContent(
 }
 
 private fun appLockBottomSheetItem(
-    preference: AppLockPreference,
+    preference: AppLockTimePreference,
     isSelected: Boolean,
     onClick: () -> Unit
 ): BottomSheetItem =
@@ -58,13 +58,13 @@ private fun appLockBottomSheetItem(
         override val title: @Composable () -> Unit
             get() = {
                 val title = when (preference) {
-                    AppLockPreference.Immediately -> R.string.app_lock_immediately
-                    AppLockPreference.InOneMinute -> R.string.app_lock_one_minute
-                    AppLockPreference.InTwoMinutes -> R.string.app_lock_two_minutes
-                    AppLockPreference.InFiveMinutes -> R.string.app_lock_five_minutes
-                    AppLockPreference.InTenMinutes -> R.string.app_lock_ten_minutes
-                    AppLockPreference.InOneHour -> R.string.app_lock_one_hour
-                    AppLockPreference.InFourHours -> R.string.app_lock_four_hours
+                    AppLockTimePreference.Immediately -> R.string.app_lock_immediately
+                    AppLockTimePreference.InOneMinute -> R.string.app_lock_one_minute
+                    AppLockTimePreference.InTwoMinutes -> R.string.app_lock_two_minutes
+                    AppLockTimePreference.InFiveMinutes -> R.string.app_lock_five_minutes
+                    AppLockTimePreference.InTenMinutes -> R.string.app_lock_ten_minutes
+                    AppLockTimePreference.InOneHour -> R.string.app_lock_one_hour
+                    AppLockTimePreference.InFourHours -> R.string.app_lock_four_hours
                 }
                 BottomSheetItemTitle(text = stringResource(title))
             }

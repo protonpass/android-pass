@@ -103,11 +103,11 @@ fun ProfileContent(
                     style = ProtonTheme.typography.defaultSmallStrongNorm,
                     color = PassTheme.colors.textNorm
                 )
-                if (state.fingerprintSection is FingerprintSectionState.Available) {
-                    FingerprintProfileSection(
-                        isFingerprintEnabled = state.fingerprintSection.enabled.value(),
-                        onFingerprintToggle = { onEvent(ProfileUiEvent.OnFingerprintClicked(it)) },
-                        onAppLockClick = { onEvent(ProfileUiEvent.OnAppLockClick) }
+                if (state.fingerprintSection is AppLockSectionState.Available) {
+                    AppLockSection(
+                        isAppLockEnabled = state.fingerprintSection.enabled.value(),
+                        onToggle = { onEvent(ProfileUiEvent.OnFingerprintClicked(it)) },
+                        onAdvancedClick = { onEvent(ProfileUiEvent.OnAppLockConfigClick) }
                     )
                 }
                 if (state.autofillStatus is AutofillSupportedStatus.Supported) {

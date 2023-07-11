@@ -26,7 +26,11 @@ import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
 object Auth : NavItem(baseRoute = "auth", noHistory = true)
-object EnterPin : NavItem(baseRoute = "pin/enter/bottomsheet", noHistory = true, isBottomsheet = true)
+object EnterPin : NavItem(
+    baseRoute = "pin/enter/bottomsheet",
+    noHistory = true,
+    isBottomsheet = true
+)
 
 sealed interface AuthNavigation {
     object Success : AuthNavigation
@@ -45,7 +49,6 @@ fun NavGraphBuilder.authGraph(
             navigation = navigation,
         )
     }
-
     bottomSheet(EnterPin) {
         EnterPinBottomsheet()
     }

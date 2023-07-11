@@ -34,7 +34,6 @@ import proton.android.pass.biometry.extensions.from
 import proton.android.pass.biometry.implementation.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -45,10 +44,8 @@ import javax.inject.Singleton
 @Singleton
 class BiometryManagerImpl @Inject constructor(
     private val biometricManager: BiometricManager,
-    private val biometryAuthTimeHolder: BiometryAuthTimeHolder,
-    private val bootCountRetriever: BootCountRetriever,
-    private val elapsedTimeProvider: ElapsedTimeProvider,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val storeAuthSuccessful: StoreAuthSuccessful
 ) : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus =
@@ -88,13 +85,8 @@ class BiometryManagerImpl @Inject constructor(
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 PassLogger.i(TAG, "Auth succeeded")
+                storeAuthSuccessful()
                 trySend(BiometryResult.Success)
-                biometryAuthTimeHolder.storeBiometryAuthData(
-                    AuthData(
-                        authTime = elapsedTimeProvider.getElapsedTime().some(),
-                        bootCount = bootCountRetriever.get().some()
-                    )
-                )
                 close()
             }
         }

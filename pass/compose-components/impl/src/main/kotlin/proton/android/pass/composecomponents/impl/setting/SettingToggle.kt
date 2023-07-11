@@ -48,6 +48,7 @@ fun SettingToggle(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
+            modifier = Modifier.weight(1f),
             text = text,
             style = ProtonTheme.typography.defaultWeak,
             color = PassTheme.colors.textNorm

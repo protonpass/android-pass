@@ -738,12 +738,15 @@ fun NavGraphBuilder.appGraph(
     )
 
     authGraph(
+        canLogout = true,
         navigation = {
             when (it) {
                 AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
                 AuthNavigation.Success -> appNavigator.onBackClick()
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)
                 AuthNavigation.Failed -> appNavigator.onBackClick()
+                AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
+                AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut(null))
             }
         }
     )

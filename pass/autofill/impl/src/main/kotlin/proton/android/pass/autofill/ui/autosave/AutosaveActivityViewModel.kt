@@ -22,19 +22,35 @@ import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.flatMap
+import proton.android.pass.common.api.some
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class AutosaveActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
-    private val preferenceRepository: UserPreferencesRepository
+    private val preferenceRepository: UserPreferencesRepository,
+    private val internalSettingsRepository: InternalSettingsRepository,
+    private val accountManager: AccountManager
 ) : ViewModel() {
+
+    private val eventFlow: MutableStateFlow<Option<AutosaveEvent>> = MutableStateFlow(None)
+    val state: StateFlow<Option<AutosaveEvent>> = eventFlow
 
     fun register(context: ComponentActivity) {
         accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
@@ -49,4 +65,27 @@ class AutosaveActivityViewModel @Inject constructor(
             preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
         }
     }
+
+    fun signOut() = viewModelScope.launch {
+        val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
+        if (primaryUserId != null) {
+            accountManager.removeAccount(primaryUserId)
+        }
+        preferenceRepository.clearPreferences()
+            .flatMap { internalSettingsRepository.clearSettings() }
+            .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
+            .onFailure {
+                PassLogger.w(TAG, it, "Error clearing preferences")
+            }
+
+        eventFlow.update { AutosaveEvent.Close.some() }
+    }
+
+    companion object {
+        private const val TAG = "AutosaveActivityViewModel"
+    }
+}
+
+sealed interface AutosaveEvent {
+    object Close : AutosaveEvent
 }

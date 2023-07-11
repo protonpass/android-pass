@@ -35,4 +35,7 @@ abstract class FakesBiometryModule {
 
     @Binds
     abstract fun bindNeedsBiometricAuth(impl: TestNeedsBiometricAuth): NeedsBiometricAuth
+
+    @Binds
+    abstract fun bindStoreAuthSuccessful(impl: TestStoreAuthSuccessful): StoreAuthSuccessful
 }

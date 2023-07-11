@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
-import me.proton.core.compose.theme.defaultSmallStrongNorm
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.commonui.api.PassTheme
@@ -98,11 +97,6 @@ fun ProfileContent(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text(
-                    text = stringResource(R.string.profile_manage_profile),
-                    style = ProtonTheme.typography.defaultSmallStrongNorm,
-                    color = PassTheme.colors.textNorm
-                )
                 if (state.fingerprintSection is AppLockSectionState.Available) {
                     AppLockSection(
                         isAppLockEnabled = state.fingerprintSection.enabled.value(),

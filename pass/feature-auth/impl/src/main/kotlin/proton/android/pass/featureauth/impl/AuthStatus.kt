@@ -18,9 +18,52 @@
 
 package proton.android.pass.featureauth.impl
 
-sealed interface AuthStatus {
-    object Pending : AuthStatus
-    object Success : AuthStatus
-    object Failed : AuthStatus
-    object Canceled : AuthStatus
+import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+
+sealed interface AuthEvent {
+    object Success : AuthEvent
+    object Failed : AuthEvent
+    object Canceled : AuthEvent
+    object SignOut : AuthEvent
+    object ForceSignOut : AuthEvent
+}
+
+sealed interface AuthError {
+    @JvmInline
+    value class WrongPassword(val remainingAttempts: Int) : AuthError
+    object UnknownError : AuthError
+}
+
+data class AuthContent(
+    val password: String,
+    val address: String,
+    val isLoadingState: IsLoadingState,
+    val isPasswordVisible: Boolean,
+    val error: Option<AuthError>
+) {
+    companion object {
+        fun default(address: String) = AuthContent(
+            password = "",
+            address = address,
+            isLoadingState = IsLoadingState.NotLoading,
+            isPasswordVisible = false,
+            error = None
+        )
+    }
+}
+
+@Stable
+data class AuthState(
+    val event: Option<AuthEvent>,
+    val content: AuthContent
+) {
+    companion object {
+        val Initial = AuthState(
+            event = None,
+            content = AuthContent.default("")
+        )
+    }
 }

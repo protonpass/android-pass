@@ -18,33 +18,52 @@
 
 package proton.android.pass.featureauth.impl
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun AuthScreenContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    state: AuthContent,
+    canLogout: Boolean,
+    onEvent: (AuthUiEvent) -> Unit
 ) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(96.dp))
-        Icon(
-            modifier = Modifier.size(96.dp),
-            painter = painterResource(proton.android.pass.composecomponents.impl.R.drawable.ic_pass_logo),
-            contentDescription = null,
-            tint = Color.Unspecified
-        )
+    Box(modifier = modifier.fillMaxSize()) {
+        if (canLogout) {
+            IconButton(
+                modifier = Modifier
+                    .align(alignment = Alignment.TopEnd)
+                    .padding(16.dp),
+                onClick = { onEvent(AuthUiEvent.OnSignOut) }
+            ) {
+                Icon(
+                    painter = painterResource(CoreR.drawable.ic_proton_arrow_out_from_rectangle),
+                    contentDescription = stringResource(CoreR.string.presentation_menu_item_title_sign_out)
+                )
+            }
+        }
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AuthScreenHeader()
+            AuthScreenBody(
+                state = state,
+                onEvent = onEvent
+            )
+        }
     }
 }

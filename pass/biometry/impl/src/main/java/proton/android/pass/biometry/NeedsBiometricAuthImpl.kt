@@ -34,13 +34,13 @@ class NeedsBiometricAuthImpl @Inject constructor(
     override fun invoke(): Flow<Boolean> = combine(
         preferencesRepository.getBiometricLockState().distinctUntilChanged(),
         preferencesRepository.getHasAuthenticated().distinctUntilChanged(),
-        preferencesRepository.getAppLockPreference().distinctUntilChanged(),
+        preferencesRepository.getAppLockTimePreference().distinctUntilChanged(),
         authTimeHolder.getBiometryAuthData().distinctUntilChanged()
-    ) { biometricLock, hasAuthenticated, appLockPreference, biometryAuthTime ->
+    ) { biometricLock, hasAuthenticated, appLockTimePreference, biometryAuthTime ->
         NeedsAuthChecker.needsAuth(
             biometricLock = biometricLock,
             hasAuthenticated = hasAuthenticated,
-            appLockPreference = appLockPreference,
+            appLockTimePreference = appLockTimePreference,
             lastUnlockTime = biometryAuthTime.authTime,
             now = elapsedTimeProvider.getElapsedTime(),
             lastBootCount = biometryAuthTime.bootCount,

@@ -30,7 +30,7 @@ private const val IN_TEN_MINUTES = 6
 private const val IN_ONE_HOUR = 7
 private const val IN_FOUR_HOURS = 8
 
-enum class AppLockPreference {
+enum class AppLockTimePreference {
     Immediately,
     InOneMinute,
     InTwoMinutes,
@@ -60,7 +60,7 @@ enum class AppLockPreference {
     }
 
     companion object {
-        fun from(value: Int): AppLockPreference = when (value) {
+        fun from(value: Int): AppLockTimePreference = when (value) {
             IMMEDIATELY -> Immediately
             IN_ONE_MINUTE -> InOneMinute
             IN_TWO_MINUTES -> InTwoMinutes

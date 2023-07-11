@@ -186,8 +186,8 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 )
             }
 
-    override suspend fun setAppLockPreference(
-        preference: AppLockPreference
+    override suspend fun setAppLockTimePreference(
+        preference: AppLockTimePreference
     ): Result<Unit> = runCatching {
         dataStore.updateData {
             it.toBuilder()
@@ -197,11 +197,28 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         return@runCatching
     }
 
-    override fun getAppLockPreference(): Flow<AppLockPreference> =
+    override fun getAppLockTimePreference(): Flow<AppLockTimePreference> =
         dataStore.data
             .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
-                preferences.lockApp.toValue(default = AppLockPreference.InTwoMinutes)
+                preferences.lockApp.toValue(default = AppLockTimePreference.InTwoMinutes)
+            }
+
+    override suspend fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAppLockType(preference.toProto())
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getAppLockTypePreference(): Flow<AppLockTypePreference> =
+        dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map { preferences ->
+                preferences.appLockType.toValue(default = AppLockTypePreference.Biometrics)
             }
 
     override suspend fun setPasswordGenerationPreference(

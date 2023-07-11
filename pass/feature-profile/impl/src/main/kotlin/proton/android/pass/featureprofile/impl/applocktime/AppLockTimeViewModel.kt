@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureprofile.impl.applock
+package proton.android.pass.featureprofile.impl.applocktime
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,22 +28,22 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.preferences.AppLockPreference
+import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class AppLockViewModel @Inject constructor(
+class AppLockTimeViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val eventState: MutableStateFlow<AppLockEvent> = MutableStateFlow(AppLockEvent.Unknown)
+    private val eventState: MutableStateFlow<AppLockTimeEvent> = MutableStateFlow(AppLockTimeEvent.Unknown)
 
-    val state: StateFlow<AppLockUiState> = combine(
-        userPreferencesRepository.getAppLockPreference(),
+    val state: StateFlow<AppLockTimeUiState> = combine(
+        userPreferencesRepository.getAppLockTimePreference(),
         eventState
     ) { preference, event ->
-        AppLockUiState(
+        AppLockTimeUiState(
             items = allPreferences,
             selected = preference,
             event = event
@@ -51,11 +51,11 @@ class AppLockViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = AppLockUiState.Initial
+        initialValue = AppLockTimeUiState.Initial
     )
 
-    fun onChanged(appLockPreference: AppLockPreference) = viewModelScope.launch {
-        userPreferencesRepository.setAppLockPreference(appLockPreference)
-        eventState.update { AppLockEvent.OnChanged }
+    fun onChanged(appLockTimePreference: AppLockTimePreference) = viewModelScope.launch {
+        userPreferencesRepository.setAppLockTimePreference(appLockTimePreference)
+        eventState.update { AppLockTimeEvent.OnChanged }
     }
 }

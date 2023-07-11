@@ -21,7 +21,7 @@ package proton.android.pass.biometry
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.AppLockPreference
+import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 
@@ -55,7 +55,7 @@ object NeedsAuthChecker {
     fun needsAuth(
         biometricLock: BiometricLockState,
         hasAuthenticated: HasAuthenticated,
-        appLockPreference: AppLockPreference,
+        appLockTimePreference: AppLockTimePreference,
         lastUnlockTime: Option<Long>,
         now: Long,
         lastBootCount: Option<Long>,
@@ -73,9 +73,9 @@ object NeedsAuthChecker {
             return NeedsAuthReason.BootCountChanged
         }
 
-        if (appLockPreference == AppLockPreference.Immediately) {
+        if (appLockTimePreference == AppLockTimePreference.Immediately) {
             val needsAuth = hasAuthenticated is HasAuthenticated.NotAuthenticated
-            PassLogger.d(TAG, "AppLockPreference.Immediately. NeedsAuth=$needsAuth")
+            PassLogger.d(TAG, "AppLockTimePreference.Immediately. NeedsAuth=$needsAuth")
             return if (needsAuth) {
                 NeedsAuthReason.LockImmediatelyAndHadNotAuthenticated
             } else {
@@ -88,7 +88,7 @@ object NeedsAuthChecker {
 
         // User has set an expiration time preference. Check if we need to perform auth again.
         val unlockTime = lastUnlockTime.value() ?: return NeedsAuthReason.LastUnlockTimeNotSet
-        val appLockDuration = appLockPreference.toDuration()
+        val appLockDuration = appLockTimePreference.toDuration()
         val timeSinceLastAuth = now - unlockTime
         if (timeSinceLastAuth < 0) {
             PassLogger.w(

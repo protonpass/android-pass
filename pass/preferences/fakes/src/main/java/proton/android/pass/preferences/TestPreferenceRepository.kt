@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Suppress("TooManyFunctions")
 @Singleton
 class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository {
 
@@ -45,7 +46,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         MutableStateFlow<UseFaviconsPreference>(UseFaviconsPreference.Disabled)
     private val allowScreenshotsPreference =
         MutableStateFlow<AllowScreenshotsPreference>(AllowScreenshotsPreference.Disabled)
-    private val lockAppPreference = MutableStateFlow(AppLockPreference.InFourHours)
+    private val appLockTimePreference = MutableStateFlow(AppLockTimePreference.InFourHours)
+    private val appLockTypePreference = MutableStateFlow(AppLockTypePreference.Biometrics)
     private val passwordGenerationPreference = MutableStateFlow(
         PasswordGenerationPreference(
             mode = PasswordGenerationMode.Words,
@@ -126,12 +128,18 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun getUseFaviconsPreference(): Flow<UseFaviconsPreference> = useFaviconsPreference
 
-    override suspend fun setAppLockPreference(preference: AppLockPreference): Result<Unit> {
-        lockAppPreference.emit(preference)
+    override suspend fun setAppLockTimePreference(preference: AppLockTimePreference): Result<Unit> {
+        appLockTimePreference.emit(preference)
         return Result.success(Unit)
     }
 
-    override fun getAppLockPreference(): Flow<AppLockPreference> = lockAppPreference
+    override fun getAppLockTimePreference(): Flow<AppLockTimePreference> = appLockTimePreference
+    override suspend fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit> {
+        appLockTypePreference.emit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun getAppLockTypePreference(): Flow<AppLockTypePreference> = appLockTypePreference
 
     override suspend fun setPasswordGenerationPreference(
         preference: PasswordGenerationPreference

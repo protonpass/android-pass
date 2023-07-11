@@ -16,23 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureprofile.impl.applockconfig
+package proton.android.pass.preferences
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.preferences.AppLockTimePreference
-import proton.android.pass.preferences.BiometricSystemLockPreference
+sealed interface BiometricSystemLockPreference {
+    object Enabled : BiometricSystemLockPreference
+    object NotEnabled : BiometricSystemLockPreference
 
-sealed class AppLockConfigUiState {
-    abstract val appLockTimePreference: AppLockTimePreference
-
-    @Stable
-    data class Biometric(
-        override val appLockTimePreference: AppLockTimePreference,
-        val biometricSystemLockPreference: BiometricSystemLockPreference
-    ) : AppLockConfigUiState()
-
-    @Stable
-    data class Pin(
-        override val appLockTimePreference: AppLockTimePreference
-    ) : AppLockConfigUiState()
+    companion object {
+        fun from(value: Boolean): BiometricSystemLockPreference = if (value) {
+            Enabled
+        } else {
+            NotEnabled
+        }
+    }
 }
+
+fun BiometricSystemLockPreference.value(): Boolean =
+    when (this) {
+        BiometricSystemLockPreference.Enabled -> true
+        BiometricSystemLockPreference.NotEnabled -> false
+    }

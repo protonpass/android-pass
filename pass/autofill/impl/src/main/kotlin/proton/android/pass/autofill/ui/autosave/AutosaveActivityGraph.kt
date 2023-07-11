@@ -64,12 +64,15 @@ fun NavGraphBuilder.autosaveActivityGraph(
 ) {
     composable(AUTH_SCREEN_ROUTE) {
         AuthScreen(
+            canLogout = false,
             navigation = {
                 when (it) {
                     AuthNavigation.Back -> onNavigate(AutosaveNavigation.Cancel)
                     AuthNavigation.Success -> appNavigator.navigate(CreateLogin)
                     AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
                     AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
+                    AuthNavigation.SignOut -> {}
+                    AuthNavigation.ForceSignOut -> onNavigate(AutosaveNavigation.ForceSignOut)
                 }
             }
         )

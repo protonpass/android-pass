@@ -90,6 +90,7 @@ fun NavGraphBuilder.autofillActivityGraph(
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
     authGraph(
+        canLogout = false,
         navigation = {
             when (it) {
                 AuthNavigation.Back -> onNavigate(AutofillNavigation.Cancel)
@@ -103,6 +104,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                 AuthNavigation.Dismissed -> onNavigate(AutofillNavigation.Cancel)
 
                 AuthNavigation.Failed -> onNavigate(AutofillNavigation.Cancel)
+
+                AuthNavigation.SignOut -> {}
+
+                AuthNavigation.ForceSignOut -> onNavigate(AutofillNavigation.ForceSignOut)
             }
         }
     )

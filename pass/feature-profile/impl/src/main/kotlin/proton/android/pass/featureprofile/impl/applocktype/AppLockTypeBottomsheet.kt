@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureprofile.impl.applock
+package proton.android.pass.featureprofile.impl.applocktype
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,20 +27,20 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.bottomSheet
 
 @Composable
-fun AppLockBottomsheet(
+fun AppLockTypeBottomsheet(
     modifier: Modifier = Modifier,
     onClose: () -> Unit,
-    viewModel: AppLockViewModel = hiltViewModel()
+    viewModel: AppLockTypeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        if (state.event == AppLockEvent.OnChanged) {
+        if (state.event == AppLockTypeEvent.OnChanged) {
             onClose()
         }
     }
 
-    AppLockBottomsheetContent(
+    AppLockTypeBottomsheetContent(
         modifier = modifier.bottomSheet(),
         state = state,
         onSelected = { viewModel.onChanged(it) }

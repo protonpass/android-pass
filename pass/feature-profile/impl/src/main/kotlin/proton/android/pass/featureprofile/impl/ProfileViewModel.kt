@@ -129,14 +129,14 @@ class ProfileViewModel @Inject constructor(
         eventFlow,
     ) { biometricLock, biometryStatus, autofillStatus, itemSummaryUiState, upgradeInfo, event ->
         val fingerprintSection = when (biometryStatus) {
-            BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
-            BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
+            BiometryStatus.NotEnrolled -> AppLockSectionState.NoFingerprintRegistered
+            BiometryStatus.NotAvailable -> AppLockSectionState.NotAvailable
             BiometryStatus.CanAuthenticate -> {
                 val available = when (biometricLock) {
                     BiometricLockState.Enabled -> IsButtonEnabled.Enabled
                     BiometricLockState.Disabled -> IsButtonEnabled.Disabled
                 }
-                FingerprintSectionState.Available(available)
+                AppLockSectionState.Available(available)
             }
         }
 

@@ -21,32 +21,48 @@ package proton.android.pass.featureprofile.impl.applockconfig
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class AppLockConfigViewModel @Inject constructor(
-    userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    val state: StateFlow<AppLockConfigUiState> = combine(
+    private val _state: Flow<AppLockConfigUiState> = combine(
         userPreferencesRepository.getAppLockTimePreference(),
         userPreferencesRepository.getAppLockTypePreference(),
-        ::AppLockConfigUiState
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = runBlocking {
-            AppLockConfigUiState(
-                userPreferencesRepository.getAppLockTimePreference().first(),
-                userPreferencesRepository.getAppLockTypePreference().first()
-            )
+        userPreferencesRepository.getBiometricSystemLockPreference()
+    ) { time, type, biometricSystemLock ->
+        when (type) {
+            AppLockTypePreference.Biometrics -> {
+                AppLockConfigUiState.Biometric(time, biometricSystemLock)
+            }
+
+            AppLockTypePreference.Pin -> AppLockConfigUiState.Pin(time)
         }
-    )
+
+    }
+    val state: StateFlow<AppLockConfigUiState> = _state
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = runBlocking { _state.first() }
+        )
+
+    fun onToggleBiometricSystemLock(value: Boolean) = viewModelScope.launch {
+        userPreferencesRepository.setBiometricSystemLockPreference(
+            BiometricSystemLockPreference.from(value)
+        )
+    }
 }

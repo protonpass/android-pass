@@ -33,121 +33,91 @@ import javax.inject.Inject
 class InternalSettingsRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<InternalSettings>
 ) : InternalSettingsRepository {
-    override suspend fun setLastUnlockedTime(time: Long): Result<Unit> = runCatching {
-        dataStore.updateData {
-            it.toBuilder()
-                .setLastUnlockTime(time)
-                .build()
-        }
-        return@runCatching
+
+    override suspend fun setLastUnlockedTime(time: Long): Result<Unit> = setPreference {
+        it.setLastUnlockTime(time)
     }
 
-    override fun getLastUnlockedTime(): Flow<Option<Long>> = dataStore.data
-        .catch { exception -> handleExceptions(exception) }
-        .map { settings ->
-            if (settings.lastUnlockTime == 0L) {
-                None
-            } else {
-                settings.lastUnlockTime.some()
-            }
+    override fun getLastUnlockedTime(): Flow<Option<Long>> = getPreference {
+        if (it.lastUnlockTime == 0L) {
+            None
+        } else {
+            it.lastUnlockTime.some()
         }
-
-    override suspend fun setBootCount(count: Long): Result<Unit> = runCatching {
-        dataStore.updateData {
-            it.toBuilder()
-                .setBootCount(count)
-                .build()
-        }
-        return@runCatching
     }
 
-    override fun getBootCount(): Flow<Option<Long>> = dataStore.data
-        .catch { exception -> handleExceptions(exception) }
-        .map { settings ->
-            if (settings.bootCount == 0L) {
-                None
-            } else {
-                settings.bootCount.some()
-            }
+    override suspend fun setBootCount(count: Long): Result<Unit> = setPreference {
+        it.setBootCount(count)
+    }
+
+    override fun getBootCount(): Flow<Option<Long>> = getPreference {
+        if (it.bootCount == 0L) {
+            None
+        } else {
+            it.bootCount.some()
         }
+    }
 
-    override suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit> =
-        runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setDeclinedUpdateVersion(versionDeclined)
-                    .build()
-            }
-            return@runCatching
-        }
+    override suspend fun setDeclinedUpdateVersion(
+        versionDeclined: String
+    ): Result<Unit> = setPreference { it.setDeclinedUpdateVersion(versionDeclined) }
 
-    override fun getDeclinedUpdateVersion(): Flow<String> = dataStore.data
-        .catch { exception -> handleExceptions(exception) }
-        .map { settings -> settings.declinedUpdateVersion }
+    override fun getDeclinedUpdateVersion(): Flow<String> = getPreference {
+        it.declinedUpdateVersion
+    }
 
-    override suspend fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit> =
-        runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setHomeSortingOption(sortingOption.value())
-                    .build()
-            }
-            return@runCatching
-        }
+    override suspend fun setHomeSortingOption(
+        sortingOption: SortingOptionPreference
+    ): Result<Unit> = setPreference { it.setHomeSortingOption(sortingOption.value()) }
 
-    override fun getHomeSortingOption(): Flow<SortingOptionPreference> = dataStore.data
-        .catch { exception -> handleExceptions(exception) }
-        .map { settings -> SortingOptionPreference.fromValue(settings.homeSortingOption) }
+    override fun getHomeSortingOption(): Flow<SortingOptionPreference> = getPreference {
+        SortingOptionPreference.fromValue(it.homeSortingOption)
+    }
 
-    override suspend fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit> =
-        runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAutofillSortingOption(sortingOption.value())
-                    .build()
-            }
-            return@runCatching
-        }
+    override suspend fun setAutofillSortingOption(
+        sortingOption: SortingOptionPreference
+    ): Result<Unit> = setPreference { it.setAutofillSortingOption(sortingOption.value()) }
 
     override fun getAutofillSortingOption(): Flow<SortingOptionPreference> = dataStore.data
         .catch { exception -> handleExceptions(exception) }
         .map { settings -> SortingOptionPreference.fromValue(settings.autofillSortingOption) }
 
-    override suspend fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> =
-        runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setSelectedVault(selectedVault.value())
-                    .build()
-            }
-            return@runCatching
-        }
+    override suspend fun setSelectedVault(
+        selectedVault: SelectedVaultPreference
+    ): Result<Unit> = setPreference { it.setSelectedVault(selectedVault.value()) }
 
-    override fun getSelectedVault(): Flow<SelectedVaultPreference> = dataStore.data
-        .catch { exception -> handleExceptions(exception) }
-        .map { settings -> SelectedVaultPreference.fromValue(settings.selectedVault) }
+    override fun getSelectedVault(): Flow<SelectedVaultPreference> = getPreference {
+        SelectedVaultPreference.fromValue(it.selectedVault)
+    }
 
-    override suspend fun setPinAttemptsCount(count: Int): Result<Unit> = runCatching {
+    override suspend fun setPinAttemptsCount(count: Int): Result<Unit> = setPreference {
+        it.setPinAttempts(count)
+    }
+
+    override fun getPinAttemptsCount(): Flow<Int> = getPreference { it.pinAttempts }
+
+    override fun getMasterPasswordAttemptsCount(): Flow<Int> = getPreference {
+        it.masterPasswordAttempts
+    }
+
+    override suspend fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> = setPreference {
+        it.setMasterPasswordAttempts(count)
+    }
+
+    override suspend fun clearSettings(): Result<Unit> = setPreference { it.clear() }
+
+    private suspend fun setPreference(
+        mapper: (InternalSettings.Builder) -> InternalSettings.Builder
+    ): Result<Unit> = runCatching {
         dataStore.updateData {
-            it.toBuilder()
-                .setPinAttempts(count)
-                .build()
+            mapper(it.toBuilder()).build()
         }
         return@runCatching
     }
 
-    override fun getPinAttemptsCount(): Flow<Int> = dataStore.data
+    private fun <T> getPreference(mapper: (InternalSettings) -> T): Flow<T> = dataStore.data
         .catch { exception -> handleExceptions(exception) }
-        .map { settings -> settings.pinAttempts }
-
-    override suspend fun clearSettings(): Result<Unit> = runCatching {
-        dataStore.updateData {
-            it.toBuilder()
-                .clear()
-                .build()
-        }
-        return@runCatching
-    }
+        .map { settings -> mapper(settings) }
 
     private suspend fun FlowCollector<InternalSettings>.handleExceptions(
         exception: Throwable

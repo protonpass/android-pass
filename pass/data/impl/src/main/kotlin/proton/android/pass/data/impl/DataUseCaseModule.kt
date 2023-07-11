@@ -58,6 +58,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -117,6 +118,7 @@ import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
+import proton.android.pass.data.impl.usecases.ObservePrimaryUserEmailImpl
 import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultCountImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
@@ -321,4 +323,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCheckMasterPassword(impl: CheckMasterPasswordImpl): CheckMasterPassword
+
+    @Binds
+    abstract fun bindObservePrimaryUserEmail(impl: ObservePrimaryUserEmailImpl): ObservePrimaryUserEmail
 }

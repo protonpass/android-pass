@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.appconfig.api.AppConfig
@@ -59,7 +58,6 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.pass.domain.PlanType
 import javax.inject.Inject
@@ -146,6 +144,7 @@ class ProfileViewModel @Inject constructor(
                 PassLogger.w(TAG, upgradeInfo.exception, "Error getting upgradeInfo")
                 PlanInfo.Hide to false
             }
+
             is LoadingResult.Success -> {
                 val info = upgradeInfo.data
                 when (val plan = info.plan.planType) {
@@ -176,49 +175,42 @@ class ProfileViewModel @Inject constructor(
         initialValue = ProfileUiState.getInitialState(appVersion = appConfig.versionName)
     )
 
-    fun onFingerprintToggle(contextHolder: ContextHolder, value: Boolean) =
-        viewModelScope.launch {
-            biometryManager.launch(contextHolder)
-                .map { result ->
-                    when (result) {
-                        BiometryResult.Success -> {
-                            preferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-                                .onFailure {
-                                    val message = "Could not save HasAuthenticated preference"
-                                    PassLogger.e(TAG, it, message)
-                                }
-                            val (lockState, message) = when (!value) {
-                                true -> BiometricLockState.Enabled to FingerprintLockEnabled
-                                false -> BiometricLockState.Disabled to FingerprintLockDisabled
-                            }
-
-                            PassLogger.d(TAG, "Changing BiometricLock to $lockState")
-                            preferencesRepository.setBiometricLockState(lockState)
-                                .onSuccess { snackbarDispatcher(message) }
-                                .onFailure {
-                                    PassLogger.e(TAG, it, "Error setting BiometricLockState")
-                                    snackbarDispatcher(ErrorPerformingOperation)
-                                }
+    fun onFingerprintToggle(contextHolder: ContextHolder, value: Boolean) = viewModelScope.launch {
+        biometryManager.launch(contextHolder)
+            .collect { result ->
+                when (result) {
+                    BiometryResult.Success -> {
+                        val (lockState, message) = when (!value) {
+                            true -> BiometricLockState.Enabled to FingerprintLockEnabled
+                            false -> BiometricLockState.Disabled to FingerprintLockDisabled
                         }
 
-                        is BiometryResult.Error -> {
-                            when (result.cause) {
-                                // If the user has cancelled it, do nothing
-                                BiometryAuthError.Canceled -> {}
-                                BiometryAuthError.UserCanceled -> {}
-                                else -> snackbarDispatcher(BiometryFailedToAuthenticateError)
+                        PassLogger.d(TAG, "Changing BiometricLock to $lockState")
+                        preferencesRepository.setBiometricLockState(lockState)
+                            .onSuccess { snackbarDispatcher(message) }
+                            .onFailure {
+                                PassLogger.e(TAG, it, "Error setting BiometricLockState")
+                                snackbarDispatcher(ErrorPerformingOperation)
                             }
-                        }
-
-                        // User can retry
-                        BiometryResult.Failed -> {}
-                        is BiometryResult.FailedToStart ->
-                            snackbarDispatcher(BiometryFailedToStartError)
                     }
-                    PassLogger.i(TAG, "Biometry result: $result")
+
+                    is BiometryResult.Error -> {
+                        when (result.cause) {
+                            // If the user has cancelled it, do nothing
+                            BiometryAuthError.Canceled -> {}
+                            BiometryAuthError.UserCanceled -> {}
+                            else -> snackbarDispatcher(BiometryFailedToAuthenticateError)
+                        }
+                    }
+
+                    // User can retry
+                    BiometryResult.Failed -> {}
+                    is BiometryResult.FailedToStart ->
+                        snackbarDispatcher(BiometryFailedToStartError)
                 }
-                .collect { }
-        }
+                PassLogger.i(TAG, "Biometry result: $result")
+            }
+    }
 
     fun onToggleAutofill(value: Boolean) {
         if (!value) {

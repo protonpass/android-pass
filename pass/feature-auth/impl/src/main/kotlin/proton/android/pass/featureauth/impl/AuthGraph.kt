@@ -36,16 +36,20 @@ sealed interface AuthNavigation {
     object Success : AuthNavigation
     object Failed : AuthNavigation
     object Dismissed : AuthNavigation
+    object SignOut : AuthNavigation
+    object ForceSignOut : AuthNavigation
     object Back : AuthNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.authGraph(
+    canLogout: Boolean,
     navigation: (AuthNavigation) -> Unit
 ) {
     composable(Auth) {
         BackHandler { navigation(AuthNavigation.Back) }
         AuthScreen(
+            canLogout = canLogout,
             navigation = navigation,
         )
     }

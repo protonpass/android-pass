@@ -41,4 +41,7 @@ abstract class BiometryBinderModule {
 
     @Binds
     abstract fun bindElapsedTimeProvider(impl: ElapsedTimeProviderImpl): ElapsedTimeProvider
+
+    @Binds
+    abstract fun bindStoreAuthSuccessful(impl: StoreAuthSuccessfulImpl): StoreAuthSuccessful
 }

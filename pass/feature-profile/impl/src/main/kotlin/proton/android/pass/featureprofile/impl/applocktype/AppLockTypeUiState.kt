@@ -16,35 +16,30 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureprofile.impl.applock
+package proton.android.pass.featureprofile.impl.applocktype
 
-import proton.android.pass.preferences.AppLockPreference
+import proton.android.pass.preferences.AppLockTypePreference
 
-sealed interface AppLockEvent {
-    object OnChanged : AppLockEvent
-    object Unknown : AppLockEvent
+sealed interface AppLockTypeEvent {
+    object OnChanged : AppLockTypeEvent
+    object Unknown : AppLockTypeEvent
 }
 
-data class AppLockUiState(
-    val items: List<AppLockPreference>,
-    val selected: AppLockPreference,
-    val event: AppLockEvent
+data class AppLockTypeUiState(
+    val items: List<AppLockTypePreference>,
+    val selected: AppLockTypePreference,
+    val event: AppLockTypeEvent
 ) {
     companion object {
-        val Initial = AppLockUiState(
+        val Initial = AppLockTypeUiState(
             items = allPreferences,
-            selected = AppLockPreference.InTwoMinutes,
-            event = AppLockEvent.Unknown
+            selected = AppLockTypePreference.Biometrics,
+            event = AppLockTypeEvent.Unknown
         )
     }
 }
 
-internal val allPreferences: List<AppLockPreference> = listOf(
-    AppLockPreference.Immediately,
-    AppLockPreference.InOneMinute,
-    AppLockPreference.InTwoMinutes,
-    AppLockPreference.InFiveMinutes,
-    AppLockPreference.InTenMinutes,
-    AppLockPreference.InOneHour,
-    AppLockPreference.InFourHours,
+internal val allPreferences: List<AppLockTypePreference> = listOf(
+    AppLockTypePreference.Biometrics,
+    AppLockTypePreference.Pin
 )

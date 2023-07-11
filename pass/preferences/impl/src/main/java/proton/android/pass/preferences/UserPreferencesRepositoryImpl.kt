@@ -221,6 +221,24 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 preferences.appLockType.toValue(default = AppLockTypePreference.Biometrics)
             }
 
+    override suspend fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setBiometricSystemLock(preference.value().toBooleanPrefProto())
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> =
+        dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map { preferences ->
+                BiometricSystemLockPreference.from(fromBooleanPrefProto(preferences.biometricSystemLock))
+            }
+
+
     override suspend fun setPasswordGenerationPreference(
         preference: PasswordGenerationPreference
     ): Result<Unit> = runCatching {

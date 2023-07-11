@@ -90,6 +90,7 @@ class AuthViewModel @Inject constructor(
                         when (result.cause) {
                             BiometryAuthError.Canceled -> _state.update { AuthStatus.Canceled }
                             BiometryAuthError.UserCanceled -> _state.update { AuthStatus.Canceled }
+                            BiometryAuthError.NegativeButton -> _state.update { AuthStatus.Canceled }
                             else -> _state.update { AuthStatus.Failed }
                         }
                     }

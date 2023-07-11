@@ -37,13 +37,14 @@ import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.R
 import proton.android.pass.preferences.AppLockTimePreference
-import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.value
 
 @Composable
 fun AppLockConfigContent(
     modifier: Modifier = Modifier,
     state: AppLockConfigUiState,
     onNavigateEvent: (ProfileNavigation) -> Unit,
+    onToggleBiometricSystemLock: (Boolean) -> Unit,
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -61,9 +62,9 @@ fun AppLockConfigContent(
                 .padding(16.dp)
                 .roundedContainerNorm()
         ) {
-            val typePreferenceTextId = when (state.appLockTypePreference) {
-                AppLockTypePreference.Biometrics -> R.string.app_lock_config_biometric
-                AppLockTypePreference.Pin -> R.string.app_lock_config_pin_code
+            val typePreferenceTextId = when (state) {
+                is AppLockConfigUiState.Biometric -> R.string.app_lock_config_biometric
+                is AppLockConfigUiState.Pin -> R.string.app_lock_config_pin_code
             }
             SettingOption(
                 label = stringResource(R.string.app_lock_config_unlock_with),
@@ -85,12 +86,13 @@ fun AppLockConfigContent(
                 text = stringResource(timePreferenceTextId),
                 onClick = { onNavigateEvent(ProfileNavigation.AppLockTime) }
             )
-            AnimatedVisibility(visible = true) {
+            AnimatedVisibility(visible = state is AppLockConfigUiState.Biometric) {
                 PassDivider()
                 SettingToggle(
                     text = stringResource(R.string.app_lock_config_use_system_lock_when_biometric_fails),
-                    isChecked = true,
-                    onClick = { },
+                    isChecked = (state as? AppLockConfigUiState.Biometric)?.biometricSystemLockPreference?.value()
+                        ?: false,
+                    onClick = { onToggleBiometricSystemLock(it) }
                 )
             }
         }

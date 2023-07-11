@@ -24,4 +24,5 @@ message UserPreferences {
   BooleanPrefProto has_dismissed_trial_banner = 11;
   BooleanPrefProto allow_screenshots = 12;
   AppLockTypePrefProto app_lock_type = 13;
+  BooleanPrefProto biometric_system_lock = 14;
 }

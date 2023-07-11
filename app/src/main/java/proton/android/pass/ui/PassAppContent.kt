@@ -45,6 +45,7 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
+import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
@@ -132,6 +133,7 @@ fun PassAppContent(
                         if (appUiState.needsAuth) {
                             BackHandler { onNavigate(AppNavigation.Finish) }
                             AuthScreen(
+                                canLogout = true,
                                 navigation = {
                                     when (it) {
                                         AuthNavigation.Dismissed,
@@ -139,6 +141,12 @@ fun PassAppContent(
 
                                         AuthNavigation.Success,
                                         AuthNavigation.Failed -> {
+                                        }
+                                        AuthNavigation.SignOut -> {
+                                            appNavigator.navigate(SignOutDialog)
+                                        }
+                                        AuthNavigation.ForceSignOut -> {
+                                            onNavigate(AppNavigation.SignOut(null))
                                         }
                                     }
                                 }

@@ -21,18 +21,25 @@ package proton.android.pass.autofill.ui.autosave
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.autofill.AutofillManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.extensions.marshalParcelable
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.preferences.AllowScreenshotsPreference
 
@@ -45,6 +52,12 @@ class AutoSaveActivity : FragmentActivity() {
         setSecureMode()
         super.onCreate(savedInstanceState)
         viewModel.register(this)
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collectLatest(::onStateReceived)
+            }
+        }
 
         val arguments = getArguments() ?: run {
             finishApp()
@@ -59,6 +72,10 @@ class AutoSaveActivity : FragmentActivity() {
                         AutosaveNavigation.Success -> finishApp()
                         AutosaveNavigation.Cancel -> finishApp()
                         AutosaveNavigation.Upgrade -> { viewModel.upgrade() }
+                        AutosaveNavigation.ForceSignOut -> {
+                            viewModel.signOut()
+                            disableAutofill()
+                        }
                     }
                 }
             )
@@ -68,6 +85,13 @@ class AutoSaveActivity : FragmentActivity() {
     override fun onStop() {
         viewModel.onStop()
         super.onStop()
+    }
+
+    private fun onStateReceived(state: Option<AutosaveEvent>) {
+        val event = state.value() ?: return
+        if (event == AutosaveEvent.Close) {
+            finishApp()
+        }
     }
 
     private fun getArguments(): AutoSaveArguments? =
@@ -93,6 +117,11 @@ class AutoSaveActivity : FragmentActivity() {
                 ?: AllowScreenshotsPreference.Disabled
         }
         setSecureMode(setting)
+    }
+
+    private fun disableAutofill() {
+        val autofillManager = getSystemService(AutofillManager::class.java)
+        autofillManager.disableAutofillServices()
     }
 
     companion object {

@@ -22,4 +22,5 @@ sealed interface AutosaveNavigation {
     object Success : AutosaveNavigation
     object Cancel : AutosaveNavigation
     object Upgrade : AutosaveNavigation
+    object ForceSignOut : AutosaveNavigation
 }

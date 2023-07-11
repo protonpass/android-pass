@@ -21,7 +21,9 @@ package proton.android.pass.featureprofile.impl
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featureprofile.impl.applock.AppLockBottomsheet
+import proton.android.pass.featureprofile.impl.applockconfig.AppLockConfigScreen
+import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomsheet
+import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
@@ -32,14 +34,21 @@ object FeedbackBottomsheet : NavItem(
     isBottomsheet = true
 )
 
-object AppLockBottomsheet : NavItem(
-    baseRoute = "applock/bottomsheet",
+object AppLockConfig : NavItem(baseRoute = "applock/config")
+object AppLockTimeBottomsheet : NavItem(
+    baseRoute = "applock/time/bottomsheet",
+    isBottomsheet = true
+)
+
+object AppLockTypeBottomsheet : NavItem(
+    baseRoute = "applock/type/bottomsheet",
     isBottomsheet = true
 )
 
 sealed interface ProfileNavigation {
+    object Back : ProfileNavigation
     object Account : ProfileNavigation
-    object AppLock : ProfileNavigation
+    object AppLockConfig : ProfileNavigation
     object List : ProfileNavigation
     object CreateItem : ProfileNavigation
     object Settings : ProfileNavigation
@@ -49,6 +58,8 @@ sealed interface ProfileNavigation {
     object Upgrade : ProfileNavigation
     object Finish : ProfileNavigation
     object CloseBottomSheet : ProfileNavigation
+    object AppLockType : ProfileNavigation
+    object AppLockTime : ProfileNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -59,12 +70,16 @@ fun NavGraphBuilder.profileGraph(
         BackHandler { onNavigateEvent(ProfileNavigation.Finish) }
         ProfileScreen(onNavigateEvent = onNavigateEvent)
     }
-
     bottomSheet(FeedbackBottomsheet) {
         FeedbackBottomsheet(onNavigateEvent = onNavigateEvent)
     }
-
-    bottomSheet(AppLockBottomsheet) {
-        AppLockBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
+    composable(AppLockConfig) {
+        AppLockConfigScreen(onNavigateEvent = onNavigateEvent)
+    }
+    bottomSheet(AppLockTimeBottomsheet) {
+        AppLockTimeBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
+    }
+    bottomSheet(AppLockTypeBottomsheet) {
+        AppLockTypeBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
     }
 }

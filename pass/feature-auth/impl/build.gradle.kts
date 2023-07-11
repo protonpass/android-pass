@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)

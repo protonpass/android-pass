@@ -24,7 +24,7 @@ import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.preferences.AppLockPreference
+import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import kotlin.time.Duration.Companion.minutes
@@ -36,7 +36,7 @@ class NeedsAuthCheckerTest {
         val res = NeedsAuthChecker.needsAuth(
             biometricLock = BiometricLockState.Disabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
-            appLockPreference = AppLockPreference.Immediately,
+            appLockTimePreference = AppLockTimePreference.Immediately,
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
             bootCount = 0,
@@ -51,7 +51,7 @@ class NeedsAuthCheckerTest {
         val res = NeedsAuthChecker.needsAuth(
             biometricLock = BiometricLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
-            appLockPreference = AppLockPreference.Immediately,
+            appLockTimePreference = AppLockTimePreference.Immediately,
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
             bootCount = 0,
@@ -66,7 +66,7 @@ class NeedsAuthCheckerTest {
         val res = NeedsAuthChecker.needsAuth(
             biometricLock = BiometricLockState.Enabled,
             hasAuthenticated = HasAuthenticated.Authenticated,
-            appLockPreference = AppLockPreference.Immediately,
+            appLockTimePreference = AppLockTimePreference.Immediately,
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
             bootCount = 0,
@@ -84,7 +84,7 @@ class NeedsAuthCheckerTest {
         val res = NeedsAuthChecker.needsAuth(
             biometricLock = BiometricLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
-            appLockPreference = AppLockPreference.InTwoMinutes,
+            appLockTimePreference = AppLockTimePreference.InTwoMinutes,
             lastUnlockTime = oneMinuteAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             bootCount = 0,
@@ -103,7 +103,7 @@ class NeedsAuthCheckerTest {
         val res = NeedsAuthChecker.needsAuth(
             biometricLock = BiometricLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
-            appLockPreference = AppLockPreference.InTwoMinutes,
+            appLockTimePreference = AppLockTimePreference.InTwoMinutes,
             lastUnlockTime = threeMinutesAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             bootCount = 0,
@@ -121,7 +121,7 @@ class NeedsAuthCheckerTest {
         val res = NeedsAuthChecker.needsAuth(
             biometricLock = BiometricLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
-            appLockPreference = AppLockPreference.InTwoMinutes,
+            appLockTimePreference = AppLockTimePreference.InTwoMinutes,
             lastUnlockTime = inThreeMinutes.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             bootCount = 0,
@@ -140,7 +140,7 @@ class NeedsAuthCheckerTest {
         val res = NeedsAuthChecker.needsAuth(
             biometricLock = BiometricLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
-            appLockPreference = AppLockPreference.InTwoMinutes,
+            appLockTimePreference = AppLockTimePreference.InTwoMinutes,
             lastUnlockTime = oneMinuteAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             bootCount = 2,

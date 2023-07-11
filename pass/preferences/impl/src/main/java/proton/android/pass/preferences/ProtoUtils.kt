@@ -18,6 +18,7 @@
 
 package proton.android.pass.preferences
 
+import me.proton.android.pass.preferences.AppLockTypePrefProto
 import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.android.pass.preferences.LockAppPrefProto
 import me.proton.android.pass.preferences.PasswordGenerationPrefProto
@@ -56,24 +57,35 @@ fun fromBooleanPrefProto(pref: BooleanPrefProto, default: Boolean = false) =
         else -> default
     }
 
-fun AppLockPreference.toProto() = when (this) {
-    AppLockPreference.Immediately -> LockAppPrefProto.LOCK_APP_IMMEDIATELY
-    AppLockPreference.InOneMinute -> LockAppPrefProto.LOCK_APP_IN_ONE_MINUTE
-    AppLockPreference.InTwoMinutes -> LockAppPrefProto.LOCK_APP_IN_TWO_MINUTES
-    AppLockPreference.InFiveMinutes -> LockAppPrefProto.LOCK_APP_IN_FIVE_MINUTES
-    AppLockPreference.InTenMinutes -> LockAppPrefProto.LOCK_APP_IN_TEN_MINUTES
-    AppLockPreference.InOneHour -> LockAppPrefProto.LOCK_APP_IN_ONE_HOUR
-    AppLockPreference.InFourHours -> LockAppPrefProto.LOCK_APP_IN_FOUR_HOURS
+fun AppLockTimePreference.toProto() = when (this) {
+    AppLockTimePreference.Immediately -> LockAppPrefProto.LOCK_APP_IMMEDIATELY
+    AppLockTimePreference.InOneMinute -> LockAppPrefProto.LOCK_APP_IN_ONE_MINUTE
+    AppLockTimePreference.InTwoMinutes -> LockAppPrefProto.LOCK_APP_IN_TWO_MINUTES
+    AppLockTimePreference.InFiveMinutes -> LockAppPrefProto.LOCK_APP_IN_FIVE_MINUTES
+    AppLockTimePreference.InTenMinutes -> LockAppPrefProto.LOCK_APP_IN_TEN_MINUTES
+    AppLockTimePreference.InOneHour -> LockAppPrefProto.LOCK_APP_IN_ONE_HOUR
+    AppLockTimePreference.InFourHours -> LockAppPrefProto.LOCK_APP_IN_FOUR_HOURS
 }
 
-fun LockAppPrefProto.toValue(default: AppLockPreference) = when (this) {
-    LockAppPrefProto.LOCK_APP_IMMEDIATELY -> AppLockPreference.Immediately
-    LockAppPrefProto.LOCK_APP_IN_ONE_MINUTE -> AppLockPreference.InOneMinute
-    LockAppPrefProto.LOCK_APP_IN_TWO_MINUTES -> AppLockPreference.InTwoMinutes
-    LockAppPrefProto.LOCK_APP_IN_FIVE_MINUTES -> AppLockPreference.InFiveMinutes
-    LockAppPrefProto.LOCK_APP_IN_TEN_MINUTES -> AppLockPreference.InTenMinutes
-    LockAppPrefProto.LOCK_APP_IN_ONE_HOUR -> AppLockPreference.InOneHour
-    LockAppPrefProto.LOCK_APP_IN_FOUR_HOURS -> AppLockPreference.InFourHours
+fun LockAppPrefProto.toValue(default: AppLockTimePreference) = when (this) {
+    LockAppPrefProto.LOCK_APP_IMMEDIATELY -> AppLockTimePreference.Immediately
+    LockAppPrefProto.LOCK_APP_IN_ONE_MINUTE -> AppLockTimePreference.InOneMinute
+    LockAppPrefProto.LOCK_APP_IN_TWO_MINUTES -> AppLockTimePreference.InTwoMinutes
+    LockAppPrefProto.LOCK_APP_IN_FIVE_MINUTES -> AppLockTimePreference.InFiveMinutes
+    LockAppPrefProto.LOCK_APP_IN_TEN_MINUTES -> AppLockTimePreference.InTenMinutes
+    LockAppPrefProto.LOCK_APP_IN_ONE_HOUR -> AppLockTimePreference.InOneHour
+    LockAppPrefProto.LOCK_APP_IN_FOUR_HOURS -> AppLockTimePreference.InFourHours
+    else -> default
+}
+
+fun AppLockTypePreference.toProto() = when (this) {
+    AppLockTypePreference.Biometrics -> AppLockTypePrefProto.APP_LOCK_TYPE_BIOMETRICS
+    AppLockTypePreference.Pin -> AppLockTypePrefProto.APP_LOCK_TYPE_PIN
+}
+
+fun AppLockTypePrefProto.toValue(default: AppLockTypePreference) = when (this) {
+    AppLockTypePrefProto.APP_LOCK_TYPE_BIOMETRICS -> AppLockTypePreference.Biometrics
+    AppLockTypePrefProto.APP_LOCK_TYPE_PIN -> AppLockTypePreference.Pin
     else -> default
 }
 

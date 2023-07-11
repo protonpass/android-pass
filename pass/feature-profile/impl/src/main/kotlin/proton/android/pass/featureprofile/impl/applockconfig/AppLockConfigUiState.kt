@@ -20,10 +20,19 @@ package proton.android.pass.featureprofile.impl.applockconfig
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.preferences.AppLockTimePreference
-import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.BiometricSystemLockPreference
 
-@Stable
-data class AppLockConfigUiState(
-    val appLockTimePreference: AppLockTimePreference,
-    val appLockTypePreference: AppLockTypePreference
-)
+sealed class AppLockConfigUiState {
+    abstract val appLockTimePreference: AppLockTimePreference
+
+    @Stable
+    data class Biometric(
+        override val appLockTimePreference: AppLockTimePreference,
+        val biometricSystemLockPreference: BiometricSystemLockPreference
+    ) : AppLockConfigUiState()
+
+    @Stable
+    data class Pin(
+        override val appLockTimePreference: AppLockTimePreference
+    ) : AppLockConfigUiState()
+}

@@ -44,5 +44,8 @@ interface InternalSettingsRepository {
     suspend fun setPinAttemptsCount(count: Int): Result<Unit>
     fun getPinAttemptsCount(): Flow<Int>
 
+    suspend fun setMasterPasswordAttemptsCount(count: Int): Result<Unit>
+    fun getMasterPasswordAttemptsCount(): Flow<Int>
+
     suspend fun clearSettings(): Result<Unit>
 }

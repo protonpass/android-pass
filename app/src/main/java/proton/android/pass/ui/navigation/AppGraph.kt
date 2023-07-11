@@ -97,7 +97,9 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
-import proton.android.pass.featureprofile.impl.AppLockBottomsheet
+import proton.android.pass.featureprofile.impl.AppLockConfig
+import proton.android.pass.featureprofile.impl.AppLockTimeBottomsheet
+import proton.android.pass.featureprofile.impl.AppLockTypeBottomsheet
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
@@ -192,6 +194,7 @@ fun NavGraphBuilder.appGraph(
                         EditNote.createNavRoute(it.shareId, it.itemId)
                     )
                 }
+
                 is HomeNavigation.EditCreditCard -> appNavigator.navigate(
                     EditCreditCard,
                     EditCreditCard.createNavRoute(it.shareId, it.itemId)
@@ -347,16 +350,21 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.List -> appNavigator.navigate(Home)
                 ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheet)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
-                ProfileNavigation.AppLock -> appNavigator.navigate(AppLockBottomsheet)
+                ProfileNavigation.AppLockConfig -> appNavigator.navigate(AppLockConfig)
                 ProfileNavigation.Report -> dismissBottomSheet {
                     onNavigate(AppNavigation.Report)
                 }
+
                 ProfileNavigation.FeatureFlags -> appNavigator.navigate(FeatureFlagRoute)
                 ProfileNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 ProfileNavigation.Finish -> onNavigate(AppNavigation.Finish)
                 ProfileNavigation.CloseBottomSheet -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
+                ProfileNavigation.AppLockTime -> appNavigator.navigate(AppLockTimeBottomsheet)
+                ProfileNavigation.AppLockType -> appNavigator.navigate(AppLockTypeBottomsheet)
+                ProfileNavigation.Back -> appNavigator.onBackClick()
             }
         }
     )

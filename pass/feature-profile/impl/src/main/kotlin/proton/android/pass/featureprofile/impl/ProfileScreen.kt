@@ -54,7 +54,7 @@ fun ProfileScreen(
         onEvent = {
             when (it) {
                 ProfileUiEvent.OnAccountClick -> onNavigateEvent(ProfileNavigation.Account)
-                ProfileUiEvent.OnAppLockClick -> onNavigateEvent(ProfileNavigation.AppLock)
+                ProfileUiEvent.OnAppLockConfigClick -> onNavigateEvent(ProfileNavigation.AppLockConfig)
                 ProfileUiEvent.OnAppVersionLongClick -> viewModel.onAppVersionLongClick()
                 is ProfileUiEvent.OnAutofillClicked -> viewModel.onToggleAutofill(it.value)
                 ProfileUiEvent.OnCopyAppVersionClick -> viewModel.copyAppVersion(state.appVersion)

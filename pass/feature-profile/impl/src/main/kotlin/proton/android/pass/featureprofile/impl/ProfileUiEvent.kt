@@ -21,7 +21,7 @@ package proton.android.pass.featureprofile.impl
 sealed interface ProfileUiEvent {
     object OnListClick : ProfileUiEvent
     object OnCreateItemClick : ProfileUiEvent
-    object OnAppLockClick : ProfileUiEvent
+    object OnAppLockConfigClick : ProfileUiEvent
     object OnAccountClick : ProfileUiEvent
     object OnSettingsClick : ProfileUiEvent
     object OnFeedbackClick : ProfileUiEvent

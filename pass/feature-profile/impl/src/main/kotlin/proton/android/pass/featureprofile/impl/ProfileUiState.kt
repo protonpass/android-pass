@@ -31,7 +31,7 @@ sealed interface ProfileEvent {
 
 @Stable
 data class ProfileUiState(
-    val fingerprintSection: FingerprintSectionState,
+    val fingerprintSection: AppLockSectionState,
     val autofillStatus: AutofillSupportedStatus,
     val itemSummaryUiState: ItemSummaryUiState,
     val appVersion: String,
@@ -41,7 +41,7 @@ data class ProfileUiState(
 ) {
     companion object {
         fun getInitialState(appVersion: String) = ProfileUiState(
-            fingerprintSection = FingerprintSectionState.Available(IsButtonEnabled.Disabled),
+            fingerprintSection = AppLockSectionState.Available(IsButtonEnabled.Disabled),
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
             itemSummaryUiState = ItemSummaryUiState(),
             appVersion = appVersion,
@@ -74,10 +74,10 @@ sealed interface PlanInfo {
     ) : PlanInfo
 }
 
-sealed interface FingerprintSectionState {
-    data class Available(val enabled: IsButtonEnabled) : FingerprintSectionState
-    object NoFingerprintRegistered : FingerprintSectionState
-    object NotAvailable : FingerprintSectionState
+sealed interface AppLockSectionState {
+    data class Available(val enabled: IsButtonEnabled) : AppLockSectionState
+    object NoFingerprintRegistered : AppLockSectionState
+    object NotAvailable : AppLockSectionState
 }
 
 data class ItemSummaryUiState(

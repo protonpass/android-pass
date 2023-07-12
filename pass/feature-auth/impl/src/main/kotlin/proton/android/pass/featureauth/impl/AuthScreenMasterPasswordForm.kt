@@ -21,12 +21,11 @@ package proton.android.pass.featureauth.impl
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -80,7 +79,7 @@ fun AuthScreenMasterPasswordForm(
     val isEditAllowed = !state.isLoadingState.value()
 
     Column(
-        modifier = modifier.verticalScroll(rememberScrollState()),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -102,7 +101,7 @@ fun AuthScreenMasterPasswordForm(
             modifier = Modifier
                 .roundedContainerNorm()
                 .fillMaxWidth()
-                .padding(start = 0.dp, top = 8.dp, end = 4.dp, bottom = 8.dp),
+                .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
             value = state.password,
             editable = isEditAllowed,
             keyboardOptions = KeyboardOptions(

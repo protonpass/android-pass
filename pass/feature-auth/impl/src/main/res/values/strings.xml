@@ -38,6 +38,7 @@
     <string name="auth_action_conceal_password">Conceal master password</string>
     <string name="auth_unlock_button">Unlock</string>
     <string name="auth_error_verifying_password">Error verifying your password</string>
+    <string name="auth_error_empty_password">Password cannot be empty</string>
     <plurals name="auth_error_wrong_password">
         <item quantity="one">Incorrect password. %d attempt remaining</item>
         <item quantity="other">Incorrect password. %d attempts remaining</item>

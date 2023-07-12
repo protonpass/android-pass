@@ -24,6 +24,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featureprofile.impl.applockconfig.AppLockConfigScreen
 import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
+import proton.android.pass.featureprofile.impl.pinconfig.PinConfigScreen
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
@@ -42,8 +43,11 @@ object AppLockTimeBottomsheet : NavItem(
 
 object AppLockTypeBottomsheet : NavItem(
     baseRoute = "applock/type/bottomsheet",
-    isBottomsheet = true
+    isBottomsheet = true,
+    noHistory = true
 )
+
+object PinConfig : NavItem(baseRoute = "pin/config")
 
 sealed interface ProfileNavigation {
     object Back : ProfileNavigation
@@ -60,6 +64,7 @@ sealed interface ProfileNavigation {
     object CloseBottomSheet : ProfileNavigation
     object AppLockType : ProfileNavigation
     object AppLockTime : ProfileNavigation
+    object PinConfig : ProfileNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -80,6 +85,9 @@ fun NavGraphBuilder.profileGraph(
         AppLockTimeBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
     }
     bottomSheet(AppLockTypeBottomsheet) {
-        AppLockTypeBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
+        AppLockTypeBottomsheet(onNavigateEvent = onNavigateEvent)
+    }
+    composable(PinConfig) {
+        PinConfigScreen(onNavigateEvent = onNavigateEvent)
     }
 }

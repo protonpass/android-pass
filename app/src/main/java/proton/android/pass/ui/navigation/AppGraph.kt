@@ -101,6 +101,7 @@ import proton.android.pass.featureprofile.impl.AppLockConfig
 import proton.android.pass.featureprofile.impl.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.AppLockTypeBottomsheet
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
+import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
@@ -369,6 +370,7 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.AppLockTime -> appNavigator.navigate(AppLockTimeBottomsheet)
                 ProfileNavigation.AppLockType -> appNavigator.navigate(AppLockTypeBottomsheet)
                 ProfileNavigation.Back -> appNavigator.onBackClick()
+                ProfileNavigation.PinConfig -> appNavigator.navigate(PinConfig)
             }
         }
     )

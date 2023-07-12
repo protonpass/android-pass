@@ -27,11 +27,13 @@ import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CheckMasterPassword
+import proton.android.pass.data.api.usecases.CheckPin
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
+import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.DeleteVault
@@ -87,11 +89,13 @@ import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
 import proton.android.pass.data.impl.usecases.CheckMasterPasswordImpl
+import proton.android.pass.data.impl.usecases.CheckPinImpl
 import proton.android.pass.data.impl.usecases.ClearTrashImpl
 import proton.android.pass.data.impl.usecases.ClearUserDataImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemAndAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemImpl
+import proton.android.pass.data.impl.usecases.CreatePinImpl
 import proton.android.pass.data.impl.usecases.CreateVaultImpl
 import proton.android.pass.data.impl.usecases.DeleteItemImpl
 import proton.android.pass.data.impl.usecases.DeleteVaultImpl
@@ -326,4 +330,10 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObservePrimaryUserEmail(impl: ObservePrimaryUserEmailImpl): ObservePrimaryUserEmail
+
+    @Binds
+    abstract fun bindCheckPin(impl: CheckPinImpl): CheckPin
+
+    @Binds
+    abstract fun bindCreatePin(impl: CreatePinImpl): CreatePin
 }

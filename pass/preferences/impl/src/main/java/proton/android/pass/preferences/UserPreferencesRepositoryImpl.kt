@@ -235,9 +235,13 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         dataStore.data
             .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
-                BiometricSystemLockPreference.from(fromBooleanPrefProto(preferences.biometricSystemLock))
+                BiometricSystemLockPreference.from(
+                    fromBooleanPrefProto(
+                        pref = preferences.biometricSystemLock,
+                        default = true
+                    )
+                )
             }
-
 
     override suspend fun setPasswordGenerationPreference(
         preference: PasswordGenerationPreference

@@ -23,4 +23,6 @@
 
     <string name="snackbar_item_move_to_trash_success">Item moved to trash</string>
     <string name="snackbar_item_move_to_trash_error">Could not move to trash</string>
+
+    <string name="autofill_user_logged_out">You have been logged out. Please log in again by opening the app.</string>
 </resources>

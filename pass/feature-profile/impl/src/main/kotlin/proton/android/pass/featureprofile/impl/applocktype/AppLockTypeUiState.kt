@@ -21,7 +21,9 @@ package proton.android.pass.featureprofile.impl.applocktype
 import proton.android.pass.preferences.AppLockTypePreference
 
 sealed interface AppLockTypeEvent {
-    object OnChanged : AppLockTypeEvent
+    @JvmInline
+    value class OnChanged(val appLockTypePreference: AppLockTypePreference) : AppLockTypeEvent
+    object Dismiss : AppLockTypeEvent
     object Unknown : AppLockTypeEvent
 }
 

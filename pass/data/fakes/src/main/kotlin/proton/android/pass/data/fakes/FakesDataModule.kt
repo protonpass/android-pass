@@ -29,6 +29,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
+import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
@@ -55,6 +56,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -78,6 +80,7 @@ import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
 import proton.android.pass.data.fakes.usecases.TestCanDisplayTotp
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestClearTrash
 import proton.android.pass.data.fakes.usecases.TestClearUserData
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
@@ -107,6 +110,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveMFACount
+import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
@@ -370,4 +374,10 @@ abstract class FakesDataModule {
     abstract fun bindCanDisplayTotp(
         impl: TestCanDisplayTotp
     ): CanDisplayTotp
+
+    @Binds
+    abstract fun bindCheckMasterPassword(impl: TestCheckMasterPassword): CheckMasterPassword
+
+    @Binds
+    abstract fun bindObservePrimaryUserEmail(impl: TestObservePrimaryUserEmail): ObservePrimaryUserEmail
 }

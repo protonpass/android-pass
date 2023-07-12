@@ -43,6 +43,7 @@ import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.isValid
 import proton.android.pass.autofill.extensions.deserializeParcelable
+import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_APP_NAME
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_IDS
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_IS_FOCUSED
@@ -62,6 +63,7 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
@@ -75,6 +77,7 @@ class AutofillActivityViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val accountManager: AccountManager,
+    private val toastManager: ToastManager,
     needsBiometricAuth: NeedsBiometricAuth,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -182,6 +185,7 @@ class AutofillActivityViewModel @Inject constructor(
         val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
         if (primaryUserId != null) {
             accountManager.removeAccount(primaryUserId)
+            toastManager.showToast(R.string.autofill_user_logged_out)
         }
         preferenceRepository.clearPreferences()
             .flatMap { internalSettingsRepository.clearSettings() }

@@ -29,7 +29,9 @@ import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class InternalSettingsRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<InternalSettings>
 ) : InternalSettingsRepository {

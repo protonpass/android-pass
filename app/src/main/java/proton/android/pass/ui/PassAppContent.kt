@@ -130,7 +130,7 @@ fun PassAppContent(
                         if (appUiState.needsAuth) {
                             BackHandler { onNavigate(AppNavigation.Finish) }
                             PassAuthScreenNavHost(
-                                appNavigator = appNavigator,
+                                appNavigator = rememberAppNavigator(),
                                 onNavigate = onNavigate
                             )
                         } else {

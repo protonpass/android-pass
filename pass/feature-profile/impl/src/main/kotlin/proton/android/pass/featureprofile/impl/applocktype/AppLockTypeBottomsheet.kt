@@ -25,24 +25,39 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.featureprofile.impl.ProfileNavigation
+import proton.android.pass.preferences.AppLockTypePreference
 
 @Composable
 fun AppLockTypeBottomsheet(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit,
+    onNavigateEvent: (ProfileNavigation) -> Unit,
     viewModel: AppLockTypeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        if (state.event == AppLockTypeEvent.OnChanged) {
-            onClose()
+        when (val event = state.event) {
+            AppLockTypeEvent.Dismiss -> {
+                onNavigateEvent(ProfileNavigation.CloseBottomSheet)
+                viewModel.clearEvents()
+            }
+
+            is AppLockTypeEvent.OnChanged -> {
+                when (event.appLockTypePreference) {
+                    AppLockTypePreference.Biometrics -> {}
+                    AppLockTypePreference.Pin -> onNavigateEvent(ProfileNavigation.PinConfig)
+                }
+                viewModel.clearEvents()
+            }
+
+            AppLockTypeEvent.Unknown -> {}
         }
     }
 
     AppLockTypeBottomsheetContent(
         modifier = modifier.bottomSheet(),
         state = state,
-        onSelected = { viewModel.onChanged(it) }
+        onSelected = viewModel::onChanged
     )
 }

@@ -34,10 +34,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppLockTypeViewModel @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val eventState: MutableStateFlow<AppLockTypeEvent> = MutableStateFlow(AppLockTypeEvent.Unknown)
+    private val eventState: MutableStateFlow<AppLockTypeEvent> =
+        MutableStateFlow(AppLockTypeEvent.Unknown)
 
     val state: StateFlow<AppLockTypeUiState> = combine(
         userPreferencesRepository.getAppLockTypePreference(),
@@ -55,7 +56,14 @@ class AppLockTypeViewModel @Inject constructor(
     )
 
     fun onChanged(appLockTypePreference: AppLockTypePreference) = viewModelScope.launch {
-        userPreferencesRepository.setAppLockTypePreference(appLockTypePreference)
-        eventState.update { AppLockTypeEvent.OnChanged }
+        if (state.value.selected == appLockTypePreference) {
+            eventState.update { AppLockTypeEvent.Dismiss }
+        } else {
+            eventState.update { AppLockTypeEvent.OnChanged(appLockTypePreference) }
+        }
+    }
+
+    fun clearEvents() = viewModelScope.launch {
+        eventState.update { AppLockTypeEvent.Unknown }
     }
 }

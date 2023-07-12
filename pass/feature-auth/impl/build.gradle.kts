@@ -92,6 +92,7 @@ dependencies {
     androidTestImplementation(libs.core.presentation.compose)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.commonUi.api)
+    androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.biometry.fakes)
 }

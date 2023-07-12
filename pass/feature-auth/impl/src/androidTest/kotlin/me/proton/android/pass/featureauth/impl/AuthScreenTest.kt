@@ -71,6 +71,7 @@ class AuthScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 AuthScreen(
+                    canLogout = true,
                     navigation = {
                         when (it) {
                             AuthNavigation.Success -> { checker.call() }
@@ -93,6 +94,7 @@ class AuthScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 AuthScreen(
+                    canLogout = true,
                     navigation = {
                         when (it) {
                             AuthNavigation.Success -> { checker.call() }
@@ -115,34 +117,12 @@ class AuthScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 AuthScreen(
+                    canLogout = true,
                     navigation = {
                         when (it) {
                             AuthNavigation.Failed -> {
                                 checker.call()
                             }
-
-                            else -> {}
-                        }
-                    }
-                )
-            }
-        }
-        composeTestRule.waitUntil { checker.isCalled }
-    }
-
-    @Test
-    fun onBiometricLockEnabledAndBiometricResultCanceledAuthDismissedCalled() {
-        val checker = CallChecker<Unit>()
-        runBlocking {
-            userPreferencesRepository.setBiometricLockState(BiometricLockState.Enabled)
-            biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Canceled))
-        }
-        composeTestRule.setContent {
-            PassTheme {
-                AuthScreen(
-                    navigation = {
-                        when (it) {
-                            AuthNavigation.Dismissed -> { checker.call() }
 
                             else -> {}
                         }

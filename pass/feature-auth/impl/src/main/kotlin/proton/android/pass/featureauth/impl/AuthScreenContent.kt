@@ -18,21 +18,30 @@
 
 package proton.android.pass.featureauth.impl
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import me.proton.core.presentation.R as CoreR
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AuthScreenContent(
     modifier: Modifier = Modifier,
@@ -40,29 +49,69 @@ fun AuthScreenContent(
     canLogout: Boolean,
     onEvent: (AuthUiEvent) -> Unit
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
-        if (canLogout) {
-            IconButton(
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    val onSubmit = {
+        keyboardController?.hide()
+        onEvent(AuthUiEvent.OnPasswordSubmit)
+    }
+
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        topBar = {
+            ProtonTopAppBar(
+                modifier = Modifier.fillMaxWidth(),
+                title = {},
+                actions = {
+                    if (canLogout) {
+                        IconButton(
+                            onClick = { onEvent(AuthUiEvent.OnSignOut) }
+                        ) {
+                            Icon(
+                                painter = painterResource(CoreR.drawable.ic_proton_arrow_out_from_rectangle),
+                                contentDescription = stringResource(CoreR.string.presentation_menu_item_title_sign_out)
+                            )
+                        }
+                    }
+                }
+            )
+        }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .padding(horizontal = 16.dp),
+        ) {
+            Column(
                 modifier = Modifier
-                    .align(alignment = Alignment.TopEnd)
-                    .padding(16.dp),
-                onClick = { onEvent(AuthUiEvent.OnSignOut) }
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(bottom = 16.dp)
             ) {
-                Icon(
-                    painter = painterResource(CoreR.drawable.ic_proton_arrow_out_from_rectangle),
-                    contentDescription = stringResource(CoreR.string.presentation_menu_item_title_sign_out)
+                AuthScreenHeader(
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+                AuthScreenMasterPasswordForm(
+                    state = state,
+                    onEvent = onEvent,
+                    onSubmit = onSubmit
                 )
             }
-        }
 
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            AuthScreenHeader()
-            AuthScreenBody(
-                state = state,
-                onEvent = onEvent
+            LoadingCircleButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                buttonHeight = 40.dp,
+                text = {
+                    Text(
+                        text = stringResource(R.string.auth_unlock_button),
+                        color = PassTheme.colors.textInvert
+                    )
+                },
+                color = PassTheme.colors.interactionNormMajor2,
+                isLoading = state.isLoadingState.value(),
+                onClick = onSubmit
             )
         }
     }

@@ -20,21 +20,29 @@ package proton.android.pass.featureprofile.impl.pinconfig
 
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.CreatePin
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class PinConfigViewModel @Inject constructor() : ViewModel() {
+class PinConfigViewModel @Inject constructor(
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val createPin: CreatePin
+) : ViewModel() {
 
     private val _state: MutableStateFlow<PinConfigUiState> = MutableStateFlow(PinConfigUiState())
-
     val state: StateFlow<PinConfigUiState> = _state
 
     fun onEnterPin(value: String) {
@@ -56,13 +64,35 @@ class PinConfigViewModel @Inject constructor() : ViewModel() {
             _state.update { it.copy(validationErrors = persistentSetOf(PinConfigValidationErrors.PinDoesNotMatch)) }
         } else {
             _state.update { it.copy(validationErrors = persistentSetOf()) }
+            viewModelScope.launch {
+                runCatching {
+                    createPin(currentState.pin.encodeToByteArray())
+                }.onSuccess {
+                    userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Pin)
+                        .onSuccess { _state.update { it.copy(event = PinConfigEvent.PinSet) } }
+                        .onFailure { PassLogger.e(TAG, it, "Failed to save app lock type") }
+                    PassLogger.i(TAG, "Pin set successfully")
+                }.onFailure {
+                    PassLogger.e(TAG, it, "Failed to set pin")
+                }
+            }
         }
         _state.update { it.copy(isLoading = IsLoadingState.NotLoading) }
     }
 
+    fun clearEvents() {
+        _state.update { it.copy(event = PinConfigEvent.Unknown) }
+    }
+
     companion object {
         private const val PIN_LENGTH = 100
+        private const val TAG = "PinConfigViewModel"
     }
+}
+
+sealed interface PinConfigEvent {
+    object PinSet : PinConfigEvent
+    object Unknown : PinConfigEvent
 }
 
 @Stable
@@ -70,7 +100,8 @@ data class PinConfigUiState(
     val pin: String = "",
     val repeatPin: String = "",
     val isLoading: IsLoadingState = IsLoadingState.NotLoading,
-    val validationErrors: ImmutableSet<PinConfigValidationErrors> = persistentSetOf()
+    val validationErrors: ImmutableSet<PinConfigValidationErrors> = persistentSetOf(),
+    val event: PinConfigEvent = PinConfigEvent.Unknown
 )
 
 enum class PinConfigValidationErrors {

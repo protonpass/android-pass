@@ -64,6 +64,7 @@ fun AuthScreenBody(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
+            buttonHeight = 40.dp,
             text = {
                 Text(
                     text = stringResource(R.string.auth_unlock_button),

@@ -76,6 +76,11 @@ fun AuthScreenMasterPasswordForm(
         )
     }
 
+    val errorMessage = when (state.passwordError.value()) {
+        PasswordError.EmptyPassword -> stringResource(R.string.auth_error_empty_password)
+        else -> ""
+    }
+
     val isEditAllowed = !state.isLoadingState.value()
 
     Column(
@@ -110,7 +115,12 @@ fun AuthScreenMasterPasswordForm(
             ),
             textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
             onChange = { onEvent(AuthUiEvent.OnPasswordUpdate(it)) },
-            label = { ProtonTextFieldLabel(text = stringResource(R.string.auth_master_password_label)) },
+            label = {
+                ProtonTextFieldLabel(
+                    text = stringResource(R.string.auth_master_password_label),
+                    isError = state.passwordError.value() == PasswordError.EmptyPassword
+                )
+            },
             leadingIcon = {
                 Icon(
                     painter = painterResource(CoreR.drawable.ic_proton_lock),
@@ -132,6 +142,8 @@ fun AuthScreenMasterPasswordForm(
                     )
                 }
             },
+            isError = state.passwordError.isNotEmpty(),
+            errorMessage = errorMessage,
             visualTransformation = visualTransformation,
             onDoneClick = onSubmit
         )
@@ -177,7 +189,8 @@ fun AuthScreenMasterPasswordFormPreview(
                     address = "some@address.test",
                     isLoadingState = IsLoadingState.NotLoading,
                     error = input.second.error,
-                    isPasswordVisible = input.second.isPasswordVisible
+                    isPasswordVisible = input.second.isPasswordVisible,
+                    passwordError = input.second.passwordError
                 ),
                 onEvent = {},
                 onSubmit = {}

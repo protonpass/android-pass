@@ -31,11 +31,13 @@ import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
+import proton.android.pass.autofill.service.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -46,7 +48,8 @@ class AutosaveActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
     private val preferenceRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
-    private val accountManager: AccountManager
+    private val accountManager: AccountManager,
+    private val toastManager: ToastManager
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<Option<AutosaveEvent>> = MutableStateFlow(None)
@@ -70,6 +73,7 @@ class AutosaveActivityViewModel @Inject constructor(
         val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
         if (primaryUserId != null) {
             accountManager.removeAccount(primaryUserId)
+            toastManager.showToast(R.string.autofill_user_logged_out)
         }
         preferenceRepository.clearPreferences()
             .flatMap { internalSettingsRepository.clearSettings() }

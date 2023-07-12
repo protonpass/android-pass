@@ -33,6 +33,9 @@ class TestBiometryManager @Inject constructor() : BiometryManager {
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
+    var hasBeenCalled = false
+        private set
+
     fun setBiometryStatus(status: BiometryStatus) {
         biometryStatus = status
     }
@@ -43,6 +46,9 @@ class TestBiometryManager @Inject constructor() : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus = biometryStatus
 
-    override fun launch(context: ContextHolder): Flow<BiometryResult> = resultFlow
+    override fun launch(context: ContextHolder): Flow<BiometryResult> {
+        hasBeenCalled = true
+        return resultFlow
+    }
 
 }

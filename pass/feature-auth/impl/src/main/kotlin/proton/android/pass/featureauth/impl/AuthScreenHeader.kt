@@ -19,8 +19,6 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -39,7 +37,6 @@ import proton.android.pass.composecomponents.impl.R
 @Composable
 fun AuthScreenHeader(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
-        Spacer(modifier = Modifier.height(72.dp))
         Icon(
             modifier = Modifier
                 .size(96.dp)

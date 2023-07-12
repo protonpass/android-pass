@@ -30,8 +30,13 @@ import proton.android.pass.biometry.BiometryStartupError
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.biometry.TestBiometryManager
+import proton.android.pass.biometry.TestStoreAuthSuccessful
 import proton.android.pass.common.api.None
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
+import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
 import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
@@ -43,21 +48,34 @@ class AuthViewModelTest {
     private lateinit var viewModel: AuthViewModel
     private lateinit var preferenceRepository: TestPreferenceRepository
     private lateinit var biometryManager: TestBiometryManager
+    private lateinit var checkMasterPassword: TestCheckMasterPassword
 
     @Before
     fun setUp() {
         preferenceRepository = TestPreferenceRepository()
         biometryManager = TestBiometryManager()
+        checkMasterPassword = TestCheckMasterPassword()
         viewModel = AuthViewModel(
-            preferenceRepository,
-            biometryManager,
+            preferenceRepository = preferenceRepository,
+            biometryManager = biometryManager,
+            checkMasterPassword = checkMasterPassword,
+            storeAuthSuccessful = TestStoreAuthSuccessful(),
+            internalSettingsRepository = TestInternalSettingsRepository(),
+            observePrimaryUserEmail = TestObservePrimaryUserEmail().apply {
+                emit(USER_EMAIL)
+            }
         )
     }
 
     @Test
     fun `sends correct initial state`() = runTest {
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(AuthStatus.Pending)
+            val expected = AuthState.Initial.copy(
+                content = AuthContent.default(
+                    USER_EMAIL
+                )
+            )
+            assertThat(awaitItem()).isEqualTo(expected)
         }
     }
 
@@ -69,7 +87,7 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(AuthStatus.Success)
+            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
         }
     }
 
@@ -83,8 +101,10 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(AuthStatus.Success)
+            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
         }
+
+        assertThat(biometryManager.hasBeenCalled).isFalse()
     }
 
     @Test
@@ -93,7 +113,7 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(AuthStatus.Success)
+            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
         }
     }
 
@@ -104,33 +124,27 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(AuthStatus.Success)
+            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
         }
     }
 
     @Test
-    fun `biometry error cancel emits cancelled`() = runTest {
+    fun `biometry error cancel emits initial state`() = runTest {
         preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Canceled))
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(AuthStatus.Canceled)
+            assertThat(awaitItem()).isEqualTo(
+                AuthState(
+                    event = None,
+                    content = AuthContent.default(USER_EMAIL)
+                )
+            )
         }
     }
 
-    @Test
-    fun `biometry error user cancel emits cancelled`() = runTest {
-        preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
-        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
-        biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.UserCanceled))
-
-        viewModel.init(ContextHolder(None))
-        viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(AuthStatus.Canceled)
-        }
-    }
 
     @Test
     fun `biometry error of any other kind emits failed`() = runTest {
@@ -140,7 +154,7 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(AuthStatus.Failed)
+            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Failed)
         }
     }
 
@@ -152,7 +166,104 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(AuthStatus.Failed)
+            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Failed)
         }
+    }
+
+    @Test
+    fun `click on sign out emits logout`() = runTest {
+        viewModel.onSignOut()
+        viewModel.state.test {
+            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.SignOut)
+        }
+    }
+
+    @Test
+    fun `correct password emits success`() = runTest {
+        viewModel.onPasswordChanged("password")
+        viewModel.onSubmit()
+        viewModel.state.test {
+            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
+        }
+    }
+
+    @Test
+    fun `empty password emits password error`() = runTest {
+        setBiometryCanceled()
+
+        viewModel.onPasswordChanged("")
+        viewModel.onSubmit()
+        viewModel.state.test {
+            val state = awaitItem()
+            assertThat(state.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(state.content.passwordError.value()).isEqualTo(PasswordError.EmptyPassword)
+        }
+    }
+
+    @Test
+    fun `wrong password emits wrong password error`() = runTest {
+        setBiometryCanceled()
+        checkMasterPassword.setResult(false)
+
+        val password = "test"
+
+        viewModel.onPasswordChanged(password)
+        viewModel.onSubmit()
+        viewModel.state.test {
+            val state1 = awaitItem()
+            assertThat(state1.content.isLoadingState).isEqualTo(IsLoadingState.Loading)
+
+            val state2 = awaitItem()
+            assertThat(state2.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(state2.content.error.value()).isEqualTo(AuthError.WrongPassword(remainingAttempts = 4))
+            assertThat(state2.content.password).isEqualTo(password)
+        }
+    }
+
+    @Test
+    fun `wrong password many times emits logout`() = runTest {
+        setBiometryCanceled()
+        checkMasterPassword.setResult(false)
+
+        val password = "test"
+
+        viewModel.onPasswordChanged(password)
+
+        viewModel.state.test {
+            skipItems(1)
+
+            // Fail 4 times
+            for (attempt in 0 until 4) {
+                viewModel.onSubmit()
+                val stateLoading = awaitItem()
+                assertThat(stateLoading.content.isLoadingState).isEqualTo(IsLoadingState.Loading)
+
+                val stateError = awaitItem()
+                assertThat(stateError.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+
+                val expected = AuthError.WrongPassword(remainingAttempts = 4 - attempt)
+                assertThat(stateError.content.error.value()).isEqualTo(expected)
+            }
+
+            // Fail one more time
+            viewModel.onSubmit()
+            val stateLoading = awaitItem()
+            assertThat(stateLoading.content.isLoadingState).isEqualTo(IsLoadingState.Loading)
+
+            val stateError = awaitItem()
+            assertThat(stateError.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(stateError.event.value()).isEqualTo(AuthEvent.ForceSignOut)
+        }
+    }
+
+    private suspend fun setBiometryCanceled() {
+        preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+        biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Canceled))
+        viewModel.init(ContextHolder(None))
+    }
+
+    companion object {
+        private const val USER_EMAIL = "test@test.test"
     }
 }

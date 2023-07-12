@@ -240,6 +240,6 @@ class AuthViewModel @Inject constructor(
         private const val TAG = "AuthViewModel"
         private const val WRONG_PASSWORD_DELAY_SECONDS = 2000L
 
-        private const val MAX_WRONG_PASSWORD_ATTEMPTS = 3
+        private const val MAX_WRONG_PASSWORD_ATTEMPTS = 5
     }
 }

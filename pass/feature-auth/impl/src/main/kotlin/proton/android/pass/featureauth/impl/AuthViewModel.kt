@@ -146,7 +146,7 @@ class AuthViewModel @Inject constructor(
             )
         }
 
-        runCatching { checkMasterPassword(password = password) }
+        runCatching { checkMasterPassword(password = password.encodeToByteArray()) }
             .onSuccess { isPasswordRight ->
                 if (isPasswordRight) {
                     storeAuthSuccessful()

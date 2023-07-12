@@ -39,5 +39,12 @@
     <string name="app_lock_config_unlock_with">Unlock with</string>
     <string name="app_lock_config_app_lock_time">App lock time</string>
     <string name="app_lock_config_use_system_lock_when_biometric_fails">Use system lock when biometric fails</string>
+    <string name="configure_pin_set_pin_code">Set PIN code</string>
+    <string name="configure_pin_unlock_the_app_with_this_code">Unlock the app with this code</string>
+    <string name="configure_pin_enter_pin_code">Enter pin code</string>
+    <string name="configure_pin_repeat_pin_code">Repeat Pin code</string>
+    <string name="configure_pin_continue">Continue</string>
+    <string name="configure_pin_pin_does_not_match">The pin does not match</string>
+    <string name="configure_pin_pin_cannot_be_blank">The pin cannot be blank</string>
 
 </resources>

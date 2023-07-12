@@ -32,5 +32,5 @@ class TestCheckMasterPassword @Inject constructor() : CheckMasterPassword {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId?, password: String): Boolean = result
+    override suspend fun invoke(userId: UserId?, password: ByteArray): Boolean = result
 }

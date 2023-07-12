@@ -77,6 +77,7 @@ class AuthViewModel @Inject constructor(
                 isLoadingState = formContent.isLoadingState,
                 isPasswordVisible = formContent.isPasswordVisible,
                 error = formContent.error,
+                passwordError = formContent.passwordError,
                 address = userEmail
             )
         }
@@ -117,20 +118,31 @@ class AuthViewModel @Inject constructor(
         formContentFlow.update {
             it.copy(
                 password = value,
-                error = None // Hide error on password change
+
+                // Hide errors on password change
+                passwordError = None,
+                error = None
             )
         }
     }
 
     fun onSubmit() = viewModelScope.launch {
         val password = formContentFlow.value.password
-        if (password.isEmpty()) return@launch // Do not use isBlank, as spaces are valid
+        if (password.isEmpty()) { // Do not use isBlank, as spaces are valid
+            formContentFlow.update {
+                it.copy(passwordError = PasswordError.EmptyPassword.some())
+            }
+            return@launch
+        }
 
         formContentFlow.update {
             it.copy(
                 isPasswordVisible = false, // Hide password on submit by default
-                error = None, // Hide error by default
-                isLoadingState = IsLoadingState.Loading
+                isLoadingState = IsLoadingState.Loading,
+
+                // Hide errors by default
+                error = None,
+                passwordError = None
             )
         }
 
@@ -226,7 +238,8 @@ class AuthViewModel @Inject constructor(
         val password: String = "",
         val isPasswordVisible: Boolean = false,
         val isLoadingState: IsLoadingState = IsLoadingState.NotLoading,
-        val error: Option<AuthError> = None
+        val error: Option<AuthError> = None,
+        val passwordError: Option<PasswordError> = None
     )
 
     private enum class AuthStatus {

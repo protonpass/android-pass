@@ -30,7 +30,7 @@ class CheckMasterPasswordImpl @Inject constructor(
     private val userManager: UserManager,
     private val accountManager: AccountManager
 ) : CheckMasterPassword {
-    override suspend fun invoke(userId: UserId?, password: String): Boolean {
+    override suspend fun invoke(userId: UserId?, password: ByteArray): Boolean {
         val id = if (userId == null) {
             val primaryUserId = accountManager.getPrimaryUserId().first() ?: return false
             primaryUserId
@@ -40,7 +40,7 @@ class CheckMasterPasswordImpl @Inject constructor(
 
         val res = userManager.unlockWithPassword(
             userId = id,
-            password = PlainByteArray(password.encodeToByteArray()),
+            password = PlainByteArray(password),
             refreshKeySalts = false
         )
         return when (res) {

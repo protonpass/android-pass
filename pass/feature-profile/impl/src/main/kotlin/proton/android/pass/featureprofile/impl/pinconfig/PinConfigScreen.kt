@@ -16,48 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureprofile.impl.applocktype
+package proton.android.pass.featureprofile.impl.pinconfig
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.featureprofile.impl.ProfileNavigation
-import proton.android.pass.preferences.AppLockTypePreference
 
 @Composable
-fun AppLockTypeBottomsheet(
+fun PinConfigScreen(
     modifier: Modifier = Modifier,
     onNavigateEvent: (ProfileNavigation) -> Unit,
-    viewModel: AppLockTypeViewModel = hiltViewModel()
+    viewModel: PinConfigViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-
-    LaunchedEffect(state.event) {
-        when (val event = state.event) {
-            AppLockTypeEvent.Dismiss -> {
-                onNavigateEvent(ProfileNavigation.CloseBottomSheet)
-                viewModel.clearEvents()
-            }
-
-            is AppLockTypeEvent.OnChanged -> {
-                when (event.appLockTypePreference) {
-                    AppLockTypePreference.Biometrics -> {}
-                    AppLockTypePreference.Pin -> onNavigateEvent(ProfileNavigation.PinConfig)
-                }
-                viewModel.clearEvents()
-            }
-
-            AppLockTypeEvent.Unknown -> {}
-        }
-    }
-
-    AppLockTypeBottomsheetContent(
-        modifier = modifier.bottomSheet(),
+    PinConfigContent(
+        modifier = modifier,
         state = state,
-        onSelected = viewModel::onChanged
+        onNavigateEvent = onNavigateEvent,
+        onPinChange = viewModel::onEnterPin,
+        onRepeatPinChange = viewModel::onRepeatPin,
+        onSubmit = viewModel::onSubmit
     )
 }

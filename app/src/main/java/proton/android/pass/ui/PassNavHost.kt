@@ -24,8 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.navigation.appGraph
+import proton.android.pass.ui.navigation.authAppGraph
 
 @OptIn(
     ExperimentalAnimationApi::class,
@@ -53,3 +55,25 @@ fun PassNavHost(
         )
     }
 }
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+@Suppress("LongParameterList")
+fun PassAuthScreenNavHost(
+    modifier: Modifier = Modifier,
+    appNavigator: AppNavigator,
+    onNavigate: (AppNavigation) -> Unit
+) {
+    AnimatedNavHost(
+        modifier = modifier,
+        navController = appNavigator.navController,
+        startDestination = Auth.route
+    ) {
+        authAppGraph(
+            appNavigator = appNavigator,
+            onNavigate = onNavigate
+        )
+    }
+}
+
+

@@ -19,6 +19,7 @@
 package proton.android.pass.featureprofile.impl.pinconfig
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,6 +33,18 @@ fun PinConfigScreen(
     viewModel: PinConfigViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            PinConfigEvent.PinSet -> {
+                onNavigateEvent(ProfileNavigation.Back)
+                viewModel.clearEvents()
+            }
+
+            PinConfigEvent.Unknown -> {}
+        }
+    }
+
     PinConfigContent(
         modifier = modifier,
         state = state,

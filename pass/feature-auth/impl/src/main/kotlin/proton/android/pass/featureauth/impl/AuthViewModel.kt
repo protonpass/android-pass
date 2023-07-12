@@ -44,7 +44,6 @@ import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.BiometricLockState
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -139,6 +138,7 @@ class AuthViewModel @Inject constructor(
             .onSuccess { isPasswordRight ->
                 if (isPasswordRight) {
                     storeAuthSuccessful()
+                    formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
                     authStatusFlow.update { AuthStatus.Done }
                     eventFlow.update { AuthEvent.Success.some() }
                 } else {
@@ -153,8 +153,10 @@ class AuthViewModel @Inject constructor(
                     val remainingAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - currentFailedAttempts - 1
 
                     if (remainingAttempts <= 0) {
+                        PassLogger.w(TAG, "Too many wrong attempts, logging user out")
                         eventFlow.update { AuthEvent.ForceSignOut.some() }
                     } else {
+                        PassLogger.i(TAG, "Wrong password. Remaining attempts: $remainingAttempts")
                         formContentFlow.update {
                             it.copy(error = AuthError.WrongPassword(remainingAttempts).some())
                         }
@@ -189,7 +191,7 @@ class AuthViewModel @Inject constructor(
                 PassLogger.i(TAG, "Biometry result: $result")
                 when (result) {
                     BiometryResult.Success -> {
-                        preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+                        formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
                         eventFlow.update { AuthEvent.Success.some() }
                         authStatusFlow.update { AuthStatus.Done }
                     }

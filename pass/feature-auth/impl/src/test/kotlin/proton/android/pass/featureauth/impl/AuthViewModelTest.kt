@@ -20,6 +20,7 @@ package proton.android.pass.featureauth.impl
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -31,8 +32,8 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.biometry.TestStoreAuthSuccessful
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
-import proton.android.pass.common.fakes.TestAppDispatchers
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
@@ -43,13 +44,13 @@ import proton.android.pass.test.MainDispatcherRule
 
 class AuthViewModelTest {
 
-    @get:Rule
-    val dispatcherRule = MainDispatcherRule()
-
     private lateinit var viewModel: AuthViewModel
     private lateinit var preferenceRepository: TestPreferenceRepository
     private lateinit var biometryManager: TestBiometryManager
     private lateinit var checkMasterPassword: TestCheckMasterPassword
+
+    @get:Rule
+    val dispatcherRule = MainDispatcherRule()
 
     @Before
     fun setUp() {
@@ -62,7 +63,11 @@ class AuthViewModelTest {
             checkMasterPassword = checkMasterPassword,
             storeAuthSuccessful = TestStoreAuthSuccessful(),
             internalSettingsRepository = TestInternalSettingsRepository(),
-            appDispatchers = TestAppDispatchers(),
+            appDispatchers = object : AppDispatchers {
+                override val main = dispatcherRule.testDispatcher
+                override val default = UnconfinedTestDispatcher()
+                override val io = UnconfinedTestDispatcher()
+            },
             observePrimaryUserEmail = TestObservePrimaryUserEmail().apply {
                 emit(USER_EMAIL)
             }

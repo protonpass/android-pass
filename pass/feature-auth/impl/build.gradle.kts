@@ -80,6 +80,7 @@ dependencies {
 
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.biometry.fakes)
+    testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.preferences.fakes)
 
@@ -88,8 +89,10 @@ dependencies {
     testImplementation(libs.truth)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(libs.coroutines.test)
     androidTestImplementation(libs.core.presentation.compose)
     androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.commonUi.api)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)

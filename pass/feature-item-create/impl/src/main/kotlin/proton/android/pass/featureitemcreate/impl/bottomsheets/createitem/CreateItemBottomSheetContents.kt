@@ -71,26 +71,18 @@ fun CreateItemBottomSheetContents(
 ) {
 
     val items = when (mode) {
-        CreateItemBottomSheetMode.Full -> {
-            val list = mutableListOf<BottomSheetItem>()
-            list.add(createLogin(state.shareId) { onNavigate(CreateLogin(it)) })
-            list.add(
-                createAlias(
-                    state.shareId,
-                    state.createItemAliasUIState
-                ) { onNavigate(CreateAlias(it)) }
-            )
-            if (state.isCreditCardEnabled) {
-                list.add(
-                    createCreditCard(state.shareId) {
-                        onNavigate(CreateItemBottomsheetNavigation.CreateCreditCard(it))
-                    }
-                )
-            }
-            list.add(createNote(state.shareId) { onNavigate(CreateNote(it)) })
-            list.add(createPassword { onNavigate(CreatePassword) })
-            list
-        }
+        CreateItemBottomSheetMode.Full -> listOf(
+            createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
+            createAlias(
+                shareId = state.shareId,
+                createItemAliasUIState = state.createItemAliasUIState
+            ) { onNavigate(CreateAlias(it)) },
+            createCreditCard(state.shareId) {
+                onNavigate(CreateItemBottomsheetNavigation.CreateCreditCard(it))
+            },
+            createNote(state.shareId) { onNavigate(CreateNote(it)) },
+            createPassword { onNavigate(CreatePassword) }
+        )
 
         CreateItemBottomSheetMode.Autofill -> listOf(
             createLogin(state.shareId) { onNavigate(CreateLogin(it)) },

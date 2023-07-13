@@ -56,8 +56,6 @@ import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.Fingerprin
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.BiometricLockState
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.pass.domain.PlanType
 import javax.inject.Inject
@@ -73,7 +71,6 @@ class ProfileViewModel @Inject constructor(
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    ffRepo: FeatureFlagsPreferencesRepository,
 ) : ViewModel() {
 
     private val biometricLockState = preferencesRepository
@@ -91,9 +88,8 @@ class ProfileViewModel @Inject constructor(
     private val itemSummaryUiStateFlow = combine(
         observeItemCount(itemState = null).asLoadingResult(),
         observeMFACount(),
-        upgradeInfoFlow,
-        ffRepo.get<Boolean>(FeatureFlag.CREDIT_CARDS_ENABLED)
-    ) { itemCountResult, mfaCount, upgradeInfoResult, creditCardsFf ->
+        upgradeInfoFlow
+    ) { itemCountResult, mfaCount, upgradeInfoResult ->
         val itemCount = itemCountResult.getOrNull()
         val upgradeInfo = upgradeInfoResult.getOrNull()
         val isUpgradeAvailable = upgradeInfo?.isUpgradeAvailable ?: false
@@ -111,7 +107,6 @@ class ProfileViewModel @Inject constructor(
             notesCount = itemCount?.note?.toInt() ?: 0,
             aliasCount = itemCount?.alias?.toInt() ?: 0,
             creditCardsCount = itemCount?.creditCard?.toInt() ?: 0,
-            displayCreditCards = creditCardsFf,
             mfaCount = mfaCount,
             aliasLimit = aliasLimit,
             mfaLimit = mfaLimit

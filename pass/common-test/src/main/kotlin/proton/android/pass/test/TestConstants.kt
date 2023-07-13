@@ -16,29 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.test
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
-import javax.inject.Inject
-import javax.inject.Singleton
-
-@Singleton
-class TestObservePrimaryUserEmail @Inject constructor() : ObservePrimaryUserEmail {
-
-    private val flow: MutableStateFlow<String> = MutableStateFlow(DEFAULT_EMAIL)
-
-    fun emit(value: String) {
-        flow.update { value }
-    }
-
-    override fun invoke(userId: UserId?): Flow<String> = flow
-
-    companion object {
-        const val DEFAULT_EMAIL = "test@test.test"
-    }
-
+object TestConstants {
+    const val BULLET = "•"
 }

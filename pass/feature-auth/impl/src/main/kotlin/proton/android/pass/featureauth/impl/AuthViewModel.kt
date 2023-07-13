@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureauth.impl
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,12 +31,14 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.biometry.StoreAuthSuccessful
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -56,6 +59,7 @@ class AuthViewModel @Inject constructor(
     private val checkMasterPassword: CheckMasterPassword,
     private val storeAuthSuccessful: StoreAuthSuccessful,
     private val internalSettingsRepository: InternalSettingsRepository,
+    private val appDispatchers: AppDispatchers,
     observePrimaryUserEmail: ObservePrimaryUserEmail
 ) : ViewModel() {
 
@@ -123,7 +127,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun onSubmit() = viewModelScope.launch {
+    fun onSubmit() = viewModelScope.launch(appDispatchers.main) {
         val password = formContentFlow.value.password
         if (password.isEmpty()) { // Do not use isBlank, as spaces are valid
             formContentFlow.update {
@@ -150,7 +154,9 @@ class AuthViewModel @Inject constructor(
                     formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
                     eventFlow.update { AuthEvent.Success }
                 } else {
-                    delay(WRONG_PASSWORD_DELAY_SECONDS)
+                    withContext(appDispatchers.default) {
+                        delay(WRONG_PASSWORD_DELAY_SECONDS)
+                    }
 
                     val currentFailedAttempts = internalSettingsRepository
                         .getMasterPasswordAttemptsCount()
@@ -235,7 +241,10 @@ class AuthViewModel @Inject constructor(
     companion object {
         private const val TAG = "AuthViewModel"
 
-        private const val WRONG_PASSWORD_DELAY_SECONDS = 2000L
-        private const val MAX_WRONG_PASSWORD_ATTEMPTS = 5
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        const val WRONG_PASSWORD_DELAY_SECONDS = 2000L
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        const val MAX_WRONG_PASSWORD_ATTEMPTS = 5
     }
 }

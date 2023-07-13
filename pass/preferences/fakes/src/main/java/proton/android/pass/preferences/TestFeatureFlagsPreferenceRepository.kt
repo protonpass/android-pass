@@ -27,7 +27,6 @@ import javax.inject.Singleton
 class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     FeatureFlagsPreferencesRepository {
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = when (featureFlag) {
-        FeatureFlag.CREDIT_CARDS_ENABLED -> flowOf(true as T)
         FeatureFlag.AUTOFILL_DEBUG_MODE -> flowOf(false as T)
     }
 

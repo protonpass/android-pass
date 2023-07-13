@@ -88,8 +88,7 @@ data class SearchUiState(
     val isProcessingSearch: IsProcessingSearchState,
     val inSearchMode: Boolean,
     val isInSuggestionsMode: Boolean,
-    val itemTypeCount: ItemTypeCount,
-    val showCreditCards: Boolean
+    val itemTypeCount: ItemTypeCount
 ) {
     companion object {
         val Initial = SearchUiState(
@@ -97,8 +96,7 @@ data class SearchUiState(
             isProcessingSearch = IsProcessingSearchState.NotLoading,
             inSearchMode = false,
             isInSuggestionsMode = false,
-            itemTypeCount = ItemTypeCount(0, 0, 0, 0),
-            showCreditCards = false
+            itemTypeCount = ItemTypeCount(0, 0, 0, 0)
         )
     }
 }

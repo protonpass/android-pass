@@ -23,11 +23,6 @@ enum class FeatureFlag(
     val description: String,
     val key: String? = null
 ) {
-    CREDIT_CARDS_ENABLED(
-        "Credit cards",
-        "Enable credit cards",
-        "PassCreditCardsV1"
-    ),
     AUTOFILL_DEBUG_MODE(
         title = "Autofill debug mode",
         description = "Enable autofill debug mode",

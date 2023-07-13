@@ -67,12 +67,10 @@ fun ItemSummary(
             count = itemSummaryUiState.aliasCount,
             limit = itemSummaryUiState.aliasLimit
         )
-        if (itemSummaryUiState.displayCreditCards) {
-            ItemTypeBox(
-                type = SummaryItemType.CreditCards,
-                count = itemSummaryUiState.creditCardsCount
-            )
-        }
+        ItemTypeBox(
+            type = SummaryItemType.CreditCards,
+            count = itemSummaryUiState.creditCardsCount
+        )
         ItemTypeBox(type = SummaryItemType.Notes, count = itemSummaryUiState.notesCount)
         ItemTypeBox(
             type = SummaryItemType.MFA,
@@ -132,7 +130,7 @@ fun ItemSummaryPreview(
     PassTheme(isDark = isDark) {
         Surface {
             ItemSummary(
-                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1, displayCreditCards = true),
+                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1),
             )
         }
     }

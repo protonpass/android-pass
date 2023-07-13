@@ -37,14 +37,8 @@ class FeatureFlagsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val state = combine(
-        ffRepository.get<Boolean>(FeatureFlag.CREDIT_CARDS_ENABLED),
         ffRepository.get<Boolean>(FeatureFlag.AUTOFILL_DEBUG_MODE),
-    ) { creditCards, autofillDebug ->
-        mapOf(
-            FeatureFlag.CREDIT_CARDS_ENABLED to creditCards,
-            FeatureFlag.AUTOFILL_DEBUG_MODE to autofillDebug,
-        )
-    }
+    ) { autofillDebug -> mapOf(FeatureFlag.AUTOFILL_DEBUG_MODE to autofillDebug) }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
     fun <T> override(featureFlag: FeatureFlag, value: T) = viewModelScope.launch {

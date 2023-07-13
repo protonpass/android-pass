@@ -29,12 +29,16 @@ import javax.inject.Singleton
 @Singleton
 class TestObservePrimaryUserEmail @Inject constructor() : ObservePrimaryUserEmail {
 
-    private val flow: MutableStateFlow<String> = MutableStateFlow("test@test.test")
+    private val flow: MutableStateFlow<String> = MutableStateFlow(DEFAULT_EMAIL)
 
     fun emit(value: String) {
         flow.update { value }
     }
 
     override fun invoke(userId: UserId?): Flow<String> = flow
+
+    companion object {
+        const val DEFAULT_EMAIL = "test@test.test"
+    }
 
 }

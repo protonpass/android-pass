@@ -32,6 +32,7 @@ import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.biometry.TestStoreAuthSuccessful
 import proton.android.pass.common.api.None
+import proton.android.pass.common.fakes.TestAppDispatchers
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
@@ -61,6 +62,7 @@ class AuthViewModelTest {
             checkMasterPassword = checkMasterPassword,
             storeAuthSuccessful = TestStoreAuthSuccessful(),
             internalSettingsRepository = TestInternalSettingsRepository(),
+            appDispatchers = TestAppDispatchers(),
             observePrimaryUserEmail = TestObservePrimaryUserEmail().apply {
                 emit(USER_EMAIL)
             }

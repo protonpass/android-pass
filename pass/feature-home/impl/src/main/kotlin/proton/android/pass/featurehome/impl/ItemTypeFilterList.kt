@@ -58,7 +58,6 @@ fun ItemTypeFilterList(
     aliasCount: Int,
     noteCount: Int,
     creditCardCount: Int,
-    showCreditCards: Boolean,
     onItemTypeClick: (HomeItemTypeSelection) -> Unit
 ) {
     Row(
@@ -75,9 +74,7 @@ fun ItemTypeFilterList(
         ItemTypeButton(Logins, selected == Logins, loginCount, onItemTypeClick)
         ItemTypeButton(Aliases, selected == Aliases, aliasCount, onItemTypeClick)
         ItemTypeButton(Notes, selected == Notes, noteCount, onItemTypeClick)
-        if (showCreditCards) {
-            ItemTypeButton(CreditCards, selected == CreditCards, creditCardCount, onItemTypeClick)
-        }
+        ItemTypeButton(CreditCards, selected == CreditCards, creditCardCount, onItemTypeClick)
     }
 }
 
@@ -150,7 +147,6 @@ fun ItemTypeFilterListPreview(
                 aliasCount = 4,
                 noteCount = 1,
                 creditCardCount = 3,
-                showCreditCards = false,
                 onItemTypeClick = {}
             )
         }

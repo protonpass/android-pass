@@ -22,12 +22,18 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import proton.android.pass.common.api.AppDispatchers
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestAppDispatchers @Inject constructor() : AppDispatchers {
 
-    private val testDispatcher = UnconfinedTestDispatcher()
+    val testDispatcher = UnconfinedTestDispatcher()
 
     override val main: CoroutineDispatcher = testDispatcher
     override val default: CoroutineDispatcher = testDispatcher
     override val io: CoroutineDispatcher = testDispatcher
+
+    fun advanceTimeBy(delay: Long) {
+        testDispatcher.scheduler.advanceTimeBy(delay)
+    }
 }

@@ -103,8 +103,6 @@ import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
@@ -141,8 +139,7 @@ class HomeViewModel @Inject constructor(
     itemSyncStatusRepository: ItemSyncStatusRepository,
     preferencesRepository: UserPreferencesRepository,
     getUserPlan: GetUserPlan,
-    appDispatchers: AppDispatchers,
-    ffRepo: FeatureFlagsPreferencesRepository
+    appDispatchers: AppDispatchers
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -377,13 +374,12 @@ class HomeViewModel @Inject constructor(
         }
     }.distinctUntilChanged()
 
-    private val searchUiStateFlow = combineN(
+    private val searchUiStateFlow = combine(
         searchQueryState,
         isProcessingSearchState,
         isInSearchModeState,
         isInSuggestionsModeState,
         itemTypeCountFlow,
-        ffRepo[FeatureFlag.CREDIT_CARDS_ENABLED],
         ::SearchUiState
     )
 

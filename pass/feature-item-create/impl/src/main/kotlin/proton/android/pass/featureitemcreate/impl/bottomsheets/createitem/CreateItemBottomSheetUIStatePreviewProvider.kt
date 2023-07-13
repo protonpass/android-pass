@@ -31,7 +31,6 @@ class CreateItemBottomSheetUIStatePreviewProvider :
                     aliasCount = 5,
                     aliasLimit = 10
                 ),
-                isCreditCardEnabled = true
             ),
             CreateItemBottomSheetUIState(
                 shareId = null,
@@ -40,7 +39,6 @@ class CreateItemBottomSheetUIStatePreviewProvider :
                     aliasCount = 10,
                     aliasLimit = 10
                 ),
-                isCreditCardEnabled = true
             )
         )
 }

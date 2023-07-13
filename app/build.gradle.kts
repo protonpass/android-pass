@@ -43,6 +43,17 @@ val testEnvUrl: String = System.getenv("TEST_ENV_URL") ?: "api.proton.black"
 val prodEnvUrl: String = System.getenv("PROD_ENV_URL") ?: "pass-api.proton.me"
 val prodHvUrl: String = if (System.getenv("PROD_ENV_URL").isNullOrBlank()) "verify.proton.me" else "verify.proton.black"
 val isCustomBuild: Boolean = !System.getenv("PROD_ENV_URL").isNullOrBlank()
+val isApkBuild: Boolean = project.findProperty("apkBuild") == "true"
+
+println("""
+    ------- BUILD INFO -------
+    testEnvUrl: $testEnvUrl
+    prodEnvUrl: $prodEnvUrl
+    prodHvUrl: $prodHvUrl
+    isCustomBuild: $isCustomBuild
+    isApkBuild: $isApkBuild
+    --------------------------
+""".trimIndent())
 
 val jobId: Int = System.getenv("CI_JOB_ID")?.take(3)?.toInt() ?: 0
 val appVersionName: String = "1.6.2"
@@ -149,9 +160,11 @@ android {
         create("play") {
             dimension = "version"
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
-            signingConfig = if (isCustomBuild) {
+            signingConfig = if (isCustomBuild || isApkBuild) {
+                println("Using signing keystore")
                 signingConfigs["signingKeystore"]
             } else {
+                println("Using upload keystore")
                 signingConfigs["uploadKeystore"]
             }
         }

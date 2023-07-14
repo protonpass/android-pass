@@ -21,7 +21,6 @@ package proton.android.pass.featureprofile.impl
 sealed interface ProfileUiEvent {
     object OnListClick : ProfileUiEvent
     object OnCreateItemClick : ProfileUiEvent
-    object OnAppLockConfigClick : ProfileUiEvent
     object OnAccountClick : ProfileUiEvent
     object OnSettingsClick : ProfileUiEvent
     object OnFeedbackClick : ProfileUiEvent
@@ -30,10 +29,12 @@ sealed interface ProfileUiEvent {
     object OnCopyAppVersionClick : ProfileUiEvent
     object OnAppVersionLongClick : ProfileUiEvent
     object OnUpgradeClick : ProfileUiEvent
-
-    @JvmInline
-    value class OnFingerprintClicked(val value: Boolean) : ProfileUiEvent
+    object OnAppLockTypeClick : ProfileUiEvent
+    object OnAppLockTimeClick : ProfileUiEvent
 
     @JvmInline
     value class OnAutofillClicked(val value: Boolean) : ProfileUiEvent
+
+    @JvmInline
+    value class OnToggleBiometricSystemLock(val value: Boolean) : ProfileUiEvent
 }

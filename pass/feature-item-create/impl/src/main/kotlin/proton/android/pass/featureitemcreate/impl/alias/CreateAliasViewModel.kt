@@ -280,8 +280,11 @@ open class CreateAliasViewModel @Inject constructor(
 
     fun onPrefixChange(value: String) {
         if (value.contains(" ") || value.contains("\n")) return
+
+        val prefix = AliasUtils.formatAlias(value.take(AliasItem.MAX_PREFIX_LENGTH))
+        if (prefix == aliasItemState.value.prefix) return
+
         onUserEditedContent()
-        val prefix = value.take(AliasItem.MAX_PREFIX_LENGTH)
         aliasItemState.update {
             it.copy(
                 prefix = prefix,

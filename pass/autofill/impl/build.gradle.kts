@@ -137,6 +137,7 @@ dependencies {
     androidTestImplementation(projects.pass.biometry.fakes)
     androidTestImplementation(projects.pass.clipboard.fakes)
     androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.commonUi.fakes)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)

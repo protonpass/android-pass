@@ -74,7 +74,8 @@ fun EnterPinContent(
         )
         PinInput(
             state = state,
-            onPinChanged = onPinChanged
+            onPinChanged = onPinChanged,
+            onPinSubmit = onPinSubmit
         )
         val pinError = (state as? EnterPinUiState.Data)?.pinError?.value()
         if (pinError is PinError.PinIncorrect) {

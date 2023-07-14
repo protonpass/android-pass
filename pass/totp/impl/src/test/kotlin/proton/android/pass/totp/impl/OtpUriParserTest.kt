@@ -180,4 +180,26 @@ class OtpUriParserTest {
         val spec = parsed.getOrThrow()
         assertThat(spec.label).isEqualTo("firstsecond")
     }
+
+    @Test
+    fun `can handle literal spaces on uri`() {
+        val input = "otpauth://totp/first:second?secret=ABCD EFGH"
+
+        val parsed = OtpUriParser.parse(input)
+        assertThat(parsed.isSuccess).isTrue()
+
+        val spec = parsed.getOrThrow()
+        assertThat(spec.secret).isEqualTo("ABCDEFGH")
+    }
+
+    @Test
+    fun `can handle urlencoded spaces on uri`() {
+        val input = "otpauth://totp/first:second?secret=ABCD%20EFGH"
+
+        val parsed = OtpUriParser.parse(input)
+        assertThat(parsed.isSuccess).isTrue()
+
+        val spec = parsed.getOrThrow()
+        assertThat(spec.secret).isEqualTo("ABCDEFGH")
+    }
 }

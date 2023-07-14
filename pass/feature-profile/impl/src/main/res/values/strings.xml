@@ -41,12 +41,12 @@
     <string name="app_lock_config_use_system_lock_when_biometric_fails">Use system lock when biometric fails</string>
     <string name="configure_pin_set_pin_code">Set PIN code</string>
     <string name="configure_pin_unlock_the_app_with_this_code">Unlock the app with this code</string>
-    <string name="configure_pin_enter_pin_code">Enter pin code</string>
-    <string name="configure_pin_repeat_pin_code">Repeat Pin code</string>
+    <string name="configure_pin_enter_pin_code">Enter PIN code</string>
+    <string name="configure_pin_repeat_pin_code">Repeat PIN code</string>
     <string name="configure_pin_continue">Continue</string>
-    <string name="configure_pin_pin_does_not_match">The pin does not match</string>
-    <string name="configure_pin_pin_too_short">The pin is too short</string>
-    <string name="configure_pin_pin_cannot_be_blank">The pin cannot be blank</string>
-    <string name="configure_pin_pin_lock_enabled">Pin lock enabled</string>
+    <string name="configure_pin_pin_does_not_match">The PIN does not match</string>
+    <string name="configure_pin_pin_too_short">The PIN is too short</string>
+    <string name="configure_pin_pin_cannot_be_blank">The PIN cannot be blank</string>
+    <string name="configure_pin_pin_lock_enabled">PIN lock enabled</string>
 
 </resources>

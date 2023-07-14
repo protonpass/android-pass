@@ -21,7 +21,6 @@ package proton.android.featuresearchoptions.impl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchOptions
 import proton.android.pass.featuresearchoptions.api.SortingOption
@@ -57,21 +56,15 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
 
 
     override fun setSortingOption(sortingOption: SortingOption) {
-        runBlocking {
-            internalSettingsRepository.setHomeSortingOption(sortingOption.toPreference())
-        }
+        internalSettingsRepository.setHomeSortingOption(sortingOption.toPreference())
     }
 
     override fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {
-        runBlocking {
-            internalSettingsRepository.setSelectedVault(vaultSelectionOption.toPreference())
-        }
+        internalSettingsRepository.setSelectedVault(vaultSelectionOption.toPreference())
     }
 
     override fun clearSearchOptions() {
-        runBlocking {
-            internalSettingsRepository.setHomeSortingOption(SortingOptionPreference.MostRecent)
-            internalSettingsRepository.setSelectedVault(SelectedVaultPreference.AllVaults)
-        }
+        internalSettingsRepository.setHomeSortingOption(SortingOptionPreference.MostRecent)
+        internalSettingsRepository.setSelectedVault(SelectedVaultPreference.AllVaults)
     }
 }

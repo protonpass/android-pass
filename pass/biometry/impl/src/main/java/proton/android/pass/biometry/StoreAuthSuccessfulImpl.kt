@@ -35,9 +35,10 @@ class StoreAuthSuccessfulImpl @Inject constructor(
     override fun invoke() {
         runBlocking {
             preferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-            internalSettingsRepository.setMasterPasswordAttemptsCount(0)
-            internalSettingsRepository.setPinAttemptsCount(0)
         }
+        internalSettingsRepository.setMasterPasswordAttemptsCount(0)
+        internalSettingsRepository.setPinAttemptsCount(0)
+
         biometryAuthTimeHolder.storeBiometryAuthData(
             AuthData(
                 authTime = elapsedTimeProvider.getElapsedTime().some(),

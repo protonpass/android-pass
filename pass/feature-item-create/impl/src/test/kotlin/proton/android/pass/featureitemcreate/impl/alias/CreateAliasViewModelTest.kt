@@ -131,7 +131,7 @@ class CreateAliasViewModelTest {
     fun `given no suffix when the alias has changed the state should hold it`() = runTest {
         viewModel = createAliasViewModel()
         setupVaults()
-        val aliasInput = "aliasInput"
+        val aliasInput = "alias-input"
         viewModel.onPrefixChange(aliasInput)
 
         viewModel.createAliasUiState.test {

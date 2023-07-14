@@ -57,9 +57,14 @@ platform :android do
     gradle(task: ":app:assemblePlayProdRelease")
   end
 
-  desc "Creates the PlayProdRelease bundle and APK"
-  lane :buildPlayProdRelease do
-    gradle(tasks: [":app:bundlePlayProdRelease", ":app:assemblePlayProdRelease -PapkBuild=true"])
+  desc "Creates the PlayProdRelease bundle"
+  lane :buildPlayProdReleaseBundle do
+    gradle(task: ":app:bundlePlayProdRelease")
+  end
+
+  desc "Creates the PlayProdRelease apk"
+  lane :buildPlayProdReleaseApk do
+    gradle(task: ":app:assemblePlayProdRelease -PapkBuild=true")
   end
 
   desc "Assemble the androidTest apks"

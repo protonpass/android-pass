@@ -71,9 +71,8 @@ class AuthViewModelTest {
     fun `sends correct initial state`() = runTest {
         viewModel.state.test {
             val expected = AuthState.Initial.copy(
-                content = AuthContent.default(
-                    USER_EMAIL
-                )
+                event = AuthEvent.Unknown,
+                content = AuthContent.default(USER_EMAIL)
             )
             assertThat(awaitItem()).isEqualTo(expected)
         }
@@ -87,7 +86,7 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success)
         }
     }
 
@@ -101,7 +100,7 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success)
         }
 
         assertThat(biometryManager.hasBeenCalled).isFalse()
@@ -113,7 +112,7 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success)
         }
     }
 
@@ -124,7 +123,7 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success)
         }
     }
 
@@ -138,7 +137,7 @@ class AuthViewModelTest {
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(
                 AuthState(
-                    event = None,
+                    event = AuthEvent.Unknown,
                     content = AuthContent.default(USER_EMAIL)
                 )
             )
@@ -154,7 +153,7 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Failed)
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Failed)
         }
     }
 
@@ -166,7 +165,7 @@ class AuthViewModelTest {
 
         viewModel.init(ContextHolder(None))
         viewModel.state.test {
-            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Failed)
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Failed)
         }
     }
 
@@ -174,7 +173,7 @@ class AuthViewModelTest {
     fun `click on sign out emits logout`() = runTest {
         viewModel.onSignOut()
         viewModel.state.test {
-            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.SignOut)
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.SignOut)
         }
     }
 
@@ -183,7 +182,7 @@ class AuthViewModelTest {
         viewModel.onPasswordChanged("password")
         viewModel.onSubmit()
         viewModel.state.test {
-            assertThat(awaitItem().event.value()).isEqualTo(AuthEvent.Success)
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success)
         }
     }
 
@@ -252,7 +251,7 @@ class AuthViewModelTest {
 
             val stateError = awaitItem()
             assertThat(stateError.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(stateError.event.value()).isEqualTo(AuthEvent.ForceSignOut)
+            assertThat(stateError.event).isEqualTo(AuthEvent.ForceSignOut)
         }
     }
 

@@ -22,8 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.preferences.AppLockTypePreference
@@ -35,7 +37,7 @@ fun AppLockTypeBottomsheet(
     viewModel: AppLockTypeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-
+    val context = LocalContext.current
     LaunchedEffect(state.event) {
         when (val event = state.event) {
             AppLockTypeEvent.Dismiss -> {
@@ -45,7 +47,8 @@ fun AppLockTypeBottomsheet(
 
             is AppLockTypeEvent.OnChanged -> {
                 when (event.appLockTypePreference) {
-                    AppLockTypePreference.Biometrics -> {}
+                    AppLockTypePreference.Biometrics ->
+                        viewModel.onOpenBiometrics(ContextHolder.fromContext(context))
                     AppLockTypePreference.Pin -> onNavigateEvent(ProfileNavigation.PinConfig)
                 }
                 viewModel.clearEvents()

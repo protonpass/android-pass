@@ -35,6 +35,7 @@ import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureaccount.impl.accountGraph
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.AuthNavigation
+import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
@@ -752,7 +753,8 @@ fun NavGraphBuilder.appGraph(
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)
                 AuthNavigation.Failed -> appNavigator.onBackClick()
                 AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
-                AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut(null))
+                AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
+                AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
             }
         }
     )

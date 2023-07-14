@@ -20,6 +20,7 @@ package proton.android.pass.featureprofile.impl.pinconfig
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -41,7 +42,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
-import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
@@ -49,6 +50,7 @@ import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.R
 import proton.android.pass.featureprofile.impl.pinconfig.PinConfigValidationErrors.PinBlank
 import proton.android.pass.featureprofile.impl.pinconfig.PinConfigValidationErrors.PinDoesNotMatch
+import proton.android.pass.featureprofile.impl.pinconfig.PinConfigValidationErrors.PinTooShort
 
 @Composable
 fun PinConfigContent(
@@ -75,11 +77,11 @@ fun PinConfigContent(
                     )
                 },
                 actions = {
-                    LoadingCircleButton(
+                    CircleButton(
                         modifier = Modifier.padding(16.dp, 0.dp),
+                        contentPadding = PaddingValues(16.dp, 10.dp),
                         color = PassTheme.colors.interactionNormMajor1,
-                        isLoading = state.isLoading.value(),
-                        text = {
+                        content = {
                             Text(
                                 text = stringResource(R.string.configure_pin_continue),
                                 style = ProtonTheme.typography.defaultSmallNorm,
@@ -108,6 +110,15 @@ fun PinConfigContent(
                 style = PassTypography.body3RegularWeak
             )
             Spacer(modifier = Modifier.height(16.dp))
+            val (isError, errorMessage) = when {
+                state.validationErrors.contains(PinBlank) ->
+                    true to stringResource(R.string.configure_pin_pin_cannot_be_blank)
+
+                state.validationErrors.contains(PinTooShort) ->
+                    true to stringResource(R.string.configure_pin_pin_too_short)
+
+                else -> false to ""
+            }
             ProtonTextField(
                 value = state.pin,
                 textStyle = PassTypography.hero,
@@ -117,8 +128,8 @@ fun PinConfigContent(
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Next
                 ),
-                isError = state.validationErrors.contains(PinBlank),
-                errorMessage = stringResource(R.string.configure_pin_pin_cannot_be_blank),
+                isError = isError,
+                errorMessage = errorMessage,
                 placeholder = {
                     ProtonTextFieldPlaceHolder(
                         text = stringResource(R.string.configure_pin_enter_pin_code),
@@ -145,7 +156,8 @@ fun PinConfigContent(
                         textStyle = PassTypography.heroWeak
                     )
                 },
-                onChange = onRepeatPinChange
+                onChange = onRepeatPinChange,
+                onDoneClick = onSubmit
             )
         }
     }

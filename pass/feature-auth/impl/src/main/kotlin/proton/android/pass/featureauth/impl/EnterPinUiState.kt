@@ -19,13 +19,22 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.Option
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 sealed interface EnterPinUiState {
     object NotInitialised : EnterPinUiState
 
     @Stable
     data class Data(
+        val event: EnterPinEvent,
         val pin: String,
-        val attempts: Int
+        val pinError: Option<PinError>,
+        val isLoadingState: IsLoadingState
     ) : EnterPinUiState
+}
+
+sealed interface PinError {
+    object PinEmpty : PinError
+    data class PinIncorrect(val remainingAttempts: Int) : PinError
 }

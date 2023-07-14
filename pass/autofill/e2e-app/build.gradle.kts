@@ -74,6 +74,7 @@ dependencies {
     implementation(projects.pass.autofill.impl)
     implementation(projects.pass.biometry.fakes)
     implementation(projects.pass.clipboard.fakes)
+    implementation(projects.pass.common.fakes)
     implementation(projects.pass.commonUi.fakes)
     implementation(projects.pass.commonTest)
     implementation(projects.pass.crypto.fakes)

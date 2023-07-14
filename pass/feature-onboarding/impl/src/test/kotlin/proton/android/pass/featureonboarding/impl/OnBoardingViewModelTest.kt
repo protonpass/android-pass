@@ -36,7 +36,7 @@ import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.TestPreferenceRepository
@@ -192,7 +192,7 @@ class OnBoardingViewModelTest {
             skipItems(1)
             biometryManager.emitResult(BiometryResult.Success)
             preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-            preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+            preferenceRepository.setAppLockState(AppLockState.Enabled)
             viewModel.onMainButtonClick(Fingerprint, ContextHolder(None))
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(

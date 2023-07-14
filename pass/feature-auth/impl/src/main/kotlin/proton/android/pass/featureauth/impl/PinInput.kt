@@ -38,7 +38,8 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolde
 fun PinInput(
     modifier: Modifier = Modifier,
     state: EnterPinUiState,
-    onPinChanged: (String) -> Unit
+    onPinChanged: (String) -> Unit,
+    onPinSubmit: () -> Unit
 ) {
     val error = (state as? EnterPinUiState.Data)?.pinError?.value()
     val errorMessage = when (error) {
@@ -59,7 +60,8 @@ fun PinInput(
         errorMessage = errorMessage,
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(R.string.enter_pin)) },
         visualTransformation = PasswordVisualTransformation(),
-        onChange = onPinChanged
+        onChange = onPinChanged,
+        onDoneClick = onPinSubmit
     )
 }
 
@@ -70,7 +72,7 @@ fun PinInputPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            PinInput(state = EnterPinUiState.NotInitialised, onPinChanged = {})
+            PinInput(state = EnterPinUiState.NotInitialised, onPinChanged = {}, onPinSubmit = {})
         }
     }
 }

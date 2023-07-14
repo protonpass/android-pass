@@ -19,16 +19,37 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
+sealed interface EnterPinNavigation {
+    object ForceSignOut : EnterPinNavigation
+    object Success : EnterPinNavigation
+}
+
 @Composable
 fun EnterPinBottomsheet(
     modifier: Modifier = Modifier,
-    viewModel: EnterPinViewModel = hiltViewModel()
+    viewModel: EnterPinViewModel = hiltViewModel(),
+    onNavigate: (EnterPinNavigation) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    EventLaunchedEffect(state as? EnterPinUiState.Data, onNavigate)
     EnterPinContent(modifier, state, viewModel::onPinChanged, viewModel::onPinSubmit)
+}
+
+@Composable
+fun EventLaunchedEffect(data: EnterPinUiState.Data?, onNavigate: (EnterPinNavigation) -> Unit) {
+    LaunchedEffect(data) {
+        when (data?.event) {
+            EnterPinEvent.ForceSignOut -> onNavigate(EnterPinNavigation.ForceSignOut)
+            EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success)
+            EnterPinEvent.Unknown,
+            null -> {
+            }
+        }
+    }
 }

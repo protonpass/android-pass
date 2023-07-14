@@ -43,6 +43,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -58,21 +59,17 @@ class AuthViewModel @Inject constructor(
     observePrimaryUserEmail: ObservePrimaryUserEmail
 ) : ViewModel() {
 
-    private val eventFlow: MutableStateFlow<Option<AuthEvent>> = MutableStateFlow(None)
+    private val eventFlow: MutableStateFlow<AuthEvent> = MutableStateFlow(AuthEvent.Unknown)
     private val formContentFlow: MutableStateFlow<FormContents> = MutableStateFlow(FormContents())
-    private val authStatusFlow: MutableStateFlow<AuthStatus> = MutableStateFlow(AuthStatus.NotStarted)
 
     val state: StateFlow<AuthState> = combine(
-        authStatusFlow,
         eventFlow,
         formContentFlow,
         observePrimaryUserEmail()
-    ) { authStatus, event, formContent, userEmail ->
-        val content = when (authStatus) {
-            AuthStatus.NotStarted,
-            AuthStatus.Pending,
-            AuthStatus.Done -> AuthContent.default(userEmail)
-            AuthStatus.Failed -> AuthContent(
+    ) { event, formContent, userEmail ->
+        AuthState(
+            event = event,
+            content = AuthContent(
                 password = formContent.password,
                 isLoadingState = formContent.isLoadingState,
                 isPasswordVisible = formContent.isPasswordVisible,
@@ -80,11 +77,6 @@ class AuthViewModel @Inject constructor(
                 passwordError = formContent.passwordError,
                 address = userEmail
             )
-        }
-
-        AuthState(
-            event = event,
-            content = content
         )
     }
         .stateIn(
@@ -94,23 +86,27 @@ class AuthViewModel @Inject constructor(
         )
 
     fun init(context: ContextHolder) = viewModelScope.launch {
-        when (biometryManager.getBiometryStatus()) {
-            BiometryStatus.CanAuthenticate -> {
-                val biometricLockState = preferenceRepository.getBiometricLockState().first()
-                if (biometricLockState == BiometricLockState.Disabled) {
-                    // If there is biometry available, but the user does not have it enabled
-                    // we should proceed
-                    eventFlow.update { AuthEvent.Success.some() }
-                } else {
-                    // If there is biometry available, and the user has it enabled, perform auth
-                    performAuth(context)
+        when (preferenceRepository.getAppLockTypePreference().first()) {
+            AppLockTypePreference.Biometrics -> when (biometryManager.getBiometryStatus()) {
+                BiometryStatus.CanAuthenticate -> {
+                    val biometricLockState = preferenceRepository.getBiometricLockState().first()
+                    if (biometricLockState == BiometricLockState.Disabled) {
+                        // If there is biometry available, but the user does not have it enabled
+                        // we should proceed
+                        eventFlow.update { AuthEvent.Success }
+                    } else {
+                        // If there is biometry available, and the user has it enabled, perform auth
+                        openBiometrics(context)
+                    }
+                }
+
+                else -> {
+                    // If there is no biometry available, emit success
+                    eventFlow.update { AuthEvent.Success }
                 }
             }
 
-            else -> {
-                // If there is no biometry available, emit success
-                eventFlow.update { AuthEvent.Success.some() }
-            }
+            AppLockTypePreference.Pin -> eventFlow.update { AuthEvent.EnterPin }
         }
     }
 
@@ -151,8 +147,7 @@ class AuthViewModel @Inject constructor(
                 if (isPasswordRight) {
                     storeAuthSuccessful()
                     formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
-                    authStatusFlow.update { AuthStatus.Done }
-                    eventFlow.update { AuthEvent.Success.some() }
+                    eventFlow.update { AuthEvent.Success }
                 } else {
                     delay(WRONG_PASSWORD_DELAY_SECONDS)
 
@@ -166,7 +161,7 @@ class AuthViewModel @Inject constructor(
 
                     if (remainingAttempts <= 0) {
                         PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                        eventFlow.update { AuthEvent.ForceSignOut.some() }
+                        eventFlow.update { AuthEvent.ForceSignOut }
                     } else {
                         PassLogger.i(TAG, "Wrong password. Remaining attempts: $remainingAttempts")
                         formContentFlow.update {
@@ -184,7 +179,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onSignOut() = viewModelScope.launch {
-        eventFlow.update { AuthEvent.SignOut.some() }
+        eventFlow.update { AuthEvent.SignOut }
     }
 
     fun onTogglePasswordVisibility(value: Boolean) = viewModelScope.launch {
@@ -192,20 +187,18 @@ class AuthViewModel @Inject constructor(
     }
 
     fun clearEvent() = viewModelScope.launch {
-        eventFlow.update { None }
+        eventFlow.update { AuthEvent.Unknown }
     }
 
-    private suspend fun performAuth(context: ContextHolder) {
+    private suspend fun openBiometrics(context: ContextHolder) {
         PassLogger.i(TAG, "Launching Biometry")
-        authStatusFlow.update { AuthStatus.Pending }
         biometryManager.launch(context)
             .collect { result ->
                 PassLogger.i(TAG, "Biometry result: $result")
                 when (result) {
                     BiometryResult.Success -> {
                         formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
-                        eventFlow.update { AuthEvent.Success.some() }
-                        authStatusFlow.update { AuthStatus.Done }
+                        eventFlow.update { AuthEvent.Success }
                     }
 
                     is BiometryResult.Error -> {
@@ -214,21 +207,17 @@ class AuthViewModel @Inject constructor(
                             BiometryAuthError.Canceled,
                             BiometryAuthError.UserCanceled,
                             BiometryAuthError.NegativeButton -> {
-                                authStatusFlow.update { AuthStatus.Failed }
                             }
-                            else -> {
-                                eventFlow.update { AuthEvent.Failed.some() }
-                            }
+
+                            else -> eventFlow.update { AuthEvent.Failed }
                         }
                     }
 
                     // User can retry
-                    BiometryResult.Failed -> {
-                        authStatusFlow.update { AuthStatus.Failed }
-                    }
+                    BiometryResult.Failed -> {}
+
                     is BiometryResult.FailedToStart -> {
-                        eventFlow.update { AuthEvent.Failed.some() }
-                        authStatusFlow.update { AuthStatus.Failed }
+                        eventFlow.update { AuthEvent.Failed }
                     }
                 }
             }
@@ -242,17 +231,10 @@ class AuthViewModel @Inject constructor(
         val passwordError: Option<PasswordError> = None
     )
 
-    private enum class AuthStatus {
-        NotStarted,
-        Pending,
-        Failed,
-        Done;
-    }
-
     companion object {
         private const val TAG = "AuthViewModel"
-        private const val WRONG_PASSWORD_DELAY_SECONDS = 2000L
 
+        private const val WRONG_PASSWORD_DELAY_SECONDS = 2000L
         private const val MAX_WRONG_PASSWORD_ATTEMPTS = 5
     }
 }

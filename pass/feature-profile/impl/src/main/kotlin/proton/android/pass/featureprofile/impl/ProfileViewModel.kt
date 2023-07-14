@@ -21,29 +21,28 @@ package proton.android.pass.featureprofile.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
-import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -55,14 +54,16 @@ import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.Fingerprin
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FingerprintLockEnabled
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.AppLockState
+import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.pass.domain.PlanType
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val preferencesRepository: UserPreferencesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager,
     private val autofillManager: AutofillManager,
     private val clipboardManager: ClipboardManager,
@@ -73,9 +74,18 @@ class ProfileViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
 ) : ViewModel() {
 
-    private val biometricLockState = preferencesRepository
-        .getBiometricLockState()
-        .distinctUntilChanged()
+    private val appLockSectionState: Flow<AppLockSectionState> = combine(
+        userPreferencesRepository.getAppLockTimePreference(),
+        userPreferencesRepository.getAppLockTypePreference(),
+        userPreferencesRepository.getBiometricSystemLockPreference()
+    ) { time, type, biometricSystemLock ->
+        when (type) {
+            AppLockTypePreference.Biometrics -> AppLockSectionState.Biometric(time, biometricSystemLock)
+
+            AppLockTypePreference.Pin -> AppLockSectionState.Pin(time)
+            AppLockTypePreference.None -> AppLockSectionState.None
+        }
+    }
 
     private val autofillStatusFlow = autofillManager
         .getAutofillStatus()
@@ -113,17 +123,19 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    val state: StateFlow<ProfileUiState> = combineN(
-        biometricLockState,
-        flowOf(biometryManager.getBiometryStatus()),
+    val state: StateFlow<ProfileUiState> = combine(
+/*        biometricLockState,
+        flowOf(biometryManager.getBiometryStatus()),*/
+        appLockSectionState,
         autofillStatusFlow,
         itemSummaryUiStateFlow,
         upgradeInfoFlow,
         eventFlow,
-    ) { biometricLock, biometryStatus, autofillStatus, itemSummaryUiState, upgradeInfo, event ->
+    ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event ->
+/*
         val fingerprintSection = when (biometryStatus) {
             BiometryStatus.NotEnrolled -> AppLockSectionState.NoFingerprintRegistered
-            BiometryStatus.NotAvailable -> AppLockSectionState.NotAvailable
+            BiometryStatus.NotAvailable -> AppLockSectionState.None
             BiometryStatus.CanAuthenticate -> {
                 val available = when (biometricLock) {
                     BiometricLockState.Enabled -> IsButtonEnabled.Enabled
@@ -132,6 +144,7 @@ class ProfileViewModel @Inject constructor(
                 AppLockSectionState.Available(available)
             }
         }
+*/
 
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
@@ -156,7 +169,7 @@ class ProfileViewModel @Inject constructor(
         }
 
         ProfileUiState(
-            fingerprintSection = fingerprintSection,
+            appLockSectionState = appLockSectionState,
             autofillStatus = autofillStatus,
             itemSummaryUiState = itemSummaryUiState,
             appVersion = appConfig.versionName,
@@ -167,7 +180,12 @@ class ProfileViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = ProfileUiState.getInitialState(appVersion = appConfig.versionName)
+        initialValue = runBlocking {
+            ProfileUiState.getInitialState(
+                appVersion = appConfig.versionName,
+                appLockSectionState = appLockSectionState.first(),
+            )
+        }
     )
 
     fun onFingerprintToggle(contextHolder: ContextHolder, value: Boolean) = viewModelScope.launch {
@@ -176,12 +194,12 @@ class ProfileViewModel @Inject constructor(
                 when (result) {
                     BiometryResult.Success -> {
                         val (lockState, message) = when (!value) {
-                            true -> BiometricLockState.Enabled to FingerprintLockEnabled
-                            false -> BiometricLockState.Disabled to FingerprintLockDisabled
+                            true -> AppLockState.Enabled to FingerprintLockEnabled
+                            false -> AppLockState.Disabled to FingerprintLockDisabled
                         }
 
                         PassLogger.d(TAG, "Changing BiometricLock to $lockState")
-                        preferencesRepository.setBiometricLockState(lockState)
+                        userPreferencesRepository.setAppLockState(lockState)
                             .onSuccess { snackbarDispatcher(message) }
                             .onFailure {
                                 PassLogger.e(TAG, it, "Error setting BiometricLockState")
@@ -228,6 +246,14 @@ class ProfileViewModel @Inject constructor(
 
     fun clearEvent() = viewModelScope.launch {
         eventFlow.emit(ProfileEvent.Unknown)
+    }
+
+    fun onToggleBiometricSystemLock(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setBiometricSystemLockPreference(
+                BiometricSystemLockPreference.from(value)
+            )
+        }
     }
 
     companion object {

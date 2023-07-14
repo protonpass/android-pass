@@ -21,8 +21,8 @@ package proton.android.pass.featureprofile.impl.applocktype
 import proton.android.pass.preferences.AppLockTypePreference
 
 sealed interface AppLockTypeEvent {
-    @JvmInline
-    value class OnChanged(val appLockTypePreference: AppLockTypePreference) : AppLockTypeEvent
+    object EnterPin : AppLockTypeEvent
+    object ConfigurePin : AppLockTypeEvent
     object Dismiss : AppLockTypeEvent
     object Unknown : AppLockTypeEvent
 }
@@ -35,13 +35,14 @@ data class AppLockTypeUiState(
     companion object {
         val Initial = AppLockTypeUiState(
             items = allPreferences,
-            selected = AppLockTypePreference.Biometrics,
+            selected = AppLockTypePreference.None,
             event = AppLockTypeEvent.Unknown
         )
     }
 }
 
 internal val allPreferences: List<AppLockTypePreference> = listOf(
+    AppLockTypePreference.None,
     AppLockTypePreference.Biometrics,
     AppLockTypePreference.Pin
 )

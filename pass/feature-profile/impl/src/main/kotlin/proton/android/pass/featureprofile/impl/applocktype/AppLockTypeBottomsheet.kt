@@ -28,29 +28,34 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.featureprofile.impl.ProfileNavigation
-import proton.android.pass.preferences.AppLockTypePreference
 
 @Composable
 fun AppLockTypeBottomsheet(
     modifier: Modifier = Modifier,
+    enterPinSuccess: Boolean,
     onNavigateEvent: (ProfileNavigation) -> Unit,
     viewModel: AppLockTypeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    if (enterPinSuccess) {
+        LaunchedEffect(Unit) {
+            viewModel.onPinSuccessfullyEntered(ContextHolder.fromContext(context))
+        }
+    }
     LaunchedEffect(state.event) {
-        when (val event = state.event) {
-            AppLockTypeEvent.Dismiss -> {
-                onNavigateEvent(ProfileNavigation.CloseBottomSheet)
+        when (state.event) {
+            AppLockTypeEvent.ConfigurePin -> {
+                onNavigateEvent(ProfileNavigation.ConfigurePin)
+                viewModel.clearEvents()
+            }
+            AppLockTypeEvent.EnterPin -> {
+                onNavigateEvent(ProfileNavigation.EnterPin)
                 viewModel.clearEvents()
             }
 
-            is AppLockTypeEvent.OnChanged -> {
-                when (event.appLockTypePreference) {
-                    AppLockTypePreference.Biometrics ->
-                        viewModel.onOpenBiometrics(ContextHolder.fromContext(context))
-                    AppLockTypePreference.Pin -> onNavigateEvent(ProfileNavigation.PinConfig)
-                }
+            AppLockTypeEvent.Dismiss -> {
+                onNavigateEvent(ProfileNavigation.CloseBottomSheet)
                 viewModel.clearEvents()
             }
 
@@ -60,7 +65,6 @@ fun AppLockTypeBottomsheet(
 
     AppLockTypeBottomsheetContent(
         modifier = modifier.bottomSheet(),
-        state = state,
-        onSelected = viewModel::onChanged
-    )
+        state = state
+    ) { viewModel.onChanged(it, ContextHolder.fromContext(context)) }
 }

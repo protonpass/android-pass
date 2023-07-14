@@ -21,7 +21,6 @@ package proton.android.pass.featureprofile.impl
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featureprofile.impl.applockconfig.AppLockConfigScreen
 import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
 import proton.android.pass.featureprofile.impl.pinconfig.PinConfigScreen
@@ -29,13 +28,14 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
+const val ENTER_PIN_PARAMETER_KEY = "enterPin"
+
 object Profile : NavItem(baseRoute = "profile", isTopLevel = true)
 object FeedbackBottomsheet : NavItem(
     baseRoute = "feedback/bottomsheet",
     isBottomsheet = true
 )
 
-object AppLockConfig : NavItem(baseRoute = "applock/config")
 object AppLockTimeBottomsheet : NavItem(
     baseRoute = "applock/time/bottomsheet",
     isBottomsheet = true
@@ -52,7 +52,6 @@ object PinConfig : NavItem(baseRoute = "pin/config")
 sealed interface ProfileNavigation {
     object Back : ProfileNavigation
     object Account : ProfileNavigation
-    object AppLockConfig : ProfileNavigation
     object List : ProfileNavigation
     object CreateItem : ProfileNavigation
     object Settings : ProfileNavigation
@@ -64,7 +63,8 @@ sealed interface ProfileNavigation {
     object CloseBottomSheet : ProfileNavigation
     object AppLockType : ProfileNavigation
     object AppLockTime : ProfileNavigation
-    object PinConfig : ProfileNavigation
+    object ConfigurePin : ProfileNavigation
+    object EnterPin : ProfileNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -78,14 +78,12 @@ fun NavGraphBuilder.profileGraph(
     bottomSheet(FeedbackBottomsheet) {
         FeedbackBottomsheet(onNavigateEvent = onNavigateEvent)
     }
-    composable(AppLockConfig) {
-        AppLockConfigScreen(onNavigateEvent = onNavigateEvent)
-    }
     bottomSheet(AppLockTimeBottomsheet) {
         AppLockTimeBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
     }
     bottomSheet(AppLockTypeBottomsheet) {
-        AppLockTypeBottomsheet(onNavigateEvent = onNavigateEvent)
+        val enterPin = it.savedStateHandle.get<Boolean>(ENTER_PIN_PARAMETER_KEY) ?: false
+        AppLockTypeBottomsheet(enterPinSuccess = enterPin, onNavigateEvent = onNavigateEvent)
     }
     composable(PinConfig) {
         PinConfigScreen(onNavigateEvent = onNavigateEvent)

@@ -52,15 +52,17 @@ object OtpUriParser {
 
     const val DEFAULT_LABEL = "ProtonPass"
 
-    fun parse(input: String): Result<TotpSpec> =
-        try {
-            val parsed = URI(input)
+    fun parse(input: String): Result<TotpSpec> {
+        val sanitized = sanitizeUri(input)
+        return try {
+            val parsed = URI(sanitized)
             extractFields(parsed)
         } catch (e: MalformedOtpUri) {
             Result.failure(e)
         } catch (e: URISyntaxException) {
             Result.failure(MalformedOtpUri.InvalidUri(e))
         }
+    }
 
     @Suppress("ComplexMethod", "ReturnCount")
     private fun extractFields(parsed: URI): Result<TotpSpec> {
@@ -161,4 +163,8 @@ object OtpUriParser {
         }
         return queryPairs
     }
+
+    private fun sanitizeUri(uri: String): String = uri
+        .replace(" ", "")
+        .replace("%20", "")
 }

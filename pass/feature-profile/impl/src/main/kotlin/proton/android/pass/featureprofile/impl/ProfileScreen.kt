@@ -26,10 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.biometry.ContextHolder
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
-import java.lang.ref.WeakReference
 
 @Suppress("CyclomaticComplexMethod", "ComplexMethod")
 @Composable
@@ -54,23 +51,19 @@ fun ProfileScreen(
         onEvent = {
             when (it) {
                 ProfileUiEvent.OnAccountClick -> onNavigateEvent(ProfileNavigation.Account)
-                ProfileUiEvent.OnAppLockConfigClick -> onNavigateEvent(ProfileNavigation.AppLockConfig)
                 ProfileUiEvent.OnAppVersionLongClick -> viewModel.onAppVersionLongClick()
                 is ProfileUiEvent.OnAutofillClicked -> viewModel.onToggleAutofill(it.value)
                 ProfileUiEvent.OnCopyAppVersionClick -> viewModel.copyAppVersion(state.appVersion)
                 ProfileUiEvent.OnCreateItemClick -> onNavigateEvent(ProfileNavigation.CreateItem)
                 ProfileUiEvent.OnFeedbackClick -> onNavigateEvent(ProfileNavigation.Feedback)
-                is ProfileUiEvent.OnFingerprintClicked -> {
-                    viewModel.onFingerprintToggle(
-                        contextHolder = ContextHolder(WeakReference(context).toOption()),
-                        value = it.value
-                    )
-                }
                 ProfileUiEvent.OnImportExportClick -> openWebsite(context, PASS_IMPORT)
                 ProfileUiEvent.OnListClick -> onNavigateEvent(ProfileNavigation.List)
                 ProfileUiEvent.OnRateAppClick -> openWebsite(context, PASS_STORE)
                 ProfileUiEvent.OnSettingsClick -> onNavigateEvent(ProfileNavigation.Settings)
                 ProfileUiEvent.OnUpgradeClick -> onNavigateEvent(ProfileNavigation.Upgrade)
+                ProfileUiEvent.OnAppLockTypeClick -> onNavigateEvent(ProfileNavigation.AppLockType)
+                ProfileUiEvent.OnAppLockTimeClick -> onNavigateEvent(ProfileNavigation.AppLockTime)
+                is ProfileUiEvent.OnToggleBiometricSystemLock -> viewModel.onToggleBiometricSystemLock(it.value)
             }
         }
     )

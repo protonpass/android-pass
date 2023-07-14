@@ -32,14 +32,17 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.ContextHolder
+import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
-import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.ErrorPerformingOperation
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FingerprintLockEnabled
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.AppLockTypePreference.Biometrics
+import proton.android.pass.preferences.AppLockTypePreference.None
+import proton.android.pass.preferences.AppLockTypePreference.Pin
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -50,9 +53,10 @@ class AppLockTypeViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
-
     private val eventState: MutableStateFlow<AppLockTypeEvent> =
         MutableStateFlow(AppLockTypeEvent.Unknown)
+    private val newPreferenceState: MutableStateFlow<AppLockTypePreference?> =
+        MutableStateFlow(null)
 
     val state: StateFlow<AppLockTypeUiState> = combine(
         userPreferencesRepository.getAppLockTypePreference(),
@@ -69,11 +73,62 @@ class AppLockTypeViewModel @Inject constructor(
         initialValue = AppLockTypeUiState.Initial
     )
 
-    fun onChanged(appLockTypePreference: AppLockTypePreference) = viewModelScope.launch {
-        if (state.value.selected == appLockTypePreference) {
-            eventState.update { AppLockTypeEvent.Dismiss }
-        } else {
-            eventState.update { AppLockTypeEvent.OnChanged(appLockTypePreference) }
+    fun onChanged(newPreference: AppLockTypePreference, contextHolder: ContextHolder) =
+        viewModelScope.launch {
+            val oldPreference = state.value.selected
+            if (oldPreference == newPreference) {
+                eventState.update { AppLockTypeEvent.Dismiss }
+            } else {
+                newPreferenceState.update { newPreference }
+                when (oldPreference) {
+                    Biometrics -> when (newPreference) {
+                        None -> openBiometrics(
+                            contextHolder = contextHolder,
+                            onSuccess = ::onBiometryAuthUnSet,
+                            onError = ::onBiometryError
+                        )
+
+                        Pin -> openBiometrics(
+                            contextHolder = contextHolder,
+                            onSuccess = { eventState.update { AppLockTypeEvent.ConfigurePin } },
+                            onError = ::onBiometryError
+                        )
+
+                        else -> {}
+                    }
+
+                    None -> when (newPreference) {
+                        Biometrics -> openBiometrics(
+                            contextHolder = contextHolder,
+                            onSuccess = ::onBiometryAuthSet,
+                            onError = ::onBiometryError
+                        )
+
+                        Pin -> eventState.update { AppLockTypeEvent.ConfigurePin }
+                        else -> {}
+                    }
+
+                    Pin -> when (newPreference) {
+                        Biometrics -> eventState.update { AppLockTypeEvent.EnterPin }
+                        None -> eventState.update { AppLockTypeEvent.EnterPin }
+                        else -> {}
+                    }
+                }
+            }
+        }
+
+    fun onPinSuccessfullyEntered(contextHolder: ContextHolder) {
+        val newPreference = newPreferenceState.value ?: return
+        when (newPreference) {
+            None -> onPinAuthUnSet()
+            Biometrics -> openBiometrics(
+                contextHolder = contextHolder,
+                onSuccess = ::onBiometryAuthSet,
+                onError = ::onBiometryError
+            )
+            Pin -> {
+                // Cannot happen
+            }
         }
     }
 
@@ -81,20 +136,22 @@ class AppLockTypeViewModel @Inject constructor(
         eventState.update { AppLockTypeEvent.Unknown }
     }
 
-    fun onOpenBiometrics(contextHolder: ContextHolder) {
-        viewModelScope.launch {
-            biometryManager.launch(contextHolder)
-                .collect { result ->
-                    when (result) {
-                        BiometryResult.Success -> onBiometrySuccess()
-                        is BiometryResult.Error -> onBiometryError(result)
-                        // User can retry
-                        BiometryResult.Failed -> {}
-                        is BiometryResult.FailedToStart -> onBiometryFailedToStart()
-                    }
-                    PassLogger.i(TAG, "Biometry result: $result")
+    private fun openBiometrics(
+        contextHolder: ContextHolder,
+        onSuccess: suspend () -> Unit,
+        onError: suspend (BiometryResult.Error) -> Unit
+    ) = viewModelScope.launch {
+        biometryManager.launch(contextHolder)
+            .collect { result ->
+                when (result) {
+                    BiometryResult.Success -> onSuccess()
+                    is BiometryResult.Error -> onError(result)
+                    // User can retry
+                    BiometryResult.Failed -> {}
+                    is BiometryResult.FailedToStart -> onBiometryFailedToStart()
                 }
-        }
+                PassLogger.i(TAG, "Biometry result: $result")
+            }
     }
 
     private suspend fun onBiometryFailedToStart() {
@@ -111,31 +168,32 @@ class AppLockTypeViewModel @Inject constructor(
         }
     }
 
-    private fun onBiometrySuccess() {
+    private fun onBiometryAuthSet() {
         viewModelScope.launch {
-            saveHasAuthenticatedFlag()
-            saveBiometricLockStateFlag()
-            saveBiometricsAppLockType()
+            userPreferencesRepository.setAppLockState(AppLockState.Enabled)
+            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+            userPreferencesRepository.setAppLockTypePreference(Biometrics)
+            snackbarDispatcher(FingerprintLockEnabled)
             eventState.update { AppLockTypeEvent.Dismiss }
         }
     }
 
-    private suspend fun saveHasAuthenticatedFlag() {
-        userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+    private fun onBiometryAuthUnSet() {
+        viewModelScope.launch {
+            userPreferencesRepository.setAppLockState(AppLockState.Disabled)
+            userPreferencesRepository.setAppLockTypePreference(None)
+            snackbarDispatcher(ProfileSnackbarMessage.FingerprintLockDisabled)
+            eventState.update { AppLockTypeEvent.Dismiss }
+        }
     }
 
-    private suspend fun saveBiometricsAppLockType() {
-        userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
-    }
-
-    private suspend fun saveBiometricLockStateFlag() {
-        PassLogger.d(TAG, "Changing BiometricLock to ${BiometricLockState.Enabled}")
-        userPreferencesRepository.setBiometricLockState(BiometricLockState.Enabled)
-            .onSuccess { snackbarDispatcher(FingerprintLockEnabled) }
-            .onFailure {
-                PassLogger.e(TAG, it, "Error setting BiometricLockState")
-                snackbarDispatcher(ErrorPerformingOperation)
-            }
+    private fun onPinAuthUnSet() {
+        viewModelScope.launch {
+            userPreferencesRepository.setAppLockState(AppLockState.Disabled)
+            userPreferencesRepository.setAppLockTypePreference(None)
+            snackbarDispatcher(ProfileSnackbarMessage.PinLockDisabled)
+            eventState.update { AppLockTypeEvent.Dismiss }
+        }
     }
 
     companion object {

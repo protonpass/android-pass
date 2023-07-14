@@ -22,7 +22,8 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import proton.android.pass.preferences.AppLockTimePreference
+import proton.android.pass.preferences.BiometricSystemLockPreference
 
 sealed interface ProfileEvent {
     object Unknown : ProfileEvent
@@ -31,7 +32,7 @@ sealed interface ProfileEvent {
 
 @Stable
 data class ProfileUiState(
-    val fingerprintSection: AppLockSectionState,
+    val appLockSectionState: AppLockSectionState,
     val autofillStatus: AutofillSupportedStatus,
     val itemSummaryUiState: ItemSummaryUiState,
     val appVersion: String,
@@ -40,8 +41,11 @@ data class ProfileUiState(
     val showUpgradeButton: Boolean
 ) {
     companion object {
-        fun getInitialState(appVersion: String) = ProfileUiState(
-            fingerprintSection = AppLockSectionState.Available(IsButtonEnabled.Disabled),
+        fun getInitialState(
+            appVersion: String,
+            appLockSectionState: AppLockSectionState
+        ) = ProfileUiState(
+            appLockSectionState = appLockSectionState,
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
             itemSummaryUiState = ItemSummaryUiState(),
             appVersion = appVersion,
@@ -75,9 +79,18 @@ sealed interface PlanInfo {
 }
 
 sealed interface AppLockSectionState {
-    data class Available(val enabled: IsButtonEnabled) : AppLockSectionState
-    object NoFingerprintRegistered : AppLockSectionState
-    object NotAvailable : AppLockSectionState
+    @Stable
+    data class Biometric(
+        val appLockTimePreference: AppLockTimePreference,
+        val biometricSystemLockPreference: BiometricSystemLockPreference
+    ) : AppLockSectionState
+
+    @Stable
+    data class Pin(
+        val appLockTimePreference: AppLockTimePreference
+    ) : AppLockSectionState
+
+    object None : AppLockSectionState
 }
 
 data class ItemSummaryUiState(

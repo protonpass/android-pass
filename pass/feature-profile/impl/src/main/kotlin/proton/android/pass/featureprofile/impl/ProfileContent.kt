@@ -46,7 +46,6 @@ import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
-import proton.android.pass.composecomponents.impl.uievents.value
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -97,13 +96,10 @@ fun ProfileContent(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                if (state.fingerprintSection is AppLockSectionState.Available) {
-                    AppLockSection(
-                        isAppLockEnabled = state.fingerprintSection.enabled.value(),
-                        onToggle = { onEvent(ProfileUiEvent.OnFingerprintClicked(it)) },
-                        onAdvancedClick = { onEvent(ProfileUiEvent.OnAppLockConfigClick) }
-                    )
-                }
+                AppLockSection(
+                    appLockSectionState = state.appLockSectionState,
+                    onEvent = onEvent
+                )
                 if (state.autofillStatus is AutofillSupportedStatus.Supported) {
                     AutofillProfileSection(
                         isChecked = state.autofillStatus.status is AutofillStatus.EnabledByOurService,

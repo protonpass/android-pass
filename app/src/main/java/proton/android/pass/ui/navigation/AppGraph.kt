@@ -98,9 +98,9 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
-import proton.android.pass.featureprofile.impl.AppLockConfig
 import proton.android.pass.featureprofile.impl.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.AppLockTypeBottomsheet
+import proton.android.pass.featureprofile.impl.ENTER_PIN_PARAMETER_KEY
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
 import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.Profile
@@ -356,7 +356,6 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.List -> appNavigator.navigate(Home)
                 ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheet)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
-                ProfileNavigation.AppLockConfig -> appNavigator.navigate(AppLockConfig)
                 ProfileNavigation.Report -> dismissBottomSheet {
                     onNavigate(AppNavigation.Report)
                 }
@@ -371,7 +370,8 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.AppLockTime -> appNavigator.navigate(AppLockTimeBottomsheet)
                 ProfileNavigation.AppLockType -> appNavigator.navigate(AppLockTypeBottomsheet)
                 ProfileNavigation.Back -> appNavigator.onBackClick()
-                ProfileNavigation.PinConfig -> appNavigator.navigate(PinConfig)
+                ProfileNavigation.ConfigurePin -> appNavigator.navigate(PinConfig)
+                ProfileNavigation.EnterPin -> appNavigator.navigate(EnterPin)
             }
         }
     )
@@ -743,13 +743,22 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-
     authGraph(
         canLogout = true,
         navigation = {
             when (it) {
                 AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
-                AuthNavigation.Success -> appNavigator.onBackClick()
+                AuthNavigation.Success -> {
+                    if (appNavigator.hasDestinationInStack(AppLockTypeBottomsheet)) {
+                        appNavigator.navigateUpWithResult(
+                            key = ENTER_PIN_PARAMETER_KEY,
+                            value = true
+                        )
+                    } else {
+                        appNavigator.onBackClick()
+                    }
+                }
+
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)
                 AuthNavigation.Failed -> appNavigator.onBackClick()
                 AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)

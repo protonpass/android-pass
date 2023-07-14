@@ -60,6 +60,7 @@ private fun appLockTypeBottomSheetItem(
                 val title = when (preference) {
                     AppLockTypePreference.Biometrics -> R.string.app_lock_config_biometric
                     AppLockTypePreference.Pin -> R.string.app_lock_config_pin_code
+                    AppLockTypePreference.None -> R.string.app_lock_config_none
                 }
                 BottomSheetItemTitle(text = stringResource(title))
             }

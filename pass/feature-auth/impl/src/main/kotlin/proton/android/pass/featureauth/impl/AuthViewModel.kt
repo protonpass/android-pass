@@ -44,7 +44,7 @@ import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -89,8 +89,8 @@ class AuthViewModel @Inject constructor(
         when (preferenceRepository.getAppLockTypePreference().first()) {
             AppLockTypePreference.Biometrics -> when (biometryManager.getBiometryStatus()) {
                 BiometryStatus.CanAuthenticate -> {
-                    val biometricLockState = preferenceRepository.getBiometricLockState().first()
-                    if (biometricLockState == BiometricLockState.Disabled) {
+                    val biometricLockState = preferenceRepository.getAppLockState().first()
+                    if (biometricLockState == AppLockState.Disabled) {
                         // If there is biometry available, but the user does not have it enabled
                         // we should proceed
                         eventFlow.update { AuthEvent.Success }
@@ -107,6 +107,7 @@ class AuthViewModel @Inject constructor(
             }
 
             AppLockTypePreference.Pin -> eventFlow.update { AuthEvent.EnterPin }
+            AppLockTypePreference.None -> {}
         }
     }
 

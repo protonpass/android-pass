@@ -42,7 +42,7 @@ import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.featureauth.impl.AuthViewModel
 import proton.android.pass.featureauth.impl.R
-import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -80,7 +80,7 @@ class AuthScreenMasterPasswordTest {
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Canceled))
         runBlocking {
-            userPreferencesRepository.setBiometricLockState(BiometricLockState.Enabled)
+            userPreferencesRepository.setBiometricSystemLockPreference(BiometricSystemLockPreference.Enabled)
         }
     }
 
@@ -192,6 +192,8 @@ class AuthScreenMasterPasswordTest {
 
             val unlockButtonText = activity.getString(R.string.auth_unlock_button)
             onNodeWithText(unlockButtonText).performClick()
+
+            appDispatchers.advanceTimeBy(2500L)
 
             val errorText = activity.resources.getQuantityString(R.plurals.auth_error_wrong_password, 4, 4)
             waitUntilExists(hasText(errorText), timeoutMillis = 2500)

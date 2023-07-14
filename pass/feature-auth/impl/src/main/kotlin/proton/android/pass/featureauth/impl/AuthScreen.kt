@@ -35,19 +35,21 @@ fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val ctx = LocalContext.current
+
     LaunchedEffect(state.event) {
-        when (state.event.value()) {
-            AuthEvent.Success -> { navigation(AuthNavigation.Success) }
-            AuthEvent.Failed -> { navigation(AuthNavigation.Failed) }
-            AuthEvent.Canceled -> { navigation(AuthNavigation.Dismissed) }
-            AuthEvent.SignOut -> { navigation(AuthNavigation.SignOut) }
-            AuthEvent.ForceSignOut -> { navigation(AuthNavigation.ForceSignOut) }
-            else -> {}
+        when (state.event) {
+            AuthEvent.Success -> navigation(AuthNavigation.Success)
+            AuthEvent.Failed -> navigation(AuthNavigation.Failed)
+            AuthEvent.Canceled -> navigation(AuthNavigation.Dismissed)
+            AuthEvent.SignOut -> navigation(AuthNavigation.SignOut)
+            AuthEvent.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
+            AuthEvent.EnterPin -> navigation(AuthNavigation.EnterPin)
+            AuthEvent.Unknown -> {}
         }
         viewModel.clearEvent()
     }
 
-    val ctx = LocalContext.current
     LaunchedEffect(Unit) {
         viewModel.init(ContextHolder.fromContext(ctx))
     }
@@ -57,18 +59,11 @@ fun AuthScreen(
         canLogout = canLogout,
         onEvent = {
             when (it) {
-                is AuthUiEvent.OnPasswordUpdate -> {
-                    viewModel.onPasswordChanged(it.value)
-                }
-                AuthUiEvent.OnPasswordSubmit -> {
-                    viewModel.onSubmit()
-                }
-                AuthUiEvent.OnSignOut -> {
-                    viewModel.onSignOut()
-                }
-                is AuthUiEvent.OnTogglePasswordVisibility -> {
+                is AuthUiEvent.OnPasswordUpdate -> viewModel.onPasswordChanged(it.value)
+                AuthUiEvent.OnPasswordSubmit -> viewModel.onSubmit()
+                AuthUiEvent.OnSignOut -> viewModel.onSignOut()
+                is AuthUiEvent.OnTogglePasswordVisibility ->
                     viewModel.onTogglePasswordVisibility(it.value)
-                }
             }
         }
     )

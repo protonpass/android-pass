@@ -29,6 +29,8 @@ sealed interface AuthEvent {
     object Canceled : AuthEvent
     object SignOut : AuthEvent
     object ForceSignOut : AuthEvent
+    object EnterPin : AuthEvent
+    object Unknown : AuthEvent
 }
 
 sealed interface AuthError {
@@ -63,12 +65,12 @@ data class AuthContent(
 
 @Stable
 data class AuthState(
-    val event: Option<AuthEvent>,
+    val event: AuthEvent,
     val content: AuthContent
 ) {
     companion object {
         val Initial = AuthState(
-            event = None,
+            event = AuthEvent.Unknown,
             content = AuthContent.default("")
         )
     }

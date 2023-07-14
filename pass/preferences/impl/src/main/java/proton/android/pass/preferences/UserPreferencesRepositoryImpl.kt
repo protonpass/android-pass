@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
 import javax.inject.Inject
@@ -35,14 +36,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     private val inMemoryPreferences: InMemoryPreferences
 ) : UserPreferencesRepository {
 
-    override suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit> =
+    override fun setBiometricLockState(state: BiometricLockState): Result<Unit> =
         runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setBiometricLock(state.value().toBooleanPrefProto())
-                    .build()
+            runBlocking {
+                dataStore.updateData {
+                    it.toBuilder()
+                        .setBiometricLock(state.value().toBooleanPrefProto())
+                        .build()
+                }
             }
-            return@runCatching
         }
 
     override fun getBiometricLockState(): Flow<BiometricLockState> =
@@ -52,14 +54,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 BiometricLockState.from(fromBooleanPrefProto(preferences.biometricLock))
             }
 
-    override suspend fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> = runCatching {
-        inMemoryPreferences.set(HasAuthenticated::class.java.name, state.value())
-        dataStore.updateData {
-            it.toBuilder()
-                .setHasAuthenticatedWithBiometry(state.value().toBooleanPrefProto())
-                .build()
+    override fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> = runCatching {
+        runBlocking {
+            inMemoryPreferences.set(HasAuthenticated::class.java.name, state.value())
+            dataStore.updateData {
+                it.toBuilder()
+                    .setHasAuthenticatedWithBiometry(state.value().toBooleanPrefProto())
+                    .build()
+            }
         }
-        return@runCatching
     }
 
     override fun getHasAuthenticated(): Flow<HasAuthenticated> =
@@ -71,14 +74,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                     ?: HasAuthenticated.from(fromBooleanPrefProto(preferences.hasAuthenticatedWithBiometry))
             }
 
-    override suspend fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> =
+    override fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> =
         runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setCompletedOnboarding(state.value().toBooleanPrefProto())
-                    .build()
+            runBlocking {
+                dataStore.updateData {
+                    it.toBuilder()
+                        .setCompletedOnboarding(state.value().toBooleanPrefProto())
+                        .build()
+                }
             }
-            return@runCatching
         }
 
     override fun getHasCompletedOnBoarding(): Flow<HasCompletedOnBoarding> =
@@ -88,14 +92,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 HasCompletedOnBoarding.from(fromBooleanPrefProto(preferences.completedOnboarding))
             }
 
-    override suspend fun setThemePreference(theme: ThemePreference): Result<Unit> =
+    override fun setThemePreference(theme: ThemePreference): Result<Unit> =
         runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setThemeValue(theme.value())
-                    .build()
+            runBlocking {
+                dataStore.updateData {
+                    it.toBuilder()
+                        .setThemeValue(theme.value())
+                        .build()
+                }
             }
-            return@runCatching
         }
 
     override fun getThemePreference(): Flow<ThemePreference> =
@@ -105,14 +110,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 ThemePreference.from(preferences.themeValue)
             }
 
-    override suspend fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit> =
+    override fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit> =
         runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setHasDismissedAutofillBanner(state.value().toBooleanPrefProto())
-                    .build()
+            runBlocking {
+                dataStore.updateData {
+                    it.toBuilder()
+                        .setHasDismissedAutofillBanner(state.value().toBooleanPrefProto())
+                        .build()
+                }
             }
-            return@runCatching
         }
 
     override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> =
@@ -122,14 +128,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 HasDismissedAutofillBanner.from(fromBooleanPrefProto(preferences.hasDismissedAutofillBanner))
             }
 
-    override suspend fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> =
+    override fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> =
         runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setCopyTotpToClipboardEnabled(state.value().toBooleanPrefProto())
-                    .build()
+            runBlocking {
+                dataStore.updateData {
+                    it.toBuilder()
+                        .setCopyTotpToClipboardEnabled(state.value().toBooleanPrefProto())
+                        .build()
+                }
             }
-            return@runCatching
         }
 
     override fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard> =
@@ -144,15 +151,16 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 )
             }
 
-    override suspend fun setClearClipboardPreference(
+    override fun setClearClipboardPreference(
         clearClipboard: ClearClipboardPreference
     ): Result<Unit> = runCatching {
-        dataStore.updateData {
-            it.toBuilder()
-                .setClearClipboardAfterValue(clearClipboard.value())
-                .build()
+        runBlocking {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setClearClipboardAfterValue(clearClipboard.value())
+                    .build()
+            }
         }
-        return@runCatching
     }
 
     override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> =
@@ -162,15 +170,16 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 ClearClipboardPreference.from(preferences.clearClipboardAfterValue)
             }
 
-    override suspend fun setUseFaviconsPreference(
+    override fun setUseFaviconsPreference(
         useFavicons: UseFaviconsPreference
     ): Result<Unit> = runCatching {
-        dataStore.updateData {
-            it.toBuilder()
-                .setUseFavicons(useFavicons.value().toBooleanPrefProto())
-                .build()
+        runBlocking {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setUseFavicons(useFavicons.value().toBooleanPrefProto())
+                    .build()
+            }
         }
-        return@runCatching
     }
 
     override fun getUseFaviconsPreference(): Flow<UseFaviconsPreference> =
@@ -185,15 +194,16 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 )
             }
 
-    override suspend fun setAppLockTimePreference(
+    override fun setAppLockTimePreference(
         preference: AppLockTimePreference
     ): Result<Unit> = runCatching {
-        dataStore.updateData {
-            it.toBuilder()
-                .setLockApp(preference.toProto())
-                .build()
+        runBlocking {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLockApp(preference.toProto())
+                    .build()
+            }
         }
-        return@runCatching
     }
 
     override fun getAppLockTimePreference(): Flow<AppLockTimePreference> =
@@ -203,14 +213,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 preferences.lockApp.toValue(default = AppLockTimePreference.InTwoMinutes)
             }
 
-    override suspend fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit> =
+    override fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit> =
         runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppLockType(preference.toProto())
-                    .build()
+            runBlocking {
+                dataStore.updateData {
+                    it.toBuilder()
+                        .setAppLockType(preference.toProto())
+                        .build()
+                }
             }
-            return@runCatching
         }
 
     override fun getAppLockTypePreference(): Flow<AppLockTypePreference> =
@@ -220,14 +231,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 preferences.appLockType.toValue(default = AppLockTypePreference.Biometrics)
             }
 
-    override suspend fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit> =
+    override fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit> =
         runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setBiometricSystemLock(preference.value().toBooleanPrefProto())
-                    .build()
+            runBlocking {
+                dataStore.updateData {
+                    it.toBuilder()
+                        .setBiometricSystemLock(preference.value().toBooleanPrefProto())
+                        .build()
+                }
             }
-            return@runCatching
         }
 
     override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> =
@@ -242,15 +254,16 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 )
             }
 
-    override suspend fun setPasswordGenerationPreference(
+    override fun setPasswordGenerationPreference(
         preference: PasswordGenerationPreference
     ): Result<Unit> = runCatching {
-        dataStore.updateData {
-            it.toBuilder()
-                .setPasswordGeneration(preference.toProto())
-                .build()
+        runBlocking {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setPasswordGeneration(preference.toProto())
+                    .build()
+            }
         }
-        return@runCatching
     }
 
     override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> =
@@ -261,14 +274,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             }
 
 
-    override suspend fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> =
+    override fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> =
         runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setHasDismissedTrialBanner(state.value().toBooleanPrefProto())
-                    .build()
+            runBlocking {
+                dataStore.updateData {
+                    it.toBuilder()
+                        .setHasDismissedTrialBanner(state.value().toBooleanPrefProto())
+                        .build()
+                }
             }
-            return@runCatching
         }
 
     override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> =
@@ -278,15 +292,17 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 HasDismissedTrialBanner.from(fromBooleanPrefProto(preferences.hasDismissedTrialBanner))
             }
 
-    override suspend fun setAllowScreenshotsPreference(state: AllowScreenshotsPreference): Result<Unit> =
-        runCatching {
+    override fun setAllowScreenshotsPreference(
+        preference: AllowScreenshotsPreference
+    ): Result<Unit> = runCatching {
+        runBlocking {
             dataStore.updateData {
                 it.toBuilder()
-                    .setAllowScreenshots(state.value().toBooleanPrefProto())
+                    .setAllowScreenshots(preference.value().toBooleanPrefProto())
                     .build()
             }
-            return@runCatching
         }
+    }
 
     override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> =
         dataStore.data
@@ -297,22 +313,23 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 )
             }
 
-    override suspend fun clearPreferences(): Result<Unit> =
+    override fun clearPreferences(): Result<Unit> =
         runCatching {
-            dataStore.updateData {
-                it.toBuilder()
-                    .clear()
-                    .build()
+            runBlocking {
+                dataStore.updateData {
+                    it.toBuilder()
+                        .clear()
+                        .build()
+                }
             }
-            return@runCatching
         }
 
-    private suspend fun FlowCollector<UserPreferences>.handleExceptions(
+    private fun FlowCollector<UserPreferences>.handleExceptions(
         exception: Throwable
     ) {
         if (exception is IOException) {
             PassLogger.e("Cannot read preferences.", exception)
-            emit(UserPreferences.getDefaultInstance())
+            runBlocking { emit(UserPreferences.getDefaultInstance()) }
         } else {
             throw exception
         }

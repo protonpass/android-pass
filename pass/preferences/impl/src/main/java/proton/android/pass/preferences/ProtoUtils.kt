@@ -81,6 +81,7 @@ fun LockAppPrefProto.toValue(default: AppLockTimePreference) = when (this) {
 fun AppLockTypePreference.toProto() = when (this) {
     AppLockTypePreference.Biometrics -> AppLockTypePrefProto.APP_LOCK_TYPE_BIOMETRICS
     AppLockTypePreference.Pin -> AppLockTypePrefProto.APP_LOCK_TYPE_PIN
+    AppLockTypePreference.None -> AppLockTypePrefProto.APP_LOCK_TYPE_UNSPECIFIED
 }
 
 fun AppLockTypePrefProto.toValue(default: AppLockTypePreference) = when (this) {

@@ -22,7 +22,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AppLockTimePreference
-import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.HasAuthenticated
 
 sealed interface NeedsAuthResult {
@@ -53,7 +53,7 @@ object NeedsAuthChecker {
 
     @Suppress("ReturnCount", "LongParameterList")
     fun needsAuth(
-        biometricLock: BiometricLockState,
+        biometricLock: AppLockState,
         hasAuthenticated: HasAuthenticated,
         appLockTimePreference: AppLockTimePreference,
         lastUnlockTime: Option<Long>,
@@ -62,7 +62,7 @@ object NeedsAuthChecker {
         bootCount: Long
     ): NeedsAuthResult {
         // Check for biometric lock. If it's disabled, no auth is needed.
-        if (biometricLock is BiometricLockState.Disabled) {
+        if (biometricLock is AppLockState.Disabled) {
             PassLogger.d(TAG, "BiometricStateLock.Disabled, no need to auth")
             return NoNeedsAuthReason.BiometricDisabled
         }

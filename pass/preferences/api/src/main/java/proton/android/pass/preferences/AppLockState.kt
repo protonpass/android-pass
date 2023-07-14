@@ -18,19 +18,19 @@
 
 package proton.android.pass.preferences
 
-sealed interface BiometricLockState {
-    object Enabled : BiometricLockState
-    object Disabled : BiometricLockState
+sealed interface AppLockState {
+    object Enabled : AppLockState
+    object Disabled : AppLockState
 
     companion object {
-        fun from(value: Boolean): BiometricLockState = if (value) { Enabled } else { Disabled }
+        fun from(value: Boolean): AppLockState = if (value) { Enabled } else { Disabled }
     }
 }
 
-fun BiometricLockState.value(): Boolean =
+fun AppLockState.value(): Boolean =
     when (this) {
-        BiometricLockState.Enabled -> true
-        BiometricLockState.Disabled -> false
+        AppLockState.Enabled -> true
+        AppLockState.Disabled -> false
     }
 
 

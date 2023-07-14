@@ -27,8 +27,8 @@ import javax.inject.Singleton
 @Singleton
 class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository {
 
-    private val biometricLockState =
-        MutableStateFlow<BiometricLockState>(BiometricLockState.Disabled)
+    private val appLockState =
+        MutableStateFlow<AppLockState>(AppLockState.Disabled)
     private val themePreference = MutableStateFlow(ThemePreference.Dark)
 
     private val hasAuthenticated =
@@ -64,12 +64,12 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         )
     )
 
-    override fun setBiometricLockState(state: BiometricLockState): Result<Unit> {
-        biometricLockState.tryEmit(state)
+    override fun setAppLockState(state: AppLockState): Result<Unit> {
+        appLockState.tryEmit(state)
         return Result.success(Unit)
     }
 
-    override fun getBiometricLockState(): Flow<BiometricLockState> = biometricLockState
+    override fun getAppLockState(): Flow<AppLockState> = appLockState
 
     override fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> {
         hasAuthenticated.tryEmit(state)

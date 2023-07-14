@@ -45,7 +45,7 @@ import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.Erro
 import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.FingerprintLockEnabled
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -184,8 +184,8 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     private suspend fun saveBiometricLockStateFlag() {
-        PassLogger.d(TAG, "Changing BiometricLock to ${BiometricLockState.Enabled}")
-        preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+        PassLogger.d(TAG, "Changing BiometricLock to ${AppLockState.Enabled}")
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
             .onSuccess {
                 snackbarDispatcher(FingerprintLockEnabled)
             }

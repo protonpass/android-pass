@@ -234,6 +234,20 @@ class CreateAliasViewModelTest {
         }
     }
 
+    @Test
+    fun `onPrefixChange does not allow emojis`() = runTest {
+        viewModel = createAliasViewModel()
+        setupAliasOptions()
+        val firstPrefix = "someprefix"
+        viewModel.onPrefixChange(firstPrefix)
+        val titleInput = "$firstPrefix😀"
+        viewModel.onPrefixChange(titleInput)
+        viewModel.createAliasUiState.test {
+            val item = awaitItem()
+            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo(firstPrefix)
+        }
+    }
+
     private fun createAliasViewModel(title: String? = null, isDraft: Boolean = false) =
         CreateAliasViewModel(
             accountManager = TestAccountManager().apply {

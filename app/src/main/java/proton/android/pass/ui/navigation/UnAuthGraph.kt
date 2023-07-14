@@ -26,13 +26,17 @@ import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
+import proton.android.pass.featureauth.impl.EnterPin
+import proton.android.pass.featureauth.impl.EnterPinBottomsheet
+import proton.android.pass.featureauth.impl.EnterPinNavigation
 import proton.android.pass.navigation.api.AppNavigator
+import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
 import proton.android.pass.ui.AppNavigation
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.authAppGraph(
+fun NavGraphBuilder.unAuthGraph(
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit
 ) {
@@ -47,12 +51,10 @@ fun NavGraphBuilder.authAppGraph(
                     AuthNavigation.Success,
                     AuthNavigation.Failed -> {
                     }
-                    AuthNavigation.SignOut -> {
-                        appNavigator.navigate(SignOutDialog)
-                    }
-                    AuthNavigation.ForceSignOut -> {
-                        onNavigate(AppNavigation.SignOut(null))
-                    }
+
+                    AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
+                    AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
+                    AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
                 }
             }
         )
@@ -68,6 +70,17 @@ fun NavGraphBuilder.authAppGraph(
                     AccountNavigation.SignOut -> {}
                     AccountNavigation.Subscription -> {}
                     AccountNavigation.Upgrade -> {}
+                }
+            }
+        )
+    }
+
+    bottomSheet(EnterPin) {
+        EnterPinBottomsheet(
+            onNavigate = {
+                when (it) {
+                    EnterPinNavigation.Success -> appNavigator.onBackClick()
+                    EnterPinNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
                 }
             }
         )

@@ -57,8 +57,6 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.core.presentation)
-    implementation(libs.core.presentation.compose)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)
@@ -70,6 +68,7 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.notifications.api)
     implementation(projects.pass.log.api)
 
     implementation(libs.dagger.hilt.android)

@@ -18,14 +18,17 @@
 
 package proton.android.pass.preferences
 
+private const val NONE = 0
 private const val BIOMETRICS = 1
 private const val PIN = 2
 
 enum class AppLockTypePreference {
+    None,
     Biometrics,
     Pin;
 
     fun value(): Int = when (this) {
+        None -> NONE
         Biometrics -> BIOMETRICS
         Pin -> PIN
     }
@@ -34,7 +37,7 @@ enum class AppLockTypePreference {
         fun from(value: Int): AppLockTypePreference = when (value) {
             BIOMETRICS -> Biometrics
             PIN -> Pin
-            else -> Biometrics
+            else -> None
         }
     }
 }

@@ -32,7 +32,7 @@ class NeedsBiometricAuthImpl @Inject constructor(
 ) : NeedsBiometricAuth {
 
     override fun invoke(): Flow<Boolean> = combine(
-        preferencesRepository.getBiometricLockState().distinctUntilChanged(),
+        preferencesRepository.getAppLockState().distinctUntilChanged(),
         preferencesRepository.getHasAuthenticated().distinctUntilChanged(),
         preferencesRepository.getAppLockTimePreference().distinctUntilChanged(),
         authTimeHolder.getBiometryAuthData().distinctUntilChanged()

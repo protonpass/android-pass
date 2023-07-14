@@ -146,7 +146,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 }
 
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
-                    appNavigator.onBackClick()
+                    appNavigator.onBackClick(comesFromBottomsheet = true)
                 }
 
                 // Updates cannot happen
@@ -163,7 +163,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
             when (it) {
                 GeneratePasswordNavigation.CloseDialog -> appNavigator.onBackClick()
                 GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
-                    appNavigator.onBackClick()
+                    appNavigator.onBackClick(comesFromBottomsheet = true)
                 }
 
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
@@ -198,7 +198,11 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 VaultNavigation.Close -> appNavigator.onBackClick()
                 VaultNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
-                    appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
+                    appNavigator.navigateUpWithResult(
+                        key = KEY_VAULT_SELECTED,
+                        value = it.shareId.id,
+                        comesFromBottomsheet = true
+                    )
                 }
 
                 is VaultNavigation.VaultEdit -> {}

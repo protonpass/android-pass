@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -36,7 +37,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<InternalSettings>
 ) : InternalSettingsRepository {
 
-    override suspend fun setLastUnlockedTime(time: Long): Result<Unit> = setPreference {
+    override fun setLastUnlockedTime(time: Long): Result<Unit> = setPreference {
         it.setLastUnlockTime(time)
     }
 
@@ -48,7 +49,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setBootCount(count: Long): Result<Unit> = setPreference {
+    override fun setBootCount(count: Long): Result<Unit> = setPreference {
         it.setBootCount(count)
     }
 
@@ -60,7 +61,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setDeclinedUpdateVersion(
+    override fun setDeclinedUpdateVersion(
         versionDeclined: String
     ): Result<Unit> = setPreference { it.setDeclinedUpdateVersion(versionDeclined) }
 
@@ -68,7 +69,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         it.declinedUpdateVersion
     }
 
-    override suspend fun setHomeSortingOption(
+    override fun setHomeSortingOption(
         sortingOption: SortingOptionPreference
     ): Result<Unit> = setPreference { it.setHomeSortingOption(sortingOption.value()) }
 
@@ -76,7 +77,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         SortingOptionPreference.fromValue(it.homeSortingOption)
     }
 
-    override suspend fun setAutofillSortingOption(
+    override fun setAutofillSortingOption(
         sortingOption: SortingOptionPreference
     ): Result<Unit> = setPreference { it.setAutofillSortingOption(sortingOption.value()) }
 
@@ -84,7 +85,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         .catch { exception -> handleExceptions(exception) }
         .map { settings -> SortingOptionPreference.fromValue(settings.autofillSortingOption) }
 
-    override suspend fun setSelectedVault(
+    override fun setSelectedVault(
         selectedVault: SelectedVaultPreference
     ): Result<Unit> = setPreference { it.setSelectedVault(selectedVault.value()) }
 
@@ -92,7 +93,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         SelectedVaultPreference.fromValue(it.selectedVault)
     }
 
-    override suspend fun setPinAttemptsCount(count: Int): Result<Unit> = setPreference {
+    override fun setPinAttemptsCount(count: Int): Result<Unit> = setPreference {
         it.setPinAttempts(count)
     }
 
@@ -102,17 +103,19 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         it.masterPasswordAttempts
     }
 
-    override suspend fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> = setPreference {
+    override fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> = setPreference {
         it.setMasterPasswordAttempts(count)
     }
 
-    override suspend fun clearSettings(): Result<Unit> = setPreference { it.clear() }
+    override fun clearSettings(): Result<Unit> = setPreference { it.clear() }
 
-    private suspend fun setPreference(
+    private fun setPreference(
         mapper: (InternalSettings.Builder) -> InternalSettings.Builder
     ): Result<Unit> = runCatching {
-        dataStore.updateData {
-            mapper(it.toBuilder()).build()
+        runBlocking {
+            dataStore.updateData {
+                mapper(it.toBuilder()).build()
+            }
         }
         return@runCatching
     }
@@ -121,12 +124,12 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         .catch { exception -> handleExceptions(exception) }
         .map { settings -> mapper(settings) }
 
-    private suspend fun FlowCollector<InternalSettings>.handleExceptions(
+    private fun FlowCollector<InternalSettings>.handleExceptions(
         exception: Throwable
     ) {
         if (exception is IOException) {
             PassLogger.e("Cannot read preferences.", exception)
-            emit(InternalSettings.getDefaultInstance())
+            runBlocking { emit(InternalSettings.getDefaultInstance()) }
         } else {
             throw exception
         }

@@ -43,7 +43,8 @@ class TotpManagerImpl @Inject constructor(
 ) : TotpManager {
 
     override fun generateUri(spec: TotpSpec): String {
-        val builder = OtpAuthUriBuilder.forTotp(spec.secret.encodeToByteArray())
+        val secret = sanitizeSecret(spec.secret).encodeToByteArray()
+        val builder = OtpAuthUriBuilder.forTotp(secret)
 
         val labelWithoutTrailingSlashes = spec.label.replace(TRAILING_SLASH_REGEX, "")
 
@@ -61,9 +62,10 @@ class TotpManagerImpl @Inject constructor(
     }
 
     @Suppress("MagicNumber")
-    override fun generateUriWithDefaults(secret: String): Result<String> =
-        if (secret.matches(Regex("^[a-zA-Z0-9]+"))) {
-            val uri = OtpAuthUriBuilder.forTotp(secret.encodeToByteArray())
+    override fun generateUriWithDefaults(secret: String): Result<String> {
+        val sanitized = sanitizeSecret(secret)
+        return if (sanitized.matches(Regex("^[a-zA-Z0-9]+"))) {
+            val uri = OtpAuthUriBuilder.forTotp(sanitized.encodeToByteArray())
                 .digits(6)
                 .algorithm(HmacAlgorithm.SHA1)
                 .period(30, TimeUnit.SECONDS)
@@ -73,6 +75,7 @@ class TotpManagerImpl @Inject constructor(
         } else {
             Result.failure(IllegalArgumentException("Secret must be base32 encoded"))
         }
+    }
 
     override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> {
         val config = TimeBasedOneTimePasswordConfig(
@@ -85,7 +88,9 @@ class TotpManagerImpl @Inject constructor(
                 TotpAlgorithm.Sha512 -> HmacAlgorithm.SHA512
             }
         )
-        val generator = TimeBasedOneTimePasswordGenerator(Base32().decode(spec.secret), config)
+        val sanitizedSecret = sanitizeSecret(spec.secret)
+
+        val generator = TimeBasedOneTimePasswordGenerator(Base32().decode(sanitizedSecret), config)
         return flow {
             while (currentCoroutineContext().isActive) {
                 val startTimestamp = clock.now().toJavaInstant().toEpochMilli()
@@ -109,6 +114,8 @@ class TotpManagerImpl @Inject constructor(
     }
 
     override fun parse(uri: String): Result<TotpSpec> = OtpUriParser.parse(uri)
+
+    private fun sanitizeSecret(secret: String) = secret.replace(" ", "")
 
     companion object {
         private const val ONE_SECOND_MILLISECONDS = 1000L

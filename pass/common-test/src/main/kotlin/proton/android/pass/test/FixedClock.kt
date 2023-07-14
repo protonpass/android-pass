@@ -21,6 +21,10 @@ package proton.android.pass.test
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
-class FixedClock(val instant: Instant) : Clock {
+class FixedClock(var instant: Instant) : Clock {
     override fun now(): Instant = instant
+
+    fun updateInstant(value: Instant) {
+        instant = value
+    }
 }

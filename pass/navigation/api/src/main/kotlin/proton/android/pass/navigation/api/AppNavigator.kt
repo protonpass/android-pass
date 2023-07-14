@@ -49,7 +49,7 @@ class AppNavigator(
         if (!lifecycleIsResumed() && !destination.isBottomsheet) {
             PassLogger.d(
                 TAG,
-                "Navigation event discarded as it was duplicated. " +
+                "Navigate: Navigation event discarded as it was duplicated. " +
                     "Current: ${navController.currentBackStackEntry?.destination?.route} | " +
                     "Destination: ${destination.route}"
             )
@@ -95,17 +95,17 @@ class AppNavigator(
     fun hasDestinationInStack(destination: NavItem): Boolean =
         navController.currentBackStack.value.any { it.destination.route == destination.route }
 
-    fun popUpTo(destination: NavItem) {
-        if (!lifecycleIsResumed()) {
-            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+    fun popUpTo(destination: NavItem, comesFromBottomsheet: Boolean = false) {
+        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
+            PassLogger.d(TAG, "PopUpTo: Navigation event discarded as it was duplicated.")
             return
         }
         navController.popBackStack(route = destination.route, inclusive = false, saveState = false)
     }
 
-    fun onBackClick() {
-        if (!lifecycleIsResumed()) {
-            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+    fun onBackClick(comesFromBottomsheet: Boolean = false) {
+        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
+            PassLogger.d(TAG, "OnBackClick: Navigation event discarded as it was duplicated.")
             return
         }
         PassLogger.i(
@@ -115,9 +115,9 @@ class AppNavigator(
         navController.popBackStack()
     }
 
-    fun navigateUpWithResult(key: String, value: Any) {
-        if (!lifecycleIsResumed()) {
-            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+    fun navigateUpWithResult(key: String, value: Any, comesFromBottomsheet: Boolean = false) {
+        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
+            PassLogger.d(TAG, "NavigateUpWithResult: Navigation event discarded as it was duplicated.")
             return
         }
         navController.previousBackStackEntry
@@ -126,9 +126,9 @@ class AppNavigator(
         navController.popBackStack()
     }
 
-    fun navigateUpWithResult(values: Map<String, Any>) {
-        if (!lifecycleIsResumed()) {
-            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+    fun navigateUpWithResult(values: Map<String, Any>, comesFromBottomsheet: Boolean = false) {
+        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
+            PassLogger.d(TAG, "NavigateUpWithResult: Navigation event discarded as it was duplicated.")
             return
         }
         navController.previousBackStackEntry

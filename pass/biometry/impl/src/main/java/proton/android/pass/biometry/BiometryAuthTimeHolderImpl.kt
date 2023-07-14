@@ -20,7 +20,6 @@ package proton.android.pass.biometry
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.common.api.Some
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -39,22 +38,20 @@ class BiometryAuthTimeHolderImpl @Inject constructor(
     )
 
     override fun storeBiometryAuthData(data: AuthData) {
-        runBlocking {
-            val authTime = data.authTime
-            if (authTime is Some) {
-                internalSettingsRepository.setLastUnlockedTime(authTime.value)
-                    .onFailure {
-                        PassLogger.w(TAG, it, "Error storing last unlocked time")
-                    }
-            }
-
-            val bootCount = data.bootCount
-            if (bootCount is Some)
-                internalSettingsRepository.setBootCount(bootCount.value)
-                    .onFailure {
-                        PassLogger.w(TAG, it, "Error storing boot count")
-                    }
+        val authTime = data.authTime
+        if (authTime is Some) {
+            internalSettingsRepository.setLastUnlockedTime(authTime.value)
+                .onFailure {
+                    PassLogger.w(TAG, it, "Error storing last unlocked time")
+                }
         }
+
+        val bootCount = data.bootCount
+        if (bootCount is Some)
+            internalSettingsRepository.setBootCount(bootCount.value)
+                .onFailure {
+                    PassLogger.w(TAG, it, "Error storing boot count")
+                }
     }
 
     companion object {

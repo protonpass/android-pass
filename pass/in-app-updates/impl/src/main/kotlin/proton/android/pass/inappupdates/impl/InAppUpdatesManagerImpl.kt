@@ -106,9 +106,7 @@ class InAppUpdatesManagerImpl @Inject constructor(
     override fun observeInAppUpdateState(): Flow<InAppUpdateState> = inAppUpdateState
 
     override fun declineUpdate() {
-        runBlocking {
-            internalSettingsRepository.setDeclinedUpdateVersion(availableVersionCode.value)
-        }
+        internalSettingsRepository.setDeclinedUpdateVersion(availableVersionCode.value)
     }
 
     override fun tearDown() {

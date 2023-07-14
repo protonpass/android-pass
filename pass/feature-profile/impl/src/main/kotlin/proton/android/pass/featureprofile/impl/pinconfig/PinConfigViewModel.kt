@@ -51,11 +51,13 @@ class PinConfigViewModel @Inject constructor(
     val state: StateFlow<PinConfigUiState> = _state
 
     fun onEnterPin(value: String) {
+        _state.update { it.copy(validationErrors = persistentSetOf()) }
         val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(MAX_PIN_LENGTH)
         _state.update { it.copy(pin = sanitisedValue) }
     }
 
     fun onRepeatPin(value: String) {
+        _state.update { it.copy(validationErrors = persistentSetOf()) }
         val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(MAX_PIN_LENGTH)
         _state.update { it.copy(repeatPin = sanitisedValue) }
     }

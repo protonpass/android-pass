@@ -21,7 +21,6 @@ package proton.android.pass.featureitemdetail.impl
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import org.junit.Before
@@ -67,9 +66,7 @@ class ItemDetailViewModelTest {
             telemetryManager = telemetryManager,
             getItemById = getItemById,
             userPreferenceRepository = TestPreferenceRepository().apply {
-                runBlocking {
-                    setUseFaviconsPreference(UseFaviconsPreference.Disabled)
-                }
+                setUseFaviconsPreference(UseFaviconsPreference.Disabled)
             },
             savedStateHandle = TestSavedStateHandleProvider().apply {
                 get().set(CommonNavArgId.ShareId.key, SHARE_ID)

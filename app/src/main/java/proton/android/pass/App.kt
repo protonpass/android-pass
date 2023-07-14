@@ -22,7 +22,6 @@ import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -42,8 +41,6 @@ class App : Application(), ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         MainInitializer.init(this)
-        runBlocking {
-            preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
-        }
+        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
     }
 }

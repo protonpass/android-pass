@@ -45,6 +45,8 @@
     <string name="configure_pin_repeat_pin_code">Repeat Pin code</string>
     <string name="configure_pin_continue">Continue</string>
     <string name="configure_pin_pin_does_not_match">The pin does not match</string>
+    <string name="configure_pin_pin_too_short">The pin is too short</string>
     <string name="configure_pin_pin_cannot_be_blank">The pin cannot be blank</string>
+    <string name="configure_pin_pin_lock_enabled">Pin lock enabled</string>
 
 </resources>

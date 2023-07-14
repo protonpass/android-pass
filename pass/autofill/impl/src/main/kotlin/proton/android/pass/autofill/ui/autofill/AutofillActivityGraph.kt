@@ -40,6 +40,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.featureauth.impl.AuthNavigation
+import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
@@ -94,7 +95,6 @@ fun NavGraphBuilder.autofillActivityGraph(
         navigation = {
             when (it) {
                 AuthNavigation.Back -> onNavigate(AutofillNavigation.Cancel)
-
                 AuthNavigation.Success -> if (selectedAutofillItem != null) {
                     onAutofillItemReceived(selectedAutofillItem)
                 } else {
@@ -102,12 +102,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                 }
 
                 AuthNavigation.Dismissed -> onNavigate(AutofillNavigation.Cancel)
-
                 AuthNavigation.Failed -> onNavigate(AutofillNavigation.Cancel)
-
                 AuthNavigation.SignOut -> {}
-
                 AuthNavigation.ForceSignOut -> onNavigate(AutofillNavigation.ForceSignOut)
+                AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
             }
         }
     )
@@ -115,10 +113,7 @@ fun NavGraphBuilder.autofillActivityGraph(
         state = autofillAppState,
         onNavigate = {
             when (it) {
-                SelectItemNavigation.AddItem -> {
-                    appNavigator.navigate(CreateItemBottomsheet)
-                }
-
+                SelectItemNavigation.AddItem -> appNavigator.navigate(CreateItemBottomsheet)
                 SelectItemNavigation.Cancel -> onNavigate(AutofillNavigation.Cancel)
                 is SelectItemNavigation.ItemSelected -> onNavigate(AutofillNavigation.Selected(it.autofillMappings))
                 is SelectItemNavigation.SortingBottomsheet ->

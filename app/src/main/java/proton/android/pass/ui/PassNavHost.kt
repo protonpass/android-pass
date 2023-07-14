@@ -27,7 +27,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.navigation.appGraph
-import proton.android.pass.ui.navigation.authAppGraph
+import proton.android.pass.ui.navigation.unAuthGraph
 
 @OptIn(
     ExperimentalAnimationApi::class,
@@ -59,7 +59,7 @@ fun PassNavHost(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 @Suppress("LongParameterList")
-fun PassAuthScreenNavHost(
+fun PassUnAuthNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit
@@ -69,7 +69,7 @@ fun PassAuthScreenNavHost(
         navController = appNavigator.navController,
         startDestination = Auth.route
     ) {
-        authAppGraph(
+        unAuthGraph(
             appNavigator = appNavigator,
             onNavigate = onNavigate
         )

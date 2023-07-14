@@ -36,293 +36,163 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     private val inMemoryPreferences: InMemoryPreferences
 ) : UserPreferencesRepository {
 
-    override fun setBiometricLockState(state: BiometricLockState): Result<Unit> =
-        runCatching {
-            runBlocking {
-                dataStore.updateData {
-                    it.toBuilder()
-                        .setBiometricLock(state.value().toBooleanPrefProto())
-                        .build()
-                }
-            }
-        }
-
-    override fun getBiometricLockState(): Flow<BiometricLockState> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                BiometricLockState.from(fromBooleanPrefProto(preferences.biometricLock))
-            }
-
-    override fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> = runCatching {
-        runBlocking {
-            inMemoryPreferences.set(HasAuthenticated::class.java.name, state.value())
-            dataStore.updateData {
-                it.toBuilder()
-                    .setHasAuthenticatedWithBiometry(state.value().toBooleanPrefProto())
-                    .build()
-            }
-        }
+    override fun setBiometricLockState(state: BiometricLockState): Result<Unit> = setPreference {
+        it.setBiometricLock(state.value().toBooleanPrefProto())
     }
 
-    override fun getHasAuthenticated(): Flow<HasAuthenticated> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                inMemoryPreferences.get<Boolean>(HasAuthenticated::class.java.name)
-                    ?.let { HasAuthenticated.from(it) }
-                    ?: HasAuthenticated.from(fromBooleanPrefProto(preferences.hasAuthenticatedWithBiometry))
-            }
+    override fun getBiometricLockState(): Flow<BiometricLockState> = getPreference {
+        BiometricLockState.from(fromBooleanPrefProto(it.biometricLock))
+    }
+
+    override fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> = setPreference {
+        inMemoryPreferences.set(HasAuthenticated::class.java.name, state.value())
+        it.setHasAuthenticatedWithBiometry(state.value().toBooleanPrefProto())
+    }
+
+    override fun getHasAuthenticated(): Flow<HasAuthenticated> = getPreference {
+        inMemoryPreferences.get<Boolean>(HasAuthenticated::class.java.name)
+            ?.let { HasAuthenticated.from(it) }
+            ?: HasAuthenticated.from(fromBooleanPrefProto(it.hasAuthenticatedWithBiometry))
+    }
 
     override fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> =
-        runCatching {
-            runBlocking {
-                dataStore.updateData {
-                    it.toBuilder()
-                        .setCompletedOnboarding(state.value().toBooleanPrefProto())
-                        .build()
-                }
-            }
+        setPreference {
+            it.setCompletedOnboarding(state.value().toBooleanPrefProto())
         }
 
-    override fun getHasCompletedOnBoarding(): Flow<HasCompletedOnBoarding> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                HasCompletedOnBoarding.from(fromBooleanPrefProto(preferences.completedOnboarding))
-            }
+    override fun getHasCompletedOnBoarding(): Flow<HasCompletedOnBoarding> = getPreference {
+        HasCompletedOnBoarding.from(fromBooleanPrefProto(it.completedOnboarding))
+    }
 
-    override fun setThemePreference(theme: ThemePreference): Result<Unit> =
-        runCatching {
-            runBlocking {
-                dataStore.updateData {
-                    it.toBuilder()
-                        .setThemeValue(theme.value())
-                        .build()
-                }
-            }
-        }
+    override fun setThemePreference(theme: ThemePreference): Result<Unit> = setPreference {
+        it.setThemeValue(theme.value())
+    }
 
-    override fun getThemePreference(): Flow<ThemePreference> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                ThemePreference.from(preferences.themeValue)
-            }
+    override fun getThemePreference(): Flow<ThemePreference> = getPreference {
+        ThemePreference.from(it.themeValue)
+    }
 
     override fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit> =
-        runCatching {
-            runBlocking {
-                dataStore.updateData {
-                    it.toBuilder()
-                        .setHasDismissedAutofillBanner(state.value().toBooleanPrefProto())
-                        .build()
-                }
-            }
+        setPreference {
+            it.setHasDismissedAutofillBanner(state.value().toBooleanPrefProto())
         }
 
-    override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                HasDismissedAutofillBanner.from(fromBooleanPrefProto(preferences.hasDismissedAutofillBanner))
-            }
+    override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> = getPreference {
+        HasDismissedAutofillBanner.from(fromBooleanPrefProto(it.hasDismissedAutofillBanner))
+    }
 
     override fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> =
-        runCatching {
-            runBlocking {
-                dataStore.updateData {
-                    it.toBuilder()
-                        .setCopyTotpToClipboardEnabled(state.value().toBooleanPrefProto())
-                        .build()
-                }
-            }
+        setPreference {
+            it.setCopyTotpToClipboardEnabled(state.value().toBooleanPrefProto())
         }
 
-    override fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                CopyTotpToClipboard.from(
-                    fromBooleanPrefProto(
-                        pref = preferences.copyTotpToClipboardEnabled,
-                        default = true
-                    )
-                )
-            }
+    override fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard> = getPreference {
+        CopyTotpToClipboard.from(
+            fromBooleanPrefProto(
+                pref = it.copyTotpToClipboardEnabled,
+                default = true
+            )
+        )
+    }
 
     override fun setClearClipboardPreference(
         clearClipboard: ClearClipboardPreference
-    ): Result<Unit> = runCatching {
-        runBlocking {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setClearClipboardAfterValue(clearClipboard.value())
-                    .build()
-            }
-        }
+    ): Result<Unit> = setPreference {
+        it.setClearClipboardAfterValue(clearClipboard.value())
     }
 
-    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                ClearClipboardPreference.from(preferences.clearClipboardAfterValue)
-            }
+    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> = getPreference {
+        ClearClipboardPreference.from(it.clearClipboardAfterValue)
+    }
 
     override fun setUseFaviconsPreference(
         useFavicons: UseFaviconsPreference
-    ): Result<Unit> = runCatching {
-        runBlocking {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setUseFavicons(useFavicons.value().toBooleanPrefProto())
-                    .build()
-            }
-        }
-    }
+    ): Result<Unit> = setPreference { it.setUseFavicons(useFavicons.value().toBooleanPrefProto()) }
 
-    override fun getUseFaviconsPreference(): Flow<UseFaviconsPreference> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                UseFaviconsPreference.from(
-                    fromBooleanPrefProto(
-                        pref = preferences.useFavicons,
-                        default = true
-                    )
-                )
-            }
+    override fun getUseFaviconsPreference(): Flow<UseFaviconsPreference> = getPreference {
+        UseFaviconsPreference.from(
+            fromBooleanPrefProto(
+                pref = it.useFavicons,
+                default = true
+            )
+        )
+    }
 
     override fun setAppLockTimePreference(
         preference: AppLockTimePreference
-    ): Result<Unit> = runCatching {
-        runBlocking {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLockApp(preference.toProto())
-                    .build()
-            }
-        }
+    ): Result<Unit> = setPreference { it.setLockApp(preference.toProto()) }
+
+    override fun getAppLockTimePreference(): Flow<AppLockTimePreference> = getPreference {
+        it.lockApp.toValue(default = AppLockTimePreference.InTwoMinutes)
     }
 
-    override fun getAppLockTimePreference(): Flow<AppLockTimePreference> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                preferences.lockApp.toValue(default = AppLockTimePreference.InTwoMinutes)
-            }
-
     override fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit> =
-        runCatching {
-            runBlocking {
-                dataStore.updateData {
-                    it.toBuilder()
-                        .setAppLockType(preference.toProto())
-                        .build()
-                }
-            }
-        }
+        setPreference { it.setAppLockType(preference.toProto()) }
 
-    override fun getAppLockTypePreference(): Flow<AppLockTypePreference> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                preferences.appLockType.toValue(default = AppLockTypePreference.Biometrics)
-            }
+    override fun getAppLockTypePreference(): Flow<AppLockTypePreference> = getPreference {
+        it.appLockType.toValue(default = AppLockTypePreference.Biometrics)
+    }
 
-    override fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit> =
-        runCatching {
-            runBlocking {
-                dataStore.updateData {
-                    it.toBuilder()
-                        .setBiometricSystemLock(preference.value().toBooleanPrefProto())
-                        .build()
-                }
-            }
-        }
+    override fun setBiometricSystemLockPreference(
+        preference: BiometricSystemLockPreference
+    ): Result<Unit> = setPreference {
+        it.setBiometricSystemLock(preference.value().toBooleanPrefProto())
+    }
 
     override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                BiometricSystemLockPreference.from(
-                    fromBooleanPrefProto(
-                        pref = preferences.biometricSystemLock,
-                        default = true
-                    )
+        getPreference {
+            BiometricSystemLockPreference.from(
+                fromBooleanPrefProto(
+                    pref = it.biometricSystemLock,
+                    default = true
                 )
-            }
+            )
+        }
 
     override fun setPasswordGenerationPreference(
         preference: PasswordGenerationPreference
-    ): Result<Unit> = runCatching {
-        runBlocking {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setPasswordGeneration(preference.toProto())
-                    .build()
-            }
-        }
-    }
+    ): Result<Unit> = setPreference { it.setPasswordGeneration(preference.toProto()) }
 
     override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                preferences.passwordGeneration.toValue()
-            }
-
-
-    override fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> =
-        runCatching {
-            runBlocking {
-                dataStore.updateData {
-                    it.toBuilder()
-                        .setHasDismissedTrialBanner(state.value().toBooleanPrefProto())
-                        .build()
-                }
-            }
+        getPreference {
+            it.passwordGeneration.toValue()
         }
 
-    override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                HasDismissedTrialBanner.from(fromBooleanPrefProto(preferences.hasDismissedTrialBanner))
-            }
+    override fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> =
+        setPreference {
+            it.setHasDismissedTrialBanner(state.value().toBooleanPrefProto())
+        }
+
+    override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> = getPreference {
+        HasDismissedTrialBanner.from(fromBooleanPrefProto(it.hasDismissedTrialBanner))
+    }
 
     override fun setAllowScreenshotsPreference(
         preference: AllowScreenshotsPreference
+    ): Result<Unit> = setPreference {
+        it.setAllowScreenshots(preference.value().toBooleanPrefProto())
+    }
+
+    override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> = getPreference {
+        AllowScreenshotsPreference.from(fromBooleanPrefProto(it.allowScreenshots))
+    }
+
+    override fun clearPreferences(): Result<Unit> = setPreference { it.clear() }
+
+    private fun setPreference(
+        mapper: (UserPreferences.Builder) -> UserPreferences.Builder
     ): Result<Unit> = runCatching {
         runBlocking {
             dataStore.updateData {
-                it.toBuilder()
-                    .setAllowScreenshots(preference.value().toBooleanPrefProto())
-                    .build()
+                mapper(it.toBuilder()).build()
             }
         }
+        return@runCatching
     }
 
-    override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> =
-        dataStore.data
-            .catch { exception -> handleExceptions(exception) }
-            .map { preferences ->
-                AllowScreenshotsPreference.from(
-                    fromBooleanPrefProto(preferences.allowScreenshots)
-                )
-            }
-
-    override fun clearPreferences(): Result<Unit> =
-        runCatching {
-            runBlocking {
-                dataStore.updateData {
-                    it.toBuilder()
-                        .clear()
-                        .build()
-                }
-            }
-        }
+    private fun <T> getPreference(mapper: (UserPreferences) -> T): Flow<T> = dataStore.data
+        .catch { exception -> handleExceptions(exception) }
+        .map { settings -> mapper(settings) }
 
     private fun FlowCollector<UserPreferences>.handleExceptions(
         exception: Throwable

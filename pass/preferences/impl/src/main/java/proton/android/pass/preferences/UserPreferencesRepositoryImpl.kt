@@ -36,12 +36,12 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     private val inMemoryPreferences: InMemoryPreferences
 ) : UserPreferencesRepository {
 
-    override fun setBiometricLockState(state: BiometricLockState): Result<Unit> = setPreference {
+    override fun setAppLockState(state: AppLockState): Result<Unit> = setPreference {
         it.setBiometricLock(state.value().toBooleanPrefProto())
     }
 
-    override fun getBiometricLockState(): Flow<BiometricLockState> = getPreference {
-        BiometricLockState.from(fromBooleanPrefProto(it.biometricLock))
+    override fun getAppLockState(): Flow<AppLockState> = getPreference {
+        AppLockState.from(fromBooleanPrefProto(it.biometricLock))
     }
 
     override fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> = setPreference {
@@ -130,7 +130,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         setPreference { it.setAppLockType(preference.toProto()) }
 
     override fun getAppLockTypePreference(): Flow<AppLockTypePreference> = getPreference {
-        it.appLockType.toValue(default = AppLockTypePreference.Biometrics)
+        it.appLockType.toValue(default = AppLockTypePreference.None)
     }
 
     override fun setBiometricSystemLockPreference(

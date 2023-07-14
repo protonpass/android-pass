@@ -35,7 +35,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
-import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -80,7 +80,7 @@ class AuthViewModelTest {
 
     @Test
     fun `biometry success with enabled biometry emits success state`() = runTest {
-        preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Success)
 
@@ -93,7 +93,7 @@ class AuthViewModelTest {
     @Test
     fun `biometry preference is respected`() = runTest {
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
-        preferenceRepository.setBiometricLockState(BiometricLockState.Disabled)
+        preferenceRepository.setAppLockState(AppLockState.Disabled)
 
         // Set to failed so we can check it is not called
         biometryManager.emitResult(BiometryResult.Failed)
@@ -129,7 +129,7 @@ class AuthViewModelTest {
 
     @Test
     fun `biometry error cancel emits initial state`() = runTest {
-        preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Canceled))
 
@@ -147,7 +147,7 @@ class AuthViewModelTest {
 
     @Test
     fun `biometry error of any other kind emits failed`() = runTest {
-        preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Unknown))
 
@@ -159,7 +159,7 @@ class AuthViewModelTest {
 
     @Test
     fun `biometry error failed to start emits failed`() = runTest {
-        preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
 
@@ -256,7 +256,7 @@ class AuthViewModelTest {
     }
 
     private suspend fun setBiometryCanceled() {
-        preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Canceled))
         viewModel.init(ContextHolder(None))

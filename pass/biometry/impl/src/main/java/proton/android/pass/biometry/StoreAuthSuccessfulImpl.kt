@@ -18,7 +18,6 @@
 
 package proton.android.pass.biometry
 
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.common.api.some
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -33,9 +32,7 @@ class StoreAuthSuccessfulImpl @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository
 ) : StoreAuthSuccessful {
     override fun invoke() {
-        runBlocking {
-            preferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-        }
+        preferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
         internalSettingsRepository.setMasterPasswordAttemptsCount(0)
         internalSettingsRepository.setPinAttemptsCount(0)
 

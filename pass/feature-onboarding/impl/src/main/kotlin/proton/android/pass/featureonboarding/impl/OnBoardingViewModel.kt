@@ -179,7 +179,7 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    private suspend fun saveHasAuthenticatedFlag() {
+    private fun saveHasAuthenticatedFlag() {
         preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
     }
 
@@ -195,7 +195,7 @@ class OnBoardingViewModel @Inject constructor(
             }
     }
 
-    private suspend fun saveOnBoardingCompleteFlag() {
+    private fun saveOnBoardingCompleteFlag() {
         preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
             .onSuccess {
                 _onBoardingUiState.update { it.copy(isCompleted = true) }

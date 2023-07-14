@@ -65,9 +65,7 @@ class AuthScreenTest {
     @Test
     fun onBiometricLockDisabledAuthSuccessCalled() {
         val checker = CallChecker<Unit>()
-        runBlocking {
-            userPreferencesRepository.setBiometricLockState(BiometricLockState.Disabled)
-        }
+        userPreferencesRepository.setBiometricLockState(BiometricLockState.Disabled)
         composeTestRule.setContent {
             PassTheme {
                 AuthScreen(
@@ -87,8 +85,8 @@ class AuthScreenTest {
     @Test
     fun onBiometricLockEnabledAndBiometricResultSuccessAuthSuccessCalled() {
         val checker = CallChecker<Unit>()
+        userPreferencesRepository.setBiometricLockState(BiometricLockState.Enabled)
         runBlocking {
-            userPreferencesRepository.setBiometricLockState(BiometricLockState.Enabled)
             biometryManager.emitResult(BiometryResult.Success)
         }
         composeTestRule.setContent {
@@ -110,8 +108,8 @@ class AuthScreenTest {
     @Test
     fun onBiometricLockEnabledAndBiometricResultErrorAuthFailedCalled() {
         val checker = CallChecker<Unit>()
+        userPreferencesRepository.setBiometricLockState(BiometricLockState.Enabled)
         runBlocking {
-            userPreferencesRepository.setBiometricLockState(BiometricLockState.Enabled)
             biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.NoBiometrics))
         }
         composeTestRule.setContent {

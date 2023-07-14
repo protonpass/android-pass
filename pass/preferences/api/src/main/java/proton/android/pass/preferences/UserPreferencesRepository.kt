@@ -22,47 +22,47 @@ import kotlinx.coroutines.flow.Flow
 
 @Suppress("TooManyFunctions", "ComplexInterface")
 interface UserPreferencesRepository {
-    suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit>
+    fun setBiometricLockState(state: BiometricLockState): Result<Unit>
     fun getBiometricLockState(): Flow<BiometricLockState>
 
-    suspend fun setHasAuthenticated(state: HasAuthenticated): Result<Unit>
+    fun setHasAuthenticated(state: HasAuthenticated): Result<Unit>
     fun getHasAuthenticated(): Flow<HasAuthenticated>
 
-    suspend fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit>
+    fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit>
     fun getHasCompletedOnBoarding(): Flow<HasCompletedOnBoarding>
 
-    suspend fun setThemePreference(theme: ThemePreference): Result<Unit>
+    fun setThemePreference(theme: ThemePreference): Result<Unit>
     fun getThemePreference(): Flow<ThemePreference>
 
-    suspend fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit>
+    fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit>
     fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner>
 
-    suspend fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit>
+    fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit>
     fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner>
 
-    suspend fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit>
+    fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit>
     fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard>
 
-    suspend fun setClearClipboardPreference(clearClipboard: ClearClipboardPreference): Result<Unit>
+    fun setClearClipboardPreference(clearClipboard: ClearClipboardPreference): Result<Unit>
     fun getClearClipboardPreference(): Flow<ClearClipboardPreference>
 
-    suspend fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit>
+    fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit>
     fun getUseFaviconsPreference(): Flow<UseFaviconsPreference>
 
-    suspend fun setAppLockTimePreference(preference: AppLockTimePreference): Result<Unit>
+    fun setAppLockTimePreference(preference: AppLockTimePreference): Result<Unit>
     fun getAppLockTimePreference(): Flow<AppLockTimePreference>
 
-    suspend fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit>
+    fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit>
     fun getAppLockTypePreference(): Flow<AppLockTypePreference>
 
-    suspend fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit>
+    fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit>
     fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference>
 
-    suspend fun setPasswordGenerationPreference(preference: PasswordGenerationPreference): Result<Unit>
+    fun setPasswordGenerationPreference(preference: PasswordGenerationPreference): Result<Unit>
     fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference>
 
-    suspend fun setAllowScreenshotsPreference(preference: AllowScreenshotsPreference): Result<Unit>
+    fun setAllowScreenshotsPreference(preference: AllowScreenshotsPreference): Result<Unit>
     fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference>
 
-    suspend fun clearPreferences(): Result<Unit>
+    fun clearPreferences(): Result<Unit>
 }

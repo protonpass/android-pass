@@ -33,7 +33,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.components.SingletonComponent
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
 import me.proton.core.domain.entity.UserId
@@ -279,11 +278,9 @@ class HomeScreenTest {
 
     private fun setupWithItems(items: List<Item> = TestObserveItems.defaultValues.asList()) {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
-        runBlocking {
-            preferencesRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
-            preferencesRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
-            preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
-        }
+        preferencesRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
+        preferencesRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
+        preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
 
         val vaults = items
             .map { it.shareId }

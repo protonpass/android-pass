@@ -126,14 +126,24 @@ fun PassAppContent(
                             progress = appUiState.inAppUpdateState.progress
                         )
                     }
-                    PassModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {
-                        if (appUiState.needsAuth) {
-                            BackHandler { onNavigate(AppNavigation.Finish) }
-                            PassAuthScreenNavHost(
-                                appNavigator = rememberAppNavigator(),
+                    if (appUiState.needsAuth) {
+                        BackHandler { onNavigate(AppNavigation.Finish) }
+                        val unAuthBottomSheetState = rememberModalBottomSheetState(
+                            initialValue = ModalBottomSheetValue.Hidden,
+                            skipHalfExpanded = true
+                        )
+                        val unAuthBottomSheetNavigator =
+                            rememberBottomSheetNavigator(unAuthBottomSheetState)
+                        val unAuthAppNavigator =
+                            rememberAppNavigator(unAuthBottomSheetNavigator)
+                        PassModalBottomSheetLayout(unAuthAppNavigator.bottomSheetNavigator) {
+                            PassUnAuthNavHost(
+                                appNavigator = unAuthAppNavigator,
                                 onNavigate = onNavigate
                             )
-                        } else {
+                        }
+                    } else {
+                        PassModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {
                             PassNavHost(
                                 modifier = Modifier.weight(1f),
                                 appNavigator = appNavigator,

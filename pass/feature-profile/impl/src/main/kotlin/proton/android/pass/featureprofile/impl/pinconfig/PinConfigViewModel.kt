@@ -29,9 +29,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.CreatePin
+import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.PinLockEnabled
+import proton.android.pass.featureprofile.impl.pinconfig.PinConfigValidationErrors.PinBlank
+import proton.android.pass.featureprofile.impl.pinconfig.PinConfigValidationErrors.PinDoesNotMatch
+import proton.android.pass.featureprofile.impl.pinconfig.PinConfigValidationErrors.PinTooShort
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -39,29 +43,31 @@ import javax.inject.Inject
 @HiltViewModel
 class PinConfigViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val createPin: CreatePin
+    private val createPin: CreatePin,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<PinConfigUiState> = MutableStateFlow(PinConfigUiState())
     val state: StateFlow<PinConfigUiState> = _state
 
     fun onEnterPin(value: String) {
-        val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(PIN_LENGTH)
+        val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(MAX_PIN_LENGTH)
         _state.update { it.copy(pin = sanitisedValue) }
     }
 
     fun onRepeatPin(value: String) {
-        val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(PIN_LENGTH)
+        val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(MAX_PIN_LENGTH)
         _state.update { it.copy(repeatPin = sanitisedValue) }
     }
 
     fun onSubmit() {
-        _state.update { it.copy(isLoading = IsLoadingState.Loading) }
         val currentState = _state.value
         if (currentState.pin.isBlank()) {
-            _state.update { it.copy(validationErrors = persistentSetOf(PinConfigValidationErrors.PinBlank)) }
+            _state.update { it.copy(validationErrors = persistentSetOf(PinBlank)) }
+        } else if (currentState.pin.length < MIN_PIN_LENGTH) {
+            _state.update { it.copy(validationErrors = persistentSetOf(PinTooShort)) }
         } else if (currentState.pin != currentState.repeatPin) {
-            _state.update { it.copy(validationErrors = persistentSetOf(PinConfigValidationErrors.PinDoesNotMatch)) }
+            _state.update { it.copy(validationErrors = persistentSetOf(PinDoesNotMatch)) }
         } else {
             _state.update { it.copy(validationErrors = persistentSetOf()) }
             viewModelScope.launch {
@@ -69,7 +75,10 @@ class PinConfigViewModel @Inject constructor(
                     createPin(currentState.pin.encodeToByteArray())
                 }.onSuccess {
                     userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Pin)
-                        .onSuccess { _state.update { it.copy(event = PinConfigEvent.PinSet) } }
+                        .onSuccess {
+                            _state.update { it.copy(event = PinConfigEvent.PinSet) }
+                            snackbarDispatcher(PinLockEnabled)
+                        }
                         .onFailure { PassLogger.e(TAG, it, "Failed to save app lock type") }
                     PassLogger.i(TAG, "Pin set successfully")
                 }.onFailure {
@@ -77,7 +86,6 @@ class PinConfigViewModel @Inject constructor(
                 }
             }
         }
-        _state.update { it.copy(isLoading = IsLoadingState.NotLoading) }
     }
 
     fun clearEvents() {
@@ -85,7 +93,8 @@ class PinConfigViewModel @Inject constructor(
     }
 
     companion object {
-        private const val PIN_LENGTH = 100
+        private const val MAX_PIN_LENGTH = 100
+        private const val MIN_PIN_LENGTH = 4
         private const val TAG = "PinConfigViewModel"
     }
 }
@@ -99,12 +108,12 @@ sealed interface PinConfigEvent {
 data class PinConfigUiState(
     val pin: String = "",
     val repeatPin: String = "",
-    val isLoading: IsLoadingState = IsLoadingState.NotLoading,
     val validationErrors: ImmutableSet<PinConfigValidationErrors> = persistentSetOf(),
     val event: PinConfigEvent = PinConfigEvent.Unknown
 )
 
 enum class PinConfigValidationErrors {
     PinBlank,
+    PinTooShort,
     PinDoesNotMatch
 }

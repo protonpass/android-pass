@@ -40,6 +40,11 @@ fun PinInput(
     state: EnterPinUiState,
     onPinChanged: (String) -> Unit
 ) {
+    val error = (state as? EnterPinUiState.Data)?.pinError?.value()
+    val errorMessage = when (error) {
+        is PinError.PinEmpty -> stringResource(R.string.auth_error_pin_cannot_be_empty)
+        else -> ""
+    }
     ProtonTextField(
         modifier = modifier,
         textFieldModifier = Modifier,
@@ -50,6 +55,8 @@ fun PinInput(
             keyboardType = KeyboardType.NumberPassword,
             imeAction = ImeAction.Done
         ),
+        isError = error is PinError.PinEmpty,
+        errorMessage = errorMessage,
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(R.string.enter_pin)) },
         visualTransformation = PasswordVisualTransformation(),
         onChange = onPinChanged

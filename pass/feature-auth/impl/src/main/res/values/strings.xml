@@ -39,6 +39,8 @@
     <string name="auth_unlock_button">Unlock</string>
     <string name="auth_error_verifying_password">Error verifying your password</string>
     <string name="auth_error_empty_password">Password cannot be empty</string>
+    <string name="auth_error_pin_cannot_be_empty">Pin cannot be empty</string>
+    <string name="auth_error_pin_too_short">Pin should be at least 4 digits</string>
     <plurals name="auth_error_wrong_password">
         <item quantity="one">Incorrect password. %d attempt remaining</item>
         <item quantity="other">Incorrect password. %d attempts remaining</item>

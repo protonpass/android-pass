@@ -31,7 +31,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,6 +45,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -119,7 +123,9 @@ fun PinConfigContent(
 
                 else -> false to ""
             }
+            val focusRequester = remember { FocusRequester() }
             ProtonTextField(
+                modifier = Modifier.focusRequester(focusRequester),
                 value = state.pin,
                 textStyle = PassTypography.hero,
                 visualTransformation = PasswordVisualTransformation(),
@@ -139,6 +145,7 @@ fun PinConfigContent(
                 moveToNextOnEnter = true,
                 onChange = onPinChange
             )
+            RequestFocusLaunchedEffect(focusRequester, true)
             ProtonTextField(
                 value = state.repeatPin,
                 textStyle = PassTypography.hero,

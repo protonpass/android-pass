@@ -38,6 +38,7 @@ sealed interface AuthNavigation {
     object Dismissed : AuthNavigation
     object SignOut : AuthNavigation
     object ForceSignOut : AuthNavigation
+    object EnterPin : AuthNavigation
     object Back : AuthNavigation
 }
 
@@ -50,10 +51,17 @@ fun NavGraphBuilder.authGraph(
         BackHandler { navigation(AuthNavigation.Back) }
         AuthScreen(
             canLogout = canLogout,
-            navigation = navigation,
+            navigation = navigation
         )
     }
     bottomSheet(EnterPin) {
-        EnterPinBottomsheet()
+        EnterPinBottomsheet(
+            onNavigate = {
+                when (it) {
+                    EnterPinNavigation.Success -> navigation(AuthNavigation.Success)
+                    EnterPinNavigation.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
+                }
+            }
+        )
     }
 }

@@ -18,15 +18,13 @@
 
 package proton.android.pass.autofill.ui.autosave
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import com.google.accompanist.navigation.animation.composable
 import proton.android.pass.autofill.entities.usernamePassword
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
 import proton.android.pass.featureauth.impl.AuthNavigation
-import proton.android.pass.featureauth.impl.AuthScreen
+import proton.android.pass.featureauth.impl.EnterPin
+import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
@@ -55,28 +53,26 @@ import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("ComplexMethod", "LongMethod")
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.autosaveActivityGraph(
     appNavigator: AppNavigator,
     arguments: AutoSaveArguments,
     onNavigate: (AutosaveNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
-    composable(AUTH_SCREEN_ROUTE) {
-        AuthScreen(
-            canLogout = false,
-            navigation = {
-                when (it) {
-                    AuthNavigation.Back -> onNavigate(AutosaveNavigation.Cancel)
-                    AuthNavigation.Success -> appNavigator.navigate(CreateLogin)
-                    AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
-                    AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
-                    AuthNavigation.SignOut -> {}
-                    AuthNavigation.ForceSignOut -> onNavigate(AutosaveNavigation.ForceSignOut)
-                }
+    authGraph(
+        canLogout = false,
+        navigation = {
+            when (it) {
+                AuthNavigation.Back -> onNavigate(AutosaveNavigation.Cancel)
+                AuthNavigation.Success -> appNavigator.navigate(CreateLogin)
+                AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
+                AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
+                AuthNavigation.SignOut -> {}
+                AuthNavigation.ForceSignOut -> onNavigate(AutosaveNavigation.ForceSignOut)
+                AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
             }
-        )
-    }
+        }
+    )
     createUpdateLoginGraph(
         initialCreateLoginUiState = getInitialState(arguments),
         showCreateAliasButton = false,

@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
@@ -64,9 +63,7 @@ class AutosaveActivityViewModel @Inject constructor(
     }
 
     fun onStop() = viewModelScope.launch {
-        runBlocking {
-            preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
-        }
+        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
     }
 
     fun signOut() = viewModelScope.launch {

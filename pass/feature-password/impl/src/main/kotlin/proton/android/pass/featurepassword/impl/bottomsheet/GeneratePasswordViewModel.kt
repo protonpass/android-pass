@@ -153,9 +153,8 @@ class GeneratePasswordViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateAndRegenerate(pref: PasswordGenerationPreference) {
+    private fun updateAndRegenerate(pref: PasswordGenerationPreference) {
         userPreferencesRepository.setPasswordGenerationPreference(pref)
-//        passwordFlow.update { generatePassword(pref) }
     }
 
     private fun storeDraft() {

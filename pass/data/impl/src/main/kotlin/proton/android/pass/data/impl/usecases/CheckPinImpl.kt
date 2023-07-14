@@ -26,6 +26,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CheckPin
 import proton.android.pass.data.impl.util.PinFileConfig
+import proton.android.pass.log.api.PassLogger
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,8 +38,16 @@ class CheckPinImpl @Inject constructor(
 ) : CheckPin {
     override suspend fun invoke(pin: ByteArray): Boolean = withContext(Dispatchers.IO) {
         val file = File(context.dataDir, PinFileConfig.FILE_NAME)
+        if (!file.exists() || file.isDirectory) {
+            PassLogger.w(TAG, "Pin file does not exist")
+            return@withContext false
+        }
         val encrypted = EncryptedByteArray(file.readBytes())
         val decryptedData = encryptionContextProvider.withEncryptionContext { decrypt(encrypted) }
         decryptedData.contentEquals(pin)
+    }
+
+    companion object {
+        private const val TAG = "CheckPinImpl"
     }
 }

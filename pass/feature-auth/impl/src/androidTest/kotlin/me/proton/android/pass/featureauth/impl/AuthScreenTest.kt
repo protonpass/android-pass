@@ -36,7 +36,7 @@ import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
-import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -65,7 +65,7 @@ class AuthScreenTest {
     @Test
     fun onBiometricLockDisabledAuthSuccessCalled() {
         val checker = CallChecker<Unit>()
-        userPreferencesRepository.setBiometricLockState(BiometricLockState.Disabled)
+        userPreferencesRepository.setAppLockState(AppLockState.Disabled)
         composeTestRule.setContent {
             PassTheme {
                 AuthScreen(
@@ -108,7 +108,7 @@ class AuthScreenTest {
     @Test
     fun onBiometricLockEnabledAndBiometricResultErrorAuthFailedCalled() {
         val checker = CallChecker<Unit>()
-        userPreferencesRepository.setBiometricLockState(BiometricLockState.Enabled)
+        userPreferencesRepository.setAppLockState(AppLockState.Enabled)
         runBlocking {
             biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.NoBiometrics))
         }

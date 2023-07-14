@@ -22,8 +22,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Suppress("TooManyFunctions", "ComplexInterface")
 interface UserPreferencesRepository {
-    fun setBiometricLockState(state: BiometricLockState): Result<Unit>
-    fun getBiometricLockState(): Flow<BiometricLockState>
+    fun setAppLockState(state: AppLockState): Result<Unit>
+    fun getAppLockState(): Flow<AppLockState>
 
     fun setHasAuthenticated(state: HasAuthenticated): Result<Unit>
     fun getHasAuthenticated(): Flow<HasAuthenticated>

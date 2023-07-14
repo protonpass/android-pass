@@ -183,12 +183,10 @@ class SettingsScreenTest {
     }
 
     private fun testUseWebIcons(initialState: Boolean) {
-        runBlocking {
-            preferenceRepository.setUseFaviconsPreference(UseFaviconsPreference.from(initialState))
+        preferenceRepository.setUseFaviconsPreference(UseFaviconsPreference.from(initialState))
 
-            preferenceRepository.setThemePreference(ThemePreference.System)
-            preferenceRepository.setCopyTotpToClipboardEnabled(CopyTotpToClipboard.Enabled)
-        }
+        preferenceRepository.setThemePreference(ThemePreference.System)
+        preferenceRepository.setCopyTotpToClipboardEnabled(CopyTotpToClipboard.Enabled)
 
         composeTestRule.setContent {
             PassTheme {

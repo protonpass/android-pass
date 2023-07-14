@@ -64,113 +64,113 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         )
     )
 
-    override suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit> {
-        biometricLockState.emit(state)
+    override fun setBiometricLockState(state: BiometricLockState): Result<Unit> {
+        biometricLockState.tryEmit(state)
         return Result.success(Unit)
     }
 
     override fun getBiometricLockState(): Flow<BiometricLockState> = biometricLockState
 
-    override suspend fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> {
-        hasAuthenticated.emit(state)
+    override fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> {
+        hasAuthenticated.tryEmit(state)
         return Result.success(Unit)
     }
 
     override fun getHasAuthenticated(): Flow<HasAuthenticated> = hasAuthenticated
 
-    override suspend fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> {
-        hasCompletedOnBoarding.emit(state)
+    override fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> {
+        hasCompletedOnBoarding.tryEmit(state)
         return Result.success(Unit)
     }
 
     override fun getHasCompletedOnBoarding(): Flow<HasCompletedOnBoarding> = hasCompletedOnBoarding
 
-    override suspend fun setThemePreference(theme: ThemePreference): Result<Unit> {
-        themePreference.emit(theme)
+    override fun setThemePreference(theme: ThemePreference): Result<Unit> {
+        themePreference.tryEmit(theme)
         return Result.success(Unit)
     }
 
     override fun getThemePreference(): Flow<ThemePreference> = themePreference
 
-    override suspend fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit> {
-        hasDismissedAutofillBanner.emit(state)
+    override fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit> {
+        hasDismissedAutofillBanner.tryEmit(state)
         return Result.success(Unit)
     }
 
     override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> =
         hasDismissedAutofillBanner
 
-    override suspend fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> {
-        hasDismissedTrialBanner.emit(state)
+    override fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> {
+        hasDismissedTrialBanner.tryEmit(state)
         return Result.success(Unit)
     }
 
     override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> =
         hasDismissedTrialBanner
 
-    override suspend fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> {
-        copyTotpToClipboard.emit(state)
+    override fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> {
+        copyTotpToClipboard.tryEmit(state)
         return Result.success(Unit)
     }
 
     override fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard> = copyTotpToClipboard
 
-    override suspend fun setClearClipboardPreference(clearClipboard: ClearClipboardPreference): Result<Unit> {
-        clearClipboardPreference.emit(clearClipboard)
+    override fun setClearClipboardPreference(clearClipboard: ClearClipboardPreference): Result<Unit> {
+        clearClipboardPreference.tryEmit(clearClipboard)
         return Result.success(Unit)
     }
 
     override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> =
         clearClipboardPreference
 
-    override suspend fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit> {
-        useFaviconsPreference.emit(useFavicons)
+    override fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit> {
+        useFaviconsPreference.tryEmit(useFavicons)
         return Result.success(Unit)
     }
 
     override fun getUseFaviconsPreference(): Flow<UseFaviconsPreference> = useFaviconsPreference
 
-    override suspend fun setAppLockTimePreference(preference: AppLockTimePreference): Result<Unit> {
-        appLockTimePreference.emit(preference)
+    override fun setAppLockTimePreference(preference: AppLockTimePreference): Result<Unit> {
+        appLockTimePreference.tryEmit(preference)
         return Result.success(Unit)
     }
 
     override fun getAppLockTimePreference(): Flow<AppLockTimePreference> = appLockTimePreference
-    override suspend fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit> {
-        appLockTypePreference.emit(preference)
+    override fun setAppLockTypePreference(preference: AppLockTypePreference): Result<Unit> {
+        appLockTypePreference.tryEmit(preference)
         return Result.success(Unit)
     }
 
     override fun getAppLockTypePreference(): Flow<AppLockTypePreference> = appLockTypePreference
 
-    override suspend fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit> {
-        biometricSystemLockPreference.emit(preference)
+    override fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit> {
+        biometricSystemLockPreference.tryEmit(preference)
         return Result.success(Unit)
     }
 
     override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> =
         biometricSystemLockPreference
 
-    override suspend fun setPasswordGenerationPreference(
+    override fun setPasswordGenerationPreference(
         preference: PasswordGenerationPreference
     ): Result<Unit> {
-        passwordGenerationPreference.emit(preference)
+        passwordGenerationPreference.tryEmit(preference)
         return Result.success(Unit)
     }
 
     override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> =
         passwordGenerationPreference
 
-    override suspend fun setAllowScreenshotsPreference(
+    override fun setAllowScreenshotsPreference(
         preference: AllowScreenshotsPreference
     ): Result<Unit> {
-        allowScreenshotsPreference.emit(preference)
+        allowScreenshotsPreference.tryEmit(preference)
         return Result.success(Unit)
     }
 
     override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> =
         allowScreenshotsPreference
 
-    override suspend fun clearPreferences(): Result<Unit> = Result.success(Unit)
+    override fun clearPreferences(): Result<Unit> = Result.success(Unit)
 
 }

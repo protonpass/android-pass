@@ -40,61 +40,61 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val pinAttemptsCountFlow = MutableStateFlow(0)
     private val masterPasswordAttemptsCountFlow = MutableStateFlow(0)
 
-    override suspend fun setLastUnlockedTime(time: Long): Result<Unit> {
+    override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
         return Result.success(Unit)
     }
 
     override fun getLastUnlockedTime(): Flow<Option<Long>> = lastUnlockedTimeFlow
 
-    override suspend fun setBootCount(count: Long): Result<Unit> {
+    override fun setBootCount(count: Long): Result<Unit> {
         bootCountFlow.update { Some(count) }
         return Result.success(Unit)
     }
 
     override fun getBootCount(): Flow<Option<Long>> = bootCountFlow
 
-    override suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit> {
+    override fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit> {
         declinedUpdateVersionFlow.update { versionDeclined }
         return Result.success(Unit)
     }
 
     override fun getDeclinedUpdateVersion(): Flow<String> = declinedUpdateVersionFlow
 
-    override suspend fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit> {
+    override fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit> {
         homeSortingFlow.update { sortingOption }
         return Result.success(Unit)
     }
 
     override fun getHomeSortingOption(): Flow<SortingOptionPreference> = homeSortingFlow
 
-    override suspend fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit> {
+    override fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit> {
         autofillSortingFlow.update { sortingOption }
         return Result.success(Unit)
     }
 
     override fun getAutofillSortingOption(): Flow<SortingOptionPreference> = autofillSortingFlow
 
-    override suspend fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> {
+    override fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> {
         selectedVaultFlow.update { selectedVault }
         return Result.success(Unit)
     }
 
     override fun getSelectedVault(): Flow<SelectedVaultPreference> = selectedVaultFlow
 
-    override suspend fun setPinAttemptsCount(count: Int): Result<Unit> {
+    override fun setPinAttemptsCount(count: Int): Result<Unit> {
         pinAttemptsCountFlow.update { count }
         return Result.success(Unit)
     }
 
     override fun getPinAttemptsCount(): Flow<Int> = pinAttemptsCountFlow
 
-    override suspend fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> {
+    override fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> {
         masterPasswordAttemptsCountFlow.update { count }
         return Result.success(Unit)
     }
 
     override fun getMasterPasswordAttemptsCount(): Flow<Int> = masterPasswordAttemptsCountFlow
 
-    override suspend fun clearSettings(): Result<Unit> = Result.success(Unit)
+    override fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

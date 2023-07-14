@@ -20,7 +20,6 @@ package proton.android.featuresearchoptions.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -35,14 +34,10 @@ class AutofillSearchOptionsRepositoryImpl @Inject constructor(
         .map { SortingOption(it.toDomain()) }
 
     override fun setSortingOption(sortingOption: SortingOption) {
-        runBlocking {
-            internalSettingsRepository.setAutofillSortingOption(sortingOption.toPreference())
-        }
+        internalSettingsRepository.setAutofillSortingOption(sortingOption.toPreference())
     }
 
     override fun clearPreferences() {
-        runBlocking {
-            internalSettingsRepository.setAutofillSortingOption(SortingOptionPreference.MostRecent)
-        }
+        internalSettingsRepository.setAutofillSortingOption(SortingOptionPreference.MostRecent)
     }
 }

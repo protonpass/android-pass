@@ -23,29 +23,29 @@ import proton.android.pass.common.api.Option
 
 interface InternalSettingsRepository {
 
-    suspend fun setLastUnlockedTime(time: Long): Result<Unit>
+    fun setLastUnlockedTime(time: Long): Result<Unit>
     fun getLastUnlockedTime(): Flow<Option<Long>>
 
-    suspend fun setBootCount(count: Long): Result<Unit>
+    fun setBootCount(count: Long): Result<Unit>
     fun getBootCount(): Flow<Option<Long>>
 
-    suspend fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit>
+    fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit>
     fun getDeclinedUpdateVersion(): Flow<String>
 
-    suspend fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit>
+    fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit>
     fun getHomeSortingOption(): Flow<SortingOptionPreference>
 
-    suspend fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit>
+    fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit>
     fun getAutofillSortingOption(): Flow<SortingOptionPreference>
 
-    suspend fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit>
+    fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit>
     fun getSelectedVault(): Flow<SelectedVaultPreference>
 
-    suspend fun setPinAttemptsCount(count: Int): Result<Unit>
+    fun setPinAttemptsCount(count: Int): Result<Unit>
     fun getPinAttemptsCount(): Flow<Int>
 
-    suspend fun setMasterPasswordAttemptsCount(count: Int): Result<Unit>
+    fun setMasterPasswordAttemptsCount(count: Int): Result<Unit>
     fun getMasterPasswordAttemptsCount(): Flow<Int>
 
-    suspend fun clearSettings(): Result<Unit>
+    fun clearSettings(): Result<Unit>
 }

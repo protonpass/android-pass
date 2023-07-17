@@ -319,6 +319,8 @@ dependencies {
     implementation(projects.pass.image.impl)
     implementation(projects.pass.inAppUpdates.api)
     implementation(projects.pass.inAppUpdates.impl)
+    implementation(projects.pass.inAppReview.api)
+    implementation(projects.pass.inAppReview.impl)
     implementation(projects.pass.featureAccount.impl)
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureFeatureFlags.impl)

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Deixa que el Proton Pass ompli els detalls d\'inici de sessió. No cal escriure ni copiar i enganxar.</string>
+  <string name="on_boarding_autofill_title">Inicieu la sessió a les aplicacions instantàniament</string>
+  <string name="on_boarding_autofill_button">Emplena automàticament amb Proton Pass</string>
+  <string name="on_boarding_fingerprint_content">Configureu Proton Pass per a desbloquejar-lo amb l\'empremta digital, de manera que només vós hi tingueu accés.</string>
+  <string name="on_boarding_fingerprint_title">Protegiu les vostres dades més sensibles</string>
+  <string name="on_boarding_fingerprint_button">Habilita el desbloqueig per empremta digital</string>
+  <string name="on_boarding_last_page_content">Deixeu de compartir la vostra adreça de correu electrònic real. Amagueu-la amb un àlies de correu electrònic, exclusiu de Proton Pass.</string>
+  <string name="on_boarding_last_page_title">Controleu què aterra a la safata d\'entrada</string>
+  <string name="on_boarding_last_page_button">Comenceu a utilitzar Proton Pass</string>
+  <string name="on_boarding_skip">Ara no</string>
+  <string name="error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
+  <string name="error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
+  <string name="settings_fingerprint_lock_enabled">S\'ha habilitat el desbloqueig per empremta digital</string>
+  <string name="error_performing_operation">S\'ha produït un error en realitzar l\'operació</string>
+</resources>

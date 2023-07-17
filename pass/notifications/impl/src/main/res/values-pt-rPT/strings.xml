@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="autofill_notification_channel_name">Preenchimento automático</string>
+  <string name="autofill_notification_copy_to_clipboard_title">Código TOTP</string>
+  <string name="autofill_notification_copy_to_clipboard_body">O código TOTP foi copiado para a área de transferência.</string>
+</resources>

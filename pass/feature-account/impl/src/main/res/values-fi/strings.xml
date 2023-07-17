@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Tili</string>
+  <string name="account_username_label">Käyttäjätunnus</string>
+  <string name="account_subscription_label">Tilaus</string>
+  <string name="account_permanently_delete_warning">Tämä poistaa tilisi ja kaikki sen tiedot pysyvästi. Et voi aktivoida tiliä uudelleen.</string>
+  <string name="account_delete_account">Poista tili</string>
+  <string name="account_delete_account_icon_content_description">Poista tili -painike</string>
+  <string name="account_sign_out">Kirjaudu ulos</string>
+  <string name="account_sign_out_icon_content_description">Kirjaudu ulos -painike</string>
+  <string name="account_manage_subscription">Hallitse tilausta</string>
+  <string name="account_get_user_info_error">Käyttäjätietoja ei voitu hakea</string>
+  <string name="manage_subscription_icon_content_description">Hallitse tilausta -painike</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Kirjaudutaanko ulos?</string>
+  <string name="alert_confirm_sign_out_message">Haluatko varmasti kirjautua ulos?</string>
+</resources>

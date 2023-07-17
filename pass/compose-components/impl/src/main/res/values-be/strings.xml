@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Па назве (А-Я)</string>
+  <string name="sort_by_title_desc">Па назве (Я-А)</string>
+  <string name="sort_by_creation_asc">Ад самых старых да самых новых</string>
+  <string name="sort_by_creation_desc">Ад самых новых да самых старых</string>
+  <string name="sort_by_modification_date">Самыя апошнія</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Усе</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">вынік</item>
+    <item quantity="few">вынікі</item>
+    <item quantity="many">вынікаў</item>
+    <item quantity="other">вынікаў</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Пацвердзіць</string>
+  <string name="bottomsheet_cancel_button">Скасаваць</string>
+  <string name="bottomsheet_move_to_trash">Перамясціць у сметніцу</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Адкрыць меню дзеянняў элемента</string>
+  <string name="action_upgrade_now">Палепшыць</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Дадаць свой першы элемент</string>
+  <string name="empty_search_results_title">Нічога не знойдзена</string>
+  <string name="empty_list_open_extension">Наведаць вэб пашырэнне</string>
+  <string name="empty_list_create_item_button">Стварыць новы элемент</string>
+  <!-- Field -->
+  <string name="field_title_title">Назва</string>
+  <string name="field_title_hint">Без назвы</string>
+  <string name="field_title_required">Патрабуецца назва</string>
+  <string name="small_cross_icon_content_description">Маленькі перакрэслены значок</string>
+  <string name="field_note_title">Нататка</string>
+  <string name="field_note_hint">Дадаць нататку</string>
+  <string name="linked_apps_title">Звязаныя праграмы</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Па-за сеткай</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Значок прапушчанай праграмы</string>
+  <string name="add_item_icon_content_description">Дадаць значок элемента</string>
+  <string name="navigate_back_icon_content_description">Значок пераходу назад</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Сховішча</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Элементы спіса</string>
+  <string name="bottom_bar_add_item_icon_content_description">Дадаць элемент</string>
+  <string name="bottom_bar_profile_icon_content_description">Профіль</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Сёння</string>
+  <string name="most_recent_yesterday">Учора</string>
+  <string name="most_recent_this_week">На гэтым тыдні</string>
+  <string name="most_recent_last_two_weeks">За апошнія два тыдні</string>
+  <string name="most_recent_last_30_days">За апошнія 30 дзён</string>
+  <string name="most_recent_last_60_days">За апошнія 60 дзён</string>
+  <string name="most_recent_last_90_days">За апошнія 90 дзён</string>
+  <string name="most_recent_within_the_last_year">За апошні год</string>
+  <string name="most_recent_more_than_1_year">Больш чым за 1 год</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Значок пошуку</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Значок параметраў</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">%d элемент</item>
+    <item quantity="few">%d элементы</item>
+    <item quantity="many">%d элементаў</item>
+    <item quantity="other">%d элементаў</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Адхіліць змены?</string>
+  <string name="confirm_close_dialog_message">У вас ёсць незахаваныя змены. Вы сапраўды хочаце адхіліць іх?</string>
+  <string name="confirm_close_dialog_close_button">Адхіліць</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Палепшыць</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Дадатковыя параметры</string>
+  <string name="hide_advanced_options">Не паказваць дадатковыя параметры</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Profiili</string>
+  <string name="profile_option_settings">Asetukset</string>
+  <string name="profile_option_account">Tili</string>
+  <string name="profile_help_center">Tukikeskus</string>
+  <string name="profile_security">Turvallisuus</string>
+  <string name="profile_option_feedback">Palaute</string>
+  <string name="profile_option_import_export">Tuonti ja vienti</string>
+  <string name="profile_option_rating">Arvioi sovellus</string>
+  <string name="profile_option_autofill">Automaattitäyttö</string>
+  <string name="profile_option_autofill_subtitle">Täytä käyttäjätunnukset ja salasanat automaattisesti.</string>
+  <string name="profile_option_fingerprint">Sormenjälki</string>
+  <string name="profile_option_automatic_app_lock">Automaattinen sovelluslukitus</string>
+  <string name="profile_option_advanced">Lisäasetukset</string>
+  <string name="profile_error_biometry_failed_to_start">Biometristä todennusta ei voitu aloittaa</string>
+  <string name="profile_error_biometry_failed_to_authenticate">Todennus epäonnistui</string>
+  <string name="profile_fingerprint_lock_enabled">Avaus sormenjäljellä on käytössä</string>
+  <string name="profile_fingerprint_lock_disabled">Avaus sormenjäljellä ei ole käytössä</string>
+  <string name="profile_error_performing_operation">Virhe suoritettaessa toimintoa</string>
+  <string name="profile_app_version_copied_to_clipboard">Sovelluksen versio kopioitiin</string>
+  <string name="feedback_option_reddit">Tutustu Protoniin Redditissä</string>
+  <string name="feedback_option_mail">Lähetä meille viesti</string>
+  <string name="feedback_option_vote_new_features">Äänestä uusia ominaisuuksia</string>
+  <string name="app_lock_immediately">Välittömästi</string>
+  <string name="app_lock_one_minute">Minuutin kuluttua</string>
+  <string name="app_lock_two_minutes">2 minuutin kuluttua</string>
+  <string name="app_lock_five_minutes">5 minuutin kuluttua</string>
+  <string name="app_lock_ten_minutes">10 minuutin kuluttua</string>
+  <string name="app_lock_one_hour">Tunnin kuluttua</string>
+  <string name="app_lock_four_hours">4 tunnin kuluttua</string>
+  <string name="profile_account_plan_name_trial">Ilmainen kokeilu</string>
+  <string name="app_lock_config_biometric">Biometria</string>
+  <string name="app_lock_config_pin_code">PIN-koodi</string>
+  <string name="app_lock_config_unlock_with">Avaa käyttäen</string>
+  <string name="app_lock_config_app_lock_time">Sovelluksen lukitusaika</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Käytä järjestelmän lukitustapaa biometrisen todennuksen epäonnistuessa</string>
+</resources>

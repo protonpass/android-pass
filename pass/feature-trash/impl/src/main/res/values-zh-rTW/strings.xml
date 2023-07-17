@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">還原</string>
+  <string name="bottomsheet_delete_permanently">永久刪除</string>
+  <string name="alert_confirm_delete_item_dialog_title">永久刪除？</string>
+  <string name="alert_confirm_delete_item_dialog_message">此動作不可逆。</string>
+  <string name="alias_dialog_move_to_trash_title">要丟進垃圾桶嗎？</string>
+  <string name="alias_dialog_move_to_trash_content">若別名移至垃圾桶，將會停止轉寄電子郵件到信箱。</string>
+  <string name="alias_dialog_move_to_trash_confirm">確認</string>
+</resources>

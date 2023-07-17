@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Zezwalaj aplikacji Proton Pass na uzupełnianie danych logowania. Wpisywanie danych lub ich kopiowanie i wklejanie nie jest potrzebne.</string>
+  <string name="on_boarding_autofill_title">Natychmiastowe logowanie się do aplikacji</string>
+  <string name="on_boarding_autofill_button">Autouzupełnianie za pomocą Proton Pass</string>
+  <string name="on_boarding_fingerprint_content">Odblokuj aplikację Proton Pass za pomocą odcisku palca.</string>
+  <string name="on_boarding_fingerprint_title">Chroń swoje najbardziej poufne dane</string>
+  <string name="on_boarding_fingerprint_button">Włącz odblokowywanie odciskiem palca</string>
+  <string name="on_boarding_last_page_content">Zatrzymaj udostępnianie swojego prawdziwego adres e-mail. Zamiast tego ukryj go za pomocą aliasów — wyłącznie w Proton Pass.</string>
+  <string name="on_boarding_last_page_title">Kontroluj, co trafia do Twojej skrzynki odbiorczej</string>
+  <string name="on_boarding_last_page_button">Zacznij korzystać z Proton Pass</string>
+  <string name="on_boarding_skip">Nie teraz</string>
+  <string name="error_biometry_failed_to_start">Nie można rozpocząć uwierzytelniania biometrycznego</string>
+  <string name="error_biometry_failed_to_authenticate">Nie udało się uwierzytelnić</string>
+  <string name="settings_fingerprint_lock_enabled">Odblokowywanie odciskiem palca zostało włączone</string>
+  <string name="error_performing_operation">Wystąpił błąd podczas wykonywania operacji</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="profile_option_fingerprint_subtitle">輕觸以解鎖 Proton Pass。</string>
+  <string name="profile_option_fingerprint">指紋</string>
+  <string name="profile_option_app_lock">應用程式鎖</string>
+  <string name="enter_your_pin_code">輸入您的個人識別數字代碼</string>
+  <string name="unlock">解鎖</string>
+  <string name="enter_pin">輸入個人識別號碼</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="other">個人識別號碼錯誤。剩餘 %d 次嘗試</item>
+  </plurals>
+  <string name="auth_unlock_app_title">解鎖 Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">輸入 %s 的主密碼</string>
+  <string name="auth_master_password_label">主密碼</string>
+  <string name="auth_action_reveal_password">顯示主密碼</string>
+  <string name="auth_action_conceal_password">隱藏主密碼</string>
+  <string name="auth_unlock_button">解鎖</string>
+  <string name="auth_error_verifying_password">驗證密碼時發生錯誤</string>
+  <string name="auth_error_empty_password">密碼不能為空</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="other">密碼錯誤。剩餘 %d 次嘗試</item>
+  </plurals>
+</resources>

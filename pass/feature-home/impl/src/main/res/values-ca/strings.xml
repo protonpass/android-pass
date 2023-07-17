@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Home -->
+  <string name="home_empty_vault_title">La vostra caixa forta està buida</string>
+  <string name="home_empty_vault_subtitle">Comenceu creant el primer element.</string>
+  <string name="home_empty_vault_create_login">Crea un inici de sessió</string>
+  <string name="home_empty_vault_create_alias">Crea un àlies Hide my email</string>
+  <string name="home_empty_vault_create_note">Crea una nota</string>
+  <string name="error_observing_items">S\'ha produït un error amb els elements</string>
+  <string name="error_observing_share">S\'ha produït un error de compartició</string>
+  <string name="error_refreshing">S\'ha produït un erro durant el refresc</string>
+  <string name="home_snackbar_login_moved_to_trash">L\'inici de sessió s\'ha mogut a la paperera</string>
+  <string name="home_snackbar_alias_moved_to_trash">L\'àlies s\'ha mogut a la paperera</string>
+  <string name="home_snackbar_note_moved_to_trash">La nota s\'ha mogut a la paperera</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">La targeta de crèdit s\'ha mogut a la paperera</string>
+  <string name="home_snackbar_move_to_trash_error">No s\'ha pogut moure a la paperera</string>
+  <string name="home_autofill_banner_title">Gaudiu de la màgia de l\'emplenament automàtic</string>
+  <string name="home_autofill_banner_text">Un toc i -presto!- el vostre nom d\'usuari i contrasenya s\'omplen a l\'instant.</string>
+  <string name="home_autofill_banner_settings">Activa l\'emplenament automàtic</string>
+  <string name="home_trial_banner_title">Gaudeix d\'una prova gratuïta</string>
+  <string name="home_trial_banner_text">Consulteu totes les característiques exclusives disponibles per un temps limitat.</string>
+  <string name="home_trial_banner_settings">Saber-ne més ›</string>
+  <!-- Common bottomsheet -->
+  <string name="bottomsheet_copy_password">Copia la contrasenya</string>
+  <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>
+  <string name="bottomsheet_copy_alias">Copia l\'adreça del correu electrònic</string>
+  <string name="bottomsheet_copy_number">Copia el número</string>
+  <string name="bottomsheet_copy_cvv">Copia el CVV</string>
+  <string name="bottomsheet_copy_note">Copiar la nota</string>
+  <string name="bottomsheet_edit">Edita</string>
+  <!-- Clipboard -->
+  <string name="alias_copied_to_clipboard">S\'ha copiat l\'àlies</string>
+  <string name="note_copied_to_clipboard">S\'ha copiat la nota</string>
+  <string name="username_copied_to_clipboard">S\'ha copiat el nom d\'usuari</string>
+  <string name="password_copied_to_clipboard">S\'ha copiat la contrasenya</string>
+  <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta de crèdit</string>
+  <string name="credit_card_pin_copied_to_clipboard">S\'ha copiat el PIN de la targeta de crèdit</string>
+  <string name="credit_card_cvv_copied_to_clipboard">S\'ha copiat el CVV de la targeta de crèdit</string>
+  <string name="item_too_long_copied_to_clipboard">El contingut és molt llarg. Ha estat copiat parcialment al portapapels.</string>
+  <!-- Vault drawer -->
+  <string name="vault_drawer_vaults_title">Caixes fortes</string>
+  <string name="vault_drawer_vaults_item_count">%d elements</string>
+  <string name="vault_drawer_create_vault">Crea una caixa forta</string>
+  <string name="vault_drawer_item_trash">Paperera</string>
+  <string name="vault_drawer_all_vaults">Totes les caixes fortes</string>
+  <!-- Vault management -->
+  <string name="vault_delete_dialog_title">Elimina la caixa forta</string>
+  <string name="vault_delete_dialog_cancel_action">Cancel·la</string>
+  <string name="vault_delete_dialog_delete_action">Elimina</string>
+  <string name="snackbar_delete_vault_success">S\'ha eliminat la caixa forta</string>
+  <string name="snackbar_delete_vault_error">No s\'ha eliminat la caixa forta</string>
+  <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_vaults">Cerca en totes les caixes fortes…</string>
+  <string name="search_topbar_placeholder_vault">Cerca en %s…</string>
+  <string name="search_topbar_placeholder_trash">Cerca a la Paperera</string>
+  <string name="item_type_filter_list_icon_content_description">Icona de tipus d\'element</string>
+  <string name="item_type_filter_all">Tots</string>
+  <string name="item_type_filter_login">Inicia la sessió</string>
+  <string name="item_type_filter_alias">Àlies</string>
+  <string name="item_type_filter_note">Nota</string>
+  <string name="item_type_filter_credit_card">Targeta</string>
+  <!-- Trash -->
+  <string name="trash_empty_list_title">La Paperera està buida.</string>
+  <string name="trash_empty_list_message">Els elements moguts a la paperera apareixen aquí</string>
+  <string name="bottomsheet_trash_all_items_title">Paperera</string>
+  <string name="bottomsheet_restore_all_items">Restaura tots els elements</string>
+  <string name="bottomsheet_empty_trash">Buida la paperera</string>
+  <string name="trash_error_clearing_trash">S\'ha produït un error en buidar la paperera</string>
+  <string name="trash_error_restoring_items">S\'ha produït un error en restaurar els elements</string>
+  <string name="trash_error_deleting_item">S\'ha produït un error en eliminar l\'element</string>
+  <!-- Alerts -->
+  <string name="alert_confirm_clear_trash_title">Voleu buidar la paperera?</string>
+  <string name="alert_confirm_clear_trash_message">Segur que voleu netejar la paperera? Tots els elements de la paperera s\'eliminaran permanentment</string>
+  <string name="alert_confirm_restore_all_title">Voleu restaurar tots els elements?</string>
+  <string name="alert_confirm_restore_all_message">Segur que voleu restaurar tots els elements de la paperera?</string>
+  <!-- Recent search -->
+  <string name="recent_search_header_count">Cerques recents</string>
+  <string name="recent_search_clear">Neteja</string>
+  <string name="recent_search_remove_item">Suprimeix de les cerques recents</string>
+</resources>

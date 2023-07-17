@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Goditi la tua prova gratuita</string>
+  <string name="trial_subtitle">Per una gestione delle password di livello superiore:</string>
+  <string name="trial_feature_1">20 casseforti</string>
+  <string name="trial_feature_2">Numero illimitato di alias</string>
+  <string name="trial_feature_3">Autenticazione 2FA integrata</string>
+  <string name="trial_feature_4">Campi personalizzati</string>
+  <string name="trial_button_text">Esegui l\'upgrade per mantenere queste funzionalità</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">1 giorno rimasto nel periodo di prova gratuita</item>
+    <item quantity="other">%d giorni rimanenti del periodo di prova gratuita</item>
+  </plurals>
+  <string name="trial_learn_more">Scopri di più</string>
+</resources>

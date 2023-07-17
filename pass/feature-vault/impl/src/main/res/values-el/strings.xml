@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Η κρύπτη δημιουργήθηκε</string>
+  <string name="snackbar_create_vault_error">Η κρύπτη δε δημιουργήθηκε</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Δεν είναι δυνατή η δημιουργία περισσότερων κρυπτών</string>
+  <string name="snackbar_edit_vault_success">Η κρύπτη επεξεργάστηκε</string>
+  <string name="snackbar_edit_vault_error">Η κρύπτη δεν επεξεργάστηκε</string>
+  <string name="snackbar_delete_vault_success">Η κρύπτη διαγράφηκε</string>
+  <string name="snackbar_delete_vault_error">Η κρύπτη δε διαγράφηκε</string>
+  <string name="snackbar_retrieve_vault_error">Η κρύπτη δε βρέθηκε</string>
+  <string name="snackbar_find_vault_error">Δεν είναι δυνατή η εύρεση της επιλεγμένης κρύπτης</string>
+  <string name="snackbar_get_vault_list_error">Δεν ήταν δυνατή η φόρτωση της λίστας κρυπτών</string>
+  <string name="snackbar_get_upgrade_info_error">Δεν ήταν δυνατή η προετοιμασία της λίστας κρυπτών</string>
+  <string name="vault_delete_dialog_title">Διαγραφή κρύπτης</string>
+  <string name="vault_delete_dialog_body">Αυτό θα διαγράψει οριστικά την κρύπτη __VAULT_NAME__ και όλα τα περιεχόμενά της. Εισαγάγετε το όνομα της κρύπτης για να επιβεβαιώσετε τη διαγραφή.</string>
+  <string name="vault_delete_dialog_placeholder">Όνομα κρύπτης</string>
+  <string name="vault_delete_dialog_cancel_action">Ακύρωση</string>
+  <string name="vault_delete_dialog_delete_action">Διαγραφή</string>
+  <string name="bottomsheet_close_icon_content_description">Κλείσιμο της Δημιουργίας Κρύπτης</string>
+  <string name="bottomsheet_create_vault_button">Δημιουργία κρύπτης</string>
+  <string name="bottomsheet_edit_vault_button">Αποθήκευση</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Έχετε φτάσει στο όριο των κρυπτών που μπορείτε να δημιουργήσετε. Δημιουργήστε απεριόριστο αριθμό κρυπτών κατά την αναβάθμιση της συνδρομής σας.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Για να αλληλεπιδράσετε με τις κρύπτες, πρέπει να αναβαθμίσετε τον λογαριασμό σας.</string>
+  <string name="bottomsheet_upgrade_now">Αναβάθμιση τώρα</string>
+  <string name="bottomsheet_edit">Επεξεργασία</string>
+  <string name="bottomsheet_migrate">Μετακίνηση όλων των στοιχείων σε άλλη κρύπτη</string>
+  <string name="bottomsheet_delete_vault">Διαγραφή κρύπτης</string>
+  <string name="vault_title">Κρύπτη</string>
+</resources>

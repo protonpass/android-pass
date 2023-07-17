@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Permita que o Proton Pass preencha os detalhes de início de sessão para você. Sem necessidade de introduzir ou copiar e colar dados.</string>
+  <string name="on_boarding_autofill_title">Inicie sessão nas aplicações instantaneamente</string>
+  <string name="on_boarding_autofill_button">Beneficie do preenchimento automático com o Proton Pass.</string>
+  <string name="on_boarding_fingerprint_content">Configure o Proton Pass para desbloquear com a sua impressão digital, assim, apenas você terá acesso.</string>
+  <string name="on_boarding_fingerprint_title">Proteja os seus dados mais sensíveis</string>
+  <string name="on_boarding_fingerprint_button">Ativar o desbloqueio por impressão digital</string>
+  <string name="on_boarding_last_page_content">Pare de partilhar o seu endereço de e-mail real. Em vez disso, oculte-o com aliases de email, uma exclusividade do Proton Pass.</string>
+  <string name="on_boarding_last_page_title">Controle o que chega na sua caixa de entrada.</string>
+  <string name="on_boarding_last_page_button">Comece a utilizar o Proton Pass</string>
+  <string name="on_boarding_skip">Agora não</string>
+  <string name="error_biometry_failed_to_start">Não foi possível iniciar a autenticação biométrica.</string>
+  <string name="error_biometry_failed_to_authenticate">Erro de autenticação</string>
+  <string name="settings_fingerprint_lock_enabled">O desbloqueio por impressão digital foi ativado.</string>
+  <string name="error_performing_operation">Ocorreu um erro durante a operação.</string>
+</resources>

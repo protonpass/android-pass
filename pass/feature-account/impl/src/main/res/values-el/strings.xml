@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Λογαριασμός</string>
+  <string name="account_username_label">Όνομα χρήστη</string>
+  <string name="account_subscription_label">Πρόγραμμα συνδρομής</string>
+  <string name="account_permanently_delete_warning">Αυτό θα διαγράψει οριστικά το λογαριασμό σας και όλα τα δεδομένα του. Δεν θα μπορέσετε να επανενεργοποιήσετε αυτόν τον λογαριασμό.</string>
+  <string name="account_delete_account">Διαγραφή λογαριασμού</string>
+  <string name="account_delete_account_icon_content_description">Κουμπί διαγραφής λογαριασμού</string>
+  <string name="account_sign_out">Αποσύνδεση</string>
+  <string name="account_sign_out_icon_content_description">Κουμπί αποσύνδεσης</string>
+  <string name="account_manage_subscription">Διαχείριση συνδρομής</string>
+  <string name="account_get_user_info_error">Δεν ήταν δυνατή η ανάκτηση των πληροφοριών χρήστη</string>
+  <string name="manage_subscription_icon_content_description">Κουμπί διαχείρισης συνδρομής</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Αποσύνδεση;</string>
+  <string name="alert_confirm_sign_out_message">Είστε βέβαιοι ότι θέλετε να αποσυνδεθείτε;</string>
+</resources>

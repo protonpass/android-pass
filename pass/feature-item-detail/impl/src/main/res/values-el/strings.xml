@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Άνοιγμα</string>
+  <string name="action_copy">Αντιγραφή</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Δεν ήταν δυνατή η προετοιμασία του στοιχείου</string>
+  <string name="top_bar_edit_button_text">Επεξεργασία</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Ψευδώνυμη διεύθυνση</string>
+  <string name="alias_copied_to_clipboard">Το ψευδώνυμο αντιγράφηκε</string>
+  <string name="alias_detail_field_mailboxes_title">Προώθηση σε</string>
+  <string name="alias_create_login_from_alias">Δημιουργία σύνδεσης</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Σημείωση</string>
+  <!-- Login details -->
+  <string name="username_copied_to_clipboard">Το όνομα χρήστη αντιγράφηκε</string>
+  <string name="password_copied_to_clipboard">Ο κωδικός πρόσβασης αντιγράφηκε</string>
+  <string name="website_copied_to_clipboard">Ο ιστότοπος αντιγράφηκε</string>
+  <string name="totp_copied_to_clipboard">Αντιγραφή TOTP</string>
+  <string name="field_copied_to_clipboard">Το πεδίο αντιγράφηκε</string>
+  <string name="move_item_to_trash_message">Το στοιχείο μετακινήθηκε στον κάδο απορριμμάτων</string>
+  <string name="error_move_item_to_trash_message">Σφάλμα κατά τη μετακίνηση στον κάδο απορριμμάτων</string>
+  <string name="item_permanently_deleted_message">Στοιχείο που διαγράφηκε οριστικά</string>
+  <string name="item_permanently_deleted_message_error">Σφάλμα κατά τη διαγραφή στοιχείων</string>
+  <string name="item_restored_message">Έγινε επαναφορά στοιχείου</string>
+  <string name="item_restored_message_error">Σφάλμα κατά την επαναφορά στοιχείου</string>
+  <string name="login_item_generate_totp_error">Σφάλμα κατά τη δημιουργία κωδικού 2FA</string>
+  <string name="login_item_view_alias_button">Προβολή ψευδωνύμου</string>
+  <string name="field_username">Όνομα χρήστη ή διεύθυνση email</string>
+  <string name="field_password">Κωδικός πρόσβασης</string>
+  <string name="websites_section_title">Ιστοσελίδες</string>
+  <string name="totp_section_title">Διακριτικό 2FA (TOTP)</string>
+  <string name="action_reveal_password">Εμφάνιση κωδικού πρόσβασης</string>
+  <string name="action_conceal_password">Απόκρυψη κωδικού πρόσβασης</string>
+  <string name="action_reveal_number">Αποκάλυψη αριθμού</string>
+  <string name="action_conceal_number">Απόκρυψή αριθμού</string>
+  <string name="more_info_created">Δημιουργήθηκε:</string>
+  <string name="more_info_modified">Τροποποιημένα:</string>
+  <string name="more_info_autofilled">Αυτόματη συμπλήρωση:</string>
+  <string name="more_info_title">Περισσότερες πληροφορίες</string>
+  <string name="more_info_icon">Εικονίδιο περισσότερες πληροφορίες</string>
+  <plurals name="more_info_modified_times">
+    <item quantity="one">Μία φορά</item>
+    <item quantity="other">%d φορές</item>
+  </plurals>
+  <string name="more_info_last_time_modified">Τελευταία φορά, %s</string>
+  <string name="open_menu_icon_content_description">Άνοιγμα κουμπιού μενού</string>
+  <string name="mfa_limit_reached">Επιτεύχθηκε το όριο 2FA</string>
+  <string name="mfa_icon_content_description">Εικονίδιο 2FA</string>
+  <string name="custom_field_text_icon_description">Προσαρμοσμένο πεδίο κειμένου</string>
+  <string name="custom_field_hidden_icon_description">Κρυφό προσαρμοσμένο πεδίο</string>
+  <string name="custom_field_totp_icon_description">Προσαρμοσμένο πεδίο 2FA</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Όνομα κατόχου κάρτας</string>
+  <string name="credit_card_number_field_name">Αριθμός κάρτας</string>
+  <string name="credit_card_cvv_field_name">Αριθμός επαλήθευσης</string>
+  <string name="credit_card_pin_field_name">Αριθμός PIN</string>
+  <string name="credit_card_expiration_date_field_name">Λήγει στις</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Ο κάτοχος της κάρτας αντιγράφηκε στο πρόχειρο</string>
+  <string name="credit_card_number_copied_to_clipboard">Ο αριθμός της κάρτας αντιγράφηκε στο πρόχειρο</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Ο αριθμός επαλήθευσης αντιγράφηκε στο πρόχειρο</string>
+  <string name="credit_card_pin_copied_to_clipboard">Το PIN αντιγράφηκε στο πρόχειρο</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Μετακίνηση στον κάδο απορριμμάτων</string>
+  <string name="migrate_item_detail_bottom_sheet">Μετακίνηση σε άλλη κρύπτη</string>
+  <!-- More info -->
+  <string name="date_today">Σήμερα %s</string>
+  <string name="date_yesterday">Χθες %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+</resources>

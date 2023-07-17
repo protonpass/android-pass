@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Geri yükle</string>
+  <string name="bottomsheet_delete_permanently">Kalıcı olarak sil</string>
+  <string name="alert_confirm_delete_item_dialog_title">Kalıcı olarak silinsin mi?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Bu işlem geri alınamaz.</string>
+  <string name="alias_dialog_move_to_trash_title">Çöpe atılsın mı?</string>
+  <string name="alias_dialog_move_to_trash_content">Bir takma adı çöpe atarsanız e-postaları gelen kutunuza iletmeyi bırakır.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Onayla</string>
+</resources>

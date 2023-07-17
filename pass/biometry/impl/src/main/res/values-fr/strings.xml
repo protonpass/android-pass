@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">Application verrouillée</string>
+  <string name="biometric_prompt_subtitle">Déverrouiller en utilisant le système de verrouillage de votre appareil</string>
+  <string name="biometric_prompt_cancel">Annuler</string>
+</resources>

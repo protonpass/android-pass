@@ -36,9 +36,9 @@ class NeedsBiometricAuthImpl @Inject constructor(
         preferencesRepository.getHasAuthenticated().distinctUntilChanged(),
         preferencesRepository.getAppLockTimePreference().distinctUntilChanged(),
         authTimeHolder.getBiometryAuthData().distinctUntilChanged()
-    ) { biometricLock, hasAuthenticated, appLockTimePreference, biometryAuthTime ->
+    ) { appLockState, hasAuthenticated, appLockTimePreference, biometryAuthTime ->
         NeedsAuthChecker.needsAuth(
-            biometricLock = biometricLock,
+            appLockState = appLockState,
             hasAuthenticated = hasAuthenticated,
             appLockTimePreference = appLockTimePreference,
             lastUnlockTime = biometryAuthTime.authTime,

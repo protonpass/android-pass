@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -56,7 +58,9 @@ fun EnterPinContent(
     onPinSubmit: () -> Unit
 ) {
     Column(
-        modifier = modifier.padding(32.dp),
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .padding(32.dp),
         horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(32.dp, CenterVertically)
     ) {

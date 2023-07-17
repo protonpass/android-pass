@@ -38,7 +38,13 @@ class FeatureFlagsViewModel @Inject constructor(
 
     val state = combine(
         ffRepository.get<Boolean>(FeatureFlag.AUTOFILL_DEBUG_MODE),
-    ) { autofillDebug -> mapOf(FeatureFlag.AUTOFILL_DEBUG_MODE to autofillDebug) }
+        ffRepository.get<Boolean>(FeatureFlag.SHARING_V1)
+    ) { autofillDebug, sharing ->
+        mapOf(
+            FeatureFlag.AUTOFILL_DEBUG_MODE to autofillDebug,
+            FeatureFlag.SHARING_V1 to sharing
+        )
+    }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
     fun <T> override(featureFlag: FeatureFlag, value: T) = viewModelScope.launch {

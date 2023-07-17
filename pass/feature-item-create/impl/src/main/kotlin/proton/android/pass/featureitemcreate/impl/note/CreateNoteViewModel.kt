@@ -54,6 +54,7 @@ import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteC
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.IncItemCreatedCount
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
@@ -68,6 +69,7 @@ class CreateNoteViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
+    private val incItemCreatedCount: IncItemCreatedCount,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
     canPerformPaidAction: CanPerformPaidAction
@@ -163,6 +165,7 @@ class CreateNoteViewModel @Inject constructor(
                         snackbarDispatcher(ItemCreationError)
                     }
                     .map { item ->
+                        incItemCreatedCount()
                         isItemSavedState.update {
                             encryptionContextProvider.withEncryptionContext {
                                 ItemSavedState.Success(

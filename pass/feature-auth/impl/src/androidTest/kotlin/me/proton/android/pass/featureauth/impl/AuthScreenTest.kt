@@ -85,7 +85,7 @@ class AuthScreenTest {
     @Test
     fun onBiometricLockEnabledAndBiometricResultSuccessAuthSuccessCalled() {
         val checker = CallChecker<Unit>()
-        userPreferencesRepository.setBiometricLockState(BiometricLockState.Enabled)
+        userPreferencesRepository.setAppLockState(AppLockState.Enabled)
         runBlocking {
             biometryManager.emitResult(BiometryResult.Success)
         }

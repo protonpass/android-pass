@@ -749,13 +749,15 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
                 AuthNavigation.Success -> {
-                    if (appNavigator.hasDestinationInStack(AppLockTypeBottomsheet)) {
-                        appNavigator.navigateUpWithResult(
-                            key = ENTER_PIN_PARAMETER_KEY,
-                            value = true
-                        )
-                    } else {
-                        appNavigator.onBackClick()
+                    when {
+                        appNavigator.hasPreviousDestination(AppLockTypeBottomsheet) ||
+                            appNavigator.hasPreviousDestination(Profile) ->
+                            appNavigator.navigateUpWithResult(
+                                key = ENTER_PIN_PARAMETER_KEY,
+                                value = true
+                            )
+
+                        else -> appNavigator.onBackClick()
                     }
                 }
 

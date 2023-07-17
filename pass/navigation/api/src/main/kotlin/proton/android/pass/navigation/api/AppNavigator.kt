@@ -95,6 +95,9 @@ class AppNavigator(
     fun hasDestinationInStack(destination: NavItem): Boolean =
         navController.currentBackStack.value.any { it.destination.route == destination.route }
 
+    fun hasPreviousDestination(destination: NavItem): Boolean =
+        navController.previousBackStackEntry.run { this?.destination?.route == destination.route }
+
     fun popUpTo(destination: NavItem, comesFromBottomsheet: Boolean = false) {
         if (!lifecycleIsResumed() && !comesFromBottomsheet) {
             PassLogger.d(TAG, "PopUpTo: Navigation event discarded as it was duplicated.")

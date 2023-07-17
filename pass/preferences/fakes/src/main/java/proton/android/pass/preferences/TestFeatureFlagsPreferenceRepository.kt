@@ -28,6 +28,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     FeatureFlagsPreferencesRepository {
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = when (featureFlag) {
         FeatureFlag.AUTOFILL_DEBUG_MODE -> flowOf(false as T)
+        FeatureFlag.SHARING_V1 -> flowOf(false as T)
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =

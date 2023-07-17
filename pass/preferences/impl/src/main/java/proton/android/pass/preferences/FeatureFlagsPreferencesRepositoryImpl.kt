@@ -22,17 +22,15 @@ import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import me.proton.android.pass.preferences.BoolFlagPrefProto
 import me.proton.android.pass.preferences.BooleanPrefProto
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.featureflag.domain.FeatureFlagManager
-import me.proton.core.featureflag.domain.entity.FeatureId
+import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
+import proton.android.pass.preferences.FeatureFlag.SHARING_V1
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -40,14 +38,14 @@ import javax.inject.Singleton
 @Suppress("UNCHECKED_CAST")
 @Singleton
 class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val featureFlagManager: FeatureFlagManager,
+    private val featureFlagManager: FeatureFlagRepository,
     private val dataStore: DataStore<FeatureFlagsPreferences>
 ) : FeatureFlagsPreferencesRepository {
 
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> =
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> getFeatureFlag(featureFlag.key) { autofillDebugModeEnabled.value }
+            SHARING_V1 -> getFeatureFlag(featureFlag.key) { sharingV1Enabled.value }
         }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =
@@ -55,22 +53,21 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             AUTOFILL_DEBUG_MODE -> setFeatureFlag {
                 autofillDebugModeEnabled = boolFlagPrefProto(value)
             }
+            SHARING_V1 -> setFeatureFlag {
+                sharingV1Enabled = boolFlagPrefProto(value)
+            }
         }
 
     private fun <T> getFeatureFlag(key: String?, prefGetter: FeatureFlagsPreferences.() -> BooleanPrefProto): Flow<T> =
         if (key != null) {
-            accountManager.getPrimaryUserId()
-                .filterNotNull()
-                .flatMapLatest { userId ->
-                    featureFlagManager.observe(userId = userId, featureId = FeatureId(key))
-                }
+            featureFlagManager.isFeatureEnabled(key)
                 .flatMapLatest { ff ->
                     dataStore.data
                         .catch { exception -> handleExceptions(exception) }
                         .map { preferences ->
                             fromBooleanPrefProto(
-                                prefGetter(preferences),
-                                ff?.value ?: false
+                                pref = prefGetter(preferences),
+                                default = ff
                             ) as T
                         }
                 }

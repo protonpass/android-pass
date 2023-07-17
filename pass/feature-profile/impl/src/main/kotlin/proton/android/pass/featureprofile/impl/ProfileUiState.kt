@@ -28,6 +28,7 @@ import proton.android.pass.preferences.BiometricSystemLockPreference
 sealed interface ProfileEvent {
     object Unknown : ProfileEvent
     object OpenFeatureFlags : ProfileEvent
+    object ConfigurePin : ProfileEvent
 }
 
 @Stable

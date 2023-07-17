@@ -20,6 +20,8 @@ package proton.android.pass.featureprofile.impl
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
@@ -72,8 +74,14 @@ fun NavGraphBuilder.profileGraph(
     onNavigateEvent: (ProfileNavigation) -> Unit
 ) {
     composable(Profile) {
+        val enterPinSuccess by it.savedStateHandle.getStateFlow(ENTER_PIN_PARAMETER_KEY, false)
+            .collectAsStateWithLifecycle()
         BackHandler { onNavigateEvent(ProfileNavigation.Finish) }
-        ProfileScreen(onNavigateEvent = onNavigateEvent)
+        ProfileScreen(
+            enterPinSuccess = enterPinSuccess,
+            onNavigateEvent = onNavigateEvent,
+            onClearPinSuccess = { it.savedStateHandle.remove<Boolean>(ENTER_PIN_PARAMETER_KEY) }
+        )
     }
     bottomSheet(FeedbackBottomsheet) {
         FeedbackBottomsheet(onNavigateEvent = onNavigateEvent)

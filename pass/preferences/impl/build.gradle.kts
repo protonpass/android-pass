@@ -59,7 +59,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.startup.runtime)
     implementation(libs.core.accountManager.domain)
-    implementation(libs.core.featureFlag.domain)
     implementation(libs.core.utilKotlin)
     implementation(libs.google.protobuf.kotlin.lite)
     implementation(libs.kotlinx.coroutines.core)
@@ -70,6 +69,7 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.common.api)
-    implementation(projects.pass.log.api)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.data.api)
+    implementation(projects.pass.log.api)
 }

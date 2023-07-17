@@ -27,5 +27,10 @@ enum class FeatureFlag(
         title = "Autofill debug mode",
         description = "Enable autofill debug mode",
         key = null // Cannot be activated server-side
+    ),
+    SHARING_V1(
+        title = "Sharing (v1)",
+        description = "Enable sharing (v1)",
+        key = "PassSharingV1"
     )
 }

@@ -103,6 +103,12 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         it.masterPasswordAttempts
     }
 
+    override fun setItemCreateCount(count: Int): Result<Unit> = setPreference {
+        it.setItemCreateCount(count)
+    }
+
+    override fun getItemCreateCount(): Flow<Int> = getPreference { it.itemCreateCount }
+
     override fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> = setPreference {
         it.setMasterPasswordAttempts(count)
     }

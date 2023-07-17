@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Απολαύστε τη δωρεάν δοκιμή σας</string>
+  <string name="trial_subtitle">Για διαχείριση κωδικών πρόσβασης επόμενου επιπέδου:</string>
+  <string name="trial_feature_1">20 κρύπτες</string>
+  <string name="trial_feature_2">Απεριόριστα ψευδώνυμα email</string>
+  <string name="trial_feature_3">Ενσωματωμένος ελεγκτής 2FA</string>
+  <string name="trial_feature_4">Προσαρμοσμένα πεδία</string>
+  <string name="trial_button_text">Αναβάθμιση για να διατηρήσετε αυτές τις δυνατότητες</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Απομένει 1 ημέρα στη δοκιμαστική περίοδο σας</item>
+    <item quantity="other">Απομένουν %d ημέρες στη δοκιμαστική περίοδο σας</item>
+  </plurals>
+  <string name="trial_learn_more">Μάθετε περισσότερα</string>
+</resources>

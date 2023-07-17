@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Home -->
+  <string name="home_empty_vault_title">Votre coffre-fort est vide.</string>
+  <string name="home_empty_vault_subtitle">Commencez par créer votre premier élément.</string>
+  <string name="home_empty_vault_create_login">Créer un identifiant</string>
+  <string name="home_empty_vault_create_alias">Créer un alias « Hide My Email »</string>
+  <string name="home_empty_vault_create_note">Créer une note</string>
+  <string name="error_observing_items">Une erreur s\'est produite sur les éléments.</string>
+  <string name="error_observing_share">Une erreur s\'est produite sur le partage.</string>
+  <string name="error_refreshing">Une erreur s\'est produite pendant l\'actualisation.</string>
+  <string name="home_snackbar_login_moved_to_trash">L\'identifiant a été déplacé dans la Corbeille.</string>
+  <string name="home_snackbar_alias_moved_to_trash">L\'alias a été déplacé dans la Corbeille.</string>
+  <string name="home_snackbar_note_moved_to_trash">La note a été déplacée dans la Corbeille.</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">La carte de crédit a été déplacée dans la corbeille.</string>
+  <string name="home_snackbar_move_to_trash_error">Impossible de déplacer dans la Corbeille</string>
+  <string name="home_autofill_banner_title">Profitez du confort du remplissage automatique</string>
+  <string name="home_autofill_banner_text">Il vous suffit d\'appuyer pour que votre nom d\'utilisateur et votre mot de passe soient immédiatement renseignés.</string>
+  <string name="home_autofill_banner_settings">Activer le remplissage automatique ›</string>
+  <string name="home_trial_banner_title">Profitez de votre essai gratuit.</string>
+  <string name="home_trial_banner_text">Découvrez toutes les fonctionnalités exclusives qui vous sont proposées pour une durée limitée.</string>
+  <string name="home_trial_banner_settings">En savoir plus ›</string>
+  <!-- Common bottomsheet -->
+  <string name="bottomsheet_copy_password">Copier le mot de passe</string>
+  <string name="bottomsheet_copy_username">Copier le nom d\'utilisateur</string>
+  <string name="bottomsheet_copy_alias">Copier l’adresse e-mail</string>
+  <string name="bottomsheet_copy_number">Copier le numéro</string>
+  <string name="bottomsheet_copy_cvv">Copier le CVV</string>
+  <string name="bottomsheet_copy_note">Copier la note</string>
+  <string name="bottomsheet_edit">Modifier</string>
+  <!-- Clipboard -->
+  <string name="alias_copied_to_clipboard">L\'alias a été copié.</string>
+  <string name="note_copied_to_clipboard">La note a été copiée.</string>
+  <string name="username_copied_to_clipboard">Le nom d\'utilisateur a été copié.</string>
+  <string name="password_copied_to_clipboard">Le mot de passe a été copié.</string>
+  <string name="credit_card_number_copied_to_clipboard">Le numéro de carte de crédit a été copié.</string>
+  <string name="credit_card_pin_copied_to_clipboard">Le PIN de la carte de crédit a été copié.</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Le CVV de la carte de crédit a été copié.</string>
+  <string name="item_too_long_copied_to_clipboard">Le contenu était trop long, il a été partiellement copié dans le presse-papiers.</string>
+  <!-- Vault drawer -->
+  <string name="vault_drawer_vaults_title">Coffres-forts</string>
+  <string name="vault_drawer_vaults_item_count">%d éléments</string>
+  <string name="vault_drawer_create_vault">Créer un coffre-fort</string>
+  <string name="vault_drawer_item_trash">Corbeille</string>
+  <string name="vault_drawer_all_vaults">Tous les coffres-forts</string>
+  <!-- Vault management -->
+  <string name="vault_delete_dialog_title">Supprimer le coffre-fort</string>
+  <string name="vault_delete_dialog_cancel_action">Annuler</string>
+  <string name="vault_delete_dialog_delete_action">Supprimer</string>
+  <string name="snackbar_delete_vault_success">Le coffre-fort a été supprimé.</string>
+  <string name="snackbar_delete_vault_error">Le coffre-fort n\'a pas été supprimé.</string>
+  <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_vaults">Rechercher dans tous les coffres-forts…</string>
+  <string name="search_topbar_placeholder_vault">Rechercher dans %s…</string>
+  <string name="search_topbar_placeholder_trash">Rechercher dans la Corbeille…</string>
+  <string name="item_type_filter_list_icon_content_description">Icône type d\'élément</string>
+  <string name="item_type_filter_all">Tous</string>
+  <string name="item_type_filter_login">Identifiant</string>
+  <string name="item_type_filter_alias">Alias</string>
+  <string name="item_type_filter_note">Note</string>
+  <string name="item_type_filter_credit_card">Carte</string>
+  <!-- Trash -->
+  <string name="trash_empty_list_title">La Corbeille est vide.</string>
+  <string name="trash_empty_list_message">Les éléments déplacés dans la Corbeille apparaissent ici.</string>
+  <string name="bottomsheet_trash_all_items_title">Corbeille</string>
+  <string name="bottomsheet_restore_all_items">Restaurer tous les éléments</string>
+  <string name="bottomsheet_empty_trash">Vider la Corbeille</string>
+  <string name="trash_error_clearing_trash">Une erreur s\'est produite pendant la suppression des éléments de la Corbeille.</string>
+  <string name="trash_error_restoring_items">Une erreur s\'est produite pendant la restauration des éléments.</string>
+  <string name="trash_error_deleting_item">Une erreur s\'est produite pendant la suppression de l\'élément.</string>
+  <!-- Alerts -->
+  <string name="alert_confirm_clear_trash_title">Vider la Corbeille ?</string>
+  <string name="alert_confirm_clear_trash_message">Voulez-vous vraiment vider la Corbeille ? Tous les éléments qu\'elle contient seront définitivement supprimés.</string>
+  <string name="alert_confirm_restore_all_title">Restaurer tous les éléments ?</string>
+  <string name="alert_confirm_restore_all_message">Voulez-vous vraiment restaurer tous les éléments mis à la Corbeille ?</string>
+  <!-- Recent search -->
+  <string name="recent_search_header_count">Recherches récentes</string>
+  <string name="recent_search_clear">Effacer</string>
+  <string name="recent_search_remove_item">Retirer des recherches récentes</string>
+</resources>

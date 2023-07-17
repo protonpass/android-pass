@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Profitez de votre essai gratuit.</string>
+  <string name="trial_subtitle">Tout ce qu\'il vous faut pour gérer vos mots de passe de façon optimale :</string>
+  <string name="trial_feature_1">20 coffres-forts</string>
+  <string name="trial_feature_2">Nombre illimité d\'alias</string>
+  <string name="trial_feature_3">Authentification à deux facteurs (A2F) intégrée</string>
+  <string name="trial_feature_4">Champs personnalisés</string>
+  <string name="trial_button_text">Changer d\'abonnement pour garder ces fonctionnalités</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Il vous reste un jour d’essai gratuit.</item>
+    <item quantity="other">Il vous reste %d jours d’essai gratuit.</item>
+  </plurals>
+  <string name="trial_learn_more">En savoir plus</string>
+</resources>

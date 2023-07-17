@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Home -->
+  <string name="home_empty_vault_title">Brankas Anda kosong</string>
+  <string name="home_empty_vault_subtitle">Mulailah dengan membuat item pertama Anda.</string>
+  <string name="home_empty_vault_create_login">Buat login</string>
+  <string name="home_empty_vault_create_alias">Buat alias Hide My Email</string>
+  <string name="home_empty_vault_create_note">Buat catatan</string>
+  <string name="error_observing_items">Terdapat kesalahan dalam mengamati item</string>
+  <string name="error_observing_share">Terdapat kesalahan dalam mengamati share</string>
+  <string name="error_refreshing">Terjadi kesalahan saat memuat ulang</string>
+  <string name="home_snackbar_login_moved_to_trash">Login dipindahkan ke sampah</string>
+  <string name="home_snackbar_alias_moved_to_trash">Alias dipindahkan ke sampah</string>
+  <string name="home_snackbar_note_moved_to_trash">Catatan dipindahkan ke sampah</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">Kartu kredit dipindahkan ke tempat sampah</string>
+  <string name="home_snackbar_move_to_trash_error">Tidak dapat memindahkan ke tempat sampah</string>
+  <string name="home_autofill_banner_title">Nikmati keajaiban Isi Otomatis</string>
+  <string name="home_autofill_banner_text">Satu ketukan saja dan—presto!—nama pengguna dan kata sandi Anda akan diisi secara instan.</string>
+  <string name="home_autofill_banner_settings">Aktifkan Isi Otomatis ›</string>
+  <string name="home_trial_banner_title">Nikmati masa uji coba gratis Anda</string>
+  <string name="home_trial_banner_text">Lihat semua fitur eksklusif yang tersedia untuk Anda hanya untuk waktu terbatas.</string>
+  <string name="home_trial_banner_settings">Pelajari lebih lanjut ›</string>
+  <!-- Common bottomsheet -->
+  <string name="bottomsheet_copy_password">Salin kata sandi</string>
+  <string name="bottomsheet_copy_username">Salin nama pengguna</string>
+  <string name="bottomsheet_copy_alias">Salin alamat email</string>
+  <string name="bottomsheet_copy_number">Salin nomor</string>
+  <string name="bottomsheet_copy_cvv">Salin CVV</string>
+  <string name="bottomsheet_copy_note">Salin catatan</string>
+  <string name="bottomsheet_edit">Sunting</string>
+  <!-- Clipboard -->
+  <string name="alias_copied_to_clipboard">Alias disalin</string>
+  <string name="note_copied_to_clipboard">Catatan disalin</string>
+  <string name="username_copied_to_clipboard">Nama pengguna disalin</string>
+  <string name="password_copied_to_clipboard">Kata sandi disalin</string>
+  <string name="credit_card_number_copied_to_clipboard">Nomor kartu kredit disalin</string>
+  <string name="credit_card_pin_copied_to_clipboard">PIN kartu kredit disalin</string>
+  <string name="credit_card_cvv_copied_to_clipboard">CVV kartu kredit disalin</string>
+  <string name="item_too_long_copied_to_clipboard">Content was too long, partially copied to the clipboard</string>
+  <!-- Vault drawer -->
+  <string name="vault_drawer_vaults_title">Brankas</string>
+  <string name="vault_drawer_vaults_item_count">%d item</string>
+  <string name="vault_drawer_create_vault">Buat brankas</string>
+  <string name="vault_drawer_item_trash">Sampah</string>
+  <string name="vault_drawer_all_vaults">Semua brankas</string>
+  <!-- Vault management -->
+  <string name="vault_delete_dialog_title">Hapus brankas</string>
+  <string name="vault_delete_dialog_cancel_action">Batal</string>
+  <string name="vault_delete_dialog_delete_action">Hapus</string>
+  <string name="snackbar_delete_vault_success">Brankas dihapus</string>
+  <string name="snackbar_delete_vault_error">Brankas tidak dihapus</string>
+  <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_vaults">Cari di seluruh berkas…</string>
+  <string name="search_topbar_placeholder_vault">Cari di %s…</string>
+  <string name="search_topbar_placeholder_trash">Cari di Sampah…</string>
+  <string name="item_type_filter_list_icon_content_description">Ikon tipe item</string>
+  <string name="item_type_filter_all">Semua</string>
+  <string name="item_type_filter_login">Login</string>
+  <string name="item_type_filter_alias">Alias</string>
+  <string name="item_type_filter_note">Catatan</string>
+  <string name="item_type_filter_credit_card">Kartu</string>
+  <!-- Trash -->
+  <string name="trash_empty_list_title">Sampah kosong</string>
+  <string name="trash_empty_list_message">Item yang dipindahkan ke sampah akan muncul di sini.</string>
+  <string name="bottomsheet_trash_all_items_title">Sampah</string>
+  <string name="bottomsheet_restore_all_items">Pulihkan semua item</string>
+  <string name="bottomsheet_empty_trash">Kosongkan sampah</string>
+  <string name="trash_error_clearing_trash">Terdapat kesalahan dalam membersihkan sampah</string>
+  <string name="trash_error_restoring_items">Terdapat kesalahan dalam memulihkan item</string>
+  <string name="trash_error_deleting_item">Terdapat kesalahan dalam menghapus item</string>
+  <!-- Alerts -->
+  <string name="alert_confirm_clear_trash_title">Bersihkan sampah?</string>
+  <string name="alert_confirm_clear_trash_message">Anda yakin ingin mengosongkan tempat sampah? Semua item dalam tempat sampah akan dihapus secara permanen.</string>
+  <string name="alert_confirm_restore_all_title">Pulihkan semua item?</string>
+  <string name="alert_confirm_restore_all_message">Apakah Anda yakin ingin memulihkan seluruh item yang telah dibuang ke sampah?</string>
+  <!-- Recent search -->
+  <string name="recent_search_header_count">Pencarian terkini</string>
+  <string name="recent_search_clear">Kosongkan</string>
+  <string name="recent_search_remove_item">Hapus dari riwayat pencarian terkini</string>
+</resources>

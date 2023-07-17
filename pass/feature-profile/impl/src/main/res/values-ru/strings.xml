@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Profile</string>
+  <string name="profile_option_settings">Settings</string>
+  <string name="profile_option_account">Account</string>
+  <string name="profile_help_center">Help center</string>
+  <string name="profile_security">Security</string>
+  <string name="profile_option_feedback">Feedback</string>
+  <string name="profile_option_import_export">Import/export</string>
+  <string name="profile_option_rating">Rate app</string>
+  <string name="profile_option_autofill">Autofill</string>
+  <string name="profile_option_autofill_subtitle">Automatically fill in your usernames and passwords.</string>
+  <string name="profile_option_fingerprint">Fingerprint</string>
+  <string name="profile_option_automatic_app_lock">Automatic app locking</string>
+  <string name="profile_option_advanced">Advanced</string>
+  <string name="profile_error_biometry_failed_to_start">Could not start the biometric authentication</string>
+  <string name="profile_error_biometry_failed_to_authenticate">Failed to authenticate</string>
+  <string name="profile_fingerprint_lock_enabled">Fingerprint unlock enabled</string>
+  <string name="profile_fingerprint_lock_disabled">Fingerprint unlock disabled</string>
+  <string name="profile_error_performing_operation">Error performing operation</string>
+  <string name="profile_app_version_copied_to_clipboard">App version copied</string>
+  <string name="feedback_option_reddit">Check out Proton on Reddit</string>
+  <string name="feedback_option_mail">Send us a message</string>
+  <string name="feedback_option_vote_new_features">Vote for new features</string>
+  <string name="app_lock_immediately">Immediately</string>
+  <string name="app_lock_one_minute">After 1 minute</string>
+  <string name="app_lock_two_minutes">After 2 minutes</string>
+  <string name="app_lock_five_minutes">After 5 minutes</string>
+  <string name="app_lock_ten_minutes">After 10 minutes</string>
+  <string name="app_lock_one_hour">After 1 hour</string>
+  <string name="app_lock_four_hours">After 4 hours</string>
+  <string name="profile_account_plan_name_trial">Free Trial</string>
+  <string name="app_lock_config_biometric">Biometric</string>
+  <string name="app_lock_config_pin_code">PIN code</string>
+  <string name="app_lock_config_unlock_with">Unlock with</string>
+  <string name="app_lock_config_app_lock_time">App lock time</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Use system lock when biometric fails</string>
+</resources>

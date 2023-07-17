@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 vaults</string>
+  <string name="unlimited_email_alias">Unlimited email aliases</string>
+  <string name="custom_fields">Zelf gedefinieerde velden</string>
+  <string name="restart_to_complete_the_update">Herstart op de update te vervolledigen</string>
+  <string name="action_restart">Herstart</string>
+</resources>

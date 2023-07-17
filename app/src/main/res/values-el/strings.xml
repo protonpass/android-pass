@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 κρύπτες</string>
+  <string name="unlimited_email_alias">Απεριόριστα ψευδώνυμα email</string>
+  <string name="custom_fields">Προσαρμοσμένα πεδία</string>
+  <string name="restart_to_complete_the_update">Για ολοκλήρωση της ενημέρωσης, κάντε επανεκκίνηση</string>
+  <string name="action_restart">Επανεκκίνηση</string>
+</resources>

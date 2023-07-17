@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 Tresore</string>
+  <string name="unlimited_email_alias">Unbegrenzte E-Mail-Aliasse</string>
+  <string name="custom_fields">Benutzerdefinierte Felder</string>
+  <string name="restart_to_complete_the_update">Neu starten, um das Update abzuschließen.</string>
+  <string name="action_restart">Neu starten</string>
+</resources>

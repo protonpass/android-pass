@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Copiar e fechar</string>
+  <string name="password_copied_to_clipboard">A palavra-passe foi copiada.</string>
+  <string name="bottomsheet_generate_password_title">Gerar uma palavra-passe</string>
+  <string name="password_type">Tipo</string>
+  <string name="special_characters">Carateres especiais (!&amp;*)</string>
+  <string name="character_count">%s carateres</string>
+  <string name="word_count">%s palavras</string>
+  <string name="word_separator">Separador de palavras</string>
+  <string name="bottomsheet_option_capital_letters">Letras maiúsculas (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Maiúsculas</string>
+  <string name="bottomsheet_option_include_numbers">Incluir números (0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Hífens ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Espaços</string>
+  <string name="bottomsheet_option_word_separator_periods">Pontos ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Vírgulas ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Sublinhados ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Números</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Números e símbolos</string>
+  <string name="regenerate_password_icon_content_description">Botão para regenerar a palavra-passe</string>
+  <string name="password_mode_memorable">Palavra-passe memorável</string>
+  <string name="password_mode_random">Palavra-passe aleatória</string>
+  <string name="password_mode_icon">Ícone do modo de palavra-passe</string>
+  <string name="password_words_separator_icon">Separador de palavras da palavra-passe</string>
+</resources>

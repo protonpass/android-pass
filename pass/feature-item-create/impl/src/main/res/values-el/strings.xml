@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Αποθήκευση</string>
+  <string name="action_remove">Αφαίρεση</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Σύνδεση</string>
+  <string name="action_alias">Ψευδώνυμο</string>
+  <string name="action_note">Σημείωση</string>
+  <string name="action_credit_card">Πιστωτική κάρτα</string>
+  <string name="action_password">Κωδικός</string>
+  <string name="item_type_login_description">Προσθήκη στοιχείων σύνδεσης για μια εφαρμογή ή έναν ιστότοπο</string>
+  <string name="item_type_alias_description">Αποκτήστε ένα ψευδώνυμο ηλεκτρονικού ταχυδρομείου για χρήση σε νέες εφαρμογές</string>
+  <string name="item_type_note_description">Σημειώστε ένα PIN, έναν κωδικό ή μια σημείωση στον εαυτό σας</string>
+  <string name="item_type_credit_card_description">Αποθηκεύστε με ασφάλεια τα στοιχεία πληρωμής σας</string>
+  <string name="item_type_password_description">Δημιουργήσετε έναν ασφαλή κωδικό πρόσβασης</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Δημιουργία σύνδεσης</string>
+  <string name="field_username_title">Όνομα χρήστη ή διεύθυνση email</string>
+  <string name="field_username_hint">Προσθήκη ονόματος χρήστη ή διεύθυνσης email</string>
+  <string name="field_password_title">Κωδικός πρόσβασης</string>
+  <string name="field_password_hint">Προσθήκη κωδικού πρόσβασης</string>
+  <string name="field_website_address_title">Ιστοσελίδα</string>
+  <string name="field_website_address_invalid">Μην έγκυρη διεύθυνση URL</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Προσθήκη</string>
+  <string name="sticky_button_generate_password">Δημιουργήσετε ένα νέο κωδικό πρόσβασης</string>
+  <string name="sticky_button_create_alias">Απόκρυψη της διεύθυνσης ηλεκτρονικού ταχυδρομείου μου</string>
+  <string name="sticky_button_use_account_email">Χρήση %s</string>
+  <string name="create_login_item_creation_error">Δεν ήταν δυνατή η δημιουργία σύνδεσης</string>
+  <string name="create_login_item_update_error">Δεν ήταν δυνατή η ενημέρωση της σύνδεσης</string>
+  <string name="create_login_init_error">Δεν ήταν δυνατή η προετοιμασία της σύνδεσης</string>
+  <string name="create_login_invalid_totp">Το περιεχόμενο 2FA δεν είναι έγκυρο</string>
+  <string name="login_created">Η σύνδεση δημιουργήθηκε</string>
+  <string name="bottomsheet_modify_alias_title">Τροποποίηση ψευδωνύμου</string>
+  <string name="bottomsheet_custom_field_type_text">Κείμενο</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Προσαρμοσμένο πεδίο κειμένου</string>
+  <string name="bottomsheet_custom_field_type_hidden">Κρυφό πεδίο</string>
+  <string name="bottomsheet_custom_field_type_totp">Μυστικό 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Επεξεργασία τίτλου</string>
+  <string name="bottomsheet_custom_field_option_remove">Αφαίρεση πεδίου</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Κατάργηση προσαρμοσμένου πεδίου</string>
+  <string name="create_login_add_custom_field_button">Προσθέστε περισσότερα</string>
+  <string name="custom_field_hidden_placeholder">Το κρυφό περιεχόμενό σας</string>
+  <string name="custom_field_hidden_icon_content_description">Εικονίδιο κρυφού προσαρμοσμένου πεδίου</string>
+  <string name="custom_field_text_placeholder">Το περιεχόμενό σας</string>
+  <string name="custom_field_dialog_title">Προσαρμοσμένο πεδίο</string>
+  <string name="custom_field_dialog_body">Εισαγάγετε ένα όνομα για το προσαρμοσμένο πεδίο σας</string>
+  <string name="custom_field_dialog_placeholder">Όνομα του προσαρμοσμένου πεδίου</string>
+  <string name="custom_field_options_content_description">Επιλογές προσαρμοσμένου πεδίου</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Δημιουργία σημείωσης</string>
+  <string name="create_note_item_creation_error">Δεν ήταν δυνατή η δημιουργία σημείωσης</string>
+  <string name="create_note_item_update_error">Δεν ήταν δυνατή η ενημέρωση της σημείωσης</string>
+  <string name="create_note_init_error">Δεν ήταν δυνατή η προετοιμασία της σημείωσης</string>
+  <string name="create_note_empty_share_id">Το αναγνωριστικό κοινής χρήσης δεν μπορεί να είναι κενό</string>
+  <string name="note_created">Η σημείωση δημιουργήθηκε</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">Η σημείωση μετακινήθηκε στον κάδο απορριμμάτων</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">Δεν ήταν δυνατή η διαγραφή σημείωσης</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Δημιουργία ψευδώνυμου</string>
+  <string name="field_alias_title">Ψευδώνυμη διεύθυνση</string>
+  <string name="field_alias_hint">Ψευδώνυμο όνομα χρήστη</string>
+  <string name="field_mailboxes_creation_title">Προώθηση σε</string>
+  <string name="field_mailboxes_edit_title">Προώθηση σε</string>
+  <string name="field_alias_you_are_about_to_create">Είστε έτοιμοι να δημιουργήσετε</string>
+  <string name="field_alias_prefix">Πρόθεμα</string>
+  <string name="field_alias_suffix">Επίθεμα</string>
+  <string name="alias_bottomsheet_alias_title">Ψευδώνυμο</string>
+  <string name="alias_bottomsheet_suffix_title">Επίθεμα</string>
+  <string name="create_alias_item_creation_error">Δεν ήταν δυνατή η δημιουργία ψευδωνύμου</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Δεν μπορείτε να δημιουργήσετε άλλα ψευδώνυμα</string>
+  <string name="create_alias_email_not_validated_error">Δεν μπορείτε να δημιουργήσετε ψευδώνυμα χωρίς πρώτα να επικυρώσετε το email σας</string>
+  <string name="alias_rate_limited">Πάρα πολλά ψευδώνυμα δημιουργήθηκαν πρόσφατα</string>
+  <string name="create_alias_item_update_error">Δεν ήταν δυνατή η ενημέρωση του ψευδωνύμου</string>
+  <string name="create_alias_init_error">Δεν ήταν δυνατή η προετοιμασία του ψευδωνύμου</string>
+  <string name="create_alias_empty_share_id">Το αναγνωριστικό κοινής χρήσης δεν μπορεί να είναι κενό</string>
+  <string name="alias_created">Δημιουργήθηκε ψευδώνυμο</string>
+  <string name="alias_moved_to_trash">Το ψευδώνυμο μεταφέρθηκε στον κάδο απορριμμάτων</string>
+  <string name="cannot_retrieve_alias_options">Δεν είναι δυνατή η ανάκτηση επιλογών ψευδωνύμου</string>
+  <string name="alias_mailbox_dialog_title">Προώθηση σε</string>
+  <!-- Create note -->
+  <string name="note_hint">Σημείωση</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Δημιουργία πιστωτικής κάρτας</string>
+  <string name="field_cardholder_name_title">Όνομα κατόχου κάρτας</string>
+  <string name="field_cardholder_name_hint">Ονοματεπώνυμο</string>
+  <string name="field_card_number_title">Αριθμός κάρτας</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Αριθμός επαλήθευσης</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">Αριθμός PIN</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Λήγει στις</string>
+  <string name="field_card_expiration_date_hint">MM / ΕΕΕΕ</string>
+  <string name="field_card_expiration_date_error">Η ημερομηνία λήξης δεν είναι έγκυρη</string>
+  <string name="create_credit_card_item_creation_error">Δεν ήταν δυνατή η δημιουργία πιστωτικής κάρτας</string>
+  <string name="create_credit_card_item_creation_success">Η πιστωτική κάρτα δημιουργήθηκε</string>
+  <string name="credit_card_init_error">Δεν ήταν δυνατή η προετοιμασία της πιστωτικής κάρτας</string>
+  <string name="credit_card_item_update_error">Δεν ήταν δυνατή η ενημέρωση της πιστωτικής κάρτας</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Έχει αποθηκευτεί η αλλαγή</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">Μυστικό 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Μην έγκυρο μυστικό 2FA</string>
+  <string name="totp_create_login_field_placeholder">Προσθέστε μυστικό 2FA</string>
+  <string name="close_scree_icon_content_description">Κουμπί κλεισίματος οθόνης</string>
+  <string name="totp_paste_code_action">Επικόλληση κώδικα</string>
+  <string name="totp_scan_code_action">Κωδικός σάρωσης</string>
+  <string name="field_cannot_be_empty">Αυτό το πεδίο δεν μπορεί να είναι κενό</string>
+  <string name="camera_permission_explanation">Απαιτείται άδεια κάμερας για να είναι διαθέσιμη αυτή η λειτουργία.</string>
+  <string name="camera_permission_open_settings">Άνοιγμα ρυθμίσεων</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">Επιτεύχθηκε το όριο 2FA</string>
+  <string name="upgrade">Αναβάθμιση</string>
+  <string name="mfa_icon_content_description">Εικονίδιο 2FA</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Αναβάθμιση για προσαρμοσμένους τομείς</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Αναβάθμιση για περισσότερα εισερχόμενα</string>
+  <string name="create_alias_content_limit_banner">Έχετε φτάσει στο όριο των ψευδωνύμων που μπορείτε να δημιουργήσετε. Δημιουργήστε απεριόριστο αριθμό ψευδωνύμων κατά την αναβάθμιση της συνδρομής σας.</string>
+</resources>

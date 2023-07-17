@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Aproveite o seu período de teste gratuito</string>
+  <string name="trial_subtitle">Para uma gestão de palavras-passe de nível superior:</string>
+  <string name="trial_feature_1">20 cofres</string>
+  <string name="trial_feature_2">Aliases de e-mail ilimitados</string>
+  <string name="trial_feature_3">Autenticador 2FA integrado</string>
+  <string name="trial_feature_4">Campos personalizados</string>
+  <string name="trial_button_text">Actualize para manter estas funcionalidades</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Ainda tem 1 dia de teste gratuito.</item>
+    <item quantity="other">Ainda tem %d dias de teste gratuito.</item>
+  </plurals>
+  <string name="trial_learn_more">Saber mais</string>
+</resources>

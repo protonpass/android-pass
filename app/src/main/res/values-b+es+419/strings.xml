@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 bóvedas</string>
+  <string name="unlimited_email_alias">Alias de correo electrónico ilimitados</string>
+  <string name="custom_fields">Campos personalizados</string>
+  <string name="restart_to_complete_the_update">Reiniciar para completar la actualización</string>
+  <string name="action_restart">Reiniciar</string>
+</resources>

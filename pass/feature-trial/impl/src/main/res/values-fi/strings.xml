@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Nauti ilmaisesta kokeilusta</string>
+  <string name="trial_subtitle">Seuraavan tason salasanahallintaan:</string>
+  <string name="trial_feature_1">20 holvia</string>
+  <string name="trial_feature_2">Rajattomasti sähköpostialiaksia</string>
+  <string name="trial_feature_3">Sisäänrakennettu kaksivaiheinen todentaja</string>
+  <string name="trial_feature_4">Mukautettavia kenttiä</string>
+  <string name="trial_button_text">Säilytä nämä ominaisuudet päivittämällä tilauksesi</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Kokeilujaksoasi on jäljellä 1 päivä</item>
+    <item quantity="other">Kokeilujaksoasi on jäljellä %d päivää</item>
+  </plurals>
+  <string name="trial_learn_more">Lue lisää</string>
+</resources>

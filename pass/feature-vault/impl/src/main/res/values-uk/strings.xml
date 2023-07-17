@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Сховище створено</string>
+  <string name="snackbar_create_vault_error">Сховище не створено</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Не вдалося створити більше сховищ</string>
+  <string name="snackbar_edit_vault_success">Сховище відредаговано</string>
+  <string name="snackbar_edit_vault_error">Сховище не відредаговано</string>
+  <string name="snackbar_delete_vault_success">Сховище видалено</string>
+  <string name="snackbar_delete_vault_error">Сховище не видалено</string>
+  <string name="snackbar_retrieve_vault_error">Сховище не знайдено</string>
+  <string name="snackbar_find_vault_error">Не вдалося знайти вибране сховище</string>
+  <string name="snackbar_get_vault_list_error">Не вдалося завантажити список сховищ</string>
+  <string name="snackbar_get_upgrade_info_error">Не вдалося підготувати список сховищ</string>
+  <string name="vault_delete_dialog_title">Видалити сховище</string>
+  <string name="vault_delete_dialog_body">Ця дія остаточно видалить сховище __VAULT_NAME__ і весь його вміст. Введіть назву сховища для підтвердження видалення.</string>
+  <string name="vault_delete_dialog_placeholder">Назва сховища</string>
+  <string name="vault_delete_dialog_cancel_action">Скасувати</string>
+  <string name="vault_delete_dialog_delete_action">Видалити</string>
+  <string name="bottomsheet_close_icon_content_description">Закриття засобу створення сховища</string>
+  <string name="bottomsheet_create_vault_button">Створити сховище</string>
+  <string name="bottomsheet_edit_vault_button">Зберегти</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Ви досягли обмеження кількості сховищ. Щоб створювати сховища без обмежень, передплатіть тарифний план.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Щоб взаємодіяти з іншими сховищами, вам потрібно передплатити тарифний план.</string>
+  <string name="bottomsheet_upgrade_now">Передплатити зараз</string>
+  <string name="bottomsheet_edit">Редагувати</string>
+  <string name="bottomsheet_migrate">Перемістити всі елементи до іншого сховища</string>
+  <string name="bottomsheet_delete_vault">Видалити сховище</string>
+  <string name="vault_title">Сховище</string>
+</resources>

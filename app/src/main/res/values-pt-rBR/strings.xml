@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 cofres</string>
+  <string name="unlimited_email_alias">Aliases de e-mail ilimitados</string>
+  <string name="custom_fields">Campos personalizados</string>
+  <string name="restart_to_complete_the_update">Reinicie para concluir a atualização</string>
+  <string name="action_restart">Reiniciar</string>
+</resources>

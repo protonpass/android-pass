@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="autofill_notification_channel_name">Emplenament automàtic</string>
+  <string name="autofill_notification_copy_to_clipboard_title">Codi TOTP</string>
+  <string name="autofill_notification_copy_to_clipboard_body">S\'ha copiat el codi TOTP al porta-retalls</string>
+</resources>

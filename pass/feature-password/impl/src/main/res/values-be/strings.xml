@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Скапіяваць і закрыць</string>
+  <string name="password_copied_to_clipboard">Пароль скапіяваны</string>
+  <string name="bottomsheet_generate_password_title">Згенерыраваць пароль</string>
+  <string name="password_type">Тып</string>
+  <string name="special_characters">Спецыяльныя сімвалы (!&amp;*)</string>
+  <string name="character_count">%s сімвалаў</string>
+  <string name="word_count">%s слоў</string>
+  <string name="word_separator">Раздзяляльнік слоў</string>
+  <string name="bottomsheet_option_capital_letters">Вялікія літары (А-Я)</string>
+  <string name="bottomsheet_option_capitalise">Вялікімі літарамі</string>
+  <string name="bottomsheet_option_include_numbers">Уключаць лічбы (0-9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Злучкі ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Прабелы</string>
+  <string name="bottomsheet_option_word_separator_periods">Перыяды ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Коскі ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Падкрэсліванні ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Лічбы</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Лічбы і сімвалы</string>
+  <string name="regenerate_password_icon_content_description">Кнопка паўторнай генерацыі пароля</string>
+  <string name="password_mode_memorable">Пароль, які лёгка запомніць</string>
+  <string name="password_mode_random">Выпадковы пароль</string>
+  <string name="password_mode_icon">Значок рэжыму пароля</string>
+  <string name="password_words_separator_icon">Раздзяляльнік слоў для пароля</string>
+</resources>

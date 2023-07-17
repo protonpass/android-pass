@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">標題 (A 到 Z)</string>
+  <string name="sort_by_title_desc">標題 (Z 到 A)</string>
+  <string name="sort_by_creation_asc">從最舊到最新</string>
+  <string name="sort_by_creation_desc">從最新到最舊</string>
+  <string name="sort_by_modification_date">最近</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">全部</string>
+  <plurals name="item_list_header_results">
+    <item quantity="other">結果</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">確認</string>
+  <string name="bottomsheet_cancel_button">取消</string>
+  <string name="bottomsheet_move_to_trash">移至垃圾桶</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">開啟項目行為清單</string>
+  <string name="action_upgrade_now">立即升級</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">加入您的第一個項目</string>
+  <string name="empty_search_results_title">查無結果</string>
+  <string name="empty_list_open_extension">參閱網頁擴充功能</string>
+  <string name="empty_list_create_item_button">建立新項目</string>
+  <!-- Field -->
+  <string name="field_title_title">標題</string>
+  <string name="field_title_hint">無標題</string>
+  <string name="field_title_required">需要標題</string>
+  <string name="small_cross_icon_content_description">小交叉圖示</string>
+  <string name="field_note_title">備註</string>
+  <string name="field_note_hint">新增備註</string>
+  <string name="linked_apps_title">連結應用程式</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">離線</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">缺少應用程式圖示</string>
+  <string name="add_item_icon_content_description">新增項目圖示</string>
+  <string name="navigate_back_icon_content_description">返回按鈕</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">保管庫</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">列出項目</string>
+  <string name="bottom_bar_add_item_icon_content_description">新增項目</string>
+  <string name="bottom_bar_profile_icon_content_description">個人資料</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">今日</string>
+  <string name="most_recent_yesterday">昨天</string>
+  <string name="most_recent_this_week">本週</string>
+  <string name="most_recent_last_two_weeks">前兩週</string>
+  <string name="most_recent_last_30_days">過去 30 天</string>
+  <string name="most_recent_last_60_days">過去 60 天</string>
+  <string name="most_recent_last_90_days">過去 90 天</string>
+  <string name="most_recent_within_the_last_year">上一年</string>
+  <string name="most_recent_more_than_1_year">超過1年</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">搜尋圖示</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">選擇圖示</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="other">%d 個項目</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">放棄變更？</string>
+  <string name="confirm_close_dialog_message">你有未儲存的修改。你確定要捨棄它嗎？</string>
+  <string name="confirm_close_dialog_close_button">捨棄</string>
+  <!-- Upgrade -->
+  <string name="upgrade">升級</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">進階選項</string>
+  <string name="hide_advanced_options">隱藏進階選項</string>
+</resources>

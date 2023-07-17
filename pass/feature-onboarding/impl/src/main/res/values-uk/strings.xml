@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Дозвольте Proton Pass заповнити дані для входу. Не потрібно вводити текст або копіювати-вставляти.</string>
+  <string name="on_boarding_autofill_title">Миттєво входьте в застосунки</string>
+  <string name="on_boarding_autofill_button">Автозаповнення з Proton Pass</string>
+  <string name="on_boarding_fingerprint_content">Налаштуйте Proton Pass на розблокування за допомогою відбитка пальця, щоб лише ви мали доступ.</string>
+  <string name="on_boarding_fingerprint_title">Захистіть свої найвразливіші дані</string>
+  <string name="on_boarding_fingerprint_button">Увімкніть розблокування відбитком пальця</string>
+  <string name="on_boarding_last_page_content">Припиніть повідомляти свою справжню електронну адресу. Натомість приховайте її за допомогою псевдонімів електронної пошти — це ексклюзив Proton Pass.</string>
+  <string name="on_boarding_last_page_title">Контролюйте, що потрапляє до вашої поштової скриньки.</string>
+  <string name="on_boarding_last_page_button">Почніть користуватися Proton Pass</string>
+  <string name="on_boarding_skip">Не зараз</string>
+  <string name="error_biometry_failed_to_start">Не вдалося запустити біометричну автентифікацію</string>
+  <string name="error_biometry_failed_to_authenticate">Не вдалося здійснити автентифікацію</string>
+  <string name="settings_fingerprint_lock_enabled">Розблокування відбитком пальця ввімкнено</string>
+  <string name="error_performing_operation">Помилка під час виконання операції</string>
+</resources>

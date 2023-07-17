@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 vaults</string>
+  <string name="unlimited_email_alias">Unlimited email aliases</string>
+  <string name="custom_fields">Custom fields</string>
+  <string name="restart_to_complete_the_update">Перезапустите для завершения обновления</string>
+  <string name="action_restart">Перезапустить</string>
+</resources>

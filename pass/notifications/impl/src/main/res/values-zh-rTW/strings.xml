@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="autofill_notification_channel_name">自動填入</string>
+  <string name="autofill_notification_copy_to_clipboard_title">TOTP 驗證碼</string>
+  <string name="autofill_notification_copy_to_clipboard_body">已將 TOTP 複製到剪貼簿</string>
+</resources>

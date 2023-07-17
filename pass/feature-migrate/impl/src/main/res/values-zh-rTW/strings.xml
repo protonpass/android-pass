@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">移動此項目到以下保險庫？</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">移動所有項目到以下保險庫？</string>
+  <string name="migrate_item_confirm_confirm_button">移動</string>
+  <string name="migrate_item_success_snackbar">已移動項目</string>
+  <string name="migrate_item_error_snackbar">移動項目時發生錯誤</string>
+  <string name="migrate_all_items_success_snackbar">已移動所有項目</string>
+  <string name="migrate_all_items_error_snackbar">移動所有保險庫項目時發生錯誤</string>
+  <string name="migrate_init_error_snackbar">無法準備遷移畫面</string>
+</resources>

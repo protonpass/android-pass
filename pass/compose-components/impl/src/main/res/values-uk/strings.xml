@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">За назвою (А-Я)</string>
+  <string name="sort_by_title_desc">За назвою (Я-А)</string>
+  <string name="sort_by_creation_asc">Спочатку найстаріші</string>
+  <string name="sort_by_creation_desc">Спочатку нові</string>
+  <string name="sort_by_modification_date">Останні</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Всі</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">результат</item>
+    <item quantity="few">результати</item>
+    <item quantity="many">результатів</item>
+    <item quantity="other">результатів</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Підтвердити</string>
+  <string name="bottomsheet_cancel_button">Скасувати</string>
+  <string name="bottomsheet_move_to_trash">Перемістити до смітника</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Відкрити меню дій елемента</string>
+  <string name="action_upgrade_now">Покращити</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Додайте свій перший елемент</string>
+  <string name="empty_search_results_title">Нічого не знайдено</string>
+  <string name="empty_list_open_extension">Відвідати веб розширення</string>
+  <string name="empty_list_create_item_button">Створити новий елемент</string>
+  <!-- Field -->
+  <string name="field_title_title">Назва</string>
+  <string name="field_title_hint">Без назви</string>
+  <string name="field_title_required">Назва обов\'язкова</string>
+  <string name="small_cross_icon_content_description">Піктограма маленький хрест</string>
+  <string name="field_note_title">Нотатка</string>
+  <string name="field_note_hint">Додати нотатку</string>
+  <string name="linked_apps_title">Пов\'язані застосунки</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Не в мережі</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Піктограма відсутнього застосунку</string>
+  <string name="add_item_icon_content_description">Піктограма додати елемент</string>
+  <string name="navigate_back_icon_content_description">Піктограма назад</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Сховище</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Елементи списку</string>
+  <string name="bottom_bar_add_item_icon_content_description">Додати елемент</string>
+  <string name="bottom_bar_profile_icon_content_description">Профіль</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Сьогодні</string>
+  <string name="most_recent_yesterday">Вчора</string>
+  <string name="most_recent_this_week">Цього тижня</string>
+  <string name="most_recent_last_two_weeks">Останні два тижні</string>
+  <string name="most_recent_last_30_days">Останні 30 днів</string>
+  <string name="most_recent_last_60_days">Останні 60 днів</string>
+  <string name="most_recent_last_90_days">Останні 90 днів</string>
+  <string name="most_recent_within_the_last_year">За останній рік</string>
+  <string name="most_recent_more_than_1_year">Більше, ніж 1 рік</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Піктограма пошук</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Піктограма параметри</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 елемент</item>
+    <item quantity="few">%d елементи</item>
+    <item quantity="many">%d елементів</item>
+    <item quantity="other">%d елементів</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Відхилити зміни?</string>
+  <string name="confirm_close_dialog_message">У вас є незбережені зміни, ви впевнені, що хочете відхилити їх?</string>
+  <string name="confirm_close_dialog_close_button">Відхилити</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Покращити</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Додаткові параметри</string>
+  <string name="hide_advanced_options">Приховати додаткові параметри</string>
+</resources>

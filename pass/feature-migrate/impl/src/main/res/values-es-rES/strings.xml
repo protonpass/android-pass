@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">¿Mover este elemento a la siguiente bóveda?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">¿Mover todos los elementos a la bóveda siguiente?</string>
+  <string name="migrate_item_confirm_confirm_button">Mover</string>
+  <string name="migrate_item_success_snackbar">Elemento movido</string>
+  <string name="migrate_item_error_snackbar">Error al mover el elemento</string>
+  <string name="migrate_all_items_success_snackbar">Todos los elementos movidos</string>
+  <string name="migrate_all_items_error_snackbar">Error al mover todos los elementos de la bóveda</string>
+  <string name="migrate_init_error_snackbar">No se ha podido preparar la pantalla de migración.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Den Eintrag in folgenden Tresor verschieben?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Alle Einträge in folgenden Tresor verschieben?</string>
+  <string name="migrate_item_confirm_confirm_button">Verschieben</string>
+  <string name="migrate_item_success_snackbar">Eintrag verschoben.</string>
+  <string name="migrate_item_error_snackbar">Fehler beim Verschieben des Eintrags.</string>
+  <string name="migrate_all_items_success_snackbar">Alle Einträge verschoben.</string>
+  <string name="migrate_all_items_error_snackbar">Fehler beim Verschieben aller Tresoreinträge.</string>
+  <string name="migrate_init_error_snackbar">Migrationsseite konnte nicht geladen werden.</string>
+</resources>

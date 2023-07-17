@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Ücretsiz denemenizin tadını çıkarın</string>
+  <string name="trial_subtitle">Gelecek nesil parola yönetimi</string>
+  <string name="trial_feature_1">20 kasa</string>
+  <string name="trial_feature_2">Sınırsız sayıda e-posta takma adı</string>
+  <string name="trial_feature_3">Bütünleşik iki adımlı doğrulayıcı</string>
+  <string name="trial_feature_4">Özel alanlar</string>
+  <string name="trial_button_text">Bu özelliği korumak için tarifenizi yükseltin</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Deneme sürenizin bitmesine 1 gün kaldı</item>
+    <item quantity="other">Deneme sürenizin bitmesine %d gün kaldı</item>
+  </plurals>
+  <string name="trial_learn_more">Ayrıntılı bilgi alın</string>
+</resources>

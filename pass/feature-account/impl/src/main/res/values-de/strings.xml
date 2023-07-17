@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Konto</string>
+  <string name="account_username_label">Benutzername</string>
+  <string name="account_subscription_label">Abonnement</string>
+  <string name="account_permanently_delete_warning">Dadurch wird dein Konto und alle zugehörigen Daten dauerhaft gelöscht. Dieses Konto kann dann nicht mehr reaktiviert werden.</string>
+  <string name="account_delete_account">Konto löschen</string>
+  <string name="account_delete_account_icon_content_description">Schaltfläche \"Konto löschen\"</string>
+  <string name="account_sign_out">Abmelden</string>
+  <string name="account_sign_out_icon_content_description">Schaltfläche \"Abmelden\"</string>
+  <string name="account_manage_subscription">Abonnement verwalten</string>
+  <string name="account_get_user_info_error">Benutzerinformationen konnten nicht abgerufen werden.</string>
+  <string name="manage_subscription_icon_content_description">Schaltfläche \"Abonnement verwalten\"</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Abmelden?</string>
+  <string name="alert_confirm_sign_out_message">Möchtest du dich wirklich abmelden?</string>
+</resources>

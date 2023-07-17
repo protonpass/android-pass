@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Nikmati masa uji coba gratis Anda</string>
+  <string name="trial_subtitle">Untuk pengelolaan kata sandi tingkat lanjut</string>
+  <string name="trial_feature_1">20 brankas</string>
+  <string name="trial_feature_2">Tanpa batasan jumlah alias email</string>
+  <string name="trial_feature_3">Autentikator 2FA terintegrasi</string>
+  <string name="trial_feature_4">Kolom khusus</string>
+  <string name="trial_button_text">Tingkatkan paket Anda untuk tetap menikmati berbagai fitur berikut</string>
+  <plurals name="trial_days_left">
+    <item quantity="other">%d hari tersisa pada masa uji coba Anda</item>
+  </plurals>
+  <string name="trial_learn_more">Pelajari lebih lanjut</string>
+</resources>

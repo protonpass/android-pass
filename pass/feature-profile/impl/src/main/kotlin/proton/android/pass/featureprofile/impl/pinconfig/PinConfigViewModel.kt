@@ -36,6 +36,7 @@ import proton.android.pass.featureprofile.impl.pinconfig.PinConfigValidationErro
 import proton.android.pass.featureprofile.impl.pinconfig.PinConfigValidationErrors.PinTooShort
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -76,6 +77,7 @@ class PinConfigViewModel @Inject constructor(
                 runCatching {
                     createPin(currentState.pin.encodeToByteArray())
                 }.onSuccess {
+                    userPreferencesRepository.setAppLockState(AppLockState.Enabled)
                     userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Pin)
                         .onSuccess {
                             _state.update { it.copy(event = PinConfigEvent.PinSet) }

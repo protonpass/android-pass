@@ -34,13 +34,14 @@ class NeedsAuthCheckerTest {
     @Test
     fun `if biometric lock is disabled, no auth is needed`() {
         val res = NeedsAuthChecker.needsAuth(
-            biometricLock = AppLockState.Disabled,
+            appLockState = AppLockState.Disabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockTimePreference = AppLockTimePreference.Immediately,
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
+            lastBootCount = Some(0),
             bootCount = 0,
-            lastBootCount = Some(0)
+            appLockTypeState = appLockTypeState
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.BiometricDisabled::class.java)
@@ -49,13 +50,14 @@ class NeedsAuthCheckerTest {
     @Test
     fun `if biometric lock is enabled and user has not authenticated, auth is required`() {
         val res = NeedsAuthChecker.needsAuth(
-            biometricLock = AppLockState.Enabled,
+            appLockState = AppLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockTimePreference = AppLockTimePreference.Immediately,
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
+            lastBootCount = Some(0),
             bootCount = 0,
-            lastBootCount = Some(0)
+            appLockTypeState = appLockTypeState
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LockImmediatelyAndHadNotAuthenticated::class.java)
@@ -64,13 +66,14 @@ class NeedsAuthCheckerTest {
     @Test
     fun `if AppLock is set to Immediately but is already authenticated, auth is not required`() {
         val res = NeedsAuthChecker.needsAuth(
-            biometricLock = AppLockState.Enabled,
+            appLockState = AppLockState.Enabled,
             hasAuthenticated = HasAuthenticated.Authenticated,
             appLockTimePreference = AppLockTimePreference.Immediately,
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
+            lastBootCount = Some(0),
             bootCount = 0,
-            lastBootCount = Some(0)
+            appLockTypeState = appLockTypeState
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.LockImmediatelyButHadAuthenticated::class.java)
@@ -82,13 +85,14 @@ class NeedsAuthCheckerTest {
         val oneMinuteAgo = now.minus(1.minutes)
 
         val res = NeedsAuthChecker.needsAuth(
-            biometricLock = AppLockState.Enabled,
+            appLockState = AppLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockTimePreference = AppLockTimePreference.InTwoMinutes,
             lastUnlockTime = oneMinuteAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
+            lastBootCount = Some(0),
             bootCount = 0,
-            lastBootCount = Some(0)
+            appLockTypeState = appLockTypeState
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.LockTimeNotElapsed::class.java)
@@ -101,13 +105,14 @@ class NeedsAuthCheckerTest {
         val threeMinutesAgo = now.minus(3.minutes)
 
         val res = NeedsAuthChecker.needsAuth(
-            biometricLock = AppLockState.Enabled,
+            appLockState = AppLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockTimePreference = AppLockTimePreference.InTwoMinutes,
             lastUnlockTime = threeMinutesAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
+            lastBootCount = None,
             bootCount = 0,
-            lastBootCount = None
+            appLockTypeState = appLockTypeState
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LockTimeElapsed::class.java)
@@ -119,13 +124,14 @@ class NeedsAuthCheckerTest {
         val inThreeMinutes = now.plus(3.minutes)
 
         val res = NeedsAuthChecker.needsAuth(
-            biometricLock = AppLockState.Enabled,
+            appLockState = AppLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockTimePreference = AppLockTimePreference.InTwoMinutes,
             lastUnlockTime = inThreeMinutes.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
+            lastBootCount = Some(0),
             bootCount = 0,
-            lastBootCount = Some(0)
+            appLockTypeState = appLockTypeState
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LastUnlockTimeInTheFuture::class.java)
@@ -138,13 +144,14 @@ class NeedsAuthCheckerTest {
         val oneMinuteAgo = now.minus(1.minutes)
 
         val res = NeedsAuthChecker.needsAuth(
-            biometricLock = AppLockState.Enabled,
+            appLockState = AppLockState.Enabled,
             hasAuthenticated = HasAuthenticated.NotAuthenticated,
             appLockTimePreference = AppLockTimePreference.InTwoMinutes,
             lastUnlockTime = oneMinuteAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
+            lastBootCount = Some(1),
             bootCount = 2,
-            lastBootCount = Some(1)
+            appLockTypeState = appLockTypeState
         )
 
 

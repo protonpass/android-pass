@@ -28,11 +28,11 @@ class StoreAuthSuccessfulImpl @Inject constructor(
     private val biometryAuthTimeHolder: BiometryAuthTimeHolder,
     private val bootCountRetriever: BootCountRetriever,
     private val elapsedTimeProvider: ElapsedTimeProvider,
-    private val preferencesRepository: UserPreferencesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository
 ) : StoreAuthSuccessful {
     override fun invoke() {
-        preferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+        userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
         internalSettingsRepository.setMasterPasswordAttemptsCount(0)
         internalSettingsRepository.setPinAttemptsCount(0)
 

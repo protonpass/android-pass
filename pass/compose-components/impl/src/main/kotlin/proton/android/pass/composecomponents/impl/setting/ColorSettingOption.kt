@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.setting
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,7 +45,8 @@ fun ColorSettingOption(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .clickable { onClick() }
+            .padding(16.dp, 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

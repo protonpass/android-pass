@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Siirretäänkö tämä kohde seuraavaan holviin?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Siirretäänkö kaikki kohteet seuraavaan holviin?</string>
+  <string name="migrate_item_confirm_confirm_button">Siirrä</string>
+  <string name="migrate_item_success_snackbar">Kohde on siirrettiin</string>
+  <string name="migrate_item_error_snackbar">Virhe siirrettäessä kohdetta</string>
+  <string name="migrate_all_items_success_snackbar">Kaikki kohteet siirrettiin</string>
+  <string name="migrate_all_items_error_snackbar">Virhe siirrettäessä holvin kaikkia kohteita</string>
+  <string name="migrate_init_error_snackbar">Siirtymisruutua ei voitu valmistella</string>
+</resources>

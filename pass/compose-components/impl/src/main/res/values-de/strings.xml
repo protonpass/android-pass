@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Titel (A-Z)</string>
+  <string name="sort_by_title_desc">Titel (Z-A)</string>
+  <string name="sort_by_creation_asc">Älteste nach neueste</string>
+  <string name="sort_by_creation_desc">Neueste nach älteste</string>
+  <string name="sort_by_modification_date">Änderungsdatum</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Alle</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">Ergebnis</item>
+    <item quantity="other">Ergebnisse</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Bestätigen</string>
+  <string name="bottomsheet_cancel_button">Abbrechen</string>
+  <string name="bottomsheet_move_to_trash">In Papierkorb verschieben</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Aktionsmenü für Eintrag öffnen.</string>
+  <string name="action_upgrade_now">Jetzt upgraden</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Füge deinen ersten Eintrag hinzu</string>
+  <string name="empty_search_results_title">Kein Ergebnis gefunden</string>
+  <string name="empty_list_open_extension">Web-Erweiterung öffnen</string>
+  <string name="empty_list_create_item_button">Neuen Eintrag erstellen</string>
+  <!-- Field -->
+  <string name="field_title_title">Titel</string>
+  <string name="field_title_hint">Unbenannt</string>
+  <string name="field_title_required">Titel erforderlich</string>
+  <string name="small_cross_icon_content_description">Kleines Kreuz-Symbol</string>
+  <string name="field_note_title">Notiz</string>
+  <string name="field_note_hint">Notiz hinzufügen</string>
+  <string name="linked_apps_title">Verknüpfte Apps</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Offline</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Fehlendes App-Symbol</string>
+  <string name="add_item_icon_content_description">Eintrag hinzufügen-Symbol</string>
+  <string name="navigate_back_icon_content_description">Zurück-Symbol</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Tresor</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Listeneinträge</string>
+  <string name="bottom_bar_add_item_icon_content_description">Eintrag hinzufügen</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Heute</string>
+  <string name="most_recent_yesterday">Gestern</string>
+  <string name="most_recent_this_week">Diese Woche</string>
+  <string name="most_recent_last_two_weeks">Letzte zwei Wochen</string>
+  <string name="most_recent_last_30_days">Letzte 30 Tage</string>
+  <string name="most_recent_last_60_days">Letzte 60 Tage</string>
+  <string name="most_recent_last_90_days">Letzte 90 Tage</string>
+  <string name="most_recent_within_the_last_year">Innerhalb des letzten Jahres</string>
+  <string name="most_recent_more_than_1_year">Mehr als 1 Jahr</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Suchsymbol</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Optionssymbol</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 Eintrag</item>
+    <item quantity="other">%d Einträge</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Änderungen verwerfen?</string>
+  <string name="confirm_close_dialog_message">Du hast ungespeicherte Änderungen. Bist du dir sicher, dass du diese verwerfen möchtest?</string>
+  <string name="confirm_close_dialog_close_button">Verwerfen</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Upgraden</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Erweiterte Optionen</string>
+  <string name="hide_advanced_options">Erweiterte Optionen ausblenden</string>
+</resources>

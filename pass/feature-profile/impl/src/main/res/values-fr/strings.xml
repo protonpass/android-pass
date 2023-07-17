@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Profil</string>
+  <string name="profile_option_settings">Paramètres</string>
+  <string name="profile_option_account">Compte</string>
+  <string name="profile_help_center">Aide &amp; Support</string>
+  <string name="profile_security">Sécurité</string>
+  <string name="profile_option_feedback">Commentaires</string>
+  <string name="profile_option_import_export">Importation/exportation</string>
+  <string name="profile_option_rating">Évaluer l\'application</string>
+  <string name="profile_option_autofill">Remplissage automatique</string>
+  <string name="profile_option_autofill_subtitle">Vos noms d\'utilisateur et vos mots de passe sont automatiquement complétés.</string>
+  <string name="profile_option_fingerprint">Empreinte digitale</string>
+  <string name="profile_option_automatic_app_lock">Verrouillage automatique de l\'application</string>
+  <string name="profile_option_advanced">Avancé</string>
+  <string name="profile_error_biometry_failed_to_start">Impossible de lancer l\'authentification biométrique</string>
+  <string name="profile_error_biometry_failed_to_authenticate">L\'authentification n\'a pas abouti.</string>
+  <string name="profile_fingerprint_lock_enabled">Déverrouillage par empreinte digitale activé</string>
+  <string name="profile_fingerprint_lock_disabled">Déverrouillage par empreinte digitale désactivé</string>
+  <string name="profile_error_performing_operation">Une erreur s\'est produite pendant l\'opération.</string>
+  <string name="profile_app_version_copied_to_clipboard">La version de l\'application a été copiée.</string>
+  <string name="feedback_option_reddit">Découvrez Proton sur Reddit</string>
+  <string name="feedback_option_mail">Envoyez-nous un message</string>
+  <string name="feedback_option_vote_new_features">Votez pour les nouvelles fonctionnalités</string>
+  <string name="app_lock_immediately">Immédiatement</string>
+  <string name="app_lock_one_minute">Après 1 minute</string>
+  <string name="app_lock_two_minutes">Après 2 minutes</string>
+  <string name="app_lock_five_minutes">Après 5 minutes</string>
+  <string name="app_lock_ten_minutes">Après 10 minutes</string>
+  <string name="app_lock_one_hour">Après 1 heure</string>
+  <string name="app_lock_four_hours">Après 4 heures</string>
+  <string name="profile_account_plan_name_trial">Essai gratuit</string>
+  <string name="app_lock_config_biometric">Biométrie</string>
+  <string name="app_lock_config_pin_code">Code PIN</string>
+  <string name="app_lock_config_unlock_with">Déverrouiller avec</string>
+  <string name="app_lock_config_app_lock_time">Temps de verrouillage de l\'application</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Utiliser le verrouillage du système quand la biométrie ne fonctionne pas.</string>
+</resources>

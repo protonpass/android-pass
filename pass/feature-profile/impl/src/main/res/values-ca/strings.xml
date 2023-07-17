@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Perfil</string>
+  <string name="profile_option_settings">Preferències</string>
+  <string name="profile_option_account">Compte</string>
+  <string name="profile_help_center">Centre d\'ajuda</string>
+  <string name="profile_security">Security</string>
+  <string name="profile_option_feedback">Comentaris</string>
+  <string name="profile_option_import_export">Importa/exporta</string>
+  <string name="profile_option_rating">Valora l\'aplicació</string>
+  <string name="profile_option_autofill">Emplenament automàtic</string>
+  <string name="profile_option_autofill_subtitle">Ompliu automàticament els vostres noms d\'usuari i contrasenyes.</string>
+  <string name="profile_option_fingerprint">Empremta digital</string>
+  <string name="profile_option_automatic_app_lock">Automatic app locking</string>
+  <string name="profile_option_advanced">Advanced</string>
+  <string name="profile_error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
+  <string name="profile_error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
+  <string name="profile_fingerprint_lock_enabled">S\'ha habilitat el desbloqueig per empremta digital</string>
+  <string name="profile_fingerprint_lock_disabled">S\'ha desactivat el desbloqueig per empremta digital</string>
+  <string name="profile_error_performing_operation">S\'ha produït un error en realitzar l\'operació</string>
+  <string name="profile_app_version_copied_to_clipboard">S\'ha copiat la versió de l\'aplicació</string>
+  <string name="feedback_option_reddit">Descobriu Proton en Reddit</string>
+  <string name="feedback_option_mail">Envieu-nos un missatge</string>
+  <string name="feedback_option_vote_new_features">Voteu per a noves característiques</string>
+  <string name="app_lock_immediately">Immediatament</string>
+  <string name="app_lock_one_minute">Després d\'1 minut</string>
+  <string name="app_lock_two_minutes">Després de 2 minuts</string>
+  <string name="app_lock_five_minutes">Després de 5 minuts</string>
+  <string name="app_lock_ten_minutes">Després de 10 minuts</string>
+  <string name="app_lock_one_hour">Després d\'1 hora</string>
+  <string name="app_lock_four_hours">Després de 4 hores</string>
+  <string name="profile_account_plan_name_trial">Prova gratuïta</string>
+  <string name="app_lock_config_biometric">Biometric</string>
+  <string name="app_lock_config_pin_code">PIN code</string>
+  <string name="app_lock_config_unlock_with">Unlock with</string>
+  <string name="app_lock_config_app_lock_time">App lock time</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Use system lock when biometric fails</string>
+</resources>

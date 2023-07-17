@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">S\'ha creat la caixa forta</string>
+  <string name="snackbar_create_vault_error">No s\'ha creat la caixa forta</string>
+  <string name="snackbar_cannot_create_more_vaults_error">No es poden crear més caixes fortes</string>
+  <string name="snackbar_edit_vault_success">S\'ha editat la caixa forta</string>
+  <string name="snackbar_edit_vault_error">No s\'ha editat la caixa forta</string>
+  <string name="snackbar_delete_vault_success">S\'ha eliminat la caixa forta</string>
+  <string name="snackbar_delete_vault_error">No s\'ha eliminat la caixa forta</string>
+  <string name="snackbar_retrieve_vault_error">No s\'ha trobat la caixa forta</string>
+  <string name="snackbar_find_vault_error">No es pot trobar la caixa forta seleccionada</string>
+  <string name="snackbar_get_vault_list_error">No s\'ha pogut carregar la llista de caixes fortes</string>
+  <string name="snackbar_get_upgrade_info_error">No s\'ha pogut preparar la llista de caixes fortes</string>
+  <string name="vault_delete_dialog_title">Elimina la caixa forta</string>
+  <string name="vault_delete_dialog_body">Això suprimirà permanentment la caixa forta __VAULT_NAME__ i tot el seu contingut. Introduïu el nom de la caixa forta per confirmar-ne l\'eliminació.</string>
+  <string name="vault_delete_dialog_placeholder">Nom de la caixa forta</string>
+  <string name="vault_delete_dialog_cancel_action">Cancel·la</string>
+  <string name="vault_delete_dialog_delete_action">Elimina</string>
+  <string name="bottomsheet_close_icon_content_description">Tanca la caixa forta creada</string>
+  <string name="bottomsheet_create_vault_button">Crea una caixa forta</string>
+  <string name="bottomsheet_edit_vault_button">Desa</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Heu assolit el límit de caixes fortes que podeu crear. Creeu un nombre il·limitat de caixes fortes en millorar la vostra subscripció.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Per a interactuar amb les vostres altres caixes fortes, heu de millorar el vostre compte.</string>
+  <string name="bottomsheet_upgrade_now">Millora ara</string>
+  <string name="bottomsheet_edit">Edita</string>
+  <string name="bottomsheet_migrate">Mou tots els elements a una altra caixa forta</string>
+  <string name="bottomsheet_delete_vault">Elimina la caixa forta</string>
+  <string name="vault_title">Caixa forta</string>
+</resources>

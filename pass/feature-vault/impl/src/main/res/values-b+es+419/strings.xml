@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Bóveda creada</string>
+  <string name="snackbar_create_vault_error">Bóveda no creada</string>
+  <string name="snackbar_cannot_create_more_vaults_error">No se pueden crear más bóvedas</string>
+  <string name="snackbar_edit_vault_success">Bóveda editada</string>
+  <string name="snackbar_edit_vault_error">Bóveda no editada</string>
+  <string name="snackbar_delete_vault_success">Bóveda eliminada</string>
+  <string name="snackbar_delete_vault_error">Bóveda no eliminada</string>
+  <string name="snackbar_retrieve_vault_error">Bóveda no encontrada</string>
+  <string name="snackbar_find_vault_error">No se encuentra la bóveda seleccionada</string>
+  <string name="snackbar_get_vault_list_error">No se pudo cargar la lista de bóveda</string>
+  <string name="snackbar_get_upgrade_info_error">No se pudo preparar la lista de bóvedas</string>
+  <string name="vault_delete_dialog_title">Eliminar bóveda</string>
+  <string name="vault_delete_dialog_body">Esto eliminará permanentemente la bóveda __VAULT_NAME__ y todo su contenido. Escriba el nombre de la bóveda para confirmar la eliminación.</string>
+  <string name="vault_delete_dialog_placeholder">Nombre de la bóveda</string>
+  <string name="vault_delete_dialog_cancel_action">Cancelar</string>
+  <string name="vault_delete_dialog_delete_action">Eliminar</string>
+  <string name="bottomsheet_close_icon_content_description">Cerrar crear bóveda</string>
+  <string name="bottomsheet_create_vault_button">Crear bóveda</string>
+  <string name="bottomsheet_edit_vault_button">Guardar</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Ha alcanzado el límite de bóvedas que puede crear. Cree bóvedas ilimitadas al actualizar su suscripción.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Para interactuar con sus otras bóvedas, necesita actualizar su cuenta.</string>
+  <string name="bottomsheet_upgrade_now">Mejorar ahora</string>
+  <string name="bottomsheet_edit">Editar</string>
+  <string name="bottomsheet_migrate">Mover todos los elementos a otra bóveda</string>
+  <string name="bottomsheet_delete_vault">Eliminar bóveda</string>
+  <string name="vault_title">Bóveda</string>
+</resources>

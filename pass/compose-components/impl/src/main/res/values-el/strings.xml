@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Τίτλος (Α-Ω)</string>
+  <string name="sort_by_title_desc">Τίτλος (Ω-Α)</string>
+  <string name="sort_by_creation_asc">Από το παλαιότερο στο νεότερο</string>
+  <string name="sort_by_creation_desc">Από το νεότερο στο παλαιότερο</string>
+  <string name="sort_by_modification_date">Πιο πρόσφατα</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Όλα</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">αποτέλεσμα</item>
+    <item quantity="other">αποτελέσματα</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Επιβεβαίωση</string>
+  <string name="bottomsheet_cancel_button">Ακύρωση</string>
+  <string name="bottomsheet_move_to_trash">Μετακίνηση στα Διαγραμμένα</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Άνοιγμα μενού ενεργειών στοιχείου</string>
+  <string name="action_upgrade_now">Αναβάθμιση τώρα</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Προσθέστε το πρώτο σας στοιχείο</string>
+  <string name="empty_search_results_title">Δεν βρέθηκε αποτέλεσμα</string>
+  <string name="empty_list_open_extension">Επισκεφτείτε την επέκταση ιστού</string>
+  <string name="empty_list_create_item_button">Δημιουργία νέου στοιχείου</string>
+  <!-- Field -->
+  <string name="field_title_title">Τίτλος</string>
+  <string name="field_title_hint">Χωρίς τίτλο</string>
+  <string name="field_title_required">Απαιτείται τίτλος</string>
+  <string name="small_cross_icon_content_description">Εικονίδιο μικρού σταυρού</string>
+  <string name="field_note_title">Σημείωση</string>
+  <string name="field_note_hint">Προσθήκη σημείωσης</string>
+  <string name="linked_apps_title">Συνδεδεμένες εφαρμογές</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Εκτός σύνδεσης</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Εικονίδιο εφαρμογής που λείπει</string>
+  <string name="add_item_icon_content_description">Εικονίδιο προσθήκης στοιχείου</string>
+  <string name="navigate_back_icon_content_description">Εικονίδιο πλοήγησης προς τα πίσω</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Θησαυροφυλάκιο</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Λίστα στοιχείων</string>
+  <string name="bottom_bar_add_item_icon_content_description">Προσθήκη στοιχείου</string>
+  <string name="bottom_bar_profile_icon_content_description">Προφίλ</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Σήμερα</string>
+  <string name="most_recent_yesterday">Χθες</string>
+  <string name="most_recent_this_week">Τρέχουσα εβδομάδα</string>
+  <string name="most_recent_last_two_weeks">Τελευταίες δύο εβδομάδες</string>
+  <string name="most_recent_last_30_days">Τελευταίες 30 ημέρες</string>
+  <string name="most_recent_last_60_days">Τελευταίες 60 ημέρες</string>
+  <string name="most_recent_last_90_days">Τελευταίες 90 ημέρες</string>
+  <string name="most_recent_within_the_last_year">Εντός του τελευταίου έτους</string>
+  <string name="most_recent_more_than_1_year">Περισσότερο από 1 χρόνο</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Εικονίδιο Αναζήτησης</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Εικονίδιο Επιλογής</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 στοιχείο</item>
+    <item quantity="other">%d στοιχεία</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Απόρριψη αλλαγών;</string>
+  <string name="confirm_close_dialog_message">Έχετε μη αποθηκευμένες αλλαγές, είστε σίγουροι πως θέλετε να τις απορρίψετε;</string>
+  <string name="confirm_close_dialog_close_button">Απόρριψη</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Αναβάθμιση</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Προηγμένες επιλογές</string>
+  <string name="hide_advanced_options">Απόκρυψη σύνθετων επιλογών</string>
+</resources>

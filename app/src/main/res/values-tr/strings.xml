@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 kasa</string>
+  <string name="unlimited_email_alias">Sınırsız sayıda e-posta takma adı</string>
+  <string name="custom_fields">Özel alanlar</string>
+  <string name="restart_to_complete_the_update">Güncellemeyi tamamlamak için yeniden başlatın</string>
+  <string name="action_restart">Yeniden başlat</string>
+</resources>

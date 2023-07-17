@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">享受您的免費試用</string>
+  <string name="trial_subtitle">對於下一個層級的密碼管理：</string>
+  <string name="trial_feature_1">20 個保管庫</string>
+  <string name="trial_feature_2">電子郵件別名無上限</string>
+  <string name="trial_feature_3">整合式雙重驗證</string>
+  <string name="trial_feature_4">自訂欄位</string>
+  <string name="trial_button_text">升級以保留這些功能</string>
+  <plurals name="trial_days_left">
+    <item quantity="other">還剩 %d 天免費試用</item>
+  </plurals>
+  <string name="trial_learn_more">取得更多資訊</string>
+</resources>

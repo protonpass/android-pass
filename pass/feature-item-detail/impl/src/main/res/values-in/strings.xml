@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Buka</string>
+  <string name="action_copy">Salin</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Elemen tidak dapat diinisialisasi</string>
+  <string name="top_bar_edit_button_text">Sunting</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Alamat alias</string>
+  <string name="alias_copied_to_clipboard">Alias disalin</string>
+  <string name="alias_detail_field_mailboxes_title">Meneruskan ke</string>
+  <string name="alias_create_login_from_alias">Buat login</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Catatan</string>
+  <!-- Login details -->
+  <string name="username_copied_to_clipboard">Nama pengguna disalin</string>
+  <string name="password_copied_to_clipboard">Kata sandi disalin</string>
+  <string name="website_copied_to_clipboard">Situs web disalin</string>
+  <string name="totp_copied_to_clipboard">TOTP disalin</string>
+  <string name="field_copied_to_clipboard">Kolom disalin</string>
+  <string name="move_item_to_trash_message">Item dipindahkan ke sampah</string>
+  <string name="error_move_item_to_trash_message">Terdapat kesalahan dalam memindahkan ke sampah</string>
+  <string name="item_permanently_deleted_message">Item dihapus secara permanen</string>
+  <string name="item_permanently_deleted_message_error">Terdapat kesalahan dalam menghapus berkas</string>
+  <string name="item_restored_message">Item dipulihkan</string>
+  <string name="item_restored_message_error">Terdapat kesalahan dalam memulihkan item</string>
+  <string name="login_item_generate_totp_error">Terdapat kesalahan dalam menghasilkan kode 2FA</string>
+  <string name="login_item_view_alias_button">Tampilkan alias</string>
+  <string name="field_username">Nama pengguna atau alamat email</string>
+  <string name="field_password">Kata sandi</string>
+  <string name="websites_section_title">Situs web</string>
+  <string name="totp_section_title">Token 2FA (TOTP)</string>
+  <string name="action_reveal_password">Perlihatkan kata sandi</string>
+  <string name="action_conceal_password">Sembunyikan kata sandi</string>
+  <string name="action_reveal_number">Perlihatkan angka</string>
+  <string name="action_conceal_number">Sembunyikan angka</string>
+  <string name="more_info_created">Dibuat:</string>
+  <string name="more_info_modified">Dimodifikasi</string>
+  <string name="more_info_autofilled">Diisi secara otomatis</string>
+  <string name="more_info_title">Info lebih lanjut</string>
+  <string name="more_info_icon">Ikon info lebih lanjut</string>
+  <plurals name="more_info_modified_times">
+    <item quantity="other">%d kali</item>
+  </plurals>
+  <string name="more_info_last_time_modified">Terakhir kali, %s</string>
+  <string name="open_menu_icon_content_description">Buka tombol menu</string>
+  <string name="mfa_limit_reached">Batas 2FA tercapai</string>
+  <string name="mfa_icon_content_description">Ikon 2FA</string>
+  <string name="custom_field_text_icon_description">Kolom khusus teks</string>
+  <string name="custom_field_hidden_icon_description">Kolom khusus tersembunyi</string>
+  <string name="custom_field_totp_icon_description">Kolom khusus 2FA</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Nama pemilik kartu</string>
+  <string name="credit_card_number_field_name">Nomor kartu</string>
+  <string name="credit_card_cvv_field_name">Nomor verifikasi</string>
+  <string name="credit_card_pin_field_name">Kode PIN</string>
+  <string name="credit_card_expiration_date_field_name">Kedaluwarsa pada</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Nama pemegang kartu disalin ke papan klip</string>
+  <string name="credit_card_number_copied_to_clipboard">Nomor kartu disalin ke papan klip</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Nomor verifikasi disalin ke papan klip</string>
+  <string name="credit_card_pin_copied_to_clipboard">PIN disalin ke papan klip</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>
+  <string name="migrate_item_detail_bottom_sheet">Pindahkan ke brankas lainnya</string>
+  <!-- More info -->
+  <string name="date_today">Hari ini %s</string>
+  <string name="date_yesterday">Kemarin %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+</resources>

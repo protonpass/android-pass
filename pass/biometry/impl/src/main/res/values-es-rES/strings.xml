@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">Aplicación bloqueada</string>
+  <string name="biometric_prompt_subtitle">Desbloquear con la función de bloqueo del dispositivo</string>
+  <string name="biometric_prompt_cancel">Cancelar</string>
+</resources>

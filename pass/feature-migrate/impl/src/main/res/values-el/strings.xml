@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Μετακίνηση αυτού του στοιχείου στην ακόλουθη θυρίδα αποθήκευσης;</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Μετακινήστε όλα τα στοιχεία στην ακόλουθη θυρίδα αποθήκευσης;</string>
+  <string name="migrate_item_confirm_confirm_button">Μεταφορά</string>
+  <string name="migrate_item_success_snackbar">Το στοιχείο καταργήθηκε</string>
+  <string name="migrate_item_error_snackbar">Σφάλμα κατά τη μετακίνηση του στοιχείου</string>
+  <string name="migrate_all_items_success_snackbar">Όλα τα στοιχεία που μετακινήθηκαν</string>
+  <string name="migrate_all_items_error_snackbar">Σφάλμα κατά τη μετακίνηση όλων των στοιχείων θυρίδας αποθήκευσης</string>
+  <string name="migrate_init_error_snackbar">Δεν ήταν δυνατή η προετοιμασία της οθόνης μετεγκατάστασης</string>
+</resources>

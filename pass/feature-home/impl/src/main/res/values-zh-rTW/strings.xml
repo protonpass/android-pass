@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Home -->
+  <string name="home_empty_vault_title">您的保存庫是空的</string>
+  <string name="home_empty_vault_subtitle">開始建立您的第一個項目</string>
+  <string name="home_empty_vault_create_login">建立登入</string>
+  <string name="home_empty_vault_create_alias">建立隱藏電子郵件別名</string>
+  <string name="home_empty_vault_create_note">建立筆記</string>
+  <string name="error_observing_items">處理項目時發生錯誤</string>
+  <string name="error_observing_share">處理分享時發生錯誤</string>
+  <string name="error_refreshing">重新整理時發生錯誤</string>
+  <string name="home_snackbar_login_moved_to_trash">登入項目已移至垃圾桶</string>
+  <string name="home_snackbar_alias_moved_to_trash">別名已移至垃圾桶</string>
+  <string name="home_snackbar_note_moved_to_trash">筆記已移至垃圾桶</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">信用卡已移至垃圾桶</string>
+  <string name="home_snackbar_move_to_trash_error">無法移至垃圾桶</string>
+  <string name="home_autofill_banner_title">享受自動填入的神奇魔力</string>
+  <string name="home_autofill_banner_text">輕輕一按，大功告成！您的使用者名稱和密碼就馬上填好。</string>
+  <string name="home_autofill_banner_settings">啟用自動填滿＞</string>
+  <string name="home_trial_banner_title">享受您的免費試用</string>
+  <string name="home_trial_banner_text">查看限時提供給您的獨家功能</string>
+  <string name="home_trial_banner_settings">了解更多＞</string>
+  <!-- Common bottomsheet -->
+  <string name="bottomsheet_copy_password">複製密碼</string>
+  <string name="bottomsheet_copy_username">複製使用者名稱</string>
+  <string name="bottomsheet_copy_alias">複製電子郵件地址</string>
+  <string name="bottomsheet_copy_number">複製號碼</string>
+  <string name="bottomsheet_copy_cvv">複製信用卡安全碼</string>
+  <string name="bottomsheet_copy_note">複製備註</string>
+  <string name="bottomsheet_edit">編輯</string>
+  <!-- Clipboard -->
+  <string name="alias_copied_to_clipboard">已複製別名</string>
+  <string name="note_copied_to_clipboard">已複製備註</string>
+  <string name="username_copied_to_clipboard">已複製使用者名稱</string>
+  <string name="password_copied_to_clipboard">已複製密碼</string>
+  <string name="credit_card_number_copied_to_clipboard">已複製信用卡卡號</string>
+  <string name="credit_card_pin_copied_to_clipboard">已複製信用卡安全碼</string>
+  <string name="credit_card_cvv_copied_to_clipboard">已複製信用卡安全碼</string>
+  <string name="item_too_long_copied_to_clipboard">聯絡人太長，部分貼上至剪貼簿</string>
+  <!-- Vault drawer -->
+  <string name="vault_drawer_vaults_title">保存庫</string>
+  <string name="vault_drawer_vaults_item_count">%d 個項目</string>
+  <string name="vault_drawer_create_vault">新增加密檔案庫</string>
+  <string name="vault_drawer_item_trash">垃圾桶</string>
+  <string name="vault_drawer_all_vaults">全部的保存庫</string>
+  <!-- Vault management -->
+  <string name="vault_delete_dialog_title">刪除保存庫</string>
+  <string name="vault_delete_dialog_cancel_action">取消</string>
+  <string name="vault_delete_dialog_delete_action">刪除</string>
+  <string name="snackbar_delete_vault_success">已刪除保存庫</string>
+  <string name="snackbar_delete_vault_error">無法刪除保存庫</string>
+  <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_vaults">於保存庫中搜尋</string>
+  <string name="search_topbar_placeholder_vault">於%s中搜尋</string>
+  <string name="search_topbar_placeholder_trash">搜尋垃圾桶</string>
+  <string name="item_type_filter_list_icon_content_description">項目類型圖示</string>
+  <string name="item_type_filter_all">全部</string>
+  <string name="item_type_filter_login">登入</string>
+  <string name="item_type_filter_alias">別名</string>
+  <string name="item_type_filter_note">備註</string>
+  <string name="item_type_filter_credit_card">卡片</string>
+  <!-- Trash -->
+  <string name="trash_empty_list_title">垃圾桶已清空</string>
+  <string name="trash_empty_list_message">被刪除的項目將在此出現</string>
+  <string name="bottomsheet_trash_all_items_title">垃圾</string>
+  <string name="bottomsheet_restore_all_items">還原項目</string>
+  <string name="bottomsheet_empty_trash">清空垃圾桶</string>
+  <string name="trash_error_clearing_trash">清除垃圾桶錯誤</string>
+  <string name="trash_error_restoring_items">還原項目錯誤</string>
+  <string name="trash_error_deleting_item">刪除項目錯誤</string>
+  <!-- Alerts -->
+  <string name="alert_confirm_clear_trash_title">清除垃圾桶?</string>
+  <string name="alert_confirm_clear_trash_message">你確定要清除垃圾桶?全部項目將永久刪除</string>
+  <string name="alert_confirm_restore_all_title">還原全部項目?</string>
+  <string name="alert_confirm_restore_all_message">您確定要還原全部垃圾項目嗎？</string>
+  <!-- Recent search -->
+  <string name="recent_search_header_count">最近搜尋</string>
+  <string name="recent_search_clear">清除</string>
+  <string name="recent_search_remove_item">從搜尋中移除</string>
+</resources>

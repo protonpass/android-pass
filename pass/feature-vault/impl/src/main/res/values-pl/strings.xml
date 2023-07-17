@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Sejf został utworzony</string>
+  <string name="snackbar_create_vault_error">Sejf nie został utworzony</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Nie można utworzyć więcej sejfów</string>
+  <string name="snackbar_edit_vault_success">Sejf został zaktualizowany</string>
+  <string name="snackbar_edit_vault_error">Sejf nie został zaktualizowany</string>
+  <string name="snackbar_delete_vault_success">Sejf został usunięty</string>
+  <string name="snackbar_delete_vault_error">Sejf nie został usunięty</string>
+  <string name="snackbar_retrieve_vault_error">Sejf nie został znaleziony</string>
+  <string name="snackbar_find_vault_error">Nie można znaleźć sejfu</string>
+  <string name="snackbar_get_vault_list_error">Lista sejfów nie mogła zostać załadowana</string>
+  <string name="snackbar_get_upgrade_info_error">Nie można przygotować listy sejfów</string>
+  <string name="vault_delete_dialog_title">Usuń sejf</string>
+  <string name="vault_delete_dialog_body">Spowoduje to trwałe usunięcie sejfu __VAULT_NAME__ i jego zawartości. Wpisz nazwę sejfu, aby potwierdzić usunięcie.</string>
+  <string name="vault_delete_dialog_placeholder">Nazwa sejfu</string>
+  <string name="vault_delete_dialog_cancel_action">Anuluj</string>
+  <string name="vault_delete_dialog_delete_action">Usuń</string>
+  <string name="bottomsheet_close_icon_content_description">Zamknij tworzenie sejfu</string>
+  <string name="bottomsheet_create_vault_button">Utwórz sejf</string>
+  <string name="bottomsheet_edit_vault_button">Zapisz</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Osiągnięto maksymalną liczbę sejfów, które możesz utworzyć. Ulepsz subskrypcję, aby utworzyć nieograniczoną liczbę sejfów.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Ulepsz konto, aby móc używać innych sejfów.</string>
+  <string name="bottomsheet_upgrade_now">Ulepsz teraz</string>
+  <string name="bottomsheet_edit">Edytuj</string>
+  <string name="bottomsheet_migrate">Przenieś wszystkie elementy do innego sejfu</string>
+  <string name="bottomsheet_delete_vault">Usuń sejf</string>
+  <string name="vault_title">Sejf</string>
+</resources>

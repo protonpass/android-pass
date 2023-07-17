@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Профіль</string>
+  <string name="profile_option_settings">Налады</string>
+  <string name="profile_option_account">Уліковы запіс</string>
+  <string name="profile_help_center">Цэнтр дапамогі</string>
+  <string name="profile_security">Бяспека</string>
+  <string name="profile_option_feedback">Зваротная сувязь</string>
+  <string name="profile_option_import_export">Імпартаванне/экспартаванне</string>
+  <string name="profile_option_rating">Ацаніць праграму</string>
+  <string name="profile_option_autofill">Аўтазапаўненне</string>
+  <string name="profile_option_autofill_subtitle">Аўтаматычна запаўняць імя карыстальніка і пароль.</string>
+  <string name="profile_option_fingerprint">Адбітак пальца</string>
+  <string name="profile_option_automatic_app_lock">Аўтаматычная блакіроўка праграмы</string>
+  <string name="profile_option_advanced">Дадаткова</string>
+  <string name="profile_error_biometry_failed_to_start">Немагчыма запусціць біяметрычную аўтэнтыфікацыю</string>
+  <string name="profile_error_biometry_failed_to_authenticate">Не ўдалося аўтэнтыфікаваць</string>
+  <string name="profile_fingerprint_lock_enabled">Разблакіроўка адбіткам пальца ўключана</string>
+  <string name="profile_fingerprint_lock_disabled">Разблакіроўка адбіткам пальца адключана</string>
+  <string name="profile_error_performing_operation">Памылка выканання аперацыі</string>
+  <string name="profile_app_version_copied_to_clipboard">Версія праграмы скапіявана</string>
+  <string name="feedback_option_reddit">Паглядзець Proton на Reddit</string>
+  <string name="feedback_option_mail">Напісаць нам</string>
+  <string name="feedback_option_vote_new_features">Галасаванне за новыя функцыі</string>
+  <string name="app_lock_immediately">Адразу</string>
+  <string name="app_lock_one_minute">Праз 1 хвіліну</string>
+  <string name="app_lock_two_minutes">Праз 2 хвіліны</string>
+  <string name="app_lock_five_minutes">Праз 5 хвілін</string>
+  <string name="app_lock_ten_minutes">Праз 10 хвілін</string>
+  <string name="app_lock_one_hour">Праз 1 гадзіну</string>
+  <string name="app_lock_four_hours">Праз 4 гадзіны</string>
+  <string name="profile_account_plan_name_trial">Бясплатная пробная версія</string>
+  <string name="app_lock_config_biometric">Біяметрыя</string>
+  <string name="app_lock_config_pin_code">PIN-код</string>
+  <string name="app_lock_config_unlock_with">Разблакіраваць з дапамогай</string>
+  <string name="app_lock_config_app_lock_time">Час блакіроўкі праграмы</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Выкарыстоўваць сістэмную блакіроўку пры збоі біяметрыі</string>
+</resources>

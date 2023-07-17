@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Cofre criado</string>
+  <string name="snackbar_create_vault_error">Cofre não criado</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Não é possível criar mais cofres.</string>
+  <string name="snackbar_edit_vault_success">Cofre editado</string>
+  <string name="snackbar_edit_vault_error">O cofre não foi editado.</string>
+  <string name="snackbar_delete_vault_success">Cofre eliminado</string>
+  <string name="snackbar_delete_vault_error">O cofre não foi eliminado.</string>
+  <string name="snackbar_retrieve_vault_error">O cofre não foi encontrado.</string>
+  <string name="snackbar_find_vault_error">Não é possível encontrar o cofre selecionado.</string>
+  <string name="snackbar_get_vault_list_error">Não foi possível carregar a lista de cofres.</string>
+  <string name="snackbar_get_upgrade_info_error">Não foi possível preparar a lista de cofres.</string>
+  <string name="vault_delete_dialog_title">Eliminar o cofre</string>
+  <string name="vault_delete_dialog_body">Isto eliminará permanentemente o cofre __VAULT_NAME__ e todo o seu conteúdo. Introduza o nome do cofre para confirmar a eliminação.</string>
+  <string name="vault_delete_dialog_placeholder">Nome do cofre</string>
+  <string name="vault_delete_dialog_cancel_action">Cancelar</string>
+  <string name="vault_delete_dialog_delete_action">Eliminar</string>
+  <string name="bottomsheet_close_icon_content_description">Fechar o cofre criado</string>
+  <string name="bottomsheet_create_vault_button">Criar um cofre</string>
+  <string name="bottomsheet_edit_vault_button">Guardar</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Atingiu o limite de cofres que pode criar. Crie cofres ilimitados ao actualizar a sua subscrição.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Para interagir com os seus outros cofres, precisa actualizar a sua conta.</string>
+  <string name="bottomsheet_upgrade_now">Actualizar agora</string>
+  <string name="bottomsheet_edit">Editar</string>
+  <string name="bottomsheet_migrate">Mover todos os itens para outro cofre</string>
+  <string name="bottomsheet_delete_vault">Eliminar o cofre</string>
+  <string name="vault_title">Cofre</string>
+</resources>

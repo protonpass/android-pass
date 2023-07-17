@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Уліковы запіс</string>
+  <string name="account_username_label">Імя карыстальніка</string>
+  <string name="account_subscription_label">Тарыфны план</string>
+  <string name="account_permanently_delete_warning">Гэта незваротна выдаліць ваш уліковы запіс і ўсе звязаныя з ім даныя. У вас не будзе магчымасці аднавіць яго пазней.</string>
+  <string name="account_delete_account">Выдаліць уліковы запіс</string>
+  <string name="account_delete_account_icon_content_description">Кнопка выдалення ўліковага запісу</string>
+  <string name="account_sign_out">Выйсці</string>
+  <string name="account_sign_out_icon_content_description">Кнопка выхаду</string>
+  <string name="account_manage_subscription">Кіраванне падпіскай</string>
+  <string name="account_get_user_info_error">Немагчыма атрымаць інфармацыю аб карыстальніку</string>
+  <string name="manage_subscription_icon_content_description">Кнопка кіравання падпіскай</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Выйсці?</string>
+  <string name="alert_confirm_sign_out_message">Вы сапраўды хочаце выйсці?</string>
+</resources>

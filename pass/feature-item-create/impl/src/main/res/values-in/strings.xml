@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Simpan</string>
+  <string name="action_remove">Hapus</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Login</string>
+  <string name="action_alias">Alias</string>
+  <string name="action_note">Catatan</string>
+  <string name="action_credit_card">Kartu kredit</string>
+  <string name="action_password">Kata sandi</string>
+  <string name="item_type_login_description">Tambahkan rincian login untuk aplikasi atau situs</string>
+  <string name="item_type_alias_description">Dapatkan alamat email samaran untuk digunakan pada aplikasi baru</string>
+  <string name="item_type_note_description">Tulis PIN, kode, atau catatan untuk diri Anda sendiri</string>
+  <string name="item_type_credit_card_description">Simpan informasi pembayaran Anda dengan aman</string>
+  <string name="item_type_password_description">Buat kata sandi yang aman</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Buat login</string>
+  <string name="field_username_title">Nama pengguna atau alamat email</string>
+  <string name="field_username_hint">Tambahkan nama pengguna atau alamat email</string>
+  <string name="field_password_title">Kata sandi</string>
+  <string name="field_password_hint">Tambahkan kata sandi</string>
+  <string name="field_website_address_title">Situs Web</string>
+  <string name="field_website_address_invalid">URL tidak valid</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Tambah</string>
+  <string name="sticky_button_generate_password">Buat kata sandi baru</string>
+  <string name="sticky_button_create_alias">Hide my email</string>
+  <string name="sticky_button_use_account_email">Gunakan %s</string>
+  <string name="create_login_item_creation_error">Tidak dapat menghasilkan Login</string>
+  <string name="create_login_item_update_error">Login tidak dapat diperbarui</string>
+  <string name="create_login_init_error">Login tidak dapat dimulai</string>
+  <string name="create_login_invalid_totp">Konten 2FA tidak valid</string>
+  <string name="login_created">Login dihasilkan</string>
+  <string name="bottomsheet_modify_alias_title">Sesuaikan alias</string>
+  <string name="bottomsheet_custom_field_type_text">Teks</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Kolom kustom teks</string>
+  <string name="bottomsheet_custom_field_type_hidden">Tersembunyi</string>
+  <string name="bottomsheet_custom_field_type_totp">Rahasia 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Sunting judul</string>
+  <string name="bottomsheet_custom_field_option_remove">Hapus kolom</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Hapus kolom khusus</string>
+  <string name="create_login_add_custom_field_button">Tambahkan lagi</string>
+  <string name="custom_field_hidden_placeholder">Konten tersembunyi Anda</string>
+  <string name="custom_field_hidden_icon_content_description">Ikon kolom khusus tersembunyi</string>
+  <string name="custom_field_text_placeholder">Konten Anda</string>
+  <string name="custom_field_dialog_title">Nama kolom khusus</string>
+  <string name="custom_field_dialog_body">Masukkan nama untuk kolom khusus Anda</string>
+  <string name="custom_field_dialog_placeholder">Nama kolom khusus</string>
+  <string name="custom_field_options_content_description">Opsi kolom khusus</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Buat catatan</string>
+  <string name="create_note_item_creation_error">Could not create Note</string>
+  <string name="create_note_item_update_error">Could not update Note</string>
+  <string name="create_note_init_error">Catatan tidak dapat dimulai</string>
+  <string name="create_note_empty_share_id">ID pembagian tidak boleh kosong</string>
+  <string name="note_created">Catatan dibuat</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">Catatan dipindahkan ke sampah</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">Catatan tidak dapat dihapus</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Buat alias</string>
+  <string name="field_alias_title">Alamat alias</string>
+  <string name="field_alias_hint">Nama pengguna alias</string>
+  <string name="field_mailboxes_creation_title">Teruskan ke</string>
+  <string name="field_mailboxes_edit_title">Meneruskan ke</string>
+  <string name="field_alias_you_are_about_to_create">Anda akan membuat</string>
+  <string name="field_alias_prefix">Awalan</string>
+  <string name="field_alias_suffix">Akhiran</string>
+  <string name="alias_bottomsheet_alias_title">Alias</string>
+  <string name="alias_bottomsheet_suffix_title">Akhiran</string>
+  <string name="create_alias_item_creation_error">Alias tidak dapat dibuat</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Anda tidak dapat membuat lebih banyak alias</string>
+  <string name="create_alias_email_not_validated_error">Anda harus memverifikasi alamat email Anda terlebih dahulu sebelum membuat alias</string>
+  <string name="alias_rate_limited">Terlalu banyak alias yang dibuat baru-baru ini</string>
+  <string name="create_alias_item_update_error">Alias tidak dapat diperbarui</string>
+  <string name="create_alias_init_error">Alias tidak dapat dimulai</string>
+  <string name="create_alias_empty_share_id">Id share tidak boleh kosong</string>
+  <string name="alias_created">Alias dibuat</string>
+  <string name="alias_moved_to_trash">Alias dipindahkan ke sampah</string>
+  <string name="cannot_retrieve_alias_options">Tidak dapat menerima opsi alias</string>
+  <string name="alias_mailbox_dialog_title">Teruskan ke</string>
+  <!-- Create note -->
+  <string name="note_hint">Catatan</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Buat kartu kredit</string>
+  <string name="field_cardholder_name_title">Nama pemilik kartu</string>
+  <string name="field_cardholder_name_hint">Nama lengkap</string>
+  <string name="field_card_number_title">Nomor kartu</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Nomor verifikasi</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">Nomor PIN</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Kedaluwarsa pada</string>
+  <string name="field_card_expiration_date_hint">BB / TTTT</string>
+  <string name="field_card_expiration_date_error">Tanggal kedaluwarsa tidak valid</string>
+  <string name="create_credit_card_item_creation_error">Tidak dapat membuat kartu kredit</string>
+  <string name="create_credit_card_item_creation_success">Kartu kredit dibuat</string>
+  <string name="credit_card_init_error">Kartu kredit tidak dapat diinisialisasi</string>
+  <string name="credit_card_item_update_error">Tidak dapat memperbarui kartu kredit</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Perubahan disimpan</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">Secret 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Secret 2FA tidak valid</string>
+  <string name="totp_create_login_field_placeholder">Tambahkan secret 2FA</string>
+  <string name="close_scree_icon_content_description">Tombol tutup layar</string>
+  <string name="totp_paste_code_action">Tempelkan kode</string>
+  <string name="totp_scan_code_action">Pindai kode</string>
+  <string name="field_cannot_be_empty">Kolom ini harus diisi</string>
+  <string name="camera_permission_explanation">Izin kamera diperlukan agar fitur ini tersedia.</string>
+  <string name="camera_permission_open_settings">Buka pengaturan</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">Batas 2FA tercapai</string>
+  <string name="upgrade">Tingkatkan</string>
+  <string name="mfa_icon_content_description">Ikon 2FA</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Tingkatkan untuk menggunakan domain khusus</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Tingkatkan untuk mendapatkan lebih banyak kotak masuk</string>
+  <string name="create_alias_content_limit_banner">Anda telah mencapai batas jumlah alias yang dapat Anda buat. Dapatkan kemampuan untuk membuat alias tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
+</resources>

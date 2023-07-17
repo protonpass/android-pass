@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">儲存</string>
+  <string name="action_remove">移除</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">登入</string>
+  <string name="action_alias">別名</string>
+  <string name="action_note">備註</string>
+  <string name="action_credit_card">信用卡</string>
+  <string name="action_password">密碼</string>
+  <string name="item_type_login_description">替應用程式或網頁新增登入詳細資料</string>
+  <string name="item_type_alias_description">取得電子郵件別名以使用新的應用程式</string>
+  <string name="item_type_note_description">小抄一個 PIN 碼、代碼或自己的筆記</string>
+  <string name="item_type_credit_card_description">安全的保存付款資料</string>
+  <string name="item_type_password_description">生成一個安全密碼</string>
+  <!-- Create Login -->
+  <string name="title_create_login">創建登入</string>
+  <string name="field_username_title">使用者名稱或電郵地址</string>
+  <string name="field_username_hint">加入使用者名稱或電郵位址</string>
+  <string name="field_password_title">密碼</string>
+  <string name="field_password_hint">新增密碼</string>
+  <string name="field_website_address_title">網站</string>
+  <string name="field_website_address_invalid">無效的網址</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">新增</string>
+  <string name="sticky_button_generate_password">生成一個新的密碼</string>
+  <string name="sticky_button_create_alias">隱藏自己的電子郵件</string>
+  <string name="sticky_button_use_account_email">使用 %s</string>
+  <string name="create_login_item_creation_error">無法創建登入</string>
+  <string name="create_login_item_update_error">無法更新登入</string>
+  <string name="create_login_init_error">無法初始化登入</string>
+  <string name="create_login_invalid_totp">雙重驗證無法驗證</string>
+  <string name="login_created">登入已建立</string>
+  <string name="bottomsheet_modify_alias_title">變更別名</string>
+  <string name="bottomsheet_custom_field_type_text">文字</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">輸入自訂欄位</string>
+  <string name="bottomsheet_custom_field_type_hidden">隱藏</string>
+  <string name="bottomsheet_custom_field_type_totp">雙重驗證祕文(TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">編輯標題</string>
+  <string name="bottomsheet_custom_field_option_remove">移除欄位</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">移除自訂欄位</string>
+  <string name="create_login_add_custom_field_button">加入更多</string>
+  <string name="custom_field_hidden_placeholder">您隱藏的內容？</string>
+  <string name="custom_field_hidden_icon_content_description">隱藏自訂的欄位圖示</string>
+  <string name="custom_field_text_placeholder">您的內容</string>
+  <string name="custom_field_dialog_title">自訂欄位的名稱</string>
+  <string name="custom_field_dialog_body">為自訂欄位輸入名稱</string>
+  <string name="custom_field_dialog_placeholder">為自訂欄位命名</string>
+  <string name="custom_field_options_content_description">自訂的選項</string>
+  <!-- Create Note -->
+  <string name="title_create_note">創建備註</string>
+  <string name="create_note_item_creation_error">無法創建備註</string>
+  <string name="create_note_item_update_error">無法更新備註</string>
+  <string name="create_note_init_error">無法初始化備註</string>
+  <string name="create_note_empty_share_id">分享的ID不可為空</string>
+  <string name="note_created">已創建備註</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">備註已移至垃圾桶</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">無法刪除備註</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">創建別名</string>
+  <string name="field_alias_title">別名地址</string>
+  <string name="field_alias_hint">別名使用者名稱</string>
+  <string name="field_mailboxes_creation_title">轉寄至</string>
+  <string name="field_mailboxes_edit_title">轉寄至</string>
+  <string name="field_alias_you_are_about_to_create">您將要創建</string>
+  <string name="field_alias_prefix">前綴</string>
+  <string name="field_alias_suffix">後綴</string>
+  <string name="alias_bottomsheet_alias_title">別名</string>
+  <string name="alias_bottomsheet_suffix_title">後綴</string>
+  <string name="create_alias_item_creation_error">無法創建別名</string>
+  <string name="create_alias_cannot_create_more_aliases_error">您無法創建更多別名</string>
+  <string name="create_alias_email_not_validated_error">您無法於驗證電子郵件前創建別名</string>
+  <string name="alias_rate_limited">近期創建太多的別名</string>
+  <string name="create_alias_item_update_error">無法更新別名</string>
+  <string name="create_alias_init_error">無法初始化別名</string>
+  <string name="create_alias_empty_share_id">分享ID不可為空白</string>
+  <string name="alias_created">已建立別名</string>
+  <string name="alias_moved_to_trash">別名已移至垃圾桶</string>
+  <string name="cannot_retrieve_alias_options">無法提取別名選項</string>
+  <string name="alias_mailbox_dialog_title">轉寄至</string>
+  <!-- Create note -->
+  <string name="note_hint">備註</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">創建信用卡</string>
+  <string name="field_cardholder_name_title">持卡人姓名</string>
+  <string name="field_cardholder_name_hint">全名</string>
+  <string name="field_card_number_title">卡號</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">驗證碼</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">PIN 碼</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">到期日</string>
+  <string name="field_card_expiration_date_hint">月月 / 年年年年</string>
+  <string name="field_card_expiration_date_error">這個到期日無效</string>
+  <string name="create_credit_card_item_creation_error">無法創建信用卡</string>
+  <string name="create_credit_card_item_creation_success">信用卡已創建</string>
+  <string name="credit_card_init_error">無法初始化信用卡</string>
+  <string name="credit_card_item_update_error">無法更新信用卡</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">更改保存。</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">雙重驗證一次性驗證碼(TOTP)</string>
+  <string name="totp_create_login_field_invalid">錯誤雙重驗證碼</string>
+  <string name="totp_create_login_field_placeholder">新增雙重驗證碼</string>
+  <string name="close_scree_icon_content_description">關閉螢幕按鈕</string>
+  <string name="totp_paste_code_action">貼上代碼</string>
+  <string name="totp_scan_code_action">掃描碼</string>
+  <string name="field_cannot_be_empty">此欄無法空白</string>
+  <string name="camera_permission_explanation">此功能需要鏡頭權限</string>
+  <string name="camera_permission_open_settings">開啟設定</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">雙重驗證已達上限</string>
+  <string name="upgrade">升級</string>
+  <string name="mfa_icon_content_description">雙重驗證圖像</string>
+  <string name="select_suffix_upgrade_for_custom_domains">為自訂網域升級</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">為信箱升級</string>
+  <string name="create_alias_content_limit_banner">你以達到新增別名。升級訂閱以新增無限別名</string>
+</resources>

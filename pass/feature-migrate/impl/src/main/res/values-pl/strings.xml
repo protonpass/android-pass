@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Przenieść element do następującego sejfu?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Przenieść wszystkie elementy do następującego sejfu?</string>
+  <string name="migrate_item_confirm_confirm_button">Przenieś</string>
+  <string name="migrate_item_success_snackbar">Element został przeniesiony</string>
+  <string name="migrate_item_error_snackbar">Wystąpił błąd podczas przenoszenia elementu</string>
+  <string name="migrate_all_items_success_snackbar">Wszystkie elementy zostały przeniesione</string>
+  <string name="migrate_all_items_error_snackbar">Wystąpił błąd podczas przenoszenia wszystkich elementów w sejfie</string>
+  <string name="migrate_init_error_snackbar">Nie można przygotować ekranu migracji</string>
+</resources>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Desa</string>
+  <string name="action_remove">Suprimeix</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Inicia la sessió</string>
+  <string name="action_alias">Àlies</string>
+  <string name="action_note">Nota</string>
+  <string name="action_credit_card">Targeta de crèdit</string>
+  <string name="action_password">Contrasenya</string>
+  <string name="item_type_login_description">Afegeix els detalls d\'inici de sessió per a una aplicació o lloc web</string>
+  <string name="item_type_alias_description">Obteniu un àlies de correu electrònic per utilitzar en aplicacions noves</string>
+  <string name="item_type_note_description">Apunteu un PIN, un codi o una nota per al vostre interès</string>
+  <string name="item_type_credit_card_description">Emmagatzemeu de forma segura la informació de pagament</string>
+  <string name="item_type_password_description">Genera una contrasenya segura</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Crea un inici de sessió</string>
+  <string name="field_username_title">Nom d\'usuari o adreça de correu electrònic</string>
+  <string name="field_username_hint">Afegeix un nom d\'usuari o correu electrònic</string>
+  <string name="field_password_title">Contrasenya</string>
+  <string name="field_password_hint">Afegeix una contrasenya</string>
+  <string name="field_website_address_title">Lloc web</string>
+  <string name="field_website_address_invalid">URL no vàlida</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Afegeix</string>
+  <string name="sticky_button_generate_password">Genera una contrasenya nova</string>
+  <string name="sticky_button_create_alias">Hide My Email</string>
+  <string name="sticky_button_use_account_email">Utilitza %s</string>
+  <string name="create_login_item_creation_error">No s\'ha pogut crear l\'inici de sessió</string>
+  <string name="create_login_item_update_error">No s\'ha pogut actualitzar l\'inici de sessió</string>
+  <string name="create_login_init_error">No s\'ha pogut inicialitzar l\'inici de sessió</string>
+  <string name="create_login_invalid_totp">El contingut 2FA no és vàlid</string>
+  <string name="login_created">S\'ha creat l\'inici de sessió</string>
+  <string name="bottomsheet_modify_alias_title">Modifica l\'àlies</string>
+  <string name="bottomsheet_custom_field_type_text">Text</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Camp de text personalitzat</string>
+  <string name="bottomsheet_custom_field_type_hidden">Ocult</string>
+  <string name="bottomsheet_custom_field_type_totp">Clau secreta 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Edita el títol</string>
+  <string name="bottomsheet_custom_field_option_remove">Suprimeix el camp</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Suprimeix el camp personalitzat</string>
+  <string name="create_login_add_custom_field_button">Afegeix-ne més</string>
+  <string name="custom_field_hidden_placeholder">El vostre contingut amagat</string>
+  <string name="custom_field_hidden_icon_content_description">Icona de camp personalitzat amagat</string>
+  <string name="custom_field_text_placeholder">El vostre contingut</string>
+  <string name="custom_field_dialog_title">Nom del camp personalitzat</string>
+  <string name="custom_field_dialog_body">Introduïu un nom per al camp personalitzat</string>
+  <string name="custom_field_dialog_placeholder">Nom del camp personalitzat</string>
+  <string name="custom_field_options_content_description">Opcions del camp personalitzat</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Crea una nota</string>
+  <string name="create_note_item_creation_error">No s\'ha pogut crear la nota</string>
+  <string name="create_note_item_update_error">No s\'ha pogut actualitzar la nota</string>
+  <string name="create_note_init_error">No s\'ha pogut inicialitzar la nota</string>
+  <string name="create_note_empty_share_id">La ID de compartició no pot estar buida</string>
+  <string name="note_created">S\'ha creat la nota</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">La nota s\'ha mogut a la paperera</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">No s\'ha pogut eliminar la nota</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Crea un àlies</string>
+  <string name="field_alias_title">Adreça d\'àlies</string>
+  <string name="field_alias_hint">Nom d\'usuari de l\'àlies</string>
+  <string name="field_mailboxes_creation_title">Envia a</string>
+  <string name="field_mailboxes_edit_title">Reenviant a</string>
+  <string name="field_alias_you_are_about_to_create">Esteu a punt de crear</string>
+  <string name="field_alias_prefix">Prefix</string>
+  <string name="field_alias_suffix">Sufix</string>
+  <string name="alias_bottomsheet_alias_title">Àlies</string>
+  <string name="alias_bottomsheet_suffix_title">Sufix</string>
+  <string name="create_alias_item_creation_error">No s\'ha pogut crear l\'àlies</string>
+  <string name="create_alias_cannot_create_more_aliases_error">No podeu crear més àlies</string>
+  <string name="create_alias_email_not_validated_error">No podeu crear àlies sense validar primer el vostre correu electrònic</string>
+  <string name="alias_rate_limited">Massa àlies creats recentment</string>
+  <string name="create_alias_item_update_error">No s\'ha pogut actualitzar l\'àlies</string>
+  <string name="create_alias_init_error">No s\'ha pogut inicialitzar l\'àlies</string>
+  <string name="create_alias_empty_share_id">La ID de compartició no pot estar buida</string>
+  <string name="alias_created">S\'ha creat l\'àlies</string>
+  <string name="alias_moved_to_trash">L\'àlies s\'ha mogut a la paperera</string>
+  <string name="cannot_retrieve_alias_options">No es poden recuperar les opcions d\'àlies</string>
+  <string name="alias_mailbox_dialog_title">Envia a</string>
+  <!-- Create note -->
+  <string name="note_hint">Nota</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Crea una targeta de crèdit</string>
+  <string name="field_cardholder_name_title">Nom del titular de la targeta</string>
+  <string name="field_cardholder_name_hint">Nom complet</string>
+  <string name="field_card_number_title">Número de targeta</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Número de verificació</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">Codi PIN</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Data de caducitat:</string>
+  <string name="field_card_expiration_date_hint">MM/AAAA</string>
+  <string name="field_card_expiration_date_error">La data de caducitat no és vàlida.</string>
+  <string name="create_credit_card_item_creation_error">No s\'ha pogut crear la targeta de crèdit</string>
+  <string name="create_credit_card_item_creation_success">S\'ha creat la targeta de crèdit</string>
+  <string name="credit_card_init_error">No s\'ha pogut inicialitzar la targeta de crèdit</string>
+  <string name="credit_card_item_update_error">No s\'ha pogut actualitzar la targeta de crèdit</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">S\'han desat els canvis.</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">Clau secreta 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">La clau secreta 2FA no és vàlida.</string>
+  <string name="totp_create_login_field_placeholder">Afegiu una clau secreta 2FA</string>
+  <string name="close_scree_icon_content_description">Botó de tancament de pantalla</string>
+  <string name="totp_paste_code_action">Enganxa el codi</string>
+  <string name="totp_scan_code_action">Escaneja el codi</string>
+  <string name="field_cannot_be_empty">Aquest camp no pot estar buit</string>
+  <string name="camera_permission_explanation">El permís de càmera és necessari perquè aquesta característica estigui disponible.</string>
+  <string name="camera_permission_open_settings">Obre les preferències</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">S\'ha assolit el límit de 2FA</string>
+  <string name="upgrade">Millora</string>
+  <string name="mfa_icon_content_description">Icona de 2FA</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Milloreu per obtenir dominis personalitzats</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Milloreu per obtenir més carpetes d\'entrada</string>
+  <string name="create_alias_content_limit_banner">Heu assolit el límit d\'àlies que podeu crear. Creeu un nombre il·limitat d\'àlies en millorar la vostra subscripció.</string>
+</resources>

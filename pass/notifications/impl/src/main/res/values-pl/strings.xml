@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="autofill_notification_channel_name">Autouzupełnianie</string>
+  <string name="autofill_notification_copy_to_clipboard_title">Kod TOTP</string>
+  <string name="autofill_notification_copy_to_clipboard_body">Kod TOTP został skopiowany do schowka</string>
+</resources>

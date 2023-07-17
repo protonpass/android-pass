@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Tallenna</string>
+  <string name="action_remove">Poista</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Kirjaudu</string>
+  <string name="action_alias">Alias</string>
+  <string name="action_note">Muistiinpano</string>
+  <string name="action_credit_card">Maksukortti</string>
+  <string name="action_password">Salasana</string>
+  <string name="item_type_login_description">Lisää sovelluksen tai sivuston kirjautumistiedot</string>
+  <string name="item_type_alias_description">Hanki sähköpostialias, jota voit käyttää uusissa sovelluksissa</string>
+  <string name="item_type_note_description">Tallenna PIN- tai muita koodeja, tai muistiinpanoja.</string>
+  <string name="item_type_credit_card_description">Säilytä maksutietosi turvallisesti</string>
+  <string name="item_type_password_description">Luo turvallinen salasana</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Luo kirjautumistieto</string>
+  <string name="field_username_title">Käyttäjätunnus tai sähköpostiosoite</string>
+  <string name="field_username_hint">Lisää käyttäjätunnus tai sähköpostiosoite</string>
+  <string name="field_password_title">Salasana</string>
+  <string name="field_password_hint">Lisää salasana</string>
+  <string name="field_website_address_title">Verkkosivusto</string>
+  <string name="field_website_address_invalid">Virheellinen URL-osoite</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Lisää</string>
+  <string name="sticky_button_generate_password">Luo uusi salasana</string>
+  <string name="sticky_button_create_alias">Hide-my-email</string>
+  <string name="sticky_button_use_account_email">Käytä osoitetta %s</string>
+  <string name="create_login_item_creation_error">Kirjautumistietoa ei voitu luoda</string>
+  <string name="create_login_item_update_error">Kirjautumistietoa ei voitu päivittää</string>
+  <string name="create_login_init_error">Kirjautumistietoa ei voitu alustaa</string>
+  <string name="create_login_invalid_totp">2FA-sisällöt ovat virheelliset</string>
+  <string name="login_created">Kirjautumistieto luotiin</string>
+  <string name="bottomsheet_modify_alias_title">Muokkaa aliasta</string>
+  <string name="bottomsheet_custom_field_type_text">Teksti</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Mukautettu tekstikenttä</string>
+  <string name="bottomsheet_custom_field_type_hidden">Piilotettu</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA-salaisuus (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Muokkaa nimeä</string>
+  <string name="bottomsheet_custom_field_option_remove">Poista kenttä</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Poista mukautettu kenttä</string>
+  <string name="create_login_add_custom_field_button">Lisää tietoja</string>
+  <string name="custom_field_hidden_placeholder">Piilotettu sisältö</string>
+  <string name="custom_field_hidden_icon_content_description">Mukautettu piilokenttä -kuvake</string>
+  <string name="custom_field_text_placeholder">Sisältö</string>
+  <string name="custom_field_dialog_title">Mukautetun kentän nimi</string>
+  <string name="custom_field_dialog_body">Nimeä mukautettu kenttä</string>
+  <string name="custom_field_dialog_placeholder">Mukautetun kentän nimi</string>
+  <string name="custom_field_options_content_description">Mukautetun kentän valinnat</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Luo muistiinpano</string>
+  <string name="create_note_item_creation_error">Muistiinpanoa ei voitu luoda</string>
+  <string name="create_note_item_update_error">Muistiinpanoa ei voitu päivittää</string>
+  <string name="create_note_init_error">Muistiinpanoa ei voitu alustaa</string>
+  <string name="create_note_empty_share_id">Share ID ei voi olla tyhjä</string>
+  <string name="note_created">Muistiinpano luotiin</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">Muistiinpano siirrettiin roskakoriin</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">Muistiinpanoa ei voitu poistaa</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Luo alias</string>
+  <string name="field_alias_title">Aliaksen osoite</string>
+  <string name="field_alias_hint">Aliaksen käyttäjätunnus</string>
+  <string name="field_mailboxes_creation_title">Ohjaa osoitteeseen</string>
+  <string name="field_mailboxes_edit_title">Ohjautuu osoitteeseen</string>
+  <string name="field_alias_you_are_about_to_create">Olet luomassa</string>
+  <string name="field_alias_prefix">Etuliite</string>
+  <string name="field_alias_suffix">Jälkiliite</string>
+  <string name="alias_bottomsheet_alias_title">Alias</string>
+  <string name="alias_bottomsheet_suffix_title">Jälkiliite</string>
+  <string name="create_alias_item_creation_error">Aliasta ei voitu luoda</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Et voi luoda enempää aliaksia</string>
+  <string name="create_alias_email_not_validated_error">Et voi luoda aliaksia vahvistamatta ensin sähköpostiosoitettasi</string>
+  <string name="alias_rate_limited">Lyhyen ajan sisällä on luotu liian monta aliasta</string>
+  <string name="create_alias_item_update_error">Aliasta ei voitu päivittää</string>
+  <string name="create_alias_init_error">Aliasta ei voitu alustaa</string>
+  <string name="create_alias_empty_share_id">Jaon ID ei voi olla tyhjä</string>
+  <string name="alias_created">Alias luotiin</string>
+  <string name="alias_moved_to_trash">Alias siirrettiin roskakoriin</string>
+  <string name="cannot_retrieve_alias_options">Aliasvaihtoehtoja ei voida hakea</string>
+  <string name="alias_mailbox_dialog_title">Ohjaa osoitteeseen</string>
+  <!-- Create note -->
+  <string name="note_hint">Muistiinpano</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Luo maksukortti</string>
+  <string name="field_cardholder_name_title">Kortinhaltijan nimi</string>
+  <string name="field_cardholder_name_hint">Koko nimi</string>
+  <string name="field_card_number_title">Kortin numero</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Turvakoodi</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">PIN-koodi</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Voimassaolo päättyy</string>
+  <string name="field_card_expiration_date_hint">KK / VVVV</string>
+  <string name="field_card_expiration_date_error">Voimassaolon päättymispäivä on virheellinen</string>
+  <string name="create_credit_card_item_creation_error">Maksukorttia ei voitu luoda</string>
+  <string name="create_credit_card_item_creation_success">Maksukortti luotiin</string>
+  <string name="credit_card_init_error">Maksukorttia ei voitu alustaa</string>
+  <string name="credit_card_item_update_error">Maksukorttia ei voitu päivittää</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Muutokset tallennettiin</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">2FA-salaisuus (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Virheellinen 2FA-salaisuus</string>
+  <string name="totp_create_login_field_placeholder">Lisää 2FA-salaisuus</string>
+  <string name="close_scree_icon_content_description">Sulje ruutu -painike</string>
+  <string name="totp_paste_code_action">Liitä koodi</string>
+  <string name="totp_scan_code_action">Skannaa koodi</string>
+  <string name="field_cannot_be_empty">Kenttä ei voi olla tyhjä</string>
+  <string name="camera_permission_explanation">Ominaisuuden käyttö edellyttää laitteen kameran käyttöoikeutta.</string>
+  <string name="camera_permission_open_settings">Avaa asetukset</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">2FA-raja on saavutettu</string>
+  <string name="upgrade">Päivitä</string>
+  <string name="mfa_icon_content_description">2FA-kuvake</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Päivitä tilaus käyttääksesi omia verkkotunnuksia</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Päivitä tilaus saadaksesi enemmän postilaatikoita</string>
+  <string name="create_alias_content_limit_banner">Luotujen aliasten enimmäismäärä on saavutettu. Luo aliaksia rajattomasti päivittämällä tilauksesi.</string>
+</resources>

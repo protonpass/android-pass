@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Título (A-Z)</string>
+  <string name="sort_by_title_desc">Título (Z-A)</string>
+  <string name="sort_by_creation_asc">De más antiguo a más reciente</string>
+  <string name="sort_by_creation_desc">De más reciente a más antiguo</string>
+  <string name="sort_by_modification_date">Más reciente</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Todos</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">resultado</item>
+    <item quantity="other">resultados</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Confirmar</string>
+  <string name="bottomsheet_cancel_button">Cancelar</string>
+  <string name="bottomsheet_move_to_trash">Mover a la papelera</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Abrir menú de acciones del elemento</string>
+  <string name="action_upgrade_now">Mejorar ahora</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Añada su primer elemento</string>
+  <string name="empty_search_results_title">No se encontraron resultados</string>
+  <string name="empty_list_open_extension">Visitar sitio web de la extensión</string>
+  <string name="empty_list_create_item_button">Crear elemento</string>
+  <!-- Field -->
+  <string name="field_title_title">Título</string>
+  <string name="field_title_hint">Sin título</string>
+  <string name="field_title_required">Título requerido</string>
+  <string name="small_cross_icon_content_description">Ícono de cruz pequeño</string>
+  <string name="field_note_title">Nota</string>
+  <string name="field_note_hint">Añadir nota</string>
+  <string name="linked_apps_title">Apps enlazadas</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Sin conexión</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Ícono de aplicación ausente</string>
+  <string name="add_item_icon_content_description">Añadir ícono de elemento</string>
+  <string name="navigate_back_icon_content_description">Ícono de navegar atrás</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Bóveda</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Elementos de la lista</string>
+  <string name="bottom_bar_add_item_icon_content_description">Añadir elemento</string>
+  <string name="bottom_bar_profile_icon_content_description">Perfil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Hoy</string>
+  <string name="most_recent_yesterday">Ayer</string>
+  <string name="most_recent_this_week">Esta semana</string>
+  <string name="most_recent_last_two_weeks">Últimas dos semanas</string>
+  <string name="most_recent_last_30_days">Últimos 30 días</string>
+  <string name="most_recent_last_60_days">Últimos 60 días</string>
+  <string name="most_recent_last_90_days">Últimos 90 días</string>
+  <string name="most_recent_within_the_last_year">Dentro del año anterior</string>
+  <string name="most_recent_more_than_1_year">Más de 1 año</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Ícono de búsqueda</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Ícono de opción</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 elemento</item>
+    <item quantity="other">%d elementos</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">¿Descartar cambios?</string>
+  <string name="confirm_close_dialog_message">Tiene cambios sin guardar. ¿En verdad desea descartarlos?</string>
+  <string name="confirm_close_dialog_close_button">Descartar</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Mejorar</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Opciones avanzadas</string>
+  <string name="hide_advanced_options">Ocultar opciones avanzadas</string>
+</resources>

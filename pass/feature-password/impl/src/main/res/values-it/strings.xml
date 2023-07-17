@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Copia e chiudi</string>
+  <string name="password_copied_to_clipboard">Password copiata</string>
+  <string name="bottomsheet_generate_password_title">Genera password</string>
+  <string name="password_type">Tipo</string>
+  <string name="special_characters">Caratteri speciali (!&amp;*)</string>
+  <string name="character_count">%s caratteri</string>
+  <string name="word_count">%s parole</string>
+  <string name="word_separator">Separatore parole</string>
+  <string name="bottomsheet_option_capital_letters">Lettere maiuscole (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Maiuscole</string>
+  <string name="bottomsheet_option_include_numbers">Include numeri (0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Trattini ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Spazi</string>
+  <string name="bottomsheet_option_word_separator_periods">Periodi ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Virgole ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Trattini bassi ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Numeri</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numeri e simboli</string>
+  <string name="regenerate_password_icon_content_description">Pulsante rigenera password</string>
+  <string name="password_mode_memorable">Password memorabile</string>
+  <string name="password_mode_random">Password casuale</string>
+  <string name="password_mode_icon">Icona modalità password</string>
+  <string name="password_words_separator_icon">Separatore parole della password</string>
+</resources>

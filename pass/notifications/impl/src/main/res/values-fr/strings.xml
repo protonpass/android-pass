@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="autofill_notification_channel_name">Remplissage automatique</string>
+  <string name="autofill_notification_copy_to_clipboard_title">Code TOTP (mot de passe à usage unique basé sur le temps)</string>
+  <string name="autofill_notification_copy_to_clipboard_body">Le mot de passe à usage unique basé sur le temps (TOTP) a été copié dans le presse-papiers.</string>
+</resources>

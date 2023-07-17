@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Palauta</string>
+  <string name="bottomsheet_delete_permanently">Poista pysyvästi</string>
+  <string name="alert_confirm_delete_item_dialog_title">Poistetaanko pysyvästi?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Tätä ei ole mahdollista perua.</string>
+  <string name="alias_dialog_move_to_trash_title">Siirretäänkö roskakoriin?</string>
+  <string name="alias_dialog_move_to_trash_content">Jos siirrät aliaksen roskakoriin, ei se enää ohjaa viestejä postilaatikkoosi.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Vahvista</string>
+</resources>

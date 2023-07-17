@@ -36,6 +36,7 @@ import proton.android.pass.data.impl.responses.CreateItemAliasResponse
 import proton.android.pass.data.impl.responses.CreateItemResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
 import proton.android.pass.data.impl.responses.DeleteVaultResponse
+import proton.android.pass.data.impl.responses.FeatureFlagsResponse
 import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
 import proton.android.pass.data.impl.responses.GetItemLatestKeyResponse
@@ -210,4 +211,8 @@ interface PasswordManagerApi : BaseRetrofitApi {
     // Telemetry
     @POST("/data/v1/stats/multiple")
     suspend fun sendTelemetry(@Body request: TelemetryRequest): retrofit2.Response<okhttp3.ResponseBody>
+
+    // Feature flags
+    @GET("/feature/v2/frontend")
+    suspend fun getFeatureFlags(): FeatureFlagsResponse
 }

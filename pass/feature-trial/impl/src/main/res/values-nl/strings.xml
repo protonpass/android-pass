@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Enjoy your free trial</string>
+  <string name="trial_subtitle">For next-level password management:</string>
+  <string name="trial_feature_1">20 kluizen</string>
+  <string name="trial_feature_2">Onbeperkte e-mailaliassen</string>
+  <string name="trial_feature_3">Geïntegreerde 2FA-authenticator</string>
+  <string name="trial_feature_4">Aangepaste velden</string>
+  <string name="trial_button_text">Upgrade to keep these features</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">1 day left in your trial period</item>
+    <item quantity="other">%d days left in your trial period</item>
+  </plurals>
+  <string name="trial_learn_more">Learn more</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 brankas</string>
+  <string name="unlimited_email_alias">Tanpa batasan jumlah alias email</string>
+  <string name="custom_fields">Kolom khusus</string>
+  <string name="restart_to_complete_the_update">Nyalakan ulang aplikasi untuk menyelesaikan pembaruan</string>
+  <string name="action_restart">Nyalakan ulang</string>
+</resources>

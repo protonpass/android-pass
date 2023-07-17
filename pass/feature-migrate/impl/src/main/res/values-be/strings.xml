@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Перамясціць гэты элемент у наступнае сховішча?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Перамясціць усе элементы ў наступнае сховішча?</string>
+  <string name="migrate_item_confirm_confirm_button">Перамясціць</string>
+  <string name="migrate_item_success_snackbar">Элемент перамешчаны</string>
+  <string name="migrate_item_error_snackbar">Памылка падчас перамяшчэння элемента</string>
+  <string name="migrate_all_items_success_snackbar">Усе элементы перамешчаны</string>
+  <string name="migrate_all_items_error_snackbar">Памылка падчас перамяшчэння ўсіх элементаў сховішча</string>
+  <string name="migrate_init_error_snackbar">Немагчыма падрыхтаваць экран пераносу</string>
+</resources>

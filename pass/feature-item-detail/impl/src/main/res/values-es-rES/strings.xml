@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Abrir</string>
+  <string name="action_copy">Copiar</string>
+  <!-- Detail -->
+  <string name="detail_init_error">No se ha podido inicializar el elemento.</string>
+  <string name="top_bar_edit_button_text">Editar</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Dirección de alias</string>
+  <string name="alias_copied_to_clipboard">Alias copiado</string>
+  <string name="alias_detail_field_mailboxes_title">Reenviando a</string>
+  <string name="alias_create_login_from_alias">Crear un inicio de sesión</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Nota</string>
+  <!-- Login details -->
+  <string name="username_copied_to_clipboard">Nombre de usuario copiado</string>
+  <string name="password_copied_to_clipboard">Contraseña copiada</string>
+  <string name="website_copied_to_clipboard">Sitio web copiado</string>
+  <string name="totp_copied_to_clipboard">TOTP copiado</string>
+  <string name="field_copied_to_clipboard">Campo copiado</string>
+  <string name="move_item_to_trash_message">Elemento movido a la papelera</string>
+  <string name="error_move_item_to_trash_message">Error al mover a la papelera</string>
+  <string name="item_permanently_deleted_message">Elemento eliminado permanentemente</string>
+  <string name="item_permanently_deleted_message_error">Error al eliminar el elemento</string>
+  <string name="item_restored_message">Elemento restaurado</string>
+  <string name="item_restored_message_error">Error al restaurar el elemento</string>
+  <string name="login_item_generate_totp_error">Error al generar el código 2FA</string>
+  <string name="login_item_view_alias_button">Ver el alias</string>
+  <string name="field_username">Nombre de usuario o dirección de correo electrónico</string>
+  <string name="field_password">Contraseña</string>
+  <string name="websites_section_title">Sitios web</string>
+  <string name="totp_section_title">Token 2FA (TOTP)</string>
+  <string name="action_reveal_password">Mostrar la contraseña</string>
+  <string name="action_conceal_password">Ocultar contraseña</string>
+  <string name="action_reveal_number">Mostrar número</string>
+  <string name="action_conceal_number">Ocultar el número</string>
+  <string name="more_info_created">Creado:</string>
+  <string name="more_info_modified">Modificado:</string>
+  <string name="more_info_autofilled">Rellenado automáticamente:</string>
+  <string name="more_info_title">Más información</string>
+  <string name="more_info_icon">Icono de más información</string>
+  <plurals name="more_info_modified_times">
+    <item quantity="one">Una vez</item>
+    <item quantity="other">%d veces</item>
+  </plurals>
+  <string name="more_info_last_time_modified">Última vez, %s</string>
+  <string name="open_menu_icon_content_description">Botón para abrir el menú</string>
+  <string name="mfa_limit_reached">Límite de 2FA alcanzado</string>
+  <string name="mfa_icon_content_description">Ícono de 2FA</string>
+  <string name="custom_field_text_icon_description">Campo personalizado de texto</string>
+  <string name="custom_field_hidden_icon_description">Campo personalizado oculto</string>
+  <string name="custom_field_totp_icon_description">Campo personalizado de 2FA</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Nombre del titular de la tarjeta</string>
+  <string name="credit_card_number_field_name">Número de tarjeta</string>
+  <string name="credit_card_cvv_field_name">Número de verificación</string>
+  <string name="credit_card_pin_field_name">Código PIN</string>
+  <string name="credit_card_expiration_date_field_name">Expira el</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">El nombre del titular de la tarjeta ha sido copiado al portapapeles.</string>
+  <string name="credit_card_number_copied_to_clipboard">El número de tarjeta ha sido copiado al portapapeles.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">El código de verificación ha sido copiado al portapapeles.</string>
+  <string name="credit_card_pin_copied_to_clipboard">El código PIN ha sido copiado al portapapeles.</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Mover a la papelera</string>
+  <string name="migrate_item_detail_bottom_sheet">Mover a otra bóveda</string>
+  <!-- More info -->
+  <string name="date_today">Hoy %s</string>
+  <string name="date_yesterday">Ayer %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd de LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd de LLLL de yyyy HH:mm</string>
+</resources>

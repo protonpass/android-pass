@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Brankas dibuat</string>
+  <string name="snackbar_create_vault_error">Brankas tidak dibuat</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Tidak dapat membuat lebih banyak brankas</string>
+  <string name="snackbar_edit_vault_success">Brankas disunting</string>
+  <string name="snackbar_edit_vault_error">Brankas tidak disunting</string>
+  <string name="snackbar_delete_vault_success">Brankas dihapus</string>
+  <string name="snackbar_delete_vault_error">Brankas tidak dihapus</string>
+  <string name="snackbar_retrieve_vault_error">Brankas tidak ditemukan</string>
+  <string name="snackbar_find_vault_error">Brankas yang dipilih tidak dapat ditemukan</string>
+  <string name="snackbar_get_vault_list_error">Daftar brankas tidak dapat dimuat</string>
+  <string name="snackbar_get_upgrade_info_error">Daftar brankas tidak dapat dipersiapkan</string>
+  <string name="vault_delete_dialog_title">Hapus brankas</string>
+  <string name="vault_delete_dialog_body">Tindakan ini akan menghapus brankas __VAULT_NAME__ beserta seluruh isinya secara permanen. Masukkan nama brankas untuk mengonfirmasi penghapusan.</string>
+  <string name="vault_delete_dialog_placeholder">Nama brankas</string>
+  <string name="vault_delete_dialog_cancel_action">Batal</string>
+  <string name="vault_delete_dialog_delete_action">Hapus</string>
+  <string name="bottomsheet_close_icon_content_description">Tutup jendela pembuatan brankas</string>
+  <string name="bottomsheet_create_vault_button">Buat brankas</string>
+  <string name="bottomsheet_edit_vault_button">Simpan</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Anda telah mencapai batas jumlah brankas yang dapat Anda buat. Dapatkan kemampuan untuk membuat brankas tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Untuk dapat berinteraksi dengan brankas lainnya, Anda perlu untuk meningkatkan akun Anda.</string>
+  <string name="bottomsheet_upgrade_now">Tingkatkan sekarang</string>
+  <string name="bottomsheet_edit">Sunting</string>
+  <string name="bottomsheet_migrate">Pindahkan seluruh item ke brankas lain</string>
+  <string name="bottomsheet_delete_vault">Hapus brankas</string>
+  <string name="vault_title">Brankas</string>
+</resources>

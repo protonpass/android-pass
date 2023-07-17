@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Restaura</string>
+  <string name="bottomsheet_delete_permanently">Elimina permanentment</string>
+  <string name="alert_confirm_delete_item_dialog_title">Voleu eliminar permanentment?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Aquesta acció és irreversible</string>
+  <string name="alias_dialog_move_to_trash_title">Mou a la paperera?</string>
+  <string name="alias_dialog_move_to_trash_content">Si moveu un àlies a la paperera, deixarà de reenviar correus electrònics a la vostra bústia.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Confirma</string>
+</resources>

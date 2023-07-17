@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">個人資料</string>
+  <string name="profile_option_settings">設定</string>
+  <string name="profile_option_account">帳號</string>
+  <string name="profile_help_center">說明中心</string>
+  <string name="profile_security">安全</string>
+  <string name="profile_option_feedback">意見反饋</string>
+  <string name="profile_option_import_export">匯入/匯出</string>
+  <string name="profile_option_rating">為應用程式評分</string>
+  <string name="profile_option_autofill">自動填入</string>
+  <string name="profile_option_autofill_subtitle">自動填入使用者名稱和密碼</string>
+  <string name="profile_option_fingerprint">指紋</string>
+  <string name="profile_option_automatic_app_lock">自動應用程式鎖定</string>
+  <string name="profile_option_advanced">進階</string>
+  <string name="profile_error_biometry_failed_to_start">無法使用生物特徵驗證</string>
+  <string name="profile_error_biometry_failed_to_authenticate">驗證失敗</string>
+  <string name="profile_fingerprint_lock_enabled">啟用指紋解鎖</string>
+  <string name="profile_fingerprint_lock_disabled">關閉指紋解鎖</string>
+  <string name="profile_error_performing_operation">操作過程中出錯</string>
+  <string name="profile_app_version_copied_to_clipboard">應用程式版本複製</string>
+  <string name="feedback_option_reddit">於Reddit查看Proton</string>
+  <string name="feedback_option_mail">傳送訊息給我們</string>
+  <string name="feedback_option_vote_new_features">投票給新功能</string>
+  <string name="app_lock_immediately">立即</string>
+  <string name="app_lock_one_minute">1分鐘後</string>
+  <string name="app_lock_two_minutes">2分鐘後</string>
+  <string name="app_lock_five_minutes">5分鐘後</string>
+  <string name="app_lock_ten_minutes">10分鐘後</string>
+  <string name="app_lock_one_hour">1 小時之後</string>
+  <string name="app_lock_four_hours">4小時之後</string>
+  <string name="profile_account_plan_name_trial">免費試用期</string>
+  <string name="app_lock_config_biometric">生物特徵辨識</string>
+  <string name="app_lock_config_pin_code">PIN 碼</string>
+  <string name="app_lock_config_unlock_with">使用解鎖</string>
+  <string name="app_lock_config_app_lock_time">應用程式鎖定時間</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">當生物特徵辨失敗使用系統鎖</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Cassaforte creata</string>
+  <string name="snackbar_create_vault_error">Cassaforte non creata</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Impossibile creare altre casseforti</string>
+  <string name="snackbar_edit_vault_success">Cassaforte modificata</string>
+  <string name="snackbar_edit_vault_error">Cassaforte non modificata</string>
+  <string name="snackbar_delete_vault_success">Cassaforte eliminata</string>
+  <string name="snackbar_delete_vault_error">Cassaforte non eliminata</string>
+  <string name="snackbar_retrieve_vault_error">Cassaforte non trovata</string>
+  <string name="snackbar_find_vault_error">Impossibile trovare la cassaforte selezionata</string>
+  <string name="snackbar_get_vault_list_error">Impossibile caricare la lista delle casseforti</string>
+  <string name="snackbar_get_upgrade_info_error">Impossibile preparare la lista delle casseforti</string>
+  <string name="vault_delete_dialog_title">Elimina cassaforte</string>
+  <string name="vault_delete_dialog_body">Ciò eliminerà definitivamente la cassaforte __VAULT_NAME__ e tutti i suoi contenuti. Inserire il nome della cassaforte per confermare.</string>
+  <string name="vault_delete_dialog_placeholder">Nome cassaforte</string>
+  <string name="vault_delete_dialog_cancel_action">Annulla</string>
+  <string name="vault_delete_dialog_delete_action">Elimina</string>
+  <string name="bottomsheet_close_icon_content_description">Chiudi creazione cassaforte</string>
+  <string name="bottomsheet_create_vault_button">Crea cassaforte</string>
+  <string name="bottomsheet_edit_vault_button">Salva</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Hai raggiunto il limite di casseforti da poter creare. Crea casseforti illimitate aggiornando il tuo abbonamento.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Per interagire con altre casseforti è necessario aggiornare il proprio account.</string>
+  <string name="bottomsheet_upgrade_now">Effettua l\'upgrade ora</string>
+  <string name="bottomsheet_edit">Modifica</string>
+  <string name="bottomsheet_migrate">Sposta tutti gli elementi su un\'altra cassaforte.</string>
+  <string name="bottomsheet_delete_vault">Elimina cassaforte</string>
+  <string name="vault_title">Cassaforte</string>
+</resources>

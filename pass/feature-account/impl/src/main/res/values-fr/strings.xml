@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Compte</string>
+  <string name="account_username_label">Nom d\'utilisateur</string>
+  <string name="account_subscription_label">Abonnement</string>
+  <string name="account_permanently_delete_warning">Ceci supprimera définitivement votre compte et toutes ses données. Vous ne pourrez pas réactiver ce compte.</string>
+  <string name="account_delete_account">Supprimer le compte</string>
+  <string name="account_delete_account_icon_content_description">Bouton de suppression de compte</string>
+  <string name="account_sign_out">Se déconnecter</string>
+  <string name="account_sign_out_icon_content_description">Bouton de déconnexion</string>
+  <string name="account_manage_subscription">Gérer l\'abonnement</string>
+  <string name="account_get_user_info_error">Impossible de récupérer les informations sur l\'utilisateur</string>
+  <string name="manage_subscription_icon_content_description">Bouton de gestion de l\'abonnement</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Se déconnecter ?</string>
+  <string name="alert_confirm_sign_out_message">Voulez-vous vraiment vous déconnecter ?</string>
+</resources>

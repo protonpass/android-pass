@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Guardar</string>
+  <string name="action_remove">Remover</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Início de sessão</string>
+  <string name="action_alias">Alias</string>
+  <string name="action_note">Nota</string>
+  <string name="action_credit_card">Cartão de crédito</string>
+  <string name="action_password">Palavra-passe</string>
+  <string name="item_type_login_description">Adicione os detalhes de início de sessão para uma aplicação ou um site</string>
+  <string name="item_type_alias_description">Obtenha um alias de e-mail para utilizar em novas aplicações.</string>
+  <string name="item_type_note_description">Anote um PIN, código ou nota para si próprio.</string>
+  <string name="item_type_credit_card_description">Armazene de forma segura as suas informações de pagamento.</string>
+  <string name="item_type_password_description">Gerar uma palavra-passe segura</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Criar um início de sessão</string>
+  <string name="field_username_title">Nome de utilizador ou endereço de e-mail</string>
+  <string name="field_username_hint">Adicionar um nome de usuário ou endereço de e-mail</string>
+  <string name="field_password_title">Palavra-passe</string>
+  <string name="field_password_hint">Adicionar uma palavra-passe</string>
+  <string name="field_website_address_title">Sítio web</string>
+  <string name="field_website_address_invalid">URL inválido</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Adicionar</string>
+  <string name="sticky_button_generate_password">Gerar uma nova palavra-passe</string>
+  <string name="sticky_button_create_alias">Hide-my-email</string>
+  <string name="sticky_button_use_account_email">Utilizar %s</string>
+  <string name="create_login_item_creation_error">Não foi possível criar o início de sessão.</string>
+  <string name="create_login_item_update_error">Não foi possível actualizar o início de sessão.</string>
+  <string name="create_login_init_error">Não foi possível inicializar o início de sessão.</string>
+  <string name="create_login_invalid_totp">Os conteúdos de A2F não são válidos.</string>
+  <string name="login_created">Início de sessão criado</string>
+  <string name="bottomsheet_modify_alias_title">Modificar o alias</string>
+  <string name="bottomsheet_custom_field_type_text">Texto</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Campo de texto personalizado</string>
+  <string name="bottomsheet_custom_field_type_hidden">Oculto</string>
+  <string name="bottomsheet_custom_field_type_totp">Chave secreta 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Editar o título</string>
+  <string name="bottomsheet_custom_field_option_remove">Remover o campo</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Remover o campo personalizado</string>
+  <string name="create_login_add_custom_field_button">Adicionar mais</string>
+  <string name="custom_field_hidden_placeholder">O seu conteúdo oculto</string>
+  <string name="custom_field_hidden_icon_content_description">Ícone de campo personalizado oculto</string>
+  <string name="custom_field_text_placeholder">O seu conteúdo</string>
+  <string name="custom_field_dialog_title">Nome do campo personalizado</string>
+  <string name="custom_field_dialog_body">Introduza um nome para o seu campo personalizado.</string>
+  <string name="custom_field_dialog_placeholder">Nome do campo personalizado</string>
+  <string name="custom_field_options_content_description">Opções de campo personalizado</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Criar uma nota</string>
+  <string name="create_note_item_creation_error">Não é possível criar a nota.</string>
+  <string name="create_note_item_update_error">Não é possível actualizar a nota.</string>
+  <string name="create_note_init_error">Não foi possível inicializar a nota.</string>
+  <string name="create_note_empty_share_id">A ID de partilhamento não pode estar vazia.</string>
+  <string name="note_created">A nota foi criada.</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">O nota foi movida para o lixo.</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">Não foi possível eliminar a nota.</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Criar um alias</string>
+  <string name="field_alias_title">Endereço do alias</string>
+  <string name="field_alias_hint">Nome de utilizador do alias</string>
+  <string name="field_mailboxes_creation_title">Encaminhar para</string>
+  <string name="field_mailboxes_edit_title">A encaminhar para</string>
+  <string name="field_alias_you_are_about_to_create">Está prestes a criar</string>
+  <string name="field_alias_prefix">Prefixo</string>
+  <string name="field_alias_suffix">Sufixo</string>
+  <string name="alias_bottomsheet_alias_title">Alias</string>
+  <string name="alias_bottomsheet_suffix_title">Sufixo</string>
+  <string name="create_alias_item_creation_error">Não foi possível criar o alias.</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Não pode criar mais alias.</string>
+  <string name="create_alias_email_not_validated_error">Não pode criar alias sem antes validar o seu e-mail.</string>
+  <string name="alias_rate_limited">Foram criados demasiados aliases recentemente.</string>
+  <string name="create_alias_item_update_error">Não foi possível actualizar o alias.</string>
+  <string name="create_alias_init_error">Não foi possível inicializar o alias.</string>
+  <string name="create_alias_empty_share_id">A ID de partilhamento não pode estar vazia.</string>
+  <string name="alias_created">Alias criado</string>
+  <string name="alias_moved_to_trash">O alias foi movido para o lixo.</string>
+  <string name="cannot_retrieve_alias_options">Não foi possível recuperar as opções de alias</string>
+  <string name="alias_mailbox_dialog_title">Encaminhar para</string>
+  <!-- Create note -->
+  <string name="note_hint">Nota</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Criar um cartão de crédito</string>
+  <string name="field_cardholder_name_title">Nome do titular do cartão</string>
+  <string name="field_cardholder_name_hint">Nome completo</string>
+  <string name="field_card_number_title">Número do cartão</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Número de verificação</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">Código PIN</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Expira em</string>
+  <string name="field_card_expiration_date_hint">MM / AAAA</string>
+  <string name="field_card_expiration_date_error">A data de expiração não é válida.</string>
+  <string name="create_credit_card_item_creation_error">Não foi possível criar o cartão de crédito.</string>
+  <string name="create_credit_card_item_creation_success">O cartão de crédito foi criado.</string>
+  <string name="credit_card_init_error">Não foi possível inicializar o cartão de crédito.</string>
+  <string name="credit_card_item_update_error">Não foi possível actualizar o cartão de crédito.</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Alterações guardadas</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">Chave secreta 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Chave secreta A2F inválida</string>
+  <string name="totp_create_login_field_placeholder">Adicionar chave secreta 2FA</string>
+  <string name="close_scree_icon_content_description">Botão para fechar o ecrã</string>
+  <string name="totp_paste_code_action">Colar o código</string>
+  <string name="totp_scan_code_action">Ler o código</string>
+  <string name="field_cannot_be_empty">Este campo não pode estar vazio.</string>
+  <string name="camera_permission_explanation">É necessária a autorização da câmara para que esta função esteja disponível.</string>
+  <string name="camera_permission_open_settings">Abrir as definições</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">Limite A2F atingido</string>
+  <string name="upgrade">Actualizar</string>
+  <string name="mfa_icon_content_description">Ícone 2FA</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Actualiza para obter domínios personalizados.</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Actualize para obter mais caixas de entrada.</string>
+  <string name="create_alias_content_limit_banner">Atingiu o limite de aliases que pode criar. Crie um número ilimitado de aliases quando actualizar a sua subscrição.</string>
+</resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Заголовок (А–Я)</string>
+  <string name="sort_by_title_desc">Заголовок (Я-А)</string>
+  <string name="sort_by_creation_asc">От старых к новым</string>
+  <string name="sort_by_creation_desc">От новых к старым</string>
+  <string name="sort_by_modification_date">Самые новые</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Все</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">результат</item>
+    <item quantity="few">результаты</item>
+    <item quantity="many">результаты</item>
+    <item quantity="other">результаты</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Подтвердить</string>
+  <string name="bottomsheet_cancel_button">Отменить</string>
+  <string name="bottomsheet_move_to_trash">Переместить в корзину</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Открыть меню действий с элементом</string>
+  <string name="action_upgrade_now">Улучшить сейчас</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Добавьте свой первый элемент</string>
+  <string name="empty_search_results_title">Ничего не найдено</string>
+  <string name="empty_list_open_extension">Посетить веб-расширение</string>
+  <string name="empty_list_create_item_button">Создать новый элемент</string>
+  <!-- Field -->
+  <string name="field_title_title">Заголовок</string>
+  <string name="field_title_hint">Без названия</string>
+  <string name="field_title_required">Название обязательно</string>
+  <string name="small_cross_icon_content_description">Иконка с маленьким крестом</string>
+  <string name="field_note_title">Заметка</string>
+  <string name="field_note_hint">Добавить заметку</string>
+  <string name="linked_apps_title">Связанные приложения</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Офлайн</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Отсутствует иконка приложения</string>
+  <string name="add_item_icon_content_description">Иконка добавления элемента</string>
+  <string name="navigate_back_icon_content_description">Иконка перехода назад</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Хранилище</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Элементы списка</string>
+  <string name="bottom_bar_add_item_icon_content_description">Добавить элемент</string>
+  <string name="bottom_bar_profile_icon_content_description">Профиль</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Сегодня</string>
+  <string name="most_recent_yesterday">Вчера</string>
+  <string name="most_recent_this_week">Эта неделя</string>
+  <string name="most_recent_last_two_weeks">Последние две недели</string>
+  <string name="most_recent_last_30_days">Последние 30 дней</string>
+  <string name="most_recent_last_60_days">Последние 60 дней</string>
+  <string name="most_recent_last_90_days">Последние 90 дней</string>
+  <string name="most_recent_within_the_last_year">За последний год</string>
+  <string name="most_recent_more_than_1_year">Более 1 года</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Иконка поиска</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Иконка вариантов</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 элемент</item>
+    <item quantity="few">%d элемента</item>
+    <item quantity="many">%d элементов</item>
+    <item quantity="other">%d элемента</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Сбросить изменения?</string>
+  <string name="confirm_close_dialog_message">У вас есть несохраненные изменения. Вы уверены, что хотите отменить их?</string>
+  <string name="confirm_close_dialog_close_button">Сбросить</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Повысить</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Расширенные параметры</string>
+  <string name="hide_advanced_options">Скрыть расширенные параметры</string>
+</resources>

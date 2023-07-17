@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.appconfig.api.AppConfig
@@ -60,7 +61,7 @@ class ProfileViewModel @Inject constructor(
     private val appConfig: AppConfig,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
-    observeUpgradeInfo: ObserveUpgradeInfo,
+    observeUpgradeInfo: ObserveUpgradeInfo
 ) : ViewModel() {
 
     private val appLockSectionState: Flow<AppLockSectionState> = combine(
@@ -69,7 +70,8 @@ class ProfileViewModel @Inject constructor(
         userPreferencesRepository.getBiometricSystemLockPreference()
     ) { time, type, biometricSystemLock ->
         when (type) {
-            AppLockTypePreference.Biometrics -> AppLockSectionState.Biometric(time, biometricSystemLock)
+            AppLockTypePreference.Biometrics ->
+                AppLockSectionState.Biometric(time, biometricSystemLock)
 
             AppLockTypePreference.Pin -> AppLockSectionState.Pin(time)
             AppLockTypePreference.None -> AppLockSectionState.None
@@ -189,6 +191,12 @@ class ProfileViewModel @Inject constructor(
             userPreferencesRepository.setBiometricSystemLockPreference(
                 BiometricSystemLockPreference.from(value)
             )
+        }
+    }
+
+    fun onPinSuccessfullyEntered() {
+        viewModelScope.launch {
+            eventFlow.update { ProfileEvent.ConfigurePin }
         }
     }
 

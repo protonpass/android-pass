@@ -33,16 +33,10 @@ data class AppLockTypeUiState(
     val event: AppLockTypeEvent
 ) {
     companion object {
-        val Initial = AppLockTypeUiState(
-            items = allPreferences,
+        fun default(preferences: List<AppLockTypePreference>) = AppLockTypeUiState(
+            items = preferences,
             selected = AppLockTypePreference.None,
             event = AppLockTypeEvent.Unknown
         )
     }
 }
-
-internal val allPreferences: List<AppLockTypePreference> = listOf(
-    AppLockTypePreference.None,
-    AppLockTypePreference.Biometrics,
-    AppLockTypePreference.Pin
-)

@@ -35,6 +35,7 @@ import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarM
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.IncItemCreatedCount
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
@@ -48,6 +49,7 @@ class CreateCreditCardViewModel @Inject constructor(
     private val createItem: CreateItem,
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
+    private val incItemCreatedCount: IncItemCreatedCount,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction,
@@ -151,6 +153,7 @@ class CreateCreditCardViewModel @Inject constructor(
                     itemContents = itemContentState.value
                 )
             }.onSuccess { item ->
+                incItemCreatedCount()
                 isItemSavedState.update {
                     encryptionContextProvider.withEncryptionContext {
                         ItemSavedState.Success(

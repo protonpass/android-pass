@@ -25,12 +25,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
+import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
@@ -59,19 +61,31 @@ class AppLockTypeViewModel @Inject constructor(
         MutableStateFlow(null)
 
     val state: StateFlow<AppLockTypeUiState> = combine(
+        flow { emit(biometryManager.getBiometryStatus()) },
         userPreferencesRepository.getAppLockTypePreference(),
         eventState
-    ) { preference, event ->
+    ) { biometryStatus, appLockTypePreference, event ->
         AppLockTypeUiState(
-            items = allPreferences,
-            selected = preference,
+            items = appLockTypePreferences(biometryStatus),
+            selected = appLockTypePreference,
             event = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = AppLockTypeUiState.Initial
+        initialValue = run {
+            val biometryStatus = biometryManager.getBiometryStatus()
+            AppLockTypeUiState.default(appLockTypePreferences(biometryStatus))
+        }
     )
+
+    private fun appLockTypePreferences(biometryStatus: BiometryStatus): MutableList<AppLockTypePreference> {
+        val preferences = mutableListOf(None, Pin)
+        if (biometryStatus is BiometryStatus.CanAuthenticate) {
+            preferences.add(Biometrics)
+        }
+        return preferences
+    }
 
     fun onChanged(newPreference: AppLockTypePreference, contextHolder: ContextHolder) =
         viewModelScope.launch {
@@ -126,6 +140,7 @@ class AppLockTypeViewModel @Inject constructor(
                 onSuccess = ::onBiometryAuthSet,
                 onError = ::onBiometryError
             )
+
             Pin -> {
                 // Cannot happen
             }

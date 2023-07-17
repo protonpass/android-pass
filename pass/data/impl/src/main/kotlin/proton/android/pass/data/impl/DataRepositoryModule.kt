@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
@@ -32,6 +33,7 @@ import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.EventRepositoryImpl
+import proton.android.pass.data.impl.repositories.FeatureFlagRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
@@ -81,4 +83,7 @@ abstract class DataRepositoryModule {
 
     @Binds
     abstract fun bindPlanRepository(impl: PlanRepositoryImpl): PlanRepository
+
+    @Binds
+    abstract fun bindFeatureFlagsRepository(impl: FeatureFlagRepositoryImpl): FeatureFlagRepository
 }

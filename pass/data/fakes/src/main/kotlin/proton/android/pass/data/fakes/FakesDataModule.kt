@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
@@ -77,6 +78,7 @@ import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.data.fakes.repositories.TestFeatureFlagRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
@@ -390,4 +392,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindCreatePin(impl: TestCreatePin): CreatePin
+
+    @Binds
+    abstract fun bindFeatureFlagRepository(impl: TestFeatureFlagRepository): FeatureFlagRepository
 }

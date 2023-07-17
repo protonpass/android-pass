@@ -9,4 +9,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto custom_fields_enabled = 1;
   BoolFlagPrefProto credit_cards_enabled = 2;
   BoolFlagPrefProto autofill_debug_mode_enabled = 3;
+  BoolFlagPrefProto sharing_v1_enabled = 4;
 }

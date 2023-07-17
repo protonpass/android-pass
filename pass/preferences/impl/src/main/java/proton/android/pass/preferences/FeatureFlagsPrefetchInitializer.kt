@@ -32,9 +32,8 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.onAccountState
-import me.proton.core.featureflag.domain.FeatureFlagManager
-import me.proton.core.featureflag.domain.entity.FeatureId
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
+import proton.android.pass.data.api.repositories.FeatureFlagRepository
 
 class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
 
@@ -44,20 +43,19 @@ class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
                 context.applicationContext,
                 FeatureFlagsPrefetchInitializerEntryPoint::class.java
             )
-        val featureFlagManager: FeatureFlagManager = entryPoint.featureFlagManager()
+        val featureFlagManager: FeatureFlagRepository = entryPoint.featureFlagManager()
         val accountManager: AccountManager = entryPoint.accountManager()
         val passAppLifecycleProvider: PassAppLifecycleProvider =
             entryPoint.passAppLifecycleProvider()
 
         accountManager.onAccountState(AccountState.Ready, initialState = true)
             .flowWithLifecycle(passAppLifecycleProvider.lifecycle, Lifecycle.State.CREATED)
-            .onEach { account ->
-                val featureFlags: Set<FeatureId> = FeatureFlag.values()
+            .onEach { _ ->
+                val featureFlags: Set<String> = FeatureFlag.values()
                     .mapNotNull { it.key }
-                    .map { FeatureId(it) }
                     .toSet()
                 if (featureFlags.isNotEmpty()) {
-                    featureFlagManager.prefetch(account.userId, featureFlags)
+                    featureFlagManager.refresh()
                 }
             }
             .launchIn(passAppLifecycleProvider.lifecycle.coroutineScope)
@@ -70,6 +68,6 @@ class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
     interface FeatureFlagsPrefetchInitializerEntryPoint {
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
-        fun featureFlagManager(): FeatureFlagManager
+        fun featureFlagManager(): FeatureFlagRepository
     }
 }

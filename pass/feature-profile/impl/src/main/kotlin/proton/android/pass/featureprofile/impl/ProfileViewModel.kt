@@ -34,10 +34,6 @@ import kotlinx.coroutines.runBlocking
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.api.AutofillManager
-import proton.android.pass.biometry.BiometryAuthError
-import proton.android.pass.biometry.BiometryManager
-import proton.android.pass.biometry.BiometryResult
-import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -47,14 +43,8 @@ import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
-import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
-import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
-import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.ErrorPerformingOperation
-import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FingerprintLockDisabled
-import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FingerprintLockEnabled
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -64,7 +54,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val biometryManager: BiometryManager,
     private val autofillManager: AutofillManager,
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -124,28 +113,12 @@ class ProfileViewModel @Inject constructor(
     }
 
     val state: StateFlow<ProfileUiState> = combine(
-/*        biometricLockState,
-        flowOf(biometryManager.getBiometryStatus()),*/
         appLockSectionState,
         autofillStatusFlow,
         itemSummaryUiStateFlow,
         upgradeInfoFlow,
         eventFlow,
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event ->
-/*
-        val fingerprintSection = when (biometryStatus) {
-            BiometryStatus.NotEnrolled -> AppLockSectionState.NoFingerprintRegistered
-            BiometryStatus.NotAvailable -> AppLockSectionState.None
-            BiometryStatus.CanAuthenticate -> {
-                val available = when (biometricLock) {
-                    BiometricLockState.Enabled -> IsButtonEnabled.Enabled
-                    BiometricLockState.Disabled -> IsButtonEnabled.Disabled
-                }
-                AppLockSectionState.Available(available)
-            }
-        }
-*/
-
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
             is LoadingResult.Error -> {
@@ -187,43 +160,6 @@ class ProfileViewModel @Inject constructor(
             )
         }
     )
-
-    fun onFingerprintToggle(contextHolder: ContextHolder, value: Boolean) = viewModelScope.launch {
-        biometryManager.launch(contextHolder)
-            .collect { result ->
-                when (result) {
-                    BiometryResult.Success -> {
-                        val (lockState, message) = when (!value) {
-                            true -> AppLockState.Enabled to FingerprintLockEnabled
-                            false -> AppLockState.Disabled to FingerprintLockDisabled
-                        }
-
-                        PassLogger.d(TAG, "Changing BiometricLock to $lockState")
-                        userPreferencesRepository.setAppLockState(lockState)
-                            .onSuccess { snackbarDispatcher(message) }
-                            .onFailure {
-                                PassLogger.e(TAG, it, "Error setting BiometricLockState")
-                                snackbarDispatcher(ErrorPerformingOperation)
-                            }
-                    }
-
-                    is BiometryResult.Error -> {
-                        when (result.cause) {
-                            // If the user has cancelled it, do nothing
-                            BiometryAuthError.Canceled -> {}
-                            BiometryAuthError.UserCanceled -> {}
-                            else -> snackbarDispatcher(BiometryFailedToAuthenticateError)
-                        }
-                    }
-
-                    // User can retry
-                    BiometryResult.Failed -> {}
-                    is BiometryResult.FailedToStart ->
-                        snackbarDispatcher(BiometryFailedToStartError)
-                }
-                PassLogger.i(TAG, "Biometry result: $result")
-            }
-    }
 
     fun onToggleAutofill(value: Boolean) {
         if (!value) {

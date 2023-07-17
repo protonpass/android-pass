@@ -32,16 +32,33 @@ import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
+    enterPinSuccess: Boolean,
     onNavigateEvent: (ProfileNavigation) -> Unit,
-    viewModel: ProfileViewModel = hiltViewModel()
+    onClearPinSuccess: () -> Unit,
+    viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
+    LaunchedEffect(enterPinSuccess) {
+        if (enterPinSuccess) {
+            onClearPinSuccess()
+            viewModel.onPinSuccessfullyEntered()
+        }
+    }
     LaunchedEffect(state.event) {
-        if (state.event == ProfileEvent.OpenFeatureFlags) {
-            onNavigateEvent(ProfileNavigation.FeatureFlags)
-            viewModel.clearEvent()
+        when (state.event) {
+            ProfileEvent.OpenFeatureFlags -> {
+                onNavigateEvent(ProfileNavigation.FeatureFlags)
+                viewModel.clearEvent()
+            }
+
+            ProfileEvent.ConfigurePin -> {
+                onNavigateEvent(ProfileNavigation.ConfigurePin)
+                viewModel.clearEvent()
+            }
+
+            ProfileEvent.Unknown -> {}
         }
     }
 
@@ -63,7 +80,10 @@ fun ProfileScreen(
                 ProfileUiEvent.OnUpgradeClick -> onNavigateEvent(ProfileNavigation.Upgrade)
                 ProfileUiEvent.OnAppLockTypeClick -> onNavigateEvent(ProfileNavigation.AppLockType)
                 ProfileUiEvent.OnAppLockTimeClick -> onNavigateEvent(ProfileNavigation.AppLockTime)
-                is ProfileUiEvent.OnToggleBiometricSystemLock -> viewModel.onToggleBiometricSystemLock(it.value)
+                is ProfileUiEvent.OnToggleBiometricSystemLock ->
+                    viewModel.onToggleBiometricSystemLock(it.value)
+
+                ProfileUiEvent.OnChangePinClick -> onNavigateEvent(ProfileNavigation.EnterPin)
             }
         }
     )

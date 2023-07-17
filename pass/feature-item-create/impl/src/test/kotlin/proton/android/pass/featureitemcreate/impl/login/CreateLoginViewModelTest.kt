@@ -53,6 +53,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestIncItemCreatedCount
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -106,7 +107,8 @@ internal class CreateLoginViewModelTest {
             telemetryManager = telemetryManager,
             draftRepository = TestDraftRepository(),
             observeUpgradeInfo = observeUpgradeInfo,
-            canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) }
+            canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
+            incItemCreatedCount = TestIncItemCreatedCount()
         )
     }
 

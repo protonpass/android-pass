@@ -64,6 +64,7 @@ import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.IncItemCreatedCount
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
@@ -78,6 +79,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val telemetryManager: TelemetryManager,
     protected val draftRepository: DraftRepository,
+    private val incItemCreatedCount: IncItemCreatedCount,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
@@ -357,6 +359,7 @@ open class CreateAliasViewModel @Inject constructor(
                     )
                 )
             }.onSuccess { item ->
+                incItemCreatedCount()
                 val generatedAlias = getAliasToBeCreated(aliasItem.prefix, aliasSuffix) ?: ""
                 isAliasSavedState.update {
                     AliasSavedState.Success(item.id, generatedAlias)

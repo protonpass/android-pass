@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
 import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.PinLockEnabled
@@ -45,7 +46,8 @@ import javax.inject.Inject
 class PinConfigViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val createPin: CreatePin,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val storeAuthSuccessful: StoreAuthSuccessful
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<PinConfigUiState> = MutableStateFlow(PinConfigUiState())
@@ -77,6 +79,7 @@ class PinConfigViewModel @Inject constructor(
                 runCatching {
                     createPin(currentState.pin.encodeToByteArray())
                 }.onSuccess {
+                    storeAuthSuccessful()
                     userPreferencesRepository.setAppLockState(AppLockState.Enabled)
                     userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Pin)
                         .onSuccess {

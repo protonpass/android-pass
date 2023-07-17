@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Home -->
+  <string name="home_empty_vault_title">Ваше сховище порожнє</string>
+  <string name="home_empty_vault_subtitle">Почніть зі створення свого першого елементу.</string>
+  <string name="home_empty_vault_create_login">Створити запис входу</string>
+  <string name="home_empty_vault_create_alias">Створити псевдонім Hide My Email</string>
+  <string name="home_empty_vault_create_note">Створити нотатку</string>
+  <string name="error_observing_items">Помилка отримання даних про елементи</string>
+  <string name="error_observing_share">Помилка отримання даних про спільний доступ</string>
+  <string name="error_refreshing">Помилка під час оновлення</string>
+  <string name="home_snackbar_login_moved_to_trash">Запис входу переміщено до смітника</string>
+  <string name="home_snackbar_alias_moved_to_trash">Псевдонім переміщено до смітника</string>
+  <string name="home_snackbar_note_moved_to_trash">Нотатку переміщено до смітника</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">Кредитну картку переміщено до смітника</string>
+  <string name="home_snackbar_move_to_trash_error">Не вдалося перемістити до смітника</string>
+  <string name="home_autofill_banner_title">Насолоджуйтеся магією автозаповнення</string>
+  <string name="home_autofill_banner_text">Ваше ім\'я користувача та пароль заповнюються одним дотиком.</string>
+  <string name="home_autofill_banner_settings">Увімкнути автозаповнення ›</string>
+  <string name="home_trial_banner_title">Оцініть усі переваги з безплатною пробною версією</string>
+  <string name="home_trial_banner_text">Ознайомтеся з усіма ексклюзивними функціями протягом обмеженого часу.</string>
+  <string name="home_trial_banner_settings">Докладніше ›</string>
+  <!-- Common bottomsheet -->
+  <string name="bottomsheet_copy_password">Копіювати пароль</string>
+  <string name="bottomsheet_copy_username">Копіювати ім\'я користувача</string>
+  <string name="bottomsheet_copy_alias">Копіювати електронну адресу</string>
+  <string name="bottomsheet_copy_number">Копіювати номер</string>
+  <string name="bottomsheet_copy_cvv">Копіювати CVV</string>
+  <string name="bottomsheet_copy_note">Копіювати нотатку</string>
+  <string name="bottomsheet_edit">Редагувати</string>
+  <!-- Clipboard -->
+  <string name="alias_copied_to_clipboard">Псевдонім скопійовано</string>
+  <string name="note_copied_to_clipboard">Нотатку скопійовано</string>
+  <string name="username_copied_to_clipboard">Ім\'я користувача скопійовано</string>
+  <string name="password_copied_to_clipboard">Пароль скопійовано</string>
+  <string name="credit_card_number_copied_to_clipboard">Номер кредитної картки скопійовано</string>
+  <string name="credit_card_pin_copied_to_clipboard">PIN-код кредитної картки скопійовано</string>
+  <string name="credit_card_cvv_copied_to_clipboard">CVV кредитної картки скопійовано</string>
+  <string name="item_too_long_copied_to_clipboard">Вміст був задовгим, частково скопійовано в буфер обміну</string>
+  <!-- Vault drawer -->
+  <string name="vault_drawer_vaults_title">Сховища</string>
+  <string name="vault_drawer_vaults_item_count">%d елементів</string>
+  <string name="vault_drawer_create_vault">Створити сховище</string>
+  <string name="vault_drawer_item_trash">Смітник</string>
+  <string name="vault_drawer_all_vaults">Всі сховища</string>
+  <!-- Vault management -->
+  <string name="vault_delete_dialog_title">Видалити сховище</string>
+  <string name="vault_delete_dialog_cancel_action">Скасувати</string>
+  <string name="vault_delete_dialog_delete_action">Видалити</string>
+  <string name="snackbar_delete_vault_success">Сховище видалено</string>
+  <string name="snackbar_delete_vault_error">Сховище не видалено</string>
+  <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_vaults">Пошук у всіх сховищах…</string>
+  <string name="search_topbar_placeholder_vault">Пошук у %s…</string>
+  <string name="search_topbar_placeholder_trash">Пошук у смітнику…</string>
+  <string name="item_type_filter_list_icon_content_description">Піктограма типу елемента</string>
+  <string name="item_type_filter_all">Всі</string>
+  <string name="item_type_filter_login">Запис входу</string>
+  <string name="item_type_filter_alias">Псевдонім</string>
+  <string name="item_type_filter_note">Нотатка</string>
+  <string name="item_type_filter_credit_card">Картка</string>
+  <!-- Trash -->
+  <string name="trash_empty_list_title">Смітник порожній</string>
+  <string name="trash_empty_list_message">Тут з\'являються елементи, переміщені до смітника.</string>
+  <string name="bottomsheet_trash_all_items_title">Смітник</string>
+  <string name="bottomsheet_restore_all_items">Відновити всі елементи</string>
+  <string name="bottomsheet_empty_trash">Спорожнити смітник</string>
+  <string name="trash_error_clearing_trash">Помилка під час очищення смітника</string>
+  <string name="trash_error_restoring_items">Помилка під час відновлення елементів</string>
+  <string name="trash_error_deleting_item">Помилка під час видалення елемента</string>
+  <!-- Alerts -->
+  <string name="alert_confirm_clear_trash_title">Очистити смітник?</string>
+  <string name="alert_confirm_clear_trash_message">Ви дійсно хочете очистити смітник? Усі елементи будуть остаточно видалені</string>
+  <string name="alert_confirm_restore_all_title">Відновити всі елементи?</string>
+  <string name="alert_confirm_restore_all_message">Ви дійсно хочете відновити всі елементи зі смітника?</string>
+  <!-- Recent search -->
+  <string name="recent_search_header_count">Останні пошуки</string>
+  <string name="recent_search_clear">Очистити</string>
+  <string name="recent_search_remove_item">Вилучити з останніх пошуків</string>
+</resources>

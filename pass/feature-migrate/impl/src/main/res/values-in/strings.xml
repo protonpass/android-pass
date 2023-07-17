@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Pindahkan item ini ke brankas berikut?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Pindahkan seluruh item ke brankas berikut?</string>
+  <string name="migrate_item_confirm_confirm_button">Pindahkan</string>
+  <string name="migrate_item_success_snackbar">Item dipindahkan</string>
+  <string name="migrate_item_error_snackbar">Terdapat kesalahan dalam memindahkan item</string>
+  <string name="migrate_all_items_success_snackbar">Seluruh item dipindahkan</string>
+  <string name="migrate_all_items_error_snackbar">Terjadi kesalahan memindahkan semua item brankas</string>
+  <string name="migrate_init_error_snackbar">Layar migrasi tidak dapat dipersiapkan</string>
+</resources>

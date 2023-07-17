@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="profile_option_fingerprint_subtitle">Розблоковувати Proton Pass одним дотиком.</string>
+  <string name="profile_option_fingerprint">Відбиток пальця</string>
+  <string name="profile_option_app_lock">Блокування застосунку</string>
+  <string name="enter_your_pin_code">Введіть PIN-код</string>
+  <string name="unlock">Розблокувати</string>
+  <string name="enter_pin">Введіть Pin-код</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="one">Неправильний PIN-код. Залишилася %d спроба.</item>
+    <item quantity="few">Неправильний PIN-код. Залишилося %d спроби.</item>
+    <item quantity="many">Неправильний PIN-код. Залишилося %d спроби.</item>
+    <item quantity="other">Неправильний PIN-код. Залишилося %d спроб.</item>
+  </plurals>
+  <string name="auth_unlock_app_title">Unlock Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
+  <string name="auth_master_password_label">Master password</string>
+  <string name="auth_action_reveal_password">Reveal master password</string>
+  <string name="auth_action_conceal_password">Conceal master password</string>
+  <string name="auth_unlock_button">Unlock</string>
+  <string name="auth_error_verifying_password">Error verifying your password</string>
+  <string name="auth_error_empty_password">Password cannot be empty</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="one">Incorrect password. %d attempt remaining</item>
+    <item quantity="few">Incorrect password. %d attempts remaining</item>
+    <item quantity="many">Incorrect password. %d attempts remaining</item>
+    <item quantity="other">Incorrect password. %d attempts remaining</item>
+  </plurals>
+</resources>

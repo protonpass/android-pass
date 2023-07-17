@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Déplacer cet élément vers ce coffre-fort ?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Déplacer tous les éléments vers ce coffre-fort ?</string>
+  <string name="migrate_item_confirm_confirm_button">Déplacer</string>
+  <string name="migrate_item_success_snackbar">L\'élément a été déplacé.</string>
+  <string name="migrate_item_error_snackbar">Une erreur s\'est produite pendant le déplacement de l\'élément.</string>
+  <string name="migrate_all_items_success_snackbar">Tous les éléments ont été déplacés.</string>
+  <string name="migrate_all_items_error_snackbar">Une erreur s\'est produite pendant le déplacement des éléments du coffre-fort.</string>
+  <string name="migrate_init_error_snackbar">Impossible de préparer l\'écran de transfert</string>
+</resources>

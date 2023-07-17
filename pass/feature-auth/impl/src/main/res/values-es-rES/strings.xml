@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="profile_option_fingerprint_subtitle">Desbloquea Proton Pass con un toque.</string>
+  <string name="profile_option_fingerprint">Huella dactilar</string>
+  <string name="profile_option_app_lock">Bloqueo de la aplicación</string>
+  <string name="enter_your_pin_code">Introduce tu código PIN</string>
+  <string name="unlock">Desbloquear</string>
+  <string name="enter_pin">Introducir código PIN</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="one">PIN incorrecto. %d intento restante.</item>
+    <item quantity="other">PIN incorrecto. %d intentos restantes.</item>
+  </plurals>
+  <string name="auth_unlock_app_title">Desbloquear Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Introduce la contraseña principal para %s</string>
+  <string name="auth_master_password_label">Contraseña principal</string>
+  <string name="auth_action_reveal_password">Mostrar la contraseña principal</string>
+  <string name="auth_action_conceal_password">Ocultar la contraseña principal</string>
+  <string name="auth_unlock_button">Desbloquear</string>
+  <string name="auth_error_verifying_password">Error al verificar tu contraseña</string>
+  <string name="auth_error_empty_password">La contraseña no puede estar vacía.</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="one">Contraseña incorrecta. %d intento restante.</item>
+    <item quantity="other">Contraseña incorrecta. %d intentos restantes.</item>
+  </plurals>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Оцініть усі переваги з безплатною пробною версією</string>
+  <string name="trial_subtitle">Щоб керувати паролями на новому рівні:</string>
+  <string name="trial_feature_1">20 сховищ</string>
+  <string name="trial_feature_2">Необмежена кількість псевдонімів пошти</string>
+  <string name="trial_feature_3">Інтегрований двоетапний (2FA) автентифікатор</string>
+  <string name="trial_feature_4">Власні поля</string>
+  <string name="trial_button_text">Щоб і надалі користуватися цими функціями, передплатіть тарифний план</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">До закінчення пробного періоду залишився 1 день</item>
+    <item quantity="few">До закінчення пробного періоду залишилося %d дні</item>
+    <item quantity="many">До закінчення пробного періоду залишилося %d днів</item>
+    <item quantity="other">До закінчення пробного періоду залишилося %d днів</item>
+  </plurals>
+  <string name="trial_learn_more">Докладніше</string>
+</resources>

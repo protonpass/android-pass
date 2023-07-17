@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Restore</string>
+  <string name="bottomsheet_delete_permanently">Delete permanently</string>
+  <string name="alert_confirm_delete_item_dialog_title">Delete permanently?</string>
+  <string name="alert_confirm_delete_item_dialog_message">This action is irreversible.</string>
+  <string name="alias_dialog_move_to_trash_title">Move to trash?</string>
+  <string name="alias_dialog_move_to_trash_content">If you move an alias to the trash, it will stop forwarding emails to your mailbox.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Confirm</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Aproveite sua avaliação gratuita</string>
+  <string name="trial_subtitle">Para gerenciamento de senhas avançado:</string>
+  <string name="trial_feature_1">20 cofres</string>
+  <string name="trial_feature_2">Alias de e-mail ilimitados</string>
+  <string name="trial_feature_3">Autenticador A2F integrado</string>
+  <string name="trial_feature_4">Campos personalizados</string>
+  <string name="trial_button_text">Faça upgrade para manter essas funcionalidades</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">1 dia restante em seu período de avaliação gratuita</item>
+    <item quantity="other">%d dias restantes em seu período de avaliação gratuita</item>
+  </plurals>
+  <string name="trial_learn_more">Saiba mais</string>
+</resources>

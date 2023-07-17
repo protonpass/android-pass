@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Зберегти</string>
+  <string name="action_remove">Вилучити</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Запис входу</string>
+  <string name="action_alias">Псевдонім</string>
+  <string name="action_note">Нотатка</string>
+  <string name="action_credit_card">Кредитна картка</string>
+  <string name="action_password">Пароль</string>
+  <string name="item_type_login_description">Додайте дані для входу в застосунок або на сайт</string>
+  <string name="item_type_alias_description">Отримайте псевдонім е-пошти для використання в нових застосунках</string>
+  <string name="item_type_note_description">Запишіть для себе PIN-код, код допуску або нотатку</string>
+  <string name="item_type_credit_card_description">Надійно зберігайте платіжну інформацію</string>
+  <string name="item_type_password_description">Згенерувати надійний пароль</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Створити запис входу</string>
+  <string name="field_username_title">Ім\'я користувача або адреса е-пошти</string>
+  <string name="field_username_hint">Додайте ім\'я користувача або адресу електронної пошти</string>
+  <string name="field_password_title">Пароль</string>
+  <string name="field_password_hint">Додайте пароль</string>
+  <string name="field_website_address_title">Вебсайт</string>
+  <string name="field_website_address_invalid">Неправильний url</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Додати</string>
+  <string name="sticky_button_generate_password">Згенерувати новий пароль</string>
+  <string name="sticky_button_create_alias">Hide My Email</string>
+  <string name="sticky_button_use_account_email">Використати %s</string>
+  <string name="create_login_item_creation_error">Не вдалося створити запис входу</string>
+  <string name="create_login_item_update_error">Не вдалося оновити запис входу</string>
+  <string name="create_login_init_error">Не вдалося ініціалізувати запис входу</string>
+  <string name="create_login_invalid_totp">Неприпустимі дані для двоетапної перевірки (2FA)</string>
+  <string name="login_created">Запис входу створено</string>
+  <string name="bottomsheet_modify_alias_title">Змінити псевдонім</string>
+  <string name="bottomsheet_custom_field_type_text">Текст</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Власне текстове поле</string>
+  <string name="bottomsheet_custom_field_type_hidden">Приховано</string>
+  <string name="bottomsheet_custom_field_type_totp">Секретний ключ 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Редагувати назву</string>
+  <string name="bottomsheet_custom_field_option_remove">Вилучити поле</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Вилучити власне поле</string>
+  <string name="create_login_add_custom_field_button">Додати ще</string>
+  <string name="custom_field_hidden_placeholder">Ваш прихований вміст</string>
+  <string name="custom_field_hidden_icon_content_description">Піктограма прихованого власного поля</string>
+  <string name="custom_field_text_placeholder">Ваш вміст</string>
+  <string name="custom_field_dialog_title">Назва власного поля</string>
+  <string name="custom_field_dialog_body">Введіть назву власного поля</string>
+  <string name="custom_field_dialog_placeholder">Назва власного поля</string>
+  <string name="custom_field_options_content_description">Параметри власного поля</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Створити нотатку</string>
+  <string name="create_note_item_creation_error">Не вдається створити нотатку</string>
+  <string name="create_note_item_update_error">Не вдалося оновити нотатку</string>
+  <string name="create_note_init_error">Не вдалося ініціалізувати нотатку</string>
+  <string name="create_note_empty_share_id">Необхідно вказати ID спільного доступу</string>
+  <string name="note_created">Нотатку створено</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">Нотатку переміщено до смітника</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">Не вдалося видалити нотатку</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Створити псевдонім</string>
+  <string name="field_alias_title">Адреса псевдоніма</string>
+  <string name="field_alias_hint">Ім\'я користувача для псевдоніма</string>
+  <string name="field_mailboxes_creation_title">Переслати</string>
+  <string name="field_mailboxes_edit_title">Пересилання на</string>
+  <string name="field_alias_you_are_about_to_create">Ви збираєтеся створити</string>
+  <string name="field_alias_prefix">Префікс</string>
+  <string name="field_alias_suffix">Суфікс</string>
+  <string name="alias_bottomsheet_alias_title">Псевдонім</string>
+  <string name="alias_bottomsheet_suffix_title">Суфікс</string>
+  <string name="create_alias_item_creation_error">Не вдалося створити псевдонім</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Ви не можете створити більше псевдонімів</string>
+  <string name="create_alias_email_not_validated_error">Ви не можете створювати псевдоніми без попередньої перевірки електронної пошти</string>
+  <string name="alias_rate_limited">Забагато псевдонімів створено останнім часом</string>
+  <string name="create_alias_item_update_error">Не вдалося оновити псевдонім</string>
+  <string name="create_alias_init_error">Не вдалося ініціалізувати псевдонім</string>
+  <string name="create_alias_empty_share_id">Необхідно вказати ID спільного доступу</string>
+  <string name="alias_created">Псевдонім створено</string>
+  <string name="alias_moved_to_trash">Псевдонім переміщено до смітника</string>
+  <string name="cannot_retrieve_alias_options">Неможливо отримати параметри псевдоніму</string>
+  <string name="alias_mailbox_dialog_title">Переслати</string>
+  <!-- Create note -->
+  <string name="note_hint">Нотатка</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Створити кредитну картку</string>
+  <string name="field_cardholder_name_title">Ім\'я власника картки</string>
+  <string name="field_cardholder_name_hint">Повне ім\'я</string>
+  <string name="field_card_number_title">Номер картки</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Номер підтвердження</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">PIN-код</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Термін дії до:</string>
+  <string name="field_card_expiration_date_hint">ММ / РРРР</string>
+  <string name="field_card_expiration_date_error">Термін дії недійсний</string>
+  <string name="create_credit_card_item_creation_error">Не вдалося створити кредитну картку</string>
+  <string name="create_credit_card_item_creation_success">Кредитну картку створено</string>
+  <string name="credit_card_init_error">Не вдалося ініціалізувати кредитну картку</string>
+  <string name="credit_card_item_update_error">Не вдалося оновити кредитну картку</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Зміни збережено</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">Секретний ключ 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Неправильний секретний ключ 2FA</string>
+  <string name="totp_create_login_field_placeholder">Додати секретний ключ 2FA</string>
+  <string name="close_scree_icon_content_description">Кнопка закриття екрана</string>
+  <string name="totp_paste_code_action">Вставити код</string>
+  <string name="totp_scan_code_action">Сканувати код</string>
+  <string name="field_cannot_be_empty">Необхідно заповнити це поле</string>
+  <string name="camera_permission_explanation">Для роботи цієї функції потрібен дозвіл на доступ до камери.</string>
+  <string name="camera_permission_open_settings">Відкрити налаштування</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">Досягнуто обмеження 2FA</string>
+  <string name="upgrade">Покращити</string>
+  <string name="mfa_icon_content_description">Піктограма 2FA</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Для використання власних доменів передплатіть тарифний план</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Для більшої кількості поштових скриньок передплатіть тарифний план</string>
+  <string name="create_alias_content_limit_banner">Ви досягли обмеження створених псевдонімів. Щоб створювати псевдоніми без обмежень, передплатіть тарифний план.</string>
+</resources>

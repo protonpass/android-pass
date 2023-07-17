@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Атрымлівайце асалоду ад бясплатнай выпрабавальнай версіі</string>
+  <string name="trial_subtitle">Для кіравання паролямі на новым узроўні:</string>
+  <string name="trial_feature_1">20 сховішчаў</string>
+  <string name="trial_feature_2">Неабмежаваная колькасць псеўданімаў электроннай пошты</string>
+  <string name="trial_feature_3">Інтэграваная аўтэнтыфікацыя 2ФА</string>
+  <string name="trial_feature_4">Карыстальніцкія палі</string>
+  <string name="trial_button_text">Палепшыць, каб пакінуць гэтыя функцыі</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Да завяршэння выпрабавальнага перыяду застаўся %d дзень</item>
+    <item quantity="few">Да завяршэння выпрабавальнага перыяду засталося %d дні</item>
+    <item quantity="many">Да завяршэння выпрабавальнага перыяду засталося %d дзён</item>
+    <item quantity="other">Да завяршэння выпрабавальнага перыяду засталося %d дзён</item>
+  </plurals>
+  <string name="trial_learn_more">Даведацца больш</string>
+</resources>

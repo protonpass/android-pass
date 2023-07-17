@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Genieße deine kostenlose Testversion</string>
+  <string name="trial_subtitle">Für die nächste Stufe der Passwortverwaltung:</string>
+  <string name="trial_feature_1">20 Tresore</string>
+  <string name="trial_feature_2">Unbegrenzte E-Mail-Aliasse</string>
+  <string name="trial_feature_3">Integrierter 2FA-Authentifikator</string>
+  <string name="trial_feature_4">Benutzerdefinierte Felder</string>
+  <string name="trial_button_text">Upgrade, um diese Funktionen zu behalten</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Deine kostenlose Testphase läuft noch einen Tag.</item>
+    <item quantity="other">Deine kostenlose Testphase läuft noch %d Tage.</item>
+  </plurals>
+  <string name="trial_learn_more">Mehr erfahren</string>
+</resources>

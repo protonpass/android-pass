@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Account</string>
+  <string name="account_username_label">Nome utente</string>
+  <string name="account_subscription_label">Piano di abbonamento</string>
+  <string name="account_permanently_delete_warning">Questo eliminerà definitivamente il tuo account e tutti i suoi dati. Non sarai in grado di riattivare questo account.</string>
+  <string name="account_delete_account">Elimina account</string>
+  <string name="account_delete_account_icon_content_description">Pulsante elimina account</string>
+  <string name="account_sign_out">Esci</string>
+  <string name="account_sign_out_icon_content_description">Pulsante esci</string>
+  <string name="account_manage_subscription">Gestisci abbonamento</string>
+  <string name="account_get_user_info_error">Non è stato possibile recuperare le informazioni utente</string>
+  <string name="manage_subscription_icon_content_description">Pulsante gestisci abbonamento</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Uscire?</string>
+  <string name="alert_confirm_sign_out_message">Sei sicuro di voler uscire?</string>
+</resources>

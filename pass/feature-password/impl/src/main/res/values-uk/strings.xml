@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Копіювати й закрити</string>
+  <string name="password_copied_to_clipboard">Пароль скопійовано</string>
+  <string name="bottomsheet_generate_password_title">Згенерувати пароль</string>
+  <string name="password_type">Тип</string>
+  <string name="special_characters">Спеціальні символи (!&amp;*)</string>
+  <string name="character_count">%s символів</string>
+  <string name="word_count">%s слів</string>
+  <string name="word_separator">Розділювач слів</string>
+  <string name="bottomsheet_option_capital_letters">Великі літери (А-Я)</string>
+  <string name="bottomsheet_option_capitalise">З великої літери</string>
+  <string name="bottomsheet_option_include_numbers">Додати цифри (0-9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Дефіси ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Пробіли</string>
+  <string name="bottomsheet_option_word_separator_periods">Крапки ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Коми ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Підкреслення ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Цифри</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Цифри та символи</string>
+  <string name="regenerate_password_icon_content_description">Кнопка відновлення пароля</string>
+  <string name="password_mode_memorable">Пароль, який легко запам\'ятати</string>
+  <string name="password_mode_random">Випадковий пароль</string>
+  <string name="password_mode_icon">Піктограма режиму пароля</string>
+  <string name="password_words_separator_icon">Розділювач слів для пароля</string>
+</resources>

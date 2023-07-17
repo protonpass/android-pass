@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 coffres-forts</string>
+  <string name="unlimited_email_alias">Nombre illimité d\'alias</string>
+  <string name="custom_fields">Champs personnalisés</string>
+  <string name="restart_to_complete_the_update">Redémarrer pour terminer la mise à jour</string>
+  <string name="action_restart">Redémarrer</string>
+</resources>

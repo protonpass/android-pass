@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">應用程式已鎖定</string>
+  <string name="biometric_prompt_subtitle">使用您的裝置鎖來解鎖</string>
+  <string name="biometric_prompt_cancel">取消</string>
+</resources>

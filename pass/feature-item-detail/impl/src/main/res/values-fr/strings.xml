@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Ouvrir</string>
+  <string name="action_copy">Copier</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Impossible d\'initialiser l\'élément</string>
+  <string name="top_bar_edit_button_text">Modifier</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Adresse de l\'alias</string>
+  <string name="alias_copied_to_clipboard">L\'alias a été copié.</string>
+  <string name="alias_detail_field_mailboxes_title">Transfert vers</string>
+  <string name="alias_create_login_from_alias">Créer un identifiant</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Note</string>
+  <!-- Login details -->
+  <string name="username_copied_to_clipboard">Le nom d\'utilisateur a été copié.</string>
+  <string name="password_copied_to_clipboard">Le mot de passe a été copié.</string>
+  <string name="website_copied_to_clipboard">Le site internet a été copié.</string>
+  <string name="totp_copied_to_clipboard">Le mot de passe à usage unique basé sur le temps (TOTP) a été copié.</string>
+  <string name="field_copied_to_clipboard">Le champ a été copié.</string>
+  <string name="move_item_to_trash_message">L\'élément a été déplacé dans la corbeille.</string>
+  <string name="error_move_item_to_trash_message">Une erreur s\'est produite pendant le déplacement vers la Corbeille.</string>
+  <string name="item_permanently_deleted_message">L\'élément a été définitivement supprimé.</string>
+  <string name="item_permanently_deleted_message_error">Une erreur s\'est produite pendant la suppression de l\'élément.</string>
+  <string name="item_restored_message">L\'élément a été restauré.</string>
+  <string name="item_restored_message_error">Une erreur s\'est produite pendant la restauration de l\'élément.</string>
+  <string name="login_item_generate_totp_error">Une erreur s\'est produite pendant la génération du code A2F.</string>
+  <string name="login_item_view_alias_button">Afficher l\'alias</string>
+  <string name="field_username">Nom d\'utilisateur ou adresse e-mail</string>
+  <string name="field_password">Mot de passe</string>
+  <string name="websites_section_title">Sites internet</string>
+  <string name="totp_section_title">Jeton A2F (TOTP/mot de passe à usage unique basé sur le temps)</string>
+  <string name="action_reveal_password">Afficher le mot de passe</string>
+  <string name="action_conceal_password">Masquer le mot de passe</string>
+  <string name="action_reveal_number">Afficher le numéro</string>
+  <string name="action_conceal_number">Masquer le numéro</string>
+  <string name="more_info_created">Création :</string>
+  <string name="more_info_modified">Modification :</string>
+  <string name="more_info_autofilled">Remplissage automatique :</string>
+  <string name="more_info_title">Plus d\'informations</string>
+  <string name="more_info_icon">Icône plus d\'informations</string>
+  <plurals name="more_info_modified_times">
+    <item quantity="one">Une fois</item>
+    <item quantity="other">%d fois</item>
+  </plurals>
+  <string name="more_info_last_time_modified">La dernière fois, %s</string>
+  <string name="open_menu_icon_content_description">Bouton d\'ouverture du menu</string>
+  <string name="mfa_limit_reached">La limite de l\'A2F est atteinte.</string>
+  <string name="mfa_icon_content_description">Icône A2F</string>
+  <string name="custom_field_text_icon_description">Champ de texte personnalisé</string>
+  <string name="custom_field_hidden_icon_description">Champ personnalisé masqué</string>
+  <string name="custom_field_totp_icon_description">Champ personnalisé A2F</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Nom du titulaire de la carte</string>
+  <string name="credit_card_number_field_name">Numéro de la carte</string>
+  <string name="credit_card_cvv_field_name">Numéro de vérification</string>
+  <string name="credit_card_pin_field_name">Code PIN</string>
+  <string name="credit_card_expiration_date_field_name">Expire le</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Le titulaire de la carte a été copié dans le presse-papiers.</string>
+  <string name="credit_card_number_copied_to_clipboard">Le numéro de la carte a été copié dans le presse-papiers.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Le numéro de vérification a été copié dans le presse-papiers.</string>
+  <string name="credit_card_pin_copied_to_clipboard">Le code PIN a été copié dans le presse-papiers.</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Déplacer dans la Corbeille</string>
+  <string name="migrate_item_detail_bottom_sheet">Déplacer vers un autre coffre-fort</string>
+  <!-- More info -->
+  <string name="date_today">Aujourd\'hui %s</string>
+  <string name="date_yesterday">Hier %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+</resources>

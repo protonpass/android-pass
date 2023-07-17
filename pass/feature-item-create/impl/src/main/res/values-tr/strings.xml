@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Kaydet</string>
+  <string name="action_remove">Kaldır</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Oturum açma</string>
+  <string name="action_alias">Takma ad</string>
+  <string name="action_note">Not</string>
+  <string name="action_credit_card">Kredi kartı</string>
+  <string name="action_password">Parola</string>
+  <string name="item_type_login_description">Bir uygulama ya da sitenin oturum açma bilgilerini ekleyin</string>
+  <string name="item_type_alias_description">Yeni uygulamalarda kullanmak için bir takma e-posta adresi alın</string>
+  <string name="item_type_note_description">Bir PIN kodu ya da kendinize bir not yazın</string>
+  <string name="item_type_credit_card_description">Ödeme bilgilerinizi güvenle kaydedin</string>
+  <string name="item_type_password_description">Güvenli parola oluştur</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Oturum açma kaydı oluştur</string>
+  <string name="field_username_title">Kullanıcı adı ya da e-posta adresi</string>
+  <string name="field_username_hint">Kullanıcı adı ya da e-posta adresi ekle</string>
+  <string name="field_password_title">Parola</string>
+  <string name="field_password_hint">Parola ekle</string>
+  <string name="field_website_address_title">Site</string>
+  <string name="field_website_address_invalid">Adres geçersiz</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Ekle</string>
+  <string name="sticky_button_generate_password">Yeni parola oluştur</string>
+  <string name="sticky_button_create_alias">Hide My Email</string>
+  <string name="sticky_button_use_account_email">%s kullanılsın</string>
+  <string name="create_login_item_creation_error">Oturum açma kaydı oluşturulamadı</string>
+  <string name="create_login_item_update_error">Oturum açma kaydı güncellenemedi</string>
+  <string name="create_login_init_error">Oturum açma hazırlanamadı</string>
+  <string name="create_login_invalid_totp">İki adımlı doğrulama içerikleri geçersiz</string>
+  <string name="login_created">Oturum açma kaydı oluşturuldu</string>
+  <string name="bottomsheet_modify_alias_title">Takma adı düzenle</string>
+  <string name="bottomsheet_custom_field_type_text">Metin</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Metin özel alanı</string>
+  <string name="bottomsheet_custom_field_type_hidden">Gizli</string>
+  <string name="bottomsheet_custom_field_type_totp">İki adımlı doğrulama kodu (tek kullanımlık)</string>
+  <string name="bottomsheet_custom_field_option_edit">Başlığı düzenle</string>
+  <string name="bottomsheet_custom_field_option_remove">Alanı kaldır</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Özel alanı kaldır</string>
+  <string name="create_login_add_custom_field_button">Başka ekle</string>
+  <string name="custom_field_hidden_placeholder">Gizli içeriğiniz</string>
+  <string name="custom_field_hidden_icon_content_description">Gizli özel alan simgesi</string>
+  <string name="custom_field_text_placeholder">İçeriğiniz</string>
+  <string name="custom_field_dialog_title">Özel alan adı</string>
+  <string name="custom_field_dialog_body">Özel alanınınız için bir ad yazın</string>
+  <string name="custom_field_dialog_placeholder">Özel alanın adı</string>
+  <string name="custom_field_options_content_description">Özel alan seçenekleri</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Not oluştur</string>
+  <string name="create_note_item_creation_error">Not oluşturulamadı</string>
+  <string name="create_note_item_update_error">Not güncellenemedi</string>
+  <string name="create_note_init_error">Not hazırlanamadı</string>
+  <string name="create_note_empty_share_id">Paylaşım kimliği boş olamaz</string>
+  <string name="note_created">Not oluşturuldu</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">Not çöpe atıldı</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">Not silinemedi</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Takma ad oluştur</string>
+  <string name="field_alias_title">Takma ad adresi</string>
+  <string name="field_alias_hint">Takma ad kullanıcı adı</string>
+  <string name="field_mailboxes_creation_title">Şuraya ilet</string>
+  <string name="field_mailboxes_edit_title">Şuraya iletiliyor</string>
+  <string name="field_alias_you_are_about_to_create">Oluşturmak üzeresiniz</string>
+  <string name="field_alias_prefix">Ön ek</string>
+  <string name="field_alias_suffix">Son ek</string>
+  <string name="alias_bottomsheet_alias_title">Takma ad</string>
+  <string name="alias_bottomsheet_suffix_title">Son ek</string>
+  <string name="create_alias_item_creation_error">Takma ad oluşturulamadı</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Daha fazla takma ad oluşturamazsınız</string>
+  <string name="create_alias_email_not_validated_error">E-posta adresinizi doğrulamadan takma adlar oluşturamazsınız</string>
+  <string name="alias_rate_limited">Kısa sürede çok fazla sayıda takma ad oluşturuldu</string>
+  <string name="create_alias_item_update_error">Takma ad güncellenemedi</string>
+  <string name="create_alias_init_error">Takma ad hazırlanamadı</string>
+  <string name="create_alias_empty_share_id">Paylaşım kimliği boş olamaz</string>
+  <string name="alias_created">Takma ad oluşturuldu</string>
+  <string name="alias_moved_to_trash">Takma ad çöpe atıldı</string>
+  <string name="cannot_retrieve_alias_options">Takma ad seçenekleri alınamadı</string>
+  <string name="alias_mailbox_dialog_title">Şuraya ilet</string>
+  <!-- Create note -->
+  <string name="note_hint">Not</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Kredi kartı oluştur</string>
+  <string name="field_cardholder_name_title">Kart sahibinin adı</string>
+  <string name="field_cardholder_name_hint">Tam ad</string>
+  <string name="field_card_number_title">Kart numarası</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Doğrulama numarası</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">PIN numarası</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Son kullanma tarihi</string>
+  <string name="field_card_expiration_date_hint">AA / YYYY</string>
+  <string name="field_card_expiration_date_error">Son kullanma tarihi geçerli değil</string>
+  <string name="create_credit_card_item_creation_error">Kredi kartı oluşturulamadı</string>
+  <string name="create_credit_card_item_creation_success">Kredi kartı oluşturuldu</string>
+  <string name="credit_card_init_error">Kredi kartı hazırlanamadı</string>
+  <string name="credit_card_item_update_error">Kredi kartı güncellenemedi</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Değişiklikler kaydedildi</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">İki adımlı doğrulama kodu (tek kullanımlık)</string>
+  <string name="totp_create_login_field_invalid">İki adımlı doğrulama parolası geçersiz</string>
+  <string name="totp_create_login_field_placeholder">İki adımlı doğrulama parolası ekle</string>
+  <string name="close_scree_icon_content_description">Ekranı kapat düğmesi</string>
+  <string name="totp_paste_code_action">Kodu yapıştır</string>
+  <string name="totp_scan_code_action">Kodu tara</string>
+  <string name="field_cannot_be_empty">Bu alan boş olamaz</string>
+  <string name="camera_permission_explanation">Bu özelliği kullanabilmek için kameraya erişme izni verilmelidir.</string>
+  <string name="camera_permission_open_settings">Ayarları aç</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
+  <string name="upgrade">Yükselt</string>
+  <string name="mfa_icon_content_description">İki adımlı doğrulama simgesi</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Özel etki alanı kullanmak için tarifenizi yükseltin</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Daha fazla gelen kutusu kullanmak için tarifenizi yükseltin</string>
+  <string name="create_alias_content_limit_banner">Oluşturabileceğiniz takma ad sayısı sınırına ulaştınız. Abonelik tarifenizi yükselterek sınırsız sayıda takma ad oluşturabilirsiniz.</string>
+</resources>

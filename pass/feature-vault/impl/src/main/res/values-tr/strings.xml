@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Kasa oluşturuldu</string>
+  <string name="snackbar_create_vault_error">Kasa oluşturulmadı</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Daha fazla kasa oluşturulamaz</string>
+  <string name="snackbar_edit_vault_success">Kasa düzenlendi</string>
+  <string name="snackbar_edit_vault_error">Kasa düzenlenmedi</string>
+  <string name="snackbar_delete_vault_success">Kasa silindi</string>
+  <string name="snackbar_delete_vault_error">Kasa silinmedi</string>
+  <string name="snackbar_retrieve_vault_error">Kasa bulunamadı</string>
+  <string name="snackbar_find_vault_error">Seçilmiş kasa bulunamadı</string>
+  <string name="snackbar_get_vault_list_error">Kasa listesi yüklenemedi</string>
+  <string name="snackbar_get_upgrade_info_error">Kasa listesi hazırlanamadı</string>
+  <string name="vault_delete_dialog_title">Kasayı sil</string>
+  <string name="vault_delete_dialog_body">Bu işlem __VAULT_NAME__ kasasını ve içindekileri kalıcı olarak silecek. Silme işlemini onaylamak için kasa adını yazın.</string>
+  <string name="vault_delete_dialog_placeholder">Kasa adı</string>
+  <string name="vault_delete_dialog_cancel_action">İptal</string>
+  <string name="vault_delete_dialog_delete_action">Sil</string>
+  <string name="bottomsheet_close_icon_content_description">Kasa oluşturmayı kapat</string>
+  <string name="bottomsheet_create_vault_button">Kasa oluştur</string>
+  <string name="bottomsheet_edit_vault_button">Kaydet</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Oluşturabileceğiniz kasa sayısı sınırına ulaştınız. Abonelik tarifenizi yükselterek sınırsız sayıda kasa oluşturabilirsiniz.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Diğer kasalarla etkileşime geçebilmek için abonelik tarifenizi yükseltmelisiniz.</string>
+  <string name="bottomsheet_upgrade_now">Şimdi yükseltin</string>
+  <string name="bottomsheet_edit">Düzenle</string>
+  <string name="bottomsheet_migrate">Tüm ögeleri başka bir kasaya taşı</string>
+  <string name="bottomsheet_delete_vault">Kasayı sil</string>
+  <string name="vault_title">Kasa</string>
+</resources>

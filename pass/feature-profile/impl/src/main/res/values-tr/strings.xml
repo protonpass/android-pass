@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Profil</string>
+  <string name="profile_option_settings">Ayarlar</string>
+  <string name="profile_option_account">Hesap</string>
+  <string name="profile_help_center">Yardım merkezi</string>
+  <string name="profile_security">Güvenlik</string>
+  <string name="profile_option_feedback">Geri bildirim</string>
+  <string name="profile_option_import_export">İçe/dışa aktarma</string>
+  <string name="profile_option_rating">Uygulamayı değerlendirin</string>
+  <string name="profile_option_autofill">Otomatik doldurma</string>
+  <string name="profile_option_autofill_subtitle">Kullanıcı adı ve parolalarınızı otomatik olarak doldurun.</string>
+  <string name="profile_option_fingerprint">Parmak izi</string>
+  <string name="profile_option_automatic_app_lock">Otomatik uygulama kilitleme</string>
+  <string name="profile_option_advanced">Gelişmiş</string>
+  <string name="profile_error_biometry_failed_to_start">Biyometrik kimlik doğrulaması başlatılamadı</string>
+  <string name="profile_error_biometry_failed_to_authenticate">Kimlik doğrulanamadı</string>
+  <string name="profile_fingerprint_lock_enabled">Parmak izi ile kilit açma etkinleştirildi</string>
+  <string name="profile_fingerprint_lock_disabled">Parmak izi ile kilit açma devre dışı bırakıldı</string>
+  <string name="profile_error_performing_operation">İşlem yapılırken sorun çıktı</string>
+  <string name="profile_app_version_copied_to_clipboard">Uygulama sürümü kopyalandı</string>
+  <string name="feedback_option_reddit">Reddit Proton konularına bakın</string>
+  <string name="feedback_option_mail">Bize ileti gönderin</string>
+  <string name="feedback_option_vote_new_features">Yeni özellikler için oy verin</string>
+  <string name="app_lock_immediately">Hemen</string>
+  <string name="app_lock_one_minute">1 dakika sonra</string>
+  <string name="app_lock_two_minutes">2 dakika sonra</string>
+  <string name="app_lock_five_minutes">5 dakika sonra</string>
+  <string name="app_lock_ten_minutes">10 dakika sonra</string>
+  <string name="app_lock_one_hour">1 saat sonra</string>
+  <string name="app_lock_four_hours">4 saat sonra</string>
+  <string name="profile_account_plan_name_trial">Ücretsiz deneme</string>
+  <string name="app_lock_config_biometric">Biyometrik</string>
+  <string name="app_lock_config_pin_code">PIN kodu</string>
+  <string name="app_lock_config_unlock_with">Kilidi şununla aç</string>
+  <string name="app_lock_config_app_lock_time">Uygulama kilitlenme süresi</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Biyometrik yöntem geçersiz olduğunda sistem kilidi kullanılsın</string>
+</resources>

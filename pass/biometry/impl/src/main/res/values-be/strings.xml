@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">Праграма заблакіравана</string>
+  <string name="biometric_prompt_subtitle">Разблакіраваць з дапамогай разблакіроўкі прылады</string>
+  <string name="biometric_prompt_cancel">Скасаваць</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Pulihkan</string>
+  <string name="bottomsheet_delete_permanently">Hapus secara permanen</string>
+  <string name="alert_confirm_delete_item_dialog_title">Hapus secara permanen?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Tindakan ini tidak dapat diurungkan.</string>
+  <string name="alias_dialog_move_to_trash_title">Pindahkan ke sampah?</string>
+  <string name="alias_dialog_move_to_trash_content">Apabila Anda memindahkan alias ke sampah, alias tersebut tidak akan lagi meneruskan email ke kotak surat Anda.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Konfirmasi</string>
+</resources>

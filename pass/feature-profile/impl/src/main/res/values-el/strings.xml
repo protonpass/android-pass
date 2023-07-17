@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Προφίλ</string>
+  <string name="profile_option_settings">Ρυθμίσεις</string>
+  <string name="profile_option_account">Λογαριασμός</string>
+  <string name="profile_help_center">Κέντρο βοήθειας</string>
+  <string name="profile_security">Ασφάλεια</string>
+  <string name="profile_option_feedback">Αξιολόγηση</string>
+  <string name="profile_option_import_export">Εισαγωγή/εξαγωγή</string>
+  <string name="profile_option_rating">Βαθμολογήστε την εφαρμογή</string>
+  <string name="profile_option_autofill">Αυτόματη συμπλήρωση</string>
+  <string name="profile_option_autofill_subtitle">Συμπληρώστε αυτόματα τα ονόματα χρήστη και τους κωδικούς πρόσβασής σας.</string>
+  <string name="profile_option_fingerprint">Δακτυλικό αποτύπωμα</string>
+  <string name="profile_option_automatic_app_lock">Αυτόματο κλείδωμα εφαρμογής</string>
+  <string name="profile_option_advanced">Προχωρημένα</string>
+  <string name="profile_error_biometry_failed_to_start">Αδυναμία εκκίνησης της βιομετρικής ταυτοποίησης</string>
+  <string name="profile_error_biometry_failed_to_authenticate">Αποτυχία επαλήθευσης</string>
+  <string name="profile_fingerprint_lock_enabled">Ενεργοποιημένο ξεκλείδωμα δακτυλικών αποτυπωμάτων</string>
+  <string name="profile_fingerprint_lock_disabled">Απενεργοποιημένο ξεκλείδωμα δακτυλικών αποτυπωμάτων</string>
+  <string name="profile_error_performing_operation">Σφάλμα κατά την εκτέλεση της λειτουργίας</string>
+  <string name="profile_app_version_copied_to_clipboard">Η έκδοση της εφαρμογής αντιγράφηκε</string>
+  <string name="feedback_option_reddit">Ρίξτε μια ματιά στο Proton στο Reddit</string>
+  <string name="feedback_option_mail">Στείλτε μας ένα μήνυμα</string>
+  <string name="feedback_option_vote_new_features">Ψηφίστε για νέες δυνατότητες</string>
+  <string name="app_lock_immediately">Άμεσα</string>
+  <string name="app_lock_one_minute">Μετά από 1 λεπτό</string>
+  <string name="app_lock_two_minutes">Μετά από 2 λεπτά</string>
+  <string name="app_lock_five_minutes">Μετά από 5 λεπτά</string>
+  <string name="app_lock_ten_minutes">Μετά από 10 λεπτά</string>
+  <string name="app_lock_one_hour">Σε 1 ώρα</string>
+  <string name="app_lock_four_hours">Σε 4 ώρες</string>
+  <string name="profile_account_plan_name_trial">Δωρεάν δοκιμαστική έκδοση</string>
+  <string name="app_lock_config_biometric">Βιομετρικό</string>
+  <string name="app_lock_config_pin_code">Κωδικός PIN</string>
+  <string name="app_lock_config_unlock_with">Ξεκλείδωμα με</string>
+  <string name="app_lock_config_app_lock_time">Χρόνος κλειδώματος εφαρμογής</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Κλείδωμα του συστήματος όταν αποτυγχάνει το βιομετρικό</string>
+</resources>

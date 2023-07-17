@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">保管庫已創建</string>
+  <string name="snackbar_create_vault_error">保管庫無法創建</string>
+  <string name="snackbar_cannot_create_more_vaults_error">無法創建更多保管庫</string>
+  <string name="snackbar_edit_vault_success">已編輯保管庫</string>
+  <string name="snackbar_edit_vault_error">保管庫無法編輯</string>
+  <string name="snackbar_delete_vault_success">已刪除保存庫</string>
+  <string name="snackbar_delete_vault_error">無法刪除保存庫</string>
+  <string name="snackbar_retrieve_vault_error">查詢不到保管庫</string>
+  <string name="snackbar_find_vault_error">無法找到選取的保管庫</string>
+  <string name="snackbar_get_vault_list_error">無法載入保管清單單</string>
+  <string name="snackbar_get_upgrade_info_error">無法載入保管庫清單</string>
+  <string name="vault_delete_dialog_title">刪除保存庫</string>
+  <string name="vault_delete_dialog_body">此將永久刪除__VAULT_NAME__保管庫及其內容。輸入保管庫名稱已繼續。</string>
+  <string name="vault_delete_dialog_placeholder">保管庫名稱</string>
+  <string name="vault_delete_dialog_cancel_action">取消</string>
+  <string name="vault_delete_dialog_delete_action">刪除</string>
+  <string name="bottomsheet_close_icon_content_description">關閉創建的保管庫</string>
+  <string name="bottomsheet_create_vault_button">新增保管庫</string>
+  <string name="bottomsheet_edit_vault_button">儲存</string>
+  <string name="bottomsheet_cannot_create_more_vaults">你已達到保管庫創建上限。升級訂閱已創建無限保管庫</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">若需使用您其他保管庫，需升級您的帳號</string>
+  <string name="bottomsheet_upgrade_now">立即升級</string>
+  <string name="bottomsheet_edit">編輯</string>
+  <string name="bottomsheet_migrate">將全部項目移至保管庫</string>
+  <string name="bottomsheet_delete_vault">刪除保管庫</string>
+  <string name="vault_title">保管庫</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">Uygulama kilitlendi</string>
+  <string name="biometric_prompt_subtitle">Aygıt kilidinizi kullanarak kilidi açın</string>
+  <string name="biometric_prompt_cancel">İptal</string>
+</resources>

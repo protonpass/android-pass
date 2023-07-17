@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Tytuł (A-Z)</string>
+  <string name="sort_by_title_desc">Tytuł (Z-A)</string>
+  <string name="sort_by_creation_asc">Od najstarszych</string>
+  <string name="sort_by_creation_desc">Od najnowszych</string>
+  <string name="sort_by_modification_date">Ostatnie</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Wszystko</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">wynik</item>
+    <item quantity="few">wyniki</item>
+    <item quantity="many">wyników</item>
+    <item quantity="other">wyników</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Potwierdź</string>
+  <string name="bottomsheet_cancel_button">Anuluj</string>
+  <string name="bottomsheet_move_to_trash">Przenieś do Kosza</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Otwórz menu akcji elementu</string>
+  <string name="action_upgrade_now">Ulepsz teraz</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Dodaj pierwszy element</string>
+  <string name="empty_search_results_title">Nie znaleziono żadnych wyników</string>
+  <string name="empty_list_open_extension">Otwórz rozszerzenie w przeglądarce</string>
+  <string name="empty_list_create_item_button">Utwórz nowy element</string>
+  <!-- Field -->
+  <string name="field_title_title">Tytuł</string>
+  <string name="field_title_hint">Bez nazwy</string>
+  <string name="field_title_required">Tytuł jest wymagany</string>
+  <string name="small_cross_icon_content_description">Ikona małego krzyżyka</string>
+  <string name="field_note_title">Notatka</string>
+  <string name="field_note_hint">Dodaj notatkę</string>
+  <string name="linked_apps_title">Połączone aplikacje</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Jesteś w trybie offline</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Ikona brakującej aplikacji</string>
+  <string name="add_item_icon_content_description">Dodaj ikonę elementu</string>
+  <string name="navigate_back_icon_content_description">Ikona wstecz</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Sejf</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Lista elementów</string>
+  <string name="bottom_bar_add_item_icon_content_description">Dodaj element</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Dzisiaj</string>
+  <string name="most_recent_yesterday">Wczoraj</string>
+  <string name="most_recent_this_week">Ostatni tydzień</string>
+  <string name="most_recent_last_two_weeks">Ostatnie 2 tygodnie</string>
+  <string name="most_recent_last_30_days">Ostatnie 30 dni</string>
+  <string name="most_recent_last_60_days">Ostatnie 60 dni</string>
+  <string name="most_recent_last_90_days">Ostatnie 90 dni</string>
+  <string name="most_recent_within_the_last_year">Ostatni rok</string>
+  <string name="most_recent_more_than_1_year">Ponad rok</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Ikona wyszukiwania</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Ikona opcji</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 element</item>
+    <item quantity="few">%d elementy</item>
+    <item quantity="many">%d elementów</item>
+    <item quantity="other">%d elementów</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Czy chcesz odrzucić zmiany?</string>
+  <string name="confirm_close_dialog_message">Masz niezapisane zmiany. Czy chcesz je odrzucić?</string>
+  <string name="confirm_close_dialog_close_button">Odrzuć</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Ulepsz</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Opcje zaawansowane</string>
+  <string name="hide_advanced_options">Ukryj opcje zaawansowane</string>
+</resources>

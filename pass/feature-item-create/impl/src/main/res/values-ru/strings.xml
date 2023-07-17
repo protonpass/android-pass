@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Сохранить</string>
+  <string name="action_remove">Удалить</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Login</string>
+  <string name="action_alias">Alias</string>
+  <string name="action_note">Note</string>
+  <string name="action_credit_card">Credit card</string>
+  <string name="action_password">Password</string>
+  <string name="item_type_login_description">Add login details for an app or site</string>
+  <string name="item_type_alias_description">Get an email alias to use on new apps</string>
+  <string name="item_type_note_description">Jot down a PIN, code, or note to self</string>
+  <string name="item_type_credit_card_description">Securely store your payment information</string>
+  <string name="item_type_password_description">Generate a secure password</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Create login</string>
+  <string name="field_username_title">Username or email address</string>
+  <string name="field_username_hint">Add username or email address</string>
+  <string name="field_password_title">Password</string>
+  <string name="field_password_hint">Add password</string>
+  <string name="field_website_address_title">Website</string>
+  <string name="field_website_address_invalid">Invalid url</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Add</string>
+  <string name="sticky_button_generate_password">Generate a new password</string>
+  <string name="sticky_button_create_alias">Hide my email</string>
+  <string name="sticky_button_use_account_email">Use %s</string>
+  <string name="create_login_item_creation_error">Could not create Login</string>
+  <string name="create_login_item_update_error">Could not update Login</string>
+  <string name="create_login_init_error">Could not initialise Login</string>
+  <string name="create_login_invalid_totp">The 2FA contents are not valid</string>
+  <string name="login_created">Login created</string>
+  <string name="bottomsheet_modify_alias_title">Modify alias</string>
+  <string name="bottomsheet_custom_field_type_text">Text</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Text custom field</string>
+  <string name="bottomsheet_custom_field_type_hidden">Hidden</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA secret (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Edit title</string>
+  <string name="bottomsheet_custom_field_option_remove">Remove field</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Remove custom field</string>
+  <string name="create_login_add_custom_field_button">Add more</string>
+  <string name="custom_field_hidden_placeholder">Your hidden content</string>
+  <string name="custom_field_hidden_icon_content_description">Hidden custom field icon</string>
+  <string name="custom_field_text_placeholder">Your content</string>
+  <string name="custom_field_dialog_title">Custom field name</string>
+  <string name="custom_field_dialog_body">Enter a name for your custom field</string>
+  <string name="custom_field_dialog_placeholder">Name of the custom field</string>
+  <string name="custom_field_options_content_description">Custom field options</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Create note</string>
+  <string name="create_note_item_creation_error">Could not create Note</string>
+  <string name="create_note_item_update_error">Could not update Note</string>
+  <string name="create_note_init_error">Could not initialise Note</string>
+  <string name="create_note_empty_share_id">Share Id cannot be empty</string>
+  <string name="note_created">Note created</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">Note moved to trash</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">Could not delete note</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Create alias</string>
+  <string name="field_alias_title">Alias address</string>
+  <string name="field_alias_hint">Alias username</string>
+  <string name="field_mailboxes_creation_title">Forward to</string>
+  <string name="field_mailboxes_edit_title">Forwarding to</string>
+  <string name="field_alias_you_are_about_to_create">You are about to create</string>
+  <string name="field_alias_prefix">Prefix</string>
+  <string name="field_alias_suffix">Suffix</string>
+  <string name="alias_bottomsheet_alias_title">Alias</string>
+  <string name="alias_bottomsheet_suffix_title">Suffix</string>
+  <string name="create_alias_item_creation_error">Could not create Alias</string>
+  <string name="create_alias_cannot_create_more_aliases_error">You cannot create any more aliases</string>
+  <string name="create_alias_email_not_validated_error">You cannot create aliases without first validating your email</string>
+  <string name="alias_rate_limited">Too many aliases created recently</string>
+  <string name="create_alias_item_update_error">Could not update Alias</string>
+  <string name="create_alias_init_error">Could not initialise Alias</string>
+  <string name="create_alias_empty_share_id">Share Id cannot be empty</string>
+  <string name="alias_created">Alias created</string>
+  <string name="alias_moved_to_trash">Alias moved to trash</string>
+  <string name="cannot_retrieve_alias_options">Cannot retrieve alias options</string>
+  <string name="alias_mailbox_dialog_title">Forward to</string>
+  <!-- Create note -->
+  <string name="note_hint">Note</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Create credit card</string>
+  <string name="field_cardholder_name_title">Cardholder name</string>
+  <string name="field_cardholder_name_hint">Full name</string>
+  <string name="field_card_number_title">Card number</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Verification number</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">PIN number</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Expires on</string>
+  <string name="field_card_expiration_date_hint">MM / YYYY</string>
+  <string name="field_card_expiration_date_error">The expiration date is not valid</string>
+  <string name="create_credit_card_item_creation_error">Could not create credit card</string>
+  <string name="create_credit_card_item_creation_success">Credit card created</string>
+  <string name="credit_card_init_error">Could not initialise credit card</string>
+  <string name="credit_card_item_update_error">Could not update credit card</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Changes saved</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">2FA secret (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Invalid 2FA secret</string>
+  <string name="totp_create_login_field_placeholder">Add 2FA secret</string>
+  <string name="close_scree_icon_content_description">Close screen button</string>
+  <string name="totp_paste_code_action">Paste code</string>
+  <string name="totp_scan_code_action">Scan code</string>
+  <string name="field_cannot_be_empty">This field cannot be empty</string>
+  <string name="camera_permission_explanation">Camera permission required for this feature to be available.</string>
+  <string name="camera_permission_open_settings">Open settings</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">2FA limit reached</string>
+  <string name="upgrade">Повысить</string>
+  <string name="mfa_icon_content_description">2fa icon</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Upgrade for custom domains</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade for more inboxes</string>
+  <string name="create_alias_content_limit_banner">You have reached the limit of aliases you can create. Create unlimited number of aliases when you upgrade your subscription.</string>
+</resources>

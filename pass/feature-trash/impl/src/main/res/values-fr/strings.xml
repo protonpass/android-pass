@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Restaurer</string>
+  <string name="bottomsheet_delete_permanently">Supprimer définitivement</string>
+  <string name="alert_confirm_delete_item_dialog_title">Supprimer définitivement ?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Cette action est irréversible.</string>
+  <string name="alias_dialog_move_to_trash_title">Déplacer dans le dossier Corbeille ?</string>
+  <string name="alias_dialog_move_to_trash_content">Si vous déplacez un alias dans la Corbeille, il ne transférera plus de messages vers votre messagerie.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Confirmer</string>
+</resources>

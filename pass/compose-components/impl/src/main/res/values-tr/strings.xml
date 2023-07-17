@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Başlık (A-Z)</string>
+  <string name="sort_by_title_desc">Başlık (Z-A)</string>
+  <string name="sort_by_creation_asc">Eskiden yeniye</string>
+  <string name="sort_by_creation_desc">Yeniden eskiye</string>
+  <string name="sort_by_modification_date">En yeni</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Tümü</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">sonuç</item>
+    <item quantity="other">sonuçlar</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Onayla</string>
+  <string name="bottomsheet_cancel_button">İptal</string>
+  <string name="bottomsheet_move_to_trash">Çöpe at</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Öge işlem menüsünü aç</string>
+  <string name="action_upgrade_now">Şimdi yükselt</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">İlk ögenizi ekleyin</string>
+  <string name="empty_search_results_title">Herhangi bir sonuç bulunamadı</string>
+  <string name="empty_list_open_extension">İnternet eklentisine git</string>
+  <string name="empty_list_create_item_button">Yeni öge ekle</string>
+  <!-- Field -->
+  <string name="field_title_title">Başlık</string>
+  <string name="field_title_hint">Adsız</string>
+  <string name="field_title_required">Başlık gereklidir</string>
+  <string name="small_cross_icon_content_description">Küçük çarpı simgesi</string>
+  <string name="field_note_title">Not</string>
+  <string name="field_note_hint">Not ekle</string>
+  <string name="linked_apps_title">Bağlantılı uygulamalar</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Çevrim dışı</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Uygulama simgesi eksik</string>
+  <string name="add_item_icon_content_description">Öge simgesi ekle</string>
+  <string name="navigate_back_icon_content_description">Geri dön simgesi</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Kasa</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Ögeleri listele</string>
+  <string name="bottom_bar_add_item_icon_content_description">Öge ekle</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Bugün</string>
+  <string name="most_recent_yesterday">Dün</string>
+  <string name="most_recent_this_week">Bu hafta</string>
+  <string name="most_recent_last_two_weeks">Son iki hafta</string>
+  <string name="most_recent_last_30_days">Son 30 gün</string>
+  <string name="most_recent_last_60_days">Son 60 gün</string>
+  <string name="most_recent_last_90_days">Son 90 gün</string>
+  <string name="most_recent_within_the_last_year">Son 1 yılda</string>
+  <string name="most_recent_more_than_1_year">1 yıldan uzun süredir</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Arama simgesi</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Seçenek simgesi</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 öge</item>
+    <item quantity="other">%d öge</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Değişiklikler yok sayılsın mı?</string>
+  <string name="confirm_close_dialog_message">Kaydedilmemiş değişiklikleriniz var, bunları silmek istediğinizden emin misiniz?</string>
+  <string name="confirm_close_dialog_close_button">Yok say</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Yükselt</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Gelişmiş seçenekler</string>
+  <string name="hide_advanced_options">Gelişmiş seçenekleri gizle</string>
+</resources>

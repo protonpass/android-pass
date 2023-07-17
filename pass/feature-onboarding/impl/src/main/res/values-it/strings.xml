@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Permetti a Proton Pass di inserire i dati di accesso per te. Gli inserimenti manuali e i copia-incolla non saranno più necessari.</string>
+  <string name="on_boarding_autofill_title">Accedi immediatamente alle app</string>
+  <string name="on_boarding_autofill_button">Compilazione automatica con Proton Pass</string>
+  <string name="on_boarding_fingerprint_content">Imposta lo sblocco tramite impronta, in questo modo solo tu avrai accesso a Proton Pass.</string>
+  <string name="on_boarding_fingerprint_title">Proteggi i tuoi dati più sensibili</string>
+  <string name="on_boarding_fingerprint_button">Abilita lo sblocco tramite impronta</string>
+  <string name="on_boarding_last_page_content">Smetti di condividere il tuo indirizzo email reale. Mantienilo riservato utilizzando gli alias email - un\'esclusiva di Proton Pass.</string>
+  <string name="on_boarding_last_page_title">Controlla quello che ricevi nella tua casella di posta</string>
+  <string name="on_boarding_last_page_button">Inizia a usare Proton Pass</string>
+  <string name="on_boarding_skip">Non adesso</string>
+  <string name="error_biometry_failed_to_start">Impossibile utilizzare l\'autenticazione biometrica</string>
+  <string name="error_biometry_failed_to_authenticate">Autenticazione non riuscita</string>
+  <string name="settings_fingerprint_lock_enabled">Sblocco tramite impronta abilitato</string>
+  <string name="error_performing_operation">Errore durante l\'esecuzione dell\'operazione</string>
+</resources>

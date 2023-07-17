@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Títol (A-Z)</string>
+  <string name="sort_by_title_desc">Títol (Z-A)</string>
+  <string name="sort_by_creation_asc">De més antic a més recent</string>
+  <string name="sort_by_creation_desc">De més recent a més antic</string>
+  <string name="sort_by_modification_date">Més recent</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Tots</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">resultat</item>
+    <item quantity="other">resultats</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Confirma</string>
+  <string name="bottomsheet_cancel_button">Cancel·la</string>
+  <string name="bottomsheet_move_to_trash">Mou a la paperera</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Obre el menú d\'acció de l\'element</string>
+  <string name="action_upgrade_now">Millora ara</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Afegeix el primer element</string>
+  <string name="empty_search_results_title">No s\'han trobat resultats</string>
+  <string name="empty_list_open_extension">Visita l\'extensió web</string>
+  <string name="empty_list_create_item_button">Crea un element nou</string>
+  <!-- Field -->
+  <string name="field_title_title">Títol</string>
+  <string name="field_title_hint">Sense títol</string>
+  <string name="field_title_required">El títol és obligatori</string>
+  <string name="small_cross_icon_content_description">Icona de creu petita</string>
+  <string name="field_note_title">Nota</string>
+  <string name="field_note_hint">Afegeix una nota</string>
+  <string name="linked_apps_title">Aplicacions enllaçades</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Fora de línia</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Icona de Falta una aplicació</string>
+  <string name="add_item_icon_content_description">Icona d\'Afegeix un element</string>
+  <string name="navigate_back_icon_content_description">Icona de Torna enrere</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Caixa forta</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Llista d\'elements</string>
+  <string name="bottom_bar_add_item_icon_content_description">Afegeix un element</string>
+  <string name="bottom_bar_profile_icon_content_description">Perfil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Avui</string>
+  <string name="most_recent_yesterday">Ahir</string>
+  <string name="most_recent_this_week">Aquesta setmana</string>
+  <string name="most_recent_last_two_weeks">Les últimes dues setmanes</string>
+  <string name="most_recent_last_30_days">Els últims 30 dies</string>
+  <string name="most_recent_last_60_days">Els últims 60 dies</string>
+  <string name="most_recent_last_90_days">Els últims 90 dies</string>
+  <string name="most_recent_within_the_last_year">En l\'últim any</string>
+  <string name="most_recent_more_than_1_year">Més d\'1 any</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Icona de cerca</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Icona d\'opció</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 element</item>
+    <item quantity="other">%d elements</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Voleu descartar els canvis?</string>
+  <string name="confirm_close_dialog_message">Hi ha modificacions que no s\'han desat. Segur que voleu descartar-les?</string>
+  <string name="confirm_close_dialog_close_button">Descarta</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Millora</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Opcions avançades</string>
+  <string name="hide_advanced_options">Amaga les opcions avançades</string>
+</resources>

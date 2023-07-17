@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Le coffre-fort a été créé.</string>
+  <string name="snackbar_create_vault_error">Le coffre-fort n\'a pas été créé.</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Impossible de créer d\'autres coffres-forts</string>
+  <string name="snackbar_edit_vault_success">Le coffre-fort a été modifié.</string>
+  <string name="snackbar_edit_vault_error">Le coffre-fort n\'a pas été modifié.</string>
+  <string name="snackbar_delete_vault_success">Le coffre-fort a été supprimé.</string>
+  <string name="snackbar_delete_vault_error">Le coffre-fort n\'a pas été supprimé.</string>
+  <string name="snackbar_retrieve_vault_error">Le coffre-fort est introuvable.</string>
+  <string name="snackbar_find_vault_error">Le coffre-fort sélectionné est introuvable.</string>
+  <string name="snackbar_get_vault_list_error">Impossible de charger la liste des coffres-forts</string>
+  <string name="snackbar_get_upgrade_info_error">Impossible de préparer la liste des coffres-forts</string>
+  <string name="vault_delete_dialog_title">Supprimer le coffre-fort</string>
+  <string name="vault_delete_dialog_body">Ceci supprimera définitivement le coffre-fort « __VAULT_NAME__ » et tout son contenu. Saisissez le nom du coffre-fort pour confirmer la suppression.</string>
+  <string name="vault_delete_dialog_placeholder">Nom du coffre-fort</string>
+  <string name="vault_delete_dialog_cancel_action">Annuler</string>
+  <string name="vault_delete_dialog_delete_action">Supprimer</string>
+  <string name="bottomsheet_close_icon_content_description">Fermer le coffre-fort créé</string>
+  <string name="bottomsheet_create_vault_button">Créer un coffre-fort</string>
+  <string name="bottomsheet_edit_vault_button">Enregistrer</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Vous avez atteint le nombre maximum de coffres-forts que vous pouvez créer. Changez d\'abonnement pour créer un nombre illimité de coffres-forts.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Pour interagir avec vos autres coffres-forts, vous devez changer d\'abonnement.</string>
+  <string name="bottomsheet_upgrade_now">Changer d\'abonnement</string>
+  <string name="bottomsheet_edit">Modifier</string>
+  <string name="bottomsheet_migrate">Déplacer tous les éléments vers un autre coffre-fort</string>
+  <string name="bottomsheet_delete_vault">Supprimer le coffre-fort</string>
+  <string name="vault_title">Coffre-fort</string>
+</resources>

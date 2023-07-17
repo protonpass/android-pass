@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Kopyala ve kapat</string>
+  <string name="password_copied_to_clipboard">Parola kopyalandı</string>
+  <string name="bottomsheet_generate_password_title">Parola oluştur</string>
+  <string name="password_type">Tür</string>
+  <string name="special_characters">Özel karakterler (!&amp;*)</string>
+  <string name="character_count">%s karakter</string>
+  <string name="word_count">%s sözcük</string>
+  <string name="word_separator">Sözcük ayracı</string>
+  <string name="bottomsheet_option_capital_letters">Büyük harfler (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Büyüt</string>
+  <string name="bottomsheet_option_include_numbers">Sayılar katılsın (0-9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Tire ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Boşluk</string>
+  <string name="bottomsheet_option_word_separator_periods">Nokta ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Virgül ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Alt çizgi ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Rakamlar</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Rakamlar ve simgeler</string>
+  <string name="regenerate_password_icon_content_description">Yeniden parola oluştur düğmesi</string>
+  <string name="password_mode_memorable">Hatırlanabilir parola</string>
+  <string name="password_mode_random">Rastgele parola</string>
+  <string name="password_mode_icon">Parola kipi simgesi</string>
+  <string name="password_words_separator_icon">Parola sözcükleri ayracı</string>
+</resources>

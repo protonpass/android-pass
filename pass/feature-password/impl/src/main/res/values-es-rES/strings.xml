@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Copiar y cerrar</string>
+  <string name="password_copied_to_clipboard">Contraseña copiada</string>
+  <string name="bottomsheet_generate_password_title">Generar una contraseña</string>
+  <string name="password_type">Tipo</string>
+  <string name="special_characters">Caracteres especiales (!&amp;*)</string>
+  <string name="character_count">%s caracteres</string>
+  <string name="word_count">%s palabras</string>
+  <string name="word_separator">Separador de palabras</string>
+  <string name="bottomsheet_option_capital_letters">Letras mayúsculas (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Mayúsculas</string>
+  <string name="bottomsheet_option_include_numbers">Incluir números (0-9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Guiones ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Espacios</string>
+  <string name="bottomsheet_option_word_separator_periods">Puntos ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Comas ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Guiones bajos ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Números</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Números y símbolos</string>
+  <string name="regenerate_password_icon_content_description">Botón de regeneración de contraseña</string>
+  <string name="password_mode_memorable">Contraseña memorizable</string>
+  <string name="password_mode_random">Contraseña aleatoria</string>
+  <string name="password_mode_icon">Icono de modo de contraseña</string>
+  <string name="password_words_separator_icon">Separador de palabras de contraseña</string>
+</resources>

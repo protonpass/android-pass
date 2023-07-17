@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Επαναφορά</string>
+  <string name="bottomsheet_delete_permanently">Οριστική διαγραφή</string>
+  <string name="alert_confirm_delete_item_dialog_title">Οριστική διαγραφή;</string>
+  <string name="alert_confirm_delete_item_dialog_message">Αυτή η ενέργεια είναι μην αναστρέψιμη.</string>
+  <string name="alias_dialog_move_to_trash_title">Μετακίνηση στα Διαγραμμένα;</string>
+  <string name="alias_dialog_move_to_trash_content">Εάν μετακινήσετε ένα ψευδώνυμο στον κάδο απορριμμάτων, θα σταματήσει να προωθεί μηνύματα ηλεκτρονικού ταχυδρομείου στο γραμματοκιβώτιό σας.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Επιβεβαίωση</string>
+</resources>

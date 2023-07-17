@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Laissez Proton Pass compléter vos informations de connexion. Vous n\'avez pas besoin de les saisir ou de les copier-coller.</string>
+  <string name="on_boarding_autofill_title">Connectez-vous instantanément aux applications.</string>
+  <string name="on_boarding_autofill_button">Profitez du remplissage automatique avec Proton Pass.</string>
+  <string name="on_boarding_fingerprint_content">Paramétrez Proton Pass pour qu\'il se déverrouille avec votre empreinte digitale. Personne d\'autre que vous ne peut y accéder.</string>
+  <string name="on_boarding_fingerprint_title">Protégez vos données les plus sensibles</string>
+  <string name="on_boarding_fingerprint_button">Activez le déverrouillage par empreinte digitale</string>
+  <string name="on_boarding_last_page_content">Ne communiquez plus votre véritable adresse e-mail. Masquez-la en utilisant des alias d\'adresses e-mail, une exclusivité de Proton Pass.</string>
+  <string name="on_boarding_last_page_title">Gardez le contrôle sur ce qui arrive dans votre boite de réception</string>
+  <string name="on_boarding_last_page_button">Commencez à utiliser Proton Pass</string>
+  <string name="on_boarding_skip">Plus tard</string>
+  <string name="error_biometry_failed_to_start">Impossible de lancer l\'authentification biométrique</string>
+  <string name="error_biometry_failed_to_authenticate">L\'authentification n\'a pas abouti.</string>
+  <string name="settings_fingerprint_lock_enabled">Déverrouillage par empreinte digitale activé</string>
+  <string name="error_performing_operation">Une erreur s\'est produite pendant l\'opération.</string>
+</resources>

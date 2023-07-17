@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="profile_option_fingerprint_subtitle">Buka kunci Proton Pass dengan sekali sentuh.</string>
+  <string name="profile_option_fingerprint">Sidik jari</string>
+  <string name="profile_option_app_lock">Kunci aplikasi</string>
+  <string name="enter_your_pin_code">Enter your PIN Code</string>
+  <string name="unlock">Unlock</string>
+  <string name="enter_pin">Enter pin</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="other">Incorrect PIN. %d attempts remaining.</item>
+  </plurals>
+  <string name="auth_unlock_app_title">Unlock Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
+  <string name="auth_master_password_label">Master password</string>
+  <string name="auth_action_reveal_password">Reveal master password</string>
+  <string name="auth_action_conceal_password">Conceal master password</string>
+  <string name="auth_unlock_button">Unlock</string>
+  <string name="auth_error_verifying_password">Error verifying your password</string>
+  <string name="auth_error_empty_password">Password cannot be empty</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="other">Incorrect password. %d attempts remaining</item>
+  </plurals>
+</resources>

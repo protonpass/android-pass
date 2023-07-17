@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Ciesz się darmową wersją próbną</string>
+  <string name="trial_subtitle">Zarządzanie hasłami na wyższym poziomie:</string>
+  <string name="trial_feature_1">20 sejfów</string>
+  <string name="trial_feature_2">Nieograniczona liczba aliasów</string>
+  <string name="trial_feature_3">Zintegrowana aplikacja uwierzytelniająca</string>
+  <string name="trial_feature_4">Pola niestandardowe</string>
+  <string name="trial_button_text">Ulepsz konto, aby zachować te funkcje</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Pozostał 1 dzień wersji próbnej</item>
+    <item quantity="few">Pozostały %d dni wersji próbnej</item>
+    <item quantity="many">Pozostało %d dni wersji próbnej</item>
+    <item quantity="other">Pozostało %d dni wersji próbnej</item>
+  </plurals>
+  <string name="trial_learn_more">Dowiedz się więcej</string>
+</resources>

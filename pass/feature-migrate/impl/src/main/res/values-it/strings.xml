@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Vuoi spostare questo elemento nella seguente cassaforte?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Vuoi spostare tutti gli elementi nella seguente cassaforte?</string>
+  <string name="migrate_item_confirm_confirm_button">Sposta</string>
+  <string name="migrate_item_success_snackbar">Elemento spostato</string>
+  <string name="migrate_item_error_snackbar">Errore durante lo spostamento dell\'elemento</string>
+  <string name="migrate_all_items_success_snackbar">Tutti gli elementi spostati</string>
+  <string name="migrate_all_items_error_snackbar">Errore durante lo spostamento di tutti gli elementi della cassaforte</string>
+  <string name="migrate_init_error_snackbar">Impossibile inizializzare la schermata di migrazione</string>
+</resources>

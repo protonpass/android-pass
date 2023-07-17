@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Open</string>
+  <string name="action_copy">Copy</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Could not initialise the element</string>
+  <string name="top_bar_edit_button_text">Edit</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Alias address</string>
+  <string name="alias_copied_to_clipboard">Alias copied</string>
+  <string name="alias_detail_field_mailboxes_title">Forwarding to</string>
+  <string name="alias_create_login_from_alias">Create login</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Note</string>
+  <!-- Login details -->
+  <string name="username_copied_to_clipboard">Username copied</string>
+  <string name="password_copied_to_clipboard">Password copied</string>
+  <string name="website_copied_to_clipboard">Website copied</string>
+  <string name="totp_copied_to_clipboard">TOTP copied</string>
+  <string name="field_copied_to_clipboard">Field copied</string>
+  <string name="move_item_to_trash_message">Item moved to trash</string>
+  <string name="error_move_item_to_trash_message">Error moving to trash</string>
+  <string name="item_permanently_deleted_message">Item permanently deleted</string>
+  <string name="item_permanently_deleted_message_error">Error deleting item</string>
+  <string name="item_restored_message">Item restored</string>
+  <string name="item_restored_message_error">Error restoring item</string>
+  <string name="login_item_generate_totp_error">Error generating 2FA code</string>
+  <string name="login_item_view_alias_button">View alias</string>
+  <string name="field_username">Username or email address</string>
+  <string name="field_password">Password</string>
+  <string name="websites_section_title">Websites</string>
+  <string name="totp_section_title">2FA token (TOTP)</string>
+  <string name="action_reveal_password">Reveal password</string>
+  <string name="action_conceal_password">Conceal password</string>
+  <string name="action_reveal_number">Nummer weergeven</string>
+  <string name="action_conceal_number">Nummer verbergen</string>
+  <string name="more_info_created">Created:</string>
+  <string name="more_info_modified">Modified:</string>
+  <string name="more_info_autofilled">Auto-filled:</string>
+  <string name="more_info_title">More info</string>
+  <string name="more_info_icon">More info icon</string>
+  <plurals name="more_info_modified_times">
+    <item quantity="one">Once</item>
+    <item quantity="other">%d times</item>
+  </plurals>
+  <string name="more_info_last_time_modified">Last time, %s</string>
+  <string name="open_menu_icon_content_description">Open menu button</string>
+  <string name="mfa_limit_reached">2FA limit reached</string>
+  <string name="mfa_icon_content_description">2fa icon</string>
+  <string name="custom_field_text_icon_description">Text custom field</string>
+  <string name="custom_field_hidden_icon_description">Hidden custom field</string>
+  <string name="custom_field_totp_icon_description">2FA custom field</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Naam van de kaarthouder</string>
+  <string name="credit_card_number_field_name">Kaartnummer</string>
+  <string name="credit_card_cvv_field_name">Verificatienummer</string>
+  <string name="credit_card_pin_field_name">PIN-code</string>
+  <string name="credit_card_expiration_date_field_name">Vervalt op</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Kaarthouder gekopieerd naar klembord</string>
+  <string name="credit_card_number_copied_to_clipboard">Kaartnummer gekopieerd naar klembord</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Verificatienummer gekopieerd naar klembord</string>
+  <string name="credit_card_pin_copied_to_clipboard">PIN gekopieerd naar klembord</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>
+  <string name="migrate_item_detail_bottom_sheet">Move to another vault</string>
+  <!-- More info -->
+  <string name="date_today">Today %s</string>
+  <string name="date_yesterday">Yesterday %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+</resources>

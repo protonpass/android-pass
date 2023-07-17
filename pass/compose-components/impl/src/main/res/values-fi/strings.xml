@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Nimi (A-Ö)</string>
+  <string name="sort_by_title_desc">Nimi (Ö-A)</string>
+  <string name="sort_by_creation_asc">Vanhimmasta uusimpaan</string>
+  <string name="sort_by_creation_desc">Uusimmasta vanhimpaan</string>
+  <string name="sort_by_modification_date">Viimeisimmät</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Kaikki</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">tulos</item>
+    <item quantity="other">tulosta</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Vahvista</string>
+  <string name="bottomsheet_cancel_button">Peruuta</string>
+  <string name="bottomsheet_move_to_trash">Siirrä roskakoriin</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Avaa kohteen toimintovalikko</string>
+  <string name="action_upgrade_now">Päivitä nyt</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
+  <string name="empty_search_results_title">Tuloksia ei löytynyt</string>
+  <string name="empty_list_open_extension">Vieraile verkkolaajennuksessa</string>
+  <string name="empty_list_create_item_button">Luo uusi kohde</string>
+  <!-- Field -->
+  <string name="field_title_title">Nimi</string>
+  <string name="field_title_hint">Nimetön</string>
+  <string name="field_title_required">Nimi vaaditaan</string>
+  <string name="small_cross_icon_content_description">Pieni risti -kuvake</string>
+  <string name="field_note_title">Muistiinpano</string>
+  <string name="field_note_hint">Lisää muistiinpano</string>
+  <string name="linked_apps_title">Yhdistetyt sovellukset</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Yhteydetön</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Sovellus puuttuu -kuvake</string>
+  <string name="add_item_icon_content_description">Lisää kohde -kuvake</string>
+  <string name="navigate_back_icon_content_description">Palaa takaisin -kuvake</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Holvi</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Listan kohteet</string>
+  <string name="bottom_bar_add_item_icon_content_description">Lisää kohde</string>
+  <string name="bottom_bar_profile_icon_content_description">Profiili</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Tänään</string>
+  <string name="most_recent_yesterday">Eilen</string>
+  <string name="most_recent_this_week">Viikon sisällä</string>
+  <string name="most_recent_last_two_weeks">Kahden viikon sisällä</string>
+  <string name="most_recent_last_30_days">30 päivän sisällä</string>
+  <string name="most_recent_last_60_days">60 päivän sisällä</string>
+  <string name="most_recent_last_90_days">90 päivän sisällä</string>
+  <string name="most_recent_within_the_last_year">Vuoden sisällä</string>
+  <string name="most_recent_more_than_1_year">Yli vuosi sitten</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Hakukuvake</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Asetuskuvake</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 kohde</item>
+    <item quantity="other">%d kohdetta</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Hylätäänkö muutokset?</string>
+  <string name="confirm_close_dialog_message">Sinulla on tallentamattomia muutoksia. Haluatko varmasti hylätä ne?</string>
+  <string name="confirm_close_dialog_close_button">Hylkää</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Päivitä</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Lisävalinnat</string>
+  <string name="hide_advanced_options">Piilota lisävalinnat</string>
+</resources>

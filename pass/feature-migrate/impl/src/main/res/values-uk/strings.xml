@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Перемістити цей елемент до цього сховища?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Перемістити всі елементи до цього сховища?</string>
+  <string name="migrate_item_confirm_confirm_button">Перемістити</string>
+  <string name="migrate_item_success_snackbar">Елемент переміщено</string>
+  <string name="migrate_item_error_snackbar">Помилка під час переміщення елементу</string>
+  <string name="migrate_all_items_success_snackbar">Всі елементи переміщено</string>
+  <string name="migrate_all_items_error_snackbar">Помилка переміщення всіх елементів сховища</string>
+  <string name="migrate_init_error_snackbar">Не вдалося підготувати екран перенесення</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">複製並關閉</string>
+  <string name="password_copied_to_clipboard">已複製密碼</string>
+  <string name="bottomsheet_generate_password_title">生成密碼</string>
+  <string name="password_type">類型</string>
+  <string name="special_characters">特殊字元 (!&amp;&amp;*)</string>
+  <string name="character_count">%s 個字元</string>
+  <string name="word_count">%s 個字</string>
+  <string name="word_separator">單字分隔字元</string>
+  <string name="bottomsheet_option_capital_letters">大寫字母(A–Z)</string>
+  <string name="bottomsheet_option_capitalise">大寫</string>
+  <string name="bottomsheet_option_include_numbers">包含數字(0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">連字號 ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">空格</string>
+  <string name="bottomsheet_option_word_separator_periods">句號 ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">逗號 ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">底線 ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">數字</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">數字和符號</string>
+  <string name="regenerate_password_icon_content_description">重新產生密碼按鈕</string>
+  <string name="password_mode_memorable">可記得的密碼</string>
+  <string name="password_mode_random">隨機生成密碼</string>
+  <string name="password_mode_icon">密碼模式圖示</string>
+  <string name="password_words_separator_icon">密碼單字分隔字元</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Copier et fermer</string>
+  <string name="password_copied_to_clipboard">Le mot de passe a été copié.</string>
+  <string name="bottomsheet_generate_password_title">Générer un mot de passe</string>
+  <string name="password_type">Type</string>
+  <string name="special_characters">Caractères spéciaux (!&amp;*)</string>
+  <string name="character_count">%s caractères</string>
+  <string name="word_count">%s mots</string>
+  <string name="word_separator">Séparateur de mots</string>
+  <string name="bottomsheet_option_capital_letters">Lettres majuscules (A-Z)</string>
+  <string name="bottomsheet_option_capitalise">Majuscules</string>
+  <string name="bottomsheet_option_include_numbers">Ajouter des chiffres (0-9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Tirets ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Espaces</string>
+  <string name="bottomsheet_option_word_separator_periods">Points ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Virgules ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Tirets bas/Underscore ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Chiffres</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Chiffres et symboles</string>
+  <string name="regenerate_password_icon_content_description">Bouton de régénération du mot de passe</string>
+  <string name="password_mode_memorable">Mot de passe facile à mémoriser</string>
+  <string name="password_mode_random">Mot de passe aléatoire</string>
+  <string name="password_mode_icon">Icône mode mot de passe</string>
+  <string name="password_words_separator_icon">Séparateur de mots pour mot de passe</string>
+</resources>

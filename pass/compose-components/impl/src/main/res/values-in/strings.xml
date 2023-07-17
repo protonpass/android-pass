@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Judul (A-Z)</string>
+  <string name="sort_by_title_desc">Judul (Z-A)</string>
+  <string name="sort_by_creation_asc">Terlama ke terbaru</string>
+  <string name="sort_by_creation_desc">Terbaru ke terlama</string>
+  <string name="sort_by_modification_date">Terkini</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Semua</string>
+  <plurals name="item_list_header_results">
+    <item quantity="other">hasil</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Konfirmasi</string>
+  <string name="bottomsheet_cancel_button">Batalkan</string>
+  <string name="bottomsheet_move_to_trash">Move to trash</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Open item action menu</string>
+  <string name="action_upgrade_now">Tingkatkan sekarang</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Tambahkan item pertama Anda</string>
+  <string name="empty_search_results_title">Hasil tidak ditemukan</string>
+  <string name="empty_list_open_extension">Kunjungi ekstensi web</string>
+  <string name="empty_list_create_item_button">Buat item baru</string>
+  <!-- Field -->
+  <string name="field_title_title">Judul</string>
+  <string name="field_title_hint">Tanpa judul</string>
+  <string name="field_title_required">Judul diperlukan</string>
+  <string name="small_cross_icon_content_description">Ikon silang kecil</string>
+  <string name="field_note_title">Catatan</string>
+  <string name="field_note_hint">Tambahkan catatan</string>
+  <string name="linked_apps_title">Aplikasi yang tertaut</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Luring</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Ikon aplikasi tidak ada</string>
+  <string name="add_item_icon_content_description">Tambahkan ikon item</string>
+  <string name="navigate_back_icon_content_description">Ikon navigasi kembali</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Brankas</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Daftar item</string>
+  <string name="bottom_bar_add_item_icon_content_description">Tambahkan item</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Hari ini</string>
+  <string name="most_recent_yesterday">Kemarin</string>
+  <string name="most_recent_this_week">Minggu ini</string>
+  <string name="most_recent_last_two_weeks">Dua minggu terakhir</string>
+  <string name="most_recent_last_30_days">30 hari terakhir</string>
+  <string name="most_recent_last_60_days">60 hari terakhir</string>
+  <string name="most_recent_last_90_days">90 hari terakhir</string>
+  <string name="most_recent_within_the_last_year">Dalam setahun ke belakang</string>
+  <string name="most_recent_more_than_1_year">Lebih dari 1 tahun</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Ikon pencarian</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Ikon opsi</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="other">%d item</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Batalkan perubahan?</string>
+  <string name="confirm_close_dialog_message">Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin untuk membatalkan perubahan ini?</string>
+  <string name="confirm_close_dialog_close_button">Buang</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Tingkatkan</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Opsi tingkat lanjut</string>
+  <string name="hide_advanced_options">Sembunyikan opsi lanjutan</string>
+</resources>

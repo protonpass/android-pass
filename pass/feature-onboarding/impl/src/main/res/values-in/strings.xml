@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Biarkan Proton Pass mengisi rincian login Anda secara otomatis. Anda tidak lagi perlu mengetik atau menyalin.</string>
+  <string name="on_boarding_autofill_title">Masuk ke aplikasi secara instan</string>
+  <string name="on_boarding_autofill_button">Isi otomatis dengan Proton Pass</string>
+  <string name="on_boarding_fingerprint_content">Atur Proton Pass untuk membuka kunci dengan sidik jari Anda sehingga hanya Anda yang memiliki akses.</string>
+  <string name="on_boarding_fingerprint_title">Lindungi data Anda yang paling sensitif</string>
+  <string name="on_boarding_fingerprint_button">Aktifkan pembuka sidik jari</string>
+  <string name="on_boarding_last_page_content">Berhenti membagikan alamat surel asli Anda. Sebaliknya, sembunyikan dengan alias surel—sebuah fitur eksklusif dalam Proton Pass.</string>
+  <string name="on_boarding_last_page_title">Kendalikan apa-apa saja yang diterima oleh kotak masuk Anda</string>
+  <string name="on_boarding_last_page_button">Mulai menggunakan Proton Pass</string>
+  <string name="on_boarding_skip">Tidak sekarang</string>
+  <string name="error_biometry_failed_to_start">Proses autentikasi biometrik tidak dapat dimulai</string>
+  <string name="error_biometry_failed_to_authenticate">Gagal mengautentikasi</string>
+  <string name="settings_fingerprint_lock_enabled">Membuka kunci dengan sidik jari diaktifkan</string>
+  <string name="error_performing_operation">Terjadi kesalahan saat melakukan tindakan</string>
+</resources>

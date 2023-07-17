@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Kopieren und schließen</string>
+  <string name="password_copied_to_clipboard">Passwort kopiert</string>
+  <string name="bottomsheet_generate_password_title">Passwort generieren</string>
+  <string name="password_type">Typ</string>
+  <string name="special_characters">Sonderzeichen (!&amp;*)</string>
+  <string name="character_count">%s Zeichen</string>
+  <string name="word_count">%s Wörter</string>
+  <string name="word_separator">Trennzeichen</string>
+  <string name="bottomsheet_option_capital_letters">Großbuchstaben (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Großschreiben</string>
+  <string name="bottomsheet_option_include_numbers">Zahlen (0–9) einschließen</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Bindestriche ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Leerzeichen</string>
+  <string name="bottomsheet_option_word_separator_periods">Punkte ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Kommas ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Unterstriche ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Zahlen</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Zahlen und Symbole</string>
+  <string name="regenerate_password_icon_content_description">Schaltfläche \"Passwort neu generieren\"</string>
+  <string name="password_mode_memorable">Einprägsames Passwort</string>
+  <string name="password_mode_random">Zufälliges Passwort</string>
+  <string name="password_mode_icon">Passwortmodus-Symbol</string>
+  <string name="password_words_separator_icon">Passwort-Worttrennzeichen</string>
+</resources>

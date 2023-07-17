@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Home -->
+  <string name="home_empty_vault_title">Your vault is empty</string>
+  <string name="home_empty_vault_subtitle">Get started by creating your first item.</string>
+  <string name="home_empty_vault_create_login">Create a login</string>
+  <string name="home_empty_vault_create_alias">Create a Hide My Email alias</string>
+  <string name="home_empty_vault_create_note">Create a note</string>
+  <string name="error_observing_items">Error observing items</string>
+  <string name="error_observing_share">Error observing share</string>
+  <string name="error_refreshing">Error performing refresh</string>
+  <string name="home_snackbar_login_moved_to_trash">Login moved to trash</string>
+  <string name="home_snackbar_alias_moved_to_trash">Alias moved to trash</string>
+  <string name="home_snackbar_note_moved_to_trash">Note moved to trash</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">Credit card moved to trash</string>
+  <string name="home_snackbar_move_to_trash_error">Could not move to trash</string>
+  <string name="home_autofill_banner_title">Enjoy the magic of AutoFill</string>
+  <string name="home_autofill_banner_text">One tap and—presto!—your username and password are filled in instantly.</string>
+  <string name="home_autofill_banner_settings">Turn on Autofill ›</string>
+  <string name="home_trial_banner_title">Enjoy your free trial</string>
+  <string name="home_trial_banner_text">Check out all the exclusive features that are available to you for a limited time.</string>
+  <string name="home_trial_banner_settings">Learn more ›</string>
+  <!-- Common bottomsheet -->
+  <string name="bottomsheet_copy_password">Copy password</string>
+  <string name="bottomsheet_copy_username">Copy username</string>
+  <string name="bottomsheet_copy_alias">Copy email address</string>
+  <string name="bottomsheet_copy_number">Copy number</string>
+  <string name="bottomsheet_copy_cvv">Copy CVV</string>
+  <string name="bottomsheet_copy_note">Copy note</string>
+  <string name="bottomsheet_edit">Edit</string>
+  <!-- Clipboard -->
+  <string name="alias_copied_to_clipboard">Alias copied</string>
+  <string name="note_copied_to_clipboard">Note copied</string>
+  <string name="username_copied_to_clipboard">Username copied</string>
+  <string name="password_copied_to_clipboard">Password copied</string>
+  <string name="credit_card_number_copied_to_clipboard">Credit card number copied</string>
+  <string name="credit_card_pin_copied_to_clipboard">Credit card pin copied</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Credit card cvv copied</string>
+  <string name="item_too_long_copied_to_clipboard">Content was too long, partially copied to the clipboard</string>
+  <!-- Vault drawer -->
+  <string name="vault_drawer_vaults_title">Vaults</string>
+  <string name="vault_drawer_vaults_item_count">%d items</string>
+  <string name="vault_drawer_create_vault">Create vault</string>
+  <string name="vault_drawer_item_trash">Trash</string>
+  <string name="vault_drawer_all_vaults">All vaults</string>
+  <!-- Vault management -->
+  <string name="vault_delete_dialog_title">Delete vault</string>
+  <string name="vault_delete_dialog_cancel_action">Cancel</string>
+  <string name="vault_delete_dialog_delete_action">Delete</string>
+  <string name="snackbar_delete_vault_success">Vault deleted</string>
+  <string name="snackbar_delete_vault_error">Vault not deleted</string>
+  <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_vaults">Search in all vaults…</string>
+  <string name="search_topbar_placeholder_vault">Search in %s…</string>
+  <string name="search_topbar_placeholder_trash">Search in Trash…</string>
+  <string name="item_type_filter_list_icon_content_description">Item type icon</string>
+  <string name="item_type_filter_all">All</string>
+  <string name="item_type_filter_login">Login</string>
+  <string name="item_type_filter_alias">Alias</string>
+  <string name="item_type_filter_note">Note</string>
+  <string name="item_type_filter_credit_card">Card</string>
+  <!-- Trash -->
+  <string name="trash_empty_list_title">Trash empty</string>
+  <string name="trash_empty_list_message">Items moved to trash appear here.</string>
+  <string name="bottomsheet_trash_all_items_title">Trash</string>
+  <string name="bottomsheet_restore_all_items">Restore all items</string>
+  <string name="bottomsheet_empty_trash">Empty trash</string>
+  <string name="trash_error_clearing_trash">Error clearing trash</string>
+  <string name="trash_error_restoring_items">Error restoring items</string>
+  <string name="trash_error_deleting_item">Error deleting item</string>
+  <!-- Alerts -->
+  <string name="alert_confirm_clear_trash_title">Clear trash?</string>
+  <string name="alert_confirm_clear_trash_message">Are you sure you want to clear the trash? All your trashed items will be deleted permanently</string>
+  <string name="alert_confirm_restore_all_title">Restore all items?</string>
+  <string name="alert_confirm_restore_all_message">Are you sure you want to restore all the trashed items?</string>
+  <!-- Recent search -->
+  <string name="recent_search_header_count">Recent searches</string>
+  <string name="recent_search_clear">Clear</string>
+  <string name="recent_search_remove_item">Remove from recent searches</string>
+</resources>

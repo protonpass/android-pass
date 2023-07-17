@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Bu öge şu kasaya taşınsın mı?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Tüm ögeler şu kasaya taşınsın mı?</string>
+  <string name="migrate_item_confirm_confirm_button">Taşı</string>
+  <string name="migrate_item_success_snackbar">Öge taşındı</string>
+  <string name="migrate_item_error_snackbar">Öge taşınırken sorun çıktı</string>
+  <string name="migrate_all_items_success_snackbar">Tüm ögeler taşındı</string>
+  <string name="migrate_all_items_error_snackbar">Tüm kasa ögeleri taşınırken sorun çıktı</string>
+  <string name="migrate_init_error_snackbar">Aktarım arayüzü hazırlanamadı</string>
+</resources>

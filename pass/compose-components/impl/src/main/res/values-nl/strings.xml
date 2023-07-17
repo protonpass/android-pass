@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Title (A-Z)</string>
+  <string name="sort_by_title_desc">Title (Z-A)</string>
+  <string name="sort_by_creation_asc">Oldest to newest</string>
+  <string name="sort_by_creation_desc">Newest to oldest</string>
+  <string name="sort_by_modification_date">Meest recent</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">All</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">result</item>
+    <item quantity="other">results</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Confirm</string>
+  <string name="bottomsheet_cancel_button">Cancel</string>
+  <string name="bottomsheet_move_to_trash">Move to trash</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Open item action menu</string>
+  <string name="action_upgrade_now">Upgrade now</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Add your first item</string>
+  <string name="empty_search_results_title">No result found</string>
+  <string name="empty_list_open_extension">Visit web extension</string>
+  <string name="empty_list_create_item_button">Maak nieuw item</string>
+  <!-- Field -->
+  <string name="field_title_title">Title</string>
+  <string name="field_title_hint">Untitled</string>
+  <string name="field_title_required">Title required</string>
+  <string name="small_cross_icon_content_description">Small cross icon</string>
+  <string name="field_note_title">Notitie</string>
+  <string name="field_note_hint">Notitie toevoegen</string>
+  <string name="linked_apps_title">Verbonden apps</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Offline</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Missing app icon</string>
+  <string name="add_item_icon_content_description">Add item icon</string>
+  <string name="navigate_back_icon_content_description">Navigate back icon</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Kluis</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">List items</string>
+  <string name="bottom_bar_add_item_icon_content_description">Item toevoegen</string>
+  <string name="bottom_bar_profile_icon_content_description">Profiel</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Vandaag</string>
+  <string name="most_recent_yesterday">Gisteren</string>
+  <string name="most_recent_this_week">Deze week</string>
+  <string name="most_recent_last_two_weeks">Last two weeks</string>
+  <string name="most_recent_last_30_days">Last 30 days</string>
+  <string name="most_recent_last_60_days">Last 60 days</string>
+  <string name="most_recent_last_90_days">Last 90 days</string>
+  <string name="most_recent_within_the_last_year">Within the last year</string>
+  <string name="most_recent_more_than_1_year">More than 1 year</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Search icon</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Option icon</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 item</item>
+    <item quantity="other">%d items</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Discard changes?</string>
+  <string name="confirm_close_dialog_message">You have unsaved changes, are you sure you want to discard them?</string>
+  <string name="confirm_close_dialog_close_button">Discard</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Upgraden</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Advanced options</string>
+  <string name="hide_advanced_options">Hide advanced options</string>
+</resources>

@@ -18,30 +18,15 @@
 
 package proton.android.pass.preferences
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.firstOrNull
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FakesPreferenceModule {
+class IncItemCreatedCountImpl @Inject constructor(
+    private val internalSettingsRepository: InternalSettingsRepository
+) : IncItemCreatedCount {
 
-    @Binds
-    abstract fun bindUserPreferencesRepository(impl: TestPreferenceRepository): UserPreferencesRepository
-
-    @Binds
-    abstract fun bindFeatureFlagsPreferencesRepository(
-        impl: TestFeatureFlagsPreferenceRepository
-    ): FeatureFlagsPreferencesRepository
-
-    @Binds
-    abstract fun bindInternalSettingsRepository(
-        impl: TestInternalSettingsRepository
-    ): InternalSettingsRepository
-
-    @Binds
-    abstract fun bindIncItemCreatedCount(
-        impl: TestIncItemCreatedCount
-    ): IncItemCreatedCount
+    override suspend fun invoke(): Result<Unit> = runCatching {
+        val count: Int = internalSettingsRepository.getItemCreateCount().firstOrNull() ?: 0
+        internalSettingsRepository.setItemCreateCount(count.inc())
+    }
 }

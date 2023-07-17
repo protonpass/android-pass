@@ -43,4 +43,9 @@ abstract class PreferencesBinderModule {
     abstract fun bindInMemoryPreferences(
         impl: InMemoryPreferencesImpl
     ): InMemoryPreferences
+
+    @Binds
+    abstract fun bindIncItemCreatedCount(
+        impl: IncItemCreatedCountImpl
+    ): IncItemCreatedCount
 }

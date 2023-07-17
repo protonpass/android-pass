@@ -31,6 +31,7 @@ sealed interface ProfileUiEvent {
     object OnUpgradeClick : ProfileUiEvent
     object OnAppLockTypeClick : ProfileUiEvent
     object OnAppLockTimeClick : ProfileUiEvent
+    object OnChangePinClick : ProfileUiEvent
 
     @JvmInline
     value class OnAutofillClicked(val value: Boolean) : ProfileUiEvent

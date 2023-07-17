@@ -95,7 +95,9 @@ class ProfileScreenTest {
                             if (it is ProfileNavigation.Account) {
                                 checker.call()
                             }
-                        }
+                        },
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }
@@ -118,7 +120,9 @@ class ProfileScreenTest {
                             if (it is ProfileNavigation.Settings) {
                                 checker.call()
                             }
-                        }
+                        },
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }
@@ -144,7 +148,9 @@ class ProfileScreenTest {
                             if (it == ProfileNavigation.Upgrade) {
                                 checker.call()
                             }
-                        }
+                        },
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }
@@ -162,7 +168,9 @@ class ProfileScreenTest {
             setContent {
                 PassTheme(isDark = true) {
                     ProfileScreen(
-                        onNavigateEvent = {}
+                        onNavigateEvent = {},
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }
@@ -184,7 +192,9 @@ class ProfileScreenTest {
                             if (it == ProfileNavigation.Upgrade) {
                                 checker.call()
                             }
-                        }
+                        },
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }
@@ -202,7 +212,9 @@ class ProfileScreenTest {
             setContent {
                 PassTheme(isDark = true) {
                     ProfileScreen(
-                        onNavigateEvent = {}
+                        onNavigateEvent = {},
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }
@@ -218,7 +230,9 @@ class ProfileScreenTest {
             setContent {
                 PassTheme(isDark = true) {
                     ProfileScreen(
-                        onNavigateEvent = {}
+                        onNavigateEvent = {},
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }
@@ -239,7 +253,9 @@ class ProfileScreenTest {
                             if (it is ProfileNavigation.Feedback) {
                                 checker.call()
                             }
-                        }
+                        },
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }
@@ -258,6 +274,8 @@ class ProfileScreenTest {
                 PassTheme {
                     ProfileScreen(
                         onNavigateEvent = {},
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }
@@ -277,6 +295,8 @@ class ProfileScreenTest {
                 PassTheme {
                     ProfileScreen(
                         onNavigateEvent = {},
+                        enterPinSuccess = false,
+                        onClearPinSuccess = {}
                     )
                 }
             }

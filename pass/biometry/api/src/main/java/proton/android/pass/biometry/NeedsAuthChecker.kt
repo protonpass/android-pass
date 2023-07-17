@@ -43,7 +43,6 @@ sealed interface NoNeedsAuthReason : NeedsAuthResult {
     override fun value() = false
 
     object AuthDisabled : NoNeedsAuthReason
-    object BiometricDisabled : NoNeedsAuthReason
     object LockTimeNotElapsed : NoNeedsAuthReason
     object LockImmediatelyButHadAuthenticated : NoNeedsAuthReason
 }

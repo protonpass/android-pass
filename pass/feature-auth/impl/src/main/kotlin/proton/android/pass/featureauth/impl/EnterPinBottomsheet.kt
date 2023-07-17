@@ -21,7 +21,9 @@ package proton.android.pass.featureauth.impl
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
@@ -30,15 +32,25 @@ sealed interface EnterPinNavigation {
     object Success : EnterPinNavigation
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EnterPinBottomsheet(
     modifier: Modifier = Modifier,
     viewModel: EnterPinViewModel = hiltViewModel(),
     onNavigate: (EnterPinNavigation) -> Unit
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     val state by viewModel.state.collectAsStateWithLifecycle()
     EventLaunchedEffect(state as? EnterPinUiState.Data, onNavigate)
-    EnterPinContent(modifier, state, viewModel::onPinChanged, viewModel::onPinSubmit)
+    EnterPinContent(
+        modifier = modifier,
+        state = state,
+        onPinChanged = viewModel::onPinChanged,
+        onPinSubmit = {
+            keyboardController?.hide()
+            viewModel.onPinSubmit()
+        }
+    )
 }
 
 @Composable

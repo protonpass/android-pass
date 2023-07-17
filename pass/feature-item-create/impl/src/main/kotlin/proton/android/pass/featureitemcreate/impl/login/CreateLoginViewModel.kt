@@ -69,6 +69,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.It
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.IncItemCreatedCount
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -86,6 +87,7 @@ class CreateLoginViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     private val draftRepository: DraftRepository,
+    private val incItemCreatedCount: IncItemCreatedCount,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
@@ -93,7 +95,7 @@ class CreateLoginViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandleProvider,
-    canPerformPaidAction: CanPerformPaidAction
+    canPerformPaidAction: CanPerformPaidAction,
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -308,6 +310,7 @@ class CreateLoginViewModel @Inject constructor(
                 )
             )
         }.onSuccess { item ->
+            incItemCreatedCount()
             isItemSavedState.update {
                 encryptionContextProvider.withEncryptionContext {
                     ItemSavedState.Success(
@@ -341,6 +344,7 @@ class CreateLoginViewModel @Inject constructor(
                 itemContents = itemContentState.value
             )
         }.onSuccess { item ->
+            incItemCreatedCount()
             isItemSavedState.update {
                 encryptionContextProvider.withEncryptionContext {
                     ItemSavedState.Success(

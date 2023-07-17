@@ -24,8 +24,8 @@ import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.AppLockState
+import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.HasAuthenticated
 import kotlin.time.Duration.Companion.minutes
 
@@ -40,11 +40,10 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0,
-            appLockTypeState = appLockTypeState
+            bootCount = 0
         )
 
-        assertThat(res).isInstanceOf(NoNeedsAuthReason.BiometricDisabled::class.java)
+        assertThat(res).isInstanceOf(NoNeedsAuthReason.AuthDisabled::class.java)
     }
 
     @Test
@@ -56,8 +55,7 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0,
-            appLockTypeState = appLockTypeState
+            bootCount = 0
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LockImmediatelyAndHadNotAuthenticated::class.java)
@@ -72,8 +70,7 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0,
-            appLockTypeState = appLockTypeState
+            bootCount = 0
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.LockImmediatelyButHadAuthenticated::class.java)
@@ -91,8 +88,7 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = oneMinuteAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0,
-            appLockTypeState = appLockTypeState
+            bootCount = 0
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.LockTimeNotElapsed::class.java)
@@ -111,8 +107,7 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = threeMinutesAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             lastBootCount = None,
-            bootCount = 0,
-            appLockTypeState = appLockTypeState
+            bootCount = 0
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LockTimeElapsed::class.java)
@@ -130,8 +125,7 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = inThreeMinutes.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0,
-            appLockTypeState = appLockTypeState
+            bootCount = 0
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LastUnlockTimeInTheFuture::class.java)
@@ -150,8 +144,7 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = oneMinuteAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(1),
-            bootCount = 2,
-            appLockTypeState = appLockTypeState
+            bootCount = 2
         )
 
 

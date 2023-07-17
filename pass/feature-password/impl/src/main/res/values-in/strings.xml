@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Salin dan tutup</string>
+  <string name="password_copied_to_clipboard">Kata sandi disalin</string>
+  <string name="bottomsheet_generate_password_title">Hasilkan kata sandi</string>
+  <string name="password_type">Jenis</string>
+  <string name="special_characters">Karakter khusus (!&amp;*)</string>
+  <string name="character_count">%s karakter</string>
+  <string name="word_count">%s kata</string>
+  <string name="word_separator">Pemisah kata</string>
+  <string name="bottomsheet_option_capital_letters">Huruf kapital (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Kapitalisasikan</string>
+  <string name="bottomsheet_option_include_numbers">Sertakan angka (0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Tanda hubung ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Spasi</string>
+  <string name="bottomsheet_option_word_separator_periods">Titik ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Koma ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Garis bawah ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Nomor</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Angka dan simbol</string>
+  <string name="regenerate_password_icon_content_description">Tombol pembuatan ulang kata sandi</string>
+  <string name="password_mode_memorable">Kata sandi yang mudah diingat</string>
+  <string name="password_mode_random">Kata sandi acak</string>
+  <string name="password_mode_icon">Ikon mode kata sandi</string>
+  <string name="password_words_separator_icon">Pemisah kata pada kata sandi</string>
+</resources>

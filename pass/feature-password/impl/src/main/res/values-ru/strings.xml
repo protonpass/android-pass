@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Copy and close</string>
+  <string name="password_copied_to_clipboard">Password copied</string>
+  <string name="bottomsheet_generate_password_title">Generate password</string>
+  <string name="password_type">Type</string>
+  <string name="special_characters">Special characters (!&amp;*)</string>
+  <string name="character_count">%s characters</string>
+  <string name="word_count">%s words</string>
+  <string name="word_separator">Word separator</string>
+  <string name="bottomsheet_option_capital_letters">Capital letters (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Capitalise</string>
+  <string name="bottomsheet_option_include_numbers">Include numbers (0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Hyphens ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Spaces</string>
+  <string name="bottomsheet_option_word_separator_periods">Periods ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Commas ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Underscores ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Numbers</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numbers and symbols</string>
+  <string name="regenerate_password_icon_content_description">Regenerate password button</string>
+  <string name="password_mode_memorable">Memorable password</string>
+  <string name="password_mode_random">Random password</string>
+  <string name="password_mode_icon">Password mode icon</string>
+  <string name="password_words_separator_icon">Password words separator</string>
+</resources>

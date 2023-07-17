@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Аднавіць</string>
+  <string name="bottomsheet_delete_permanently">Выдаліць незваротна</string>
+  <string name="alert_confirm_delete_item_dialog_title">Выдаліць незваротна?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Гэта дзеянне з\'яўляецца незваротным.</string>
+  <string name="alias_dialog_move_to_trash_title">Перамясціць у сметніцу?</string>
+  <string name="alias_dialog_move_to_trash_content">Калі вы перамясціце псеўданім у сметніцу, ён перастане перасылаць лісты ў вашу паштовую скрыню.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Пацвердзіць</string>
+</resources>

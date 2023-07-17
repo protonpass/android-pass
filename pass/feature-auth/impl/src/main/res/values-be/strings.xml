@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="profile_option_fingerprint_subtitle">Разблакіруйце Proton Pass адным дотыкам.</string>
+  <string name="profile_option_fingerprint">Адбітак пальца</string>
+  <string name="profile_option_app_lock">Блакіроўка праграмы</string>
+  <string name="enter_your_pin_code">Увядзіце PIN-код</string>
+  <string name="unlock">Разблакіраваць</string>
+  <string name="enter_pin">Увядзіце PIN</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="one">Няправільны PIN. Засталася %d спроба.</item>
+    <item quantity="few">Няправільны PIN. Засталося %d спробы.</item>
+    <item quantity="many">Няправільны PIN. Засталося %d спроб.</item>
+    <item quantity="other">Няправільны PIN. Засталося %d спроб.</item>
+  </plurals>
+  <string name="auth_unlock_app_title">Разблакіраваць Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Увядзіце асноўны пароль для %s</string>
+  <string name="auth_master_password_label">Асноўны пароль</string>
+  <string name="auth_action_reveal_password">Паказаць асноўны пароль</string>
+  <string name="auth_action_conceal_password">Схаваць асноўны пароль</string>
+  <string name="auth_unlock_button">Разблакіраваць</string>
+  <string name="auth_error_verifying_password">Памылка праверкі вашага пароля</string>
+  <string name="auth_error_empty_password">Пароль не можа быць пустым</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="one">Няправільны пароль. Засталася %d спроба</item>
+    <item quantity="few">Няправільны пароль. Засталося %d спробы</item>
+    <item quantity="many">Няправільны пароль. Засталося %d спроб</item>
+    <item quantity="other">Няправільны пароль. Засталося %d спроб</item>
+  </plurals>
+</resources>

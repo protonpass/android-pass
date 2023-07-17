@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">Sovellus on lukittu</string>
+  <string name="biometric_prompt_subtitle">Avaa laitteen lukitustavalla</string>
+  <string name="biometric_prompt_cancel">Peru</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Tresor erstellt</string>
+  <string name="snackbar_create_vault_error">Tresor nicht erstellt</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Es können keine weiteren Tresore erstellt werden</string>
+  <string name="snackbar_edit_vault_success">Tresor bearbeitet</string>
+  <string name="snackbar_edit_vault_error">Tresor nicht bearbeitet</string>
+  <string name="snackbar_delete_vault_success">Tresor gelöscht</string>
+  <string name="snackbar_delete_vault_error">Tresor nicht gelöscht</string>
+  <string name="snackbar_retrieve_vault_error">Tresor nicht gefunden</string>
+  <string name="snackbar_find_vault_error">Ausgewählter Tresor konnte nicht gefunden werden</string>
+  <string name="snackbar_get_vault_list_error">Tresorliste konnte nicht geladen werden.</string>
+  <string name="snackbar_get_upgrade_info_error">Fehler beim Erstellen der Tresorliste.</string>
+  <string name="vault_delete_dialog_title">Tresor löschen</string>
+  <string name="vault_delete_dialog_body">Dadurch wird der Tresor __VAULT_NAME__ und alle seine Inhalte dauerhaft gelöscht. Bitte gib den Tresornamen ein, um die Löschung zu bestätigen.</string>
+  <string name="vault_delete_dialog_placeholder">Tresorname</string>
+  <string name="vault_delete_dialog_cancel_action">Abbrechen</string>
+  <string name="vault_delete_dialog_delete_action">Löschen</string>
+  <string name="bottomsheet_close_icon_content_description">Erstellten Tresor schließen</string>
+  <string name="bottomsheet_create_vault_button">Tresor erstellen</string>
+  <string name="bottomsheet_edit_vault_button">Speichern</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Du hast das Limit an Tresoren erreicht, die du erstellen kannst. Ein Upgrade deines Abonnements ermöglicht dir das Erstellen von unbegrenzten Tresoren.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Um mit deinen anderen Tresoren zu interagieren, musst du dein Konto upgraden.</string>
+  <string name="bottomsheet_upgrade_now">Jetzt upgraden</string>
+  <string name="bottomsheet_edit">Bearbeiten</string>
+  <string name="bottomsheet_migrate">Alle Einträge in einen anderen Tresor verschieben</string>
+  <string name="bottomsheet_delete_vault">Tresor löschen</string>
+  <string name="vault_title">Tresor</string>
+</resources>

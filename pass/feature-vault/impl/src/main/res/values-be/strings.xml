@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Сховішча створана</string>
+  <string name="snackbar_create_vault_error">Сховішча не створана</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Немагчыма стварыць больш сховішчаў</string>
+  <string name="snackbar_edit_vault_success">Сховішча адрэдагавана</string>
+  <string name="snackbar_edit_vault_error">Сховішча не адрэдагавана</string>
+  <string name="snackbar_delete_vault_success">Сховішча выдалена</string>
+  <string name="snackbar_delete_vault_error">Сховішча не выдалена</string>
+  <string name="snackbar_retrieve_vault_error">Сховішча не знойдзена</string>
+  <string name="snackbar_find_vault_error">Немагчыма знайсці выбранае сховішча</string>
+  <string name="snackbar_get_vault_list_error">Немагчыма загрузіць спіс сховішчаў</string>
+  <string name="snackbar_get_upgrade_info_error">Немагчыма падрыхтаваць спіс сховішчаў</string>
+  <string name="vault_delete_dialog_title">Выдаліць сховішча</string>
+  <string name="vault_delete_dialog_body">Дзеянне прывядзе да выдалення сховішча з назвай __VAULT_NAME__ і ўсяго яго змесціва. Увядзіце назву сховішча, каб пацвердзіць выдаленне.</string>
+  <string name="vault_delete_dialog_placeholder">Назва сховішча</string>
+  <string name="vault_delete_dialog_cancel_action">Скасаваць</string>
+  <string name="vault_delete_dialog_delete_action">Выдаліць</string>
+  <string name="bottomsheet_close_icon_content_description">Закрыць стварэнне сховішча</string>
+  <string name="bottomsheet_create_vault_button">Стварыць сховішча</string>
+  <string name="bottomsheet_edit_vault_button">Захаваць</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Вы дасягнулі абмежавання па колькасці сховішчаў, якія вы можаце стварыць. Стварэнне неабмежаванай колькасці сховішчаў стане даступна пасля паляпшэння падпіскі.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Палепшыце падпіску свайго ўліковага запісу, каб мець магчымасць узаемадзейнічаць з іншымі сховішчамі.</string>
+  <string name="bottomsheet_upgrade_now">Палепшыць</string>
+  <string name="bottomsheet_edit">Рэдагаваць</string>
+  <string name="bottomsheet_migrate">Перамясціць усе элементы ў іншае сховішча</string>
+  <string name="bottomsheet_delete_vault">Выдаліць сховішча</string>
+  <string name="vault_title">Сховішча</string>
+</resources>

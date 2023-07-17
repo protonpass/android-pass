@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Cuenta</string>
+  <string name="account_username_label">Nombre de usuario</string>
+  <string name="account_subscription_label">Plan de suscripción</string>
+  <string name="account_permanently_delete_warning">Esto eliminará permanentemente su cuenta y todos sus datos. No podrá reactivar esta cuenta.</string>
+  <string name="account_delete_account">Eliminar cuenta</string>
+  <string name="account_delete_account_icon_content_description">Botón de eliminar cuenta</string>
+  <string name="account_sign_out">Cerrar sesión</string>
+  <string name="account_sign_out_icon_content_description">Botón de cerrar sesión</string>
+  <string name="account_manage_subscription">Gestionar suscripción</string>
+  <string name="account_get_user_info_error">No se pudo recuperar la información del usuario</string>
+  <string name="manage_subscription_icon_content_description">Botón de gestionar suscripción</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">¿Cerrar sesión?</string>
+  <string name="alert_confirm_sign_out_message">¿En verdad desea cerrar sesión?</string>
+</resources>

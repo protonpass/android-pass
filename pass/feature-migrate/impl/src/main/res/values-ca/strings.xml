@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Voleu moure aquest element a la caixa forta següent?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Voleu moure tots els elements a la caixa forta següent?</string>
+  <string name="migrate_item_confirm_confirm_button">Mou</string>
+  <string name="migrate_item_success_snackbar">S\'ha mogut l\'element</string>
+  <string name="migrate_item_error_snackbar">S\'ha produït un error en moure l\'element</string>
+  <string name="migrate_all_items_success_snackbar">S\'han mogut tots els elements</string>
+  <string name="migrate_all_items_error_snackbar">S\'ha produït un error en moure tots els elements de la caixa forta</string>
+  <string name="migrate_init_error_snackbar">No s\'ha pogut preparar la pantalla de migració</string>
+</resources>

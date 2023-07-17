@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">帳號</string>
+  <string name="account_username_label">使用者名稱</string>
+  <string name="account_subscription_label">訂閱方案</string>
+  <string name="account_permanently_delete_warning">請注意，此動作將會永久刪除您的帳號與其相關資料。您也將無法重新啟用此帳號。</string>
+  <string name="account_delete_account">刪除帳號</string>
+  <string name="account_delete_account_icon_content_description">刪除帳號按鈕</string>
+  <string name="account_sign_out">登出</string>
+  <string name="account_sign_out_icon_content_description">登出按鈕</string>
+  <string name="account_manage_subscription">管理訂閱</string>
+  <string name="account_get_user_info_error">無法擷取使用者資訊</string>
+  <string name="manage_subscription_icon_content_description">管理訂閱按鈕</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">登出？</string>
+  <string name="alert_confirm_sign_out_message">您確定要登出嗎？</string>
+</resources>

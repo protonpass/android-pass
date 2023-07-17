@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Обліковий запис</string>
+  <string name="account_username_label">Ім\'я користувача</string>
+  <string name="account_subscription_label">Тарифний план</string>
+  <string name="account_permanently_delete_warning">Ця дія остаточно видалить ваш обліковий запис та всі пов\'язані з ним дані. Ви не зможете відновити цей обліковий запис.</string>
+  <string name="account_delete_account">Видалити обліковий запис</string>
+  <string name="account_delete_account_icon_content_description">Кнопка видалення облікового запису</string>
+  <string name="account_sign_out">Вийти</string>
+  <string name="account_sign_out_icon_content_description">Кнопка виходу із системи</string>
+  <string name="account_manage_subscription">Керувати передплатою</string>
+  <string name="account_get_user_info_error">Не вдалося отримати інформацію про користувача</string>
+  <string name="manage_subscription_icon_content_description">Кнопка керування передплатою</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Вийти?</string>
+  <string name="alert_confirm_sign_out_message">Ви дійсно хочете вийти?</string>
+</resources>

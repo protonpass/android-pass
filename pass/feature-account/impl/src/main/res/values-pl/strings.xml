@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Konto</string>
+  <string name="account_username_label">Nazwa użytkownika</string>
+  <string name="account_subscription_label">Plan subskrypcji</string>
+  <string name="account_permanently_delete_warning">Ta czynność spowoduje trwałe usunięcie konta. Nie będziesz mógł reaktywować tego konta.</string>
+  <string name="account_delete_account">Usuń konto</string>
+  <string name="account_delete_account_icon_content_description">Przycisk usunięcia konta</string>
+  <string name="account_sign_out">Wyloguj</string>
+  <string name="account_sign_out_icon_content_description">Przycisk wylogowania</string>
+  <string name="account_manage_subscription">Zarządzaj subskrypcją</string>
+  <string name="account_get_user_info_error">Nie można pobrać informacji o użytkowniku</string>
+  <string name="manage_subscription_icon_content_description">Przycisk zarządzania subskrypcją</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Wylogować się?</string>
+  <string name="alert_confirm_sign_out_message">Czy na pewno chcesz się wylogować?</string>
+</resources>

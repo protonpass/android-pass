@@ -22,15 +22,19 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.ColorSettingOption
@@ -134,3 +138,19 @@ private fun getAppLockTimePreferenceText(appLockTimePreference: AppLockTimePrefe
         AppLockTimePreference.InOneHour -> stringResource(R.string.app_lock_one_hour)
         AppLockTimePreference.InFourHours -> stringResource(R.string.app_lock_four_hours)
     }
+
+
+class ThemeAndAppLockSectionPreviewProvider :
+    ThemePairPreviewProvider<AppLockSectionState>(AppLockSectionStatePreviewProvider())
+
+@Preview
+@Composable
+fun AppLockSectionPreview(
+    @PreviewParameter(ThemeAndAppLockSectionPreviewProvider::class) input: Pair<Boolean, AppLockSectionState>
+) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            AppLockSection(appLockSectionState = input.second, onEvent = {})
+        }
+    }
+}

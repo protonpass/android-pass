@@ -12,4 +12,5 @@ message InternalSettings {
   string selected_vault = 6;
   int32 pin_attempts = 7;
   int32 master_password_attempts = 8;
+  int32 item_create_count = 9;
 }

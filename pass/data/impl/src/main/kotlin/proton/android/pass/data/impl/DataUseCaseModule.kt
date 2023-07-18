@@ -28,7 +28,7 @@ import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.CheckPin
-import proton.android.pass.data.api.usecases.ResetAppToDefaults
+import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
@@ -69,6 +69,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RequestImage
+import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItem
@@ -91,8 +92,6 @@ import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
 import proton.android.pass.data.impl.usecases.CheckMasterPasswordImpl
 import proton.android.pass.data.impl.usecases.CheckPinImpl
-import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
-import proton.android.pass.data.impl.usecases.ClearPin
 import proton.android.pass.data.impl.usecases.ClearPinImpl
 import proton.android.pass.data.impl.usecases.ClearTrashImpl
 import proton.android.pass.data.impl.usecases.ClearUserDataImpl
@@ -134,6 +133,7 @@ import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
+import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.RestoreItemsImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest

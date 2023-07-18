@@ -13,4 +13,5 @@ message InternalSettings {
   int32 pin_attempts = 7;
   int32 master_password_attempts = 8;
   int32 item_create_count = 9;
+  bool in_app_review_triggered = 10;
 }

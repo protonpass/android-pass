@@ -29,7 +29,7 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.biometry.ContextHolder
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.common.api.None
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
@@ -108,7 +108,7 @@ class OnBoardingViewModelTest {
             viewModel = createViewModel()
             viewModel.onBoardingUiState.test {
                 skipItems(1)
-                viewModel.onMainButtonClick(Autofill, ContextHolder(None))
+                viewModel.onMainButtonClick(Autofill, ClassHolder(None))
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
                         enabledPages = setOf(Autofill, Fingerprint, Last),
@@ -126,7 +126,7 @@ class OnBoardingViewModelTest {
             viewModel = createViewModel()
             viewModel.onBoardingUiState.test {
                 skipItems(1)
-                viewModel.onMainButtonClick(Autofill, ContextHolder(None))
+                viewModel.onMainButtonClick(Autofill, ClassHolder(None))
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
                         selectedPage = 1,
@@ -193,7 +193,7 @@ class OnBoardingViewModelTest {
             biometryManager.emitResult(BiometryResult.Success)
             preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
             preferenceRepository.setAppLockState(AppLockState.Enabled)
-            viewModel.onMainButtonClick(Fingerprint, ContextHolder(None))
+            viewModel.onMainButtonClick(Fingerprint, ClassHolder(None))
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(
                     selectedPage = 1,
@@ -228,7 +228,7 @@ class OnBoardingViewModelTest {
         viewModel.onBoardingUiState.test {
             skipItems(1)
             preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
-            viewModel.onMainButtonClick(Last, ContextHolder(None))
+            viewModel.onMainButtonClick(Last, ClassHolder(None))
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(
                     enabledPages = setOf(Last),

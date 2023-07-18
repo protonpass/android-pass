@@ -24,6 +24,7 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -43,7 +44,8 @@ class InAppReviewManagerImpl @Inject constructor(
         }
     }
 
-    override fun requestReview(activity: Activity) {
+    override fun requestReview(activityHolder: ClassHolder<Activity>) {
+        val activity = activityHolder.get().value() ?: return
         val manager = ReviewManagerFactory.create(activity)
         manager.requestReviewFlow()
             .addOnSuccessListener { reviewInfo ->

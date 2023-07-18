@@ -27,7 +27,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.pager.ExperimentalPagerApi
-import proton.android.pass.biometry.ContextHolder
+import proton.android.pass.commonui.api.toClassHolder
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -46,7 +46,7 @@ fun OnBoardingScreen(
     OnBoardingContent(
         modifier = modifier.testTag(OnBoardingScreenTestTag.screen),
         uiState = onBoardingUiState,
-        onMainButtonClick = { viewModel.onMainButtonClick(it, ContextHolder.fromContext(context)) },
+        onMainButtonClick = { viewModel.onMainButtonClick(it, context.toClassHolder()) },
         onSkipButtonClick = viewModel::onSkipButtonClick,
         onSelectedPageChanged = viewModel::onSelectedPageChanged
     )

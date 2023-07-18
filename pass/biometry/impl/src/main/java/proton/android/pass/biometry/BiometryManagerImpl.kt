@@ -34,6 +34,7 @@ import proton.android.pass.biometry.extensions.from
 import proton.android.pass.biometry.implementation.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -63,7 +64,7 @@ class BiometryManagerImpl @Inject constructor(
             else -> BiometryStatus.NotAvailable
         }
 
-    override fun launch(context: ContextHolder): Flow<BiometryResult> = channelFlow {
+    override fun launch(contextHolder: ClassHolder<Context>): Flow<BiometryResult> = channelFlow {
         val canAuthenticate = canAuthenticate()
         if (canAuthenticate is BiometryResult.FailedToStart) {
             trySend(canAuthenticate)
@@ -91,7 +92,7 @@ class BiometryManagerImpl @Inject constructor(
             }
         }
 
-        val ctx = when (val ctx = context.getContext()) {
+        val ctx = when (val ctx = contextHolder.get()) {
             None -> {
                 val message = "Received None context"
                 PassLogger.e(TAG, IllegalArgumentException(message), message)

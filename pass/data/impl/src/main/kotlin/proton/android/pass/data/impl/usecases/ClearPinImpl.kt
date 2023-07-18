@@ -23,15 +23,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.impl.util.PinFileConfig
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
-
-interface ClearPin {
-    operator fun invoke()
-}
 
 @Singleton
 class ClearPinImpl @Inject constructor(

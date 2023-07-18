@@ -177,17 +177,22 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         AllowScreenshotsPreference.from(fromBooleanPrefProto(it.allowScreenshots))
     }
 
-    override fun clearPreferences(): Result<Unit> = setPreference { it.clear() }
+    override fun tryClearPreferences(): Result<Unit> = runBlocking { clearPreferences() }
+
+    override suspend fun clearPreferences(): Result<Unit> = setPreferenceSuspend { it.clear() }
 
     private fun setPreference(
-        mapper: (UserPreferences.Builder) -> UserPreferences.Builder
+        mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder
+    ): Result<Unit> = runBlocking {
+        setPreferenceSuspend(mapper)
+    }
+
+    private suspend fun setPreferenceSuspend(
+        mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder
     ): Result<Unit> = runCatching {
-        runBlocking {
-            dataStore.updateData {
-                mapper(it.toBuilder()).build()
-            }
+        dataStore.updateData {
+            mapper(it.toBuilder()).build()
         }
-        return@runCatching
     }
 
     private fun <T> getPreference(mapper: (UserPreferences) -> T): Flow<T> = dataStore.data

@@ -32,7 +32,7 @@ import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.CheckPin
-import proton.android.pass.data.api.usecases.ClearAppData
+import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
@@ -87,7 +87,7 @@ import proton.android.pass.data.fakes.usecases.TestCanDisplayTotp
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestCheckPin
-import proton.android.pass.data.fakes.usecases.TestClearAppData
+import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
 import proton.android.pass.data.fakes.usecases.TestClearTrash
 import proton.android.pass.data.fakes.usecases.TestClearUserData
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
@@ -399,5 +399,5 @@ abstract class FakesDataModule {
     abstract fun bindFeatureFlagRepository(impl: TestFeatureFlagRepository): FeatureFlagRepository
 
     @Binds
-    abstract fun bindClearAppData(impl: TestClearAppData): ClearAppData
+    abstract fun bindClearAppData(impl: TestResetAppToDefaults): ResetAppToDefaults
 }

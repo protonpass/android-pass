@@ -32,6 +32,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import proton.android.pass.commonui.api.LifecycleEffect
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.findActivity
+import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
 
@@ -47,7 +48,7 @@ fun PassApp(
     val activity = LocalContext.current.findActivity()
     LaunchedEffect(appUiState.requestInAppReview) {
         if (appUiState.requestInAppReview) {
-            appViewModel.requestReview(activity)
+            activity.value()?.let { appViewModel.requestReview(it.toClassHolder()) }
         }
     }
 

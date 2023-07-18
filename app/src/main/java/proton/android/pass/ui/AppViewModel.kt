@@ -40,6 +40,7 @@ import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.combineN
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
@@ -133,8 +134,8 @@ class AppViewModel @Inject constructor(
         inAppUpdatesManager.completeUpdate()
     }
 
-    fun requestReview(activity: Activity) {
-        inAppReviewManager.requestReview(activity)
+    fun requestReview(activityHolder: ClassHolder<Activity>) {
+        inAppReviewManager.requestReview(activityHolder)
     }
 
     companion object {

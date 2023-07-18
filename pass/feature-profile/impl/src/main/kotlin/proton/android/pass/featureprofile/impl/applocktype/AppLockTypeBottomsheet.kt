@@ -25,8 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 
 @Composable
@@ -40,7 +40,7 @@ fun AppLockTypeBottomsheet(
     val context = LocalContext.current
     if (enterPinSuccess) {
         LaunchedEffect(Unit) {
-            viewModel.onPinSuccessfullyEntered(ContextHolder.fromContext(context))
+            viewModel.onPinSuccessfullyEntered(context.toClassHolder())
         }
     }
     LaunchedEffect(state.event) {
@@ -66,5 +66,5 @@ fun AppLockTypeBottomsheet(
     AppLockTypeBottomsheetContent(
         modifier = modifier.bottomSheet(),
         state = state
-    ) { viewModel.onChanged(it, ContextHolder.fromContext(context)) }
+    ) { viewModel.onChanged(it, context.toClassHolder()) }
 }

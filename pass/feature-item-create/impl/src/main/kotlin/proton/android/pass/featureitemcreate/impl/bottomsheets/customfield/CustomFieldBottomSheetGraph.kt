@@ -23,6 +23,7 @@ import androidx.navigation.NavType
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.navigation.api.bottomSheet
 
@@ -38,12 +39,12 @@ object CustomFieldTitleNavArgId : NavArgId {
 
 object AddCustomFieldBottomSheet : NavItem(
     baseRoute = "item/create/customfield/add/bottomsheet",
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 )
 object CustomFieldOptionsBottomSheet : NavItem(
     baseRoute = "item/create/customfield/options/bottomsheet",
     navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 ) {
     fun buildRoute(index: Int, currentTitle: String) =
         "$baseRoute/$index/${NavParamEncoder.encode(currentTitle)}"

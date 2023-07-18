@@ -21,9 +21,13 @@ package proton.android.pass.featurepassword.impl.dialog.mode
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.dialog
 
-object PasswordModeDialog : NavItem(baseRoute = "password/create/passwordmode")
+object PasswordModeDialog : NavItem(
+    baseRoute = "password/create/passwordmode",
+    navItemType = NavItemType.Dialog
+)
 
 fun NavGraphBuilder.passwordModeDialog(
     onNavigate: (GeneratePasswordNavigation) -> Unit

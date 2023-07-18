@@ -27,6 +27,7 @@ import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomshee
 import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
 import proton.android.pass.featureprofile.impl.pinconfig.PinConfigScreen
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
@@ -35,17 +36,17 @@ const val ENTER_PIN_PARAMETER_KEY = "enterPin"
 object Profile : NavItem(baseRoute = "profile", isTopLevel = true)
 object FeedbackBottomsheet : NavItem(
     baseRoute = "feedback/bottomsheet",
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 )
 
 object AppLockTimeBottomsheet : NavItem(
     baseRoute = "applock/time/bottomsheet",
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 )
 
 object AppLockTypeBottomsheet : NavItem(
     baseRoute = "applock/type/bottomsheet",
-    isBottomsheet = true,
+    navItemType = NavItemType.Bottomsheet,
     noHistory = true
 )
 

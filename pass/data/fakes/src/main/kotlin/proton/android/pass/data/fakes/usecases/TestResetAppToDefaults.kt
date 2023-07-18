@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Singleton
 class TestResetAppToDefaults @Inject constructor() : ResetAppToDefaults {
-    override fun invoke() {
+    override suspend fun invoke() {
 
     }
 }

@@ -94,7 +94,6 @@ class AutofillActivity : FragmentActivity() {
                                 AutofillNavigation.Upgrade -> viewModel.upgrade()
                                 AutofillNavigation.ForceSignOut -> {
                                     viewModel.signOut()
-                                    disableAutofill()
                                 }
                             }
                         }
@@ -145,11 +144,6 @@ class AutofillActivity : FragmentActivity() {
                 ?: AllowScreenshotsPreference.Disabled
         }
         setSecureMode(setting)
-    }
-
-    private fun disableAutofill() {
-        val autofillManager = getSystemService(AutofillManager::class.java)
-        autofillManager.disableAutofillServices()
     }
 
     companion object {

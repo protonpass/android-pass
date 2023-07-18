@@ -73,6 +73,7 @@ import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -86,6 +87,7 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
+@Suppress("LongParameterList")
 class LauncherViewModel @Inject constructor(
     private val product: Product,
     private val requiredAccountType: AccountType,
@@ -101,7 +103,8 @@ class LauncherViewModel @Inject constructor(
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val clearUserData: ClearUserData,
     private val refreshPlan: RefreshPlan,
-    private val inAppUpdatesManager: InAppUpdatesManager
+    private val inAppUpdatesManager: InAppUpdatesManager,
+    private val autofillManager: AutofillManager
 ) : ViewModel() {
 
     val state: StateFlow<State> = accountManager.getAccounts()
@@ -203,6 +206,7 @@ class LauncherViewModel @Inject constructor(
                 .onFailure {
                     PassLogger.w(TAG, it, "Error clearing preferences")
                 }
+            autofillManager.disableAutofill()
         }
     }
 
@@ -246,6 +250,12 @@ class LauncherViewModel @Inject constructor(
             runCatching { clearUserData(account.userId) }
                 .onSuccess { PassLogger.i(TAG, "Cleared user data") }
                 .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
+        }
+
+        // If there are no accounts left, disable autofill
+        val allDisabled = accounts.all { it.isDisabled() }
+        if (accounts.isEmpty() || allDisabled) {
+            autofillManager.disableAutofill()
         }
     }
 

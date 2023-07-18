@@ -19,7 +19,9 @@
 package proton.android.pass.inappreview.api
 
 import android.app.Activity
+import kotlinx.coroutines.flow.Flow
 
 interface InAppReviewManager {
+    fun shouldRequestReview(): Flow<Boolean>
     fun requestReview(activity: Activity)
 }

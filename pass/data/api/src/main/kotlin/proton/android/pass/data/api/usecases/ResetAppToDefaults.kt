@@ -18,6 +18,6 @@
 
 package proton.android.pass.data.api.usecases
 
-interface ClearAppData {
+interface ResetAppToDefaults {
     operator fun invoke()
 }

@@ -46,7 +46,8 @@ class AppNavigator(
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
         val destinationRoute = route ?: destination.route
         // Discard duplicated nav events
-        if (!lifecycleIsResumed() && !destination.isBottomsheet) {
+        PassLogger.d(TAG, "State ${navController.currentBackStackEntry?.lifecycle?.currentState}")
+        if (!lifecycleIsResumed() && destination.navItemType == NavItemType.Screen) {
             PassLogger.d(
                 TAG,
                 "Navigate: Navigation event discarded as it was duplicated. " +
@@ -69,16 +70,18 @@ class AppNavigator(
                 restoreState = true
             }
 
-            destination.isBottomsheet -> navController.navigate(destinationRoute) {
-                launchSingleTop = true
-                if (backDestination != null) {
-                    popUpTo(backDestination.route) {
-                        if (destination.noHistory) {
-                            inclusive = true
+            destination.navItemType == NavItemType.Bottomsheet ||
+                destination.navItemType == NavItemType.Dialog ->
+                navController.navigate(destinationRoute) {
+                    launchSingleTop = true
+                    if (backDestination != null) {
+                        popUpTo(backDestination.route) {
+                            if (destination.noHistory) {
+                                inclusive = true
+                            }
                         }
                     }
                 }
-            }
 
             else -> navController.navigate(destinationRoute) {
                 if (backDestination != null) {
@@ -120,7 +123,10 @@ class AppNavigator(
 
     fun navigateUpWithResult(key: String, value: Any, comesFromBottomsheet: Boolean = false) {
         if (!lifecycleIsResumed() && !comesFromBottomsheet) {
-            PassLogger.d(TAG, "NavigateUpWithResult: Navigation event discarded as it was duplicated.")
+            PassLogger.d(
+                TAG,
+                "NavigateUpWithResult: Navigation event discarded as it was duplicated."
+            )
             return
         }
         navController.previousBackStackEntry
@@ -131,7 +137,10 @@ class AppNavigator(
 
     fun navigateUpWithResult(values: Map<String, Any>, comesFromBottomsheet: Boolean = false) {
         if (!lifecycleIsResumed() && !comesFromBottomsheet) {
-            PassLogger.d(TAG, "NavigateUpWithResult: Navigation event discarded as it was duplicated.")
+            PassLogger.d(
+                TAG,
+                "NavigateUpWithResult: Navigation event discarded as it was duplicated."
+            )
             return
         }
         navController.previousBackStackEntry

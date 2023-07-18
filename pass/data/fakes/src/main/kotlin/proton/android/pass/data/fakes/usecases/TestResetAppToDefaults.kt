@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import proton.android.pass.data.api.usecases.ClearAppData
+import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestClearAppData @Inject constructor() : ClearAppData {
+class TestResetAppToDefaults @Inject constructor() : ResetAppToDefaults {
     override fun invoke() {
 
     }

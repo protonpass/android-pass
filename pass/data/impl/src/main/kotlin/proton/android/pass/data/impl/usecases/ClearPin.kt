@@ -37,19 +37,27 @@ interface ClearPin {
 class ClearPinImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ClearPin {
-    override fun invoke() = runBlocking {
-        withContext(Dispatchers.IO) {
-            val file = File(context.dataDir, PinFileConfig.FILE_NAME)
-            if (!file.exists() || file.isDirectory) {
-                PassLogger.w(TAG, "Pin file does not exist")
-                return@withContext
+    override fun invoke() {
+        runCatching {
+            runBlocking {
+                withContext(Dispatchers.IO) {
+                    performPinClear()
+                }
             }
-            val res = file.delete()
-            if (!res) {
-                PassLogger.w(TAG, "Error deleting pin file")
-            } else {
-                PassLogger.d(TAG, "Deleted pin file")
-            }
+        }
+    }
+
+    private fun performPinClear() {
+        val file = File(context.dataDir, PinFileConfig.FILE_NAME)
+        if (!file.exists() || file.isDirectory) {
+            PassLogger.w(TAG, "Pin file does not exist")
+            return
+        }
+        val res = file.delete()
+        if (!res) {
+            PassLogger.w(TAG, "Error deleting pin file")
+        } else {
+            PassLogger.d(TAG, "Deleted pin file")
         }
     }
 

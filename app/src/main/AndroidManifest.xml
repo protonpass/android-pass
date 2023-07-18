@@ -85,6 +85,10 @@
                 android:name="me.proton.core.plan.presentation.UnredeemedPurchaseInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
+            <meta-data
+                android:name="proton.android.pass.initializer.AccountListenerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
         </provider>
 
         <provider

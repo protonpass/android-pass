@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases
 
+import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -29,7 +30,7 @@ class ResetAppToDefaultsImpl @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     private val clearPin: ClearPin
 ) : ResetAppToDefaults {
-    override fun invoke() {
+    override suspend fun invoke() {
         preferencesRepository.clearPreferences()
             .onSuccess { PassLogger.d(TAG, "Preferences cleared") }
             .onFailure { PassLogger.w(TAG, it, "Error clearing preferences") }

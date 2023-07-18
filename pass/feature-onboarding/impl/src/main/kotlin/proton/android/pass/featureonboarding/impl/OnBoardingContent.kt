@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureonboarding.impl
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,11 +44,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -55,7 +55,7 @@ import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingContent(
     modifier: Modifier = Modifier,
@@ -79,7 +79,7 @@ fun OnBoardingContent(
         HorizontalPager(
             modifier = Modifier.weight(1f),
             state = pagerState,
-            count = uiState.enabledPages.size
+            pageCount = uiState.enabledPages.size
         ) { page ->
             val pageUiState = if (uiState.enabledPages.contains(Autofill) && page == 0) {
                 autofillPageUiState()
@@ -101,7 +101,8 @@ fun OnBoardingContent(
             pagerState = pagerState,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(16.dp)
+                .padding(16.dp),
+            pageCount = uiState.enabledPages.size
         )
     }
 }
@@ -194,7 +195,7 @@ fun lastPageUiState(): OnBoardingPageUiState =
 class ThemeAndOnBoardingUiStatePreviewProvider :
     ThemePairPreviewProvider<OnBoardingUiState>(OnBoardingUiStatePreviewProvider())
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 fun OnBoardingContentPreview(

@@ -64,5 +64,6 @@ interface UserPreferencesRepository {
     fun setAllowScreenshotsPreference(preference: AllowScreenshotsPreference): Result<Unit>
     fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference>
 
-    fun clearPreferences(): Result<Unit>
+    fun tryClearPreferences(): Result<Unit>
+    suspend fun clearPreferences(): Result<Unit>
 }

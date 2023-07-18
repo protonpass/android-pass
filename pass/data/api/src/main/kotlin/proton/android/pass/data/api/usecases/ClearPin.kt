@@ -19,5 +19,5 @@
 package proton.android.pass.data.api.usecases
 
 interface ClearPin {
-    operator fun invoke()
+    suspend operator fun invoke()
 }

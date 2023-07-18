@@ -22,7 +22,7 @@ import proton.android.pass.data.api.usecases.ClearPin
 import javax.inject.Inject
 
 class TestClearPin @Inject constructor() : ClearPin {
-    override fun invoke() {
+    override suspend fun invoke() {
 
     }
 }

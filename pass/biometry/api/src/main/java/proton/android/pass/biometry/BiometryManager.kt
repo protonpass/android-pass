@@ -18,9 +18,11 @@
 
 package proton.android.pass.biometry
 
+import android.content.Context
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.commonui.api.ClassHolder
 
 interface BiometryManager {
     fun getBiometryStatus(): BiometryStatus
-    fun launch(context: ContextHolder): Flow<BiometryResult>
+    fun launch(contextHolder: ClassHolder<Context>): Flow<BiometryResult>
 }

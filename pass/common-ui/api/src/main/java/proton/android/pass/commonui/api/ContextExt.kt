@@ -16,12 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.inappreview.api
+package proton.android.pass.commonui.api
 
 import android.app.Activity
-import kotlinx.coroutines.flow.Flow
+import android.content.Context
+import android.content.ContextWrapper
 
-interface InAppReviewManager {
-    fun shouldRequestReview(): Flow<Boolean>
-    fun requestReview(activity: Activity)
+fun Context.findActivity(): Activity {
+    var context = this
+    while (context is ContextWrapper) {
+        when (context) {
+            is Activity -> return context
+            else -> context = context.baseContext
+        }
+    }
+    throw IllegalStateException("Context is not an Activity")
 }

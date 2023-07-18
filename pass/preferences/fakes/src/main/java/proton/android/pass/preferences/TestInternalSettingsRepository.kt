@@ -40,6 +40,7 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val pinAttemptsCountFlow = MutableStateFlow(0)
     private val masterPasswordAttemptsCountFlow = MutableStateFlow(0)
     private val itemCreateCountFlow = MutableStateFlow(0)
+    private val inAppReviewTriggeredFlow = MutableStateFlow(false)
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -103,6 +104,13 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun getItemCreateCount(): Flow<Int> = itemCreateCountFlow
+
+    override fun setInAppReviewTriggered(value: Boolean): Result<Unit> {
+        inAppReviewTriggeredFlow.update { value }
+        return Result.success(Unit)
+    }
+
+    override fun getInAppReviewTriggered(): Flow<Boolean> = inAppReviewTriggeredFlow
 
     override fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

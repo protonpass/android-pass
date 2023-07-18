@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
+import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
@@ -77,6 +78,7 @@ class AutofillActivityViewModel @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
+    private val autofillManager: AutofillManager,
     needsBiometricAuth: NeedsBiometricAuth,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -190,6 +192,8 @@ class AutofillActivityViewModel @Inject constructor(
             .onFailure {
                 PassLogger.w(TAG, it, "Error clearing preferences")
             }
+
+        autofillManager.disableAutofill()
 
         closeScreenFlow.update { true }
     }

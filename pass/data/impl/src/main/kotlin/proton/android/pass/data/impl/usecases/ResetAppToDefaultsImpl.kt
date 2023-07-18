@@ -18,17 +18,17 @@
 
 package proton.android.pass.data.impl.usecases
 
-import proton.android.pass.data.api.usecases.ClearAppData
+import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
-class ClearAppDataImpl @Inject constructor(
+class ResetAppToDefaultsImpl @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val clearPin: ClearPin
-) : ClearAppData {
+) : ResetAppToDefaults {
     override fun invoke() {
         preferencesRepository.clearPreferences()
             .onSuccess { PassLogger.d(TAG, "Preferences cleared") }

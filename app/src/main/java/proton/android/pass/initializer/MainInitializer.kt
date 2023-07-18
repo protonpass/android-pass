@@ -46,8 +46,8 @@ import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
 import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
 import proton.android.pass.data.impl.migration.DataMigrationInitializer
 import proton.android.pass.data.impl.sync.SyncInitializer
-import proton.android.pass.preferences.FeatureFlagsPrefetchInitializer
 import proton.android.pass.log.impl.LoggerInitializer
+import proton.android.pass.preferences.FeatureFlagsPrefetchInitializer
 import proton.android.pass.telemetry.impl.startup.TelemetryInitializer
 import proton.android.pass.tracing.impl.SentryInitializer
 
@@ -72,6 +72,7 @@ class MainInitializer : Initializer<Unit> {
         UnAuthSessionFetcherInitializer::class.java,
         UnredeemedPurchaseInitializer::class.java,
         FeatureFlagsPrefetchInitializer::class.java,
+        AccountListenerInitializer::class.java
     )
 
     companion object {

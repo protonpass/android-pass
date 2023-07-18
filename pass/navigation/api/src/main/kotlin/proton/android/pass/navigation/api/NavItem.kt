@@ -27,7 +27,7 @@ open class NavItem(
     private val optionalArgIds: List<OptionalNavArgId> = emptyList(),
     val noHistory: Boolean = false,
     val isTopLevel: Boolean = false,
-    val isBottomsheet: Boolean = false,
+    val navItemType: NavItemType = NavItemType.Screen,
 ) {
     val route: String = run {
         buildString {
@@ -59,4 +59,8 @@ open class NavItem(
                     }
                 }
             )
+}
+
+enum class NavItemType {
+    Screen, Bottomsheet, Dialog
 }

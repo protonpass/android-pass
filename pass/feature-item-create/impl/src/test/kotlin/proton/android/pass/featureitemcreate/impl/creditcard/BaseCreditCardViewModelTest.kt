@@ -122,8 +122,8 @@ class BaseCreditCardViewModelTest {
     }
 
     @Test
-    fun `cannot enter a pin with more than 4 digits`() = runTest {
-        val rightPin = "7894"
+    fun `cannot enter a pin with more than max digits`() = runTest {
+        val rightPin = "1".repeat(BaseCreditCardViewModel.PIN_MAX_LENGTH)
         val tooLongPin = "${rightPin}1"
         val encryptedPin = TestEncryptionContext.encrypt(rightPin)
         instance.onPinChanged(rightPin)
@@ -139,8 +139,8 @@ class BaseCreditCardViewModelTest {
     }
 
     @Test
-    fun `cannot enter a cvv with more than 4 digits`() = runTest {
-        val rightCvv = "7894"
+    fun `cannot enter a cvv with more than max digits`() = runTest {
+        val rightCvv = "1".repeat(BaseCreditCardViewModel.CVV_MAX_LENGTH)
         val tooLongCvv = "${rightCvv}1"
         val encryptedCvv = TestEncryptionContext.encrypt(rightCvv)
         instance.onCVVChanged(rightCvv)

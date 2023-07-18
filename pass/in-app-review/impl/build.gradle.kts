@@ -40,4 +40,5 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.log.api)
+    implementation(projects.pass.preferences.api)
 }

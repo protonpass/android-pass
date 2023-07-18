@@ -19,9 +19,16 @@
 package proton.android.pass
 
 import android.app.Application
+import androidx.lifecycle.Lifecycle
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import dagger.hilt.android.HiltAndroidApp
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.presentation.observe
+import me.proton.core.accountmanager.presentation.onAccountDisabled
+import me.proton.core.accountmanager.presentation.onAccountRemoved
+import proton.android.pass.commonui.api.PassAppLifecycleProvider
+import proton.android.pass.data.api.usecases.ClearAppData
 import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -36,11 +43,33 @@ class App : Application(), ImageLoaderFactory {
     @Inject
     lateinit var preferenceRepository: UserPreferencesRepository
 
+    @Inject
+    lateinit var accountManager: Provider<AccountManager>
+
+    @Inject
+    lateinit var clearAppData: ClearAppData
+
+    @Inject
+    lateinit var passAppLifecycleProvider: PassAppLifecycleProvider
+
     override fun newImageLoader(): ImageLoader = imageLoader.get()
 
     override fun onCreate() {
         super.onCreate()
         MainInitializer.init(this)
         preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+
+        registerAccountManagerCallbacks()
+    }
+
+    private fun registerAccountManagerCallbacks() {
+        accountManager.get().observe(
+            lifecycle = passAppLifecycleProvider.lifecycle,
+            minActiveState = Lifecycle.State.CREATED
+        ).onAccountDisabled {
+            accountManager.get().removeAccount(it.userId)
+        }.onAccountRemoved {
+            clearAppData.invoke()
+        }
     }
 }

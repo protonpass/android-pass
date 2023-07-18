@@ -21,14 +21,22 @@ package proton.android.pass.commonui.api
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
+import java.lang.ref.WeakReference
 
-fun Context.findActivity(): Activity {
+fun Context.findActivity(): Option<Activity> {
     var context = this
     while (context is ContextWrapper) {
         when (context) {
-            is Activity -> return context
+            is Activity -> return context.some()
             else -> context = context.baseContext
         }
     }
-    throw IllegalStateException("Context is not an Activity")
+    return None
 }
+
+fun Context.toClassHolder() = ClassHolder(Some(WeakReference(this)))
+fun Activity.toClassHolder() = ClassHolder(Some(WeakReference(this)))

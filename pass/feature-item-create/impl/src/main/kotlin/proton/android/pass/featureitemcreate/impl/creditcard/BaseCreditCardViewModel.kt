@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.creditcard
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.toPersistentSet
@@ -88,7 +89,7 @@ abstract class BaseCreditCardViewModel(
     }
 
     fun onCVVChanged(value: String) {
-        val sanitisedValue = value.replace(nonDigitRegex, "").take(4)
+        val sanitisedValue = value.replace(nonDigitRegex, "").take(CVV_MAX_LENGTH)
         onUserEditedContent()
         encryptionContextProvider.withEncryptionContext {
             itemContentState.update {
@@ -102,7 +103,7 @@ abstract class BaseCreditCardViewModel(
     }
 
     fun onPinChanged(value: String) {
-        val sanitisedValue = value.replace(nonDigitRegex, "").take(4)
+        val sanitisedValue = value.replace(nonDigitRegex, "").take(PIN_MAX_LENGTH)
         onUserEditedContent()
         encryptionContextProvider.withEncryptionContext {
             itemContentState.update {
@@ -193,5 +194,11 @@ abstract class BaseCreditCardViewModel(
 
     companion object {
         val nonDigitRegex: Regex = "\\D".toRegex()
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+        const val CVV_MAX_LENGTH = 20
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+        const val PIN_MAX_LENGTH = 20
     }
 }

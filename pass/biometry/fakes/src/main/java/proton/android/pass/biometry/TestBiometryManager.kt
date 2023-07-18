@@ -18,9 +18,11 @@
 
 package proton.android.pass.biometry
 
+import android.content.Context
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import proton.android.pass.commonui.api.ClassHolder
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -46,7 +48,7 @@ class TestBiometryManager @Inject constructor() : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus = biometryStatus
 
-    override fun launch(context: ContextHolder): Flow<BiometryResult> {
+    override fun launch(contextHolder: ClassHolder<Context>): Flow<BiometryResult> {
         hasBeenCalled = true
         return resultFlow
     }

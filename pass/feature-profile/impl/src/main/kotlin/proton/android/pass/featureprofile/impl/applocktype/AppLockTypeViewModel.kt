@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureprofile.impl.applocktype
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +34,7 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.biometry.ContextHolder
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
@@ -87,7 +88,7 @@ class AppLockTypeViewModel @Inject constructor(
         return preferences
     }
 
-    fun onChanged(newPreference: AppLockTypePreference, contextHolder: ContextHolder) =
+    fun onChanged(newPreference: AppLockTypePreference, contextHolder: ClassHolder<Context>) =
         viewModelScope.launch {
             val oldPreference = state.value.selected
             if (oldPreference == newPreference) {
@@ -131,7 +132,7 @@ class AppLockTypeViewModel @Inject constructor(
             }
         }
 
-    fun onPinSuccessfullyEntered(contextHolder: ContextHolder) {
+    fun onPinSuccessfullyEntered(contextHolder: ClassHolder<Context>) {
         val newPreference = newPreferenceState.value ?: return
         when (newPreference) {
             None -> onPinAuthUnSet()
@@ -152,7 +153,7 @@ class AppLockTypeViewModel @Inject constructor(
     }
 
     private fun openBiometrics(
-        contextHolder: ContextHolder,
+        contextHolder: ClassHolder<Context>,
         onSuccess: suspend () -> Unit,
         onError: suspend (BiometryResult.Error) -> Unit
     ) = viewModelScope.launch {

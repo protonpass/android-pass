@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureauth.impl
 
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,18 +37,18 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.AppLockState
+import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -89,7 +90,7 @@ class AuthViewModel @Inject constructor(
             initialValue = AuthState.Initial
         )
 
-    fun init(context: ContextHolder) = viewModelScope.launch {
+    fun init(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
         when (preferenceRepository.getAppLockTypePreference().first()) {
             AppLockTypePreference.Biometrics -> when (biometryManager.getBiometryStatus()) {
                 BiometryStatus.CanAuthenticate -> {
@@ -100,7 +101,7 @@ class AuthViewModel @Inject constructor(
                         eventFlow.update { AuthEvent.Success }
                     } else {
                         // If there is biometry available, and the user has it enabled, perform auth
-                        openBiometrics(context)
+                        openBiometrics(contextHolder)
                     }
                 }
 
@@ -197,9 +198,9 @@ class AuthViewModel @Inject constructor(
         eventFlow.update { AuthEvent.Unknown }
     }
 
-    private suspend fun openBiometrics(context: ContextHolder) {
+    private suspend fun openBiometrics(contextHolder: ClassHolder<Context>) {
         PassLogger.i(TAG, "Launching Biometry")
-        biometryManager.launch(context)
+        biometryManager.launch(contextHolder)
             .collect { result ->
                 PassLogger.i(TAG, "Biometry result: $result")
                 when (result) {

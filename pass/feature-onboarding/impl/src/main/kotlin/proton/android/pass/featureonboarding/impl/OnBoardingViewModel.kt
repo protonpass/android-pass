@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureonboarding.impl
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +36,7 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.biometry.ContextHolder
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
@@ -93,7 +94,7 @@ class OnBoardingViewModel @Inject constructor(
             BiometryStatus.NotEnrolled -> false
         }
 
-    fun onMainButtonClick(page: OnBoardingPageName, contextHolder: ContextHolder) {
+    fun onMainButtonClick(page: OnBoardingPageName, contextHolder: ClassHolder<Context>) {
         when (page) {
             Autofill -> onEnableAutofill()
             Fingerprint -> onEnableFingerprint(contextHolder)
@@ -129,7 +130,7 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    private fun onEnableFingerprint(contextHolder: ContextHolder) {
+    private fun onEnableFingerprint(contextHolder: ClassHolder<Context>) {
         viewModelScope.launch {
             biometryManager.launch(contextHolder)
                 .collect { result ->

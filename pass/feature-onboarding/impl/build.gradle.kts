@@ -48,8 +48,6 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)

@@ -28,6 +28,7 @@ import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.CheckPin
+import proton.android.pass.data.api.usecases.ClearAppData
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
@@ -90,6 +91,9 @@ import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
 import proton.android.pass.data.impl.usecases.CheckMasterPasswordImpl
 import proton.android.pass.data.impl.usecases.CheckPinImpl
+import proton.android.pass.data.impl.usecases.ClearAppDataImpl
+import proton.android.pass.data.impl.usecases.ClearPin
+import proton.android.pass.data.impl.usecases.ClearPinImpl
 import proton.android.pass.data.impl.usecases.ClearTrashImpl
 import proton.android.pass.data.impl.usecases.ClearUserDataImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
@@ -336,4 +340,10 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCreatePin(impl: CreatePinImpl): CreatePin
+
+    @Binds
+    abstract fun bindClearPin(impl: ClearPinImpl): ClearPin
+
+    @Binds
+    abstract fun bindClearData(impl: ClearAppDataImpl): ClearAppData
 }

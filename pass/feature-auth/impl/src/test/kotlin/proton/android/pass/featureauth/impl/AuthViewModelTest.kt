@@ -29,7 +29,7 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStartupError
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.biometry.ContextHolder
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.biometry.TestStoreAuthSuccessful
 import proton.android.pass.common.api.AppDispatchers
@@ -91,7 +91,7 @@ class AuthViewModelTest {
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Success)
 
-        viewModel.init(ContextHolder(None))
+        viewModel.init(ClassHolder(None))
         viewModel.state.test {
             assertThat(awaitItem().event).isEqualTo(AuthEvent.Success)
         }
@@ -105,7 +105,7 @@ class AuthViewModelTest {
         // Set to failed so we can check it is not called
         biometryManager.emitResult(BiometryResult.Failed)
 
-        viewModel.init(ContextHolder(None))
+        viewModel.init(ClassHolder(None))
         viewModel.state.test {
             assertThat(awaitItem().event).isEqualTo(AuthEvent.Success)
         }
@@ -117,7 +117,7 @@ class AuthViewModelTest {
     fun `unavailable biometry leads to auth success`() = runTest {
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
 
-        viewModel.init(ContextHolder(None))
+        viewModel.init(ClassHolder(None))
         viewModel.state.test {
             assertThat(awaitItem().event).isEqualTo(AuthEvent.Success)
         }
@@ -128,7 +128,7 @@ class AuthViewModelTest {
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.setBiometryStatus(BiometryStatus.NotEnrolled)
 
-        viewModel.init(ContextHolder(None))
+        viewModel.init(ClassHolder(None))
         viewModel.state.test {
             assertThat(awaitItem().event).isEqualTo(AuthEvent.Success)
         }
@@ -140,7 +140,7 @@ class AuthViewModelTest {
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Canceled))
 
-        viewModel.init(ContextHolder(None))
+        viewModel.init(ClassHolder(None))
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(
                 AuthState(
@@ -158,7 +158,7 @@ class AuthViewModelTest {
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Unknown))
 
-        viewModel.init(ContextHolder(None))
+        viewModel.init(ClassHolder(None))
         viewModel.state.test {
             assertThat(awaitItem().event).isEqualTo(AuthEvent.Failed)
         }
@@ -170,7 +170,7 @@ class AuthViewModelTest {
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
 
-        viewModel.init(ContextHolder(None))
+        viewModel.init(ClassHolder(None))
         viewModel.state.test {
             assertThat(awaitItem().event).isEqualTo(AuthEvent.Failed)
         }
@@ -266,7 +266,7 @@ class AuthViewModelTest {
         preferenceRepository.setAppLockState(AppLockState.Enabled)
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.Canceled))
-        viewModel.init(ContextHolder(None))
+        viewModel.init(ClassHolder(None))
     }
 
     companion object {

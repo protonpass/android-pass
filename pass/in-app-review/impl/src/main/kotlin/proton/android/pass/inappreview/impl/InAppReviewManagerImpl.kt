@@ -22,25 +22,50 @@ import android.app.Activity
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
-class InAppReviewManagerImpl @Inject constructor() : InAppReviewManager {
+class InAppReviewManagerImpl @Inject constructor(
+    private val internalSettingsRepository: InternalSettingsRepository
+) : InAppReviewManager {
+
+    override fun shouldRequestReview(): Flow<Boolean> = combine(
+        internalSettingsRepository.getItemCreateCount(),
+        internalSettingsRepository.getInAppReviewTriggered()
+    ) { itemCreateCount, inAppReviewTriggered ->
+        when {
+            !inAppReviewTriggered -> itemCreateCount == ITEM_CREATED_TRIGGER
+            else -> false
+        }
+    }
 
     override fun requestReview(activity: Activity) {
         val manager = ReviewManagerFactory.create(activity)
         manager.requestReviewFlow()
             .addOnSuccessListener { reviewInfo ->
                 manager.launchReviewFlow(activity, reviewInfo)
+                    .addOnFailureListener { exception ->
+                        PassLogger.w(TAG, exception, "Review flow failed")
+                    }
+                    .addOnSuccessListener {
+                        PassLogger.i(TAG, "Review flow completed")
+                    }
             }
             .addOnFailureListener { exception ->
                 @ReviewErrorCode val reviewErrorCode = (exception as ReviewException).errorCode
-                PassLogger.w(TAG, "reviewErrorCode=$reviewErrorCode")
+                PassLogger.w(TAG, exception, "reviewErrorCode=$reviewErrorCode")
+            }
+            .addOnCompleteListener {
+                internalSettingsRepository.setInAppReviewTriggered(true)
             }
     }
 
     companion object {
         private const val TAG = "InAppReviewManagerImpl"
+        private const val ITEM_CREATED_TRIGGER = 10
     }
 }

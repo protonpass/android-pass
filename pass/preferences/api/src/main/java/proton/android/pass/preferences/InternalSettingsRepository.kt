@@ -21,6 +21,7 @@ package proton.android.pass.preferences
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
 
+@Suppress("TooManyFunctions", "ComplexInterface")
 interface InternalSettingsRepository {
 
     fun setLastUnlockedTime(time: Long): Result<Unit>
@@ -49,6 +50,9 @@ interface InternalSettingsRepository {
 
     fun setItemCreateCount(count: Int): Result<Unit>
     fun getItemCreateCount(): Flow<Int>
+
+    fun setInAppReviewTriggered(value: Boolean): Result<Unit>
+    fun getInAppReviewTriggered(): Flow<Boolean>
 
     fun clearSettings(): Result<Unit>
 }

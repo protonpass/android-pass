@@ -23,6 +23,7 @@ import androidx.navigation.NavType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.SortingTypeNavArgId
 import proton.android.pass.navigation.api.bottomSheet
 
@@ -39,7 +40,7 @@ object SortingLocationNavArgId : NavArgId {
 object SortingBottomsheet : NavItem(
     baseRoute = "sorting/bottomsheet",
     navArgIds = listOf(SortingTypeNavArgId, SortingLocationNavArgId),
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 ) {
     fun createNavRoute(sortingType: SearchSortingType, location: SortingLocation): String =
         "$baseRoute/${sortingType.name}/${location.name}"

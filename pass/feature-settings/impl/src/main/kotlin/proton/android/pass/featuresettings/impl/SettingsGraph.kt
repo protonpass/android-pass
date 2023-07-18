@@ -22,6 +22,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featuresettings.impl.primaryvault.SelectPrimaryVaultBottomSheet
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
@@ -29,22 +30,22 @@ object Settings : NavItem(baseRoute = "settings")
 object LogView : NavItem(baseRoute = "log/view")
 object ThemeSelector : NavItem(
     baseRoute = "theme/bottomsheet",
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 )
 
 object ClipboardSettings : NavItem(
     baseRoute = "clipboard/settings/bottomsheet",
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 )
 
 object ClearClipboardOptions : NavItem(
     baseRoute = "clipboard/clearOptions/bottomsheet",
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 )
 
 object SelectPrimaryVault : NavItem(
     baseRoute = "vault/primary/bottomsheet",
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 )
 
 sealed interface SettingsNavigation {

@@ -21,9 +21,13 @@ package proton.android.pass.featurepassword.impl.dialog.separator
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.dialog
 
-object WordSeparatorDialog : NavItem(baseRoute = "password/create/wordseparator")
+object WordSeparatorDialog : NavItem(
+    baseRoute = "password/create/wordseparator",
+    navItemType = NavItemType.Dialog
+)
 
 fun NavGraphBuilder.wordSeparatorDialog(
     onNavigate: (GeneratePasswordNavigation) -> Unit

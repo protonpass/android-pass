@@ -22,6 +22,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
@@ -29,7 +30,7 @@ object Auth : NavItem(baseRoute = "auth", noHistory = true)
 object EnterPin : NavItem(
     baseRoute = "pin/enter/bottomsheet",
     noHistory = true,
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 )
 
 sealed interface AuthNavigation {

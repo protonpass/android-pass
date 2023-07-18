@@ -25,6 +25,7 @@ import proton.android.pass.featurepassword.impl.dialog.mode.passwordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.wordSeparatorDialog
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 
 object GeneratePasswordBottomsheetMode : NavArgId {
@@ -40,7 +41,7 @@ enum class GeneratePasswordBottomsheetModeValue {
 object GeneratePasswordBottomsheet : NavItem(
     baseRoute = "password/create/bottomsheet",
     navArgIds = listOf(GeneratePasswordBottomsheetMode),
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 ) {
     fun buildRoute(mode: GeneratePasswordBottomsheetModeValue) =
         "$baseRoute/${mode.name}"

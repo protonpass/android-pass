@@ -252,9 +252,16 @@ class LauncherViewModel @Inject constructor(
                 .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
         }
 
-        // If there are no accounts left, disable autofill
+        // If there are no accounts left, disable autofill and clear preferences
         val allDisabled = accounts.all { it.isDisabled() }
         if (accounts.isEmpty() || allDisabled) {
+            preferenceRepository.clearPreferences()
+                .flatMap { internalSettingsRepository.clearSettings() }
+                .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
+                .onFailure {
+                    PassLogger.w(TAG, it, "Error clearing preferences")
+                }
+
             autofillManager.disableAutofill()
         }
     }

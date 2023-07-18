@@ -39,7 +39,8 @@ object PreferencesProviderModule {
         @ApplicationContext context: Context
     ): DataStore<UserPreferences> =
         DataStoreFactory.create(
-            serializer = UserPreferencesSerializer
+            serializer = UserPreferencesSerializer,
+            migrations = listOf(UserPreferenceMigration.MIGRATION_1)
         ) {
             context.dataStoreFile("user_preferences.pb")
         }

@@ -21,7 +21,6 @@ package proton.android.pass.autofill.ui.autosave
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.autofill.AutofillManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
@@ -74,7 +73,6 @@ class AutoSaveActivity : FragmentActivity() {
                         AutosaveNavigation.Upgrade -> { viewModel.upgrade() }
                         AutosaveNavigation.ForceSignOut -> {
                             viewModel.signOut()
-                            disableAutofill()
                         }
                     }
                 }
@@ -117,11 +115,6 @@ class AutoSaveActivity : FragmentActivity() {
                 ?: AllowScreenshotsPreference.Disabled
         }
         setSecureMode(setting)
-    }
-
-    private fun disableAutofill() {
-        val autofillManager = getSystemService(AutofillManager::class.java)
-        autofillManager.disableAutofillServices()
     }
 
     companion object {

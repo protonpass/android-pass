@@ -171,6 +171,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> =
         allowScreenshotsPreference
 
-    override fun clearPreferences(): Result<Unit> = Result.success(Unit)
+    override fun tryClearPreferences(): Result<Unit> = Result.success(Unit)
+
+    override suspend fun clearPreferences(): Result<Unit> = Result.success(Unit)
 
 }

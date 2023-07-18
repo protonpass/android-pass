@@ -33,6 +33,7 @@ dependencies {
 
     implementation(libs.google.inAppUpdate)
     implementation(libs.core.utilKotlin)
+    implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

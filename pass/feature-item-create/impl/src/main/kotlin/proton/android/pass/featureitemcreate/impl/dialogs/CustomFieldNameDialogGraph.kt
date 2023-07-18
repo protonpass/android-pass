@@ -25,6 +25,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.Custo
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.navigation.api.dialog
 
@@ -35,14 +36,16 @@ object CustomFieldTypeNavArgId : NavArgId {
 
 object CustomFieldNameDialog : NavItem(
     baseRoute = "item/create/customfield/add/dialog",
-    navArgIds = listOf(CustomFieldTypeNavArgId)
+    navArgIds = listOf(CustomFieldTypeNavArgId),
+    navItemType = NavItemType.Dialog
 ) {
     fun buildRoute(type: CustomFieldType) = "$baseRoute/${type.name}"
 }
 
 object EditCustomFieldNameDialog : NavItem(
     baseRoute = "item/create/customfield/edit/dialog",
-    navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId)
+    navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
+    navItemType = NavItemType.Dialog
 ) {
     fun buildRoute(index: Int, currentValue: String) =
         "$baseRoute/$index/${NavParamEncoder.encode(currentValue)}"

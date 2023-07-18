@@ -42,11 +42,11 @@ import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.BiometryFailedToStartError
-import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.ErrorPerformingOperation
 import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.FingerprintLockEnabled
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
+import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -57,7 +57,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class OnBoardingViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val biometryManager: BiometryManager,
-    private val preferenceRepository: UserPreferencesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -162,8 +162,10 @@ class OnBoardingViewModel @Inject constructor(
 
     private fun onBiometrySuccess() {
         viewModelScope.launch {
-            saveHasAuthenticatedFlag()
-            saveBiometricLockStateFlag()
+            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+            userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
+            userPreferencesRepository.setAppLockState(AppLockState.Enabled)
+            snackbarDispatcher(FingerprintLockEnabled)
             _onBoardingUiState.update { it.copy(selectedPage = it.selectedPage + 1) }
         }
     }
@@ -180,24 +182,8 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    private fun saveHasAuthenticatedFlag() {
-        preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-    }
-
-    private suspend fun saveBiometricLockStateFlag() {
-        PassLogger.d(TAG, "Changing BiometricLock to ${AppLockState.Enabled}")
-        preferenceRepository.setAppLockState(AppLockState.Enabled)
-            .onSuccess {
-                snackbarDispatcher(FingerprintLockEnabled)
-            }
-            .onFailure {
-                PassLogger.e(TAG, it, "Error setting BiometricLockState")
-                snackbarDispatcher(ErrorPerformingOperation)
-            }
-    }
-
     private fun saveOnBoardingCompleteFlag() {
-        preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
+        userPreferencesRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
             .onSuccess {
                 _onBoardingUiState.update { it.copy(isCompleted = true) }
             }

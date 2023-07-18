@@ -27,6 +27,7 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.toPath
 import proton.pass.domain.ItemId
@@ -64,7 +65,7 @@ object MigrateSelectVault : NavItem(
     baseRoute = "migrate/select",
     navArgIds = listOf(CommonNavArgId.ShareId, MigrateModeArg),
     optionalArgIds = listOf(CommonOptionalNavArgId.ItemId),
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 ) {
     fun createNavRouteForMigrateAll(shareId: ShareId) =
         "$baseRoute/${shareId.id}/${MigrateModeValue.AllVaultItems.name}"
@@ -82,7 +83,7 @@ object MigrateConfirmVault : NavItem(
     baseRoute = "migrate/confirm",
     navArgIds = listOf(CommonNavArgId.ShareId, MigrateModeArg, DestinationShareNavArgId),
     optionalArgIds = listOf(CommonOptionalNavArgId.ItemId),
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 ) {
     fun createNavRouteForMigrateAll(shareId: ShareId, destShareId: ShareId) = buildString {
         append("$baseRoute/${shareId.id}/${MigrateModeValue.AllVaultItems.name}/${destShareId.id}")

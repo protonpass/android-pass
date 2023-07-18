@@ -32,6 +32,7 @@ import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.ShowUpgradeNavArgId
 import proton.android.pass.navigation.api.bottomSheet
@@ -70,7 +71,7 @@ object CreateAliasBottomSheet : NavItem(
     baseRoute = "alias/create/bottomsheet",
     navArgIds = listOf(CommonOptionalNavArgId.ShareId, ShowUpgradeNavArgId),
     optionalArgIds = listOf(AliasOptionalNavArgId.Title, IsEditAliasNavArg),
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 ) {
     fun createNavRoute(
         shareId: ShareId,

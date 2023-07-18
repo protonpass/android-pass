@@ -23,6 +23,7 @@ import androidx.navigation.NavType
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.pass.domain.ShareId
 
@@ -34,7 +35,7 @@ object SelectedVaultArg : NavArgId {
 object SelectVaultBottomsheet : NavItem(
     baseRoute = "vault/select/bottomsheet",
     navArgIds = listOf(SelectedVaultArg),
-    isBottomsheet = true
+    navItemType = NavItemType.Bottomsheet
 ) {
     fun createNavRoute(selectedVault: ShareId) = "$baseRoute/${selectedVault.id}"
 }

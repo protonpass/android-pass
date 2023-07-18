@@ -35,6 +35,7 @@ import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
@@ -54,7 +55,8 @@ import javax.inject.Inject
 class AppLockTypeViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val clearPin: ClearPin
 ) : ViewModel() {
     private val eventState: MutableStateFlow<AppLockTypeEvent> =
         MutableStateFlow(AppLockTypeEvent.Unknown)
@@ -208,6 +210,7 @@ class AppLockTypeViewModel @Inject constructor(
             userPreferencesRepository.setAppLockState(AppLockState.Disabled)
             userPreferencesRepository.setAppLockTypePreference(None)
             snackbarDispatcher(ProfileSnackbarMessage.PinLockDisabled)
+            clearPin()
             eventState.update { AppLockTypeEvent.Dismiss }
         }
     }

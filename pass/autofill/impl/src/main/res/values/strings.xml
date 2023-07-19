@@ -13,7 +13,7 @@
     <!-- Placeholder will contain the domain / app name we are trying to autofill -->
     <string name="autofill_suggestions_for_placeholder">Suggestions for %s</string>
 
-    <string name="autofill_associate_web_app_name_dialog_title">Use login details from \"%s"\ on this app or website.</string>
+    <string name="autofill_associate_web_app_name_dialog_title">Use login details from \"%s\" on this app or website.</string>
     <string name="autofill_dialog_associate_and_autofill">Use always</string>
     <string name="autofill_dialog_just_autofill">Use once</string>
     <string name="autofill_dialog_cancel">Cancel</string>

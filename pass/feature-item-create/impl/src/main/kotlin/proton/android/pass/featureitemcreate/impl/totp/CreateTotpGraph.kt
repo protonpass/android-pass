@@ -19,11 +19,6 @@
 package proton.android.pass.featureitemcreate.impl.totp
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.common.api.None
@@ -82,12 +77,8 @@ fun NavGraphBuilder.createTotpGraph(
     composable(CameraTotp) { backStackEntry ->
         val totpIndexField =
             backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpIndexField.key)
-        var uriFound: String? by remember { mutableStateOf(null) }
-        uriFound?.let { uri ->
-            LaunchedEffect(Unit) { onSuccess(uri, totpIndexField) }
-        }
         CameraPreviewTotp(
-            onUriReceived = { uri -> uriFound = uri },
+            onUriReceived = { uri -> onSuccess(uri, totpIndexField) },
             onOpenImagePicker = { onOpenImagePicker(totpIndexField) },
             onClosePreview = onCloseTotp
         )

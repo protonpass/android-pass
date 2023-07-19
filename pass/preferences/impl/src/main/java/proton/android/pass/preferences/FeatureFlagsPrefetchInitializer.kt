@@ -34,6 +34,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.onAccountState
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.FeatureFlagRepository
+import proton.android.pass.log.api.PassLogger
 
 class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
 
@@ -54,8 +55,12 @@ class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
                 val featureFlags: Set<String> = FeatureFlag.values()
                     .mapNotNull { it.key }
                     .toSet()
-                if (featureFlags.isNotEmpty()) {
-                    featureFlagManager.refresh()
+                runCatching {
+                    if (featureFlags.isNotEmpty()) {
+                        featureFlagManager.refresh()
+                    }
+                }.onFailure {
+                    PassLogger.w(TAG, it, "Failed to refresh feature flags")
                 }
             }
             .launchIn(passAppLifecycleProvider.lifecycle.coroutineScope)
@@ -69,5 +74,9 @@ class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
         fun featureFlagManager(): FeatureFlagRepository
+    }
+
+    companion object {
+        private const val TAG = "FeatureFlagsPrefetchInitializer"
     }
 }

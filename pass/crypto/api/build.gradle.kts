@@ -9,6 +9,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 dependencies {
+    implementation(libs.kotlinx.datetime)
     implementation(libs.core.key.domain)
     implementation(libs.core.user.domain)
 

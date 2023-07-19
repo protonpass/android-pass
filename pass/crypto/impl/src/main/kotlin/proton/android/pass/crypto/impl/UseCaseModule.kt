@@ -22,15 +22,19 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.crypto.api.usecases.AcceptInvite
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemKey
+import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.crypto.api.usecases.UpdateVault
+import proton.android.pass.crypto.impl.usecases.AcceptInviteImpl
 import proton.android.pass.crypto.impl.usecases.CreateItemImpl
 import proton.android.pass.crypto.impl.usecases.CreateVaultImpl
+import proton.android.pass.crypto.impl.usecases.EncryptInviteKeysImpl
 import proton.android.pass.crypto.impl.usecases.MigrateItemImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemKeyImpl
@@ -61,5 +65,11 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindMigrateItem(impl: MigrateItemImpl): MigrateItem
+
+    @Binds
+    abstract fun bindShareVault(impl: EncryptInviteKeysImpl): EncryptInviteKeys
+
+    @Binds
+    abstract fun bindAcceptInvite(impl: AcceptInviteImpl): AcceptInvite
 
 }

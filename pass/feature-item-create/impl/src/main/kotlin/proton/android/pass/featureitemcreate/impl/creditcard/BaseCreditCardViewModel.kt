@@ -196,9 +196,9 @@ abstract class BaseCreditCardViewModel(
         val nonDigitRegex: Regex = "\\D".toRegex()
 
         @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-        const val CVV_MAX_LENGTH = 20
+        const val CVV_MAX_LENGTH = 4
 
         @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-        const val PIN_MAX_LENGTH = 20
+        const val PIN_MAX_LENGTH = 12
     }
 }

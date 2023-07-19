@@ -521,7 +521,7 @@ class LoginDetailViewModel @Inject constructor(
         .catch { e ->
             PassLogger.w(TAG, e, "Error observing totp")
             snackbarDispatcher(DetailSnackbarMessages.GenerateTotpError)
-            emit(TotpUiState.Limited)
+            emit(TotpUiState.Hidden)
         }
 
     private suspend fun getAliasForItem(item: ItemType.Login): Option<LinkedAliasItem> {

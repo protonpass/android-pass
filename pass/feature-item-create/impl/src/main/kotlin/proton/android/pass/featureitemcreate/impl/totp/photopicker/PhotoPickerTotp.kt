@@ -27,8 +27,16 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.google.zxing.RGBLuminanceSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import proton.android.pass.featureitemcreate.impl.totp.imageprocessing.ZxingWrapper
 import proton.android.pass.log.api.PassLogger
 import java.io.FileNotFoundException
@@ -42,31 +50,44 @@ fun PhotoPickerTotpScreen(
     onPhotoPickerDismissed: () -> Unit
 ) {
     val context = LocalContext.current
-    val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) { uri ->
-        if (uri != null) {
-            try {
-                val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    ImageDecoder.decodeBitmap(
-                        ImageDecoder.createSource(context.contentResolver, uri)
-                    ).copy(Bitmap.Config.ARGB_8888, false)
-                } else {
-                    MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
-                }
-                val pixels = IntArray(bitmap.width * bitmap.height)
-                bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
-                val source = RGBLuminanceSource(bitmap.width, bitmap.height, pixels)
-                ZxingWrapper.tryReadingQrCode(source)
-                    .onSuccess { onQrReceived(it) }
-                    .onFailure { onQrNotDetected() }
-            } catch (e: IOException) {
-                PassLogger.w(TAG, e, "Error decoding bitmap")
-                onQrNotDetected()
-            } catch (e: FileNotFoundException) {
-                PassLogger.w(TAG, e, "File not found")
-                onQrNotDetected()
-            }
+    var totpUriResult by remember { mutableStateOf<TotpUriResult>(TotpUriResult.NotStarted) }
+    val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) {
+        totpUriResult = if (it != null) {
+            TotpUriResult.Success(it)
         } else {
-            onPhotoPickerDismissed()
+            TotpUriResult.Cancelled
+        }
+    }
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(totpUriResult) {
+        when (val result = totpUriResult) {
+            TotpUriResult.Cancelled -> onPhotoPickerDismissed()
+            TotpUriResult.NotStarted -> {}
+            is TotpUriResult.Success -> {
+                scope.launch(Dispatchers.Default) {
+                    try {
+                        val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            ImageDecoder.decodeBitmap(
+                                ImageDecoder.createSource(context.contentResolver, result.uri)
+                            ).copy(Bitmap.Config.ARGB_8888, false)
+                        } else {
+                            MediaStore.Images.Media.getBitmap(context.contentResolver, result.uri)
+                        }
+                        val pixels = IntArray(bitmap.width * bitmap.height)
+                        bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+                        val source = RGBLuminanceSource(bitmap.width, bitmap.height, pixels)
+                        ZxingWrapper.tryReadingQrCode(source)
+                            .onSuccess { withContext(Dispatchers.Main) { onQrReceived(it) } }
+                            .onFailure { withContext(Dispatchers.Main) { onQrNotDetected() } }
+                    } catch (e: IOException) {
+                        PassLogger.w(TAG, e, "Error decoding bitmap")
+                        withContext(Dispatchers.Main) { onQrNotDetected() }
+                    } catch (e: FileNotFoundException) {
+                        PassLogger.w(TAG, e, "File not found")
+                        withContext(Dispatchers.Main) { onQrNotDetected() }
+                    }
+                }
+            }
         }
     }
 

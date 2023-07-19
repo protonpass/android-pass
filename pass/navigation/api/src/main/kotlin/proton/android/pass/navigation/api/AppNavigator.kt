@@ -46,7 +46,6 @@ class AppNavigator(
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
         val destinationRoute = route ?: destination.route
         // Discard duplicated nav events
-        PassLogger.d(TAG, "State ${navController.currentBackStackEntry?.lifecycle?.currentState}")
         if (!lifecycleIsResumed() && destination.navItemType == NavItemType.Screen) {
             PassLogger.d(
                 TAG,
@@ -129,6 +128,7 @@ class AppNavigator(
             )
             return
         }
+        PassLogger.i(TAG, "Navigating up with result")
         navController.previousBackStackEntry
             ?.savedStateHandle
             ?.set(key, value)
@@ -143,6 +143,7 @@ class AppNavigator(
             )
             return
         }
+        PassLogger.i(TAG, "Navigating up with results")
         navController.previousBackStackEntry
             ?.savedStateHandle
             ?.let {
@@ -158,8 +159,14 @@ class AppNavigator(
      *
      * This is used to de-duplicate navigation events.
      */
-    private fun lifecycleIsResumed() =
-        navController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED
+    private fun lifecycleIsResumed() = navController.currentBackStackEntry
+        ?.lifecycle
+        ?.currentState
+        ?.let {
+            PassLogger.d(TAG, "State $it")
+            it == Lifecycle.State.RESUMED
+        }
+        ?: false
 
     companion object {
         private const val TAG = "AppNavigator"

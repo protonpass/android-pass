@@ -21,18 +21,22 @@ package proton.android.pass.featureauth.impl
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
-import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 
 @Composable
 fun PinInput(
@@ -47,12 +51,12 @@ fun PinInput(
         is PinError.PinEmpty -> stringResource(R.string.auth_error_pin_cannot_be_empty)
         else -> ""
     }
+    val focusRequester = remember { FocusRequester() }
     ProtonTextField(
-        modifier = modifier,
-        textFieldModifier = Modifier,
+        modifier = modifier.focusRequester(focusRequester),
         editable = data?.isLoadingState?.value() != true,
         value = (state as? EnterPinUiState.Data)?.pin.orEmpty(),
-        textStyle = PassTypography.hero,
+        textStyle = PassTypography.hero.copy(textAlign = TextAlign.Center),
         keyboardOptions = KeyboardOptions(
             autoCorrect = false,
             keyboardType = KeyboardType.NumberPassword,
@@ -60,11 +64,11 @@ fun PinInput(
         ),
         isError = error is PinError.PinEmpty,
         errorMessage = errorMessage,
-        placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(R.string.enter_pin)) },
         visualTransformation = PasswordVisualTransformation(),
         onChange = onPinChanged,
         onDoneClick = onPinSubmit
     )
+    RequestFocusLaunchedEffect(focusRequester)
 }
 
 @Preview

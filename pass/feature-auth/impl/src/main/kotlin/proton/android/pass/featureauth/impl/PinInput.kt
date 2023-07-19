@@ -19,7 +19,6 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -30,12 +29,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 
 @Composable
@@ -69,16 +64,4 @@ fun PinInput(
         onDoneClick = onPinSubmit
     )
     RequestFocusLaunchedEffect(focusRequester)
-}
-
-@Preview
-@Composable
-fun PinInputPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            PinInput(state = EnterPinUiState.NotInitialised, onPinChanged = {}, onPinSubmit = {})
-        }
-    }
 }

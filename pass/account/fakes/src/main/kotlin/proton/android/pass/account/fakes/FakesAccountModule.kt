@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.account.api.AccountOrchestrators
@@ -50,4 +51,9 @@ abstract class FakesAccountModule {
     abstract fun bindDeviceSettingsRepository(
         impl: TestDeviceSettingsRepository
     ): DeviceSettingsRepository
+
+    @Binds
+    abstract fun bindPublicAddressRepository(
+        impl: TestPublicAddressRepository
+    ): PublicAddressRepository
 }

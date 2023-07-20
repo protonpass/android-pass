@@ -67,7 +67,7 @@ abstract class UseCaseModule {
     abstract fun bindMigrateItem(impl: MigrateItemImpl): MigrateItem
 
     @Binds
-    abstract fun bindShareVault(impl: EncryptInviteKeysImpl): EncryptInviteKeys
+    abstract fun bindEncryptInviteKeys(impl: EncryptInviteKeysImpl): EncryptInviteKeys
 
     @Binds
     abstract fun bindAcceptInvite(impl: AcceptInviteImpl): AcceptInvite

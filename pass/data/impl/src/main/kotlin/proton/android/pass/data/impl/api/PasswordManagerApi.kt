@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import proton.android.pass.data.impl.requests.CreateAliasRequest
+import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
@@ -32,6 +33,7 @@ import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
+import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.CreateItemAliasResponse
 import proton.android.pass.data.impl.responses.CreateItemResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
@@ -215,4 +217,11 @@ interface PasswordManagerApi : BaseRetrofitApi {
     // Feature flags
     @GET("/feature/v2/frontend")
     suspend fun getFeatureFlags(): FeatureFlagsResponse
+
+    // Sharing
+    @POST("$PREFIX/share/{shareId}/invite")
+    suspend fun inviteUser(
+        @Query("shareId") shareId: String,
+        @Body request: CreateInviteRequest
+    ): CodeOnlyResponse
 }

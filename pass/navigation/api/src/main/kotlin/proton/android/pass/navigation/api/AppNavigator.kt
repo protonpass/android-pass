@@ -24,15 +24,13 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import proton.android.pass.log.api.PassLogger
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun rememberAppNavigator(
-    bottomSheetNavigator: BottomSheetNavigator = rememberBottomSheetNavigator(),
+    bottomSheetNavigator: PassBottomSheetNavigator,
     navController: NavHostController = rememberAnimatedNavController(bottomSheetNavigator),
 ): AppNavigator = remember(navController) { AppNavigator(navController, bottomSheetNavigator) }
 
@@ -40,7 +38,7 @@ fun rememberAppNavigator(
 @Stable
 class AppNavigator(
     val navController: NavHostController,
-    val bottomSheetNavigator: BottomSheetNavigator
+    val passBottomSheetNavigator: PassBottomSheetNavigator
 ) {
 
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {

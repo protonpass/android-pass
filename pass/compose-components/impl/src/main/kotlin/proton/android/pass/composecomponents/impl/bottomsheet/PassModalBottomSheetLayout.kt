@@ -20,17 +20,17 @@ package proton.android.pass.composecomponents.impl.bottomsheet
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetDefaults
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.contentColorFor
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.compositeOver
-import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.navigation.api.PassBottomSheetNavigator
 
 @ExperimentalMaterialApi
 @Composable
@@ -55,19 +55,21 @@ fun PassModalBottomSheetLayout(
     )
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
+@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun PassModalBottomSheetLayout(
-    bottomSheetNavigator: BottomSheetNavigator,
+    bottomSheetNavigator: PassBottomSheetNavigator,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     ModalBottomSheetLayout(
+        sheetState = bottomSheetNavigator.sheetState,
+        sheetContent = bottomSheetNavigator.sheetContent,
         modifier = modifier,
-        bottomSheetNavigator = bottomSheetNavigator,
         sheetShape = PassTheme.shapes.bottomsheetShape,
-        sheetBackgroundColor = PassTheme.colors.backgroundWeak
-            .compositeOver(PassTheme.colors.backgroundNorm),
+        sheetElevation = ModalBottomSheetDefaults.Elevation,
+        sheetBackgroundColor = PassTheme.colors.backgroundWeak,
+        sheetContentColor = contentColorFor(PassTheme.colors.backgroundWeak),
         scrimColor = PassTheme.colors.backdrop,
         content = content
     )

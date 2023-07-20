@@ -53,9 +53,7 @@ class InviteToVaultImpl @Inject constructor(
         shareId: ShareId
     ): Result<Unit> {
         val id = userId ?: run {
-            println("BEFORE: ${System.currentTimeMillis()}")
             val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
-            println("AFTER: ${System.currentTimeMillis()}")
             if (primaryUserId == null) {
                 PassLogger.w(TAG, "No primary user")
                 return Result.failure(IllegalStateException("No primary user"))

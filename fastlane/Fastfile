@@ -125,5 +125,6 @@ platform :android do
        release_status: 'draft',
        aab: './app/build/outputs/bundle/playProdRelease/app-play-prod-release.aab'
      )
+     sh("../tools/publish/slack-publish.sh")
   end
 end

@@ -32,7 +32,7 @@ data class EncryptedInviteKey(
 
 interface EncryptInviteKeys {
 
-    fun invoke(
+    operator fun invoke(
         inviterAddressKey: PrivateKey,
         shareKeys: List<ShareKey>,
         targetAddressKey: PublicKey

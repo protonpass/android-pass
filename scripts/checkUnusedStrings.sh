@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Make sure dependencies are in place
 if ! command -v rg --help &> /dev/null; then

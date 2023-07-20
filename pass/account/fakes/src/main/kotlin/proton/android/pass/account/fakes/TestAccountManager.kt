@@ -18,10 +18,9 @@
 
 package proton.android.pass.account.fakes
 
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.onStart
 import me.proton.core.account.domain.entity.Account
@@ -35,8 +34,8 @@ import javax.inject.Singleton
 @Singleton
 class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
-    private val primaryUserIdFlow: MutableSharedFlow<UserId?> =
-        MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val primaryUserIdFlow: MutableStateFlow<UserId?> =
+        MutableStateFlow(UserId("TestAccountManager-DefaultUserId"))
 
     override suspend fun addAccount(account: Account, session: Session) {
         // no-op

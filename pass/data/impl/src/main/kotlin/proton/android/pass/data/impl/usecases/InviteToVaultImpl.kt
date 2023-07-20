@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
@@ -51,17 +52,16 @@ class InviteToVaultImpl @Inject constructor(
         targetEmail: String,
         shareId: ShareId
     ): Result<Unit> {
-        val id = userId ?: runCatching {
-            accountManager.getPrimaryUserId().first()
-        }.fold(
-            onSuccess = {
-                it ?: return Result.failure(IllegalStateException("No primary user"))
-            },
-            onFailure = {
-                PassLogger.w(TAG, it, "Failed to get primary user id")
-                return Result.failure(it)
+        val id = userId ?: run {
+            println("BEFORE: ${System.currentTimeMillis()}")
+            val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
+            println("AFTER: ${System.currentTimeMillis()}")
+            if (primaryUserId == null) {
+                PassLogger.w(TAG, "No primary user")
+                return Result.failure(IllegalStateException("No primary user"))
             }
-        )
+            primaryUserId
+        }
 
         val address = runCatching { userAddressRepository.getAddresses(id) }
             .fold(

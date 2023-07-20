@@ -51,6 +51,7 @@ import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.MigrateVault
@@ -109,6 +110,7 @@ import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.TestInviteToVault
 import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestMarkVaultAsPrimary
 import proton.android.pass.data.fakes.usecases.TestMigrateItem
@@ -405,4 +407,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindClearPin(impl: TestClearPin): ClearPin
+
+    @Binds
+    abstract fun bindInviteToVault(impl: TestInviteToVault): InviteToVault
 }

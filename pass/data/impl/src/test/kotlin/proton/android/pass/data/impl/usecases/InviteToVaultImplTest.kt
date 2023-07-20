@@ -43,53 +43,21 @@ class InviteToVaultImplTest {
     private lateinit var instance: InviteToVaultImpl
 
     private lateinit var remoteDataSource: TestRemoteInviteDataSource
+    private lateinit var accountManager: TestAccountManager
+    private lateinit var publicAddressRepository: TestPublicAddressRepository
+    private lateinit var userAddressRepository: TestUserAddressRepository
 
     @Before
     fun setup() {
         remoteDataSource = TestRemoteInviteDataSource()
-        val publicAddressRepository = TestPublicAddressRepository().apply {
-            val key = PublicKey(
-                key = "InvitedKey",
-                isPrimary = true,
-                isActive = true,
-                canEncrypt = true,
-                canVerify = true
-            )
-            setAddress(INVITED_ADDRESS, key)
+        publicAddressRepository = TestPublicAddressRepository()
+        accountManager = TestAccountManager()
+        userAddressRepository = TestUserAddressRepository()
 
-        }
         instance = InviteToVaultImpl(
             publicAddressRepository = publicAddressRepository,
-            userAddressRepository = TestUserAddressRepository().apply {
-                val addressId = AddressId("AddressId123")
-                val key = UserAddressKey(
-                    addressId = addressId,
-                    version = 1,
-                    flags = 0,
-                    active = true,
-                    keyId = KeyId("KeyId123"),
-                    privateKey = PrivateKey(
-                        key = "key",
-                        isPrimary = true,
-                        passphrase = null
-                    )
-                )
-                val userAddress = UserAddress(
-                    userId = UserId(USER_ID),
-                    addressId = addressId,
-                    email = INVITER_ADDRESS,
-                    canSend = true,
-                    canReceive = true,
-                    enabled = true,
-                    keys = listOf(key),
-                    signedKeyList = null,
-                    order = 1
-                )
-                setAddresses(listOf(userAddress))
-            },
-            accountManager = TestAccountManager().apply {
-                sendPrimaryUserId(UserId(USER_ID))
-            },
+            userAddressRepository = userAddressRepository,
+            accountManager = accountManager,
             encryptInviteKeys = TestEncryptInviteKeys(),
             shareKeyRepository = TestShareKeyRepository().apply {
                 emitGetShareKeys(listOf(TestUtils.createShareKey().first))
@@ -100,6 +68,10 @@ class InviteToVaultImplTest {
 
     @Test
     fun `invite to vault does not go kaboom`() = runTest {
+        setupAccountManager()
+        setupPublicAddress()
+        setupUserAddress()
+
         val shareId = ShareId("shareId123")
         val res = instance.invoke(targetEmail = INVITED_ADDRESS, shareId = shareId)
         assertThat(res.isSuccess).isTrue()
@@ -111,6 +83,77 @@ class InviteToVaultImplTest {
         assertThat(memoryValue.userId).isEqualTo(UserId(USER_ID))
         assertThat(memoryValue.shareId).isEqualTo(shareId)
         assertThat(memoryValue.request.email).isEqualTo(INVITED_ADDRESS)
+    }
+
+    @Test
+    fun `invite to vault returns failure if there is no current user`() = runTest {
+        setupAccountManager(null)
+        setupPublicAddress()
+        setupUserAddress()
+
+        val res = instance.invoke(targetEmail = INVITED_ADDRESS, shareId = ShareId("shareId123"))
+        assertThat(res.isFailure).isTrue()
+    }
+
+    @Test
+    fun `invite to vault returns failure if there is no public address for target user`() = runTest {
+        setupAccountManager()
+        setupUserAddress()
+
+        val res = instance.invoke(targetEmail = INVITED_ADDRESS, shareId = ShareId("shareId123"))
+        assertThat(res.isFailure).isTrue()
+    }
+
+    @Test
+    fun `invite to vault returns failure if there is no user address for current user`() = runTest {
+        setupAccountManager()
+        setupPublicAddress()
+
+        val res = instance.invoke(targetEmail = INVITED_ADDRESS, shareId = ShareId("shareId123"))
+        assertThat(res.isFailure).isTrue()
+    }
+
+    private fun setupAccountManager(userId: UserId? = UserId(USER_ID)) {
+        accountManager.sendPrimaryUserId(userId)
+    }
+
+    private fun setupPublicAddress() {
+        val key = PublicKey(
+            key = "InvitedKey",
+            isPrimary = true,
+            isActive = true,
+            canEncrypt = true,
+            canVerify = true
+        )
+        publicAddressRepository.setAddress(INVITED_ADDRESS, key)
+    }
+
+    private fun setupUserAddress() {
+        val addressId = AddressId("AddressId123")
+        val key = UserAddressKey(
+            addressId = addressId,
+            version = 1,
+            flags = 0,
+            active = true,
+            keyId = KeyId("KeyId123"),
+            privateKey = PrivateKey(
+                key = "key",
+                isPrimary = true,
+                passphrase = null
+            )
+        )
+        val userAddress = UserAddress(
+            userId = UserId(USER_ID),
+            addressId = addressId,
+            email = INVITER_ADDRESS,
+            canSend = true,
+            canReceive = true,
+            enabled = true,
+            keys = listOf(key),
+            signedKeyList = null,
+            order = 1
+        )
+        userAddressRepository.setAddresses(listOf(userAddress))
     }
 
     companion object {

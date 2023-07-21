@@ -136,14 +136,14 @@ fun PassAppContent(
                             rememberBottomSheetNavigator(unAuthBottomSheetState)
                         val unAuthAppNavigator =
                             rememberAppNavigator(unAuthBottomSheetNavigator)
-                        PassModalBottomSheetLayout(unAuthAppNavigator.passBottomSheetNavigator) {
+                        PassModalBottomSheetLayout(unAuthAppNavigator.bottomSheetNavigator) {
                             PassUnAuthNavHost(
                                 appNavigator = unAuthAppNavigator,
                                 onNavigate = onNavigate
                             )
                         }
                     } else {
-                        PassModalBottomSheetLayout(appNavigator.passBottomSheetNavigator) {
+                        PassModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {
                             PassNavHost(
                                 modifier = Modifier.weight(1f),
                                 appNavigator = appNavigator,

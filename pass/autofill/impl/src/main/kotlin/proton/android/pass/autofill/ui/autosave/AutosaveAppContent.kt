@@ -56,7 +56,7 @@ fun AutosaveAppContent(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )
     val coroutineScope = rememberCoroutineScope()
-    PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
+    PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.bottomSheetNavigator) {
         AnimatedNavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
             navController = appNavigator.navController,

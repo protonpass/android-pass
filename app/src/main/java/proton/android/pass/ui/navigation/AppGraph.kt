@@ -245,45 +245,47 @@ fun NavGraphBuilder.appGraph(
     bottomsheetCreateItemGraph(
         mode = CreateItemBottomSheetMode.Full,
         onNavigate = {
-            when (it) {
-                is CreateItemBottomsheetNavigation.CreateAlias ->
-                    appNavigator.navigate(
-                        CreateAlias,
-                        CreateAlias.createNavRoute(it.shareId)
-                    )
+            dismissBottomSheet {
+                when (it) {
+                    is CreateItemBottomsheetNavigation.CreateAlias ->
+                        appNavigator.navigate(
+                            CreateAlias,
+                            CreateAlias.createNavRoute(it.shareId)
+                        )
 
-                is CreateItemBottomsheetNavigation.CreateLogin ->
-                    appNavigator.navigate(
-                        CreateLogin,
-                        CreateLogin.createNavRoute(it.shareId)
-                    )
+                    is CreateItemBottomsheetNavigation.CreateLogin ->
+                        appNavigator.navigate(
+                            CreateLogin,
+                            CreateLogin.createNavRoute(it.shareId)
+                        )
 
-                is CreateItemBottomsheetNavigation.CreateNote ->
-                    appNavigator.navigate(
-                        CreateNote,
-                        CreateNote.createNavRoute(it.shareId)
-                    )
+                    is CreateItemBottomsheetNavigation.CreateNote ->
+                        appNavigator.navigate(
+                            CreateNote,
+                            CreateNote.createNavRoute(it.shareId)
+                        )
 
-                CreateItemBottomsheetNavigation.CreatePassword -> {
-                    val backDestination = when {
-                        appNavigator.hasDestinationInStack(Profile) -> Profile
-                        appNavigator.hasDestinationInStack(Home) -> Home
-                        else -> null
+                    CreateItemBottomsheetNavigation.CreatePassword -> {
+                        val backDestination = when {
+                            appNavigator.hasDestinationInStack(Profile) -> Profile
+                            appNavigator.hasDestinationInStack(Home) -> Home
+                            else -> null
+                        }
+                        appNavigator.navigate(
+                            destination = GeneratePasswordBottomsheet,
+                            route = GeneratePasswordBottomsheet.buildRoute(
+                                mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
+                            ),
+                            backDestination = backDestination
+                        )
                     }
-                    appNavigator.navigate(
-                        destination = GeneratePasswordBottomsheet,
-                        route = GeneratePasswordBottomsheet.buildRoute(
-                            mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
-                        ),
-                        backDestination = backDestination
-                    )
-                }
 
-                is CreateItemBottomsheetNavigation.CreateCreditCard ->
-                    appNavigator.navigate(
-                        CreateCreditCard,
-                        CreateCreditCard.createNavRoute(it.shareId)
-                    )
+                    is CreateItemBottomsheetNavigation.CreateCreditCard ->
+                        appNavigator.navigate(
+                            CreateCreditCard,
+                            CreateCreditCard.createNavRoute(it.shareId)
+                        )
+                }
             }
         },
     )
@@ -370,8 +372,12 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.AppLockTime -> appNavigator.navigate(AppLockTimeBottomsheet)
                 ProfileNavigation.AppLockType -> appNavigator.navigate(AppLockTypeBottomsheet)
                 ProfileNavigation.Back -> appNavigator.onBackClick()
-                ProfileNavigation.ConfigurePin -> appNavigator.navigate(PinConfig)
-                ProfileNavigation.EnterPin -> appNavigator.navigate(EnterPin)
+                ProfileNavigation.ConfigurePin -> dismissBottomSheet {
+                    appNavigator.navigate(PinConfig)
+                }
+                ProfileNavigation.EnterPin -> dismissBottomSheet {
+                    appNavigator.navigate(EnterPin)
+                }
             }
         }
     )
@@ -385,7 +391,9 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 SettingsNavigation.ViewLogs -> appNavigator.navigate(LogView)
-                SettingsNavigation.ClipboardSettings -> appNavigator.navigate(ClipboardSettings)
+                SettingsNavigation.ClipboardSettings -> dismissBottomSheet {
+                    appNavigator.navigate(ClipboardSettings)
+                }
                 SettingsNavigation.ClearClipboardSettings -> dismissBottomSheet {
                     appNavigator.navigate(ClearClipboardOptions)
                 }

@@ -35,6 +35,7 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.navigation.material)

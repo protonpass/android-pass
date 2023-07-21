@@ -25,7 +25,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -41,6 +44,7 @@ import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.rememberAppNavigator
+import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
 @Composable
 fun AutofillDebugApp(
@@ -70,13 +74,21 @@ fun AutofillDebugApp(
     }
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
+@OptIn(
+    ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class,
+    ExperimentalMaterialApi::class
+)
 @Composable
 private fun AutofillDebugAppContent(
     modifier: Modifier = Modifier,
     sessions: ImmutableList<AutofillSession>
 ) {
-    val appNavigator = rememberAppNavigator()
+    val bottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+    val bottomSheetNavigator = rememberBottomSheetNavigator(sheetState = bottomSheetState)
+    val appNavigator = rememberAppNavigator(bottomSheetNavigator)
     AnimatedNavHost(
         modifier = modifier.defaultMinSize(minHeight = 200.dp),
         navController = appNavigator.navController,

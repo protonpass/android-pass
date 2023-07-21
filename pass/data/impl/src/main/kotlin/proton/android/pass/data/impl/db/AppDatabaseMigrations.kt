@@ -24,6 +24,7 @@ import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.extension.addTableColumn
+import me.proton.core.eventmanager.data.db.EventMetadataDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
 import me.proton.core.notification.data.local.db.NotificationDatabase
@@ -147,6 +148,12 @@ object AppDatabaseMigrations {
     val MIGRATION_18_19 = object : Migration(18, 19) {
         override fun migrate(database: SupportSQLiteDatabase) {
             UserSettingsDatabase.MIGRATION_2.migrate(database)
+        }
+    }
+
+    val MIGRATION_22_23 = object : Migration(22, 23) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            EventMetadataDatabase.MIGRATION_1.migrate(database)
         }
     }
 }

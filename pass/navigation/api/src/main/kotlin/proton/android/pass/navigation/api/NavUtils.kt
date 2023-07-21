@@ -22,16 +22,13 @@ import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.dialog
-import androidx.navigation.get
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.bottomSheet
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.composable(
@@ -54,37 +51,15 @@ fun NavGraphBuilder.composable(
     }
 }
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
 fun NavGraphBuilder.bottomSheet(
     navItem: NavItem,
     content: @Composable (NavBackStackEntry) -> Unit
 ) {
-    passBottomSheet(
+    bottomSheet(
         route = navItem.route,
         arguments = navItem.args
     ) { content(it) }
-}
-
-@OptIn(ExperimentalMaterialNavigationApi::class)
-fun NavGraphBuilder.passBottomSheet(
-    route: String,
-    arguments: List<NamedNavArgument> = emptyList(),
-    deepLinks: List<NavDeepLink> = emptyList(),
-    content: @Composable ColumnScope.(backstackEntry: NavBackStackEntry) -> Unit
-) {
-    addDestination(
-        PassBottomSheetNavigator.Destination(
-            provider[PassBottomSheetNavigator::class],
-            content
-        ).apply {
-            this.route = route
-            arguments.forEach { (argumentName, argument) ->
-                addArgument(argumentName, argument)
-            }
-            deepLinks.forEach { deepLink ->
-                addDeepLink(deepLink)
-            }
-        }
-    )
 }
 
 fun NavGraphBuilder.dialog(

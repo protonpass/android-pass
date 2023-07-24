@@ -58,7 +58,7 @@ class InAppReviewManagerImpl @Inject constructor(
                     }
             }
             .addOnFailureListener { exception ->
-                @ReviewErrorCode val reviewErrorCode = (exception as ReviewException).errorCode
+                @ReviewErrorCode val reviewErrorCode = (exception as? ReviewException)?.errorCode
                 PassLogger.w(TAG, exception, "reviewErrorCode=$reviewErrorCode")
             }
             .addOnCompleteListener {

@@ -37,6 +37,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.feature.vault.impl.R
+import me.proton.core.presentation.R as CoreR
 
 @ExperimentalMaterialApi
 @Composable
@@ -45,7 +46,8 @@ fun VaultOptionsBottomSheetContents(
     state: VaultOptionsUiState.Success,
     onEdit: () -> Unit,
     onMigrate: () -> Unit,
-    onRemove: () -> Unit
+    onRemove: () -> Unit,
+    onShare: () -> Unit
 ) {
     val items = mutableListOf<BottomSheetItem>()
     if (state.showEdit) {
@@ -53,6 +55,9 @@ fun VaultOptionsBottomSheetContents(
     }
     if (state.showMigrate) {
         items.add(migrateVault(onMigrate))
+    }
+    if (state.showShare) {
+        items.add(shareVault(onShare))
     }
     if (state.showDelete) {
         items.add(removeVault(onRemove))
@@ -76,7 +81,7 @@ private fun editVault(onEdit: () -> Unit): BottomSheetItem =
         override val subtitle: (@Composable () -> Unit)?
             get() = null
         override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_pencil) }
+            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_pencil) }
         override val endIcon: (@Composable () -> Unit)?
             get() = null
         override val onClick: () -> Unit
@@ -91,7 +96,7 @@ private fun migrateVault(onMigrate: () -> Unit): BottomSheetItem =
         override val subtitle: (@Composable () -> Unit)?
             get() = null
         override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_folder_arrow_in) }
+            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder_arrow_in) }
         override val endIcon: (@Composable () -> Unit)?
             get() = null
         override val onClick: () -> Unit
@@ -113,7 +118,7 @@ private fun removeVault(onRemove: () -> Unit): BottomSheetItem =
         override val leftIcon: (@Composable () -> Unit)
             get() = {
                 BottomSheetItemIcon(
-                    iconId = me.proton.core.presentation.R.drawable.ic_proton_trash_cross,
+                    iconId = CoreR.drawable.ic_proton_trash_cross,
                     tint = ProtonTheme.colors.notificationError
                 )
             }
@@ -124,8 +129,29 @@ private fun removeVault(onRemove: () -> Unit): BottomSheetItem =
         override val isDivider = false
     }
 
+private fun shareVault(onClick: () -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = {
+                BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_share_vault))
+            }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val leftIcon: (@Composable () -> Unit)
+            get() = {
+                BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_user_plus)
+            }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onClick() }
+        override val isDivider = false
+    }
+
 class ThemeVaultOptionsInput :
-    ThemePairPreviewProvider<VaultOptionsUiState.Success>(VaultOptionsBottomSheetContentsPreviewProvider())
+    ThemePairPreviewProvider<VaultOptionsUiState.Success>(
+        VaultOptionsBottomSheetContentsPreviewProvider()
+    )
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
@@ -139,7 +165,8 @@ fun VaultOptionsBottomSheetContentsPreview(
                 state = input.second,
                 onEdit = {},
                 onMigrate = {},
-                onRemove = {}
+                onRemove = {},
+                onShare = {},
             )
         }
     }

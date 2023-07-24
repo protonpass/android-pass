@@ -312,11 +312,13 @@ fun NavGraphBuilder.appGraph(
                     MigrateSelectVault.createNavRouteForMigrateAll(it.shareId)
                 )
 
-                is VaultNavigation.VaultRemove -> appNavigator.navigate(
-                    destination = DeleteVaultDialog,
-                    route = DeleteVaultDialog.createNavRoute(it.shareId),
-                    backDestination = Home
-                )
+                is VaultNavigation.VaultRemove -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = DeleteVaultDialog,
+                        route = DeleteVaultDialog.createNavRoute(it.shareId),
+                        backDestination = Home
+                    )
+                }
             }
         }
     )

@@ -44,6 +44,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.log.api.PassLogger
@@ -64,8 +65,8 @@ class LoggerInitializer : Initializer<Unit> {
         Timber.plant(FileLoggingTree(context))
         deviceInfo(entryPoint.appConfig())
 
-        // Forward Core Logs to Timber, using AppLogger.
-        CoreLogger.set(PassLogger)
+        // Forward Core Logs to Timber, using TimberLogger.
+        CoreLogger.set(TimberLogger)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = listOf(

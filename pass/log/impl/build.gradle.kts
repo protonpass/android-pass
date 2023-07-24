@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.androidx.startup.runtime)
     implementation(libs.timber)
     implementation(libs.core.utilKotlin)
+    implementation(libs.core.utilAndroidSentry)
     implementation(libs.kotlinx.datetime)
 
     implementation(libs.dagger.hilt.android)

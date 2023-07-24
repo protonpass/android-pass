@@ -29,5 +29,6 @@ dependencies {
     implementation(libs.core.network.domain)
     implementation(libs.core.userSettings.domain)
     implementation(libs.core.utilKotlin)
+    implementation(libs.core.utilAndroidSentry)
     implementation(libs.timber)
 }

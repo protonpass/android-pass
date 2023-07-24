@@ -44,9 +44,9 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import io.sentry.SentryLevel
 import io.sentry.android.core.SentryAndroid
-import io.sentry.android.timber.SentryTimberIntegration
 import me.proton.core.usersettings.domain.DeviceSettingsHandler
 import me.proton.core.usersettings.domain.onDeviceSettingsChanged
+import me.proton.core.util.android.sentry.TimberLoggerIntegration
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.toValue
 
@@ -61,6 +61,7 @@ class SentryInitializer : Initializer<Unit> {
 
         entryPoint.deviceSettingsHandler()
             .onDeviceSettingsChanged { settings ->
+                // By default true, but should always minimal sentry logs.
                 if (settings.isCrashReportEnabled) {
                     if (appConfig.sentryDSN?.isNotBlank() == true) {
                         SentryAndroid.init(context) { options ->
@@ -70,7 +71,7 @@ class SentryInitializer : Initializer<Unit> {
                             options.environment = appConfig.flavor.toValue()
                             if (!appConfig.isDebug) {
                                 options.addIntegration(
-                                    SentryTimberIntegration(
+                                    TimberLoggerIntegration(
                                         minEventLevel = SentryLevel.ERROR,
                                         minBreadcrumbLevel = SentryLevel.INFO
                                     )

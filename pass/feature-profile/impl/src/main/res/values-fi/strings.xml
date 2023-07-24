@@ -30,9 +30,23 @@
   <string name="app_lock_one_hour">Tunnin kuluttua</string>
   <string name="app_lock_four_hours">4 tunnin kuluttua</string>
   <string name="profile_account_plan_name_trial">Ilmainen kokeilu</string>
+  <string name="app_lock_config_none">Ei mitään</string>
   <string name="app_lock_config_biometric">Biometria</string>
   <string name="app_lock_config_pin_code">PIN-koodi</string>
   <string name="app_lock_config_unlock_with">Avaa käyttäen</string>
   <string name="app_lock_config_app_lock_time">Sovelluksen lukitusaika</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Käytä järjestelmän lukitustapaa biometrisen todennuksen epäonnistuessa</string>
+  <string name="configure_pin_set_pin_code">Aseta PIN-koodi</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Avaa sovellus tällä koodilla</string>
+  <string name="configure_pin_enter_pin_code">Syötä PIN-koodi</string>
+  <string name="configure_pin_repeat_pin_code">Toista PIN-koodi</string>
+  <string name="configure_pin_continue">Jatka</string>
+  <string name="configure_pin_pin_does_not_match">PIN-koodi ei täsmää</string>
+  <string name="configure_pin_pin_too_short">PIN-koodi on liian lyhyt</string>
+  <string name="configure_pin_pin_cannot_be_blank">PIN-koodi ei voi olla tyhjä</string>
+  <string name="configure_pin_pin_lock_enabled">PIN-koodi käytössä</string>
+  <string name="configure_pin_pin_lock_disabled">PIN-koodi pois käytöstä</string>
+  <string name="profile_option_lock_with">Lukitse käyttäen</string>
+  <string name="profile_option_unlock_with">Avaa käyttäen</string>
+  <string name="profile_option_change_pin_code">Vaihda PIN-koodi</string>
 </resources>

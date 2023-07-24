@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources/>
+<resources>
+  <string name="error_cant_find_matching_fields">Görüntülenen alanlardan doldurulabilecek olan anlaşılamadı</string>
+  <string name="autofill_authenticate_prompt">Proton Pass üzerinden alın</string>
+  <string name="error_credentials_not_found">Eşleşen bir kimlik doğrulama bilgisi bulunamadı</string>
+  <string name="error_credentials_not_saved">Kimlik doğrulama bilgileri kaydedilemedi</string>
+  <string name="error_loading_items">Ögeler yüklenemedi</string>
+  <string name="topbar_search_query">Tüm kasalarda ara…</string>
+  <string name="topbar_search_query_primary_vault">Birincil kasada ara…</string>
+  <string name="topbar_search_query_uninitialized">Ara…</string>
+  <string name="inline_suggestions_open_app">Proton Pass uygulamasını aç</string>
+  <string name="autofill_only_searching_in_primary_vault">Tarifeniz otomatik doldurma için yalnızca birincil kasanızdaki ögelerin kullanılmasına izin veriyor.</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="autofill_suggestions_for_placeholder">%s için öneriler</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Bu uygulama ya da sitede \"%s\" oturum açma bilgileri kullanılsın.</string>
+  <string name="autofill_dialog_associate_and_autofill">Her zaman kullan</string>
+  <string name="autofill_dialog_just_autofill">Bir kez kullan</string>
+  <string name="autofill_dialog_cancel">İptal</string>
+  <string name="autofill_notification_copy_to_clipboard">Tek kullanımlık kod panoya kopyalandı</string>
+  <string name="autofill_dialog_associate_title">Oturum açma kullanılsın mı?</string>
+  <string name="snackbar_item_move_to_trash_success">Öge çöpe atıldı</string>
+  <string name="snackbar_item_move_to_trash_error">Çöpe atılamadı</string>
+  <string name="autofill_user_logged_out">Oturumunuz kapatıldı. Lütfen uygulamayı yeniden açarak oturum açın.</string>
+</resources>

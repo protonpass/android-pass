@@ -41,7 +41,7 @@
   <!-- Vault selector -->
   <string name="vault_selector_title">Holvi</string>
   <!-- Bottom bar -->
-  <string name="bottom_bar_list_items_icon_content_description">Listan kohteet</string>
+  <string name="bottom_bar_list_items_icon_content_description">Listaa kohteet</string>
   <string name="bottom_bar_add_item_icon_content_description">Lisää kohde</string>
   <string name="bottom_bar_profile_icon_content_description">Profiili</string>
   <!-- List group by most recents -->

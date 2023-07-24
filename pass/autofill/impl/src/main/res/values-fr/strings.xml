@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources/>
+<resources>
+  <string name="error_cant_find_matching_fields">Aucun champ visible correspondant n\'a été trouvé</string>
+  <string name="autofill_authenticate_prompt">Obtenir depuis Proton Pass</string>
+  <string name="error_credentials_not_found">Aucun identifiant correspondant n\'a été trouvé.</string>
+  <string name="error_credentials_not_saved">Impossible d\'enregistrer les informations d\'identification</string>
+  <string name="error_loading_items">Impossible de charger les éléments</string>
+  <string name="topbar_search_query">Rechercher dans tous les coffres-forts…</string>
+  <string name="topbar_search_query_primary_vault">Rechercher dans le coffre-fort principal…</string>
+  <string name="topbar_search_query_uninitialized">Rechercher…</string>
+  <string name="inline_suggestions_open_app">Ouvrir Proton Pass</string>
+  <string name="autofill_only_searching_in_primary_vault">Votre abonnement vous permet d\'utiliser uniquement les éléments de votre coffre-fort principal pour la fonction de remplissage automatique.</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="autofill_suggestions_for_placeholder">Suggestions pour %s</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Utiliser les informations de connexion de \"%s\" sur cette application ou ce site web.</string>
+  <string name="autofill_dialog_associate_and_autofill">Toujours utiliser</string>
+  <string name="autofill_dialog_just_autofill">Utiliser une fois</string>
+  <string name="autofill_dialog_cancel">Annuler</string>
+  <string name="autofill_notification_copy_to_clipboard">Le mot de passe à usage unique basé sur le temps (TOTP) a été copié dans le presse-papiers.</string>
+  <string name="autofill_dialog_associate_title">Utiliser l\'identifiant ?</string>
+  <string name="snackbar_item_move_to_trash_success">L\'élément a été déplacé dans la corbeille.</string>
+  <string name="snackbar_item_move_to_trash_error">Impossible de déplacer l\'élément dans la corbeille.</string>
+  <string name="autofill_user_logged_out">Vous avez été déconnecté. Veuillez vous reconnecter en ouvrant l\'application.</string>
+</resources>

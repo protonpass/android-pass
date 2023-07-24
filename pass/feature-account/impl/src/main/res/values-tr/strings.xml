@@ -3,7 +3,7 @@
   <string name="account_title">Hesap</string>
   <string name="account_username_label">Kullanıcı adı</string>
   <string name="account_subscription_label">Abonelik tarifesi</string>
-  <string name="account_permanently_delete_warning">Bu işlem, hesabınızı ve tüm verilerini kalıcı olarak siler. Bu hesabı yeniden etkinleştiremezsiniz.</string>
+  <string name="account_permanently_delete_warning">Bu işlem, hesabınızı ve tüm verilerini kalıcı olarak siler. Bu hesabı yeniden kullanıma alamazsınız.</string>
   <string name="account_delete_account">Hesabı sil</string>
   <string name="account_delete_account_icon_content_description">Hesabı sil düğmesi</string>
   <string name="account_sign_out">Oturumu kapat</string>

@@ -29,7 +29,7 @@
   <string name="settings_primary_vault_change_success">La bóveda principal ha sido cambiada.</string>
   <string name="settings_primary_vault_change_error">No se ha podido cambiar la bóveda principal.</string>
   <string name="settings_privacy_section_title">Privacidad</string>
-  <string name="settings_use_favicons_preference_title">Usar iconos web</string>
+  <string name="settings_use_favicons_preference_title">Utilizar iconos web</string>
   <string name="settings_use_favicons_preference_subtitle">Decide si quieres ver los íconos de sitio web en tus elementos.</string>
   <string name="settings_allow_screenshots_preference_title">Permitir capturas de pantalla</string>
   <string name="settings_allow_screenshots_preference_subtitle">Si está habilitado, podrás tomar capturas de pantalla de la aplicación.</string>

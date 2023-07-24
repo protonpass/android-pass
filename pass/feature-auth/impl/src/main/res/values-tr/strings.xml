@@ -35,6 +35,8 @@
   <string name="auth_unlock_button">Kilidi aç</string>
   <string name="auth_error_verifying_password">Parolanız onaylanırken sorun çıktı</string>
   <string name="auth_error_empty_password">Parola boş olamaz</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN kodu boş olamaz</string>
+  <string name="auth_error_pin_too_short">PIN kodu en az 4 rakamdan oluşmalıdır</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Parola geçersiz. %d kez daha deneyebilirsiniz</item>
     <item quantity="other">Parola geçersiz. %d kez daha deneyebilirsiniz</item>

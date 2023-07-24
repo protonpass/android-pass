@@ -20,23 +20,25 @@
   <string name="profile_option_fingerprint_subtitle">Desbloqueja el Proton Pass amb un toc.</string>
   <string name="profile_option_fingerprint">Empremta digital</string>
   <string name="profile_option_app_lock">Bloqueig de l\'aplicació</string>
-  <string name="enter_your_pin_code">Enter your PIN Code</string>
-  <string name="unlock">Unlock</string>
-  <string name="enter_pin">Enter pin</string>
+  <string name="enter_your_pin_code">Introduïu el vostre codi PIN</string>
+  <string name="unlock">Desbloqueja</string>
+  <string name="enter_pin">Introduïu el codi PIN</string>
   <plurals name="enter_your_pin_code_error">
-    <item quantity="one">Incorrect PIN. %d attempt remaining.</item>
-    <item quantity="other">Incorrect PIN. %d attempts remaining.</item>
+    <item quantity="one">Codi PIN incorrecte. %d intent restant.</item>
+    <item quantity="other">Codi PIN incorrecte. %d intents restants.</item>
   </plurals>
-  <string name="auth_unlock_app_title">Unlock Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
-  <string name="auth_master_password_label">Master password</string>
-  <string name="auth_action_reveal_password">Reveal master password</string>
-  <string name="auth_action_conceal_password">Conceal master password</string>
-  <string name="auth_unlock_button">Unlock</string>
-  <string name="auth_error_verifying_password">Error verifying your password</string>
-  <string name="auth_error_empty_password">Password cannot be empty</string>
+  <string name="auth_unlock_app_title">Desbloqueja Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Introduïu la contrasenya principal per a %s</string>
+  <string name="auth_master_password_label">Contrasenya principal</string>
+  <string name="auth_action_reveal_password">Mostra la contrasenya principal</string>
+  <string name="auth_action_conceal_password">Oculta la contrasenya principal</string>
+  <string name="auth_unlock_button">Desbloqueja</string>
+  <string name="auth_error_verifying_password">S\'ha produït un error en verificar la vostra contrasenya.</string>
+  <string name="auth_error_empty_password">La contrasenya no pot estar buida.</string>
+  <string name="auth_error_pin_cannot_be_empty">El codi PIN no pot estar buit.</string>
+  <string name="auth_error_pin_too_short">El codi PIN ha de tenir com a mínim 4 xifres.</string>
   <plurals name="auth_error_wrong_password">
-    <item quantity="one">Incorrect password. %d attempt remaining</item>
-    <item quantity="other">Incorrect password. %d attempts remaining</item>
+    <item quantity="one">Contrasenya incorrecta. %d intent restant.</item>
+    <item quantity="other">Contrasenya incorrecta. %d intents restants.</item>
   </plurals>
 </resources>

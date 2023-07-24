@@ -22,7 +22,7 @@
   <string name="profile_option_app_lock">Bloqueo de la aplicación</string>
   <string name="enter_your_pin_code">Introduce tu código PIN</string>
   <string name="unlock">Desbloquear</string>
-  <string name="enter_pin">Introducir código PIN</string>
+  <string name="enter_pin">Introduce el código PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">PIN incorrecto. %d intento restante.</item>
     <item quantity="other">PIN incorrecto. %d intentos restantes.</item>
@@ -35,6 +35,8 @@
   <string name="auth_unlock_button">Desbloquear</string>
   <string name="auth_error_verifying_password">Error al verificar tu contraseña</string>
   <string name="auth_error_empty_password">La contraseña no puede estar vacía.</string>
+  <string name="auth_error_pin_cannot_be_empty">El código PIN no puede estar vacío.</string>
+  <string name="auth_error_pin_too_short">El código PIN debe tener al menos 4 cifras.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Contraseña incorrecta. %d intento restante.</item>
     <item quantity="other">Contraseña incorrecta. %d intentos restantes.</item>

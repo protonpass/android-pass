@@ -37,6 +37,7 @@ import proton.android.pass.crypto.fakes.utils.TestUtils
 import proton.android.pass.data.impl.fakes.TestRemoteInviteDataSource
 import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 
 class InviteToVaultImplTest {
 
@@ -73,7 +74,12 @@ class InviteToVaultImplTest {
         setupUserAddress()
 
         val shareId = ShareId("shareId123")
-        val res = instance.invoke(targetEmail = INVITED_ADDRESS, shareId = shareId)
+        val shareRole = ShareRole.Admin
+        val res = instance.invoke(
+            targetEmail = INVITED_ADDRESS,
+            shareId = shareId,
+            shareRole = shareRole
+        )
         assertThat(res.isSuccess).isTrue()
 
         val memory = remoteDataSource.getMemory()
@@ -83,6 +89,7 @@ class InviteToVaultImplTest {
         assertThat(memoryValue.userId).isEqualTo(UserId(USER_ID))
         assertThat(memoryValue.shareId).isEqualTo(shareId)
         assertThat(memoryValue.request.email).isEqualTo(INVITED_ADDRESS)
+        assertThat(memoryValue.request.shareRoleId).isEqualTo(shareRole.value)
     }
 
     @Test
@@ -91,25 +98,38 @@ class InviteToVaultImplTest {
         setupPublicAddress()
         setupUserAddress()
 
-        val res = instance.invoke(targetEmail = INVITED_ADDRESS, shareId = ShareId("shareId123"))
+        val res = instance.invoke(
+            targetEmail = INVITED_ADDRESS,
+            shareId = ShareId("shareId123"),
+            shareRole = ShareRole.Admin
+        )
         assertThat(res.isFailure).isTrue()
     }
 
     @Test
-    fun `invite to vault returns failure if there is no public address for target user`() = runTest {
-        setupAccountManager()
-        setupUserAddress()
+    fun `invite to vault returns failure if there is no public address for target user`() =
+        runTest {
+            setupAccountManager()
+            setupUserAddress()
 
-        val res = instance.invoke(targetEmail = INVITED_ADDRESS, shareId = ShareId("shareId123"))
-        assertThat(res.isFailure).isTrue()
-    }
+            val res = instance.invoke(
+                targetEmail = INVITED_ADDRESS,
+                shareId = ShareId("shareId123"),
+                shareRole = ShareRole.Admin
+            )
+            assertThat(res.isFailure).isTrue()
+        }
 
     @Test
     fun `invite to vault returns failure if there is no user address for current user`() = runTest {
         setupAccountManager()
         setupPublicAddress()
 
-        val res = instance.invoke(targetEmail = INVITED_ADDRESS, shareId = ShareId("shareId123"))
+        val res = instance.invoke(
+            targetEmail = INVITED_ADDRESS,
+            shareId = ShareId("shareId123"),
+            shareRole = ShareRole.Admin
+        )
         assertThat(res.isFailure).isTrue()
     }
 

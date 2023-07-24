@@ -25,9 +25,15 @@ import kotlinx.serialization.Serializable
 data class CreateInviteRequest(
     @SerialName("Keys")
     val keys: List<CreateInviteKey>,
+    @SerialName("Email")
     val email: String,
+    @SerialName("TargetType")
     val targetType: Int,
+    @SerialName("ShareRoleID")
+    val shareRoleId: String,
+    @SerialName("ItemID")
     val itemId: String? = null,
+    @SerialName("ExpirationTime")
     val expirationTime: Long? = null
 )
 

@@ -19,7 +19,7 @@
   <string name="totp_copied_to_clipboard">Le mot de passe à usage unique basé sur le temps (TOTP) a été copié.</string>
   <string name="field_copied_to_clipboard">Le champ a été copié.</string>
   <string name="move_item_to_trash_message">L\'élément a été déplacé dans la corbeille.</string>
-  <string name="error_move_item_to_trash_message">Une erreur s\'est produite pendant le déplacement vers la Corbeille.</string>
+  <string name="error_move_item_to_trash_message">Une erreur s\'est produite pendant le déplacement vers la corbeille.</string>
   <string name="item_permanently_deleted_message">L\'élément a été définitivement supprimé.</string>
   <string name="item_permanently_deleted_message_error">Une erreur s\'est produite pendant la suppression de l\'élément.</string>
   <string name="item_restored_message">L\'élément a été restauré.</string>
@@ -61,7 +61,7 @@
   <string name="credit_card_verifcation_number_copied_to_clipboard">Le numéro de vérification a été copié dans le presse-papiers.</string>
   <string name="credit_card_pin_copied_to_clipboard">Le code PIN a été copié dans le presse-papiers.</string>
   <!-- Bottomsheet -->
-  <string name="move_to_trash_item_detail_bottom_sheet">Déplacer dans la Corbeille</string>
+  <string name="move_to_trash_item_detail_bottom_sheet">Déplacer dans la corbeille</string>
   <string name="migrate_item_detail_bottom_sheet">Déplacer vers un autre coffre-fort</string>
   <!-- More info -->
   <string name="date_today">Aujourd\'hui %s</string>

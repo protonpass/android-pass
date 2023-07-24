@@ -37,6 +37,8 @@
   <string name="auth_unlock_button">Odblokuj</string>
   <string name="auth_error_verifying_password">Wystąpił błąd podczas weryfikowania hasła</string>
   <string name="auth_error_empty_password">Hasło nie może być puste</string>
+  <string name="auth_error_pin_cannot_be_empty">Kod PIN nie może być pusty</string>
+  <string name="auth_error_pin_too_short">Kod PIN musi zawierać co najmniej 4 cyfry</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Hasło jest nieprawidłowe. Pozostała %d próba</item>
     <item quantity="few">Hasło jest nieprawidłowe. Pozostały %d próby</item>

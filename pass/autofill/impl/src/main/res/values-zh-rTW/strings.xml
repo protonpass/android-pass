@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources/>
+<resources>
+  <string name="error_cant_find_matching_fields">找不到相符的顯示欄位</string>
+  <string name="autofill_authenticate_prompt">從Proton Pass取得</string>
+  <string name="error_credentials_not_found">找不到匹配的驗證</string>
+  <string name="error_credentials_not_saved">無法儲存驗證</string>
+  <string name="error_loading_items">載入項目失敗</string>
+  <string name="topbar_search_query">於保存庫中搜尋…</string>
+  <string name="topbar_search_query_primary_vault">於主要保存庫中搜尋…</string>
+  <string name="topbar_search_query_uninitialized">搜尋…</string>
+  <string name="inline_suggestions_open_app">開啟 Proton Pass</string>
+  <string name="autofill_only_searching_in_primary_vault">您的方案僅允許將您主要保管庫中的項目用於自動填入用途。</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="autofill_suggestions_for_placeholder">給%s的建議</string>
+  <string name="autofill_associate_web_app_name_dialog_title">請使用 \"%s\" 相同的詳細資訊以登入此應用程式或是網頁。</string>
+  <string name="autofill_dialog_associate_and_autofill">一律使用</string>
+  <string name="autofill_dialog_just_autofill">使用一次</string>
+  <string name="autofill_dialog_cancel">取消</string>
+  <string name="autofill_notification_copy_to_clipboard">已將 Totp 複製到剪貼簿</string>
+  <string name="autofill_dialog_associate_title">使用登入?</string>
+  <string name="snackbar_item_move_to_trash_success">項目已移至垃圾桶</string>
+  <string name="snackbar_item_move_to_trash_error">無法移至垃圾桶</string>
+  <string name="autofill_user_logged_out">您已登出。請重新開啟應用程式以登入。</string>
+</resources>

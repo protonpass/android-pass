@@ -292,7 +292,9 @@ fun NavGraphBuilder.appGraph(
     vaultGraph(
         onNavigate = {
             when (it) {
-                VaultNavigation.Close -> appNavigator.onBackClick()
+                VaultNavigation.Close -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
                 VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
                     appNavigator.navigateUpWithResult(

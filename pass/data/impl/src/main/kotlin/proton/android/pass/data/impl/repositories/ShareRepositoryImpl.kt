@@ -156,17 +156,23 @@ class ShareRepositoryImpl @Inject constructor(
                     .first()
                 val localSharesMap = localShares.associateBy { ShareId(it.id) }
 
-                // Update primary status if needed
-                remoteShareMap.forEach { (remoteId, remoteShare) ->
-                    val localShare = localSharesMap[remoteId]
-                    if (localShare != null && localShare.isPrimary != remoteShare.primary) {
-                        localShareDataSource.setPrimaryShareStatus(
-                            userId = userId,
-                            shareId = remoteId,
-                            isPrimary = remoteShare.primary
-                        )
+                // Update local share if needed
+                val sharesToUpdate = remoteShareMap.mapNotNull { (_, remoteShare) ->
+                    val localShare = localSharesMap[ShareId(remoteShare.shareId)]
+                    if (localShare != null && localShareNeedsUpdate(localShare, remoteShare)) {
+                        localShare to remoteShare
+                    } else {
+                        null
                     }
+                }.map { (localShare, remoteShare) ->
+                    localShare.copy(
+                        owner = remoteShare.owner,
+                        shareRoleId = remoteShare.shareRoleId,
+                        isPrimary = remoteShare.primary
+                    )
                 }
+
+                localShareDataSource.upsertShares(sharesToUpdate)
 
                 // Delete from the local data source the shares that are not in remote response
                 val toDelete = localSharesMap.keys.subtract(remoteShareMap.keys)
@@ -339,13 +345,15 @@ class ShareRepositoryImpl @Inject constructor(
     private fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKeyStatus {
         if (keyRotation == null) return EncryptionKeyStatus.NotFound
 
-        val encryptionKey = keys.firstOrNull { it.rotation == keyRotation } ?: return EncryptionKeyStatus.NotFound
+        val encryptionKey =
+            keys.firstOrNull { it.rotation == keyRotation } ?: return EncryptionKeyStatus.NotFound
         if (!encryptionKey.isActive) {
             PassLogger.d(TAG, "Found key but it is not active")
             return EncryptionKeyStatus.Inactive
         }
 
-        val decrypted = encryptionContextProvider.withEncryptionContext { decrypt(encryptionKey.key) }
+        val decrypted =
+            encryptionContextProvider.withEncryptionContext { decrypt(encryptionKey.key) }
         return EncryptionKeyStatus.Found(EncryptionKey(decrypted))
     }
 
@@ -360,6 +368,7 @@ class ShareRepositoryImpl @Inject constructor(
             is EncryptionKeyStatus.Found -> {
                 reencryptShareContents(shareResponse.content, key.encryptionKey) to true
             }
+
             EncryptionKeyStatus.Inactive -> null to false
         }
         return ShareEntity(
@@ -442,6 +451,18 @@ class ShareRepositoryImpl @Inject constructor(
             .setDescription(description)
             .setDisplay(display)
             .build()
+    }
+
+    @Suppress("ReturnCount")
+    private fun localShareNeedsUpdate(
+        localShare: ShareEntity,
+        remoteShare: ShareResponse
+    ): Boolean {
+        if (localShare.isPrimary != remoteShare.primary) return true
+        if (localShare.owner != remoteShare.owner) return true
+        if (localShare.shareRoleId != remoteShare.shareRoleId) return true
+
+        return false
     }
 
     internal data class ShareResponseEntity(

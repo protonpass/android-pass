@@ -341,9 +341,11 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
                 }
 
-                is VaultNavigation.VaultEdit -> {}
-                is VaultNavigation.VaultMigrate -> {}
-                is VaultNavigation.VaultRemove -> {}
+                is VaultNavigation.VaultEdit,
+                is VaultNavigation.VaultMigrate,
+                is VaultNavigation.VaultRemove,
+                is VaultNavigation.VaultShare -> {
+                }
             }
         }
     )

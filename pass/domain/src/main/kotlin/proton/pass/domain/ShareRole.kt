@@ -18,9 +18,6 @@
 
 package proton.pass.domain
 
-private const val SHARE_ROLE_ADMIN = "1"
-private const val SHARE_ROLE_WRITE = "2"
-private const val SHARE_ROLE_READ = "3"
 
 @JvmInline
 value class ShareRoleId(val id: String)
@@ -40,5 +37,18 @@ sealed interface ShareRole {
     }
     data class Custom(val roleId: ShareRoleId) : ShareRole {
         override val value: String = roleId.id
+    }
+
+    companion object {
+        const val SHARE_ROLE_ADMIN = "1"
+        const val SHARE_ROLE_WRITE = "2"
+        const val SHARE_ROLE_READ = "3"
+
+        fun fromValue(value: String): ShareRole = when (value) {
+            SHARE_ROLE_ADMIN -> Admin
+            SHARE_ROLE_WRITE -> Write
+            SHARE_ROLE_READ -> Read
+            else -> Custom(ShareRoleId(value))
+        }
     }
 }

@@ -92,7 +92,6 @@ class UserAccessImplTest {
         // When
         val result = userAccess.canShare(shareId = ShareId("some_share_id"))
 
-        println("VicLog $result")
         // Then
         assertTrue(result)
     }

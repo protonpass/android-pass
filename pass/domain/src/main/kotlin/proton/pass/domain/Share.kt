@@ -39,5 +39,7 @@ data class Share(
     val expirationTime: Date?,
     val createTime: Date,
     val color: ShareColor,
-    val icon: ShareIcon
+    val icon: ShareIcon,
+    val shareRole: ShareRole,
+    val isOwner: Boolean
 )

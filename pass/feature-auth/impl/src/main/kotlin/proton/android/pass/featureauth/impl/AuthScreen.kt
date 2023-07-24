@@ -26,8 +26,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.toClassHolder
 
-const val AUTH_SCREEN_ROUTE = "common/auth"
-
 @Composable
 fun AuthScreen(
     navigation: (AuthNavigation) -> Unit,

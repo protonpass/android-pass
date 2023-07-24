@@ -457,12 +457,12 @@ class ShareRepositoryImpl @Inject constructor(
     private fun localShareNeedsUpdate(
         localShare: ShareEntity,
         remoteShare: ShareResponse
-    ): Boolean {
-        if (localShare.isPrimary != remoteShare.primary) return true
-        if (localShare.owner != remoteShare.owner) return true
-        if (localShare.shareRoleId != remoteShare.shareRoleId) return true
+    ): Boolean = when {
+        localShare.isPrimary != remoteShare.primary -> true
+        localShare.owner != remoteShare.owner -> true
+        localShare.shareRoleId != remoteShare.shareRoleId -> true
 
-        return false
+        else -> false
     }
 
     internal data class ShareResponseEntity(

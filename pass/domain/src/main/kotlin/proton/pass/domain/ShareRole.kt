@@ -16,31 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.requests
+package proton.pass.domain
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+private const val SHARE_ROLE_ADMIN = "1"
+private const val SHARE_ROLE_WRITE = "2"
+private const val SHARE_ROLE_READ = "3"
 
-@Serializable
-data class CreateInviteRequest(
-    @SerialName("Keys")
-    val keys: List<CreateInviteKey>,
-    @SerialName("Email")
-    val email: String,
-    @SerialName("TargetType")
-    val targetType: Int,
-    @SerialName("ShareRoleID")
-    val shareRoleId: String,
-    @SerialName("ItemID")
-    val itemId: String? = null,
-    @SerialName("ExpirationTime")
-    val expirationTime: Long? = null
-)
+@JvmInline
+value class ShareRoleId(val id: String)
 
-@Serializable
-data class CreateInviteKey(
-    @SerialName("Key")
-    val key: String,
-    @SerialName("KeyRotation")
-    val keyRotation: Long
-)
+sealed interface ShareRole {
+
+    val value: String
+
+    object Admin : ShareRole {
+        override val value: String = SHARE_ROLE_ADMIN
+    }
+    object Write : ShareRole {
+        override val value: String = SHARE_ROLE_WRITE
+    }
+    object Read : ShareRole {
+        override val value: String = SHARE_ROLE_READ
+    }
+    data class Custom(val roleId: ShareRoleId) : ShareRole {
+        override val value: String = roleId.id
+    }
+}

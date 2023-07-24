@@ -348,6 +348,8 @@ dependencies {
     implementation(projects.pass.telemetry.impl)
     implementation(projects.pass.totp.impl)
     implementation(projects.pass.tracing.impl)
+    implementation(projects.pass.userAccess.api)
+    implementation(projects.pass.userAccess.impl)
 
     debugImplementation(libs.leakCanary)
     debugImplementation(libs.androidx.compose.uiTooling)

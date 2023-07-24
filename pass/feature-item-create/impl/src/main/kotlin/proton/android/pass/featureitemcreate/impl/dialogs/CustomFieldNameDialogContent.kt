@@ -26,9 +26,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
@@ -44,6 +46,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.featureitemcreate.impl.R
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CustomFieldNameDialogContent(
     modifier: Modifier = Modifier,
@@ -54,6 +57,7 @@ fun CustomFieldNameDialogContent(
     onCancel: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(modifier = modifier) {
         Column(
@@ -86,7 +90,11 @@ fun CustomFieldNameDialogContent(
                         )
                     },
                     textStyle = ProtonTheme.typography.defaultNorm,
-                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
+                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                    onDoneClick = {
+                        keyboardController?.hide()
+                        onConfirm()
+                    }
                 )
             }
         }

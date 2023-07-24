@@ -22,7 +22,7 @@
   <string name="profile_option_app_lock">Блокировка приложения</string>
   <string name="enter_your_pin_code">Введите PIN-код.</string>
   <string name="unlock">Разблокировать</string>
-  <string name="enter_pin">Введите PIN-код</string>
+  <string name="enter_pin">Enter PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Неправильный PIN-код. Осталась %d попытка.</item>
     <item quantity="few">Incorrect PIN. %d attempts remaining.</item>
@@ -37,6 +37,8 @@
   <string name="auth_unlock_button">Разблокировать</string>
   <string name="auth_error_verifying_password">Возникла ошибка при проверке вашего пароля</string>
   <string name="auth_error_empty_password">Пароль не может быть пустым</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN cannot be empty</string>
+  <string name="auth_error_pin_too_short">PIN should be at least 4 digits</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Неправильный пароль. Осталась %d попытка</item>
     <item quantity="few">Incorrect password. %d attempts remaining</item>

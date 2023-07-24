@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources/>
+<resources>
+  <string name="error_cant_find_matching_fields">No se han encontrado campos visibles qe coinciden.</string>
+  <string name="autofill_authenticate_prompt">Obtener de Proton Pass</string>
+  <string name="error_credentials_not_found">No se han encontrado credenciales coincidentes.</string>
+  <string name="error_credentials_not_saved">No se han podido guardar las credenciales.</string>
+  <string name="error_loading_items">No se han podido cargar los elementos.</string>
+  <string name="topbar_search_query">Buscar en todas las bóvedas…</string>
+  <string name="topbar_search_query_primary_vault">Buscar en la bóveda principal…</string>
+  <string name="topbar_search_query_uninitialized">Buscar…</string>
+  <string name="inline_suggestions_open_app">Abrir Proton Pass</string>
+  <string name="autofill_only_searching_in_primary_vault">Tu plan solo permite utilizar los elementos en tu bóveda principal para la función de relleno automático.</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="autofill_suggestions_for_placeholder">Sugerencias para %s</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Utilizar los datos de inicio de sesión de \"%s\" en esta aplicación o este sitio web.</string>
+  <string name="autofill_dialog_associate_and_autofill">Siempre utilizar</string>
+  <string name="autofill_dialog_just_autofill">Utilizar una vez</string>
+  <string name="autofill_dialog_cancel">Cancelar</string>
+  <string name="autofill_notification_copy_to_clipboard">El código TOTP ha sido copiado al portapapeles.</string>
+  <string name="autofill_dialog_associate_title">¿Utilizar el inicio de sesión?</string>
+  <string name="snackbar_item_move_to_trash_success">El elemento ha sido movido a la papelera.</string>
+  <string name="snackbar_item_move_to_trash_error">No se ha podido mover a la papelera.</string>
+  <string name="autofill_user_logged_out">Se ha cerrado la sesión. Inicia sesión de nuevo abriendo la aplicación.</string>
+</resources>

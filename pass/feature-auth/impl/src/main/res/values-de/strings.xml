@@ -35,6 +35,8 @@
   <string name="auth_unlock_button">Entsperren</string>
   <string name="auth_error_verifying_password">Fehler beim Verifizieren deines Passworts.</string>
   <string name="auth_error_empty_password">Passwort kann nicht leer sein</string>
+  <string name="auth_error_pin_cannot_be_empty">Die PIN darf nicht leer sein</string>
+  <string name="auth_error_pin_too_short">Die PIN sollte mindestens 4 Stellen haben.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Ungültiges Passwort. %d Versuch verbleibend</item>
     <item quantity="other">Ungültiges Passwort. %d Versuche verbleibend</item>

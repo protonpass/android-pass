@@ -6,9 +6,9 @@
   <string name="on_boarding_fingerprint_content">Aseta Proton Passin lukitus avautumaan sormenjäljelläsi, jotta vain sinä voit käyttää sitä.</string>
   <string name="on_boarding_fingerprint_title">Suojaa arkaluonteisimmat tietosi</string>
   <string name="on_boarding_fingerprint_button">Käytä sormenjäljellä avausta</string>
-  <string name="on_boarding_last_page_content">Lopeta todellisen sähköpostiosoitteesi jakaminen ja piilota se sen sijaan sähköpostialiaksilla—Proton Passin ainulaatuinen ominaisuus.</string>
+  <string name="on_boarding_last_page_content">Lopeta todellisen sähköpostiosoitteesi jakaminen ja piilota se sen sijaan sähköpostialiaksilla — Proton Passin ainulaatuinen ominaisuus.</string>
   <string name="on_boarding_last_page_title">Hallitse mitä postilaatikkoosi päätyy</string>
-  <string name="on_boarding_last_page_button">Aloita Proton Passin käyttäminen</string>
+  <string name="on_boarding_last_page_button">Aloita Proton Passin käyttö</string>
   <string name="on_boarding_skip">Ei nyt</string>
   <string name="error_biometry_failed_to_start">Biometristä todennusta ei voitu aloittaa</string>
   <string name="error_biometry_failed_to_authenticate">Todennus epäonnistui</string>

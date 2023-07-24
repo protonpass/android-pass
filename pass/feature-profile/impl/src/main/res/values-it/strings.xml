@@ -30,9 +30,23 @@
   <string name="app_lock_one_hour">Dopo un’ora</string>
   <string name="app_lock_four_hours">Dopo 4 ore</string>
   <string name="profile_account_plan_name_trial">Prova gratuita</string>
+  <string name="app_lock_config_none">Nessuno</string>
   <string name="app_lock_config_biometric">Biometrico</string>
   <string name="app_lock_config_pin_code">Codice PIN</string>
   <string name="app_lock_config_unlock_with">Sblocca con</string>
   <string name="app_lock_config_app_lock_time">Ora di blocco dell\'app</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Usa il blocco di sistema quando quello biometrico fallisce</string>
+  <string name="configure_pin_set_pin_code">Imposta il codice PIN</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Sblocca l\'app con questo codice</string>
+  <string name="configure_pin_enter_pin_code">Inserire il codice PIN</string>
+  <string name="configure_pin_repeat_pin_code">Ripetere il codice PIN</string>
+  <string name="configure_pin_continue">Continua</string>
+  <string name="configure_pin_pin_does_not_match">Il PIN non corrisponde</string>
+  <string name="configure_pin_pin_too_short">Il PIN è troppo corto</string>
+  <string name="configure_pin_pin_cannot_be_blank">Il PIN non può essere vuoto</string>
+  <string name="configure_pin_pin_lock_enabled">Blocco PIN abilitato</string>
+  <string name="configure_pin_pin_lock_disabled">Blocco PIN disattivato</string>
+  <string name="profile_option_lock_with">Blocca con</string>
+  <string name="profile_option_unlock_with">Sblocca con</string>
+  <string name="profile_option_change_pin_code">Cambia codice PIN</string>
 </resources>

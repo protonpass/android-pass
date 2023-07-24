@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Establece Proton Pass para desbloquear con tu huella dactilar así solo ti tendrás acceso.</string>
   <string name="on_boarding_fingerprint_title">Protege tus datos más sensibles</string>
   <string name="on_boarding_fingerprint_button">Habilitar desbloqueo con huella dactilar</string>
-  <string name="on_boarding_last_page_content">Deja de compartir tu dirección de correo real. En su lugar, ocúltala usando alias de correo electrónico. Exclusivo de Proton Pass.</string>
+  <string name="on_boarding_last_page_content">Deja de compartir tu dirección de correo real. En su lugar, ocúltala utilizando alias de correo electrónico. Exclusivo de Proton Pass.</string>
   <string name="on_boarding_last_page_title">Controla lo que llega a tu buzón</string>
   <string name="on_boarding_last_page_button">Empieza a utilizar Proton Pass</string>
   <string name="on_boarding_skip">Ahora no</string>

@@ -37,6 +37,8 @@
   <string name="auth_unlock_button">Разблакіраваць</string>
   <string name="auth_error_verifying_password">Памылка праверкі вашага пароля</string>
   <string name="auth_error_empty_password">Пароль не можа быць пустым</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN не можа быць пустым</string>
+  <string name="auth_error_pin_too_short">PIN-код павінен утрымліваць не менш за 4 лічбы</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Няправільны пароль. Засталася %d спроба</item>
     <item quantity="few">Няправільны пароль. Засталося %d спробы</item>

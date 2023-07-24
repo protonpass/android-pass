@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources/>
+<resources>
+  <string name="error_cant_find_matching_fields">Δε βρέθηκαν πεδία που να ταιριάζουν</string>
+  <string name="autofill_authenticate_prompt">Λήψη από το Proton Pass</string>
+  <string name="error_credentials_not_found">Δεν βρέθηκαν διαπιστευτήρια που να ταιριάζουν</string>
+  <string name="error_credentials_not_saved">Δεν ήταν δυνατή η αποθήκευση των διαπιστευτηρίων</string>
+  <string name="error_loading_items">Αδυναμία φόρτωσης των στοιχείων</string>
+  <string name="topbar_search_query">Αναζήτηση σε όλες τις κρύπτες...</string>
+  <string name="topbar_search_query_primary_vault">Αναζήτηση στην κύρια κρύπτη…</string>
+  <string name="topbar_search_query_uninitialized">Αναζήτηση…</string>
+  <string name="inline_suggestions_open_app">Άνοιγμα Proton Pass</string>
+  <string name="autofill_only_searching_in_primary_vault">Το πλάνο σας επιτρέπει τη χρήση στοιχείων στην κύρια κρύπτη μόνο για σκοπούς αυτόματης συμπλήρωσης.</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="autofill_suggestions_for_placeholder">Υποδείξεις για %s</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Χρησιμοποιήστε τα στοιχεία σύνδεσης από το \"%s\" σε αυτήν την εφαρμογή ή ιστότοπο.</string>
+  <string name="autofill_dialog_associate_and_autofill">Χρήση πάντα</string>
+  <string name="autofill_dialog_just_autofill">Χρήση μία φορά</string>
+  <string name="autofill_dialog_cancel">Ακύρωση</string>
+  <string name="autofill_notification_copy_to_clipboard">Ο TOTP έχει αντιγραφεί στο πρόχειρο</string>
+  <string name="autofill_dialog_associate_title">Χρησιμοποίηση διαπιστευτηρίων;</string>
+  <string name="snackbar_item_move_to_trash_success">Το στοιχείο μετακινήθηκε στον κάδο απορριμμάτων</string>
+  <string name="snackbar_item_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση στον κάδο απορριμμάτων</string>
+  <string name="autofill_user_logged_out">Έχετε αποσυνδεθεί. Παρακαλούμε συνδεθείτε ξανά ανοίγοντας την εφαρμογή.</string>
+</resources>

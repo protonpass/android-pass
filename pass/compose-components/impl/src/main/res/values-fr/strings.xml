@@ -15,7 +15,7 @@
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Confirmer</string>
   <string name="bottomsheet_cancel_button">Annuler</string>
-  <string name="bottomsheet_move_to_trash">Déplacer dans la Corbeille</string>
+  <string name="bottomsheet_move_to_trash">Déplacer dans la corbeille</string>
   <!-- Actions -->
   <string name="action_content_description_menu">Ouvrir le menu d\'action de l\'élément</string>
   <string name="action_upgrade_now">Changer d\'abonnement</string>

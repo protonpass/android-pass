@@ -55,7 +55,7 @@
   <string name="create_note_init_error">Impossible d\'initialiser la note</string>
   <string name="create_note_empty_share_id">L\'identifiant de partage ne peut pas être vide.</string>
   <string name="note_created">La note a été créée.</string>
-  <string name="edit_note_snackbar_note_moved_to_trash">La note a été déplacée dans la Corbeille.</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">La note a été déplacée dans la corbeille.</string>
   <string name="edit_note_snackbar_note_moved_to_trash_error">Impossible de supprimer la note</string>
   <!-- Create Alias -->
   <string name="title_create_alias">Créer un alias</string>
@@ -76,7 +76,7 @@
   <string name="create_alias_init_error">Impossible d\'initialiser l\'alias</string>
   <string name="create_alias_empty_share_id">L\'identifiant de partage ne peut pas être vide.</string>
   <string name="alias_created">L\'alias a été créé.</string>
-  <string name="alias_moved_to_trash">L\'alias a été déplacé dans la Corbeille.</string>
+  <string name="alias_moved_to_trash">L\'alias a été déplacé dans la corbeille.</string>
   <string name="cannot_retrieve_alias_options">Impossible de récupérer les options d\'alias</string>
   <string name="alias_mailbox_dialog_title">Transférer vers</string>
   <!-- Create note -->

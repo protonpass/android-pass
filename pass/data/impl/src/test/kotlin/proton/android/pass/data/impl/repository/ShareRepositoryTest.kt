@@ -23,6 +23,8 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.account.fakes.TestUserAddressRepository
+import proton.android.pass.account.fakes.TestUserRepository
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.TestCreateVault
 import proton.android.pass.data.impl.db.entities.ShareEntity
@@ -33,8 +35,6 @@ import proton.android.pass.data.impl.fakes.TestRemoteShareDataSource
 import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.responses.ShareResponse
-import proton.android.pass.account.fakes.TestUserAddressRepository
-import proton.android.pass.account.fakes.TestUserRepository
 import proton.android.pass.test.domain.TestShare
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
@@ -104,25 +104,24 @@ class ShareRepositoryTest {
 
         local.setDeleteSharesResponse(Result.success(true))
         local.setUpsertResponse(Result.success(Unit))
-        local.setSetPrimaryShareStatusResult(Result.success(Unit))
 
         // WHEN
         instance.refreshShares(userId)
 
         // THEN
 
-        // Primary status should have changed
-        val updateStatusMemory = local.getSetPrimaryShareMemory()
-        assertThat(updateStatusMemory.size).isEqualTo(2)
-        assertThat(updateStatusMemory[0].shareId).isEqualTo(share1.id)
-        assertThat(updateStatusMemory[0].isPrimary).isEqualTo(false)
-        assertThat(updateStatusMemory[1].shareId).isEqualTo(share2.id)
-        assertThat(updateStatusMemory[1].isPrimary).isEqualTo(true)
-
-        // Upsert should have been called with 1 share
         val upsertMemory = local.getUpsertMemory()
-        assertThat(upsertMemory.size).isEqualTo(1)
-        assertThat(upsertMemory[0]).isEqualTo(listOf(share5.toEntity()))
+        assertThat(upsertMemory.size).isEqualTo(2)
+
+        val firstUpsertMemory = upsertMemory[0]
+        assertThat(firstUpsertMemory.size).isEqualTo(2)
+        assertThat(firstUpsertMemory[0].id).isEqualTo(share1.id.id)
+        assertThat(firstUpsertMemory[0].isPrimary).isEqualTo(false)
+        assertThat(firstUpsertMemory[1].id).isEqualTo(share2.id.id)
+        assertThat(firstUpsertMemory[1].isPrimary).isEqualTo(true)
+
+        val secondUpsertMemory = upsertMemory[1]
+        assertThat(secondUpsertMemory).isEqualTo(listOf(share5.toEntity()))
 
         // share4 should be deleted
         val deleteMemory = local.getDeleteMemory()
@@ -142,7 +141,9 @@ class ShareRepositoryTest {
         contentKeyRotation = null,
         contentFormatVersion = null,
         expirationTime = null,
-        createTime = 0
+        createTime = 0,
+        owner = isOwner,
+        shareRoleId = shareRole.value
     )
 
     private fun Share.toEntity(): ShareEntity = ShareEntity(
@@ -160,7 +161,9 @@ class ShareRepositoryTest {
         expirationTime = null,
         createTime = 0,
         encryptedContent = null,
-        isActive = true
+        isActive = true,
+        owner = isOwner,
+        shareRoleId = shareRole.value
     )
 
     companion object {

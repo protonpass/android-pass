@@ -20,17 +20,23 @@ package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
+import proton.android.pass.preferences.FeatureFlag.SHARING_V1
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     FeatureFlagsPreferencesRepository {
+    private val state = mutableMapOf<FeatureFlag, Any?>()
+
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = when (featureFlag) {
-        FeatureFlag.AUTOFILL_DEBUG_MODE -> flowOf(false as T)
-        FeatureFlag.SHARING_V1 -> flowOf(false as T)
+        AUTOFILL_DEBUG_MODE -> flowOf(state.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T)
+        SHARING_V1 -> flowOf(state.getOrDefault(SHARING_V1, false) as T)
     }
 
-    override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =
-        Result.success(Unit)
+    override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> {
+        state[featureFlag] = value
+        return Result.success(Unit)
+    }
 }

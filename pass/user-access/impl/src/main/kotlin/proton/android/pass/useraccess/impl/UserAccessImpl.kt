@@ -18,8 +18,10 @@
 
 package proton.android.pass.useraccess.impl
 
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.useraccess.api.UserAccess
@@ -38,9 +40,19 @@ class UserAccessImpl @Inject constructor(
             .firstOrNull()
             ?: false
         if (!isSharingFlagEnabled) return false
-        val vaultResult = runCatching { getVaultById(shareId = shareId).firstOrNull() }
-        val vault = vaultResult.getOrNull() ?: return false
+        val vault = runCatching { getVaultById(shareId = shareId).first() }
+            .fold(
+                onSuccess = { vault -> vault },
+                onFailure = {
+                    PassLogger.w(TAG, it, "canShare vault not found")
+                    return false
+                }
+            )
         if (vault.isPrimary) return false
         return true
+    }
+
+    companion object {
+        private const val TAG = "UserAccessImpl"
     }
 }

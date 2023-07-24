@@ -32,21 +32,24 @@ import me.proton.core.key.domain.publicKey
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.crypto.api.Base64
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.crypto.api.usecases.AcceptInvite
+import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKey
+import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKeyList
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
-import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
 import javax.inject.Inject
 
 class AcceptInviteImpl @Inject constructor(
-    private val cryptoContext: CryptoContext
+    private val cryptoContext: CryptoContext,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : AcceptInvite {
     override fun invoke(
         invitedUser: User,
         invitedUserAddressKeys: List<PrivateKey>,
         inviterAddressKeys: List<PublicKey>,
         keys: List<EncryptedInviteKey>
-    ): EncryptedInviteShareKeyList {
+    ): EncryptedInviteAcceptKeyList {
 
         // KeyHolder that contains the invited user address keys
         val invitedUserPrivateKeyHolder = KeyHolderContext(
@@ -84,14 +87,17 @@ class AcceptInviteImpl @Inject constructor(
                     user = invitedUser
                 )
 
-                EncryptedInviteKey(
+                EncryptedInviteAcceptKey(
                     keyRotation = inviteKey.keyRotation,
-                    key = Base64.encodeBase64String(reencryptedKey)
+                    key = Base64.encodeBase64String(reencryptedKey),
+                    localEncryptedKey = encryptionContextProvider.withEncryptionContext {
+                        encrypt(decryptedKey.data)
+                    }
                 )
             }
         }
 
-        return EncryptedInviteShareKeyList(reencryptedKeys)
+        return EncryptedInviteAcceptKeyList(reencryptedKeys)
     }
 
     private fun reencryptKey(key: ByteArray, user: User): ByteArray = user.useKeys(cryptoContext) {

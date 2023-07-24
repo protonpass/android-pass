@@ -60,6 +60,7 @@ dependencies {
     implementation(projects.pass.featureProfile.impl)
     implementation(projects.pass.featureSearchOptions.impl)
     implementation(projects.pass.featureSettings.impl)
+    implementation(projects.pass.featureSharing.impl)
     implementation(projects.pass.featureTrash.impl)
     implementation(projects.pass.featureTrial.impl)
     implementation(projects.pass.featureVault.impl)

@@ -42,7 +42,7 @@ fun VaultOptionsBottomSheet(
             onEdit = { onNavigate(VaultNavigation.VaultEdit(state.shareId)) },
             onMigrate = { onNavigate(VaultNavigation.VaultMigrate(state.shareId)) },
             onRemove = { onNavigate(VaultNavigation.VaultRemove(state.shareId)) },
-            onShare = {}
+            onShare = { onNavigate(VaultNavigation.VaultShare(state.shareId)) },
         )
 
         VaultOptionsUiState.Loading,

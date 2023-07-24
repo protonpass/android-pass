@@ -29,10 +29,21 @@ import proton.pass.domain.ShareId
 sealed interface VaultNavigation {
     object Upgrade : VaultNavigation
     object Close : VaultNavigation
-    data class VaultSelected(val shareId: ShareId) : VaultNavigation
-    data class VaultMigrate(val shareId: ShareId) : VaultNavigation
-    data class VaultEdit(val shareId: ShareId) : VaultNavigation
-    data class VaultRemove(val shareId: ShareId) : VaultNavigation
+
+    @JvmInline
+    value class VaultSelected(val shareId: ShareId) : VaultNavigation
+
+    @JvmInline
+    value class VaultMigrate(val shareId: ShareId) : VaultNavigation
+
+    @JvmInline
+    value class VaultEdit(val shareId: ShareId) : VaultNavigation
+
+    @JvmInline
+    value class VaultRemove(val shareId: ShareId) : VaultNavigation
+
+    @JvmInline
+    value class VaultShare(val shareId: ShareId) : VaultNavigation
 }
 
 fun NavGraphBuilder.vaultGraph(

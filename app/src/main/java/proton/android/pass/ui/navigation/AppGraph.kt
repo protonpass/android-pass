@@ -114,6 +114,9 @@ import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featuresettings.impl.SettingsNavigation
 import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
+import proton.android.pass.featuresharing.impl.SharingNavigation
+import proton.android.pass.featuresharing.impl.SharingWith
+import proton.android.pass.featuresharing.impl.sharingGraph
 import proton.android.pass.featuretrial.impl.TrialNavigation
 import proton.android.pass.featuretrial.impl.TrialScreen
 import proton.android.pass.featuretrial.impl.trialGraph
@@ -295,6 +298,7 @@ fun NavGraphBuilder.appGraph(
                 VaultNavigation.Close -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
                 VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
                     appNavigator.navigateUpWithResult(
@@ -320,6 +324,10 @@ fun NavGraphBuilder.appGraph(
                         route = DeleteVaultDialog.createNavRoute(it.shareId),
                         backDestination = Home
                     )
+                }
+
+                is VaultNavigation.VaultShare -> dismissBottomSheet {
+                    appNavigator.navigate(SharingWith, SharingWith.createRoute(it.shareId))
                 }
             }
         }
@@ -379,6 +387,7 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.ConfigurePin -> dismissBottomSheet {
                     appNavigator.navigate(PinConfig)
                 }
+
                 ProfileNavigation.EnterPin -> dismissBottomSheet {
                     appNavigator.navigate(EnterPin)
                 }
@@ -398,6 +407,7 @@ fun NavGraphBuilder.appGraph(
                 SettingsNavigation.ClipboardSettings -> dismissBottomSheet {
                     appNavigator.navigate(ClipboardSettings)
                 }
+
                 SettingsNavigation.ClearClipboardSettings -> dismissBottomSheet {
                     appNavigator.navigate(ClearClipboardOptions)
                 }
@@ -790,6 +800,11 @@ fun NavGraphBuilder.appGraph(
         when (it) {
             TrialNavigation.Close -> appNavigator.onBackClick()
             TrialNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+        }
+    }
+    sharingGraph {
+        when (it) {
+            SharingNavigation.Back -> appNavigator.onBackClick()
         }
     }
 }

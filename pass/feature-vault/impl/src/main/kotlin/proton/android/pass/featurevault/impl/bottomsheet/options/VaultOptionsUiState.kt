@@ -29,5 +29,6 @@ sealed class VaultOptionsUiState {
         val showEdit: Boolean,
         val showMigrate: Boolean,
         val showDelete: Boolean,
+        val showShare: Boolean,
     ) : VaultOptionsUiState()
 }

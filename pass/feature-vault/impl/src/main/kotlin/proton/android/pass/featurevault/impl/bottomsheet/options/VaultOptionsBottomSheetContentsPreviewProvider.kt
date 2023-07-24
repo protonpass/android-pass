@@ -29,7 +29,8 @@ class VaultOptionsBottomSheetContentsPreviewProvider :
                 shareId = ShareId(""),
                 showEdit = true,
                 showMigrate = true,
-                showDelete = true
+                showDelete = true,
+                showShare = true
             )
         )
 }

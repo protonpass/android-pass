@@ -22,9 +22,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -35,6 +38,7 @@ import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotGetVault
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.useraccess.api.UserAccess
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -43,16 +47,21 @@ class VaultOptionsViewModel @Inject constructor(
     snackbarDispatcher: SnackbarDispatcher,
     canPerformPaidAction: CanPerformPaidAction,
     observeVaults: ObserveVaults,
+    userAccess: UserAccess,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val navShareId: ShareId =
         ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
 
+    private val canShare: Flow<Boolean> = flow { emit(userAccess.canShare(navShareId)) }
+        .distinctUntilChanged()
+
     val state: StateFlow<VaultOptionsUiState> = combine(
         observeVaults().asLoadingResult(),
-        canPerformPaidAction().asLoadingResult()
-    ) { vaultResult, canPerformPaidActionResult ->
+        canPerformPaidAction().asLoadingResult(),
+        canShare
+    ) { vaultResult, canPerformPaidActionResult, canShare ->
         val vaultList = when (vaultResult) {
             is LoadingResult.Error -> return@combine run {
                 snackbarDispatcher(CannotGetVaultListError)
@@ -90,7 +99,8 @@ class VaultOptionsViewModel @Inject constructor(
             shareId = navShareId,
             showEdit = canEdit,
             showMigrate = canMigrate,
-            showDelete = canDelete
+            showDelete = canDelete,
+            showShare = canShare
         )
     }.stateIn(
         scope = viewModelScope,

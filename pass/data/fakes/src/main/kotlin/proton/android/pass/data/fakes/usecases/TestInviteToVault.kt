@@ -21,6 +21,7 @@ package proton.android.pass.data.fakes.usecases
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -36,6 +37,7 @@ class TestInviteToVault @Inject constructor() : InviteToVault {
     override suspend fun invoke(
         userId: UserId?,
         targetEmail: String,
-        shareId: ShareId
+        shareId: ShareId,
+        shareRole: ShareRole
     ): Result<Unit> = result
 }

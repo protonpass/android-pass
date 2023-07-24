@@ -35,6 +35,7 @@ import proton.android.pass.data.impl.requests.CreateInviteKey
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 import javax.inject.Inject
 
 class InviteToVaultImpl @Inject constructor(
@@ -50,7 +51,8 @@ class InviteToVaultImpl @Inject constructor(
     override suspend fun invoke(
         userId: UserId?,
         targetEmail: String,
-        shareId: ShareId
+        shareId: ShareId,
+        shareRole: ShareRole
     ): Result<Unit> {
         val id = userId ?: run {
             val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
@@ -77,7 +79,8 @@ class InviteToVaultImpl @Inject constructor(
             userId = id,
             shareId = shareId,
             address = address,
-            targetEmail = targetEmail
+            targetEmail = targetEmail,
+            shareRole = shareRole,
         ).mapCatching { request ->
             remoteInviteDataSource.sendInvite(id, shareId, request)
         }
@@ -88,7 +91,8 @@ class InviteToVaultImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         address: UserAddress,
-        targetEmail: String
+        targetEmail: String,
+        shareRole: ShareRole
     ): Result<CreateInviteRequest> {
         val shareKeys = shareKeyRepository.getShareKeys(
             userId = userId,
@@ -133,6 +137,7 @@ class InviteToVaultImpl @Inject constructor(
             },
             email = targetEmail,
             targetType = TARGET_TYPE_VAULT,
+            shareRoleId = shareRole.value
         )
 
         return Result.success(request)

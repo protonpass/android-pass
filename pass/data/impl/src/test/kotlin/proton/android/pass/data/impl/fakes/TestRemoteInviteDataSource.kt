@@ -39,9 +39,9 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
         userId: UserId,
         shareId: ShareId,
         request: CreateInviteRequest
-    ): Result<Unit> {
+    ) {
         memory.add(Payload(userId, shareId, request))
-        return result
+        result.getOrThrow()
     }
 
     data class Payload(

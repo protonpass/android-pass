@@ -32,21 +32,14 @@ class RemoteInviteDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         request: CreateInviteRequest
-    ): Result<Unit> {
-        val response = apiProvider.get<PasswordManagerApi>(userId)
+    ) {
+        apiProvider.get<PasswordManagerApi>(userId)
             .invoke {
                 inviteUser(
                     shareId = shareId.id,
                     request = request
                 )
             }
-
-        return runCatching { response.valueOrThrow }
-            .fold(
-                onSuccess = { Result.success(Unit) },
-                onFailure = {
-                    Result.failure(it)
-                }
-            )
+            .valueOrThrow
     }
 }

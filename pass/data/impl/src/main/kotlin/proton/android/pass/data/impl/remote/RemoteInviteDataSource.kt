@@ -27,5 +27,5 @@ interface RemoteInviteDataSource {
         userId: UserId,
         shareId: ShareId,
         request: CreateInviteRequest
-    ): Result<Unit>
+    )
 }

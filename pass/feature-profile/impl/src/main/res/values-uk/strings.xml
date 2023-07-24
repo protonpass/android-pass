@@ -30,9 +30,23 @@
   <string name="app_lock_one_hour">Через 1 годину</string>
   <string name="app_lock_four_hours">Через 4 години</string>
   <string name="profile_account_plan_name_trial">Безплатна пробна версія</string>
+  <string name="app_lock_config_none">Немає</string>
   <string name="app_lock_config_biometric">Біометрія</string>
   <string name="app_lock_config_pin_code">PIN-код</string>
   <string name="app_lock_config_unlock_with">Розблокувати за допомогою</string>
   <string name="app_lock_config_app_lock_time">Час блокування застосунку</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Використовувати системне блокування при біометричному збої</string>
+  <string name="configure_pin_set_pin_code">Встановити PIN-код</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Розблокувати застосунок за допомогою цього коду</string>
+  <string name="configure_pin_enter_pin_code">Введіть PIN-код</string>
+  <string name="configure_pin_repeat_pin_code">Повторіть PIN-код</string>
+  <string name="configure_pin_continue">Продовжити</string>
+  <string name="configure_pin_pin_does_not_match">PIN-код не збігається</string>
+  <string name="configure_pin_pin_too_short">PIN-код закороткий</string>
+  <string name="configure_pin_pin_cannot_be_blank">PIN-код не може бути порожнім</string>
+  <string name="configure_pin_pin_lock_enabled">Ввімкнено блокування PIN-кодом</string>
+  <string name="configure_pin_pin_lock_disabled">Вимкнено блокування PIN-кодом</string>
+  <string name="profile_option_lock_with">Заблокувати за допомогою</string>
+  <string name="profile_option_unlock_with">Розблокувати за допомогою</string>
+  <string name="profile_option_change_pin_code">Змінити PIN-код</string>
 </resources>

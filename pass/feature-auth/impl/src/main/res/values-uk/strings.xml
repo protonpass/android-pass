@@ -22,25 +22,27 @@
   <string name="profile_option_app_lock">Блокування застосунку</string>
   <string name="enter_your_pin_code">Введіть PIN-код</string>
   <string name="unlock">Розблокувати</string>
-  <string name="enter_pin">Введіть Pin-код</string>
+  <string name="enter_pin">Введіть PIN-код</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Неправильний PIN-код. Залишилася %d спроба.</item>
     <item quantity="few">Неправильний PIN-код. Залишилося %d спроби.</item>
     <item quantity="many">Неправильний PIN-код. Залишилося %d спроби.</item>
     <item quantity="other">Неправильний PIN-код. Залишилося %d спроб.</item>
   </plurals>
-  <string name="auth_unlock_app_title">Unlock Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
-  <string name="auth_master_password_label">Master password</string>
-  <string name="auth_action_reveal_password">Reveal master password</string>
-  <string name="auth_action_conceal_password">Conceal master password</string>
-  <string name="auth_unlock_button">Unlock</string>
-  <string name="auth_error_verifying_password">Error verifying your password</string>
-  <string name="auth_error_empty_password">Password cannot be empty</string>
+  <string name="auth_unlock_app_title">Розблокувати Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Введіть основний пароль для %s</string>
+  <string name="auth_master_password_label">Основний пароль</string>
+  <string name="auth_action_reveal_password">Показати основний пароль</string>
+  <string name="auth_action_conceal_password">Приховати основний пароль</string>
+  <string name="auth_unlock_button">Розблокувати</string>
+  <string name="auth_error_verifying_password">Помилка під час перевірки пароля</string>
+  <string name="auth_error_empty_password">Пароль не може бути порожнім</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN-код не може бути порожнім</string>
+  <string name="auth_error_pin_too_short">PIN-код повинен бути не менше 4 цифр</string>
   <plurals name="auth_error_wrong_password">
-    <item quantity="one">Incorrect password. %d attempt remaining</item>
-    <item quantity="few">Incorrect password. %d attempts remaining</item>
-    <item quantity="many">Incorrect password. %d attempts remaining</item>
-    <item quantity="other">Incorrect password. %d attempts remaining</item>
+    <item quantity="one">Неправильний пароль. Залишилася %d спроба</item>
+    <item quantity="few">Неправильний пароль. Залишилося %d спроби</item>
+    <item quantity="many">Неправильний пароль. Залишилося %d спроб</item>
+    <item quantity="other">Неправильний пароль. Залишилося %d спроб</item>
   </plurals>
 </resources>

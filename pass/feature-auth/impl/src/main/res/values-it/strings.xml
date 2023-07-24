@@ -22,7 +22,7 @@
   <string name="profile_option_app_lock">Blocco applicazioni</string>
   <string name="enter_your_pin_code">Inserisci il tuo PIN</string>
   <string name="unlock">Sblocca</string>
-  <string name="enter_pin">Inserisci pin</string>
+  <string name="enter_pin">Inserisci il PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">PIN errato, %d tentativo rimasto.</item>
     <item quantity="other">PIN errato, %d tentativi rimasti.</item>
@@ -35,6 +35,8 @@
   <string name="auth_unlock_button">Sblocca</string>
   <string name="auth_error_verifying_password">Errore durante la verifica della password</string>
   <string name="auth_error_empty_password">La password non può essere vuota</string>
+  <string name="auth_error_pin_cannot_be_empty">Il PIN non può essere vuoto</string>
+  <string name="auth_error_pin_too_short">Il PIN deve essere di almeno quattro cifre</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Password errata. %d tentativo rimasto</item>
     <item quantity="other">Password errata. %d tentativi rimasti</item>

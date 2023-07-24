@@ -22,21 +22,23 @@
   <string name="profile_option_app_lock">Bloqueio da aplicação</string>
   <string name="enter_your_pin_code">Insira o seu código PIN</string>
   <string name="unlock">Desbloquear</string>
-  <string name="enter_pin">Insira o PIN</string>
+  <string name="enter_pin">Introduza o código PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">PIN incorreto. Resta %d tentativa.</item>
     <item quantity="other">PIN incorreto. Restam %d tentativas.</item>
   </plurals>
-  <string name="auth_unlock_app_title">Unlock Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
-  <string name="auth_master_password_label">Master password</string>
-  <string name="auth_action_reveal_password">Reveal master password</string>
-  <string name="auth_action_conceal_password">Conceal master password</string>
-  <string name="auth_unlock_button">Unlock</string>
-  <string name="auth_error_verifying_password">Error verifying your password</string>
-  <string name="auth_error_empty_password">Password cannot be empty</string>
+  <string name="auth_unlock_app_title">Desbloquear Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Introduza a sua palavra-passe principal para %s</string>
+  <string name="auth_master_password_label">Palavra-passe principal</string>
+  <string name="auth_action_reveal_password">Mostrar a palavra-passe principal</string>
+  <string name="auth_action_conceal_password">Ocultar a palavra-passe principal</string>
+  <string name="auth_unlock_button">Desbloquear</string>
+  <string name="auth_error_verifying_password">Erro ao verificar a sua palavra-passe</string>
+  <string name="auth_error_empty_password">A palavra-passe não pode estar vazia.</string>
+  <string name="auth_error_pin_cannot_be_empty">O código PIN não pode estar vazio.</string>
+  <string name="auth_error_pin_too_short">O código PIN deve ter pelo menos 4 números.</string>
   <plurals name="auth_error_wrong_password">
-    <item quantity="one">Incorrect password. %d attempt remaining</item>
-    <item quantity="other">Incorrect password. %d attempts remaining</item>
+    <item quantity="one">Palavra-passe incorreta. Resta %d tentativa</item>
+    <item quantity="other">Palavra-passe incorreta. Restam %d tentativas</item>
   </plurals>
 </resources>

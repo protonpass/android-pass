@@ -22,7 +22,7 @@
   <string name="profile_option_app_lock">Verrouillage de l\'application</string>
   <string name="enter_your_pin_code">Entrez votre code PIN</string>
   <string name="unlock">Déverrouiller</string>
-  <string name="enter_pin">Saisir le PIN</string>
+  <string name="enter_pin">Saisir le code PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Le code PIN n\'est pas correct. Il reste %d tentative.</item>
     <item quantity="other">Le code PIN n\'est pas correct. Il reste %d tentatives.</item>
@@ -35,6 +35,8 @@
   <string name="auth_unlock_button">Déverrouiller</string>
   <string name="auth_error_verifying_password">Une erreur s\'est produite lors de la vérification de votre mot de passe.</string>
   <string name="auth_error_empty_password">Le mot de passe ne peut être vide.</string>
+  <string name="auth_error_pin_cannot_be_empty">Le code PIN ne peut pas être vide.</string>
+  <string name="auth_error_pin_too_short">Le code PIN doit être composé d\'au moins 4 chiffres.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Le mot de passe n\'est pas correct. Il reste %d tentative.</item>
     <item quantity="other">Le mot de passe n\'est pas correct. Il reste %d tentatives.</item>

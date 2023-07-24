@@ -15,8 +15,8 @@
   <string name="profile_option_advanced">Gelişmiş</string>
   <string name="profile_error_biometry_failed_to_start">Biyometrik kimlik doğrulaması başlatılamadı</string>
   <string name="profile_error_biometry_failed_to_authenticate">Kimlik doğrulanamadı</string>
-  <string name="profile_fingerprint_lock_enabled">Parmak izi ile kilit açma etkinleştirildi</string>
-  <string name="profile_fingerprint_lock_disabled">Parmak izi ile kilit açma devre dışı bırakıldı</string>
+  <string name="profile_fingerprint_lock_enabled">Parmak izi ile kilit açma özelliği açıldı</string>
+  <string name="profile_fingerprint_lock_disabled">Parmak izi ile kilit açma özelliği kapatıldı</string>
   <string name="profile_error_performing_operation">İşlem yapılırken sorun çıktı</string>
   <string name="profile_app_version_copied_to_clipboard">Uygulama sürümü kopyalandı</string>
   <string name="feedback_option_reddit">Reddit Proton konularına bakın</string>
@@ -30,9 +30,23 @@
   <string name="app_lock_one_hour">1 saat sonra</string>
   <string name="app_lock_four_hours">4 saat sonra</string>
   <string name="profile_account_plan_name_trial">Ücretsiz deneme</string>
+  <string name="app_lock_config_none">Yok</string>
   <string name="app_lock_config_biometric">Biyometrik</string>
   <string name="app_lock_config_pin_code">PIN kodu</string>
   <string name="app_lock_config_unlock_with">Kilidi şununla aç</string>
   <string name="app_lock_config_app_lock_time">Uygulama kilitlenme süresi</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Biyometrik yöntem geçersiz olduğunda sistem kilidi kullanılsın</string>
+  <string name="configure_pin_set_pin_code">PIN kodu ayarla</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Uygulama kilidi bu kod ile açılsın</string>
+  <string name="configure_pin_enter_pin_code">PIN kodunu yazın</string>
+  <string name="configure_pin_repeat_pin_code">PIN kodu onayı</string>
+  <string name="configure_pin_continue">İlerle</string>
+  <string name="configure_pin_pin_does_not_match">PIN kodu doğru değil</string>
+  <string name="configure_pin_pin_too_short">PIN kodu çok kısa</string>
+  <string name="configure_pin_pin_cannot_be_blank">PIN kodu boş olamaz</string>
+  <string name="configure_pin_pin_lock_enabled">PIN kodu ile kilitleme açık</string>
+  <string name="configure_pin_pin_lock_disabled">PIN kodu ile kilitleme kapalı</string>
+  <string name="profile_option_lock_with">Şununla kilitlensin</string>
+  <string name="profile_option_unlock_with">Kilit şununla açılsın</string>
+  <string name="profile_option_change_pin_code">PIN kodunu değiştir</string>
 </resources>

@@ -39,8 +39,6 @@ class TestLocalShareDataSource : LocalShareDataSource {
         Result.failure(IllegalStateException("deleteShares not set"))
     private var hasSharesResponse: Result<Boolean> =
         Result.failure(IllegalStateException("hasShares not set"))
-    private var setPrimaryShareStatusResult: Result<Unit> =
-        Result.failure(IllegalStateException("primaryShareStatusResult not set"))
     private var deleteSharesForUserResult: Result<Unit> = Result.success(Unit)
 
     private val getAllSharesForUserFlow = testFlow<List<ShareEntity>>()
@@ -49,11 +47,9 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     private var deleteMemory: MutableList<Set<ShareId>> = mutableListOf()
     private var upsertMemory: MutableList<List<ShareEntity>> = mutableListOf()
-    private var setPrimaryShareStatusMemory: MutableList<SetPrimarySharePayload> = mutableListOf()
 
     fun getDeleteMemory() = deleteMemory
     fun getUpsertMemory() = upsertMemory
-    fun getSetPrimaryShareMemory() = setPrimaryShareStatusMemory
 
     fun setUpsertResponse(value: Result<Unit>) {
         upsertResponse = value
@@ -73,10 +69,6 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     fun setHasSharesResponse(value: Result<Boolean>) {
         hasSharesResponse = value
-    }
-
-    fun setSetPrimaryShareStatusResult(value: Result<Unit>) {
-        setPrimaryShareStatusResult = value
     }
 
     fun emitAllSharesForUser(value: List<ShareEntity>) {
@@ -119,25 +111,10 @@ class TestLocalShareDataSource : LocalShareDataSource {
         disablePrimaryShareResponse.getOrThrow()
     }
 
-    override suspend fun setPrimaryShareStatus(
-        userId: UserId,
-        shareId: ShareId,
-        isPrimary: Boolean
-    ) {
-        setPrimaryShareStatusMemory.add(SetPrimarySharePayload(userId, shareId, isPrimary))
-        setPrimaryShareStatusResult.getOrThrow()
-    }
-
     override suspend fun deleteSharesForUser(userId: UserId) {
         deleteSharesForUserResult.getOrThrow()
     }
 
     override fun observeActiveVaultCount(userId: UserId): Flow<Int> = getShareCountFlow
         .map { it.getOrThrow() }
-
-    data class SetPrimarySharePayload(
-        val userId: UserId,
-        val shareId: ShareId,
-        val isPrimary: Boolean
-    )
 }

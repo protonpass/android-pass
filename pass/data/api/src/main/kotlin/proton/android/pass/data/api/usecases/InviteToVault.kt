@@ -20,13 +20,15 @@ package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 
 interface InviteToVault {
 
     suspend operator fun invoke(
         userId: UserId? = null,
         targetEmail: String,
-        shareId: ShareId
+        shareId: ShareId,
+        shareRole: ShareRole
     ): Result<Unit>
 
 }

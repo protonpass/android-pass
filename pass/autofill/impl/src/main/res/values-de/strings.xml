@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources/>
+<resources>
+  <string name="error_cant_find_matching_fields">Keine passenden angezeigten Felder gefunden</string>
+  <string name="autofill_authenticate_prompt">Von Proton Pass holen</string>
+  <string name="error_credentials_not_found">Keine passenden Zugangsdaten gefunden</string>
+  <string name="error_credentials_not_saved">Zugangsdaten konnten nicht gespeichert werden.</string>
+  <string name="error_loading_items">Einträge konnten nicht geladen werden. </string>
+  <string name="topbar_search_query">In allen Tresoren suchen…</string>
+  <string name="topbar_search_query_primary_vault">Im primären Tresor suchen…</string>
+  <string name="topbar_search_query_uninitialized">Suchen…</string>
+  <string name="inline_suggestions_open_app">Proton Pass öffnen</string>
+  <string name="autofill_only_searching_in_primary_vault">Dein Abonnement erlaubt nur die Verwendung von Einträgen in deinem primären Tresor für das automatische Ausfüllen.</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="autofill_suggestions_for_placeholder">Vorschläge für %s</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Die Zugangsdaten von \"%s\" auf dieser App oder Website verwenden.</string>
+  <string name="autofill_dialog_associate_and_autofill">Immer verwenden</string>
+  <string name="autofill_dialog_just_autofill">Einmal verwenden</string>
+  <string name="autofill_dialog_cancel">Abbrechen</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTP wurde in die Zwischenablage kopiert.</string>
+  <string name="autofill_dialog_associate_title">Anmeldedaten verwenden?</string>
+  <string name="snackbar_item_move_to_trash_success">Eintrag in den Papierkorb verschoben.</string>
+  <string name="snackbar_item_move_to_trash_error">Fehler beim Verschieben in den Papierkorb.</string>
+  <string name="autofill_user_logged_out">Du wurdest abgemeldet. Bitte melde dich erneut an, um fortzufahren.</string>
+</resources>

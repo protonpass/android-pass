@@ -22,7 +22,7 @@
   <string name="profile_option_app_lock">應用程式鎖</string>
   <string name="enter_your_pin_code">輸入您的個人識別數字代碼</string>
   <string name="unlock">解鎖</string>
-  <string name="enter_pin">輸入個人識別號碼</string>
+  <string name="enter_pin">輸入 PIN 碼</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="other">個人識別號碼錯誤。剩餘 %d 次嘗試</item>
   </plurals>
@@ -34,6 +34,8 @@
   <string name="auth_unlock_button">解鎖</string>
   <string name="auth_error_verifying_password">驗證密碼時發生錯誤</string>
   <string name="auth_error_empty_password">密碼不能為空</string>
+  <string name="auth_error_pin_cannot_be_empty">Pin碼不能為空白</string>
+  <string name="auth_error_pin_too_short">PIN 碼需至少 4 位數字</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">密碼錯誤。剩餘 %d 次嘗試</item>
   </plurals>

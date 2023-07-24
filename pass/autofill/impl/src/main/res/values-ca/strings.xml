@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources/>
+<resources>
+  <string name="error_cant_find_matching_fields">No s\'ha trobat cap camp visible coincident.</string>
+  <string name="autofill_authenticate_prompt">Aconsegueix des de Proton Pass</string>
+  <string name="error_credentials_not_found">No s\'han trobat les credencials coincidents.</string>
+  <string name="error_credentials_not_saved">No s\'han pogut desar les credencials.</string>
+  <string name="error_loading_items">No s\'ha pogut carregar els elements.</string>
+  <string name="topbar_search_query">Cerca en totes les caixes fortes…</string>
+  <string name="topbar_search_query_primary_vault">Cerca a la caixa forta principal…</string>
+  <string name="topbar_search_query_uninitialized">Cerca…</string>
+  <string name="inline_suggestions_open_app">Obriu Proton Pass</string>
+  <string name="autofill_only_searching_in_primary_vault">El vostre pla només permet utilitzar elements de la vostra caixa forte per l\'emplenament automàtic.</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="autofill_suggestions_for_placeholder">Suggeriments per a %s</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Utilitza les dades d\'inici de sessió de \"%s\" en aquesta aplicació o lloc web.</string>
+  <string name="autofill_dialog_associate_and_autofill">Utilitza sempre</string>
+  <string name="autofill_dialog_just_autofill">Utilitza una vegada</string>
+  <string name="autofill_dialog_cancel">Cancel·la</string>
+  <string name="autofill_notification_copy_to_clipboard">S\'ha copiat el codi TOTP al porta-retalls.</string>
+  <string name="autofill_dialog_associate_title">Voleu utilitzar les dades d\'inici de sessió?</string>
+  <string name="snackbar_item_move_to_trash_success">L\'element s\'ha mogut a la paperera.</string>
+  <string name="snackbar_item_move_to_trash_error">No s\'ha pogut moure a la paperera.</string>
+  <string name="autofill_user_logged_out">Heu tancat la sessió. Torneu a iniciar sessió obrint l\'aplicació.</string>
+</resources>

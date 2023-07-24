@@ -9,11 +9,11 @@
   <string name="error_observing_items">Une erreur s\'est produite sur les éléments.</string>
   <string name="error_observing_share">Une erreur s\'est produite sur le partage.</string>
   <string name="error_refreshing">Une erreur s\'est produite pendant l\'actualisation.</string>
-  <string name="home_snackbar_login_moved_to_trash">L\'identifiant a été déplacé dans la Corbeille.</string>
-  <string name="home_snackbar_alias_moved_to_trash">L\'alias a été déplacé dans la Corbeille.</string>
-  <string name="home_snackbar_note_moved_to_trash">La note a été déplacée dans la Corbeille.</string>
+  <string name="home_snackbar_login_moved_to_trash">L\'identifiant a été déplacé dans la corbeille.</string>
+  <string name="home_snackbar_alias_moved_to_trash">L\'alias a été déplacé dans la corbeille.</string>
+  <string name="home_snackbar_note_moved_to_trash">La note a été déplacée dans la corbeille.</string>
   <string name="home_snackbar_credit_card_moved_to_trash">La carte de crédit a été déplacée dans la corbeille.</string>
-  <string name="home_snackbar_move_to_trash_error">Impossible de déplacer dans la Corbeille</string>
+  <string name="home_snackbar_move_to_trash_error">Impossible de déplacer dans la corbeille</string>
   <string name="home_autofill_banner_title">Profitez du confort du remplissage automatique</string>
   <string name="home_autofill_banner_text">Il vous suffit d\'appuyer pour que votre nom d\'utilisateur et votre mot de passe soient immédiatement renseignés.</string>
   <string name="home_autofill_banner_settings">Activer le remplissage automatique ›</string>
@@ -52,7 +52,7 @@
   <!-- Search top bar -->
   <string name="search_topbar_placeholder_all_vaults">Rechercher dans tous les coffres-forts…</string>
   <string name="search_topbar_placeholder_vault">Rechercher dans %s…</string>
-  <string name="search_topbar_placeholder_trash">Rechercher dans la Corbeille…</string>
+  <string name="search_topbar_placeholder_trash">Rechercher dans la corbeille…</string>
   <string name="item_type_filter_list_icon_content_description">Icône type d\'élément</string>
   <string name="item_type_filter_all">Tous</string>
   <string name="item_type_filter_login">Identifiant</string>
@@ -60,19 +60,19 @@
   <string name="item_type_filter_note">Note</string>
   <string name="item_type_filter_credit_card">Carte</string>
   <!-- Trash -->
-  <string name="trash_empty_list_title">La Corbeille est vide.</string>
-  <string name="trash_empty_list_message">Les éléments déplacés dans la Corbeille apparaissent ici.</string>
+  <string name="trash_empty_list_title">La corbeille est vide.</string>
+  <string name="trash_empty_list_message">Les éléments déplacés dans la corbeille apparaissent ici.</string>
   <string name="bottomsheet_trash_all_items_title">Corbeille</string>
   <string name="bottomsheet_restore_all_items">Restaurer tous les éléments</string>
-  <string name="bottomsheet_empty_trash">Vider la Corbeille</string>
-  <string name="trash_error_clearing_trash">Une erreur s\'est produite pendant la suppression des éléments de la Corbeille.</string>
+  <string name="bottomsheet_empty_trash">Vider la corbeille</string>
+  <string name="trash_error_clearing_trash">Une erreur s\'est produite pendant la suppression des éléments de la corbeille.</string>
   <string name="trash_error_restoring_items">Une erreur s\'est produite pendant la restauration des éléments.</string>
   <string name="trash_error_deleting_item">Une erreur s\'est produite pendant la suppression de l\'élément.</string>
   <!-- Alerts -->
-  <string name="alert_confirm_clear_trash_title">Vider la Corbeille ?</string>
-  <string name="alert_confirm_clear_trash_message">Voulez-vous vraiment vider la Corbeille ? Tous les éléments qu\'elle contient seront définitivement supprimés.</string>
+  <string name="alert_confirm_clear_trash_title">Vider la corbeille ?</string>
+  <string name="alert_confirm_clear_trash_message">Voulez-vous vraiment vider la corbeille ? Tous les éléments qu\'elle contient seront définitivement supprimés.</string>
   <string name="alert_confirm_restore_all_title">Restaurer tous les éléments ?</string>
-  <string name="alert_confirm_restore_all_message">Voulez-vous vraiment restaurer tous les éléments mis à la Corbeille ?</string>
+  <string name="alert_confirm_restore_all_message">Voulez-vous vraiment restaurer tous les éléments mis à la corbeille ?</string>
   <!-- Recent search -->
   <string name="recent_search_header_count">Recherches récentes</string>
   <string name="recent_search_clear">Effacer</string>

@@ -34,6 +34,7 @@ import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermission
 import proton.pass.domain.SharePermissionFlag
+import proton.pass.domain.ShareRole
 import proton.pass.domain.ShareType
 import proton.pass.domain.VaultId
 import proton.pass.domain.key.ShareKey
@@ -87,7 +88,9 @@ class OpenItemImplTest {
             createTime = Date(1664195804),
             color = ShareColor.Color1,
             icon = ShareIcon.Icon1,
-            isPrimary = false
+            isPrimary = false,
+            shareRole = ShareRole.Admin,
+            isOwner = true
         )
     }
 

@@ -24,6 +24,7 @@ import androidx.room.ForeignKey
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.UserEntity
+import proton.pass.domain.ShareRole
 
 @Entity(
     tableName = ShareEntity.TABLE,
@@ -76,7 +77,11 @@ data class ShareEntity(
     val encryptedContent: EncryptedByteArray?,
 
     @ColumnInfo(name = Columns.IS_ACTIVE, defaultValue = "1")
-    val isActive: Boolean
+    val isActive: Boolean,
+    @ColumnInfo(name = Columns.SHARE_ROLE_ID, defaultValue = ShareRole.SHARE_ROLE_ADMIN)
+    val shareRoleId: String,
+    @ColumnInfo(name = Columns.OWNER, defaultValue = "1")
+    val owner: Boolean
 ) {
     object Columns {
         const val ID = "id"
@@ -94,6 +99,8 @@ data class ShareEntity(
         const val CREATE_TIME = "create_time"
         const val ENCRYPTED_CONTENT = "encrypted_content"
         const val IS_ACTIVE = "is_active"
+        const val SHARE_ROLE_ID = "share_role_id"
+        const val OWNER = "owner"
     }
 
     companion object {

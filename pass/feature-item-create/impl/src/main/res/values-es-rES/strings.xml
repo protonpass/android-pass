@@ -112,7 +112,7 @@
   <string name="camera_permission_open_settings">Abrir ajustes</string>
   <!--  Totp limit  -->
   <string name="mfa_limit_reached">Límite de 2FA alcanzado</string>
-  <string name="upgrade">Mejorar</string>
+  <string name="upgrade">Cambiar de plan</string>
   <string name="mfa_icon_content_description">Ícono de 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Mejora tu plan para obtener dominios personalizados</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Mejora tu plan para obtener más buzones</string>

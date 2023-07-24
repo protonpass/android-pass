@@ -22,7 +22,7 @@
   <string name="profile_option_app_lock">Kunci aplikasi</string>
   <string name="enter_your_pin_code">Enter your PIN Code</string>
   <string name="unlock">Unlock</string>
-  <string name="enter_pin">Enter pin</string>
+  <string name="enter_pin">Enter PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="other">Incorrect PIN. %d attempts remaining.</item>
   </plurals>
@@ -34,6 +34,8 @@
   <string name="auth_unlock_button">Unlock</string>
   <string name="auth_error_verifying_password">Error verifying your password</string>
   <string name="auth_error_empty_password">Password cannot be empty</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN cannot be empty</string>
+  <string name="auth_error_pin_too_short">PIN should be at least 4 digits</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">Incorrect password. %d attempts remaining</item>
   </plurals>

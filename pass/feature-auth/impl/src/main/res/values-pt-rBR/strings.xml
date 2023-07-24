@@ -35,6 +35,8 @@
   <string name="auth_unlock_button">Desbloquear</string>
   <string name="auth_error_verifying_password">Erro ao verificar a sua senha</string>
   <string name="auth_error_empty_password">A senha não pode estar em branco</string>
+  <string name="auth_error_pin_cannot_be_empty">O PIN não pode estar vazio</string>
+  <string name="auth_error_pin_too_short">O PIN deve ter pelo menos 4 dígitos</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Senha incorreta. %d tentativa restante</item>
     <item quantity="other">Senha incorreta. %d tentativas restantes</item>

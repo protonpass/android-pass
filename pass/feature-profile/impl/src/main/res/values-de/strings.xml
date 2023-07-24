@@ -30,9 +30,23 @@
   <string name="app_lock_one_hour">Nach 1 Stunde</string>
   <string name="app_lock_four_hours">Nach 4 Stunden</string>
   <string name="profile_account_plan_name_trial">Kostenlose Testversion</string>
+  <string name="app_lock_config_none">Keine</string>
   <string name="app_lock_config_biometric">Biometrie</string>
   <string name="app_lock_config_pin_code">PIN-Code</string>
   <string name="app_lock_config_unlock_with">Entsperren mit</string>
   <string name="app_lock_config_app_lock_time">App-Sperrzeit</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Systemsperre verwenden, wenn Biometrie fehlschlägt</string>
+  <string name="configure_pin_set_pin_code">PIN-Code festlegen</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Entsperre die App mit diesem Code</string>
+  <string name="configure_pin_enter_pin_code">PIN eingeben</string>
+  <string name="configure_pin_repeat_pin_code">PIN-Code erneut eingeben</string>
+  <string name="configure_pin_continue">Fortfahren</string>
+  <string name="configure_pin_pin_does_not_match">Die PIN stimmt nicht überein.</string>
+  <string name="configure_pin_pin_too_short">Die PIN ist zu kurz.</string>
+  <string name="configure_pin_pin_cannot_be_blank">Die PIN darf nicht leer sein.</string>
+  <string name="configure_pin_pin_lock_enabled">PIN-Sperre aktiviert</string>
+  <string name="configure_pin_pin_lock_disabled">PIN-Sperre deaktiviert</string>
+  <string name="profile_option_lock_with">Sperren mit</string>
+  <string name="profile_option_unlock_with">Entsperren mit</string>
+  <string name="profile_option_change_pin_code">PIN-Code ändern</string>
 </resources>

@@ -4,7 +4,7 @@
   <string name="action_save">Speichern</string>
   <string name="action_remove">Entfernen</string>
   <!-- Create item bottomsheet -->
-  <string name="action_login">Anmelden</string>
+  <string name="action_login">Login</string>
   <string name="action_alias">Alias</string>
   <string name="action_note">Notiz</string>
   <string name="action_credit_card">Kreditkarte</string>
@@ -53,7 +53,7 @@
   <string name="create_note_item_creation_error">Notiz konnte nicht erstellt werden</string>
   <string name="create_note_item_update_error">Notiz konnte nicht aktualisiert werden</string>
   <string name="create_note_init_error">Notiz konnte nicht initialisiert werden</string>
-  <string name="create_note_empty_share_id">Share Id cannot be empty</string>
+  <string name="create_note_empty_share_id">Freigabe-ID darf nicht leer sein</string>
   <string name="note_created">Notiz erstellt</string>
   <string name="edit_note_snackbar_note_moved_to_trash">Notiz in den Papierkorb verschoben</string>
   <string name="edit_note_snackbar_note_moved_to_trash_error">Notiz konnte nicht gelöscht werden.</string>
@@ -63,7 +63,7 @@
   <string name="field_alias_hint">Alias-Benutzername</string>
   <string name="field_mailboxes_creation_title">Weiterleiten an</string>
   <string name="field_mailboxes_edit_title">Wird weitergeleitet an</string>
-  <string name="field_alias_you_are_about_to_create">You are about to create</string>
+  <string name="field_alias_you_are_about_to_create">Folgender Alias wird erstellt:</string>
   <string name="field_alias_prefix">Präfix</string>
   <string name="field_alias_suffix">Suffix</string>
   <string name="alias_bottomsheet_alias_title">Alias</string>
@@ -74,7 +74,7 @@
   <string name="alias_rate_limited">Zu viele kürzlich erstellte Aliasse.</string>
   <string name="create_alias_item_update_error">Alias konnte nicht aktualisiert werden.</string>
   <string name="create_alias_init_error">Alias konnte nicht initialisiert werden.</string>
-  <string name="create_alias_empty_share_id">Share Id cannot be empty</string>
+  <string name="create_alias_empty_share_id">Freigabe-ID darf nicht leer sein</string>
   <string name="alias_created">Alias erstellt</string>
   <string name="alias_moved_to_trash">Alias in den Papierkorb verschoben.</string>
   <string name="cannot_retrieve_alias_options">Fehler beim Abrufen der Alias-Optionen.</string>

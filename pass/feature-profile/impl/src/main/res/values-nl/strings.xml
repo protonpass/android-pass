@@ -30,9 +30,23 @@
   <string name="app_lock_one_hour">After 1 hour</string>
   <string name="app_lock_four_hours">After 4 hours</string>
   <string name="profile_account_plan_name_trial">Free Trial</string>
+  <string name="app_lock_config_none">None</string>
   <string name="app_lock_config_biometric">Biometric</string>
   <string name="app_lock_config_pin_code">PIN code</string>
   <string name="app_lock_config_unlock_with">Unlock with</string>
   <string name="app_lock_config_app_lock_time">App lock time</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Use system lock when biometric fails</string>
+  <string name="configure_pin_set_pin_code">Set PIN code</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Unlock the app with this code</string>
+  <string name="configure_pin_enter_pin_code">Enter PIN code</string>
+  <string name="configure_pin_repeat_pin_code">Repeat PIN code</string>
+  <string name="configure_pin_continue">Continue</string>
+  <string name="configure_pin_pin_does_not_match">The PIN does not match</string>
+  <string name="configure_pin_pin_too_short">The PIN is too short</string>
+  <string name="configure_pin_pin_cannot_be_blank">The PIN cannot be blank</string>
+  <string name="configure_pin_pin_lock_enabled">PIN lock enabled</string>
+  <string name="configure_pin_pin_lock_disabled">PIN lock disabled</string>
+  <string name="profile_option_lock_with">Lock with</string>
+  <string name="profile_option_unlock_with">Unlock with</string>
+  <string name="profile_option_change_pin_code">Change PIN Code</string>
 </resources>

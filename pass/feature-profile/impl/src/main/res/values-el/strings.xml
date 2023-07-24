@@ -30,9 +30,23 @@
   <string name="app_lock_one_hour">Σε 1 ώρα</string>
   <string name="app_lock_four_hours">Σε 4 ώρες</string>
   <string name="profile_account_plan_name_trial">Δωρεάν δοκιμαστική έκδοση</string>
+  <string name="app_lock_config_none">Κανένα</string>
   <string name="app_lock_config_biometric">Βιομετρικό</string>
   <string name="app_lock_config_pin_code">Κωδικός PIN</string>
   <string name="app_lock_config_unlock_with">Ξεκλείδωμα με</string>
   <string name="app_lock_config_app_lock_time">Χρόνος κλειδώματος εφαρμογής</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Κλείδωμα του συστήματος όταν αποτυγχάνει το βιομετρικό</string>
+  <string name="configure_pin_set_pin_code">Ορισμός κωδικού PIN</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Ξεκλειδώστε την εφαρμογή με αυτόν τον κωδικό</string>
+  <string name="configure_pin_enter_pin_code">Εισαγωγή κωδικού ΡΙΝ</string>
+  <string name="configure_pin_repeat_pin_code">Επανάληψη κωδικού PIN</string>
+  <string name="configure_pin_continue">Συνέχεια</string>
+  <string name="configure_pin_pin_does_not_match">Το PIN δεν ταιριάζει</string>
+  <string name="configure_pin_pin_too_short">Το PIN είναι πολύ μικρό</string>
+  <string name="configure_pin_pin_cannot_be_blank">Το PIN δεν μπορεί να είναι κενό</string>
+  <string name="configure_pin_pin_lock_enabled">Ενεργοποιημένο κλείδωμα με PIN</string>
+  <string name="configure_pin_pin_lock_disabled">Απενεργοποιημένο κλείδωμα με PIN</string>
+  <string name="profile_option_lock_with">Κλείδωμα με</string>
+  <string name="profile_option_unlock_with">Ξεκλείδωμα με</string>
+  <string name="profile_option_change_pin_code">Αλλαγή κωδικού PIN</string>
 </resources>

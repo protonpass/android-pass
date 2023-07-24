@@ -30,9 +30,23 @@
   <string name="app_lock_one_hour">Après 1 heure</string>
   <string name="app_lock_four_hours">Après 4 heures</string>
   <string name="profile_account_plan_name_trial">Essai gratuit</string>
+  <string name="app_lock_config_none">Aucun</string>
   <string name="app_lock_config_biometric">Biométrie</string>
   <string name="app_lock_config_pin_code">Code PIN</string>
   <string name="app_lock_config_unlock_with">Déverrouiller avec</string>
   <string name="app_lock_config_app_lock_time">Temps de verrouillage de l\'application</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Utiliser le verrouillage du système quand la biométrie ne fonctionne pas.</string>
+  <string name="configure_pin_set_pin_code">Définir le code PIN</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Déverrouillez l\'application avec ce code.</string>
+  <string name="configure_pin_enter_pin_code">Saisissez le code PIN</string>
+  <string name="configure_pin_repeat_pin_code">Confirmez le code PIN</string>
+  <string name="configure_pin_continue">Continuer</string>
+  <string name="configure_pin_pin_does_not_match">Le code PIN ne correspond pas.</string>
+  <string name="configure_pin_pin_too_short">Le code PIN est trop court.</string>
+  <string name="configure_pin_pin_cannot_be_blank">Le code PIN ne peut pas être vide.</string>
+  <string name="configure_pin_pin_lock_enabled">Verrouillage par code PIN activé</string>
+  <string name="configure_pin_pin_lock_disabled">Verrouillage par code PIN désactivé</string>
+  <string name="profile_option_lock_with">Verrouiller avec</string>
+  <string name="profile_option_unlock_with">Déverrouiller avec</string>
+  <string name="profile_option_change_pin_code">Modifier le code PIN</string>
 </resources>

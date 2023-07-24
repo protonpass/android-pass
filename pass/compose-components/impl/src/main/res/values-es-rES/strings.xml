@@ -68,7 +68,7 @@
   <string name="confirm_close_dialog_message">Tienes cambios sin guardar. ¿Estás seguro de que desas descartarlos?</string>
   <string name="confirm_close_dialog_close_button">Descartar</string>
   <!-- Upgrade -->
-  <string name="upgrade">Mejorar</string>
+  <string name="upgrade">Cambiar de plan</string>
   <!-- Advanced options -->
   <string name="show_advanced_options">Opciones avanzadas</string>
   <string name="hide_advanced_options">Ocultar las opciones avanzadas</string>

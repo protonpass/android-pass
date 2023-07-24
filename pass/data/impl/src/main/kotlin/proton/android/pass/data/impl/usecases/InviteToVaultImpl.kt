@@ -27,7 +27,6 @@ import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.common.api.flatMap
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
@@ -47,6 +46,7 @@ class InviteToVaultImpl @Inject constructor(
     private val remoteInviteDataSource: RemoteInviteDataSource
 ) : InviteToVault {
 
+    @Suppress("ReturnCount")
     override suspend fun invoke(
         userId: UserId?,
         targetEmail: String,
@@ -78,7 +78,7 @@ class InviteToVaultImpl @Inject constructor(
             shareId = shareId,
             address = address,
             targetEmail = targetEmail
-        ).flatMap { request ->
+        ).mapCatching { request ->
             remoteInviteDataSource.sendInvite(id, shareId, request)
         }
     }

@@ -56,6 +56,7 @@ import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermission
+import proton.pass.domain.ShareRole
 import proton.pass.domain.ShareType
 import proton.pass.domain.VaultId
 import proton.pass.domain.entity.NewVault
@@ -376,7 +377,9 @@ class ShareRepositoryImpl @Inject constructor(
             createTime = shareResponse.createTime,
             encryptedContent = encryptedContent,
             isPrimary = shareResponse.primary,
-            isActive = isActive
+            isActive = isActive,
+            shareRoleId = shareResponse.shareRoleId,
+            owner = shareResponse.owner
         )
     }
 
@@ -409,7 +412,9 @@ class ShareRepositoryImpl @Inject constructor(
             createTime = Date(entity.createTime),
             color = color,
             icon = icon,
-            isPrimary = entity.isPrimary
+            isPrimary = entity.isPrimary,
+            shareRole = ShareRole.fromValue(entity.shareRoleId),
+            isOwner = entity.owner
         )
     }
 

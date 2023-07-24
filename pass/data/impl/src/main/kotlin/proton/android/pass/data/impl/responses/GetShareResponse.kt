@@ -51,6 +51,10 @@ data class ShareResponse(
     val contentKeyRotation: Long?,
     @SerialName("ContentFormatVersion")
     val contentFormatVersion: Int?,
+    @SerialName("ShareRoleID")
+    val shareRoleId: String,
+    @SerialName("Owner")
+    val owner: Boolean,
     @SerialName("ExpireTime")
     val expirationTime: Long?,
     @SerialName("CreateTime")

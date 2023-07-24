@@ -25,6 +25,7 @@ import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermission
 import proton.pass.domain.SharePermissionFlag
+import proton.pass.domain.ShareRole
 import proton.pass.domain.ShareType
 import proton.pass.domain.VaultId
 import java.util.Date
@@ -32,7 +33,9 @@ import java.util.Date
 object TestShare {
     fun create(
         shareId: ShareId = ShareId("123"),
-        isPrimary: Boolean = false
+        isPrimary: Boolean = false,
+        shareRole: ShareRole = ShareRole.Admin,
+        isOwner: Boolean = true
     ): Share = Share(
         id = shareId,
         shareType = ShareType.Vault,
@@ -44,6 +47,8 @@ object TestShare {
         createTime = Date(),
         color = ShareColor.Color1,
         icon = ShareIcon.Icon1,
-        isPrimary = isPrimary
+        isPrimary = isPrimary,
+        shareRole = shareRole,
+        isOwner = isOwner
     )
 }

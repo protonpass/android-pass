@@ -28,6 +28,7 @@ import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
@@ -71,6 +72,7 @@ import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
@@ -88,6 +90,7 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.repositories.TestFeatureFlagRepository
 import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
+import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
 import proton.android.pass.data.fakes.usecases.TestCanDisplayTotp
@@ -136,6 +139,7 @@ import proton.android.pass.data.fakes.usecases.TestPerformSync
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
 import proton.android.pass.data.fakes.usecases.TestRefreshInvites
 import proton.android.pass.data.fakes.usecases.TestRefreshPlan
+import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
@@ -430,4 +434,10 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindPerformSync(impl: TestPerformSync): PerformSync
+
+    @Binds
+    abstract fun bindAcceptInvite(impl: TestAcceptInvite): AcceptInvite
+
+    @Binds
+    abstract fun bindRejectInvite(impl: TestRejectInvite): RejectInvite
 }

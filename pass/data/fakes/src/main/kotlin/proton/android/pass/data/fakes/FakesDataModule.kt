@@ -67,6 +67,7 @@ import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -131,6 +132,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.TestPerformSync
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
 import proton.android.pass.data.fakes.usecases.TestRefreshInvites
 import proton.android.pass.data.fakes.usecases.TestRefreshPlan
@@ -425,4 +427,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindRefreshInvites(impl: TestRefreshInvites): RefreshInvites
+
+    @Binds
+    abstract fun bindPerformSync(impl: TestPerformSync): PerformSync
 }

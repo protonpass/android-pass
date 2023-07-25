@@ -16,15 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.api.usecases
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.pass.domain.PendingInvite
-
-interface InviteRepository {
-
-    fun observeInvites(userId: UserId): Flow<List<PendingInvite>>
-    suspend fun refreshInvites(userId: UserId)
-
+interface RefreshInvites {
+    suspend operator fun invoke()
 }

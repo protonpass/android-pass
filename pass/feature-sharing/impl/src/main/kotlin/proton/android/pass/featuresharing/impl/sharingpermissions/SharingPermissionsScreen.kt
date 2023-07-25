@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.sharingwith
+package proton.android.pass.featuresharing.impl.sharingpermissions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,27 +27,28 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.featuresharing.impl.SharingNavigation
 
 @Composable
-fun SharingWithScreen(
+fun SharingPermissionsScreen(
     modifier: Modifier = Modifier,
-    viewModel: SharingWithViewModel = hiltViewModel(),
+    viewModel: SharingPermissionsViewModel = hiltViewModel(),
     onNavigateEvent: (SharingNavigation) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         when (val event = state.event) {
-            is SharingWithEvents.NavigateToPermissions -> onNavigateEvent(
-                SharingNavigation.Permissions(event.shareId, event.email)
+            is SharingPermissionsEvents.NavigateToSummary -> onNavigateEvent(
+                SharingNavigation.Summary(event.shareId, event.email, event.permission)
             )
 
-            SharingWithEvents.Unknown -> {}
+            SharingPermissionsEvents.Unknown -> {}
         }
         viewModel.clearEvent()
     }
-    SharingWithContent(
+    SharingPermissionsContent(
         modifier = modifier,
         state = state,
         onNavigateEvent = onNavigateEvent,
-        onEmailChange = viewModel::onEmailChange,
-        onEmailSubmit = viewModel::onEmailSubmit
+        onPermissionsSubmit = { viewModel.onPermissionsSubmit() },
+        onPermissionChange = { viewModel.onPermissionChange(it) }
     )
 }
+

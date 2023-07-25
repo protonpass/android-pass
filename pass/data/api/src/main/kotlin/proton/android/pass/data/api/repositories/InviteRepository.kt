@@ -16,19 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.remote
+package proton.android.pass.data.api.repositories
 
+import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.impl.requests.CreateInviteRequest
-import proton.android.pass.data.impl.responses.PendingInviteResponse
-import proton.pass.domain.ShareId
+import proton.pass.domain.PendingInvite
 
-interface RemoteInviteDataSource {
-    suspend fun sendInvite(
-        userId: UserId,
-        shareId: ShareId,
-        request: CreateInviteRequest
-    )
+interface InviteRepository {
 
-    suspend fun fetchInvites(userId: UserId): List<PendingInviteResponse>
+    fun observeInvites(userId: UserId? = null): Flow<List<PendingInvite>>
+    suspend fun refreshInvites(userId: UserId? = null)
+
 }

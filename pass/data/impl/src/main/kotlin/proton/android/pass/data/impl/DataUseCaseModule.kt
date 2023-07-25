@@ -59,6 +59,7 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -68,6 +69,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
@@ -124,6 +126,7 @@ import proton.android.pass.data.impl.usecases.ObserveActiveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
 import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
+import proton.android.pass.data.impl.usecases.ObserveInvitesImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
@@ -133,6 +136,7 @@ import proton.android.pass.data.impl.usecases.ObserveVaultCountImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
+import proton.android.pass.data.impl.usecases.RefreshInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
 import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
@@ -351,4 +355,10 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindInviteToVault(impl: InviteToVaultImpl): InviteToVault
+
+    @Binds
+    abstract fun bindObserveInvites(impl: ObserveInvitesImpl): ObserveInvites
+
+    @Binds
+    abstract fun bindRefreshInvites(impl: RefreshInvitesImpl): RefreshInvites
 }

@@ -21,7 +21,6 @@ package proton.android.pass.commonui.api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
@@ -44,15 +43,6 @@ object PassTypography {
     val heroWeak: TextStyle
         @Composable get() = heroWeak()
 
-    private val body1Base: TextStyle
-        @Composable get() = TextStyle(
-            fontSize = 16.sp,
-            lineHeight = 24.sp,
-            fontWeight = FontWeight(400),
-            textAlign = TextAlign.Center,
-            letterSpacing = 0.5.sp,
-        )
-
     private val body3Base: TextStyle
         @Composable get() = TextStyle(
             fontSize = 14.sp,
@@ -60,9 +50,6 @@ object PassTypography {
             letterSpacing = 0.02.em,
             lineHeight = 20.sp
         )
-
-    val body1Regular: TextStyle
-        @Composable get() = body1Regular()
 
     val body3Regular: TextStyle
         @Composable get() = body3Regular()
@@ -86,10 +73,6 @@ object PassTypography {
     @Composable
     fun heroWeak(enabled: Boolean = true): TextStyle =
         heroRegular.copy(color = ProtonTheme.colors.textWeak(enabled))
-
-    @Composable
-    fun body1Regular(enabled: Boolean = true): TextStyle = body1Base
-        .copy(color = ProtonTheme.colors.textNorm(enabled))
 
     @Composable
     fun body3Regular(enabled: Boolean = true): TextStyle = body3Base

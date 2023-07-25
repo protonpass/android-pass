@@ -20,10 +20,7 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -35,7 +32,6 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.InviteAndKeysEntity
 import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
-import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.InviteToken
 import proton.pass.domain.PendingInvite
 import proton_pass_vault_v1.VaultV1
@@ -44,33 +40,20 @@ import javax.inject.Inject
 class InviteRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteInviteDataSource,
     private val localDatasource: LocalInviteDataSource,
-    private val accountManager: AccountManager,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val reencryptInviteContents: ReencryptInviteContents
 ) : InviteRepository {
-    override fun observeInvites(userId: UserId?): Flow<List<PendingInvite>> = flow {
-        val id = userId ?: accountManager.getPrimaryUserId().firstOrNull()
-        if (id == null) {
-            PassLogger.w(TAG, "No primary user")
-            throw IllegalStateException("No primary user")
+    override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = localDatasource
+        .observeAllInvites(userId)
+        .map { entities ->
+            encryptionContextProvider.withEncryptionContext {
+                entities.map { it.toDomain(this@withEncryptionContext) }
+            }
         }
-        emit(id)
-    }.flatMapLatest {
-        localDatasource.observeAllInvites(it)
-    }.map { entities ->
-        encryptionContextProvider.withEncryptionContext {
-            entities.map { it.toDomain(this@withEncryptionContext) }
-        }
-    }
 
-    override suspend fun refreshInvites(userId: UserId?) {
-        val id = userId ?: accountManager.getPrimaryUserId().firstOrNull()
-        if (id == null) {
-            PassLogger.w(TAG, "No primary user")
-            throw IllegalStateException("No primary user")
-        }
-        val remoteInvites = remoteDataSource.fetchInvites(id)
-        val localInvites = localDatasource.observeAllInvites(id).firstOrNull() ?: emptyList()
+    override suspend fun refreshInvites(userId: UserId) {
+        val remoteInvites = remoteDataSource.fetchInvites(userId)
+        val localInvites = localDatasource.observeAllInvites(userId).firstOrNull() ?: emptyList()
 
         // Remove deleted invites
         val deletedInvites = localInvites.filter { local ->
@@ -85,10 +68,10 @@ class InviteRepositoryImpl @Inject constructor(
 
         val invitesWithKeys: List<InviteAndKeysEntity> = newInvites.map { invite ->
             val vaultData = invite.vaultData
-            val reencryptedInviteContent = reencryptInviteContents(id, invite)
+            val reencryptedInviteContent = reencryptInviteContents(userId, invite)
             val inviteEntity = InviteEntity(
                 token = invite.inviteToken,
-                userId = id.id,
+                userId = userId.id,
                 inviterEmail = invite.inviterEmail,
                 memberCount = vaultData.memberCount,
                 itemCount = vaultData.itemCount,
@@ -131,9 +114,5 @@ class InviteRepositoryImpl @Inject constructor(
             icon = decoded.display.icon.toDomain(),
             color = decoded.display.color.toDomain()
         )
-    }
-
-    companion object {
-        private const val TAG = "InviteRepositoryImpl"
     }
 }

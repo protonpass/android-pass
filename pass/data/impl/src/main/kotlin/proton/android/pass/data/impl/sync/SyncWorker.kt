@@ -29,28 +29,61 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
+import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
+import kotlin.Result as KResult
 
 @HiltWorker
 open class SyncWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val applyPendingEvents: ApplyPendingEvents
+    private val applyPendingEvents: ApplyPendingEvents,
+    private val inviteRepository: InviteRepository
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting sync worker")
+        return withContext(Dispatchers.IO) {
+            val pendingEvents = async { pendingEvents() }
+            val refreshInvites = async { refreshInvites() }
+            val res = awaitAll(pendingEvents, refreshInvites)
+
+            val error = res.firstOrNull { it.isFailure }
+            if (error != null) {
+                Result.failure()
+            }
+            Result.success()
+        }
+    }
+
+    private suspend fun pendingEvents(): KResult<Unit> {
         return runCatching {
             applyPendingEvents()
         }.fold(
-            onSuccess = { Result.success() },
+            onSuccess = { KResult.success(Unit) },
             onFailure = {
-                PassLogger.w(TAG, it, "Sync worker error")
-                Result.failure()
+                PassLogger.w(TAG, it, "Apply pending events error")
+                KResult.failure(it)
+            }
+        )
+    }
+
+    private suspend fun refreshInvites(): KResult<Unit> {
+        return runCatching {
+            inviteRepository.refreshInvites()
+        }.fold(
+            onSuccess = { KResult.success(Unit) },
+            onFailure = {
+                PassLogger.w(TAG, it, "Refresh invites")
+                KResult.failure(it)
             }
         )
     }
@@ -60,7 +93,10 @@ open class SyncWorker @AssistedInject constructor(
 
         const val WORKER_UNIQUE_NAME = "sync_worker"
 
-        fun getRequestFor(manager: EventWorkerManager, initialDelay: Duration): PeriodicWorkRequest {
+        fun getRequestFor(
+            manager: EventWorkerManager,
+            initialDelay: Duration
+        ): PeriodicWorkRequest {
             val initialDelaySeconds = initialDelay.inWholeSeconds
             val backoffDelaySeconds = manager.getBackoffDelay().inWholeSeconds
             val repeatIntervalSeconds = manager.getRepeatIntervalBackground().inWholeSeconds

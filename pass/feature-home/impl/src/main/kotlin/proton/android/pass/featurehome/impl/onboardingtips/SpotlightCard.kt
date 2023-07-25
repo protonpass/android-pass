@@ -53,10 +53,12 @@ fun SpotlightCard(
     backgroundColor: Color,
     title: String,
     body: String,
-    buttonText: String,
+    titleColor: Color = PassTheme.colors.textInvert,
+    subtitleColor: Color = titleColor,
+    buttonText: String?,
     image: (@Composable () -> Unit)? = null,
     onClick: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: (() -> Unit)?
 ) {
     Card(
         modifier = modifier
@@ -80,28 +82,32 @@ fun SpotlightCard(
                     Text(
                         text = title,
                         style = ProtonTheme.typography.defaultHighlightNorm,
-                        color = PassTheme.colors.textInvert
+                        color = titleColor
                     )
                     Text(
                         text = body,
                         style = PassTypography.body3Regular,
-                        color = PassTheme.colors.textInvert
+                        color = subtitleColor
                     )
-                    Spacer(modifier = Modifier.size(4.dp))
-                    Text(
-                        text = buttonText,
-                        style = ProtonTheme.typography.defaultHighlightNorm,
-                        color = PassTheme.colors.textInvert
-                    )
+                    if (buttonText != null) {
+                        Spacer(modifier = Modifier.size(4.dp))
+                        Text(
+                            text = buttonText,
+                            style = ProtonTheme.typography.defaultHighlightNorm,
+                            color = PassTheme.colors.textInvert
+                        )
+                    }
                 }
                 image?.invoke()
             }
 
-            SmallCrossIconButton(
-                modifier = Modifier.align(Alignment.TopEnd),
-                tint = PassTheme.colors.textInvert,
-                onClick = onDismiss
-            )
+            if (onDismiss != null) {
+                SmallCrossIconButton(
+                    modifier = Modifier.align(Alignment.TopEnd),
+                    tint = PassTheme.colors.textInvert,
+                    onClick = onDismiss
+                )
+            }
         }
     }
 }

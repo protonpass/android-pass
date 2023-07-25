@@ -21,12 +21,9 @@ package proton.android.pass.featuresharing.impl
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-<<<<<<< HEAD
 import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
-=======
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
->>>>>>> b230f2bd1 (feat(sharing): show accept invite bottomsheet)
 import proton.android.pass.featuresharing.impl.sharingwith.SharingWithScreen
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId

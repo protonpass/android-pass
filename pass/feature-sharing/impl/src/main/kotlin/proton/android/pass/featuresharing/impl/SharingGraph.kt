@@ -20,11 +20,19 @@ package proton.android.pass.featuresharing.impl
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
+import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
 import proton.android.pass.featuresharing.impl.sharingwith.SharingWithScreen
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.pass.domain.ShareId
+
+object EmailNavArgId : NavArgId {
+    override val key: String = "email"
+    override val navType: NavType<*> = NavType.StringType
+}
 
 object SharingWith : NavItem(
     baseRoute = "sharing/with/screen",
@@ -33,8 +41,17 @@ object SharingWith : NavItem(
     fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
 }
 
+object SharingPermissions : NavItem(
+    baseRoute = "sharing/permissions/screen",
+    navArgIds = listOf(CommonNavArgId.ShareId, EmailNavArgId)
+) {
+    fun createRoute(shareId: ShareId, email: String) = "$baseRoute/${shareId.id}/$email"
+}
+
 sealed interface SharingNavigation {
     object Back : SharingNavigation
+    data class Permissions(val shareId: ShareId, val email: String) : SharingNavigation
+    data class Summary(val shareId: ShareId, val email: String, val permission: Int) : SharingNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -43,5 +60,8 @@ fun NavGraphBuilder.sharingGraph(
 ) {
     composable(SharingWith) {
         SharingWithScreen(onNavigateEvent = onNavigateEvent)
+    }
+    composable(SharingPermissions) {
+        SharingPermissionsScreen(onNavigateEvent = onNavigateEvent)
     }
 }

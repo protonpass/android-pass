@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.sharingwith
+package proton.android.pass.featuresharing.impl.sharingpermissions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,68 +25,66 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import proton.android.pass.common.api.CommonRegex.EMAIL_VALIDATION_REGEX
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.featuresharing.impl.EmailNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
-class SharingWithViewModel @Inject constructor(
+class SharingPermissionsViewModel @Inject constructor(
     getVaultById: GetVaultById,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val shareId: ShareId =
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
+    private val email: String = savedStateHandleProvider.get().require(EmailNavArgId.key)
 
-    private val isEmailNotValidState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val emailState: MutableStateFlow<String> = MutableStateFlow("")
-    private val eventState: MutableStateFlow<SharingWithEvents> = MutableStateFlow(SharingWithEvents.Unknown)
+    private val sharingTypeState: MutableStateFlow<SharingType> = MutableStateFlow(SharingType.Read)
+    private val eventState: MutableStateFlow<SharingPermissionsEvents> =
+        MutableStateFlow(SharingPermissionsEvents.Unknown)
 
-    val state: StateFlow<SharingWithUIState> = combine(
-        emailState,
-        isEmailNotValidState,
+    val state: StateFlow<SharingPermissionsUIState> = combine(
+        flowOf(email),
         getVaultById(shareId = shareId).asLoadingResult(),
+        sharingTypeState,
         eventState
-    ) { email, isEmailNotValid, vault, event ->
-        SharingWithUIState(
+    ) { email, vault, sharingType, event ->
+        SharingPermissionsUIState(
             email = email,
             vaultName = vault.getOrNull()?.name,
-            isEmailNotValid = isEmailNotValid,
-            isVaultNotFound = vault is LoadingResult.Error,
+            sharingType = sharingType,
             event = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = SharingWithUIState()
+        initialValue = SharingPermissionsUIState()
     )
 
-    fun onEmailChange(value: String) {
-        val sanitised = value.replace(" ", "").replace("\n", "")
-        emailState.update { sanitised }
-        isEmailNotValidState.update { false }
+    fun onPermissionChange(sharingType: SharingType) {
+        sharingTypeState.update { sharingType }
     }
 
-    fun onEmailSubmit() {
-        val email = emailState.value
-        if (email.isBlank() || !EMAIL_VALIDATION_REGEX.matches(email)) {
-            isEmailNotValidState.update { true }
-        } else {
-            eventState.update { SharingWithEvents.NavigateToPermissions(shareId, email) }
+    fun onPermissionsSubmit() {
+        eventState.update {
+            SharingPermissionsEvents.NavigateToSummary(
+                shareId = shareId,
+                email = email,
+                permission = sharingTypeState.value.ordinal
+            )
         }
     }
 
     fun clearEvent() {
-        eventState.update { SharingWithEvents.Unknown }
+        eventState.update { SharingPermissionsEvents.Unknown }
     }
 }
-

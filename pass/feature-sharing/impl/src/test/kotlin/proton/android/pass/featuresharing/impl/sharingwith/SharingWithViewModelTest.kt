@@ -19,6 +19,7 @@
 package proton.android.pass.featuresharing.impl.sharingwith
 
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -56,7 +57,7 @@ class SharingWithViewModelTest {
     fun `onEmailChange should update emailState correctly`() = runTest {
         viewModel.onEmailChange("test@example.com")
         viewModel.state.test {
-            assert(awaitItem().email == "test@example.com")
+            assertThat(awaitItem().email).isEqualTo("test@example.com")
         }
     }
 
@@ -65,7 +66,7 @@ class SharingWithViewModelTest {
         viewModel.onEmailChange("test@example.com")
         viewModel.onEmailSubmit()
         viewModel.state.test {
-            assert(!awaitItem().isEmailNotValid)
+            assertThat(awaitItem().isEmailNotValid).isFalse()
         }
     }
 
@@ -74,7 +75,7 @@ class SharingWithViewModelTest {
         viewModel.onEmailChange("invalid-email")
         viewModel.onEmailSubmit()
         viewModel.state.test {
-            assert(awaitItem().isEmailNotValid)
+            assertThat(awaitItem().isEmailNotValid).isTrue()
         }
     }
 
@@ -91,11 +92,10 @@ class SharingWithViewModelTest {
 
         viewModel.state.test {
             val currentState = awaitItem()
-            assert(currentState.email == "test@example.com")
-            assert(currentState.vaultName == testVault.name)
-            assert(!currentState.isEmailNotValid)
-            assert(!currentState.isVaultNotFound)
+            assertThat(currentState.email).isEqualTo("test@example.com")
+            assertThat(currentState.vaultName).isEqualTo(testVault.name)
+            assertThat(currentState.isEmailNotValid).isFalse()
+            assertThat(currentState.isVaultNotFound).isFalse()
         }
     }
-
 }

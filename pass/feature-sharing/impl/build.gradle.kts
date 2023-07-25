@@ -66,4 +66,12 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
+
+    testImplementation(projects.pass.commonUi.fakes)
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.data.fakes)
+
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
 }

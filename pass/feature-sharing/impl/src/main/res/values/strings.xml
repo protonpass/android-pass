@@ -30,4 +30,9 @@
     <string name="sharing_can_view_description">Can view items in this vault.</string>
     <string name="sharing_can_edit_description">Can create, edit, delete and export items in this vault.</string>
     <string name="sharing_can_manage_description">Can grant and revoke access to this vault.</string>
+    <string name="sharing_invitation_from">Invitation from %s</string>
+    <string name="sharing_item_count">%d items</string>
+    <string name="sharing_member_count">%d members</string>
+    <string name="sharing_join_shared_vault">Join shared vault</string>
+    <string name="sharing_reject_invitation">Reject invitation</string>
 </resources>

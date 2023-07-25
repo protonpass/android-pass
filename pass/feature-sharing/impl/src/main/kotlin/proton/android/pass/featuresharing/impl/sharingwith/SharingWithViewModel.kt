@@ -36,7 +36,6 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,17 +49,20 @@ class SharingWithViewModel @Inject constructor(
 
     private val isEmailNotValidState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val emailState: MutableStateFlow<String> = MutableStateFlow("")
+    private val eventState: MutableStateFlow<SharingWithEvents> = MutableStateFlow(SharingWithEvents.Unknown)
 
     val state: StateFlow<SharingWithUIState> = combine(
         emailState,
         isEmailNotValidState,
-        getVaultById(shareId = shareId).asLoadingResult()
-    ) { email, isEmailNotValid, vault: LoadingResult<Vault> ->
+        getVaultById(shareId = shareId).asLoadingResult(),
+        eventState
+    ) { email, isEmailNotValid, vault, event ->
         SharingWithUIState(
             email = email,
             vaultName = vault.getOrNull()?.name,
             isEmailNotValid = isEmailNotValid,
-            isVaultNotFound = vault is LoadingResult.Error
+            isVaultNotFound = vault is LoadingResult.Error,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
@@ -78,7 +80,13 @@ class SharingWithViewModel @Inject constructor(
         val email = emailState.value
         if (email.isBlank() || !EMAIL_VALIDATION_REGEX.matches(email)) {
             isEmailNotValidState.update { true }
+        } else {
+            eventState.update { SharingWithEvents.NavigateToPermissions(shareId, email) }
         }
+    }
+
+    fun clearEvent() {
+        eventState.update { SharingWithEvents.Unknown }
     }
 }
 

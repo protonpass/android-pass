@@ -20,6 +20,14 @@
     <string name="share_with_title">Share with</string>
     <string name="share_with_subtitle">This user will receive an invitation to join your \'%s\' vault.</string>
     <string name="share_with_email_hint">Proton email address</string>
-    <string name="share_with_continue">Continue</string>
+    <string name="share_continue">Continue</string>
     <string name="share_with_email_error">Invalid email address</string>
+    <string name="share_permissions_title">Set permissions</string>
+    <string name="share_permissions_subtitle">Select the level of access this user will gain when they join your \'%s\' vault.</string>
+    <string name="sharing_can_view">Can view</string>
+    <string name="sharing_can_edit">Can edit</string>
+    <string name="sharing_can_manage">Can manage</string>
+    <string name="sharing_can_view_description">Can view items in this vault.</string>
+    <string name="sharing_can_edit_description">Can create, edit, delete and export items in this vault.</string>
+    <string name="sharing_can_manage_description">Can grant and revoke access to this vault.</string>
 </resources>

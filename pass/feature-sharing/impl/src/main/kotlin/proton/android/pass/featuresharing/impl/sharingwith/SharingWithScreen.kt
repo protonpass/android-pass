@@ -19,6 +19,7 @@
 package proton.android.pass.featuresharing.impl.sharingwith
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,6 +33,16 @@ fun SharingWithScreen(
     onNavigateEvent: (SharingNavigation) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(state.event) {
+        when (val event = state.event) {
+            is SharingWithEvents.NavigateToPermissions -> onNavigateEvent(
+                SharingNavigation.Permissions(event.shareId, event.email)
+            )
+
+            SharingWithEvents.Unknown -> {}
+        }
+        viewModel.clearEvent()
+    }
     SharingWithContent(
         modifier = modifier,
         state = state,

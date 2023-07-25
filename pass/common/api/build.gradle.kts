@@ -7,4 +7,7 @@ dependencies {
 
     api(libs.core.network.domain)
     api(libs.core.utilKotlin)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
 }

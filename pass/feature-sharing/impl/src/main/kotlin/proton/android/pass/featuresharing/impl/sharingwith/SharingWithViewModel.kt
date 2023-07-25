@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import proton.android.pass.common.api.EmailUtils
+import proton.android.pass.common.api.CommonRegex.EMAIL_VALIDATION_REGEX
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
@@ -76,7 +76,7 @@ class SharingWithViewModel @Inject constructor(
 
     fun onEmailSubmit() {
         val email = emailState.value
-        if (!EmailUtils.validate(email)) {
+        if (email.isBlank() || !EMAIL_VALIDATION_REGEX.matches(email)) {
             isEmailNotValidState.update { true }
         }
     }

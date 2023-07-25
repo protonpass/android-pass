@@ -21,18 +21,25 @@ package proton.android.pass.data.impl.fakes
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.CreateInviteRequest
+import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource {
 
-    private var result: Result<Unit> = Result.success(Unit)
+    private var sendInviteResult: Result<Unit> = Result.success(Unit)
+    private var fetchInvitesResult: Result<List<PendingInviteResponse>> =
+        Result.success(emptyList())
     private var memory: MutableList<Payload> = mutableListOf()
 
     fun getMemory(): List<Payload> = memory
 
-    fun setResult(value: Result<Unit>) {
-        result = value
+    fun setSendInviteResult(value: Result<Unit>) {
+        sendInviteResult = value
+    }
+
+    fun setFetchInvitesResult(value: Result<List<PendingInviteResponse>>) {
+        fetchInvitesResult = value
     }
 
     override suspend fun sendInvite(
@@ -41,8 +48,11 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
         request: CreateInviteRequest
     ) {
         memory.add(Payload(userId, shareId, request))
-        result.getOrThrow()
+        sendInviteResult.getOrThrow()
     }
+
+    override suspend fun fetchInvites(userId: UserId): List<PendingInviteResponse> =
+        fetchInvitesResult.getOrThrow()
 
     data class Payload(
         val userId: UserId,

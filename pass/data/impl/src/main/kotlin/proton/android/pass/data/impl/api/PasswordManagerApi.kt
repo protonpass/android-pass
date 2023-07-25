@@ -48,6 +48,7 @@ import proton.android.pass.data.impl.responses.GetShareResponse
 import proton.android.pass.data.impl.responses.GetSharesResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.MigrateItemsResponse
+import proton.android.pass.data.impl.responses.PendingInvitesResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
@@ -224,4 +225,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Query("shareId") shareId: String,
         @Body request: CreateInviteRequest
     ): CodeOnlyResponse
+
+    @GET("$PREFIX/invite")
+    suspend fun fetchInvites(): PendingInvitesResponse
 }

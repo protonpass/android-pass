@@ -30,6 +30,8 @@ import proton.android.pass.data.impl.remote.RemoteFeatureFlagDataSource
 import proton.android.pass.data.impl.remote.RemoteFeatureFlagDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteImageFetcher
 import proton.android.pass.data.impl.remote.RemoteImageFetcherImpl
+import proton.android.pass.data.impl.remote.RemoteInviteDataSource
+import proton.android.pass.data.impl.remote.RemoteInviteDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
@@ -82,5 +84,10 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteFeatureFlagDataSource(
         impl: RemoteFeatureFlagDataSourceImpl
     ): RemoteFeatureFlagDataSource
+
+    @Binds
+    abstract fun bindRemoteInviteDataSource(
+        impl: RemoteInviteDataSourceImpl
+    ): RemoteInviteDataSource
 }
 

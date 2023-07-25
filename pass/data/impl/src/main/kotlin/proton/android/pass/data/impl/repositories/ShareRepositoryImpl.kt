@@ -78,7 +78,6 @@ class ShareRepositoryImpl @Inject constructor(
     private val shareKeyRepository: ShareKeyRepository
 ) : ShareRepository {
 
-    @Suppress("ReturnCount", "TooGenericExceptionCaught")
     override suspend fun createVault(
         userId: SessionUserId,
         vault: NewVault
@@ -123,7 +122,7 @@ class ShareRepositoryImpl @Inject constructor(
             shareKeyRepository.saveShareKeys(listOf(shareKeyEntity))
         }
 
-        return@withContext this@ShareRepositoryImpl.shareEntityToShare(responseAsEntity)
+        return@withContext shareEntityToShare(responseAsEntity)
     }
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
@@ -453,7 +452,6 @@ class ShareRepositoryImpl @Inject constructor(
             .build()
     }
 
-    @Suppress("ReturnCount")
     private fun localShareNeedsUpdate(
         localShare: ShareEntity,
         remoteShare: ShareResponse

@@ -72,6 +72,7 @@ dependencies {
     testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
 
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine)

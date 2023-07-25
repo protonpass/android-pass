@@ -29,61 +29,29 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.withContext
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
-import proton.android.pass.data.api.usecases.ApplyPendingEvents
-import proton.android.pass.data.api.usecases.RefreshInvites
+import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
-import kotlin.Result as KResult
 
 @HiltWorker
 open class SyncWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val applyPendingEvents: ApplyPendingEvents,
-    private val refreshInvites: RefreshInvites
+    private val performSync: PerformSync
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting sync worker")
-        return withContext(Dispatchers.IO) {
-            val pendingEvents = async { performPendingEvents() }
-            val refreshInvites = async { performRefreshInvites() }
-            val res = awaitAll(pendingEvents, refreshInvites)
-
-            val error = res.firstOrNull { it.isFailure }
-            if (error != null) {
+        return performSync().fold(
+            onSuccess = {
+                PassLogger.i(TAG, "Sync worker finished successfully")
+                Result.success()
+            },
+            onFailure = {
+                PassLogger.w(TAG, it, "Sync worker finished with error")
                 Result.failure()
-            }
-            Result.success()
-        }
-    }
-
-    private suspend fun performPendingEvents(): KResult<Unit> {
-        return runCatching {
-            applyPendingEvents()
-        }.fold(
-            onSuccess = { KResult.success(Unit) },
-            onFailure = {
-                PassLogger.w(TAG, it, "Apply pending events error")
-                KResult.failure(it)
-            }
-        )
-    }
-
-    private suspend fun performRefreshInvites(): KResult<Unit> {
-        return runCatching {
-            refreshInvites()
-        }.fold(
-            onSuccess = { KResult.success(Unit) },
-            onFailure = {
-                PassLogger.w(TAG, it, "Refresh invites")
-                KResult.failure(it)
             }
         )
     }

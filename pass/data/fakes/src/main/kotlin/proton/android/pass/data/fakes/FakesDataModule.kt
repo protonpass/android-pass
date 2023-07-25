@@ -25,6 +25,7 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.FeatureFlagRepository
+import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
@@ -58,6 +59,7 @@ import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -66,6 +68,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreItem
@@ -82,6 +85,7 @@ import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.repositories.TestFeatureFlagRepository
+import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
@@ -118,6 +122,7 @@ import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveMFACount
@@ -127,6 +132,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
+import proton.android.pass.data.fakes.usecases.TestRefreshInvites
 import proton.android.pass.data.fakes.usecases.TestRefreshPlan
 import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
@@ -410,4 +416,13 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindInviteToVault(impl: TestInviteToVault): InviteToVault
+
+    @Binds
+    abstract fun bindInviteRepository(impl: TestInviteRepository): InviteRepository
+
+    @Binds
+    abstract fun bindObserveInvites(impl: TestObserveInvites): ObserveInvites
+
+    @Binds
+    abstract fun bindRefreshInvites(impl: TestRefreshInvites): RefreshInvites
 }

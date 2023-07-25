@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -31,15 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -111,23 +107,6 @@ fun SharingWithContent(
                 onDoneClick = onEmailSubmit
             )
             RequestFocusLaunchedEffect(focusRequester)
-        }
-    }
-}
-
-@Preview
-@Composable
-fun SharingWithContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            SharingWithContent(
-                state = SharingWithUIState(),
-                onNavigateEvent = {},
-                onEmailChange = {},
-                onEmailSubmit = {}
-            )
         }
     }
 }

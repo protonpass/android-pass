@@ -29,14 +29,24 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun OnBoardingTips(
     modifier: Modifier = Modifier,
     onTrialInfoClick: () -> Unit,
+    onInviteClick: () -> Unit,
     viewModel: OnBoardingTipsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        if (state.event == OnBoardingTipsEvent.OpenTrialScreen) {
-            onTrialInfoClick()
-            viewModel.clearEvent()
+        when (state.event) {
+            OnBoardingTipsEvent.OpenTrialScreen -> {
+                onTrialInfoClick()
+                viewModel.clearEvent()
+            }
+
+            OnBoardingTipsEvent.OpenInviteScreen -> {
+                onInviteClick()
+                viewModel.clearEvent()
+            }
+
+            OnBoardingTipsEvent.Unknown -> {}
         }
     }
 

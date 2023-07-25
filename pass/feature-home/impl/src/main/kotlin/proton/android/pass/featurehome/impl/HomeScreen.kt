@@ -358,7 +358,8 @@ fun HomeScreen(
                     scope.launch { bottomSheetState.show() }
                 },
                 onClearRecentSearchClick = homeViewModel::onClearAllRecentSearch,
-                onTrialInfoClick = { onNavigateEvent(HomeNavigation.TrialInfo) }
+                onTrialInfoClick = { onNavigateEvent(HomeNavigation.TrialInfo) },
+                onInviteClick = { onNavigateEvent(HomeNavigation.OpenInvite) }
             )
 
             ConfirmRestoreAllDialog(

@@ -52,7 +52,7 @@ git lfs track --filename "PassAndroid/ProtonPass-Android.apk"
 
 # Prepare the version file notes
 now=$(date +'%Y-%m-%dT%H:%M:%S+0000')
-echo "{\"Version\": \"${TAG}\", \"ReleaseDate\": \"${now}\", \"SHA256\": \"${APK_CERT_HASH}\"" > "${tmpDir}/PassAndroid/protonpass_android_version.json"
+echo "{\"Version\": \"${TAG}\", \"ReleaseDate\": \"${now}\", \"SHA256\": \"${APK_CERT_HASH}\"}" > "${tmpDir}/PassAndroid/protonpass_android_version.json"
 
 git add .
 git commit -m "Pass Android ${TAG}"

@@ -62,5 +62,6 @@ sealed interface HomeNavigation {
     data class VaultOptions(val shareId: ShareId) : HomeNavigation
     data class SortingBottomsheet(val searchSortingType: SearchSortingType) : HomeNavigation
     object TrialInfo : HomeNavigation
+    object OpenInvite : HomeNavigation
     object Finish : HomeNavigation
 }

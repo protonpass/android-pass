@@ -39,7 +39,9 @@ import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
@@ -51,17 +53,31 @@ import javax.inject.Inject
 class OnBoardingTipsViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val preferencesRepository: UserPreferencesRepository,
+    observeInvites: ObserveInvites,
     getUserPlan: GetUserPlan
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<OnBoardingTipsEvent> =
         MutableStateFlow(OnBoardingTipsEvent.Unknown)
 
+    private val hasInvitesFlow: Flow<Boolean> = observeInvites()
+        .map { invites -> invites.isNotEmpty() }
+        .distinctUntilChanged()
+
     private val shouldShowAutofillFlow: Flow<Boolean> = combine(
         autofillManager.getAutofillStatus(),
         preferencesRepository.getHasDismissedAutofillBanner(),
-        ::shouldShowBanner
-    )
+        hasInvitesFlow
+    ) { autofillStatus, hasDismissedAutofillBanner, hasInvites ->
+        if (hasInvites) {
+            true
+        } else {
+            shouldShowBanner(
+                autofillSupportedStatus = autofillStatus,
+                hasDismissedAutofillBanner = hasDismissedAutofillBanner
+            )
+        }
+    }
 
     private val shouldShowTrialFlow: Flow<Boolean> = preferencesRepository
         .getHasDismissedTrialBanner()
@@ -77,13 +93,15 @@ class OnBoardingTipsViewModel @Inject constructor(
         shouldShowAutofillFlow,
         shouldShowTrialFlow,
         getUserPlan(),
-        eventFlow
-    ) { shouldShowAutofill, shouldShowTrial, userPlan, event ->
+        eventFlow,
+        hasInvitesFlow
+    ) { shouldShowAutofill, shouldShowTrial, userPlan, event, hasInvites ->
 
         val tips = getTips(
             planType = userPlan.planType,
             shouldShowTrial = shouldShowTrial,
-            shouldShowAutofill = shouldShowAutofill
+            shouldShowAutofill = shouldShowAutofill,
+            hasInvites
         )
 
         OnBoardingTipsUiState(
@@ -100,7 +118,8 @@ class OnBoardingTipsViewModel @Inject constructor(
                 val tips = getTips(
                     planType = userPlan.planType,
                     shouldShowTrial = shouldShowTrialFlow.first(),
-                    shouldShowAutofill = shouldShowAutofillFlow.first()
+                    shouldShowAutofill = shouldShowAutofillFlow.first(),
+                    hasInvites = hasInvitesFlow.first()
                 )
                 OnBoardingTipsUiState(tips)
             }
@@ -109,10 +128,12 @@ class OnBoardingTipsViewModel @Inject constructor(
     private fun getTips(
         planType: PlanType,
         shouldShowTrial: Boolean,
-        shouldShowAutofill: Boolean
+        shouldShowAutofill: Boolean,
+        hasInvites: Boolean
     ): ImmutableSet<OnBoardingTipPage> {
         val isTrial = planType is PlanType.Trial
         return when {
+            hasInvites -> persistentSetOf(INVITE)
             isTrial && shouldShowTrial -> persistentSetOf(TRIAL)
             shouldShowAutofill -> persistentSetOf(AUTOFILL)
             else -> persistentSetOf()
@@ -131,6 +152,7 @@ class OnBoardingTipsViewModel @Inject constructor(
         when (onBoardingTipPage) {
             AUTOFILL -> autofillManager.openAutofillSelector()
             TRIAL -> eventFlow.update { OnBoardingTipsEvent.OpenTrialScreen }
+            INVITE -> eventFlow.update { OnBoardingTipsEvent.OpenInviteScreen }
         }
     }
 
@@ -141,6 +163,8 @@ class OnBoardingTipsViewModel @Inject constructor(
 
             TRIAL ->
                 preferencesRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.Dismissed)
+
+            INVITE -> {} // Invites cannot be dismissed
         }
     }
 

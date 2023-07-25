@@ -76,6 +76,7 @@ data class PassColors(
 
     val backgroundNorm: Color,
     val backgroundWeak: Color,
+    val backgroundMedium: Color,
     val backgroundStrong: Color,
     val backgroundStrongest: Color,
 
@@ -158,6 +159,7 @@ data class PassColors(
 
             backgroundNorm = PassPalette.EerieBlack,
             backgroundWeak = PassPalette.DarkGunmetal,
+            backgroundMedium = PassPalette.ValleyNight,
             backgroundStrong = PassPalette.EerieBlack,
             backgroundStrongest = PassPalette.SmokyBlack,
 
@@ -238,6 +240,7 @@ data class PassColors(
 
             backgroundNorm = PassPalette.White100,
             backgroundWeak = PassPalette.White100,
+            backgroundMedium = PassPalette.IvoryWhite,
             backgroundStrong = PassPalette.White100,
             backgroundStrongest = PassPalette.AliceBlue,
 
@@ -313,6 +316,7 @@ val LocalPassColors = staticCompositionLocalOf {
         inputBorderFocused = Color.Unspecified,
         backgroundNorm = Color.Unspecified,
         backgroundWeak = Color.Unspecified,
+        backgroundMedium = Color.Unspecified,
         backgroundStrong = Color.Unspecified,
         backgroundStrongest = Color.Unspecified,
         signalDanger = Color.Unspecified,

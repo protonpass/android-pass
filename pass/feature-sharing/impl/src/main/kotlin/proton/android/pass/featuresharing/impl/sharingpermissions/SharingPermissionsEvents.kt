@@ -16,12 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.sharingwith
+package proton.android.pass.featuresharing.impl.sharingpermissions
 
-data class SharingWithUIState(
-    val email: String = "",
-    val vaultName: String? = null,
-    val isEmailNotValid: Boolean = false,
-    val isVaultNotFound: Boolean = false,
-    val event: SharingWithEvents = SharingWithEvents.Unknown
-)
+import proton.pass.domain.ShareId
+
+sealed interface SharingPermissionsEvents {
+    data class NavigateToSummary(
+        val shareId: ShareId,
+        val email: String,
+        val permission: Int
+    ) : SharingPermissionsEvents
+
+    object Unknown : SharingPermissionsEvents
+}

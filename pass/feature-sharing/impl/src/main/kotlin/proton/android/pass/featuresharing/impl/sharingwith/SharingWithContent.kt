@@ -65,7 +65,7 @@ fun SharingWithContent(
                         onClick = onEmailSubmit
                     ) {
                         Text(
-                            text = stringResource(R.string.share_with_continue),
+                            text = stringResource(R.string.share_continue),
                             style = PassTypography.body3Regular,
                             color = PassTheme.colors.textInvert
                         )

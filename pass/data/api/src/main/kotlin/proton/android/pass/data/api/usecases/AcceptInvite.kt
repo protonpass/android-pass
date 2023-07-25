@@ -16,23 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.remote
+package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.impl.requests.AcceptInviteRequest
-import proton.android.pass.data.impl.requests.CreateInviteRequest
-import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.pass.domain.InviteToken
-import proton.pass.domain.ShareId
 
-interface RemoteInviteDataSource {
-    suspend fun sendInvite(
-        userId: UserId,
-        shareId: ShareId,
-        request: CreateInviteRequest
-    )
-
-    suspend fun fetchInvites(userId: UserId): List<PendingInviteResponse>
-    suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken, body: AcceptInviteRequest)
-    suspend fun rejectInvite(userId: UserId, token: InviteToken)
+interface AcceptInvite {
+    suspend operator fun invoke(invite: InviteToken)
 }

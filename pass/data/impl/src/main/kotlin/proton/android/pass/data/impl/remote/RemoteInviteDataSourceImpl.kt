@@ -21,8 +21,10 @@ package proton.android.pass.data.impl.remote
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.responses.PendingInviteResponse
+import proton.pass.domain.InviteToken
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -51,4 +53,23 @@ class RemoteInviteDataSourceImpl @Inject constructor(
             }
             .valueOrThrow
             .invites
+
+    override suspend fun acceptInvite(
+        userId: UserId,
+        inviteToken: InviteToken,
+        body: AcceptInviteRequest
+    ) {
+        apiProvider.get<PasswordManagerApi>(userId)
+            .invoke {
+                acceptInvite(
+                    inviteId = inviteToken.value,
+                    request = body
+                )
+            }
+            .valueOrThrow
+    }
+
+    override suspend fun rejectInvite(userId: UserId, token: InviteToken) {
+
+    }
 }

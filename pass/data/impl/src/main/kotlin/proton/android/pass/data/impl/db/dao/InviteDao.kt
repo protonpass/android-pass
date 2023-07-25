@@ -43,4 +43,13 @@ abstract class InviteDao : BaseDao<InviteEntity>() {
         """
     )
     abstract suspend fun getByToken(userId: String, token: String): InviteEntity?
+
+    @Query(
+        """
+        DELETE FROM ${InviteEntity.TABLE}
+        WHERE ${InviteEntity.Columns.TOKEN} = :token
+          AND ${InviteEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract suspend fun removeByToken(userId: String, token: String)
 }

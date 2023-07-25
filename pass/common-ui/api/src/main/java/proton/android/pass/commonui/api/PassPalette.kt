@@ -163,4 +163,7 @@ object PassPalette {
     val ForestGreen = Color(0xFF51940D)
     val LimeGreen = Color(0xFF66C146)
     val DarkGreen = Color(0xFF317806)
+
+    val ValleyNight = Color(0xFF302D45)
+    val IvoryWhite = Color(0xFFEDEDED)
 }

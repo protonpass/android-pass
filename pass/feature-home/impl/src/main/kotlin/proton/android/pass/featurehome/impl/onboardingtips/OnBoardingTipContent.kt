@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.coroutines.launch
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -100,6 +101,18 @@ fun OnBoardingTipContent(
                         }
                     )
                 }
+            }
+        }
+
+        AnimatedVisibility(
+            visible = tipsSetToShow.contains(INVITE),
+            enter = expandVertically(),
+            exit = shrinkVertically()
+        ) {
+            Box(modifier = modifier.padding(16.dp)) {
+                InviteCard(
+                    onClick = { onClick(INVITE) }
+                )
             }
         }
     }

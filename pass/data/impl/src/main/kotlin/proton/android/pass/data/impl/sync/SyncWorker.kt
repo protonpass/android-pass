@@ -34,8 +34,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
-import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
@@ -46,14 +46,14 @@ open class SyncWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val applyPendingEvents: ApplyPendingEvents,
-    private val inviteRepository: InviteRepository
+    private val refreshInvites: RefreshInvites
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting sync worker")
         return withContext(Dispatchers.IO) {
-            val pendingEvents = async { pendingEvents() }
-            val refreshInvites = async { refreshInvites() }
+            val pendingEvents = async { performPendingEvents() }
+            val refreshInvites = async { performRefreshInvites() }
             val res = awaitAll(pendingEvents, refreshInvites)
 
             val error = res.firstOrNull { it.isFailure }
@@ -64,7 +64,7 @@ open class SyncWorker @AssistedInject constructor(
         }
     }
 
-    private suspend fun pendingEvents(): KResult<Unit> {
+    private suspend fun performPendingEvents(): KResult<Unit> {
         return runCatching {
             applyPendingEvents()
         }.fold(
@@ -76,9 +76,9 @@ open class SyncWorker @AssistedInject constructor(
         )
     }
 
-    private suspend fun refreshInvites(): KResult<Unit> {
+    private suspend fun performRefreshInvites(): KResult<Unit> {
         return runCatching {
-            inviteRepository.refreshInvites()
+            refreshInvites()
         }.fold(
             onSuccess = { KResult.success(Unit) },
             onFailure = {

@@ -114,6 +114,7 @@ import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featuresettings.impl.SettingsNavigation
 import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
+import proton.android.pass.featuresharing.impl.AcceptInvite
 import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.SharingPermissions
 import proton.android.pass.featuresharing.impl.SharingWith
@@ -233,6 +234,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.TrialInfo -> appNavigator.navigate(TrialScreen)
+                HomeNavigation.OpenInvite -> appNavigator.navigate(AcceptInvite)
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
             }
         }
@@ -805,7 +807,9 @@ fun NavGraphBuilder.appGraph(
     }
     sharingGraph {
         when (it) {
-            SharingNavigation.Back -> appNavigator.onBackClick()
+            SharingNavigation.Back -> dismissBottomSheet {
+                appNavigator.onBackClick()
+            }
             is SharingNavigation.Permissions -> appNavigator.navigate(
                 SharingPermissions,
                 SharingPermissions.createRoute(it.shareId, it.email)

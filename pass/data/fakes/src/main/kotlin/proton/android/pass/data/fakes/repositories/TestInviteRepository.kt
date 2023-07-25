@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InviteRepository
+import proton.pass.domain.InviteToken
 import proton.pass.domain.PendingInvite
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,6 +32,8 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
 
     private val invitesFlow: MutableStateFlow<List<PendingInvite>> = MutableStateFlow(emptyList())
     private var refreshResult: Result<Unit> = Result.success(Unit)
+    private var acceptResult: Result<Unit> = Result.success(Unit)
+    private var rejectResult: Result<Unit> = Result.success(Unit)
 
     fun emitInvites(invites: List<PendingInvite>) {
         invitesFlow.tryEmit(invites)
@@ -40,9 +43,25 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
         refreshResult = value
     }
 
+    fun setAcceptResult(value: Result<Unit>) {
+        acceptResult = value
+    }
+
+    fun setRejectResult(value: Result<Unit>) {
+        rejectResult = value
+    }
+
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = invitesFlow
 
     override suspend fun refreshInvites(userId: UserId) {
         refreshResult.getOrThrow()
+    }
+
+    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken) {
+        acceptResult.getOrThrow()
+    }
+
+    override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {
+        rejectResult.getOrThrow()
     }
 }

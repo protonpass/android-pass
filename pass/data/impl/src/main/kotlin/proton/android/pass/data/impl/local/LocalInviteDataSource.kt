@@ -33,6 +33,7 @@ data class InviteAndKeysEntity(
 interface LocalInviteDataSource {
     suspend fun storeInvites(invites: List<InviteAndKeysEntity>)
     suspend fun removeInvites(invites: List<InviteEntity>)
+    suspend fun removeInvite(userId: UserId, invite: InviteToken)
     fun observeAllInvites(userId: UserId): Flow<List<InviteEntity>>
     suspend fun getInviteWithKeys(userId: UserId, inviteToken: InviteToken): Option<InviteAndKeysEntity>
 }

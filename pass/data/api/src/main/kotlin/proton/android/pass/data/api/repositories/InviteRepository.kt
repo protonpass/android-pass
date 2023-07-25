@@ -20,11 +20,14 @@ package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
+import proton.pass.domain.InviteToken
 import proton.pass.domain.PendingInvite
 
 interface InviteRepository {
 
     fun observeInvites(userId: UserId): Flow<List<PendingInvite>>
     suspend fun refreshInvites(userId: UserId)
+    suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken)
+    suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken)
 
 }

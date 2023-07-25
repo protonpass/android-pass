@@ -18,10 +18,9 @@
 
 package proton.android.pass.featuresharing.impl.sharingwith
 
-data class SharingWithUIState(
-    val email: String = "",
-    val vaultName: String? = null,
-    val isEmailNotValid: Boolean = false,
-    val isVaultNotFound: Boolean = false,
-    val event: SharingWithEvents = SharingWithEvents.Unknown
-)
+import proton.pass.domain.ShareId
+
+sealed interface SharingWithEvents {
+    data class NavigateToPermissions(val shareId: ShareId, val email: String) : SharingWithEvents
+    object Unknown : SharingWithEvents
+}

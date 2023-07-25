@@ -66,10 +66,10 @@ fun AcceptInviteBottomSheet(
                     .bottomSheet(),
                 state = contentState,
                 onConfirm = {
-                    viewModel.onConfirm()
+                    viewModel.onConfirm(contentState.invite)
                 },
                 onReject = {
-                    viewModel.onReject()
+                    viewModel.onReject(contentState.invite)
                 }
             )
         }

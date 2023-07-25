@@ -24,7 +24,7 @@ import proton.pass.domain.PendingInvite
 
 interface InviteRepository {
 
-    fun observeInvites(userId: UserId? = null): Flow<List<PendingInvite>>
-    suspend fun refreshInvites(userId: UserId? = null)
+    fun observeInvites(userId: UserId): Flow<List<PendingInvite>>
+    suspend fun refreshInvites(userId: UserId)
 
 }

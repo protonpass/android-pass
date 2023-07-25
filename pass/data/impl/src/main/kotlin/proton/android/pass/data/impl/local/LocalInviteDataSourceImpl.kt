@@ -61,4 +61,8 @@ class LocalInviteDataSourceImpl @Inject constructor(
     override suspend fun removeInvites(invites: List<InviteEntity>) {
         database.inviteDao().delete(*invites.toTypedArray())
     }
+
+    override suspend fun removeInvite(userId: UserId, invite: InviteToken) {
+        database.inviteDao().removeByToken(userId.id, invite.value)
+    }
 }

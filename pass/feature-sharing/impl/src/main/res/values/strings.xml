@@ -35,4 +35,8 @@
     <string name="sharing_member_count">%d members</string>
     <string name="sharing_join_shared_vault">Join shared vault</string>
     <string name="sharing_reject_invitation">Reject invitation</string>
+    <string name="sharing_snackbar_invite_accepted">Invite accepted</string>
+    <string name="sharing_snackbar_invite_accept_error">Error accepting the invite</string>
+    <string name="sharing_snackbar_invite_rejected">Invite rejected</string>
+    <string name="sharing_snackbar_invite_reject_error">Error rejecting the invite</string>
 </resources>

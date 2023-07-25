@@ -34,13 +34,20 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.map
+import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ObserveInvites
+import proton.android.pass.data.api.usecases.RejectInvite
+import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.PendingInvite
 import javax.inject.Inject
 
 @HiltViewModel
 class AcceptInviteViewModel @Inject constructor(
+    private val acceptInvite: AcceptInvite,
+    private val rejectInvite: RejectInvite,
+    private val snackbarDispatcher: SnackbarDispatcher,
     observeInvites: ObserveInvites
 ) : ViewModel() {
 
@@ -94,12 +101,35 @@ class AcceptInviteViewModel @Inject constructor(
         initialValue = AcceptInviteUiState.Loading
     )
 
-    fun onConfirm() = viewModelScope.launch {
+    fun onConfirm(invite: PendingInvite) = viewModelScope.launch {
         loadingFlow.update { LoadingButtonState.ConfirmLoading }
+        runCatching { acceptInvite(invite.inviteToken) }
+            .onSuccess {
+                PassLogger.i(TAG, "Invite accepted")
+                eventFlow.update { AcceptInviteEvent.Close }
+                snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
+            }
+            .onFailure {
+                PassLogger.w(TAG, it, "Error accepting invite")
+                snackbarDispatcher(SharingSnackbarMessage.InviteAcceptError)
+            }
+        loadingFlow.update { LoadingButtonState.NotLoading }
     }
 
-    fun onReject() = viewModelScope.launch {
+    fun onReject(invite: PendingInvite) = viewModelScope.launch {
         loadingFlow.update { LoadingButtonState.RejectLoading }
+        runCatching { rejectInvite(invite.inviteToken) }
+            .onSuccess {
+                PassLogger.i(TAG, "Invite rejected")
+                eventFlow.update { AcceptInviteEvent.Close }
+                snackbarDispatcher(SharingSnackbarMessage.InviteRejected)
+            }
+            .onFailure {
+                PassLogger.w(TAG, it, "Error rejected invite")
+                eventFlow.update { AcceptInviteEvent.Close }
+                snackbarDispatcher(SharingSnackbarMessage.InviteRejectError)
+            }
+        loadingFlow.update { LoadingButtonState.NotLoading }
     }
 
     sealed interface LoadingButtonState {

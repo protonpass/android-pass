@@ -24,6 +24,7 @@ import kotlinx.collections.immutable.persistentSetOf
 sealed interface OnBoardingTipsEvent {
     object Unknown : OnBoardingTipsEvent
     object OpenTrialScreen : OnBoardingTipsEvent
+    object OpenInviteScreen : OnBoardingTipsEvent
 }
 
 data class OnBoardingTipsUiState(

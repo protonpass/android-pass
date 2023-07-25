@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
@@ -85,7 +86,7 @@ fun AcceptInviteContent(
         }
         Text(
             text = subtitle,
-            style = PassTypography.body1Regular,
+            style = ProtonTheme.typography.defaultNorm,
             color = PassTheme.colors.textWeak
         )
 

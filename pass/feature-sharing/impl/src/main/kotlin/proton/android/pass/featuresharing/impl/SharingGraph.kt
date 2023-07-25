@@ -18,14 +18,20 @@
 
 package proton.android.pass.featuresharing.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+<<<<<<< HEAD
 import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
+=======
+import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
+>>>>>>> b230f2bd1 (feat(sharing): show accept invite bottomsheet)
 import proton.android.pass.featuresharing.impl.sharingwith.SharingWithScreen
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.pass.domain.ShareId
 
@@ -48,6 +54,8 @@ object SharingPermissions : NavItem(
     fun createRoute(shareId: ShareId, email: String) = "$baseRoute/${shareId.id}/$email"
 }
 
+object AcceptInvite : NavItem("sharing/accept")
+
 sealed interface SharingNavigation {
     object Back : SharingNavigation
     data class Permissions(val shareId: ShareId, val email: String) : SharingNavigation
@@ -61,7 +69,13 @@ fun NavGraphBuilder.sharingGraph(
     composable(SharingWith) {
         SharingWithScreen(onNavigateEvent = onNavigateEvent)
     }
+
     composable(SharingPermissions) {
         SharingPermissionsScreen(onNavigateEvent = onNavigateEvent)
+    }
+
+    bottomSheet(AcceptInvite) {
+        BackHandler { onNavigateEvent(SharingNavigation.Back) }
+        AcceptInviteBottomSheet(onNavigateEvent = onNavigateEvent)
     }
 }

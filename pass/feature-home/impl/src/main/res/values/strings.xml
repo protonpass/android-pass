@@ -27,6 +27,9 @@
     <string name="home_trial_banner_text">Check out all the exclusive features that are available to you for a limited time.</string>
     <string name="home_trial_banner_settings">Learn more ›</string>
 
+    <string name="home_invite_banner_title">Shared vault invitation</string>
+    <string name="home_invite_banner_subtitle">You\'ve been invited to a vault. Tap here to see the invitation.</string>
+
     <!-- Common bottomsheet -->
     <string name="bottomsheet_copy_password">Copy password</string>
     <string name="bottomsheet_copy_username">Copy username</string>

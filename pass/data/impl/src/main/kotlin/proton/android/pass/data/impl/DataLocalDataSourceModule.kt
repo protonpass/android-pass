@@ -28,6 +28,8 @@ import proton.android.pass.data.impl.local.LocalEventDataSource
 import proton.android.pass.data.impl.local.LocalEventDataSourceImpl
 import proton.android.pass.data.impl.local.LocalFeatureFlagDataSource
 import proton.android.pass.data.impl.local.LocalFeatureFlagDataSourceImpl
+import proton.android.pass.data.impl.local.LocalInviteDataSource
+import proton.android.pass.data.impl.local.LocalInviteDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
 import proton.android.pass.data.impl.local.LocalPlanDataSource
@@ -71,4 +73,7 @@ abstract class DataLocalDataSourceModule {
 
     @Binds
     abstract fun bindLocalFeatureFlagDataSource(impl: LocalFeatureFlagDataSourceImpl): LocalFeatureFlagDataSource
+
+    @Binds
+    abstract fun bindLocalInviteDataSource(impl: LocalInviteDataSourceImpl): LocalInviteDataSource
 }

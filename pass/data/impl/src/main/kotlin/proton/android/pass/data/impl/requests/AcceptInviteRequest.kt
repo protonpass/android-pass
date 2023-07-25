@@ -16,18 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.impl.requests
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.pass.domain.InviteToken
-import proton.pass.domain.PendingInvite
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-interface InviteRepository {
+@Serializable
+data class AcceptInviteRequest(
+    @SerialName("Keys")
+    val keys: List<InviteKeyRotation>
+)
 
-    fun observeInvites(userId: UserId): Flow<List<PendingInvite>>
-    suspend fun refreshInvites(userId: UserId)
-    suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken)
-    suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken)
-
-}
+@Serializable
+data class InviteKeyRotation(
+    @SerialName("Key")
+    val key: String,
+    @SerialName("KeyRotation")
+    val keyRotation: Long
+)

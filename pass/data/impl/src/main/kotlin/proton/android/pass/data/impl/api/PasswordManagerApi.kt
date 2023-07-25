@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
@@ -222,10 +223,16 @@ interface PasswordManagerApi : BaseRetrofitApi {
     // Sharing
     @POST("$PREFIX/share/{shareId}/invite")
     suspend fun inviteUser(
-        @Query("shareId") shareId: String,
+        @Path("shareId") shareId: String,
         @Body request: CreateInviteRequest
     ): CodeOnlyResponse
 
     @GET("$PREFIX/invite")
     suspend fun fetchInvites(): PendingInvitesResponse
+
+    @POST("$PREFIX/invite/{inviteId}")
+    suspend fun acceptInvite(
+        @Path("inviteId") inviteId: String,
+        @Body request: AcceptInviteRequest
+    ): CodeOnlyResponse
 }

@@ -31,7 +31,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
-import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.impl.sync.SyncWorker.Companion.WORKER_UNIQUE_NAME
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -43,7 +43,7 @@ class SyncManagerImpl @Inject constructor(
     private val scopeProvider: CoroutineScopeProvider,
     private val workManager: WorkManager,
     private val eventWorkerManager: EventWorkerManager,
-    private val applyPendingEvents: ApplyPendingEvents,
+    private val performSync: PerformSync,
     appLifecycleProvider: AppLifecycleProvider,
     accountManager: AccountManager
 ) : SyncManager {
@@ -73,11 +73,10 @@ class SyncManagerImpl @Inject constructor(
                         AppLifecycleProvider.State.Foreground -> {
                             workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
                             while (currentCoroutineContext().isActive) {
-                                runCatching {
-                                    applyPendingEvents()
-                                }.onFailure { t ->
-                                    PassLogger.w(TAG, t, "Apply pending events error")
-                                }
+                                performSync()
+                                    .onFailure { error ->
+                                        PassLogger.w(TAG, error, "Error in performSync")
+                                    }
                                 delay(initialDelay)
                             }
                         }

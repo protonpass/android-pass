@@ -68,6 +68,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -135,6 +136,7 @@ import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultCountImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
+import proton.android.pass.data.impl.usecases.PerformSyncImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
@@ -361,4 +363,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRefreshInvites(impl: RefreshInvitesImpl): RefreshInvites
+
+    @Binds
+    abstract fun bindPerformSync(impl: PerformSyncImpl): PerformSync
 }

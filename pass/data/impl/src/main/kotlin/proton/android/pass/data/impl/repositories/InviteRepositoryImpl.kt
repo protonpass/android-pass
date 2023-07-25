@@ -25,6 +25,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.InviteRepository
+import proton.android.pass.data.impl.crypto.EncryptInviteKeys
 import proton.android.pass.data.impl.crypto.ReencryptInviteContents
 import proton.android.pass.data.impl.db.entities.InviteEntity
 import proton.android.pass.data.impl.db.entities.InviteKeyEntity
@@ -32,6 +33,8 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.InviteAndKeysEntity
 import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
+import proton.android.pass.data.impl.requests.AcceptInviteRequest
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.InviteToken
 import proton.pass.domain.PendingInvite
 import proton_pass_vault_v1.VaultV1
@@ -41,7 +44,8 @@ class InviteRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteInviteDataSource,
     private val localDatasource: LocalInviteDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val reencryptInviteContents: ReencryptInviteContents
+    private val reencryptInviteContents: ReencryptInviteContents,
+    private val encryptInviteKeys: EncryptInviteKeys
 ) : InviteRepository {
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = localDatasource
         .observeAllInvites(userId)
@@ -98,8 +102,25 @@ class InviteRepositoryImpl @Inject constructor(
             )
         }
 
-
         localDatasource.storeInvites(invitesWithKeys)
+    }
+
+    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken) {
+        val invite = localDatasource.getInviteWithKeys(userId, inviteToken).value()
+        if (invite == null) {
+            PassLogger.w(TAG, "Could not find the invite: ${inviteToken.value}")
+            return
+        }
+
+        val keys = encryptInviteKeys(userId, invite)
+        val request = AcceptInviteRequest(keys)
+        remoteDataSource.acceptInvite(userId, inviteToken, request)
+        localDatasource.removeInvite(userId, inviteToken)
+    }
+
+    override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {
+        remoteDataSource.rejectInvite(userId, inviteToken)
+        localDatasource.removeInvite(userId, inviteToken)
     }
 
     private fun InviteEntity.toDomain(encryptionContext: EncryptionContext): PendingInvite {
@@ -114,5 +135,9 @@ class InviteRepositoryImpl @Inject constructor(
             icon = decoded.display.icon.toDomain(),
             color = decoded.display.color.toDomain()
         )
+    }
+
+    companion object {
+        private const val TAG = "InviteRepositoryImpl"
     }
 }

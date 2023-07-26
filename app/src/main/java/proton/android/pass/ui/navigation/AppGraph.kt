@@ -117,6 +117,7 @@ import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featuresharing.impl.AcceptInvite
 import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.SharingPermissions
+import proton.android.pass.featuresharing.impl.SharingSummary
 import proton.android.pass.featuresharing.impl.SharingWith
 import proton.android.pass.featuresharing.impl.sharingGraph
 import proton.android.pass.featuretrial.impl.TrialNavigation
@@ -815,7 +816,10 @@ fun NavGraphBuilder.appGraph(
                 SharingPermissions.createRoute(it.shareId, it.email)
             )
 
-            is SharingNavigation.Summary -> {}
+            is SharingNavigation.Summary -> appNavigator.navigate(
+                SharingSummary,
+                SharingSummary.createRoute(it.shareId, it.email, it.permission)
+            )
         }
     }
 }

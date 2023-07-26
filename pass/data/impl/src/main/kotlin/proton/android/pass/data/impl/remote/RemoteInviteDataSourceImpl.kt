@@ -70,6 +70,10 @@ class RemoteInviteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun rejectInvite(userId: UserId, token: InviteToken) {
-
+        apiProvider.get<PasswordManagerApi>(userId)
+            .invoke {
+                rejectInvite(inviteId = token.value)
+            }
+            .valueOrThrow
     }
 }

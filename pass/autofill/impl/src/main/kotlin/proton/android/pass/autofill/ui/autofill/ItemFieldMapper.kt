@@ -18,7 +18,7 @@
 
 package proton.android.pass.autofill.ui.autofill
 
-import proton.android.pass.autofill.entities.AndroidAutofillFieldId
+import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.DatasetMapping
@@ -31,20 +31,20 @@ object ItemFieldMapper {
     private const val TAG = "ItemFieldMapper"
 
     private data class AutofillFieldMapping(
-        val autofillFieldId: AndroidAutofillFieldId?,
+        val autofillFieldId: AutofillFieldId?,
         val autofillType: FieldType,
         val isFocused: Boolean,
-        val parentId: AndroidAutofillFieldId?
+        val parentId: AutofillFieldId?
     )
 
     @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
     fun mapFields(
         encryptionContext: EncryptionContext,
         autofillItem: AutofillItem,
-        androidAutofillFieldIds: List<AndroidAutofillFieldId?>,
+        androidAutofillFieldIds: List<AutofillFieldId?>,
         autofillTypes: List<FieldType>,
         fieldIsFocusedList: List<Boolean>,
-        parentIdList: List<AndroidAutofillFieldId?>
+        parentIdList: List<AutofillFieldId?>
     ): AutofillMappings {
         val mappingList = mutableListOf<DatasetMapping>()
         val fields = androidAutofillFieldIds

@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -79,8 +80,16 @@ fun AcceptInviteContent(
             color = PassTheme.colors.textNorm
         )
 
-        val itemCount = stringResource(R.string.sharing_item_count, invite.itemCount)
-        val memberCount = stringResource(R.string.sharing_member_count, invite.memberCount)
+        val itemCount = pluralStringResource(
+            R.plurals.sharing_item_count,
+            invite.itemCount,
+            invite.itemCount
+        )
+        val memberCount = pluralStringResource(
+            R.plurals.sharing_member_count,
+            invite.memberCount,
+            invite.memberCount
+        )
         val subtitle = remember(invite.itemCount, invite.memberCount) {
             "$itemCount • $memberCount"
         }

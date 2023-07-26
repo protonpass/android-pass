@@ -60,6 +60,11 @@ fun AcceptInviteBottomSheet(
         }
         is AcceptInviteUiState.Content -> {
             val contentState = state as AcceptInviteUiState.Content
+            LaunchedEffect(contentState.event) {
+                if (contentState.event == AcceptInviteEvent.Close) {
+                    onNavigateEvent(SharingNavigation.Back)
+                }
+            }
             AcceptInviteContent(
                 modifier = modifier
                     .fillMaxWidth()

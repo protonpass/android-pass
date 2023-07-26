@@ -65,17 +65,12 @@ class SharingSummaryViewModel @Inject constructor(
 
     private val isLoadingStateFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
-
-    private val eventState: MutableStateFlow<SharingSummaryEvents> =
-        MutableStateFlow(SharingSummaryEvents.Unknown)
-
     val state: StateFlow<SharingSummaryUIState> = combine(
         flowOf(email),
         flowOf(sharingType),
         getVaultWithItemCountById(shareId = shareId).asLoadingResult(),
-        isLoadingStateFlow,
-        eventState
-    ) { email, sharingType, vaultResult, isLoadingState, event ->
+        isLoadingStateFlow
+    ) { email, sharingType, vaultResult, isLoadingState ->
         val vaultWithItemCount = when (vaultResult) {
             is LoadingResult.Success -> vaultResult.data
             is LoadingResult.Error -> {
@@ -92,17 +87,12 @@ class SharingSummaryViewModel @Inject constructor(
             vaultWithItemCount = vaultWithItemCount,
             sharingType = sharingType,
             isLoading = isLoading,
-            event = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = SharingSummaryUIState()
     )
-
-    fun clearEvent() {
-        eventState.update { SharingSummaryEvents.Unknown }
-    }
 
     fun onSubmit(email: String, shareId: ShareId?, sharingType: SharingType) =
         viewModelScope.launch {

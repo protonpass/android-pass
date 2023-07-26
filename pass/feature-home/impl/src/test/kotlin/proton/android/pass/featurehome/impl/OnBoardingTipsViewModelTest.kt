@@ -35,8 +35,10 @@ import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INV
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsUiState
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsViewModel
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestPendingInvite
@@ -54,6 +56,7 @@ class OnBoardingTipsViewModelTest {
     private lateinit var autofillManager: TestAutofillManager
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var observeInvites: TestObserveInvites
+    private lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
 
     @Before
     fun setUp() {
@@ -61,6 +64,14 @@ class OnBoardingTipsViewModelTest {
         autofillManager = TestAutofillManager()
         getUserPlan = TestGetUserPlan()
         observeInvites = TestObserveInvites()
+        ffRepo = TestFeatureFlagsPreferenceRepository()
+        viewModel = OnBoardingTipsViewModel(
+            autofillManager,
+            preferenceRepository,
+            observeInvites,
+            getUserPlan,
+            ffRepo,
+        )
     }
 
     @Test
@@ -68,12 +79,6 @@ class OnBoardingTipsViewModelTest {
         setupPlan()
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel = OnBoardingTipsViewModel(
-            autofillManager,
-            preferenceRepository,
-            observeInvites,
-            getUserPlan
-        )
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState())
         }
@@ -84,12 +89,6 @@ class OnBoardingTipsViewModelTest {
         setupPlan()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel = OnBoardingTipsViewModel(
-            autofillManager,
-            preferenceRepository,
-            observeInvites,
-            getUserPlan
-        )
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState())
         }
@@ -100,12 +99,6 @@ class OnBoardingTipsViewModelTest {
         setupPlan()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel = OnBoardingTipsViewModel(
-            autofillManager,
-            preferenceRepository,
-            observeInvites,
-            getUserPlan
-        )
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(AUTOFILL)))
         }
@@ -116,12 +109,6 @@ class OnBoardingTipsViewModelTest {
         setupPlan()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel = OnBoardingTipsViewModel(
-            autofillManager,
-            preferenceRepository,
-            observeInvites,
-            getUserPlan
-        )
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(AUTOFILL)))
         }
@@ -132,12 +119,6 @@ class OnBoardingTipsViewModelTest {
         setupPlan()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
-        viewModel = OnBoardingTipsViewModel(
-            autofillManager,
-            preferenceRepository,
-            observeInvites,
-            getUserPlan
-        )
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState())
         }
@@ -149,12 +130,6 @@ class OnBoardingTipsViewModelTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
-        viewModel = OnBoardingTipsViewModel(
-            autofillManager,
-            preferenceRepository,
-            observeInvites,
-            getUserPlan
-        )
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(TRIAL)))
         }
@@ -166,12 +141,6 @@ class OnBoardingTipsViewModelTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
-        viewModel = OnBoardingTipsViewModel(
-            autofillManager,
-            preferenceRepository,
-            observeInvites,
-            getUserPlan
-        )
 
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(TRIAL)))
@@ -189,15 +158,24 @@ class OnBoardingTipsViewModelTest {
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
         observeInvites.emitInvites(listOf(TestPendingInvite.create()))
-        viewModel = OnBoardingTipsViewModel(
-            autofillManager,
-            preferenceRepository,
-            observeInvites,
-            getUserPlan
-        )
+        ffRepo.set(FeatureFlag.SHARING_V1, true)
 
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(INVITE)))
+        }
+    }
+
+    @Test
+    fun `Should not display invite banner if FF is disabled`() = runTest {
+        setupPlan(PlanType.Trial("", "", 1))
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
+        preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
+        preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
+        observeInvites.emitInvites(listOf(TestPendingInvite.create()))
+        ffRepo.set(FeatureFlag.SHARING_V1, false)
+
+        viewModel.state.test {
+            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(TRIAL)))
         }
     }
 

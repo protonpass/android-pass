@@ -24,6 +24,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
+import proton.android.pass.featuresharing.impl.sharingsummary.SharingSummaryScreen
 import proton.android.pass.featuresharing.impl.sharingwith.SharingWithScreen
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
@@ -35,6 +36,11 @@ import proton.pass.domain.ShareId
 object EmailNavArgId : NavArgId {
     override val key: String = "email"
     override val navType: NavType<*> = NavType.StringType
+}
+
+object PermissionNavArgId : NavArgId {
+    override val key: String = "permission"
+    override val navType: NavType<*> = NavType.IntType
 }
 
 object SharingWith : NavItem(
@@ -53,10 +59,19 @@ object SharingPermissions : NavItem(
 
 object AcceptInvite : NavItem("sharing/accept")
 
+object SharingSummary : NavItem(
+    baseRoute = "sharing/summary/screen",
+    navArgIds = listOf(CommonNavArgId.ShareId, EmailNavArgId, PermissionNavArgId)
+) {
+    fun createRoute(shareId: ShareId, email: String, permission: Int) =
+        "$baseRoute/${shareId.id}/$email/$permission"
+}
+
 sealed interface SharingNavigation {
     object Back : SharingNavigation
     data class Permissions(val shareId: ShareId, val email: String) : SharingNavigation
-    data class Summary(val shareId: ShareId, val email: String, val permission: Int) : SharingNavigation
+    data class Summary(val shareId: ShareId, val email: String, val permission: Int) :
+        SharingNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -69,6 +84,10 @@ fun NavGraphBuilder.sharingGraph(
 
     composable(SharingPermissions) {
         SharingPermissionsScreen(onNavigateEvent = onNavigateEvent)
+    }
+
+    composable(SharingSummary) {
+        SharingSummaryScreen(onNavigateEvent = onNavigateEvent)
     }
 
     bottomSheet(AcceptInvite) {

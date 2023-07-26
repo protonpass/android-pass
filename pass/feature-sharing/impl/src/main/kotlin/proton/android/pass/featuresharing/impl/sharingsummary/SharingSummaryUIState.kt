@@ -25,6 +25,5 @@ data class SharingSummaryUIState(
     val email: String = "",
     val vaultWithItemCount: VaultWithItemCount? = null,
     val sharingType: SharingType = SharingType.Read,
-    val isLoading: Boolean = false,
-    val event: SharingSummaryEvents = SharingSummaryEvents.Unknown,
+    val isLoading: Boolean = false
 )

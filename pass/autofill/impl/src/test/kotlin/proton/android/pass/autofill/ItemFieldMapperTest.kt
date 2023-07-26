@@ -184,6 +184,78 @@ class ItemFieldMapperTest {
         assertThat(res.mappings).isEqualTo(listOf(expectedUsername, expectedPassword))
     }
 
+    @Test
+    fun `can autofill focused group of username+password when there are 2 groups`() {
+        val parentAutofillId1 = TestAutofillId(10)
+        val usernameAutofillId1 = TestAutofillId(11)
+        val passwordAutofillId1 = TestAutofillId(12)
+
+        val parentAutofillId2 = TestAutofillId(20)
+        val usernameAutofillId2 = TestAutofillId(21)
+        val passwordAutofillId2 = TestAutofillId(22)
+
+        val username = "username"
+        val password = "somepassword"
+        val item = autofillItem(
+            username = username,
+            password = TestEncryptionContext.encrypt(password)
+        )
+
+        val cases = listOf(
+            listOf(true, false, false, false) to 1,
+            listOf(false, true, false, false) to 1,
+            listOf(false, false, true, false) to 2,
+            listOf(false, false, false, true) to 2,
+        )
+
+        cases.forEach {
+            val (fieldIsFocusedList, expectedGroup) = it
+
+            val res = ItemFieldMapper.mapFields(
+                encryptionContext = TestEncryptionContext,
+                autofillItem = item,
+                androidAutofillFieldIds = listOf(
+                    usernameAutofillId1, passwordAutofillId1,
+                    usernameAutofillId2, passwordAutofillId2
+                ),
+                autofillTypes = listOf(
+                    FieldType.Username, FieldType.Password,
+                    FieldType.Username, FieldType.Password
+                ),
+                fieldIsFocusedList = fieldIsFocusedList,
+                parentIdList = listOf(
+                    parentAutofillId1, parentAutofillId1,
+                    parentAutofillId2, parentAutofillId2
+                )
+            )
+
+            val (usernameAutofillId, passwordAutofillId) = when (expectedGroup) {
+                1 -> usernameAutofillId1 to passwordAutofillId1
+                2 -> usernameAutofillId2 to passwordAutofillId2
+
+                else -> throw IllegalStateException("CANNOT HAPPEN")
+            }
+
+            val expectedUsername = DatasetMapping(
+                autofillFieldId = usernameAutofillId,
+                contents = username,
+                displayValue = username
+            )
+            val expectedPassword = DatasetMapping(
+                autofillFieldId = passwordAutofillId,
+                contents = password,
+                displayValue = ""
+            )
+
+            assertThat(res.mappings).containsExactlyElementsIn(
+                listOf(
+                    expectedUsername,
+                    expectedPassword
+                )
+            )
+        }
+    }
+
     private fun autofillItem(
         itemId: String = "ItemID-123",
         shareId: String = "ShareId-123",

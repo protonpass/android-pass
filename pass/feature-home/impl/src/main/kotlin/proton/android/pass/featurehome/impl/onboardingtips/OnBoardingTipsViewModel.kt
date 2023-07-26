@@ -43,6 +43,8 @@ import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -54,7 +56,8 @@ class OnBoardingTipsViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val preferencesRepository: UserPreferencesRepository,
     observeInvites: ObserveInvites,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<OnBoardingTipsEvent> =
@@ -64,20 +67,14 @@ class OnBoardingTipsViewModel @Inject constructor(
         .map { invites -> invites.isNotEmpty() }
         .distinctUntilChanged()
 
+    private val sharingEnabledFlow: Flow<Boolean> = ffRepo.get<Boolean>(FeatureFlag.SHARING_V1)
+        .distinctUntilChanged()
+
     private val shouldShowAutofillFlow: Flow<Boolean> = combine(
         autofillManager.getAutofillStatus(),
         preferencesRepository.getHasDismissedAutofillBanner(),
-        hasInvitesFlow
-    ) { autofillStatus, hasDismissedAutofillBanner, hasInvites ->
-        if (hasInvites) {
-            true
-        } else {
-            shouldShowBanner(
-                autofillSupportedStatus = autofillStatus,
-                hasDismissedAutofillBanner = hasDismissedAutofillBanner
-            )
-        }
-    }
+        ::shouldShowAutofillBanner
+    )
 
     private val shouldShowTrialFlow: Flow<Boolean> = preferencesRepository
         .getHasDismissedTrialBanner()
@@ -89,19 +86,24 @@ class OnBoardingTipsViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
+    private val shouldShowInvitesFlow: Flow<Boolean> = combine(
+        hasInvitesFlow,
+        sharingEnabledFlow
+    ) { hasInvites, sharingEnabled -> hasInvites && sharingEnabled }
+
     val state: StateFlow<OnBoardingTipsUiState> = combine(
         shouldShowAutofillFlow,
         shouldShowTrialFlow,
+        shouldShowInvitesFlow,
         getUserPlan(),
-        eventFlow,
-        hasInvitesFlow
-    ) { shouldShowAutofill, shouldShowTrial, userPlan, event, hasInvites ->
+        eventFlow
+    ) { shouldShowAutofill, shouldShowTrial, shouldShowInvites, userPlan, event ->
 
         val tips = getTips(
             planType = userPlan.planType,
             shouldShowTrial = shouldShowTrial,
             shouldShowAutofill = shouldShowAutofill,
-            hasInvites
+            shouldShowInvites = shouldShowInvites
         )
 
         OnBoardingTipsUiState(
@@ -119,7 +121,7 @@ class OnBoardingTipsViewModel @Inject constructor(
                     planType = userPlan.planType,
                     shouldShowTrial = shouldShowTrialFlow.first(),
                     shouldShowAutofill = shouldShowAutofillFlow.first(),
-                    hasInvites = hasInvitesFlow.first()
+                    shouldShowInvites = shouldShowInvitesFlow.first()
                 )
                 OnBoardingTipsUiState(tips)
             }
@@ -129,18 +131,18 @@ class OnBoardingTipsViewModel @Inject constructor(
         planType: PlanType,
         shouldShowTrial: Boolean,
         shouldShowAutofill: Boolean,
-        hasInvites: Boolean
+        shouldShowInvites: Boolean
     ): ImmutableSet<OnBoardingTipPage> {
         val isTrial = planType is PlanType.Trial
         return when {
-            hasInvites -> persistentSetOf(INVITE)
+            shouldShowInvites -> persistentSetOf(INVITE)
             isTrial && shouldShowTrial -> persistentSetOf(TRIAL)
             shouldShowAutofill -> persistentSetOf(AUTOFILL)
             else -> persistentSetOf()
         }
     }
 
-    private fun shouldShowBanner(
+    private fun shouldShowAutofillBanner(
         autofillSupportedStatus: AutofillSupportedStatus,
         hasDismissedAutofillBanner: HasDismissedAutofillBanner
     ): Boolean =

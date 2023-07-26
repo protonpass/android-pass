@@ -31,5 +31,7 @@ enum class SharingSnackbarMessage(
     InviteAcceptError(R.string.sharing_snackbar_invite_accept_error, SnackbarType.ERROR),
     InviteRejected(R.string.sharing_snackbar_invite_rejected, SnackbarType.SUCCESS),
     InviteRejectError(R.string.sharing_snackbar_invite_reject_error, SnackbarType.ERROR),
-
+    VaultNotFound(R.string.sharing_snackbar_vault_not_found, SnackbarType.ERROR),
+    InviteSentSuccess(R.string.sharing_snackbar_invite_sent_success, SnackbarType.SUCCESS),
+    InviteSentError(R.string.sharing_snackbar_invite_sent_error, SnackbarType.ERROR)
 }

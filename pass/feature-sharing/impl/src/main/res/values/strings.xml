@@ -17,26 +17,51 @@
   -->
 
 <resources>
-    <string name="share_with_title">Share with</string>
-    <string name="share_with_subtitle">This user will receive an invitation to join your \'%s\' vault.</string>
-    <string name="share_with_email_hint">Proton email address</string>
     <string name="share_continue">Continue</string>
-    <string name="share_with_email_error">Invalid email address</string>
-    <string name="share_permissions_title">Set permissions</string>
-    <string name="share_permissions_subtitle">Select the level of access this user will gain when they join your \'%s\' vault.</string>
     <string name="sharing_can_view">Can view</string>
     <string name="sharing_can_edit">Can edit</string>
     <string name="sharing_can_manage">Can manage</string>
     <string name="sharing_can_view_description">Can view items in this vault.</string>
     <string name="sharing_can_edit_description">Can create, edit, delete and export items in this vault.</string>
     <string name="sharing_can_manage_description">Can grant and revoke access to this vault.</string>
+    <plurals name="sharing_item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
+    <plurals name="sharing_member_count">
+        <item quantity="one">%d member</item>
+        <item quantity="other">%d members</item>
+    </plurals>
+
+    <string name="share_with_title">Share with</string>
+    <string name="share_with_subtitle">This user will receive an invitation to join your \'%s\' vault.</string>
+    <string name="share_with_email_hint">Proton email address</string>
+    <string name="share_with_email_error">Invalid email address</string>
+
+    <string name="share_permissions_title">Set permissions</string>
+    <string name="share_permissions_subtitle">Select the level of access this user will gain when they join your \'%s\' vault.</string>
+
     <string name="sharing_invitation_from">Invitation from %s</string>
-    <string name="sharing_item_count">%d items</string>
-    <string name="sharing_member_count">%d members</string>
     <string name="sharing_join_shared_vault">Join shared vault</string>
     <string name="sharing_reject_invitation">Reject invitation</string>
+
     <string name="sharing_snackbar_invite_accepted">Invite accepted</string>
     <string name="sharing_snackbar_invite_accept_error">Error accepting the invite</string>
     <string name="sharing_snackbar_invite_rejected">Invite rejected</string>
     <string name="sharing_snackbar_invite_reject_error">Error rejecting the invite</string>
+    <string name="sharing_snackbar_vault_not_found">Vault could not be found</string>
+    <string name="sharing_snackbar_invite_sent_success">Invitation sent</string>
+    <string name="sharing_snackbar_invite_sent_error">Could not send invite</string>
+
+    <string name="share_summary_title">Summary</string>
+    <string name="share_summary_subtitle">You are about to invite %1$s into your %2$s. They will gain access to %3$s and they will be able to %4$s in this vault.</string>
+    <string name="share_summary_vault">%s vault</string>
+    <string name="share_summary_view_items">only view items</string>
+    <string name="share_summary_create_items">create items</string>
+    <string name="share_summary_manage_vault">manage vault</string>
+    <string name="share_summary_share_vault">Share vault</string>
+    <string name="share_summary_email_title">User</string>
+    <string name="share_summary_vault_title">Vault</string>
+    <string name="share_summary_permissions_title">Permissions</string>
+
 </resources>

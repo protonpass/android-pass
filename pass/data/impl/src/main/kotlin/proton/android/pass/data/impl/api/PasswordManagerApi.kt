@@ -235,4 +235,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("inviteId") inviteId: String,
         @Body request: AcceptInviteRequest
     ): CodeOnlyResponse
+
+    @DELETE("$PREFIX/invite/{inviteId}")
+    suspend fun rejectInvite(
+        @Path("inviteId") inviteId: String,
+    ): CodeOnlyResponse
 }

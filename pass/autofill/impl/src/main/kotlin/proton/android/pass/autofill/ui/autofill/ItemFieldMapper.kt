@@ -47,12 +47,12 @@ object ItemFieldMapper {
         parentIdList: List<AutofillFieldId?>
     ): AutofillMappings {
         val mappingList = mutableListOf<DatasetMapping>()
-        val fields = androidAutofillFieldIds
-            .zip(autofillTypes)
-            .zip(fieldIsFocusedList)
-            .zip(parentIdList) { (pair, isFocused), parentId ->
-                AutofillFieldMapping(pair.first, pair.second, isFocused, parentId)
-            }
+        val fields = mapToFields(
+            androidAutofillFieldIds,
+            autofillTypes,
+            fieldIsFocusedList,
+            parentIdList
+        )
         val usernameFields =
             fields.filter { it.autofillType == FieldType.Username || it.autofillType == FieldType.Email }
         val passwordFields = fields.filter { it.autofillType == FieldType.Password }
@@ -115,5 +115,17 @@ object ItemFieldMapper {
         }
 
         return AutofillMappings(mappingList)
+    }
+
+    private fun mapToFields(
+        androidAutofillFieldIds: List<AutofillFieldId?>,
+        autofillTypes: List<FieldType>,
+        fieldIsFocusedList: List<Boolean>,
+        parentIdList: List<AutofillFieldId?>
+    ): List<AutofillFieldMapping> = autofillTypes.mapIndexed { index, fieldType ->
+        val autofillFieldId = androidAutofillFieldIds.getOrNull(index)
+        val isFocused = fieldIsFocusedList.getOrNull(index) ?: false
+        val parentId = parentIdList.getOrNull(index)
+        AutofillFieldMapping(autofillFieldId, fieldType, isFocused, parentId)
     }
 }

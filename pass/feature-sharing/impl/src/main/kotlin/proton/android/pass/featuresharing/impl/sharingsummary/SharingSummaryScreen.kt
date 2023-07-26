@@ -19,7 +19,6 @@
 package proton.android.pass.featuresharing.impl.sharingsummary
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,16 +32,6 @@ fun SharingSummaryScreen(
     onNavigateEvent: (SharingNavigation) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    LaunchedEffect(state.event) {
-        when (val event = state.event) {
-            is SharingSummaryEvents.NavigateToPermissions -> onNavigateEvent(
-                SharingNavigation.Permissions(event.shareId, event.email)
-            )
-
-            SharingSummaryEvents.Unknown -> {}
-        }
-        viewModel.clearEvent()
-    }
     SharingSummaryContent(
         modifier = modifier,
         state = state,

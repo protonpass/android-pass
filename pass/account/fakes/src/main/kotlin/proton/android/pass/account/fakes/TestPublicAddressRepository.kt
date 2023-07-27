@@ -24,6 +24,7 @@ import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
+import me.proton.core.key.domain.entity.key.Recipient
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import javax.inject.Inject
@@ -34,10 +35,22 @@ class TestPublicAddressRepository @Inject constructor() : PublicAddressRepositor
 
     private val addressList: MutableMap<String, PublicAddress> = mutableMapOf()
 
-    fun setAddress(address: String, publicKey: PublicKey) {
+    private val defaultKey = PublicKey(
+        key = "defaultKey",
+        isPrimary = true,
+        isActive = true,
+        canEncrypt = true,
+        canVerify = true
+    )
+
+    fun setAddress(
+        address: String,
+        publicKey: PublicKey = defaultKey,
+        recipientType: Int = Recipient.Internal.value
+    ) {
         addressList[address] = PublicAddress(
             email = address,
-            recipientType = 0,
+            recipientType = recipientType,
             mimeType = null,
             keys = listOf(
                 PublicAddressKey(

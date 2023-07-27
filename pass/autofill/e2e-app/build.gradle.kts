@@ -85,7 +85,6 @@ dependencies {
     implementation(projects.pass.preferences.fakes)
     implementation(projects.pass.telemetry.fakes)
     implementation(projects.pass.totp.fakes)
-    implementation(projects.pass.userAccess.fakes)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

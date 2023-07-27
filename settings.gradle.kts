@@ -170,9 +170,6 @@ include(":pass:totp:api")
 include(":pass:totp:fakes")
 include(":pass:totp:impl")
 include(":pass:tracing:impl")
-include(":pass:user-access:api")
-include(":pass:user-access:fakes")
-include(":pass:user-access:impl")
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)

@@ -117,4 +117,8 @@ class TestShareRepository : ShareRepository {
         markAsPrimaryResult.getOrThrow()
 
     override suspend fun deleteSharesForUser(userId: UserId) = deleteSharesResult.getOrThrow()
+
+    override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
+
+    }
 }

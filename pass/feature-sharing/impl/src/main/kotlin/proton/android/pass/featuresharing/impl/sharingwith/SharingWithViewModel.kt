@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.key.domain.entity.key.Recipient
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.getPublicAddressOrNull
 import proton.android.pass.common.api.CommonRegex.EMAIL_VALIDATION_REGEX
@@ -104,16 +103,15 @@ class SharingWithViewModel @Inject constructor(
             return@launch
         }
         val publicAddress = publicAddressRepository.getPublicAddressOrNull(userId, email)
-        println(publicAddress)
         when {
             email.isBlank() || !EMAIL_VALIDATION_REGEX.matches(email) -> {
                 PassLogger.i(TAG, "Email not valid")
                 isEmailNotValidState.update { EmailNotValidReason.NotValid }
             }
 
-            publicAddress?.recipientType != Recipient.Internal.value -> {
-                PassLogger.i(TAG, "Email not internal")
-                isEmailNotValidState.update { EmailNotValidReason.NotInternal }
+            publicAddress?.keys?.isEmpty() ?: true -> {
+                PassLogger.i(TAG, "Cannot share vault with email")
+                isEmailNotValidState.update { EmailNotValidReason.NotShareable }
             }
 
             else -> eventState.update { SharingWithEvents.NavigateToPermissions(shareId, email) }
@@ -132,6 +130,6 @@ class SharingWithViewModel @Inject constructor(
 
 enum class EmailNotValidReason {
     NotValid,
-    NotInternal,
+    NotShareable,
     UserIdNotFound
 }

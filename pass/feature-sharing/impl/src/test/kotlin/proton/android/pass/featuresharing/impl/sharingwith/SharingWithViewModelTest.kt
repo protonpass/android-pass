@@ -22,7 +22,6 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.entity.key.Recipient
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,6 +29,8 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.account.fakes.TestPublicAddressRepository
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
+import proton.android.pass.featuresharing.impl.sharingwith.EmailNotValidReason.NotShareable
+import proton.android.pass.featuresharing.impl.sharingwith.EmailNotValidReason.NotValid
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
 import proton.pass.domain.ShareId
@@ -74,10 +75,7 @@ class SharingWithViewModelTest {
     @Test
     fun `onEmailSubmit with valid email should update emailNotValidReason to null`() = runTest {
         accountManager.sendPrimaryUserId(UserId("primary-user-id"))
-        publicAddressRepository.setAddress(
-            address = "myemail@proton.me",
-            recipientType = Recipient.Internal.value
-        )
+        publicAddressRepository.setAddress(address = "myemail@proton.me")
         viewModel.onEmailChange("test@example.com")
         viewModel.onEmailSubmit()
         viewModel.state.test {
@@ -89,42 +87,33 @@ class SharingWithViewModelTest {
     fun `onEmailSubmit with invalid email should update emailNotValidReason to NotValid`() =
         runTest {
             accountManager.sendPrimaryUserId(UserId("primary-user-id"))
-            publicAddressRepository.setAddress(
-                address = "myemail@proton.me",
-                recipientType = Recipient.Internal.value
-            )
+            publicAddressRepository.setAddress(address = "myemail@proton.me")
             viewModel.onEmailChange("invalid-email")
             viewModel.state.test {
                 skipItems(1)
                 viewModel.onEmailSubmit()
-                assertThat(awaitItem().emailNotValidReason).isEqualTo(EmailNotValidReason.NotValid)
+                assertThat(awaitItem().emailNotValidReason).isEqualTo(NotValid)
             }
         }
 
     @Test
-    fun `onEmailSubmit with not Proton email should update emailNotValidReason to NotInternal`() =
+    fun `onEmailSubmit with not Proton email should update emailNotValidReason to NotShareable`() =
         runTest {
             accountManager.sendPrimaryUserId(UserId("primary-user-id"))
-            publicAddressRepository.setAddress(
-                address = "myemail@proton.me",
-                recipientType = Recipient.External.value
-            )
+            publicAddressRepository.setAddress(address = "myemail@proton.me")
             viewModel.onEmailChange("test@example.com")
             viewModel.state.test {
                 skipItems(1)
                 viewModel.onEmailSubmit()
                 val item = awaitItem()
-                assertThat(item.emailNotValidReason).isEqualTo(EmailNotValidReason.NotInternal)
+                assertThat(item.emailNotValidReason).isEqualTo(NotShareable)
             }
         }
 
     @Test
     fun `state should be updated correctly after combining flows`() = runTest {
         accountManager.sendPrimaryUserId(UserId("primary-user-id"))
-        publicAddressRepository.setAddress(
-            address = "myemail@proton.me",
-            recipientType = Recipient.Internal.value
-        )
+        publicAddressRepository.setAddress(address = "myemail@proton.me")
         val testVault = Vault(
             shareId = ShareId(id = ""),
             name = "vault name",

@@ -146,5 +146,4 @@ dependencies {
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
     androidTestImplementation(projects.pass.totp.fakes)
-    androidTestImplementation(projects.pass.userAccess.fakes)
 }

@@ -91,6 +91,12 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .invoke { markAsPrimary(shareId.id) }
             .valueOrThrow
 
+    override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
+        api.get<PasswordManagerApi>(userId)
+            .invoke { leaveShare(shareId.id) }
+            .valueOrThrow
+    }
+
     @Suppress("UnderscoresInNumericLiterals")
     companion object {
         private const val PROTON_RESPONSE_OK = 1000

@@ -54,6 +54,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
+import proton.android.pass.data.api.usecases.LeaveVault
 import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.MigrateVault
@@ -81,6 +82,9 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
+import proton.android.pass.data.api.usecases.capabilities.CanEditVault
+import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -94,7 +98,10 @@ import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
 import proton.android.pass.data.fakes.usecases.TestCanDisplayTotp
+import proton.android.pass.data.fakes.usecases.TestCanEditVault
+import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestCheckPin
 import proton.android.pass.data.fakes.usecases.TestClearPin
@@ -120,6 +127,7 @@ import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
 import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
+import proton.android.pass.data.fakes.usecases.TestLeaveVault
 import proton.android.pass.data.fakes.usecases.TestMarkVaultAsPrimary
 import proton.android.pass.data.fakes.usecases.TestMigrateItem
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
@@ -440,4 +448,16 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindRejectInvite(impl: TestRejectInvite): RejectInvite
+
+    @Binds
+    abstract fun bindLeaveVault(impl: TestLeaveVault): LeaveVault
+
+    @Binds
+    abstract fun bindCanShareVault(impl: TestCanShareVault): CanShareVault
+
+    @Binds
+    abstract fun bindCanEditVault(impl: TestCanEditVault): CanEditVault
+
+    @Binds
+    abstract fun bindCanMigrateVault(impl: TestCanMigrateVault): CanMigrateVault
 }

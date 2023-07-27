@@ -287,6 +287,11 @@ class ShareRepositoryImpl @Inject constructor(
     override fun observeVaultCount(userId: UserId): Flow<Int> =
         localShareDataSource.observeActiveVaultCount(userId)
 
+    override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
+        remoteShareDataSource.leaveVault(userId, shareId)
+        localShareDataSource.deleteShares(setOf(shareId))
+    }
+
     private suspend fun storeShares(
         userAddress: UserAddress,
         shares: List<ShareResponse>

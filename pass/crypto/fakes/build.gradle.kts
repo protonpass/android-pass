@@ -33,7 +33,7 @@ dependencies {
 
     implementation(libs.core.crypto)
     implementation(libs.core.cryptoCommon)
-    implementation(libs.core.key)
+    implementation(libs.core.key.domain)
     implementation(libs.core.user)
 
     implementation(libs.dagger.hilt.android)

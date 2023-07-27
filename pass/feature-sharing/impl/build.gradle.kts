@@ -42,6 +42,8 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.core.key.domain)
+    implementation(libs.core.accountManager.domain)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.utilKotlin)
@@ -71,6 +73,7 @@ dependencies {
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.account.fakes)
 
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine)

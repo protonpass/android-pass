@@ -20,7 +20,6 @@ package proton.android.pass.featuresharing.impl.sharingwith
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -38,7 +37,7 @@ import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
-import proton.android.pass.composecomponents.impl.buttons.CircleButton
+import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
@@ -60,18 +59,19 @@ fun SharingWithContent(
                 title = "",
                 onUpClick = { onNavigateEvent(SharingNavigation.Back) },
                 actions = {
-                    CircleButton(
+                    LoadingCircleButton(
                         modifier = Modifier.padding(12.dp, 0.dp),
-                        contentPadding = PaddingValues(16.dp, 10.dp),
                         color = PassTheme.colors.interactionNormMajor1,
-                        onClick = onEmailSubmit
-                    ) {
-                        Text(
-                            text = stringResource(R.string.share_continue),
-                            style = PassTypography.body3Regular,
-                            color = PassTheme.colors.textInvert
-                        )
-                    }
+                        onClick = onEmailSubmit,
+                        isLoading = state.isLoading,
+                        text = {
+                            Text(
+                                text = stringResource(R.string.share_continue),
+                                style = PassTypography.body3Regular,
+                                color = PassTheme.colors.textInvert
+                            )
+                        }
+                    )
                 }
             )
         }
@@ -103,7 +103,7 @@ fun SharingWithContent(
                         textStyle = ProtonTheme.typography.subheadlineNorm.copy(color = ProtonTheme.colors.textHint)
                     )
                 },
-                isError = state.isEmailNotValid,
+                isError = state.emailNotValidReason != null,
                 errorMessage = stringResource(R.string.share_with_email_error),
                 textStyle = ProtonTheme.typography.subheadlineNorm,
                 onChange = onEmailChange,

@@ -39,6 +39,7 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
         Result.failure(IllegalStateException("getShareByIdResponse not set"))
     private var markAsPrimaryResponse: Result<Unit> =
         Result.failure(IllegalStateException("markAsPrimaryResponse not set"))
+    private var leaveVaultResponse: Result<Unit> = Result.success(Unit)
 
     fun setCreateVaultResponse(value: Result<ShareResponse>) {
         createVaultResponse = value
@@ -62,6 +63,10 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
 
     fun setMarkAsPrimaryResponse(value: Result<Unit>) {
         markAsPrimaryResponse = value
+    }
+
+    fun setLeaveVaultResponse(value: Result<Unit>) {
+        leaveVaultResponse = value
     }
 
     override suspend fun createVault(
@@ -88,5 +93,9 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
 
     override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) {
         markAsPrimaryResponse.getOrThrow()
+    }
+
+    override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
+        leaveVaultResponse.getOrThrow()
     }
 }

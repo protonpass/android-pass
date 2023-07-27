@@ -23,6 +23,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
@@ -145,7 +146,12 @@ class InviteToVaultImplTest {
             canEncrypt = true,
             canVerify = true
         )
-        publicAddressRepository.setAddress(INVITED_ADDRESS, key)
+        val publicAddressKey = PublicAddressKey(
+            email = INVITED_ADDRESS,
+            flags = 0,
+            publicKey = key
+        )
+        publicAddressRepository.setAddress(INVITED_ADDRESS, listOf(publicAddressKey))
     }
 
     private fun setupUserAddress() {

@@ -21,7 +21,8 @@ package proton.android.pass.featuresharing.impl.sharingwith
 data class SharingWithUIState(
     val email: String = "",
     val vaultName: String? = null,
-    val isEmailNotValid: Boolean = false,
+    val emailNotValidReason: EmailNotValidReason? = null,
     val isVaultNotFound: Boolean = false,
-    val event: SharingWithEvents = SharingWithEvents.Unknown
+    val event: SharingWithEvents = SharingWithEvents.Unknown,
+    val isLoading: Boolean = false
 )

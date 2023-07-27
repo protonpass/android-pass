@@ -58,7 +58,7 @@
     <string name="share_summary_vault">%s vault</string>
     <string name="share_summary_view_items">only view items</string>
     <string name="share_summary_create_items">create items</string>
-    <string name="share_summary_manage_vault">manage vault</string>
+    <string name="share_summary_manage_vault">manage</string>
     <string name="share_summary_share_vault">Share vault</string>
     <string name="share_summary_email_title">User</string>
     <string name="share_summary_vault_title">Vault</string>

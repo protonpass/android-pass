@@ -31,7 +31,9 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestGetVaultById @Inject constructor() : GetVaultById {
 
     private val flow: MutableSharedFlow<Vault> = FlowUtils.testFlow()

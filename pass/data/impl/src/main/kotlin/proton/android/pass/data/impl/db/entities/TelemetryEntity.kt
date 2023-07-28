@@ -39,7 +39,7 @@ data class TelemetryEntity(
     @ColumnInfo(name = Columns.ID)
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    @ColumnInfo(name = Columns.USER_ID)
+    @ColumnInfo(name = Columns.USER_ID, index = true)
     val userId: String,
     @ColumnInfo(name = Columns.EVENT)
     val event: String,

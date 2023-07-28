@@ -18,7 +18,6 @@
 
 package proton.android.pass.featurevault.impl.bottomsheet.options
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,76 +30,72 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.data.api.usecases.CanPerformPaidAction
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
+import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotGetVaultListError
-import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotGetVaultUpgradeInfoError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.useraccess.api.UserAccess
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
 class VaultOptionsViewModel @Inject constructor(
     snackbarDispatcher: SnackbarDispatcher,
-    canPerformPaidAction: CanPerformPaidAction,
-    observeVaults: ObserveVaults,
-    userAccess: UserAccess,
-    savedStateHandle: SavedStateHandle
+    getVaultById: GetVaultById,
+    canShareVault: CanShareVault,
+    canMigrateVault: CanMigrateVault,
+    canManageVaultAccess: CanManageVaultAccess,
+    savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val navShareId: ShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
+        ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
 
-    private val canShare: Flow<Boolean> = flow { emit(userAccess.canShare(navShareId)) }
+    private val canShare: Flow<Boolean> = flow { emit(canShareVault(navShareId)) }
         .distinctUntilChanged()
 
     val state: StateFlow<VaultOptionsUiState> = combine(
-        observeVaults().asLoadingResult(),
-        canPerformPaidAction().asLoadingResult(),
+        getVaultById(shareId = navShareId).asLoadingResult(),
         canShare
-    ) { vaultResult, canPerformPaidActionResult, canShare ->
-        val vaultList = when (vaultResult) {
+    ) { vaultResult, canShare ->
+        val selectedVault = when (vaultResult) {
             is LoadingResult.Error -> return@combine run {
                 snackbarDispatcher(CannotGetVaultListError)
-                PassLogger.w(TAG, vaultResult.exception, "Cannot get vault list")
+                PassLogger.w(TAG, vaultResult.exception, "Cannot get vault")
                 VaultOptionsUiState.Error
             }
 
             LoadingResult.Loading -> return@combine VaultOptionsUiState.Loading
             is LoadingResult.Success -> vaultResult.data
         }
-        val canPerformPaidActionValue = when (canPerformPaidActionResult) {
-            is LoadingResult.Error -> return@combine run {
-                snackbarDispatcher(CannotGetVaultUpgradeInfoError)
-                PassLogger.w(
-                    TAG,
-                    canPerformPaidActionResult.exception,
-                    "Cannot get CanPerformPaidAction"
-                )
-                VaultOptionsUiState.Error
-            }
 
-            LoadingResult.Loading -> return@combine VaultOptionsUiState.Loading
-            is LoadingResult.Success -> canPerformPaidActionResult.data
-        }
-        val selectedVault = vaultList.firstOrNull { it.shareId == navShareId }
-            ?: return@combine VaultOptionsUiState.Error
-        val canEdit = canPerformPaidActionValue || selectedVault.isPrimary
-        val canMigrate = if (canPerformPaidActionValue) {
-            vaultList.size > 1
-        } else {
-            vaultList.size > 1 && !selectedVault.isPrimary
-        }
-        val canDelete = !selectedVault.isPrimary
+        val canEdit = selectedVault.isOwned
+        val canMigrate = canMigrateVault(navShareId)
+        val canDelete = !selectedVault.isPrimary && selectedVault.isOwned
+        val canLeave = !selectedVault.isOwned
+
+        val vaultAccessData = canManageVaultAccess(selectedVault)
+
+        // Only show share if it is not already shared
+        val showShare = canShare && !selectedVault.isShared()
+
+        // Only show manageVault and viewMembers if vault has not already been shared
+        val showManageAccess = selectedVault.isShared() && vaultAccessData.canManageAccess
+        val showViewMembers = selectedVault.isShared() && vaultAccessData.canViewMembers
         VaultOptionsUiState.Success(
             shareId = navShareId,
             showEdit = canEdit,
             showMigrate = canMigrate,
             showDelete = canDelete,
-            showShare = canShare
+            showShare = showShare,
+            showLeave = canLeave,
+            showManageAccess = showManageAccess,
+            showViewMembers = showViewMembers
         )
     }.stateIn(
         scope = viewModelScope,

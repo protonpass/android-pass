@@ -129,6 +129,7 @@ import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.options.VaultOptionsBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
+import proton.android.pass.featurevault.impl.leave.LeaveVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.AppNavigation
@@ -333,6 +334,16 @@ fun NavGraphBuilder.appGraph(
                 is VaultNavigation.VaultShare -> dismissBottomSheet {
                     appNavigator.navigate(SharingWith, SharingWith.createRoute(it.shareId))
                 }
+
+                is VaultNavigation.VaultLeave -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = LeaveVaultDialog,
+                        route = LeaveVaultDialog.createNavRoute(it.shareId),
+                        backDestination = Home
+                    )
+                }
+
+                is VaultNavigation.VaultAccess -> {} // Not yet implemented
             }
         }
     )

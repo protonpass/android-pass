@@ -8,6 +8,8 @@
     <string name="snackbar_edit_vault_error">Vault not edited</string>
     <string name="snackbar_delete_vault_success">Vault deleted</string>
     <string name="snackbar_delete_vault_error">Vault not deleted</string>
+    <string name="snackbar_leave_vault_success">Vault left</string>
+    <string name="snackbar_leave_vault_error">Could not leave vault</string>
     <string name="snackbar_retrieve_vault_error">Vault not found</string>
     <string name="snackbar_find_vault_error">Cannot find selected vault</string>
     <string name="snackbar_get_vault_list_error">Vault list could not be loaded</string>
@@ -18,6 +20,11 @@
     <string name="vault_delete_dialog_placeholder">Vault name</string>
     <string name="vault_delete_dialog_cancel_action">Cancel</string>
     <string name="vault_delete_dialog_delete_action">Delete</string>
+
+    <string name="vault_leave_dialog_title">Leave vault</string>
+    <string name="vault_leave_dialog_body">This will remove your access from the vault __VAULT_NAME__ and all its contents. Are you sure you want to leave?</string>
+    <string name="vault_leave_dialog_cancel_action">Cancel</string>
+    <string name="vault_leave_dialog_leave_action">Leave</string>
 
     <string name="bottomsheet_close_icon_content_description">Close Create Vault</string>
     <string name="bottomsheet_create_vault_button">Create vault</string>
@@ -30,6 +37,9 @@
     <string name="bottomsheet_migrate">Move all items to another vault</string>
     <string name="bottomsheet_delete_vault">Delete vault</string>
     <string name="bottomsheet_share_vault">Share</string>
+    <string name="bottomsheet_leave_vault">Leave vault</string>
+    <string name="bottomsheet_view_members">View members</string>
+    <string name="bottomsheet_manage_access">Manage access</string>
 
     <string name="vault_title">Vault</string>
 </resources>

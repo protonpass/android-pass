@@ -52,11 +52,11 @@ import me.proton.core.user.data.entity.UserEntity
 data class ShareKeyEntity(
     @ColumnInfo(name = Columns.ROTATION)
     val rotation: Long,
-    @ColumnInfo(name = Columns.USER_ID)
+    @ColumnInfo(name = Columns.USER_ID, index = true)
     val userId: String,
-    @ColumnInfo(name = Columns.ADDRESS_ID)
+    @ColumnInfo(name = Columns.ADDRESS_ID, index = true)
     val addressId: String,
-    @ColumnInfo(name = Columns.SHARE_ID)
+    @ColumnInfo(name = Columns.SHARE_ID, index = true)
     val shareId: String,
     @ColumnInfo(name = Columns.KEY)
     val key: String,

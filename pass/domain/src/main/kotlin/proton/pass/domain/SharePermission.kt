@@ -20,7 +20,12 @@ package proton.pass.domain
 
 import me.proton.core.util.kotlin.hasFlag
 
-data class SharePermission(val value: Int)
+data class SharePermission(val value: Int) {
+    companion object {
+        fun fromFlags(flags: List<SharePermissionFlag>): SharePermission =
+            SharePermission(flags.fold(0) { acc, flag -> acc.or(flag.value) })
+    }
+}
 
 fun SharePermission.hasFlag(flag: SharePermissionFlag): Boolean = value.hasFlag(flag.value)
 fun SharePermission.flags(): List<SharePermissionFlag> =

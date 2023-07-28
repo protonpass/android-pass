@@ -16,17 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.capabilities
+package proton.android.pass.data.fakes.usecases
 
-import proton.android.pass.data.api.usecases.capabilities.CanEditVault
-import proton.pass.domain.SharePermissionFlag
+import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
+import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.pass.domain.Vault
-import proton.pass.domain.hasFlag
-import proton.pass.domain.toPermissions
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class CanEditVaultImpl @Inject constructor() : CanEditVault {
-    override fun invoke(vault: Vault): Boolean = vault.role
-        .toPermissions()
-        .hasFlag(SharePermissionFlag.Admin)
+@Singleton
+class TestCanManageVaultAccess @Inject constructor() : CanManageVaultAccess {
+
+    private var result: VaultAccessData = VaultAccessData(
+        canManageAccess = true,
+        canViewMembers = true
+    )
+
+    fun setResult(value: VaultAccessData) {
+        result = value
+    }
+
+    override suspend fun invoke(vault: Vault): VaultAccessData = result
 }

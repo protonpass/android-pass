@@ -16,20 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.api.usecases.capabilities
 
-import proton.android.pass.data.api.usecases.capabilities.CanEditVault
 import proton.pass.domain.Vault
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TestCanEditVault @Inject constructor(): CanEditVault {
-    private var result: Boolean = true
+data class VaultAccessData(
+    val canManageAccess: Boolean,
+    val canViewMembers: Boolean
+)
 
-    fun setResult(value: Boolean) {
-        result = value
-    }
-
-    override fun invoke(vault: Vault): Boolean = result
+interface CanManageVaultAccess {
+    suspend operator fun invoke(vault: Vault): VaultAccessData
 }

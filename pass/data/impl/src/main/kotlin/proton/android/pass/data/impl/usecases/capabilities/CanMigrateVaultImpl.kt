@@ -23,8 +23,9 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
-import proton.pass.domain.isAtLeast
+import proton.pass.domain.SharePermissionFlag
+import proton.pass.domain.hasFlag
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 class CanMigrateVaultImpl @Inject constructor(
@@ -32,6 +33,14 @@ class CanMigrateVaultImpl @Inject constructor(
     private val canPerformPaidAction: CanPerformPaidAction
 ) : CanMigrateVault {
 
+    /**
+     * User can only migrate a vault if:
+     * - They have at least one other vault
+     * - They have delete permission on the vault (as migrate performs a create on target and delete on source)
+     * - Paid account status:
+     *   - If paid, they can migrate any vault
+     *   - If not paid, they can migrate any vault except the primary one
+     */
     @Suppress("ReturnCount")
     override suspend fun invoke(shareId: ShareId): Boolean {
         val vaults = observeVaults().firstOrNull() ?: return false
@@ -39,12 +48,12 @@ class CanMigrateVaultImpl @Inject constructor(
 
         val vault = vaults.firstOrNull { it.shareId == shareId } ?: return false
 
-        val hasDeletePermission = vault.role.isAtLeast(ShareRole.Write)
+        val hasDeletePermission = vault.role.toPermissions().hasFlag(SharePermissionFlag.Delete)
         if (!hasDeletePermission) return false
 
         val canDoPaidAction = canPerformPaidAction().firstOrNull() ?: false
         return if (canDoPaidAction) {
-            vault.isOwned || vault.role.isAtLeast(ShareRole.Write)
+            true
         } else {
             !vault.isPrimary
         }

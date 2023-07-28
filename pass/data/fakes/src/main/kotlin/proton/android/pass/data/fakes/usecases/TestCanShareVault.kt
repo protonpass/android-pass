@@ -24,7 +24,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestCanShareVault @Inject constructor(): CanShareVault {
+class TestCanShareVault @Inject constructor() : CanShareVault {
 
     private var result: Boolean = true
 

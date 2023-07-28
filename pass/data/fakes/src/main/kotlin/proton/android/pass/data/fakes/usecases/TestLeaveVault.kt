@@ -24,7 +24,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestLeaveVault @Inject constructor(): LeaveVault {
+class TestLeaveVault @Inject constructor() : LeaveVault {
 
     private var result: Result<Unit> = Result.success(Unit)
 

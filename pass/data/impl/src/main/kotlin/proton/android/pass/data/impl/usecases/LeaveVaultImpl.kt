@@ -16,10 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.capabilities
+package proton.android.pass.data.impl.usecases
 
-import proton.pass.domain.Vault
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.LeaveVault
+import proton.pass.domain.ShareId
+import javax.inject.Inject
 
-interface CanEditVault {
-    operator fun invoke(vault: Vault): Boolean
+class LeaveVaultImpl @Inject constructor(
+    private val accountManager: AccountManager,
+    private val shareRepository: ShareRepository
+) : LeaveVault {
+    override suspend fun invoke(shareId: ShareId) {
+        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+        shareRepository.leaveVault(userId, shareId)
+    }
 }

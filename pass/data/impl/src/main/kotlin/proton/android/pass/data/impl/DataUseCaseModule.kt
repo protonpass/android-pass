@@ -52,6 +52,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
+import proton.android.pass.data.api.usecases.LeaveVault
 import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.MigrateVault
@@ -84,6 +85,9 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
+import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
+import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -122,6 +126,7 @@ import proton.android.pass.data.impl.usecases.GetUserPlanImpl
 import proton.android.pass.data.impl.usecases.GetVaultByIdImpl
 import proton.android.pass.data.impl.usecases.GetVaultWithItemCountByIdImpl
 import proton.android.pass.data.impl.usecases.InviteToVaultImpl
+import proton.android.pass.data.impl.usecases.LeaveVaultImpl
 import proton.android.pass.data.impl.usecases.MarkVaultAsPrimaryImpl
 import proton.android.pass.data.impl.usecases.MigrateItemImpl
 import proton.android.pass.data.impl.usecases.MigrateVaultImpl
@@ -156,6 +161,9 @@ import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
+import proton.android.pass.data.impl.usecases.capabilities.CanManageVaultAccessImpl
+import proton.android.pass.data.impl.usecases.capabilities.CanMigrateVaultImpl
+import proton.android.pass.data.impl.usecases.capabilities.CanShareVaultImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
@@ -376,4 +384,16 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRejectInvite(impl: RejectInviteImpl): RejectInvite
+
+    @Binds
+    abstract fun bindLeaveVault(impl: LeaveVaultImpl): LeaveVault
+
+    @Binds
+    abstract fun bindCanShareVault(impl: CanShareVaultImpl): CanShareVault
+
+    @Binds
+    abstract fun bindCanMigrateVault(impl: CanMigrateVaultImpl): CanMigrateVault
+
+    @Binds
+    abstract fun bindCanManageVaultAccess(impl: CanManageVaultAccessImpl): CanManageVaultAccess
 }

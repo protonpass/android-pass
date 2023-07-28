@@ -54,7 +54,7 @@ data class ShareResponse(
     @SerialName("ShareRoleID")
     val shareRoleId: String,
     @SerialName("TargetMembers")
-    val targetMembers: Int,
+    val targetMembers: Int?,
     @SerialName("Owner")
     val owner: Boolean,
     @SerialName("ExpireTime")

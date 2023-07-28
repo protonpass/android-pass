@@ -23,7 +23,10 @@ data class Vault(
     val name: String,
     val color: ShareColor = ShareColor.Color1,
     val icon: ShareIcon = ShareIcon.Icon1,
-    val isPrimary: Boolean
-)
+    val isPrimary: Boolean,
+    val members: Int = 1
+) {
+    fun isShared(): Boolean = members > 1
+}
 
 fun List<Vault>.sorted(): List<Vault> = sortedBy { it.name.lowercase() }

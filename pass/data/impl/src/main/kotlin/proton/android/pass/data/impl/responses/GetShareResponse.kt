@@ -53,6 +53,8 @@ data class ShareResponse(
     val contentFormatVersion: Int?,
     @SerialName("ShareRoleID")
     val shareRoleId: String,
+    @SerialName("TargetMembers")
+    val targetMembers: Int,
     @SerialName("Owner")
     val owner: Boolean,
     @SerialName("ExpireTime")

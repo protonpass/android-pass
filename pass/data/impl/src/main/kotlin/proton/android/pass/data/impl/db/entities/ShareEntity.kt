@@ -81,7 +81,9 @@ data class ShareEntity(
     @ColumnInfo(name = Columns.SHARE_ROLE_ID, defaultValue = ShareRole.SHARE_ROLE_ADMIN)
     val shareRoleId: String,
     @ColumnInfo(name = Columns.OWNER, defaultValue = "1")
-    val owner: Boolean
+    val owner: Boolean,
+    @ColumnInfo(name = Columns.TARGET_MEMBERS, defaultValue = "1")
+    val targetMembers: Int
 ) {
     object Columns {
         const val ID = "id"
@@ -101,6 +103,7 @@ data class ShareEntity(
         const val IS_ACTIVE = "is_active"
         const val SHARE_ROLE_ID = "share_role_id"
         const val OWNER = "owner"
+        const val TARGET_MEMBERS = "target_members"
     }
 
     companion object {

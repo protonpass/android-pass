@@ -167,7 +167,8 @@ class ShareRepositoryImpl @Inject constructor(
                     localShare.copy(
                         owner = remoteShare.owner,
                         shareRoleId = remoteShare.shareRoleId,
-                        isPrimary = remoteShare.primary
+                        isPrimary = remoteShare.primary,
+                        targetMembers = remoteShare.targetMembers
                     )
                 }
 
@@ -387,7 +388,8 @@ class ShareRepositoryImpl @Inject constructor(
             isPrimary = shareResponse.primary,
             isActive = isActive,
             shareRoleId = shareResponse.shareRoleId,
-            owner = shareResponse.owner
+            owner = shareResponse.owner,
+            targetMembers = shareResponse.targetMembers
         )
     }
 
@@ -422,7 +424,8 @@ class ShareRepositoryImpl @Inject constructor(
             icon = icon,
             isPrimary = entity.isPrimary,
             shareRole = ShareRole.fromValue(entity.shareRoleId),
-            isOwner = entity.owner
+            isOwner = entity.owner,
+            memberCount = entity.targetMembers
         )
     }
 
@@ -459,6 +462,7 @@ class ShareRepositoryImpl @Inject constructor(
         localShare.isPrimary != remoteShare.primary -> true
         localShare.owner != remoteShare.owner -> true
         localShare.shareRoleId != remoteShare.shareRoleId -> true
+        localShare.targetMembers != remoteShare.targetMembers -> true
 
         else -> false
     }

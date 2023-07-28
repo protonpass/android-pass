@@ -41,5 +41,6 @@ data class Share(
     val color: ShareColor,
     val icon: ShareIcon,
     val shareRole: ShareRole,
-    val isOwner: Boolean
+    val isOwner: Boolean,
+    val memberCount: Int = 1
 )

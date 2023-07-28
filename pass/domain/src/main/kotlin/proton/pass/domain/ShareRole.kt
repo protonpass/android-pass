@@ -52,3 +52,30 @@ sealed interface ShareRole {
         }
     }
 }
+
+fun ShareRole.toPermissions(): SharePermission = when (this) {
+    ShareRole.Admin -> SharePermission.fromFlags(
+        listOf(
+            SharePermissionFlag.Admin,
+            SharePermissionFlag.Read,
+            SharePermissionFlag.Create,
+            SharePermissionFlag.Update,
+            SharePermissionFlag.Trash,
+            SharePermissionFlag.Delete,
+        )
+    )
+    ShareRole.Write -> SharePermission.fromFlags(
+        listOf(
+            SharePermissionFlag.Read,
+            SharePermissionFlag.Create,
+            SharePermissionFlag.Update,
+            SharePermissionFlag.Trash,
+            SharePermissionFlag.Delete,
+        )
+    )
+    ShareRole.Read -> SharePermission.fromFlags(listOf(SharePermissionFlag.Read))
+
+    // Custom roles not handled yet
+    is ShareRole.Custom -> SharePermission.fromFlags(listOf(SharePermissionFlag.Read))
+}
+

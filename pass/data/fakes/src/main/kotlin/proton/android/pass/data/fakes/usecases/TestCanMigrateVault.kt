@@ -24,7 +24,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestCanMigrateVault @Inject constructor(): CanMigrateVault {
+class TestCanMigrateVault @Inject constructor() : CanMigrateVault {
     private var result: Boolean = true
 
     fun setResult(value: Boolean) {

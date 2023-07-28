@@ -82,7 +82,7 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
-import proton.android.pass.data.api.usecases.capabilities.CanEditVault
+import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
@@ -98,7 +98,7 @@ import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
 import proton.android.pass.data.fakes.usecases.TestCanDisplayTotp
-import proton.android.pass.data.fakes.usecases.TestCanEditVault
+import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
@@ -456,8 +456,8 @@ abstract class FakesDataModule {
     abstract fun bindCanShareVault(impl: TestCanShareVault): CanShareVault
 
     @Binds
-    abstract fun bindCanEditVault(impl: TestCanEditVault): CanEditVault
+    abstract fun bindCanMigrateVault(impl: TestCanMigrateVault): CanMigrateVault
 
     @Binds
-    abstract fun bindCanMigrateVault(impl: TestCanMigrateVault): CanMigrateVault
+    abstract fun bindCanManageVaultAccess(impl: TestCanManageVaultAccess): CanManageVaultAccess
 }

@@ -143,7 +143,8 @@ class ShareRepositoryTest {
         expirationTime = null,
         createTime = 0,
         owner = isOwner,
-        shareRoleId = shareRole.value
+        shareRoleId = shareRole.value,
+        targetMembers = memberCount
     )
 
     private fun Share.toEntity(): ShareEntity = ShareEntity(
@@ -163,7 +164,8 @@ class ShareRepositoryTest {
         encryptedContent = null,
         isActive = true,
         owner = isOwner,
-        shareRoleId = shareRole.value
+        shareRoleId = shareRole.value,
+        targetMembers = memberCount
     )
 
     companion object {

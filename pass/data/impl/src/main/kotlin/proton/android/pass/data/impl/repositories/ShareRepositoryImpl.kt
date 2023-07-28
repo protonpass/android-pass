@@ -168,7 +168,7 @@ class ShareRepositoryImpl @Inject constructor(
                         owner = remoteShare.owner,
                         shareRoleId = remoteShare.shareRoleId,
                         isPrimary = remoteShare.primary,
-                        targetMembers = remoteShare.targetMembers
+                        targetMembers = remoteShare.targetMembers ?: 1
                     )
                 }
 
@@ -389,7 +389,7 @@ class ShareRepositoryImpl @Inject constructor(
             isActive = isActive,
             shareRoleId = shareResponse.shareRoleId,
             owner = shareResponse.owner,
-            targetMembers = shareResponse.targetMembers
+            targetMembers = shareResponse.targetMembers ?: 1
         )
     }
 

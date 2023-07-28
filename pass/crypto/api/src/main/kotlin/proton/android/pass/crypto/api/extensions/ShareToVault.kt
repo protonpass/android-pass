@@ -36,7 +36,9 @@ fun Share.toVault(encryptionContextProvider: EncryptionContextProvider): Option<
             name = parsed.name,
             color = color,
             icon = icon,
-            members = memberCount
+            members = memberCount,
+            isOwned = isOwner,
+            role = shareRole
         )
     }
 

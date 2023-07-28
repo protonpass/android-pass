@@ -39,7 +39,7 @@ import me.proton.core.user.data.entity.UserEntity
 data class InviteEntity(
     @ColumnInfo(name = Columns.TOKEN)
     val token: String,
-    @ColumnInfo(name = Columns.USER_ID)
+    @ColumnInfo(name = Columns.USER_ID, index = true)
     val userId: String,
     @ColumnInfo(name = Columns.INVITER_EMAIL)
     val inviterEmail: String,

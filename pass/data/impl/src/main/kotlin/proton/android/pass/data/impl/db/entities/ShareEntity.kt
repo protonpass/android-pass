@@ -47,9 +47,9 @@ import proton.pass.domain.ShareRole
 data class ShareEntity(
     @ColumnInfo(name = Columns.ID)
     val id: String,
-    @ColumnInfo(name = Columns.USER_ID)
+    @ColumnInfo(name = Columns.USER_ID, index = true)
     val userId: String,
-    @ColumnInfo(name = Columns.ADDRESS_ID)
+    @ColumnInfo(name = Columns.ADDRESS_ID, index = true)
     val addressId: String,
     @ColumnInfo(name = Columns.VAULT_ID)
     val vaultId: String,

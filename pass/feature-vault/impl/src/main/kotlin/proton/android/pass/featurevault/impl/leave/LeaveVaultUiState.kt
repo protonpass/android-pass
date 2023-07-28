@@ -16,24 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurevault.impl.bottomsheet.options
+package proton.android.pass.featurevault.impl.leave
 
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.pass.domain.ShareId
+import androidx.compose.runtime.Stable
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-class VaultOptionsBottomSheetContentsPreviewProvider :
-    PreviewParameterProvider<VaultOptionsUiState.Success> {
-    override val values: Sequence<VaultOptionsUiState.Success>
-        get() = sequenceOf(
-            VaultOptionsUiState.Success(
-                shareId = ShareId(""),
-                showEdit = true,
-                showMigrate = true,
-                showDelete = true,
-                showShare = true,
-                showLeave = true,
-                showManageAccess = true,
-                showViewMembers = true
-            )
+sealed interface LeaveVaultEvent {
+    object Unknown : LeaveVaultEvent
+    object Left : LeaveVaultEvent
+}
+
+@Stable
+data class LeaveVaultUiState(
+    val vaultName: String,
+    val event: LeaveVaultEvent,
+    val isLoadingState: IsLoadingState
+) {
+    companion object {
+        val Initial = LeaveVaultUiState(
+            vaultName = "",
+            event = LeaveVaultEvent.Unknown,
+            isLoadingState = IsLoadingState.NotLoading
         )
+    }
 }

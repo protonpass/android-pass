@@ -39,10 +39,28 @@ fun VaultOptionsBottomSheet(
         is VaultOptionsUiState.Success -> VaultOptionsBottomSheetContents(
             modifier = modifier,
             state = state,
-            onEdit = { onNavigate(VaultNavigation.VaultEdit(state.shareId)) },
-            onMigrate = { onNavigate(VaultNavigation.VaultMigrate(state.shareId)) },
-            onRemove = { onNavigate(VaultNavigation.VaultRemove(state.shareId)) },
-            onShare = { onNavigate(VaultNavigation.VaultShare(state.shareId)) },
+            onEvent = {
+                when (it) {
+                    VaultOptionsUserEvent.OnEdit -> {
+                        onNavigate(VaultNavigation.VaultEdit(state.shareId))
+                    }
+                    VaultOptionsUserEvent.OnLeave -> {
+                        onNavigate(VaultNavigation.VaultLeave(state.shareId))
+                    }
+                    VaultOptionsUserEvent.OnMigrate -> {
+                        onNavigate(VaultNavigation.VaultMigrate(state.shareId))
+                    }
+                    VaultOptionsUserEvent.OnRemove -> {
+                        onNavigate(VaultNavigation.VaultRemove(state.shareId))
+                    }
+                    VaultOptionsUserEvent.OnShare -> {
+                        onNavigate(VaultNavigation.VaultShare(state.shareId))
+                    }
+                    VaultOptionsUserEvent.OnVaultAccess -> {
+                        onNavigate(VaultNavigation.VaultAccess(state.shareId))
+                    }
+                }
+            }
         )
 
         VaultOptionsUiState.Loading,

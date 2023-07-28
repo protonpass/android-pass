@@ -51,6 +51,7 @@ interface ShareRepository {
 
     suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share
     suspend fun deleteSharesForUser(userId: UserId)
+    suspend fun leaveVault(userId: UserId, shareId: ShareId)
 }
 
 data class RefreshSharesResult(

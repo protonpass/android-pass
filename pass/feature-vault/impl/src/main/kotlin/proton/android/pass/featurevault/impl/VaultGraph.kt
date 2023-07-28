@@ -24,6 +24,7 @@ import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetEditVaultGra
 import proton.android.pass.featurevault.impl.bottomsheet.options.bottomSheetVaultOptionsGraph
 import proton.android.pass.featurevault.impl.bottomsheet.select.selectVaultBottomsheetGraph
 import proton.android.pass.featurevault.impl.delete.deleteVaultDialogGraph
+import proton.android.pass.featurevault.impl.leave.leaveVaultDialogGraph
 import proton.pass.domain.ShareId
 
 sealed interface VaultNavigation {
@@ -44,6 +45,12 @@ sealed interface VaultNavigation {
 
     @JvmInline
     value class VaultShare(val shareId: ShareId) : VaultNavigation
+
+    @JvmInline
+    value class VaultLeave(val shareId: ShareId) : VaultNavigation
+
+    @JvmInline
+    value class VaultAccess(val shareId: ShareId) : VaultNavigation
 }
 
 fun NavGraphBuilder.vaultGraph(
@@ -52,6 +59,7 @@ fun NavGraphBuilder.vaultGraph(
     bottomSheetCreateVaultGraph(onNavigate)
     bottomSheetEditVaultGraph(onNavigate)
     deleteVaultDialogGraph(onNavigate)
+    leaveVaultDialogGraph(onNavigate)
     selectVaultBottomsheetGraph(onNavigate)
     bottomSheetVaultOptionsGraph(onNavigate)
 }

@@ -64,19 +64,20 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.protos)
-    implementation(projects.pass.userAccess.api)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTestManifest)
 
     testImplementation(libs.core.test.kotlin)
+    testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinTest)
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
 
     testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
@@ -84,6 +85,7 @@ dependencies {
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(libs.kotlinx.datetime)
+    androidTestImplementation(libs.truth)
     androidTestImplementation(projects.pass.account.fakes)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.commonUi.fakes)
@@ -91,5 +93,4 @@ dependencies {
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
-    androidTestImplementation(projects.pass.userAccess.fakes)
 }

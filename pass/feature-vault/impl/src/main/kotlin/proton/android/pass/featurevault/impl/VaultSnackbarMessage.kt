@@ -32,6 +32,8 @@ enum class VaultSnackbarMessage(
     EditVaultError(R.string.snackbar_edit_vault_error, SnackbarType.ERROR),
     DeleteVaultSuccess(R.string.snackbar_delete_vault_success, SnackbarType.SUCCESS),
     DeleteVaultError(R.string.snackbar_delete_vault_error, SnackbarType.ERROR),
+    LeaveVaultSuccess(R.string.snackbar_leave_vault_success, SnackbarType.SUCCESS),
+    LeaveVaultError(R.string.snackbar_leave_vault_error, SnackbarType.ERROR),
     CreateVaultSuccess(R.string.snackbar_create_vault_success, SnackbarType.SUCCESS),
     CannotCreateMoreVaultsError(
         R.string.snackbar_cannot_create_more_vaults_error,

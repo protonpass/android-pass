@@ -30,7 +30,10 @@ class VaultOptionsBottomSheetContentsPreviewProvider :
                 showEdit = true,
                 showMigrate = true,
                 showDelete = true,
-                showShare = true
+                showShare = true,
+                showLeave = true,
+                showManageAccess = true,
+                showViewMembers = true
             )
         )
 }

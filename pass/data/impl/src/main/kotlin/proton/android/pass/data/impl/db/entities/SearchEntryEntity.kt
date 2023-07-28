@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 
 @Entity(
     tableName = SearchEntryEntity.TABLE,
@@ -32,12 +33,18 @@ import androidx.room.ForeignKey
             childColumns = [SearchEntryEntity.Columns.ITEM_ID, SearchEntryEntity.Columns.SHARE_ID],
             onDelete = ForeignKey.CASCADE
         )
+    ],
+    indices = [
+        Index(
+            value = [SearchEntryEntity.Columns.ITEM_ID, SearchEntryEntity.Columns.SHARE_ID],
+            unique = true
+        )
     ]
 )
 data class SearchEntryEntity(
-    @ColumnInfo(name = Columns.ITEM_ID)
+    @ColumnInfo(name = Columns.ITEM_ID, index = true)
     val itemId: String,
-    @ColumnInfo(name = Columns.SHARE_ID)
+    @ColumnInfo(name = Columns.SHARE_ID, index = true)
     val shareId: String,
     @ColumnInfo(name = Columns.USER_ID)
     val userId: String,

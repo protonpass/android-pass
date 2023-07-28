@@ -59,9 +59,9 @@ data class PassEventEntity(
     val eventId: String,
     @ColumnInfo(name = Columns.USER_ID)
     val userId: String,
-    @ColumnInfo(name = Columns.ADDRESS_ID)
+    @ColumnInfo(name = Columns.ADDRESS_ID, index = true)
     val addressId: String,
-    @ColumnInfo(name = Columns.SHARE_ID)
+    @ColumnInfo(name = Columns.SHARE_ID, index = true)
     val shareId: String,
     @ColumnInfo(name = Columns.RETRIEVED_AT)
     val retrievedAt: Long

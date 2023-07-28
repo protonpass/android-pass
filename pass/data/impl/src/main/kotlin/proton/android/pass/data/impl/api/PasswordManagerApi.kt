@@ -84,6 +84,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
     @GET("$PREFIX/share/{shareId}")
     suspend fun getShare(@Path("shareId") shareId: String): GetShareResponse
 
+    @DELETE("$PREFIX/share/{shareId}")
+    suspend fun leaveShare(@Path("shareId") shareId: String): CodeOnlyResponse
+
     @PUT("$PREFIX/vault/{shareId}/primary")
     suspend fun markAsPrimary(@Path("shareId") shareId: String)
 

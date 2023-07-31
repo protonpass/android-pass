@@ -120,6 +120,9 @@ import proton.android.pass.featuresharing.impl.SharingPermissions
 import proton.android.pass.featuresharing.impl.SharingSummary
 import proton.android.pass.featuresharing.impl.SharingWith
 import proton.android.pass.featuresharing.impl.sharingGraph
+import proton.android.pass.featuresync.impl.SyncDialog
+import proton.android.pass.featuresync.impl.SyncNavigation
+import proton.android.pass.featuresync.impl.syncGraph
 import proton.android.pass.featuretrial.impl.TrialNavigation
 import proton.android.pass.featuretrial.impl.TrialScreen
 import proton.android.pass.featuretrial.impl.trialGraph
@@ -241,6 +244,7 @@ fun NavGraphBuilder.appGraph(
                     backDestination = Home
                 )
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
+                HomeNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
             }
         }
     )
@@ -825,6 +829,7 @@ fun NavGraphBuilder.appGraph(
             SharingNavigation.Back -> dismissBottomSheet {
                 appNavigator.popUpTo(Home)
             }
+
             is SharingNavigation.Permissions -> appNavigator.navigate(
                 SharingPermissions,
                 SharingPermissions.createRoute(it.shareId, it.email)
@@ -834,6 +839,11 @@ fun NavGraphBuilder.appGraph(
                 SharingSummary,
                 SharingSummary.createRoute(it.shareId, it.email, it.permission)
             )
+        }
+    }
+    syncGraph {
+        when (it) {
+            SyncNavigation.FinishedFetching -> appNavigator.onBackClick()
         }
     }
 }

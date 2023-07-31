@@ -20,7 +20,8 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.runningFold
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -31,20 +32,32 @@ import javax.inject.Singleton
 @Singleton
 class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusRepository {
 
-    private val syncStatus: MutableSharedFlow<ItemSyncStatus> = MutableSharedFlow(replay = 1, extraBufferCapacity = 1)
-    private val map: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
+    private val syncStatus: MutableSharedFlow<ItemSyncStatus> =
+        MutableSharedFlow(replay = 1, extraBufferCapacity = 1)
+    private val accSyncStatus: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
+        MutableSharedFlow(replay = 1, extraBufferCapacity = 1)
+    private val payloadMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
+    private val mutex: Mutex = Mutex()
 
     override suspend fun emit(status: ItemSyncStatus) {
+        mutex.withLock {
+            when (status) {
+                is ItemSyncStatus.Syncing -> {
+                    payloadMutableMap[status.shareId] = ItemSyncStatusPayload(status.current, status.total)
+                    accSyncStatus.emit(payloadMutableMap.toMap())
+                }
+
+                ItemSyncStatus.NotStarted -> {
+                    payloadMutableMap.clear()
+                    accSyncStatus.emit(payloadMutableMap.toMap())
+                }
+                else -> {}
+            }
+        }
         syncStatus.emit(status)
     }
 
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = syncStatus
 
-    override fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> =
-        syncStatus.runningFold(map) { accumulator, value ->
-            if (value is ItemSyncStatus.Syncing) {
-                accumulator[value.shareId] = ItemSyncStatusPayload(value.current, value.total)
-            }
-            accumulator
-        }
+    override fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> = accSyncStatus
 }

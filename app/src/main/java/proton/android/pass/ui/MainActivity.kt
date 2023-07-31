@@ -78,7 +78,9 @@ class MainActivity : FragmentActivity() {
             splashScreen.setKeepOnScreenCondition {
                 state == Processing || state == StepNeeded
             }
-
+            LaunchedEffect(Unit) {
+                launcherViewModel.start()
+            }
             LaunchedEffect(state) {
                 launcherViewModel.onUserStateChanced(state)
             }

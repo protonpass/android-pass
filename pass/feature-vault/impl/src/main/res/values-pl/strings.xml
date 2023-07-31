@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Edytuj</string>
   <string name="bottomsheet_migrate">Przenieś wszystkie elementy do innego sejfu</string>
   <string name="bottomsheet_delete_vault">Usuń sejf</string>
+  <string name="bottomsheet_share_vault">Udostępnij</string>
   <string name="vault_title">Sejf</string>
 </resources>

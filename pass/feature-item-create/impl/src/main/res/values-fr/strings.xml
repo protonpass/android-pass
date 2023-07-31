@@ -25,7 +25,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Ajouter</string>
   <string name="sticky_button_generate_password">Générer un nouveau mot de passe</string>
-  <string name="sticky_button_create_alias">Hide My Email</string>
+  <string name="sticky_button_create_alias">Hide-my-email</string>
   <string name="sticky_button_use_account_email">Utiliser %s</string>
   <string name="create_login_item_creation_error">Impossible de créer l\'identifiant</string>
   <string name="create_login_item_update_error">Impossible de mettre à jour l\'identifiant</string>

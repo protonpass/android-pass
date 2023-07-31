@@ -20,6 +20,8 @@
   <string name="home_trial_banner_title">Disfruta de tu prueba gratuita</string>
   <string name="home_trial_banner_text">Echa un vistazo a todas las funciones exclusivas que están disponibles para ti por tiempo limitado.</string>
   <string name="home_trial_banner_settings">Más información ›</string>
+  <string name="home_invite_banner_title">Invitación de bóveda compartida</string>
+  <string name="home_invite_banner_subtitle">Se te ha invitado a una bóveda. Toca aquí para ver la invitación.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar contraseña</string>
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>

@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Редагувати</string>
   <string name="bottomsheet_migrate">Перемістити всі елементи до іншого сховища</string>
   <string name="bottomsheet_delete_vault">Видалити сховище</string>
+  <string name="bottomsheet_share_vault">Поділитися</string>
   <string name="vault_title">Сховище</string>
 </resources>

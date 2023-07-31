@@ -17,32 +17,32 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="profile_option_fingerprint_subtitle">Unlock Proton Pass with a touch.</string>
+  <string name="profile_option_fingerprint_subtitle">Разблокируйте Proton Pass прикосновением.</string>
   <string name="profile_option_fingerprint">Fingerprint</string>
   <string name="profile_option_app_lock">Блокировка приложения</string>
   <string name="enter_your_pin_code">Введите PIN-код.</string>
   <string name="unlock">Разблокировать</string>
-  <string name="enter_pin">Enter PIN</string>
+  <string name="enter_pin">Введите PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Неправильный PIN-код. Осталась %d попытка.</item>
-    <item quantity="few">Incorrect PIN. %d attempts remaining.</item>
-    <item quantity="many">Incorrect PIN. %d attempts remaining.</item>
+    <item quantity="few">Неправильный PIN-код. Осталось %d попытки.</item>
+    <item quantity="many">Неправильный PIN-код. Осталось %d попыток.</item>
     <item quantity="other">Неправильный PIN-код. Осталось %d попыток.</item>
   </plurals>
   <string name="auth_unlock_app_title">Разблокировать Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
-  <string name="auth_master_password_label">Master password</string>
-  <string name="auth_action_reveal_password">Reveal master password</string>
-  <string name="auth_action_conceal_password">Conceal master password</string>
+  <string name="auth_unlock_app_subtitle">Введите мастер-пароль для %s</string>
+  <string name="auth_master_password_label">Мастер-пароль</string>
+  <string name="auth_action_reveal_password">Показать мастер-пароль</string>
+  <string name="auth_action_conceal_password">Скрыть мастер-пароль</string>
   <string name="auth_unlock_button">Разблокировать</string>
   <string name="auth_error_verifying_password">Возникла ошибка при проверке вашего пароля</string>
   <string name="auth_error_empty_password">Пароль не может быть пустым</string>
-  <string name="auth_error_pin_cannot_be_empty">PIN cannot be empty</string>
-  <string name="auth_error_pin_too_short">PIN should be at least 4 digits</string>
+  <string name="auth_error_pin_cannot_be_empty">Пин-код не может быть пустым</string>
+  <string name="auth_error_pin_too_short">Пин-код должен состоять хотя бы из четырех цифр</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Неправильный пароль. Осталась %d попытка</item>
-    <item quantity="few">Incorrect password. %d attempts remaining</item>
-    <item quantity="many">Incorrect password. %d attempts remaining</item>
+    <item quantity="few">Неправильный пароль. Осталось %d попытки</item>
+    <item quantity="many">Неправильный пароль. Осталось %d попыток</item>
     <item quantity="other">Неправильный пароль. Осталось %d попыток</item>
   </plurals>
 </resources>

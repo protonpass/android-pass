@@ -25,7 +25,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Afegeix</string>
   <string name="sticky_button_generate_password">Genera una contrasenya nova</string>
-  <string name="sticky_button_create_alias">Hide My Email</string>
+  <string name="sticky_button_create_alias">Hide-my-email</string>
   <string name="sticky_button_use_account_email">Utilitza %s</string>
   <string name="create_login_item_creation_error">No s\'ha pogut crear l\'inici de sessió</string>
   <string name="create_login_item_update_error">No s\'ha pogut actualitzar l\'inici de sessió</string>

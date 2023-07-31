@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Fortfahren</string>
+  <string name="sharing_can_view">Darf ansehen</string>
+  <string name="sharing_can_edit">Darf bearbeiten</string>
+  <string name="sharing_can_manage">Darf verwalten</string>
+  <string name="sharing_can_view_description">Darf Einträge in diesem Tresor anzeigen.</string>
+  <string name="sharing_can_edit_description">Darf Einträge in diesem Tresor erstellen, bearbeiten, löschen und exportieren.</string>
+  <string name="sharing_can_manage_description">Darf Zugriff auf diesen Tresor gewähren oder widerrufen.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d Eintrag</item>
+    <item quantity="other">%d Einträge</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d Mitglied</item>
+    <item quantity="other">%d Mitglieder</item>
+  </plurals>
+  <string name="share_with_title">Teilen mit</string>
+  <string name="share_with_subtitle">Dieser Benutzer erhält eine Einladung, deinem Tresor \'%s\' beizutreten.</string>
+  <string name="share_with_email_hint">E‐Mail‐Adresse</string>
+  <string name="share_with_email_error">Ungültige E-Mail-Adresse</string>
+  <string name="share_permissions_title">Berechtigungen festlegen</string>
+  <string name="share_permissions_subtitle">Wähle die Zugriffsstufe, die dieser Benutzer erhält, wenn er deinem Tresor \'%s\' beitritt.</string>
+  <string name="sharing_invitation_from">Einladung von %s</string>
+  <string name="sharing_join_shared_vault">Freigegebenem Tresor beitreten</string>
+  <string name="sharing_reject_invitation">Einladung ablehnen</string>
+  <string name="sharing_snackbar_invite_accepted">Einladung angenommen</string>
+  <string name="sharing_snackbar_invite_accept_error">Fehler beim Annehmen der Einladung.</string>
+  <string name="sharing_snackbar_invite_rejected">Einladung abgelehnt</string>
+  <string name="sharing_snackbar_invite_reject_error">Fehler beim Ablehnen der Einladung.</string>
+  <string name="sharing_snackbar_vault_not_found">Tresor konnte nicht gefunden werden.</string>
+  <string name="sharing_snackbar_invite_sent_success">Einladung gesendet</string>
+  <string name="sharing_snackbar_invite_sent_error">Fehler beim Senden der Einladung.</string>
+  <string name="share_summary_title">Zusammenfassung</string>
+  <string name="share_summary_subtitle">Du lädst damit %1$s zu %2$s ein. Dadurch wird Zugriff zu %3$s gewährt und die eingeladene Person darf %4$s.</string>
+  <string name="share_summary_vault">%s Tresor</string>
+  <string name="share_summary_view_items">Einträge anzeigen</string>
+  <string name="share_summary_create_items">Einträge erstellen</string>
+  <string name="share_summary_manage_vault">verwalten</string>
+  <string name="share_summary_share_vault">Tresor teilen</string>
+  <string name="share_summary_email_title">Benutzer</string>
+  <string name="share_summary_vault_title">Tresor</string>
+  <string name="share_summary_permissions_title">Berechtigungen</string>
+</resources>

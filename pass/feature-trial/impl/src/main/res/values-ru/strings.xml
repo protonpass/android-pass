@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trial_title">Enjoy your free trial</string>
+  <string name="trial_title">Наслаждайтесь своей бесплатной пробной версией</string>
   <string name="trial_subtitle">For next-level password management:</string>
-  <string name="trial_feature_1">20 vaults</string>
-  <string name="trial_feature_2">Unlimited email aliases</string>
-  <string name="trial_feature_3">Integrated 2FA authenticator</string>
-  <string name="trial_feature_4">Custom fields</string>
-  <string name="trial_button_text">Upgrade to keep these features</string>
+  <string name="trial_feature_1">20 хранилищ</string>
+  <string name="trial_feature_2">Неограниченное количество псевдонимов эл. почты</string>
+  <string name="trial_feature_3">Встроенный двухфакторный аутентификатор</string>
+  <string name="trial_feature_4">Настраиваемые поля</string>
+  <string name="trial_button_text">Улучшите, чтобы сохранить эти функции</string>
   <plurals name="trial_days_left">
-    <item quantity="one">1 day left in your trial period</item>
+    <item quantity="one">Остался %d день в вашем пробном периоде</item>
     <item quantity="few">%d days left in your trial period</item>
-    <item quantity="many">%d days left in your trial period</item>
-    <item quantity="other">%d days left in your trial period</item>
+    <item quantity="many">Осталось %d дней в вашем пробном периоде</item>
+    <item quantity="other">Осталось %d дня в вашем пробном периоде</item>
   </plurals>
-  <string name="trial_learn_more">Learn more</string>
+  <string name="trial_learn_more">Подробнее</string>
 </resources>

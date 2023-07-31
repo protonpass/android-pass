@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Continuar</string>
+  <string name="sharing_can_view">Pode ver</string>
+  <string name="sharing_can_edit">Pode editar</string>
+  <string name="sharing_can_manage">Pode gerenciar</string>
+  <string name="sharing_can_view_description">Pode ver itens para esse cofre.</string>
+  <string name="sharing_can_edit_description">Pode criar, editar e exportar itens para esse cofre.</string>
+  <string name="sharing_can_manage_description">Pode conceder ou revogar acesso para esse core.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d item</item>
+    <item quantity="other">%d itens</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d membro</item>
+    <item quantity="other">%d membros</item>
+  </plurals>
+  <string name="share_with_title">Compartilhar com</string>
+  <string name="share_with_subtitle">Este usuário receberá um convite para juntar-se a seu cofre \'%s\'.</string>
+  <string name="share_with_email_hint">Endereço de e-mail</string>
+  <string name="share_with_email_error">O endereço de e-mail não é válido.</string>
+  <string name="share_permissions_title">Configurar as permissões</string>
+  <string name="share_permissions_subtitle">Selecione o nível de acesso que este usuário terá ao entrar no seu cofre \'%s\'.</string>
+  <string name="sharing_invitation_from">Convite de %s</string>
+  <string name="sharing_join_shared_vault">Juntar ao cofre compartilhado</string>
+  <string name="sharing_reject_invitation">Recusar convite</string>
+  <string name="sharing_snackbar_invite_accepted">Convite aceito</string>
+  <string name="sharing_snackbar_invite_accept_error">Erro ao aceitar o convite.</string>
+  <string name="sharing_snackbar_invite_rejected">Convite rejeitado</string>
+  <string name="sharing_snackbar_invite_reject_error">Erro ao rejeitar o convite.</string>
+  <string name="sharing_snackbar_vault_not_found">Não foi possível encontrar o cofre.</string>
+  <string name="sharing_snackbar_invite_sent_success">Convite enviado</string>
+  <string name="sharing_snackbar_invite_sent_error">Não foi possível enviar o convite.</string>
+  <string name="share_summary_title">Resumo</string>
+  <string name="share_summary_subtitle">You are about to invite %1$s into your %2$s. They will gain access to %3$s and they will be able to %4$s in this vault.</string>
+  <string name="share_summary_vault">o cofre %s</string>
+  <string name="share_summary_view_items">somente ver os itens</string>
+  <string name="share_summary_create_items">criar itens</string>
+  <string name="share_summary_manage_vault">gerenciar</string>
+  <string name="share_summary_share_vault">Compartilhar cofre</string>
+  <string name="share_summary_email_title">Usuário</string>
+  <string name="share_summary_vault_title">Cofre</string>
+  <string name="share_summary_permissions_title">Permissões</string>
+</resources>

@@ -24,6 +24,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
@@ -89,11 +90,13 @@ fun NavGraphBuilder.passBottomSheet(
 
 fun NavGraphBuilder.dialog(
     navItem: NavItem,
+    dialogProperties: DialogProperties = DialogProperties(),
     content: @Composable (NavBackStackEntry) -> Unit
 ) {
     dialog(
         route = navItem.route,
-        arguments = navItem.args
+        arguments = navItem.args,
+        dialogProperties = dialogProperties
     ) { content(it) }
 }
 

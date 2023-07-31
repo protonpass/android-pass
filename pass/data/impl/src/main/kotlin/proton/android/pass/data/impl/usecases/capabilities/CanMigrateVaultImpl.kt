@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermissionFlag
 import proton.pass.domain.hasFlag
@@ -44,6 +45,10 @@ class CanMigrateVaultImpl @Inject constructor(
     @Suppress("ReturnCount")
     override suspend fun invoke(shareId: ShareId): Boolean {
         val vaults = observeVaults().firstOrNull() ?: return false
+        if (vaults.isEmpty()) {
+            PassLogger.w(TAG, "There are no vaults")
+            return false
+        }
         if (vaults.size < 2) return false
 
         val vault = vaults.firstOrNull { it.shareId == shareId } ?: return false
@@ -57,5 +62,9 @@ class CanMigrateVaultImpl @Inject constructor(
         } else {
             !vault.isPrimary
         }
+    }
+
+    companion object {
+        private const val TAG = "CanMigrateVaultImpl"
     }
 }

@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Рэдагаваць</string>
   <string name="bottomsheet_migrate">Перамясціць усе элементы ў іншае сховішча</string>
   <string name="bottomsheet_delete_vault">Выдаліць сховішча</string>
+  <string name="bottomsheet_share_vault">Абагуліць</string>
   <string name="vault_title">Сховішча</string>
 </resources>

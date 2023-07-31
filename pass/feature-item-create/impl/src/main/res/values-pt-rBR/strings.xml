@@ -21,7 +21,7 @@
   <string name="field_password_title">Senha</string>
   <string name="field_password_hint">Adicionar senha</string>
   <string name="field_website_address_title">Site</string>
-  <string name="field_website_address_invalid">URL inválida</string>
+  <string name="field_website_address_invalid">O URL não é valido.</string>
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Adicionar</string>
   <string name="sticky_button_generate_password">Gerar uma nova senha</string>
@@ -68,12 +68,12 @@
   <string name="field_alias_suffix">Sufixo</string>
   <string name="alias_bottomsheet_alias_title">Alias</string>
   <string name="alias_bottomsheet_suffix_title">Sufixo</string>
-  <string name="create_alias_item_creation_error">Não foi possível criar o alias.</string>
+  <string name="create_alias_item_creation_error">Não foi possível criar o alias</string>
   <string name="create_alias_cannot_create_more_aliases_error">Você não pode criar mais alias</string>
   <string name="create_alias_email_not_validated_error">Você não pode criar alias sem antes validar seu e-mail</string>
   <string name="alias_rate_limited">Muitos alias criados recentemente</string>
-  <string name="create_alias_item_update_error">Não foi possível atualizar o alias.</string>
-  <string name="create_alias_init_error">Não foi possível iniciar o alias.</string>
+  <string name="create_alias_item_update_error">Não foi possível atualizar o alias</string>
+  <string name="create_alias_init_error">Não foi possível iniciar o alias</string>
   <string name="create_alias_empty_share_id">ID de compartilhamento não pode estar vazio</string>
   <string name="alias_created">Alias criado</string>
   <string name="alias_moved_to_trash">Alias movido para a lixeira</string>
@@ -102,12 +102,12 @@
   <string name="changes_saved">Alterações salvas</string>
   <!--  Totp  -->
   <string name="totp_create_login_field_title">Chave secreta A2F (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Chave secreta A2F inválida</string>
+  <string name="totp_create_login_field_invalid">A chave secreta A2F não é valida</string>
   <string name="totp_create_login_field_placeholder">Adicionar chave secreta A2F</string>
   <string name="close_scree_icon_content_description">Botão de fechar tela</string>
   <string name="totp_paste_code_action">Colar o código</string>
   <string name="totp_scan_code_action">Escanear código</string>
-  <string name="field_cannot_be_empty">Este campo não pode ficar vazio.</string>
+  <string name="field_cannot_be_empty">Este campo não pode ficar vazio</string>
   <string name="camera_permission_explanation">A autorização da câmera é necessária para que essa função esteja disponível.</string>
   <string name="camera_permission_open_settings">Abrir configurações</string>
   <!--  Totp limit  -->

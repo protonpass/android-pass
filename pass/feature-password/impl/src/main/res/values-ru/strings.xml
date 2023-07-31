@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="generate_password_copy">Copy and close</string>
-  <string name="password_copied_to_clipboard">Password copied</string>
+  <string name="password_copied_to_clipboard">Пароль скопирован</string>
   <string name="bottomsheet_generate_password_title">Generate password</string>
-  <string name="password_type">Type</string>
+  <string name="password_type">Тип</string>
   <string name="special_characters">Special characters (!&amp;*)</string>
   <string name="character_count">%s characters</string>
   <string name="word_count">%s words</string>

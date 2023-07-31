@@ -25,7 +25,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">新增</string>
   <string name="sticky_button_generate_password">生成一個新的密碼</string>
-  <string name="sticky_button_create_alias">隱藏自己的電子郵件</string>
+  <string name="sticky_button_create_alias">Hide-my-email</string>
   <string name="sticky_button_use_account_email">使用 %s</string>
   <string name="create_login_item_creation_error">無法創建登入</string>
   <string name="create_login_item_update_error">無法更新登入</string>

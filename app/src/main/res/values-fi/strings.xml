@@ -2,7 +2,7 @@
 <resources>
   <string name="twenty_vaults">20 holvia</string>
   <string name="unlimited_email_alias">Rajattomasti sähköpostialiaksia</string>
-  <string name="custom_fields">Mukautetut kentät</string>
+  <string name="custom_fields">Omat kentät</string>
   <string name="restart_to_complete_the_update">Käynnistä uudelleen päivityksen viimeistelemiseksi</string>
   <string name="action_restart">Käynnistä uudelleen</string>
 </resources>

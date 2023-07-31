@@ -25,7 +25,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Tambah</string>
   <string name="sticky_button_generate_password">Buat kata sandi baru</string>
-  <string name="sticky_button_create_alias">Hide my email</string>
+  <string name="sticky_button_create_alias">Hide-my-email</string>
   <string name="sticky_button_use_account_email">Gunakan %s</string>
   <string name="create_login_item_creation_error">Tidak dapat menghasilkan Login</string>
   <string name="create_login_item_update_error">Login tidak dapat diperbarui</string>

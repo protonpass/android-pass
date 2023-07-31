@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Continuer</string>
+  <string name="sharing_can_view">Consulter</string>
+  <string name="sharing_can_edit">Modifier</string>
+  <string name="sharing_can_manage">Gérer</string>
+  <string name="sharing_can_view_description">Permet de consulter les éléments de ce coffre-fort.</string>
+  <string name="sharing_can_edit_description">Permet de créer, modifier, supprimer et exporter des éléments dans ce coffre-fort.</string>
+  <string name="sharing_can_manage_description">Permet d\'accorder et de révoquer l\'accès à ce coffre-fort.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d élément</item>
+    <item quantity="other">%d éléments</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d membre</item>
+    <item quantity="other">%d membres</item>
+  </plurals>
+  <string name="share_with_title">Partager avec</string>
+  <string name="share_with_subtitle">Cet utilisateur recevra une invitation à rejoindre votre coffre-fort \'%s\'.</string>
+  <string name="share_with_email_hint">Adresse électronique</string>
+  <string name="share_with_email_error">L\'adresse e-mail n\'est pas valide.</string>
+  <string name="share_permissions_title">Définir les autorisations</string>
+  <string name="share_permissions_subtitle">Sélectionnez le niveau d\'accès dont bénéficiera cet utilisateur en rejoignant votre coffre-fort \'%s\'.</string>
+  <string name="sharing_invitation_from">Invitation envoyée par %s</string>
+  <string name="sharing_join_shared_vault">Rejoindre le coffre-fort partagé</string>
+  <string name="sharing_reject_invitation">Refuser l\'invitation</string>
+  <string name="sharing_snackbar_invite_accepted">Invitation acceptée</string>
+  <string name="sharing_snackbar_invite_accept_error">Une erreur s\'est produite lors de l\'acceptation de l\'invitation.</string>
+  <string name="sharing_snackbar_invite_rejected">Invitation rejetée</string>
+  <string name="sharing_snackbar_invite_reject_error">Une erreur s\'est produite lors du refus de l\'invitation.</string>
+  <string name="sharing_snackbar_vault_not_found">Ce coffre-fort est introuvable.</string>
+  <string name="sharing_snackbar_invite_sent_success">L\'invitation a été envoyée.</string>
+  <string name="sharing_snackbar_invite_sent_error">L’invitation n’a pas pu être envoyée.</string>
+  <string name="share_summary_title">Résumé</string>
+  <string name="share_summary_subtitle">Vous êtes sur le point d\'inviter %1$s dans votre %2$s. Ils auront accès à %3$s et pourront %4$s dans ce coffre-fort.</string>
+  <string name="share_summary_vault">coffre-fort %s</string>
+  <string name="share_summary_view_items">voir uniquement des éléments</string>
+  <string name="share_summary_create_items">créer des éléments</string>
+  <string name="share_summary_manage_vault">gérer</string>
+  <string name="share_summary_share_vault">Partager mon coffre-fort</string>
+  <string name="share_summary_email_title">Utilisateur</string>
+  <string name="share_summary_vault_title">Coffre-fort</string>
+  <string name="share_summary_permissions_title">Permissions</string>
+</resources>

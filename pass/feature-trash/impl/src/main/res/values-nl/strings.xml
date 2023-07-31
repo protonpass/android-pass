@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trash_action_restore">Restore</string>
-  <string name="bottomsheet_delete_permanently">Delete permanently</string>
-  <string name="alert_confirm_delete_item_dialog_title">Delete permanently?</string>
-  <string name="alert_confirm_delete_item_dialog_message">This action is irreversible.</string>
+  <string name="trash_action_restore">Herstel</string>
+  <string name="bottomsheet_delete_permanently">Permanent verwijderen</string>
+  <string name="alert_confirm_delete_item_dialog_title">Permanent verwijderen?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Deze actie is onomkeerbaar.</string>
   <string name="alias_dialog_move_to_trash_title">Verplaats naar prullenbak?</string>
-  <string name="alias_dialog_move_to_trash_content">If you move an alias to the trash, it will stop forwarding emails to your mailbox.</string>
+  <string name="alias_dialog_move_to_trash_content">Als u een alias naar de prullenbak verplaatst, worden e-mails niet meer doorgestuurd naar uw mailbox.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bevestigen</string>
 </resources>

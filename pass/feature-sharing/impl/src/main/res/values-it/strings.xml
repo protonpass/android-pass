@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Continua</string>
+  <string name="sharing_can_view">Può visualizzare</string>
+  <string name="sharing_can_edit">Può modificare</string>
+  <string name="sharing_can_manage">Può gestire</string>
+  <string name="sharing_can_view_description">Può visualizzare gli elementi in questa cassaforte.</string>
+  <string name="sharing_can_edit_description">Può creare, modificare, eliminare ed esportare gli elementi in questa cassaforte.</string>
+  <string name="sharing_can_manage_description">Può concedere e revocare l\'accesso a questa cassaforte.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d membro</item>
+    <item quantity="other">%d membri</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d membro</item>
+    <item quantity="other">%d membri</item>
+  </plurals>
+  <string name="share_with_title">Condividi con</string>
+  <string name="share_with_subtitle">Questo utente riceverà un invito a unirsi al tuo vault \'%s\'.</string>
+  <string name="share_with_email_hint">Indirizzo e-mail</string>
+  <string name="share_with_email_error">Indirizzo email non valido</string>
+  <string name="share_permissions_title">Imposta i permessi</string>
+  <string name="share_permissions_subtitle">Seleziona il livello di accesso che questo utente otterrà quando si unirà alla tua cassaforte \'%s\'.</string>
+  <string name="sharing_invitation_from">Invito da %s</string>
+  <string name="sharing_join_shared_vault">Unisciti al deposito condiviso</string>
+  <string name="sharing_reject_invitation">Rifiuta l\'invito</string>
+  <string name="sharing_snackbar_invite_accepted">Invito accettato</string>
+  <string name="sharing_snackbar_invite_accept_error">Errore durante l\'accettazione dell\'invito</string>
+  <string name="sharing_snackbar_invite_rejected">Invito rifiutato</string>
+  <string name="sharing_snackbar_invite_reject_error">Errore nel rifiuto dell\'invito</string>
+  <string name="sharing_snackbar_vault_not_found">Impossibile trovare la cassaforte</string>
+  <string name="sharing_snackbar_invite_sent_success">Invito spedito</string>
+  <string name="sharing_snackbar_invite_sent_error">Impossibile inviare l\'invito</string>
+  <string name="share_summary_title">Riepilogo</string>
+  <string name="share_summary_subtitle">Stai per invitare %1$s nel tuo %2$s. Avranno accesso a %3$s e potranno accedere a %4$s in questo caveau.</string>
+  <string name="share_summary_vault">la cassaforte %s</string>
+  <string name="share_summary_view_items">visualizza solo gli elementi</string>
+  <string name="share_summary_create_items">creare oggetti</string>
+  <string name="share_summary_manage_vault">gestire</string>
+  <string name="share_summary_share_vault">Condividi caveau</string>
+  <string name="share_summary_email_title">Utente</string>
+  <string name="share_summary_vault_title">Caveau</string>
+  <string name="share_summary_permissions_title">Autorizzazioni</string>
+</resources>

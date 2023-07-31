@@ -25,6 +25,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestLeaveVault
@@ -32,7 +33,6 @@ import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
@@ -56,8 +56,8 @@ class LeaveVaultViewModelTest {
         instance = LeaveVaultViewModel(
             getVaultById = getVaultById,
             leaveVault = leaveVault,
-            savedStateHandle = TestSavedStateHandle.create().apply {
-                set(CommonNavArgId.ShareId.key, "123")
+            savedStateHandle = TestSavedStateHandleProvider().apply {
+                get()[CommonNavArgId.ShareId.key] = "123"
             },
             snackbarDispatcher = snackbarDispatcher
         )
@@ -111,9 +111,21 @@ class LeaveVaultViewModelTest {
         assertThat(message).isEqualTo(VaultSnackbarMessage.LeaveVaultError)
     }
 
+    @Test
+    fun `emits close on getVaultById error`() = runTest {
+        getVaultById.sendException(IllegalStateException("test"))
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.event).isEqualTo(LeaveVaultEvent.Close)
+        }
+
+        val message = snackbarDispatcher.snackbarMessage.first().value()!!
+        assertThat(message).isEqualTo(VaultSnackbarMessage.CannotRetrieveVaultError)
+    }
+
     private fun performSetup() {
         getVaultById.emitValue(testVault())
-        instance.onStart()
     }
 
     private fun testVault(): Vault = Vault(

@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Editar</string>
   <string name="bottomsheet_migrate">Mover todos los elementos a otra bóveda</string>
   <string name="bottomsheet_delete_vault">Eliminar bóveda</string>
+  <string name="bottomsheet_share_vault">Compartir</string>
   <string name="vault_title">Bóveda</string>
 </resources>

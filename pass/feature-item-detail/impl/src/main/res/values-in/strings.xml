@@ -60,7 +60,7 @@
   <string name="credit_card_verifcation_number_copied_to_clipboard">Nomor verifikasi disalin ke papan klip</string>
   <string name="credit_card_pin_copied_to_clipboard">PIN disalin ke papan klip</string>
   <!-- Bottomsheet -->
-  <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>
+  <string name="move_to_trash_item_detail_bottom_sheet">Pindahkan ke sampah</string>
   <string name="migrate_item_detail_bottom_sheet">Pindahkan ke brankas lainnya</string>
   <!-- More info -->
   <string name="date_today">Hari ini %s</string>

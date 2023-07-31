@@ -20,6 +20,8 @@
   <string name="home_trial_banner_title">Gaudeix d\'una prova gratuïta</string>
   <string name="home_trial_banner_text">Consulteu totes les característiques exclusives disponibles per un temps limitat.</string>
   <string name="home_trial_banner_settings">Saber-ne més ›</string>
+  <string name="home_invite_banner_title">Invitació a una caixa forta compartida</string>
+  <string name="home_invite_banner_subtitle">Heu rebut una invitació a una caixa forta. Toqueu aquí per veure la invitació.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia la contrasenya</string>
   <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>

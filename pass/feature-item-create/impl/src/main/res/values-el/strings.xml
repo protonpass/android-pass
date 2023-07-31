@@ -25,7 +25,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Προσθήκη</string>
   <string name="sticky_button_generate_password">Δημιουργήσετε ένα νέο κωδικό πρόσβασης</string>
-  <string name="sticky_button_create_alias">Απόκρυψη της διεύθυνσης ηλεκτρονικού ταχυδρομείου μου</string>
+  <string name="sticky_button_create_alias">Hide-my-email</string>
   <string name="sticky_button_use_account_email">Χρήση %s</string>
   <string name="create_login_item_creation_error">Δεν ήταν δυνατή η δημιουργία σύνδεσης</string>
   <string name="create_login_item_update_error">Δεν ήταν δυνατή η ενημέρωση της σύνδεσης</string>

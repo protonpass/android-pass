@@ -3,15 +3,15 @@
   <string name="account_title">Аккаунт</string>
   <string name="account_username_label">Имя пользователя</string>
   <string name="account_subscription_label">План подписки</string>
-  <string name="account_permanently_delete_warning">This will permanently delete your account and all of its data. You will not be able to reactivate this account.</string>
+  <string name="account_permanently_delete_warning">Это приведет к окончательному удалению вашего аккаунта и всех его данных. Вы не сможете повторно активировать этот аккаунт.</string>
   <string name="account_delete_account">Удалить аккаунт</string>
   <string name="account_delete_account_icon_content_description">Кнопка удаления аккаунта</string>
   <string name="account_sign_out">Выйти</string>
   <string name="account_sign_out_icon_content_description">Кнопка выхода</string>
-  <string name="account_manage_subscription">Manage subscription</string>
-  <string name="account_get_user_info_error">Could not retrieve the user information</string>
-  <string name="manage_subscription_icon_content_description">Manage subscription button</string>
+  <string name="account_manage_subscription">Управление подпиской</string>
+  <string name="account_get_user_info_error">Не могу получить информацию о пользователе</string>
+  <string name="manage_subscription_icon_content_description">Кнопка управления подпиской</string>
   <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Sign out?</string>
-  <string name="alert_confirm_sign_out_message">Are you sure you want to sign out?</string>
+  <string name="alert_confirm_sign_out_title">Выйти из аккаунта?</string>
+  <string name="alert_confirm_sign_out_message">Вы уверены, что хотите выйти?</string>
 </resources>

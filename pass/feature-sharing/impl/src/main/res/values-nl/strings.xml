@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Doorgaan</string>
+  <string name="sharing_can_view">Kan bekijken</string>
+  <string name="sharing_can_edit">Kan bewerken</string>
+  <string name="sharing_can_manage">Kan beheren</string>
+  <string name="sharing_can_view_description">Kan items bekijken in deze kluis.</string>
+  <string name="sharing_can_edit_description">Kan items aanmaken, bewerken, verwijderen en exporteren in deze kluis.</string>
+  <string name="sharing_can_manage_description">Kan toegang tot deze kluis verlenen en intrekken.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d item</item>
+    <item quantity="other">%d items</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d lid</item>
+    <item quantity="other">%d leden</item>
+  </plurals>
+  <string name="share_with_title">Deel met</string>
+  <string name="share_with_subtitle">Deze gebruiker ontvangt een uitnodiging om lid te worden van uw kluis \'%s\'.</string>
+  <string name="share_with_email_hint">E-mailadres</string>
+  <string name="share_with_email_error">Ongeldig e-mailadres</string>
+  <string name="share_permissions_title">Machtigingen instellen</string>
+  <string name="share_permissions_subtitle">Selecteer het toegangsniveau dat deze gebruiker krijgt wanneer hij lid wordt van uw kluis \'%s\'.</string>
+  <string name="sharing_invitation_from">Uitnodiging van %s</string>
+  <string name="sharing_join_shared_vault">Deelnemen aan gedeelde kluis</string>
+  <string name="sharing_reject_invitation">Uitnodiging afwijzen</string>
+  <string name="sharing_snackbar_invite_accepted">Uitnodiging geaccepteerd</string>
+  <string name="sharing_snackbar_invite_accept_error">Fout bij het accepteren van de uitnodiging</string>
+  <string name="sharing_snackbar_invite_rejected">Uitnodiging afgewezen</string>
+  <string name="sharing_snackbar_invite_reject_error">Fout bij het weigeren van de uitnodiging</string>
+  <string name="sharing_snackbar_vault_not_found">Kluis kon niet worden gevonden</string>
+  <string name="sharing_snackbar_invite_sent_success">Uitnodiging verzonden</string>
+  <string name="sharing_snackbar_invite_sent_error">Kan de uitnodiging niet verzenden</string>
+  <string name="share_summary_title">Overzicht</string>
+  <string name="share_summary_subtitle">Je staat op het punt %1$s uit te nodigen voor je %2$s. Ze krijgen toegang tot %3$s en kunnen %4$s in deze kluis.</string>
+  <string name="share_summary_vault">%s kluis</string>
+  <string name="share_summary_view_items">alleen artikelen bekijken</string>
+  <string name="share_summary_create_items">creëer items</string>
+  <string name="share_summary_manage_vault">beheer</string>
+  <string name="share_summary_share_vault">Kluis delen</string>
+  <string name="share_summary_email_title">Gebruiker</string>
+  <string name="share_summary_vault_title">Kluis</string>
+  <string name="share_summary_permissions_title">Rechten</string>
+</resources>

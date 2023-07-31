@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Bearbeiten</string>
   <string name="bottomsheet_migrate">Alle Einträge in einen anderen Tresor verschieben</string>
   <string name="bottomsheet_delete_vault">Tresor löschen</string>
+  <string name="bottomsheet_share_vault">Teilen</string>
   <string name="vault_title">Tresor</string>
 </resources>

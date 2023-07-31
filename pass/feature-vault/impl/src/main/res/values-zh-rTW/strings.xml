@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">編輯</string>
   <string name="bottomsheet_migrate">將全部項目移至保管庫</string>
   <string name="bottomsheet_delete_vault">刪除保管庫</string>
+  <string name="bottomsheet_share_vault">分享</string>
   <string name="vault_title">保管庫</string>
 </resources>

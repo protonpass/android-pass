@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">İlerle</string>
+  <string name="sharing_can_view">Görüntüleyebilir</string>
+  <string name="sharing_can_edit">Düzenleyebilir</string>
+  <string name="sharing_can_manage">Yönetebilir</string>
+  <string name="sharing_can_view_description">Bu kasadaki ögeleri görüntüleyebilir.</string>
+  <string name="sharing_can_edit_description">Bu kasadaki ögeleri oluşturabilir, düzenleyebilir, silebilir ve dışa aktarabilir.</string>
+  <string name="sharing_can_manage_description">Bu kasaya erişme iznini verebilir ya da kaldırabilir.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d öge</item>
+    <item quantity="other">%d öge</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d üye</item>
+    <item quantity="other">%d üye</item>
+  </plurals>
+  <string name="share_with_title">Şununla paylaş</string>
+  <string name="share_with_subtitle">Bu kullanıcıya, \'%s\' kasanıza katılma daveti gönderilecek.</string>
+  <string name="share_with_email_hint">E-posta adresi</string>
+  <string name="share_with_email_error">E-posta adresi geçersiz</string>
+  <string name="share_permissions_title">İzinleri ayarla</string>
+  <string name="share_permissions_subtitle">Bu kullanıcının \'%s\' kasanıza erişme düzeyini seçin.</string>
+  <string name="sharing_invitation_from">%s daveti</string>
+  <string name="sharing_join_shared_vault">Paylaşılan kasaya eriş</string>
+  <string name="sharing_reject_invitation">Daveti reddet</string>
+  <string name="sharing_snackbar_invite_accepted">Davet kabul edildi</string>
+  <string name="sharing_snackbar_invite_accept_error">Davet kabul edilirken sorun çıktı</string>
+  <string name="sharing_snackbar_invite_rejected">Davet reddedildi</string>
+  <string name="sharing_snackbar_invite_reject_error">Davet reddedilirken sorun çıktı</string>
+  <string name="sharing_snackbar_vault_not_found">Kasa bulunamadı</string>
+  <string name="sharing_snackbar_invite_sent_success">Davet gönderildi</string>
+  <string name="sharing_snackbar_invite_sent_error">Davet gönderilemedi</string>
+  <string name="share_summary_title">Özet</string>
+  <string name="share_summary_subtitle">%1$s kullanıcısını %2$s kasanızı paylaşmaya davet ediyorsunuz. Kullanıcının bu kasada %3$s izni olacak ve %4$s işlemlerini yapabilecek.</string>
+  <string name="share_summary_vault">%s kasa</string>
+  <string name="share_summary_view_items">yalnızca ögeleri görüntüleme</string>
+  <string name="share_summary_create_items">ögeler oluşturma</string>
+  <string name="share_summary_manage_vault">yönetme</string>
+  <string name="share_summary_share_vault">Kasayı paylaş</string>
+  <string name="share_summary_email_title">Kullanıcı</string>
+  <string name="share_summary_vault_title">Kasa</string>
+  <string name="share_summary_permissions_title">İzinler</string>
+</resources>

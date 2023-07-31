@@ -33,7 +33,7 @@
   <string name="action_reveal_password">Mostrar senha</string>
   <string name="action_conceal_password">Ocultar senha</string>
   <string name="action_reveal_number">Exibir número</string>
-  <string name="action_conceal_number">Ocultar o número</string>
+  <string name="action_conceal_number">Ocultar número</string>
   <string name="more_info_created">Criação:</string>
   <string name="more_info_modified">Modificação:</string>
   <string name="more_info_autofilled">Preenchimento automático:</string>
@@ -54,8 +54,8 @@
   <string name="credit_card_cardholder_field_name">Nome do titular do cartão</string>
   <string name="credit_card_number_field_name">Número do cartão</string>
   <string name="credit_card_cvv_field_name">Número de verificação</string>
-  <string name="credit_card_pin_field_name">Número do PIN</string>
-  <string name="credit_card_expiration_date_field_name">Válido até</string>
+  <string name="credit_card_pin_field_name">Código PIN</string>
+  <string name="credit_card_expiration_date_field_name">Expira em</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Nome do titular do cartão copiado para a área de transferência</string>
   <string name="credit_card_number_copied_to_clipboard">Número do cartão copiado para a área de transferência</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Número de verificação copiado para a área de transferência</string>

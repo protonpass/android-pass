@@ -28,15 +28,15 @@
     <item quantity="other">Virheellinen PIN-koodi. %d yritystä jäljellä.</item>
   </plurals>
   <string name="auth_unlock_app_title">Avaa Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Syötä pääsalasana kohteelle %s</string>
+  <string name="auth_unlock_app_subtitle">Syötä tunnuksen %s pääsalasana</string>
   <string name="auth_master_password_label">Pääsalasana</string>
   <string name="auth_action_reveal_password">Näytä pääsalasana</string>
   <string name="auth_action_conceal_password">Piilota pääsalasana</string>
   <string name="auth_unlock_button">Avaa</string>
-  <string name="auth_error_verifying_password">Virhe salasanasi tarkistamisessa</string>
+  <string name="auth_error_verifying_password">Salasanan vahvistusvirhe</string>
   <string name="auth_error_empty_password">Salasana ei voi olla tyhjä</string>
   <string name="auth_error_pin_cannot_be_empty">PIN-koodi ei voi olla tyhjä</string>
-  <string name="auth_error_pin_too_short">PIN-koodin on oltava vähintään 4-numeroinen</string>
+  <string name="auth_error_pin_too_short">PIN-koodin on oltava vähintään 4-numeroa</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Virheellinen salasana. %d yritys jäljellä</item>
     <item quantity="other">Virheellinen salasana. %d yritystä jäljellä</item>

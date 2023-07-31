@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Продолжить</string>
+  <string name="sharing_can_view">Может просматривать</string>
+  <string name="sharing_can_edit">Может редактировать</string>
+  <string name="sharing_can_manage">Может управлять</string>
+  <string name="sharing_can_view_description">Может просматривать элементы в этом хранилище.</string>
+  <string name="sharing_can_edit_description">Может создавать, редактировать, удалять и экспортировать элементы этого хранилища.</string>
+  <string name="sharing_can_manage_description">Может представлять и отзывать доступ к этому хранилищу.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d элемент</item>
+    <item quantity="few">%d элемента</item>
+    <item quantity="many">%d элементов</item>
+    <item quantity="other">%d элемента</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d участник</item>
+    <item quantity="few">%d участника</item>
+    <item quantity="many">%d участников</item>
+    <item quantity="other">%d участника</item>
+  </plurals>
+  <string name="share_with_title">Поделиться с</string>
+  <string name="share_with_subtitle">Пользователь получит приглашение, чтобы присоединиться к вашему хранилищу \'%s\'.</string>
+  <string name="share_with_email_hint">Адрес эл. почты</string>
+  <string name="share_with_email_error">Недействительный адрес эл. почты</string>
+  <string name="share_permissions_title">Задать разрешения</string>
+  <string name="share_permissions_subtitle">Select the level of access this user will gain when they join your \'%s\' vault.</string>
+  <string name="sharing_invitation_from">Invitation from %s</string>
+  <string name="sharing_join_shared_vault">Присоединиться к общему хранилищу</string>
+  <string name="sharing_reject_invitation">Отклонить приглашение</string>
+  <string name="sharing_snackbar_invite_accepted">Приглашение принято</string>
+  <string name="sharing_snackbar_invite_accept_error">Ошибка при принятии приглашения</string>
+  <string name="sharing_snackbar_invite_rejected">Приглашение отклонено</string>
+  <string name="sharing_snackbar_invite_reject_error">Ошибка при отклонении приглашения</string>
+  <string name="sharing_snackbar_vault_not_found">Хранилище не может быть найдено</string>
+  <string name="sharing_snackbar_invite_sent_success">Приглашение отправлено</string>
+  <string name="sharing_snackbar_invite_sent_error">Не могу отправить приглашение</string>
+  <string name="share_summary_title">Сводка</string>
+  <string name="share_summary_subtitle">Вы собираетесь пригласить %1$s в своё %2$s. Они получат доступ к %3$s, и смогут %4$s в этом хранилище.</string>
+  <string name="share_summary_vault">%s хранилище</string>
+  <string name="share_summary_view_items">только просматривать элементы</string>
+  <string name="share_summary_create_items">создавать элементы</string>
+  <string name="share_summary_manage_vault">управлять</string>
+  <string name="share_summary_share_vault">Поделиться хранилищем</string>
+  <string name="share_summary_email_title">Пользователь</string>
+  <string name="share_summary_vault_title">Хранилище</string>
+  <string name="share_summary_permissions_title">Разрешения</string>
+</resources>

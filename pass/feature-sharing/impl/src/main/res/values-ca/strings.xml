@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Continua</string>
+  <string name="sharing_can_view">Pot veure</string>
+  <string name="sharing_can_edit">Pot editar</string>
+  <string name="sharing_can_manage">Pot gestionar</string>
+  <string name="sharing_can_view_description">Permet veure els elements d\'aquesta caixa forte.</string>
+  <string name="sharing_can_edit_description">Permet crear, editar, suprimir i exportar elements en aquesta caixa forta.</string>
+  <string name="sharing_can_manage_description">Permet concedir i revocar accés a aquesta caixa forta.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d element</item>
+    <item quantity="other">%d elements</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d membre</item>
+    <item quantity="other">%d membres</item>
+  </plurals>
+  <string name="share_with_title">Comparteix amb</string>
+  <string name="share_with_subtitle">Aquest usuari rebrà una invitació per unir-se a la vostra caixa forta \'%s\'.</string>
+  <string name="share_with_email_hint">Adreça de correu electrònic</string>
+  <string name="share_with_email_error">L\'adreça de correu electrònic no és vàlida.</string>
+  <string name="share_permissions_title">Estableix els permisos</string>
+  <string name="share_permissions_subtitle">Seleccioneu el nivell d\'accés que obtindrà aquest usuari quan s\'uneixi a la vostra caixa forta \'%s\'.</string>
+  <string name="sharing_invitation_from">Invitació de %s</string>
+  <string name="sharing_join_shared_vault">Uniu-vos a la caixa forta compartida</string>
+  <string name="sharing_reject_invitation">Rebutja la invitació</string>
+  <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
+  <string name="sharing_snackbar_invite_accept_error">S\'ha produït un error en acceptar la invitació</string>
+  <string name="sharing_snackbar_invite_rejected">Invitació rebutjada</string>
+  <string name="sharing_snackbar_invite_reject_error">S\'ha produït un error en rebutjar la invitació.</string>
+  <string name="sharing_snackbar_vault_not_found">No s\'ha pogut trobar la caixa forta.</string>
+  <string name="sharing_snackbar_invite_sent_success">S\'ha enviat la invitació.</string>
+  <string name="sharing_snackbar_invite_sent_error">No s’ha pogut enviar la invitació.</string>
+  <string name="share_summary_title">Resum</string>
+  <string name="share_summary_subtitle">Esteu a punt de convidar %1$s al vostre %2$s. Tindran accés a %3$s i podran %4$s en aquesta caixa forta.</string>
+  <string name="share_summary_vault">a caixa forta %s</string>
+  <string name="share_summary_view_items">només veure elements</string>
+  <string name="share_summary_create_items">crear elements</string>
+  <string name="share_summary_manage_vault">gestionar</string>
+  <string name="share_summary_share_vault">Comparteix la caixa forta</string>
+  <string name="share_summary_email_title">Usuari</string>
+  <string name="share_summary_vault_title">Caixa forta</string>
+  <string name="share_summary_permissions_title">Permisos</string>
+</resources>

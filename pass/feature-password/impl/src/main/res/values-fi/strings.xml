@@ -11,11 +11,11 @@
   <string name="bottomsheet_option_capital_letters">Isot kirjaimet (A-Z)</string>
   <string name="bottomsheet_option_capitalise">Isot alkukirjaimet</string>
   <string name="bottomsheet_option_include_numbers">Sisällytä numerot (0-9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Yhdysmerkit ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Välilyönnit</string>
-  <string name="bottomsheet_option_word_separator_periods">Pisteet ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Pilkut ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Alaviivat ( _ )</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Yhdysmerkki ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Välilyönti</string>
+  <string name="bottomsheet_option_word_separator_periods">Piste ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Pilkku ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Alaviiva ( _ )</string>
   <string name="bottomsheet_option_word_separator_numbers">Numerot</string>
   <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numerot ja erikoismerkit</string>
   <string name="regenerate_password_icon_content_description">Luo uusi salasana -painike</string>

@@ -7,7 +7,7 @@
   <string name="home_empty_vault_create_alias">Luo Hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Luo muistiinpano</string>
   <string name="error_observing_items">Virhe näytettäessä kohteita</string>
-  <string name="error_observing_share">Virhe näytettäessä jako</string>
+  <string name="error_observing_share">Virhe näytettäessä jakoa</string>
   <string name="error_refreshing">Virhe päivitettäessä</string>
   <string name="home_snackbar_login_moved_to_trash">Kirjautumistieto siirrettiin roskakoriin</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias siirrettiin roskakoriin</string>
@@ -15,11 +15,13 @@
   <string name="home_snackbar_credit_card_moved_to_trash">Maksukortti siirrettiin roskakoriin</string>
   <string name="home_snackbar_move_to_trash_error">Ei voitu siirtää roskakoriin</string>
   <string name="home_autofill_banner_title">Nauti automaattitäytön taiasta</string>
-  <string name="home_autofill_banner_text">Yksi napautus ja—tadaa!—käyttäjätunnuksesi ja salasanasi täyttyvät välittömästi.</string>
+  <string name="home_autofill_banner_text">Vain yksi napautus ja käyttäjätunnuksesi ja salasanasi on täytetty.</string>
   <string name="home_autofill_banner_settings">Ota automaattitäyttö käyttöön ›</string>
   <string name="home_trial_banner_title">Nauti ilmaisesta kokeilusta</string>
   <string name="home_trial_banner_text">Tutustu kaikkiin ainutlaatuisiin ominaisuuksiin, jotka ovat käytettävissäsi rajoitetun ajan.</string>
   <string name="home_trial_banner_settings">Lue lisää ›</string>
+  <string name="home_invite_banner_title">Jettu holvin kutsu</string>
+  <string name="home_invite_banner_subtitle">Sinut on kutusuttu holviin. Näytä kutsu napauttamalla tästä.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopioi salasana</string>
   <string name="bottomsheet_copy_username">Kopioi käyttäjätunnus</string>
@@ -36,7 +38,7 @@
   <string name="credit_card_number_copied_to_clipboard">Maksukortin numero kopioitiin</string>
   <string name="credit_card_pin_copied_to_clipboard">Maksukortin PIN-koodi kopioitiin</string>
   <string name="credit_card_cvv_copied_to_clipboard">Maksukortin turvakoodi kopioitiin</string>
-  <string name="item_too_long_copied_to_clipboard">Sisältö oli liian pitkä, kopioitu osittain leikepöydälle</string>
+  <string name="item_too_long_copied_to_clipboard">Sisältö oli liian pitkä ja kopioitiin osittain leikepöydälle</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Holvit</string>
   <string name="vault_drawer_vaults_item_count">%d kohdetta</string>
@@ -74,7 +76,7 @@
   <string name="alert_confirm_restore_all_title">Palautetaanko kaikki kohteet?</string>
   <string name="alert_confirm_restore_all_message">Haluatko varmasti palauttaa kaikki roskakorissa olevat kohteet?</string>
   <!-- Recent search -->
-  <string name="recent_search_header_count">Edelliset haut</string>
+  <string name="recent_search_header_count">Aiemmat haut</string>
   <string name="recent_search_clear">Tyhjennä</string>
   <string name="recent_search_remove_item">Poista hakuhistoriasta</string>
 </resources>

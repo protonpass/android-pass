@@ -24,6 +24,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 sealed interface LeaveVaultEvent {
     object Unknown : LeaveVaultEvent
     object Left : LeaveVaultEvent
+    object Close : LeaveVaultEvent
 }
 
 @Stable

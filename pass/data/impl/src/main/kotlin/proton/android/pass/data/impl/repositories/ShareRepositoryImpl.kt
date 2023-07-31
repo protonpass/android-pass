@@ -18,7 +18,11 @@
 
 package proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -297,25 +301,10 @@ class ShareRepositoryImpl @Inject constructor(
         shares: List<ShareResponse>
     ): List<ShareEntity> {
         val entities: List<Pair<ShareResponseEntity, List<ShareKey>>> =
-            shares.map { shareResponse ->
-                val shareId = ShareId(shareResponse.shareId)
-
-                // First we fetch the shareKeys and not save them, in case the share has not been
-                // inserted yet, as it would cause a FK mismatch in the database
-                val shareKeys = shareKeyRepository.getShareKeys(
-                    userId = userAddress.userId,
-                    addressId = userAddress.addressId,
-                    shareId = shareId,
-                    forceRefresh = false,
-                    shouldStoreLocally = false
-                ).first()
-
-                // Reencrypt the share contents
-                val encryptionKey = getEncryptionKey(shareResponse.contentKeyRotation, shareKeys)
-                ShareResponseEntity(
-                    response = shareResponse,
-                    entity = shareResponseToEntity(userAddress, shareResponse, encryptionKey)
-                ) to shareKeys
+            withContext(Dispatchers.IO) {
+                shares.map { shareResponse ->
+                    getShareKeys(shareResponse, userAddress)
+                }.awaitAll()
             }
 
         return database.inTransaction {
@@ -345,6 +334,35 @@ class ShareRepositoryImpl @Inject constructor(
 
             shareEntities
         }
+    }
+
+    private fun CoroutineScope.getShareKeys(
+        shareResponse: ShareResponse,
+        userAddress: UserAddress
+    ): Deferred<Pair<ShareResponseEntity, List<ShareKey>>> = async {
+        val shareId = ShareId(shareResponse.shareId)
+
+        // First we fetch the shareKeys and not save them, in case the share has not been
+        // inserted yet, as it would cause a FK mismatch in the database
+        val shareKeys = shareKeyRepository.getShareKeys(
+            userId = userAddress.userId,
+            addressId = userAddress.addressId,
+            shareId = shareId,
+            forceRefresh = false,
+            shouldStoreLocally = false
+        ).first()
+
+        // Reencrypt the share contents
+        val encryptionKey =
+            getEncryptionKey(shareResponse.contentKeyRotation, shareKeys)
+        ShareResponseEntity(
+            response = shareResponse,
+            entity = shareResponseToEntity(
+                userAddress,
+                shareResponse,
+                encryptionKey
+            )
+        ) to shareKeys
     }
 
     private fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKeyStatus {

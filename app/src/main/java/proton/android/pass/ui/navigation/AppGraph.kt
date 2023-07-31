@@ -436,6 +436,7 @@ fun NavGraphBuilder.appGraph(
 
                 SettingsNavigation.PrimaryVault -> appNavigator.navigate(SelectPrimaryVault)
                 SettingsNavigation.Restart -> onNavigate(AppNavigation.Restart)
+                SettingsNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
             }
         }
     )

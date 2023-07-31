@@ -20,6 +20,8 @@
   <string name="home_trial_banner_title">Profitez de votre essai gratuit.</string>
   <string name="home_trial_banner_text">Découvrez toutes les fonctionnalités exclusives qui vous sont proposées pour une durée limitée.</string>
   <string name="home_trial_banner_settings">En savoir plus ›</string>
+  <string name="home_invite_banner_title">Invitation à un coffre-fort partagé</string>
+  <string name="home_invite_banner_subtitle">Vous avez reçu une invitation à un coffre-fort. Appuyez ici pour voir l\'invitation.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copier le mot de passe</string>
   <string name="bottomsheet_copy_username">Copier le nom d\'utilisateur</string>

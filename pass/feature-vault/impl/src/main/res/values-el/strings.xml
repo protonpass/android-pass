@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Επεξεργασία</string>
   <string name="bottomsheet_migrate">Μετακίνηση όλων των στοιχείων σε άλλη κρύπτη</string>
   <string name="bottomsheet_delete_vault">Διαγραφή κρύπτης</string>
+  <string name="bottomsheet_share_vault">Κοινοποίηση</string>
   <string name="vault_title">Κρύπτη</string>
 </resources>

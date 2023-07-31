@@ -34,7 +34,7 @@
   <string name="app_lock_config_biometric">Biométrie</string>
   <string name="app_lock_config_pin_code">Code PIN</string>
   <string name="app_lock_config_unlock_with">Déverrouiller avec</string>
-  <string name="app_lock_config_app_lock_time">Temps de verrouillage de l\'application</string>
+  <string name="app_lock_config_app_lock_time">Verrouillage automatique</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Utiliser le verrouillage du système quand la biométrie ne fonctionne pas.</string>
   <string name="configure_pin_set_pin_code">Définir le code PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Déverrouillez l\'application avec ce code.</string>

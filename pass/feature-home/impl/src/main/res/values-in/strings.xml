@@ -20,6 +20,8 @@
   <string name="home_trial_banner_title">Nikmati masa uji coba gratis Anda</string>
   <string name="home_trial_banner_text">Lihat semua fitur eksklusif yang tersedia untuk Anda hanya untuk waktu terbatas.</string>
   <string name="home_trial_banner_settings">Pelajari lebih lanjut ›</string>
+  <string name="home_invite_banner_title">Shared vault invitation</string>
+  <string name="home_invite_banner_subtitle">You\'ve been invited to a vault. Tap here to see the invitation.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Salin kata sandi</string>
   <string name="bottomsheet_copy_username">Salin nama pengguna</string>

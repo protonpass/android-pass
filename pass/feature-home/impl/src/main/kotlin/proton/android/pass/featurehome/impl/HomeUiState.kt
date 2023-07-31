@@ -60,6 +60,7 @@ data class HomeUiState(
 data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
+    val isSyncing: Boolean,
     val shouldScrollToTop: Boolean,
     val canLoadExternalImages: Boolean,
     val actionState: ActionState = ActionState.Unknown,
@@ -74,6 +75,7 @@ data class HomeListUiState(
         val Loading = HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
+            isSyncing = false,
             shouldScrollToTop = false,
             canLoadExternalImages = false,
             items = persistentListOf(),

@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.remote
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
@@ -140,6 +142,36 @@ class RemoteItemDataSourceImpl @Inject constructor(
                 items
             }
             .valueOrThrow
+
+    override fun observeItems(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<ItemTotal> = flow {
+        api.get<PasswordManagerApi>(userId)
+            .invoke {
+                var sinceToken: String? = null
+                var itemsRetrieved = 0
+                while (true) {
+                    val response = getItems(
+                        shareId = shareId.id,
+                        sinceToken = sinceToken,
+                        pageSize = PAGE_SIZE
+                    )
+
+                    val total = response.items.total
+                    val pageItems = response.items.revisions
+                    itemsRetrieved += pageItems.size
+                    emit(ItemTotal(total.toInt(), itemsRetrieved, pageItems))
+
+                    if (pageItems.size < PAGE_SIZE || response.items.lastToken == null) {
+                        break
+                    }
+
+                    sinceToken = response.items.lastToken
+                }
+            }
+            .valueOrThrow
+    }
 
     override suspend fun sendToTrash(
         userId: UserId,

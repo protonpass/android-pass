@@ -26,6 +26,7 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
+import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -145,6 +146,13 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     }
 
     override suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item> {
+        TODO("Not yet implemented")
+    }
+
+    override fun refreshItemsAndObserveProgress(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<VaultProgress> {
         TODO("Not yet implemented")
     }
 

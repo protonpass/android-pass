@@ -19,20 +19,31 @@
 package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TestItemSyncStatusRepository @Inject constructor() : ItemSyncStatusRepository {
 
-    private val flow = testFlow<ItemSyncStatus>()
+    private val flow: MutableSharedFlow<ItemSyncStatus> = testFlow()
+    private val accumulatedFlow: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> = testFlow()
 
-    override fun emit(status: ItemSyncStatus) {
-        flow.tryEmit(status)
+    fun emitAccumulated(map: Map<ShareId, ItemSyncStatusPayload>) {
+        accumulatedFlow.tryEmit(map)
+    }
+
+    override suspend fun emit(status: ItemSyncStatus) {
+        flow.emit(status)
     }
 
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = flow
+
+    override fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> =
+        accumulatedFlow
 }

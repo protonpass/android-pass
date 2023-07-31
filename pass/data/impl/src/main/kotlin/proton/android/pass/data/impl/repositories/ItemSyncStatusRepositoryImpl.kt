@@ -19,22 +19,32 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.runningFold
 import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusRepository {
 
-    private val syncStatus = MutableStateFlow<ItemSyncStatus>(ItemSyncStatus.NotStarted)
+    private val syncStatus: MutableSharedFlow<ItemSyncStatus> = MutableSharedFlow(replay = 1, extraBufferCapacity = 1)
+    private val map: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
 
-    override fun emit(status: ItemSyncStatus) {
-        syncStatus.update { status }
+    override suspend fun emit(status: ItemSyncStatus) {
+        syncStatus.emit(status)
     }
 
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = syncStatus
 
+    override fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> =
+        syncStatus.runningFold(map) { accumulator, value ->
+            if (value is ItemSyncStatus.Syncing) {
+                accumulator[value.shareId] = ItemSyncStatusPayload(value.current, value.total)
+            }
+            accumulator
+        }
 }

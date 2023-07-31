@@ -179,7 +179,7 @@ class HomeViewModelTest {
 
     @Test
     fun `does not stay in loading if sync finished and search is empty`() = runTest {
-        itemSyncStatusRepository.emit(ItemSyncStatus.Synced(hasItems = true))
+        itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = true))
         setupItems()
 
         instance.onEnterSearch()
@@ -196,7 +196,7 @@ class HomeViewModelTest {
 
     @Test
     fun `does not stay in loading if vault switched and has no contents`() = runTest {
-        itemSyncStatusRepository.emit(ItemSyncStatus.Synced(hasItems = true))
+        itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = true))
 
         // Emit initial items
         setupItems()
@@ -248,7 +248,7 @@ class HomeViewModelTest {
             )
         }
 
-        itemSyncStatusRepository.emit(ItemSyncStatus.Synced(hasItems = items.isNotEmpty()))
+        itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = items.isNotEmpty()))
         observeVaults.sendResult(Result.success(vaults))
         observeItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)

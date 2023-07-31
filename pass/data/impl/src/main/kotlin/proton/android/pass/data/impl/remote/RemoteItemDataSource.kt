@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.remote
 
+import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
@@ -59,6 +60,12 @@ interface RemoteItemDataSource {
     ): ItemRevision
 
     suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision>
+
+    fun observeItems(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<ItemTotal>
+
     suspend fun sendToTrash(
         userId: UserId,
         shareId: ShareId,
@@ -93,3 +100,9 @@ interface RemoteItemDataSource {
         body: MigrateItemsRequest
     ): List<ItemRevision>
 }
+
+data class ItemTotal(
+    val total: Int,
+    val created: Int,
+    val items: List<ItemRevision>
+)

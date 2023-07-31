@@ -395,7 +395,7 @@ class HomeViewModel @Inject constructor(
         )
     }.distinctUntilChanged()
 
-    val homeUiState = combineN(
+    val homeUiState: StateFlow<HomeUiState> = combineN(
         shareListWrapperFlow,
         filtersWrapperFlow,
         resultsFlow,
@@ -407,7 +407,7 @@ class HomeViewModel @Inject constructor(
         hasChangedVaultState
     ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading,
         shouldScrollToTop, useFavicons, userPlan, hasChangedVault ->
-        val syncLoading = if (refreshingLoading.syncStatus == ItemSyncStatus.Syncing) {
+        val syncLoading = if (refreshingLoading.syncStatus is ItemSyncStatus.Syncing) {
             IsLoadingState.Loading
         } else {
             IsLoadingState.from(itemsResult is LoadingResult.Loading)
@@ -416,24 +416,22 @@ class HomeViewModel @Inject constructor(
         val (items, isLoading) = when (itemsResult) {
             LoadingResult.Loading -> persistentListOf<GroupedItemList>() to IsLoadingState.Loading
             is LoadingResult.Success -> when (val syncStatus = refreshingLoading.syncStatus) {
-                is ItemSyncStatus.Synced -> {
+                is ItemSyncStatus.CompletedSyncing -> {
 
                     val loading = if (itemsResult.data.isEmpty()) {
                         // There are no items emitted yet
                         // Check if SyncStatus says there should be items
                         // If the user has changed vaults, we don't want to check this flag, because
                         // even if the Sync says there are items, there may be none for this vault
-                        if (!syncStatus.hasItems) {
-                            IsLoadingState.NotLoading
-                        } else if (searchUiState.inSearchMode) {
-                            when (searchUiState.isProcessingSearch) {
+                        when {
+                            !syncStatus.hasItems -> IsLoadingState.NotLoading
+                            searchUiState.inSearchMode -> when (searchUiState.isProcessingSearch) {
                                 IsProcessingSearchState.NotLoading -> syncLoading
                                 IsProcessingSearchState.Loading -> IsLoadingState.Loading
                             }
-                        } else if (!hasChangedVault) {
-                            IsLoadingState.Loading
-                        } else {
-                            syncLoading
+
+                            !hasChangedVault -> IsLoadingState.Loading
+                            else -> syncLoading
                         }
                     } else {
                         syncLoading
@@ -450,11 +448,12 @@ class HomeViewModel @Inject constructor(
                 persistentListOf<GroupedItemList>() to IsLoadingState.NotLoading
             }
         }
-
         HomeUiState(
             homeListUiState = HomeListUiState(
                 isLoading = isLoading,
                 isRefreshing = refreshingLoading.refreshing,
+                isSyncing = refreshingLoading.syncStatus is ItemSyncStatus.Syncing ||
+                    refreshingLoading.syncStatus is ItemSyncStatus.Started,
                 shouldScrollToTop = shouldScrollToTop,
                 actionState = refreshingLoading.actionState,
                 items = items,

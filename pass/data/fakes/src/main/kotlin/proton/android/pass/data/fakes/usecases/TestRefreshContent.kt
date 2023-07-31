@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.RefreshContent
 import javax.inject.Inject
 
@@ -30,5 +29,5 @@ class TestRefreshContent @Inject constructor() : RefreshContent {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId) = result.getOrThrow()
+    override suspend fun invoke() = result.getOrThrow()
 }

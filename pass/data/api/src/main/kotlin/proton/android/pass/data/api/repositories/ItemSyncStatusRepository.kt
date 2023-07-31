@@ -19,15 +19,22 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
+import proton.pass.domain.ShareId
 
 sealed interface ItemSyncStatus {
-    object NotStarted : ItemSyncStatus
-    object Syncing : ItemSyncStatus
-    data class Synced(val hasItems: Boolean) : ItemSyncStatus
-    object NotSynced : ItemSyncStatus
+    object Started : ItemSyncStatus
+    data class Syncing(val shareId: ShareId, val current: Int, val total: Int) : ItemSyncStatus
+    data class CompletedSyncing(val hasItems: Boolean) : ItemSyncStatus
+    object ErrorSyncing : ItemSyncStatus
 }
 
+data class ItemSyncStatusPayload(
+    val current: Int,
+    val total: Int
+)
+
 interface ItemSyncStatusRepository {
-    fun emit(status: ItemSyncStatus)
+    suspend fun emit(status: ItemSyncStatus)
     fun observeSyncStatus(): Flow<ItemSyncStatus>
+    fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>>
 }

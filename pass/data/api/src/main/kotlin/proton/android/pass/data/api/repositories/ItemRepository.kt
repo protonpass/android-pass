@@ -93,6 +93,11 @@ interface ItemRepository {
         shareId: ShareId
     ): List<Item>
 
+    fun refreshItemsAndObserveProgress(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<VaultProgress>
+
     suspend fun applyEvents(
         userId: UserId,
         addressId: AddressId,
@@ -133,3 +138,8 @@ interface ItemRepository {
         aliasEmail: String
     ): Item?
 }
+
+data class VaultProgress(
+    val total: Int,
+    val current: Int
+)

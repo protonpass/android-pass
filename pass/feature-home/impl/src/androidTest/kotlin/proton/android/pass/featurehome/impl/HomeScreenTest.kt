@@ -304,7 +304,7 @@ class HomeScreenTest {
             )
         }
 
-        itemSyncStatusRepository.emit(ItemSyncStatus.Synced(hasItems = items.isNotEmpty()))
+        itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = items.isNotEmpty()))
         observeVaults.sendResult(Result.success(vaults))
         observeItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)

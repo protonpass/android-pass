@@ -107,6 +107,11 @@ fun HomeScreen(
             homeViewModel.restoreActionState()
         }
     }
+    LaunchedEffect(homeUiState.homeListUiState.isSyncing) {
+        if (homeUiState.homeListUiState.isSyncing) {
+            onNavigateEvent(HomeNavigation.SyncDialog)
+        }
+    }
 
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -209,6 +214,7 @@ fun HomeScreen(
                         }
                     }
                 )
+
                 CreditCardOptions -> CreditCardOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,

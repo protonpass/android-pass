@@ -71,7 +71,7 @@ class ApplyPendingEventsImpl @Inject constructor(
             if (refreshSharesResult.allShareIds.isEmpty()) {
                 PassLogger.d(TAG, "Received an empty list of shares, creating default vault")
                 createDefaultVault(user.userId)
-                itemSyncStatusRepository.emit(ItemSyncStatus.Synced(false))
+                itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(false))
             } else {
                 enqueueRefreshItems(refreshSharesResult.newShareIds)
                 refreshSharesResult.allShareIds.subtract(refreshSharesResult.newShareIds)
@@ -141,7 +141,6 @@ class ApplyPendingEventsImpl @Inject constructor(
 
     private fun enqueueRefreshItems(shares: Set<ShareId>) {
         if (shares.isNotEmpty()) {
-            itemSyncStatusRepository.emit(ItemSyncStatus.Syncing)
             val request = FetchItemsWorker.getRequestFor(shares.toList())
             workManager.enqueue(request)
         }

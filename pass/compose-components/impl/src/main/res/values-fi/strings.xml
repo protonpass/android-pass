@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Nimi (Ö-A)</string>
   <string name="sort_by_creation_asc">Vanhimmasta uusimpaan</string>
   <string name="sort_by_creation_desc">Uusimmasta vanhimpaan</string>
-  <string name="sort_by_modification_date">Viimeisimmät</string>
+  <string name="sort_by_modification_date">Käytön mukaan</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Kaikki</string>
   <plurals name="item_list_header_results">
@@ -33,7 +33,7 @@
   <string name="field_note_hint">Lisää muistiinpano</string>
   <string name="linked_apps_title">Yhdistetyt sovellukset</string>
   <!-- Indicator that indicates lack of internet connectivity -->
-  <string name="indicator_no_network">Yhteydetön</string>
+  <string name="indicator_no_network">Ei yhteyttä</string>
   <!-- Icon content description -->
   <string name="missing_app_icon_content_description">Sovellus puuttuu -kuvake</string>
   <string name="add_item_icon_content_description">Lisää kohde -kuvake</string>
@@ -47,12 +47,12 @@
   <!-- List group by most recents -->
   <string name="most_recent_today">Tänään</string>
   <string name="most_recent_yesterday">Eilen</string>
-  <string name="most_recent_this_week">Viikon sisällä</string>
-  <string name="most_recent_last_two_weeks">Kahden viikon sisällä</string>
-  <string name="most_recent_last_30_days">30 päivän sisällä</string>
-  <string name="most_recent_last_60_days">60 päivän sisällä</string>
-  <string name="most_recent_last_90_days">90 päivän sisällä</string>
-  <string name="most_recent_within_the_last_year">Vuoden sisällä</string>
+  <string name="most_recent_this_week">Viikon aikana</string>
+  <string name="most_recent_last_two_weeks">Kahden viikon aikana</string>
+  <string name="most_recent_last_30_days">30 päivän aikana</string>
+  <string name="most_recent_last_60_days">60 päivän aikana</string>
+  <string name="most_recent_last_90_days">90 päivän aikana</string>
+  <string name="most_recent_within_the_last_year">Vuoden aikana</string>
   <string name="most_recent_more_than_1_year">Yli vuosi sitten</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Hakukuvake</string>
@@ -60,7 +60,7 @@
   <string name="setting_option_icon_content_description">Asetuskuvake</string>
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
-    <item quantity="one">1 kohde</item>
+    <item quantity="one">Yksi kohde</item>
     <item quantity="other">%d kohdetta</item>
   </plurals>
   <!-- Confirm close dialog -->

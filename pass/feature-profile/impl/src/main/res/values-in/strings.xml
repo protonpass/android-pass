@@ -4,7 +4,7 @@
   <string name="profile_option_settings">Pengaturan</string>
   <string name="profile_option_account">Akun</string>
   <string name="profile_help_center">Pusat bantuan</string>
-  <string name="profile_security">Security</string>
+  <string name="profile_security">Keamanan</string>
   <string name="profile_option_feedback">Masukan</string>
   <string name="profile_option_import_export">Impor/ekspor</string>
   <string name="profile_option_rating">Nilai aplikasi</string>
@@ -12,7 +12,7 @@
   <string name="profile_option_autofill_subtitle">Isi nama pengguna dan kata sandi Anda secara otomatis.</string>
   <string name="profile_option_fingerprint">Sidik jari</string>
   <string name="profile_option_automatic_app_lock">Automatic app locking</string>
-  <string name="profile_option_advanced">Advanced</string>
+  <string name="profile_option_advanced">Lanjutan</string>
   <string name="profile_error_biometry_failed_to_start">Proses autentikasi biometrik tidak dapat dimulai</string>
   <string name="profile_error_biometry_failed_to_authenticate">Gagal mengautentikasi</string>
   <string name="profile_fingerprint_lock_enabled">Membuka kunci dengan sidik jari diaktifkan</string>
@@ -32,14 +32,14 @@
   <string name="profile_account_plan_name_trial">Uji Coba Gratis</string>
   <string name="app_lock_config_none">None</string>
   <string name="app_lock_config_biometric">Biometric</string>
-  <string name="app_lock_config_pin_code">PIN code</string>
+  <string name="app_lock_config_pin_code">Kode PIN</string>
   <string name="app_lock_config_unlock_with">Unlock with</string>
-  <string name="app_lock_config_app_lock_time">App lock time</string>
+  <string name="app_lock_config_app_lock_time">Automatic lock</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Use system lock when biometric fails</string>
   <string name="configure_pin_set_pin_code">Set PIN code</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Unlock the app with this code</string>
-  <string name="configure_pin_enter_pin_code">Enter PIN code</string>
-  <string name="configure_pin_repeat_pin_code">Repeat PIN code</string>
+  <string name="configure_pin_enter_pin_code">Masukkan kode PIN</string>
+  <string name="configure_pin_repeat_pin_code">Ulangi kode PIN</string>
   <string name="configure_pin_continue">Continue</string>
   <string name="configure_pin_pin_does_not_match">The PIN does not match</string>
   <string name="configure_pin_pin_too_short">The PIN is too short</string>

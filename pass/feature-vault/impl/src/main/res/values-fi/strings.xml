@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Muokkaa</string>
   <string name="bottomsheet_migrate">Siirrä kaikki kohteet toiseen holviin</string>
   <string name="bottomsheet_delete_vault">Poista holvi</string>
+  <string name="bottomsheet_share_vault">Jaa</string>
   <string name="vault_title">Holvi</string>
 </resources>

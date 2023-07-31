@@ -34,14 +34,14 @@
   <string name="app_lock_config_biometric">Biométrico</string>
   <string name="app_lock_config_pin_code">Código PIN</string>
   <string name="app_lock_config_unlock_with">Desbloquear com</string>
-  <string name="app_lock_config_app_lock_time">Tempo de bloqueio da aplicação</string>
+  <string name="app_lock_config_app_lock_time">Bloqueio automático</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Utiliza o bloqueio do sistema quando o biométrico não funciona</string>
   <string name="configure_pin_set_pin_code">Definir o código PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Desbloqueie a aplicação com este código.</string>
   <string name="configure_pin_enter_pin_code">Introduzir o código PIN</string>
   <string name="configure_pin_repeat_pin_code">Repetir o código PIN</string>
   <string name="configure_pin_continue">Continuar</string>
-  <string name="configure_pin_pin_does_not_match">O código PIN não coincide.</string>
+  <string name="configure_pin_pin_does_not_match">O código PIN não corresponde.</string>
   <string name="configure_pin_pin_too_short">O código PIN é demasiado curto.</string>
   <string name="configure_pin_pin_cannot_be_blank">O código PIN não pode estar vazio.</string>
   <string name="configure_pin_pin_lock_enabled">O bloqueio por código PIN foi ativado.</string>

@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Modifica</string>
   <string name="bottomsheet_migrate">Sposta tutti gli elementi su un\'altra cassaforte.</string>
   <string name="bottomsheet_delete_vault">Elimina cassaforte</string>
+  <string name="bottomsheet_share_vault">Condividi</string>
   <string name="vault_title">Cassaforte</string>
 </resources>

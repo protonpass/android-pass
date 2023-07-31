@@ -34,7 +34,7 @@
   <string name="app_lock_config_biometric">Biometrie</string>
   <string name="app_lock_config_pin_code">PIN-Code</string>
   <string name="app_lock_config_unlock_with">Entsperren mit</string>
-  <string name="app_lock_config_app_lock_time">App-Sperrzeit</string>
+  <string name="app_lock_config_app_lock_time">Automatische Sperre</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Systemsperre verwenden, wenn Biometrie fehlschlägt</string>
   <string name="configure_pin_set_pin_code">PIN-Code festlegen</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Entsperre die App mit diesem Code</string>

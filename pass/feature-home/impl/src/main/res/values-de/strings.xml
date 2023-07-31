@@ -20,6 +20,8 @@
   <string name="home_trial_banner_title">Genieße deine kostenlose Testversion</string>
   <string name="home_trial_banner_text">Schau dir all die exklusiven Funktionen an, die dir für eine begrenzte Zeit zur Verfügung stehen.</string>
   <string name="home_trial_banner_settings">Mehr erfahren ›</string>
+  <string name="home_invite_banner_title">Shared vault invitation</string>
+  <string name="home_invite_banner_subtitle">Du wurdest eingeladen, einem Tresor beizutreten. Tippe hier, um die Einladung anzusehen.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Passwort kopieren</string>
   <string name="bottomsheet_copy_username">Benutzername kopieren</string>

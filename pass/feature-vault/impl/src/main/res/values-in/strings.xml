@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Sunting</string>
   <string name="bottomsheet_migrate">Pindahkan seluruh item ke brankas lain</string>
   <string name="bottomsheet_delete_vault">Hapus brankas</string>
+  <string name="bottomsheet_share_vault">Bagikan</string>
   <string name="vault_title">Brankas</string>
 </resources>

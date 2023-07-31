@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Düzenle</string>
   <string name="bottomsheet_migrate">Tüm ögeleri başka bir kasaya taşı</string>
   <string name="bottomsheet_delete_vault">Kasayı sil</string>
+  <string name="bottomsheet_share_vault">Paylaş</string>
   <string name="vault_title">Kasa</string>
 </resources>

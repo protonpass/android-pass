@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Працягнуць</string>
+  <string name="sharing_can_view">Можа праглядаць</string>
+  <string name="sharing_can_edit">Можа рэдагаваць</string>
+  <string name="sharing_can_manage">Можа кіраваць</string>
+  <string name="sharing_can_view_description">Можа праглядаць элементы ў гэтым сховішчы.</string>
+  <string name="sharing_can_edit_description">Можа ствараць, рэдагаваць, выдаляць і экспартаваць элементы ў гэтым сховішчы.</string>
+  <string name="sharing_can_manage_description">Можа даваць і адклікаць дазвол на доступ да гэтага сховішча.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d элемент</item>
+    <item quantity="few">%d элементы</item>
+    <item quantity="many">%d элементаў</item>
+    <item quantity="other">%d элементаў</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d удзельнік</item>
+    <item quantity="few">%d удзельнікі</item>
+    <item quantity="many">%d удзельнікаў</item>
+    <item quantity="other">%d удзельнікаў</item>
+  </plurals>
+  <string name="share_with_title">Абагуліць з</string>
+  <string name="share_with_subtitle">Гэты карыстальнік атрымае запрашэнне на далучэнне да вашага сховішча \'%s\'.</string>
+  <string name="share_with_email_hint">Адрас электроннай пошты</string>
+  <string name="share_with_email_error">Памылковы адрас электроннай пошты</string>
+  <string name="share_permissions_title">Задаць дазволы</string>
+  <string name="share_permissions_subtitle">Выберыце ўзровень доступу, які атрымае гэты карыстальнік пасля далучэння да вашага сховішча \'%s\'.</string>
+  <string name="sharing_invitation_from">Запрашэнне ад %s</string>
+  <string name="sharing_join_shared_vault">Далучыцца да абагуленага сховішча</string>
+  <string name="sharing_reject_invitation">Адхіліць запрашэнне</string>
+  <string name="sharing_snackbar_invite_accepted">Запрашэнне прынята</string>
+  <string name="sharing_snackbar_invite_accept_error">Памылка прымання запрашэння</string>
+  <string name="sharing_snackbar_invite_rejected">Запрашэнне адхілена</string>
+  <string name="sharing_snackbar_invite_reject_error">Памылка адхілення запрашэння</string>
+  <string name="sharing_snackbar_vault_not_found">Не атрымалася знайсці сховішча</string>
+  <string name="sharing_snackbar_invite_sent_success">Запрашэнне адпраўлена</string>
+  <string name="sharing_snackbar_invite_sent_error">Немагчыма адправіць запрашэнне</string>
+  <string name="share_summary_title">Зводка</string>
+  <string name="share_summary_subtitle">You are about to invite %1$s into your %2$s. They will gain access to %3$s and they will be able to %4$s in this vault.</string>
+  <string name="share_summary_vault">%s vault</string>
+  <string name="share_summary_view_items">only view items</string>
+  <string name="share_summary_create_items">стварыць элементы</string>
+  <string name="share_summary_manage_vault">кіраваць</string>
+  <string name="share_summary_share_vault">Абагуліць сховішча</string>
+  <string name="share_summary_email_title">Карыстальнік</string>
+  <string name="share_summary_vault_title">Сховішча</string>
+  <string name="share_summary_permissions_title">Дазволы</string>
+</resources>

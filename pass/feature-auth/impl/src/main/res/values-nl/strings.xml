@@ -17,28 +17,28 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="profile_option_fingerprint_subtitle">Unlock Proton Pass with a touch.</string>
-  <string name="profile_option_fingerprint">Fingerprint</string>
-  <string name="profile_option_app_lock">App lock</string>
-  <string name="enter_your_pin_code">Enter your PIN Code</string>
-  <string name="unlock">Unlock</string>
-  <string name="enter_pin">Enter PIN</string>
+  <string name="profile_option_fingerprint_subtitle">Ontgrendel Proton Pass met een aanraking.</string>
+  <string name="profile_option_fingerprint">Vingerafdruk</string>
+  <string name="profile_option_app_lock">Appvergrendeling</string>
+  <string name="enter_your_pin_code">Voer uw pincode in</string>
+  <string name="unlock">Ontgrendelen</string>
+  <string name="enter_pin">Pincode invoeren</string>
   <plurals name="enter_your_pin_code_error">
-    <item quantity="one">Incorrect PIN. %d attempt remaining.</item>
-    <item quantity="other">Incorrect PIN. %d attempts remaining.</item>
+    <item quantity="one">Onjuiste pincode. %d resterende poging.</item>
+    <item quantity="other">Onjuiste pincode. %d resterende pogingen.</item>
   </plurals>
-  <string name="auth_unlock_app_title">Unlock Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
-  <string name="auth_master_password_label">Master password</string>
-  <string name="auth_action_reveal_password">Reveal master password</string>
-  <string name="auth_action_conceal_password">Conceal master password</string>
-  <string name="auth_unlock_button">Unlock</string>
-  <string name="auth_error_verifying_password">Error verifying your password</string>
-  <string name="auth_error_empty_password">Password cannot be empty</string>
-  <string name="auth_error_pin_cannot_be_empty">PIN cannot be empty</string>
-  <string name="auth_error_pin_too_short">PIN should be at least 4 digits</string>
+  <string name="auth_unlock_app_title">Ontgrendel Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Voer het hoofdwachtwoord in voor %s</string>
+  <string name="auth_master_password_label">Hoofdwachtwoord</string>
+  <string name="auth_action_reveal_password">Hoofdwachtwoord weergeven</string>
+  <string name="auth_action_conceal_password">Hoofdwachtwoord verbergen</string>
+  <string name="auth_unlock_button">Ontgrendelen</string>
+  <string name="auth_error_verifying_password">Fout bij het verifiëren van uw wachtwoord</string>
+  <string name="auth_error_empty_password">Wachtwoord kan niet leeg zijn</string>
+  <string name="auth_error_pin_cannot_be_empty">Pincode mag niet leeg zijn</string>
+  <string name="auth_error_pin_too_short">De pincode moet minimaal 4 cijfers bevatten</string>
   <plurals name="auth_error_wrong_password">
-    <item quantity="one">Incorrect password. %d attempt remaining</item>
-    <item quantity="other">Incorrect password. %d attempts remaining</item>
+    <item quantity="one">Incorrect wachtwoord. %d resterende poging</item>
+    <item quantity="other">Incorrect wachtwoord. %d resterende pogingen</item>
   </plurals>
 </resources>

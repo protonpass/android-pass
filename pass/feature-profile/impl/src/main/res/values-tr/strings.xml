@@ -34,7 +34,7 @@
   <string name="app_lock_config_biometric">Biyometrik</string>
   <string name="app_lock_config_pin_code">PIN kodu</string>
   <string name="app_lock_config_unlock_with">Kilidi şununla aç</string>
-  <string name="app_lock_config_app_lock_time">Uygulama kilitlenme süresi</string>
+  <string name="app_lock_config_app_lock_time">Otomatik kilitleme</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Biyometrik yöntem geçersiz olduğunda sistem kilidi kullanılsın</string>
   <string name="configure_pin_set_pin_code">PIN kodu ayarla</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Uygulama kilidi bu kod ile açılsın</string>

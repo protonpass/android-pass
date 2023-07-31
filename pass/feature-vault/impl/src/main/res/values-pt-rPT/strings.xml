@@ -25,5 +25,6 @@
   <string name="bottomsheet_edit">Editar</string>
   <string name="bottomsheet_migrate">Mover todos os itens para outro cofre</string>
   <string name="bottomsheet_delete_vault">Eliminar o cofre</string>
+  <string name="bottomsheet_share_vault">Partilhar</string>
   <string name="vault_title">Cofre</string>
 </resources>

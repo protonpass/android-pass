@@ -37,7 +37,7 @@ data class LeaveVaultUiState(
         val Initial = LeaveVaultUiState(
             vaultName = "",
             event = LeaveVaultEvent.Unknown,
-            isLoadingState = IsLoadingState.NotLoading
+            isLoadingState = IsLoadingState.Loading
         )
     }
 }

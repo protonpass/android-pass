@@ -57,6 +57,7 @@ sealed interface SettingsNavigation {
     object ViewLogs : SettingsNavigation
     object PrimaryVault : SettingsNavigation
     object Restart : SettingsNavigation
+    object SyncDialog : SettingsNavigation
 }
 
 @Suppress("LongParameterList")

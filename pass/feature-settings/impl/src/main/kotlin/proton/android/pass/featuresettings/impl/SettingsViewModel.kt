@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -39,8 +38,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.image.api.ClearIconCache
@@ -57,11 +56,11 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
-    private val observeCurrentUser: ObserveCurrentUser,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val refreshContent: RefreshContent,
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
+    syncStatusRepository: ItemSyncStatusRepository,
     observeVaults: ObserveVaults
 ) : ViewModel() {
 
@@ -99,18 +98,20 @@ class SettingsViewModel @Inject constructor(
         useFaviconsState
     ) { theme, totp, favicons -> PreferencesState(theme, totp, favicons) }
 
-    private val isLoadingState: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
-
     private val primaryVaultFlow: Flow<PrimaryVaultWrapper> = observeVaults()
         .asLoadingResult()
         .map { res ->
             when (res) {
-                LoadingResult.Loading -> PrimaryVaultWrapper(primaryVault = None, showSelector = false)
+                LoadingResult.Loading -> PrimaryVaultWrapper(
+                    primaryVault = None,
+                    showSelector = false
+                )
+
                 is LoadingResult.Error -> {
                     PassLogger.e(TAG, res.exception, "Error observing vaults")
                     PrimaryVaultWrapper(primaryVault = None, showSelector = false)
                 }
+
                 is LoadingResult.Success -> {
                     val primary = res.data.firstOrNull { it.isPrimary }
                         ?: res.data.firstOrNull()
@@ -132,17 +133,17 @@ class SettingsViewModel @Inject constructor(
     val state: StateFlow<SettingsUiState> = combineN(
         preferencesState,
         primaryVaultFlow,
-        isLoadingState,
         deviceSettingsRepository.observeDeviceSettings(),
         allowScreenshotsState,
+        syncStatusRepository.observeSyncStatus(),
         eventState
-    ) { preferences, primaryVault, loading, deviceSettings, allowScreenshots, event ->
+    ) { preferences, primaryVault, deviceSettings, allowScreenshots, sync, event ->
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
-            isLoadingState = loading,
             primaryVault = primaryVault.primaryVault,
             showPrimaryVaultSelector = primaryVault.showSelector,
+            isForceRefreshing = sync is ItemSyncStatus.Started || sync is ItemSyncStatus.Syncing,
             useFavicons = preferences.useFavicons,
             allowScreenshots = allowScreenshots,
             shareTelemetry = deviceSettings.isTelemetryEnabled,
@@ -171,7 +172,11 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onAllowScreenshotsChange(allowScreenshots: Boolean) = viewModelScope.launch {
-        preferencesRepository.setAllowScreenshotsPreference(AllowScreenshotsPreference.from(allowScreenshots))
+        preferencesRepository.setAllowScreenshotsPreference(
+            AllowScreenshotsPreference.from(
+                allowScreenshots
+            )
+        )
         eventState.update { SettingsEvent.RestartApp }
     }
 
@@ -186,19 +191,14 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onForceSync() = viewModelScope.launch {
-        val userId = observeCurrentUser().firstOrNull()?.userId ?: return@launch
-
-        isLoadingState.update { IsLoadingState.Loading }
-        runCatching {
-            refreshContent.invoke(userId)
-        }.onSuccess {
-            snackbarDispatcher(SettingsSnackbarMessage.SyncSuccessful)
-        }.onFailure {
-            PassLogger.e(TAG, it, "Error performing sync")
-            snackbarDispatcher(SettingsSnackbarMessage.ErrorPerformingSync)
-        }
-
-        isLoadingState.update { IsLoadingState.NotLoading }
+        runCatching { refreshContent() }
+            .onSuccess {
+                // snackbarDispatcher(SettingsSnackbarMessage.SyncSuccessful)
+            }
+            .onFailure {
+                PassLogger.e(TAG, it, "Error performing sync")
+                // snackbarDispatcher(SettingsSnackbarMessage.ErrorPerformingSync)
+            }
     }
 
     companion object {

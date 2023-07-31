@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 
+@Suppress("ComplexMethod")
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
@@ -38,6 +39,12 @@ fun SettingsScreen(
     LaunchedEffect(state.event) {
         if (state.event == SettingsEvent.RestartApp) {
             onNavigate(SettingsNavigation.Restart)
+        }
+    }
+
+    LaunchedEffect(state.isForceRefreshing) {
+        if (state.isForceRefreshing) {
+            onNavigate(SettingsNavigation.SyncDialog)
         }
     }
 

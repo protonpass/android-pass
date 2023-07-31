@@ -32,9 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.loading.LoadingDialog
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.preferences.value
 
 @Composable
@@ -52,9 +50,6 @@ fun SettingsContent(
             )
         }
     ) { contentPadding ->
-        if (state.isLoadingState == IsLoadingState.Loading) {
-            LoadingDialog()
-        }
         Column(
             modifier = Modifier
                 .fillMaxHeight()

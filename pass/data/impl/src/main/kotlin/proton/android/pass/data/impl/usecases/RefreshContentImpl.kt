@@ -18,37 +18,33 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.firstError
-import proton.android.pass.data.api.repositories.ItemRepository
+import androidx.work.WorkManager
+import kotlinx.coroutines.flow.firstOrNull
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
+import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RefreshContentImpl @Inject constructor(
+    private val accountManager: AccountManager,
     private val shareRepository: ShareRepository,
-    private val itemRepository: ItemRepository
+    private val workManager: WorkManager,
+    private val syncStatusRepository: ItemSyncStatusRepository
 ) : RefreshContent {
 
-    override suspend fun invoke(userId: UserId) {
+    override suspend fun invoke() {
         PassLogger.i(TAG, "Refreshing shares")
+        syncStatusRepository.emit(ItemSyncStatus.Started)
+        val userId = accountManager.getPrimaryUserId().firstOrNull()
+            ?: throw UserIdNotAvailableError()
         val refreshSharesResult = shareRepository.refreshShares(userId)
-        return coroutineScope {
-            PassLogger.i(TAG, "Refreshing items for shares")
-            val refreshItemsResults = refreshSharesResult.allShareIds.map { share ->
-                async { runCatching { itemRepository.refreshItems(userId, share) } }
-            }.awaitAll()
-
-            val firstError = refreshItemsResults.firstError()
-            PassLogger.i(TAG, "Items refreshed [success=${firstError == null}]")
-            if (firstError != null) {
-                throw firstError
-            }
-        }
+        val request = FetchItemsWorker.getRequestFor(refreshSharesResult.allShareIds.toList())
+        workManager.enqueue(request)
     }
 
     companion object {

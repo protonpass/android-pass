@@ -31,10 +31,10 @@
   <string name="app_lock_four_hours">Праз 4 гадзіны</string>
   <string name="profile_account_plan_name_trial">Бясплатная пробная версія</string>
   <string name="app_lock_config_none">Няма</string>
-  <string name="app_lock_config_biometric">Біяметрыя</string>
-  <string name="app_lock_config_pin_code">PIN-код</string>
+  <string name="app_lock_config_biometric">Біяметрыі</string>
+  <string name="app_lock_config_pin_code">PIN-кода</string>
   <string name="app_lock_config_unlock_with">Разблакіраваць з дапамогай</string>
-  <string name="app_lock_config_app_lock_time">Час блакіроўкі праграмы</string>
+  <string name="app_lock_config_app_lock_time">Аўтаматычная блакіроўка</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Выкарыстоўваць сістэмную блакіроўку пры збоі біяметрыі</string>
   <string name="configure_pin_set_pin_code">Задаць PIN-код</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Разблакіраваць праграму з дапамогай гэтага кода</string>

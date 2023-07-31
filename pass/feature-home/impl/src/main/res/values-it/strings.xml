@@ -20,6 +20,8 @@
   <string name="home_trial_banner_title">Goditi la tua prova gratuita</string>
   <string name="home_trial_banner_text">Scopri tutte le funzionalità esclusive che sono disponibili per te per un periodo di tempo limitato.</string>
   <string name="home_trial_banner_settings">Per saperne di più ›</string>
+  <string name="home_invite_banner_title">Invito alla cassaforte condivisa</string>
+  <string name="home_invite_banner_subtitle">Sei stato invitato in una cassaforte. Tocca qui per vedere l\'invito.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia password</string>
   <string name="bottomsheet_copy_username">Copia nome utente</string>

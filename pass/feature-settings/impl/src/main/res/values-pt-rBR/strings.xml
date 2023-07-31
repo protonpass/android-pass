@@ -36,11 +36,11 @@
   <string name="settings_clear_icon_cache_success">Cache de ícones limpo</string>
   <string name="settings_clear_icon_cache_error">Não foi possível limpar o cache de ícones</string>
   <string name="settings_share_telemetry">Compartilhar uso anônimo</string>
-  <string name="settings_share_crashes">Compartilhar relatórios de falha anônimos</string>
+  <string name="settings_share_crashes">Compartilhar relatórios de erros anônimos</string>
   <string name="settings_preference_updated">Sua preferência foi atualizada</string>
   <string name="view_logs_title">Visualizar registros</string>
   <string name="clipboard_bottomsheet_title">Área de transferência</string>
-  <string name="clipboard_option_clear_clipboard_label">Limpar a área de transferência</string>
+  <string name="clipboard_option_clear_clipboard_label">Limpar área de transferência</string>
   <string name="clipboard_option_copy_totp_code">Copiar códigos de autenticação</string>
   <string name="clipboard_option_copy_totp_code_hint">Copie automaticamente os códigos de autenticação ao usar o preenchimento automático.</string>
   <string name="clipboard_option_clear_clipboard_never">Nunca</string>

@@ -9,11 +9,11 @@
   <string name="action_note">Nota</string>
   <string name="action_credit_card">Tarjeta de crédito</string>
   <string name="action_password">Contraseña</string>
-  <string name="item_type_login_description">Añadir detalles de inicio de sesión para una app o sitio web</string>
-  <string name="item_type_alias_description">Obtener un alias de correo para usar en apps nuevas</string>
-  <string name="item_type_note_description">Anotar un PIN, un código o una nota para sí mismo</string>
-  <string name="item_type_credit_card_description">Almacene de forma segura su información de pago.</string>
-  <string name="item_type_password_description">Generar una contraseña segura</string>
+  <string name="item_type_login_description">Añada detalles de inicio de sesión para una app o sitio web</string>
+  <string name="item_type_alias_description">Obtenga un alias de correo para usar en apps nuevas</string>
+  <string name="item_type_note_description">Anote un PIN, un código o una nota para usted</string>
+  <string name="item_type_credit_card_description">Almacene de forma segura su información de pago</string>
+  <string name="item_type_password_description">Genere una contraseña segura</string>
   <!-- Create Login -->
   <string name="title_create_login">Crear inicio de sesión</string>
   <string name="field_username_title">Nombre de usuario o dirección de correo</string>
@@ -106,7 +106,7 @@
   <string name="totp_create_login_field_placeholder">Añadir clave secreta 2FA</string>
   <string name="close_scree_icon_content_description">Cerrar botón de pantalla</string>
   <string name="totp_paste_code_action">Pegar código</string>
-  <string name="totp_scan_code_action">Escanee código</string>
+  <string name="totp_scan_code_action">Escanear código</string>
   <string name="field_cannot_be_empty">Este campo no puede estar vacío</string>
   <string name="camera_permission_explanation">Se requiere el permiso de cámara para que esta función esté disponible.</string>
   <string name="camera_permission_open_settings">Abrir ajustes</string>

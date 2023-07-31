@@ -34,7 +34,7 @@
   <string name="app_lock_config_biometric">Biomètric</string>
   <string name="app_lock_config_pin_code">Codi PIN</string>
   <string name="app_lock_config_unlock_with">Desbloqueja amb</string>
-  <string name="app_lock_config_app_lock_time">Temps de bloqueig de l\'aplicació</string>
+  <string name="app_lock_config_app_lock_time">Bloqueig automàtic</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Utilitzeu el bloqueig del sistema quan la característica biomètrica no funcioni.</string>
   <string name="configure_pin_set_pin_code">Establiu el codi PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Desbloqueja l\'aplicació amb aquest codi</string>

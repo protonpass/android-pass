@@ -34,7 +34,7 @@
   <string name="app_lock_config_biometric">Βιομετρικό</string>
   <string name="app_lock_config_pin_code">Κωδικός PIN</string>
   <string name="app_lock_config_unlock_with">Ξεκλείδωμα με</string>
-  <string name="app_lock_config_app_lock_time">Χρόνος κλειδώματος εφαρμογής</string>
+  <string name="app_lock_config_app_lock_time">Αυτόματο κλείδωμα</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Κλείδωμα του συστήματος όταν αποτυγχάνει το βιομετρικό</string>
   <string name="configure_pin_set_pin_code">Ορισμός κωδικού PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Ξεκλειδώστε την εφαρμογή με αυτόν τον κωδικό</string>

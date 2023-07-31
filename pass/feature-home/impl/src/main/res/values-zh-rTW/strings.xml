@@ -20,6 +20,8 @@
   <string name="home_trial_banner_title">享受您的免費試用</string>
   <string name="home_trial_banner_text">查看限時提供給您的獨家功能</string>
   <string name="home_trial_banner_settings">了解更多＞</string>
+  <string name="home_invite_banner_title">分享保管庫邀請函</string>
+  <string name="home_invite_banner_subtitle">您被邀請至保管庫。點及這裡以看邀請函。</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">複製密碼</string>
   <string name="bottomsheet_copy_username">複製使用者名稱</string>

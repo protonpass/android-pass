@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Kontynuuj</string>
+  <string name="sharing_can_view">Odczyt</string>
+  <string name="sharing_can_edit">Edycja</string>
+  <string name="sharing_can_manage">Zarządzanie</string>
+  <string name="sharing_can_view_description">Widzi elementy w sejfie.</string>
+  <string name="sharing_can_edit_description">Może edytować i eksportować elementy w sejfie.</string>
+  <string name="sharing_can_manage_description">Zarządza dostępem do sejfu.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d element</item>
+    <item quantity="few">%d elementy</item>
+    <item quantity="many">%d elementów</item>
+    <item quantity="other">%d elementów</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d użytkownik</item>
+    <item quantity="few">%d użytkowników</item>
+    <item quantity="many">%d użytkowników</item>
+    <item quantity="other">%d użytkowników</item>
+  </plurals>
+  <string name="share_with_title">Udostępnij</string>
+  <string name="share_with_subtitle">Użytkownik otrzyma zaproszenie do sejfu \'%s\'.</string>
+  <string name="share_with_email_hint">Adres e-mail</string>
+  <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
+  <string name="share_permissions_title">Ustaw uprawnienia</string>
+  <string name="share_permissions_subtitle">Wybierz uprawnienia użytkownika dla sejfu \'%s\'.</string>
+  <string name="sharing_invitation_from">Zaproszenie od %s</string>
+  <string name="sharing_join_shared_vault">Dołącz do udostępnionego sejfu</string>
+  <string name="sharing_reject_invitation">Odrzuć zaproszenie</string>
+  <string name="sharing_snackbar_invite_accepted">Zaproszenie zostało zaakceptowane</string>
+  <string name="sharing_snackbar_invite_accept_error">Wystąpił błąd podczas akceptowania zaproszenia</string>
+  <string name="sharing_snackbar_invite_rejected">Zaproszenie zostało odrzucone</string>
+  <string name="sharing_snackbar_invite_reject_error">Wystąpił błąd podczas odrzucania zaproszenia</string>
+  <string name="sharing_snackbar_vault_not_found">Sejf nie został znaleziony</string>
+  <string name="sharing_snackbar_invite_sent_success">Zaproszenie zostało wysłane</string>
+  <string name="sharing_snackbar_invite_sent_error">Nie można wysłać zaproszenia</string>
+  <string name="share_summary_title">Podsumowanie</string>
+  <string name="share_summary_subtitle">You are about to invite %1$s into your %2$s. They will gain access to %3$s and they will be able to %4$s in this vault.</string>
+  <string name="share_summary_vault">sejfu %s</string>
+  <string name="share_summary_view_items">only view items</string>
+  <string name="share_summary_create_items">create items</string>
+  <string name="share_summary_manage_vault">zarządzaj</string>
+  <string name="share_summary_share_vault">Udostępnij sejf</string>
+  <string name="share_summary_email_title">Użytkownik</string>
+  <string name="share_summary_vault_title">Sejf</string>
+  <string name="share_summary_permissions_title">Uprawnienia</string>
+</resources>

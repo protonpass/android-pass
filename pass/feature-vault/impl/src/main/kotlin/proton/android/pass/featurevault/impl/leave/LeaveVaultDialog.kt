@@ -32,15 +32,15 @@ fun LeaveVaultDialog(
     onNavigate: (VaultNavigation) -> Unit,
     viewModel: LeaveVaultViewModel = hiltViewModel()
 ) {
-
-    LaunchedEffect(Unit) {
-        viewModel.onStart()
-    }
-
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
-        if (state.event == LeaveVaultEvent.Left) {
-            onNavigate(VaultNavigation.Close)
+        when (state.event) {
+            LeaveVaultEvent.Close,
+            LeaveVaultEvent.Left -> {
+                onNavigate(VaultNavigation.Close)
+                viewModel.clearEvent()
+            }
+            LeaveVaultEvent.Unknown -> {}
         }
     }
 

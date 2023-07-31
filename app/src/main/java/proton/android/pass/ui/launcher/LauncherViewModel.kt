@@ -141,7 +141,7 @@ class LauncherViewModel @Inject constructor(
 
                 if (result != null) {
                     PassLogger.i(TAG, "Sending User Access")
-                    itemSyncStatusRepository.emit(ItemSyncStatus.Syncing)
+                    itemSyncStatusRepository.emit(ItemSyncStatus.Started)
                 }
             }
         }

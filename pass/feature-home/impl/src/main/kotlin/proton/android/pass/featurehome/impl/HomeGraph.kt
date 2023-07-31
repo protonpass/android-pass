@@ -64,4 +64,5 @@ sealed interface HomeNavigation {
     object TrialInfo : HomeNavigation
     object OpenInvite : HomeNavigation
     object Finish : HomeNavigation
+    object SyncDialog : HomeNavigation
 }

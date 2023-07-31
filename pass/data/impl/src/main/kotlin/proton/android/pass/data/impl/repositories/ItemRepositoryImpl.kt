@@ -22,7 +22,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -46,6 +49,7 @@ import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
+import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -469,6 +473,22 @@ class ItemRepositoryImpl @Inject constructor(
             val share = shareRepository.getById(userId, shareId)
             refreshItems(userId, share)
         }
+
+    override fun refreshItemsAndObserveProgress(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<VaultProgress> =
+        combine(
+            flow { emit(shareRepository.getById(userId, shareId)) },
+            flow { emit(requireNotNull(userAddressRepository.getAddresses(userId).primary())) },
+            ::Pair
+        ).flatMapLatest { pair ->
+            remoteItemDataSource.observeItems(pair.second.userId, pair.first.id)
+                .map {
+                    decryptItems(pair.second, pair.first, it.items)
+                    VaultProgress(total = it.total, current = it.created)
+                }
+        }.flowOn(Dispatchers.IO)
 
     override suspend fun applyEvents(
         userId: UserId,

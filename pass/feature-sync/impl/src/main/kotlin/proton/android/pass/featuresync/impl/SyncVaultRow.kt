@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -72,6 +73,8 @@ fun SyncVaultRow(
             Text(
                 text = name,
                 style = ProtonTheme.typography.defaultSmallNorm,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
             val subtitle = when {
                 itemCurrent == itemTotal && itemTotal != -1 ->
@@ -85,6 +88,7 @@ fun SyncVaultRow(
             Text(
                 text = subtitle,
                 style = PassTypography.body3RegularWeak,
+                maxLines = 1
             )
         }
         Box(

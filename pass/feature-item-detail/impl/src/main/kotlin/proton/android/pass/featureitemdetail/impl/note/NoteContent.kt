@@ -47,15 +47,16 @@ fun NoteContent(
     name: String,
     note: String,
     vault: Vault?,
-    moreInfoUiState: MoreInfoUiState
+    moreInfoUiState: MoreInfoUiState,
+    onVaultClick: () -> Unit
 ) {
     Column(
         modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        Column {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             ItemTitleText(text = name, maxLines = Int.MAX_VALUE)
-            VaultNameSubtitle(vault = vault)
+            VaultNameSubtitle(vault = vault, onClick = onVaultClick)
         }
         SelectionContainer(modifier = Modifier.fillMaxWidth()) {
             Text(
@@ -80,7 +81,8 @@ fun NoteContentPreview(
                 note = "Note body",
                 vault = input.second.vault,
                 // We don't care about the MoreInfo as we are not showing it
-                moreInfoUiState = MoreInfoUiState.Initial
+                moreInfoUiState = MoreInfoUiState.Initial,
+                onVaultClick = {}
             )
         }
     }

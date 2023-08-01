@@ -233,6 +233,11 @@ fun LoginDetail(
                                     currentBottomSheet = WebsiteOptions
                                     scope.launch { bottomSheetState.show() }
                                 }
+                                LoginDetailEvent.OnVaultClick -> {
+                                    state.vault?.shareId?.let { shareId ->
+                                        onNavigate(ItemDetailNavigation.ManageVault(shareId))
+                                    }
+                                }
                             }
                         }
                     )

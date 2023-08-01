@@ -61,7 +61,8 @@ fun LoginContent(
             vault = vault,
             website = contents.urls.firstOrNull(),
             packageName = contents.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value,
-            canLoadExternalImages = canLoadExternalImages
+            canLoadExternalImages = canLoadExternalImages,
+            onVaultClick = { onEvent(LoginDetailEvent.OnVaultClick) }
         )
         MainLoginSection(
             username = contents.username,

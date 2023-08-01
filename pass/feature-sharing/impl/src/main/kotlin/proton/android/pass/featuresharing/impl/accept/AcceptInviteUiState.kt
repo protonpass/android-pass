@@ -27,19 +27,28 @@ sealed interface AcceptInviteEvent {
 }
 
 @Stable
-sealed interface AcceptInviteUiState {
-    @Stable
-    object Loading : AcceptInviteUiState
+data class AcceptInviteUiState(
+    val event: AcceptInviteEvent,
+    val content: AcceptInviteUiContent
+) {
+    companion object {
+        val Initial = AcceptInviteUiState(
+            event = AcceptInviteEvent.Unknown,
+            content = AcceptInviteUiContent.Loading
+        )
+    }
+}
 
+@Stable
+sealed interface AcceptInviteUiContent {
     @Stable
-    object Error : AcceptInviteUiState
+    object Loading : AcceptInviteUiContent
 
     @Stable
     data class Content(
-        val invite: PendingInvite,
+        val invite: PendingInvite?,
         val isConfirmLoading: Boolean,
         val isRejectLoading: Boolean,
         val areButtonsEnabled: Boolean,
-        val event: AcceptInviteEvent
-    ) : AcceptInviteUiState
+    ) : AcceptInviteUiContent
 }

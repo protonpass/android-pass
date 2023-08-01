@@ -65,12 +65,14 @@ class AcceptInviteViewModelTest {
     fun `sends right values`() = runTest {
         instance.state.test {
             assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState.Content(
-                    invite = TEST_INVITE,
-                    isConfirmLoading = false,
-                    isRejectLoading = false,
-                    areButtonsEnabled = true,
-                    event = AcceptInviteEvent.Unknown
+                AcceptInviteUiState(
+                    event = AcceptInviteEvent.Unknown,
+                    content = AcceptInviteUiContent.Content(
+                        invite = TEST_INVITE,
+                        isConfirmLoading = false,
+                        isRejectLoading = false,
+                        areButtonsEnabled = true,
+                    )
                 )
             )
         }
@@ -81,12 +83,14 @@ class AcceptInviteViewModelTest {
         instance.onConfirm(TEST_INVITE)
         instance.state.test {
             assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState.Content(
-                    invite = TEST_INVITE,
-                    isConfirmLoading = false,
-                    isRejectLoading = false,
-                    areButtonsEnabled = true,
-                    event = AcceptInviteEvent.Close
+                AcceptInviteUiState(
+                    event = AcceptInviteEvent.Close,
+                    content = AcceptInviteUiContent.Content(
+                        invite = TEST_INVITE,
+                        isConfirmLoading = false,
+                        isRejectLoading = false,
+                        areButtonsEnabled = true,
+                    )
                 )
             )
         }
@@ -100,12 +104,14 @@ class AcceptInviteViewModelTest {
         instance.onConfirm(TEST_INVITE)
         instance.state.test {
             assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState.Content(
-                    invite = TEST_INVITE,
-                    isConfirmLoading = false,
-                    isRejectLoading = false,
-                    areButtonsEnabled = true,
-                    event = AcceptInviteEvent.Unknown
+                AcceptInviteUiState(
+                    event = AcceptInviteEvent.Unknown,
+                    content = AcceptInviteUiContent.Content(
+                        invite = TEST_INVITE,
+                        isConfirmLoading = false,
+                        isRejectLoading = false,
+                        areButtonsEnabled = true,
+                    )
                 )
             )
         }
@@ -118,12 +124,14 @@ class AcceptInviteViewModelTest {
         instance.onReject(TEST_INVITE)
         instance.state.test {
             assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState.Content(
-                    invite = TEST_INVITE,
-                    isConfirmLoading = false,
-                    isRejectLoading = false,
-                    areButtonsEnabled = true,
-                    event = AcceptInviteEvent.Close
+                AcceptInviteUiState(
+                    event = AcceptInviteEvent.Close,
+                    content = AcceptInviteUiContent.Content(
+                        invite = TEST_INVITE,
+                        isConfirmLoading = false,
+                        isRejectLoading = false,
+                        areButtonsEnabled = true,
+                    )
                 )
             )
         }
@@ -137,12 +145,14 @@ class AcceptInviteViewModelTest {
         instance.onReject(TEST_INVITE)
         instance.state.test {
             assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState.Content(
-                    invite = TEST_INVITE,
-                    isConfirmLoading = false,
-                    isRejectLoading = false,
-                    areButtonsEnabled = true,
-                    event = AcceptInviteEvent.Close
+                AcceptInviteUiState(
+                    event = AcceptInviteEvent.Close,
+                    content = AcceptInviteUiContent.Content(
+                        invite = TEST_INVITE,
+                        isConfirmLoading = false,
+                        isRejectLoading = false,
+                        areButtonsEnabled = true,
+                    )
                 )
             )
         }

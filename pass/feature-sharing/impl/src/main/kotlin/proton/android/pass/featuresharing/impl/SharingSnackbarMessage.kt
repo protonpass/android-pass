@@ -27,6 +27,7 @@ enum class SharingSnackbarMessage(
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
+    GetInviteError(R.string.sharing_snackbar_get_invite_error, SnackbarType.SUCCESS),
     InviteAccepted(R.string.sharing_snackbar_invite_accepted, SnackbarType.SUCCESS),
     InviteAcceptError(R.string.sharing_snackbar_invite_accept_error, SnackbarType.ERROR),
     InviteRejected(R.string.sharing_snackbar_invite_rejected, SnackbarType.SUCCESS),

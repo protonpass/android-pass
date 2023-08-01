@@ -41,9 +41,15 @@ fun AcceptInviteBottomSheet(
     viewModel: AcceptInviteViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(state.event) {
+        if (state.event == AcceptInviteEvent.Close) {
+            onNavigateEvent(SharingNavigation.Back)
+            viewModel.clearEvent()
+        }
+    }
 
-    when (state) {
-        is AcceptInviteUiState.Loading -> {
+    when (val content = state.content) {
+        is AcceptInviteUiContent.Loading -> {
             Box(
                 modifier = modifier
                     .fillMaxWidth()
@@ -53,28 +59,17 @@ fun AcceptInviteBottomSheet(
                 CircularProgressIndicator(modifier = Modifier.size(48.dp).align(Alignment.Center))
             }
         }
-        is AcceptInviteUiState.Error -> {
-            LaunchedEffect(Unit) {
-                onNavigateEvent(SharingNavigation.Back)
-            }
-        }
-        is AcceptInviteUiState.Content -> {
-            val contentState = state as AcceptInviteUiState.Content
-            LaunchedEffect(contentState.event) {
-                if (contentState.event == AcceptInviteEvent.Close) {
-                    onNavigateEvent(SharingNavigation.Back)
-                }
-            }
+        is AcceptInviteUiContent.Content -> {
             AcceptInviteContent(
                 modifier = modifier
                     .fillMaxWidth()
                     .bottomSheet(),
-                state = contentState,
+                state = content,
                 onConfirm = {
-                    viewModel.onConfirm(contentState.invite)
+                    viewModel.onConfirm(content.invite)
                 },
                 onReject = {
-                    viewModel.onReject(contentState.invite)
+                    viewModel.onReject(content.invite)
                 }
             )
         }

@@ -43,7 +43,8 @@ fun AliasDetailContent(
     mailboxes: PersistentList<AliasMailbox>,
     isLoading: Boolean,
     onCopyAlias: (String) -> Unit,
-    onCreateLoginFromAlias: (String) -> Unit
+    onCreateLoginFromAlias: (String) -> Unit,
+    onVaultClick: () -> Unit
 ) {
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
@@ -53,6 +54,7 @@ fun AliasDetailContent(
             modifier = Modifier.padding(0.dp, 12.dp),
             title = itemUiModel.contents.title,
             vault = vault,
+            onVaultClick = onVaultClick
         )
         AliasSection(
             alias = (itemUiModel.contents as ItemContents.Alias).aliasEmail,

@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.body3Norm
 
 @Composable
 fun ProtonTextFieldLabel(
@@ -43,7 +43,7 @@ fun ProtonTextFieldLabel(
         style = if (isError) {
             ProtonTheme.typography.defaultSmallWeak
         } else {
-            PassTypography.body3Regular
+            PassTheme.typography.body3Norm()
         }
     )
 }

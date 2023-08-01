@@ -34,8 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.body3Inverted
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.featurepassword.R
@@ -88,7 +88,7 @@ fun GenPasswordBottomSheetContentPreview(
                     ) {
                         Text(
                             text = stringResource(R.string.generate_password_copy),
-                            style = PassTypography.body3RegularInverted,
+                            style = PassTheme.typography.body3Inverted(),
                             color = PassTheme.colors.textInvert
                         )
                     }

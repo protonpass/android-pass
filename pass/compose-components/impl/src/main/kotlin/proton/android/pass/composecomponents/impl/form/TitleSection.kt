@@ -32,10 +32,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.commonui.api.heroNorm
+import proton.android.pass.commonui.api.heroWeak
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 
@@ -63,7 +64,7 @@ fun TitleSection(
                 }
             )
             .focusRequester(focusRequester),
-        textStyle = PassTypography.hero(enabled),
+        textStyle = PassTheme.typography.heroNorm(enabled),
         label = {
             ProtonTextFieldLabel(
                 text = stringResource(id = R.string.field_title_title),
@@ -73,7 +74,7 @@ fun TitleSection(
         placeholder = {
             ProtonTextFieldPlaceHolder(
                 text = stringResource(id = R.string.field_title_hint),
-                textStyle = PassTypography.heroWeak,
+                textStyle = PassTheme.typography.heroWeak(),
             )
         },
         trailingIcon = if (value.isNotBlank() && enabled) {

@@ -34,8 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
@@ -52,7 +52,7 @@ fun UpgradeButton(
     ) {
         Text(
             text = stringResource(R.string.upgrade),
-            style = PassTypography.body3Regular,
+            style = PassTheme.typography.body3Norm(),
             color = PassTheme.colors.textInvert
         )
         Spacer(modifier = Modifier.width(8.dp))

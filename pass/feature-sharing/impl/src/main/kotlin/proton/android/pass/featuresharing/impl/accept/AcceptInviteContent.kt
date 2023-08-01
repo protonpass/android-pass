@@ -36,8 +36,8 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
@@ -62,7 +62,7 @@ fun AcceptInviteContent(
     ) {
         Text(
             text = stringResource(R.string.sharing_invitation_from, invite.inviterEmail),
-            style = PassTypography.body3Regular,
+            style = PassTheme.typography.body3Norm(),
             color = PassTheme.colors.textNorm
         )
 

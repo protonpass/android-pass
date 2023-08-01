@@ -29,8 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.sp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Bold
 
 @Composable
 fun BottomSheetTitle(
@@ -44,7 +44,7 @@ fun BottomSheetTitle(
     ) {
         Text(
             text = title,
-            style = PassTypography.body3Bold,
+            style = PassTheme.typography.body3Bold(),
             fontSize = 16.sp
         )
     }

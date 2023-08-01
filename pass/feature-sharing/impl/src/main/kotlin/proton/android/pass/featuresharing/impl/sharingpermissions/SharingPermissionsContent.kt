@@ -33,7 +33,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.body3Norm
+import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.setting.SettingRadio
@@ -65,7 +67,7 @@ fun SharingPermissionsContent(
                     ) {
                         Text(
                             text = stringResource(R.string.share_continue),
-                            style = PassTypography.body3Regular,
+                            style = PassTheme.typography.body3Norm(),
                             color = PassTheme.colors.textInvert
                         )
                     }
@@ -82,12 +84,12 @@ fun SharingPermissionsContent(
         ) {
             Text(
                 text = stringResource(R.string.share_permissions_title),
-                style = PassTypography.hero
+                style = PassTheme.typography.heroNorm()
             )
             state.vaultName?.let { name ->
                 Text(
                     text = stringResource(R.string.share_permissions_subtitle, name),
-                    style = PassTypography.body3RegularWeak
+                    style = PassTheme.typography.body3Weak()
                 )
             }
             ShareToEmail(email = state.email)

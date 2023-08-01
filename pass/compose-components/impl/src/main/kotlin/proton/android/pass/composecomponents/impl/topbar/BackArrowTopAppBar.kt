@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 
 @Composable
@@ -44,7 +44,7 @@ fun BackArrowTopAppBar(
         title = {
             Text(
                 text = title,
-                style = PassTypography.hero
+                style = PassTheme.typography.heroNorm()
             )
         },
         navigationIcon = {

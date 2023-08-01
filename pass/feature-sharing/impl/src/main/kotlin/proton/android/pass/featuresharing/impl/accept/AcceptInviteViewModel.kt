@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -64,44 +65,46 @@ class AcceptInviteViewModel @Inject constructor(
                 invites.firstOrNull()
             }
         }
+        .onEach {
+            if (it is LoadingResult.Error) {
+                PassLogger.w(TAG, it.exception, "Error loading invite")
+                eventFlow.update { AcceptInviteEvent.Close }
+            }
+        }
         .distinctUntilChanged()
-
 
     val state: StateFlow<AcceptInviteUiState> = combine(
         loadingFlow,
         inviteFlow,
         eventFlow
     ) { isLoading, invite, event ->
-        when (invite) {
+        val content = when (invite) {
+            LoadingResult.Loading -> AcceptInviteUiContent.Loading
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, invite.exception, "Error loading invite")
-                AcceptInviteUiState.Error
+                snackbarDispatcher(SharingSnackbarMessage.GetInviteError)
+                AcceptInviteUiContent.Loading
             }
-            LoadingResult.Loading -> AcceptInviteUiState.Loading
-            is LoadingResult.Success -> {
-                val inviteData = invite.data
-                if (inviteData == null) {
-                    PassLogger.w(TAG, "There is no pending invite")
-                    AcceptInviteUiState.Error
-                } else {
-                    AcceptInviteUiState.Content(
-                        invite = inviteData,
-                        isConfirmLoading = isLoading == LoadingButtonState.ConfirmLoading,
-                        isRejectLoading = isLoading == LoadingButtonState.RejectLoading,
-                        areButtonsEnabled = isLoading == LoadingButtonState.NotLoading,
-                        event = event
-                    )
-                }
-            }
+            is LoadingResult.Success -> AcceptInviteUiContent.Content(
+                invite = invite.data,
+                isConfirmLoading = isLoading == LoadingButtonState.ConfirmLoading,
+                isRejectLoading = isLoading == LoadingButtonState.RejectLoading,
+                areButtonsEnabled = isLoading == LoadingButtonState.NotLoading,
+            )
         }
+        AcceptInviteUiState(
+            event = event,
+            content = content
+        )
 
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = AcceptInviteUiState.Loading
+        initialValue = AcceptInviteUiState.Initial
     )
 
-    fun onConfirm(invite: PendingInvite) = viewModelScope.launch {
+    fun onConfirm(invite: PendingInvite?) = viewModelScope.launch {
+        if (invite == null) return@launch
         loadingFlow.update { LoadingButtonState.ConfirmLoading }
         runCatching { acceptInvite(invite.inviteToken) }
             .onSuccess {
@@ -116,7 +119,9 @@ class AcceptInviteViewModel @Inject constructor(
         loadingFlow.update { LoadingButtonState.NotLoading }
     }
 
-    fun onReject(invite: PendingInvite) = viewModelScope.launch {
+    fun onReject(invite: PendingInvite?) = viewModelScope.launch {
+        if (invite == null) return@launch
+
         loadingFlow.update { LoadingButtonState.RejectLoading }
         runCatching { rejectInvite(invite.inviteToken) }
             .onSuccess {
@@ -130,6 +135,10 @@ class AcceptInviteViewModel @Inject constructor(
                 snackbarDispatcher(SharingSnackbarMessage.InviteRejectError)
             }
         loadingFlow.update { LoadingButtonState.NotLoading }
+    }
+
+    fun clearEvent() {
+        eventFlow.update { AcceptInviteEvent.Unknown }
     }
 
     sealed interface LoadingButtonState {

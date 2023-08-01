@@ -236,7 +236,10 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.TrialInfo -> appNavigator.navigate(TrialScreen)
-                HomeNavigation.OpenInvite -> appNavigator.navigate(AcceptInvite)
+                HomeNavigation.OpenInvite -> appNavigator.navigate(
+                    destination = AcceptInvite,
+                    backDestination = Home
+                )
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
             }
         }
@@ -820,7 +823,7 @@ fun NavGraphBuilder.appGraph(
     sharingGraph {
         when (it) {
             SharingNavigation.Back -> dismissBottomSheet {
-                appNavigator.onBackClick()
+                appNavigator.popUpTo(Home)
             }
             is SharingNavigation.Permissions -> appNavigator.navigate(
                 SharingPermissions,

@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.body3Inverted
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.featurepassword.R
@@ -105,7 +105,7 @@ fun GeneratePasswordBottomSheet(
                         ) {
                             Text(
                                 text = stringResource(R.string.generate_password_copy),
-                                style = PassTypography.body3RegularInverted,
+                                style = PassTheme.typography.body3Inverted(),
                                 color = PassTheme.colors.textInvert
                             )
                         }

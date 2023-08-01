@@ -25,7 +25,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.common.ShareToEmail
 
@@ -34,7 +35,7 @@ fun ShareToEmailSection(modifier: Modifier = Modifier, email: String) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.share_summary_email_title),
-            style = PassTypography.body3RegularWeak
+            style = PassTheme.typography.body3Weak()
         )
         ShareToEmail(email = email)
     }

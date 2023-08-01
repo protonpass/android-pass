@@ -32,8 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.sp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.featurepassword.R
 
@@ -48,7 +48,7 @@ fun GeneratePasswordBottomSheetTitle(
         Text(
             modifier = Modifier.align(Alignment.Center),
             text = stringResource(id = R.string.bottomsheet_generate_password_title),
-            style = PassTypography.body3Bold,
+            style = PassTheme.typography.body3Bold(),
             fontSize = 16.sp
         )
         CircleIconButton(

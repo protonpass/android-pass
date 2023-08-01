@@ -38,8 +38,8 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionStrongNorm
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Bold
 
 @Composable
 fun RecentSearchListHeader(
@@ -59,7 +59,7 @@ fun RecentSearchListHeader(
         ) {
             Text(
                 text = stringResource(R.string.recent_search_header_count),
-                style = PassTypography.body3Bold
+                style = PassTheme.typography.body3Bold()
             )
             Text(
                 text = itemCount?.let { "($it)" } ?: "",

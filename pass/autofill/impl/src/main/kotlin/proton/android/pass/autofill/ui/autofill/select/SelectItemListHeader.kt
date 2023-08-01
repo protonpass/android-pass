@@ -41,8 +41,8 @@ import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.previewproviders.SuggestionsInput
 import proton.android.pass.autofill.ui.previewproviders.SuggestionsPreviewProvider
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.item.ActionableItemRow
@@ -97,7 +97,7 @@ fun LazyListScope.SelectItemListHeader(
                 R.string.autofill_suggestions_for_placeholder,
                 suggestionsForTitle
             ),
-            style = PassTypography.body3Bold
+            style = PassTheme.typography.body3Bold()
         )
     }
 

@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
@@ -87,7 +87,7 @@ fun SyncVaultRow(
             }
             Text(
                 text = subtitle,
-                style = PassTypography.body3RegularWeak,
+                style = PassTheme.typography.body3Weak(),
                 maxLines = 1
             )
         }

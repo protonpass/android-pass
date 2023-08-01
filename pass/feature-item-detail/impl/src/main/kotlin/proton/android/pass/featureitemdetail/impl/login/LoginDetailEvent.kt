@@ -29,6 +29,7 @@ sealed interface LoginDetailEvent {
     data class OnWebsiteLongClicked(val website: String) : LoginDetailEvent
     data class OnCopyTotpClick(val totpCode: String) : LoginDetailEvent
     object OnUpgradeClick : LoginDetailEvent
+    object OnVaultClick : LoginDetailEvent
 
     data class OnCustomFieldEvent(val event: CustomFieldEvent) : LoginDetailEvent
 }

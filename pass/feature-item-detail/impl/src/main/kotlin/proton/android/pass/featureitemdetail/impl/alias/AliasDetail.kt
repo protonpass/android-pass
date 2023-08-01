@@ -150,6 +150,11 @@ fun AliasDetail(
                         moreInfoUiState = moreInfoUiState,
                         onCreateLoginFromAlias = { alias ->
                             onNavigate(ItemDetailNavigation.OnCreateLoginFromAlias(alias = alias))
+                        },
+                        onVaultClick = {
+                            state.vault?.shareId?.let {
+                                onNavigate(ItemDetailNavigation.ManageVault(it))
+                            }
                         }
                     )
                 }

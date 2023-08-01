@@ -29,8 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.pass.domain.ShareColor
@@ -44,7 +44,7 @@ fun SummarySection(modifier: Modifier = Modifier, state: SharingSummaryUIState) 
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.share_summary_title),
-            style = PassTypography.hero
+            style = PassTheme.typography.heroNorm()
         )
         SharingSummaryDescription(state = state)
     }

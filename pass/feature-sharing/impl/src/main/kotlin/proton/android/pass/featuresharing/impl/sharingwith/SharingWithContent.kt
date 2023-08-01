@@ -35,8 +35,10 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
+import proton.android.pass.commonui.api.body3Norm
+import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -67,7 +69,7 @@ fun SharingWithContent(
                         text = {
                             Text(
                                 text = stringResource(R.string.share_continue),
-                                style = PassTypography.body3Regular,
+                                style = PassTheme.typography.body3Norm(),
                                 color = PassTheme.colors.textInvert
                             )
                         }
@@ -85,12 +87,12 @@ fun SharingWithContent(
         ) {
             Text(
                 text = stringResource(R.string.share_with_title),
-                style = PassTypography.hero
+                style = PassTheme.typography.heroNorm()
             )
             state.vaultName?.let { name ->
                 Text(
                     text = stringResource(R.string.share_with_subtitle, name),
-                    style = PassTypography.body3RegularWeak
+                    style = PassTheme.typography.body3Weak()
                 )
             }
             val focusRequester = remember { FocusRequester() }

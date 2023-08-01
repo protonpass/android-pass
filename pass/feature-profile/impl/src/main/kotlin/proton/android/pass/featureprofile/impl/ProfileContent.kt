@@ -42,7 +42,7 @@ import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
@@ -62,7 +62,7 @@ fun ProfileContent(
                 title = {
                     Text(
                         text = stringResource(R.string.profile_screen_title),
-                        style = PassTypography.hero
+                        style = PassTheme.typography.heroNorm()
                     )
                 },
                 actions = {

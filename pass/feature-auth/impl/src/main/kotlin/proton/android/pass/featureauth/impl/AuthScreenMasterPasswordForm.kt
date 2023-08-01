@@ -47,7 +47,9 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.body3Norm
+import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
@@ -91,14 +93,14 @@ fun AuthScreenMasterPasswordForm(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.auth_unlock_app_title),
             textAlign = TextAlign.Center,
-            style = PassTypography.hero
+            style = PassTheme.typography.heroNorm()
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.auth_unlock_app_subtitle, state.address),
             textAlign = TextAlign.Center,
-            style = PassTypography.body3RegularWeak
+            style = PassTheme.typography.body3Weak()
         )
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -163,7 +165,7 @@ fun AuthScreenMasterPasswordForm(
                 modifier = Modifier.fillMaxWidth(),
                 text = errorText,
                 textAlign = TextAlign.Center,
-                style = PassTypography.body3Regular,
+                style = PassTheme.typography.body3Norm(),
                 color = ProtonTheme.colors.notificationError
             )
         }

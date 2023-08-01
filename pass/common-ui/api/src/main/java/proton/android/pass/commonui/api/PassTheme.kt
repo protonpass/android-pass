@@ -20,6 +20,7 @@ package proton.android.pass.commonui.api
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
 import me.proton.core.compose.theme.ProtonColors
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
@@ -31,12 +32,14 @@ fun PassTheme(
     passColors: PassColors = if (isDark) PassColors.Dark else PassColors.Light,
     passDimens: PassDimens = PassDimens.Phone,
     passShapes: PassShapes = PassShapes.Default,
+    passTypography: PassTypography = PassTypography.Default,
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
         LocalPassColors provides passColors,
         LocalPassDimens provides passDimens,
-        LocalPassShapes provides passShapes
+        LocalPassShapes provides passShapes,
+        LocalPassTypography provides passTypography,
     ) {
         ProtonTheme(
             isDark = isDark,
@@ -51,11 +54,18 @@ fun PassTheme(
 object PassTheme {
     val colors: PassColors
         @Composable
+        @ReadOnlyComposable
         get() = LocalPassColors.current
     val dimens: PassDimens
         @Composable
+        @ReadOnlyComposable
         get() = LocalPassDimens.current
     val shapes: PassShapes
         @Composable
+        @ReadOnlyComposable
         get() = LocalPassShapes.current
+    val typography: PassTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalPassTypography.current
 }

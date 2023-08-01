@@ -29,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
@@ -60,7 +60,7 @@ fun VaultDrawerSection(
                     .padding(horizontal = PassTheme.dimens.bottomsheetHorizontalPadding),
                 text = stringResource(R.string.vault_drawer_vaults_title),
                 color = PassTheme.colors.textNorm,
-                style = PassTypography.hero
+                style = PassTheme.typography.heroNorm()
             )
         }
         if (list.size > 1) {

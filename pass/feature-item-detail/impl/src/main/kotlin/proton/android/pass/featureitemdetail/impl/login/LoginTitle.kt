@@ -44,7 +44,8 @@ fun LoginTitle(
     website: String?,
     packageName: String?,
     vault: Vault?,
-    canLoadExternalImages: Boolean
+    canLoadExternalImages: Boolean,
+    onVaultClick: () -> Unit
 ) {
     Row(
         modifier = modifier,
@@ -59,9 +60,12 @@ fun LoginTitle(
             packageName = packageName,
             canLoadExternalImages = canLoadExternalImages
         )
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             ItemTitleText(text = title)
-            VaultNameSubtitle(vault = vault)
+            VaultNameSubtitle(vault = vault, onClick = onVaultClick)
         }
     }
 }
@@ -78,7 +82,8 @@ fun LoginTitlePreview(
                 website = null,
                 packageName = null,
                 vault = input.second.vault,
-                canLoadExternalImages = false
+                canLoadExternalImages = false,
+                onVaultClick = {}
             )
         }
     }

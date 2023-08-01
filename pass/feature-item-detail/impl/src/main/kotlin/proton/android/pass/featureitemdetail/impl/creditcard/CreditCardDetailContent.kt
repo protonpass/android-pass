@@ -48,7 +48,8 @@ fun CreditCardDetailContent(
         CreditCardTitle(
             modifier = Modifier.padding(0.dp, 12.dp),
             title = model.title,
-            vault = vault
+            vault = vault,
+            onVaultClick = { onEvent(CreditCardDetailEvent.OnVaultClick) }
         )
         MainCreditCardSection(
             cardHolder = model.cardHolder,

@@ -28,7 +28,8 @@ data class ShareUiModel(
     val name: String,
     val color: ShareColor,
     val icon: ShareIcon,
-    val isPrimary: Boolean
+    val isPrimary: Boolean,
+    val isShared: Boolean
 ) {
     companion object {
         fun fromVault(vault: Vault) = ShareUiModel(
@@ -36,7 +37,8 @@ data class ShareUiModel(
             name = vault.name,
             color = vault.color,
             icon = vault.icon,
-            isPrimary = vault.isPrimary
+            isPrimary = vault.isPrimary,
+            isShared = vault.isShared()
         )
     }
 }
@@ -48,5 +50,6 @@ data class ShareUiModelWithItemCount(
     val trashedItemCount: Long,
     val color: ShareColor,
     val icon: ShareIcon,
-    val isPrimary: Boolean
+    val isPrimary: Boolean,
+    val isShared: Boolean
 )

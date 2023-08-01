@@ -33,6 +33,7 @@ val ShareUiModelWithItemCountSaver: Saver<ShareUiModelWithItemCount?, Any> = run
     val activeItemCount = "active_item_count"
     val trashedItemCount = "trashed_item_count"
     val isPrimary = "is_primary"
+    val isShared = "is_shared"
     mapSaver(
         save = {
             if (it != null) {
@@ -43,7 +44,8 @@ val ShareUiModelWithItemCountSaver: Saver<ShareUiModelWithItemCount?, Any> = run
                     color to it.color.name,
                     activeItemCount to it.activeItemCount,
                     trashedItemCount to it.trashedItemCount,
-                    isPrimary to it.isPrimary
+                    isPrimary to it.isPrimary,
+                    isShared to it.isShared
 
                 )
             } else {
@@ -59,7 +61,8 @@ val ShareUiModelWithItemCountSaver: Saver<ShareUiModelWithItemCount?, Any> = run
                     color = ShareColor.valueOf(values[color] as String),
                     activeItemCount = values[activeItemCount] as Long,
                     trashedItemCount = values[trashedItemCount] as Long,
-                    isPrimary = values[isPrimary] as Boolean
+                    isPrimary = values[isPrimary] as Boolean,
+                    isShared = values[isShared] as Boolean
                 )
             } else {
                 null

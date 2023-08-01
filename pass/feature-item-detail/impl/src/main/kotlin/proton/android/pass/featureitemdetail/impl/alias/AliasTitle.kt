@@ -41,7 +41,8 @@ import proton.pass.domain.Vault
 fun AliasTitle(
     modifier: Modifier = Modifier,
     title: String,
-    vault: Vault?
+    vault: Vault?,
+    onVaultClick: () -> Unit
 ) {
     Row(
         modifier = modifier,
@@ -49,9 +50,12 @@ fun AliasTitle(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         AliasIcon(size = 60, shape = PassTheme.shapes.squircleMediumLargeShape)
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             ItemTitleText(text = title)
-            VaultNameSubtitle(vault = vault)
+            VaultNameSubtitle(vault = vault, onClick = onVaultClick)
         }
     }
 }
@@ -65,7 +69,8 @@ fun AliasTitlePreview(
         Surface {
             AliasTitle(
                 title = input.second.title,
-                vault = input.second.vault
+                vault = input.second.vault,
+                onVaultClick = {}
             )
         }
     }

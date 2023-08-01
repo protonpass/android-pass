@@ -143,7 +143,12 @@ fun NoteDetail(
                         name = state.itemUiModel.contents.title,
                         note = (state.itemUiModel.contents as ItemContents.Note).note,
                         vault = state.vault,
-                        moreInfoUiState = moreInfoUiState
+                        moreInfoUiState = moreInfoUiState,
+                        onVaultClick = {
+                            state.vault?.shareId?.let {
+                                onNavigate(ItemDetailNavigation.ManageVault(it))
+                            }
+                        }
                     )
                 }
                 ConfirmDeleteItemDialog(

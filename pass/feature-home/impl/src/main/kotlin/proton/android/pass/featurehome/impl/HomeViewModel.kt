@@ -75,13 +75,13 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItem
@@ -121,7 +121,7 @@ class HomeViewModel @Inject constructor(
     private val trashItem: TrashItem,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
-    private val applyPendingEvents: ApplyPendingEvents,
+    private val performSync: PerformSync,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val restoreItem: RestoreItem,
     private val restoreItems: RestoreItems,
@@ -505,7 +505,7 @@ class HomeViewModel @Inject constructor(
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
         isRefreshing.update { IsRefreshingState.Refreshing }
         runCatching {
-            applyPendingEvents()
+            performSync()
         }.onFailure {
             PassLogger.e(TAG, it, "Apply pending events failed")
             snackbarDispatcher(RefreshError)

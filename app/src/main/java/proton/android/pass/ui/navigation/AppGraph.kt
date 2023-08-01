@@ -734,6 +734,10 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 ItemDetailNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+
+                is ItemDetailNavigation.ManageVault -> {
+                    // to be done
+                }
             }
         }
     )

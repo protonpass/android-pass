@@ -78,6 +78,12 @@ class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusReposit
         syncStatus.tryEmit(status)
     }
 
+    override suspend fun clear() {
+        payloadMutableMap.clear()
+        accSyncStatus.emit(emptyMap())
+        syncStatus.emit(ItemSyncStatus.NotStarted)
+    }
+
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = syncStatus
 
     override fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> = accSyncStatus

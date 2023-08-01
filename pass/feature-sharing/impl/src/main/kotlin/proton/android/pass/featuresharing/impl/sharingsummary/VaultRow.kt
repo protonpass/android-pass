@@ -30,7 +30,8 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.featuresharing.impl.R
 
 @Composable
@@ -59,7 +60,7 @@ fun VaultRow(
                     itemCount.toInt(),
                     itemCount.toInt()
                 ),
-                style = PassTypography.body3RegularWeak,
+                style = PassTheme.typography.body3Weak(),
             )
         }
     }

@@ -42,7 +42,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 
@@ -90,7 +90,7 @@ fun EmptyList(
                 ) {
                     Text(
                         text = stringResource(R.string.empty_list_create_item_button),
-                        style = PassTypography.body3Regular,
+                        style = PassTheme.typography.body3Norm(),
                         color = ProtonTheme.colors.textNorm
                     )
                 }
@@ -103,7 +103,7 @@ fun EmptyList(
                 ) {
                     Text(
                         text = stringResource(R.string.empty_list_open_extension),
-                        style = PassTypography.body3Regular,
+                        style = PassTheme.typography.body3Norm(),
                         color = PassTheme.colors.interactionNormMajor1
                     )
                 }

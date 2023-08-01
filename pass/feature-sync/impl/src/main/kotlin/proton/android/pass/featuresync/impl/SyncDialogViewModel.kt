@@ -53,21 +53,17 @@ class SyncDialogViewModel @Inject constructor(
         observeFinishEvents,
         observeVaults().asLoadingResult()
     ) { accSync, isFinished, vaultsResult ->
-        val syncItemMap = vaultsResult
-            .getOrNull()
-            ?.associate { it.shareId to it }
-            ?.toMutableMap()
-            ?.map { entry ->
-                val syncItem = accSync[entry.key]
-                entry.key to SyncItem(
-                    vault = entry.value,
+        val syncItemMap = (vaultsResult.getOrNull() ?: emptyList())
+            .associateBy { it.shareId }
+            .mapValues { (shareId, vault) ->
+                val syncItem = accSync[shareId]
+                SyncItem(
+                    vault = vault,
                     current = syncItem?.current ?: -1,
                     total = syncItem?.total ?: -1
                 )
             }
-            ?.toMap()
-            ?.toPersistentMap()
-            ?: persistentMapOf()
+            .toPersistentMap()
 
         SyncDialogUiState(
             syncItemMap = syncItemMap,

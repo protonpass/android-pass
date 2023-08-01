@@ -281,10 +281,6 @@ class LauncherViewModel @Inject constructor(
         inAppUpdatesManager.declineUpdate()
     }
 
-    fun start() = viewModelScope.launch {
-        itemSyncStatusRepository.emit(ItemSyncStatus.NotStarted)
-    }
-
     enum class State { Processing, AccountNeeded, PrimaryExist, StepNeeded }
 
     companion object {

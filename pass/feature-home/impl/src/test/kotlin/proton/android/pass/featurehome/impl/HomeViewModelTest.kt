@@ -39,7 +39,6 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
-import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
 import proton.android.pass.data.fakes.usecases.TestClearTrash
 import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteItem
@@ -49,6 +48,7 @@ import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestPerformSync
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItem
@@ -76,7 +76,7 @@ class HomeViewModelTest {
     private lateinit var trashItem: TestTrashItem
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var clipboardManager: TestClipboardManager
-    private lateinit var applyPendingEvents: TestApplyPendingEvents
+    private lateinit var performSync: TestPerformSync
     private lateinit var encryptionContextProvider: TestEncryptionContextProvider
     private lateinit var restoreItem: TestRestoreItem
     private lateinit var restoreItems: TestRestoreItems
@@ -101,7 +101,7 @@ class HomeViewModelTest {
         trashItem = TestTrashItem()
         snackbarDispatcher = TestSnackbarDispatcher()
         clipboardManager = TestClipboardManager()
-        applyPendingEvents = TestApplyPendingEvents()
+        performSync = TestPerformSync()
         encryptionContextProvider = TestEncryptionContextProvider()
         restoreItem = TestRestoreItem()
         restoreItems = TestRestoreItems()
@@ -124,7 +124,7 @@ class HomeViewModelTest {
             trashItem = trashItem,
             snackbarDispatcher = snackbarDispatcher,
             clipboardManager = clipboardManager,
-            applyPendingEvents = applyPendingEvents,
+            performSync = performSync,
             encryptionContextProvider = encryptionContextProvider,
             restoreItem = restoreItem,
             restoreItems = restoreItems,

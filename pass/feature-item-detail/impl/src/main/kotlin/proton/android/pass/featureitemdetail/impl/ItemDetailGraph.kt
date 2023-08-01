@@ -45,6 +45,9 @@ sealed interface ItemDetailNavigation {
     data class OnViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
     object Back : ItemDetailNavigation
     object Upgrade : ItemDetailNavigation
+
+    @JvmInline
+    value class ManageVault(val shareId: ShareId) : ItemDetailNavigation
 }
 
 object ViewItem : NavItem(

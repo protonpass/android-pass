@@ -18,23 +18,36 @@
 
 package proton.android.pass.featureitemdetail.impl.common
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
@@ -44,12 +57,43 @@ import proton.pass.domain.Vault
 @Composable
 fun VaultNameSubtitle(
     modifier: Modifier = Modifier,
-    vault: Vault?
+    vault: Vault?,
+    onClick: () -> Unit
 ) {
     if (vault == null) return
 
+    val vaultText = remember(vault.members) {
+        if (vault.isShared()) {
+            buildAnnotatedString {
+                append(vault.name)
+                append(" • ")
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append(vault.members.toString())
+                }
+            }
+        } else {
+            AnnotatedString(vault.name)
+        }
+    }
     Row(
-        modifier = modifier,
+        modifier = modifier
+            .border(
+                width = 1.dp,
+                color = vault.color.toColor(isBackground = true),
+                shape = RoundedCornerShape(24.dp)
+            )
+            .applyIf(
+                condition = vault.isShared(),
+                ifTrue = {
+                    background(
+                        color = vault.color.toColor(isBackground = true),
+                        shape = RoundedCornerShape(24.dp)
+                    )
+                        .clip(RoundedCornerShape(24.dp))
+                        .clickable(onClick = onClick)
+                }
+            )
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
@@ -57,13 +101,13 @@ fun VaultNameSubtitle(
             modifier = Modifier.height(12.dp),
             painter = painterResource(vault.icon.toSmallResource()),
             contentDescription = null,
-            tint = PassTheme.colors.textWeak
+            tint = vault.color.toColor()
         )
+
         Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = vault.name,
+            text = vaultText,
             style = PassTypography.body3Regular,
-            color = PassTheme.colors.textWeak
+            color = vault.color.toColor()
         )
     }
 }
@@ -71,9 +115,10 @@ fun VaultNameSubtitle(
 @Preview
 @Composable
 fun VaultNameSubtitlePreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDark) {
+    val members = if (input.second) 2 else 1
+    PassTheme(isDark = input.first) {
         Surface {
             VaultNameSubtitle(
                 vault = Vault(
@@ -81,8 +126,10 @@ fun VaultNameSubtitlePreview(
                     name = "Vault Name",
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
-                    isPrimary = false
-                )
+                    isPrimary = false,
+                    members = members
+                ),
+                onClick = {}
             )
         }
     }

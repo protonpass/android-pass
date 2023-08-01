@@ -170,6 +170,11 @@ fun CreditCardDetail(
                                 CreditCardDetailEvent.OnUpgradeClick -> {
                                     onNavigate(ItemDetailNavigation.Upgrade)
                                 }
+                                CreditCardDetailEvent.OnVaultClick -> {
+                                    state.vault?.shareId?.let { shareId ->
+                                        onNavigate(ItemDetailNavigation.ManageVault(shareId))
+                                    }
+                                }
                             }
                         }
                     )

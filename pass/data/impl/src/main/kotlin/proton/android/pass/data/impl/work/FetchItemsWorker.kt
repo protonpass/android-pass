@@ -69,7 +69,9 @@ open class FetchItemsWorker @AssistedInject constructor(
         val shareIds = inputData.getStringArray(ARG_SHARE_IDS)?.map { ShareId(it) } ?: emptyList()
 
         val hasItems = AtomicBoolean(false)
-        val semaphore = Semaphore(MAX_PARALLEL_ASYNC_CALLS)
+        val availableCores = Runtime.getRuntime().availableProcessors()
+        val maxParallelAsyncCalls = (availableCores / 2).coerceAtLeast(1)
+        val semaphore = Semaphore(maxParallelAsyncCalls)
         val results = withContext(Dispatchers.IO) {
             shareIds.map { shareId ->
                 async {
@@ -136,7 +138,6 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val TAG = "FetchItemsWorker"
         private const val ARG_SHARE_IDS = "share_ids"
 
-        private const val MAX_PARALLEL_ASYNC_CALLS = 3
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
 

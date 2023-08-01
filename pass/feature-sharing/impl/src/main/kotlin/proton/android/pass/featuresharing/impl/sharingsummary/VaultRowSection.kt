@@ -29,8 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
@@ -47,7 +47,7 @@ fun VaultRowSection(modifier: Modifier = Modifier, vaultWithItemCount: VaultWith
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.share_summary_vault_title),
-            style = PassTypography.body3RegularWeak
+            style = PassTheme.typography.body3Weak()
         )
         VaultRow(
             name = vaultWithItemCount.vault.name,

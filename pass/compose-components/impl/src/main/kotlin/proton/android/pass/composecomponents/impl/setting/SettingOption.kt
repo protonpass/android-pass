@@ -38,9 +38,9 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.placeholder
 
@@ -68,7 +68,7 @@ fun SettingOption(
             label?.let {
                 Text(
                     text = it,
-                    style = PassTypography.body3RegularWeak,
+                    style = PassTheme.typography.body3Weak(),
                 )
             }
             Text(

@@ -45,8 +45,9 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Norm
+import proton.android.pass.commonui.api.heroNorm
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -70,7 +71,7 @@ fun TrialContent(
 
         Text(
             text = stringResource(R.string.trial_title),
-            style = PassTypography.hero
+            style = PassTheme.typography.heroNorm()
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
@@ -97,7 +98,7 @@ fun TrialContent(
                 state.remainingTrialDays,
                 state.remainingTrialDays
             ),
-            style = PassTypography.body3Regular
+            style = PassTheme.typography.body3Norm()
         )
 
         Text(
@@ -109,7 +110,7 @@ fun TrialContent(
                 .padding(8.dp),
             text = stringResource(R.string.trial_learn_more),
             color = PassTheme.colors.interactionNormMajor2,
-            style = PassTypography.body3Regular.copy(textDecoration = TextDecoration.Underline)
+            style = PassTheme.typography.body3Norm().copy(textDecoration = TextDecoration.Underline)
         )
     }
 }

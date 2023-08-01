@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Inverted
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
@@ -71,7 +71,7 @@ fun CameraPermissionContent(
             ) {
                 Text(
                     text = stringResource(R.string.camera_permission_open_settings),
-                    style = PassTypography.body3RegularInverted
+                    style = PassTheme.typography.body3Inverted()
                 )
             }
         }

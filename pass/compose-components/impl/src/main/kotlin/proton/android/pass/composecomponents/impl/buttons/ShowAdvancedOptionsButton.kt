@@ -37,8 +37,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
@@ -70,7 +70,7 @@ fun ShowAdvancedOptionsButton(
         Text(
             text = text,
             color = PassTheme.colors.textWeak,
-            style = PassTypography.body3Regular
+            style = PassTheme.typography.body3Norm()
         )
     }
 

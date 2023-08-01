@@ -29,8 +29,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 
 @Composable
@@ -51,7 +52,7 @@ fun PinInput(
         modifier = modifier.focusRequester(focusRequester),
         editable = data?.isLoadingState?.value() != true,
         value = (state as? EnterPinUiState.Data)?.pin.orEmpty(),
-        textStyle = PassTypography.hero.copy(textAlign = TextAlign.Center),
+        textStyle = PassTheme.typography.heroNorm().copy(textAlign = TextAlign.Center),
         keyboardOptions = KeyboardOptions(
             autoCorrect = false,
             keyboardType = KeyboardType.NumberPassword,

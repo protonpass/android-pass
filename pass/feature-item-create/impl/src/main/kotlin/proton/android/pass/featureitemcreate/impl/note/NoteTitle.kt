@@ -31,9 +31,9 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 
@@ -56,11 +56,11 @@ fun NoteTitle(
     ProtonTextField(
         modifier = modifier
             .focusRequester(focusRequester),
-        textStyle = PassTypography.hero(enabled),
+        textStyle = PassTheme.typography.heroNorm(enabled),
         placeholder = {
             Text(
                 text = stringResource(id = R.string.field_title_title),
-                style = PassTypography.hero,
+                style = PassTheme.typography.heroNorm(),
                 color = titleColor
             )
         },

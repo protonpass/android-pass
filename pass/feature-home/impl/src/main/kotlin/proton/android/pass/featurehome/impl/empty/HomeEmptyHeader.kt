@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.headlineSmallNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.featurehome.impl.R
 
 @Composable
@@ -54,7 +54,7 @@ fun HomeEmptyHeader(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.home_empty_vault_subtitle),
-            style = PassTypography.body3Regular,
+            style = PassTheme.typography.body3Norm(),
             color = PassTheme.colors.textWeak,
             textAlign = TextAlign.Center
         )

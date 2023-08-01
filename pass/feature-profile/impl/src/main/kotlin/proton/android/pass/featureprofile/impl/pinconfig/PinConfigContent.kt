@@ -44,8 +44,10 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
+import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.commonui.api.heroNorm
+import proton.android.pass.commonui.api.heroWeak
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -107,11 +109,11 @@ fun PinConfigContent(
         ) {
             Text(
                 text = stringResource(R.string.configure_pin_set_pin_code),
-                style = PassTypography.hero
+                style = PassTheme.typography.heroNorm()
             )
             Text(
                 text = stringResource(R.string.configure_pin_unlock_the_app_with_this_code),
-                style = PassTypography.body3RegularWeak
+                style = PassTheme.typography.body3Weak()
             )
             Spacer(modifier = Modifier.height(16.dp))
             val (isError, errorMessage) = when {
@@ -127,7 +129,7 @@ fun PinConfigContent(
             ProtonTextField(
                 modifier = Modifier.focusRequester(focusRequester),
                 value = state.pin,
-                textStyle = PassTypography.hero,
+                textStyle = PassTheme.typography.heroNorm(),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
                     autoCorrect = false,
@@ -139,7 +141,7 @@ fun PinConfigContent(
                 placeholder = {
                     ProtonTextFieldPlaceHolder(
                         text = stringResource(R.string.configure_pin_enter_pin_code),
-                        textStyle = PassTypography.heroWeak
+                        textStyle = PassTheme.typography.heroWeak()
                     )
                 },
                 moveToNextOnEnter = true,
@@ -148,7 +150,7 @@ fun PinConfigContent(
             RequestFocusLaunchedEffect(focusRequester, true)
             ProtonTextField(
                 value = state.repeatPin,
-                textStyle = PassTypography.hero,
+                textStyle = PassTheme.typography.heroNorm(),
                 keyboardOptions = KeyboardOptions(
                     autoCorrect = false,
                     keyboardType = KeyboardType.NumberPassword,
@@ -160,7 +162,7 @@ fun PinConfigContent(
                 placeholder = {
                     ProtonTextFieldPlaceHolder(
                         text = stringResource(R.string.configure_pin_repeat_pin_code),
-                        textStyle = PassTypography.heroWeak
+                        textStyle = PassTheme.typography.heroWeak()
                     )
                 },
                 onChange = onRepeatPinChange,

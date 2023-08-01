@@ -29,8 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 
@@ -39,7 +39,7 @@ fun PermissionSummarySection(modifier: Modifier = Modifier, sharingType: Sharing
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.share_summary_permissions_title),
-            style = PassTypography.body3RegularWeak
+            style = PassTheme.typography.body3Weak()
         )
         val (title, subtitle) = when (sharingType) {
             SharingType.Read -> stringResource(R.string.sharing_can_view) to

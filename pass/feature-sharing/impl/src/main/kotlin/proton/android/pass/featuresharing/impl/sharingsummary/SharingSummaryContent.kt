@@ -30,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.featuresharing.impl.R
@@ -58,7 +58,7 @@ fun SharingSummaryContent(
                         text = {
                             Text(
                                 text = stringResource(R.string.share_summary_share_vault),
-                                style = PassTypography.body3Regular,
+                                style = PassTheme.typography.body3Norm(),
                                 color = PassTheme.colors.textInvert
                             )
                         }

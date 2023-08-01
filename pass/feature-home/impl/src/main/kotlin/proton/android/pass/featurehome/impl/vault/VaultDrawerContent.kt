@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import me.proton.core.compose.theme.ProtonDimens
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.featurehome.impl.R
@@ -76,7 +76,7 @@ fun VaultDrawerContent(
             Text(
                 text = stringResource(R.string.vault_drawer_create_vault),
                 color = PassTheme.colors.loginInteractionNormMajor2,
-                style = PassTypography.body3Regular
+                style = PassTheme.typography.body3Norm()
             )
         }
     }

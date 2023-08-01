@@ -36,8 +36,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.container.Circle
@@ -96,7 +96,7 @@ fun CreateVaultBottomSheetTopBar(
                     Text(
                         text = buttonText,
                         color = PassTheme.colors.textInvert,
-                        style = PassTypography.body3Regular
+                        style = PassTheme.typography.body3Norm()
                     )
                 },
                 onClick = {

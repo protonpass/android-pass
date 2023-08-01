@@ -42,8 +42,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultHighlightNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 
 @Suppress("MagicNumber")
@@ -86,7 +86,7 @@ fun SpotlightCard(
                     )
                     Text(
                         text = body,
-                        style = PassTypography.body3Regular,
+                        style = PassTheme.typography.body3Norm(),
                         color = subtitleColor
                     )
                     if (buttonText != null) {

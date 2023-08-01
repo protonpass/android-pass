@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.composecomponents.impl.R
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -54,7 +54,7 @@ fun ItemCount(
         Text(
             text = if (showSearchResults) itemCount?.let { "$it" }
                 ?: "0" else stringResource(R.string.item_list_header_all_search_results),
-            style = PassTypography.body3Bold
+            style = PassTheme.typography.body3Bold()
         )
         Text(
             text = if (showSearchResults) {

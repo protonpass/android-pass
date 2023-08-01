@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 
 @Composable
@@ -54,7 +54,7 @@ fun PermissionRow(
         )
         Text(
             text = subtitle,
-            style = PassTypography.body3RegularWeak,
+            style = PassTheme.typography.body3Weak(),
         )
     }
 }

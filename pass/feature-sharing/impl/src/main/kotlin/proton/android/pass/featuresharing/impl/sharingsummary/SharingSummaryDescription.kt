@@ -26,7 +26,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
-import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.body3Norm
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 
@@ -63,7 +65,7 @@ fun SharingSummaryDescription(modifier: Modifier = Modifier, state: SharingSumma
         AnnotatedString.Range(
             item = SpanStyle(
                 fontWeight = FontWeight.Bold,
-                color = PassTypography.body3Regular.color
+                color = PassTheme.typography.body3Norm().color
             ),
             start = emailIndex,
             end = emailIndex + emailString.length
@@ -71,7 +73,7 @@ fun SharingSummaryDescription(modifier: Modifier = Modifier, state: SharingSumma
         AnnotatedString.Range(
             item = SpanStyle(
                 fontWeight = FontWeight.Bold,
-                color = PassTypography.body3Regular.color
+                color = PassTheme.typography.body3Norm().color
             ),
             start = nameIndex,
             end = nameIndex + nameString.length
@@ -79,7 +81,7 @@ fun SharingSummaryDescription(modifier: Modifier = Modifier, state: SharingSumma
         AnnotatedString.Range(
             item = SpanStyle(
                 fontWeight = FontWeight.Bold,
-                color = PassTypography.body3Regular.color
+                color = PassTheme.typography.body3Norm().color
             ),
             start = countIndex,
             end = countIndex + countString.length
@@ -87,7 +89,7 @@ fun SharingSummaryDescription(modifier: Modifier = Modifier, state: SharingSumma
         AnnotatedString.Range(
             item = SpanStyle(
                 fontWeight = FontWeight.Bold,
-                color = PassTypography.body3Regular.color
+                color = PassTheme.typography.body3Norm().color
             ),
             start = typeIndex,
             end = typeIndex + sharingTypeString.length
@@ -96,6 +98,6 @@ fun SharingSummaryDescription(modifier: Modifier = Modifier, state: SharingSumma
     Text(
         modifier = modifier,
         text = AnnotatedString(text = text, spanStyles = spanStyles),
-        style = PassTypography.body3RegularWeak
+        style = PassTheme.typography.body3Weak()
     )
 }

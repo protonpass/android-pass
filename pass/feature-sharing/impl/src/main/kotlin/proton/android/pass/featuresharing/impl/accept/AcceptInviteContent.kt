@@ -50,11 +50,11 @@ import proton.pass.domain.ShareIcon
 @Composable
 fun AcceptInviteContent(
     modifier: Modifier = Modifier,
-    state: AcceptInviteUiState.Content,
+    state: AcceptInviteUiContent.Content,
     onConfirm: () -> Unit,
     onReject: () -> Unit
 ) {
-    val invite = state.invite
+    val invite = state.invite ?: return
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -117,7 +117,7 @@ fun AcceptInviteContentPreview(
     PassTheme(isDark = input.first) {
         Surface {
             AcceptInviteContent(
-                state = AcceptInviteUiState.Content(
+                state = AcceptInviteUiContent.Content(
                     invite = PendingInvite(
                         inviteToken = InviteToken(""),
                         inviterEmail = "some@inviter.test",
@@ -129,8 +129,7 @@ fun AcceptInviteContentPreview(
                     ),
                     isConfirmLoading = input.second,
                     isRejectLoading = false,
-                    areButtonsEnabled = !input.second,
-                    event = AcceptInviteEvent.Unknown
+                    areButtonsEnabled = !input.second
                 ),
                 onConfirm = {},
                 onReject = {}

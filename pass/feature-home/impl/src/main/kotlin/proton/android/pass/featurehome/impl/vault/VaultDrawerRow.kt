@@ -87,7 +87,8 @@ fun VaultDrawerRow(
             if (isShared) {
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_users),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = PassTheme.colors.textWeak
                 )
             }
         }

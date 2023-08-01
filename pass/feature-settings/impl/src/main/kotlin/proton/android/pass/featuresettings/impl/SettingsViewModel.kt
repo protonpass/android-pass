@@ -192,12 +192,8 @@ class SettingsViewModel @Inject constructor(
 
     fun onForceSync() = viewModelScope.launch {
         runCatching { refreshContent() }
-            .onSuccess {
-                // snackbarDispatcher(SettingsSnackbarMessage.SyncSuccessful)
-            }
             .onFailure {
                 PassLogger.e(TAG, it, "Error performing sync")
-                // snackbarDispatcher(SettingsSnackbarMessage.ErrorPerformingSync)
             }
     }
 

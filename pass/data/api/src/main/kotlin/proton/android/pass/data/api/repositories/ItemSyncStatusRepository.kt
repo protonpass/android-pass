@@ -36,6 +36,7 @@ data class ItemSyncStatusPayload(
 
 interface ItemSyncStatusRepository {
     suspend fun emit(status: ItemSyncStatus)
+    fun tryEmit(status: ItemSyncStatus)
     fun observeSyncStatus(): Flow<ItemSyncStatus>
     fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>>
 }

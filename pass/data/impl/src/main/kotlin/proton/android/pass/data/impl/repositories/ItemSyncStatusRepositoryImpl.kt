@@ -33,7 +33,8 @@ import javax.inject.Singleton
 class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusRepository {
 
     private val syncStatus: MutableSharedFlow<ItemSyncStatus> =
-        MutableSharedFlow(replay = 1, extraBufferCapacity = 1)
+        MutableSharedFlow<ItemSyncStatus>(replay = 1, extraBufferCapacity = 1)
+            .apply { tryEmit(ItemSyncStatus.NotStarted) }
     private val accSyncStatus: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
         MutableSharedFlow(replay = 1, extraBufferCapacity = 1)
     private val payloadMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
@@ -43,7 +44,8 @@ class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusReposit
         mutex.withLock {
             when (status) {
                 is ItemSyncStatus.Syncing -> {
-                    payloadMutableMap[status.shareId] = ItemSyncStatusPayload(status.current, status.total)
+                    payloadMutableMap[status.shareId] =
+                        ItemSyncStatusPayload(status.current, status.total)
                     accSyncStatus.emit(payloadMutableMap.toMap())
                 }
 
@@ -51,10 +53,29 @@ class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusReposit
                     payloadMutableMap.clear()
                     accSyncStatus.emit(payloadMutableMap.toMap())
                 }
+
                 else -> {}
             }
         }
         syncStatus.emit(status)
+    }
+
+    override fun tryEmit(status: ItemSyncStatus) {
+        when (status) {
+            is ItemSyncStatus.Syncing -> {
+                payloadMutableMap[status.shareId] =
+                    ItemSyncStatusPayload(status.current, status.total)
+                accSyncStatus.tryEmit(payloadMutableMap.toMap())
+            }
+
+            ItemSyncStatus.NotStarted -> {
+                payloadMutableMap.clear()
+                accSyncStatus.tryEmit(payloadMutableMap.toMap())
+            }
+
+            else -> {}
+        }
+        syncStatus.tryEmit(status)
     }
 
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = syncStatus

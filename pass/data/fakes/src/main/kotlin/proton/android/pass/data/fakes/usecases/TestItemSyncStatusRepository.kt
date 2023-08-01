@@ -42,6 +42,10 @@ class TestItemSyncStatusRepository @Inject constructor() : ItemSyncStatusReposit
         flow.emit(status)
     }
 
+    override fun tryEmit(status: ItemSyncStatus) {
+        flow.tryEmit(status)
+    }
+
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = flow
 
     override fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> =

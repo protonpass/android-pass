@@ -22,13 +22,14 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
+import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
 import proton.android.pass.featuresharing.impl.sharingsummary.SharingSummaryScreen
 import proton.android.pass.featuresharing.impl.sharingwith.SharingWithScreen
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.pass.domain.ShareId
@@ -57,7 +58,7 @@ object SharingPermissions : NavItem(
     fun createRoute(shareId: ShareId, email: String) = "$baseRoute/${shareId.id}/$email"
 }
 
-object AcceptInvite : NavItem("sharing/accept")
+object AcceptInvite : NavItem("sharing/accept", navItemType = NavItemType.Bottomsheet)
 
 object SharingSummary : NavItem(
     baseRoute = "sharing/summary/screen",

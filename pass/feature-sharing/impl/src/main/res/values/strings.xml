@@ -45,6 +45,7 @@
     <string name="sharing_join_shared_vault">Join shared vault</string>
     <string name="sharing_reject_invitation">Reject invitation</string>
 
+    <string name="sharing_snackbar_get_invite_error">Could not get invite</string>
     <string name="sharing_snackbar_invite_accepted">Invite accepted</string>
     <string name="sharing_snackbar_invite_accept_error">Error accepting the invite</string>
     <string name="sharing_snackbar_invite_rejected">Invite rejected</string>

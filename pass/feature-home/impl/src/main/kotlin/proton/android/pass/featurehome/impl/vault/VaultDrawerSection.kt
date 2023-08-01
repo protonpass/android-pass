@@ -93,7 +93,7 @@ fun VaultDrawerSection(
                         iconColor = share.color.toColor()
                     )
                 },
-                isShared = false,
+                isShared = share.isShared,
                 isSelected = homeVaultSelection == VaultSelectionOption.Vault(share.id),
                 showMenuIcon = true,
                 onOptionsClick = { onVaultOptionsClick(share) },

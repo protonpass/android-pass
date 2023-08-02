@@ -16,8 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.preferences
+package proton.android.pass.inappreview.api
 
-interface IncItemCreatedCount {
-    suspend operator fun invoke(): Result<Unit>
+interface InAppReviewTriggerMetrics {
+    suspend fun incrementItemCreatedCount()
+    suspend fun incrementItemAutofillCount()
+    suspend fun incrementAppLaunchStreakCount()
 }

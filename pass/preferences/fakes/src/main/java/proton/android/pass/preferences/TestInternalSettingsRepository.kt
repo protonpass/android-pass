@@ -21,6 +21,7 @@ package proton.android.pass.preferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.datetime.Clock
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -40,6 +41,8 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val pinAttemptsCountFlow = MutableStateFlow(0)
     private val masterPasswordAttemptsCountFlow = MutableStateFlow(0)
     private val itemCreateCountFlow = MutableStateFlow(0)
+    private val itemAutofillCountFlow = MutableStateFlow(0)
+    private val appUsageFlow = MutableStateFlow(AppUsageConfig(timesUsed = 0, lastDateUsed = Clock.System.now()))
     private val inAppReviewTriggeredFlow = MutableStateFlow(false)
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
@@ -111,6 +114,20 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun getInAppReviewTriggered(): Flow<Boolean> = inAppReviewTriggeredFlow
+
+    override fun setAppUsage(appUsageConfig: AppUsageConfig): Result<Unit> {
+        appUsageFlow.update { appUsageConfig }
+        return Result.success(Unit)
+    }
+
+    override fun getAppUsage(): Flow<AppUsageConfig> = appUsageFlow
+
+    override fun setItemAutofillCount(count: Int): Result<Unit> {
+        itemAutofillCountFlow.update { count }
+        return Result.success(Unit)
+    }
+
+    override fun getItemAutofillCount(): Flow<Int> = itemAutofillCountFlow
 
     override fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

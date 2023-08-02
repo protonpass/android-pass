@@ -115,6 +115,7 @@ import proton.android.pass.featuresettings.impl.SettingsNavigation
 import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featuresharing.impl.AcceptInvite
+import proton.android.pass.featuresharing.impl.ManageVault
 import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.SharingPermissions
 import proton.android.pass.featuresharing.impl.SharingSummary
@@ -350,7 +351,13 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is VaultNavigation.VaultAccess -> {} // Not yet implemented
+                is VaultNavigation.VaultAccess -> {
+                    appNavigator.navigate(
+                        destination = ManageVault,
+                        route = ManageVault.createRoute(it.shareId),
+                        backDestination = Home
+                    )
+                }
             }
         }
     )
@@ -736,7 +743,10 @@ fun NavGraphBuilder.appGraph(
                 ItemDetailNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
 
                 is ItemDetailNavigation.ManageVault -> {
-                    // to be done
+                    appNavigator.navigate(
+                        destination = ManageVault,
+                        route = ManageVault.createRoute(it.shareId)
+                    )
                 }
             }
         }
@@ -836,13 +846,24 @@ fun NavGraphBuilder.appGraph(
             }
 
             is SharingNavigation.Permissions -> appNavigator.navigate(
-                SharingPermissions,
-                SharingPermissions.createRoute(it.shareId, it.email)
+                destination = SharingPermissions,
+                route = SharingPermissions.createRoute(it.shareId, it.email)
             )
 
             is SharingNavigation.Summary -> appNavigator.navigate(
-                SharingSummary,
-                SharingSummary.createRoute(it.shareId, it.email, it.permission)
+                destination = SharingSummary,
+                route = SharingSummary.createRoute(it.shareId, it.email, it.permission)
+            )
+
+            is SharingNavigation.ShareVault -> appNavigator.navigate(
+                destination = SharingWith,
+                route = SharingWith.createRoute(it.shareId)
+            )
+
+            is SharingNavigation.ManageVault -> appNavigator.navigate(
+                destination = ManageVault,
+                route = ManageVault.createRoute(it.shareId),
+                backDestination = Home
             )
         }
     }

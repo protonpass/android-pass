@@ -19,11 +19,14 @@
 package proton.android.pass.preferences
 
 import androidx.datastore.core.DataStore
+import com.google.protobuf.Timestamp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Instant
+import me.proton.android.pass.preferences.AppUsage
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -32,6 +35,7 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Suppress("TooManyFunctions")
 @Singleton
 class InternalSettingsRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<InternalSettings>
@@ -115,6 +119,32 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     override fun getInAppReviewTriggered(): Flow<Boolean> =
         getPreference { it.inAppReviewTriggered }
+
+    override fun setAppUsage(appUsageConfig: AppUsageConfig): Result<Unit> = setPreference {
+        it.setAppUsage(
+            AppUsage.newBuilder(it.appUsage)
+                .setDaysAppUsedInARow(appUsageConfig.timesUsed)
+                .setLastAppUsageDate(
+                    Timestamp.newBuilder()
+                        .setSeconds(appUsageConfig.lastDateUsed.epochSeconds)
+                        .build()
+                )
+                .build()
+        )
+    }
+
+    override fun getAppUsage(): Flow<AppUsageConfig> = getPreference {
+        AppUsageConfig(
+            it.appUsage.daysAppUsedInARow,
+            Instant.fromEpochSeconds(it.appUsage.lastAppUsageDate.seconds)
+        )
+    }
+
+    override fun setItemAutofillCount(count: Int): Result<Unit> = setPreference {
+        it.setItemAutofillCount(count)
+    }
+
+    override fun getItemAutofillCount(): Flow<Int> = getPreference { it.itemAutofillCount }
 
     override fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> = setPreference {
         it.setMasterPasswordAttempts(count)

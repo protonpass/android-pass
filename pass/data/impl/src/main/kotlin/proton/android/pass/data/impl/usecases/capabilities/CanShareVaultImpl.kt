@@ -27,6 +27,7 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
+import proton.pass.domain.Vault
 import javax.inject.Inject
 
 class CanShareVaultImpl @Inject constructor(
@@ -35,9 +36,6 @@ class CanShareVaultImpl @Inject constructor(
 ) : CanShareVault {
 
     override suspend fun invoke(shareId: ShareId): Boolean {
-        val isSharingEnabled = getSharingEnabledFlag()
-        if (!isSharingEnabled) return false
-
         val vault = runCatching { getVaultById(shareId = shareId).first() }
             .fold(
                 onSuccess = { vault -> vault },
@@ -46,6 +44,14 @@ class CanShareVaultImpl @Inject constructor(
                     return false
                 }
             )
+
+        return invoke(vault)
+    }
+
+    override suspend fun invoke(vault: Vault): Boolean {
+        val isSharingEnabled = getSharingEnabledFlag()
+        if (!isSharingEnabled) return false
+
         return when {
             vault.isPrimary -> false
             vault.isOwned -> true

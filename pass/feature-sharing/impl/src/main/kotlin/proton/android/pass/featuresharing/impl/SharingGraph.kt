@@ -23,6 +23,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
+import proton.android.pass.featuresharing.impl.manage.ManageVaultScreen
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
 import proton.android.pass.featuresharing.impl.sharingsummary.SharingSummaryScreen
 import proton.android.pass.featuresharing.impl.sharingwith.SharingWithScreen
@@ -68,11 +69,24 @@ object SharingSummary : NavItem(
         "$baseRoute/${shareId.id}/$email/$permission"
 }
 
+object ManageVault : NavItem(
+    baseRoute = "sharing/manage/screen",
+    navArgIds = listOf(CommonNavArgId.ShareId)
+) {
+    fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+}
+
 sealed interface SharingNavigation {
     object Back : SharingNavigation
     data class Permissions(val shareId: ShareId, val email: String) : SharingNavigation
     data class Summary(val shareId: ShareId, val email: String, val permission: Int) :
         SharingNavigation
+
+    @JvmInline
+    value class ShareVault(val shareId: ShareId) : SharingNavigation
+
+    @JvmInline
+    value class ManageVault(val shareId: ShareId) : SharingNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -94,5 +108,9 @@ fun NavGraphBuilder.sharingGraph(
     bottomSheet(AcceptInvite) {
         BackHandler { onNavigateEvent(SharingNavigation.Back) }
         AcceptInviteBottomSheet(onNavigateEvent = onNavigateEvent)
+    }
+
+    composable(ManageVault) {
+        ManageVaultScreen(onNavigateEvent = onNavigateEvent)
     }
 }

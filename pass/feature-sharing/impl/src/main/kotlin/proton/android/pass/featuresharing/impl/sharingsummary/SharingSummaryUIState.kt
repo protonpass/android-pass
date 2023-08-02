@@ -21,9 +21,15 @@ package proton.android.pass.featuresharing.impl.sharingsummary
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.pass.domain.VaultWithItemCount
 
+sealed interface SharingSummaryEvent {
+    object Unknown : SharingSummaryEvent
+    object Shared : SharingSummaryEvent
+}
+
 data class SharingSummaryUIState(
     val email: String = "",
     val vaultWithItemCount: VaultWithItemCount? = null,
     val sharingType: SharingType = SharingType.Read,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val event: SharingSummaryEvent = SharingSummaryEvent.Unknown
 )

@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.pass.domain.ShareId
+import proton.pass.domain.Vault
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,4 +34,5 @@ class TestCanShareVault @Inject constructor() : CanShareVault {
     }
 
     override suspend fun invoke(shareId: ShareId): Boolean = result
+    override suspend fun invoke(vault: Vault): Boolean = result
 }

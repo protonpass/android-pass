@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "proton.android.pass.inappreview.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
-    
+
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.google.inAppReview)
     implementation(libs.google.inAppReviewKtx)
     implementation(libs.core.utilKotlin)
+    implementation(libs.kotlinx.datetime)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
@@ -41,6 +42,16 @@ dependencies {
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
     implementation(projects.pass.preferences.api)
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.junit)
+
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.preferences.fakes)
 }

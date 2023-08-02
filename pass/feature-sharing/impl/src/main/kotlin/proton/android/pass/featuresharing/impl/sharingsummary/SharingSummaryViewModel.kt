@@ -65,12 +65,17 @@ class SharingSummaryViewModel @Inject constructor(
 
     private val isLoadingStateFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
+
+    private val eventFlow: MutableStateFlow<SharingSummaryEvent> =
+        MutableStateFlow(SharingSummaryEvent.Unknown)
+
     val state: StateFlow<SharingSummaryUIState> = combine(
         flowOf(email),
         flowOf(sharingType),
         getVaultWithItemCountById(shareId = shareId).asLoadingResult(),
-        isLoadingStateFlow
-    ) { email, sharingType, vaultResult, isLoadingState ->
+        isLoadingStateFlow,
+        eventFlow
+    ) { email, sharingType, vaultResult, isLoadingState, event ->
         val vaultWithItemCount = when (vaultResult) {
             is LoadingResult.Success -> vaultResult.data
             is LoadingResult.Error -> {
@@ -87,6 +92,7 @@ class SharingSummaryViewModel @Inject constructor(
             vaultWithItemCount = vaultWithItemCount,
             sharingType = sharingType,
             isLoading = isLoading,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
@@ -107,6 +113,7 @@ class SharingSummaryViewModel @Inject constructor(
                         isLoadingStateFlow.update { IsLoadingState.NotLoading }
                         snackbarDispatcher(InviteSentSuccess)
                         PassLogger.i(TAG, "Invite sent successfully")
+                        eventFlow.update { SharingSummaryEvent.Shared }
                     }
                     .onFailure {
                         isLoadingStateFlow.update { IsLoadingState.NotLoading }

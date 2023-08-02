@@ -39,9 +39,4 @@ abstract class FakesPreferenceModule {
     abstract fun bindInternalSettingsRepository(
         impl: TestInternalSettingsRepository
     ): InternalSettingsRepository
-
-    @Binds
-    abstract fun bindIncItemCreatedCount(
-        impl: TestIncItemCreatedCount
-    ): IncItemCreatedCount
 }

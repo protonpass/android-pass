@@ -66,10 +66,10 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.Al
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.CannotCreateMoreAliases
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.EmailNotValidated
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.IncItemCreatedCount
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -87,7 +87,7 @@ class CreateLoginViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     private val draftRepository: DraftRepository,
-    private val incItemCreatedCount: IncItemCreatedCount,
+    private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
@@ -310,7 +310,7 @@ class CreateLoginViewModel @Inject constructor(
                 )
             )
         }.onSuccess { item ->
-            incItemCreatedCount()
+            inAppReviewTriggerMetrics.incrementItemCreatedCount()
             isItemSavedState.update {
                 encryptionContextProvider.withEncryptionContext {
                     ItemSavedState.Success(
@@ -344,7 +344,7 @@ class CreateLoginViewModel @Inject constructor(
                 itemContents = itemContentState.value
             )
         }.onSuccess { item ->
-            incItemCreatedCount()
+            inAppReviewTriggerMetrics.incrementItemCreatedCount()
             isItemSavedState.update {
                 encryptionContextProvider.withEncryptionContext {
                     ItemSavedState.Success(

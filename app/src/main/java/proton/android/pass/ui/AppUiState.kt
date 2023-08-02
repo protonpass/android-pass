@@ -32,8 +32,7 @@ data class AppUiState(
     val theme: ThemePreference,
     val networkStatus: NetworkStatus,
     val needsAuth: Boolean,
-    val inAppUpdateState: InAppUpdateState,
-    val requestInAppReview: Boolean
+    val inAppUpdateState: InAppUpdateState
 ) {
     companion object {
         fun default(theme: ThemePreference, needsAuth: Boolean) = AppUiState(
@@ -41,8 +40,7 @@ data class AppUiState(
             theme = theme,
             networkStatus = NetworkStatus.Online,
             needsAuth = needsAuth,
-            inAppUpdateState = InAppUpdateState.Idle,
-            requestInAppReview = false
+            inAppUpdateState = InAppUpdateState.Idle
         )
     }
 }

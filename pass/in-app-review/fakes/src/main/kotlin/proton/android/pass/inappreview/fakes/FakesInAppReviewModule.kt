@@ -16,17 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.preferences
+package proton.android.pass.inappreview.fakes
 
-import kotlinx.coroutines.flow.firstOrNull
-import javax.inject.Inject
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 
-class IncItemCreatedCountImpl @Inject constructor(
-    private val internalSettingsRepository: InternalSettingsRepository
-) : IncItemCreatedCount {
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class FakesInAppReviewModule {
 
-    override suspend fun invoke(): Result<Unit> = runCatching {
-        val count: Int = internalSettingsRepository.getItemCreateCount().firstOrNull() ?: 0
-        internalSettingsRepository.setItemCreateCount(count.inc())
-    }
+    @Binds
+    abstract fun bindInAppReviewTriggerMetrics(impl: TestInAppReviewTriggerMetrics): InAppReviewTriggerMetrics
 }

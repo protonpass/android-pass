@@ -36,8 +36,8 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.alias.IsEditAliasNavArg
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.IncItemCreatedCount
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -53,7 +53,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     telemetryManager: TelemetryManager,
     draftRepository: DraftRepository,
-    incItemCreatedCount: IncItemCreatedCount
+    inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
 ) : CreateAliasViewModel(
     accountManager = accountManager,
     createAlias = createAlias,
@@ -64,7 +64,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeAliasOptions = observeAliasOptions,
     observeVaults = observeVaults,
     savedStateHandle = savedStateHandle,
-    incItemCreatedCount = incItemCreatedCount,
+    inAppReviewTriggerMetrics = inAppReviewTriggerMetrics,
     canPerformPaidAction = canPerformPaidAction
 ) {
 

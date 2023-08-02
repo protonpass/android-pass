@@ -32,10 +32,10 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.ItemCreated
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.ItemCreationError
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.IncItemCreatedCount
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
@@ -49,7 +49,7 @@ class CreateCreditCardViewModel @Inject constructor(
     private val createItem: CreateItem,
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
-    private val incItemCreatedCount: IncItemCreatedCount,
+    private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction,
@@ -153,7 +153,7 @@ class CreateCreditCardViewModel @Inject constructor(
                     itemContents = itemContentState.value
                 )
             }.onSuccess { item ->
-                incItemCreatedCount()
+                inAppReviewTriggerMetrics.incrementItemCreatedCount()
                 isItemSavedState.update {
                     encryptionContextProvider.withEncryptionContext {
                         ItemSavedState.Success(

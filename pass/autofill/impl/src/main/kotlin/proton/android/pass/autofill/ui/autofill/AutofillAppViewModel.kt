@@ -38,6 +38,7 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -56,7 +57,8 @@ class AutofillAppViewModel @Inject constructor(
     private val toastManager: ToastManager,
     private val updateAutofillItem: UpdateAutofillItem,
     private val preferenceRepository: UserPreferencesRepository,
-    private val telemetryManager: TelemetryManager
+    private val telemetryManager: TelemetryManager,
+    private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics
 ) : ViewModel() {
 
     fun getMappings(
@@ -86,8 +88,9 @@ class AutofillAppViewModel @Inject constructor(
             )
         }
 
-    fun onAutofillItemSelected(source: AutofillTriggerSource) {
+    fun onAutofillItemSelected(source: AutofillTriggerSource) = viewModelScope.launch {
         telemetryManager.sendEvent(AutofillDone(source))
+        inAppReviewTriggerMetrics.incrementItemAutofillCount()
     }
 
     private fun handleTotpUri(encryptionContext: EncryptionContext, totp: EncryptedString?) {

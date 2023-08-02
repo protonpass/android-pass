@@ -16,20 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.data.api.usecases
 
-@JvmInline
-value class InviteToken(val value: String)
+import kotlinx.coroutines.flow.Flow
+import proton.pass.domain.InviteId
+import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 
-@JvmInline
-value class InviteId(val value: String)
+sealed class VaultMember(open val email: String) {
+    data class Member(
+        override val email: String,
+        val shareId: ShareId,
+        val username: String,
+        val role: ShareRole?
+    ) : VaultMember(email)
 
-data class PendingInvite(
-    val inviteToken: InviteToken,
-    val inviterEmail: String,
-    val memberCount: Int,
-    val itemCount: Int,
-    val name: String,
-    val icon: ShareIcon,
-    val color: ShareColor
-)
+    data class InvitePending(
+        override val email: String,
+        val inviteId: InviteId
+    ) : VaultMember(email)
+}
+
+interface GetVaultMembers {
+    operator fun invoke(shareId: ShareId): Flow<List<VaultMember>>
+}

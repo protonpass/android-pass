@@ -19,11 +19,15 @@
 package proton.android.pass.common.api
 
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.flow
 
 object FlowUtils {
 
     fun <T> testFlow() = MutableSharedFlow<T>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
     )
+
+    fun <T> oneShot(block: suspend () -> T): Flow<T> = flow { emit(block()) }
 }

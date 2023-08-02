@@ -31,6 +31,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.autofill.AutofillDone
+import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
@@ -56,11 +58,13 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.GetTotpCodeFromUri
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -68,12 +72,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InlineSuggestionsActivityViewModel @Inject constructor(
-    preferenceRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
     private val getTotpCodeFromUri: GetTotpCodeFromUri,
     private val toastManager: ToastManager,
     private val updateAutofillItem: UpdateAutofillItem,
+    preferenceRepository: UserPreferencesRepository,
+    inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    telemetryManager: TelemetryManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -134,13 +140,14 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         autofillItemState,
         copyTotpToClipboardState
     ) { autofillAppState, autofillItemOption, copyTotpToClipboard ->
-        PassLogger.d(TAG, autofillAppState.toString())
         val mappingsOption = autofillItemOption
             .map { autofillItem ->
                 getMappings(autofillItem, copyTotpToClipboard, autofillAppState)
             }
         if (mappingsOption is Some) {
             if (mappingsOption.value.mappings.isNotEmpty()) {
+                telemetryManager.sendEvent(AutofillDone(AutofillTriggerSource.Source))
+                inAppReviewTriggerMetrics.incrementItemAutofillCount()
                 InlineSuggestionAutofillNoUiState.Success(mappingsOption.value)
             } else {
                 PassLogger.i(TAG, "Empty mappings")

@@ -16,20 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.data.fakes.usecases
 
-@JvmInline
-value class InviteToken(val value: String)
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import proton.android.pass.data.api.usecases.GetVaultMembers
+import proton.android.pass.data.api.usecases.VaultMember
+import proton.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@JvmInline
-value class InviteId(val value: String)
+@Singleton
+class TestGetVaultMembers @Inject constructor() : GetVaultMembers {
 
-data class PendingInvite(
-    val inviteToken: InviteToken,
-    val inviterEmail: String,
-    val memberCount: Int,
-    val itemCount: Int,
-    val name: String,
-    val icon: ShareIcon,
-    val color: ShareColor
-)
+    private val flow: MutableStateFlow<List<VaultMember>> = MutableStateFlow(emptyList())
+
+    fun emitValue(value: List<VaultMember>) {
+        flow.tryEmit(value)
+    }
+
+    override fun invoke(shareId: ShareId): Flow<List<VaultMember>> = flow
+
+}

@@ -50,6 +50,7 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.LeaveVault
@@ -124,6 +125,7 @@ import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
 import proton.android.pass.data.impl.usecases.GetUserPlanImpl
 import proton.android.pass.data.impl.usecases.GetVaultByIdImpl
+import proton.android.pass.data.impl.usecases.GetVaultMembersImpl
 import proton.android.pass.data.impl.usecases.GetVaultWithItemCountByIdImpl
 import proton.android.pass.data.impl.usecases.InviteToVaultImpl
 import proton.android.pass.data.impl.usecases.LeaveVaultImpl
@@ -396,4 +398,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCanManageVaultAccess(impl: CanManageVaultAccessImpl): CanManageVaultAccess
+
+    @Binds
+    abstract fun bindGetVaultMembers(impl: GetVaultMembersImpl): GetVaultMembers
 }

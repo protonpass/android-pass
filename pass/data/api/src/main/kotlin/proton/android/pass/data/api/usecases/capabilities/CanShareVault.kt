@@ -19,7 +19,9 @@
 package proton.android.pass.data.api.usecases.capabilities
 
 import proton.pass.domain.ShareId
+import proton.pass.domain.Vault
 
 interface CanShareVault {
     suspend operator fun invoke(shareId: ShareId): Boolean
+    suspend operator fun invoke(vault: Vault): Boolean
 }

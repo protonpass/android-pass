@@ -21,6 +21,9 @@ package proton.pass.domain
 @JvmInline
 value class InviteToken(val value: String)
 
+@JvmInline
+value class InviteId(val value: String)
+
 data class PendingInvite(
     val inviteToken: InviteToken,
     val inviterEmail: String,

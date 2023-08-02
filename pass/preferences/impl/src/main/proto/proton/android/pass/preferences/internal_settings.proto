@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "proton/android/pass/preferences/app_usage.proto";
+
 option java_package = "proton.android.pass.preferences";
 option java_multiple_files = true;
 
@@ -14,4 +16,6 @@ message InternalSettings {
   int32 master_password_attempts = 8;
   int32 item_create_count = 9;
   bool in_app_review_triggered = 10;
+  AppUsage app_usage = 11;
+  int32 item_autofill_count = 12;
 }

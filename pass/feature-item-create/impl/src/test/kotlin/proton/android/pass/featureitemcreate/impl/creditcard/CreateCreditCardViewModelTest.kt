@@ -41,8 +41,8 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestIncItemCreatedCount
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -83,7 +83,7 @@ class CreateCreditCardViewModelTest {
             observeVaults = observeVaults,
             telemetryManager = telemetryManager,
             canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
-            incItemCreatedCount = TestIncItemCreatedCount()
+            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics()
         )
     }
 

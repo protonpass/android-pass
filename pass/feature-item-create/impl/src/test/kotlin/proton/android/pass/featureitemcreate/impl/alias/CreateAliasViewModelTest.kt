@@ -37,10 +37,10 @@ import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
+import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestIncItemCreatedCount
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -68,7 +68,7 @@ class CreateAliasViewModelTest {
     private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var draftRepository: TestDraftRepository
-    private lateinit var incItemCreatedCount: TestIncItemCreatedCount
+    private lateinit var inAppReviewTriggerMetrics: TestInAppReviewTriggerMetrics
 
     @Before
     fun setUp() {
@@ -83,7 +83,7 @@ class CreateAliasViewModelTest {
         draftRepository = TestDraftRepository()
         observeUpgradeInfo = TestObserveUpgradeInfo()
         canPerformPaidAction = TestCanPerformPaidAction()
-        incItemCreatedCount = TestIncItemCreatedCount()
+        inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics()
     }
 
 
@@ -270,7 +270,7 @@ class CreateAliasViewModelTest {
             observeUpgradeInfo = observeUpgradeInfo,
             canPerformPaidAction = canPerformPaidAction,
             draftRepository = draftRepository,
-            incItemCreatedCount = incItemCreatedCount
+            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics()
         ).apply {
             setDraftStatus(isDraft)
         }

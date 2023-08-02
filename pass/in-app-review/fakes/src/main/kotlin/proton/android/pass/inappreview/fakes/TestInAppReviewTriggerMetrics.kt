@@ -16,13 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.preferences
+package proton.android.pass.inappreview.fakes
 
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TestIncItemCreatedCount @Inject constructor() : IncItemCreatedCount {
+class TestInAppReviewTriggerMetrics @Inject constructor() : InAppReviewTriggerMetrics {
+    override suspend fun incrementItemCreatedCount() {
+    }
 
-    override suspend fun invoke(): Result<Unit> = Result.success(Unit)
+    override suspend fun incrementItemAutofillCount() {
+    }
+
+    override suspend fun incrementAppLaunchStreakCount() {
+    }
 }

@@ -24,24 +24,41 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import org.jetbrains.annotations.VisibleForTesting
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
+import proton.pass.domain.PlanType
 import javax.inject.Inject
 
 class InAppReviewManagerImpl @Inject constructor(
-    private val internalSettingsRepository: InternalSettingsRepository
+    private val internalSettingsRepository: InternalSettingsRepository,
+    private val getUserPlan: GetUserPlan
 ) : InAppReviewManager {
 
     override fun shouldRequestReview(): Flow<Boolean> = combine(
         internalSettingsRepository.getItemCreateCount(),
-        internalSettingsRepository.getInAppReviewTriggered()
-    ) { itemCreateCount, inAppReviewTriggered ->
-        when {
-            !inAppReviewTriggered -> itemCreateCount == ITEM_CREATED_TRIGGER
-            else -> false
+        internalSettingsRepository.getItemAutofillCount(),
+        internalSettingsRepository.getAppUsage(),
+        internalSettingsRepository.getInAppReviewTriggered(),
+        getUserPlan().asLoadingResult()
+    ) { itemCreateCount, autofillCount, appUsage, inAppReviewTriggered, plan ->
+        val isPaid = plan.getOrNull()?.planType is PlanType.Paid
+        if (inAppReviewTriggered) {
+            return@combine false
         }
+        val itemCreateTrigger =
+            if (isPaid) PAID_USER_ITEM_CREATED_TRIGGER else FREE_USER_ITEM_CREATED_TRIGGER
+        val autofillTrigger =
+            if (isPaid) PAID_USER_ITEM_AUTOFILL_TRIGGER else FREE_USER_ITEM_AUTOFILL_TRIGGER
+
+        itemCreateCount >= itemCreateTrigger ||
+            autofillCount >= autofillTrigger ||
+            appUsage.timesUsed >= TIMES_USED
     }
 
     override fun requestReview(activityHolder: ClassHolder<Activity>) {
@@ -68,6 +85,20 @@ class InAppReviewManagerImpl @Inject constructor(
 
     companion object {
         private const val TAG = "InAppReviewManagerImpl"
-        private const val ITEM_CREATED_TRIGGER = 10
+
+        @VisibleForTesting
+        const val TIMES_USED = 3
+
+        @VisibleForTesting
+        const val FREE_USER_ITEM_CREATED_TRIGGER = 10
+
+        @VisibleForTesting
+        const val PAID_USER_ITEM_CREATED_TRIGGER = 5
+
+        @VisibleForTesting
+        const val FREE_USER_ITEM_AUTOFILL_TRIGGER = 5
+
+        @VisibleForTesting
+        const val PAID_USER_ITEM_AUTOFILL_TRIGGER = 3
     }
 }

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto"; // Import the Timestamp definition
+
+option java_package = "me.proton.android.pass.preferences";
+option java_multiple_files = true;
+
+message AppUsage {
+  int32 days_app_used_in_a_row = 1;
+  google.protobuf.Timestamp last_app_usage_date = 2;
+}

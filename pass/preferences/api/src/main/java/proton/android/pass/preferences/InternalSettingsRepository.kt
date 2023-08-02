@@ -54,5 +54,11 @@ interface InternalSettingsRepository {
     fun setInAppReviewTriggered(value: Boolean): Result<Unit>
     fun getInAppReviewTriggered(): Flow<Boolean>
 
+    fun setAppUsage(appUsageConfig: AppUsageConfig): Result<Unit>
+    fun getAppUsage(): Flow<AppUsageConfig>
+
+    fun setItemAutofillCount(count: Int): Result<Unit>
+    fun getItemAutofillCount(): Flow<Int>
+
     fun clearSettings(): Result<Unit>
 }

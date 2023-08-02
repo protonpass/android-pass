@@ -22,17 +22,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import proton.android.pass.commonui.api.LifecycleEffect
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.findActivity
-import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
 
@@ -45,13 +41,6 @@ fun PassApp(
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
     val isDark = isDark(appUiState.theme)
     SystemUIEffect(isDark = isDark)
-    val activity = LocalContext.current.findActivity()
-    LaunchedEffect(appUiState.requestInAppReview) {
-        if (appUiState.requestInAppReview) {
-            activity.value()?.let { appViewModel.requestReview(it.toClassHolder()) }
-        }
-    }
-
     LifecycleEffect(
         onStop = { appViewModel.onStop() },
         onStart = { appViewModel.onStart() },

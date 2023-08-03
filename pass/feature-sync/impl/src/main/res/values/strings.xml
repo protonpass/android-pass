@@ -24,6 +24,6 @@
     <string name="sync_progress_item_count">%1$d of %2$d items</string>
     <string name="sync_dialog_title">Syncing items…</string>
     <string name="sync_dialog_subtitle">We are downloading and decrypting your items. This might take a few minutes.</string>
-    <string name="sync_dialog_confirm_button">Your data is ready. Continue</string>
+    <string name="sync_dialog_confirm_button">Continue</string>
     <string name="sync_item_not_started">Not started</string>
 </resources>

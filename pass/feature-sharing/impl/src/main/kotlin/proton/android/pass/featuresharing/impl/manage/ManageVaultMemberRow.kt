@@ -29,6 +29,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -42,6 +43,7 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
+import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.common.toShortSummary
@@ -50,12 +52,30 @@ import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
 import proton.android.pass.composecomponents.impl.R as CompR
 
+@Stable
+sealed interface VaultMemberContent {
+    object Loading : VaultMemberContent
+
+    @JvmInline
+    value class Member(val member: VaultMember) : VaultMemberContent
+}
+
 @Composable
 fun ManageVaultMemberRow(
     modifier: Modifier = Modifier,
-    member: VaultMember,
-    onOptionsClick: () -> Unit
+    member: VaultMemberContent,
+    onOptionsClick: (() -> Unit)? = null
 ) {
+    val (circleTextModifier, circleText) = when (member) {
+        VaultMemberContent.Loading -> Modifier.placeholder() to ""
+        is VaultMemberContent.Member -> Modifier to member.member.email
+    }
+
+    val (titleTextModifier, titleText) = when (member) {
+        VaultMemberContent.Loading -> Modifier.fillMaxWidth().placeholder() to ""
+        is VaultMemberContent.Member -> Modifier to member.member.email
+    }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -64,49 +84,63 @@ fun ManageVaultMemberRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         CircleTextIcon(
-            text = member.email,
+            modifier = circleTextModifier,
+            text = circleText,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
             textColor = PassTheme.colors.interactionNormMajor1,
             shape = PassTheme.shapes.squircleMediumShape
         )
 
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
-                text = member.email,
+                modifier = titleTextModifier,
+                text = titleText,
                 style = PassTheme.typography.body3Norm()
             )
 
             when (member) {
-                is VaultMember.Member -> {
-                    member.role?.let { role ->
+                VaultMemberContent.Loading -> {
+                    Text(
+                        modifier = Modifier.fillMaxWidth().placeholder(),
+                        text = ""
+                    )
+                }
+
+                is VaultMemberContent.Member -> when (val memberContent = member.member) {
+                    is VaultMember.Member -> {
+                        memberContent.role?.let { role ->
+                            Text(
+                                text = role.toShortSummary(),
+                                style = PassTheme.typography.body3Weak()
+                            )
+                        }
+
+                    }
+
+                    is VaultMember.InvitePending -> {
                         Text(
-                            text = role.toShortSummary(),
+                            text = stringResource(R.string.share_manage_vault_invite_pending),
                             style = PassTheme.typography.body3Weak()
                         )
                     }
-
-                }
-
-                is VaultMember.InvitePending -> {
-                    Text(
-                        text = stringResource(R.string.share_manage_vault_invite_pending),
-                        style = PassTheme.typography.body3Weak()
-                    )
                 }
             }
         }
 
-        IconButton(
-            onClick = { onOptionsClick() },
-            modifier = Modifier.size(24.dp)
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(CompR.drawable.ic_three_dots_vertical_24),
-                contentDescription = stringResource(id = CompR.string.action_content_description_menu),
-                tint = PassTheme.colors.textHint
-            )
+        if (member is VaultMemberContent.Member) {
+            IconButton(
+                onClick = { onOptionsClick?.invoke() },
+                modifier = Modifier.size(24.dp)
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(CompR.drawable.ic_three_dots_vertical_24),
+                    contentDescription = stringResource(id = CompR.string.action_content_description_menu),
+                    tint = PassTheme.colors.textHint
+                )
+            }
         }
     }
 }
@@ -129,7 +163,7 @@ fun ManageVaultMemberRowPreview(
     PassTheme(isDark = input.first) {
         Surface {
             ManageVaultMemberRow(
-                member = member,
+                member = VaultMemberContent.Member(member),
                 onOptionsClick = {}
             )
         }

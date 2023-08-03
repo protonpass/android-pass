@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.alias
 import androidx.compose.runtime.Immutable
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.pass.domain.ShareId
 
@@ -30,7 +31,7 @@ data class BaseAliasUiState(
     val isDraft: Boolean,
     val errorList: Set<AliasItemValidationErrors>,
     val isLoadingState: IsLoadingState,
-    val isAliasSavedState: AliasSavedState,
+    val itemSavedState: ItemSavedState,
     val isAliasDraftSavedState: AliasDraftSavedState,
     val isApplyButtonEnabled: IsButtonEnabled,
     val closeScreenEvent: CloseScreenEvent,
@@ -44,7 +45,7 @@ data class BaseAliasUiState(
             isDraft = false,
             errorList = emptySet(),
             isLoadingState = IsLoadingState.Loading,
-            isAliasSavedState = AliasSavedState.Unknown,
+            itemSavedState = ItemSavedState.Unknown,
             isAliasDraftSavedState = AliasDraftSavedState.Unknown,
             isApplyButtonEnabled = IsButtonEnabled.Disabled,
             closeScreenEvent = CloseScreenEvent.NotClose,

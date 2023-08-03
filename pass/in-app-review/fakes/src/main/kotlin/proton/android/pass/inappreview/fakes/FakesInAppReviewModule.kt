@@ -22,6 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 
 @Module
@@ -30,4 +31,7 @@ abstract class FakesInAppReviewModule {
 
     @Binds
     abstract fun bindInAppReviewTriggerMetrics(impl: TestInAppReviewTriggerMetrics): InAppReviewTriggerMetrics
+
+    @Binds
+    abstract fun bindInAppReviewManager(impl: TestInAppReviewManager): InAppReviewManager
 }

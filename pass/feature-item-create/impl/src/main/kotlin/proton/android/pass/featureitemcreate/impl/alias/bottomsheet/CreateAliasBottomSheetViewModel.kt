@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Some
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateAlias
@@ -54,6 +55,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     telemetryManager: TelemetryManager,
     draftRepository: DraftRepository,
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    encryptionContextProvider: EncryptionContextProvider
 ) : CreateAliasViewModel(
     accountManager = accountManager,
     createAlias = createAlias,
@@ -65,7 +67,8 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeVaults = observeVaults,
     savedStateHandle = savedStateHandle,
     inAppReviewTriggerMetrics = inAppReviewTriggerMetrics,
-    canPerformPaidAction = canPerformPaidAction
+    canPerformPaidAction = canPerformPaidAction,
+    encryptionContextProvider = encryptionContextProvider
 ) {
 
     private val isEditMode = savedStateHandle.get<Boolean>(IsEditAliasNavArg.key) ?: false

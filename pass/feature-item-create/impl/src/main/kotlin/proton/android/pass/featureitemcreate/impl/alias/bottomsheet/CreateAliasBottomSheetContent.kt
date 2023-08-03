@@ -51,6 +51,7 @@ import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.container.rememberAnimatedVisibilityState
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasAdvancedOptionsSection
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
@@ -59,7 +60,6 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationError
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasPrefixSuffixText
-import proton.android.pass.featureitemcreate.impl.alias.AliasSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 import proton.android.pass.featureitemcreate.impl.alias.BaseAliasUiState
 import proton.android.pass.featureitemcreate.impl.alias.CloseScreenEvent
@@ -242,7 +242,7 @@ fun CreateAliasBottomSheetContentPreview(
                     isDraft = false,
                     errorList = emptySet(),
                     isLoadingState = IsLoadingState.NotLoading,
-                    isAliasSavedState = AliasSavedState.Unknown,
+                    itemSavedState = ItemSavedState.Unknown,
                     isAliasDraftSavedState = AliasDraftSavedState.Unknown,
                     isApplyButtonEnabled = IsButtonEnabled.Enabled,
                     closeScreenEvent = CloseScreenEvent.NotClose,

@@ -29,6 +29,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
@@ -37,6 +38,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -177,7 +179,7 @@ class CreateAliasViewModelTest {
             val item = awaitItem()
 
             assertThat(item.baseAliasUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(item.baseAliasUiState.isAliasSavedState).isInstanceOf(AliasSavedState.Success::class.java)
+            assertThat(item.baseAliasUiState.itemSavedState).isInstanceOf(ItemSavedState.Success::class.java)
         }
 
         val events = telemetryManager.getMemory()
@@ -270,7 +272,8 @@ class CreateAliasViewModelTest {
             observeUpgradeInfo = observeUpgradeInfo,
             canPerformPaidAction = canPerformPaidAction,
             draftRepository = draftRepository,
-            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics()
+            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
+            encryptionContextProvider = TestEncryptionContextProvider()
         ).apply {
             setDraftStatus(isDraft)
         }

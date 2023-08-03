@@ -18,19 +18,12 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
-import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
 sealed interface LoginContentEvent {
     object Up : LoginContentEvent
-    data class Success(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val model: ItemUiModel
-    ) : LoginContentEvent
     data class Submit(val shareId: ShareId) : LoginContentEvent
     data class OnUsernameChange(val username: String) : LoginContentEvent
     data class OnPasswordChange(val password: String) : LoginContentEvent

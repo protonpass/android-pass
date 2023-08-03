@@ -20,6 +20,11 @@ package proton.android.pass.featureitemcreate.impl.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.findActivity
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.pass.domain.ItemId
@@ -29,15 +34,17 @@ import proton.pass.domain.ShareId
 fun ItemSavedLaunchedEffect(
     isItemSaved: ItemSavedState,
     selectedShareId: ShareId?,
+    viewModel: ItemSavedViewModel = hiltViewModel(),
     onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit
 ) {
+    val activity = LocalContext.current.findActivity()
+    val shouldRequestReview by viewModel.shouldRequestReview.collectAsStateWithLifecycle()
     if (isItemSaved !is ItemSavedState.Success) return
     selectedShareId ?: return
     LaunchedEffect(Unit) {
-        onSuccess(
-            selectedShareId,
-            isItemSaved.itemId,
-            isItemSaved.item
-        )
+        if (shouldRequestReview) {
+            viewModel.requestReview(activity.value())
+        }
+        onSuccess(selectedShareId, isItemSaved.itemId, isItemSaved.item)
     }
 }

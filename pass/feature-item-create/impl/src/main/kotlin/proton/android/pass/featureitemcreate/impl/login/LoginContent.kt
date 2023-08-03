@@ -37,7 +37,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
-import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors.InvalidUrl
 import proton.pass.domain.ShareId
 
@@ -170,14 +169,6 @@ internal fun LoginContent(
             },
             onNavigate = onNavigate,
             titleSection = titleSection
-        )
-
-        ItemSavedLaunchedEffect(
-            isItemSaved = uiState.isItemSaved,
-            selectedShareId = selectedShareId,
-            onSuccess = { shareId, itemId, model ->
-                onEvent(LoginContentEvent.Success(shareId, itemId, model))
-            }
         )
     }
 }

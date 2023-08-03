@@ -18,37 +18,46 @@
 
 package proton.android.pass.featuresharing.impl.manage
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.data.api.usecases.VaultMember
+import proton.pass.domain.VaultWithItemCount
 
 @Composable
-fun ColumnScope.ManageVaultMembersList(
+fun ManageVaultMembersList(
     modifier: Modifier = Modifier,
     content: ManageVaultUiContent,
+    vault: VaultWithItemCount?,
     onMemberOptionsClick: (VaultMember) -> Unit
 ) {
-    when (content) {
-        ManageVaultUiContent.Loading -> {
-            CircularProgressIndicator(
-                modifier = modifier.align(Alignment.CenterHorizontally)
-            )
-        }
+    Column(
+        modifier = modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        ManageVaultHeader(vault = vault)
 
-        is ManageVaultUiContent.Content -> {
-            Box(modifier = modifier) {
-                LazyColumn(modifier = Modifier.roundedContainerNorm()) {
-                    items(items = content.vaultMembers, key = { it.email }) { member ->
+        Column(modifier = Modifier.roundedContainerNorm()) {
+            when (content) {
+                ManageVaultUiContent.Loading -> {
+                    repeat(2) {
                         ManageVaultMemberRow(
-                            member = member,
+                            member = VaultMemberContent.Loading
+                        )
+                        PassDivider()
+                    }
+                }
+
+                is ManageVaultUiContent.Content -> {
+                    content.vaultMembers.forEach { member ->
+                        ManageVaultMemberRow(
+                            member = VaultMemberContent.Member(member),
                             onOptionsClick = { onMemberOptionsClick(member) }
                         )
                         PassDivider()

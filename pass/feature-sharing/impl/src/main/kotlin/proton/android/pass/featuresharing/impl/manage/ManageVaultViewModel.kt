@@ -56,7 +56,7 @@ class ManageVaultViewModel @Inject constructor(
 
     private val navShareId: ShareId = ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
 
-    private val eventFlow: MutableStateFlow<ManageVaultEvent> = MutableStateFlow(ManageVaultEvent.Close)
+    private val eventFlow: MutableStateFlow<ManageVaultEvent> = MutableStateFlow(ManageVaultEvent.Unknown)
     private val vaultFlow: Flow<VaultWithItemCount> = getVaultById(shareId = navShareId)
         .catch {
             snackbarDispatcher(SharingSnackbarMessage.GetMembersInfoError)
@@ -93,5 +93,9 @@ class ManageVaultViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = ManageVaultUiState.Initial
     )
+
+    fun clearEvent() {
+        eventFlow.update { ManageVaultEvent.Unknown }
+    }
 
 }

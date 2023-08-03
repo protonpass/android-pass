@@ -18,10 +18,16 @@
 
 package proton.android.pass
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -36,12 +42,61 @@ class App : Application(), ImageLoaderFactory {
     @Inject
     lateinit var preferenceRepository: UserPreferencesRepository
 
+    @Inject
+    lateinit var inAppReviewTriggerMetrics: InAppReviewTriggerMetrics
+
     override fun newImageLoader(): ImageLoader = imageLoader.get()
 
     override fun onCreate() {
         super.onCreate()
         MainInitializer.init(this)
         preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+        registerActivityLifecycleCallbacks(
+            activityLifecycleCallbacks(
+                onActivityCreated = { _, _ ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        inAppReviewTriggerMetrics.incrementAppLaunchStreakCount()
+                    }
+                }
+            )
+        )
     }
 
+    private fun activityLifecycleCallbacks(
+        onActivityCreated: (activity: Activity, savedInstanceState: Bundle?) -> Unit = { _, _ -> },
+        onActivityStarted: (activity: Activity) -> Unit = {},
+        onActivityResumed: (activity: Activity) -> Unit = {},
+        onActivityPaused: (activity: Activity) -> Unit = {},
+        onActivityStopped: (activity: Activity) -> Unit = {},
+        onActivitySaveInstanceState: (activity: Activity, outState: Bundle) -> Unit = { _, _ -> },
+        onActivityDestroyed: (activity: Activity) -> Unit = {}
+    ) = object : ActivityLifecycleCallbacks {
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            onActivityCreated(activity, savedInstanceState)
+        }
+
+        override fun onActivityStarted(activity: Activity) {
+            onActivityStarted(activity)
+        }
+
+        override fun onActivityResumed(activity: Activity) {
+            onActivityResumed(activity)
+        }
+
+        override fun onActivityPaused(activity: Activity) {
+            onActivityPaused(activity)
+        }
+
+        override fun onActivityStopped(activity: Activity) {
+            onActivityStopped(activity)
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+            onActivitySaveInstanceState(activity, outState)
+        }
+
+        override fun onActivityDestroyed(activity: Activity) {
+            onActivityDestroyed(activity)
+        }
+    }
 }

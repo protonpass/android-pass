@@ -29,5 +29,5 @@ object FlowUtils {
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
     )
 
-    fun <T> oneShot(block: suspend () -> T): Flow<T> = flow { emit(block()) }
+    inline fun <T> oneShot(crossinline block: suspend () -> T): Flow<T> = flow { emit(block()) }
 }

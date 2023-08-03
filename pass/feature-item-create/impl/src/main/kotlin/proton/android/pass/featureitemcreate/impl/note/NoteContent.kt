@@ -22,15 +22,12 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.note.NoteItemValidationErrors.BlankTitle
-import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
 @ExperimentalComposeUiApi
@@ -41,7 +38,6 @@ internal fun NoteContent(
     uiState: BaseNoteUiState,
     selectedShareId: ShareId?,
     onUpClick: () -> Unit,
-    onSuccess: (ShareId, ItemId) -> Unit,
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -74,11 +70,5 @@ internal fun NoteContent(
             enabled = uiState.isLoadingState != IsLoadingState.Loading,
             vaultSelect = vaultSelect
         )
-    }
-    LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
-        val isItemSaved = uiState.isItemSaved
-        if (isItemSaved is ItemSavedState.Success && selectedShareId != null) {
-            onSuccess(selectedShareId, isItemSaved.itemId)
-        }
     }
 }

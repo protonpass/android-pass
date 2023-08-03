@@ -280,6 +280,7 @@ class UpdateLoginViewModel @Inject constructor(
                 }
             }
             telemetryManager.sendEvent(ItemUpdate(EventItemType.Login))
+            snackbarDispatcher(LoginSnackbarMessages.LoginUpdated)
         }.onFailure {
             PassLogger.e(TAG, it, "Update item error")
             snackbarDispatcher(ItemUpdateError)

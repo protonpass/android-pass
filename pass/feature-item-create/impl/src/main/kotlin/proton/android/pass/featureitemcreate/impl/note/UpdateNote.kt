@@ -33,15 +33,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.R
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun UpdateNote(
     modifier: Modifier = Modifier,
-    onUpClick: () -> Unit,
-    onSuccess: (ShareId, ItemId) -> Unit,
+    onNavigate: (UpdateNoteNavigation) -> Unit,
     viewModel: UpdateNoteViewModel = hiltViewModel()
 ) {
     val noteUiState by viewModel.updateNoteUiState.collectAsStateWithLifecycle()
@@ -51,7 +49,7 @@ fun UpdateNote(
         if (noteUiState.baseNoteUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            onUpClick()
+            onNavigate(UpdateNoteNavigation.Back)
         }
     }
     BackHandler {
@@ -64,7 +62,6 @@ fun UpdateNote(
             selectedShareId = noteUiState.selectedShareId,
             topBarActionName = stringResource(R.string.action_save),
             onUpClick = onExit,
-            onSuccess = { shareId, itemId -> onSuccess(shareId, itemId) },
             onSubmit = { shareId -> viewModel.updateItem(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
@@ -78,8 +75,15 @@ fun UpdateNote(
             },
             onConfirm = {
                 showConfirmDialog = false
-                onUpClick()
+                onNavigate(UpdateNoteNavigation.Back)
             }
         )
     }
+    ItemSavedLaunchedEffect(
+        isItemSaved = noteUiState.baseNoteUiState.itemSavedState,
+        selectedShareId = noteUiState.selectedShareId,
+        onSuccess = { shareId, itemId, _ ->
+            onNavigate(UpdateNoteNavigation.NoteUpdated(shareId, itemId))
+        }
+    )
 }

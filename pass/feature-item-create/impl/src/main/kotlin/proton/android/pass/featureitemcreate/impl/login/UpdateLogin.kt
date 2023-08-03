@@ -39,7 +39,7 @@ import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
-import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.LoginUpdated
+import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 
 @Suppress("ComplexMethod")
@@ -88,18 +88,6 @@ fun UpdateLogin(
             onEvent = {
                 when (it) {
                     LoginContentEvent.Up -> onExit()
-                    is LoginContentEvent.Success -> {
-                        viewModel.onEmitSnackbarMessage(LoginUpdated)
-                        onNavigate(
-                            BaseLoginNavigation.OnUpdateLoginEvent(
-                                UpdateLoginNavigation.LoginUpdated(
-                                    it.shareId,
-                                    it.itemId
-                                )
-                            )
-                        )
-                    }
-
                     is LoginContentEvent.Submit -> viewModel.updateItem(it.shareId)
                     is LoginContentEvent.OnUsernameChange -> viewModel.onUsernameChange(it.username)
                     is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
@@ -175,4 +163,13 @@ fun UpdateLogin(
             }
         )
     }
+
+    ItemSavedLaunchedEffect(
+        isItemSaved = uiState.baseLoginUiState.isItemSaved,
+        selectedShareId = uiState.selectedShareId,
+        onSuccess = { shareId, itemId, _ ->
+            val event = UpdateLoginNavigation.LoginUpdated(shareId, itemId)
+            onNavigate(BaseLoginNavigation.OnUpdateLoginEvent(event))
+        }
+    )
 }

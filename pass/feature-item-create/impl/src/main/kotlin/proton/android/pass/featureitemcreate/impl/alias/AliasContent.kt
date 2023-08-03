@@ -21,7 +21,6 @@ package proton.android.pass.featureitemcreate.impl.alias
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,7 +36,6 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationError
 import proton.android.pass.featureitemcreate.impl.alias.mailboxes.SelectMailboxesDialog
 import proton.android.pass.featureitemcreate.impl.alias.suffixes.SelectSuffixDialog
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
-import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -52,7 +50,6 @@ internal fun AliasContent(
     isEditAllowed: Boolean,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
-    onAliasCreated: (ShareId, ItemId, String) -> Unit,
     onSuffixChange: (AliasSuffixUiModel) -> Unit,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -137,23 +134,6 @@ internal fun AliasContent(
                 onDismiss = { showMailboxDialog = false },
                 onUpgrade = onUpgrade
             )
-        }
-
-        IsAliasSavedLaunchedEffect(uiState.isAliasSavedState, selectedShareId, onAliasCreated)
-    }
-}
-
-@Composable
-private fun IsAliasSavedLaunchedEffect(
-    aliasSavedState: AliasSavedState,
-    selectedShareId: ShareId?,
-    onAliasCreated: (ShareId, ItemId, String) -> Unit
-) {
-    if (aliasSavedState is AliasSavedState.Success) {
-        LaunchedEffect(selectedShareId) {
-            selectedShareId?.let {
-                onAliasCreated(it, aliasSavedState.itemId, aliasSavedState.alias)
-            }
         }
     }
 }

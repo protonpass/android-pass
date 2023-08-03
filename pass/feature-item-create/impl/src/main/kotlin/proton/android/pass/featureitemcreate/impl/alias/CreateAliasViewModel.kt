@@ -45,8 +45,10 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
@@ -57,6 +59,7 @@ import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
 import proton.android.pass.featureitemcreate.impl.common.ShareError
@@ -80,6 +83,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     protected val draftRepository: DraftRepository,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    private val encryptionContextProvider: EncryptionContextProvider,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
@@ -360,9 +364,11 @@ open class CreateAliasViewModel @Inject constructor(
                 )
             }.onSuccess { item ->
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()
-                val generatedAlias = getAliasToBeCreated(aliasItem.prefix, aliasSuffix) ?: ""
-                isAliasSavedState.update {
-                    AliasSavedState.Success(item.id, generatedAlias)
+                val itemUiModel = encryptionContextProvider.withEncryptionContext {
+                    item.toUiModel(this)
+                }
+                isItemSavedState.update {
+                    ItemSavedState.Success(item.id, itemUiModel)
                 }
                 snackbarDispatcher(AliasCreated)
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))

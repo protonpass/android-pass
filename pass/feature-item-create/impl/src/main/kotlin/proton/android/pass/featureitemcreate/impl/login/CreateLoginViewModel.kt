@@ -66,6 +66,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.Al
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.CannotCreateMoreAliases
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.EmailNotValidated
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.LoginCreated
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -322,6 +323,7 @@ class CreateLoginViewModel @Inject constructor(
             telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
             telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
             draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+            snackbarDispatcher(LoginCreated)
         }.onFailure {
             when (it) {
                 is CannotCreateMoreAliasesError -> snackbarDispatcher(CannotCreateMoreAliases)
@@ -354,6 +356,7 @@ class CreateLoginViewModel @Inject constructor(
                 }
             }
             telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+            snackbarDispatcher(LoginCreated)
         }.onFailure {
             PassLogger.e(TAG, it, "Could not create item")
             snackbarDispatcher(ItemCreationError)

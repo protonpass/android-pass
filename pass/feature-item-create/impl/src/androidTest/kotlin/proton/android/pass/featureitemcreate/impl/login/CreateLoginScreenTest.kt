@@ -322,6 +322,7 @@ class CreateLoginScreenTest {
             onNodeWithText(addCustomFieldText).performScrollTo()
             waitUntilExists(hasText(totpCustomFieldValue))
 
+            onNode(hasText(titleText)).performClick().performScrollTo()
             // Submit
             onNode(hasText(buttonText)).performClick()
 

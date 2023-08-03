@@ -40,9 +40,11 @@ import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankTitle
+import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 
 private enum class CAActionAfterHideKeyboard {
@@ -111,10 +113,6 @@ fun CreateAliasScreen(
             isCreateMode = true,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
             onUpClick = onExit,
-            onAliasCreated = { shareId, itemId, alias ->
-                val event = CreateAliasNavigation.Created(shareId, itemId, alias)
-                onNavigate(event)
-            },
             onSubmit = { shareId -> viewModel.createAlias(shareId) },
             onSuffixChange = { viewModel.onSuffixChange(it) },
             onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
@@ -164,4 +162,13 @@ fun CreateAliasScreen(
             }
         }
     }
+    ItemSavedLaunchedEffect(
+        isItemSaved = uiState.baseAliasUiState.itemSavedState,
+        selectedShareId = selectedVault?.vault?.shareId,
+        onSuccess = { shareId, itemId, model ->
+            val aliasEmail = (model.contents as ItemContents.Alias).aliasEmail
+            val event = CreateAliasNavigation.Created(shareId, itemId, aliasEmail)
+            onNavigate(event)
+        }
+    )
 }

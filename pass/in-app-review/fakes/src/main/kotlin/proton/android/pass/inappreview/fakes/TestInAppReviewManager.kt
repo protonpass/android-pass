@@ -16,13 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.alias
+package proton.android.pass.inappreview.fakes
 
-import androidx.compose.runtime.Stable
-import proton.pass.domain.ItemId
+import android.app.Activity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.inappreview.api.InAppReviewManager
+import javax.inject.Inject
 
-@Stable
-sealed interface AliasSavedState {
-    object Unknown : AliasSavedState
-    data class Success(val itemId: ItemId, val alias: String) : AliasSavedState
+class TestInAppReviewManager @Inject constructor() : InAppReviewManager {
+
+    override fun shouldRequestReview(): Flow<Boolean> = flowOf(false)
+
+    override fun requestReview(activityHolder: ClassHolder<Activity>) {
+    }
 }

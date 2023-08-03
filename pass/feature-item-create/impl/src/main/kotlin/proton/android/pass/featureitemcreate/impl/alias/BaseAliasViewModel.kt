@@ -33,6 +33,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 
@@ -55,8 +56,8 @@ abstract class BaseAliasViewModel(
     )
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.Loading)
-    protected val isAliasSavedState: MutableStateFlow<AliasSavedState> =
-        MutableStateFlow(AliasSavedState.Unknown)
+    protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
+        MutableStateFlow(ItemSavedState.Unknown)
     protected val isAliasDraftSavedState: MutableStateFlow<AliasDraftSavedState> =
         MutableStateFlow(AliasDraftSavedState.Unknown)
     protected val aliasItemValidationErrorsState: MutableStateFlow<Set<AliasItemValidationErrors>> =
@@ -96,7 +97,7 @@ abstract class BaseAliasViewModel(
     )
 
     private val eventWrapperState = combine(
-        isAliasSavedState,
+        isItemSavedState,
         isAliasDraftSavedState,
         isApplyButtonEnabledState,
         mutableCloseScreenEventFlow,
@@ -104,7 +105,7 @@ abstract class BaseAliasViewModel(
     )
 
     private data class EventWrapper(
-        val isAliasSaved: AliasSavedState,
+        val itemSavedState: ItemSavedState,
         val isAliasDraftSaved: AliasDraftSavedState,
         val isApplyButtonEnabled: IsButtonEnabled,
         val closeScreenEvent: CloseScreenEvent
@@ -122,7 +123,7 @@ abstract class BaseAliasViewModel(
             isDraft = isDraft,
             errorList = aliasItemWrapper.aliasItemValidationErrors,
             isLoadingState = isLoading,
-            isAliasSavedState = eventWrapper.isAliasSaved,
+            itemSavedState = eventWrapper.itemSavedState,
             isAliasDraftSavedState = eventWrapper.isAliasDraftSaved,
             isApplyButtonEnabled = eventWrapper.isApplyButtonEnabled,
             closeScreenEvent = eventWrapper.closeScreenEvent,

@@ -26,16 +26,6 @@ import androidx.compose.ui.test.performTextReplacement
 
 private const val WAIT_UNTIL_TIMEOUT = 1_000L
 
-fun ComposeContentTestRule.waitUntilNodeCount(
-    matcher: SemanticsMatcher,
-    count: Int,
-    timeoutMillis: Long = WAIT_UNTIL_TIMEOUT
-) {
-    waitUntil(timeoutMillis) {
-        onAllNodes(matcher).fetchSemanticsNodes().size == count
-    }
-}
-
 @OptIn(ExperimentalTestApi::class)
 fun ComposeContentTestRule.waitUntilExists(
     matcher: SemanticsMatcher,

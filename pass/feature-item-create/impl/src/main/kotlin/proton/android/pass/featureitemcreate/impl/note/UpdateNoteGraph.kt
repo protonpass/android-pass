@@ -36,13 +36,14 @@ object EditNote : NavItem(
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.updateNoteGraph(
-    onNoteUpdateSuccess: (ShareId, ItemId) -> Unit,
-    onBackClick: () -> Unit,
+    onNavigate: (UpdateNoteNavigation) -> Unit,
 ) {
     composable(EditNote) {
-        UpdateNote(
-            onUpClick = onBackClick,
-            onSuccess = onNoteUpdateSuccess
-        )
+        UpdateNote(onNavigate = onNavigate)
     }
+}
+
+sealed interface UpdateNoteNavigation {
+    data class NoteUpdated(val shareId: ShareId, val itemId: ItemId) : UpdateNoteNavigation
+    object Back : UpdateNoteNavigation
 }

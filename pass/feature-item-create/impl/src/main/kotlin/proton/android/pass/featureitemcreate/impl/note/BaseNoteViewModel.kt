@@ -66,7 +66,7 @@ abstract class BaseNoteViewModel(private val snackbarDispatcher: SnackbarDispatc
             noteItem = noteItemWrapper.noteItem,
             errorList = noteItemWrapper.noteItemValidationErrors,
             isLoadingState = isLoading,
-            isItemSaved = isItemSaved,
+            itemSavedState = isItemSaved,
             hasUserEditedContent = hasUserEditedContent
         )
     }

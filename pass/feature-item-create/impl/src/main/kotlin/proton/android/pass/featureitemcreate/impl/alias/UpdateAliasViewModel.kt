@@ -39,6 +39,7 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -47,6 +48,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasUpdated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.InitError
@@ -231,10 +233,13 @@ class UpdateAliasViewModel @Inject constructor(
                 )
             }.onSuccess { item ->
                 PassLogger.i(TAG, "Alias successfully updated")
-                isAliasSavedState.update {
-                    AliasSavedState.Success(
+                isItemSavedState.update {
+                    val itemUiModel = encryptionContextProvider.withEncryptionContext {
+                        item.toUiModel(this)
+                    }
+                    ItemSavedState.Success(
                         itemId = item.id,
-                        alias = "" // we don't care about it as we are updating it
+                        item = itemUiModel
                     )
                 }
                 isLoadingState.update { IsLoadingState.NotLoading }

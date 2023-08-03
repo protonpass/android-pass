@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -78,9 +79,6 @@ fun UpdateAlias(
             isCreateMode = false,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
             onUpClick = onExit,
-            onAliasCreated = { shareId, itemId, _ ->
-                onNavigate(UpdateAliasNavigation.Updated(shareId, itemId))
-            },
             onSubmit = { viewModel.updateAlias() },
             onSuffixChange = {},
             onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
@@ -115,4 +113,11 @@ fun UpdateAlias(
             }
         )
     }
+    ItemSavedLaunchedEffect(
+        isItemSaved = uiState.baseAliasUiState.itemSavedState,
+        selectedShareId = uiState.selectedShareId,
+        onSuccess = { shareId, itemId, _ ->
+            onNavigate(UpdateAliasNavigation.Updated(shareId, itemId))
+        }
+    )
 }

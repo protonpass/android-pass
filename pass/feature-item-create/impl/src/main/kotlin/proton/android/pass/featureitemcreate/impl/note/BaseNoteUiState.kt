@@ -29,7 +29,7 @@ data class BaseNoteUiState(
     val noteItem: NoteItem,
     val errorList: Set<NoteItemValidationErrors>,
     val isLoadingState: IsLoadingState,
-    val isItemSaved: ItemSavedState,
+    val itemSavedState: ItemSavedState,
     val hasUserEditedContent: Boolean
 ) {
     companion object {
@@ -37,7 +37,7 @@ data class BaseNoteUiState(
             isLoadingState = IsLoadingState.NotLoading,
             noteItem = NoteItem.Empty,
             errorList = emptySet(),
-            isItemSaved = ItemSavedState.Unknown,
+            itemSavedState = ItemSavedState.Unknown,
             hasUserEditedContent = false
         )
     }

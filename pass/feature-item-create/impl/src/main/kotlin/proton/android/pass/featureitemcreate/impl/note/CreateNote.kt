@@ -43,6 +43,7 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.VaultSelector
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
@@ -110,7 +111,6 @@ fun CreateNoteScreen(
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(R.string.title_create_note),
             onUpClick = onExit,
-            onSuccess = { _, _ -> onNavigate(CreateNoteNavigation.Success) },
             onSubmit = { shareId -> viewModel.createNote(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
@@ -160,4 +160,11 @@ fun CreateNoteScreen(
             }
         }
     }
+    ItemSavedLaunchedEffect(
+        isItemSaved = uiState.baseNoteUiState.itemSavedState,
+        selectedShareId = selectedVault?.vault?.shareId,
+        onSuccess = { _, _, _ ->
+            onNavigate(CreateNoteNavigation.NoteCreated)
+        }
+    )
 }

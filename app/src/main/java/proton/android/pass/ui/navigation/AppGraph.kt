@@ -76,6 +76,7 @@ import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
 import proton.android.pass.featureitemcreate.impl.note.CreateNote
 import proton.android.pass.featureitemcreate.impl.note.CreateNoteNavigation
 import proton.android.pass.featureitemcreate.impl.note.EditNote
+import proton.android.pass.featureitemcreate.impl.note.UpdateNoteNavigation
 import proton.android.pass.featureitemcreate.impl.note.createNoteGraph
 import proton.android.pass.featureitemcreate.impl.note.updateNoteGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
@@ -140,8 +141,6 @@ import proton.android.pass.ui.AppNavigation
 import proton.android.pass.ui.RootNavigation
 import proton.android.pass.ui.rootGraph
 import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -244,6 +243,7 @@ fun NavGraphBuilder.appGraph(
                     destination = AcceptInvite,
                     backDestination = Home
                 )
+
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
                 HomeNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
             }
@@ -584,19 +584,21 @@ fun NavGraphBuilder.appGraph(
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                 )
 
-                CreateNoteNavigation.Success -> appNavigator.onBackClick()
+                CreateNoteNavigation.NoteCreated -> appNavigator.onBackClick()
             }
         }
     )
     updateNoteGraph(
-        onNoteUpdateSuccess = { shareId: ShareId, itemId: ItemId ->
-            appNavigator.navigate(
-                destination = ViewItem,
-                route = ViewItem.createNavRoute(shareId, itemId),
-                backDestination = Home
-            )
-        },
-        onBackClick = { appNavigator.onBackClick() }
+        onNavigate = {
+            when (it) {
+                UpdateNoteNavigation.Back -> appNavigator.onBackClick()
+                is UpdateNoteNavigation.NoteUpdated -> appNavigator.navigate(
+                    destination = ViewItem,
+                    route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                    backDestination = Home
+                )
+            }
+        }
     )
     createCreditCardGraph {
         when (it) {

@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSectio
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
@@ -122,17 +123,6 @@ fun CreateLoginScreen(
             onEvent = {
                 when (it) {
                     LoginContentEvent.Up -> onExit()
-                    is LoginContentEvent.Success -> {
-                        viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)
-                        onNavigate(
-                            BaseLoginNavigation.OnCreateLoginEvent(
-                                CreateLoginNavigation.LoginCreated(
-                                    it.model
-                                )
-                            )
-                        )
-                    }
-
                     is LoginContentEvent.Submit -> viewModel.createItem()
                     is LoginContentEvent.OnUsernameChange -> viewModel.onUsernameChange(it.username)
                     is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
@@ -231,4 +221,13 @@ fun CreateLoginScreen(
             }
         }
     }
+
+    ItemSavedLaunchedEffect(
+        isItemSaved = uiState.baseLoginUiState.isItemSaved,
+        selectedShareId = selectedVault?.vault?.shareId,
+        onSuccess = { _, _, model ->
+            val event = CreateLoginNavigation.LoginCreated(model)
+            onNavigate(BaseLoginNavigation.OnCreateLoginEvent(event))
+        }
+    )
 }

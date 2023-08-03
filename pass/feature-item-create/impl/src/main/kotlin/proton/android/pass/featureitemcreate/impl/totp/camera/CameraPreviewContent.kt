@@ -27,19 +27,13 @@ import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.net.toUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
-import proton.android.pass.commonui.api.LifecycleEffect
-import proton.android.pass.featureitemcreate.impl.totp.photopicker.TotpUriResult
 import proton.android.pass.log.api.PassLogger
 
 @Composable
@@ -82,9 +76,8 @@ private fun CameraPreviewBindingDisposableEffect(
     val processCameraProvider = remember(context) {
         ProcessCameraProvider.getInstance(context).get()
     }
-    var totpUriResult by remember { mutableStateOf<TotpUriResult>(TotpUriResult.NotStarted) }
     val qrCodeImageAnalyzer = QrCodeImageAnalyzer(
-        onSuccess = { totpUriResult = TotpUriResult.Success(it.toUri()) },
+        onSuccess = { onSuccess(it) },
         onError = {}
     )
     val imageAnalysis = remember {
@@ -94,14 +87,6 @@ private fun CameraPreviewBindingDisposableEffect(
         imageAnalysis.setAnalyzer(Dispatchers.Main.asExecutor(), qrCodeImageAnalyzer)
         imageAnalysis
     }
-    LifecycleEffect(
-        onResume = {
-            when (val result = totpUriResult) {
-                is TotpUriResult.Success -> onSuccess(result.uri.toString())
-                else -> {}
-            }
-        }
-    )
     DisposableEffect(lifecycleOwner) {
         try {
             processCameraProvider.unbindAll()

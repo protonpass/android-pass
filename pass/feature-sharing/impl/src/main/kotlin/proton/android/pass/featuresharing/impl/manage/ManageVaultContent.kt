@@ -53,12 +53,12 @@ fun ManageVaultContent(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(padding),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            ManageVaultHeader(vault = state.vault)
             ManageVaultMembersList(
                 modifier = Modifier.weight(1f),
                 content = state.content,
+                vault = state.vault,
                 onMemberOptionsClick = {}
             )
             if (state.showShareButton) {

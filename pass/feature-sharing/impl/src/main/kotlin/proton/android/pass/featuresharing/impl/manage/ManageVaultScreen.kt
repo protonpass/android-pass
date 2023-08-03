@@ -37,6 +37,7 @@ fun ManageVaultScreen(
     LaunchedEffect(state.event) {
         if (state.event == ManageVaultEvent.Close) {
             onNavigateEvent(SharingNavigation.Back)
+            viewModel.clearEvent()
         }
     }
 

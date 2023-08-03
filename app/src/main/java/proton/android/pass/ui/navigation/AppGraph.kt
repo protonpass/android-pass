@@ -351,7 +351,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is VaultNavigation.VaultAccess -> {
+                is VaultNavigation.VaultAccess -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = ManageVault,
                         route = ManageVault.createRoute(it.shareId),

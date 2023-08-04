@@ -36,7 +36,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleSection
+import proton.android.pass.composecomponents.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
@@ -171,5 +173,8 @@ fun UpdateLogin(
             val event = UpdateLoginNavigation.LoginUpdated(shareId, itemId)
             onNavigate(BaseLoginNavigation.OnUpdateLoginEvent(event))
         }
+    )
+    InAppReviewTriggerLaunchedEffect(
+        triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success,
     )
 }

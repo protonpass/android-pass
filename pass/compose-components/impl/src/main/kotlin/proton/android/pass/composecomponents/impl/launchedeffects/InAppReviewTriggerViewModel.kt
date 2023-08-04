@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.common
+package proton.android.pass.composecomponents.impl.launchedeffects
 
 import android.app.Activity
 import androidx.lifecycle.ViewModel
@@ -24,20 +24,23 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.runBlocking
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.inappreview.api.InAppReviewManager
 import javax.inject.Inject
 
 @HiltViewModel
-class ItemSavedViewModel @Inject constructor(
+class InAppReviewTriggerViewModel @Inject constructor(
     private val inAppReviewManager: InAppReviewManager
 ) : ViewModel() {
+
     val shouldRequestReview: StateFlow<Boolean> = inAppReviewManager.shouldRequestReview()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = false
+            initialValue = runBlocking { inAppReviewManager.shouldRequestReview().first() }
         )
 
     fun requestReview(activity: Activity?) {

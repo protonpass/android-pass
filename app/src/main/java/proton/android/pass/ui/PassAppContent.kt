@@ -45,7 +45,6 @@ import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
-import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
@@ -145,7 +144,6 @@ fun PassAppContent(
                             PassNavHost(
                                 modifier = Modifier.weight(1f),
                                 appNavigator = appNavigator,
-                                startingRoute = Home.route,
                                 onNavigate = onNavigate,
                                 dismissBottomSheet = { callback ->
                                     coroutineScope.launch {

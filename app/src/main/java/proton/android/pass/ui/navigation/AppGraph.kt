@@ -120,6 +120,7 @@ import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.SharingPermissions
 import proton.android.pass.featuresharing.impl.SharingSummary
 import proton.android.pass.featuresharing.impl.SharingWith
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.sharingGraph
 import proton.android.pass.featuresync.impl.SyncDialog
 import proton.android.pass.featuresync.impl.SyncNavigation
@@ -838,6 +839,10 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.popUpTo(Home)
             }
 
+            SharingNavigation.Close -> dismissBottomSheet {
+                appNavigator.onBackClick(true)
+            }
+
             is SharingNavigation.Permissions -> appNavigator.navigate(
                 destination = SharingPermissions,
                 route = SharingPermissions.createRoute(it.shareId, it.email)
@@ -858,6 +863,18 @@ fun NavGraphBuilder.appGraph(
                 route = ManageVault.createRoute(it.shareId),
                 backDestination = Home
             )
+
+            is SharingNavigation.MemberOptions -> appNavigator.navigate(
+                destination = MemberOptionsBottomSheet,
+                route = MemberOptionsBottomSheet.buildRoute(
+                    shareId = it.shareId,
+                    memberShareId = it.destShareId,
+                    shareRole = it.memberRole,
+                    memberEmail = it.destEmail
+                )
+            )
+
+            is SharingNavigation.TransferOwnershipConfirm -> {} // not implemented yet
         }
     }
     syncGraph {

@@ -82,8 +82,10 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateEvent: (HomeNavigation) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
+    routerViewModel: RouterViewModel = hiltViewModel(),
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel()
 ) {
+    val routerEvent by routerViewModel.eventStateFlow.collectAsStateWithLifecycle()
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
     val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
 
@@ -107,9 +109,11 @@ fun HomeScreen(
             homeViewModel.restoreActionState()
         }
     }
-    LaunchedEffect(homeUiState.homeListUiState.isSyncing) {
-        if (homeUiState.homeListUiState.isSyncing) {
-            onNavigateEvent(HomeNavigation.SyncDialog)
+    LaunchedEffect(routerEvent) {
+        when (routerEvent) {
+            RouterEvent.OnBoarding -> onNavigateEvent(HomeNavigation.OnBoarding)
+            RouterEvent.SyncDialog -> onNavigateEvent(HomeNavigation.SyncDialog)
+            RouterEvent.None -> {}
         }
     }
 

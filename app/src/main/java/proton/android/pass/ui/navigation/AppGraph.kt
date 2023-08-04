@@ -33,7 +33,6 @@ import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
 import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureaccount.impl.accountGraph
-import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
@@ -138,8 +137,6 @@ import proton.android.pass.featurevault.impl.leave.LeaveVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.AppNavigation
-import proton.android.pass.ui.RootNavigation
-import proton.android.pass.ui.rootGraph
 import proton.pass.domain.ItemContents
 
 @ExperimentalAnimationApi
@@ -151,15 +148,6 @@ fun NavGraphBuilder.appGraph(
     onNavigate: (AppNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
-    rootGraph(
-        onNavigateEvent = {
-            when (it) {
-                RootNavigation.Auth -> appNavigator.navigate(Auth)
-                RootNavigation.Home -> appNavigator.navigate(Home)
-                RootNavigation.OnBoarding -> appNavigator.navigate(OnBoarding)
-            }
-        }
-    )
     homeGraph(
         onNavigateEvent = {
             when (it) {
@@ -246,6 +234,7 @@ fun NavGraphBuilder.appGraph(
 
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
                 HomeNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
+                HomeNavigation.OnBoarding -> appNavigator.navigate(OnBoarding)
             }
         }
     )

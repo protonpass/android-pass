@@ -19,6 +19,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
+import proton.android.pass.composecomponents.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
@@ -165,6 +167,9 @@ fun CreateCreditCardScreen(
                 onSuccess = { _, _, model ->
                     onNavigate(CreateCreditCardNavigation.ItemCreated(model))
                 }
+            )
+            InAppReviewTriggerLaunchedEffect(
+                triggerCondition = uiState.baseState.isItemSaved is ItemSavedState.Success,
             )
         }
     }

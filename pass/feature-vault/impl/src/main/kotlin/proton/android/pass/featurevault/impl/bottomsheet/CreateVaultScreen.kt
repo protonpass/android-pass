@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.composecomponents.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.feature.vault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 
@@ -41,12 +42,14 @@ fun CreateVaultScreen(
         onNavigate(VaultNavigation.Close)
     }
 
+    InAppReviewTriggerLaunchedEffect(
+        triggerCondition = createState.base.isVaultCreatedEvent is IsVaultCreatedEvent.Created,
+    )
     LaunchedEffect(createState.base.isVaultCreatedEvent) {
         if (createState.base.isVaultCreatedEvent == IsVaultCreatedEvent.Created) {
             onNavigate(VaultNavigation.Close)
         }
     }
-
     VaultBottomSheetContent(
         modifier = modifier,
         state = createState.base,

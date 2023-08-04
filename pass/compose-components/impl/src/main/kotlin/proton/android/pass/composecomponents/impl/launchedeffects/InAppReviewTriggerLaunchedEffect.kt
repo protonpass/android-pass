@@ -16,24 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.common
+package proton.android.pass.composecomponents.impl.launchedeffects
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.featureitemcreate.impl.ItemSavedState
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.findActivity
 
 @Composable
-fun ItemSavedLaunchedEffect(
-    isItemSaved: ItemSavedState,
-    selectedShareId: ShareId?,
-    onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit
+fun InAppReviewTriggerLaunchedEffect(
+    triggerCondition: Boolean,
+    viewModel: InAppReviewTriggerViewModel = hiltViewModel()
 ) {
-    if (isItemSaved !is ItemSavedState.Success) return
-    selectedShareId ?: return
-    LaunchedEffect(Unit) {
-        onSuccess(selectedShareId, isItemSaved.itemId, isItemSaved.item)
+    val activity = LocalContext.current.findActivity()
+    val shouldRequestReview by viewModel.shouldRequestReview.collectAsStateWithLifecycle()
+    LaunchedEffect(triggerCondition) {
+        if (triggerCondition && shouldRequestReview) {
+            viewModel.requestReview(activity.value())
+        }
     }
 }

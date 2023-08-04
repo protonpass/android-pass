@@ -36,4 +36,8 @@ enum class SharingSnackbarMessage(
     InviteSentSuccess(R.string.sharing_snackbar_invite_sent_success, SnackbarType.SUCCESS),
     InviteSentError(R.string.sharing_snackbar_invite_sent_error, SnackbarType.ERROR),
     GetMembersInfoError(R.string.sharing_snackbar_get_vault_members_error, SnackbarType.ERROR),
+    ChangeMemberPermissionSuccess(R.string.sharing_snackbar_change_permission_success, SnackbarType.NORM),
+    ChangeMemberPermissionError(R.string.sharing_snackbar_change_permission_error, SnackbarType.ERROR),
+    RemoveMemberSuccess(R.string.sharing_snackbar_remove_member_success, SnackbarType.NORM),
+    RemoveMemberError(R.string.sharing_snackbar_remove_member_error, SnackbarType.ERROR),
 }

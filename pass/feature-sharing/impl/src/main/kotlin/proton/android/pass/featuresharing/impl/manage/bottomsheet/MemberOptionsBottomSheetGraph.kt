@@ -79,7 +79,7 @@ fun NavGraphBuilder.memberOptionsBottomSheetGraph(
     }
 
     bottomSheet(MemberOptionsBottomSheet) {
-        BackHandler { onNavigateEvent(SharingNavigation.Close) }
+        BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(refresh = false)) }
         MemberOptionsBottomSheet(onNavigate = onNavigateEvent)
     }
 }

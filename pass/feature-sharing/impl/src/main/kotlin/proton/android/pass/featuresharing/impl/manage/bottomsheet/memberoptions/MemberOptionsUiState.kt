@@ -56,7 +56,8 @@ sealed interface MemberOptionsEvent {
     object Unknown : MemberOptionsEvent
 
     @Stable
-    object Close : MemberOptionsEvent
+    @JvmInline
+    value class Close(val refresh: Boolean) : MemberOptionsEvent
 
     @Stable
     data class TransferOwnership(

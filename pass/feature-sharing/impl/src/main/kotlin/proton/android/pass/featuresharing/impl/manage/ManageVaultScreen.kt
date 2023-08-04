@@ -29,10 +29,17 @@ import proton.android.pass.featuresharing.impl.SharingNavigation
 @Composable
 fun ManageVaultScreen(
     modifier: Modifier = Modifier,
+    refresh: Boolean,
     viewModel: ManageVaultViewModel = hiltViewModel(),
     onNavigateEvent: (SharingNavigation) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(refresh) {
+        if (refresh) {
+            viewModel.refresh()
+        }
+    }
 
     LaunchedEffect(state.event) {
         if (state.event == ManageVaultEvent.Close) {

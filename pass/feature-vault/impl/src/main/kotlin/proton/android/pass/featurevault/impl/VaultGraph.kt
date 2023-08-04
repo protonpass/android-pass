@@ -19,8 +19,8 @@
 package proton.android.pass.featurevault.impl
 
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetCreateVaultGraph
-import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetEditVaultGraph
+import proton.android.pass.featurevault.impl.bottomsheet.createVaultGraph
+import proton.android.pass.featurevault.impl.bottomsheet.editVaultGraph
 import proton.android.pass.featurevault.impl.bottomsheet.options.bottomSheetVaultOptionsGraph
 import proton.android.pass.featurevault.impl.bottomsheet.select.selectVaultBottomsheetGraph
 import proton.android.pass.featurevault.impl.delete.deleteVaultDialogGraph
@@ -56,8 +56,8 @@ sealed interface VaultNavigation {
 fun NavGraphBuilder.vaultGraph(
     onNavigate: (VaultNavigation) -> Unit,
 ) {
-    bottomSheetCreateVaultGraph(onNavigate)
-    bottomSheetEditVaultGraph(onNavigate)
+    createVaultGraph(onNavigate)
+    editVaultGraph(onNavigate)
     deleteVaultDialogGraph(onNavigate)
     leaveVaultDialogGraph(onNavigate)
     selectVaultBottomsheetGraph(onNavigate)

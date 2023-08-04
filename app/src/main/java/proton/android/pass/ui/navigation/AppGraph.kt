@@ -129,8 +129,8 @@ import proton.android.pass.featuretrial.impl.TrialNavigation
 import proton.android.pass.featuretrial.impl.TrialScreen
 import proton.android.pass.featuretrial.impl.trialGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
-import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
-import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
+import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultScreen
+import proton.android.pass.featurevault.impl.bottomsheet.EditVaultScreen
 import proton.android.pass.featurevault.impl.bottomsheet.options.VaultOptionsBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
@@ -183,7 +183,7 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 HomeNavigation.CreateVault -> {
-                    appNavigator.navigate(CreateVaultBottomSheet)
+                    appNavigator.navigate(CreateVaultScreen)
                 }
 
                 is HomeNavigation.EditAlias -> {
@@ -321,10 +321,12 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is VaultNavigation.VaultEdit -> appNavigator.navigate(
-                    EditVaultBottomSheet,
-                    EditVaultBottomSheet.createNavRoute(it.shareId)
-                )
+                is VaultNavigation.VaultEdit -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        EditVaultScreen,
+                        EditVaultScreen.createNavRoute(it.shareId)
+                    )
+                }
 
                 is VaultNavigation.VaultMigrate -> appNavigator.navigate(
                     MigrateSelectVault,

@@ -27,7 +27,7 @@ import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
-private const val AUTH_GRAPH = "auth_graph"
+const val AUTH_GRAPH = "auth_graph"
 
 object Auth : NavItem(baseRoute = "auth", noHistory = true)
 object EnterPin : NavItem(

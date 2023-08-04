@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
@@ -37,10 +36,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
@@ -58,6 +59,7 @@ class ManageVaultViewModel @Inject constructor(
     getVaultMembers: GetVaultMembers,
     getVaultById: GetVaultWithItemCountById,
     savedStateHandleProvider: SavedStateHandleProvider,
+    observeCurrentUser: ObserveCurrentUser,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val canShareVault: CanShareVault
 ) : ViewModel() {
@@ -92,13 +94,14 @@ class ManageVaultViewModel @Inject constructor(
         .map { it.vault.role.toPermissions().hasFlag(SharePermissionFlag.Admin) }
         .distinctUntilChanged()
 
-    val state: StateFlow<ManageVaultUiState> = combine(
+    val state: StateFlow<ManageVaultUiState> = combineN(
         membersFlow,
         vaultFlow,
         showShareButtonFlow,
         canEditFlow,
-        eventFlow
-    ) { vaultMembers, vault, showShareButton, canEdit, event ->
+        eventFlow,
+        observeCurrentUser()
+    ) { vaultMembers, vault, showShareButton, canEdit, event, currentUser ->
         val content = when (vaultMembers) {
             is LoadingResult.Error -> ManageVaultUiContent.Loading
             LoadingResult.Loading -> ManageVaultUiContent.Loading

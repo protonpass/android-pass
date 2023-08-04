@@ -21,10 +21,13 @@ package proton.android.pass.featureauth.impl
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.navigation
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
+
+private const val AUTH_GRAPH = "auth_graph"
 
 object Auth : NavItem(baseRoute = "auth", noHistory = true)
 object EnterPin : NavItem(
@@ -48,21 +51,26 @@ fun NavGraphBuilder.authGraph(
     canLogout: Boolean,
     navigation: (AuthNavigation) -> Unit
 ) {
-    composable(Auth) {
-        BackHandler { navigation(AuthNavigation.Back) }
-        AuthScreen(
-            canLogout = canLogout,
-            navigation = navigation
-        )
-    }
-    bottomSheet(EnterPin) {
-        EnterPinBottomsheet(
-            onNavigate = {
-                when (it) {
-                    EnterPinNavigation.Success -> navigation(AuthNavigation.Success)
-                    EnterPinNavigation.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
+    navigation(
+        route = AUTH_GRAPH,
+        startDestination = Auth.route
+    ) {
+        composable(Auth) {
+            BackHandler { navigation(AuthNavigation.Back) }
+            AuthScreen(
+                canLogout = canLogout,
+                navigation = navigation
+            )
+        }
+        bottomSheet(EnterPin) {
+            EnterPinBottomsheet(
+                onNavigate = {
+                    when (it) {
+                        EnterPinNavigation.Success -> navigation(AuthNavigation.Success)
+                        EnterPinNavigation.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }

@@ -40,6 +40,7 @@ class AppNavigator(
     val navController: NavHostController,
     val passBottomSheetNavigator: PassBottomSheetNavigator
 ) {
+    private val previousRoute: String? = navController.previousBackStackEntry?.destination?.route
 
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
         val destinationRoute = route ?: destination.route
@@ -99,49 +100,28 @@ class AppNavigator(
         navController.previousBackStackEntry.run { this?.destination?.route == destination.route }
 
     fun popUpTo(destination: NavItem, comesFromBottomsheet: Boolean = false) {
-        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
-            PassLogger.d(TAG, "PopUpTo: Navigation event discarded as it was duplicated.")
-            return
-        }
+        if (shouldDiscard(comesFromBottomsheet)) return
         navController.popBackStack(route = destination.route, inclusive = false, saveState = false)
     }
 
-    fun onBackClick(comesFromBottomsheet: Boolean = false) {
-        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
-            PassLogger.d(TAG, "OnBackClick: Navigation event discarded as it was duplicated.")
-            return
-        }
-        PassLogger.i(
-            TAG,
-            "Navigating back to ${navController.previousBackStackEntry?.destination?.route}"
-        )
+    fun navigateBack(comesFromBottomsheet: Boolean = false) {
+        if (shouldDiscard(comesFromBottomsheet)) return
+        PassLogger.i(TAG, "Navigating back to $previousRoute")
         navController.popBackStack()
     }
 
-    fun navigateUpWithResult(key: String, value: Any, comesFromBottomsheet: Boolean = false) {
-        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
-            PassLogger.d(
-                TAG,
-                "NavigateUpWithResult: Navigation event discarded as it was duplicated."
-            )
-            return
-        }
-        PassLogger.i(TAG, "Navigating up with result")
+    fun navigateBackWithResult(key: String, value: Any, comesFromBottomsheet: Boolean = false) {
+        if (shouldDiscard(comesFromBottomsheet)) return
+        PassLogger.i(TAG, "Navigating back with result to $previousRoute")
         navController.previousBackStackEntry
             ?.savedStateHandle
             ?.set(key, value)
         navController.popBackStack()
     }
 
-    fun navigateUpWithResult(values: Map<String, Any>, comesFromBottomsheet: Boolean = false) {
-        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
-            PassLogger.d(
-                TAG,
-                "NavigateUpWithResult: Navigation event discarded as it was duplicated."
-            )
-            return
-        }
-        PassLogger.i(TAG, "Navigating up with results")
+    fun navigateBackWithResult(values: Map<String, Any>, comesFromBottomsheet: Boolean = false) {
+        if (shouldDiscard(comesFromBottomsheet)) return
+        PassLogger.i(TAG, "Navigating back with results to $previousRoute")
         navController.previousBackStackEntry
             ?.savedStateHandle
             ?.let {
@@ -150,6 +130,14 @@ class AppNavigator(
                 }
             }
         navController.popBackStack()
+    }
+
+    private fun shouldDiscard(comesFromBottomsheet: Boolean): Boolean {
+        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
+            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+            return true
+        }
+        return false
     }
 
     /**

@@ -26,7 +26,6 @@ import proton.pass.domain.ShareId
 
 @Immutable
 data class BaseNoteUiState(
-    val noteItem: NoteItem,
     val errorList: Set<NoteItemValidationErrors>,
     val isLoadingState: IsLoadingState,
     val itemSavedState: ItemSavedState,
@@ -35,7 +34,6 @@ data class BaseNoteUiState(
     companion object {
         val Initial = BaseNoteUiState(
             isLoadingState = IsLoadingState.NotLoading,
-            noteItem = NoteItem.Empty,
             errorList = emptySet(),
             itemSavedState = ItemSavedState.Unknown,
             hasUserEditedContent = false

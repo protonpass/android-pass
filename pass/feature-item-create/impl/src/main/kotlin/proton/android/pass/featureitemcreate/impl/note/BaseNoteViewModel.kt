@@ -19,8 +19,11 @@
 package proton.android.pass.featureitemcreate.impl.note
 
 import androidx.annotation.VisibleForTesting
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,13 +31,21 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.notifications.api.SnackbarDispatcher
 
-abstract class BaseNoteViewModel(private val snackbarDispatcher: SnackbarDispatcher) : ViewModel() {
+abstract class BaseNoteViewModel(
+    private val snackbarDispatcher: SnackbarDispatcher,
+    savedStateHandleProvider: SavedStateHandleProvider
+) : ViewModel() {
 
-    protected val noteItemState: MutableStateFlow<NoteItem> = MutableStateFlow(NoteItem.Empty)
+    @OptIn(SavedStateHandleSaveableApi::class)
+    protected var noteItemState: NoteItem by savedStateHandleProvider.get()
+        .saveable { mutableStateOf(NoteItem.Empty) }
+    val noteItem: NoteItem get() = noteItemState
+
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
@@ -43,28 +54,15 @@ abstract class BaseNoteViewModel(private val snackbarDispatcher: SnackbarDispatc
         MutableStateFlow(emptySet())
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private val noteItemWrapperState = combine(
-        noteItemState,
-        noteItemValidationErrorsState
-    ) { noteItem, noteItemValidationErrors ->
-        NoteItemWrapper(noteItem, noteItemValidationErrors)
-    }
-
-    private data class NoteItemWrapper(
-        val noteItem: NoteItem,
-        val noteItemValidationErrors: Set<NoteItemValidationErrors>
-    )
-
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val baseNoteUiState: StateFlow<BaseNoteUiState> = combine(
-        noteItemWrapperState,
+        noteItemValidationErrorsState,
         isLoadingState,
         isItemSavedState,
         hasUserEditedContentFlow
-    ) { noteItemWrapper, isLoading, isItemSaved, hasUserEditedContent ->
+    ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent ->
         BaseNoteUiState(
-            noteItem = noteItemWrapper.noteItem,
-            errorList = noteItemWrapper.noteItemValidationErrors,
+            errorList = noteItemValidationErrors,
             isLoadingState = isLoading,
             itemSavedState = isItemSaved,
             hasUserEditedContent = hasUserEditedContent
@@ -78,7 +76,7 @@ abstract class BaseNoteViewModel(private val snackbarDispatcher: SnackbarDispatc
 
     fun onTitleChange(value: String) {
         onUserEditedContent()
-        noteItemState.update { it.copy(title = value) }
+        noteItemState = noteItemState.copy(title = value)
         noteItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(NoteItemValidationErrors.BlankTitle) }
         }
@@ -86,7 +84,7 @@ abstract class BaseNoteViewModel(private val snackbarDispatcher: SnackbarDispatc
 
     fun onNoteChange(value: String) {
         onUserEditedContent()
-        noteItemState.update { it.copy(note = value) }
+        noteItemState = noteItemState.copy(note = value)
     }
 
     protected fun onUserEditedContent() {

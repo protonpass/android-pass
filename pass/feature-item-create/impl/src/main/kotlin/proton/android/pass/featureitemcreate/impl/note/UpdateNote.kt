@@ -60,14 +60,15 @@ fun UpdateNote(
 
     Box(modifier = modifier.fillMaxSize()) {
         NoteContent(
+            topBarActionName = stringResource(R.string.action_save),
             uiState = noteUiState.baseNoteUiState,
             selectedShareId = noteUiState.selectedShareId,
-            topBarActionName = stringResource(R.string.action_save),
             onUpClick = onExit,
             onSubmit = { shareId -> viewModel.updateItem(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
             vaultSelect = {},
+            noteItem = viewModel.noteItem,
         )
 
         ConfirmCloseDialog(

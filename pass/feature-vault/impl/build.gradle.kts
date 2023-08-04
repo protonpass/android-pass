@@ -60,6 +60,7 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.inAppReview.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
@@ -91,6 +92,7 @@ dependencies {
     androidTestImplementation(projects.pass.commonUi.fakes)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.inAppReview.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
 }

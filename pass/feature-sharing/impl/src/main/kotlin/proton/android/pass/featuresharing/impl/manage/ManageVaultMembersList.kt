@@ -48,7 +48,8 @@ fun ManageVaultMembersList(
                 ManageVaultUiContent.Loading -> {
                     repeat(2) {
                         ManageVaultMemberRow(
-                            member = VaultMemberContent.Loading
+                            member = VaultMemberContent.Loading,
+                            canShowActions = false
                         )
                         PassDivider()
                     }
@@ -58,6 +59,7 @@ fun ManageVaultMembersList(
                     content.vaultMembers.forEach { member ->
                         ManageVaultMemberRow(
                             member = VaultMemberContent.Member(member),
+                            canShowActions = content.canEdit,
                             onOptionsClick = { onMemberOptionsClick(member) }
                         )
                         PassDivider()

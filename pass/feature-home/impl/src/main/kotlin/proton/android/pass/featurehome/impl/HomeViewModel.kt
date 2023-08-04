@@ -73,8 +73,6 @@ import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchSta
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
-import proton.android.pass.data.api.repositories.ItemSyncStatus
-import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -136,7 +134,6 @@ class HomeViewModel @Inject constructor(
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
-    itemSyncStatusRepository: ItemSyncStatusRepository,
     preferencesRepository: UserPreferencesRepository,
     getUserPlan: GetUserPlan,
     appDispatchers: AppDispatchers
@@ -164,7 +161,6 @@ class HomeViewModel @Inject constructor(
     private val isInSuggestionsModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
         MutableStateFlow(IsProcessingSearchState.NotLoading)
-    private val hasChangedVaultState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     @OptIn(FlowPreview::class)
     private val debouncedSearchQueryState = searchQueryState
@@ -175,16 +171,6 @@ class HomeViewModel @Inject constructor(
     private val vaultSelectionFlow: Flow<VaultSelectionOption> = homeSearchOptionsRepository
         .observeVaultSelectionOption()
         .distinctUntilChanged()
-
-    init {
-        viewModelScope.launch {
-            vaultSelectionFlow.collect {
-                if (it !is VaultSelectionOption.AllVaults) {
-                    hasChangedVaultState.update { true }
-                }
-            }
-        }
-    }
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
         vaultSelectionFlow,
@@ -245,8 +231,7 @@ class HomeViewModel @Inject constructor(
 
     private data class ActionRefreshingWrapper(
         val refreshing: IsRefreshingState,
-        val actionState: ActionState,
-        val syncStatus: ItemSyncStatus
+        val actionState: ActionState
     )
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
@@ -353,7 +338,6 @@ class HomeViewModel @Inject constructor(
     private val refreshingLoadingFlow = combine(
         isRefreshing,
         actionStateFlow,
-        itemSyncStatusRepository.observeSyncStatus(),
         ::ActionRefreshingWrapper
     ).distinctUntilChanged()
 
@@ -403,44 +387,14 @@ class HomeViewModel @Inject constructor(
         refreshingLoadingFlow,
         shouldScrollToTopFlow,
         preferencesRepository.getUseFaviconsPreference(),
-        getUserPlan().asLoadingResult(),
-        hasChangedVaultState
+        getUserPlan().asLoadingResult()
     ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading,
-        shouldScrollToTop, useFavicons, userPlan, hasChangedVault ->
-        val syncLoading = if (refreshingLoading.syncStatus is ItemSyncStatus.Syncing) {
-            IsLoadingState.Loading
-        } else {
-            IsLoadingState.from(itemsResult is LoadingResult.Loading)
-        }
+        shouldScrollToTop, useFavicons, userPlan ->
+        val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
             LoadingResult.Loading -> persistentListOf<GroupedItemList>() to IsLoadingState.Loading
-            is LoadingResult.Success -> when (val syncStatus = refreshingLoading.syncStatus) {
-                is ItemSyncStatus.CompletedSyncing -> {
-
-                    val loading = if (itemsResult.data.isEmpty()) {
-                        // There are no items emitted yet
-                        // Check if SyncStatus says there should be items
-                        // If the user has changed vaults, we don't want to check this flag, because
-                        // even if the Sync says there are items, there may be none for this vault
-                        when {
-                            !syncStatus.hasItems -> IsLoadingState.NotLoading
-                            searchUiState.inSearchMode -> when (searchUiState.isProcessingSearch) {
-                                IsProcessingSearchState.NotLoading -> syncLoading
-                                IsProcessingSearchState.Loading -> IsLoadingState.Loading
-                            }
-
-                            !hasChangedVault -> IsLoadingState.Loading
-                            else -> syncLoading
-                        }
-                    } else {
-                        syncLoading
-                    }
-                    itemsResult.data to loading
-                }
-
-                else -> itemsResult.data to syncLoading
-            }
+            is LoadingResult.Success -> itemsResult.data to isLoadingState
 
             is LoadingResult.Error -> {
                 PassLogger.e(TAG, itemsResult.exception, "Observe items error")
@@ -452,8 +406,6 @@ class HomeViewModel @Inject constructor(
             homeListUiState = HomeListUiState(
                 isLoading = isLoading,
                 isRefreshing = refreshingLoading.refreshing,
-                isSyncing = refreshingLoading.syncStatus is ItemSyncStatus.Syncing ||
-                    refreshingLoading.syncStatus is ItemSyncStatus.Started,
                 shouldScrollToTop = shouldScrollToTop,
                 actionState = refreshingLoading.actionState,
                 items = items,

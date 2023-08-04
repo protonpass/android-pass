@@ -18,14 +18,17 @@
 
 package proton.android.pass.featureitemcreate.impl.note
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 import proton.pass.domain.ItemContents
 
+@Parcelize
 @Immutable
 data class NoteItem(
     val title: String,
     val note: String
-) {
+) : Parcelable {
     fun validate(): Set<NoteItemValidationErrors> {
         val mutableSet = mutableSetOf<NoteItemValidationErrors>()
         if (title.isBlank()) mutableSet.add(NoteItemValidationErrors.BlankTitle)

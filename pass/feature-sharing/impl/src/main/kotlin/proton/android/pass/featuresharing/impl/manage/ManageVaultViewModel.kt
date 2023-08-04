@@ -42,7 +42,10 @@ import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ShareId
+import proton.pass.domain.SharePermissionFlag
 import proton.pass.domain.VaultWithItemCount
+import proton.pass.domain.hasFlag
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel
@@ -68,17 +71,23 @@ class ManageVaultViewModel @Inject constructor(
         .map { canShareVault(it.vault) }
         .distinctUntilChanged()
 
+    private val canEditFlow: Flow<Boolean> = vaultFlow
+        .map { it.vault.role.toPermissions().hasFlag(SharePermissionFlag.Admin) }
+        .distinctUntilChanged()
+
     val state: StateFlow<ManageVaultUiState> = combine(
         getVaultMembers(navShareId).asLoadingResult(),
         vaultFlow,
         showShareButtonFlow,
+        canEditFlow,
         eventFlow
-    ) { vaultMembers, vault, showShareButton, event ->
+    ) { vaultMembers, vault, showShareButton, canEdit, event ->
         val content = when (vaultMembers) {
             is LoadingResult.Error -> ManageVaultUiContent.Loading
             LoadingResult.Loading -> ManageVaultUiContent.Loading
             is LoadingResult.Success -> ManageVaultUiContent.Content(
-                vaultMembers = vaultMembers.data
+                vaultMembers = vaultMembers.data,
+                canEdit = canEdit
             )
         }
 

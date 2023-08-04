@@ -26,13 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.feature.vault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 
 @Composable
-fun EditVaultBottomSheet(
+fun EditVaultScreen(
     modifier: Modifier = Modifier,
     onNavigate: (VaultNavigation) -> Unit,
     viewModel: EditVaultViewModel = hiltViewModel()
@@ -54,8 +52,7 @@ fun EditVaultBottomSheet(
     }
 
     VaultBottomSheetContent(
-        modifier = modifier
-            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
+        modifier = modifier,
         state = state,
         showUpgradeUi = false,
         buttonText = stringResource(R.string.bottomsheet_edit_vault_button),

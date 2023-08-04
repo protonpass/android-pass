@@ -21,10 +21,11 @@ package proton.android.pass.featurevault.impl.bottomsheet
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -49,50 +50,56 @@ fun VaultBottomSheetContent(
     onButtonClick: () -> Unit,
     onUpgradeClick: () -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-    ) {
-        CreateVaultBottomSheetTopBar(
-            showUpgradeButton = showUpgradeUi,
-            buttonText = buttonText,
-            isLoading = state.isLoading.value(),
-            isButtonEnabled = showUpgradeUi || state.isCreateButtonEnabled.value(),
-            onCloseClick = onClose,
-            onCreateClick = onButtonClick,
-            onUpgradeClick = onUpgradeClick
-        )
-
-        AnimatedVisibility(visible = showUpgradeUi) {
-            Column {
-                Spacer(modifier = Modifier.height(32.dp))
-                InfoBanner(
-                    backgroundColor = PassTheme.colors.interactionNormMinor1,
-                    text = stringResource(R.string.bottomsheet_cannot_create_more_vaults),
-                )
-            }
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            CreateVaultBottomSheetTopBar(
+                showUpgradeButton = showUpgradeUi,
+                buttonText = buttonText,
+                isLoading = state.isLoading.value(),
+                isButtonEnabled = showUpgradeUi || state.isCreateButtonEnabled.value(),
+                onCloseClick = onClose,
+                onCreateClick = onButtonClick,
+                onUpgradeClick = onUpgradeClick
+            )
         }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            AnimatedVisibility(visible = showUpgradeUi) {
+                Column {
+                    Spacer(modifier = Modifier.height(32.dp))
+                    InfoBanner(
+                        backgroundColor = PassTheme.colors.interactionNormMinor1,
+                        text = stringResource(R.string.bottomsheet_cannot_create_more_vaults),
+                    )
+                }
+            }
 
-        Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-        VaultPreviewSection(
-            state = state,
-            onNameChange = onNameChange
-        )
+            VaultPreviewSection(
+                state = state,
+                onNameChange = onNameChange
+            )
 
-        Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-        ColorSelectionSection(
-            selected = state.color,
-            onColorSelected = onColorChange
-        )
+            ColorSelectionSection(
+                selected = state.color,
+                onColorSelected = onColorChange
+            )
 
-        Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-        IconSelectionSection(
-            selected = state.icon,
-            onIconSelected = onIconChange
-        )
+            IconSelectionSection(
+                selected = state.icon,
+                onIconSelected = onIconChange
+            )
+        }
     }
 }

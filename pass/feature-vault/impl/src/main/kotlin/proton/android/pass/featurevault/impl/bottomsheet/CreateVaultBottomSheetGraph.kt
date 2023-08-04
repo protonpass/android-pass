@@ -18,43 +18,44 @@
 
 package proton.android.pass.featurevault.impl.bottomsheet
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
-import proton.android.pass.navigation.api.bottomSheet
+import proton.android.pass.navigation.api.composable
 import proton.pass.domain.ShareId
 
-object CreateVaultBottomSheet : NavItem(
-    baseRoute = "vault/create/bottomsheet",
-    navItemType = NavItemType.Bottomsheet
+object CreateVaultScreen : NavItem(
+    baseRoute = "vault/create/screen",
 )
-object EditVaultBottomSheet : NavItem(
-    baseRoute = "vault/edit/bottomsheet",
-    navArgIds = listOf(CommonNavArgId.ShareId),
-    navItemType = NavItemType.Bottomsheet
+
+object EditVaultScreen : NavItem(
+    baseRoute = "vault/edit/screen",
+    navArgIds = listOf(CommonNavArgId.ShareId)
 ) {
     fun createNavRoute(shareId: ShareId) = buildString {
         append("$baseRoute/${shareId.id}")
     }
 }
 
-internal fun NavGraphBuilder.bottomSheetCreateVaultGraph(
+@OptIn(ExperimentalAnimationApi::class)
+internal fun NavGraphBuilder.createVaultGraph(
     onNavigate: (VaultNavigation) -> Unit
 ) {
-    bottomSheet(CreateVaultBottomSheet) {
-        CreateVaultBottomSheet(
+    composable(CreateVaultScreen) {
+        CreateVaultScreen(
             onNavigate = onNavigate
         )
     }
 }
 
-internal fun NavGraphBuilder.bottomSheetEditVaultGraph(
+@OptIn(ExperimentalAnimationApi::class)
+internal fun NavGraphBuilder.editVaultGraph(
     onNavigate: (VaultNavigation) -> Unit
 ) {
-    bottomSheet(EditVaultBottomSheet) {
-        EditVaultBottomSheet(
+    composable(EditVaultScreen) {
+        EditVaultScreen(
             onNavigate = onNavigate
         )
     }

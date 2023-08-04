@@ -18,7 +18,6 @@
 
 package proton.android.pass.featurehome.impl
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -38,7 +37,6 @@ fun NavGraphBuilder.homeGraph(
     onNavigateEvent: (HomeNavigation) -> Unit,
 ) {
     composable(Home) {
-        BackHandler { onNavigateEvent(HomeNavigation.Finish) }
         HomeScreen(
             modifier = Modifier.testTag(HomeScreenTestTag.screen),
             onNavigateEvent = onNavigateEvent
@@ -64,5 +62,6 @@ sealed interface HomeNavigation {
     object TrialInfo : HomeNavigation
     object OpenInvite : HomeNavigation
     object Finish : HomeNavigation
+    object OnBoarding : HomeNavigation
     object SyncDialog : HomeNavigation
 }

@@ -38,7 +38,9 @@ import proton.android.pass.commonui.api.OneTimeLaunchedEffect
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
+import proton.android.pass.composecomponents.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
@@ -229,5 +231,8 @@ fun CreateLoginScreen(
             val event = CreateLoginNavigation.LoginCreated(model)
             onNavigate(BaseLoginNavigation.OnCreateLoginEvent(event))
         }
+    )
+    InAppReviewTriggerLaunchedEffect(
+        triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success,
     )
 }

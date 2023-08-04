@@ -32,6 +32,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 
@@ -85,5 +87,8 @@ fun UpdateNote(
         onSuccess = { shareId, itemId, _ ->
             onNavigate(UpdateNoteNavigation.NoteUpdated(shareId, itemId))
         }
+    )
+    InAppReviewTriggerLaunchedEffect(
+        triggerCondition = noteUiState.baseNoteUiState.itemSavedState is ItemSavedState.Success,
     )
 }

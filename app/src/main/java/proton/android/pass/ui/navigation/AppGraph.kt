@@ -116,6 +116,7 @@ import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featuresharing.impl.AcceptInvite
 import proton.android.pass.featuresharing.impl.ManageVault
+import proton.android.pass.featuresharing.impl.REFRESH_MEMBER_LIST_FLAG
 import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.SharingPermissions
 import proton.android.pass.featuresharing.impl.SharingSummary
@@ -839,8 +840,16 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.popUpTo(Home)
             }
 
-            SharingNavigation.Close -> dismissBottomSheet {
-                appNavigator.onBackClick(true)
+            is SharingNavigation.CloseBottomSheet -> dismissBottomSheet {
+                if (it.refresh) {
+                    appNavigator.navigateUpWithResult(
+                        key = REFRESH_MEMBER_LIST_FLAG,
+                        value = true,
+                        comesFromBottomsheet = true
+                    )
+                } else {
+                    appNavigator.onBackClick(true)
+                }
             }
 
             is SharingNavigation.Permissions -> appNavigator.navigate(

@@ -110,7 +110,7 @@ class MemberOptionsViewModel @Inject constructor(
             )
         }.onSuccess {
             PassLogger.i(TAG, "Member permissions changed")
-            eventFlow.update { MemberOptionsEvent.Close }
+            eventFlow.update { MemberOptionsEvent.Close(refresh = true) }
             snackbarDispatcher(SharingSnackbarMessage.ChangeMemberPermissionSuccess)
         }.onFailure {
             PassLogger.w(TAG, it, "Error changing member permissions")
@@ -130,7 +130,7 @@ class MemberOptionsViewModel @Inject constructor(
             )
         }.onSuccess {
             PassLogger.i(TAG, "Member removed from vault")
-            eventFlow.update { MemberOptionsEvent.Close }
+            eventFlow.update { MemberOptionsEvent.Close(refresh = true) }
             snackbarDispatcher(SharingSnackbarMessage.RemoveMemberSuccess)
         }.onFailure {
             PassLogger.w(TAG, it, "Error removing member")

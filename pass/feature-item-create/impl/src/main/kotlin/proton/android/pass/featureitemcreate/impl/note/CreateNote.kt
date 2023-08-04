@@ -42,6 +42,8 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.VaultSelector
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
+import proton.android.pass.composecomponents.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
@@ -166,5 +168,8 @@ fun CreateNoteScreen(
         onSuccess = { _, _, _ ->
             onNavigate(CreateNoteNavigation.NoteCreated)
         }
+    )
+    InAppReviewTriggerLaunchedEffect(
+        triggerCondition = uiState.baseNoteUiState.itemSavedState is ItemSavedState.Success,
     )
 }

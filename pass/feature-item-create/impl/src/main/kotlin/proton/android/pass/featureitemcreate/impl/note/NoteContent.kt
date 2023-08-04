@@ -36,12 +36,13 @@ internal fun NoteContent(
     modifier: Modifier = Modifier,
     topBarActionName: String,
     uiState: BaseNoteUiState,
+    noteItem: NoteItem,
     selectedShareId: ShareId?,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
-    vaultSelect: @Composable ColumnScope.() -> Unit
+    vaultSelect: @Composable() (ColumnScope.() -> Unit),
 ) {
     Scaffold(
         modifier = modifier,
@@ -63,7 +64,7 @@ internal fun NoteContent(
     ) { padding ->
         CreateNoteItemForm(
             modifier = Modifier.padding(padding),
-            noteItem = uiState.noteItem,
+            noteItem = noteItem,
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             onTitleChange = onTitleChange,
             onNoteChange = onNoteChange,

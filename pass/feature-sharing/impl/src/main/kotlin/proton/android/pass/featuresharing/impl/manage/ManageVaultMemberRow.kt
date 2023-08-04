@@ -64,6 +64,7 @@ sealed interface VaultMemberContent {
 fun ManageVaultMemberRow(
     modifier: Modifier = Modifier,
     member: VaultMemberContent,
+    canShowActions: Boolean,
     onOptionsClick: (() -> Unit)? = null
 ) {
     val (circleTextModifier, circleText) = when (member) {
@@ -130,7 +131,7 @@ fun ManageVaultMemberRow(
             }
         }
 
-        if (member is VaultMemberContent.Member) {
+        if (member is VaultMemberContent.Member && canShowActions) {
             IconButton(
                 onClick = { onOptionsClick?.invoke() },
                 modifier = Modifier.size(24.dp)
@@ -164,6 +165,7 @@ fun ManageVaultMemberRowPreview(
         Surface {
             ManageVaultMemberRow(
                 member = VaultMemberContent.Member(member),
+                canShowActions = true,
                 onOptionsClick = {}
             )
         }

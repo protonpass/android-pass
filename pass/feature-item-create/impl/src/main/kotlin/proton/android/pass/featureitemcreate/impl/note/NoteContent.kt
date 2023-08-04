@@ -42,7 +42,7 @@ internal fun NoteContent(
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
-    vaultSelect: @Composable() (ColumnScope.() -> Unit),
+    vaultSelect: @Composable ColumnScope.() -> Unit,
 ) {
     Scaffold(
         modifier = modifier,

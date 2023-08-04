@@ -38,7 +38,7 @@ import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.featureauth.impl.Auth
+import proton.android.pass.featureauth.impl.AUTH_GRAPH
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -58,7 +58,7 @@ fun AutofillAppContent(
 ) {
     val startDestination = remember {
         if (needsAuth) {
-            Auth.route
+            AUTH_GRAPH
         } else {
             SelectItem.route
         }

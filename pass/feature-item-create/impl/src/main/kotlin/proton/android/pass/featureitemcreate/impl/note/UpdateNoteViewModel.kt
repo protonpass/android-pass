@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.note
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -31,6 +30,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -59,17 +60,17 @@ class UpdateNoteViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    savedStateHandle: SavedStateHandle
-) : BaseNoteViewModel(snackbarDispatcher) {
+    savedStateHandleProvider: SavedStateHandleProvider
+) : BaseNoteViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
 
     private val navShareId: ShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
+        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
-        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
+        ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
     private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
 
     private var _item: Item? = null
@@ -84,13 +85,11 @@ class UpdateNoteViewModel @Inject constructor(
                 runCatching { itemRepository.getById(userId, navShareId, navItemId) }
                     .onSuccess { item: Item ->
                         _item = item
-                        noteItemState.update {
-                            encryptionContextProvider.withEncryptionContext {
-                                NoteItem(
-                                    title = decrypt(item.title),
-                                    note = decrypt(item.note)
-                                )
-                            }
+                        noteItemState = encryptionContextProvider.withEncryptionContext {
+                            NoteItem(
+                                title = decrypt(item.title),
+                                note = decrypt(item.note)
+                            )
                         }
                     }
                     .onFailure {
@@ -119,7 +118,7 @@ class UpdateNoteViewModel @Inject constructor(
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         requireNotNull(_item)
         isLoadingState.update { IsLoadingState.Loading }
-        val noteItem = noteItemState.value
+        val noteItem = noteItemState
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {

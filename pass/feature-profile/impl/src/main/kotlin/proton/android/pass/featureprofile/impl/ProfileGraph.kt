@@ -22,6 +22,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.navigation
 import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
 import proton.android.pass.featureprofile.impl.pinconfig.PinConfigScreen
@@ -31,6 +32,7 @@ import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
 const val ENTER_PIN_PARAMETER_KEY = "enterPin"
+private const val PROFILE_GRAPH = "profile_graph"
 
 object Profile : NavItem(baseRoute = "profile", isTopLevel = true)
 object FeedbackBottomsheet : NavItem(
@@ -73,26 +75,31 @@ sealed interface ProfileNavigation {
 fun NavGraphBuilder.profileGraph(
     onNavigateEvent: (ProfileNavigation) -> Unit
 ) {
-    composable(Profile) {
-        val enterPinSuccess by it.savedStateHandle.getStateFlow(ENTER_PIN_PARAMETER_KEY, false)
-            .collectAsStateWithLifecycle()
-        ProfileScreen(
-            enterPinSuccess = enterPinSuccess,
-            onNavigateEvent = onNavigateEvent,
-            onClearPinSuccess = { it.savedStateHandle.remove<Boolean>(ENTER_PIN_PARAMETER_KEY) }
-        )
-    }
-    bottomSheet(FeedbackBottomsheet) {
-        FeedbackBottomsheet(onNavigateEvent = onNavigateEvent)
-    }
-    bottomSheet(AppLockTimeBottomsheet) {
-        AppLockTimeBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
-    }
-    bottomSheet(AppLockTypeBottomsheet) {
-        val enterPin = it.savedStateHandle.get<Boolean>(ENTER_PIN_PARAMETER_KEY) ?: false
-        AppLockTypeBottomsheet(enterPinSuccess = enterPin, onNavigateEvent = onNavigateEvent)
-    }
-    composable(PinConfig) {
-        PinConfigScreen(onNavigateEvent = onNavigateEvent)
+    navigation(
+        route = PROFILE_GRAPH,
+        startDestination = Profile.route
+    ) {
+        composable(Profile) {
+            val enterPinSuccess by it.savedStateHandle.getStateFlow(ENTER_PIN_PARAMETER_KEY, false)
+                .collectAsStateWithLifecycle()
+            ProfileScreen(
+                enterPinSuccess = enterPinSuccess,
+                onNavigateEvent = onNavigateEvent,
+                onClearPinSuccess = { it.savedStateHandle.remove<Boolean>(ENTER_PIN_PARAMETER_KEY) }
+            )
+        }
+        bottomSheet(FeedbackBottomsheet) {
+            FeedbackBottomsheet(onNavigateEvent = onNavigateEvent)
+        }
+        bottomSheet(AppLockTimeBottomsheet) {
+            AppLockTimeBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
+        }
+        bottomSheet(AppLockTypeBottomsheet) {
+            val enterPin = it.savedStateHandle.get<Boolean>(ENTER_PIN_PARAMETER_KEY) ?: false
+            AppLockTypeBottomsheet(enterPinSuccess = enterPin, onNavigateEvent = onNavigateEvent)
+        }
+        composable(PinConfig) {
+            PinConfigScreen(onNavigateEvent = onNavigateEvent)
+        }
     }
 }

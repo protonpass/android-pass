@@ -28,7 +28,8 @@ sealed class VaultMember(open val email: String) {
         override val email: String,
         val shareId: ShareId,
         val username: String,
-        val role: ShareRole?
+        val role: ShareRole?,
+        val isCurrentUser: Boolean
     ) : VaultMember(email)
 
     data class InvitePending(

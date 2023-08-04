@@ -32,6 +32,7 @@ import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
+import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
@@ -255,4 +256,17 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getPendingInvitesForShare(
         @Path("shareId") shareId: String
     ): GetSharePendingInvitesResponse
+
+    @DELETE("$PREFIX/share/{shareId}/user/{memberShareId}")
+    suspend fun removeMemberFromVault(
+        @Path("shareId") shareId: String,
+        @Path("memberShareId") memberShareId: String
+    ): CodeOnlyResponse
+
+    @PUT("$PREFIX/share/{shareId}/user/{memberShareId}")
+    suspend fun updateShareMember(
+        @Path("shareId") shareId: String,
+        @Path("memberShareId") memberShareId: String,
+        @Body request: UpdateMemberShareRequest
+    ): CodeOnlyResponse
 }

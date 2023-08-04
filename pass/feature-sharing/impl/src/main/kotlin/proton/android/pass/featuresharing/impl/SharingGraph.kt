@@ -20,6 +20,8 @@ package proton.android.pass.featuresharing.impl
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
@@ -80,7 +82,9 @@ object ManageVault : NavItem(
 
 sealed interface SharingNavigation {
     object Back : SharingNavigation
-    object Close : SharingNavigation
+
+    @JvmInline
+    value class CloseBottomSheet(val refresh: Boolean) : SharingNavigation
     data class Permissions(val shareId: ShareId, val email: String) : SharingNavigation
     data class Summary(val shareId: ShareId, val email: String, val permission: Int) :
         SharingNavigation
@@ -127,8 +131,16 @@ fun NavGraphBuilder.sharingGraph(
     }
 
     composable(ManageVault) {
-        ManageVaultScreen(onNavigateEvent = onNavigateEvent)
+        val refresh by it.savedStateHandle
+            .getStateFlow(REFRESH_MEMBER_LIST_FLAG, false)
+            .collectAsStateWithLifecycle()
+        ManageVaultScreen(
+            refresh = refresh,
+            onNavigateEvent = onNavigateEvent
+        )
     }
 
     memberOptionsBottomSheetGraph(onNavigateEvent)
 }
+
+const val REFRESH_MEMBER_LIST_FLAG = "refreshMemberList"

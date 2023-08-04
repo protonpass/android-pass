@@ -28,15 +28,20 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -57,9 +62,21 @@ class ManageVaultViewModel @Inject constructor(
     private val canShareVault: CanShareVault
 ) : ViewModel() {
 
-    private val navShareId: ShareId = ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
+    private val navShareId: ShareId =
+        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
 
-    private val eventFlow: MutableStateFlow<ManageVaultEvent> = MutableStateFlow(ManageVaultEvent.Unknown)
+    private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
+
+    private val membersFlow: Flow<LoadingResult<List<VaultMember>>> = refreshFlow
+        .filter { it }
+        .flatMapLatest {
+            getVaultMembers(navShareId).asLoadingResult()
+        }
+        .onEach { refreshFlow.update { false } }
+        .distinctUntilChanged()
+
+    private val eventFlow: MutableStateFlow<ManageVaultEvent> =
+        MutableStateFlow(ManageVaultEvent.Unknown)
     private val vaultFlow: Flow<VaultWithItemCount> = getVaultById(shareId = navShareId)
         .catch {
             snackbarDispatcher(SharingSnackbarMessage.GetMembersInfoError)
@@ -76,7 +93,7 @@ class ManageVaultViewModel @Inject constructor(
         .distinctUntilChanged()
 
     val state: StateFlow<ManageVaultUiState> = combine(
-        getVaultMembers(navShareId).asLoadingResult(),
+        membersFlow,
         vaultFlow,
         showShareButtonFlow,
         canEditFlow,
@@ -102,6 +119,10 @@ class ManageVaultViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = ManageVaultUiState.Initial
     )
+
+    fun refresh() = viewModelScope.launch {
+        refreshFlow.update { true }
+    }
 
     fun clearEvent() {
         eventFlow.update { ManageVaultEvent.Unknown }

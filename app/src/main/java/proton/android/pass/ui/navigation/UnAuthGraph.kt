@@ -64,9 +64,9 @@ fun NavGraphBuilder.unAuthGraph(
         ConfirmSignOutDialog(
             onNavigate = {
                 when (it) {
-                    AccountNavigation.Back -> appNavigator.onBackClick()
+                    AccountNavigation.Back -> appNavigator.navigateBack()
                     AccountNavigation.ConfirmSignOut -> onNavigate(AppNavigation.SignOut())
-                    AccountNavigation.DismissDialog -> appNavigator.onBackClick()
+                    AccountNavigation.DismissDialog -> appNavigator.navigateBack()
                     AccountNavigation.SignOut -> {}
                     AccountNavigation.Subscription -> {}
                     AccountNavigation.Upgrade -> {}
@@ -79,7 +79,7 @@ fun NavGraphBuilder.unAuthGraph(
         EnterPinBottomsheet(
             onNavigate = {
                 when (it) {
-                    EnterPinNavigation.Success -> appNavigator.onBackClick()
+                    EnterPinNavigation.Success -> appNavigator.navigateBack()
                     EnterPinNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
                 }
             }

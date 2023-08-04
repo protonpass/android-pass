@@ -145,6 +145,7 @@ android {
         create("dev") {
             dimension = "version"
             isDefault = true
+            resourceConfigurations.addAll(listOf("en", "xxhdpi"))
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")

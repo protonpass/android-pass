@@ -55,6 +55,7 @@ sealed interface ManageVaultUiContent {
 
     @Stable
     data class Content(
-        val vaultMembers: List<VaultMember>
+        val vaultMembers: List<VaultMember>,
+        val canEdit: Boolean,
     ) : ManageVaultUiContent
 }

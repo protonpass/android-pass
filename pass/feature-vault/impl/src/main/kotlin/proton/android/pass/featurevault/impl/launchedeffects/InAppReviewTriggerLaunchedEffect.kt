@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.launchedeffects
+package proton.android.pass.featurevault.impl.launchedeffects
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

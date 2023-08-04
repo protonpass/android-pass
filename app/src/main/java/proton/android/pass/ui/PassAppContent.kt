@@ -46,6 +46,7 @@ import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
+import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
@@ -77,6 +78,13 @@ fun PassAppContent(
     val appNavigator = rememberAppNavigator(bottomSheetNavigator)
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
+
+    val unAuthBottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+    val unAuthBottomSheetNavigator = rememberBottomSheetNavigator(unAuthBottomSheetState)
+    val unAuthAppNavigator = rememberAppNavigator(unAuthBottomSheetNavigator)
 
     SnackBarLaunchedEffect(
         appUiState.snackbarMessage.value(),
@@ -128,14 +136,6 @@ fun PassAppContent(
                     }
                     if (appUiState.needsAuth) {
                         BackHandler { onNavigate(AppNavigation.Finish) }
-                        val unAuthBottomSheetState = rememberModalBottomSheetState(
-                            initialValue = ModalBottomSheetValue.Hidden,
-                            skipHalfExpanded = true
-                        )
-                        val unAuthBottomSheetNavigator =
-                            rememberBottomSheetNavigator(unAuthBottomSheetState)
-                        val unAuthAppNavigator =
-                            rememberAppNavigator(unAuthBottomSheetNavigator)
                         PassModalBottomSheetLayout(unAuthAppNavigator.passBottomSheetNavigator) {
                             PassUnAuthNavHost(
                                 appNavigator = unAuthAppNavigator,
@@ -147,7 +147,7 @@ fun PassAppContent(
                             PassNavHost(
                                 modifier = Modifier.weight(1f),
                                 appNavigator = appNavigator,
-                                startingRoute = Root.route,
+                                startingRoute = Home.route,
                                 onNavigate = onNavigate,
                                 dismissBottomSheet = { callback ->
                                     coroutineScope.launch {

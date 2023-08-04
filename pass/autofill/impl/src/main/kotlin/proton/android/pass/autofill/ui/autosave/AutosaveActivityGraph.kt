@@ -142,7 +142,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 }
 
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 // Updates cannot happen
@@ -157,9 +157,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
     generatePasswordBottomsheetGraph(
         onNavigate = {
             when (it) {
-                GeneratePasswordNavigation.CloseDialog -> appNavigator.onBackClick()
+                GeneratePasswordNavigation.CloseDialog -> appNavigator.navigateBack()
                 GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
@@ -176,9 +176,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
         onSuccess = { totp, index ->
             val values = mutableMapOf<String, Any>(TOTP_NAV_PARAMETER_KEY to totp)
             index?.let { values.put(INDEX_NAV_PARAMETER_KEY, it) }
-            appNavigator.navigateUpWithResult(values)
+            appNavigator.navigateBackWithResult(values)
         },
-        onCloseTotp = { appNavigator.onBackClick() },
+        onCloseTotp = { appNavigator.navigateBack() },
         onOpenImagePicker = {
             appNavigator.navigate(
                 destination = PhotoPickerTotp,
@@ -191,10 +191,10 @@ fun NavGraphBuilder.autosaveActivityGraph(
     vaultGraph(
         onNavigate = {
             when (it) {
-                VaultNavigation.Close -> appNavigator.onBackClick()
+                VaultNavigation.Close -> appNavigator.navigateBack()
                 VaultNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
-                    appNavigator.navigateUpWithResult(
+                    appNavigator.navigateBackWithResult(
                         key = KEY_VAULT_SELECTED,
                         value = it.shareId.id,
                         comesFromBottomsheet = true

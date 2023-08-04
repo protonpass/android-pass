@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.note
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -38,6 +37,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -71,16 +71,16 @@ class CreateNoteViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandle: SavedStateHandle,
+    savedStateHandleProvider: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction
-) : BaseNoteViewModel(snackbarDispatcher) {
+) : BaseNoteViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
 
     private val navShareId: Option<ShareId> =
-        savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
             .map { ShareId(it) }
     private val navShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(navShareId)
@@ -145,7 +145,7 @@ class CreateNoteViewModel @Inject constructor(
     )
 
     fun createNote(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
-        val noteItem = noteItemState.value
+        val noteItem = noteItemState
         val noteItemValidationErrors = noteItem.validate()
         if (noteItemValidationErrors.isNotEmpty()) {
             noteItemValidationErrorsState.update { noteItemValidationErrors }

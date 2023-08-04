@@ -71,7 +71,7 @@ class CreateVaultBottomSheetTest {
         composeTestRule.apply {
             setContent {
                 PassTheme {
-                    CreateVaultBottomSheet(
+                    CreateVaultScreen(
                         onNavigate = {
                             if (it == VaultNavigation.Close) {
                                 checker.call()
@@ -103,7 +103,7 @@ class CreateVaultBottomSheetTest {
         composeTestRule.apply {
             setContent {
                 PassTheme {
-                    CreateVaultBottomSheet(
+                    CreateVaultScreen(
                         onNavigate = {}
                     )
                 }

@@ -24,6 +24,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
 import proton.android.pass.featuresharing.impl.manage.ManageVaultScreen
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberOptionsBottomSheetGraph
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
 import proton.android.pass.featuresharing.impl.sharingsummary.SharingSummaryScreen
 import proton.android.pass.featuresharing.impl.sharingwith.SharingWithScreen
@@ -34,6 +35,7 @@ import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 
 object EmailNavArgId : NavArgId {
     override val key: String = "email"
@@ -78,6 +80,7 @@ object ManageVault : NavItem(
 
 sealed interface SharingNavigation {
     object Back : SharingNavigation
+    object Close : SharingNavigation
     data class Permissions(val shareId: ShareId, val email: String) : SharingNavigation
     data class Summary(val shareId: ShareId, val email: String, val permission: Int) :
         SharingNavigation
@@ -87,6 +90,19 @@ sealed interface SharingNavigation {
 
     @JvmInline
     value class ManageVault(val shareId: ShareId) : SharingNavigation
+
+    data class MemberOptions(
+        val shareId: ShareId,
+        val memberRole: ShareRole,
+        val destShareId: ShareId,
+        val destEmail: String
+    ) : SharingNavigation
+
+    data class TransferOwnershipConfirm(
+        val shareId: ShareId,
+        val destShareId: ShareId,
+        val destEmail: String
+    ) : SharingNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -113,4 +129,6 @@ fun NavGraphBuilder.sharingGraph(
     composable(ManageVault) {
         ManageVaultScreen(onNavigateEvent = onNavigateEvent)
     }
+
+    memberOptionsBottomSheetGraph(onNavigateEvent)
 }

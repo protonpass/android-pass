@@ -38,7 +38,7 @@ import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 
 @Composable
-fun VaultBottomSheetContent(
+fun VaultContent(
     modifier: Modifier = Modifier,
     state: BaseVaultUiState,
     showUpgradeUi: Boolean,
@@ -72,7 +72,6 @@ fun VaultBottomSheetContent(
         ) {
             AnimatedVisibility(visible = showUpgradeUi) {
                 Column {
-                    Spacer(modifier = Modifier.height(32.dp))
                     InfoBanner(
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         text = stringResource(R.string.bottomsheet_cannot_create_more_vaults),

@@ -20,10 +20,13 @@ package proton.android.pass.featureaccount.impl
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.navigation
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
+
+private const val ACCOUNT_GRAPH = "account_graph"
 
 object Account : NavItem(baseRoute = "account/view")
 object SignOutDialog : NavItem(
@@ -35,19 +38,22 @@ object SignOutDialog : NavItem(
 fun NavGraphBuilder.accountGraph(
     onNavigate: (AccountNavigation) -> Unit
 ) {
-    composable(Account) {
-        AccountScreen(
-            onNavigate = onNavigate
-        )
-    }
-
-    dialog(SignOutDialog) {
-        ConfirmSignOutDialog(
-            onNavigate = onNavigate
-        )
+    navigation(
+        route = ACCOUNT_GRAPH,
+        startDestination = Account.route
+    ) {
+        composable(Account) {
+            AccountScreen(
+                onNavigate = onNavigate
+            )
+        }
+        dialog(SignOutDialog) {
+            ConfirmSignOutDialog(
+                onNavigate = onNavigate
+            )
+        }
     }
 }
-
 
 sealed interface AccountNavigation {
     object Subscription : AccountNavigation

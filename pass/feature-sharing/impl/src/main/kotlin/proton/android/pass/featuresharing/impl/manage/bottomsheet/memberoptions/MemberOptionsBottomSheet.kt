@@ -35,8 +35,8 @@ fun MemberOptionsBottomSheet(
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         when (val event = state.event) {
-            MemberOptionsEvent.Close -> {
-                onNavigate(SharingNavigation.Close)
+            is MemberOptionsEvent.Close -> {
+                onNavigate(SharingNavigation.CloseBottomSheet(refresh = event.refresh))
                 viewModel.clearEvent()
             }
             is MemberOptionsEvent.TransferOwnership -> {

@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureprofile.impl
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -77,7 +76,6 @@ fun NavGraphBuilder.profileGraph(
     composable(Profile) {
         val enterPinSuccess by it.savedStateHandle.getStateFlow(ENTER_PIN_PARAMETER_KEY, false)
             .collectAsStateWithLifecycle()
-        BackHandler { onNavigateEvent(ProfileNavigation.Finish) }
         ProfileScreen(
             enterPinSuccess = enterPinSuccess,
             onNavigateEvent = onNavigateEvent,

@@ -55,7 +55,7 @@ fun EditVaultScreen(
         }
     }
 
-    VaultBottomSheetContent(
+    VaultContent(
         modifier = modifier,
         state = state,
         showUpgradeUi = false,

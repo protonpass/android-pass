@@ -50,7 +50,7 @@ fun CreateVaultScreen(
             onNavigate(VaultNavigation.Close)
         }
     }
-    VaultBottomSheetContent(
+    VaultContent(
         modifier = modifier,
         state = createState.base,
         showUpgradeUi = createState.displayNeedUpgrade,

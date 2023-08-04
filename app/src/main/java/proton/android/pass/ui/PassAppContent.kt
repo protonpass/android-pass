@@ -18,7 +18,6 @@
 
 package proton.android.pass.ui
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -135,7 +134,6 @@ fun PassAppContent(
                         )
                     }
                     if (appUiState.needsAuth) {
-                        BackHandler { onNavigate(AppNavigation.Finish) }
                         PassModalBottomSheetLayout(unAuthAppNavigator.passBottomSheetNavigator) {
                             PassUnAuthNavHost(
                                 appNavigator = unAuthAppNavigator,

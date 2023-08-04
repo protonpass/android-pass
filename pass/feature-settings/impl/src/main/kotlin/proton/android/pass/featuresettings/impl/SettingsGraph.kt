@@ -20,11 +20,14 @@ package proton.android.pass.featuresettings.impl
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.navigation
 import proton.android.pass.featuresettings.impl.primaryvault.SelectPrimaryVaultBottomSheet
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
+
+private const val SETTINGS_GRAPH = "settings_graph"
 
 object Settings : NavItem(baseRoute = "settings")
 object LogView : NavItem(baseRoute = "log/view")
@@ -65,33 +68,33 @@ sealed interface SettingsNavigation {
 fun NavGraphBuilder.settingsGraph(
     onNavigate: (SettingsNavigation) -> Unit
 ) {
-    composable(Settings) {
-        SettingsScreen(
-            onNavigate = onNavigate
-        )
-    }
-
-    bottomSheet(ThemeSelector) {
-        ThemeSelectionBottomSheet(onNavigate = onNavigate)
-    }
-
-    composable(LogView) {
-        LogViewScreen(onUpClick = { onNavigate(SettingsNavigation.Close) })
-    }
-
-    bottomSheet(ClipboardSettings) {
-        ClipboardBottomSheet(
-            onClearClipboardSettingClick = { onNavigate(SettingsNavigation.ClearClipboardSettings) },
-        )
-    }
-
-    bottomSheet(ClearClipboardOptions) {
-        ClearClipboardOptionsBottomSheet(onNavigate = onNavigate)
-    }
-
-    bottomSheet(SelectPrimaryVault) {
-        SelectPrimaryVaultBottomSheet(
-            onNavigate = onNavigate
-        )
+    navigation(
+        route = SETTINGS_GRAPH,
+        startDestination = Settings.route
+    ) {
+        composable(Settings) {
+            SettingsScreen(
+                onNavigate = onNavigate
+            )
+        }
+        bottomSheet(ThemeSelector) {
+            ThemeSelectionBottomSheet(onNavigate = onNavigate)
+        }
+        composable(LogView) {
+            LogViewScreen(onUpClick = { onNavigate(SettingsNavigation.Close) })
+        }
+        bottomSheet(ClipboardSettings) {
+            ClipboardBottomSheet(
+                onClearClipboardSettingClick = { onNavigate(SettingsNavigation.ClearClipboardSettings) },
+            )
+        }
+        bottomSheet(ClearClipboardOptions) {
+            ClearClipboardOptionsBottomSheet(onNavigate = onNavigate)
+        }
+        bottomSheet(SelectPrimaryVault) {
+            SelectPrimaryVaultBottomSheet(
+                onNavigate = onNavigate
+            )
+        }
     }
 }

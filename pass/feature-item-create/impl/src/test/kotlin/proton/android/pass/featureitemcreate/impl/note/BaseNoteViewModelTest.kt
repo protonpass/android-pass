@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.featureitemcreate.impl.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
@@ -34,13 +35,16 @@ internal class BaseNoteViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var baseNoteViewModel: BaseNoteViewModel
 
     @Before
     fun setUp() {
         snackbarDispatcher = TestSnackbarDispatcher()
+        savedStateHandleProvider = TestSavedStateHandleProvider()
         baseNoteViewModel = object : BaseNoteViewModel(
-            snackbarDispatcher
+            snackbarDispatcher,
+            savedStateHandleProvider
         ) {}
     }
 
@@ -55,19 +59,14 @@ internal class BaseNoteViewModelTest {
     fun `when the title has changed, the state should hold it`() = runTest {
         val titleInput = "Title Changed"
         baseNoteViewModel.onTitleChange(titleInput)
-        baseNoteViewModel.baseNoteUiState.test {
-            assertThat(awaitItem().noteItem)
-                .isEqualTo(Initial.noteItem.copy(title = titleInput))
-        }
+
+        assertThat(baseNoteViewModel.noteItem.title).isEqualTo(titleInput)
     }
 
     @Test
     fun `when the note has changed, the state should hold it`() = runTest {
         val noteInput = "Note Changed"
         baseNoteViewModel.onNoteChange(noteInput)
-        baseNoteViewModel.baseNoteUiState.test {
-            assertThat(awaitItem().noteItem)
-                .isEqualTo(Initial.noteItem.copy(note = noteInput))
-        }
+        assertThat(baseNoteViewModel.noteItem.note).isEqualTo(noteInput)
     }
 }

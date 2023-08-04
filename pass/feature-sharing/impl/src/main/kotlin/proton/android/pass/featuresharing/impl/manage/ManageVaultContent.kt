@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
+import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.SharingNavigation
 
@@ -59,7 +60,24 @@ fun ManageVaultContent(
                 modifier = Modifier.weight(1f),
                 content = state.content,
                 vault = state.vault,
-                onMemberOptionsClick = {}
+                onMemberOptionsClick = { member ->
+                    state.vault?.vault?.shareId?.let { shareId ->
+                        when (member) {
+                            is VaultMember.Member -> {
+                                member.role?.let { role ->
+                                    val event = SharingNavigation.MemberOptions(
+                                        shareId = shareId,
+                                        destShareId = member.shareId,
+                                        memberRole = role,
+                                        destEmail = member.email
+                                    )
+                                    onNavigateEvent(event)
+                                }
+                            }
+                            is VaultMember.InvitePending -> {}
+                        }
+                    }
+                }
             )
             if (state.showShareButton) {
                 CircleButton(

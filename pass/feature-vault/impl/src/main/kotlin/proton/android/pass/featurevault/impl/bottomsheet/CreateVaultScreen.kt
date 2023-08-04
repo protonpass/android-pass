@@ -26,34 +26,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.feature.vault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 
 @Composable
-fun CreateVaultBottomSheet(
+fun CreateVaultScreen(
     modifier: Modifier = Modifier,
     onNavigate: (VaultNavigation) -> Unit,
     viewModel: CreateVaultViewModel = hiltViewModel()
 ) {
     val createState by viewModel.createState.collectAsStateWithLifecycle()
-    val state = createState.base
 
     BackHandler {
         onNavigate(VaultNavigation.Close)
     }
 
-    LaunchedEffect(state.isVaultCreatedEvent) {
-        if (state.isVaultCreatedEvent == IsVaultCreatedEvent.Created) {
+    LaunchedEffect(createState.base.isVaultCreatedEvent) {
+        if (createState.base.isVaultCreatedEvent == IsVaultCreatedEvent.Created) {
             onNavigate(VaultNavigation.Close)
         }
     }
 
     VaultBottomSheetContent(
-        modifier = modifier
-            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
-        state = state,
+        modifier = modifier,
+        state = createState.base,
         showUpgradeUi = createState.displayNeedUpgrade,
         buttonText = stringResource(R.string.bottomsheet_create_vault_button),
         onNameChange = { viewModel.onNameChange(it) },

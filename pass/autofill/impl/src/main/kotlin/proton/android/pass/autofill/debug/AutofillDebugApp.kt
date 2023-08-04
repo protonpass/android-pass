@@ -108,7 +108,7 @@ private fun AutofillDebugAppContent(
 
         composable(SessionDetail) {
             SessionDetail(
-                onBackClick = { appNavigator.onBackClick() }
+                onBackClick = { appNavigator.navigateBack() }
             )
         }
     }

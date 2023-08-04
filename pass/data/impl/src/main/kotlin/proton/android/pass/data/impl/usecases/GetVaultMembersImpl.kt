@@ -20,17 +20,15 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultMembers
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.responses.ShareMemberResponse
@@ -44,36 +42,37 @@ import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 class GetVaultMembersImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val apiProvider: ApiProvider,
-    private val getVaultById: GetVaultById
+    private val getVaultById: GetVaultById,
+    private val observeCurrentUser: ObserveCurrentUser
 ) : GetVaultMembers {
 
-    override fun invoke(shareId: ShareId): Flow<List<VaultMember>> = oneShot {
-        accountManager.getPrimaryUserId().filterNotNull().first()
-    }.flatMapLatest { userId ->
-        val vault = getVaultById(userId = userId, shareId = shareId).firstOrNull()
-            ?: return@flatMapLatest flowOf(emptyList())
+    override fun invoke(shareId: ShareId): Flow<List<VaultMember>> = observeCurrentUser()
+        .flatMapLatest { user ->
+            val userId = user.userId
+            val vault = getVaultById(userId = userId, shareId = shareId).firstOrNull()
+                ?: return@flatMapLatest flowOf(emptyList())
 
-        val vaultPermissions = vault.role.toPermissions()
-        if (vaultPermissions.hasFlag(SharePermissionFlag.Admin)) {
-            combine(
-                oneShot { fetchShareMembers(shareId, userId) },
-                oneShot { fetchPendingInvites(shareId, userId) }
-            ) { members, invites -> members + invites }
-        } else {
-            oneShot { fetchShareMembers(shareId, userId) }
+            val vaultPermissions = vault.role.toPermissions()
+            if (vaultPermissions.hasFlag(SharePermissionFlag.Admin)) {
+                combine(
+                    oneShot { fetchShareMembers(shareId, userId, user.email) },
+                    oneShot { fetchPendingInvites(shareId, userId) }
+                ) { members, invites -> members + invites }
+            } else {
+                oneShot { fetchShareMembers(shareId, userId, user.email) }
+            }
         }
-    }
 
     private suspend fun fetchShareMembers(
         shareId: ShareId,
-        userId: UserId
+        userId: UserId,
+        userEmail: String?
     ): List<VaultMember.Member> {
         val members = apiProvider.get<PasswordManagerApi>(userId)
             .invoke { getVaultMembers(shareId.id) }
             .valueOrThrow
-        return members.members.map { it.toDomain() }
+        return members.members.map { it.toDomain(userEmail) }
     }
 
     private suspend fun fetchPendingInvites(
@@ -86,11 +85,12 @@ class GetVaultMembersImpl @Inject constructor(
         return invites.invites.map { it.toDomain() }
     }
 
-    private fun ShareMemberResponse.toDomain() = VaultMember.Member(
+    private fun ShareMemberResponse.toDomain(currentUserEmail: String?) = VaultMember.Member(
         shareId = ShareId(shareId),
         email = userEmail,
         username = userName,
-        role = shareRoleId?.let { ShareRole.fromValue(it) }
+        role = shareRoleId?.let { ShareRole.fromValue(it) },
+        isCurrentUser = userEmail == currentUserEmail
     )
 
     private fun SharePendingInvite.toDomain() = VaultMember.InvitePending(

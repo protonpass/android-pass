@@ -244,7 +244,7 @@ fun NavGraphBuilder.appGraph(
         onNavigateEvent = {
             when (it) {
                 is SortingNavigation.SelectSorting -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
             }
         }
@@ -300,12 +300,12 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             when (it) {
                 VaultNavigation.Close -> dismissBottomSheet {
-                    appNavigator.onBackClick()
+                    appNavigator.navigateBack()
                 }
 
                 VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
-                    appNavigator.navigateUpWithResult(
+                    appNavigator.navigateBackWithResult(
                         key = KEY_VAULT_SELECTED,
                         value = it.shareId.id,
                         comesFromBottomsheet = true
@@ -357,9 +357,9 @@ fun NavGraphBuilder.appGraph(
     generatePasswordBottomsheetGraph(
         onNavigate = {
             when (it) {
-                GeneratePasswordNavigation.CloseDialog -> appNavigator.onBackClick()
+                GeneratePasswordNavigation.CloseDialog -> appNavigator.navigateBack()
                 GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
@@ -375,9 +375,9 @@ fun NavGraphBuilder.appGraph(
     accountGraph(
         onNavigate = {
             when (it) {
-                AccountNavigation.Back -> appNavigator.onBackClick()
+                AccountNavigation.Back -> appNavigator.navigateBack()
                 AccountNavigation.ConfirmSignOut -> onNavigate(AppNavigation.SignOut())
-                AccountNavigation.DismissDialog -> appNavigator.onBackClick()
+                AccountNavigation.DismissDialog -> appNavigator.navigateBack()
                 AccountNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
                 AccountNavigation.Subscription -> onNavigate(AppNavigation.Subscription)
                 AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
@@ -400,12 +400,12 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 ProfileNavigation.Finish -> onNavigate(AppNavigation.Finish)
                 ProfileNavigation.CloseBottomSheet -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 ProfileNavigation.AppLockTime -> appNavigator.navigate(AppLockTimeBottomsheet)
                 ProfileNavigation.AppLockType -> appNavigator.navigate(AppLockTypeBottomsheet)
-                ProfileNavigation.Back -> appNavigator.onBackClick()
+                ProfileNavigation.Back -> appNavigator.navigateBack()
                 ProfileNavigation.ConfigurePin -> dismissBottomSheet {
                     appNavigator.navigate(PinConfig)
                 }
@@ -420,9 +420,9 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             when (it) {
                 SettingsNavigation.SelectTheme -> appNavigator.navigate(ThemeSelector)
-                SettingsNavigation.Close -> appNavigator.onBackClick()
+                SettingsNavigation.Close -> appNavigator.navigateBack()
                 SettingsNavigation.DismissBottomSheet -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 SettingsNavigation.ViewLogs -> appNavigator.navigate(LogView)
@@ -449,7 +449,7 @@ fun NavGraphBuilder.appGraph(
             }
             when (it) {
                 BaseLoginNavigation.Close -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
@@ -471,7 +471,7 @@ fun NavGraphBuilder.appGraph(
                     )
 
                 is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
-                    is CreateLoginNavigation.LoginCreated -> appNavigator.onBackClick()
+                    is CreateLoginNavigation.LoginCreated -> appNavigator.navigateBack()
                     is CreateLoginNavigation.SelectVault -> {
                         appNavigator.navigate(
                             destination = SelectVaultBottomsheet,
@@ -503,7 +503,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 BaseLoginNavigation.DeleteAlias ->
-                    appNavigator.navigateUpWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
+                    appNavigator.navigateBackWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
 
                 is BaseLoginNavigation.EditAlias -> {
                     appNavigator.navigate(
@@ -543,7 +543,7 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
             }
         }
@@ -552,9 +552,9 @@ fun NavGraphBuilder.appGraph(
         onSuccess = { totp, index ->
             val values = mutableMapOf<String, Any>(TOTP_NAV_PARAMETER_KEY to totp)
             index?.let { values.put(INDEX_NAV_PARAMETER_KEY, it) }
-            appNavigator.navigateUpWithResult(values)
+            appNavigator.navigateBackWithResult(values)
         },
-        onCloseTotp = { appNavigator.onBackClick() },
+        onCloseTotp = { appNavigator.navigateBack() },
         onOpenImagePicker = {
             val backDestination = when {
                 appNavigator.hasDestinationInStack(CreateLogin) -> CreateLogin
@@ -571,20 +571,20 @@ fun NavGraphBuilder.appGraph(
     createNoteGraph(
         onNavigate = {
             when (it) {
-                CreateNoteNavigation.Back -> appNavigator.onBackClick()
+                CreateNoteNavigation.Back -> appNavigator.navigateBack()
                 is CreateNoteNavigation.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                 )
 
-                CreateNoteNavigation.NoteCreated -> appNavigator.onBackClick()
+                CreateNoteNavigation.NoteCreated -> appNavigator.navigateBack()
             }
         }
     )
     updateNoteGraph(
         onNavigate = {
             when (it) {
-                UpdateNoteNavigation.Back -> appNavigator.onBackClick()
+                UpdateNoteNavigation.Back -> appNavigator.navigateBack()
                 is UpdateNoteNavigation.NoteUpdated -> appNavigator.navigate(
                     destination = ViewItem,
                     route = ViewItem.createNavRoute(it.shareId, it.itemId),
@@ -595,9 +595,9 @@ fun NavGraphBuilder.appGraph(
     )
     createCreditCardGraph {
         when (it) {
-            BaseCreditCardNavigation.Close -> appNavigator.onBackClick()
+            BaseCreditCardNavigation.Close -> appNavigator.navigateBack()
             is CreateCreditCardNavigation -> when (it) {
-                is CreateCreditCardNavigation.ItemCreated -> appNavigator.onBackClick()
+                is CreateCreditCardNavigation.ItemCreated -> appNavigator.navigateBack()
                 is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
@@ -610,7 +610,7 @@ fun NavGraphBuilder.appGraph(
     }
     updateCreditCardGraph {
         when (it) {
-            BaseCreditCardNavigation.Close -> appNavigator.onBackClick()
+            BaseCreditCardNavigation.Close -> appNavigator.navigateBack()
             is CreateCreditCardNavigation -> {}
             is UpdateCreditCardNavigation -> {
                 when (it) {
@@ -628,17 +628,17 @@ fun NavGraphBuilder.appGraph(
     createAliasGraph(
         onNavigate = {
             when (it) {
-                CreateAliasNavigation.Close -> appNavigator.onBackClick()
+                CreateAliasNavigation.Close -> appNavigator.navigateBack()
                 CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 is CreateAliasNavigation.Created -> {
-                    appNavigator.onBackClick()
+                    appNavigator.navigateBack()
                 }
 
                 CreateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
@@ -655,7 +655,7 @@ fun NavGraphBuilder.appGraph(
     updateAliasGraph(
         onNavigate = {
             when (it) {
-                UpdateAliasNavigation.Close -> appNavigator.onBackClick()
+                UpdateAliasNavigation.Close -> appNavigator.navigateBack()
                 is UpdateAliasNavigation.Updated -> appNavigator.navigate(
                     destination = ViewItem,
                     route = ViewItem.createNavRoute(it.shareId, it.itemId),
@@ -670,7 +670,7 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             when (it) {
                 ItemDetailNavigation.Back -> {
-                    appNavigator.onBackClick()
+                    appNavigator.navigateBack()
                 }
 
                 is ItemDetailNavigation.OnCreateLoginFromAlias -> {
@@ -775,7 +775,7 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 MigrateNavigation.VaultMigrated -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 is MigrateNavigation.VaultSelectedForMigrateAll -> {
@@ -792,7 +792,7 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 MigrateNavigation.Close -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
             }
         }
@@ -806,17 +806,17 @@ fun NavGraphBuilder.appGraph(
                     when {
                         appNavigator.hasPreviousDestination(AppLockTypeBottomsheet) ||
                             appNavigator.hasPreviousDestination(Profile) ->
-                            appNavigator.navigateUpWithResult(
+                            appNavigator.navigateBackWithResult(
                                 key = ENTER_PIN_PARAMETER_KEY,
                                 value = true
                             )
 
-                        else -> appNavigator.onBackClick()
+                        else -> appNavigator.navigateBack()
                     }
                 }
 
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)
-                AuthNavigation.Failed -> appNavigator.onBackClick()
+                AuthNavigation.Failed -> appNavigator.navigateBack()
                 AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
                 AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
                 AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
@@ -830,7 +830,7 @@ fun NavGraphBuilder.appGraph(
     featureFlagsGraph()
     trialGraph {
         when (it) {
-            TrialNavigation.Close -> appNavigator.onBackClick()
+            TrialNavigation.Close -> appNavigator.navigateBack()
             TrialNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
         }
     }
@@ -888,7 +888,7 @@ fun NavGraphBuilder.appGraph(
     }
     syncGraph {
         when (it) {
-            SyncNavigation.FinishedFetching -> appNavigator.onBackClick()
+            SyncNavigation.FinishedFetching -> appNavigator.navigateBack()
         }
     }
 }

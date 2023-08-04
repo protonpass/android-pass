@@ -134,7 +134,7 @@ fun NavGraphBuilder.autofillActivityGraph(
             }
         }
     )
-    sortingGraph { appNavigator.onBackClick() }
+    sortingGraph { appNavigator.navigateBack() }
 
     createUpdateLoginGraph(
         initialCreateLoginUiState = InitialCreateLoginUiState(
@@ -146,7 +146,7 @@ fun NavGraphBuilder.autofillActivityGraph(
         onNavigate = {
             when (it) {
                 BaseLoginNavigation.Close -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
@@ -193,7 +193,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
                 )
 
-                BaseLoginNavigation.DeleteAlias -> appNavigator.navigateUpWithResult(
+                BaseLoginNavigation.DeleteAlias -> appNavigator.navigateBackWithResult(
                     key = CLEAR_ALIAS_NAV_PARAMETER_KEY,
                     value = true
                 )
@@ -235,7 +235,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 }
 
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 // Updates cannot happen
@@ -247,9 +247,9 @@ fun NavGraphBuilder.autofillActivityGraph(
     generatePasswordBottomsheetGraph(
         onNavigate = {
             when (it) {
-                GeneratePasswordNavigation.CloseDialog -> appNavigator.onBackClick()
+                GeneratePasswordNavigation.CloseDialog -> appNavigator.navigateBack()
                 GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
@@ -266,9 +266,9 @@ fun NavGraphBuilder.autofillActivityGraph(
         onSuccess = { totp, index ->
             val values = mutableMapOf<String, Any>(TOTP_NAV_PARAMETER_KEY to totp)
             index?.let { values.put(INDEX_NAV_PARAMETER_KEY, it) }
-            appNavigator.navigateUpWithResult(values)
+            appNavigator.navigateBackWithResult(values)
         },
-        onCloseTotp = { appNavigator.onBackClick() },
+        onCloseTotp = { appNavigator.navigateBack() },
         onOpenImagePicker = {
             appNavigator.navigate(
                 destination = PhotoPickerTotp,
@@ -280,13 +280,13 @@ fun NavGraphBuilder.autofillActivityGraph(
     createAliasGraph(
         onNavigate = {
             when (it) {
-                CreateAliasNavigation.Close -> appNavigator.onBackClick()
+                CreateAliasNavigation.Close -> appNavigator.navigateBack()
                 CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
                 is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {
-                    appNavigator.onBackClick(comesFromBottomsheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
 
@@ -331,10 +331,10 @@ fun NavGraphBuilder.autofillActivityGraph(
     vaultGraph(
         onNavigate = {
             when (it) {
-                VaultNavigation.Close -> appNavigator.onBackClick()
+                VaultNavigation.Close -> appNavigator.navigateBack()
                 VaultNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
-                    appNavigator.navigateUpWithResult(
+                    appNavigator.navigateBackWithResult(
                         key = KEY_VAULT_SELECTED,
                         value = it.shareId.id,
                         comesFromBottomsheet = true
@@ -355,7 +355,7 @@ fun NavGraphBuilder.autofillActivityGraph(
     autofillItemOptionsGraph {
         when (it) {
             AutofillItemOptionsNavigation.Close -> dismissBottomSheet {
-                appNavigator.onBackClick(comesFromBottomsheet = true)
+                appNavigator.navigateBack(comesFromBottomsheet = true)
             }
         }
     }

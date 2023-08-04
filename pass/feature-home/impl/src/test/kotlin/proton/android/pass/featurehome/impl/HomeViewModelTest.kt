@@ -37,14 +37,12 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
-import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestClearTrash
 import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteItem
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
@@ -91,7 +89,6 @@ class HomeViewModelTest {
     private lateinit var observeVaults: TestObserveVaults
     private lateinit var clock: FixedClock
     private lateinit var observeItems: TestObserveItems
-    private lateinit var itemSyncStatusRepository: TestItemSyncStatusRepository
     private lateinit var preferencesRepository: TestPreferenceRepository
     private lateinit var getUserPlan: TestGetUserPlan
 
@@ -116,7 +113,6 @@ class HomeViewModelTest {
         observeVaults = TestObserveVaults()
         clock = FixedClock(Clock.System.now())
         observeItems = TestObserveItems()
-        itemSyncStatusRepository = TestItemSyncStatusRepository()
         preferencesRepository = TestPreferenceRepository()
         getUserPlan = TestGetUserPlan()
 
@@ -139,7 +135,6 @@ class HomeViewModelTest {
             observeVaults = observeVaults,
             clock = clock,
             observeItems = observeItems,
-            itemSyncStatusRepository = itemSyncStatusRepository,
             preferencesRepository = preferencesRepository,
             getUserPlan = getUserPlan,
             appDispatchers = TestAppDispatchers()
@@ -178,26 +173,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `does not stay in loading if sync finished and search is empty`() = runTest {
-        itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = true))
-        setupItems()
-
-        instance.onEnterSearch()
-        instance.onSearchQueryChange("random")
-
-        instance.homeUiState.test {
-            skipItems(2) // Skip initial and loading search state
-
-            val state = awaitItem()
-            assertThat(state.homeListUiState.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
-            assertThat(state.homeListUiState.items).isEmpty()
-        }
-    }
-
-    @Test
     fun `does not stay in loading if vault switched and has no contents`() = runTest {
-        itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = true))
-
         // Emit initial items
         setupItems()
 
@@ -212,7 +188,7 @@ class HomeViewModelTest {
         }
     }
 
-    private suspend fun setupItems(): List<Item> {
+    private fun setupItems(): List<Item> {
         val items = TestObserveItems.defaultValues
             .asList()
             .map {
@@ -248,7 +224,6 @@ class HomeViewModelTest {
             )
         }
 
-        itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = items.isNotEmpty()))
         observeVaults.sendResult(Result.success(vaults))
         observeItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)

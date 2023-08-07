@@ -23,8 +23,6 @@ import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
-import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 
 @Immutable
@@ -33,16 +31,14 @@ data class BaseCreditCardUiState(
     val hasUserEditedContent: Boolean,
     val validationErrors: PersistentSet<CreditCardValidationErrors>,
     val isItemSaved: ItemSavedState,
-    val contents: ItemContents.CreditCard,
     val isDowngradedMode: Boolean
 ) {
     companion object {
-        fun default(cvv: HiddenState, pin: HiddenState) = BaseCreditCardUiState(
+        val DEFAULT = BaseCreditCardUiState(
             isLoading = false,
             hasUserEditedContent = false,
             validationErrors = persistentSetOf(),
             isItemSaved = ItemSavedState.Unknown,
-            contents = ItemContents.CreditCard.default(cvv = cvv, pin = pin),
             isDowngradedMode = false
         )
     }

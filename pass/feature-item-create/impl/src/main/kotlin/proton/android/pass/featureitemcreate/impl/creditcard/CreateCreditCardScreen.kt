@@ -19,7 +19,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
-import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
@@ -30,6 +29,7 @@ import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavig
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
 import proton.android.pass.featureitemcreate.impl.creditcard.CCCActionAfterHideKeyboard.SelectVault
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardValidationErrors.BlankTitle
+import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.pass.domain.ShareId
 
 private enum class CCCActionAfterHideKeyboard {
@@ -90,11 +90,12 @@ fun CreateCreditCardScreen(
             Box(modifier = modifier.fillMaxSize()) {
                 CreditCardContent(
                     state = uiState.baseState,
+                    creditCardFormItem = viewModel.creditCardFormItem,
                     selectedShareId = selectedVault?.vault?.shareId,
                     topBarActionName = stringResource(id = R.string.title_create_credit_card),
                     titleSection = {
                         TitleVaultSelectionSection(
-                            titleValue = uiState.baseState.contents.title,
+                            titleValue = viewModel.creditCardFormItem.title,
                             showVaultSelector = showVaultSelector,
                             onTitleChanged = viewModel::onTitleChange,
                             onTitleRequiredError = uiState.baseState.validationErrors

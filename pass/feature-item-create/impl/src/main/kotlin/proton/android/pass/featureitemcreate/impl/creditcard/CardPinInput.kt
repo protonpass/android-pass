@@ -27,13 +27,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ThemedHiddenStatePreviewProvider
-import proton.pass.domain.HiddenState
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun CardPinInput(
     modifier: Modifier = Modifier,
-    value: HiddenState,
+    value: UIHiddenState,
     enabled: Boolean,
     onChange: (String) -> Unit,
     onFocusChange: (Boolean) -> Unit
@@ -53,7 +53,7 @@ internal fun CardPinInput(
 @Preview
 @Composable
 fun CardPinInputPreview(
-    @PreviewParameter(ThemedHiddenStatePreviewProvider::class) input: Pair<Boolean, HiddenState>
+    @PreviewParameter(ThemedHiddenStatePreviewProvider::class) input: Pair<Boolean, UIHiddenState>
 ) {
     PassTheme(isDark = input.first) {
         Surface {

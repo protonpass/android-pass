@@ -20,16 +20,15 @@ package proton.android.pass.featureitemcreate.impl.common
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.pass.domain.HiddenState
 
-class HiddenStatePreviewProvider : PreviewParameterProvider<HiddenState> {
-    override val values: Sequence<HiddenState>
+class HiddenStatePreviewProvider : PreviewParameterProvider<UIHiddenState> {
+    override val values: Sequence<UIHiddenState>
         get() = sequenceOf(
-            HiddenState.Empty("emptyEncrypted"),
-            HiddenState.Revealed("revealedEncrypted", "Revealed"),
-            HiddenState.Concealed("concealedEncrypted"),
+            UIHiddenState.Empty("emptyEncrypted"),
+            UIHiddenState.Revealed("revealedEncrypted", "Revealed"),
+            UIHiddenState.Concealed("concealedEncrypted"),
         )
 }
 
 class ThemedHiddenStatePreviewProvider :
-    ThemePairPreviewProvider<HiddenState>(HiddenStatePreviewProvider())
+    ThemePairPreviewProvider<UIHiddenState>(HiddenStatePreviewProvider())

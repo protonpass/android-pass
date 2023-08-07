@@ -18,10 +18,11 @@ import proton.pass.domain.ShareId
 fun CreditCardContent(
     modifier: Modifier = Modifier,
     state: BaseCreditCardUiState,
+    creditCardFormItem: CreditCardFormItem,
     topBarActionName: String,
     titleSection: @Composable (ColumnScope.() -> Unit),
     onEvent: (CreditCardContentEvent) -> Unit,
-    selectedShareId: ShareId?
+    selectedShareId: ShareId?,
 ) {
     Scaffold(
         modifier = modifier,
@@ -44,7 +45,7 @@ fun CreditCardContent(
     ) { padding ->
         CreditCardItemForm(
             modifier = Modifier.padding(padding),
-            content = state.contents,
+            creditCardFormItem = creditCardFormItem,
             enabled = !state.isLoading,
             validationErrors = state.validationErrors,
             titleSection = titleSection,

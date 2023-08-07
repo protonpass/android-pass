@@ -90,31 +90,31 @@ platform :android do
 
   desc "Run instrumentation tests"
   lane :instrumentationTests do
-    sh("../tools/ci/installFirebase.sh")
-    sh("../tools/ci/setupGoogleJson.sh")
-    sh("../tools/ci/setupGoogleCloud.sh")
+    sh("../tools/private/ci/installFirebase.sh")
+    sh("../tools/private/ci/setupGoogleJson.sh")
+    sh("../tools/private/ci/setupGoogleCloud.sh")
     gradle(task: "runFlank")
   end
 
   desc "Publish dev build to firebase group"
   lane :deployToFirebaseDevGroup do
-    sh("../tools/ci/installFirebase.sh")
-    sh("../tools/ci/setupGoogleJson.sh")
-    sh("../tools/ci/uploadApkToFirebase.sh devBlack")
+    sh("../tools/private/ci/installFirebase.sh")
+    sh("../tools/private/ci/setupGoogleJson.sh")
+    sh("../tools/private/ci/uploadApkToFirebase.sh devBlack")
   end
 
   desc "Publish alpha build to firebase group"
   lane :deployToFirebaseAlphaGroup do
-    sh("../tools/ci/installFirebase.sh")
-    sh("../tools/ci/setupGoogleJson.sh")
-    sh("../tools/ci/uploadApkToFirebase.sh alphaProd")
+    sh("../tools/private/ci/installFirebase.sh")
+    sh("../tools/private/ci/setupGoogleJson.sh")
+    sh("../tools/private/ci/uploadApkToFirebase.sh alphaProd")
   end
 
   desc "Publish prod black build to firebase group"
   lane :deployToFirebaseProdGroup do
-    sh("../tools/ci/installFirebase.sh")
-    sh("../tools/ci/setupGoogleJson.sh")
-    sh("../tools/ci/uploadApkToFirebase.sh playBlack")
+    sh("../tools/private/ci/installFirebase.sh")
+    sh("../tools/private/ci/setupGoogleJson.sh")
+    sh("../tools/private/ci/uploadApkToFirebase.sh playBlack")
   end
 
   desc "Publish internal prod bundle"
@@ -125,6 +125,6 @@ platform :android do
        release_status: 'draft',
        aab: './app/build/outputs/bundle/playProdRelease/app-play-prod-release.aab'
      )
-     sh("../tools/publish/slack-publish.sh")
+     sh("../tools/private/publish/slack-publish.sh")
   end
 end

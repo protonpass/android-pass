@@ -22,15 +22,27 @@ import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestSetVaultMemberPermission @Inject constructor() : SetVaultMemberPermission {
     private var result: Result<Unit> = Result.success(Unit)
+    private val memory: MutableList<Payload> = mutableListOf()
+
+    fun getMemory(): List<Payload> = memory
 
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
     override suspend fun invoke(shareId: ShareId, memberShareId: ShareId, role: ShareRole) {
+        memory.add(Payload(shareId, memberShareId, role))
         result.getOrThrow()
     }
+
+    data class Payload(
+        val shareId: ShareId,
+        val memberShareId: ShareId,
+        val role: ShareRole
+    )
 }

@@ -41,6 +41,7 @@
   <string name="sharing_invitation_from">Uitnodiging van %s</string>
   <string name="sharing_join_shared_vault">Deelnemen aan gedeelde kluis</string>
   <string name="sharing_reject_invitation">Uitnodiging afwijzen</string>
+  <string name="sharing_snackbar_get_invite_error">Kan geen uitnodiging krijgen</string>
   <string name="sharing_snackbar_invite_accepted">Uitnodiging geaccepteerd</string>
   <string name="sharing_snackbar_invite_accept_error">Fout bij het accepteren van de uitnodiging</string>
   <string name="sharing_snackbar_invite_rejected">Uitnodiging afgewezen</string>
@@ -48,6 +49,7 @@
   <string name="sharing_snackbar_vault_not_found">Kluis kon niet worden gevonden</string>
   <string name="sharing_snackbar_invite_sent_success">Uitnodiging verzonden</string>
   <string name="sharing_snackbar_invite_sent_error">Kan de uitnodiging niet verzenden</string>
+  <string name="sharing_snackbar_get_vault_members_error">Could not get vault members</string>
   <string name="share_summary_title">Overzicht</string>
   <string name="share_summary_subtitle">Je staat op het punt %1$s uit te nodigen voor je %2$s. Ze krijgen toegang tot %3$s en kunnen %4$s in deze kluis.</string>
   <string name="share_summary_vault">%s kluis</string>
@@ -58,4 +60,10 @@
   <string name="share_summary_email_title">Gebruiker</string>
   <string name="share_summary_vault_title">Kluis</string>
   <string name="share_summary_permissions_title">Rechten</string>
+  <string name="share_manage_vault_share_with_more_people">Deel met meer mensen</string>
+  <string name="share_manage_vault_item_count">%d items</string>
+  <string name="share_manage_vault_invite_pending">Uitnodiging in behandeling</string>
+  <string name="share_role_can_view">Kan bekijken</string>
+  <string name="share_role_can_edit">Kan bewerken</string>
+  <string name="share_role_admin">Beheerder</string>
 </resources>

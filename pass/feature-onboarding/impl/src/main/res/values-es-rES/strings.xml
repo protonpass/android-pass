@@ -3,7 +3,7 @@
   <string name="on_boarding_autofill_content">Permitir a Proton Pass rellenar los detalles de inicio de sesión por ti. No se requiere escribir o copiar y pegar.</string>
   <string name="on_boarding_autofill_title">Iniciar sesión en las aplicaciones al instante</string>
   <string name="on_boarding_autofill_button">Autorellenar con Proton Pass</string>
-  <string name="on_boarding_fingerprint_content">Establece Proton Pass para desbloquear con tu huella dactilar así solo ti tendrás acceso.</string>
+  <string name="on_boarding_fingerprint_content">Configura Proton Pass para el desbloqueo con tu huella dactilar, así solo tú tendrás acceso.</string>
   <string name="on_boarding_fingerprint_title">Protege tus datos más sensibles</string>
   <string name="on_boarding_fingerprint_button">Habilitar desbloqueo con huella dactilar</string>
   <string name="on_boarding_last_page_content">Deja de compartir tu dirección de correo real. En su lugar, ocúltala utilizando alias de correo electrónico. Exclusivo de Proton Pass.</string>

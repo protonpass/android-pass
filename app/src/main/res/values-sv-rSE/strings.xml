@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 valv</string>
+  <string name="unlimited_email_alias">Obegränsat antal e-postalias</string>
+  <string name="custom_fields">Anpassade fält</string>
+  <string name="restart_to_complete_the_update">Starta om för att slutföra uppdateringen</string>
+  <string name="action_restart">Starta om</string>
+</resources>

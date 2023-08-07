@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Seiful s-a creat.</string>
+  <string name="snackbar_create_vault_error">Seiful nu s-a creat.</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Nu se pot crea mai multe seifuri.</string>
+  <string name="snackbar_edit_vault_success">Seiful s-a editat.</string>
+  <string name="snackbar_edit_vault_error">Seiful nu s-a editat.</string>
+  <string name="snackbar_delete_vault_success">Seif deleted</string>
+  <string name="snackbar_delete_vault_error">Seiful nu s-a șters.</string>
+  <string name="snackbar_leave_vault_success">Seifuri rămase</string>
+  <string name="snackbar_leave_vault_error">Nu s-a putut părăsi seiful</string>
+  <string name="snackbar_retrieve_vault_error">Seiful nu s-a găsit.</string>
+  <string name="snackbar_find_vault_error">Nu se poate găsi seiful selectat.</string>
+  <string name="snackbar_get_vault_list_error">Nu s-a putut încărca lista cu seifuri.</string>
+  <string name="snackbar_get_upgrade_info_error">Nu s-a putut pregăti lista cu seifuri.</string>
+  <string name="vault_delete_dialog_title">Ștergere seif</string>
+  <string name="vault_delete_dialog_body">Aceasta va șterge permanent seiful __VAULT_NAME__ și a conținutului său. Introduceți numele seifului pentru a confirma ștergerea.</string>
+  <string name="vault_delete_dialog_placeholder">Nume seif</string>
+  <string name="vault_delete_dialog_cancel_action">Anulare</string>
+  <string name="vault_delete_dialog_delete_action">Ștergere</string>
+  <string name="vault_leave_dialog_title">Părăsire seif</string>
+  <string name="vault_leave_dialog_body">Aceasta vă va elimina accesul la seiful __VAULT_NAME__ și conținutul acestuia. Sigur doriți să-l părăsiți?</string>
+  <string name="vault_leave_dialog_cancel_action">Anulare</string>
+  <string name="vault_leave_dialog_leave_action">Părăsire</string>
+  <string name="bottomsheet_close_icon_content_description">Închidere creare seif</string>
+  <string name="bottomsheet_create_vault_button">Creare seif</string>
+  <string name="bottomsheet_edit_vault_button">Salvare</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Ați atins limita seifurilor pe care le puteți crea. Puteți crea seifuri nelimitate dacă vă modificați abonamentul.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Pentru a interacționa cu celelalte seifuri, trebuie să vă modificați contul.</string>
+  <string name="bottomsheet_upgrade_now">Modificare</string>
+  <string name="bottomsheet_edit">Editare</string>
+  <string name="bottomsheet_migrate">Mutare toate articolele în alt seif</string>
+  <string name="bottomsheet_delete_vault">Ștergere seif</string>
+  <string name="bottomsheet_share_vault">Partajare</string>
+  <string name="bottomsheet_leave_vault">Părăsire seif</string>
+  <string name="bottomsheet_view_members">Afișare membri</string>
+  <string name="bottomsheet_manage_access">Gestionare acces</string>
+  <string name="vault_title">Seif</string>
+</resources>

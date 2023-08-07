@@ -41,6 +41,7 @@
   <string name="sharing_invitation_from">Invito da %s</string>
   <string name="sharing_join_shared_vault">Unisciti al deposito condiviso</string>
   <string name="sharing_reject_invitation">Rifiuta l\'invito</string>
+  <string name="sharing_snackbar_get_invite_error">Impossibile ottenere l\'invito</string>
   <string name="sharing_snackbar_invite_accepted">Invito accettato</string>
   <string name="sharing_snackbar_invite_accept_error">Errore durante l\'accettazione dell\'invito</string>
   <string name="sharing_snackbar_invite_rejected">Invito rifiutato</string>
@@ -48,6 +49,7 @@
   <string name="sharing_snackbar_vault_not_found">Impossibile trovare la cassaforte</string>
   <string name="sharing_snackbar_invite_sent_success">Invito spedito</string>
   <string name="sharing_snackbar_invite_sent_error">Impossibile inviare l\'invito</string>
+  <string name="sharing_snackbar_get_vault_members_error">Impossibile ottenere i membri del vault</string>
   <string name="share_summary_title">Riepilogo</string>
   <string name="share_summary_subtitle">Stai per invitare %1$s nel tuo %2$s. Avranno accesso a %3$s e potranno accedere a %4$s in questo caveau.</string>
   <string name="share_summary_vault">la cassaforte %s</string>
@@ -58,4 +60,10 @@
   <string name="share_summary_email_title">Utente</string>
   <string name="share_summary_vault_title">Caveau</string>
   <string name="share_summary_permissions_title">Autorizzazioni</string>
+  <string name="share_manage_vault_share_with_more_people">Condividi con più persone</string>
+  <string name="share_manage_vault_item_count">%d elementi</string>
+  <string name="share_manage_vault_invite_pending">Invito in attesa</string>
+  <string name="share_role_can_view">Può vedere</string>
+  <string name="share_role_can_edit">Può modificare</string>
+  <string name="share_role_admin">Amministratore</string>
 </resources>

@@ -3,11 +3,11 @@
   <string name="error_cant_find_matching_fields">Não foram encontrados campos visíveis correspondentes.</string>
   <string name="autofill_authenticate_prompt">Obter do Proton Pass</string>
   <string name="error_credentials_not_found">Não foram encontradas credenciais correspondentes.</string>
-  <string name="error_credentials_not_saved">Não foi possível salvar as credenciais.</string>
+  <string name="error_credentials_not_saved">Não foi possível guardar as credenciais</string>
   <string name="error_loading_items">Não foi possível carregar os itens.</string>
   <string name="topbar_search_query">Pesquisar em todos os cofres…</string>
   <string name="topbar_search_query_primary_vault">Pesquisar no cofre principal…</string>
-  <string name="topbar_search_query_uninitialized">Pesquisar…</string>
+  <string name="topbar_search_query_uninitialized">A pesquisar…</string>
   <string name="inline_suggestions_open_app">Abrir o Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">O seu plano permite apenas a utilização de itens do seu cofre principal para o preenchimento automático.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->

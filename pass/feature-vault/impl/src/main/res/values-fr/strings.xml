@@ -7,6 +7,8 @@
   <string name="snackbar_edit_vault_error">Le coffre-fort n\'a pas été modifié.</string>
   <string name="snackbar_delete_vault_success">Le coffre-fort a été supprimé.</string>
   <string name="snackbar_delete_vault_error">Le coffre-fort n\'a pas été supprimé.</string>
+  <string name="snackbar_leave_vault_success">Vous avez quitté le coffre-fort.</string>
+  <string name="snackbar_leave_vault_error">Impossible de quitter le coffre-fort</string>
   <string name="snackbar_retrieve_vault_error">Le coffre-fort est introuvable.</string>
   <string name="snackbar_find_vault_error">Le coffre-fort sélectionné est introuvable.</string>
   <string name="snackbar_get_vault_list_error">Impossible de charger la liste des coffres-forts</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">Nom du coffre-fort</string>
   <string name="vault_delete_dialog_cancel_action">Annuler</string>
   <string name="vault_delete_dialog_delete_action">Supprimer</string>
+  <string name="vault_leave_dialog_title">Quitter le coffre-fort</string>
+  <string name="vault_leave_dialog_body">Cela supprimera votre accès au coffre-fort __VAULT_NAME__ et à son contenu. Voulez-vous vraiment le quitter ?</string>
+  <string name="vault_leave_dialog_cancel_action">Annuler</string>
+  <string name="vault_leave_dialog_leave_action">Quitter</string>
   <string name="bottomsheet_close_icon_content_description">Fermer le coffre-fort créé</string>
   <string name="bottomsheet_create_vault_button">Créer un coffre-fort</string>
   <string name="bottomsheet_edit_vault_button">Enregistrer</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Déplacer tous les éléments vers un autre coffre-fort</string>
   <string name="bottomsheet_delete_vault">Supprimer le coffre-fort</string>
   <string name="bottomsheet_share_vault">Partager</string>
+  <string name="bottomsheet_leave_vault">Quitter le coffre-fort</string>
+  <string name="bottomsheet_view_members">Afficher les membres</string>
+  <string name="bottomsheet_manage_access">Gérer l\'accès</string>
   <string name="vault_title">Coffre-fort</string>
 </resources>

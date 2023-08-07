@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Rubrik (A-Ö)</string>
+  <string name="sort_by_title_desc">Rubrik (Ö-A)</string>
+  <string name="sort_by_creation_asc">Äldsta till nyaste</string>
+  <string name="sort_by_creation_desc">Nyaste till äldsta</string>
+  <string name="sort_by_modification_date">Senaste</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Alla</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">resultat</item>
+    <item quantity="other">resultat</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Bekräfta</string>
+  <string name="bottomsheet_cancel_button">Avbryt</string>
+  <string name="bottomsheet_move_to_trash">Flytta till papperskorg</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Öppna åtgärdsmeny för objekt</string>
+  <string name="action_upgrade_now">Uppgradera nu</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Lägg till ditt första objekt</string>
+  <string name="empty_search_results_title">Inga resultat hittades</string>
+  <string name="empty_list_open_extension">Besök webbtillägg</string>
+  <string name="empty_list_create_item_button">Skapa nytt objekt</string>
+  <!-- Field -->
+  <string name="field_title_title">Rubrik</string>
+  <string name="field_title_hint">Ingen rubrik</string>
+  <string name="field_title_required">Rubrik krävs</string>
+  <string name="small_cross_icon_content_description">Liten kryss-ikon</string>
+  <string name="field_note_title">Anteckning</string>
+  <string name="field_note_hint">Lägg till anteckning</string>
+  <string name="linked_apps_title">Länkade appar</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Offline</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Saknar app-ikon</string>
+  <string name="add_item_icon_content_description">Ikon för “Lägg till objekt“</string>
+  <string name="navigate_back_icon_content_description">Ikon för “Gå tillbaka“</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Valv</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Objekt i listan</string>
+  <string name="bottom_bar_add_item_icon_content_description">Lägg till objekt</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Idag</string>
+  <string name="most_recent_yesterday">Igår</string>
+  <string name="most_recent_this_week">Denna vecka</string>
+  <string name="most_recent_last_two_weeks">Senaste två veckorna</string>
+  <string name="most_recent_last_30_days">Senaste 30 dagarna</string>
+  <string name="most_recent_last_60_days">Senaste 60 dagarna</string>
+  <string name="most_recent_last_90_days">Senaste 90 dagarna</string>
+  <string name="most_recent_within_the_last_year">Under det senaste året</string>
+  <string name="most_recent_more_than_1_year">Mer än 1 år</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Ikon för “Sök“</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Ikon för “Alternativ“</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 objekt</item>
+    <item quantity="other">%d objekt</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Kasta ändringar?</string>
+  <string name="confirm_close_dialog_message">Du har osparade ändringar. Är du säker på att du vill kasta dem?</string>
+  <string name="confirm_close_dialog_close_button">Kasta</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Uppgradera</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Avancerade alternativ</string>
+  <string name="hide_advanced_options">Dölj avancerade alternativ</string>
+</resources>

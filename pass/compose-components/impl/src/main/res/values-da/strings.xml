@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Titel (A-Å)</string>
+  <string name="sort_by_title_desc">Titel (Å-A)</string>
+  <string name="sort_by_creation_asc">Ældste til nyeste</string>
+  <string name="sort_by_creation_desc">Nyeste til ældste</string>
+  <string name="sort_by_modification_date">Seneste</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Alle</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">resultat</item>
+    <item quantity="other">resultater</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Bekræft</string>
+  <string name="bottomsheet_cancel_button">Annullér</string>
+  <string name="bottomsheet_move_to_trash">Flyt til papirkurv</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Åbn handlingsmenu for element</string>
+  <string name="action_upgrade_now">Opgradér nu</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Tilføj dit første element</string>
+  <string name="empty_search_results_title">Intet resultat fundet</string>
+  <string name="empty_list_open_extension">Besøg web-udvidelsen</string>
+  <string name="empty_list_create_item_button">Opret nyt element</string>
+  <!-- Field -->
+  <string name="field_title_title">Titel</string>
+  <string name="field_title_hint">Unavngivet</string>
+  <string name="field_title_required">Titel påkrævet</string>
+  <string name="small_cross_icon_content_description">Lille kryds-ikon</string>
+  <string name="field_note_title">Note</string>
+  <string name="field_note_hint">Tilføj note</string>
+  <string name="linked_apps_title">Forbundne apps</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Offline</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Mangler app-ikon</string>
+  <string name="add_item_icon_content_description">Tilføj element-ikon</string>
+  <string name="navigate_back_icon_content_description">Ikon for at gå tilbage</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Boks</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Elementer i liste</string>
+  <string name="bottom_bar_add_item_icon_content_description">Tilføj element</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">I dag</string>
+  <string name="most_recent_yesterday">I går</string>
+  <string name="most_recent_this_week">Denne uge</string>
+  <string name="most_recent_last_two_weeks">Sidste to uger</string>
+  <string name="most_recent_last_30_days">Sidste 30 dage</string>
+  <string name="most_recent_last_60_days">Sidste 60 dage</string>
+  <string name="most_recent_last_90_days">Sidste 90 dage</string>
+  <string name="most_recent_within_the_last_year">Indenfor det seneste år</string>
+  <string name="most_recent_more_than_1_year">Mere end 1 år</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Søgeikon</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Ikon for indstilling</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 element</item>
+    <item quantity="other">%d elementer</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Kassér ændringer?</string>
+  <string name="confirm_close_dialog_message">Du har ikke-gemte ændringer, er du sikker på, at du vil kassere dem?</string>
+  <string name="confirm_close_dialog_close_button">Kassér</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Opgradér</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Avancerede indstillinger</string>
+  <string name="hide_advanced_options">Skjul avancerede indstillinger</string>
+</resources>

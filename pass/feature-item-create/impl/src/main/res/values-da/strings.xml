@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Gem</string>
+  <string name="action_remove">Fjern</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Login</string>
+  <string name="action_alias">Alias</string>
+  <string name="action_note">Notat</string>
+  <string name="action_credit_card">Kreditkort</string>
+  <string name="action_password">Adgangskode</string>
+  <string name="item_type_login_description">Tilføj loginoplysninger for en app eller et websted</string>
+  <string name="item_type_alias_description">Få et e-mail-alias til brug i nye apps</string>
+  <string name="item_type_note_description">Notér en pinkode, kode eller bemærkning til dig selv</string>
+  <string name="item_type_credit_card_description">Opbevar dine betalingsoplysninger sikkert</string>
+  <string name="item_type_password_description">Generér en sikker adgangskode</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Opret login</string>
+  <string name="field_username_title">Brugernavn eller e-mailadresse</string>
+  <string name="field_username_hint">Tilføj brugernavn eller e-mailadresse</string>
+  <string name="field_password_title">Adgangskode</string>
+  <string name="field_password_hint">Tilføj adgangskode</string>
+  <string name="field_website_address_title">Websted</string>
+  <string name="field_website_address_invalid">Ugyldig URL</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Tilføj</string>
+  <string name="sticky_button_generate_password">Generér ny adgangskode</string>
+  <string name="sticky_button_create_alias">Hide My Email</string>
+  <string name="sticky_button_use_account_email">Brug %s</string>
+  <string name="create_login_item_creation_error">Kunne ikke oprette login</string>
+  <string name="create_login_item_update_error">Kunne ikke opdatere login</string>
+  <string name="create_login_init_error">Login kunne ikke initialiseres</string>
+  <string name="create_login_invalid_totp">2FA-indholdet er ikke gyldigt</string>
+  <string name="login_created">Login oprettet</string>
+  <string name="bottomsheet_modify_alias_title">Tilpas alias</string>
+  <string name="bottomsheet_custom_field_type_text">Tekst</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Brugerdefineret tekstfelt</string>
+  <string name="bottomsheet_custom_field_type_hidden">Skjult</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA-hemmelighed (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Rediger titel</string>
+  <string name="bottomsheet_custom_field_option_remove">Fjern felt</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Fjern brugerdefineret felt</string>
+  <string name="create_login_add_custom_field_button">Tilføj flere</string>
+  <string name="custom_field_hidden_placeholder">Dit skjulte indhold</string>
+  <string name="custom_field_hidden_icon_content_description">Ikon for skjult brugerdefineret felt</string>
+  <string name="custom_field_text_placeholder">Dit indhold</string>
+  <string name="custom_field_dialog_title">Navn på brugerdefineret felt</string>
+  <string name="custom_field_dialog_body">Indtast et navn for dit brugerdefinerede felt</string>
+  <string name="custom_field_dialog_placeholder">Navn på det brugerdefinerede felt</string>
+  <string name="custom_field_options_content_description">Indstillinger for brugerdefineret felt</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Opret note</string>
+  <string name="create_note_item_creation_error">Kunne ikke oprette note</string>
+  <string name="create_note_item_update_error">Kunne ikke opdatere note</string>
+  <string name="create_note_init_error">Note kunne ikke initialiseres</string>
+  <string name="create_note_empty_share_id">Delings-ID kan ikke være tom</string>
+  <string name="note_created">Note oprettet</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">Note flyttet til papirkurv</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">Kunne ikke slette note</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Opret alias</string>
+  <string name="field_alias_title">Alias-adresse</string>
+  <string name="field_alias_hint">Alias-brugernavn</string>
+  <string name="field_mailboxes_creation_title">Videresend til</string>
+  <string name="field_mailboxes_edit_title">Videresendes til</string>
+  <string name="field_alias_you_are_about_to_create">Du er ved at oprette</string>
+  <string name="field_alias_prefix">Præfiks</string>
+  <string name="field_alias_suffix">Suffiks</string>
+  <string name="alias_bottomsheet_alias_title">Alias</string>
+  <string name="alias_bottomsheet_suffix_title">Suffiks</string>
+  <string name="create_alias_item_creation_error">Kunne ikke oprette alias</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Du kan ikke oprette flere aliasser</string>
+  <string name="create_alias_email_not_validated_error">Du kan ikke oprette aliasser uden først at bekræfte din e-mail.</string>
+  <string name="alias_rate_limited">For mange aliasser oprettet for nylig</string>
+  <string name="create_alias_item_update_error">Kunne ikke opdatere alias</string>
+  <string name="create_alias_init_error">Kunne ikke initialisere alias</string>
+  <string name="create_alias_empty_share_id">Delings-ID kan ikke være tom</string>
+  <string name="alias_created">Alias oprettet</string>
+  <string name="alias_moved_to_trash">Alias flyttet til papirkurv</string>
+  <string name="cannot_retrieve_alias_options">Kan ikke hente alias-indstillinger</string>
+  <string name="alias_mailbox_dialog_title">Videresend til</string>
+  <!-- Create note -->
+  <string name="note_hint">Note</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Opret kreditkort</string>
+  <string name="field_cardholder_name_title">Kortholders navn</string>
+  <string name="field_cardholder_name_hint">Fulde navn</string>
+  <string name="field_card_number_title">Kortnummer</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Verifikationsnummer</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">PIN-nummer</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Udløber</string>
+  <string name="field_card_expiration_date_hint">MM / ÅÅÅÅ</string>
+  <string name="field_card_expiration_date_error">Udløbsdatoen er ikke gyldig</string>
+  <string name="create_credit_card_item_creation_error">Kunne ikke oprette kreditkort</string>
+  <string name="create_credit_card_item_creation_success">Kreditkort oprettet</string>
+  <string name="credit_card_init_error">Kunne ikke initialisere kreditkort</string>
+  <string name="credit_card_item_update_error">Kunne ikke opdatere kreditkort</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Ændringer gemt</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">2FA-hemmelighed (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Ugyldig 2FA-hemmelighed</string>
+  <string name="totp_create_login_field_placeholder">Tilføj 2FA-hemmelighed</string>
+  <string name="close_scree_icon_content_description">Knap til at lukke skærm</string>
+  <string name="totp_paste_code_action">Indsæt kode</string>
+  <string name="totp_scan_code_action">Scan kode</string>
+  <string name="field_cannot_be_empty">Dette felt må ikke være tomt</string>
+  <string name="camera_permission_explanation">Kameratilladelse påkrævet for at gøre denne funktion tilgængelig.</string>
+  <string name="camera_permission_open_settings">Åbn Indstillinger</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">2FA-grænse nået</string>
+  <string name="upgrade">Opgradér</string>
+  <string name="mfa_icon_content_description">2FA-ikon</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Opgrader for brugerdomæner</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Opgrader for flere indbakker</string>
+  <string name="create_alias_content_limit_banner">Du har nået grænsen for, hvor mange aliasser du kan oprette. Opret et ubegrænset antal aliasser, når du opgraderer dit abonnement.</string>
+</resources>

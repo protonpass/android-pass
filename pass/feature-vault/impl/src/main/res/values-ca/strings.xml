@@ -7,6 +7,8 @@
   <string name="snackbar_edit_vault_error">No s\'ha editat la caixa forta</string>
   <string name="snackbar_delete_vault_success">S\'ha eliminat la caixa forta</string>
   <string name="snackbar_delete_vault_error">No s\'ha eliminat la caixa forta</string>
+  <string name="snackbar_leave_vault_success">Heu deixat la caixa forta.</string>
+  <string name="snackbar_leave_vault_error">No s\'ha pogut deixar la cassa forta.</string>
   <string name="snackbar_retrieve_vault_error">No s\'ha trobat la caixa forta</string>
   <string name="snackbar_find_vault_error">No es pot trobar la caixa forta seleccionada</string>
   <string name="snackbar_get_vault_list_error">No s\'ha pogut carregar la llista de caixes fortes</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">Nom de la caixa forta</string>
   <string name="vault_delete_dialog_cancel_action">Cancel·la</string>
   <string name="vault_delete_dialog_delete_action">Elimina</string>
+  <string name="vault_leave_dialog_title">Deixa la caixa forta</string>
+  <string name="vault_leave_dialog_body">Això suprimirà el vostre accés de la caixa forta __VAULT_NAME__ i tot el seu contingut. Esteu segur que voleu deixar-la?</string>
+  <string name="vault_leave_dialog_cancel_action">Cancel·la</string>
+  <string name="vault_leave_dialog_leave_action">Deixa</string>
   <string name="bottomsheet_close_icon_content_description">Tanca la caixa forta creada</string>
   <string name="bottomsheet_create_vault_button">Crea una caixa forta</string>
   <string name="bottomsheet_edit_vault_button">Desa</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Mou tots els elements a una altra caixa forta</string>
   <string name="bottomsheet_delete_vault">Elimina la caixa forta</string>
   <string name="bottomsheet_share_vault">Comparteix</string>
+  <string name="bottomsheet_leave_vault">Deixa la caixa forta</string>
+  <string name="bottomsheet_view_members">Mostra els membres</string>
+  <string name="bottomsheet_manage_access">Gestiona l\'accés</string>
   <string name="vault_title">Caixa forta</string>
 </resources>

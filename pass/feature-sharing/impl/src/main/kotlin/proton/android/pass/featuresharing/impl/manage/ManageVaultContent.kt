@@ -74,7 +74,13 @@ fun ManageVaultContent(
                                     onNavigateEvent(event)
                                 }
                             }
-                            is VaultMember.InvitePending -> {}
+                            is VaultMember.InvitePending -> {
+                                val event = SharingNavigation.InviteOptions(
+                                    shareId = shareId,
+                                    inviteId = member.inviteId
+                                )
+                                onNavigateEvent(event)
+                            }
                         }
                     }
                 }

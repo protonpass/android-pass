@@ -34,6 +34,7 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
+import proton.android.pass.biometry.BiometryType
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage
@@ -159,7 +160,7 @@ class AppLockTypeViewModel @Inject constructor(
         onSuccess: suspend () -> Unit,
         onError: suspend (BiometryResult.Error) -> Unit
     ) = viewModelScope.launch {
-        biometryManager.launch(contextHolder)
+        biometryManager.launch(contextHolder, BiometryType.CONFIGURE)
             .collect { result ->
                 when (result) {
                     BiometryResult.Success -> onSuccess()

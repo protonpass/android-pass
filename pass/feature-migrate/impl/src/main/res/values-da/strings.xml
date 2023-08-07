@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Flyt dette element til den følgende boks?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Flyt alle elementerne til den følgende boks?</string>
+  <string name="migrate_item_confirm_confirm_button">Flyt</string>
+  <string name="migrate_item_success_snackbar">Element flyttet</string>
+  <string name="migrate_item_error_snackbar">Fejl ved flytning af elementet</string>
+  <string name="migrate_all_items_success_snackbar">Alle elementer flyttet</string>
+  <string name="migrate_all_items_error_snackbar">Fejl ved flytning af alle boks-elementer</string>
+  <string name="migrate_init_error_snackbar">Kunne ikke forberede migreringsskærm</string>
+</resources>

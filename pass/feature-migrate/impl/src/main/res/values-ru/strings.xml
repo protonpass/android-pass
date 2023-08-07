@@ -3,7 +3,7 @@
   <string name="migrate_item_confirm_title_bottom_sheet">Move this item to the following vault?</string>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Move all the items to the following vault?</string>
   <string name="migrate_item_confirm_confirm_button">Переместить</string>
-  <string name="migrate_item_success_snackbar">Item moved</string>
+  <string name="migrate_item_success_snackbar">Элемент перемещен</string>
   <string name="migrate_item_error_snackbar">Error moving the item</string>
   <string name="migrate_all_items_success_snackbar">All items moved</string>
   <string name="migrate_all_items_error_snackbar">Error moving all vault items</string>

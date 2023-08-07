@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Boks oprettet</string>
+  <string name="snackbar_create_vault_error">Boks ikke oprettet</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Kan ikke oprette flere bokse</string>
+  <string name="snackbar_edit_vault_success">Boks redigeret</string>
+  <string name="snackbar_edit_vault_error">Boks ikke redigeret</string>
+  <string name="snackbar_delete_vault_success">Boks slettet</string>
+  <string name="snackbar_delete_vault_error">Boks ikke slettet</string>
+  <string name="snackbar_leave_vault_success">Boks forladt</string>
+  <string name="snackbar_leave_vault_error">Kunne ikke forlade boks</string>
+  <string name="snackbar_retrieve_vault_error">Boks ikke fundet</string>
+  <string name="snackbar_find_vault_error">Kan ikke finde valgte boks</string>
+  <string name="snackbar_get_vault_list_error">Listen over bokse kunne ikke indlæses</string>
+  <string name="snackbar_get_upgrade_info_error">Kunne ikke forberede listen over bokse</string>
+  <string name="vault_delete_dialog_title">Slet boks</string>
+  <string name="vault_delete_dialog_body">Dette vil permanent slette boksen __VAULT_NAME__ og alt dens indhold. Indtast boksens navn for at bekræfte sletningen.</string>
+  <string name="vault_delete_dialog_placeholder">Boksnavn</string>
+  <string name="vault_delete_dialog_cancel_action">Annullér</string>
+  <string name="vault_delete_dialog_delete_action">Slet</string>
+  <string name="vault_leave_dialog_title">Forlad boks</string>
+  <string name="vault_leave_dialog_body">Dette vil fjerne din adgang fra boksen __VAULT_NAME__ og al dens indhold. Er du sikker på, at du vil forlade den?</string>
+  <string name="vault_leave_dialog_cancel_action">Annullér</string>
+  <string name="vault_leave_dialog_leave_action">Forlad</string>
+  <string name="bottomsheet_close_icon_content_description">Luk opret boks</string>
+  <string name="bottomsheet_create_vault_button">Opret boks</string>
+  <string name="bottomsheet_edit_vault_button">Gem</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Du har nået grænsen for, hvor mange bokse du kan oprette. Opret et ubegrænset antal bokse, når du opgraderer dit abonnement.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Hvis du vil interagere med dine andre bokse, skal du opgradere din konto.</string>
+  <string name="bottomsheet_upgrade_now">Opgradér nu</string>
+  <string name="bottomsheet_edit">Redigér</string>
+  <string name="bottomsheet_migrate">Flyt alle elementer til en anden boks</string>
+  <string name="bottomsheet_delete_vault">Slet boks</string>
+  <string name="bottomsheet_share_vault">Del</string>
+  <string name="bottomsheet_leave_vault">Forlad boks</string>
+  <string name="bottomsheet_view_members">Vis medlemmer</string>
+  <string name="bottomsheet_manage_access">Administrer adgang</string>
+  <string name="vault_title">Boks</string>
+</resources>

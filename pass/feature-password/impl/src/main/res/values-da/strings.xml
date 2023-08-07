@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Kopiér og luk</string>
+  <string name="password_copied_to_clipboard">Adgangskode kopieret</string>
+  <string name="bottomsheet_generate_password_title">Generér adgangskode</string>
+  <string name="password_type">Type</string>
+  <string name="special_characters">Specielle tegn (!&amp;*)</string>
+  <string name="character_count">%s tegn</string>
+  <string name="word_count">%s ord</string>
+  <string name="word_separator">Ordseparator</string>
+  <string name="bottomsheet_option_capital_letters">Store bogstaver (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Brug store bogstaver</string>
+  <string name="bottomsheet_option_include_numbers">Inkluder tal (0-9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Bindestreger ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Mellemrum</string>
+  <string name="bottomsheet_option_word_separator_periods">Punktummer (.)</string>
+  <string name="bottomsheet_option_word_separator_commas">Kommaer ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Bundstreg ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Tal</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Tal og symboler</string>
+  <string name="regenerate_password_icon_content_description">Regenerér adgangskode-knap</string>
+  <string name="password_mode_memorable">Huskværdig adgangskode</string>
+  <string name="password_mode_random">Tilfældig adgangskode</string>
+  <string name="password_mode_icon">Ikon for adgangskode-tilstand</string>
+  <string name="password_words_separator_icon">Adgangskode-ordskiller</string>
+</resources>

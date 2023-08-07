@@ -45,6 +45,7 @@
   <string name="sharing_invitation_from">Invitation from %s</string>
   <string name="sharing_join_shared_vault">Присоединиться к общему хранилищу</string>
   <string name="sharing_reject_invitation">Отклонить приглашение</string>
+  <string name="sharing_snackbar_get_invite_error">Could not get invite</string>
   <string name="sharing_snackbar_invite_accepted">Приглашение принято</string>
   <string name="sharing_snackbar_invite_accept_error">Ошибка при принятии приглашения</string>
   <string name="sharing_snackbar_invite_rejected">Приглашение отклонено</string>
@@ -52,6 +53,7 @@
   <string name="sharing_snackbar_vault_not_found">Хранилище не может быть найдено</string>
   <string name="sharing_snackbar_invite_sent_success">Приглашение отправлено</string>
   <string name="sharing_snackbar_invite_sent_error">Не могу отправить приглашение</string>
+  <string name="sharing_snackbar_get_vault_members_error">Could not get vault members</string>
   <string name="share_summary_title">Сводка</string>
   <string name="share_summary_subtitle">Вы собираетесь пригласить %1$s в своё %2$s. Они получат доступ к %3$s, и смогут %4$s в этом хранилище.</string>
   <string name="share_summary_vault">%s хранилище</string>
@@ -62,4 +64,10 @@
   <string name="share_summary_email_title">Пользователь</string>
   <string name="share_summary_vault_title">Хранилище</string>
   <string name="share_summary_permissions_title">Разрешения</string>
+  <string name="share_manage_vault_share_with_more_people">Share with more people</string>
+  <string name="share_manage_vault_item_count">%d items</string>
+  <string name="share_manage_vault_invite_pending">Pending invite</string>
+  <string name="share_role_can_view">Can view</string>
+  <string name="share_role_can_edit">Can edit</string>
+  <string name="share_role_admin">Admin</string>
 </resources>

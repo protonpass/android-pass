@@ -6,8 +6,8 @@
   <string name="home_empty_vault_create_login">Login aanmaken</string>
   <string name="home_empty_vault_create_alias">Maak een Hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Notitie aanmaken</string>
-  <string name="error_observing_items">Fout bij het observeren van items</string>
-  <string name="error_observing_share">Error observing share</string>
+  <string name="error_observing_items">Fout op items</string>
+  <string name="error_observing_share">Fout bij het delen</string>
   <string name="error_refreshing">Fout bij vernieuwen</string>
   <string name="home_snackbar_login_moved_to_trash">Login verplaatst naar prullenbak</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias verplaatst naar prullenbak</string>

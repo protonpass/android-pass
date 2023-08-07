@@ -7,6 +7,8 @@
   <string name="snackbar_edit_vault_error">Sejf nie został zaktualizowany</string>
   <string name="snackbar_delete_vault_success">Sejf został usunięty</string>
   <string name="snackbar_delete_vault_error">Sejf nie został usunięty</string>
+  <string name="snackbar_leave_vault_success">Sejf został opuszczony</string>
+  <string name="snackbar_leave_vault_error">Nie można opuścić sejfu</string>
   <string name="snackbar_retrieve_vault_error">Sejf nie został znaleziony</string>
   <string name="snackbar_find_vault_error">Nie można znaleźć sejfu</string>
   <string name="snackbar_get_vault_list_error">Lista sejfów nie mogła zostać załadowana</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">Nazwa sejfu</string>
   <string name="vault_delete_dialog_cancel_action">Anuluj</string>
   <string name="vault_delete_dialog_delete_action">Usuń</string>
+  <string name="vault_leave_dialog_title">Opuść sejf</string>
+  <string name="vault_leave_dialog_body">Spowoduje to utratę dostępu do sejfu __VAULT_NAME__. Czy chcesz opuścić sejf?</string>
+  <string name="vault_leave_dialog_cancel_action">Anuluj</string>
+  <string name="vault_leave_dialog_leave_action">Opuść</string>
   <string name="bottomsheet_close_icon_content_description">Zamknij tworzenie sejfu</string>
   <string name="bottomsheet_create_vault_button">Utwórz sejf</string>
   <string name="bottomsheet_edit_vault_button">Zapisz</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Przenieś wszystkie elementy do innego sejfu</string>
   <string name="bottomsheet_delete_vault">Usuń sejf</string>
   <string name="bottomsheet_share_vault">Udostępnij</string>
+  <string name="bottomsheet_leave_vault">Opuść sejf</string>
+  <string name="bottomsheet_view_members">Pokaż użytkowników</string>
+  <string name="bottomsheet_manage_access">Zarządzaj dostępem</string>
   <string name="vault_title">Sejf</string>
 </resources>

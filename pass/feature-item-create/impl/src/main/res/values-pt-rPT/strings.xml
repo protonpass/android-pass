@@ -28,7 +28,7 @@
   <string name="sticky_button_create_alias">Hide-my-email</string>
   <string name="sticky_button_use_account_email">Utilizar %s</string>
   <string name="create_login_item_creation_error">Não foi possível criar o início de sessão.</string>
-  <string name="create_login_item_update_error">Não foi possível actualizar o início de sessão.</string>
+  <string name="create_login_item_update_error">Não foi possível atualizar o início de sessão.</string>
   <string name="create_login_init_error">Não foi possível inicializar o início de sessão.</string>
   <string name="create_login_invalid_totp">Os conteúdos de A2F não são válidos.</string>
   <string name="login_created">Início de sessão criado</string>
@@ -53,7 +53,7 @@
   <string name="create_note_item_creation_error">Não é possível criar a nota.</string>
   <string name="create_note_item_update_error">Não é possível actualizar a nota.</string>
   <string name="create_note_init_error">Não foi possível inicializar a nota.</string>
-  <string name="create_note_empty_share_id">A ID de partilhamento não pode estar vazia.</string>
+  <string name="create_note_empty_share_id">O ID de partilha não pode estar vazio</string>
   <string name="note_created">A nota foi criada.</string>
   <string name="edit_note_snackbar_note_moved_to_trash">O nota foi movida para o lixo.</string>
   <string name="edit_note_snackbar_note_moved_to_trash_error">Não foi possível eliminar a nota.</string>
@@ -72,9 +72,9 @@
   <string name="create_alias_cannot_create_more_aliases_error">Não pode criar mais alias.</string>
   <string name="create_alias_email_not_validated_error">Não pode criar alias sem antes validar o seu e-mail.</string>
   <string name="alias_rate_limited">Foram criados demasiados aliases recentemente.</string>
-  <string name="create_alias_item_update_error">Não foi possível actualizar o alias.</string>
+  <string name="create_alias_item_update_error">Não foi possível atualizar o alias.</string>
   <string name="create_alias_init_error">Não foi possível inicializar o alias.</string>
-  <string name="create_alias_empty_share_id">A ID de partilhamento não pode estar vazia.</string>
+  <string name="create_alias_empty_share_id">O ID de partilha não pode estar vazio</string>
   <string name="alias_created">Alias criado</string>
   <string name="alias_moved_to_trash">O alias foi movido para o lixo.</string>
   <string name="cannot_retrieve_alias_options">Não foi possível recuperar as opções de alias</string>
@@ -97,7 +97,7 @@
   <string name="create_credit_card_item_creation_error">Não foi possível criar o cartão de crédito.</string>
   <string name="create_credit_card_item_creation_success">O cartão de crédito foi criado.</string>
   <string name="credit_card_init_error">Não foi possível inicializar o cartão de crédito.</string>
-  <string name="credit_card_item_update_error">Não foi possível actualizar o cartão de crédito.</string>
+  <string name="credit_card_item_update_error">Não foi possível atualizar o cartão de crédito.</string>
   <!--  Common create items  -->
   <string name="changes_saved">Alterações guardadas</string>
   <!--  Totp  -->
@@ -114,7 +114,7 @@
   <string name="mfa_limit_reached">Limite A2F atingido</string>
   <string name="upgrade">Actualizar</string>
   <string name="mfa_icon_content_description">Ícone 2FA</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Actualiza para obter domínios personalizados.</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Actualize para obter mais caixas de entrada.</string>
-  <string name="create_alias_content_limit_banner">Atingiu o limite de aliases que pode criar. Crie um número ilimitado de aliases quando actualizar a sua subscrição.</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Atualize para obter domínios personalizados.</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Atualize para obter mais caixas de entrada.</string>
+  <string name="create_alias_content_limit_banner">Atingiu o limite de aliases que pode criar. Crie um número ilimitado de aliases quando atualizar a sua subscrição.</string>
 </resources>

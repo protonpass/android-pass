@@ -17,15 +17,15 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Continue</string>
-  <string name="sharing_can_view">Can view</string>
-  <string name="sharing_can_edit">Can edit</string>
+  <string name="share_continue">Lanjutkan</string>
+  <string name="sharing_can_view">Dapat melihat</string>
+  <string name="sharing_can_edit">Dapat menyunting</string>
   <string name="sharing_can_manage">Can manage</string>
   <string name="sharing_can_view_description">Can view items in this vault.</string>
   <string name="sharing_can_edit_description">Can create, edit, delete and export items in this vault.</string>
   <string name="sharing_can_manage_description">Can grant and revoke access to this vault.</string>
   <plurals name="sharing_item_count">
-    <item quantity="other">%d items</item>
+    <item quantity="other">%d item</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="other">%d members</item>
@@ -34,26 +34,34 @@
   <string name="share_with_subtitle">This user will receive an invitation to join your \'%s\' vault.</string>
   <string name="share_with_email_hint">Email address</string>
   <string name="share_with_email_error">Invalid email address</string>
-  <string name="share_permissions_title">Set permissions</string>
+  <string name="share_permissions_title">Atur perizinan</string>
   <string name="share_permissions_subtitle">Select the level of access this user will gain when they join your \'%s\' vault.</string>
   <string name="sharing_invitation_from">Invitation from %s</string>
-  <string name="sharing_join_shared_vault">Join shared vault</string>
-  <string name="sharing_reject_invitation">Reject invitation</string>
-  <string name="sharing_snackbar_invite_accepted">Invite accepted</string>
-  <string name="sharing_snackbar_invite_accept_error">Error accepting the invite</string>
-  <string name="sharing_snackbar_invite_rejected">Invite rejected</string>
-  <string name="sharing_snackbar_invite_reject_error">Error rejecting the invite</string>
-  <string name="sharing_snackbar_vault_not_found">Vault could not be found</string>
+  <string name="sharing_join_shared_vault">Bergabung brankas terbagi</string>
+  <string name="sharing_reject_invitation">Tolak undangan</string>
+  <string name="sharing_snackbar_get_invite_error">Could not get invite</string>
+  <string name="sharing_snackbar_invite_accepted">Undangan diterima</string>
+  <string name="sharing_snackbar_invite_accept_error">Terjadi kesalahan menerima undangan</string>
+  <string name="sharing_snackbar_invite_rejected">Undangan ditolak</string>
+  <string name="sharing_snackbar_invite_reject_error">Terjadi kesalahan menolak undangan</string>
+  <string name="sharing_snackbar_vault_not_found">Brankas tidak dapat ditemukan</string>
   <string name="sharing_snackbar_invite_sent_success">Undangan dikirim</string>
   <string name="sharing_snackbar_invite_sent_error">Could not send invite</string>
+  <string name="sharing_snackbar_get_vault_members_error">Could not get vault members</string>
   <string name="share_summary_title">Rangkuman</string>
   <string name="share_summary_subtitle">You are about to invite %1$s into your %2$s. They will gain access to %3$s and they will be able to %4$s in this vault.</string>
   <string name="share_summary_vault">%s vault</string>
-  <string name="share_summary_view_items">only view items</string>
+  <string name="share_summary_view_items">hanya tampilkan item</string>
   <string name="share_summary_create_items">create items</string>
-  <string name="share_summary_manage_vault">manage</string>
+  <string name="share_summary_manage_vault">kelola</string>
   <string name="share_summary_share_vault">Share vault</string>
   <string name="share_summary_email_title">Pengguna</string>
   <string name="share_summary_vault_title">Brankas</string>
   <string name="share_summary_permissions_title">Permissions</string>
+  <string name="share_manage_vault_share_with_more_people">Share with more people</string>
+  <string name="share_manage_vault_item_count">%d items</string>
+  <string name="share_manage_vault_invite_pending">Pending invite</string>
+  <string name="share_role_can_view">Dapat melihat</string>
+  <string name="share_role_can_edit">Dapat menyunting</string>
+  <string name="share_role_admin">Admin</string>
 </resources>

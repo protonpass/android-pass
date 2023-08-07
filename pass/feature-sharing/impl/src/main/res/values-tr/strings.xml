@@ -41,6 +41,7 @@
   <string name="sharing_invitation_from">%s daveti</string>
   <string name="sharing_join_shared_vault">Paylaşılan kasaya eriş</string>
   <string name="sharing_reject_invitation">Daveti reddet</string>
+  <string name="sharing_snackbar_get_invite_error">Davet alınamadı</string>
   <string name="sharing_snackbar_invite_accepted">Davet kabul edildi</string>
   <string name="sharing_snackbar_invite_accept_error">Davet kabul edilirken sorun çıktı</string>
   <string name="sharing_snackbar_invite_rejected">Davet reddedildi</string>
@@ -48,6 +49,7 @@
   <string name="sharing_snackbar_vault_not_found">Kasa bulunamadı</string>
   <string name="sharing_snackbar_invite_sent_success">Davet gönderildi</string>
   <string name="sharing_snackbar_invite_sent_error">Davet gönderilemedi</string>
+  <string name="sharing_snackbar_get_vault_members_error">Kasa üyeleri alınamadı</string>
   <string name="share_summary_title">Özet</string>
   <string name="share_summary_subtitle">%1$s kullanıcısını %2$s kasanızı paylaşmaya davet ediyorsunuz. Kullanıcının bu kasada %3$s izni olacak ve %4$s işlemlerini yapabilecek.</string>
   <string name="share_summary_vault">%s kasa</string>
@@ -58,4 +60,10 @@
   <string name="share_summary_email_title">Kullanıcı</string>
   <string name="share_summary_vault_title">Kasa</string>
   <string name="share_summary_permissions_title">İzinler</string>
+  <string name="share_manage_vault_share_with_more_people">Başkalarıyla paylaş</string>
+  <string name="share_manage_vault_item_count">%d öge</string>
+  <string name="share_manage_vault_invite_pending">Bekleyen davet</string>
+  <string name="share_role_can_view">Görüntüleyebilir</string>
+  <string name="share_role_can_edit">Düzenleyebilir</string>
+  <string name="share_role_admin">Yönetici</string>
 </resources>

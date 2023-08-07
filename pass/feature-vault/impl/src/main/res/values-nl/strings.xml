@@ -2,11 +2,13 @@
 <resources>
   <string name="snackbar_create_vault_success">Kluis aangemaakt</string>
   <string name="snackbar_create_vault_error">Kluis niet aangemaakt</string>
-  <string name="snackbar_cannot_create_more_vaults_error">Kan geen kluizen meer maken</string>
-  <string name="snackbar_edit_vault_success">Vault bewerkt</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Kan geen kluizen meer aanmaken</string>
+  <string name="snackbar_edit_vault_success">Kluis bewerkt</string>
   <string name="snackbar_edit_vault_error">Kluis niet bewerkt</string>
   <string name="snackbar_delete_vault_success">Kluis verwijderd</string>
   <string name="snackbar_delete_vault_error">Kluis niet verwijderd</string>
+  <string name="snackbar_leave_vault_success">Kluis verlaten</string>
+  <string name="snackbar_leave_vault_error">Kon de kluis niet verlaten</string>
   <string name="snackbar_retrieve_vault_error">Kluis niet gevonden</string>
   <string name="snackbar_find_vault_error">Kan geselecteerde kluis niet vinden</string>
   <string name="snackbar_get_vault_list_error">Kluislijst kan niet worden geladen</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">Kluisnaam</string>
   <string name="vault_delete_dialog_cancel_action">Annuleren</string>
   <string name="vault_delete_dialog_delete_action">Verwijderen</string>
+  <string name="vault_leave_dialog_title">Verlaat kluis</string>
+  <string name="vault_leave_dialog_body">Dit verwijderd je toegang tot de kluis __VAULT_NAME__ en al zijn inhoud. Weet je zeker dat je hem wil verlaten?</string>
+  <string name="vault_leave_dialog_cancel_action">Annuleren</string>
+  <string name="vault_leave_dialog_leave_action">Verlaten</string>
   <string name="bottomsheet_close_icon_content_description">Sluit Kluis aanmaken</string>
   <string name="bottomsheet_create_vault_button">Kluis aanmaken</string>
   <string name="bottomsheet_edit_vault_button">Opslaan</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Verplaats alle items naar een andere kluis</string>
   <string name="bottomsheet_delete_vault">Kluis verwijderen</string>
   <string name="bottomsheet_share_vault">Delen</string>
+  <string name="bottomsheet_leave_vault">Verlaat kluis</string>
+  <string name="bottomsheet_view_members">Bekijk leden</string>
+  <string name="bottomsheet_manage_access">Beheer toegang</string>
   <string name="vault_title">Kluis</string>
 </resources>

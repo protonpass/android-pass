@@ -7,6 +7,8 @@
   <string name="snackbar_edit_vault_error">Holvia ei muokattu</string>
   <string name="snackbar_delete_vault_success">Holvi poistettiin</string>
   <string name="snackbar_delete_vault_error">Holvia ei poistettu</string>
+  <string name="snackbar_leave_vault_success">Holvista on poistuttu</string>
+  <string name="snackbar_leave_vault_error">Holvista ei voitu poistua</string>
   <string name="snackbar_retrieve_vault_error">Holvia ei löytynyt</string>
   <string name="snackbar_find_vault_error">Valittua holvia ei löytynyt</string>
   <string name="snackbar_get_vault_list_error">Holvilistaa ei voitu ladata</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">Holvin nimi</string>
   <string name="vault_delete_dialog_cancel_action">Peruuta</string>
   <string name="vault_delete_dialog_delete_action">Poista</string>
+  <string name="vault_leave_dialog_title">Poistu holvista</string>
+  <string name="vault_leave_dialog_body">Tämä poistaa pääsysi holviin __VAULT_NAME__ ja sen sisältöön. Oletko varma, että haluat poistua?</string>
+  <string name="vault_leave_dialog_cancel_action">Peruuta</string>
+  <string name="vault_leave_dialog_leave_action">Poistu</string>
   <string name="bottomsheet_close_icon_content_description">Sulje holvin luonti</string>
   <string name="bottomsheet_create_vault_button">Luo holvi</string>
   <string name="bottomsheet_edit_vault_button">Tallenna</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Siirrä kaikki kohteet toiseen holviin</string>
   <string name="bottomsheet_delete_vault">Poista holvi</string>
   <string name="bottomsheet_share_vault">Jaa</string>
+  <string name="bottomsheet_leave_vault">Poistu holvista</string>
+  <string name="bottomsheet_view_members">Näytä jäsenet</string>
+  <string name="bottomsheet_manage_access">Hallinnoi pääsyä</string>
   <string name="vault_title">Holvi</string>
 </resources>

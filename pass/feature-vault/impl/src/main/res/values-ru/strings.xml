@@ -5,17 +5,23 @@
   <string name="snackbar_cannot_create_more_vaults_error">Не могу создать больше хранилищ</string>
   <string name="snackbar_edit_vault_success">Хранилище отредактировано</string>
   <string name="snackbar_edit_vault_error">Хранилище не отредактировано</string>
-  <string name="snackbar_delete_vault_success">Vault deleted</string>
-  <string name="snackbar_delete_vault_error">Vault not deleted</string>
+  <string name="snackbar_delete_vault_success">Хранилище удалено</string>
+  <string name="snackbar_delete_vault_error">Хранилище не удалено</string>
+  <string name="snackbar_leave_vault_success">Vault left</string>
+  <string name="snackbar_leave_vault_error">Could not leave vault</string>
   <string name="snackbar_retrieve_vault_error">Хранилище не найдено</string>
   <string name="snackbar_find_vault_error">Не могу найти созданное хранилище</string>
   <string name="snackbar_get_vault_list_error">Список хранилищ не может быть загружен</string>
   <string name="snackbar_get_upgrade_info_error">Не могу подготовить список хранилищ</string>
-  <string name="vault_delete_dialog_title">Delete vault</string>
+  <string name="vault_delete_dialog_title">Удалить хранилище</string>
   <string name="vault_delete_dialog_body">This will permanently delete the vault __VAULT_NAME__ and all its contents. Enter the vault name to confirm deletion.</string>
   <string name="vault_delete_dialog_placeholder">Название хранилища</string>
   <string name="vault_delete_dialog_cancel_action">Отменить</string>
   <string name="vault_delete_dialog_delete_action">Удалить</string>
+  <string name="vault_leave_dialog_title">Leave vault</string>
+  <string name="vault_leave_dialog_body">This will remove your access from the vault __VAULT_NAME__ and all its contents. Are you sure you want to leave?</string>
+  <string name="vault_leave_dialog_cancel_action">Cancel</string>
+  <string name="vault_leave_dialog_leave_action">Leave</string>
   <string name="bottomsheet_close_icon_content_description">Close Create Vault</string>
   <string name="bottomsheet_create_vault_button">Создать хранилище</string>
   <string name="bottomsheet_edit_vault_button">Сохранить</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Move all items to another vault</string>
   <string name="bottomsheet_delete_vault">Удалить хранилище</string>
   <string name="bottomsheet_share_vault">Поделиться</string>
+  <string name="bottomsheet_leave_vault">Leave vault</string>
+  <string name="bottomsheet_view_members">View members</string>
+  <string name="bottomsheet_manage_access">Manage access</string>
   <string name="vault_title">Хранилище</string>
 </resources>

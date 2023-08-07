@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Konto</string>
+  <string name="account_username_label">Användarnamn</string>
+  <string name="account_subscription_label">Prenumerationspaket</string>
+  <string name="account_permanently_delete_warning">Detta kommer att ta bort ditt konto och all dess data permanent. Du kommer inte att kunna återaktivera detta konto.</string>
+  <string name="account_delete_account">Ta bort konto</string>
+  <string name="account_delete_account_icon_content_description">Knapp för “Ta bort konto“</string>
+  <string name="account_sign_out">Logga ut</string>
+  <string name="account_sign_out_icon_content_description">Knapp för “Logga ut“</string>
+  <string name="account_manage_subscription">Hantera prenumeration</string>
+  <string name="account_get_user_info_error">Kunde inte hämta användarinformationen</string>
+  <string name="manage_subscription_icon_content_description">Knapp för “Hantera prenumeration“</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Logga ut?</string>
+  <string name="alert_confirm_sign_out_message">Är du säker på att du vill logga ut?</string>
+</resources>

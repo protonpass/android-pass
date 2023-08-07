@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 de seifuri</string>
+  <string name="unlimited_email_alias">Aliasuri de e-mail nelimitate</string>
+  <string name="custom_fields">Câmpuri personale</string>
+  <string name="restart_to_complete_the_update">Reporniți pentru a finaliza actualizarea</string>
+  <string name="action_restart">Repornire</string>
+</resources>

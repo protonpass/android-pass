@@ -7,6 +7,8 @@
   <string name="snackbar_edit_vault_error">Сховішча не адрэдагавана</string>
   <string name="snackbar_delete_vault_success">Сховішча выдалена</string>
   <string name="snackbar_delete_vault_error">Сховішча не выдалена</string>
+  <string name="snackbar_leave_vault_success">Вы выйшлі са сховішча</string>
+  <string name="snackbar_leave_vault_error">Немагчыма выйсці са сховішча</string>
   <string name="snackbar_retrieve_vault_error">Сховішча не знойдзена</string>
   <string name="snackbar_find_vault_error">Немагчыма знайсці выбранае сховішча</string>
   <string name="snackbar_get_vault_list_error">Немагчыма загрузіць спіс сховішчаў</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">Назва сховішча</string>
   <string name="vault_delete_dialog_cancel_action">Скасаваць</string>
   <string name="vault_delete_dialog_delete_action">Выдаліць</string>
+  <string name="vault_leave_dialog_title">Выйсці са сховішча</string>
+  <string name="vault_leave_dialog_body">Гэта прывядзе да выдалення доступу вашага сховішча з назвай __VAULT_NAME__ і ўсяго яго змесціва. Вы ўпэўнены, што хочаце выйсці?</string>
+  <string name="vault_leave_dialog_cancel_action">Скасаваць</string>
+  <string name="vault_leave_dialog_leave_action">Выйсці</string>
   <string name="bottomsheet_close_icon_content_description">Закрыць стварэнне сховішча</string>
   <string name="bottomsheet_create_vault_button">Стварыць сховішча</string>
   <string name="bottomsheet_edit_vault_button">Захаваць</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Перамясціць усе элементы ў іншае сховішча</string>
   <string name="bottomsheet_delete_vault">Выдаліць сховішча</string>
   <string name="bottomsheet_share_vault">Абагуліць</string>
+  <string name="bottomsheet_leave_vault">Выйсці са сховішча</string>
+  <string name="bottomsheet_view_members">Прагляд удзельнікаў</string>
+  <string name="bottomsheet_manage_access">Кіраваць доступам</string>
   <string name="vault_title">Сховішча</string>
 </resources>

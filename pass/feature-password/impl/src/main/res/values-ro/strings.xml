@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Copiere și închidere</string>
+  <string name="password_copied_to_clipboard">Parola s-a copiat</string>
+  <string name="bottomsheet_generate_password_title">Generare parolă</string>
+  <string name="password_type">Tip</string>
+  <string name="special_characters">Caractere speciale (&amp;*)</string>
+  <string name="character_count">%s caractere</string>
+  <string name="word_count">%s cuvinte</string>
+  <string name="word_separator">Separator cuvinte</string>
+  <string name="bottomsheet_option_capital_letters">Majuscule (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Scriere cu majuscule</string>
+  <string name="bottomsheet_option_include_numbers">Includere cifre (0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Cratimă ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Spații</string>
+  <string name="bottomsheet_option_word_separator_periods">Punct ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Virgulă ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Subliniere ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Cifre</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Cifre și simboluri</string>
+  <string name="regenerate_password_icon_content_description">Buton regenerare parolă</string>
+  <string name="password_mode_memorable">Parolă ușor de reținut</string>
+  <string name="password_mode_random">Parolă aleatorie</string>
+  <string name="password_mode_icon">Pictogramă mod parolă</string>
+  <string name="password_words_separator_icon">Separator cuvinte parolă</string>
+</resources>

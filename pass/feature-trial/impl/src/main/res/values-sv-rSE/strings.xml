@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Njut av din gratis provperiod</string>
+  <string name="trial_subtitle">För nästa nivå av lösenordshantering:</string>
+  <string name="trial_feature_1">20 valv</string>
+  <string name="trial_feature_2">Obegränsat antal e-postalias</string>
+  <string name="trial_feature_3">Integrerad 2FA-autentisering</string>
+  <string name="trial_feature_4">Anpassade fält</string>
+  <string name="trial_button_text">Uppgradera för att behålla dessa funktioner</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">1 dag kvar av din provperiod</item>
+    <item quantity="other">%d dagar kvar av din provperiod</item>
+  </plurals>
+  <string name="trial_learn_more">Lär dig mer</string>
+</resources>

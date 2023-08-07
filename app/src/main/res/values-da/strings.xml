@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 bokse</string>
+  <string name="unlimited_email_alias">Ubegrænsede e-mail-aliasser</string>
+  <string name="custom_fields">Brugerdefinerede felter</string>
+  <string name="restart_to_complete_the_update">Genstart for at fuldføre opdateringen</string>
+  <string name="action_restart">Genstart</string>
+</resources>

@@ -7,6 +7,8 @@
   <string name="snackbar_edit_vault_error">Bóveda no editada</string>
   <string name="snackbar_delete_vault_success">Bóveda eliminada</string>
   <string name="snackbar_delete_vault_error">Bóveda no eliminada</string>
+  <string name="snackbar_leave_vault_success">Ha dejado la bóveda.</string>
+  <string name="snackbar_leave_vault_error">No se pudo dejar la bóveda.</string>
   <string name="snackbar_retrieve_vault_error">Bóveda no encontrada</string>
   <string name="snackbar_find_vault_error">No se encuentra la bóveda seleccionada</string>
   <string name="snackbar_get_vault_list_error">No se pudo cargar la lista de bóveda</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">Nombre de la bóveda</string>
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
   <string name="vault_delete_dialog_delete_action">Eliminar</string>
+  <string name="vault_leave_dialog_title">Dejar la bóveda</string>
+  <string name="vault_leave_dialog_body">Esto eliminará su acceso de la bóveda __VAULT_NAME__ y todo su contenido. ¿En verdad desea dejarla?</string>
+  <string name="vault_leave_dialog_cancel_action">Cancelar</string>
+  <string name="vault_leave_dialog_leave_action">Dejar</string>
   <string name="bottomsheet_close_icon_content_description">Cerrar crear bóveda</string>
   <string name="bottomsheet_create_vault_button">Crear bóveda</string>
   <string name="bottomsheet_edit_vault_button">Guardar</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Mover todos los elementos a otra bóveda</string>
   <string name="bottomsheet_delete_vault">Eliminar bóveda</string>
   <string name="bottomsheet_share_vault">Compartir</string>
+  <string name="bottomsheet_leave_vault">Dejar la bóveda</string>
+  <string name="bottomsheet_view_members">Ver miembros</string>
+  <string name="bottomsheet_manage_access">Gestionar acceso</string>
   <string name="vault_title">Bóveda</string>
 </resources>

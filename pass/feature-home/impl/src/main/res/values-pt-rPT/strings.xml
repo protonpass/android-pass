@@ -20,8 +20,8 @@
   <string name="home_trial_banner_title">Aproveite o seu período de teste gratuito</string>
   <string name="home_trial_banner_text">Descubra todas as funcionalidades exclusivas que estão à sua disposição por um período limitado.</string>
   <string name="home_trial_banner_settings">Escolher um cofre</string>
-  <string name="home_invite_banner_title">Shared vault invitation</string>
-  <string name="home_invite_banner_subtitle">You\'ve been invited to a vault. Tap here to see the invitation.</string>
+  <string name="home_invite_banner_title">Convite do cofre partilhado</string>
+  <string name="home_invite_banner_subtitle">Foi convidado para o cofre. Toque aqui para ver o convite.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar a palavra-passe</string>
   <string name="bottomsheet_copy_username">Copiar o nome de utilizador</string>

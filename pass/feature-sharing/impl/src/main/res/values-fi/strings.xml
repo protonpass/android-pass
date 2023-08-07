@@ -41,6 +41,7 @@
   <string name="sharing_invitation_from">Kutsu käyttäjältä %s</string>
   <string name="sharing_join_shared_vault">Liitty jaettuun holviin</string>
   <string name="sharing_reject_invitation">Kieltäydy kutsusta</string>
+  <string name="sharing_snackbar_get_invite_error">Kutsua ei saatu</string>
   <string name="sharing_snackbar_invite_accepted">Kutsu hyväksyttiin</string>
   <string name="sharing_snackbar_invite_accept_error">Virhe hyväksyttäessä kutsua</string>
   <string name="sharing_snackbar_invite_rejected">Kutsusta kieltäydyttiin</string>
@@ -48,6 +49,7 @@
   <string name="sharing_snackbar_vault_not_found">Holvia ei löytynyt</string>
   <string name="sharing_snackbar_invite_sent_success">Kutsu lähetetty</string>
   <string name="sharing_snackbar_invite_sent_error">Kutsua ei voitu lähettää</string>
+  <string name="sharing_snackbar_get_vault_members_error">Holvin jäseniä ei saatu</string>
   <string name="share_summary_title">Yhteenveto</string>
   <string name="share_summary_subtitle">Olet kutsumassa käyttäjän %1$s kohteeseen %2$s. Hän saa pääsyn kohteeseen %3$s hänen on mahdollista %4$s tässä holvissa.</string>
   <string name="share_summary_vault">%s holvi</string>
@@ -58,4 +60,10 @@
   <string name="share_summary_email_title">Käyttäjä</string>
   <string name="share_summary_vault_title">Holvi</string>
   <string name="share_summary_permissions_title">Oikeudet</string>
+  <string name="share_manage_vault_share_with_more_people">Jaa useammalle ihmiselle</string>
+  <string name="share_manage_vault_item_count">%d kohdetta</string>
+  <string name="share_manage_vault_invite_pending">Odottava kutsu</string>
+  <string name="share_role_can_view">Voi tarkastella</string>
+  <string name="share_role_can_edit">Voi muokata</string>
+  <string name="share_role_admin">Ylläpitäjä</string>
 </resources>

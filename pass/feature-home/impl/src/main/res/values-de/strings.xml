@@ -6,8 +6,8 @@
   <string name="home_empty_vault_create_login">Einen Login erstellen</string>
   <string name="home_empty_vault_create_alias">Einen Hide My Email-Alias erstellen</string>
   <string name="home_empty_vault_create_note">Eine Notiz erstellen</string>
-  <string name="error_observing_items">Error observing items</string>
-  <string name="error_observing_share">Error observing share</string>
+  <string name="error_observing_items">Fehler bei der Betrachtung des Elements</string>
+  <string name="error_observing_share">Fehler beim Teilen.</string>
   <string name="error_refreshing">Fehler beim Aktualisieren</string>
   <string name="home_snackbar_login_moved_to_trash">Login in den Papierkorb verschoben</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias in den Papierkorb verschoben</string>
@@ -20,7 +20,7 @@
   <string name="home_trial_banner_title">Genieße deine kostenlose Testversion</string>
   <string name="home_trial_banner_text">Schau dir all die exklusiven Funktionen an, die dir für eine begrenzte Zeit zur Verfügung stehen.</string>
   <string name="home_trial_banner_settings">Mehr erfahren ›</string>
-  <string name="home_invite_banner_title">Shared vault invitation</string>
+  <string name="home_invite_banner_title">Geteilte Safe-Einladung</string>
   <string name="home_invite_banner_subtitle">Du wurdest eingeladen, einem Tresor beizutreten. Tippe hier, um die Einladung anzusehen.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Passwort kopieren</string>

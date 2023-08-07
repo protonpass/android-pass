@@ -11,7 +11,7 @@
   <string name="alias_detail_field_mailboxes_title">Forwarding to</string>
   <string name="alias_create_login_from_alias">Create login</string>
   <!-- Note details -->
-  <string name="field_detail_note_title">Note</string>
+  <string name="field_detail_note_title">Заметка</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>

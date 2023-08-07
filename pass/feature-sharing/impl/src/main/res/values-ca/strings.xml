@@ -41,6 +41,7 @@
   <string name="sharing_invitation_from">Invitació de %s</string>
   <string name="sharing_join_shared_vault">Uniu-vos a la caixa forta compartida</string>
   <string name="sharing_reject_invitation">Rebutja la invitació</string>
+  <string name="sharing_snackbar_get_invite_error">No s’ha pogut obtenir la invitació.</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
   <string name="sharing_snackbar_invite_accept_error">S\'ha produït un error en acceptar la invitació</string>
   <string name="sharing_snackbar_invite_rejected">Invitació rebutjada</string>
@@ -48,6 +49,7 @@
   <string name="sharing_snackbar_vault_not_found">No s\'ha pogut trobar la caixa forta.</string>
   <string name="sharing_snackbar_invite_sent_success">S\'ha enviat la invitació.</string>
   <string name="sharing_snackbar_invite_sent_error">No s’ha pogut enviar la invitació.</string>
+  <string name="sharing_snackbar_get_vault_members_error">No s\'han pogut obtenir els membres de la caixa forta</string>
   <string name="share_summary_title">Resum</string>
   <string name="share_summary_subtitle">Esteu a punt de convidar %1$s al vostre %2$s. Tindran accés a %3$s i podran %4$s en aquesta caixa forta.</string>
   <string name="share_summary_vault">a caixa forta %s</string>
@@ -58,4 +60,10 @@
   <string name="share_summary_email_title">Usuari</string>
   <string name="share_summary_vault_title">Caixa forta</string>
   <string name="share_summary_permissions_title">Permisos</string>
+  <string name="share_manage_vault_share_with_more_people">Comparteix amb més gent</string>
+  <string name="share_manage_vault_item_count">%d elements</string>
+  <string name="share_manage_vault_invite_pending">Invitació pendent</string>
+  <string name="share_role_can_view">Pot veure</string>
+  <string name="share_role_can_edit">Pot editar</string>
+  <string name="share_role_admin">Administrador/a</string>
 </resources>

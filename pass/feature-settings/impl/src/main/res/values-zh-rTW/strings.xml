@@ -12,8 +12,6 @@
   <string name="settings_appearance_preference_subtitle_match_system">匹配系統</string>
   <string name="settings_appearance_preference_subtitle_light">淺色模式</string>
   <string name="settings_appearance_preference_subtitle_dark">深色模式</string>
-  <string name="settings_force_sync_success">您的項目現在可以同步</string>
-  <string name="settings_force_sync_error">同步錯誤</string>
   <string name="settings_fingerprint_lock_enabled">啟用指紋解鎖</string>
   <string name="settings_error_performing_operation">操作過程中出錯</string>
   <string name="settings_option_clipboard">剪貼簿</string>

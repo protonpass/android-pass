@@ -45,6 +45,7 @@
   <string name="sharing_invitation_from">Zaproszenie od %s</string>
   <string name="sharing_join_shared_vault">Dołącz do udostępnionego sejfu</string>
   <string name="sharing_reject_invitation">Odrzuć zaproszenie</string>
+  <string name="sharing_snackbar_get_invite_error">Nie można pobrać zaproszenia</string>
   <string name="sharing_snackbar_invite_accepted">Zaproszenie zostało zaakceptowane</string>
   <string name="sharing_snackbar_invite_accept_error">Wystąpił błąd podczas akceptowania zaproszenia</string>
   <string name="sharing_snackbar_invite_rejected">Zaproszenie zostało odrzucone</string>
@@ -52,14 +53,21 @@
   <string name="sharing_snackbar_vault_not_found">Sejf nie został znaleziony</string>
   <string name="sharing_snackbar_invite_sent_success">Zaproszenie zostało wysłane</string>
   <string name="sharing_snackbar_invite_sent_error">Nie można wysłać zaproszenia</string>
+  <string name="sharing_snackbar_get_vault_members_error">Nie można pobrać użytkowników sejfu</string>
   <string name="share_summary_title">Podsumowanie</string>
   <string name="share_summary_subtitle">You are about to invite %1$s into your %2$s. They will gain access to %3$s and they will be able to %4$s in this vault.</string>
   <string name="share_summary_vault">sejfu %s</string>
-  <string name="share_summary_view_items">only view items</string>
-  <string name="share_summary_create_items">create items</string>
+  <string name="share_summary_view_items">może tylko wyświetlać elementy</string>
+  <string name="share_summary_create_items">utwórz elementy</string>
   <string name="share_summary_manage_vault">zarządzaj</string>
   <string name="share_summary_share_vault">Udostępnij sejf</string>
   <string name="share_summary_email_title">Użytkownik</string>
   <string name="share_summary_vault_title">Sejf</string>
   <string name="share_summary_permissions_title">Uprawnienia</string>
+  <string name="share_manage_vault_share_with_more_people">Udostępnij innym</string>
+  <string name="share_manage_vault_item_count">%d items</string>
+  <string name="share_manage_vault_invite_pending">Oczekujące zaproszenie</string>
+  <string name="share_role_can_view">Odczyt</string>
+  <string name="share_role_can_edit">Edycja</string>
+  <string name="share_role_admin">Administrator</string>
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="title_settings">Indstillinger</string>
+  <string name="settings_autofill_section_title">Autofyld</string>
+  <string name="settings_autofill_preference_title">Autofyld</string>
+  <string name="settings_autofill_preference_description">For at logge ind hurtigt og nemt kan du lade Proton Pass udfylde dine brugernavne og adgangskoder.</string>
+  <string name="settings_authentication_section_title">Godkendelse</string>
+  <string name="settings_authentication_preference_title">Oplås med fingeraftryk</string>
+  <string name="settings_authentication_preference_description_enabled">Kræver Hurtig og sikker åbning af appen med dit fingeraftryk.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">Du kan ikke bruge dit fingeraftryk til at interagere med appen, da der ikke er registreret fingeraftryk på denne enhed.</string>
+  <string name="settings_appearance_preference_title">Tema</string>
+  <string name="settings_appearance_preference_subtitle_match_system">Følg system</string>
+  <string name="settings_appearance_preference_subtitle_light">Lys tilstand</string>
+  <string name="settings_appearance_preference_subtitle_dark">Mørk tilstand</string>
+  <string name="settings_fingerprint_lock_enabled">Oplåsning med fingeraftryk aktiveret</string>
+  <string name="settings_error_performing_operation">Fejl ved udførelse af handling</string>
+  <string name="settings_option_clipboard">Udklipsholder</string>
+  <string name="settings_application_section_title">Applikation</string>
+  <string name="settings_option_view_logs">Vis logfiler</string>
+  <string name="settings_option_force_sync">Fremtving synkronisering</string>
+  <string name="settings_about_section_title">Om</string>
+  <string name="settings_option_privacy_policy">Privatlivspolitik</string>
+  <string name="settings_option_terms_of_service">Servicevilkår</string>
+  <string name="settings_primary_vault_section_title">Bokse</string>
+  <string name="settings_primary_vault_vault_selector_title">Primær boks</string>
+  <string name="settings_primary_vault_section_subtitle">Du kan ikke slette den primære boks</string>
+  <string name="settings_primary_vault_change_success">Den primære boks er blevet ændret</string>
+  <string name="settings_primary_vault_change_error">Kunne ikke ændre den primære boks</string>
+  <string name="settings_privacy_section_title">Privatliv</string>
+  <string name="settings_use_favicons_preference_title">Brug web-ikoner</string>
+  <string name="settings_use_favicons_preference_subtitle">Beslut dig for, om du vil se webstedets ikoner på dine elementer.</string>
+  <string name="settings_allow_screenshots_preference_title">Tillad skærmbilleder</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Hvis aktiveret, vil du kunne tage skærmbilleder af appen.</string>
+  <string name="settings_clear_icon_cache_success">Ikon-cache ryddet</string>
+  <string name="settings_clear_icon_cache_error">Kunne ikke rydde ikon-cachen</string>
+  <string name="settings_share_telemetry">Del anonyme brugsdata</string>
+  <string name="settings_share_crashes">Del anonyme rapporter om nedbrud</string>
+  <string name="settings_preference_updated">Dine præferencer er blevet opdateret</string>
+  <string name="view_logs_title">Vis logfiler</string>
+  <string name="clipboard_bottomsheet_title">Udklipsholder</string>
+  <string name="clipboard_option_clear_clipboard_label">Ryd udklipsholder</string>
+  <string name="clipboard_option_copy_totp_code">Kopiér godkendelseskoder</string>
+  <string name="clipboard_option_copy_totp_code_hint">Kopiér automatisk godkendelseskoder, når du bruger autofyld.</string>
+  <string name="clipboard_option_clear_clipboard_never">Aldrig</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Efter 60 sekunder</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Efter 180 sekunder</string>
+</resources>

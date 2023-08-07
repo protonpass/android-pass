@@ -1,5 +1,8 @@
 # Contributing
 
+Before working on a new feature, please get in touch with us at pass[at]proton.me to avoid duplication.
+We can also discuss the best way to implement it.
+
 ## Pull Request Process
 
 1. Ensure only essential dependencies are added to the project.

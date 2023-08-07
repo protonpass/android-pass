@@ -64,7 +64,10 @@ class BiometryManagerImpl @Inject constructor(
             else -> BiometryStatus.NotAvailable
         }
 
-    override fun launch(contextHolder: ClassHolder<Context>): Flow<BiometryResult> = channelFlow {
+    override fun launch(
+        contextHolder: ClassHolder<Context>,
+        biometryType: BiometryType
+    ): Flow<BiometryResult> = channelFlow {
         val canAuthenticate = canAuthenticate()
         if (canAuthenticate is BiometryResult.FailedToStart) {
             trySend(canAuthenticate)
@@ -122,7 +125,7 @@ class BiometryManagerImpl @Inject constructor(
         PassLogger.i(TAG, "Starting biometry authentication")
         val biometricSystemLock = userPreferencesRepository.getBiometricSystemLockPreference()
             .first()
-        prompt.authenticate(getPromptInfo(ctx, biometricSystemLock))
+        prompt.authenticate(getPromptInfo(ctx, biometricSystemLock, biometryType))
         awaitClose()
     }
 
@@ -136,10 +139,14 @@ class BiometryManagerImpl @Inject constructor(
 
     private fun getPromptInfo(
         context: Context,
-        biometricSystemLock: BiometricSystemLockPreference
+        biometricSystemLock: BiometricSystemLockPreference,
+        biometryType: BiometryType
     ): PromptInfo {
         val builder = PromptInfo.Builder()
-        builder.setTitle(context.getString(R.string.biometric_prompt_title))
+        when (biometryType) {
+            BiometryType.CONFIGURE -> builder.setTitle(context.getString(R.string.biometric_prompt_title_setup))
+            BiometryType.AUTHENTICATE -> builder.setTitle(context.getString(R.string.biometric_prompt_title))
+        }
         builder.setSubtitle(context.getString(R.string.biometric_prompt_subtitle))
         when (biometricSystemLock) {
             BiometricSystemLockPreference.Enabled -> {

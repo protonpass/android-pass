@@ -37,6 +37,7 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
+import proton.android.pass.biometry.BiometryType
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
@@ -200,7 +201,7 @@ class AuthViewModel @Inject constructor(
 
     private suspend fun openBiometrics(contextHolder: ClassHolder<Context>) {
         PassLogger.i(TAG, "Launching Biometry")
-        biometryManager.launch(contextHolder)
+        biometryManager.launch(contextHolder, BiometryType.AUTHENTICATE)
             .collect { result ->
                 PassLogger.i(TAG, "Biometry result: $result")
                 when (result) {

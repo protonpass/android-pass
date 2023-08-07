@@ -102,7 +102,7 @@ class CreateCreditCardViewModelTest {
                 vaultList = listOf(vault),
                 currentVault = vault
             ),
-            baseState = BaseCreditCardUiState.DEFAULT
+            baseState = BaseCreditCardUiState.Initial
         )
 
         instance.state.test {
@@ -127,7 +127,7 @@ class CreateCreditCardViewModelTest {
                 vaultList = listOf(vault),
                 currentVault = vault
             ),
-            baseState = BaseCreditCardUiState.DEFAULT
+            baseState = BaseCreditCardUiState.Initial
         )
         val titleInput = "Title input"
         instance.onTitleChange(titleInput)

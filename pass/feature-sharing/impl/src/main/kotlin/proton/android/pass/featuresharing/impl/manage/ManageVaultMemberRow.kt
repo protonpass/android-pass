@@ -80,7 +80,7 @@ fun ManageVaultMemberRow(
     val showActions = when (member) {
         is VaultMemberContent.Member -> when (member.member) {
             is VaultMember.Member -> canShowActions && !member.member.isCurrentUser
-            is VaultMember.InvitePending -> false // set to true when invite bottomsheet is implemented
+            is VaultMember.InvitePending -> true
         }
         VaultMemberContent.Loading -> false
     }

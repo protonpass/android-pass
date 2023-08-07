@@ -22,6 +22,7 @@ import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.SharingNavigation
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.inviteoptions.InviteOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberoptions.MemberOptionsBottomSheet
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
@@ -75,7 +76,8 @@ fun NavGraphBuilder.memberOptionsBottomSheetGraph(
     onNavigateEvent: (SharingNavigation) -> Unit
 ) {
     bottomSheet(InviteOptionsBottomSheet) {
-
+        BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(refresh = false)) }
+        InviteOptionsBottomSheet(onNavigate = onNavigateEvent)
     }
 
     bottomSheet(MemberOptionsBottomSheet) {

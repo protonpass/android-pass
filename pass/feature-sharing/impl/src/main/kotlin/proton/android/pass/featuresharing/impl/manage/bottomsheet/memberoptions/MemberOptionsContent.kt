@@ -169,7 +169,7 @@ private fun permissionRow(
             get() = null
         override val endIcon: (@Composable () -> Unit)?
             get() = if (loading) {
-                { CircularProgressIndicator(modifier = Modifier.size(28.dp)) }
+                { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
             } else if (checked) {
                 { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark) }
             } else {
@@ -238,7 +238,7 @@ private fun removeAccess(
             get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_circle_slash) }
         override val endIcon: (@Composable () -> Unit)?
             get() = if (loading) {
-                { CircularProgressIndicator(modifier = Modifier.size(28.dp)) }
+                { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
             } else {
                 null
             }

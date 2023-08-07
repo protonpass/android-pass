@@ -46,8 +46,8 @@ data class CreditCardFormItem(
         cardHolder = itemContents.cardHolder,
         type = itemContents.type,
         number = itemContents.number,
-        cvv = itemContents.cvv.from(),
-        pin = itemContents.pin.from(),
+        cvv = from(itemContents.cvv),
+        pin = from(itemContents.pin),
         expirationDate = itemContents.expirationDate
     )
 

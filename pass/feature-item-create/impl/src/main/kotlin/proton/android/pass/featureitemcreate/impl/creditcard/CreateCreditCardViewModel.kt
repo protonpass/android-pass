@@ -51,15 +51,16 @@ class CreateCreditCardViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandle: SavedStateHandleProvider,
+    savedStateHandleProvider: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction,
 ) : BaseCreditCardViewModel(
     encryptionContextProvider = encryptionContextProvider,
-    canPerformPaidAction = canPerformPaidAction
+    canPerformPaidAction = canPerformPaidAction,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
 
     private val navShareId: Option<ShareId> =
-        savedStateHandle.get().get<String>(CommonOptionalNavArgId.ShareId.key)
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
             .map { ShareId(it) }
     private val navShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(navShareId)
@@ -150,7 +151,7 @@ class CreateCreditCardViewModel @Inject constructor(
                 createItem(
                     userId = userId,
                     shareId = vault.vault.shareId,
-                    itemContents = itemContentState.value
+                    itemContents = creditCardFormItem.toItemContents()
                 )
             }.onSuccess { item ->
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()

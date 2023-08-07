@@ -36,6 +36,7 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
+import proton.android.pass.biometry.BiometryType
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
@@ -132,7 +133,7 @@ class OnBoardingViewModel @Inject constructor(
 
     private fun onEnableFingerprint(contextHolder: ClassHolder<Context>) {
         viewModelScope.launch {
-            biometryManager.launch(contextHolder)
+            biometryManager.launch(contextHolder, BiometryType.CONFIGURE)
                 .collect { result ->
                     when (result) {
                         BiometryResult.Success -> onBiometrySuccess()

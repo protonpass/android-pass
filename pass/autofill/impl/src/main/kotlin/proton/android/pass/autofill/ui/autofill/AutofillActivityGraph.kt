@@ -38,7 +38,6 @@ import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptio
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.autofillItemOptionsGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
@@ -63,10 +62,7 @@ import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
-import proton.android.pass.featureitemcreate.impl.totp.INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
-import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
-import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheet
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
@@ -240,6 +236,14 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> {}
+                is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
+                    destination = PhotoPickerTotp,
+                    route = PhotoPickerTotp.createNavRoute(it.index),
+                    backDestination = CreateLogin
+                )
+                BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseLoginNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(it.results)
             }
         }
     )
@@ -260,21 +264,6 @@ fun NavGraphBuilder.autofillActivityGraph(
                     destination = PasswordModeDialog
                 )
             }
-        }
-    )
-    createTotpGraph(
-        onSuccess = { totp, index ->
-            val values = mutableMapOf<String, Any>(TOTP_NAV_PARAMETER_KEY to totp)
-            index?.let { values.put(INDEX_NAV_PARAMETER_KEY, it) }
-            appNavigator.navigateBackWithResult(values)
-        },
-        onCloseTotp = { appNavigator.navigateBack() },
-        onOpenImagePicker = {
-            appNavigator.navigate(
-                destination = PhotoPickerTotp,
-                route = PhotoPickerTotp.createNavRoute(it.toOption()),
-                backDestination = CreateLogin
-            )
         }
     )
     createAliasGraph(

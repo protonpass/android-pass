@@ -27,7 +27,6 @@ import proton.android.featuresearchoptions.impl.SortingLocation
 import proton.android.featuresearchoptions.impl.SortingNavigation
 import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
@@ -79,10 +78,7 @@ import proton.android.pass.featureitemcreate.impl.note.UpdateNoteNavigation
 import proton.android.pass.featureitemcreate.impl.note.createNoteGraph
 import proton.android.pass.featureitemcreate.impl.note.updateNoteGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
-import proton.android.pass.featureitemcreate.impl.totp.INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
-import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
-import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
@@ -545,27 +541,18 @@ fun NavGraphBuilder.appGraph(
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
+
+                is BaseLoginNavigation.OpenImagePicker -> {
+                    appNavigator.navigate(
+                        destination = PhotoPickerTotp,
+                        route = PhotoPickerTotp.createNavRoute(it.index),
+                        backDestination = backDestination
+                    )
+                }
+
+                BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseLoginNavigation.TotpSuccess -> appNavigator.navigateBackWithResult(it.results)
             }
-        }
-    )
-    createTotpGraph(
-        onSuccess = { totp, index ->
-            val values = mutableMapOf<String, Any>(TOTP_NAV_PARAMETER_KEY to totp)
-            index?.let { values.put(INDEX_NAV_PARAMETER_KEY, it) }
-            appNavigator.navigateBackWithResult(values)
-        },
-        onCloseTotp = { appNavigator.navigateBack() },
-        onOpenImagePicker = {
-            val backDestination = when {
-                appNavigator.hasDestinationInStack(CreateLogin) -> CreateLogin
-                appNavigator.hasDestinationInStack(EditLogin) -> EditLogin
-                else -> null
-            }
-            appNavigator.navigate(
-                destination = PhotoPickerTotp,
-                route = PhotoPickerTotp.createNavRoute(it.toOption()),
-                backDestination = backDestination
-            )
         }
     )
     createNoteGraph(

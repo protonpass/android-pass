@@ -1,17 +1,17 @@
 #!/bin/bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:tools/autofill::g')
+REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:tools/public/autofill::g')
 
-BROWSERS_INPUT_FILE_PATH="${REPO_ROOT}/tools/autofill/browsers.csv"
+BROWSERS_INPUT_FILE_PATH="${REPO_ROOT}/tools/public/autofill/browsers.csv"
 
 TEMPLATE_PLACEHOLDER="{{CONTENT}}"
 BROWSER_TEMPLATE_PLACEHOLDER="{{BROWSER}}"
 VERSION_TEMPLATE_PLACEHOLDER="{{VERSION}}"
-XML_TEMPLATE_PATH="${REPO_ROOT}/tools/autofill/templates/xml.tpl"
-XML_ROW_TEMPLATE_PATH="${REPO_ROOT}/tools/autofill/templates/xml_row.tpl"
-KT_TEMPLATE_PATH="${REPO_ROOT}/tools/autofill/templates/kt.tpl"
-KT_ROW_TEMPLATE_PATH="${REPO_ROOT}/tools/autofill/templates/kt_row.tpl"
+XML_TEMPLATE_PATH="${REPO_ROOT}/tools/public/autofill/templates/xml.tpl"
+XML_ROW_TEMPLATE_PATH="${REPO_ROOT}/tools/public/autofill/templates/xml_row.tpl"
+KT_TEMPLATE_PATH="${REPO_ROOT}/tools/public/autofill/templates/kt.tpl"
+KT_ROW_TEMPLATE_PATH="${REPO_ROOT}/tools/public/autofill/templates/kt_row.tpl"
 
 DEST_BASE_PATH="${REPO_ROOT}/pass/autofill/impl/src/main"
 

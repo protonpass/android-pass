@@ -33,6 +33,12 @@ enum class MemberPermissionLevel {
         Write -> LoadingOption.Write
         Read -> LoadingOption.Read
     }
+
+    fun toShareRole(): ShareRole = when (this) {
+        Admin -> ShareRole.Admin
+        Write -> ShareRole.Write
+        Read -> ShareRole.Read
+    }
 }
 
 enum class LoadingOption {

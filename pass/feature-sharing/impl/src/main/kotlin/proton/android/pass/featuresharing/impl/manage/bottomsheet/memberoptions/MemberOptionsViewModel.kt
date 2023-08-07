@@ -106,7 +106,7 @@ class MemberOptionsViewModel @Inject constructor(
             setVaultMemberPermission(
                 shareId = vaultShareId,
                 memberShareId = memberShareId,
-                role = shareRole
+                role = permissionLevel.toShareRole()
             )
         }.onSuccess {
             PassLogger.i(TAG, "Member permissions changed")

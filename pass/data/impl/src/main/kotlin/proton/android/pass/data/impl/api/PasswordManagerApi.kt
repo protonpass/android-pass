@@ -269,4 +269,16 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("memberShareId") memberShareId: String,
         @Body request: UpdateMemberShareRequest
     ): CodeOnlyResponse
+
+    @DELETE("$PREFIX/share/{shareId}/invite/{inviteId}")
+    suspend fun deleteInvite(
+        @Path("shareId") shareId: String,
+        @Path("inviteId") inviteId: String
+    ): CodeOnlyResponse
+
+    @POST("$PREFIX/share/{shareId}/invite/{inviteId}/reminder")
+    suspend fun sendInviteReminder(
+        @Path("shareId") shareId: String,
+        @Path("inviteId") inviteId: String
+    ): CodeOnlyResponse
 }

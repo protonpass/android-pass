@@ -47,7 +47,6 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.totp.fakes.TestTotpManager
-import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemState
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
@@ -78,7 +77,7 @@ class CreateCreditCardViewModelTest {
             },
             createItem = createItem,
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandle = TestSavedStateHandleProvider(),
+            savedStateHandleProvider = TestSavedStateHandleProvider(),
             encryptionContextProvider = TestEncryptionContextProvider(),
             observeVaults = observeVaults,
             telemetryManager = telemetryManager,
@@ -103,10 +102,7 @@ class CreateCreditCardViewModelTest {
                 vaultList = listOf(vault),
                 currentVault = vault
             ),
-            baseState = BaseCreditCardUiState.default(
-                cvv = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-                pin = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-            )
+            baseState = BaseCreditCardUiState.DEFAULT
         )
 
         instance.state.test {
@@ -131,13 +127,11 @@ class CreateCreditCardViewModelTest {
                 vaultList = listOf(vault),
                 currentVault = vault
             ),
-            baseState = BaseCreditCardUiState.default(
-                cvv = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-                pin = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-            )
+            baseState = BaseCreditCardUiState.DEFAULT
         )
         val titleInput = "Title input"
         instance.onTitleChange(titleInput)
+        assertThat(instance.creditCardFormItem.title).isEqualTo(titleInput)
 
         createItem.sendItem(Result.success(item))
 
@@ -146,7 +140,6 @@ class CreateCreditCardViewModelTest {
             val firstItem = awaitItem()
             val firstExpected = initialState.copy(
                 baseState = initialState.baseState.copy(
-                    contents = initialState.baseState.contents.copy(title = titleInput),
                     isLoading = IsLoadingState.NotLoading.value(),
                     hasUserEditedContent = true,
                 )
@@ -157,10 +150,6 @@ class CreateCreditCardViewModelTest {
             val secondExpected = firstExpected.copy(
                 baseState = firstExpected.baseState.copy(
                     isLoading = IsLoadingState.Loading.value(),
-                    contents = firstExpected.baseState.contents.copy(
-                        pin = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-                        cvv = HiddenState.Empty(TestEncryptionContext.encrypt(""))
-                    )
                 )
             )
             assertThat(secondItem).isEqualTo(secondExpected)

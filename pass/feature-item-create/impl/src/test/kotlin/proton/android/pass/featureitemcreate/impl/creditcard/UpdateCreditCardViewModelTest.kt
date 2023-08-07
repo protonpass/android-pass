@@ -68,7 +68,7 @@ class UpdateCreditCardViewModelTest {
                 sendPrimaryUserId(UserId("user-id"))
             },
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandle = TestSavedStateHandleProvider().apply {
+            savedStateHandleProvider = TestSavedStateHandleProvider().apply {
                 get().set(CommonOptionalNavArgId.ShareId.key, SHARE_ID)
                 get().set(CommonNavArgId.ItemId.key, ITEM_ID)
             },

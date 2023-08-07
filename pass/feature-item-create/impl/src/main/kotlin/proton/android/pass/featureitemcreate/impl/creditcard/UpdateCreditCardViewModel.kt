@@ -45,18 +45,19 @@ class UpdateCreditCardViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
-    savedStateHandle: SavedStateHandleProvider,
+    savedStateHandleProvider: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction
 ) : BaseCreditCardViewModel(
     encryptionContextProvider = encryptionContextProvider,
-    canPerformPaidAction = canPerformPaidAction
+    canPerformPaidAction = canPerformPaidAction,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: ShareId =
-        ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
+        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
-        ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
+        ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
     private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
-    private val itemState: MutableStateFlow<Option<Item>> = MutableStateFlow(None)
+    private var itemOption: Option<Item> = None
 
     init {
         viewModelScope.launch {
@@ -78,11 +79,12 @@ class UpdateCreditCardViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.Loading }
         runCatching { getItemById(navShareId, navItemId).first() }
             .onSuccess { item ->
-                itemState.update { item.some() }
+                itemOption = item.some()
                 val itemContents = encryptionContextProvider.withEncryptionContext {
                     item.toItemContents(this)
                 }
-                itemContentState.update { itemContents as ItemContents.CreditCard }
+                creditCardFormItemState =
+                    CreditCardFormItem(itemContents as ItemContents.CreditCard)
             }
             .onFailure {
                 PassLogger.w(TAG, it, "Error getting item by id")
@@ -101,12 +103,12 @@ class UpdateCreditCardViewModel @Inject constructor(
         runCatching {
             val userId = accountManager.getPrimaryUserId().first()
                 ?: throw IllegalStateException("User id is null")
-            val item = itemState.value.value() ?: throw IllegalStateException("Item is null")
+            val item = itemOption.value() ?: throw IllegalStateException("Item is null")
             updateItem(
                 userId = userId,
                 shareId = navShareId,
                 item = item,
-                contents = itemContentState.value
+                contents = creditCardFormItem.toItemContents()
             )
         }.onSuccess { item ->
             PassLogger.i(TAG, "Credit card successfully updated")

@@ -829,13 +829,13 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.CloseBottomSheet -> dismissBottomSheet {
                 if (it.refresh) {
-                    appNavigator.navigateUpWithResult(
+                    appNavigator.navigateBackWithResult(
                         key = REFRESH_MEMBER_LIST_FLAG,
                         value = true,
                         comesFromBottomsheet = true
                     )
                 } else {
-                    appNavigator.onBackClick(true)
+                    appNavigator.navigateBack(true)
                 }
             }
 

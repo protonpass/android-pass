@@ -27,6 +27,7 @@ import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
+import proton.android.pass.data.api.usecases.CancelInvite
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.CheckPin
 import proton.android.pass.data.api.usecases.ClearPin
@@ -78,6 +79,7 @@ import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveMemberFromVault
 import proton.android.pass.data.api.usecases.RequestImage
+import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
@@ -104,6 +106,7 @@ import proton.android.pass.data.impl.usecases.AcceptInviteImpl
 import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
+import proton.android.pass.data.impl.usecases.CancelInviteImpl
 import proton.android.pass.data.impl.usecases.CheckMasterPasswordImpl
 import proton.android.pass.data.impl.usecases.CheckPinImpl
 import proton.android.pass.data.impl.usecases.ClearPinImpl
@@ -155,6 +158,7 @@ import proton.android.pass.data.impl.usecases.RefreshPlanImpl
 import proton.android.pass.data.impl.usecases.RejectInviteImpl
 import proton.android.pass.data.impl.usecases.RemoveMemberFromVaultImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
+import proton.android.pass.data.impl.usecases.ResendInviteImpl
 import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.RestoreItemsImpl
@@ -411,4 +415,10 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindSetVaultMemberPermission(impl: SetVaultMemberPermissionImpl): SetVaultMemberPermission
+
+    @Binds
+    abstract fun bindCancelInvite(impl: CancelInviteImpl): CancelInvite
+
+    @Binds
+    abstract fun bindResendInvite(impl: ResendInviteImpl): ResendInvite
 }

@@ -20,7 +20,7 @@
   <string name="home_trial_banner_title">Aproveite sua avaliação gratuita</string>
   <string name="home_trial_banner_text">Confira todos os recursos exclusivos que estão disponíveis para você por tempo limitado.</string>
   <string name="home_trial_banner_settings">Saiba mais ›</string>
-  <string name="home_invite_banner_title">Convite de cofre compartilhada</string>
+  <string name="home_invite_banner_title">Convite de cofre compartilhado</string>
   <string name="home_invite_banner_subtitle">Você foi convidado para o cofre. Toque aqui para ver o convite.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar senha</string>

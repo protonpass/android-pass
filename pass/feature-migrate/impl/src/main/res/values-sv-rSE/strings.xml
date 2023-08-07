@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Flytta detta objekt till följande valv?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Flytta alla objekt till följande valv?</string>
+  <string name="migrate_item_confirm_confirm_button">Flytta</string>
+  <string name="migrate_item_success_snackbar">Objekt flyttat</string>
+  <string name="migrate_item_error_snackbar">Gick inte flytta objektet</string>
+  <string name="migrate_all_items_success_snackbar">Alla alias flyttade</string>
+  <string name="migrate_all_items_error_snackbar">Gick inte flytta alla valvobjekt</string>
+  <string name="migrate_init_error_snackbar">Kunde inte förbereda migreringsskärmen</string>
+</resources>

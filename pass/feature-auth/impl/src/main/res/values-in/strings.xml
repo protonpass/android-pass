@@ -20,21 +20,21 @@
   <string name="profile_option_fingerprint_subtitle">Buka kunci Proton Pass dengan sekali sentuh.</string>
   <string name="profile_option_fingerprint">Sidik jari</string>
   <string name="profile_option_app_lock">Kunci aplikasi</string>
-  <string name="enter_your_pin_code">Enter your PIN Code</string>
-  <string name="unlock">Unlock</string>
+  <string name="enter_your_pin_code">Masukkan kode PIN Anda</string>
+  <string name="unlock">Buka kunci</string>
   <string name="enter_pin">Masukkan PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="other">PIN salah. %d upaya tersisa.</item>
   </plurals>
-  <string name="auth_unlock_app_title">Unlock Proton Pass</string>
+  <string name="auth_unlock_app_title">Buka Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
   <string name="auth_master_password_label">Master password</string>
   <string name="auth_action_reveal_password">Reveal master password</string>
   <string name="auth_action_conceal_password">Conceal master password</string>
-  <string name="auth_unlock_button">Unlock</string>
+  <string name="auth_unlock_button">Buka kunci</string>
   <string name="auth_error_verifying_password">Error verifying your password</string>
-  <string name="auth_error_empty_password">Password cannot be empty</string>
-  <string name="auth_error_pin_cannot_be_empty">PIN cannot be empty</string>
+  <string name="auth_error_empty_password">Kata sandi tidak boleh kosong</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN tidak boleh kosong</string>
   <string name="auth_error_pin_too_short">PIN should be at least 4 digits</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">Incorrect password. %d attempts remaining</item>

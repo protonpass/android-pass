@@ -41,6 +41,7 @@
   <string name="sharing_invitation_from">Einladung von %s</string>
   <string name="sharing_join_shared_vault">Freigegebenem Tresor beitreten</string>
   <string name="sharing_reject_invitation">Einladung ablehnen</string>
+  <string name="sharing_snackbar_get_invite_error">Fehler beim Abrufen der Einladung.</string>
   <string name="sharing_snackbar_invite_accepted">Einladung angenommen</string>
   <string name="sharing_snackbar_invite_accept_error">Fehler beim Annehmen der Einladung.</string>
   <string name="sharing_snackbar_invite_rejected">Einladung abgelehnt</string>
@@ -48,6 +49,7 @@
   <string name="sharing_snackbar_vault_not_found">Tresor konnte nicht gefunden werden.</string>
   <string name="sharing_snackbar_invite_sent_success">Einladung gesendet</string>
   <string name="sharing_snackbar_invite_sent_error">Fehler beim Senden der Einladung.</string>
+  <string name="sharing_snackbar_get_vault_members_error">Fehler beim Abrufen der Tresormitglieder.</string>
   <string name="share_summary_title">Zusammenfassung</string>
   <string name="share_summary_subtitle">Du lädst damit %1$s zu %2$s ein. Dadurch wird Zugriff zu %3$s gewährt und die eingeladene Person darf %4$s.</string>
   <string name="share_summary_vault">%s Tresor</string>
@@ -58,4 +60,10 @@
   <string name="share_summary_email_title">Benutzer</string>
   <string name="share_summary_vault_title">Tresor</string>
   <string name="share_summary_permissions_title">Berechtigungen</string>
+  <string name="share_manage_vault_share_with_more_people">Mit weiteren Personen teilen</string>
+  <string name="share_manage_vault_item_count">%d Einträge</string>
+  <string name="share_manage_vault_invite_pending">Ausstehende Einladung</string>
+  <string name="share_role_can_view">Darf ansehen</string>
+  <string name="share_role_can_edit">Darf bearbeiten</string>
+  <string name="share_role_admin">Administrator</string>
 </resources>

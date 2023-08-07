@@ -95,7 +95,7 @@
   <string name="field_card_expiration_date_hint">MM / AAAA</string>
   <string name="field_card_expiration_date_error">La fecha de expiración no es válida.</string>
   <string name="create_credit_card_item_creation_error">No se ha podido crear la tarjeta de crédito.</string>
-  <string name="create_credit_card_item_creation_success">La tarjeta de crédito ha sido creada.</string>
+  <string name="create_credit_card_item_creation_success">Se ha creado la tarjeta de crédito.</string>
   <string name="credit_card_init_error">No se ha podido inicializar la tarjeta de crédito.</string>
   <string name="credit_card_item_update_error">No se ha podido actualizar la tarjeta de crédito.</string>
   <!--  Common create items  -->

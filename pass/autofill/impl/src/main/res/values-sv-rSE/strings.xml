@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_cant_find_matching_fields">Inga matchande visade fält hittades</string>
+  <string name="autofill_authenticate_prompt">Hämta från Proton Pass</string>
+  <string name="error_credentials_not_found">Inga matchande inloggningsuppgifter hittades</string>
+  <string name="error_credentials_not_saved">Kunde inte spara inloggningsuppgifterna</string>
+  <string name="error_loading_items">Kunde inte ladda objekten</string>
+  <string name="topbar_search_query">Sök i alla valv…</string>
+  <string name="topbar_search_query_primary_vault">Sök i primärt valv…</string>
+  <string name="topbar_search_query_uninitialized">Sök…</string>
+  <string name="inline_suggestions_open_app">Öppna Proton Pass</string>
+  <string name="autofill_only_searching_in_primary_vault">Ditt paket tillåter endast att använda objekt i ditt primära valv för autofyllsändamål.</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="autofill_suggestions_for_placeholder">Förslag för %s</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Använd inloggningsuppgifter från “%s“ på denna app eller webbplats.</string>
+  <string name="autofill_dialog_associate_and_autofill">Använd alltid</string>
+  <string name="autofill_dialog_just_autofill">Använd en gång</string>
+  <string name="autofill_dialog_cancel">Avbryt</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTP har kopierats till urklipp</string>
+  <string name="autofill_dialog_associate_title">Använd inloggning?</string>
+  <string name="snackbar_item_move_to_trash_success">Objekt flyttat till papperskorg</string>
+  <string name="snackbar_item_move_to_trash_error">Kunde inte flytta till papperskorg</string>
+  <string name="autofill_user_logged_out">Du har loggats ut. Logga in igen genom att öppna appen.</string>
+</resources>

@@ -117,6 +117,7 @@ import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.SharingPermissions
 import proton.android.pass.featuresharing.impl.SharingSummary
 import proton.android.pass.featuresharing.impl.SharingWith
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.sharingGraph
 import proton.android.pass.featuresync.impl.SyncDialog
@@ -867,6 +868,14 @@ fun NavGraphBuilder.appGraph(
                     memberShareId = it.destShareId,
                     shareRole = it.memberRole,
                     memberEmail = it.destEmail
+                )
+            )
+
+            is SharingNavigation.InviteOptions -> appNavigator.navigate(
+                destination = InviteOptionsBottomSheet,
+                route = InviteOptionsBottomSheet.buildRoute(
+                    shareId = it.shareId,
+                    inviteId = it.inviteId
                 )
             )
 

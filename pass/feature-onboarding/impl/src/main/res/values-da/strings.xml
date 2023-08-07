@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Lad Proton Pass udfylde loginoplysningerne for dig. Ingen indtastning eller copy-paste nødvendig.</string>
+  <string name="on_boarding_autofill_title">Log ind på apps øjeblikkeligt</string>
+  <string name="on_boarding_autofill_button">Autofyld med Proton Pass</string>
+  <string name="on_boarding_fingerprint_content">Indstil Proton Pass til at låse op med dit fingeraftryk, så kun du har adgang.</string>
+  <string name="on_boarding_fingerprint_title">Beskyt dine mest følsomme data</string>
+  <string name="on_boarding_fingerprint_button">Aktivér fingeraftryksoplåsning</string>
+  <string name="on_boarding_last_page_content">Hold op med at dele din rigtige e-mailadresse. Skjul den i stedet med e-mail-alias - eksklusivt for Proton Pass.</string>
+  <string name="on_boarding_last_page_title">Få kontrol over, hvad der lander i din indbakke</string>
+  <string name="on_boarding_last_page_button">Begynd at bruge Proton Pass</string>
+  <string name="on_boarding_skip">Ikke nu</string>
+  <string name="error_biometry_failed_to_start">Kunne ikke starte den biometriske godkendelse</string>
+  <string name="error_biometry_failed_to_authenticate">Kunne ikke godkende</string>
+  <string name="settings_fingerprint_lock_enabled">Oplåsning med fingeraftryk aktiveret</string>
+  <string name="error_performing_operation">Fejl ved udførelse af handling</string>
+</resources>

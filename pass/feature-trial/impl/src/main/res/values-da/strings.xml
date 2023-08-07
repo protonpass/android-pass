@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">God fornøjelse med din gratis prøveperiode</string>
+  <string name="trial_subtitle">For avanceret håndtering af adgangskoder:</string>
+  <string name="trial_feature_1">20 bokse</string>
+  <string name="trial_feature_2">Ubegrænsede e-mail-aliasser</string>
+  <string name="trial_feature_3">Integreret Windows-godkendelse</string>
+  <string name="trial_feature_4">Brugerdefinerede felter</string>
+  <string name="trial_button_text">Opgradér for at beholde disse funktioner</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">1 dag tilbage af din prøveperiode</item>
+    <item quantity="other">%d dage tilbage af din prøveperiode</item>
+  </plurals>
+  <string name="trial_learn_more">Få mere at vide</string>
+</resources>

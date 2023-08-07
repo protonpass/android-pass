@@ -36,7 +36,7 @@
   <string name="auth_error_verifying_password">Erro ao verificar a sua palavra-passe</string>
   <string name="auth_error_empty_password">A palavra-passe não pode estar vazia.</string>
   <string name="auth_error_pin_cannot_be_empty">O código PIN não pode estar vazio.</string>
-  <string name="auth_error_pin_too_short">O código PIN deve ter pelo menos 4 números.</string>
+  <string name="auth_error_pin_too_short">O PIN deve ter pelo menos 4 dígitos</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Palavra-passe incorreta. Resta %d tentativa</item>
     <item quantity="other">Palavra-passe incorreta. Restam %d tentativas</item>

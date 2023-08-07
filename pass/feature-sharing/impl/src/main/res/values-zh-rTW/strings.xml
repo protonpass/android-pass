@@ -39,6 +39,7 @@
   <string name="sharing_invitation_from">來自%s的邀請</string>
   <string name="sharing_join_shared_vault">加入共享的保管庫</string>
   <string name="sharing_reject_invitation">拒絕邀請</string>
+  <string name="sharing_snackbar_get_invite_error">無法取得邀請</string>
   <string name="sharing_snackbar_invite_accepted">邀請已接受</string>
   <string name="sharing_snackbar_invite_accept_error">拒絕邀請時發生錯誤</string>
   <string name="sharing_snackbar_invite_rejected">邀請已拒絕</string>
@@ -46,6 +47,7 @@
   <string name="sharing_snackbar_vault_not_found">抱歉，不能删除保管庫。</string>
   <string name="sharing_snackbar_invite_sent_success">邀請函已寄送</string>
   <string name="sharing_snackbar_invite_sent_error">無法發送邀請</string>
+  <string name="sharing_snackbar_get_vault_members_error">無法取得保管庫成員</string>
   <string name="share_summary_title">摘要</string>
   <string name="share_summary_subtitle">您將邀請%1$s至您的%2$s。他們將取得%3$s權限及將可於保管庫中%4$s。</string>
   <string name="share_summary_vault">%s保管庫</string>
@@ -56,4 +58,10 @@
   <string name="share_summary_email_title">使用者</string>
   <string name="share_summary_vault_title">保管庫</string>
   <string name="share_summary_permissions_title">權限</string>
+  <string name="share_manage_vault_share_with_more_people">分享給更多人</string>
+  <string name="share_manage_vault_item_count">%d項目</string>
+  <string name="share_manage_vault_invite_pending">等待邀請</string>
+  <string name="share_role_can_view">可以查看</string>
+  <string name="share_role_can_edit">可以編輯</string>
+  <string name="share_role_admin">管理員</string>
 </resources>

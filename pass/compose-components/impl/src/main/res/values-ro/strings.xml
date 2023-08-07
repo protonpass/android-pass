@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Titlu (A-Z)</string>
+  <string name="sort_by_title_desc">Titlu (Z-A)</string>
+  <string name="sort_by_creation_asc">De la vechi la noi</string>
+  <string name="sort_by_creation_desc">De la noi la vechi</string>
+  <string name="sort_by_modification_date">Cele mai noi</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Toate</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">rezultat</item>
+    <item quantity="few">rezultate</item>
+    <item quantity="other">de rezultate</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Confirmare</string>
+  <string name="bottomsheet_cancel_button">Anulare</string>
+  <string name="bottomsheet_move_to_trash">Mutare în gunoi</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">Meniu acțiune deschidere articol</string>
+  <string name="action_upgrade_now">Modificare</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Adăugați primul articol</string>
+  <string name="empty_search_results_title">Nu s-au găsit rezultate</string>
+  <string name="empty_list_open_extension">Accesare extensie web</string>
+  <string name="empty_list_create_item_button">Creare articol</string>
+  <!-- Field -->
+  <string name="field_title_title">Titlu</string>
+  <string name="field_title_hint">Nedenumit</string>
+  <string name="field_title_required">Titlul este obligatoriu</string>
+  <string name="small_cross_icon_content_description">Pictogramă cruce mică</string>
+  <string name="field_note_title">Notă</string>
+  <string name="field_note_hint">Adăugare notă</string>
+  <string name="linked_apps_title">Aplicații legate</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Deconectat</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Pictogramă aplicație lipsă</string>
+  <string name="add_item_icon_content_description">Pictogramă adăugare articol</string>
+  <string name="navigate_back_icon_content_description">Pictogramă navigare înapoi</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Seif</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Articole listă</string>
+  <string name="bottom_bar_add_item_icon_content_description">Adăugare articol</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Astăzi</string>
+  <string name="most_recent_yesterday">Ieri</string>
+  <string name="most_recent_this_week">Săptămâna asta</string>
+  <string name="most_recent_last_two_weeks">Ultimele două săptămâni</string>
+  <string name="most_recent_last_30_days">Ultimele 30 de zile</string>
+  <string name="most_recent_last_60_days">Ultimele 60 de zile</string>
+  <string name="most_recent_last_90_days">Ultimele 90 de zile</string>
+  <string name="most_recent_within_the_last_year">În ultimul an</string>
+  <string name="most_recent_more_than_1_year">Mai mult de un an</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Pictogramă căutare</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Pictogramă opțiuni</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">Un articol</item>
+    <item quantity="few">%d articole</item>
+    <item quantity="other">%d de articole</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Renunți la modificări?</string>
+  <string name="confirm_close_dialog_message">Aveți modificări nesalvate, sigur doriți să nu le salvați?</string>
+  <string name="confirm_close_dialog_close_button">Renunțare</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Modificare</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Opțiuni avansate</string>
+  <string name="hide_advanced_options">Ascundere opțiuni avansate</string>
+</resources>

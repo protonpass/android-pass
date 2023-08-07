@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Mutați acest articol în seiful următor?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Mutați toate aceste articole în seiful următor?</string>
+  <string name="migrate_item_confirm_confirm_button">Mutare</string>
+  <string name="migrate_item_success_snackbar">Articolul s-a mutat.</string>
+  <string name="migrate_item_error_snackbar">Eroare la mutarea articolului.</string>
+  <string name="migrate_all_items_success_snackbar">S-au mutat toate articolele.</string>
+  <string name="migrate_all_items_error_snackbar">Eroare la mutarea tuturor articolelor din seif.</string>
+  <string name="migrate_init_error_snackbar">Nu s-a putut pregăti ecranul de migrare.</string>
+</resources>

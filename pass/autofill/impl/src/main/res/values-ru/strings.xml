@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">No matching displayed fields found</string>
+  <string name="error_cant_find_matching_fields">Подходящие видимые поля не найдены</string>
   <string name="autofill_authenticate_prompt">Получить из Proton Pass</string>
   <string name="error_credentials_not_found">Совпадающих учётных данных не найдено</string>
   <string name="error_credentials_not_saved">Не могу сохранить учетные данные</string>

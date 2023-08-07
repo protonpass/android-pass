@@ -7,6 +7,8 @@
   <string name="snackbar_edit_vault_error">Brankas tidak disunting</string>
   <string name="snackbar_delete_vault_success">Brankas dihapus</string>
   <string name="snackbar_delete_vault_error">Brankas tidak dihapus</string>
+  <string name="snackbar_leave_vault_success">Vault left</string>
+  <string name="snackbar_leave_vault_error">Could not leave vault</string>
   <string name="snackbar_retrieve_vault_error">Brankas tidak ditemukan</string>
   <string name="snackbar_find_vault_error">Brankas yang dipilih tidak dapat ditemukan</string>
   <string name="snackbar_get_vault_list_error">Daftar brankas tidak dapat dimuat</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">Nama brankas</string>
   <string name="vault_delete_dialog_cancel_action">Batal</string>
   <string name="vault_delete_dialog_delete_action">Hapus</string>
+  <string name="vault_leave_dialog_title">Leave vault</string>
+  <string name="vault_leave_dialog_body">This will remove your access from the vault __VAULT_NAME__ and all its contents. Are you sure you want to leave?</string>
+  <string name="vault_leave_dialog_cancel_action">Batalkan</string>
+  <string name="vault_leave_dialog_leave_action">Keluar</string>
   <string name="bottomsheet_close_icon_content_description">Tutup jendela pembuatan brankas</string>
   <string name="bottomsheet_create_vault_button">Buat brankas</string>
   <string name="bottomsheet_edit_vault_button">Simpan</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Pindahkan seluruh item ke brankas lain</string>
   <string name="bottomsheet_delete_vault">Hapus brankas</string>
   <string name="bottomsheet_share_vault">Bagikan</string>
+  <string name="bottomsheet_leave_vault">Leave vault</string>
+  <string name="bottomsheet_view_members">View members</string>
+  <string name="bottomsheet_manage_access">Manage access</string>
   <string name="vault_title">Brankas</string>
 </resources>

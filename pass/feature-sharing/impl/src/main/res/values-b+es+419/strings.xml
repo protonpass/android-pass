@@ -41,6 +41,7 @@
   <string name="sharing_invitation_from">Invitación de %s</string>
   <string name="sharing_join_shared_vault">Unirse a la bóveda compartida</string>
   <string name="sharing_reject_invitation">Rechazar invitación</string>
+  <string name="sharing_snackbar_get_invite_error">No se pudo obtener la invitación</string>
   <string name="sharing_snackbar_invite_accepted">Invitación aceptada</string>
   <string name="sharing_snackbar_invite_accept_error">Error al aceptar la invitación</string>
   <string name="sharing_snackbar_invite_rejected">Invitación rechazada</string>
@@ -48,6 +49,7 @@
   <string name="sharing_snackbar_vault_not_found">No se pudo encontrar la bóveda</string>
   <string name="sharing_snackbar_invite_sent_success">Invitación enviada</string>
   <string name="sharing_snackbar_invite_sent_error">No se pudo enviar la invitación</string>
+  <string name="sharing_snackbar_get_vault_members_error">No se pudieron obtener los miembros de la bóveda</string>
   <string name="share_summary_title">Resumen</string>
   <string name="share_summary_subtitle">Está por invitar a %1$s a su %2$s. Obtendrá acceso a %3$s y podrá %4$s en esta bóveda.</string>
   <string name="share_summary_vault">la bóveda %s</string>
@@ -58,4 +60,10 @@
   <string name="share_summary_email_title">Usuario</string>
   <string name="share_summary_vault_title">Bóveda</string>
   <string name="share_summary_permissions_title">Permisos</string>
+  <string name="share_manage_vault_share_with_more_people">Compartir con más personas</string>
+  <string name="share_manage_vault_item_count">%d elementos</string>
+  <string name="share_manage_vault_invite_pending">Invitación pendiente</string>
+  <string name="share_role_can_view">Puede ver</string>
+  <string name="share_role_can_edit">Puede editar</string>
+  <string name="share_role_admin">Administrador</string>
 </resources>

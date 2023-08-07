@@ -7,6 +7,8 @@
   <string name="snackbar_edit_vault_error">保管庫無法編輯</string>
   <string name="snackbar_delete_vault_success">已刪除保存庫</string>
   <string name="snackbar_delete_vault_error">無法刪除保存庫</string>
+  <string name="snackbar_leave_vault_success">剩餘保管庫</string>
+  <string name="snackbar_leave_vault_error">無法離開保管庫</string>
   <string name="snackbar_retrieve_vault_error">查詢不到保管庫</string>
   <string name="snackbar_find_vault_error">無法找到選取的保管庫</string>
   <string name="snackbar_get_vault_list_error">無法載入保管清單單</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">保管庫名稱</string>
   <string name="vault_delete_dialog_cancel_action">取消</string>
   <string name="vault_delete_dialog_delete_action">刪除</string>
+  <string name="vault_leave_dialog_title">離開保管庫</string>
+  <string name="vault_leave_dialog_body">此將移除您存取__VAULT_NAME__保管庫的權限及全部內容。確定要離開?</string>
+  <string name="vault_leave_dialog_cancel_action">取消</string>
+  <string name="vault_leave_dialog_leave_action">離開</string>
   <string name="bottomsheet_close_icon_content_description">關閉創建的保管庫</string>
   <string name="bottomsheet_create_vault_button">新增保管庫</string>
   <string name="bottomsheet_edit_vault_button">儲存</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">將全部項目移至保管庫</string>
   <string name="bottomsheet_delete_vault">刪除保管庫</string>
   <string name="bottomsheet_share_vault">分享</string>
+  <string name="bottomsheet_leave_vault">離開保管庫</string>
+  <string name="bottomsheet_view_members">檢視成員</string>
+  <string name="bottomsheet_manage_access">管理存取權限</string>
   <string name="vault_title">保管庫</string>
 </resources>

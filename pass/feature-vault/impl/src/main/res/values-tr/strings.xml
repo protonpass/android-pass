@@ -7,6 +7,8 @@
   <string name="snackbar_edit_vault_error">Kasa düzenlenmedi</string>
   <string name="snackbar_delete_vault_success">Kasa silindi</string>
   <string name="snackbar_delete_vault_error">Kasa silinmedi</string>
+  <string name="snackbar_leave_vault_success">Kalan kasa</string>
+  <string name="snackbar_leave_vault_error">Kasa bırakılamadı</string>
   <string name="snackbar_retrieve_vault_error">Kasa bulunamadı</string>
   <string name="snackbar_find_vault_error">Seçilmiş kasa bulunamadı</string>
   <string name="snackbar_get_vault_list_error">Kasa listesi yüklenemedi</string>
@@ -16,6 +18,10 @@
   <string name="vault_delete_dialog_placeholder">Kasa adı</string>
   <string name="vault_delete_dialog_cancel_action">İptal</string>
   <string name="vault_delete_dialog_delete_action">Sil</string>
+  <string name="vault_leave_dialog_title">Kasayı bırak</string>
+  <string name="vault_leave_dialog_body">Bu işlem __VAULT_NAME__ kasasını ve tüm içeriklerini bırakmanızı sağlar. Kasayı bırakmak istediğinize emin misiniz?</string>
+  <string name="vault_leave_dialog_cancel_action">İptal</string>
+  <string name="vault_leave_dialog_leave_action">Bırak</string>
   <string name="bottomsheet_close_icon_content_description">Kasa oluşturmayı kapat</string>
   <string name="bottomsheet_create_vault_button">Kasa oluştur</string>
   <string name="bottomsheet_edit_vault_button">Kaydet</string>
@@ -26,5 +32,8 @@
   <string name="bottomsheet_migrate">Tüm ögeleri başka bir kasaya taşı</string>
   <string name="bottomsheet_delete_vault">Kasayı sil</string>
   <string name="bottomsheet_share_vault">Paylaş</string>
+  <string name="bottomsheet_leave_vault">Kasayı bırak</string>
+  <string name="bottomsheet_view_members">Üyeleri görüntüle</string>
+  <string name="bottomsheet_manage_access">Erişim yönetimi</string>
   <string name="vault_title">Kasa</string>
 </resources>

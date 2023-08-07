@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Continuare</string>
+  <string name="sharing_can_view">Poate vedea</string>
+  <string name="sharing_can_edit">Poate edita</string>
+  <string name="sharing_can_manage">Poate gestiona</string>
+  <string name="sharing_can_view_description">Poate vizualiza articolele din acest seif.</string>
+  <string name="sharing_can_edit_description">Poate crea, edita, șterge și exporta articole din acest seif.</string>
+  <string name="sharing_can_manage_description">Poate acorda și anul accesul la acest seif.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d articol</item>
+    <item quantity="few">%d articole</item>
+    <item quantity="other">%d de articole</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d membru</item>
+    <item quantity="few">%d membri</item>
+    <item quantity="other">%d de membri</item>
+  </plurals>
+  <string name="share_with_title">Partajare cu</string>
+  <string name="share_with_subtitle">Acest utilizator va primi o invitație pentru a se alătura la seiful „%s”.</string>
+  <string name="share_with_email_hint">Adresa de e-mail</string>
+  <string name="share_with_email_error">Adresă de e-mail nevalidă.</string>
+  <string name="share_permissions_title">Setare permisiuni</string>
+  <string name="share_permissions_subtitle">Selectați nivelul de acces pe care îl are acest utilizator la seiful „%s”.</string>
+  <string name="sharing_invitation_from">Invitație de la %s</string>
+  <string name="sharing_join_shared_vault">Alăturare la seif partajat</string>
+  <string name="sharing_reject_invitation">Refuzare invitație</string>
+  <string name="sharing_snackbar_get_invite_error">Nu s-a putut primi invitația.</string>
+  <string name="sharing_snackbar_invite_accepted">Invitație acceptată</string>
+  <string name="sharing_snackbar_invite_accept_error">Eroare la acceptarea invitației.</string>
+  <string name="sharing_snackbar_invite_rejected">Invitație refuzată</string>
+  <string name="sharing_snackbar_invite_reject_error">Eroare la refuzarea invitației.</string>
+  <string name="sharing_snackbar_vault_not_found">Nu s-a putut găsi seiful.</string>
+  <string name="sharing_snackbar_invite_sent_success">Invitația a fost trimisă.</string>
+  <string name="sharing_snackbar_invite_sent_error">Nu s-a putut trimite invitația.</string>
+  <string name="sharing_snackbar_get_vault_members_error">Nu s-au putut prelua membrii seifului.</string>
+  <string name="share_summary_title">Sumar</string>
+  <string name="share_summary_subtitle">Sunteți pe cale să-i invitați pe %1$s în %2$s. Ei vor obține acces la %3$s și vor putea să %4$s în acest seif.</string>
+  <string name="share_summary_vault">seiful %s</string>
+  <string name="share_summary_view_items">doar să vadă articolele</string>
+  <string name="share_summary_create_items">creeze articole</string>
+  <string name="share_summary_manage_vault">gestioneze</string>
+  <string name="share_summary_share_vault">Partajare seif</string>
+  <string name="share_summary_email_title">Utilizator</string>
+  <string name="share_summary_vault_title">Seif</string>
+  <string name="share_summary_permissions_title">Permisiuni</string>
+  <string name="share_manage_vault_share_with_more_people">Partajați cu mai mulți</string>
+  <string name="share_manage_vault_item_count">%d articole</string>
+  <string name="share_manage_vault_invite_pending">Invitație în așteptare</string>
+  <string name="share_role_can_view">Poate vedea</string>
+  <string name="share_role_can_edit">Poate edita</string>
+  <string name="share_role_admin">Administrator</string>
+</resources>

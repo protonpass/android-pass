@@ -45,6 +45,7 @@
   <string name="sharing_invitation_from">Запрашэнне ад %s</string>
   <string name="sharing_join_shared_vault">Далучыцца да абагуленага сховішча</string>
   <string name="sharing_reject_invitation">Адхіліць запрашэнне</string>
+  <string name="sharing_snackbar_get_invite_error">Немагчыма атрымаць запрашэнне</string>
   <string name="sharing_snackbar_invite_accepted">Запрашэнне прынята</string>
   <string name="sharing_snackbar_invite_accept_error">Памылка прымання запрашэння</string>
   <string name="sharing_snackbar_invite_rejected">Запрашэнне адхілена</string>
@@ -52,14 +53,21 @@
   <string name="sharing_snackbar_vault_not_found">Не атрымалася знайсці сховішча</string>
   <string name="sharing_snackbar_invite_sent_success">Запрашэнне адпраўлена</string>
   <string name="sharing_snackbar_invite_sent_error">Немагчыма адправіць запрашэнне</string>
+  <string name="sharing_snackbar_get_vault_members_error">Немагчыма атрымаць удзельнікаў сховішча</string>
   <string name="share_summary_title">Зводка</string>
-  <string name="share_summary_subtitle">You are about to invite %1$s into your %2$s. They will gain access to %3$s and they will be able to %4$s in this vault.</string>
-  <string name="share_summary_vault">%s vault</string>
-  <string name="share_summary_view_items">only view items</string>
+  <string name="share_summary_subtitle">Вы збіраецеся запрасіць %1$s да свайго %2$s. Яны атрымаюць доступ да %3$s і змогуць %4$s у гэтым сховішчы.</string>
+  <string name="share_summary_vault">%s сховішча</string>
+  <string name="share_summary_view_items">толькі прагляд элементаў</string>
   <string name="share_summary_create_items">стварыць элементы</string>
   <string name="share_summary_manage_vault">кіраваць</string>
   <string name="share_summary_share_vault">Абагуліць сховішча</string>
   <string name="share_summary_email_title">Карыстальнік</string>
   <string name="share_summary_vault_title">Сховішча</string>
   <string name="share_summary_permissions_title">Дазволы</string>
+  <string name="share_manage_vault_share_with_more_people">Абагуліць з большай колькасцю людзей</string>
+  <string name="share_manage_vault_item_count">Элементаў: %d</string>
+  <string name="share_manage_vault_invite_pending">Запрашэнне, якое чакае адказу</string>
+  <string name="share_role_can_view">Можа праглядаць</string>
+  <string name="share_role_can_edit">Можа рэдагаваць</string>
+  <string name="share_role_admin">Адміністратар</string>
 </resources>

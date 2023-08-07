@@ -22,7 +22,7 @@
   <string name="action_content_description_menu">Адкрыць меню дзеянняў элемента</string>
   <string name="action_upgrade_now">Палепшыць</string>
   <!-- Empty list -->
-  <string name="empty_list_title">Дадаць свой першы элемент</string>
+  <string name="empty_list_title">Дадайце свой першы элемент</string>
   <string name="empty_search_results_title">Нічога не знойдзена</string>
   <string name="empty_list_open_extension">Наведаць вэб пашырэнне</string>
   <string name="empty_list_create_item_button">Стварыць новы элемент</string>

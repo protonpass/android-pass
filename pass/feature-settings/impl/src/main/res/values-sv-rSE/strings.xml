@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="title_settings">Inställningar</string>
+  <string name="settings_autofill_section_title">Fyll automatiskt</string>
+  <string name="settings_autofill_preference_title">Fyll automatiskt</string>
+  <string name="settings_autofill_preference_description">För snabba och enkla inloggningar, låt Proton Pass fylla i dina användarnamn och lösenord.</string>
+  <string name="settings_authentication_section_title">Autentisering</string>
+  <string name="settings_authentication_preference_title">Fingeravtrycksupplåsning</string>
+  <string name="settings_authentication_preference_description_enabled">Kräver snabb och säker öppning av appen med ditt fingeravtryck.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">Du kan inte kräva ditt fingeravtryck för att interagera med appen eftersom det inte finns några fingeravtryck registrerade på denna enhet.</string>
+  <string name="settings_appearance_preference_title">Tema</string>
+  <string name="settings_appearance_preference_subtitle_match_system">Matcha system</string>
+  <string name="settings_appearance_preference_subtitle_light">Ljust läge</string>
+  <string name="settings_appearance_preference_subtitle_dark">Mörkt läge</string>
+  <string name="settings_fingerprint_lock_enabled">Fingeravtrycksupplåsning aktiverat</string>
+  <string name="settings_error_performing_operation">Gick inte utföra åtgärd</string>
+  <string name="settings_option_clipboard">Urklipp</string>
+  <string name="settings_application_section_title">Applikation</string>
+  <string name="settings_option_view_logs">Visa loggar</string>
+  <string name="settings_option_force_sync">Tvinga synkronisering</string>
+  <string name="settings_about_section_title">Om</string>
+  <string name="settings_option_privacy_policy">Integritetspolicy</string>
+  <string name="settings_option_terms_of_service">Användarvillkor</string>
+  <string name="settings_primary_vault_section_title">Valv</string>
+  <string name="settings_primary_vault_vault_selector_title">Primärt valv</string>
+  <string name="settings_primary_vault_section_subtitle">Du kan inte ta bort ett primärt valv</string>
+  <string name="settings_primary_vault_change_success">Det primära valvet har ändrats</string>
+  <string name="settings_primary_vault_change_error">Kunde inte ändra det primära valvet</string>
+  <string name="settings_privacy_section_title">Integritet</string>
+  <string name="settings_use_favicons_preference_title">Använd webbikoner</string>
+  <string name="settings_use_favicons_preference_subtitle">Bestäm om du vill se webbplatsikonerna på dina objekt.</string>
+  <string name="settings_allow_screenshots_preference_title">Tillåt skärmdumpar</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Om det är aktiverat kommer du att kunna ta skärmdumpar av appen.</string>
+  <string name="settings_clear_icon_cache_success">Ikonens cache rensad</string>
+  <string name="settings_clear_icon_cache_error">Kunde inte rensa ikonens cache</string>
+  <string name="settings_share_telemetry">Dela anonym användning</string>
+  <string name="settings_share_crashes">Dela anonyma kraschrapporter</string>
+  <string name="settings_preference_updated">Dina preferenser har uppdaterats</string>
+  <string name="view_logs_title">Visa loggar</string>
+  <string name="clipboard_bottomsheet_title">Urklipp</string>
+  <string name="clipboard_option_clear_clipboard_label">Rensa urklipp</string>
+  <string name="clipboard_option_copy_totp_code">Kopiera autentiseringskoder</string>
+  <string name="clipboard_option_copy_totp_code_hint">Kopiera autentiseringskoder automatiskt vid användning av automatisk ifyllning.</string>
+  <string name="clipboard_option_clear_clipboard_never">Aldrig</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Efter 60 sekunder</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Efter 180 sekunder</string>
+</resources>

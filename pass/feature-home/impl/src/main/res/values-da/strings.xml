@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Home -->
+  <string name="home_empty_vault_title">Din boks er tom</string>
+  <string name="home_empty_vault_subtitle">Kom i gang ved at oprette dit første element.</string>
+  <string name="home_empty_vault_create_login">Opret et login</string>
+  <string name="home_empty_vault_create_alias">Opret et Hide My Email-alias</string>
+  <string name="home_empty_vault_create_note">Opret en note</string>
+  <string name="error_observing_items">Fejl ved observation af elementer</string>
+  <string name="error_observing_share">Fejl under observation af deling</string>
+  <string name="error_refreshing">Fejl ved opdatering</string>
+  <string name="home_snackbar_login_moved_to_trash">Login flyttet til papirkurv</string>
+  <string name="home_snackbar_alias_moved_to_trash">Alias flyttet til papirkurv</string>
+  <string name="home_snackbar_note_moved_to_trash">Note flyttet til papirkurv</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">Kredirkort flyttet til papirkurv</string>
+  <string name="home_snackbar_move_to_trash_error">Kunne ikke flytte til papirkurv</string>
+  <string name="home_autofill_banner_title">Nyd magien ved autofyld</string>
+  <string name="home_autofill_banner_text">Et tryk, og dit brugernavn og din adgangskode udfyldes øjeblikkeligt.</string>
+  <string name="home_autofill_banner_settings">Slå autofyld til ›</string>
+  <string name="home_trial_banner_title">Nyd din gratis prøveperiode</string>
+  <string name="home_trial_banner_text">Se alle de eksklusive funktioner, der er tilgængelige for dig i en begrænset periode.</string>
+  <string name="home_trial_banner_settings">Lær mere ›</string>
+  <string name="home_invite_banner_title">Delte boks-invitation</string>
+  <string name="home_invite_banner_subtitle">Du er blevet inviteret til en boks. Tryk her for at se invitationen.</string>
+  <!-- Common bottomsheet -->
+  <string name="bottomsheet_copy_password">Kopiér adgangskode</string>
+  <string name="bottomsheet_copy_username">Kopiér brugernavn</string>
+  <string name="bottomsheet_copy_alias">Kopiér e-mailadresse</string>
+  <string name="bottomsheet_copy_number">Kopiér nummer</string>
+  <string name="bottomsheet_copy_cvv">Kopiér CVV</string>
+  <string name="bottomsheet_copy_note">Kopiér note</string>
+  <string name="bottomsheet_edit">Redigér</string>
+  <!-- Clipboard -->
+  <string name="alias_copied_to_clipboard">Alias kopieret</string>
+  <string name="note_copied_to_clipboard">Note kopieret</string>
+  <string name="username_copied_to_clipboard">Brugernavn kopieret</string>
+  <string name="password_copied_to_clipboard">Adgangskode kopieret</string>
+  <string name="credit_card_number_copied_to_clipboard">Kreditkortnummer kopieret</string>
+  <string name="credit_card_pin_copied_to_clipboard">Kreditkort-pinkode kopieret</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Kreditkort CVV kopieret</string>
+  <string name="item_too_long_copied_to_clipboard">Indholdet var for langt, delvist kopieret til udklipsholderen</string>
+  <!-- Vault drawer -->
+  <string name="vault_drawer_vaults_title">Bokse</string>
+  <string name="vault_drawer_vaults_item_count">%d elementer</string>
+  <string name="vault_drawer_create_vault">Opret boks</string>
+  <string name="vault_drawer_item_trash">Papirkurv</string>
+  <string name="vault_drawer_all_vaults">Alle bokse</string>
+  <!-- Vault management -->
+  <string name="vault_delete_dialog_title">Slet boks</string>
+  <string name="vault_delete_dialog_cancel_action">Annullér</string>
+  <string name="vault_delete_dialog_delete_action">Slet</string>
+  <string name="snackbar_delete_vault_success">Boks slettet</string>
+  <string name="snackbar_delete_vault_error">Boks ikke slettet</string>
+  <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_vaults">Søg i alle bokse…</string>
+  <string name="search_topbar_placeholder_vault">Søg i %s…</string>
+  <string name="search_topbar_placeholder_trash">Søg i Papirkurv…</string>
+  <string name="item_type_filter_list_icon_content_description">Ikon for elementtype</string>
+  <string name="item_type_filter_all">Alle</string>
+  <string name="item_type_filter_login">Login</string>
+  <string name="item_type_filter_alias">Alias</string>
+  <string name="item_type_filter_note">Note</string>
+  <string name="item_type_filter_credit_card">Kort</string>
+  <!-- Trash -->
+  <string name="trash_empty_list_title">Papirkurv tom</string>
+  <string name="trash_empty_list_message">Elementer, der flyttes til papirkurven, vises her.</string>
+  <string name="bottomsheet_trash_all_items_title">Papirkurv</string>
+  <string name="bottomsheet_restore_all_items">Gendan alle elementer</string>
+  <string name="bottomsheet_empty_trash">Tøm papirkurv</string>
+  <string name="trash_error_clearing_trash">Fejl ved tømning af papirkurv</string>
+  <string name="trash_error_restoring_items">Fejl under gendannelse af elementer</string>
+  <string name="trash_error_deleting_item">Fejl under sletning af element</string>
+  <!-- Alerts -->
+  <string name="alert_confirm_clear_trash_title">Tøm papirkurv?</string>
+  <string name="alert_confirm_clear_trash_message">Er du sikker på, at du vil tømme papirkurven? Alle dine elementer i papirkurven vil blive slettet permanent.</string>
+  <string name="alert_confirm_restore_all_title">Gendan alle elementer?</string>
+  <string name="alert_confirm_restore_all_message">Er du sikker på, at du vil gendanne alle de slettede elementer?</string>
+  <!-- Recent search -->
+  <string name="recent_search_header_count">Seneste søgninger</string>
+  <string name="recent_search_clear">Ryd</string>
+  <string name="recent_search_remove_item">Fjern fra seneste søgninger</string>
+</resources>

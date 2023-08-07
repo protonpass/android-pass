@@ -18,13 +18,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleSection
-import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Close
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardValidationErrors.BlankTitle
+import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 
 @Suppress("ComplexMethod")
 @Composable
@@ -56,14 +56,14 @@ fun UpdateCreditCardScreen(
             Box(modifier = modifier.fillMaxSize()) {
                 CreditCardContent(
                     state = uiState.baseState,
-                    selectedShareId = uiState.selectedShareId,
+                    creditCardFormItem = viewModel.creditCardFormItem,
                     topBarActionName = stringResource(id = R.string.action_save),
                     titleSection = {
                         TitleSection(
                             modifier = Modifier
                                 .roundedContainerNorm()
                                 .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-                            value = uiState.baseState.contents.title,
+                            value = viewModel.creditCardFormItem.title,
                             requestFocus = true,
                             onTitleRequiredError = uiState.baseState.validationErrors
                                 .contains(BlankTitle),
@@ -100,7 +100,8 @@ fun UpdateCreditCardScreen(
                             is CreditCardContentEvent.OnPinFocusChange ->
                                 viewModel.onPinFocusChanged(event.isFocused)
                         }
-                    }
+                    },
+                    selectedShareId = uiState.selectedShareId
                 )
                 ConfirmCloseDialog(
                     show = showConfirmDialog,

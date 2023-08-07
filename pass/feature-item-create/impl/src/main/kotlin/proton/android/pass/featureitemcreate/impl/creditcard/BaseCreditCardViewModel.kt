@@ -65,7 +65,7 @@ abstract class BaseCreditCardViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = BaseCreditCardUiState.DEFAULT
+            initialValue = BaseCreditCardUiState.Initial
         )
 
     fun onTitleChange(value: String) {

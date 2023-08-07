@@ -81,4 +81,13 @@
     <string name="sharing_bottomsheet_transfer_ownership">Transfer ownership</string>
     <string name="sharing_bottomsheet_remove_access">Remove access</string>
 
+    <string name="sharing_bottomsheet_resend_invite">Resend invite</string>
+    <string name="sharing_bottomsheet_cancel_invite">Remove access</string>
+
+    <string name="sharing_snackbar_cancel_invite_success">Invite canceled</string>
+    <string name="sharing_snackbar_cancel_invite_error">Error cancelling invite</string>
+    <string name="sharing_snackbar_resend_invite_success">Invite resent</string>
+    <string name="sharing_snackbar_resend_invite_error">Error resending invite</string>
+    <string name="sharing_snackbar_too_many_invites_sent">Address has been invited too many times</string>
+
 </resources>

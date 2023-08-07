@@ -35,13 +35,13 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.login.PASSWORD_CONCEALED_LENGTH
-import proton.pass.domain.HiddenState
 
 @Composable
 internal fun HiddenNumberInput(
     modifier: Modifier = Modifier,
-    value: HiddenState,
+    value: UIHiddenState,
     enabled: Boolean,
     label: String,
     placeholder: String,
@@ -50,9 +50,9 @@ internal fun HiddenNumberInput(
     onFocusChange: (Boolean) -> Unit
 ) {
     val (text, visualTransformation) = when (value) {
-        is HiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
-        is HiddenState.Revealed -> value.clearText to VisualTransformation.None
-        is HiddenState.Empty -> "" to VisualTransformation.None
+        is UIHiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
+        is UIHiddenState.Revealed -> value.clearText to VisualTransformation.None
+        is UIHiddenState.Empty -> "" to VisualTransformation.None
     }
     ProtonTextField(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),

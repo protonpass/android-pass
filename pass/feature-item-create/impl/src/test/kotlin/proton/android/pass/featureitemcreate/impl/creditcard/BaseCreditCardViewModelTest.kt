@@ -24,11 +24,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.test.MainDispatcherRule
-import proton.pass.domain.HiddenState
 
 class BaseCreditCardViewModelTest {
 
@@ -38,11 +39,6 @@ class BaseCreditCardViewModelTest {
     private lateinit var instance: BaseCreditCardViewModel
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
 
-    private val initial = BaseCreditCardUiState.default(
-        cvv = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-        pin = HiddenState.Empty(TestEncryptionContext.encrypt(""))
-    )
-
     @Before
     fun setUp() {
         canPerformPaidAction = TestCanPerformPaidAction().apply {
@@ -50,14 +46,15 @@ class BaseCreditCardViewModelTest {
         }
         instance = object : BaseCreditCardViewModel(
             encryptionContextProvider = TestEncryptionContextProvider(),
-            canPerformPaidAction = canPerformPaidAction
+            canPerformPaidAction = canPerformPaidAction,
+            savedStateHandleProvider = TestSavedStateHandleProvider()
         ) {}
     }
 
     @Test
     fun `should start with the initial state`() = runTest {
         instance.baseState.test {
-            assertThat(awaitItem()).isEqualTo(initial)
+            assertThat(awaitItem()).isEqualTo(BaseCreditCardUiState.DEFAULT)
         }
     }
 
@@ -65,30 +62,21 @@ class BaseCreditCardViewModelTest {
     fun `when the title has changed the state should hold it`() = runTest {
         val titleInput = "Title Changed"
         instance.onTitleChange(titleInput)
-        instance.baseState.test {
-            assertThat(awaitItem().contents)
-                .isEqualTo(initial.contents.copy(title = titleInput))
-        }
+        assertThat(instance.creditCardFormItem.title).isEqualTo(titleInput)
     }
 
     @Test
     fun `when the cardholder has changed the state should hold it`() = runTest {
         val cardHolder = "Username Changed"
         instance.onNameChanged(cardHolder)
-        instance.baseState.test {
-            assertThat(awaitItem().contents)
-                .isEqualTo(initial.contents.copy(cardHolder = cardHolder))
-        }
+        assertThat(instance.creditCardFormItem.cardHolder).isEqualTo(cardHolder)
     }
 
     @Test
     fun `when the number has changed the state should hold it`() = runTest {
         val number = "123456789"
         instance.onNumberChanged(number)
-        instance.baseState.test {
-            assertThat(awaitItem().contents)
-                .isEqualTo(initial.contents.copy(number = number))
-        }
+        assertThat(instance.creditCardFormItem.number).isEqualTo(number)
     }
 
     @Test
@@ -96,29 +84,17 @@ class BaseCreditCardViewModelTest {
         val pin = "7894"
         val encryptedPin = TestEncryptionContext.encrypt(pin)
         instance.onPinChanged(pin)
-        instance.baseState.test {
-            assertThat(awaitItem().contents)
-                .isEqualTo(
-                    initial.contents.copy(
-                        pin = HiddenState.Revealed(encryptedPin, pin)
-                    )
-                )
-        }
+        assertThat(instance.creditCardFormItem.pin)
+            .isEqualTo(UIHiddenState.Revealed(encryptedPin, pin))
     }
 
     @Test
     fun `when the cvv has changed the state should hold it`() = runTest {
         val cvv = "7894"
-        val encryptedPin = TestEncryptionContext.encrypt(cvv)
+        val encryptedCVV = TestEncryptionContext.encrypt(cvv)
         instance.onCVVChanged(cvv)
-        instance.baseState.test {
-            assertThat(awaitItem().contents)
-                .isEqualTo(
-                    initial.contents.copy(
-                        cvv = HiddenState.Revealed(encryptedPin, cvv)
-                    )
-                )
-        }
+        assertThat(instance.creditCardFormItem.cvv)
+            .isEqualTo(UIHiddenState.Revealed(encryptedCVV, cvv))
     }
 
     @Test
@@ -128,14 +104,8 @@ class BaseCreditCardViewModelTest {
         val encryptedPin = TestEncryptionContext.encrypt(rightPin)
         instance.onPinChanged(rightPin)
         instance.onPinChanged(tooLongPin)
-        instance.baseState.test {
-            assertThat(awaitItem().contents)
-                .isEqualTo(
-                    initial.contents.copy(
-                        pin = HiddenState.Revealed(encryptedPin, rightPin)
-                    )
-                )
-        }
+        assertThat(instance.creditCardFormItem.pin)
+            .isEqualTo(UIHiddenState.Revealed(encryptedPin, rightPin))
     }
 
     @Test
@@ -145,70 +115,42 @@ class BaseCreditCardViewModelTest {
         val encryptedCvv = TestEncryptionContext.encrypt(rightCvv)
         instance.onCVVChanged(rightCvv)
         instance.onCVVChanged(tooLongCvv)
-        instance.baseState.test {
-            assertThat(awaitItem().contents)
-                .isEqualTo(
-                    initial.contents.copy(
-                        cvv = HiddenState.Revealed(encryptedCvv, rightCvv)
-                    )
-                )
-        }
+        assertThat(instance.creditCardFormItem.cvv)
+            .isEqualTo(UIHiddenState.Revealed(encryptedCvv, rightCvv))
     }
 
     @Test
     fun `when the note has changed the state should hold it`() = runTest {
         val noteInput = "Note Changed"
         instance.onNoteChanged(noteInput)
-        instance.baseState.test {
-            assertThat(awaitItem().contents)
-                .isEqualTo(initial.contents.copy(note = noteInput))
-        }
+        assertThat(instance.creditCardFormItem.note).isEqualTo(noteInput)
     }
 
     @Test
     fun `when the cvv gets focus it changes the visibility`() = runTest {
         val cvv = "7894"
-        instance.baseState.test {
-            assertThat(awaitItem().contents.cvv).isInstanceOf(HiddenState.Empty::class.java)
-        }
+        assertThat(instance.creditCardFormItem.cvv).isInstanceOf(UIHiddenState.Empty::class.java)
         instance.onCVVChanged(cvv)
-        instance.baseState.test {
-            assertThat(awaitItem().contents.cvv).isInstanceOf(HiddenState.Revealed::class.java)
-        }
-
+        assertThat(instance.creditCardFormItem.cvv).isInstanceOf(UIHiddenState.Revealed::class.java)
         instance.onCVVFocusChanged(false)
-        instance.baseState.test {
-            assertThat(awaitItem().contents.cvv).isInstanceOf(HiddenState.Concealed::class.java)
-        }
+        assertThat(instance.creditCardFormItem.cvv).isInstanceOf(UIHiddenState.Concealed::class.java)
 
         instance.onCVVChanged("")
         instance.onCVVFocusChanged(false)
-        instance.baseState.test {
-            assertThat(awaitItem().contents.cvv).isInstanceOf(HiddenState.Empty::class.java)
-        }
+        assertThat(instance.creditCardFormItem.cvv).isInstanceOf(UIHiddenState.Empty::class.java)
     }
 
     @Test
     fun `when the pin gets focus it changes the visibility`() = runTest {
         val pin = "1235"
-        instance.baseState.test {
-            assertThat(awaitItem().contents.pin).isInstanceOf(HiddenState.Empty::class.java)
-        }
+        assertThat(instance.creditCardFormItem.pin).isInstanceOf(UIHiddenState.Empty::class.java)
         instance.onPinChanged(pin)
-        instance.baseState.test {
-            assertThat(awaitItem().contents.pin).isInstanceOf(HiddenState.Revealed::class.java)
-        }
-
+        assertThat(instance.creditCardFormItem.pin).isInstanceOf(UIHiddenState.Revealed::class.java)
         instance.onPinFocusChanged(false)
-        instance.baseState.test {
-            assertThat(awaitItem().contents.pin).isInstanceOf(HiddenState.Concealed::class.java)
-        }
-
+        assertThat(instance.creditCardFormItem.pin).isInstanceOf(UIHiddenState.Concealed::class.java)
         instance.onPinChanged("")
         instance.onPinFocusChanged(false)
-        instance.baseState.test {
-            assertThat(awaitItem().contents.pin).isInstanceOf(HiddenState.Empty::class.java)
-        }
+        assertThat(instance.creditCardFormItem.pin).isInstanceOf(UIHiddenState.Empty::class.java)
     }
 
     @Test

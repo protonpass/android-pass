@@ -27,12 +27,21 @@ import javax.inject.Singleton
 class TestRemoveMemberFromVault @Inject constructor() : RemoveMemberFromVault {
 
     private var result: Result<Unit> = Result.success(Unit)
+    private val memory: MutableList<Payload> = mutableListOf()
+
+    fun getMemory(): List<Payload> = memory
 
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
     override suspend fun invoke(shareId: ShareId, memberShareId: ShareId) {
+        memory.add(Payload(shareId, memberShareId))
         result.getOrThrow()
     }
+
+    data class Payload(
+        val shareId: ShareId,
+        val memberShareId: ShareId
+    )
 }

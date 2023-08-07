@@ -20,7 +20,6 @@ package proton.android.pass.autofill.ui.autosave
 
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.usernamePassword
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
@@ -37,10 +36,7 @@ import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
-import proton.android.pass.featureitemcreate.impl.totp.INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
-import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
-import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheet
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
@@ -151,6 +147,15 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.AliasOptions -> {}
                 BaseLoginNavigation.DeleteAlias -> {}
                 is BaseLoginNavigation.EditAlias -> {}
+                is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
+                    destination = PhotoPickerTotp,
+                    route = PhotoPickerTotp.createNavRoute(it.index),
+                    backDestination = CreateLogin
+                )
+
+                BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseLoginNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(it.results)
             }
         }
     )
@@ -172,22 +177,6 @@ fun NavGraphBuilder.autosaveActivityGraph(
             }
         }
     )
-    createTotpGraph(
-        onSuccess = { totp, index ->
-            val values = mutableMapOf<String, Any>(TOTP_NAV_PARAMETER_KEY to totp)
-            index?.let { values.put(INDEX_NAV_PARAMETER_KEY, it) }
-            appNavigator.navigateBackWithResult(values)
-        },
-        onCloseTotp = { appNavigator.navigateBack() },
-        onOpenImagePicker = {
-            appNavigator.navigate(
-                destination = PhotoPickerTotp,
-                route = PhotoPickerTotp.createNavRoute(it.toOption()),
-                backDestination = CreateLogin
-            )
-        }
-    )
-
     vaultGraph(
         onNavigate = {
             when (it) {

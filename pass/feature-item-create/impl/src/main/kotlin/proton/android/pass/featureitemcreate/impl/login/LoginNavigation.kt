@@ -68,4 +68,11 @@ sealed interface BaseLoginNavigation {
     data class CustomFieldOptions(val currentValue: String, val index: Int) : BaseLoginNavigation
     data class EditCustomField(val currentValue: String, val index: Int) : BaseLoginNavigation
     object RemovedCustomField : BaseLoginNavigation
+
+    @JvmInline
+    value class TotpSuccess(val results: Map<String, Any>) : BaseLoginNavigation
+    object TotpCancel : BaseLoginNavigation
+
+    @JvmInline
+    value class OpenImagePicker(val index: Option<Int>) : BaseLoginNavigation
 }

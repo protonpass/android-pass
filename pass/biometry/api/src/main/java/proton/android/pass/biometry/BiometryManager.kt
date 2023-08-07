@@ -24,5 +24,13 @@ import proton.android.pass.commonui.api.ClassHolder
 
 interface BiometryManager {
     fun getBiometryStatus(): BiometryStatus
-    fun launch(contextHolder: ClassHolder<Context>): Flow<BiometryResult>
+    fun launch(
+        contextHolder: ClassHolder<Context>,
+        biometryType: BiometryType
+    ): Flow<BiometryResult>
+}
+
+enum class BiometryType {
+    CONFIGURE,
+    AUTHENTICATE
 }

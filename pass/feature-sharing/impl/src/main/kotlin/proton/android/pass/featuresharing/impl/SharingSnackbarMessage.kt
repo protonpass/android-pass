@@ -40,4 +40,10 @@ enum class SharingSnackbarMessage(
     ChangeMemberPermissionError(R.string.sharing_snackbar_change_permission_error, SnackbarType.ERROR),
     RemoveMemberSuccess(R.string.sharing_snackbar_remove_member_success, SnackbarType.NORM),
     RemoveMemberError(R.string.sharing_snackbar_remove_member_error, SnackbarType.ERROR),
+
+    CancelInviteSuccess(R.string.sharing_snackbar_cancel_invite_success, SnackbarType.NORM),
+    CancelInviteError(R.string.sharing_snackbar_cancel_invite_error, SnackbarType.ERROR),
+    ResendInviteSuccess(R.string.sharing_snackbar_resend_invite_success, SnackbarType.NORM),
+    ResendInviteError(R.string.sharing_snackbar_resend_invite_error, SnackbarType.ERROR),
+    TooManyInvitesSentError(R.string.sharing_snackbar_too_many_invites_sent, SnackbarType.ERROR)
 }

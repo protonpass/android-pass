@@ -50,10 +50,10 @@ sealed interface UIHiddenState : Parcelable {
     }
 
     companion object {
-        fun HiddenState.from() = when (this) {
-            is HiddenState.Empty -> Empty(encrypted)
-            is HiddenState.Concealed -> Concealed(encrypted)
-            is HiddenState.Revealed -> Revealed(encrypted, clearText)
+        fun from(state: HiddenState) = when (state) {
+            is HiddenState.Empty -> Empty(state.encrypted)
+            is HiddenState.Concealed -> Concealed(state.encrypted)
+            is HiddenState.Revealed -> Revealed(state.encrypted, state.clearText)
         }
     }
 }

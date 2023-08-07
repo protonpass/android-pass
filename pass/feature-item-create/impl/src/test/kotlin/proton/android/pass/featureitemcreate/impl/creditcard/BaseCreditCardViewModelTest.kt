@@ -54,7 +54,7 @@ class BaseCreditCardViewModelTest {
     @Test
     fun `should start with the initial state`() = runTest {
         instance.baseState.test {
-            assertThat(awaitItem()).isEqualTo(BaseCreditCardUiState.DEFAULT)
+            assertThat(awaitItem()).isEqualTo(BaseCreditCardUiState.Initial)
         }
     }
 

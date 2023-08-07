@@ -34,7 +34,7 @@ data class BaseCreditCardUiState(
     val isDowngradedMode: Boolean
 ) {
     companion object {
-        val DEFAULT = BaseCreditCardUiState(
+        val Initial = BaseCreditCardUiState(
             isLoading = false,
             hasUserEditedContent = false,
             validationErrors = persistentSetOf(),

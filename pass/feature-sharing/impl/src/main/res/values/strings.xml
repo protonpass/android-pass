@@ -82,7 +82,7 @@
     <string name="sharing_bottomsheet_remove_access">Remove access</string>
 
     <string name="sharing_bottomsheet_resend_invite">Resend invite</string>
-    <string name="sharing_bottomsheet_cancel_invite">Remove access</string>
+    <string name="sharing_bottomsheet_cancel_invite">Cancel invite</string>
 
     <string name="sharing_snackbar_cancel_invite_success">Invite canceled</string>
     <string name="sharing_snackbar_cancel_invite_error">Error cancelling invite</string>

@@ -24,20 +24,28 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import androidx.navigation.navigation
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
+import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameNavigation
+import proton.android.pass.featureitemcreate.impl.dialogs.customFieldNameDialogGraph
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.aliasOptionsBottomSheetGraph
 import proton.android.pass.featureitemcreate.impl.totp.INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
 import proton.pass.domain.ShareId
+
+private const val CREATE_LOGIN_GRAPH = "create_login_graph"
 
 object CreateLoginDefaultUsernameArg : OptionalNavArgId {
     override val key = "username"
@@ -65,43 +73,68 @@ object CreateLogin : NavItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class,)
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.createLoginGraph(
     initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(),
     showCreateAliasButton: Boolean = true,
     onNavigate: (BaseLoginNavigation) -> Unit
 ) {
-    composable(CreateLogin) { navBackStack ->
-        val navTotpUri by navBackStack.savedStateHandle
-            .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
-            .collectAsStateWithLifecycle()
-        LaunchedEffect(navTotpUri) {
-            navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
-        }
-        val navTotpIndex by navBackStack.savedStateHandle
-            .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
-            .collectAsStateWithLifecycle()
-        LaunchedEffect(navTotpIndex) {
-            navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
-        }
-        val clearAlias by navBackStack.savedStateHandle
-            .getStateFlow(CLEAR_ALIAS_NAV_PARAMETER_KEY, false)
-            .collectAsStateWithLifecycle()
-        val selectVault by navBackStack.savedStateHandle
-            .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
-            .collectAsStateWithLifecycle()
+    navigation(
+        route = CREATE_LOGIN_GRAPH,
+        startDestination = CreateLogin.route
+    ) {
+        composable(CreateLogin) { navBackStack ->
+            val navTotpUri by navBackStack.savedStateHandle
+                .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            LaunchedEffect(navTotpUri) {
+                navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
+            }
+            val navTotpIndex by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            LaunchedEffect(navTotpIndex) {
+                navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
+            }
+            val clearAlias by navBackStack.savedStateHandle
+                .getStateFlow(CLEAR_ALIAS_NAV_PARAMETER_KEY, false)
+                .collectAsStateWithLifecycle()
+            val selectVault by navBackStack.savedStateHandle
+                .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
+                .collectAsStateWithLifecycle()
 
-        val initialContents = initialCreateLoginUiState.copy(
-            navTotpUri = navTotpUri,
-            navTotpIndex = navTotpIndex ?: -1
-        )
+            val initialContents = initialCreateLoginUiState.copy(
+                navTotpUri = navTotpUri,
+                navTotpIndex = navTotpIndex ?: -1
+            )
 
-        CreateLoginScreen(
-            initialContents = initialContents,
-            clearAlias = clearAlias,
-            selectVault = selectVault.toOption().map { ShareId(it) }.value(),
-            showCreateAliasButton = showCreateAliasButton,
-            onNavigate = onNavigate
+            CreateLoginScreen(
+                initialContents = initialContents,
+                clearAlias = clearAlias,
+                selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+                showCreateAliasButton = showCreateAliasButton,
+                onNavigate = onNavigate
+            )
+        }
+        aliasOptionsBottomSheetGraph(onNavigate)
+        customFieldBottomSheetGraph(onNavigate)
+        customFieldNameDialogGraph {
+            when (it) {
+                is CustomFieldNameNavigation.Close -> {
+                    onNavigate(BaseLoginNavigation.Close)
+                }
+            }
+        }
+        createTotpGraph(
+            onSuccess = { totp, index ->
+                val values = mutableMapOf<String, Any>(TOTP_NAV_PARAMETER_KEY to totp)
+                index?.let { values.put(INDEX_NAV_PARAMETER_KEY, it) }
+                onNavigate(BaseLoginNavigation.TotpSuccess(values))
+            },
+            onCloseTotp = { onNavigate(BaseLoginNavigation.TotpCancel) },
+            onOpenImagePicker = {
+                onNavigate(BaseLoginNavigation.OpenImagePicker(it.toOption()))
+            }
         )
     }
 }

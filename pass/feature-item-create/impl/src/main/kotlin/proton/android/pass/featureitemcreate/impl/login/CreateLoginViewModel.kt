@@ -18,7 +18,11 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -60,6 +64,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
+import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareError
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.AliasRateLimited
@@ -95,7 +100,7 @@ class CreateLoginViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandle: SavedStateHandleProvider,
+    savedStateHandleProvider: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction,
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -108,11 +113,11 @@ class CreateLoginViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider
 ) {
     private val navShareId: Option<ShareId> =
-        savedStateHandle.get().get<String>(CommonOptionalNavArgId.ShareId.key)
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
             .map { ShareId(it) }
     private val navShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(navShareId)
-    private val initialUsername: Option<String> = savedStateHandle.get()
+    private val initialUsername: Option<String> = savedStateHandleProvider.get()
         .get<String>(CreateLoginDefaultUsernameArg.key)
         .toOption()
 
@@ -120,7 +125,12 @@ class CreateLoginViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
-    private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
+        .saveable(stateSaver = OptionShareIdSaver) { mutableStateOf(None) }
+    private val selectedShareIdState: Flow<Option<ShareId>> =
+        snapshotFlow { selectedShareIdMutableState }
+
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults().distinctUntilChanged()
 
@@ -185,7 +195,7 @@ class CreateLoginViewModel @Inject constructor(
     )
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
-        selectedShareIdState.update { shareId.toOption() }
+        selectedShareIdMutableState = Some(shareId)
     }
 
     @Suppress("ComplexMethod", "LongMethod")

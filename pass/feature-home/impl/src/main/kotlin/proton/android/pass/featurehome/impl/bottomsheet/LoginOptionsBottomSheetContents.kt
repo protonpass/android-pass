@@ -76,9 +76,12 @@ fun LoginOptionsBottomSheetContents(
         val list = mutableListOf(
             copyUsername(contents.username, onCopyUsername),
             copyPassword(contents.password.encrypted, onCopyPassword),
-            edit(itemUiModel, onEdit),
-            moveToTrash(itemUiModel, onMoveToTrash)
         )
+
+        if (itemUiModel.canModify) {
+            list += edit(itemUiModel, onEdit)
+            list += moveToTrash(itemUiModel, onMoveToTrash)
+        }
 
         if (isRecentSearch) {
             list.add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))

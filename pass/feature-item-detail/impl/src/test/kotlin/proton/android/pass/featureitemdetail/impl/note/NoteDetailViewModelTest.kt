@@ -51,6 +51,7 @@ import proton.pass.domain.ItemType
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 import proton.pass.domain.Vault
 
 class NoteDetailViewModelTest {
@@ -238,15 +239,43 @@ class NoteDetailViewModelTest {
         }
     }
 
+    @Test
+    fun `shows actions if user is write`() = runTest {
+        initialSetup(shareRole = ShareRole.Write)
+        instance.state.test {
+            val value = awaitItem() as NoteDetailUiState.Success
+            assertThat(value.canPerformActions).isTrue()
+        }
+    }
+
+    @Test
+    fun `shows actions if user is admin`() = runTest {
+        initialSetup(shareRole = ShareRole.Admin)
+        instance.state.test {
+            val value = awaitItem() as NoteDetailUiState.Success
+            assertThat(value.canPerformActions).isTrue()
+        }
+    }
+
+    @Test
+    fun `does not show actions if user is read only`() = runTest {
+        initialSetup(shareRole = ShareRole.Read)
+        instance.state.test {
+            val value = awaitItem() as NoteDetailUiState.Success
+            assertThat(value.canPerformActions).isFalse()
+        }
+    }
+
     private fun initialSetup(
         note: String = "note",
-        hasMoreThanOneVault: Boolean = true
+        hasMoreThanOneVault: Boolean = true,
+        shareRole: ShareRole = ShareRole.Admin,
     ): Item {
         val item = createEncryptedItem(note)
         val value = ItemWithVaultInfo(
             item = item,
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = hasMoreThanOneVault
+            vault = TEST_VAULT.copy(role = shareRole),
+            hasMoreThanOneVault = hasMoreThanOneVault,
         )
         getItemByIdWithVault.emitValue(Result.success(value))
         return item

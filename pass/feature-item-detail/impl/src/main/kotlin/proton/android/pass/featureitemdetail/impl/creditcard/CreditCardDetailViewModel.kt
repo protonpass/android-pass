@@ -65,6 +65,8 @@ import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
+import proton.pass.domain.canUpdate
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel
@@ -185,6 +187,9 @@ class CreditCardDetailViewModel @Inject constructor(
                     else -> true
                 }
 
+                val permissions = details.vault.role.toPermissions()
+                val canPerformItemActions = permissions.canUpdate()
+
                 CreditCardDetailUiState.Success(
                     itemContent = CreditCardDetailUiState.ItemContent(
                         model = details.itemUiModel,
@@ -196,7 +201,8 @@ class CreditCardDetailViewModel @Inject constructor(
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canMigrate = canMigrate,
-                    isDowngradedMode = !isPaid
+                    isDowngradedMode = !isPaid,
+                    canPerformActions = canPerformItemActions
                 )
             }
         }

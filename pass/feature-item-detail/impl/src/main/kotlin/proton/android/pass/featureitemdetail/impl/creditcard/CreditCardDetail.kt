@@ -129,6 +129,7 @@ fun CreditCardDetail(
                             actionColor = PassTheme.colors.cardInteractionNormMajor1,
                             iconColor = PassTheme.colors.cardInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
+                            showActions = state.canPerformActions,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(itemUiModel)) },
                             onOptionsClick = {

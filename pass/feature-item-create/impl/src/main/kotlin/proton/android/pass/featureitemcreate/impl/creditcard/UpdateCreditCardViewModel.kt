@@ -2,11 +2,11 @@ package proton.android.pass.featureitemcreate.impl.creditcard
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -56,7 +56,6 @@ class UpdateCreditCardViewModel @Inject constructor(
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
         ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
-    private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
     private var itemOption: Option<Item> = None
 
     init {
@@ -66,7 +65,7 @@ class UpdateCreditCardViewModel @Inject constructor(
     }
 
     val state: StateFlow<UpdateCreditCardUiState> = combine(
-        navShareIdState,
+        flowOf(navShareId),
         baseState,
         UpdateCreditCardUiState::Success
     ).stateIn(

@@ -40,7 +40,8 @@ class AppNavigator(
     val navController: NavHostController,
     val passBottomSheetNavigator: PassBottomSheetNavigator
 ) {
-    private val previousRoute: String? = navController.previousBackStackEntry?.destination?.route
+    private val previousRoute: String?
+        get() = navController.previousBackStackEntry?.destination?.route
 
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
         val destinationRoute = route ?: destination.route

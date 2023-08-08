@@ -117,6 +117,7 @@ import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.SharingPermissions
 import proton.android.pass.featuresharing.impl.SharingSummary
 import proton.android.pass.featuresharing.impl.SharingWith
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.ConfirmTransferOwnership
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.sharingGraph
@@ -879,7 +880,17 @@ fun NavGraphBuilder.appGraph(
                 )
             )
 
-            is SharingNavigation.TransferOwnershipConfirm -> {} // not implemented yet
+            is SharingNavigation.TransferOwnershipConfirm -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = ConfirmTransferOwnership,
+                    route = ConfirmTransferOwnership.buildRoute(
+                        shareId = it.shareId,
+                        memberShareId = it.destShareId,
+                        memberEmail = it.destEmail
+                    ),
+                    backDestination = ManageVault
+                )
+            }
         }
     }
     syncGraph {

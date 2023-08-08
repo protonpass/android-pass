@@ -30,5 +30,6 @@ data class ItemUiModel(
     val state: Int,
     val createTime: Instant,
     val modificationTime: Instant,
-    val lastAutofillTime: Instant?
+    val lastAutofillTime: Instant?,
+    val canModify: Boolean = true
 )

@@ -21,11 +21,11 @@ package proton.android.pass.featureitemcreate.impl.alias
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -87,7 +87,6 @@ class UpdateAliasViewModel @Inject constructor(
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
         ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
-    private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
 
     private var _item: Item? = null
 
@@ -102,7 +101,7 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     val updateAliasUiState: StateFlow<UpdateAliasUiState> = combine(
-        navShareIdState,
+        flowOf(navShareId),
         baseAliasUiState,
         ::UpdateAliasUiState
     ).stateIn(

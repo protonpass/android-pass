@@ -69,10 +69,13 @@ fun NoteOptionsBottomSheetContents(
             leftIcon = { NoteIcon() }
         )
         val list = mutableListOf(
-            copyNote(contents.note, onCopyNote),
-            edit(itemUiModel, onEdit),
-            moveToTrash(itemUiModel, onMoveToTrash)
+            copyNote(contents.note, onCopyNote)
         )
+
+        if (itemUiModel.canModify) {
+            list += edit(itemUiModel, onEdit)
+            list += moveToTrash(itemUiModel, onMoveToTrash)
+        }
 
         if (isRecentSearch) {
             list.add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))

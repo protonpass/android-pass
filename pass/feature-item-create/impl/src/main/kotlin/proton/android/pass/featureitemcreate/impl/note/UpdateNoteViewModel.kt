@@ -30,6 +30,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
@@ -72,34 +76,11 @@ class UpdateNoteViewModel @Inject constructor(
     private val navItemId: ItemId =
         ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
 
-    private var _item: Item? = null
+    private var itemOption: Option<Item> = None
 
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
-            if (_item != null) return@launch
-            isLoadingState.update { IsLoadingState.Loading }
-            val userId = accountManager.getPrimaryUserId()
-                .first { userId -> userId != null }
-            if (userId != null) {
-                runCatching { itemRepository.getById(userId, navShareId, navItemId) }
-                    .onSuccess { item: Item ->
-                        _item = item
-                        noteItemFormMutableState = encryptionContextProvider.withEncryptionContext {
-                            NoteItemFormState(
-                                title = decrypt(item.title),
-                                note = decrypt(item.note)
-                            )
-                        }
-                    }
-                    .onFailure {
-                        PassLogger.i(TAG, it, "Get by id error")
-                        snackbarDispatcher(InitError)
-                    }
-            } else {
-                PassLogger.i(TAG, "Empty user/share/item Id")
-                snackbarDispatcher(InitError)
-            }
-            isLoadingState.update { IsLoadingState.NotLoading }
+            setupInitialState()
         }
     }
 
@@ -113,14 +94,45 @@ class UpdateNoteViewModel @Inject constructor(
         initialValue = UpdateNoteUiState.Initial
     )
 
+    private suspend fun setupInitialState() {
+        if (itemOption != None) return
+        isLoadingState.update { IsLoadingState.Loading }
+        val userId = accountManager.getPrimaryUserId()
+            .first { userId -> userId != null }
+        if (userId != null) {
+            runCatching { itemRepository.getById(userId, navShareId, navItemId) }
+                .onSuccess(::onNoteItemReceived)
+                .onFailure {
+                    PassLogger.i(TAG, it, "Get by id error")
+                    snackbarDispatcher(InitError)
+                }
+        } else {
+            PassLogger.i(TAG, "Empty user/share/item Id")
+            snackbarDispatcher(InitError)
+        }
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    private fun onNoteItemReceived(item: Item) {
+        itemOption = item.some()
+        if (noteItemFormState != NoteItemFormState.Empty) {
+            noteItemFormMutableState = encryptionContextProvider.withEncryptionContext {
+                NoteItemFormState(
+                    title = decrypt(item.title),
+                    note = decrypt(item.note)
+                )
+            }
+        }
+    }
 
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
-        requireNotNull(_item)
+        val item = itemOption
+        if (item == None) return@launch
         isLoadingState.update { IsLoadingState.Loading }
         val noteItem = noteItemFormMutableState
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
-        if (userId != null) {
+        if (userId != null && item is Some) {
             val itemContents = noteItem.toItemContents()
             runCatching { getShare(userId, shareId) }
                 .onFailure {
@@ -128,14 +140,14 @@ class UpdateNoteViewModel @Inject constructor(
                     snackbarDispatcher(ItemUpdateError)
                 }
                 .mapCatching { share ->
-                    itemRepository.updateItem(userId, share, _item!!, itemContents)
+                    itemRepository.updateItem(userId, share, item.value, itemContents)
                 }
-                .onSuccess { item ->
+                .onSuccess { newItem ->
                     isItemSavedState.update {
                         encryptionContextProvider.withEncryptionContext {
                             ItemSavedState.Success(
-                                item.id,
-                                item.toUiModel(this@withEncryptionContext)
+                                newItem.id,
+                                newItem.toUiModel(this@withEncryptionContext)
                             )
                         }
                     }

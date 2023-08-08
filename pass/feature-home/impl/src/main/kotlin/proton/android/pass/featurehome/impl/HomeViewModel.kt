@@ -21,6 +21,7 @@ package proton.android.pass.featurehome.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
@@ -111,6 +112,8 @@ import proton.pass.domain.ItemState
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
 import proton.pass.domain.Vault
+import proton.pass.domain.canUpdate
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @Suppress("LongParameterList", "LargeClass")
@@ -379,10 +382,34 @@ class HomeViewModel @Inject constructor(
         )
     }.distinctUntilChanged()
 
+    private val itemsFlow: Flow<LoadingResult<ImmutableList<GroupedItemList>>> = combine(
+        shareListWrapperFlow,
+        resultsFlow
+    ) { shares, items ->
+        val checkCanModify: (ShareId) -> Boolean = { shareId ->
+            val share = shares.shares.get(shareId)
+            if (share != null) {
+                val permissions = share.role.toPermissions()
+                permissions.canUpdate()
+            } else {
+                false
+            }
+        }
+
+        items.map { listOfGroupedItems ->
+            listOfGroupedItems.map { groupedItemList ->
+                val mappedItems = groupedItemList.items.map { item ->
+                    item.copy(canModify = checkCanModify(item.shareId))
+                }
+                groupedItemList.copy(items = mappedItems.toImmutableList())
+            }.toImmutableList()
+        }
+    }
+
     val homeUiState: StateFlow<HomeUiState> = combineN(
         shareListWrapperFlow,
         filtersWrapperFlow,
-        resultsFlow,
+        itemsFlow,
         searchUiStateFlow,
         refreshingLoadingFlow,
         shouldScrollToTopFlow,

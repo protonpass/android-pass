@@ -23,11 +23,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -104,7 +104,7 @@ class UpdateLoginViewModel @Inject constructor(
         ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
         ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
-    private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
@@ -130,7 +130,7 @@ class UpdateLoginViewModel @Inject constructor(
     }
 
     val updateLoginUiState: StateFlow<UpdateLoginUiState> = combine(
-        navShareIdState,
+        flowOf(navShareId),
         baseLoginUiState,
         ::UpdateLoginUiState
     ).stateIn(

@@ -85,8 +85,8 @@ class UpdateNoteViewModel @Inject constructor(
                 runCatching { itemRepository.getById(userId, navShareId, navItemId) }
                     .onSuccess { item: Item ->
                         _item = item
-                        noteItemState = encryptionContextProvider.withEncryptionContext {
-                            NoteItem(
+                        noteItemFormMutableState = encryptionContextProvider.withEncryptionContext {
+                            NoteItemFormState(
                                 title = decrypt(item.title),
                                 note = decrypt(item.note)
                             )
@@ -118,7 +118,7 @@ class UpdateNoteViewModel @Inject constructor(
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         requireNotNull(_item)
         isLoadingState.update { IsLoadingState.Loading }
-        val noteItem = noteItemState
+        val noteItem = noteItemFormMutableState
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {

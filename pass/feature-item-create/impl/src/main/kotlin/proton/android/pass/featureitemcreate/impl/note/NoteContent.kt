@@ -36,7 +36,7 @@ internal fun NoteContent(
     modifier: Modifier = Modifier,
     topBarActionName: String,
     uiState: BaseNoteUiState,
-    noteItem: NoteItem,
+    noteItemFormState: NoteItemFormState,
     selectedShareId: ShareId?,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
@@ -64,7 +64,7 @@ internal fun NoteContent(
     ) { padding ->
         CreateNoteItemForm(
             modifier = Modifier.padding(padding),
-            noteItem = noteItem,
+            noteItemFormState = noteItemFormState,
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             onTitleChange = onTitleChange,
             onNoteChange = onNoteChange,

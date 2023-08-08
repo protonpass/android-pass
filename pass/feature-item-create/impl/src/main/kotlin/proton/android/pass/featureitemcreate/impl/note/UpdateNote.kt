@@ -68,7 +68,7 @@ fun UpdateNote(
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
             vaultSelect = {},
-            noteItem = viewModel.noteItem,
+            noteItemFormState = viewModel.noteItemFormState,
         )
 
         ConfirmCloseDialog(

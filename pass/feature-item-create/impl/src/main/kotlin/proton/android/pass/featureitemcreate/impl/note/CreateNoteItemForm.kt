@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun CreateNoteItemForm(
     modifier: Modifier = Modifier,
-    noteItem: NoteItem,
+    noteItemFormState: NoteItemFormState,
     enabled: Boolean,
     onTitleRequiredError: Boolean,
     onTitleChange: (String) -> Unit,
@@ -48,7 +48,7 @@ internal fun CreateNoteItemForm(
     ) {
         vaultSelect()
         NoteTitle(
-            value = noteItem.title,
+            value = noteItemFormState.title,
             requestFocus = true,
             onTitleRequiredError = onTitleRequiredError,
             enabled = enabled,
@@ -58,7 +58,7 @@ internal fun CreateNoteItemForm(
             modifier = Modifier.weight(1f),
             textFieldModifier = Modifier.weight(1f),
             enabled = enabled,
-            value = noteItem.note,
+            value = noteItemFormState.note,
             onChange = onNoteChange
         )
     }

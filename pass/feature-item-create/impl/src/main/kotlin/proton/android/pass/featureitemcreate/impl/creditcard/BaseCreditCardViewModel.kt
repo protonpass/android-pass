@@ -37,15 +37,15 @@ abstract class BaseCreditCardViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
 
     @OptIn(SavedStateHandleSaveableApi::class)
-    protected var creditCardFormItemState: CreditCardFormItem by savedStateHandleProvider.get()
+    protected var creditCardItemFormMutableState: CreditCardItemFormState by savedStateHandleProvider.get()
         .saveable {
             mutableStateOf(
                 encryptionContextProvider.withEncryptionContext {
-                    CreditCardFormItem.default(this)
+                    CreditCardItemFormState.default(this)
                 }
             )
         }
-    val creditCardFormItem: CreditCardFormItem get() = creditCardFormItemState
+    val creditCardItemFormState: CreditCardItemFormState get() = creditCardItemFormMutableState
 
     val baseState: StateFlow<BaseCreditCardUiState> = combine(
         isLoadingState,
@@ -70,7 +70,7 @@ abstract class BaseCreditCardViewModel(
 
     fun onTitleChange(value: String) {
         onUserEditedContent()
-        creditCardFormItemState = creditCardFormItemState.copy(title = value)
+        creditCardItemFormMutableState = creditCardItemFormMutableState.copy(title = value)
         validationErrorsState.update {
             it.toMutableSet().apply { remove(CreditCardValidationErrors.BlankTitle) }
         }
@@ -78,28 +78,28 @@ abstract class BaseCreditCardViewModel(
 
     fun onNameChanged(value: String) {
         onUserEditedContent()
-        creditCardFormItemState = creditCardFormItemState.copy(cardHolder = value)
+        creditCardItemFormMutableState = creditCardItemFormMutableState.copy(cardHolder = value)
     }
 
     fun onNumberChanged(value: String) {
         val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(19)
         onUserEditedContent()
-        creditCardFormItemState = creditCardFormItemState.copy(number = sanitisedValue)
+        creditCardItemFormMutableState = creditCardItemFormMutableState.copy(number = sanitisedValue)
     }
 
     fun onCVVChanged(value: String) {
         val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(CVV_MAX_LENGTH)
         onUserEditedContent()
-        creditCardFormItemState = encryptionContextProvider.withEncryptionContext {
+        creditCardItemFormMutableState = encryptionContextProvider.withEncryptionContext {
             if (sanitisedValue.isNotBlank()) {
-                creditCardFormItemState.copy(
+                creditCardItemFormMutableState.copy(
                     cvv = UIHiddenState.Revealed(
                         encrypt(sanitisedValue),
                         sanitisedValue
                     )
                 )
             } else {
-                creditCardFormItemState.copy(cvv = UIHiddenState.Empty(encrypt(sanitisedValue)))
+                creditCardItemFormMutableState.copy(cvv = UIHiddenState.Empty(encrypt(sanitisedValue)))
             }
         }
     }
@@ -107,16 +107,16 @@ abstract class BaseCreditCardViewModel(
     fun onPinChanged(value: String) {
         val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(PIN_MAX_LENGTH)
         onUserEditedContent()
-        creditCardFormItemState = encryptionContextProvider.withEncryptionContext {
+        creditCardItemFormMutableState = encryptionContextProvider.withEncryptionContext {
             if (sanitisedValue.isNotBlank()) {
-                creditCardFormItemState.copy(
+                creditCardItemFormMutableState.copy(
                     pin = UIHiddenState.Revealed(
                         encrypt(sanitisedValue),
                         sanitisedValue
                     )
                 )
             } else {
-                creditCardFormItemState.copy(pin = UIHiddenState.Empty(encrypt(sanitisedValue)))
+                creditCardItemFormMutableState.copy(pin = UIHiddenState.Empty(encrypt(sanitisedValue)))
             }
         }
     }
@@ -125,7 +125,7 @@ abstract class BaseCreditCardViewModel(
         val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(6)
         val converted = adaptToProtoFormat(sanitisedValue)
         onUserEditedContent()
-        creditCardFormItemState = creditCardFormItemState.copy(expirationDate = converted)
+        creditCardItemFormMutableState = creditCardItemFormMutableState.copy(expirationDate = converted)
         validationErrorsState.update {
             it.toMutableSet().apply { remove(CreditCardValidationErrors.InvalidExpirationDate) }
         }
@@ -142,11 +142,11 @@ abstract class BaseCreditCardViewModel(
 
     fun onNoteChanged(value: String) {
         onUserEditedContent()
-        creditCardFormItemState = creditCardFormItemState.copy(note = value)
+        creditCardItemFormMutableState = creditCardItemFormMutableState.copy(note = value)
     }
 
     protected fun validateItem(): Boolean {
-        val validationErrors = creditCardFormItemState.validate()
+        val validationErrors = creditCardItemFormMutableState.validate()
         if (validationErrors.isNotEmpty()) {
             validationErrorsState.update { validationErrors }
             return false
@@ -160,8 +160,8 @@ abstract class BaseCreditCardViewModel(
     }
 
     fun onCVVFocusChanged(isFocused: Boolean) {
-        val state = creditCardFormItemState
-        creditCardFormItemState = encryptionContextProvider.withEncryptionContext {
+        val state = creditCardItemFormMutableState
+        creditCardItemFormMutableState = encryptionContextProvider.withEncryptionContext {
             val decryptedByteArray =
                 decrypt(state.cvv.encrypted.toEncryptedByteArray())
             when {
@@ -171,7 +171,7 @@ abstract class BaseCreditCardViewModel(
 
                 isFocused -> state.copy(
                     cvv = UIHiddenState.Revealed(
-                        encrypted = creditCardFormItemState.cvv.encrypted,
+                        encrypted = creditCardItemFormMutableState.cvv.encrypted,
                         clearText = decryptedByteArray.decodeToString()
                     )
                 )
@@ -182,8 +182,8 @@ abstract class BaseCreditCardViewModel(
     }
 
     fun onPinFocusChanged(isFocused: Boolean) {
-        val state = creditCardFormItemState
-        creditCardFormItemState = encryptionContextProvider.withEncryptionContext {
+        val state = creditCardItemFormMutableState
+        creditCardItemFormMutableState = encryptionContextProvider.withEncryptionContext {
             val decryptedByteArray = decrypt(state.pin.encrypted.toEncryptedByteArray())
             when {
                 decryptedByteArray.isEmpty() -> state.copy(pin = UIHiddenState.Empty(state.pin.encrypted))

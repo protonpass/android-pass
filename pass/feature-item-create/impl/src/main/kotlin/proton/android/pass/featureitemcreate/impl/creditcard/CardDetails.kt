@@ -28,7 +28,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 @Composable
 fun CardDetails(
     modifier: Modifier = Modifier,
-    creditCardFormItem: CreditCardFormItem,
+    creditCardItemFormState: CreditCardItemFormState,
     enabled: Boolean,
     validationErrors: PersistentSet<CreditCardValidationErrors>,
     onNameChanged: (String) -> Unit,
@@ -42,26 +42,26 @@ fun CardDetails(
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
-        CardHolderNameInput(value = creditCardFormItem.cardHolder, enabled = enabled, onChange = onNameChanged)
+        CardHolderNameInput(value = creditCardItemFormState.cardHolder, enabled = enabled, onChange = onNameChanged)
         PassDivider()
-        CardNumberInput(value = creditCardFormItem.number, enabled = enabled, onChange = onNumberChanged)
+        CardNumberInput(value = creditCardItemFormState.number, enabled = enabled, onChange = onNumberChanged)
         PassDivider()
         CardCVVInput(
-            value = creditCardFormItem.cvv,
+            value = creditCardItemFormState.cvv,
             enabled = enabled,
             onChange = onCVVChanged,
             onFocusChange = onCVVFocusChange
         )
         PassDivider()
         CardPinInput(
-            value = creditCardFormItem.pin,
+            value = creditCardItemFormState.pin,
             enabled = enabled,
             onChange = onPinChanged,
             onFocusChange = onPinFocusChange
         )
         PassDivider()
         CardExpirationDateInput(
-            value = creditCardFormItem.expirationDate,
+            value = creditCardItemFormState.expirationDate,
             enabled = enabled,
             hasError = validationErrors.contains(CreditCardValidationErrors.InvalidExpirationDate),
             onChange = onExpirationDateChanged

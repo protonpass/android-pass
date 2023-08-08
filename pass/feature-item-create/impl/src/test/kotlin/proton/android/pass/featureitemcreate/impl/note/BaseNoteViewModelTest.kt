@@ -60,13 +60,13 @@ internal class BaseNoteViewModelTest {
         val titleInput = "Title Changed"
         baseNoteViewModel.onTitleChange(titleInput)
 
-        assertThat(baseNoteViewModel.noteItem.title).isEqualTo(titleInput)
+        assertThat(baseNoteViewModel.noteItemFormState.title).isEqualTo(titleInput)
     }
 
     @Test
     fun `when the note has changed, the state should hold it`() = runTest {
         val noteInput = "Note Changed"
         baseNoteViewModel.onNoteChange(noteInput)
-        assertThat(baseNoteViewModel.noteItem.note).isEqualTo(noteInput)
+        assertThat(baseNoteViewModel.noteItemFormState.note).isEqualTo(noteInput)
     }
 }

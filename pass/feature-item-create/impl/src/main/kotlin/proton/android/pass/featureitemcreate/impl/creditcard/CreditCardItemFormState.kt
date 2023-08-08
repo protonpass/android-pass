@@ -29,7 +29,7 @@ import proton.pass.domain.ItemContents
 
 @Parcelize
 @Immutable
-data class CreditCardFormItem(
+data class CreditCardItemFormState(
     val title: String,
     val note: String,
     val cardHolder: String,
@@ -73,7 +73,7 @@ data class CreditCardFormItem(
     companion object {
         private val expirationDateRegex = Regex("^\\d{4}-(0[1-9]|1[0-2])\$")
 
-        fun default(encryptionContext: EncryptionContext) = CreditCardFormItem(
+        fun default(encryptionContext: EncryptionContext) = CreditCardItemFormState(
             title = "",
             note = "",
             cardHolder = "",

@@ -99,7 +99,7 @@ internal class CreateLoginViewModelTest {
             clipboardManager = clipboardManager,
             totpManager = totpManager,
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandle = TestSavedStateHandleProvider(),
+            savedStateHandleProvider = TestSavedStateHandleProvider(),
             encryptionContextProvider = TestEncryptionContextProvider(),
             createItemAndAlias = createItemAndAlias,
             observeVaults = observeVaults,

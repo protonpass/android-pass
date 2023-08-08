@@ -99,7 +99,7 @@ fun ManageVaultMemberRow(
             modifier = circleTextModifier,
             text = circleText,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
-            textColor = PassTheme.colors.interactionNormMajor1,
+            textColor = PassTheme.colors.interactionNormMajor2,
             shape = PassTheme.shapes.squircleMediumShape
         )
 

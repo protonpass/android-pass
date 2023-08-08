@@ -21,7 +21,7 @@ package proton.android.pass.featureitemcreate.impl.login
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 
 data class InitialCreateLoginUiState(
     val title: String? = null,
@@ -29,7 +29,7 @@ data class InitialCreateLoginUiState(
     val password: String? = null,
     val url: String? = null,
     val packageInfoUi: PackageInfoUi? = null,
-    val aliasItem: AliasItem? = null,
+    val aliasItemFormState: AliasItemFormState? = null,
     val navTotpUri: String? = null,
     val navTotpIndex: Int = -1
 )
@@ -53,7 +53,7 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
                     url to it.url,
                     packageName to it.packageInfoUi?.packageName,
                     appName to it.packageInfoUi?.appName,
-                    aliasItem to it.aliasItem,
+                    aliasItem to it.aliasItemFormState,
                     primaryTotp to it.navTotpUri,
                 )
             } else {
@@ -75,7 +75,7 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
                     password = values[password] as? String,
                     url = values[url] as? String,
                     packageInfoUi = packageInfoUi,
-                    aliasItem = values[aliasItem] as? AliasItem,
+                    aliasItemFormState = values[aliasItem] as? AliasItemFormState,
                     navTotpUri = values[primaryTotp] as? String
                 )
             } else {

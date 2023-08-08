@@ -26,6 +26,6 @@ sealed interface AliasDraftSavedState {
     object Unknown : AliasDraftSavedState
     data class Success(
         val shareId: ShareId,
-        val aliasItem: AliasItem
+        val aliasItemFormState: AliasItemFormState
     ) : AliasDraftSavedState
 }

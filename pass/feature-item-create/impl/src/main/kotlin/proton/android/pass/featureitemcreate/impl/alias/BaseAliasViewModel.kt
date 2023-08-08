@@ -19,9 +19,11 @@
 package proton.android.pass.featureitemcreate.impl.alias
 
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.SavedStateHandle
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -31,6 +33,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -39,21 +42,19 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 
 abstract class BaseAliasViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
-    savedStateHandle: SavedStateHandle
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val title: Option<String> = savedStateHandle
+    private val title: Option<String> = savedStateHandleProvider.get()
         .get<String>(AliasOptionalNavArgId.Title.key)
         .toOption()
     protected var isDraft: Boolean = false
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(
-        AliasItem(
-            title = title.value() ?: "",
-            prefix = AliasUtils.formatAlias(title.value() ?: "")
-        )
-    )
+    @OptIn(SavedStateHandleSaveableApi::class)
+    protected var aliasItemFormMutableState: AliasItemFormState by savedStateHandleProvider.get()
+        .saveable { mutableStateOf(AliasItemFormState.default(title)) }
+    val aliasItemFormState: AliasItemFormState get() = aliasItemFormMutableState
+
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.Loading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
@@ -69,32 +70,6 @@ abstract class BaseAliasViewModel(
     protected val selectedMailboxListState: MutableStateFlow<List<Int>> =
         MutableStateFlow(emptyList())
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-    private val aliasItemWrapperState = combine(
-        aliasItemState,
-        selectedMailboxListState,
-        aliasItemValidationErrorsState,
-    ) { aliasItem, selectedMailboxList, aliasItemValidationErrors ->
-        val mailboxes = aliasItem.mailboxes
-            .map { mailbox ->
-                mailbox.copy(
-                    selected = selectedMailboxList.contains(mailbox.model.id)
-                )
-            }
-            .toMutableList()
-        AliasItemWrapper(
-            aliasItem = aliasItem.copy(
-                mailboxes = mailboxes,
-                mailboxTitle = getMailboxTitle(mailboxes)
-            ),
-            aliasItemValidationErrors = aliasItemValidationErrors
-        )
-    }
-
-    private data class AliasItemWrapper(
-        val aliasItem: AliasItem,
-        val aliasItemValidationErrors: Set<AliasItemValidationErrors>
-    )
 
     private val eventWrapperState = combine(
         isItemSavedState,
@@ -113,15 +88,14 @@ abstract class BaseAliasViewModel(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val baseAliasUiState: StateFlow<BaseAliasUiState> = combine(
-        aliasItemWrapperState,
+        aliasItemValidationErrorsState,
         isLoadingState,
         eventWrapperState,
         hasUserEditedContentFlow
-    ) { aliasItemWrapper, isLoading, eventWrapper, hasUserEditedContent ->
+    ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent ->
         BaseAliasUiState(
-            aliasItem = aliasItemWrapper.aliasItem,
             isDraft = isDraft,
-            errorList = aliasItemWrapper.aliasItemValidationErrors,
+            errorList = aliasItemValidationErrors,
             isLoadingState = isLoading,
             itemSavedState = eventWrapper.itemSavedState,
             isAliasDraftSavedState = eventWrapper.isAliasDraftSaved,
@@ -142,7 +116,7 @@ abstract class BaseAliasViewModel(
 
     open fun onNoteChange(value: String) {
         onUserEditedContent()
-        aliasItemState.update { it.copy(note = value) }
+        aliasItemFormMutableState = aliasItemFormMutableState.copy(note = value)
     }
 
     open fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {
@@ -186,5 +160,4 @@ abstract class BaseAliasViewModel(
         viewModelScope.launch {
             snackbarDispatcher(snackbarMessage)
         }
-
 }

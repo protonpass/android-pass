@@ -30,7 +30,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 @Composable
 internal fun CreateAliasSection(
     modifier: Modifier = Modifier,
-    state: AliasItem,
+    state: AliasItemFormState,
     canEdit: Boolean,
     canSelectSuffix: Boolean,
     onAliasRequiredError: Boolean,
@@ -68,7 +68,7 @@ fun CreateAliasSectionPreview(
     PassTheme(isDark = input.first) {
         Surface {
             CreateAliasSection(
-                state = param.aliasItem,
+                state = param.aliasItemFormState,
                 canEdit = param.canEdit,
                 canSelectSuffix = true,
                 onAliasRequiredError = param.onAliasRequiredError,

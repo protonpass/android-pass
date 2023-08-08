@@ -84,10 +84,15 @@
     <string name="sharing_bottomsheet_resend_invite">Resend invite</string>
     <string name="sharing_bottomsheet_cancel_invite">Cancel invite</string>
 
+    <string name="sharing_transfer_ownership_confirm_title">Transfer ownership</string>
+    <string name="sharing_transfer_ownership_confirm_message">Are you sure you want to transfer your ownership to %s?</string>
+
     <string name="sharing_snackbar_cancel_invite_success">Invite canceled</string>
     <string name="sharing_snackbar_cancel_invite_error">Error cancelling invite</string>
     <string name="sharing_snackbar_resend_invite_success">Invite resent</string>
     <string name="sharing_snackbar_resend_invite_error">Error resending invite</string>
     <string name="sharing_snackbar_too_many_invites_sent">Address has been invited too many times</string>
+    <string name="sharing_snackbar_transfer_ownership_success">Ownership transferred</string>
+    <string name="sharing_snackbar_transfer_ownership_error">Error transferring ownership</string>
 
 </resources>

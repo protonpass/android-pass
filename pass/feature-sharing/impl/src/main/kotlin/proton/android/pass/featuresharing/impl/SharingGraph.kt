@@ -142,7 +142,8 @@ fun NavGraphBuilder.sharingGraph(
             .collectAsStateWithLifecycle()
         ManageVaultScreen(
             refresh = refresh,
-            onNavigateEvent = onNavigateEvent
+            onNavigateEvent = onNavigateEvent,
+            clearRefreshFlag = { it.savedStateHandle.remove<String>(REFRESH_MEMBER_LIST_FLAG) }
         )
     }
 

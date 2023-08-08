@@ -18,7 +18,11 @@
 
 package proton.android.pass.featureitemcreate.impl.alias
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
@@ -62,6 +66,7 @@ import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
+import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareError
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
@@ -105,7 +110,12 @@ open class CreateAliasViewModel @Inject constructor(
 
     private val navShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(navShareId)
 
-    private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
+        .saveable(stateSaver = OptionShareIdSaver) { mutableStateOf(None) }
+    private val selectedShareIdState: Flow<Option<ShareId>> =
+        snapshotFlow { selectedShareIdMutableState }
+
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults().distinctUntilChanged()
 
@@ -396,7 +406,7 @@ open class CreateAliasViewModel @Inject constructor(
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
         onUserEditedContent()
         isLoadingState.update { IsLoadingState.Loading }
-        selectedShareIdState.update { shareId.toOption() }
+        selectedShareIdMutableState = Some(shareId)
     }
 
     companion object {

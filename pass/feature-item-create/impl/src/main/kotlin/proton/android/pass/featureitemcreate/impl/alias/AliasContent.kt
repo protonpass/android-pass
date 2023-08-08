@@ -44,6 +44,7 @@ import proton.pass.domain.ShareId
 internal fun AliasContent(
     modifier: Modifier = Modifier,
     uiState: BaseAliasUiState,
+    aliasItemFormState: AliasItemFormState,
     selectedShareId: ShareId?,
     topBarActionName: String,
     isCreateMode: Boolean,
@@ -80,7 +81,7 @@ internal fun AliasContent(
     ) { padding ->
         CreateAliasForm(
             modifier = Modifier.padding(padding),
-            aliasItem = uiState.aliasItem,
+            aliasItemFormState = aliasItemFormState,
             isCreateMode = isCreateMode,
             isEditAllowed = isEditAllowed,
             isLoading = uiState.isLoadingState.value(),
@@ -105,8 +106,8 @@ internal fun AliasContent(
         SelectSuffixDialog(
             show = showSuffixDialog,
             canUpgrade = false,
-            suffixes = uiState.aliasItem.aliasOptions.suffixes.toImmutableList(),
-            selectedSuffix = uiState.aliasItem.selectedSuffix,
+            suffixes = aliasItemFormState.aliasOptions.suffixes.toImmutableList(),
+            selectedSuffix = aliasItemFormState.selectedSuffix,
             color = PassTheme.colors.aliasInteractionNorm,
             onSuffixChanged = { suffix ->
                 scope.launch {
@@ -122,9 +123,9 @@ internal fun AliasContent(
             onUpgrade = onUpgrade
         )
 
-        if (showMailboxDialog && uiState.aliasItem.mailboxes.isNotEmpty()) {
+        if (showMailboxDialog && aliasItemFormState.mailboxes.isNotEmpty()) {
             SelectMailboxesDialog(
-                mailboxes = uiState.aliasItem.mailboxes,
+                mailboxes = aliasItemFormState.mailboxes,
                 color = PassTheme.colors.aliasInteractionNorm,
                 canUpgrade = uiState.canUpgrade,
                 onMailboxesChanged = {

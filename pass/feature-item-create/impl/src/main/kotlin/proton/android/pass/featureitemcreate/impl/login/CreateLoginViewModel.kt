@@ -57,7 +57,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.common.ShareError
@@ -203,16 +203,17 @@ class CreateLoginViewModel @Inject constructor(
                 websites.add(initialContents.url)
             }
         }
-        aliasLocalItemState.update { initialContents.aliasItem.toOption() }
+        aliasLocalItemState.update { initialContents.aliasItemFormState.toOption() }
 
         val username = when {
             initialContents.username != null -> initialContents.username
-            initialContents.aliasItem?.aliasToBeCreated != null -> initialContents.aliasItem.aliasToBeCreated
+            initialContents.aliasItemFormState?.aliasToBeCreated != null ->
+                initialContents.aliasItemFormState.aliasToBeCreated
             initialUsername is Some -> initialUsername.value
             else -> currentValue.username
         }
 
-        if (initialContents.aliasItem?.aliasToBeCreated?.isNotEmpty() == true) {
+        if (initialContents.aliasItemFormState?.aliasToBeCreated?.isNotEmpty() == true) {
             canUpdateUsernameState.update { false }
         }
 
@@ -284,9 +285,9 @@ class CreateLoginViewModel @Inject constructor(
     private suspend fun performCreateItemAndAlias(
         userId: UserId,
         shareId: ShareId,
-        aliasItem: AliasItem
+        aliasItemFormState: AliasItemFormState
     ) {
-        val selectedSuffix = aliasItem.selectedSuffix
+        val selectedSuffix = aliasItemFormState.selectedSuffix
         if (selectedSuffix == null) {
             val message = "Empty suffix on create alias"
             PassLogger.w(TAG, message)
@@ -300,11 +301,11 @@ class CreateLoginViewModel @Inject constructor(
                 shareId = shareId,
                 itemContents = itemContentState.value,
                 newAlias = NewAlias(
-                    title = aliasItem.title,
-                    note = aliasItem.note,
-                    prefix = aliasItem.prefix,
-                    suffix = aliasItem.selectedSuffix.toDomain(),
-                    mailboxes = aliasItem.mailboxes
+                    title = aliasItemFormState.title,
+                    note = aliasItemFormState.note,
+                    prefix = aliasItemFormState.prefix,
+                    suffix = aliasItemFormState.selectedSuffix.toDomain(),
+                    mailboxes = aliasItemFormState.mailboxes
                         .filter { it.selected }
                         .map { it.model }
                         .map(AliasMailboxUiModel::toDomain)
@@ -322,7 +323,7 @@ class CreateLoginViewModel @Inject constructor(
             }
             telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
             telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
-            draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+            draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
             snackbarDispatcher(LoginCreated)
         }.onFailure {
             when (it) {

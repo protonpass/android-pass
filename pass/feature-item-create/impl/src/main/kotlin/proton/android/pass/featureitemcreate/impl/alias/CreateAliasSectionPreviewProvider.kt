@@ -28,42 +28,42 @@ class CreateAliasSectionPreviewProvider :
                 canEdit = true,
                 onAliasRequiredError = false,
                 onInvalidAliasError = false,
-                aliasItem = aliasItem("")
+                aliasItemFormState = aliasItem("")
             ),
             CreateAliasSectionPreviewParameter(
                 canEdit = true,
                 onAliasRequiredError = false,
                 onInvalidAliasError = false,
-                aliasItem = aliasItem("some.alias")
+                aliasItemFormState = aliasItem("some.alias")
             ),
             CreateAliasSectionPreviewParameter(
                 canEdit = true,
                 onAliasRequiredError = false,
                 onInvalidAliasError = false,
-                aliasItem = aliasItem("this.is.a.very.very.long.alias.that.should.appear.in.two.lines")
+                aliasItemFormState = aliasItem("this.is.a.very.very.long.alias.that.should.appear.in.two.lines")
             ),
             CreateAliasSectionPreviewParameter(
                 canEdit = false,
                 onAliasRequiredError = false,
                 onInvalidAliasError = false,
-                aliasItem = aliasItem("some.alias")
+                aliasItemFormState = aliasItem("some.alias")
             ),
             CreateAliasSectionPreviewParameter(
                 canEdit = true,
                 onAliasRequiredError = true,
                 onInvalidAliasError = false,
-                aliasItem = aliasItem("")
+                aliasItemFormState = aliasItem("")
             ),
             CreateAliasSectionPreviewParameter(
                 canEdit = true,
                 onAliasRequiredError = false,
                 onInvalidAliasError = true,
-                aliasItem = aliasItem("invalid!alias")
+                aliasItemFormState = aliasItem("invalid!alias")
             )
         )
 
 
-    private fun aliasItem(alias: String) = AliasItem(
+    private fun aliasItem(alias: String) = AliasItemFormState(
         prefix = alias,
         selectedSuffix = AliasSuffixUiModel(
             suffix = "@random.suffix",
@@ -76,7 +76,7 @@ class CreateAliasSectionPreviewProvider :
 }
 
 data class CreateAliasSectionPreviewParameter(
-    val aliasItem: AliasItem,
+    val aliasItemFormState: AliasItemFormState,
     val canEdit: Boolean,
     val onAliasRequiredError: Boolean,
     val onInvalidAliasError: Boolean

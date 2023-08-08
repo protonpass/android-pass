@@ -22,6 +22,7 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState.Companion.from
 import proton.pass.domain.CreditCardType
@@ -69,6 +70,18 @@ data class CreditCardItemFormState(
         pin = pin.toHiddenState(),
         type = type
     )
+
+    fun compare(other: CreditCardItemFormState, encryptionContext: EncryptionContext): Boolean =
+        title == other.title &&
+            note == other.note &&
+            cardHolder == other.cardHolder &&
+            number == other.number &&
+            encryptionContext.decrypt(cvv.encrypted.toEncryptedByteArray())
+                .contentEquals(encryptionContext.decrypt(other.cvv.encrypted.toEncryptedByteArray())) &&
+            expirationDate == other.expirationDate &&
+            encryptionContext.decrypt(pin.encrypted.toEncryptedByteArray())
+                .contentEquals(encryptionContext.decrypt(other.pin.encrypted.toEncryptedByteArray())) &&
+            type == other.type
 
     companion object {
         private val expirationDateRegex = Regex("^\\d{4}-(0[1-9]|1[0-2])\$")

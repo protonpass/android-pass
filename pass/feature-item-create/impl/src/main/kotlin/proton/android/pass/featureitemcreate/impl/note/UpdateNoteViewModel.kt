@@ -21,11 +21,11 @@ package proton.android.pass.featureitemcreate.impl.note
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -71,7 +71,6 @@ class UpdateNoteViewModel @Inject constructor(
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
         ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
-    private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
 
     private var _item: Item? = null
 
@@ -105,7 +104,7 @@ class UpdateNoteViewModel @Inject constructor(
     }
 
     val updateNoteUiState: StateFlow<UpdateNoteUiState> = combine(
-        navShareIdState,
+        flowOf(navShareId),
         baseNoteUiState,
         ::UpdateNoteUiState
     ).stateIn(

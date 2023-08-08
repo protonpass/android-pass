@@ -48,9 +48,11 @@ class TestBiometryManager @Inject constructor() : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus = biometryStatus
 
-    override fun launch(contextHolder: ClassHolder<Context>): Flow<BiometryResult> {
+    override fun launch(
+        contextHolder: ClassHolder<Context>,
+        biometryType: BiometryType
+    ): Flow<BiometryResult> {
         hasBeenCalled = true
         return resultFlow
     }
-
 }

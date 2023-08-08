@@ -110,7 +110,7 @@ fun CreateNoteScreen(
     ) {
         NoteContent(
             uiState = uiState.baseNoteUiState,
-            noteItem = viewModel.noteItem,
+            noteItemFormState = viewModel.noteItemFormState,
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(R.string.title_create_note),
             onUpClick = onExit,

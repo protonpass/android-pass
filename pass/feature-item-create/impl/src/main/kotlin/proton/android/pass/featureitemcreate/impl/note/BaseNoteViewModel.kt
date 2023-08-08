@@ -42,9 +42,9 @@ abstract class BaseNoteViewModel(
 ) : ViewModel() {
 
     @OptIn(SavedStateHandleSaveableApi::class)
-    protected var noteItemState: NoteItem by savedStateHandleProvider.get()
-        .saveable { mutableStateOf(NoteItem.Empty) }
-    val noteItem: NoteItem get() = noteItemState
+    protected var noteItemFormMutableState: NoteItemFormState by savedStateHandleProvider.get()
+        .saveable { mutableStateOf(NoteItemFormState.Empty) }
+    val noteItemFormState: NoteItemFormState get() = noteItemFormMutableState
 
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -76,7 +76,7 @@ abstract class BaseNoteViewModel(
 
     fun onTitleChange(value: String) {
         onUserEditedContent()
-        noteItemState = noteItemState.copy(title = value)
+        noteItemFormMutableState = noteItemFormMutableState.copy(title = value)
         noteItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(NoteItemValidationErrors.BlankTitle) }
         }
@@ -84,7 +84,7 @@ abstract class BaseNoteViewModel(
 
     fun onNoteChange(value: String) {
         onUserEditedContent()
-        noteItemState = noteItemState.copy(note = value)
+        noteItemFormMutableState = noteItemFormMutableState.copy(note = value)
     }
 
     protected fun onUserEditedContent() {

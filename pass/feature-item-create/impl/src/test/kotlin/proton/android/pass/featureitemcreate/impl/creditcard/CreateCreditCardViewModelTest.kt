@@ -131,7 +131,7 @@ class CreateCreditCardViewModelTest {
         )
         val titleInput = "Title input"
         instance.onTitleChange(titleInput)
-        assertThat(instance.creditCardFormItem.title).isEqualTo(titleInput)
+        assertThat(instance.creditCardItemFormState.title).isEqualTo(titleInput)
 
         createItem.sendItem(Result.success(item))
 

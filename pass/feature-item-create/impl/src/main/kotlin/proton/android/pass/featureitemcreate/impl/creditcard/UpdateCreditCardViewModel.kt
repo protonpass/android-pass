@@ -83,8 +83,8 @@ class UpdateCreditCardViewModel @Inject constructor(
                 val itemContents = encryptionContextProvider.withEncryptionContext {
                     item.toItemContents(this)
                 }
-                creditCardFormItemState =
-                    CreditCardFormItem(itemContents as ItemContents.CreditCard)
+                creditCardItemFormMutableState =
+                    CreditCardItemFormState(itemContents as ItemContents.CreditCard)
             }
             .onFailure {
                 PassLogger.w(TAG, it, "Error getting item by id")
@@ -108,7 +108,7 @@ class UpdateCreditCardViewModel @Inject constructor(
                 userId = userId,
                 shareId = navShareId,
                 item = item,
-                contents = creditCardFormItem.toItemContents()
+                contents = creditCardItemFormState.toItemContents()
             )
         }.onSuccess { item ->
             PassLogger.i(TAG, "Credit card successfully updated")

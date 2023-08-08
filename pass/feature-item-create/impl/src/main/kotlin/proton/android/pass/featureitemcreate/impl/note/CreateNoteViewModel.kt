@@ -145,7 +145,7 @@ class CreateNoteViewModel @Inject constructor(
     )
 
     fun createNote(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
-        val noteItem = noteItemState
+        val noteItem = noteItemFormMutableState
         val noteItemValidationErrors = noteItem.validate()
         if (noteItemValidationErrors.isNotEmpty()) {
             noteItemValidationErrorsState.update { noteItemValidationErrors }

@@ -56,14 +56,14 @@ fun UpdateCreditCardScreen(
             Box(modifier = modifier.fillMaxSize()) {
                 CreditCardContent(
                     state = uiState.baseState,
-                    creditCardFormItem = viewModel.creditCardFormItem,
+                    creditCardItemFormState = viewModel.creditCardItemFormState,
                     topBarActionName = stringResource(id = R.string.action_save),
                     titleSection = {
                         TitleSection(
                             modifier = Modifier
                                 .roundedContainerNorm()
                                 .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-                            value = viewModel.creditCardFormItem.title,
+                            value = viewModel.creditCardItemFormState.title,
                             requestFocus = true,
                             onTitleRequiredError = uiState.baseState.validationErrors
                                 .contains(BlankTitle),

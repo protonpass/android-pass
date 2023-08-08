@@ -25,7 +25,7 @@ import proton.pass.domain.ItemContents
 
 @Parcelize
 @Immutable
-data class NoteItem(
+data class NoteItemFormState(
     val title: String,
     val note: String
 ) : Parcelable {
@@ -41,7 +41,7 @@ data class NoteItem(
     )
 
     companion object {
-        val Empty = NoteItem(
+        val Empty = NoteItemFormState(
             title = "",
             note = ""
         )

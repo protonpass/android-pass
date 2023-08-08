@@ -49,7 +49,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -529,7 +529,7 @@ class CreateLoginScreenTest {
         val title = "Item title"
         val checker = CallChecker<Unit>()
 
-        val aliasItem = AliasItem(
+        val aliasItemFormState = AliasItemFormState(
             selectedSuffix = AliasSuffixUiModel(
                 aliasSuffix = AliasSuffix(
                     suffix = "some.suffix@test.random",
@@ -540,7 +540,7 @@ class CreateLoginScreenTest {
             )
         )
 
-        draftRepository.save(CreateAliasViewModel.KEY_DRAFT_ALIAS, aliasItem)
+        draftRepository.save(CreateAliasViewModel.KEY_DRAFT_ALIAS, aliasItemFormState)
         createItemAndAlias.setResult(Result.success(TestObserveItems.createLogin()))
 
         composeTestRule.apply {

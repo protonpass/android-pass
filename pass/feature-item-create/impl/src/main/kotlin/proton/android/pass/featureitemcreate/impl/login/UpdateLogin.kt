@@ -40,7 +40,7 @@ import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTri
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 
@@ -48,7 +48,7 @@ import proton.android.pass.featureitemcreate.impl.login.customfields.CustomField
 @Composable
 fun UpdateLogin(
     modifier: Modifier = Modifier,
-    draftAlias: AliasItem? = null,
+    draftAlias: AliasItemFormState? = null,
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
     onNavigate: (BaseLoginNavigation) -> Unit,

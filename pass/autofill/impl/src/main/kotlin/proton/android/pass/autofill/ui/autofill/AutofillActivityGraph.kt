@@ -136,7 +136,7 @@ fun NavGraphBuilder.autofillActivityGraph(
         initialCreateLoginUiState = InitialCreateLoginUiState(
             title = autofillAppState.title,
             url = autofillAppState.webDomain.value(),
-            aliasItem = null,
+            aliasItemFormState = null,
             packageInfoUi = autofillAppState.packageInfoUi.takeIf { autofillAppState.webDomain.isEmpty() },
         ),
         onNavigate = {

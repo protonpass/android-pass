@@ -21,11 +21,14 @@ package proton.android.pass.featureitemcreate.impl.alias
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.featureitemcreate.impl.alias.AliasUtils.areAllAliasCharactersValid
 
 @Parcelize
 @Immutable
-data class AliasItem(
+data class AliasItemFormState(
     val title: String = "",
     val prefix: String = "",
     val note: String = "",
@@ -62,7 +65,13 @@ data class AliasItem(
     companion object {
         const val MAX_PREFIX_LENGTH: Int = 40
 
-        val Empty = AliasItem()
+        fun default(title: Option<String>): AliasItemFormState = when (title) {
+            None -> AliasItemFormState()
+            is Some -> AliasItemFormState(
+                title = title.value,
+                prefix = AliasUtils.formatAlias(title.value)
+            )
+        }
     }
 }
 

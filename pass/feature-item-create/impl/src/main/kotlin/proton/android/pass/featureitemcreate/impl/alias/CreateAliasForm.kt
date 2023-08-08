@@ -37,7 +37,7 @@ import proton.android.pass.featureitemcreate.impl.R
 @Composable
 internal fun CreateAliasForm(
     modifier: Modifier = Modifier,
-    aliasItem: AliasItem,
+    aliasItemFormState: AliasItemFormState,
     isCreateMode: Boolean,
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
@@ -66,30 +66,30 @@ internal fun CreateAliasForm(
         titleSection()
         if (isCreateMode) {
             CreateAliasSection(
-                state = aliasItem,
+                state = aliasItemFormState,
                 onChange = onPrefixChange,
                 onSuffixClick = onSuffixClick,
                 canEdit = isEditAllowed,
-                canSelectSuffix = aliasItem.aliasOptions.suffixes.size > 1,
+                canSelectSuffix = aliasItemFormState.aliasOptions.suffixes.size > 1,
                 onAliasRequiredError = onAliasRequiredError,
                 onInvalidAliasError = onInvalidAliasError
             )
         } else {
             DisplayAliasSection(
-                state = aliasItem,
+                state = aliasItemFormState,
                 isLoading = isLoading
             )
         }
         MailboxSection(
             isBottomSheet = false,
-            mailboxes = aliasItem.mailboxes,
+            mailboxes = aliasItemFormState.mailboxes,
             isCreateMode = isCreateMode,
-            isEditAllowed = isEditAllowed && aliasItem.mailboxes.size > 1,
+            isEditAllowed = isEditAllowed && aliasItemFormState.mailboxes.size > 1,
             isLoading = isLoading,
             onMailboxClick = onMailboxClick
         )
         SimpleNoteSection(
-            value = aliasItem.note,
+            value = aliasItemFormState.note,
             enabled = isEditAllowed,
             onChange = onNoteChange
         )

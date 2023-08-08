@@ -46,7 +46,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
@@ -362,7 +362,7 @@ internal class CreateLoginViewModelTest {
         }
     }
 
-    private fun setTestAlias(): AliasItem {
+    private fun setTestAlias(): AliasItemFormState {
         val suffix = AliasSuffixUiModel(
             suffix = TestUtils.randomString(),
             signedSuffix = TestUtils.randomString(),
@@ -370,7 +370,7 @@ internal class CreateLoginViewModelTest {
             domain = TestUtils.randomString()
         )
         val mailbox = AliasMailboxUiModel(id = 1, email = TestUtils.randomString())
-        val aliasItem = AliasItem(
+        val aliasItemFormState = AliasItemFormState(
             title = TestUtils.randomString(),
             prefix = TestUtils.randomString(),
             note = TestUtils.randomString(),
@@ -383,8 +383,8 @@ internal class CreateLoginViewModelTest {
             mailboxes = listOf(SelectedAliasMailboxUiModel(mailbox, true)),
             aliasToBeCreated = TestUtils.randomString()
         )
-        instance.onAliasCreated(aliasItem)
-        return aliasItem
+        instance.onAliasCreated(aliasItemFormState)
+        return aliasItemFormState
     }
 
     private fun setInitialContents(): InitialCreateLoginUiState {

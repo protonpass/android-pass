@@ -62,7 +62,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.log.api.PassLogger
@@ -95,8 +95,8 @@ abstract class BaseLoginViewModel(
                 )
             }
         )
-    protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
-    private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
+    protected val aliasLocalItemState: MutableStateFlow<Option<AliasItemFormState>> = MutableStateFlow(None)
+    private val aliasDraftState: Flow<Option<AliasItemFormState>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
     private val focusedFieldFlow: MutableStateFlow<Option<LoginField>> = MutableStateFlow(None)
 
@@ -109,7 +109,7 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    private val aliasState: Flow<Option<AliasItem>> = combine(
+    private val aliasState: Flow<Option<AliasItemFormState>> = combine(
         aliasLocalItemState,
         aliasDraftState.onStart { emit(None) }
     ) { aliasItem, aliasDraft ->
@@ -158,7 +158,7 @@ abstract class BaseLoginViewModel(
         val loginItemValidationErrors: Set<LoginItemValidationErrors>,
         val canUpdateUsername: Boolean,
         val primaryEmail: String?,
-        val aliasItem: Option<AliasItem>
+        val aliasItemFormState: Option<AliasItemFormState>
     )
 
     protected val itemHadTotpState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -221,7 +221,7 @@ abstract class BaseLoginViewModel(
             focusLastWebsite = focusLastWebsite,
             canUpdateUsername = loginItemWrapper.canUpdateUsername,
             primaryEmail = loginItemWrapper.primaryEmail,
-            aliasItem = loginItemWrapper.aliasItem.value(),
+            aliasItemFormState = loginItemWrapper.aliasItemFormState.value(),
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState,
@@ -327,10 +327,10 @@ abstract class BaseLoginViewModel(
             snackbarDispatcher(snackbarMessage)
         }
 
-    fun onAliasCreated(aliasItem: AliasItem) {
+    fun onAliasCreated(aliasItemFormState: AliasItemFormState) {
         onUserEditedContent()
-        aliasLocalItemState.update { aliasItem.toOption() }
-        val alias = aliasItem.aliasToBeCreated
+        aliasLocalItemState.update { aliasItemFormState.toOption() }
+        val alias = aliasItemFormState.aliasToBeCreated
         if (alias != null) {
             itemContentState.update { it.copy(username = alias) }
             canUpdateUsernameState.update { false }
@@ -338,7 +338,7 @@ abstract class BaseLoginViewModel(
     }
 
     fun onClose() {
-        draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+        draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
         draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
     }
 
@@ -555,7 +555,7 @@ abstract class BaseLoginViewModel(
     fun onRemoveAlias() {
         onUserEditedContent()
         aliasLocalItemState.update { None }
-        draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+        draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
 
         itemContentState.update { it.copy(username = "") }
         canUpdateUsernameState.update { true }

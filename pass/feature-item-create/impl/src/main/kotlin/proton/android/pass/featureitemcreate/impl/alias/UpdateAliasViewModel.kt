@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.alias
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -39,6 +38,8 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -75,17 +76,17 @@ class UpdateAliasViewModel @Inject constructor(
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(snackbarDispatcher, savedStateHandle) {
+    savedStateHandleProvider: SavedStateHandleProvider
+) : BaseAliasViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
 
     private val navShareId: ShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
+        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
-        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
+        ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
     private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
 
     private var _item: Item? = null
@@ -124,7 +125,7 @@ class UpdateAliasViewModel @Inject constructor(
 
     override fun onTitleChange(value: String) {
         onUserEditedContent()
-        aliasItemState.update { it.copy(title = value) }
+        aliasItemFormMutableState = aliasItemFormState.copy(title = value)
         aliasItemValidationErrorsState.update {
             it.toMutableSet()
                 .apply { remove(AliasItemValidationErrors.BlankTitle) }
@@ -183,19 +184,17 @@ class UpdateAliasViewModel @Inject constructor(
                     }
                 }
 
-                aliasItemState.update {
-                    encryptionContextProvider.withEncryptionContext {
-                        it.copy(
-                            title = decrypt(item.title),
-                            note = decrypt(item.note),
-                            prefix = prefix,
-                            aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
-                            selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
-                            mailboxes = mailboxes,
-                            aliasToBeCreated = email,
-                            mailboxTitle = getMailboxTitle(mailboxes)
-                        )
-                    }
+                aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
+                    aliasItemFormState.copy(
+                        title = decrypt(item.title),
+                        note = decrypt(item.note),
+                        prefix = prefix,
+                        aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
+                        selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
+                        mailboxes = mailboxes,
+                        aliasToBeCreated = email,
+                        mailboxTitle = getMailboxTitle(mailboxes)
+                    )
                 }
             }
             .onError {
@@ -263,8 +262,7 @@ class UpdateAliasViewModel @Inject constructor(
             return false
         }
 
-        val aliasItem = aliasItemState.value
-        val aliasItemValidationErrors = aliasItem.validate(allowEmptyTitle = false)
+        val aliasItemValidationErrors = aliasItemFormState.validate(allowEmptyTitle = false)
         if (aliasItemValidationErrors.isNotEmpty()) {
             PassLogger.i(TAG, "alias item validation has failed: $aliasItemValidationErrors")
             aliasItemValidationErrorsState.update { aliasItemValidationErrors }
@@ -275,7 +273,7 @@ class UpdateAliasViewModel @Inject constructor(
 
     private fun createUpdateAliasBody(): UpdateAliasContent {
         val mailboxes = if (mailboxesChanged) {
-            val selectedMailboxes = baseAliasUiState.value.aliasItem
+            val selectedMailboxes = aliasItemFormState
                 .mailboxes
                 .filter { it.selected }
                 .map { it.model }
@@ -284,11 +282,10 @@ class UpdateAliasViewModel @Inject constructor(
         } else None
 
         val itemData = if (itemDataChanged) {
-            val aliasItem = aliasItemState.value
             Some(
                 UpdateAliasItemContent(
-                    title = aliasItem.title,
-                    note = aliasItem.note
+                    title = aliasItemFormState.title,
+                    note = aliasItemFormState.note
                 )
             )
         } else None

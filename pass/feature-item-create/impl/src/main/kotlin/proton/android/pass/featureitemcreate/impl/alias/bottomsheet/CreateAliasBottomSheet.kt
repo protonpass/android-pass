@@ -53,7 +53,7 @@ fun CreateAliasBottomSheet(
         LaunchedEffect(state.shareUiState) {
             if (state.shareUiState is ShareUiState.Success) {
                 val event = CreateAliasNavigation.CreatedFromBottomsheet(
-                    alias = isAliasDraftSaved.aliasItem.aliasToBeCreated ?: "",
+                    alias = isAliasDraftSaved.aliasItemFormState.aliasToBeCreated ?: "",
                 )
                 onNavigate(event)
                 viewModel.resetAliasDraftSavedState()
@@ -64,6 +64,7 @@ fun CreateAliasBottomSheet(
     CreateAliasBottomSheetContent(
         modifier = modifier,
         state = state.baseAliasUiState,
+        aliasItemFormState = viewModel.aliasItemFormState,
         onCancel = { onNavigate(CreateAliasNavigation.Close) },
         onConfirm = {
             val shareUiState = state.shareUiState

@@ -55,7 +55,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasAdvancedOptionsSection
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
@@ -73,6 +73,7 @@ import proton.android.pass.featureitemcreate.impl.alias.suffixes.SelectSuffixDia
 fun CreateAliasBottomSheetContent(
     modifier: Modifier = Modifier,
     state: BaseAliasUiState,
+    aliasItemFormState: AliasItemFormState,
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
     onPrefixChanged: (String) -> Unit,
@@ -102,8 +103,8 @@ fun CreateAliasBottomSheetContent(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(vertical = 8.dp),
-            prefix = state.aliasItem.prefix,
-            suffix = state.aliasItem.selectedSuffix?.suffix ?: "",
+            prefix = aliasItemFormState.prefix,
+            suffix = aliasItemFormState.selectedSuffix?.suffix ?: "",
             suffixColor = PassTheme.colors.loginInteractionNormMajor2,
             fontSize = 20.sp
         )
@@ -111,10 +112,10 @@ fun CreateAliasBottomSheetContent(
             AliasAdvancedOptionsSection(
                 enabled = true,
                 isBottomSheet = true,
-                prefix = state.aliasItem.prefix,
-                suffix = state.aliasItem.selectedSuffix,
+                prefix = aliasItemFormState.prefix,
+                suffix = aliasItemFormState.selectedSuffix,
                 isError = isBlankAliasError || isInvalidAliasError,
-                canSelectSuffix = state.aliasItem.aliasOptions.suffixes.size > 1,
+                canSelectSuffix = aliasItemFormState.aliasOptions.suffixes.size > 1,
                 onPrefixChanged = onPrefixChanged,
                 onSuffixClicked = { showSuffixDialog = true }
             )
@@ -135,9 +136,9 @@ fun CreateAliasBottomSheetContent(
         }
         MailboxSection(
             isBottomSheet = true,
-            mailboxes = state.aliasItem.mailboxes,
+            mailboxes = aliasItemFormState.mailboxes,
             isCreateMode = false,
-            isEditAllowed = state.aliasItem.mailboxes.size > 1,
+            isEditAllowed = aliasItemFormState.mailboxes.size > 1,
             isLoading = state.isLoadingState.value(),
             onMailboxClick = { showMailboxesDialog = true }
         )
@@ -157,9 +158,9 @@ fun CreateAliasBottomSheetContent(
             onUpgradeClick = { onNavigate(CreateAliasNavigation.Upgrade) }
         )
 
-        if (showMailboxesDialog && state.aliasItem.mailboxes.isNotEmpty()) {
+        if (showMailboxesDialog && aliasItemFormState.mailboxes.isNotEmpty()) {
             SelectMailboxesDialog(
-                mailboxes = state.aliasItem.mailboxes,
+                mailboxes = aliasItemFormState.mailboxes,
                 color = PassTheme.colors.loginInteractionNorm,
                 canUpgrade = state.canUpgrade,
                 onMailboxesChanged = {
@@ -173,8 +174,8 @@ fun CreateAliasBottomSheetContent(
         SelectSuffixDialog(
             show = showSuffixDialog,
             canUpgrade = false,
-            suffixes = state.aliasItem.aliasOptions.suffixes.toImmutableList(),
-            selectedSuffix = state.aliasItem.selectedSuffix,
+            suffixes = aliasItemFormState.aliasOptions.suffixes.toImmutableList(),
+            selectedSuffix = aliasItemFormState.selectedSuffix,
             color = PassTheme.colors.loginInteractionNorm,
             onSuffixChanged = {
                 onSuffixChanged(it)
@@ -195,50 +196,6 @@ fun CreateAliasBottomSheetContentPreview(
         Surface {
             CreateAliasBottomSheetContent(
                 state = BaseAliasUiState(
-                    aliasItem = AliasItem(
-                        title = "some title",
-                        prefix = "some alias",
-                        note = "",
-                        mailboxTitle = "mailbox title",
-                        aliasOptions = AliasOptionsUiModel(
-                            suffixes = listOf(
-                                AliasSuffixUiModel(
-                                    suffix = ".some@suffix.test",
-                                    signedSuffix = "",
-                                    isCustom = false,
-                                    domain = ""
-                                )
-                            ),
-                            mailboxes = listOf(
-                                AliasMailboxUiModel(
-                                    id = 1,
-                                    email = "some.mailbox@test.local"
-                                )
-                            )
-                        ),
-                        selectedSuffix = AliasSuffixUiModel(
-                            suffix = ".some@suffix.test",
-                            signedSuffix = "",
-                            isCustom = false,
-                            domain = ""
-                        ),
-                        mailboxes = listOf(
-                            SelectedAliasMailboxUiModel(
-                                model = AliasMailboxUiModel(
-                                    id = 1,
-                                    email = "some.mailbox@test.local"
-                                ),
-                                selected = true
-                            ),
-                            SelectedAliasMailboxUiModel(
-                                model = AliasMailboxUiModel(
-                                    id = 2,
-                                    email = "other.mailbox@test.local"
-                                ),
-                                selected = false
-                            ),
-                        )
-                    ),
                     isDraft = false,
                     errorList = emptySet(),
                     isLoadingState = IsLoadingState.NotLoading,
@@ -249,6 +206,50 @@ fun CreateAliasBottomSheetContentPreview(
                     hasUserEditedContent = false,
                     hasReachedAliasLimit = false,
                     canUpgrade = false
+                ),
+                aliasItemFormState = AliasItemFormState(
+                    title = "some title",
+                    prefix = "some alias",
+                    note = "",
+                    mailboxTitle = "mailbox title",
+                    aliasOptions = AliasOptionsUiModel(
+                        suffixes = listOf(
+                            AliasSuffixUiModel(
+                                suffix = ".some@suffix.test",
+                                signedSuffix = "",
+                                isCustom = false,
+                                domain = ""
+                            )
+                        ),
+                        mailboxes = listOf(
+                            AliasMailboxUiModel(
+                                id = 1,
+                                email = "some.mailbox@test.local"
+                            )
+                        )
+                    ),
+                    selectedSuffix = AliasSuffixUiModel(
+                        suffix = ".some@suffix.test",
+                        signedSuffix = "",
+                        isCustom = false,
+                        domain = ""
+                    ),
+                    mailboxes = listOf(
+                        SelectedAliasMailboxUiModel(
+                            model = AliasMailboxUiModel(
+                                id = 1,
+                                email = "some.mailbox@test.local"
+                            ),
+                            selected = true
+                        ),
+                        SelectedAliasMailboxUiModel(
+                            model = AliasMailboxUiModel(
+                                id = 2,
+                                email = "other.mailbox@test.local"
+                            ),
+                            selected = false
+                        ),
+                    )
                 ),
                 showAdvancedOptionsInitially = true,
                 onCancel = {},

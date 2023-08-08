@@ -31,12 +31,14 @@ fun ManageVaultScreen(
     modifier: Modifier = Modifier,
     refresh: Boolean,
     viewModel: ManageVaultViewModel = hiltViewModel(),
-    onNavigateEvent: (SharingNavigation) -> Unit
+    onNavigateEvent: (SharingNavigation) -> Unit,
+    clearRefreshFlag: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(refresh) {
         if (refresh) {
+            clearRefreshFlag()
             viewModel.refresh()
         }
     }

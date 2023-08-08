@@ -34,11 +34,11 @@ class AliasItemPreviewProvider : PreviewParameterProvider<AliasItemParameter> {
     companion object {
         private fun with(alias: String) =
             AliasItemParameter(
-                item = AliasItem(aliasToBeCreated = alias)
+                item = AliasItemFormState(aliasToBeCreated = alias)
             )
     }
 }
 
 data class AliasItemParameter(
-    val item: AliasItem
+    val item: AliasItemFormState
 )

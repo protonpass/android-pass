@@ -21,13 +21,13 @@ package proton.android.pass.featureitemcreate.impl.alias
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
@@ -46,7 +46,6 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.pass.domain.AliasOptions
@@ -94,40 +93,30 @@ class CreateAliasViewModelTest {
         viewModel = createAliasViewModel()
         setupAliasOptions()
         val titleInput = "Title changed"
-
         viewModel.onSuffixChange(suffix)
         viewModel.onTitleChange(titleInput)
-
         viewModel.createAliasUiState.test {
-            val item = awaitItem()
-            assertThat(item.baseAliasUiState.aliasItem.title).isEqualTo(titleInput)
-            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo("title-changed")
-            assertThat(item.baseAliasUiState.aliasItem.aliasToBeCreated).isEqualTo("title-changed${suffix.suffix}")
-
+            assertThat(viewModel.aliasItemFormState.title).isEqualTo(titleInput)
+            assertThat(viewModel.aliasItemFormState.prefix).isEqualTo("title-changed")
+            assertThat(viewModel.aliasItemFormState.aliasToBeCreated).isEqualTo("title-changed${suffix.suffix}")
             cancelAndIgnoreRemainingEvents()
         }
 
         val newAlias = "myalias"
         viewModel.onPrefixChange(newAlias)
-
         viewModel.createAliasUiState.test {
-            val item = awaitItem()
-            assertThat(item.baseAliasUiState.aliasItem.title).isEqualTo(titleInput)
-            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo(newAlias)
-            assertThat(item.baseAliasUiState.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
-
+            assertThat(viewModel.aliasItemFormState.title).isEqualTo(titleInput)
+            assertThat(viewModel.aliasItemFormState.prefix).isEqualTo(newAlias)
+            assertThat(viewModel.aliasItemFormState.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
             cancelAndIgnoreRemainingEvents()
         }
 
         val newTitle = "New title"
         viewModel.onTitleChange(newTitle)
-
         viewModel.createAliasUiState.test {
-            val item = awaitItem()
-            assertThat(item.baseAliasUiState.aliasItem.title).isEqualTo(newTitle)
-            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo(newAlias)
-            assertThat(item.baseAliasUiState.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
-
+            assertThat(viewModel.aliasItemFormState.title).isEqualTo(newTitle)
+            assertThat(viewModel.aliasItemFormState.prefix).isEqualTo(newAlias)
+            assertThat(viewModel.aliasItemFormState.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -139,12 +128,8 @@ class CreateAliasViewModelTest {
         val aliasInput = "alias-input"
         viewModel.onPrefixChange(aliasInput)
 
-        viewModel.createAliasUiState.test {
-            assertThat(awaitItem().baseAliasUiState.aliasItem)
-                .isEqualTo(BaseAliasUiState.Initial.aliasItem.copy(prefix = aliasInput))
-
-            cancelAndIgnoreRemainingEvents()
-        }
+        assertThat(viewModel.aliasItemFormState)
+            .isEqualTo(viewModel.aliasItemFormState.copy(prefix = aliasInput))
     }
 
     @Test
@@ -209,7 +194,7 @@ class CreateAliasViewModelTest {
         assertThat(events).isEmpty()
 
         // Draft should be stored
-        val draft = draftRepository.get<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+        val draft = draftRepository.get<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
             .first()
             .value()
         assertThat(draft).isNotNull()
@@ -223,20 +208,14 @@ class CreateAliasViewModelTest {
         setupAliasOptions()
         val titleInput = "ThiS iS a TeSt"
         viewModel.onTitleChange(titleInput)
-        viewModel.createAliasUiState.test {
-            val item = awaitItem()
-            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo("this-is-a-test")
-        }
+        assertThat(viewModel.aliasItemFormState.prefix).isEqualTo("this-is-a-test")
     }
 
     @Test
     fun `setInitialState properly formats alias`() = runTest {
         viewModel = createAliasViewModel(title = "ThiS.iS_a TeSt")
         setupAliasOptions()
-        viewModel.createAliasUiState.test {
-            val item = awaitItem()
-            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo("this.is_a-test")
-        }
+        assertThat(viewModel.aliasItemFormState.prefix).isEqualTo("this.is_a-test")
     }
 
     @Test
@@ -247,10 +226,7 @@ class CreateAliasViewModelTest {
         viewModel.onPrefixChange(firstPrefix)
         val titleInput = "$firstPrefix😀"
         viewModel.onPrefixChange(titleInput)
-        viewModel.createAliasUiState.test {
-            val item = awaitItem()
-            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo(firstPrefix)
-        }
+        assertThat(viewModel.aliasItemFormState.prefix).isEqualTo(firstPrefix)
     }
 
     private fun createAliasViewModel(title: String? = null, isDraft: Boolean = false) =
@@ -262,10 +238,10 @@ class CreateAliasViewModelTest {
             observeVaults = observeVaults,
             createAlias = createAlias,
             snackbarDispatcher = snackbarRepository,
-            savedStateHandle = TestSavedStateHandle.create().apply {
-                set(CommonNavArgId.ShareId.key, "123")
+            savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+                get()[CommonNavArgId.ShareId.key] = "123"
                 title?.let {
-                    set(AliasOptionalNavArgId.Title.key, title)
+                    get()[AliasOptionalNavArgId.Title.key] = title
                 }
             },
             telemetryManager = telemetryManager,
@@ -279,14 +255,6 @@ class CreateAliasViewModelTest {
         }
 
     private fun setupContentsForCreation() {
-        viewModel.aliasItemState.update {
-            AliasItem(
-                mailboxes = listOf(
-                    SelectedAliasMailboxUiModel(model = mailbox, selected = false)
-                )
-            )
-        }
-
         viewModel.onTitleChange(TEST_ALIAS_TITLE)
         viewModel.onPrefixChange(TEST_ALIAS_PREFIX)
         viewModel.onSuffixChange(suffix)

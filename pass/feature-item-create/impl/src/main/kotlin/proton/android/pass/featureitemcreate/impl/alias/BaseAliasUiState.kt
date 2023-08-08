@@ -27,7 +27,6 @@ import proton.pass.domain.ShareId
 
 @Immutable
 data class BaseAliasUiState(
-    val aliasItem: AliasItem,
     val isDraft: Boolean,
     val errorList: Set<AliasItemValidationErrors>,
     val isLoadingState: IsLoadingState,
@@ -41,7 +40,6 @@ data class BaseAliasUiState(
 ) {
     companion object {
         val Initial = BaseAliasUiState(
-            aliasItem = AliasItem.Empty,
             isDraft = false,
             errorList = emptySet(),
             isLoadingState = IsLoadingState.Loading,

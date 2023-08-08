@@ -38,11 +38,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleSection
-import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -76,6 +76,7 @@ fun UpdateAlias(
     ) {
         AliasContent(
             uiState = uiState.baseAliasUiState,
+            aliasItemFormState = viewModel.aliasItemFormState,
             selectedShareId = uiState.selectedShareId,
             topBarActionName = stringResource(id = R.string.action_save),
             isCreateMode = false,
@@ -92,7 +93,7 @@ fun UpdateAlias(
                     modifier = Modifier
                         .roundedContainerNorm()
                         .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-                    value = uiState.baseAliasUiState.aliasItem.title,
+                    value = viewModel.aliasItemFormState.title,
                     requestFocus = true,
                     onTitleRequiredError = uiState.baseAliasUiState.errorList.contains(
                         AliasItemValidationErrors.BlankTitle

@@ -386,25 +386,15 @@ class HomeViewModel @Inject constructor(
         shareListWrapperFlow,
         resultsFlow
     ) { shares, items ->
-        val checkCanModify: (ShareId) -> Boolean = { shareId ->
-            val share = shares.shares.get(shareId)
-            if (share != null) {
-                val permissions = share.role.toPermissions()
-                permissions.canUpdate()
-            } else {
-                false
-            }
-        }
-
         items.map { listOfGroupedItems ->
             listOfGroupedItems.map { groupedItemList ->
                 val mappedItems = groupedItemList.items.map { item ->
-                    item.copy(canModify = checkCanModify(item.shareId))
+                    item.copy(canModify = checkCanModify(shares, item.shareId))
                 }
                 groupedItemList.copy(items = mappedItems.toImmutableList())
             }.toImmutableList()
         }
-    }
+    }.flowOn(appDispatchers.default)
 
     val homeUiState: StateFlow<HomeUiState> = combineN(
         shareListWrapperFlow,
@@ -686,6 +676,9 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    private fun checkCanModify(listWrapper: ShareListWrapper, shareId: ShareId): Boolean =
+        listWrapper.shares[shareId]?.role?.toPermissions()?.canUpdate() ?: false
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

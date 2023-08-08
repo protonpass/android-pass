@@ -54,9 +54,11 @@ fun CreditCardOptionsBottomSheetContents(
         val list = mutableListOf(
             copyNumber { onCopyNumber(contents.number) },
             copyCvv { onCopyCvv(contents.cvv.encrypted) },
-            edit(itemUiModel, onEdit),
-            moveToTrash(itemUiModel, onMoveToTrash)
         )
+        if (itemUiModel.canModify) {
+            list += edit(itemUiModel, onEdit)
+            list += moveToTrash(itemUiModel, onMoveToTrash)
+        }
         if (isRecentSearch) {
             list.add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
         }

@@ -128,6 +128,7 @@ fun AliasDetail(
                             actionColor = PassTheme.colors.aliasInteractionNormMajor1,
                             iconColor = PassTheme.colors.aliasInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
+                            showActions = state.canPerformActions,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(state.itemUiModel)) },
                             onOptionsClick = {

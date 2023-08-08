@@ -69,11 +69,14 @@ fun AliasOptionsBottomSheetContents(
         )
         val list = mutableListOf(
             copyAlias(contents.aliasEmail, onCopyAlias),
-            edit(itemUiModel, onEdit),
-            moveToTrash(itemUiModel, onMoveToTrash)
         )
+
+        if (itemUiModel.canModify) {
+            list += edit(itemUiModel, onEdit)
+            list += moveToTrash(itemUiModel, onMoveToTrash)
+        }
         if (isRecentSearch) {
-            list.add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
+            list += removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch)
         }
         BottomSheetItemList(
             items = list.withDividers().toPersistentList()

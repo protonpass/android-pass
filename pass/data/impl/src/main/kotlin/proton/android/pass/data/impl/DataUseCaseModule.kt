@@ -84,6 +84,7 @@ import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
+import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
@@ -165,6 +166,7 @@ import proton.android.pass.data.impl.usecases.RestoreItemsImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
 import proton.android.pass.data.impl.usecases.SetVaultMemberPermissionImpl
+import proton.android.pass.data.impl.usecases.TransferVaultOwnershipImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
@@ -421,4 +423,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindResendInvite(impl: ResendInviteImpl): ResendInvite
+
+    @Binds
+    abstract fun bindTransferOwnership(impl: TransferVaultOwnershipImpl): TransferVaultOwnership
 }

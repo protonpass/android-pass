@@ -126,6 +126,7 @@ fun NoteDetail(
                             actionColor = PassTheme.colors.noteInteractionNormMajor1,
                             iconColor = PassTheme.colors.noteInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
+                            showActions = state.canPerformActions,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(state.itemUiModel)) },
                             onOptionsClick = {

@@ -94,6 +94,8 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
+import proton.pass.domain.canUpdate
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @Suppress("LargeClass")
@@ -306,6 +308,9 @@ class LoginDetailViewModel @Inject constructor(
 
                 val customFieldsList = if (!isPaid) emptyList() else customFields
 
+                val permissions = details.vault.role.toPermissions()
+                val canPerformItemActions = permissions.canUpdate()
+
                 LoginDetailUiState.Success(
                     itemUiModel = details.itemUiModel,
                     vault = vault,
@@ -316,6 +321,7 @@ class LoginDetailViewModel @Inject constructor(
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canMigrate = canMigrate,
+                    canPerformItemActions = canPerformItemActions,
                     customFields = customFieldsList.toPersistentList()
                 )
             }

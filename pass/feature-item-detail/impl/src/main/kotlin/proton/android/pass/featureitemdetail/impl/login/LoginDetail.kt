@@ -160,6 +160,7 @@ fun LoginDetail(
                             actionColor = PassTheme.colors.loginInteractionNormMajor1,
                             iconColor = PassTheme.colors.loginInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                            showActions = state.canPerformItemActions,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(state.itemUiModel)) },
                             onOptionsClick = {

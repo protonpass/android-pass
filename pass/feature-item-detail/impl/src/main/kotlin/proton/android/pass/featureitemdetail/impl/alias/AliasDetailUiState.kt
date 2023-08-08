@@ -42,6 +42,7 @@ sealed interface AliasDetailUiState {
         val isItemSentToTrash: Boolean,
         val isPermanentlyDeleted: Boolean,
         val isRestoredFromTrash: Boolean,
-        val canMigrate: Boolean
+        val canMigrate: Boolean,
+        val canPerformActions: Boolean
     ) : AliasDetailUiState
 }

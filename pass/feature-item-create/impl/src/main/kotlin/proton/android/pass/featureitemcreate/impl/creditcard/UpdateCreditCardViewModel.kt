@@ -77,19 +77,24 @@ class UpdateCreditCardViewModel @Inject constructor(
     private suspend fun setupInitialState() {
         isLoadingState.update { IsLoadingState.Loading }
         runCatching { getItemById(navShareId, navItemId).first() }
-            .onSuccess { item ->
-                itemOption = item.some()
-                val itemContents = encryptionContextProvider.withEncryptionContext {
-                    item.toItemContents(this)
-                }
-                creditCardItemFormMutableState =
-                    CreditCardItemFormState(itemContents as ItemContents.CreditCard)
-            }
+            .onSuccess(::onCreditCardItemReceived)
             .onFailure {
                 PassLogger.w(TAG, it, "Error getting item by id")
                 snackbarDispatcher(InitError)
             }
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    private fun onCreditCardItemReceived(item: Item) {
+        itemOption = item.some()
+        encryptionContextProvider.withEncryptionContext {
+            val default = CreditCardItemFormState.default(this)
+            if (creditCardItemFormState.compare(default, this)) {
+                val itemContents = item.toItemContents(this)
+                creditCardItemFormMutableState =
+                    CreditCardItemFormState(itemContents as ItemContents.CreditCard)
+            }
+        }
     }
 
     fun update() = viewModelScope.launch {

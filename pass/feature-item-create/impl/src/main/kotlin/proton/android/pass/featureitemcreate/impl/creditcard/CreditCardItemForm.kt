@@ -42,7 +42,7 @@ import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEv
 @Composable
 fun CreditCardItemForm(
     modifier: Modifier = Modifier,
-    creditCardFormItem: CreditCardFormItem,
+    creditCardItemFormState: CreditCardItemFormState,
     enabled: Boolean,
     validationErrors: PersistentSet<CreditCardValidationErrors>,
     titleSection: @Composable (ColumnScope.() -> Unit),
@@ -57,7 +57,7 @@ fun CreditCardItemForm(
     ) {
         titleSection()
         CardDetails(
-            creditCardFormItem = creditCardFormItem,
+            creditCardItemFormState = creditCardItemFormState,
             enabled = enabled,
             validationErrors = validationErrors,
             onNameChanged = { onEvent(OnNameChange(it)) },
@@ -69,7 +69,7 @@ fun CreditCardItemForm(
             onPinFocusChange = { onEvent(OnPinFocusChange(it)) },
         )
         SimpleNoteSection(
-            value = creditCardFormItem.note,
+            value = creditCardItemFormState.note,
             enabled = enabled,
             onChange = { onEvent(OnNoteChange(it)) }
         )

@@ -18,6 +18,7 @@
 
 package proton.android.pass.featurehome.impl.onboardingtips
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -45,8 +47,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
+import proton.android.pass.featurehome.impl.R
 
-@Suppress("MagicNumber")
 @Composable
 fun SpotlightCard(
     modifier: Modifier = Modifier,
@@ -73,7 +75,7 @@ fun SpotlightCard(
             Row(
                 modifier = Modifier.padding(16.dp, 32.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
@@ -122,8 +124,16 @@ fun SpotlightCardPreview(
             SpotlightCard(
                 backgroundColor = PassTheme.colors.loginInteractionNorm,
                 title = "A sample card",
-                body = "A sample body",
+                body = "A sample body with a very long text that can go multiline",
                 buttonText = "Click me",
+                image = {
+                    Image(
+                        modifier = Modifier.size(60.dp),
+                        alignment = Alignment.CenterEnd,
+                        painter = painterResource(id = R.drawable.spotlight_illustration),
+                        contentDescription = null
+                    )
+                },
                 onClick = {},
                 onDismiss = {}
             )

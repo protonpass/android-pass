@@ -44,6 +44,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import me.proton.core.presentation.R as CoreR
 
 @ExperimentalComposeUiApi
 @Composable
@@ -51,6 +52,7 @@ internal fun ItemDetailTopBar(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
     isInTrash: Boolean,
+    showActions: Boolean,
     iconColor: Color,
     iconBackgroundColor: Color,
     actionColor: Color,
@@ -71,51 +73,73 @@ internal fun ItemDetailTopBar(
             )
         },
         actions = {
-            Row(
-                modifier = Modifier
-                    .height(48.dp)
-                    .padding(12.dp, 4.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (!isInTrash) {
-                    LoadingCircleButton(
-                        color = actionColor,
-                        isLoading = isLoading,
-                        text = {
-                            Text(
-                                text = stringResource(R.string.top_bar_edit_button_text),
-                                style = ProtonTheme.typography.defaultSmallNorm,
-                                color = PassTheme.colors.textInvert
-                            )
-                        },
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_pencil),
-                                contentDescription = null,
-                                tint = PassTheme.colors.textInvert
-                            )
-                        },
-                        onClick = { onEditClick() }
-                    )
-                }
-                AnimatedVisibility(visible = !isLoading) {
-                    Circle(
-                        backgroundColor = iconBackgroundColor,
-                        onClick = { onOptionsClick() }
-                    ) {
-                        Icon(
-                            painter = painterResource(
-                                me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical
-                            ),
-                            contentDescription = stringResource(R.string.open_menu_icon_content_description),
-                            tint = iconColor
-                        )
-                    }
-                }
+            if (showActions) {
+                ItemTopBarActions(
+                    isInTrash = isInTrash,
+                    isLoading = isLoading,
+                    actionColor = actionColor,
+                    iconColor = iconColor,
+                    iconBackgroundColor = iconBackgroundColor,
+                    onEditClick = onEditClick,
+                    onOptionsClick = onOptionsClick
+                )
             }
         }
     )
+}
+
+@Composable
+private fun ItemTopBarActions(
+    modifier: Modifier = Modifier,
+    isInTrash: Boolean,
+    isLoading: Boolean,
+    actionColor: Color,
+    iconColor: Color,
+    iconBackgroundColor: Color,
+    onEditClick: () -> Unit,
+    onOptionsClick: () -> Unit
+) {
+    Row(
+        modifier = modifier
+            .height(48.dp)
+            .padding(horizontal = 12.dp, vertical = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (!isInTrash) {
+            LoadingCircleButton(
+                color = actionColor,
+                isLoading = isLoading,
+                text = {
+                    Text(
+                        text = stringResource(R.string.top_bar_edit_button_text),
+                        style = ProtonTheme.typography.defaultSmallNorm,
+                        color = PassTheme.colors.textInvert
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(CoreR.drawable.ic_proton_pencil),
+                        contentDescription = null,
+                        tint = PassTheme.colors.textInvert
+                    )
+                },
+                onClick = { onEditClick() }
+            )
+        }
+        AnimatedVisibility(visible = !isLoading) {
+            Circle(
+                backgroundColor = iconBackgroundColor,
+                onClick = { onOptionsClick() }
+            ) {
+                Icon(
+                    painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
+                    contentDescription = stringResource(R.string.open_menu_icon_content_description),
+                    tint = iconColor
+                )
+            }
+        }
+    }
 }
 
 class ThemeAndAccentColorProvider :
@@ -135,6 +159,7 @@ fun ItemDetailTopBarPreview(
                 actionColor = input.second.color,
                 iconBackgroundColor = input.second.closeBackgroundColor,
                 iconColor = input.second.color,
+                showActions = input.second.showActions,
                 onUpClick = {},
                 onEditClick = {},
                 onOptionsClick = {}

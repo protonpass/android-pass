@@ -37,16 +37,26 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
                         ItemDetailTopBarPreview(
                             isLoading = isLoading,
                             color = color,
-                            closeBackgroundColor = color.copy(alpha = 0.8f)
+                            closeBackgroundColor = color.copy(alpha = 0.8f),
+                            showActions = true
                         )
                     )
                 }
             }
+            yield(
+                ItemDetailTopBarPreview(
+                    isLoading = false,
+                    color = PassPalette.Lavender100,
+                    closeBackgroundColor = PassPalette.Lavender100.copy(alpha = 0.8f),
+                    showActions = false
+                )
+            )
         }
 }
 
 data class ItemDetailTopBarPreview(
     val isLoading: Boolean,
     val color: Color,
-    val closeBackgroundColor: Color
+    val closeBackgroundColor: Color,
+    val showActions: Boolean
 )

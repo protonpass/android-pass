@@ -133,7 +133,7 @@ class AliasItemValidationTest {
 
     @Test
     fun `prefix too long should return an error`() {
-        val item = itemWithContents(prefix = "a".times(AliasItem.MAX_PREFIX_LENGTH + 1))
+        val item = itemWithContents(prefix = "a".times(AliasItemFormState.MAX_PREFIX_LENGTH + 1))
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res.size).isEqualTo(1)
@@ -142,7 +142,7 @@ class AliasItemValidationTest {
 
     @Test
     fun `prefix exactly MAX_PREFIX_LENGTH long should not return error`() {
-        val item = itemWithContents(prefix = "a".times(AliasItem.MAX_PREFIX_LENGTH))
+        val item = itemWithContents(prefix = "a".times(AliasItemFormState.MAX_PREFIX_LENGTH))
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res).isEmpty()
@@ -152,8 +152,8 @@ class AliasItemValidationTest {
         title: String = "sometitle",
         prefix: String = "somealias",
         mailboxes: List<SelectedAliasMailboxUiModel>? = null
-    ): AliasItem {
-        return AliasItem(
+    ): AliasItemFormState {
+        return AliasItemFormState(
             title = title,
             prefix = prefix,
             mailboxes = mailboxes ?: listOf(SelectedAliasMailboxUiModel(AliasMailboxUiModel(1, "email"), true))

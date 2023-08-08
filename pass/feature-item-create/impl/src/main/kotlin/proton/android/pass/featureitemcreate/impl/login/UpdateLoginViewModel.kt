@@ -53,7 +53,7 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.datamodels.api.toContent
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.InitError
@@ -144,12 +144,12 @@ class UpdateLoginViewModel @Inject constructor(
         }
     )
 
-    fun setAliasItem(aliasItem: AliasItem) {
+    fun setAliasItem(aliasItemFormState: AliasItemFormState) {
         canUpdateUsernameState.update { false }
-        aliasLocalItemState.update { aliasItem.toOption() }
+        aliasLocalItemState.update { aliasItemFormState.toOption() }
         itemContentState.update {
             it.copy(
-                username = aliasItem.aliasToBeCreated ?: it.username
+                username = aliasItemFormState.aliasToBeCreated ?: it.username
             )
         }
     }
@@ -234,19 +234,19 @@ class UpdateLoginViewModel @Inject constructor(
     private suspend fun performCreateAlias(
         userId: UserId,
         shareId: ShareId,
-        aliasItem: AliasItem
+        aliasItemFormState: AliasItemFormState
     ): Result<Item> =
-        if (aliasItem.selectedSuffix != null) {
+        if (aliasItemFormState.selectedSuffix != null) {
             runCatching {
                 createAlias(
                     userId = userId,
                     shareId = shareId,
                     newAlias = NewAlias(
-                        title = aliasItem.title,
-                        note = aliasItem.note,
-                        prefix = aliasItem.prefix,
-                        suffix = aliasItem.selectedSuffix.toDomain(),
-                        mailboxes = aliasItem.mailboxes
+                        title = aliasItemFormState.title,
+                        note = aliasItemFormState.note,
+                        prefix = aliasItemFormState.prefix,
+                        suffix = aliasItemFormState.selectedSuffix.toDomain(),
+                        mailboxes = aliasItemFormState.mailboxes
                             .filter { it.selected }
                             .map { it.model }
                             .map(AliasMailboxUiModel::toDomain)

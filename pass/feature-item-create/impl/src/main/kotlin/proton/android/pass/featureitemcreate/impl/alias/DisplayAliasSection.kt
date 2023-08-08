@@ -45,7 +45,7 @@ import proton.android.pass.featureitemcreate.impl.R
 @Composable
 internal fun DisplayAliasSection(
     modifier: Modifier = Modifier,
-    state: AliasItem,
+    state: AliasItemFormState,
     isLoading: Boolean
 ) {
     Row(

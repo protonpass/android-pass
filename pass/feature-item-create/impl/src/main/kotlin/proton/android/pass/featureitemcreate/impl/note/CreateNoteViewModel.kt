@@ -18,7 +18,11 @@
 
 package proton.android.pass.featureitemcreate.impl.note
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
@@ -35,6 +39,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -47,6 +52,7 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareError
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemCreationError
@@ -85,7 +91,12 @@ class CreateNoteViewModel @Inject constructor(
             .map { ShareId(it) }
     private val navShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(navShareId)
 
-    private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
+        .saveable(stateSaver = OptionShareIdSaver) { mutableStateOf(None) }
+    private val selectedShareIdState: Flow<Option<ShareId>> =
+        snapshotFlow { selectedShareIdMutableState }
+
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults().distinctUntilChanged()
 
@@ -187,7 +198,7 @@ class CreateNoteViewModel @Inject constructor(
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
         onUserEditedContent()
-        selectedShareIdState.update { shareId.toOption() }
+        selectedShareIdMutableState = Some(shareId)
     }
 
     companion object {

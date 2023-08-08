@@ -151,7 +151,7 @@ class CreateCreditCardViewModel @Inject constructor(
                 createItem(
                     userId = userId,
                     shareId = vault.vault.shareId,
-                    itemContents = creditCardFormItem.toItemContents()
+                    itemContents = creditCardItemFormState.toItemContents()
                 )
             }.onSuccess { item ->
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()

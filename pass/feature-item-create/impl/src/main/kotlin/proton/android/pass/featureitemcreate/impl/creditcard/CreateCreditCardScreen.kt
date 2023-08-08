@@ -90,12 +90,12 @@ fun CreateCreditCardScreen(
             Box(modifier = modifier.fillMaxSize()) {
                 CreditCardContent(
                     state = uiState.baseState,
-                    creditCardFormItem = viewModel.creditCardFormItem,
+                    creditCardItemFormState = viewModel.creditCardItemFormState,
                     selectedShareId = selectedVault?.vault?.shareId,
                     topBarActionName = stringResource(id = R.string.title_create_credit_card),
                     titleSection = {
                         TitleVaultSelectionSection(
-                            titleValue = viewModel.creditCardFormItem.title,
+                            titleValue = viewModel.creditCardItemFormState.title,
                             showVaultSelector = showVaultSelector,
                             onTitleChanged = viewModel::onTitleChange,
                             onTitleRequiredError = uiState.baseState.validationErrors

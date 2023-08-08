@@ -21,6 +21,7 @@ package proton.android.pass.commonuimodels.api
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 import proton.pass.domain.Vault
 
 data class ShareUiModel(
@@ -29,7 +30,8 @@ data class ShareUiModel(
     val color: ShareColor,
     val icon: ShareIcon,
     val isPrimary: Boolean,
-    val isShared: Boolean
+    val isShared: Boolean,
+    val role: ShareRole
 ) {
     companion object {
         fun fromVault(vault: Vault) = ShareUiModel(
@@ -38,7 +40,8 @@ data class ShareUiModel(
             color = vault.color,
             icon = vault.icon,
             isPrimary = vault.isPrimary,
-            isShared = vault.isShared()
+            isShared = vault.isShared(),
+            role = vault.role
         )
     }
 }

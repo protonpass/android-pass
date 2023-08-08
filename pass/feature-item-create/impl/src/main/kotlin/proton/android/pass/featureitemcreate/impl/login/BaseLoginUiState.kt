@@ -24,7 +24,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
@@ -34,7 +34,7 @@ import proton.pass.domain.ShareId
 @Immutable
 data class BaseLoginUiState(
     val contents: ItemContents.Login,
-    val aliasItem: AliasItem?,
+    val aliasItemFormState: AliasItemFormState?,
     val validationErrors: PersistentSet<LoginItemValidationErrors>,
     val isLoadingState: IsLoadingState,
     val isItemSaved: ItemSavedState,
@@ -54,7 +54,7 @@ data class BaseLoginUiState(
             primaryTotp: HiddenState
         ) = BaseLoginUiState(
             contents = ItemContents.Login.create(password, primaryTotp),
-            aliasItem = null,
+            aliasItemFormState = null,
             validationErrors = persistentSetOf(),
             isLoadingState = IsLoadingState.NotLoading,
             isItemSaved = ItemSavedState.Unknown,

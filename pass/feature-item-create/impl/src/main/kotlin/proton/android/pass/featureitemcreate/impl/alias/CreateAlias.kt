@@ -37,7 +37,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
-import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -46,6 +45,7 @@ import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 
@@ -110,6 +110,7 @@ fun CreateAliasScreen(
     ) {
         AliasContent(
             uiState = uiState.baseAliasUiState,
+            aliasItemFormState = viewModel.aliasItemFormState,
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(id = R.string.title_create_alias),
             isCreateMode = true,
@@ -123,7 +124,7 @@ fun CreateAliasScreen(
             onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) },
             titleSection = {
                 TitleVaultSelectionSection(
-                    titleValue = uiState.baseAliasUiState.aliasItem.title,
+                    titleValue = viewModel.aliasItemFormState.title,
                     onTitleChanged = { viewModel.onTitleChange(it) },
                     onTitleRequiredError = uiState.baseAliasUiState.errorList.contains(BlankTitle),
                     enabled = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,

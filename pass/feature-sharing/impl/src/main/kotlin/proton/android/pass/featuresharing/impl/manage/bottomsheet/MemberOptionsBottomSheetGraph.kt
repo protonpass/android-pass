@@ -24,12 +24,14 @@ import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.inviteoptions.InviteOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberoptions.MemberOptionsBottomSheet
+import proton.android.pass.featuresharing.impl.transferownership.TransferOwnershipDialog
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.navigation.api.bottomSheet
+import proton.android.pass.navigation.api.dialog
 import proton.pass.domain.InviteId
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
@@ -72,6 +74,16 @@ object MemberOptionsBottomSheet : NavItem(
         "$baseRoute/${shareId.id}/${memberShareId.id}/${shareRole.value}/${NavParamEncoder.encode(memberEmail)}"
 }
 
+
+object ConfirmTransferOwnership : NavItem(
+    baseRoute = "sharing/manage/ownership/dialog",
+    navArgIds = listOf(CommonNavArgId.ShareId, MemberShareIdArg, MemberEmailArg),
+    navItemType = NavItemType.Dialog
+) {
+    fun buildRoute(shareId: ShareId, memberShareId: ShareId, memberEmail: String) =
+        "$baseRoute/${shareId.id}/${memberShareId.id}/${NavParamEncoder.encode(memberEmail)}"
+}
+
 fun NavGraphBuilder.memberOptionsBottomSheetGraph(
     onNavigateEvent: (SharingNavigation) -> Unit
 ) {
@@ -83,5 +95,10 @@ fun NavGraphBuilder.memberOptionsBottomSheetGraph(
     bottomSheet(MemberOptionsBottomSheet) {
         BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(refresh = false)) }
         MemberOptionsBottomSheet(onNavigate = onNavigateEvent)
+    }
+
+    dialog(ConfirmTransferOwnership) {
+        BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(refresh = false)) }
+        TransferOwnershipDialog(onNavigate = onNavigateEvent)
     }
 }

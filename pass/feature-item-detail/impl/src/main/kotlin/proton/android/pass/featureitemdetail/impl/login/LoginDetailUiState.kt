@@ -46,6 +46,7 @@ sealed interface LoginDetailUiState {
         val isPermanentlyDeleted: Boolean,
         val isRestoredFromTrash: Boolean,
         val canMigrate: Boolean,
+        val canPerformItemActions: Boolean,
         val customFields: ImmutableList<CustomFieldUiContent>
     ) : LoginDetailUiState
 }

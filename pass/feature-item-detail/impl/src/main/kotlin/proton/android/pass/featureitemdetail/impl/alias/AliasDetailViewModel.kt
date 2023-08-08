@@ -64,6 +64,8 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
+import proton.pass.domain.canUpdate
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel
@@ -124,6 +126,9 @@ class AliasDetailViewModel @Inject constructor(
                     vault?.isPrimary == true -> false
                     else -> true
                 }
+
+                val permissions = details.vault.role.toPermissions()
+                val canPerformItemActions = permissions.canUpdate()
                 AliasDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {
                         details.item.toUiModel(this)
@@ -136,7 +141,8 @@ class AliasDetailViewModel @Inject constructor(
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
-                    canMigrate = canMigrate
+                    canMigrate = canMigrate,
+                    canPerformActions = canPerformItemActions
                 )
             }
         }

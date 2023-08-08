@@ -33,11 +33,13 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
@@ -88,7 +90,7 @@ class UpdateAliasViewModel @Inject constructor(
     private val navItemId: ItemId =
         ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
 
-    private var _item: Item? = null
+    private var itemOption: Option<Item> = None
 
     private var itemDataChanged = false
     private var mailboxesChanged = false
@@ -134,7 +136,7 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     private suspend fun setupInitialState() {
-        if (_item != null) return
+        if (itemOption != None) return
         isLoadingState.update { IsLoadingState.Loading }
 
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
@@ -150,7 +152,7 @@ class UpdateAliasViewModel @Inject constructor(
         runCatching {
             itemRepository.getById(userId, shareId, itemId)
         }.onSuccess { item ->
-            _item = item
+            itemOption = item.some()
             aliasRepository.getAliasDetails(userId, shareId, itemId)
                 .asResultWithoutLoading()
                 .collect { onAliasDetails(it, item) }
@@ -222,21 +224,22 @@ class UpdateAliasViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.Loading }
 
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null) {
+        val item = itemOption
+        if (userId != null && item is Some) {
             runCatching {
                 updateAliasUseCase(
                     userId = userId,
-                    item = _item!!,
+                    item = item.value,
                     content = body
                 )
-            }.onSuccess { item ->
+            }.onSuccess { newItem ->
                 PassLogger.i(TAG, "Alias successfully updated")
                 isItemSavedState.update {
                     val itemUiModel = encryptionContextProvider.withEncryptionContext {
-                        item.toUiModel(this)
+                        newItem.toUiModel(this)
                     }
                     ItemSavedState.Success(
-                        itemId = item.id,
+                        itemId = newItem.id,
                         item = itemUiModel
                     )
                 }

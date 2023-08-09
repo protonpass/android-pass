@@ -46,6 +46,7 @@ import proton.pass.domain.Plan
 import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
 import javax.inject.Inject
@@ -238,6 +239,49 @@ class SelectVaultBottomSheetTest {
         }
 
         assertEquals(shareIdForIndex(0), checker.memory)
+    }
+
+    @Test
+    fun cannotSelectReadOnlyVault() {
+        setupPlan(true, PlanType.Paid("", ""))
+        val vaults = listOf(
+            VaultWithItemCount(
+                vault = Vault(
+                    shareId = shareIdForIndex(0),
+                    name = vaultNameForIndex(0),
+                    isPrimary = true
+                ),
+                activeItemCount = 1,
+                trashedItemCount = 1
+            ),
+            VaultWithItemCount(
+                vault = Vault(
+                    shareId = shareIdForIndex(1),
+                    name = vaultNameForIndex(1),
+                    isPrimary = false,
+                    role = ShareRole.Read
+                ),
+                activeItemCount = 1,
+                trashedItemCount = 1
+            )
+        )
+        savedStateHandle.get()[SelectedVaultArg.key] = shareIdForIndex(0).id
+        observeVaultsWithItemCount.sendResult(Result.success(vaults))
+
+
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    SelectVaultBottomsheet(
+                        onNavigate = {}
+                    )
+                }
+            }
+
+            val otherVaultRow = hasText(vaultNameForIndex(1))
+            waitUntilExists(otherVaultRow)
+            onNode(otherVaultRow).assertHasNoClickAction()
+        }
     }
 
     private fun setupVaults(count: Int, primaryIndex: Int = 0) {

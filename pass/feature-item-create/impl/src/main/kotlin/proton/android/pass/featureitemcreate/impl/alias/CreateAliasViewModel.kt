@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -109,19 +108,23 @@ open class CreateAliasViewModel @Inject constructor(
     private val selectedSuffixState: MutableStateFlow<Option<AliasSuffixUiModel>> =
         MutableStateFlow(None)
 
-    private val navShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(navShareId)
-
     @OptIn(SavedStateHandleSaveableApi::class)
     private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
         .saveable(stateSaver = OptionShareIdSaver) { mutableStateOf(None) }
-    private val selectedShareIdState: Flow<Option<ShareId>> =
-        snapshotFlow { selectedShareIdMutableState }.filterNotNull().onEmpty { emit(None) }
+    private val selectedShareIdState: StateFlow<Option<ShareId>> =
+        snapshotFlow { selectedShareIdMutableState }
+            .filterNotNull()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = None
+            )
 
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults().distinctUntilChanged()
 
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
-        navShareIdState,
+        flowOf(navShareId),
         selectedShareIdState,
         observeAllVaultsFlow.asLoadingResult(),
         canPerformPaidAction().asLoadingResult(),

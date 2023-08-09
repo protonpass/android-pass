@@ -29,5 +29,8 @@ enum class AutofillItemOptionsSnackbarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     SentToTrashSuccess(R.string.snackbar_item_move_to_trash_success, SnackbarType.SUCCESS),
-    SentToTrashError(R.string.snackbar_item_move_to_trash_error, SnackbarType.ERROR)
+    SentToTrashError(R.string.snackbar_item_move_to_trash_error, SnackbarType.ERROR),
+    UsernameCopiedToClipboard(R.string.snackbar_item_copy_username_success, SnackbarType.SUCCESS, isClipboard = true),
+    PasswordCopiedToClipboard(R.string.snackbar_item_copy_password_success, SnackbarType.SUCCESS, isClipboard = true),
+    CopyToClipboardError(R.string.snackbar_item_copy_clipboard_error, SnackbarType.ERROR),
 }

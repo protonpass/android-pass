@@ -101,6 +101,7 @@ class AutofillItemOptionsViewModel @Inject constructor(
     fun onCopyUsername() = viewModelScope.launch {
         getLoginItem().onSuccess {
             clipboardManager.copyToClipboard(it.username)
+            eventFlow.update { AutofillItemOptionsEvent.Close }
             snackbarDispatcher(AutofillItemOptionsSnackbarMessage.UsernameCopiedToClipboard)
         }.onFailure {
             snackbarDispatcher(AutofillItemOptionsSnackbarMessage.CopyToClipboardError)
@@ -113,7 +114,8 @@ class AutofillItemOptionsViewModel @Inject constructor(
                 decrypt(it.password)
             }
             clipboardManager.copyToClipboard(password, isSecure = true)
-            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.UsernameCopiedToClipboard)
+            eventFlow.update { AutofillItemOptionsEvent.Close }
+            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.PasswordCopiedToClipboard)
         }.onFailure {
             snackbarDispatcher(AutofillItemOptionsSnackbarMessage.CopyToClipboardError)
         }

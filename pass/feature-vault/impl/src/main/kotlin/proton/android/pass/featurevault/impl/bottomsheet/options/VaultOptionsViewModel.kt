@@ -82,11 +82,11 @@ class VaultOptionsViewModel @Inject constructor(
         val vaultAccessData = canManageVaultAccess(selectedVault)
 
         // Only show share if it is not already shared
-        val showShare = canShare && !selectedVault.isShared()
+        val showShare = canShare && !selectedVault.shared
 
         // Only show manageVault and viewMembers if vault has not already been shared
-        val showManageAccess = selectedVault.isShared() && vaultAccessData.canManageAccess
-        val showViewMembers = selectedVault.isShared() && vaultAccessData.canViewMembers
+        val showManageAccess = selectedVault.shared && vaultAccessData.canManageAccess
+        val showViewMembers = selectedVault.shared && vaultAccessData.canViewMembers
         VaultOptionsUiState.Success(
             shareId = navShareId,
             showEdit = canEdit,

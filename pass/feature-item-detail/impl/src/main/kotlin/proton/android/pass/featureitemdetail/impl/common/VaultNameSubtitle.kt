@@ -62,8 +62,8 @@ fun VaultNameSubtitle(
 ) {
     if (vault == null) return
 
-    val vaultText = remember(vault.members) {
-        if (vault.isShared()) {
+    val vaultText = remember(vault.shared, vault.members) {
+        if (vault.shared) {
             buildAnnotatedString {
                 append(vault.name)
                 append(" • ")
@@ -83,7 +83,7 @@ fun VaultNameSubtitle(
                 shape = RoundedCornerShape(24.dp)
             )
             .applyIf(
-                condition = vault.isShared(),
+                condition = vault.shared,
                 ifTrue = {
                     background(
                         color = vault.color.toColor(isBackground = true),
@@ -127,7 +127,8 @@ fun VaultNameSubtitlePreview(
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
                     isPrimary = false,
-                    members = members
+                    members = members,
+                    shared = input.second
                 ),
                 onClick = {}
             )

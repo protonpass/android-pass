@@ -35,11 +35,9 @@ val OptionShareIdSaver: Saver<Option<ShareId>, Any> = run {
             }
         },
         restore = { values ->
-            if (values.isNotEmpty()) {
-                Some(ShareId(values[shareId] as String))
-            } else {
-                None
-            }
+            values[shareId]
+                ?.let { Some(ShareId(it as String)) }
+                ?: None
         }
     )
 }

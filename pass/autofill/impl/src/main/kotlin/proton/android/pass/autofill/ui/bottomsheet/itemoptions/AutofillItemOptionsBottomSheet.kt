@@ -42,8 +42,9 @@ fun AutofillItemOptionsBottomSheet(
     AutofillItemOptionsBottomSheetContent(
         modifier = modifier,
         isLoading = state.isLoading.value(),
-        onTrash = {
-            viewModel.onTrash()
-        }
+        canModify = state.canModify,
+        onTrash = viewModel::onTrash,
+        onCopyUsername = viewModel::onCopyUsername,
+        onCopyPassword = viewModel::onCopyPassword
     )
 }

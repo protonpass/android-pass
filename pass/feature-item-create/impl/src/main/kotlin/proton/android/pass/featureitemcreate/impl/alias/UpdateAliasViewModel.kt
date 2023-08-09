@@ -160,8 +160,7 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     private suspend fun onAliasDetails(result: LoadingResult<AliasDetails>, item: Item) {
-        result
-            .map(::AliasDetailsUiModel)
+        result.map(::AliasDetailsUiModel)
             .onSuccess { details ->
                 val alias = item.itemType as ItemType.Alias
                 val email = alias.aliasEmail
@@ -184,11 +183,8 @@ class UpdateAliasViewModel @Inject constructor(
                         mailboxes.filter { it.selected }.map { it.model.id }
                     }
                 }
-
-                aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
-                    aliasItemFormState.copy(
-                        title = decrypt(item.title),
-                        note = decrypt(item.note),
+                if (aliasItemFormState.title.isNotBlank() || aliasItemFormState.note.isNotBlank()) {
+                    aliasItemFormMutableState = aliasItemFormState.copy(
                         prefix = prefix,
                         aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
                         selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
@@ -196,6 +192,19 @@ class UpdateAliasViewModel @Inject constructor(
                         aliasToBeCreated = email,
                         mailboxTitle = getMailboxTitle(mailboxes)
                     )
+                } else {
+                    aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
+                        aliasItemFormState.copy(
+                            title = decrypt(item.title),
+                            note = decrypt(item.note),
+                            prefix = prefix,
+                            aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
+                            selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
+                            mailboxes = mailboxes,
+                            aliasToBeCreated = email,
+                            mailboxTitle = getMailboxTitle(mailboxes)
+                        )
+                    }
                 }
             }
             .onError {

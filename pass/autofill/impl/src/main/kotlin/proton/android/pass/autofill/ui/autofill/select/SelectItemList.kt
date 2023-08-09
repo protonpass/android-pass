@@ -18,6 +18,8 @@
 
 package proton.android.pass.autofill.ui.autofill.select
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -42,6 +44,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 fun SelectItemList(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
+    scrollState: LazyListState = rememberLazyListState(),
     onScrolledToTop: () -> Unit,
     onItemClicked: (ItemUiModel) -> Unit,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
@@ -52,6 +55,7 @@ fun SelectItemList(
 
     ItemsList(
         modifier = modifier,
+        scrollableState = scrollState,
         items = listUiState.items.items,
         shares = listUiState.shares,
         shouldScrollToTop = uiState.listUiState.shouldScrollToTop,

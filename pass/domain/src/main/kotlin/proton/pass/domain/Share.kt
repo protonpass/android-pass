@@ -42,5 +42,6 @@ data class Share(
     val icon: ShareIcon,
     val shareRole: ShareRole,
     val isOwner: Boolean,
-    val memberCount: Int = 1
+    val memberCount: Int = 1,
+    val shared: Boolean = false
 )

@@ -19,12 +19,15 @@
 package proton.android.pass.autofill.ui.autofill.select
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.autofill.service.R
@@ -56,6 +59,18 @@ internal fun SelectItemScreenContent(
 ) {
     var showAssociateDialog by remember { mutableStateOf(false) }
     var itemClicked by remember { mutableStateOf<Option<ItemUiModel>>(None) }
+    val verticalScroll = rememberLazyListState()
+    var showFab by remember { mutableStateOf(true) }
+
+    LaunchedEffect(verticalScroll) {
+        var prev = 0
+        snapshotFlow { verticalScroll.firstVisibleItemIndex }
+            .collect {
+                showFab = it <= prev
+                prev = it
+            }
+    }
+
     if (showAssociateDialog) {
         AssociateAutofillItemDialog(
             itemUiModel = itemClicked.value(),
@@ -79,6 +94,7 @@ internal fun SelectItemScreenContent(
         modifier = modifier,
         floatingActionButton = {
             PassFloatingActionButton(
+                visible = showFab,
                 onClick = { onNavigate(SelectItemNavigation.AddItem) }
             )
         },
@@ -115,6 +131,7 @@ internal fun SelectItemScreenContent(
         SelectItemList(
             modifier = Modifier.padding(padding),
             uiState = uiState,
+            scrollState = verticalScroll,
             onScrolledToTop = onScrolledToTop,
             onItemOptionsClicked = onItemOptionsClicked,
             onItemClicked = {

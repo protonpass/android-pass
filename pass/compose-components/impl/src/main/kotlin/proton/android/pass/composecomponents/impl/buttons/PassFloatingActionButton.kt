@@ -18,6 +18,9 @@
 
 package proton.android.pass.composecomponents.impl.buttons
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -34,18 +37,25 @@ import proton.android.pass.composecomponents.impl.R
 @Composable
 fun PassFloatingActionButton(
     modifier: Modifier = Modifier,
+    visible: Boolean = true,
     onClick: () -> Unit
 ) {
-    FloatingActionButton(
-        modifier = modifier,
-        backgroundColor = PassTheme.colors.interactionNormMajor1,
-        contentColor = PassTheme.colors.textInvert,
-        onClick = onClick
+    AnimatedVisibility(
+        visible = visible,
+        enter = slideInVertically { it * 2 },
+        exit = slideOutVertically { it * 2 }
     ) {
-        Icon(
-            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
-            contentDescription = stringResource(R.string.add_item_icon_content_description),
-        )
+        FloatingActionButton(
+            modifier = modifier,
+            backgroundColor = PassTheme.colors.interactionNormMajor1,
+            contentColor = PassTheme.colors.textInvert,
+            onClick = onClick
+        ) {
+            Icon(
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
+                contentDescription = stringResource(R.string.add_item_icon_content_description),
+            )
+        }
     }
 }
 

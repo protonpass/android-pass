@@ -29,12 +29,14 @@ sealed interface AutofillItemOptionsEvent {
 @Stable
 data class AutofillItemOptionsUiState(
     val isLoading: IsLoadingState,
-    val event: AutofillItemOptionsEvent
+    val event: AutofillItemOptionsEvent,
+    val canModify: Boolean
 ) {
     companion object {
         val Initial = AutofillItemOptionsUiState(
             isLoading = IsLoadingState.NotLoading,
-            event = AutofillItemOptionsEvent.Unknown
+            event = AutofillItemOptionsEvent.Unknown,
+            canModify = false
         )
     }
 }

@@ -99,6 +99,10 @@ class SelectVaultViewModel @Inject constructor(
             val vaultsList = vaults.map { vault ->
                 val permissions = vault.vault.role.toPermissions()
                 when {
+                    vault.vault.isPrimary -> VaultWithStatus(
+                        vault = vault,
+                        status = VaultStatus.Selectable
+                    )
                     !canSelectOtherVault -> VaultWithStatus(
                         vault = vault,
                         status = VaultStatus.Disabled(VaultStatus.Reason.Downgraded)

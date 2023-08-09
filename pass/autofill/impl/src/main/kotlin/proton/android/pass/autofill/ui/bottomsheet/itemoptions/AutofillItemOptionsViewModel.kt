@@ -22,27 +22,43 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.flatMap
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ItemId
+import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
+import proton.pass.domain.canUpdate
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel
 class AutofillItemOptionsViewModel @Inject constructor(
     private val trashItem: TrashItem,
     private val savedStateHandle: SavedStateHandle,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val getItemById: GetItemById,
+    private val clipboardManager: ClipboardManager,
+    private val encryptionContextProvider: EncryptionContextProvider,
+    getVaultById: GetVaultById
 ) : ViewModel() {
 
     private val shareId = ShareId(getNavArg(CommonNavArgId.ShareId.key))
@@ -53,15 +69,16 @@ class AutofillItemOptionsViewModel @Inject constructor(
     private val loadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
+    private val canModifyFlow: Flow<Boolean> = getVaultById(shareId = shareId)
+        .map { vault -> vault.role.toPermissions().canUpdate() }
+        .distinctUntilChanged()
+
     val state: StateFlow<AutofillItemOptionsUiState> = combine(
+        loadingFlow,
         eventFlow,
-        loadingFlow
-    ) { event, loading ->
-        AutofillItemOptionsUiState(
-            isLoading = loading,
-            event = event
-        )
-    }.stateIn(
+        canModifyFlow,
+        ::AutofillItemOptionsUiState
+    ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = AutofillItemOptionsUiState.Initial
@@ -79,6 +96,38 @@ class AutofillItemOptionsViewModel @Inject constructor(
                 snackbarDispatcher(AutofillItemOptionsSnackbarMessage.SentToTrashError)
             }
         loadingFlow.update { IsLoadingState.NotLoading }
+    }
+
+    fun onCopyUsername() = viewModelScope.launch {
+        getLoginItem().onSuccess {
+            clipboardManager.copyToClipboard(it.username)
+            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.UsernameCopiedToClipboard)
+        }.onFailure {
+            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.CopyToClipboardError)
+        }
+    }
+
+    fun onCopyPassword() = viewModelScope.launch {
+        getLoginItem().onSuccess {
+            val password = encryptionContextProvider.withEncryptionContext {
+                decrypt(it.password)
+            }
+            clipboardManager.copyToClipboard(password, isSecure = true)
+            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.UsernameCopiedToClipboard)
+        }.onFailure {
+            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.CopyToClipboardError)
+        }
+    }
+
+    private suspend fun getLoginItem(): Result<ItemType.Login> = runCatching {
+        getItemById(shareId = shareId, itemId = itemId).first()
+    }.flatMap { item ->
+        val itemType = item.itemType
+        return@flatMap if (itemType !is ItemType.Login) {
+            Result.failure(IllegalStateException("Item is not a login"))
+        } else {
+            Result.success(itemType)
+        }
     }
 
     private fun getNavArg(name: String): String =

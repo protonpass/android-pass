@@ -21,7 +21,7 @@ package proton.android.pass.featurevault.impl.bottomsheet.select
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -34,17 +34,21 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ShareId
+import proton.pass.domain.VaultWithItemCount
+import proton.pass.domain.canCreate
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel
 class SelectVaultViewModel @Inject constructor(
+    private val snackbarDispatcher: SnackbarDispatcher,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    snackbarDispatcher: SnackbarDispatcher,
     savedStateHandle: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction
 ) : ViewModel() {
@@ -56,6 +60,31 @@ class SelectVaultViewModel @Inject constructor(
         observeUpgradeInfo().asLoadingResult(),
         canPerformPaidAction().asLoadingResult()
     ) { vaultsResult, upgradeResult, selectOtherVaultResult ->
+        when (vaultsResult) {
+            LoadingResult.Loading -> SelectVaultUiState.Loading
+            is LoadingResult.Success -> successState(
+                vaults = vaultsResult.data,
+                selectOtherVaultResult = selectOtherVaultResult,
+                upgradeResult = upgradeResult
+            )
+
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, vaultsResult.exception, "Error observing vaults")
+                snackbarDispatcher(VaultSnackbarMessage.CannotGetVaultListError)
+                SelectVaultUiState.Error
+            }
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = SelectVaultUiState.Uninitialised
+    )
+
+    private suspend fun successState(
+        vaults: List<VaultWithItemCount>,
+        selectOtherVaultResult: LoadingResult<Boolean>,
+        upgradeResult: LoadingResult<UpgradeInfo>
+    ): SelectVaultUiState {
         val canSelectOtherVault = selectOtherVaultResult.getOrNull() ?: false
 
         val showUpgradeMessage = if (canSelectOtherVault) {
@@ -64,36 +93,38 @@ class SelectVaultViewModel @Inject constructor(
             upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
         }
 
-        when (vaultsResult) {
-            LoadingResult.Loading -> SelectVaultUiState.Loading
-            is LoadingResult.Success -> {
-                val shares = vaultsResult.data.map { it.vault.shareId }
-                if (shares.contains(selected)) {
-                    SelectVaultUiState.Success(
-                        vaults = vaultsResult.data.toPersistentList(),
-                        selected = vaultsResult.data.first { it.vault.shareId == selected },
-                        showUpgradeMessage = showUpgradeMessage,
-                        canSelectOtherVaults = canSelectOtherVault
+        val shares = vaults.map { it.vault.shareId }
+        return if (shares.contains(selected)) {
+            val selectedVault = vaults.first { it.vault.shareId == selected }
+            val vaultsList = vaults.map { vault ->
+                val permissions = vault.vault.role.toPermissions()
+                when {
+                    !canSelectOtherVault -> VaultWithStatus(
+                        vault = vault,
+                        status = VaultStatus.Disabled(VaultStatus.Reason.Downgraded)
                     )
-                } else {
-                    PassLogger.w(TAG, "Error finding current vault")
-                    snackbarDispatcher(VaultSnackbarMessage.CannotFindVaultError)
-                    SelectVaultUiState.Error
+                    !permissions.canCreate() -> VaultWithStatus(
+                        vault = vault,
+                        status = VaultStatus.Disabled(VaultStatus.Reason.ReadOnly)
+                    )
+                    else -> VaultWithStatus(
+                        vault = vault,
+                        status = VaultStatus.Selectable
+                    )
                 }
             }
 
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, vaultsResult.exception, "Error observing vaults")
-                snackbarDispatcher(VaultSnackbarMessage.CannotGetVaultListError)
-                SelectVaultUiState.Error
-            }
+            SelectVaultUiState.Success(
+                vaults = vaultsList.toImmutableList(),
+                selected = selectedVault,
+                showUpgradeMessage = showUpgradeMessage
+            )
+        } else {
+            PassLogger.w(TAG, "Error finding current vault")
+            snackbarDispatcher(VaultSnackbarMessage.CannotFindVaultError)
+            SelectVaultUiState.Error
         }
     }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = SelectVaultUiState.Uninitialised
-        )
 
     companion object {
         private const val TAG = "SelectVaultViewModel"

@@ -7,14 +7,13 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.onEmpty
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -65,24 +64,28 @@ class CreateCreditCardViewModel @Inject constructor(
     canPerformPaidAction = canPerformPaidAction,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
-
     private val navShareId: Option<ShareId> =
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
             .map { ShareId(it) }
-    private val navShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(navShareId)
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
         .saveable(stateSaver = OptionShareIdSaver) { mutableStateOf(None) }
     private val selectedShareIdState: Flow<Option<ShareId>> =
-        snapshotFlow { selectedShareIdMutableState }.filterNotNull().onEmpty { emit(None) }
+        snapshotFlow { selectedShareIdMutableState }
+            .filterNotNull()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = None
+            )
 
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults().distinctUntilChanged()
 
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
-        navShareIdState,
+        flowOf(navShareId),
         selectedShareIdState,
         observeAllVaultsFlow.asLoadingResult(),
         canPerformPaidAction().asLoadingResult(),

@@ -40,7 +40,7 @@ data class ShareUiModel(
             color = vault.color,
             icon = vault.icon,
             isPrimary = vault.isPrimary,
-            isShared = vault.isShared(),
+            isShared = vault.shared,
             role = vault.role
         )
     }

@@ -86,16 +86,22 @@ fun SelectVaultBottomsheetContent(
         BottomSheetItemList(
             items = state.vaults
                 .map {
-                    val isSelected = it.vault.shareId == state.selected.vault.shareId
-                    val enabled = if (state.canSelectOtherVaults) {
-                        true
-                    } else {
-                        isSelected
+                    val isSelected = it.vault.vault.shareId == state.selected.vault.shareId
+                    val (subtitle, enabled) = when (it.status) {
+                        is VaultStatus.Disabled -> when (it.status.reason) {
+                            VaultStatus.Reason.ReadOnly ->
+                                stringResource(R.string.bottomsheet_select_vault_read_only) to false
+                            VaultStatus.Reason.Downgraded ->
+                                stringResource(R.string.bottomsheet_select_vault_not_primary_vault) to false
+                        }
+
+                        VaultStatus.Selectable -> null to true
                     }
                     BottomSheetVaultRow(
-                        vault = it,
+                        vault = it.vault,
                         isSelected = isSelected,
                         enabled = enabled,
+                        customSubtitle = subtitle,
                         onVaultClick = onVaultClick
                     )
                 }
@@ -124,21 +130,40 @@ fun SelectVaultBottomsheetContentPreview(
             SelectVaultBottomsheetContent(
                 state = SelectVaultUiState.Success(
                     vaults = persistentListOf(
-                        selectedVault,
-                        VaultWithItemCount(
-                            vault = Vault(
-                                shareId = ShareId("other"),
-                                name = "vault 2",
-                                color = ShareColor.Color2,
-                                icon = ShareIcon.Icon2,
-                                isPrimary = false
+                        VaultWithStatus(
+                            vault = selectedVault,
+                            status = VaultStatus.Selectable
+                        ),
+                        VaultWithStatus(
+                            vault = VaultWithItemCount(
+                                vault = Vault(
+                                    shareId = ShareId("other"),
+                                    name = "vault 2",
+                                    color = ShareColor.Color2,
+                                    icon = ShareIcon.Icon2,
+                                    isPrimary = false
+                                ),
+                                activeItemCount = 1,
+                                trashedItemCount = 0,
                             ),
-                            activeItemCount = 1,
-                            trashedItemCount = 0,
+                            status = VaultStatus.Disabled(VaultStatus.Reason.ReadOnly)
+                        ),
+                        VaultWithStatus(
+                            vault = VaultWithItemCount(
+                                vault = Vault(
+                                    shareId = ShareId("another"),
+                                    name = "vault 3",
+                                    color = ShareColor.Color3,
+                                    icon = ShareIcon.Icon3,
+                                    isPrimary = false
+                                ),
+                                activeItemCount = 1,
+                                trashedItemCount = 0,
+                            ),
+                            status = VaultStatus.Disabled(VaultStatus.Reason.Downgraded)
                         )
                     ),
                     selected = selectedVault,
-                    canSelectOtherVaults = input.second,
                     showUpgradeMessage = input.second
                 ),
                 onVaultClick = {},

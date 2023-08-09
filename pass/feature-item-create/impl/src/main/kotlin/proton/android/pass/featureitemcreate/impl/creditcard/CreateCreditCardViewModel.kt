@@ -12,7 +12,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -75,7 +77,7 @@ class CreateCreditCardViewModel @Inject constructor(
     private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
         .saveable(stateSaver = OptionShareIdSaver) { mutableStateOf(None) }
     private val selectedShareIdState: Flow<Option<ShareId>> =
-        snapshotFlow { selectedShareIdMutableState }
+        snapshotFlow { selectedShareIdMutableState }.filterNotNull().onEmpty { emit(None) }
 
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults().distinctUntilChanged()

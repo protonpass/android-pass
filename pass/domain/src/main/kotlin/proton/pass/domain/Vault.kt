@@ -28,8 +28,6 @@ data class Vault(
     val role: ShareRole = ShareRole.Admin,
     val members: Int = 1,
     val shared: Boolean = false
-) {
-    fun isShared(): Boolean = shared
-}
+)
 
 fun List<Vault>.sorted(): List<Vault> = sortedBy { it.name.lowercase() }

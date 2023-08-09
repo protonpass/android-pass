@@ -73,7 +73,7 @@ class VaultDrawerViewModel @Inject constructor(
                             color = it.vault.color,
                             icon = it.vault.icon,
                             isPrimary = it.vault.isPrimary,
-                            isShared = it.vault.isShared()
+                            isShared = it.vault.shared
                         )
                     }
                     .toImmutableList()

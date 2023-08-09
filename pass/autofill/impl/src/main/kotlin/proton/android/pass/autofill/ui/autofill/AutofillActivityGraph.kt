@@ -298,17 +298,17 @@ fun NavGraphBuilder.autofillActivityGraph(
         mode = CreateItemBottomSheetMode.Autofill,
         onNavigate = {
             when (it) {
-                is CreateItemBottomsheetNavigation.CreateAlias -> {
+                is CreateItemBottomsheetNavigation.CreateAlias -> dismissBottomSheet {
                     appNavigator.navigate(
-                        CreateAlias,
-                        CreateAlias.createNavRoute(it.shareId)
+                        destination = CreateAlias,
+                        route = CreateAlias.createNavRoute(it.shareId)
                     )
                 }
 
-                is CreateItemBottomsheetNavigation.CreateLogin -> {
+                is CreateItemBottomsheetNavigation.CreateLogin -> dismissBottomSheet {
                     appNavigator.navigate(
-                        CreateLogin,
-                        CreateLogin.createNavRoute(it.shareId)
+                        destination = CreateLogin,
+                        route = CreateLogin.createNavRoute(it.shareId)
                     )
                 }
 

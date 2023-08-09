@@ -23,7 +23,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,10 +38,10 @@ import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
 
-@OptIn(ExperimentalComposeUiApi::class)
 fun BottomSheetVaultRow(
     vault: VaultWithItemCount,
     isSelected: Boolean,
+    customSubtitle: String? = null,
     enabled: Boolean = true,
     isLoading: Boolean = false,
     onVaultClick: ((ShareId) -> Unit)?
@@ -68,12 +67,13 @@ fun BottomSheetVaultRow(
                 } else {
                     PassTheme.colors.textDisabled
                 }
+                val text = customSubtitle ?: pluralStringResource(
+                    id = R.plurals.bottomsheet_select_vault_item_count,
+                    count = vault.activeItemCount.toInt(),
+                    vault.activeItemCount
+                )
                 Text(
-                    text = pluralStringResource(
-                        id = R.plurals.bottomsheet_select_vault_item_count,
-                        count = vault.activeItemCount.toInt(),
-                        vault.activeItemCount
-                    ),
+                    text = text,
                     color = color
                 )
             }

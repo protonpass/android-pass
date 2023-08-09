@@ -19,8 +19,29 @@
 package proton.android.pass.featurevault.impl.bottomsheet.select
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import proton.pass.domain.VaultWithItemCount
+
+@Stable
+sealed interface VaultStatus {
+    @Stable
+    object Selectable : VaultStatus
+
+    @Stable
+    data class Disabled(val reason: Reason) : VaultStatus
+
+    enum class Reason {
+        ReadOnly,
+        Downgraded
+    }
+}
+
+@Stable
+data class VaultWithStatus(
+    val vault: VaultWithItemCount,
+    val status: VaultStatus,
+)
 
 sealed interface SelectVaultUiState {
     object Uninitialised : SelectVaultUiState
@@ -29,9 +50,8 @@ sealed interface SelectVaultUiState {
 
     @Immutable
     data class Success(
-        val vaults: ImmutableList<VaultWithItemCount>,
+        val vaults: ImmutableList<VaultWithStatus>,
         val selected: VaultWithItemCount,
-        val showUpgradeMessage: Boolean,
-        val canSelectOtherVaults: Boolean
+        val showUpgradeMessage: Boolean
     ) : SelectVaultUiState
 }

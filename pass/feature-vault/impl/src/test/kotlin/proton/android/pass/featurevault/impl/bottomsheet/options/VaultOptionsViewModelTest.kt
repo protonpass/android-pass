@@ -290,7 +290,8 @@ class VaultOptionsViewModelTest {
             name = "Test vault",
             isPrimary = primary,
             isOwned = owned,
-            members = if (shared) 2 else 1
+            members = if (shared) 2 else 1,
+            shared = shared
         )
 
         getVaultById.emitValue(defaultVault)

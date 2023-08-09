@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -69,8 +68,8 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
-import proton.android.pass.featureitemcreate.impl.common.ShareError
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -121,50 +120,13 @@ open class CreateAliasViewModel @Inject constructor(
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults().distinctUntilChanged()
 
-    private val shareUiState: StateFlow<ShareUiState> = combine(
+    private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
         navShareIdState,
         selectedShareIdState,
         observeAllVaultsFlow.asLoadingResult(),
-        canPerformPaidAction().asLoadingResult()
-    ) { navShareId, selectedShareId, allSharesResult, canDoPaidAction ->
-        val allShares = when (allSharesResult) {
-            is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
-            LoadingResult.Loading -> return@combine ShareUiState.Loading
-            is LoadingResult.Success -> allSharesResult.data
-        }
-
-        val canSwitchVaults = when (canDoPaidAction) {
-            is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.UpgradeInfoNotAvailable)
-            LoadingResult.Loading -> return@combine ShareUiState.Loading
-            is LoadingResult.Success -> canDoPaidAction.data
-        }
-
-        if (allShares.isEmpty()) {
-            return@combine ShareUiState.Error(ShareError.EmptyShareList)
-        }
-        val selectedVault = if (!canSwitchVaults) {
-            val primaryVault = allShares.firstOrNull { it.vault.isPrimary }
-            if (primaryVault == null) {
-                PassLogger.w(TAG, "No primary vault found")
-                return@combine ShareUiState.Error(ShareError.NoPrimaryVault)
-            }
-            primaryVault
-        } else {
-            allShares
-                .firstOrNull { it.vault.shareId == selectedShareId.value() }
-                ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
-                ?: allShares.firstOrNull { it.vault.isPrimary }
-                ?: allShares.firstOrNull()
-                ?: return@combine ShareUiState.Error(ShareError.EmptyShareList)
-        }
-        ShareUiState.Success(
-            vaultList = allShares,
-            currentVault = selectedVault
-        )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = ShareUiState.NotInitialised
+        canPerformPaidAction().asLoadingResult(),
+        viewModelScope,
+        TAG
     )
 
     private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = shareUiState

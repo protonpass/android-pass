@@ -19,31 +19,31 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.pass.domain.HiddenState
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 
 class PasswordInputPreviewProvider : PreviewParameterProvider<PasswordInputPreviewParams> {
     override val values: Sequence<PasswordInputPreviewParams>
         get() = sequenceOf(
             PasswordInputPreviewParams(
-                HiddenState.Revealed("", "someValue"),
+                UIHiddenState.Revealed("", "someValue"),
                 false
             ),
             PasswordInputPreviewParams(
-                HiddenState.Revealed("", "someValue"),
+                UIHiddenState.Revealed("", "someValue"),
                 true
             ),
             PasswordInputPreviewParams(
-                HiddenState.Concealed(""),
+                UIHiddenState.Concealed(""),
                 false,
             ),
             PasswordInputPreviewParams(
-                HiddenState.Concealed(""),
+                UIHiddenState.Concealed(""),
                 true
             )
         )
 }
 
 data class PasswordInputPreviewParams(
-    val hiddenState: HiddenState,
+    val hiddenState: UIHiddenState,
     val isEditAllowed: Boolean
 )

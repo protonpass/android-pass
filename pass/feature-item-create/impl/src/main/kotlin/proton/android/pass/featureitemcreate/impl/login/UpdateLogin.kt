@@ -36,12 +36,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleSection
-import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 
 @Suppress("ComplexMethod")
@@ -83,6 +83,7 @@ fun UpdateLogin(
     ) {
         LoginContent(
             uiState = uiState.baseLoginUiState,
+            loginItemFormState = viewModel.loginItemFormState,
             selectedShareId = uiState.selectedShareId,
             showCreateAliasButton = true,
             topBarActionName = stringResource(id = R.string.action_save),
@@ -142,7 +143,7 @@ fun UpdateLogin(
                     modifier = Modifier
                         .roundedContainerNorm()
                         .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-                    value = uiState.baseLoginUiState.contents.title,
+                    value = viewModel.loginItemFormState.title,
                     requestFocus = true,
                     onTitleRequiredError = uiState.baseLoginUiState.validationErrors
                         .contains(LoginItemValidationErrors.BlankTitle),

@@ -66,6 +66,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.AliasRateLimited
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.CannotCreateMoreAliases
@@ -79,7 +80,6 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
-import proton.pass.domain.HiddenState
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
 import proton.pass.domain.entity.NewAlias
@@ -110,7 +110,8 @@ class CreateLoginViewModel @Inject constructor(
     observeCurrentUser = observeCurrentUser,
     observeUpgradeInfo = observeUpgradeInfo,
     draftRepository = draftRepository,
-    encryptionContextProvider = encryptionContextProvider
+    encryptionContextProvider = encryptionContextProvider,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> =
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
@@ -155,12 +156,7 @@ class CreateLoginViewModel @Inject constructor(
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = encryptionContextProvider.withEncryptionContext {
-            CreateLoginUiState.create(
-                password = HiddenState.Empty(encrypt("")),
-                primaryTotp = HiddenState.Empty(encrypt(""))
-            )
-        }
+        initialValue = CreateLoginUiState.Initial
     )
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
@@ -170,7 +166,7 @@ class CreateLoginViewModel @Inject constructor(
     @Suppress("ComplexMethod", "LongMethod")
     fun setInitialContents(initialContents: InitialCreateLoginUiState) {
 
-        val currentValue = itemContentState.value
+        val currentValue = loginItemFormState
         val websites = currentValue.urls.toMutableList()
 
         if (initialContents.url != null) {
@@ -197,43 +193,41 @@ class CreateLoginViewModel @Inject constructor(
             canUpdateUsernameState.update { false }
         }
 
-        itemContentState.update {
-            val packageInfoSet = if (initialContents.packageInfoUi != null) {
-                it.packageInfoSet.toMutableSet()
-                    .apply { add(initialContents.packageInfoUi.toPackageInfo()) }
-                    .toImmutableSet()
-            } else {
-                it.packageInfoSet
-            }
-
-            val password = initialContents.password
-                ?.let { password ->
-                    encryptionContextProvider.withEncryptionContext {
-                        HiddenState.Concealed(encrypt(password))
-                    }
-                }
-                ?: currentValue.password
-            val primaryTotp = updatePrimaryTotpIfNeeded(
-                navTotpUri = initialContents.navTotpUri,
-                navTotpIndex = initialContents.navTotpIndex,
-                currentValue = currentValue
-            )
-            val customFields = updateCustomFieldsIfNeeded(
-                navTotpUri = initialContents.navTotpUri,
-                navTotpIndex = initialContents.navTotpIndex,
-                currentValue = currentValue
-            )
-
-            it.copy(
-                title = initialContents.title ?: currentValue.title,
-                username = username,
-                password = password,
-                urls = websites,
-                packageInfoSet = packageInfoSet,
-                primaryTotp = primaryTotp,
-                customFields = customFields
-            )
+        val packageInfoSet = if (initialContents.packageInfoUi != null) {
+            currentValue.packageInfoSet.toMutableSet()
+                .apply { add(initialContents.packageInfoUi) }
+                .toImmutableSet()
+        } else {
+            currentValue.packageInfoSet
         }
+
+        val password = initialContents.password
+            ?.let { password ->
+                encryptionContextProvider.withEncryptionContext {
+                    UIHiddenState.Concealed(encrypt(password))
+                }
+            }
+            ?: currentValue.password
+        val primaryTotp = updatePrimaryTotpIfNeeded(
+            navTotpUri = initialContents.navTotpUri,
+            navTotpIndex = initialContents.navTotpIndex,
+            currentValue = currentValue
+        )
+        val customFields = updateCustomFieldsIfNeeded(
+            navTotpUri = initialContents.navTotpUri,
+            navTotpIndex = initialContents.navTotpIndex,
+            currentValue = currentValue
+        )
+
+        loginItemFormMutableState = loginItemFormState.copy(
+            title = initialContents.title ?: currentValue.title,
+            username = username,
+            password = password,
+            urls = websites,
+            packageInfoSet = packageInfoSet,
+            primaryTotp = primaryTotp,
+            customFields = customFields
+        )
     }
 
     fun createItem() = viewModelScope.launch(coroutineExceptionHandler) {
@@ -279,7 +273,7 @@ class CreateLoginViewModel @Inject constructor(
             createItemAndAlias(
                 userId = userId,
                 shareId = shareId,
-                itemContents = itemContentState.value,
+                itemContents = loginItemFormState.toItemContents(),
                 newAlias = NewAlias(
                     title = aliasItemFormState.title,
                     note = aliasItemFormState.note,
@@ -324,7 +318,7 @@ class CreateLoginViewModel @Inject constructor(
             createItem(
                 userId = userId,
                 shareId = shareId,
-                itemContents = itemContentState.value
+                itemContents = loginItemFormState.toItemContents()
             )
         }.onSuccess { item ->
             inAppReviewTriggerMetrics.incrementItemCreatedCount()

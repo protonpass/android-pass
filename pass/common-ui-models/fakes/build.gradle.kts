@@ -30,4 +30,5 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
     implementation(projects.pass.commonUiModels.api)
+    implementation(projects.pass.domain)
 }

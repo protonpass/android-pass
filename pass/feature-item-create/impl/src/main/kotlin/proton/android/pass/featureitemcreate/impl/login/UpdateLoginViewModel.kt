@@ -40,6 +40,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -56,6 +57,8 @@ import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.InitError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.log.api.PassLogger
@@ -65,8 +68,6 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.CustomField
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
@@ -88,7 +89,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    savedStateHandle: SavedStateHandleProvider,
+    savedStateHandleProvider: SavedStateHandleProvider,
     draftRepository: DraftRepository,
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -98,12 +99,13 @@ class UpdateLoginViewModel @Inject constructor(
     observeCurrentUser = observeCurrentUser,
     observeUpgradeInfo = observeUpgradeInfo,
     draftRepository = draftRepository,
-    encryptionContextProvider = encryptionContextProvider
+    encryptionContextProvider = encryptionContextProvider,
+    savedStateHandleProvider = savedStateHandleProvider,
 ) {
     private val navShareId: ShareId =
-        ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
+        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
-        ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
+        ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -136,35 +138,27 @@ class UpdateLoginViewModel @Inject constructor(
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = encryptionContextProvider.withEncryptionContext {
-            UpdateLoginUiState.create(
-                password = HiddenState.Empty(encrypt("")),
-                primaryTotp = HiddenState.Empty(encrypt("")),
-            )
-        }
+        initialValue = UpdateLoginUiState.Initial
     )
 
     fun setAliasItem(aliasItemFormState: AliasItemFormState) {
+        val currentState = loginItemFormState
         canUpdateUsernameState.update { false }
         aliasLocalItemState.update { aliasItemFormState.toOption() }
-        itemContentState.update {
-            it.copy(
-                username = aliasItemFormState.aliasToBeCreated ?: it.username
-            )
-        }
+        loginItemFormMutableState = currentState.copy(
+            username = aliasItemFormState.aliasToBeCreated ?: currentState.username
+        )
     }
 
     fun setTotp(navTotpUri: String?, navTotpIndex: Int?) {
         onUserEditedContent()
-        val currentValue = itemContentState.value
-        val primaryTotp = updatePrimaryTotpIfNeeded(navTotpUri, navTotpIndex, currentValue)
-        val customFields = updateCustomFieldsIfNeeded(navTotpUri, navTotpIndex ?: -1, currentValue)
-        itemContentState.update {
-            it.copy(
-                primaryTotp = primaryTotp,
-                customFields = customFields
-            )
-        }
+        val currentState = loginItemFormState
+        val primaryTotp = updatePrimaryTotpIfNeeded(navTotpUri, navTotpIndex, currentState)
+        val customFields = updateCustomFieldsIfNeeded(navTotpUri, navTotpIndex ?: -1, currentState)
+        loginItemFormMutableState = currentState.copy(
+            primaryTotp = primaryTotp,
+            customFields = customFields
+        )
     }
 
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
@@ -174,7 +168,7 @@ class UpdateLoginViewModel @Inject constructor(
         if (!shouldUpdate) return@launch
 
         isLoadingState.update { IsLoadingState.Loading }
-        val loginItem = itemContentState.value
+        val loginItem = loginItemFormState.toItemContents()
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {
@@ -209,26 +203,24 @@ class UpdateLoginViewModel @Inject constructor(
             val isPasswordEmpty = decrypt(itemContents.password.toEncryptedByteArray())
                 .isEmpty()
             val passwordHiddenState = if (isPasswordEmpty) {
-                HiddenState.Empty(itemContents.password)
+                UIHiddenState.Empty(itemContents.password)
             } else {
-                HiddenState.Concealed(itemContents.password)
+                UIHiddenState.Concealed(itemContents.password)
             }
 
-            ItemContents.Login(
+            loginItemFormMutableState = loginItemFormState.copy(
                 title = decrypt(item.title),
                 username = itemContents.username,
                 password = passwordHiddenState,
                 urls = websites,
                 note = decrypt(item.note),
-                packageInfoSet = item.packageInfoSet,
-                primaryTotp = HiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
+                packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),
+                primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
                 customFields = itemContents.customFields.mapNotNull {
                     convertCustomField(it, this@withEncryptionContext)
                 }.toImmutableList()
             )
         }
-
-        itemContentState.update { loginItem }
     }
 
     private suspend fun performCreateAlias(
@@ -290,29 +282,31 @@ class UpdateLoginViewModel @Inject constructor(
     private fun convertCustomField(
         customField: CustomField,
         encryptionContext: EncryptionContext
-    ): CustomFieldContent? {
+    ): UICustomFieldContent? {
         val isConcealed = when (customField) {
             is CustomField.Hidden -> true
             else -> false
         }
-        val mapped = customField.toContent(encryptionContext, isConcealed = isConcealed)
-        return if (mapped is CustomFieldContent.Totp) {
-            val uri = when (val value = mapped.value) {
-                is HiddenState.Concealed -> encryptionContext.decrypt(value.encrypted)
-                is HiddenState.Empty -> ""
-                is HiddenState.Revealed -> value.clearText
+        val customFieldContent = customField.toContent(encryptionContext, isConcealed = isConcealed)
+        customFieldContent ?: return null
+        val uiCustomFieldContent = UICustomFieldContent.from(customFieldContent)
+        return if (uiCustomFieldContent is UICustomFieldContent.Totp) {
+            val uri = when (val value = uiCustomFieldContent.value) {
+                is UIHiddenState.Concealed -> encryptionContext.decrypt(value.encrypted)
+                is UIHiddenState.Empty -> ""
+                is UIHiddenState.Revealed -> value.clearText
             }
 
             val totp = getDisplayTotp(uri)
-            CustomFieldContent.Totp(
-                label = mapped.label,
-                value = HiddenState.Revealed(
+            UICustomFieldContent.Totp(
+                label = customFieldContent.label,
+                value = UIHiddenState.Revealed(
                     encrypted = encryptionContext.encrypt(totp),
                     clearText = totp
                 )
             )
         } else {
-            mapped
+            uiCustomFieldContent
         }
     }
 

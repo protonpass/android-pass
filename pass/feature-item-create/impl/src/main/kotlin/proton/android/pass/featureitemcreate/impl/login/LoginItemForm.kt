@@ -55,10 +55,10 @@ import proton.android.pass.featureitemcreate.impl.login.customfields.CustomField
 internal fun LoginItemForm(
     modifier: Modifier = Modifier,
     loginItemFormState: LoginItemFormState,
+    canUseCustomFields: Boolean,
     isEditAllowed: Boolean,
     totpUiState: TotpUiState,
     focusedField: LoginField?,
-    customFieldsState: CustomFieldsState,
     customFieldValidationErrors: ImmutableList<LoginItemValidationErrors.CustomFieldValidationError>,
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
@@ -72,7 +72,7 @@ internal fun LoginItemForm(
     onCreateAliasClick: () -> Unit,
     onAliasOptionsClick: () -> Unit,
     onNavigate: (BaseLoginNavigation) -> Unit,
-    titleSection: @Composable ColumnScope.() -> Unit
+    titleSection: @Composable (ColumnScope.() -> Unit),
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -125,9 +125,10 @@ internal fun LoginItemForm(
                 onChange = { onEvent(LoginContentEvent.OnNoteChange(it)) }
             )
             CustomFieldsContent(
-                state = customFieldsState,
+                customFields = loginItemFormState.customFields.toImmutableList(),
                 focusedField = focusedField as? LoginCustomField,
                 canEdit = isEditAllowed,
+                canUseCustomFields = canUseCustomFields,
                 validationErrors = customFieldValidationErrors,
                 onEvent = { onEvent(LoginContentEvent.OnCustomFieldEvent(it)) }
             )

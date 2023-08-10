@@ -22,6 +22,8 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.pass.domain.HiddenState
 
 @Parcelize
@@ -48,6 +50,28 @@ sealed interface UIHiddenState : Parcelable {
         is Concealed -> HiddenState.Concealed(encrypted)
         is Revealed -> HiddenState.Revealed(encrypted, clearText)
     }
+
+    fun compare(other: UIHiddenState, encryptionContext: EncryptionContext): Boolean =
+        when (this) {
+            is Empty -> when (other) {
+                is Empty -> true
+                else -> false
+            }
+
+            is Concealed -> when (other) {
+                is Concealed -> encryptionContext.decrypt(encrypted.toEncryptedByteArray())
+                    .contentEquals(encryptionContext.decrypt(other.encrypted.toEncryptedByteArray()))
+
+                else -> false
+            }
+
+            is Revealed -> when (other) {
+                is Revealed -> encryptionContext.decrypt(encrypted.toEncryptedByteArray())
+                    .contentEquals(encryptionContext.decrypt(other.encrypted.toEncryptedByteArray()))
+
+                else -> false
+            }
+        }
 
     companion object {
         fun from(state: HiddenState) = when (state) {

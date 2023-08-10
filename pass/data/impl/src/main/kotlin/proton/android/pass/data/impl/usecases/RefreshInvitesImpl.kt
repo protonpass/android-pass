@@ -24,17 +24,22 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
 class RefreshInvitesImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val inviteRepository: InviteRepository
+    private val inviteRepository: InviteRepository,
+    private val notificationManager: NotificationManager
 ) : RefreshInvites {
     override suspend fun invoke() {
         val userId = accountManager.getPrimaryUserId().filterNotNull().first()
         runCatching { inviteRepository.refreshInvites(userId) }
             .onSuccess {
                 PassLogger.d(TAG, "Invites refreshed successfully")
+                if (it) {
+                    notificationManager.sendReceivedInviteNotification()
+                }
             }
             .onFailure {
                 PassLogger.w(TAG, it, "Error refreshing invites")

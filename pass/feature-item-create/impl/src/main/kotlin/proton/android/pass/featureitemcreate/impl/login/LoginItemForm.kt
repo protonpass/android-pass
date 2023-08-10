@@ -41,7 +41,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AddTotp
@@ -49,15 +48,14 @@ import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsCo
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.None
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldsContent
-import proton.pass.domain.ItemContents
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Suppress("UnusedPrivateMember")
 @Composable
 internal fun LoginItemForm(
     modifier: Modifier = Modifier,
+    loginItemFormState: LoginItemFormState,
     isEditAllowed: Boolean,
-    contents: ItemContents.Login,
     totpUiState: TotpUiState,
     focusedField: LoginField?,
     customFieldsState: CustomFieldsState,
@@ -102,7 +100,7 @@ internal fun LoginItemForm(
         ) {
             titleSection()
             MainLoginSection(
-                contents = contents,
+                loginItemFormState = loginItemFormState,
                 canUpdateUsername = canUpdateUsername,
                 totpUiState = totpUiState,
                 isEditAllowed = isEditAllowed,
@@ -115,14 +113,14 @@ internal fun LoginItemForm(
                 onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) }
             )
             WebsitesSection(
-                websites = contents.urls.toImmutableList(),
+                websites = loginItemFormState.urls.toImmutableList(),
                 isEditAllowed = isEditAllowed,
                 websitesWithErrors = websitesWithErrors,
                 focusLastWebsite = focusLastWebsite,
                 onWebsiteSectionEvent = { onEvent(LoginContentEvent.OnWebsiteEvent(it)) }
             )
             SimpleNoteSection(
-                value = contents.note,
+                value = loginItemFormState.note,
                 enabled = isEditAllowed,
                 onChange = { onEvent(LoginContentEvent.OnNoteChange(it)) }
             )
@@ -135,8 +133,7 @@ internal fun LoginItemForm(
             )
             if (isUpdate) {
                 LinkedAppsListSection(
-                    packageInfoUiSet = contents.packageInfoSet.map(::PackageInfoUi)
-                        .toImmutableSet(),
+                    packageInfoUiSet = loginItemFormState.packageInfoSet.toImmutableSet(),
                     isEditable = true,
                     onLinkedAppDelete = { onEvent(LoginContentEvent.OnLinkedAppDelete(it)) }
                 )

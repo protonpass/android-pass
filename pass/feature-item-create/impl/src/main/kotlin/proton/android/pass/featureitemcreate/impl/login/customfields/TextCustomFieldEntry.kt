@@ -41,14 +41,14 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
-import proton.pass.domain.CustomFieldContent
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun TextCustomFieldEntry(
     modifier: Modifier = Modifier,
-    content: CustomFieldContent.Text,
+    content: UICustomFieldContent.Text,
     index: Int,
     canEdit: Boolean,
     onChange: (String) -> Unit,
@@ -95,7 +95,7 @@ fun TextCustomFieldEntryPreview(
     PassTheme(isDark = input.first) {
         Surface {
             TextCustomFieldEntry(
-                content = CustomFieldContent.Text(label = "label", value = input.second.text),
+                content = UICustomFieldContent.Text(label = "label", value = input.second.text),
                 canEdit = input.second.enabled,
                 index = 0,
                 onChange = {},

@@ -22,4 +22,5 @@ interface NotificationManager {
     fun sendNotification()
     fun showDebugAutofillNotification()
     fun hideDebugAutofillNotification()
+    fun sendReceivedInviteNotification()
 }

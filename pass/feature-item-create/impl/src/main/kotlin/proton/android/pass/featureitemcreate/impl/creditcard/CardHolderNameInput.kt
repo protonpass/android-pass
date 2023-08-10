@@ -50,7 +50,7 @@ internal fun CardHolderNameInput(
         value = value,
         onChange = onChange,
         moveToNextOnEnter = true,
-        textStyle = ProtonTheme.typography.defaultNorm,
+        textStyle = ProtonTheme.typography.defaultNorm(enabled),
         editable = enabled,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_cardholder_name_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_cardholder_name_hint)) },

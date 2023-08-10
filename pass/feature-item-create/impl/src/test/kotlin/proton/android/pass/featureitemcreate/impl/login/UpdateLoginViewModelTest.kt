@@ -71,7 +71,7 @@ class UpdateLoginViewModelTest {
             clipboardManager = TestClipboardManager(),
             totpManager = totpManager,
             snackbarDispatcher = TestSnackbarDispatcher(),
-            savedStateHandle = TestSavedStateHandleProvider().apply {
+            savedStateHandleProvider = TestSavedStateHandleProvider().apply {
                 get().set(CommonOptionalNavArgId.ShareId.key, SHARE_ID)
                 get().set(CommonNavArgId.ItemId.key, ITEM_ID)
             },

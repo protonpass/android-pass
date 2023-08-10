@@ -24,12 +24,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.pass.domain.ItemContents
 
 @Composable
 fun MainLoginSection(
     modifier: Modifier = Modifier,
-    contents: ItemContents.Login,
+    loginItemFormState: LoginItemFormState,
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean,
     isTotpError: Boolean,
@@ -43,7 +42,7 @@ fun MainLoginSection(
         modifier = modifier.roundedContainerNorm()
     ) {
         UsernameInput(
-            value = contents.username,
+            value = loginItemFormState.username,
             canUpdateUsername = canUpdateUsername,
             isEditAllowed = isEditAllowed,
             onChange = { onEvent(LoginContentEvent.OnUsernameChange(it)) },
@@ -52,7 +51,7 @@ fun MainLoginSection(
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         PasswordInput(
-            value = contents.password,
+            value = loginItemFormState.password,
             isEditAllowed = isEditAllowed,
             onChange = { onEvent(LoginContentEvent.OnPasswordChange(it)) },
             onFocus = { onFocusChange(LoginField.Password, it) }
@@ -70,7 +69,7 @@ fun MainLoginSection(
             TotpLimit(onUpgrade = onUpgrade)
         } else {
             TotpInput(
-                value = contents.primaryTotp,
+                value = loginItemFormState.primaryTotp,
                 enabled = enabled,
                 isError = isTotpError,
                 onTotpChanged = { onEvent(LoginContentEvent.OnTotpChange(it)) },

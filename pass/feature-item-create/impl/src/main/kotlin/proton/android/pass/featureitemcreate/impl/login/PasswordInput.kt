@@ -42,12 +42,12 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
-import proton.pass.domain.HiddenState
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 
 @Composable
 internal fun PasswordInput(
     modifier: Modifier = Modifier,
-    value: HiddenState,
+    value: UIHiddenState,
     label: String = stringResource(id = R.string.field_password_title),
     placeholder: String = stringResource(id = R.string.field_password_hint),
     @DrawableRes icon: Int = me.proton.core.presentation.R.drawable.ic_proton_key,
@@ -57,9 +57,9 @@ internal fun PasswordInput(
     onFocus: (Boolean) -> Unit
 ) {
     val (text, visualTransformation) = when (value) {
-        is HiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
-        is HiddenState.Revealed -> value.clearText to VisualTransformation.None
-        is HiddenState.Empty -> "" to VisualTransformation.None
+        is UIHiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
+        is UIHiddenState.Revealed -> value.clearText to VisualTransformation.None
+        is UIHiddenState.Empty -> "" to VisualTransformation.None
     }
 
     ProtonTextField(
@@ -82,7 +82,7 @@ internal fun PasswordInput(
                 tint = ProtonTheme.colors.iconWeak
             )
         },
-        trailingIcon = if (value is HiddenState.Revealed && text.isNotEmpty()) {
+        trailingIcon = if (value is UIHiddenState.Revealed && text.isNotEmpty()) {
             { SmallCrossIconButton { onChange("") } }
         } else {
             null

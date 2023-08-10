@@ -18,14 +18,18 @@
 
 package proton.android.pass.commonuimodels.api
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import proton.pass.domain.entity.AppName
 import proton.pass.domain.entity.PackageInfo
 import proton.pass.domain.entity.PackageName
 
+@Parcelize
 data class PackageInfoUi(
     val packageName: String,
     val appName: String
-) {
+) : Parcelable {
+
     constructor(packageInfo: PackageInfo) : this(
         packageInfo.packageName.value,
         packageInfo.appName.value

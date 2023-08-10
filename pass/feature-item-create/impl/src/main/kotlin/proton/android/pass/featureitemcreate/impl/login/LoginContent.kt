@@ -50,13 +50,14 @@ private enum class ActionAfterHideKeyboard {
 internal fun LoginContent(
     modifier: Modifier = Modifier,
     uiState: BaseLoginUiState,
+    loginItemFormState: LoginItemFormState,
     selectedShareId: ShareId?,
     topBarActionName: String,
     showCreateAliasButton: Boolean,
     isUpdate: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
     onNavigate: (BaseLoginNavigation) -> Unit,
-    titleSection: @Composable ColumnScope.() -> Unit
+    titleSection: @Composable (ColumnScope.() -> Unit),
 ) {
     BackHandler {
         onEvent(LoginContentEvent.Up)
@@ -75,7 +76,7 @@ internal fun LoginContent(
                         BaseLoginNavigation.CreateAlias(
                             selectedShareId,
                             uiState.hasReachedAliasLimit,
-                            uiState.contents.title.some()
+                            loginItemFormState.title.some()
                         )
                     )
                     actionWhenKeyboardDisappears = null // Clear flag
@@ -112,7 +113,7 @@ internal fun LoginContent(
     ) { padding ->
         LoginItemForm(
             modifier = Modifier.padding(padding),
-            contents = uiState.contents,
+            loginItemFormState = loginItemFormState,
             totpUiState = uiState.totpUiState,
             customFieldsState = uiState.customFieldsState,
             customFieldValidationErrors = uiState.validationErrors
@@ -149,7 +150,7 @@ internal fun LoginContent(
                         BaseLoginNavigation.CreateAlias(
                             selectedShareId,
                             uiState.hasReachedAliasLimit,
-                            uiState.contents.title.some()
+                            loginItemFormState.title.some()
                         )
                     )
                 } else {

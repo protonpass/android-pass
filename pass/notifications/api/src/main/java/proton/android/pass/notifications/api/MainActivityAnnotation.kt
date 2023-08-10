@@ -16,25 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.notifications.fakes
+package proton.android.pass.notifications.api
 
-import proton.android.pass.notifications.api.NotificationManager
-import javax.inject.Inject
+import javax.inject.Qualifier
 
-class TestNotificationManager @Inject constructor() : NotificationManager {
-    override fun sendNotification() {
-        // no op
-    }
-
-    override fun showDebugAutofillNotification() {
-        // no op
-    }
-
-    override fun hideDebugAutofillNotification() {
-        // no op
-    }
-
-    override fun sendReceivedInviteNotification() {
-        // no op
-    }
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class MainActivityAnnotation

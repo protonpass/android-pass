@@ -25,18 +25,21 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
+import me.proton.core.presentation.R as CoreR
 import proton.android.pass.notifications.api.AutofillDebugActivityAnnotation
+import proton.android.pass.notifications.api.MainActivityAnnotation
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 import android.app.NotificationManager as AndroidNotificationManager
 
 class NotificationManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    @AutofillDebugActivityAnnotation private val autofillDebugActivityClass: Class<*>
+    @AutofillDebugActivityAnnotation private val autofillDebugActivityClass: Class<*>,
+    @MainActivityAnnotation private val mainActivityClass: Class<*>
 ) : NotificationManager {
 
     override fun sendNotification() {
-        createAutofillNotificationChannel(context)
+        createAutofillNotificationChannel()
         val builder = NotificationCompat.Builder(context, AUTOFILL_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.autofill_notification_copy_to_clipboard_title))
@@ -50,7 +53,7 @@ class NotificationManagerImpl @Inject constructor(
     }
 
     override fun showDebugAutofillNotification() {
-        createAutofillNotificationChannel(context)
+        createAutofillNotificationChannel()
         val builder = NotificationCompat.Builder(context, AUTOFILL_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle("Autofill debug")
@@ -81,12 +84,47 @@ class NotificationManagerImpl @Inject constructor(
         }
     }
 
-    private fun createAutofillNotificationChannel(context: Context) {
-        val importance = AndroidNotificationManager.IMPORTANCE_HIGH
+    override fun sendReceivedInviteNotification() {
+        createUpdatesNotificationChannel()
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            INVITE_RECEIVED_UNIQUE_ID,
+            Intent(context, mainActivityClass).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            },
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val builder = NotificationCompat.Builder(context, UPDATES_CHANNEL_ID)
+            .setSmallIcon(CoreR.drawable.ic_proton_brand_proton_pass)
+            .setContentTitle(context.getString(R.string.updates_new_invite_received_title))
+            .setContentText(context.getString(R.string.updates_new_invite_received_message))
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        with(NotificationManagerCompat.from(context)) {
+            notify(INVITE_RECEIVED_UNIQUE_ID, builder.build())
+        }
+    }
+
+    private fun createAutofillNotificationChannel() {
+        createNotificationChannel(
+            channelId = AUTOFILL_CHANNEL_ID,
+            name = context.getString(R.string.autofill_notification_channel_name)
+        )
+    }
+
+    private fun createUpdatesNotificationChannel() {
+        createNotificationChannel(
+            channelId = UPDATES_CHANNEL_ID,
+            name = context.getString(R.string.updates_notification_channel_name)
+        )
+    }
+
+    private fun createNotificationChannel(channelId: String, name: String) {
         val channel = NotificationChannel(
-            AUTOFILL_CHANNEL_ID,
-            context.getString(R.string.autofill_notification_channel_name),
-            importance
+            channelId,
+            name,
+            AndroidNotificationManager.IMPORTANCE_HIGH
         )
         val notificationManager =
             this.context.getSystemService(AndroidNotificationManager::class.java)
@@ -97,6 +135,8 @@ class NotificationManagerImpl @Inject constructor(
         private const val NOTIFICATION_TIMEOUT = 2000L
         private const val COPY_TO_CLIPBOARD_UNIQUE_ID = 1
         private const val AUTOFILL_DEBUG_MODE_UNIQUE_ID = 2
+        private const val INVITE_RECEIVED_UNIQUE_ID = 3
         private const val AUTOFILL_CHANNEL_ID = "AUTOFILL"
+        private const val UPDATES_CHANNEL_ID = "UPDATES"
     }
 }

@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.common
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.pass.domain.CustomFieldContent
 
 @Immutable
@@ -45,6 +46,22 @@ sealed interface UICustomFieldContent : Parcelable {
         is Hidden -> CustomFieldContent.Hidden(label, value.toHiddenState())
         is Totp -> CustomFieldContent.Totp(label, value.toHiddenState())
     }
+
+    fun compare(other: UICustomFieldContent, encryptionContext: EncryptionContext): Boolean =
+        when (this) {
+            is Text -> when (other) {
+                is Text -> value == other.value
+                else -> false
+            }
+            is Hidden -> when (other) {
+                is Hidden -> value.compare(other.value, encryptionContext)
+                else -> false
+            }
+            is Totp -> when (other) {
+                is Totp -> value.compare(other.value, encryptionContext)
+                else -> false
+            }
+        }
 
     companion object {
         fun from(state: CustomFieldContent) = when (state) {

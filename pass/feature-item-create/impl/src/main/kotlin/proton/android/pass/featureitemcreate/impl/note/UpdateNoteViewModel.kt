@@ -115,7 +115,7 @@ class UpdateNoteViewModel @Inject constructor(
 
     private fun onNoteItemReceived(item: Item) {
         itemOption = item.some()
-        if (noteItemFormState != NoteItemFormState.Empty) {
+        if (noteItemFormState == NoteItemFormState.Empty) {
             noteItemFormMutableState = encryptionContextProvider.withEncryptionContext {
                 NoteItemFormState(
                     title = decrypt(item.title),

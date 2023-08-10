@@ -56,7 +56,7 @@ internal fun CardExpirationDateInput(
         value = convert(value),
         onChange = onChange,
         moveToNextOnEnter = true,
-        textStyle = ProtonTheme.typography.defaultNorm,
+        textStyle = ProtonTheme.typography.defaultNorm(enabled),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         isError = hasError,
         errorMessage = stringResource(id = R.string.field_card_expiration_date_error),

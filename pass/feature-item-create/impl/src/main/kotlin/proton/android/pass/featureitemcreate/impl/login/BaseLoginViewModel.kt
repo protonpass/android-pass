@@ -197,33 +197,13 @@ abstract class BaseLoginViewModel(
         userInteractionFlow
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading,
         totpUiState, upgradeInfoResult, userInteraction ->
-
-        val plan = upgradeInfoResult.getOrNull()?.plan
-        val customFieldsState = when (plan?.planType) {
-            is PlanType.Paid, is PlanType.Trial -> {
-                CustomFieldsState.Enabled(
-                    customFields = loginItemFormState.customFields,
-                    isLimited = false
-                )
-            }
-
-            else -> {
-                if (loginItemFormState.customFields.isNotEmpty()) {
-                    CustomFieldsState.Enabled(
-                        customFields = loginItemFormState.customFields,
-                        isLimited = true
-                    )
-                } else {
-                    CustomFieldsState.Disabled
-                }
-            }
-        }
-
+        val planType = upgradeInfoResult.getOrNull()?.plan?.planType
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
             isLoadingState = isLoading,
             isItemSaved = userInteraction.events.itemSavedState,
             openScanState = userInteraction.events.openScanState,
+            canUseCustomFields = planType is PlanType.Paid || planType is PlanType.Trial,
             focusLastWebsite = userInteraction.focusLastWebsite,
             canUpdateUsername = userInteraction.canUpdateUsername,
             primaryEmail = primaryEmail,
@@ -231,7 +211,6 @@ abstract class BaseLoginViewModel(
             hasUserEditedContent = userInteraction.hasUserEditedContent,
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState,
-            customFieldsState = customFieldsState,
             focusedField = userInteraction.focusedField.value()
         )
     }

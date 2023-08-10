@@ -130,8 +130,7 @@ internal class CreateLoginViewModelTest {
                             ),
                             BaseLoginUiState.Initial.copy(
                                 validationErrors = persistentSetOf(LoginItemValidationErrors.BlankTitle),
-                                totpUiState = TotpUiState.Success,
-                                customFieldsState = CustomFieldsState.Disabled,
+                                totpUiState = TotpUiState.Success
                             )
                         )
                     )
@@ -162,8 +161,7 @@ internal class CreateLoginViewModelTest {
                 baseLoginUiState = baseState.baseLoginUiState.copy(
                     isLoadingState = IsLoadingState.NotLoading,
                     hasUserEditedContent = true,
-                    totpUiState = TotpUiState.Success,
-                    customFieldsState = CustomFieldsState.Disabled,
+                    totpUiState = TotpUiState.Success
                 )
             )
             assertThat(firstItem).isEqualTo(firstExpected)

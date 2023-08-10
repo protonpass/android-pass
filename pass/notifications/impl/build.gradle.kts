@@ -32,6 +32,7 @@ dependencies {
     api(projects.pass.notifications.api)
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.core.presentation)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

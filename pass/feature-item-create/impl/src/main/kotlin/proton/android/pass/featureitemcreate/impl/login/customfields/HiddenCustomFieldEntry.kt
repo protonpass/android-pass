@@ -42,16 +42,16 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.PASSWORD_CONCEALED_LENGTH
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun HiddenCustomFieldEntry(
     modifier: Modifier = Modifier,
-    content: CustomFieldContent.Hidden,
+    content: UICustomFieldContent.Hidden,
     canEdit: Boolean,
     onChange: (String) -> Unit,
     onFocusChange: (LoginCustomField, Boolean) -> Unit,
@@ -59,9 +59,9 @@ fun HiddenCustomFieldEntry(
     index: Int
 ) {
     val (text, visualTransformation) = when (val value = content.value) {
-        is HiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
-        is HiddenState.Revealed -> value.clearText to VisualTransformation.None
-        is HiddenState.Empty -> "" to VisualTransformation.None
+        is UIHiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
+        is UIHiddenState.Revealed -> value.clearText to VisualTransformation.None
+        is UIHiddenState.Empty -> "" to VisualTransformation.None
     }
 
     Box(modifier = modifier.roundedContainerNorm()) {
@@ -108,9 +108,9 @@ fun HiddenCustomFieldEntryPreview(
     PassTheme(isDark = input.first) {
         Surface {
             HiddenCustomFieldEntry(
-                content = CustomFieldContent.Hidden(
+                content = UICustomFieldContent.Hidden(
                     label = "label",
-                    value = HiddenState.Revealed("", input.second.text)
+                    value = UIHiddenState.Revealed("", input.second.text)
                 ),
                 canEdit = input.second.enabled,
                 onChange = {},

@@ -19,8 +19,11 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.annotation.VisibleForTesting
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +50,7 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -65,12 +69,12 @@ import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
 import proton.pass.domain.PlanType
 
 @Suppress("TooManyFunctions", "LargeClass")
@@ -82,20 +86,25 @@ abstract class BaseLoginViewModel(
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     observeCurrentUser: ObserveCurrentUser,
-    observeUpgradeInfo: ObserveUpgradeInfo
+    observeUpgradeInfo: ObserveUpgradeInfo,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    protected val itemContentState: MutableStateFlow<ItemContents.Login> =
-        MutableStateFlow(
-            encryptionContextProvider.withEncryptionContext {
-                ItemContents.Login.create(
-                    HiddenState.Empty(encrypt("")),
-                    HiddenState.Empty(encrypt(""))
-                )
-            }
-        )
-    protected val aliasLocalItemState: MutableStateFlow<Option<AliasItemFormState>> = MutableStateFlow(None)
+
+    @OptIn(SavedStateHandleSaveableApi::class)
+    protected var loginItemFormMutableState: LoginItemFormState by savedStateHandleProvider.get()
+        .saveable {
+            mutableStateOf(
+                encryptionContextProvider.withEncryptionContext {
+                    LoginItemFormState.default(this)
+                }
+            )
+        }
+    val loginItemFormState: LoginItemFormState get() = loginItemFormMutableState
+
+    protected val aliasLocalItemState: MutableStateFlow<Option<AliasItemFormState>> =
+        MutableStateFlow(None)
     private val aliasDraftState: Flow<Option<AliasItemFormState>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
     private val focusedFieldFlow: MutableStateFlow<Option<LoginField>> = MutableStateFlow(None)
@@ -109,7 +118,7 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    private val aliasState: Flow<Option<AliasItemFormState>> = combine(
+    private val aliasItemFormState: Flow<Option<AliasItemFormState>> = combine(
         aliasLocalItemState,
         aliasDraftState.onStart { emit(None) }
     ) { aliasItem, aliasDraft ->
@@ -144,23 +153,6 @@ abstract class BaseLoginViewModel(
 
     protected val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
 
-    private val loginAliasItemWrapperState = combine(
-        itemContentState,
-        loginItemValidationErrorsState,
-        canUpdateUsernameState,
-        observeCurrentUser().map { it.email },
-        aliasState,
-        ::LoginAliasItemWrapper
-    )
-
-    private data class LoginAliasItemWrapper(
-        val content: ItemContents.Login,
-        val loginItemValidationErrors: Set<LoginItemValidationErrors>,
-        val canUpdateUsername: Boolean,
-        val primaryEmail: String?,
-        val aliasItemFormState: Option<AliasItemFormState>
-    )
-
     protected val itemHadTotpState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val totpUiStateFlow = combine(
         itemHadTotpState,
@@ -177,33 +169,48 @@ abstract class BaseLoginViewModel(
         }
     }
 
+    private val userInteractionFlow: Flow<UserInteractionWrapper> = combine(
+        canUpdateUsernameState,
+        focusLastWebsiteState,
+        focusedFieldFlow,
+        hasUserEditedContentFlow,
+        eventsFlow,
+        ::UserInteractionWrapper
+    )
+
+    data class UserInteractionWrapper(
+        val canUpdateUsername: Boolean,
+        val focusLastWebsite: Boolean,
+        val focusedField: Option<LoginField>,
+        val hasUserEditedContent: Boolean,
+        val events: Events
+    )
+
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
-        loginAliasItemWrapperState,
+        loginItemValidationErrorsState,
+        observeCurrentUser().map { it.email },
+        aliasItemFormState,
         isLoadingState,
-        eventsFlow,
-        focusLastWebsiteState,
-        hasUserEditedContentFlow,
         totpUiStateFlow,
         upgradeInfoFlow.asLoadingResult(),
-        focusedFieldFlow
-    ) { loginItemWrapper, isLoading, events,
-        focusLastWebsite, hasUserEditedContent,
-        totpUiState, upgradeInfoResult, focusedField ->
+        userInteractionFlow
+    ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading,
+        totpUiState, upgradeInfoResult, userInteraction ->
 
         val plan = upgradeInfoResult.getOrNull()?.plan
         val customFieldsState = when (plan?.planType) {
             is PlanType.Paid, is PlanType.Trial -> {
                 CustomFieldsState.Enabled(
-                    customFields = loginItemWrapper.content.customFields,
+                    customFields = loginItemFormState.customFields,
                     isLimited = false
                 )
             }
 
             else -> {
-                if (loginItemWrapper.content.customFields.isNotEmpty()) {
+                if (loginItemFormState.customFields.isNotEmpty()) {
                     CustomFieldsState.Enabled(
-                        customFields = loginItemWrapper.content.customFields,
+                        customFields = loginItemFormState.customFields,
                         isLimited = true
                     )
                 } else {
@@ -213,36 +220,30 @@ abstract class BaseLoginViewModel(
         }
 
         BaseLoginUiState(
-            contents = loginItemWrapper.content,
-            validationErrors = loginItemWrapper.loginItemValidationErrors.toPersistentSet(),
+            validationErrors = loginItemValidationErrors.toPersistentSet(),
             isLoadingState = isLoading,
-            isItemSaved = events.itemSavedState,
-            openScanState = events.openScanState,
-            focusLastWebsite = focusLastWebsite,
-            canUpdateUsername = loginItemWrapper.canUpdateUsername,
-            primaryEmail = loginItemWrapper.primaryEmail,
-            aliasItemFormState = loginItemWrapper.aliasItemFormState.value(),
-            hasUserEditedContent = hasUserEditedContent,
+            isItemSaved = userInteraction.events.itemSavedState,
+            openScanState = userInteraction.events.openScanState,
+            focusLastWebsite = userInteraction.focusLastWebsite,
+            canUpdateUsername = userInteraction.canUpdateUsername,
+            primaryEmail = primaryEmail,
+            aliasItemFormState = aliasItemFormState.value(),
+            hasUserEditedContent = userInteraction.hasUserEditedContent,
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState,
             customFieldsState = customFieldsState,
-            focusedField = focusedField.value()
+            focusedField = userInteraction.focusedField.value()
         )
     }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = encryptionContextProvider.withEncryptionContext {
-                BaseLoginUiState.create(
-                    password = HiddenState.Empty(encrypt("")),
-                    primaryTotp = HiddenState.Empty(encrypt("")),
-                )
-            }
+            initialValue = BaseLoginUiState.Initial
         )
 
     fun onTitleChange(value: String) {
         onUserEditedContent()
-        itemContentState.update { it.copy(title = value) }
+        loginItemFormMutableState = loginItemFormMutableState.copy(title = value)
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.BlankTitle) }
         }
@@ -255,25 +256,26 @@ abstract class BaseLoginViewModel(
 
     fun onUsernameChange(value: String) {
         onUserEditedContent()
-        itemContentState.update { it.copy(username = value) }
+        loginItemFormMutableState = loginItemFormMutableState.copy(username = value)
     }
 
     fun onPasswordChange(value: String) {
         onUserEditedContent()
-        encryptionContextProvider.withEncryptionContext {
-            itemContentState.update {
-                it.copy(password = HiddenState.Revealed(encrypt(value), value))
-            }
+        loginItemFormMutableState = encryptionContextProvider.withEncryptionContext {
+            loginItemFormMutableState.copy(password = UIHiddenState.Revealed(encrypt(value), value))
         }
     }
 
     fun onTotpChange(value: String) {
         onUserEditedContent()
         val newValue = value.replace(" ", "").replace("\n", "")
-        encryptionContextProvider.withEncryptionContext {
-            itemContentState.update {
-                it.copy(primaryTotp = HiddenState.Revealed(encrypt(newValue), newValue))
-            }
+        loginItemFormMutableState = encryptionContextProvider.withEncryptionContext {
+            loginItemFormMutableState.copy(
+                primaryTotp = UIHiddenState.Revealed(
+                    encrypt(newValue),
+                    newValue
+                )
+            )
         }
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidTotp) }
@@ -283,12 +285,10 @@ abstract class BaseLoginViewModel(
     fun onWebsiteChange(value: String, index: Int) {
         onUserEditedContent()
         val newValue = value.replace(" ", "").replace("\n", "")
-        itemContentState.update {
-            it.copy(
-                urls = it.urls.toMutableList()
-                    .apply { this[index] = newValue }
-            )
-        }
+        loginItemFormMutableState = loginItemFormState.copy(
+            urls = loginItemFormState.urls.toMutableList()
+                .apply { this[index] = newValue }
+        )
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidUrl(index)) }
         }
@@ -297,20 +297,17 @@ abstract class BaseLoginViewModel(
 
     fun onAddWebsite() {
         onUserEditedContent()
-        itemContentState.update {
-            val websites = sanitizeWebsites(it.urls).toMutableList()
-            websites.add("")
-
-            it.copy(urls = websites)
-        }
+        loginItemFormMutableState =
+            loginItemFormState.copy(urls = sanitizeWebsites(loginItemFormState.urls) + "")
         focusLastWebsiteState.update { true }
     }
 
     fun onRemoveWebsite(index: Int) {
         onUserEditedContent()
-        itemContentState.update {
-            it.copy(urls = it.urls.toMutableList().apply { removeAt(index) })
-        }
+        loginItemFormMutableState = loginItemFormState.copy(
+            urls = loginItemFormState.urls.toMutableList()
+                .apply { removeAt(index) }
+        )
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidUrl(index)) }
         }
@@ -319,7 +316,7 @@ abstract class BaseLoginViewModel(
 
     fun onNoteChange(value: String) {
         onUserEditedContent()
-        itemContentState.update { it.copy(note = value) }
+        loginItemFormMutableState = loginItemFormMutableState.copy(note = value)
     }
 
     fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) =
@@ -332,7 +329,7 @@ abstract class BaseLoginViewModel(
         aliasLocalItemState.update { aliasItemFormState.toOption() }
         val alias = aliasItemFormState.aliasToBeCreated
         if (alias != null) {
-            itemContentState.update { it.copy(username = alias) }
+            loginItemFormMutableState = loginItemFormMutableState.copy(username = alias)
             canUpdateUsernameState.update { false }
         }
     }
@@ -344,38 +341,39 @@ abstract class BaseLoginViewModel(
 
     @Suppress("ReturnCount")
     protected suspend fun validateItem(): Boolean {
-        itemContentState.update { state ->
-            val websites = sanitizeWebsites(state.urls)
-            val decryptedTotp = encryptionContextProvider.withEncryptionContext {
-                decrypt(state.primaryTotp.encrypted)
-            }
-            val sanitisedPrimaryTotp = if (decryptedTotp.isNotBlank()) {
-                sanitizeOTP(decryptedTotp)
-                    .fold(
-                        onSuccess = { it },
-                        onFailure = {
-                            addValidationError(LoginItemValidationErrors.InvalidTotp)
-                            snackbarDispatcher(LoginSnackbarMessages.InvalidTotpError)
-                            return false
-                        }
-                    )
-            } else {
-                ""
-            }
-            val totpHiddenState = encryptionContextProvider.withEncryptionContext {
-                HiddenState.Revealed(encrypt(sanitisedPrimaryTotp), sanitisedPrimaryTotp)
-            }
-
-            val (customFields, hasCustomFieldErrors) = validateCustomFields(state.customFields)
-            if (hasCustomFieldErrors) {
-                return false
-            }
-
-            state.copy(urls = websites, primaryTotp = totpHiddenState, customFields = customFields)
+        val websites = sanitizeWebsites(loginItemFormState.urls)
+        val decryptedTotp = encryptionContextProvider.withEncryptionContext {
+            decrypt(loginItemFormState.primaryTotp.encrypted)
+        }
+        val sanitisedPrimaryTotp = if (decryptedTotp.isNotBlank()) {
+            sanitizeOTP(decryptedTotp)
+                .fold(
+                    onSuccess = { it },
+                    onFailure = {
+                        addValidationError(LoginItemValidationErrors.InvalidTotp)
+                        snackbarDispatcher(LoginSnackbarMessages.InvalidTotpError)
+                        return false
+                    }
+                )
+        } else {
+            ""
+        }
+        val totpHiddenState = encryptionContextProvider.withEncryptionContext {
+            UIHiddenState.Revealed(encrypt(sanitisedPrimaryTotp), sanitisedPrimaryTotp)
         }
 
-        val loginItem = itemContentState.value
-        val loginItemValidationErrors = loginItem.validate()
+        val (customFields, hasCustomFieldErrors) = validateCustomFields(loginItemFormState.customFields)
+        if (hasCustomFieldErrors) {
+            return false
+        }
+
+        loginItemFormMutableState = loginItemFormState.copy(
+            urls = websites,
+            primaryTotp = totpHiddenState,
+            customFields = customFields
+        )
+
+        val loginItemValidationErrors = loginItemFormState.validate()
         if (loginItemValidationErrors.isNotEmpty()) {
             loginItemValidationErrorsState.update { loginItemValidationErrors }
             return false
@@ -383,13 +381,15 @@ abstract class BaseLoginViewModel(
         return true
     }
 
-    private fun validateCustomFields(customFields: List<CustomFieldContent>): Pair<List<CustomFieldContent>, Boolean> {
+    private fun validateCustomFields(
+        customFields: List<UICustomFieldContent>
+    ): Pair<List<UICustomFieldContent>, Boolean> {
         var hasCustomFieldErrors = false
         val fields = customFields.mapIndexed { idx, field ->
             when (field) {
-                is CustomFieldContent.Hidden -> field
-                is CustomFieldContent.Text -> field
-                is CustomFieldContent.Totp -> {
+                is UICustomFieldContent.Hidden -> field
+                is UICustomFieldContent.Text -> field
+                is UICustomFieldContent.Totp -> {
                     val (validated, hasErrors) = validateTotpField(field, idx)
                     if (hasErrors) {
                         PassLogger.i(TAG, "TOTP custom field on index $idx had errors")
@@ -404,18 +404,18 @@ abstract class BaseLoginViewModel(
     }
 
     private fun validateTotpField(
-        field: CustomFieldContent.Totp,
+        field: UICustomFieldContent.Totp,
         index: Int
-    ): Pair<CustomFieldContent.Totp, Boolean> {
+    ): Pair<UICustomFieldContent.Totp, Boolean> {
         val content = when (val hiddenState = field.value) {
-            is HiddenState.Revealed -> hiddenState.clearText
-            is HiddenState.Concealed -> {
+            is UIHiddenState.Revealed -> hiddenState.clearText
+            is UIHiddenState.Concealed -> {
                 encryptionContextProvider.withEncryptionContext {
                     decrypt(hiddenState.encrypted)
                 }
             }
 
-            is HiddenState.Empty -> ""
+            is UIHiddenState.Empty -> ""
         }
 
         if (content.isBlank()) {
@@ -442,21 +442,21 @@ abstract class BaseLoginViewModel(
             encrypt(sanitized)
         }
 
-        return CustomFieldContent.Totp(
+        return UICustomFieldContent.Totp(
             label = field.label,
             value = when (field.value) {
-                is HiddenState.Revealed -> {
-                    HiddenState.Revealed(
+                is UIHiddenState.Revealed -> {
+                    UIHiddenState.Revealed(
                         encrypted = encryptedSanitized,
                         clearText = sanitized
                     )
                 }
 
-                is HiddenState.Concealed -> {
-                    HiddenState.Concealed(encryptedSanitized)
+                is UIHiddenState.Concealed -> {
+                    UIHiddenState.Concealed(encryptedSanitized)
                 }
 
-                is HiddenState.Empty -> HiddenState.Empty(encryptedSanitized)
+                is UIHiddenState.Empty -> UIHiddenState.Empty(encryptedSanitized)
             }
         ) to false
     }
@@ -494,9 +494,9 @@ abstract class BaseLoginViewModel(
 
     fun onDeleteLinkedApp(packageInfo: PackageInfoUi) {
         onUserEditedContent()
-        itemContentState.update {
-            it.copy(packageInfoSet = it.packageInfoSet.minus(packageInfo.toPackageInfo()))
-        }
+        loginItemFormMutableState = loginItemFormState.copy(
+            packageInfoSet = loginItemFormState.packageInfoSet.minus(packageInfo)
+        )
     }
 
     fun onPasteTotp() = viewModelScope.launch(Dispatchers.IO) {
@@ -514,16 +514,16 @@ abstract class BaseLoginViewModel(
                         is LoginCustomField.CustomFieldTOTP -> {
                             val customFieldTOTP =
                                 focusedFieldFlow.value.value() as? LoginCustomField.CustomFieldTOTP
-                            val customFields = itemContentState.value.customFields
+                            val customFields = loginItemFormState.customFields
                             if (customFieldTOTP != null && customFields.size - 1 >= customFieldTOTP.index) {
                                 val updatedCustomFields = customFields.toMutableList()
                                     .mapIndexed { index, customFieldContent ->
                                         if (
-                                            customFieldContent is CustomFieldContent.Totp &&
+                                            customFieldContent is UICustomFieldContent.Totp &&
                                             index == customFieldTOTP.index
                                         ) {
                                             customFieldContent.copy(
-                                                value = HiddenState.Revealed(
+                                                value = UIHiddenState.Revealed(
                                                     encryptedContent,
                                                     sanitisedContent
                                                 )
@@ -532,15 +532,15 @@ abstract class BaseLoginViewModel(
                                             customFieldContent
                                         }
                                     }
-                                itemContentState.update {
-                                    it.copy(customFields = updatedCustomFields)
-                                }
+                                loginItemFormMutableState = loginItemFormState.copy(
+                                    customFields = updatedCustomFields
+                                )
                             }
                         }
 
-                        else -> itemContentState.update {
-                            it.copy(
-                                primaryTotp = HiddenState.Revealed(
+                        else -> {
+                            loginItemFormMutableState = loginItemFormState.copy(
+                                primaryTotp = UIHiddenState.Revealed(
                                     encryptedContent,
                                     sanitisedContent
                                 )
@@ -557,7 +557,7 @@ abstract class BaseLoginViewModel(
         aliasLocalItemState.update { None }
         draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
 
-        itemContentState.update { it.copy(username = "") }
+        loginItemFormMutableState = loginItemFormState.copy(username = "")
         canUpdateUsernameState.update { true }
     }
 
@@ -569,39 +569,38 @@ abstract class BaseLoginViewModel(
             }
         }
 
-        itemContentState.update {
-            val customFields = it.customFields.toMutableList()
+        val customFields = loginItemFormState.customFields.toMutableList()
 
-            val updated = encryptionContextProvider.withEncryptionContext {
-                when (val field = customFields[index]) {
-                    is CustomFieldContent.Hidden -> {
-                        CustomFieldContent.Hidden(
-                            label = field.label,
-                            value = HiddenState.Revealed(
-                                encrypted = encrypt(value),
-                                clearText = value
-                            )
-                        )
-                    }
-
-                    is CustomFieldContent.Text -> CustomFieldContent.Text(
+        val updated = encryptionContextProvider.withEncryptionContext {
+            when (val field = customFields[index]) {
+                is UICustomFieldContent.Hidden -> {
+                    UICustomFieldContent.Hidden(
                         label = field.label,
-                        value = value
-                    )
-
-                    is CustomFieldContent.Totp -> CustomFieldContent.Totp(
-                        label = field.label,
-                        value = HiddenState.Revealed(
+                        value = UIHiddenState.Revealed(
                             encrypted = encrypt(value),
                             clearText = value
                         )
                     )
                 }
-            }
 
-            customFields[index] = updated
-            it.copy(customFields = customFields.toPersistentList())
+                is UICustomFieldContent.Text -> UICustomFieldContent.Text(
+                    label = field.label,
+                    value = value
+                )
+
+                is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
+                    label = field.label,
+                    value = UIHiddenState.Revealed(
+                        encrypted = encrypt(value),
+                        clearText = value
+                    )
+                )
+            }
         }
+
+        customFields[index] = updated
+        loginItemFormMutableState =
+            loginItemFormState.copy(customFields = customFields.toPersistentList())
     }
 
     protected fun onUserEditedContent() {
@@ -616,16 +615,14 @@ abstract class BaseLoginViewModel(
                 if (it is Some) {
                     draftRepository.delete<String>(DRAFT_PASSWORD_KEY).value()
                         ?.let { encryptedPassword ->
-                            itemContentState.update { content ->
-                                encryptionContextProvider.withEncryptionContext {
-                                    content.copy(
-                                        password = HiddenState.Revealed(
-                                            encryptedPassword,
-                                            decrypt(encryptedPassword)
-                                        )
-                                    )
-                                }
-                            }
+                            loginItemFormMutableState = loginItemFormState.copy(
+                                password = UIHiddenState.Revealed(
+                                    encrypted = encryptedPassword,
+                                    clearText = encryptionContextProvider.withEncryptionContext {
+                                        decrypt(encryptedPassword)
+                                    }
+                                )
+                            )
                         }
                 }
             }
@@ -638,12 +635,12 @@ abstract class BaseLoginViewModel(
                 if (it is Some) {
                     draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY).value()
                         ?.let { customField ->
-                            itemContentState.update { loginItem ->
-                                val customFields = loginItem.customFields.toMutableList()
-                                customFields.add(customField)
-                                loginItem.copy(customFields = customFields.toPersistentList())
-                            }
-                            val index = itemContentState.value.customFields.size - 1
+                            loginItemFormMutableState = loginItemFormState.copy(
+                                customFields = loginItemFormState.customFields.toMutableList()
+                                    .apply { add(UICustomFieldContent.from(customField)) }
+                                    .toPersistentList()
+                            )
+                            val index = loginItemFormState.customFields.size - 1
                             when (customField) {
                                 is CustomFieldContent.Hidden -> focusedFieldFlow.update {
                                     LoginCustomField.CustomFieldHidden(index).some()
@@ -686,58 +683,53 @@ abstract class BaseLoginViewModel(
         field: LoginCustomField.CustomFieldHidden,
         isFocused: Boolean
     ) {
-        itemContentState.update { loginItem ->
-            val customFields = loginItem.customFields.toMutableList()
-            val customFieldContent: CustomFieldContent.Hidden? = customFields.getOrNull(field.index)
-                as? CustomFieldContent.Hidden
-            customFieldContent ?: return@update loginItem
-            val hiddenValueByteArray = encryptionContextProvider.withEncryptionContext {
-                decrypt(customFieldContent.value.encrypted.toEncryptedByteArray())
-            }
-            val hiddenFieldHiddenState = when {
-                isFocused -> HiddenState.Revealed(
-                    encrypted = customFieldContent.value.encrypted,
-                    clearText = hiddenValueByteArray.decodeToString()
-                )
-
-                hiddenValueByteArray.isEmpty() -> HiddenState.Empty(customFieldContent.value.encrypted)
-                else -> HiddenState.Concealed(customFieldContent.value.encrypted)
-            }
-            customFields[field.index] = customFieldContent.copy(
-                value = hiddenFieldHiddenState
-            )
-            loginItem.copy(customFields = customFields.toPersistentList())
+        val customFields = loginItemFormState.customFields.toMutableList()
+        val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)
+            as? UICustomFieldContent.Hidden
+        customFieldContent ?: return
+        val hiddenValueByteArray = encryptionContextProvider.withEncryptionContext {
+            decrypt(customFieldContent.value.encrypted.toEncryptedByteArray())
         }
+        val hiddenFieldHiddenState = when {
+            isFocused -> UIHiddenState.Revealed(
+                encrypted = customFieldContent.value.encrypted,
+                clearText = hiddenValueByteArray.decodeToString()
+            )
+
+            hiddenValueByteArray.isEmpty() -> UIHiddenState.Empty(customFieldContent.value.encrypted)
+            else -> UIHiddenState.Concealed(customFieldContent.value.encrypted)
+        }
+        customFields[field.index] = customFieldContent.copy(
+            value = hiddenFieldHiddenState
+        )
+        loginItemFormMutableState =
+            loginItemFormState.copy(customFields = customFields.toPersistentList())
     }
 
     private fun updatePrimaryTotpOnFocusChange() {
-        itemContentState.update {
-            val primaryTotp = encryptionContextProvider.withEncryptionContext {
-                HiddenState.Revealed(
-                    it.primaryTotp.encrypted,
-                    decrypt(it.primaryTotp.encrypted)
-                )
-            }
-            it.copy(primaryTotp = primaryTotp)
+        val primaryTotp = encryptionContextProvider.withEncryptionContext {
+            UIHiddenState.Revealed(
+                loginItemFormState.primaryTotp.encrypted,
+                decrypt(loginItemFormState.primaryTotp.encrypted)
+            )
         }
+        loginItemFormMutableState = loginItemFormState.copy(primaryTotp = primaryTotp)
     }
 
     private fun updatePasswordOnFocusChange(isFocused: Boolean) {
-        itemContentState.update {
-            val passwordByteArray = encryptionContextProvider.withEncryptionContext {
-                decrypt(it.password.encrypted.toEncryptedByteArray())
-            }
-            val passwordHiddenState = when {
-                isFocused -> HiddenState.Revealed(
-                    it.password.encrypted,
-                    passwordByteArray.decodeToString()
-                )
-
-                passwordByteArray.isEmpty() -> HiddenState.Empty(it.password.encrypted)
-                else -> HiddenState.Concealed(it.password.encrypted)
-            }
-            it.copy(password = passwordHiddenState)
+        val passwordByteArray = encryptionContextProvider.withEncryptionContext {
+            decrypt(loginItemFormState.password.encrypted.toEncryptedByteArray())
         }
+        val passwordHiddenState = when {
+            isFocused -> UIHiddenState.Revealed(
+                loginItemFormState.password.encrypted,
+                passwordByteArray.decodeToString()
+            )
+
+            passwordByteArray.isEmpty() -> UIHiddenState.Empty(loginItemFormState.password.encrypted)
+            else -> UIHiddenState.Concealed(loginItemFormState.password.encrypted)
+        }
+        loginItemFormMutableState = loginItemFormState.copy(password = passwordHiddenState)
     }
 
     private suspend fun observeRemoveCustomField() {
@@ -767,40 +759,39 @@ abstract class BaseLoginViewModel(
     }
 
     private fun renameCustomField(indexTitle: CustomFieldIndexTitle) {
-        itemContentState.update { loginItem ->
-            val customFields = loginItem.customFields.toMutableList()
-            val updated = when (val field = customFields[indexTitle.index]) {
-                is CustomFieldContent.Hidden -> {
-                    CustomFieldContent.Hidden(
-                        label = indexTitle.title,
-                        value = field.value
-                    )
-                }
-
-                is CustomFieldContent.Text -> CustomFieldContent.Text(
-                    label = indexTitle.title,
-                    value = field.value
-                )
-
-                is CustomFieldContent.Totp -> CustomFieldContent.Totp(
+        val customFields = loginItemFormState.customFields.toMutableList()
+        val updated = when (val field = customFields[indexTitle.index]) {
+            is UICustomFieldContent.Hidden -> {
+                UICustomFieldContent.Hidden(
                     label = indexTitle.title,
                     value = field.value
                 )
             }
-            customFields[indexTitle.index] = updated
-            loginItem.copy(customFields = customFields.toPersistentList())
-        }
 
-        when (itemContentState.value.customFields.getOrNull(indexTitle.index)) {
-            is CustomFieldContent.Hidden -> focusedFieldFlow.update {
+            is UICustomFieldContent.Text -> UICustomFieldContent.Text(
+                label = indexTitle.title,
+                value = field.value
+            )
+
+            is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
+                label = indexTitle.title,
+                value = field.value
+            )
+        }
+        customFields[indexTitle.index] = updated
+        loginItemFormMutableState =
+            loginItemFormState.copy(customFields = customFields.toPersistentList())
+
+        when (loginItemFormState.customFields.getOrNull(indexTitle.index)) {
+            is UICustomFieldContent.Hidden -> focusedFieldFlow.update {
                 LoginCustomField.CustomFieldHidden(indexTitle.index).some()
             }
 
-            is CustomFieldContent.Text -> focusedFieldFlow.update {
+            is UICustomFieldContent.Text -> focusedFieldFlow.update {
                 LoginCustomField.CustomFieldText(indexTitle.index).some()
             }
 
-            is CustomFieldContent.Totp -> focusedFieldFlow.update {
+            is UICustomFieldContent.Totp -> focusedFieldFlow.update {
                 LoginCustomField.CustomFieldTOTP(indexTitle.index).some()
             }
 
@@ -810,11 +801,12 @@ abstract class BaseLoginViewModel(
 
     private fun removeCustomField(index: Int) = viewModelScope.launch {
         onUserEditedContent()
-        itemContentState.update {
-            val customFields = it.customFields.toMutableList()
-            customFields.removeAt(index)
-            it.copy(customFields = customFields.toPersistentList())
-        }
+        loginItemFormMutableState = loginItemFormState.copy(
+            customFields = loginItemFormState.customFields
+                .toMutableList()
+                .apply { removeAt(index) }
+                .toPersistentList()
+        )
     }
 
     private fun addValidationError(error: LoginItemValidationErrors) {
@@ -826,20 +818,20 @@ abstract class BaseLoginViewModel(
     protected fun updatePrimaryTotpIfNeeded(
         navTotpUri: String?,
         navTotpIndex: Int?,
-        currentValue: ItemContents.Login
+        currentValue: LoginItemFormState,
     ) = navTotpUri
         ?.takeIf { navTotpIndex == -1 }
         ?.let { decrypted ->
             val encrypted =
                 encryptionContextProvider.withEncryptionContext { encrypt(decrypted) }
-            HiddenState.Revealed(encrypted, decrypted)
+            UIHiddenState.Revealed(encrypted, decrypted)
         }
         ?: currentValue.primaryTotp
 
     protected fun updateCustomFieldsIfNeeded(
         navTotpUri: String?,
         navTotpIndex: Int,
-        currentValue: ItemContents.Login
+        currentValue: LoginItemFormState,
     ) = if (navTotpUri != null) {
         navTotpUri
             .takeIf { navTotpIndex >= 0 }
@@ -848,12 +840,12 @@ abstract class BaseLoginViewModel(
                     .mapIndexed { index, customFieldContent ->
                         if (
                             navTotpIndex == index &&
-                            customFieldContent is CustomFieldContent.Totp
+                            customFieldContent is UICustomFieldContent.Totp
                         ) {
                             val encrypted = encryptionContextProvider.withEncryptionContext {
                                 encrypt(decrypted)
                             }
-                            val hiddenState = HiddenState.Revealed(encrypted, decrypted)
+                            val hiddenState = UIHiddenState.Revealed(encrypted, decrypted)
                             customFieldContent.copy(value = hiddenState)
                         } else {
                             customFieldContent

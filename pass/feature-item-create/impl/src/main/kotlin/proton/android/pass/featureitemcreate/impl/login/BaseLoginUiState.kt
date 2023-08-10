@@ -26,14 +26,11 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.pass.domain.ShareId
 
 @Immutable
 data class BaseLoginUiState(
-    val contents: ItemContents.Login,
     val aliasItemFormState: AliasItemFormState?,
     val validationErrors: PersistentSet<LoginItemValidationErrors>,
     val isLoadingState: IsLoadingState,
@@ -49,11 +46,7 @@ data class BaseLoginUiState(
     val focusedField: LoginField?,
 ) {
     companion object {
-        fun create(
-            password: HiddenState,
-            primaryTotp: HiddenState
-        ) = BaseLoginUiState(
-            contents = ItemContents.Login.create(password, primaryTotp),
+        val Initial = BaseLoginUiState(
             aliasItemFormState = null,
             validationErrors = persistentSetOf(),
             isLoadingState = IsLoadingState.NotLoading,
@@ -77,12 +70,9 @@ data class CreateLoginUiState(
     val baseLoginUiState: BaseLoginUiState
 ) {
     companion object {
-        fun create(
-            password: HiddenState,
-            primaryTotp: HiddenState
-        ) = CreateLoginUiState(
+        val Initial = CreateLoginUiState(
             shareUiState = ShareUiState.NotInitialised,
-            baseLoginUiState = BaseLoginUiState.create(password, primaryTotp)
+            baseLoginUiState = BaseLoginUiState.Initial
         )
     }
 }
@@ -93,12 +83,9 @@ data class UpdateLoginUiState(
     val baseLoginUiState: BaseLoginUiState
 ) {
     companion object {
-        fun create(
-            password: HiddenState,
-            primaryTotp: HiddenState
-        ) = UpdateLoginUiState(
+        val Initial = UpdateLoginUiState(
             selectedShareId = null,
-            baseLoginUiState = BaseLoginUiState.create(password, primaryTotp)
+            baseLoginUiState = BaseLoginUiState.Initial
         )
     }
 }
@@ -130,7 +117,7 @@ sealed interface CustomFieldsState {
 
     @Immutable
     data class Enabled(
-        val customFields: List<CustomFieldContent>,
+        val customFields: List<UICustomFieldContent>,
         val isLimited: Boolean
     ) : CustomFieldsState
 }

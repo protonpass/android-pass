@@ -39,15 +39,15 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
 
 @Composable
 fun TotpCustomFieldEntry(
     modifier: Modifier = Modifier,
-    content: CustomFieldContent.Totp,
+    content: UICustomFieldContent.Totp,
     validationError: LoginItemValidationErrors.CustomFieldValidationError?,
     canEdit: Boolean,
     onChange: (String) -> Unit,
@@ -56,9 +56,9 @@ fun TotpCustomFieldEntry(
     index: Int
 ) {
     val value = when (val state = content.value) {
-        is HiddenState.Concealed -> ""
-        is HiddenState.Revealed -> state.clearText
-        is HiddenState.Empty -> ""
+        is UIHiddenState.Concealed -> ""
+        is UIHiddenState.Revealed -> state.clearText
+        is UIHiddenState.Empty -> ""
     }
 
     val (isError, errorMessage) = when (validationError) {
@@ -117,9 +117,9 @@ fun TotpCustomFieldEntryPreview(
     PassTheme(isDark = input.first) {
         Surface {
             TotpCustomFieldEntry(
-                content = CustomFieldContent.Totp(
+                content = UICustomFieldContent.Totp(
                     label = "label",
-                    value = HiddenState.Revealed("", input.second.text)
+                    value = UIHiddenState.Revealed("", input.second.text)
                 ),
                 validationError = input.second.error,
                 canEdit = input.second.isEnabled,

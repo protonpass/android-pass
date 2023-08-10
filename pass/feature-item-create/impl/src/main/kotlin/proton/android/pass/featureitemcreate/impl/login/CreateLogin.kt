@@ -38,7 +38,6 @@ import proton.android.pass.commonui.api.OneTimeLaunchedEffect
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
-import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -46,6 +45,7 @@ import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 import proton.pass.domain.ShareId
 
@@ -118,10 +118,11 @@ fun CreateLoginScreen(
     Box(modifier = modifier.fillMaxSize()) {
         LoginContent(
             uiState = uiState.baseLoginUiState,
+            loginItemFormState = viewModel.loginItemFormState,
             selectedShareId = selectedVault?.vault?.shareId,
+            topBarActionName = stringResource(id = R.string.title_create_login),
             showCreateAliasButton = showCreateAliasButton,
             isUpdate = false,
-            topBarActionName = stringResource(id = R.string.title_create_login),
             onEvent = {
                 when (it) {
                     LoginContentEvent.Up -> onExit()
@@ -174,7 +175,7 @@ fun CreateLoginScreen(
             onNavigate = onNavigate,
             titleSection = {
                 TitleVaultSelectionSection(
-                    titleValue = uiState.baseLoginUiState.contents.title,
+                    titleValue = viewModel.loginItemFormState.title,
                     showVaultSelector = showVaultSelector,
                     onTitleChanged = viewModel::onTitleChange,
                     onTitleRequiredError = uiState.baseLoginUiState.validationErrors.contains(

@@ -167,6 +167,7 @@ class VaultOptionsBottomSheetTest {
             isPrimary = primary,
             isOwned = owned,
             members = if (shared) 2 else 1,
+            shared = shared
         )
         getVaultById.emitValue(vault)
     }

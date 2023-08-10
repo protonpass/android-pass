@@ -23,6 +23,7 @@ import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
@@ -66,6 +67,18 @@ data class LoginItemFormState(
         primaryTotp = primaryTotp.toHiddenState(),
         customFields = customFields.map(UICustomFieldContent::toCustomFieldContent)
     )
+
+    fun compare(other: LoginItemFormState, encryptionContext: EncryptionContext): Boolean =
+        title == other.title &&
+            note == other.note &&
+            username == other.username &&
+            encryptionContext.decrypt(password.encrypted.toEncryptedByteArray())
+                .contentEquals(encryptionContext.decrypt(other.password.encrypted.toEncryptedByteArray())) &&
+            urls == other.urls &&
+            packageInfoSet == other.packageInfoSet &&
+            encryptionContext.decrypt(primaryTotp.encrypted.toEncryptedByteArray())
+                .contentEquals(encryptionContext.decrypt(other.primaryTotp.encrypted.toEncryptedByteArray())) &&
+            customFields == other.customFields
 
     companion object {
         fun default(encryptionContext: EncryptionContext) = LoginItemFormState(

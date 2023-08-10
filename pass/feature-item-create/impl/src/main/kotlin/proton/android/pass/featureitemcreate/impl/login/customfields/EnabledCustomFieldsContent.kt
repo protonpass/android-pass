@@ -41,10 +41,10 @@ import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.login.CustomFieldsState
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
-import proton.pass.domain.CustomFieldContent
 import me.proton.core.presentation.R as CoreR
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -74,7 +74,7 @@ fun EnabledCustomFieldsContent(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        state.customFields.forEachIndexed { idx, field: CustomFieldContent ->
+        state.customFields.forEachIndexed { idx, field: UICustomFieldContent ->
             val entryModifier = if (focusedField?.index == idx) {
                 Modifier.focusRequester(focusRequester)
             } else {

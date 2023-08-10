@@ -20,14 +20,14 @@ package proton.android.pass.featureitemcreate.impl.login.customfields
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
-import proton.pass.domain.CustomFieldContent
 
 @Composable
 fun CustomFieldEntry(
     modifier: Modifier = Modifier,
-    entry: CustomFieldContent,
+    entry: UICustomFieldContent,
     validationError: LoginItemValidationErrors.CustomFieldValidationError?,
     index: Int,
     canEdit: Boolean,
@@ -36,7 +36,7 @@ fun CustomFieldEntry(
     onOptionsClick: () -> Unit,
 ) {
     when (entry) {
-        is CustomFieldContent.Text -> TextCustomFieldEntry(
+        is UICustomFieldContent.Text -> TextCustomFieldEntry(
             modifier = modifier,
             content = entry,
             index = index,
@@ -45,7 +45,7 @@ fun CustomFieldEntry(
             onFocusChange = onFocusChange,
             onOptionsClick = onOptionsClick
         )
-        is CustomFieldContent.Hidden -> HiddenCustomFieldEntry(
+        is UICustomFieldContent.Hidden -> HiddenCustomFieldEntry(
             modifier = modifier,
             content = entry,
             index = index,
@@ -54,7 +54,7 @@ fun CustomFieldEntry(
             onFocusChange = onFocusChange,
             onOptionsClick = onOptionsClick
         )
-        is CustomFieldContent.Totp -> TotpCustomFieldEntry(
+        is UICustomFieldContent.Totp -> TotpCustomFieldEntry(
             modifier = modifier,
             content = entry,
             validationError = validationError,

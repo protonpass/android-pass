@@ -39,12 +39,12 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
-import proton.pass.domain.HiddenState
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 
 @Composable
 internal fun TotpInput(
     modifier: Modifier = Modifier,
-    value: HiddenState,
+    value: UIHiddenState,
     label: String = stringResource(R.string.totp_create_login_field_title),
     enabled: Boolean,
     isError: Boolean,
@@ -52,9 +52,9 @@ internal fun TotpInput(
     onFocus: (Boolean) -> Unit
 ) {
     val text = when (value) {
-        is HiddenState.Concealed -> "" // This state cannot happen as TOTP is always revealed
-        is HiddenState.Revealed -> value.clearText
-        is HiddenState.Empty -> ""
+        is UIHiddenState.Concealed -> "" // This state cannot happen as TOTP is always revealed
+        is UIHiddenState.Revealed -> value.clearText
+        is UIHiddenState.Empty -> ""
     }
     ProtonTextField(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
@@ -101,7 +101,7 @@ fun TotpInputPreview(
     PassTheme(isDark = input.first) {
         Surface {
             TotpInput(
-                value = HiddenState.Revealed("", "123"),
+                value = UIHiddenState.Revealed("", "123"),
                 enabled = true,
                 isError = input.second,
                 onTotpChanged = {},

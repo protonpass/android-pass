@@ -35,7 +35,10 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -111,16 +114,16 @@ class UpdateLoginViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
-    private var _item: Item? = null
+    private var itemOption: Option<Item> = None
 
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
-            if (_item != null) return@launch
+            if (itemOption != None) return@launch
 
             isLoadingState.update { IsLoadingState.Loading }
             runCatching { getItemById.invoke(navShareId, navItemId).first() }
                 .onSuccess { item ->
-                    _item = item
+                    itemOption = item.some()
                     onItemReceived(item)
                 }
                 .onFailure {
@@ -162,8 +165,7 @@ class UpdateLoginViewModel @Inject constructor(
     }
 
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
-        val currentItem = _item
-        requireNotNull(currentItem)
+        val currentItem = itemOption.value() ?: return@launch
         val shouldUpdate = validateItem()
         if (!shouldUpdate) return@launch
 
@@ -187,39 +189,41 @@ class UpdateLoginViewModel @Inject constructor(
     }
 
     private fun onItemReceived(item: Item) {
-        val itemContents = item.itemType as ItemType.Login
+        encryptionContextProvider.withEncryptionContext {
+            val default = LoginItemFormState.default(this)
+            if (loginItemFormState.compare(default, this)) {
+                val itemContents = item.itemType as ItemType.Login
 
-        val websites = if (itemContents.websites.isEmpty()) {
-            persistentListOf("")
-        } else {
-            itemContents.websites.toImmutableList()
-        }
+                val websites = if (itemContents.websites.isEmpty()) {
+                    persistentListOf("")
+                } else {
+                    itemContents.websites.toImmutableList()
+                }
+                val decryptedTotp = handleTotp(
+                    encryptionContext = this@withEncryptionContext,
+                    primaryTotp = itemContents.primaryTotp
+                )
+                val isPasswordEmpty = decrypt(itemContents.password.toEncryptedByteArray())
+                    .isEmpty()
+                val passwordHiddenState = if (isPasswordEmpty) {
+                    UIHiddenState.Empty(itemContents.password)
+                } else {
+                    UIHiddenState.Concealed(itemContents.password)
+                }
 
-        val loginItem = encryptionContextProvider.withEncryptionContext {
-            val decryptedTotp = handleTotp(
-                encryptionContext = this@withEncryptionContext,
-                primaryTotp = itemContents.primaryTotp
-            )
-            val isPasswordEmpty = decrypt(itemContents.password.toEncryptedByteArray())
-                .isEmpty()
-            val passwordHiddenState = if (isPasswordEmpty) {
-                UIHiddenState.Empty(itemContents.password)
-            } else {
-                UIHiddenState.Concealed(itemContents.password)
+                loginItemFormMutableState = loginItemFormState.copy(
+                    title = decrypt(item.title),
+                    username = itemContents.username,
+                    password = passwordHiddenState,
+                    urls = websites,
+                    note = decrypt(item.note),
+                    packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),
+                    primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
+                    customFields = itemContents.customFields.mapNotNull {
+                        convertCustomField(it, this@withEncryptionContext)
+                    }.toImmutableList()
+                )
             }
-
-            loginItemFormMutableState = loginItemFormState.copy(
-                title = decrypt(item.title),
-                username = itemContents.username,
-                password = passwordHiddenState,
-                urls = websites,
-                note = decrypt(item.note),
-                packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),
-                primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
-                customFields = itemContents.customFields.mapNotNull {
-                    convertCustomField(it, this@withEncryptionContext)
-                }.toImmutableList()
-            )
         }
     }
 

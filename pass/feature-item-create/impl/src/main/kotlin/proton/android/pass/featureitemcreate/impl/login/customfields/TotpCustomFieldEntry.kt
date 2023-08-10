@@ -81,7 +81,7 @@ fun TotpCustomFieldEntry(
         isError = isError,
         errorMessage = errorMessage,
         moveToNextOnEnter = true,
-        textStyle = ProtonTheme.typography.defaultNorm,
+        textStyle = ProtonTheme.typography.defaultNorm(canEdit),
         onFocusChange = { onFocusChange(LoginCustomField.CustomFieldTOTP(index), it) },
         label = { ProtonTextFieldLabel(text = content.label, isError = isError) },
         placeholder = {

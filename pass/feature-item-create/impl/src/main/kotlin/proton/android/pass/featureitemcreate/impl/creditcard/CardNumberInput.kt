@@ -56,7 +56,7 @@ internal fun CardNumberInput(
         onChange = onChange,
         moveToNextOnEnter = true,
         editable = enabled,
-        textStyle = ProtonTheme.typography.defaultNorm,
+        textStyle = ProtonTheme.typography.defaultNorm(enabled),
         keyboardOptions = KeyboardOptions(autoCorrect = false, keyboardType = KeyboardType.Number),
         visualTransformation = { text ->
             if (text.isEmpty())

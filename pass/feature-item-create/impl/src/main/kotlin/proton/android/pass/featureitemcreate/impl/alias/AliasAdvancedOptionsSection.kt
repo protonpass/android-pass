@@ -75,7 +75,7 @@ fun AliasAdvancedOptionsSection(
     ) {
         ProtonTextField(
             modifier = modifier.padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 4.dp),
-            textStyle = ProtonTheme.typography.defaultNorm,
+            textStyle = ProtonTheme.typography.defaultNorm(enabled),
             label = {
                 ProtonTextFieldLabel(
                     text = stringResource(id = R.string.field_alias_prefix),
@@ -101,7 +101,6 @@ fun AliasAdvancedOptionsSection(
 
         Divider(color = PassTheme.colors.inputBorderNorm)
 
-        val aliasText = suffix?.suffix ?: ""
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -113,7 +112,10 @@ fun AliasAdvancedOptionsSection(
                 modifier = Modifier.weight(1f),
             ) {
                 ProtonTextFieldLabel(text = stringResource(R.string.field_alias_suffix))
-                Text(aliasText)
+                Text(
+                    text = suffix?.suffix ?: "",
+                    style = ProtonTheme.typography.defaultNorm(enabled),
+                )
             }
             if (canSelectSuffix) {
                 ChevronDownIcon()

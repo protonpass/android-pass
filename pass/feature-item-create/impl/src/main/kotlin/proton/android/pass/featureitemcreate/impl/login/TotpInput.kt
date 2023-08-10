@@ -64,7 +64,7 @@ internal fun TotpInput(
         isError = isError,
         errorMessage = stringResource(id = R.string.totp_create_login_field_invalid),
         moveToNextOnEnter = true,
-        textStyle = ProtonTheme.typography.defaultNorm,
+        textStyle = ProtonTheme.typography.defaultNorm(enabled),
         keyboardOptions = KeyboardOptions(
             autoCorrect = false,
             keyboardType = KeyboardType.Password

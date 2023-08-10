@@ -31,7 +31,7 @@ import javax.inject.Singleton
 class TestInviteRepository @Inject constructor() : InviteRepository {
 
     private val invitesFlow: MutableStateFlow<List<PendingInvite>> = MutableStateFlow(emptyList())
-    private var refreshResult: Result<Unit> = Result.success(Unit)
+    private var refreshResult: Result<Boolean> = Result.success(false)
     private var acceptResult: Result<Unit> = Result.success(Unit)
     private var rejectResult: Result<Unit> = Result.success(Unit)
 
@@ -39,7 +39,7 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
         invitesFlow.tryEmit(invites)
     }
 
-    fun setRefreshResult(value: Result<Unit>) {
+    fun setRefreshResult(value: Result<Boolean>) {
         refreshResult = value
     }
 
@@ -53,9 +53,7 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
 
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = invitesFlow
 
-    override suspend fun refreshInvites(userId: UserId) {
-        refreshResult.getOrThrow()
-    }
+    override suspend fun refreshInvites(userId: UserId) = refreshResult.getOrThrow()
 
     override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken) {
         acceptResult.getOrThrow()

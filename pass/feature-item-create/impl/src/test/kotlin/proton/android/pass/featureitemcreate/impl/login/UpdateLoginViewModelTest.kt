@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
-import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
@@ -37,6 +36,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -72,8 +72,8 @@ class UpdateLoginViewModelTest {
             totpManager = totpManager,
             snackbarDispatcher = TestSnackbarDispatcher(),
             savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-                get().set(CommonOptionalNavArgId.ShareId.key, SHARE_ID)
-                get().set(CommonNavArgId.ItemId.key, ITEM_ID)
+                get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
+                get()[CommonNavArgId.ItemId.key] = ITEM_ID
             },
             encryptionContextProvider = TestEncryptionContextProvider(),
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
@@ -90,7 +90,6 @@ class UpdateLoginViewModelTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA1&period=30&digits=6"
         val primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(uri), uri)
-        val primaryTotpWithDefaults = HiddenState.Revealed(TestEncryptionContext.encrypt(secret), secret)
         val item = TestObserveItems.createItem(
             itemContents = ItemContents.Login(
                 title = "item",
@@ -106,10 +105,8 @@ class UpdateLoginViewModelTest {
         totpManager.setParseResult(Result.success(TotpSpec(secret = secret, label = "label")))
         getItemById.emitValue(Result.success(item))
 
-        instance.updateLoginUiState.test {
-            val state = awaitItem()
-            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(primaryTotpWithDefaults)
-        }
+        assertThat(instance.loginItemFormState.primaryTotp)
+            .isEqualTo(UIHiddenState.Revealed(TestEncryptionContext.encrypt(secret), secret))
     }
 
     @Test
@@ -131,10 +128,7 @@ class UpdateLoginViewModelTest {
         )
         getItemById.emitValue(Result.success(item))
 
-        instance.updateLoginUiState.test {
-            val state = awaitItem()
-            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(primaryTotp)
-        }
+        assertThat(instance.loginItemFormState.primaryTotp).isEqualTo(UIHiddenState.from(primaryTotp))
     }
 
     companion object {

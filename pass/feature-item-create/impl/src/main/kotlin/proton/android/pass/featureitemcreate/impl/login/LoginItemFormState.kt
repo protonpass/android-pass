@@ -78,7 +78,8 @@ data class LoginItemFormState(
             packageInfoSet == other.packageInfoSet &&
             encryptionContext.decrypt(primaryTotp.encrypted.toEncryptedByteArray())
                 .contentEquals(encryptionContext.decrypt(other.primaryTotp.encrypted.toEncryptedByteArray())) &&
-            customFields == other.customFields
+            customFields.size == other.customFields.size &&
+            customFields.zip(other.customFields).all { (a, b) -> a.compare(b, encryptionContext) }
 
     companion object {
         fun default(encryptionContext: EncryptionContext) = LoginItemFormState(

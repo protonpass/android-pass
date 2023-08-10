@@ -26,7 +26,6 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
-import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.pass.domain.ShareId
 
 @Immutable
@@ -38,11 +37,11 @@ data class BaseLoginUiState(
     val openScanState: OpenScanState,
     val focusLastWebsite: Boolean,
     val canUpdateUsername: Boolean,
+    val canUseCustomFields: Boolean,
     val primaryEmail: String?,
     val hasUserEditedContent: Boolean,
     val hasReachedAliasLimit: Boolean,
     val totpUiState: TotpUiState,
-    val customFieldsState: CustomFieldsState,
     val focusedField: LoginField?,
 ) {
     companion object {
@@ -53,12 +52,12 @@ data class BaseLoginUiState(
             isItemSaved = ItemSavedState.Unknown,
             openScanState = OpenScanState.Unknown,
             focusLastWebsite = false,
+            canUseCustomFields = false,
             canUpdateUsername = true,
             primaryEmail = null,
             hasUserEditedContent = false,
             hasReachedAliasLimit = false,
             totpUiState = TotpUiState.NotInitialised,
-            customFieldsState = CustomFieldsState.NotInitialised,
             focusedField = null
         )
     }
@@ -106,18 +105,4 @@ sealed interface TotpUiState {
 
     @Immutable
     data class Limited(val isEdit: Boolean) : TotpUiState
-}
-
-sealed interface CustomFieldsState {
-    @Immutable
-    object NotInitialised : CustomFieldsState
-
-    @Immutable
-    object Disabled : CustomFieldsState
-
-    @Immutable
-    data class Enabled(
-        val customFields: List<UICustomFieldContent>,
-        val isLimited: Boolean
-    ) : CustomFieldsState
 }

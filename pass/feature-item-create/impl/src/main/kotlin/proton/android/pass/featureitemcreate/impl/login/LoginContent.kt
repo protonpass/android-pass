@@ -114,8 +114,8 @@ internal fun LoginContent(
         LoginItemForm(
             modifier = Modifier.padding(padding),
             loginItemFormState = loginItemFormState,
+            canUseCustomFields = uiState.canUseCustomFields,
             totpUiState = uiState.totpUiState,
-            customFieldsState = uiState.customFieldsState,
             customFieldValidationErrors = uiState.validationErrors
                 .filterIsInstance<LoginItemValidationErrors.CustomFieldValidationError>()
                 .toPersistentList(),

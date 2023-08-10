@@ -55,7 +55,7 @@ class InviteRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun refreshInvites(userId: UserId) {
+    override suspend fun refreshInvites(userId: UserId): Boolean {
         val remoteInvites = remoteDataSource.fetchInvites(userId)
         val localInvites = localDatasource.observeAllInvites(userId).firstOrNull() ?: emptyList()
 
@@ -69,6 +69,7 @@ class InviteRepositoryImpl @Inject constructor(
         val newInvites = remoteInvites.filter { remote ->
             localInvites.none { local -> local.token == remote.inviteToken }
         }
+        val hasNewInvites = newInvites.isNotEmpty()
 
         val invitesWithKeys: List<InviteAndKeysEntity> = newInvites.map { invite ->
             val vaultData = invite.vaultData
@@ -103,6 +104,7 @@ class InviteRepositoryImpl @Inject constructor(
         }
 
         localDatasource.storeInvites(invitesWithKeys)
+        return hasNewInvites
     }
 
     override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken) {

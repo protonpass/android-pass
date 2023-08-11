@@ -36,6 +36,7 @@ import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.coroutines.launch
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -113,6 +114,34 @@ fun OnBoardingTipContent(
                 InviteCard(
                     onClick = { onClick(INVITE) }
                 )
+            }
+        }
+
+        AnimatedVisibility(
+            visible = tipsSetToShow.contains(NOTIFICATION_PERMISSION),
+            enter = expandVertically(),
+            exit = shrinkVertically()
+        ) {
+            Box(modifier = modifier.padding(16.dp)) {
+                val dismissState = rememberDismissState(
+                    confirmStateChange = {
+                        if (it != DismissValue.Default) {
+                            onDismiss(NOTIFICATION_PERMISSION)
+                        }
+                        true
+                    }
+                )
+                SwipeToDismiss(state = dismissState, background = {}) {
+                    NotificationPermissionCard(
+                        onClick = { onClick(NOTIFICATION_PERMISSION) },
+                        onDismiss = {
+                            scope.launch {
+                                dismissState.dismiss(DismissDirection.EndToStart)
+                                onDismiss(NOTIFICATION_PERMISSION)
+                            }
+                        }
+                    )
+                }
             }
         }
     }

@@ -140,10 +140,17 @@ fun LoginDetail(
                                     shouldShowDeleteItemDialog = true
                                 },
                                 icon = {
+                                    val contents = state.itemUiModel.contents as ItemContents.Login
+                                    val sortedPackages =
+                                        contents.packageInfoSet.sortedBy { it.packageName.value }
+                                    val packageName =
+                                        sortedPackages.firstOrNull()?.packageName?.value
+                                    val website = contents.urls.firstOrNull()
                                     LoginIcon(
-                                        text = state.itemUiModel.contents.title,
-                                        content = state.itemUiModel.contents as ItemContents.Login,
-                                        canLoadExternalImages = canLoadExternalImages
+                                        text = contents.title,
+                                        canLoadExternalImages = canLoadExternalImages,
+                                        website = website,
+                                        packageName = packageName,
                                     )
                                 }
                             )
@@ -188,25 +195,31 @@ fun LoginDetail(
                                 LoginDetailEvent.OnCopyPasswordClick -> {
                                     viewModel.copyPasswordToClipboard()
                                 }
+
                                 is LoginDetailEvent.OnCopyTotpClick -> {
                                     viewModel.copyTotpCodeToClipboard(it.totpCode)
                                 }
+
                                 is LoginDetailEvent.OnCustomFieldEvent -> {
                                     when (val event = it.event) {
                                         is CustomFieldEvent.CopyValue -> {
                                             viewModel.copyCustomFieldValue(event.index)
                                         }
+
                                         is CustomFieldEvent.ToggleFieldVisibility -> {
                                             viewModel.toggleCustomFieldVisibility(event.index)
                                         }
+
                                         is CustomFieldEvent.CopyValueContent -> {
                                             viewModel.copyCustomFieldContent(event.content)
                                         }
+
                                         CustomFieldEvent.Upgrade -> {
                                             onNavigate(ItemDetailNavigation.Upgrade)
                                         }
                                     }
                                 }
+
                                 LoginDetailEvent.OnGoToAliasClick -> {
                                     state.linkedAlias.map { aliasItem ->
                                         onNavigate(
@@ -217,23 +230,29 @@ fun LoginDetail(
                                         )
                                     }
                                 }
+
                                 LoginDetailEvent.OnTogglePasswordClick -> {
                                     viewModel.togglePassword()
                                 }
+
                                 LoginDetailEvent.OnUpgradeClick -> {
                                     onNavigate(ItemDetailNavigation.Upgrade)
                                 }
+
                                 LoginDetailEvent.OnUsernameClick -> {
                                     viewModel.copyUsernameToClipboard()
                                 }
+
                                 is LoginDetailEvent.OnWebsiteClicked -> {
                                     openWebsite(context, it.website)
                                 }
+
                                 is LoginDetailEvent.OnWebsiteLongClicked -> {
                                     selectedWebsite = it.website
                                     currentBottomSheet = WebsiteOptions
                                     scope.launch { bottomSheetState.show() }
                                 }
+
                                 LoginDetailEvent.OnVaultClick -> {
                                     state.vault?.shareId?.let { shareId ->
                                         onNavigate(ItemDetailNavigation.ManageVault(shareId))

@@ -81,6 +81,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         HasDismissedAutofillBanner.from(fromBooleanPrefProto(it.hasDismissedAutofillBanner))
     }
 
+    override fun setHasDismissedNotificationBanner(state: HasDismissedNotificationBanner): Result<Unit> =
+        setPreference {
+            it.setHasDismissedNotificationBanner(state.value().toBooleanPrefProto())
+        }
+
+    override fun getHasDismissedNotificationBanner(): Flow<HasDismissedNotificationBanner> = getPreference {
+        HasDismissedNotificationBanner.from(fromBooleanPrefProto(it.hasDismissedNotificationBanner))
+    }
+
     override fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> =
         setPreference {
             it.setCopyTotpToClipboardEnabled(state.value().toBooleanPrefProto())

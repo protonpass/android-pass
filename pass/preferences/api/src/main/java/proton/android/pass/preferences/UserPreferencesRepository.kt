@@ -40,6 +40,9 @@ interface UserPreferencesRepository {
     fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit>
     fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner>
 
+    fun setHasDismissedNotificationBanner(state: HasDismissedNotificationBanner): Result<Unit>
+    fun getHasDismissedNotificationBanner(): Flow<HasDismissedNotificationBanner>
+
     fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit>
     fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard>
 

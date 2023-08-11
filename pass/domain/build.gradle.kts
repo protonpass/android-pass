@@ -8,6 +8,7 @@ dependencies {
     api(libs.core.key.domain)
     api(projects.pass.common.api)
 
+    compileOnly(libs.compose.stable.marker)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
 }

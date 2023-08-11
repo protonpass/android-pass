@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
+    compileOnly(libs.compose.stable.marker)
 
     api(libs.core.network.domain)
     api(libs.core.utilKotlin)

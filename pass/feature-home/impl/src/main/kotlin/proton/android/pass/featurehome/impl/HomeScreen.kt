@@ -264,11 +264,17 @@ fun HomeScreen(
                     },
                     icon = {
                         when (val contents = selectedItem!!.contents) {
-                            is ItemContents.Login -> LoginIcon(
-                                text = selectedItem!!.contents.title,
-                                content = contents,
-                                canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages
-                            )
+                            is ItemContents.Login -> {
+                                val sortedPackages = contents.packageInfoSet.sortedBy { it.packageName.value }
+                                val packageName = sortedPackages.firstOrNull()?.packageName?.value
+                                val website = contents.urls.firstOrNull()
+                                LoginIcon(
+                                    text = selectedItem!!.contents.title,
+                                    canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
+                                    website = website,
+                                    packageName = packageName,
+                                )
+                            }
 
                             is ItemContents.Alias -> AliasIcon()
                             is ItemContents.Note -> NoteIcon()

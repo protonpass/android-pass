@@ -18,6 +18,9 @@
 
 package proton.android.pass.common.api
 
+import androidx.compose.runtime.Stable
+
+@Stable
 sealed interface Option<out A> {
 
     fun isEmpty(): Boolean

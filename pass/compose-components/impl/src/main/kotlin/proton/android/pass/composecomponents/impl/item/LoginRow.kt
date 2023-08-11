@@ -62,10 +62,14 @@ fun LoginRow(
     ItemRow(
         modifier = modifier,
         icon = {
+            val sortedPackages = content.packageInfoSet.sortedBy { it.packageName.value }
+            val packageName = sortedPackages.firstOrNull()?.packageName?.value
+            val website = content.urls.firstOrNull()
             LoginIcon(
                 text = fields.title.text,
-                content = content,
-                canLoadExternalImages = canLoadExternalImages
+                canLoadExternalImages = canLoadExternalImages,
+                website = website,
+                packageName = packageName,
             )
         },
         title = fields.title,

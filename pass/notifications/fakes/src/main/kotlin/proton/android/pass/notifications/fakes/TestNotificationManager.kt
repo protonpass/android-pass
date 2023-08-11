@@ -22,6 +22,13 @@ import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
 class TestNotificationManager @Inject constructor() : NotificationManager {
+
+    private var hasNotificationPermission = true
+
+    fun setHasNotificationPermission(value: Boolean) {
+        hasNotificationPermission = value
+    }
+
     override fun sendNotification() {
         // no op
     }
@@ -37,4 +44,6 @@ class TestNotificationManager @Inject constructor() : NotificationManager {
     override fun sendReceivedInviteNotification() {
         // no op
     }
+
+    override fun hasNotificationPermission(): Boolean = hasNotificationPermission
 }

@@ -229,32 +229,42 @@ fun formatMoreInfoInstantText(
             acceptedFormats = listOf(Today, Yesterday, DateOfSameYear, Date)
         )
     ) {
-        Date -> {
+        Date -> runCatching {
             val pattern =
                 stringResource(R.string.date_full_date_format_with_year)
             DateTimeFormatter.ofPattern(pattern)
                 .withLocale(locale)
                 .format(
-                    toFormat.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
+                    toFormat.toLocalDateTime(TimeZone.currentSystemDefault())
+                        .toJavaLocalDateTime()
                 )
-        }
-        DateOfSameYear -> {
+        }.getOrDefault("")
+
+        DateOfSameYear -> runCatching {
             val pattern =
                 stringResource(R.string.date_full_date_format)
             DateTimeFormatter.ofPattern(pattern)
                 .withLocale(locale)
                 .format(
-                    toFormat.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
+                    toFormat.toLocalDateTime(TimeZone.currentSystemDefault())
+                        .toJavaLocalDateTime()
                 )
-        }
-        Today -> stringResource(
-            R.string.date_today,
-            extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
-        )
-        Yesterday -> stringResource(
-            R.string.date_yesterday,
-            extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
-        )
+        }.getOrDefault("")
+
+        Today -> runCatching {
+            stringResource(
+                R.string.date_today,
+                extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
+            )
+        }.getOrDefault("")
+
+        Yesterday -> runCatching {
+            stringResource(
+                R.string.date_yesterday,
+                extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
+            )
+        }.getOrDefault("")
+
         else -> throw IllegalStateException("Unexpected date format")
     }
 

@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.accompanist.permissions)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)

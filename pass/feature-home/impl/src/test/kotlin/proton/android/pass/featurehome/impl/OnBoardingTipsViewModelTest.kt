@@ -35,6 +35,7 @@ import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INV
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsUiState
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsViewModel
+import proton.android.pass.notifications.fakes.TestNotificationManager
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
@@ -66,11 +67,12 @@ class OnBoardingTipsViewModelTest {
         observeInvites = TestObserveInvites()
         ffRepo = TestFeatureFlagsPreferenceRepository()
         viewModel = OnBoardingTipsViewModel(
-            autofillManager,
-            preferenceRepository,
-            observeInvites,
-            getUserPlan,
-            ffRepo,
+            autofillManager = autofillManager,
+            preferencesRepository = preferenceRepository,
+            observeInvites = observeInvites,
+            getUserPlan = getUserPlan,
+            ffRepo = ffRepo,
+            notificationManager = TestNotificationManager()
         )
     }
 

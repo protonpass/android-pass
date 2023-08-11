@@ -33,7 +33,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,9 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.HorizontalPagerIndicator
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -63,15 +60,23 @@ fun OnBoardingContent(
     onMainButtonClick: (OnBoardingPageName) -> Unit,
     onSkipButtonClick: (OnBoardingPageName) -> Unit,
     onSelectedPageChanged: (Int) -> Unit,
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     pagerState: PagerState = rememberPagerState(initialPage = 0)
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ) {
-        LaunchedEffect(uiState.selectedPage != pagerState.currentPage && !pagerState.isScrollInProgress) {
-            coroutineScope.launch { pagerState.animateScrollToPage(uiState.selectedPage) }
+        LaunchedEffect(
+            pagerState,
+            uiState.selectedPage != pagerState.currentPage && !pagerState.isScrollInProgress
+        ) {
+            if (
+                pagerState.canScrollForward &&
+                pagerState.currentPage < uiState.selectedPage &&
+                uiState.selectedPage < uiState.enabledPages.size
+            ) {
+                pagerState.animateScrollToPage(uiState.selectedPage)
+            }
         }
         LaunchedEffect(pagerState) {
             snapshotFlow { pagerState.currentPage }.collectLatest { onSelectedPageChanged(it) }

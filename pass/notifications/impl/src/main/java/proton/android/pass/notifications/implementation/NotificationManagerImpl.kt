@@ -22,8 +22,11 @@ import android.app.NotificationChannel
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.notifications.api.AutofillDebugActivityAnnotation
@@ -37,6 +40,17 @@ class NotificationManagerImpl @Inject constructor(
     @AutofillDebugActivityAnnotation private val autofillDebugActivityClass: Class<*>,
     @MainActivityAnnotation private val mainActivityClass: Class<*>
 ) : NotificationManager {
+
+    override fun hasNotificationPermission(): Boolean =
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+            true
+        } else {
+            val result = ContextCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            )
+            result == PackageManager.PERMISSION_GRANTED
+        }
 
     override fun sendNotification() {
         createAutofillNotificationChannel()

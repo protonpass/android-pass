@@ -18,15 +18,26 @@
 
 package proton.android.pass.featurehome.impl.onboardingtips
 
+import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 
+@Stable
 sealed interface OnBoardingTipsEvent {
+    @Stable
     object Unknown : OnBoardingTipsEvent
+
+    @Stable
     object OpenTrialScreen : OnBoardingTipsEvent
+
+    @Stable
     object OpenInviteScreen : OnBoardingTipsEvent
+
+    @Stable
+    object RequestNotificationPermission : OnBoardingTipsEvent
 }
 
+@Stable
 data class OnBoardingTipsUiState(
     val tipsToShow: ImmutableSet<OnBoardingTipPage> = persistentSetOf(),
     val event: OnBoardingTipsEvent = OnBoardingTipsEvent.Unknown

@@ -18,12 +18,14 @@
 
 package proton.android.pass.commonuimodels.api
 
+import androidx.compose.runtime.Stable
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
 import proton.pass.domain.Vault
 
+@Stable
 data class ShareUiModel(
     val id: ShareId,
     val name: String,
@@ -46,6 +48,7 @@ data class ShareUiModel(
     }
 }
 
+@Stable
 data class ShareUiModelWithItemCount(
     val id: ShareId,
     val name: String,

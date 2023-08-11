@@ -18,11 +18,13 @@
 
 package proton.android.pass.commonuimodels.api
 
+import androidx.compose.runtime.Stable
 import kotlinx.datetime.Instant
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
+@Stable
 data class ItemUiModel(
     val id: ItemId,
     val shareId: ShareId,

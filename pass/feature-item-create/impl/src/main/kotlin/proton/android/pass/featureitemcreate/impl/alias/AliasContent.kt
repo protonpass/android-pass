@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankPrefix
@@ -125,7 +126,7 @@ internal fun AliasContent(
 
         if (showMailboxDialog && aliasItemFormState.mailboxes.isNotEmpty()) {
             SelectMailboxesDialog(
-                mailboxes = aliasItemFormState.mailboxes,
+                mailboxes = aliasItemFormState.mailboxes.toPersistentList(),
                 color = PassTheme.colors.aliasInteractionNorm,
                 canUpgrade = uiState.canUpgrade,
                 onMailboxesChanged = {

@@ -23,4 +23,6 @@ interface NotificationManager {
     fun showDebugAutofillNotification()
     fun hideDebugAutofillNotification()
     fun sendReceivedInviteNotification()
+
+    fun hasNotificationPermission(): Boolean
 }

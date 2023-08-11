@@ -18,6 +18,9 @@
 
 package proton.android.pass.composecomponents.impl.uievents
 
+import androidx.compose.runtime.Stable
+
+@Stable
 sealed interface IsButtonEnabled {
     object Enabled : IsButtonEnabled
     object Disabled : IsButtonEnabled

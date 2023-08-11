@@ -33,6 +33,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.applyIf
@@ -47,7 +49,7 @@ import proton.android.pass.featureitemcreate.impl.R
 @Composable
 fun MailboxSection(
     modifier: Modifier = Modifier,
-    mailboxes: List<SelectedAliasMailboxUiModel>,
+    mailboxes: ImmutableList<SelectedAliasMailboxUiModel>,
     isCreateMode: Boolean,
     isEditAllowed: Boolean,
     isLoading: Boolean,
@@ -103,7 +105,7 @@ fun MailboxSectionPreview(
             MailboxSection(
                 isLoading = false,
                 isBottomSheet = false,
-                mailboxes = listOf(
+                mailboxes = persistentListOf(
                     SelectedAliasMailboxUiModel(
                         model = AliasMailboxUiModel(
                             id = 1,
@@ -130,7 +132,7 @@ fun MailboxSectionBottomSheetPreview(
             MailboxSection(
                 isBottomSheet = input.second,
                 isLoading = false,
-                mailboxes = listOf(
+                mailboxes = persistentListOf(
                     SelectedAliasMailboxUiModel(
                         model = AliasMailboxUiModel(
                             id = 1,

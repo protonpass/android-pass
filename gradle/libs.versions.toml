@@ -38,6 +38,8 @@ turbine = "1.0.0"
 coil = "2.2.2"
 # Commons codec
 commons-codec = "1.15"
+# Compose marker
+compose-stable-marker = "1.0.0"
 # Core
 core = "14.0.1"
 # Dagger
@@ -144,6 +146,8 @@ androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "a
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
 ## Autofill
 androidx-autofill = { module = "androidx.autofill:autofill", version.ref = "androidx-autofill" }
+## Compose Marker
+compose-stable-marker = { module = "com.github.skydoves:compose-stable-marker", version.ref = "compose-stable-marker" }
 ## Hilt
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }

@@ -31,4 +31,5 @@ dependencies {
     implementation(projects.pass.protos)
 
     implementation(libs.kotlinx.datetime)
+    compileOnly(libs.compose.stable.marker)
 }

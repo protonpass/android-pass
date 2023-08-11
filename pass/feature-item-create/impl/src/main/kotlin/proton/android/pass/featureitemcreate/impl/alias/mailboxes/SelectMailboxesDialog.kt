@@ -25,13 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 
 @Composable
 fun SelectMailboxesDialog(
     modifier: Modifier = Modifier,
-    mailboxes: List<SelectedAliasMailboxUiModel>,
+    mailboxes: ImmutableList<SelectedAliasMailboxUiModel>,
     canUpgrade: Boolean,
     color: Color,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,

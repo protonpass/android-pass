@@ -44,6 +44,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
@@ -57,7 +59,7 @@ import me.proton.core.presentation.compose.R as CoreR
 @Composable
 fun SelectSuffixContent(
     modifier: Modifier = Modifier,
-    suffixes: List<AliasSuffixUiModel>,
+    suffixes: ImmutableList<AliasSuffixUiModel>,
     canUpgrade: Boolean,
     selectedSuffix: AliasSuffixUiModel?,
     color: Color,
@@ -130,7 +132,7 @@ fun SelectSuffixContentPreview(
     PassTheme(isDark = input.first) {
         Surface {
             SelectSuffixContent(
-                suffixes = listOf(
+                suffixes = persistentListOf(
                     selected,
                     AliasSuffixUiModel(
                         suffix = ".other@random.suffix",

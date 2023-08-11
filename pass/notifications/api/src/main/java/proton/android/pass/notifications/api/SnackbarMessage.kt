@@ -18,6 +18,9 @@
 
 package proton.android.pass.notifications.api
 
+import androidx.compose.runtime.Stable
+
+@Stable
 interface SnackbarMessage {
     val id: Int
     val type: SnackbarType

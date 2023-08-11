@@ -18,13 +18,16 @@
 
 package proton.pass.domain
 
+import androidx.compose.runtime.Stable
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.common.api.Option
 import java.util.Date
 
+@Stable
 @JvmInline
 value class ShareId(val id: String)
 
+@Stable
 @JvmInline
 value class VaultId(val id: String)
 

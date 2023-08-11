@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
@@ -82,7 +83,7 @@ internal fun CreateAliasForm(
         }
         MailboxSection(
             isBottomSheet = false,
-            mailboxes = aliasItemFormState.mailboxes,
+            mailboxes = aliasItemFormState.mailboxes.toPersistentList(),
             isCreateMode = isCreateMode,
             isEditAllowed = isEditAllowed && aliasItemFormState.mailboxes.size > 1,
             isLoading = isLoading,

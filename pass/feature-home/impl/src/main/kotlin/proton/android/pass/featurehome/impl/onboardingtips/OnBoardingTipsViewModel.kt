@@ -18,6 +18,8 @@
 
 package proton.android.pass.featurehome.impl.onboardingtips
 
+import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,14 +40,18 @@ import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
+import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
+import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasDismissedAutofillBanner
+import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.pass.domain.PlanType
@@ -57,7 +63,8 @@ class OnBoardingTipsViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     observeInvites: ObserveInvites,
     getUserPlan: GetUserPlan,
-    ffRepo: FeatureFlagsPreferencesRepository
+    ffRepo: FeatureFlagsPreferencesRepository,
+    notificationManager: NotificationManager
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<OnBoardingTipsEvent> =
@@ -70,11 +77,27 @@ class OnBoardingTipsViewModel @Inject constructor(
     private val sharingEnabledFlow: Flow<Boolean> = ffRepo.get<Boolean>(FeatureFlag.SHARING_V1)
         .distinctUntilChanged()
 
+    private val notificationPermissionFlow: MutableStateFlow<Boolean> = MutableStateFlow(
+        notificationManager.hasNotificationPermission()
+    )
+
     private val shouldShowAutofillFlow: Flow<Boolean> = combine(
         autofillManager.getAutofillStatus(),
         preferencesRepository.getHasDismissedAutofillBanner(),
         ::shouldShowAutofillBanner
     )
+
+    private val shouldShowNotificationPermissionFlow: Flow<Boolean> = combine(
+        sharingEnabledFlow,
+        notificationPermissionFlow,
+        preferencesRepository.getHasDismissedNotificationBanner()
+    ) { sharingEnabled, notificationPermissionEnabled, hasDismissedNotificationBanner ->
+        when {
+            notificationPermissionEnabled -> false
+            hasDismissedNotificationBanner is HasDismissedNotificationBanner.Dismissed -> false
+            else -> sharingEnabled && needsNotificationPermissions()
+        }
+    }.distinctUntilChanged()
 
     private val shouldShowTrialFlow: Flow<Boolean> = preferencesRepository
         .getHasDismissedTrialBanner()
@@ -91,19 +114,22 @@ class OnBoardingTipsViewModel @Inject constructor(
         sharingEnabledFlow
     ) { hasInvites, sharingEnabled -> hasInvites && sharingEnabled }
 
-    val state: StateFlow<OnBoardingTipsUiState> = combine(
+    val state: StateFlow<OnBoardingTipsUiState> = combineN(
         shouldShowAutofillFlow,
         shouldShowTrialFlow,
         shouldShowInvitesFlow,
+        shouldShowNotificationPermissionFlow,
         getUserPlan(),
         eventFlow
-    ) { shouldShowAutofill, shouldShowTrial, shouldShowInvites, userPlan, event ->
+    ) { shouldShowAutofill, shouldShowTrial, shouldShowInvites, shouldShowNotificationPermission,
+        userPlan, event ->
 
         val tips = getTips(
             planType = userPlan.planType,
             shouldShowTrial = shouldShowTrial,
             shouldShowAutofill = shouldShowAutofill,
-            shouldShowInvites = shouldShowInvites
+            shouldShowInvites = shouldShowInvites,
+            shouldShowNotificationPermission = shouldShowNotificationPermission
         )
 
         OnBoardingTipsUiState(
@@ -121,7 +147,8 @@ class OnBoardingTipsViewModel @Inject constructor(
                     planType = userPlan.planType,
                     shouldShowTrial = shouldShowTrialFlow.first(),
                     shouldShowAutofill = shouldShowAutofillFlow.first(),
-                    shouldShowInvites = shouldShowInvitesFlow.first()
+                    shouldShowInvites = shouldShowInvitesFlow.first(),
+                    shouldShowNotificationPermission = shouldShowNotificationPermissionFlow.first()
                 )
                 OnBoardingTipsUiState(tips)
             }
@@ -131,11 +158,13 @@ class OnBoardingTipsViewModel @Inject constructor(
         planType: PlanType,
         shouldShowTrial: Boolean,
         shouldShowAutofill: Boolean,
-        shouldShowInvites: Boolean
+        shouldShowInvites: Boolean,
+        shouldShowNotificationPermission: Boolean
     ): ImmutableSet<OnBoardingTipPage> {
         val isTrial = planType is PlanType.Trial
         return when {
             shouldShowInvites -> persistentSetOf(INVITE)
+            shouldShowNotificationPermission -> persistentSetOf(NOTIFICATION_PERMISSION)
             isTrial && shouldShowTrial -> persistentSetOf(TRIAL)
             shouldShowAutofill -> persistentSetOf(AUTOFILL)
             else -> persistentSetOf()
@@ -155,6 +184,7 @@ class OnBoardingTipsViewModel @Inject constructor(
             AUTOFILL -> autofillManager.openAutofillSelector()
             TRIAL -> eventFlow.update { OnBoardingTipsEvent.OpenTrialScreen }
             INVITE -> eventFlow.update { OnBoardingTipsEvent.OpenInviteScreen }
+            NOTIFICATION_PERMISSION -> eventFlow.update { OnBoardingTipsEvent.RequestNotificationPermission }
         }
     }
 
@@ -167,8 +197,19 @@ class OnBoardingTipsViewModel @Inject constructor(
                 preferencesRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.Dismissed)
 
             INVITE -> {} // Invites cannot be dismissed
+            NOTIFICATION_PERMISSION ->
+                preferencesRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
         }
     }
+
+    fun onNotificationPermissionChanged(permission: Boolean) = viewModelScope.launch {
+        notificationPermissionFlow.update { permission }
+    }
+
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.TIRAMISU)
+    private fun needsNotificationPermissions(): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+
 
     fun clearEvent() {
         eventFlow.update { OnBoardingTipsEvent.Unknown }

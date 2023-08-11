@@ -18,6 +18,7 @@
 
 package proton.android.pass.featuresearchoptions.api
 
+import androidx.compose.runtime.Stable
 import kotlinx.coroutines.flow.Flow
 import proton.pass.domain.ShareId
 
@@ -45,6 +46,7 @@ data class SearchOptions(
 
 data class SortingOption(val searchSortingType: SearchSortingType)
 
+@Stable
 sealed class VaultSelectionOption {
     object AllVaults : VaultSelectionOption()
     object Trash : VaultSelectionOption()

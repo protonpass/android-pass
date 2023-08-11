@@ -18,6 +18,9 @@
 
 package proton.pass.domain
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class Vault(
     val shareId: ShareId,
     val name: String,

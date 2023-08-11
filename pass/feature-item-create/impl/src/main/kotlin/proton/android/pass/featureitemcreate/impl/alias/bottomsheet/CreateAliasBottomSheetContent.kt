@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -136,7 +137,7 @@ fun CreateAliasBottomSheetContent(
         }
         MailboxSection(
             isBottomSheet = true,
-            mailboxes = aliasItemFormState.mailboxes,
+            mailboxes = aliasItemFormState.mailboxes.toImmutableList(),
             isCreateMode = false,
             isEditAllowed = aliasItemFormState.mailboxes.size > 1,
             isLoading = state.isLoadingState.value(),
@@ -160,7 +161,7 @@ fun CreateAliasBottomSheetContent(
 
         if (showMailboxesDialog && aliasItemFormState.mailboxes.isNotEmpty()) {
             SelectMailboxesDialog(
-                mailboxes = aliasItemFormState.mailboxes,
+                mailboxes = aliasItemFormState.mailboxes.toPersistentList(),
                 color = PassTheme.colors.loginInteractionNorm,
                 canUpgrade = state.canUpgrade,
                 onMailboxesChanged = {

@@ -170,6 +170,7 @@ class AssistNodeTraversal {
         View.AUTOFILL_HINT_EMAIL_ADDRESS -> FieldType.Email
         View.AUTOFILL_HINT_USERNAME -> FieldType.Username
         View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> FieldType.Password
+        "passwordAuto" -> FieldType.Password //non-standard (ex 'com.ziraat.ziraatmobil')
         // Support for these fields will be added in the future
         // View.AUTOFILL_HINT_PHONE -> FieldType.Phone
         // View.AUTOFILL_HINT_NAME -> FieldType.FullName

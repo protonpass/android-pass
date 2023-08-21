@@ -20,9 +20,9 @@
   <plurals name="sync_item_count">
     <item quantity="other">%d item</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d of %2$d items</string>
-  <string name="sync_dialog_title">Syncing items…</string>
-  <string name="sync_dialog_subtitle">We are downloading and decrypting your items. This might take a few minutes.</string>
+  <string name="sync_progress_item_count">%1$d dari %2$d item</string>
+  <string name="sync_dialog_title">Menyinkronkan item…</string>
+  <string name="sync_dialog_subtitle">Kami sedang mengunduh dan mendekripsikan item Anda. Ini mungkin membutuhkan beberapa menit.</string>
   <string name="sync_dialog_confirm_button">Lanjutkan</string>
-  <string name="sync_item_not_started">Not started</string>
+  <string name="sync_item_not_started">Belum dimulai</string>
 </resources>

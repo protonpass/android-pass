@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">¿Utilizar el inicio de sesión?</string>
   <string name="snackbar_item_move_to_trash_success">Elemento movido a la papelera.</string>
   <string name="snackbar_item_move_to_trash_error">No se ha podido mover a la papelera.</string>
+  <string name="snackbar_item_copy_username_success">Se ha copiado el nombre de usuario en el portapapeles</string>
+  <string name="snackbar_item_copy_password_success">La contraseña se ha copiado en el portapapeles</string>
+  <string name="snackbar_item_copy_clipboard_error">No se ha podio copiar en el portapapeles</string>
   <string name="autofill_user_logged_out">Se ha cerrado la sesión. Inicia sesión de nuevo abriendo la aplicación.</string>
+  <string name="bottomsheet_copy_password">Copiar contraseña</string>
+  <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>
 </resources>

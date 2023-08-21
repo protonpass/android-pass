@@ -54,6 +54,10 @@
   <string name="sharing_snackbar_invite_sent_success">Запрошення надіслано</string>
   <string name="sharing_snackbar_invite_sent_error">Не вдалося надіслати запрошення</string>
   <string name="sharing_snackbar_get_vault_members_error">Не вдалося отримати учасників сховища</string>
+  <string name="sharing_snackbar_change_permission_success">Дозволи змінено</string>
+  <string name="sharing_snackbar_change_permission_error">Не вдалося змінити дозволи</string>
+  <string name="sharing_snackbar_remove_member_success">Учасника вилучено зі сховища</string>
+  <string name="sharing_snackbar_remove_member_error">Не вдалося вилучити зі сховища</string>
   <string name="share_summary_title">Підсумок</string>
   <string name="share_summary_subtitle">Ви збираєтеся запросити %1$s] до свого %2$s. Вони отримають доступ до %3$s і зможуть %4$s у цьому сховищі.</string>
   <string name="share_summary_vault">%s сховище</string>
@@ -65,9 +69,23 @@
   <string name="share_summary_vault_title">Сховище</string>
   <string name="share_summary_permissions_title">Дозволи</string>
   <string name="share_manage_vault_share_with_more_people">Поділіться з іншими людьми</string>
-  <string name="share_manage_vault_item_count">%d items</string>
+  <string name="share_manage_vault_item_count">Елементів: %d</string>
   <string name="share_manage_vault_invite_pending">Очікує на запрошення</string>
+  <string name="share_manage_vault_current_user_indicator">Ви</string>
   <string name="share_role_can_view">Лише перегляд</string>
   <string name="share_role_can_edit">Може редагувати</string>
   <string name="share_role_admin">Адміністратор</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Передати право власності</string>
+  <string name="sharing_bottomsheet_remove_access">Вилучити доступ</string>
+  <string name="sharing_bottomsheet_resend_invite">Повторно надіслати запрошення</string>
+  <string name="sharing_bottomsheet_cancel_invite">Скасувати запрошення</string>
+  <string name="sharing_transfer_ownership_confirm_title">Передача права власності</string>
+  <string name="sharing_transfer_ownership_confirm_message">Ви впевнені, що хочете передати право власності на %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Запрошення скасовано</string>
+  <string name="sharing_snackbar_cancel_invite_error">Помилка при скасуванні запрошення</string>
+  <string name="sharing_snackbar_resend_invite_success">Запрошення повторно надіслано</string>
+  <string name="sharing_snackbar_resend_invite_error">Помилка повторного надсилання запрошення</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Адреса була запрошена занадто багато разів</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Право власності передано</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Помилка передачі права власності</string>
 </resources>

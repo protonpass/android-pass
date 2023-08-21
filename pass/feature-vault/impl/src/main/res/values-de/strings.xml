@@ -35,5 +35,7 @@
   <string name="bottomsheet_leave_vault">Tresor verlassen</string>
   <string name="bottomsheet_view_members">Mitglieder anzeigen</string>
   <string name="bottomsheet_manage_access">Zugriff verwalten</string>
+  <string name="bottomsheet_select_vault_read_only">Du hast nur Leseberechtigungen</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">Du kannst Einträge nur in deinem Haupttresor erstellen</string>
   <string name="vault_title">Tresor</string>
 </resources>

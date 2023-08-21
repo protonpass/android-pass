@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="biometric_prompt_title">App gesperrt</string>
+  <string name="biometric_prompt_title_setup">Biometrie-Einrichtung</string>
   <string name="biometric_prompt_subtitle">Mit Gerätesperre entsperren</string>
   <string name="biometric_prompt_cancel">Abbrechen</string>
 </resources>

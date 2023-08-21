@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Gebruik login?</string>
   <string name="snackbar_item_move_to_trash_success">Item verplaatst naar prullenbak</string>
   <string name="snackbar_item_move_to_trash_error">Kon niet verplaatsen naar prullenbak</string>
+  <string name="snackbar_item_copy_username_success">De Gebruikersnaam is naar het klembord gekopieerd</string>
+  <string name="snackbar_item_copy_password_success">Wachtwoord gekopieerd naar klembord</string>
+  <string name="snackbar_item_copy_clipboard_error">Kon niet kopiëren naar klembord</string>
   <string name="autofill_user_logged_out">U bent uitgelogd. Gelieve opnieuw in loggen door de app te openen.</string>
+  <string name="bottomsheet_copy_password">Wachtwoord kopiëren</string>
+  <string name="bottomsheet_copy_username">Gebruikersnaam kopiëren</string>
 </resources>

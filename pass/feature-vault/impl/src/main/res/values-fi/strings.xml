@@ -35,5 +35,7 @@
   <string name="bottomsheet_leave_vault">Poistu holvista</string>
   <string name="bottomsheet_view_members">Näytä jäsenet</string>
   <string name="bottomsheet_manage_access">Hallinnoi pääsyä</string>
+  <string name="bottomsheet_select_vault_read_only">Vain lukuoikeus</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">Voit luoda kohteita vain ensisijaiseen holviisi</string>
   <string name="vault_title">Holvi</string>
 </resources>

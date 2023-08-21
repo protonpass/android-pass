@@ -21,7 +21,7 @@
   <string name="profile_app_version_copied_to_clipboard">Версія праграмы скапіявана</string>
   <string name="feedback_option_reddit">Паглядзець Proton на Reddit</string>
   <string name="feedback_option_mail">Напісаць нам</string>
-  <string name="feedback_option_vote_new_features">Галасаванне за новыя функцыі</string>
+  <string name="feedback_option_vote_new_features">Прагаласаваць за новыя функцыі</string>
   <string name="app_lock_immediately">Адразу</string>
   <string name="app_lock_one_minute">Праз 1 хвіліну</string>
   <string name="app_lock_two_minutes">Праз 2 хвіліны</string>

@@ -2,7 +2,7 @@
 <resources>
   <string name="account_title">Account</string>
   <string name="account_username_label">Gebruikersnaam</string>
-  <string name="account_subscription_label">Abonnementsplan</string>
+  <string name="account_subscription_label">Abonnement</string>
   <string name="account_permanently_delete_warning">Dit zal uw account en alle bijbehorende gegevens permanent verwijderen. U zult dit account niet kunnen heractiveren.</string>
   <string name="account_delete_account">Account verwijderen</string>
   <string name="account_delete_account_icon_content_description">Account verwijderen knop</string>

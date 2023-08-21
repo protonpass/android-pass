@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Voleu utilitzar les dades d\'inici de sessió?</string>
   <string name="snackbar_item_move_to_trash_success">L\'element s\'ha mogut a la paperera.</string>
   <string name="snackbar_item_move_to_trash_error">No s\'ha pogut moure a la paperera.</string>
+  <string name="snackbar_item_copy_username_success">S\'ha copiat el nom d\'usuari al porta-retalls.</string>
+  <string name="snackbar_item_copy_password_success">La contrasenya s\'ha copiat al porta-retalls.</string>
+  <string name="snackbar_item_copy_clipboard_error">Could not copy to clipboard</string>
   <string name="autofill_user_logged_out">Heu tancat la sessió. Torneu a iniciar sessió obrint l\'aplicació.</string>
+  <string name="bottomsheet_copy_password">Copia la contrasenya</string>
+  <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>
 </resources>

@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Anmeldedaten verwenden?</string>
   <string name="snackbar_item_move_to_trash_success">Eintrag in den Papierkorb verschoben.</string>
   <string name="snackbar_item_move_to_trash_error">Fehler beim Verschieben in den Papierkorb.</string>
+  <string name="snackbar_item_copy_username_success">Benutzername in die Zwischenablage kopiert</string>
+  <string name="snackbar_item_copy_password_success">Passwort in die Zwischenablage kopiert</string>
+  <string name="snackbar_item_copy_clipboard_error">Fehler beim Kopieren in die Zwischenablage.</string>
   <string name="autofill_user_logged_out">Du wurdest abgemeldet. Bitte melde dich erneut an, um fortzufahren.</string>
+  <string name="bottomsheet_copy_password">Passwort kopieren</string>
+  <string name="bottomsheet_copy_username">Benutzername kopieren</string>
 </resources>

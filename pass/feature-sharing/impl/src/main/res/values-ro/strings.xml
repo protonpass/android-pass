@@ -52,6 +52,10 @@
   <string name="sharing_snackbar_invite_sent_success">Invitația a fost trimisă.</string>
   <string name="sharing_snackbar_invite_sent_error">Nu s-a putut trimite invitația.</string>
   <string name="sharing_snackbar_get_vault_members_error">Nu s-au putut prelua membrii seifului.</string>
+  <string name="sharing_snackbar_change_permission_success">Permisiunile au fost modificate.</string>
+  <string name="sharing_snackbar_change_permission_error">Nu s-au putut modifica permisiunile.</string>
+  <string name="sharing_snackbar_remove_member_success">Membrul a fost eliminat de la seif.</string>
+  <string name="sharing_snackbar_remove_member_error">Nu a putut fi eliminat de la seif.</string>
   <string name="share_summary_title">Sumar</string>
   <string name="share_summary_subtitle">Sunteți pe cale să-i invitați pe %1$s în %2$s. Ei vor obține acces la %3$s și vor putea să %4$s în acest seif.</string>
   <string name="share_summary_vault">seiful %s</string>
@@ -65,7 +69,21 @@
   <string name="share_manage_vault_share_with_more_people">Partajați cu mai mulți</string>
   <string name="share_manage_vault_item_count">%d articole</string>
   <string name="share_manage_vault_invite_pending">Invitație în așteptare</string>
+  <string name="share_manage_vault_current_user_indicator">Dvs.</string>
   <string name="share_role_can_view">Poate vedea</string>
   <string name="share_role_can_edit">Poate edita</string>
   <string name="share_role_admin">Administrator</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Schimbare proprietar</string>
+  <string name="sharing_bottomsheet_remove_access">Eliminare acces</string>
+  <string name="sharing_bottomsheet_resend_invite">Retrimitere invitație</string>
+  <string name="sharing_bottomsheet_cancel_invite">Anulare invitație</string>
+  <string name="sharing_transfer_ownership_confirm_title">Schimbare proprietar</string>
+  <string name="sharing_transfer_ownership_confirm_message">Sigur doriți să transferați drepturile lui %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitație anulată</string>
+  <string name="sharing_snackbar_cancel_invite_error">Eroare anulare invitație</string>
+  <string name="sharing_snackbar_resend_invite_success">Invitație retrimisă</string>
+  <string name="sharing_snackbar_resend_invite_error">Eroare la retrimiterea invitației.</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Adresa a fost invitată de prea multe ori.</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Proprietar transferat</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Eroare la schimbarea proprietarului.</string>
 </resources>

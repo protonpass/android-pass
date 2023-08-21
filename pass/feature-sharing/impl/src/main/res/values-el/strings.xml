@@ -50,6 +50,10 @@
   <string name="sharing_snackbar_invite_sent_success">Η πρόσκληση στάλθηκε</string>
   <string name="sharing_snackbar_invite_sent_error">Δεν ήταν δυνατή η αποστολή πρόσκλησης</string>
   <string name="sharing_snackbar_get_vault_members_error">Δεν ήταν δυνατή η λήψη μελών της κρύπτης</string>
+  <string name="sharing_snackbar_change_permission_success">Τα δικαιώματα άλλαξαν</string>
+  <string name="sharing_snackbar_change_permission_error">Δεν ήταν δυνατή η αλλαγή των δικαιωμάτων</string>
+  <string name="sharing_snackbar_remove_member_success">Το μέλος αφαιρέθηκε από την κρύπτη</string>
+  <string name="sharing_snackbar_remove_member_error">Δεν ήταν δυνατή η κατάργηση από την κρύπτη</string>
   <string name="share_summary_title">Περίληψη</string>
   <string name="share_summary_subtitle">Πρόκειται να προσκαλέσετε %1$s στο %2$s σας. Θα αποκτήσουν πρόσβαση σε %3$s και θα μπορούν να %4$s σε αυτή την κρύπτη.</string>
   <string name="share_summary_vault">%s κρύπτη</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Κοινοποίηση με περισσότερα άτομα</string>
   <string name="share_manage_vault_item_count">%d στοιχεία</string>
   <string name="share_manage_vault_invite_pending">Εκκρεμής πρόσκληση</string>
+  <string name="share_manage_vault_current_user_indicator">Εσείς</string>
   <string name="share_role_can_view">Δυνατότητα προβολής</string>
   <string name="share_role_can_edit">Δυνατότητα επεξεργασίας</string>
   <string name="share_role_admin">Διαχειριστής</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Μεταβίβαση κυριότητας</string>
+  <string name="sharing_bottomsheet_remove_access">Αφαίρεση πρόσβασης</string>
+  <string name="sharing_bottomsheet_resend_invite">Επανάληψη αποστολής πρόσκλησης</string>
+  <string name="sharing_bottomsheet_cancel_invite">Ακύρωση πρόσκλησης</string>
+  <string name="sharing_transfer_ownership_confirm_title">Μεταβίβαση κυριότητας</string>
+  <string name="sharing_transfer_ownership_confirm_message">Είστε βέβαιοι ότι θέλετε να μεταβιβάσετε την ιδιοκτησία σας στο %s;</string>
+  <string name="sharing_snackbar_cancel_invite_success">Η πρόσκληση ακυρώθηκε</string>
+  <string name="sharing_snackbar_cancel_invite_error">Σφάλμα ακύρωσης πρόσκλησης</string>
+  <string name="sharing_snackbar_resend_invite_success">Η πρόσκληση στάλθηκε ξανά</string>
+  <string name="sharing_snackbar_resend_invite_error">Σφάλμα επανάληψης αποστολής πρόσκλησης</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Η διεύθυνση έχει προσκληθεί πάρα πολλές φορές</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Μεταβίβαση κυριότητας</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Σφάλμα κατά τη μεταβίβαση ιδιοκτησίας</string>
 </resources>

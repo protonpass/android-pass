@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Использовать логин?</string>
   <string name="snackbar_item_move_to_trash_success">Элемент перемещен в корзину</string>
   <string name="snackbar_item_move_to_trash_error">Не могу переместить в корзину</string>
+  <string name="snackbar_item_copy_username_success">Имя пользователя скопировано в буфер обмена</string>
+  <string name="snackbar_item_copy_password_success">Пароль скопирован в буфер обмена</string>
+  <string name="snackbar_item_copy_clipboard_error">Не могу скопировать в буфер обмена</string>
   <string name="autofill_user_logged_out">Был произведён выход из учётной записи. Пожалуйста, войдите снова, открыв приложение.</string>
+  <string name="bottomsheet_copy_password">Скопировать пароль</string>
+  <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>
 </resources>

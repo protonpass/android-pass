@@ -50,6 +50,10 @@
   <string name="sharing_snackbar_invite_sent_success">Invito spedito</string>
   <string name="sharing_snackbar_invite_sent_error">Impossibile inviare l\'invito</string>
   <string name="sharing_snackbar_get_vault_members_error">Impossibile ottenere i membri del vault</string>
+  <string name="sharing_snackbar_change_permission_success">Autorizzazioni modificate</string>
+  <string name="sharing_snackbar_change_permission_error">Impossibile modificare le autorizzazioni</string>
+  <string name="sharing_snackbar_remove_member_success">Membro rimosso dalla cassaforte</string>
+  <string name="sharing_snackbar_remove_member_error">Impossibile rimuovere dalla cassaforte</string>
   <string name="share_summary_title">Riepilogo</string>
   <string name="share_summary_subtitle">Stai per invitare %1$s nel tuo %2$s. Avranno accesso a %3$s e potranno accedere a %4$s in questo caveau.</string>
   <string name="share_summary_vault">la cassaforte %s</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Condividi con più persone</string>
   <string name="share_manage_vault_item_count">%d elementi</string>
   <string name="share_manage_vault_invite_pending">Invito in attesa</string>
+  <string name="share_manage_vault_current_user_indicator">Tu</string>
   <string name="share_role_can_view">Può vedere</string>
   <string name="share_role_can_edit">Può modificare</string>
   <string name="share_role_admin">Amministratore</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Trasferisci proprietà</string>
+  <string name="sharing_bottomsheet_remove_access">Rimuovi accesso</string>
+  <string name="sharing_bottomsheet_resend_invite">Invia di nuovo l\'invito</string>
+  <string name="sharing_bottomsheet_cancel_invite">Annulla l\'invito</string>
+  <string name="sharing_transfer_ownership_confirm_title">Trasferimento della proprietà</string>
+  <string name="sharing_transfer_ownership_confirm_message">Sei sicuro di voler trasferire la tua proprietà a %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invito annullato</string>
+  <string name="sharing_snackbar_cancel_invite_error">Errore durante l\'annullamento dell\'invito</string>
+  <string name="sharing_snackbar_resend_invite_success">Invito rispedito</string>
+  <string name="sharing_snackbar_resend_invite_error">Errore durante il reinvio dell\'invito</string>
+  <string name="sharing_snackbar_too_many_invites_sent">L\'indirizzo è stato invitato troppe volte</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Proprietà trasferita</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Errore nel trasferimento della proprietà</string>
 </resources>

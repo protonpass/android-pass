@@ -20,7 +20,7 @@
   <string name="action_content_description_menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>
   <!-- Empty list -->
-  <string name="empty_list_title">Voeg je eerste item toe</string>
+  <string name="empty_list_title">Voeg uw eerste item toe</string>
   <string name="empty_search_results_title">Geen resultaten gevonden</string>
   <string name="empty_list_open_extension">Bezoek webextensie</string>
   <string name="empty_list_create_item_button">Maak nieuw item</string>

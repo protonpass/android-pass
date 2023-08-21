@@ -35,5 +35,7 @@
   <string name="bottomsheet_leave_vault">Opuść sejf</string>
   <string name="bottomsheet_view_members">Pokaż użytkowników</string>
   <string name="bottomsheet_manage_access">Zarządzaj dostępem</string>
+  <string name="bottomsheet_select_vault_read_only">Możesz tylko odczytywać</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">Możesz tylko tworzyć elementy w sejfie głównym</string>
   <string name="vault_title">Sejf</string>
 </resources>

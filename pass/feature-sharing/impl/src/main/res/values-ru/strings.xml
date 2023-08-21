@@ -54,6 +54,10 @@
   <string name="sharing_snackbar_invite_sent_success">Приглашение отправлено</string>
   <string name="sharing_snackbar_invite_sent_error">Не могу отправить приглашение</string>
   <string name="sharing_snackbar_get_vault_members_error">Could not get vault members</string>
+  <string name="sharing_snackbar_change_permission_success">Permissions changed</string>
+  <string name="sharing_snackbar_change_permission_error">Could not change the permissions</string>
+  <string name="sharing_snackbar_remove_member_success">Member removed from the vault</string>
+  <string name="sharing_snackbar_remove_member_error">Could not remove from the vault</string>
   <string name="share_summary_title">Сводка</string>
   <string name="share_summary_subtitle">Вы собираетесь пригласить %1$s в своё %2$s. Они получат доступ к %3$s, и смогут %4$s в этом хранилище.</string>
   <string name="share_summary_vault">%s хранилище</string>
@@ -67,7 +71,21 @@
   <string name="share_manage_vault_share_with_more_people">Share with more people</string>
   <string name="share_manage_vault_item_count">%d items</string>
   <string name="share_manage_vault_invite_pending">Pending invite</string>
+  <string name="share_manage_vault_current_user_indicator">You</string>
   <string name="share_role_can_view">Can view</string>
   <string name="share_role_can_edit">Can edit</string>
   <string name="share_role_admin">Admin</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Transfer ownership</string>
+  <string name="sharing_bottomsheet_remove_access">Remove access</string>
+  <string name="sharing_bottomsheet_resend_invite">Resend invite</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancel invite</string>
+  <string name="sharing_transfer_ownership_confirm_title">Transfer ownership</string>
+  <string name="sharing_transfer_ownership_confirm_message">Are you sure you want to transfer your ownership to %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invite canceled</string>
+  <string name="sharing_snackbar_cancel_invite_error">Error cancelling invite</string>
+  <string name="sharing_snackbar_resend_invite_success">Invite resent</string>
+  <string name="sharing_snackbar_resend_invite_error">Error resending invite</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Address has been invited too many times</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Ownership transferred</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Error transferring ownership</string>
 </resources>

@@ -4,7 +4,7 @@
   <string name="action_save">Salva</string>
   <string name="action_remove">Elimina</string>
   <!-- Create item bottomsheet -->
-  <string name="action_login">Accedi</string>
+  <string name="action_login">Login</string>
   <string name="action_alias">Alias</string>
   <string name="action_note">Nota</string>
   <string name="action_credit_card">Carta di credito</string>
@@ -13,7 +13,7 @@
   <string name="item_type_alias_description">Ottieni un alias email da utilizzare nelle nuove applicazioni</string>
   <string name="item_type_note_description">Appuntati un PIN, un codice o una nota personale</string>
   <string name="item_type_credit_card_description">Memorizza in modo sicuro le informazioni di pagamento</string>
-  <string name="item_type_password_description">Generare una password sicura</string>
+  <string name="item_type_password_description">Genera una password sicura</string>
   <!-- Create Login -->
   <string name="title_create_login">Crea login</string>
   <string name="field_username_title">Nome utente o indirizzo email</string>

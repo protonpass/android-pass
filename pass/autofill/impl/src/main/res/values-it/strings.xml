@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Usare il login?</string>
   <string name="snackbar_item_move_to_trash_success">Elemento spostato nel cestino</string>
   <string name="snackbar_item_move_to_trash_error">Impossibile spostare nel cestino</string>
+  <string name="snackbar_item_copy_username_success">Username copiato negli appunti</string>
+  <string name="snackbar_item_copy_password_success">Password copiata negli appunti</string>
+  <string name="snackbar_item_copy_clipboard_error">Impossibile copiare negli appunti</string>
   <string name="autofill_user_logged_out">Sei stato disconnesso. Accedi nuovamente aprendo l\'app.</string>
+  <string name="bottomsheet_copy_password">Copia password</string>
+  <string name="bottomsheet_copy_username">Copia nome utente</string>
 </resources>

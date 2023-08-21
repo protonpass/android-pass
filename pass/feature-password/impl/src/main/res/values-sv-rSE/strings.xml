@@ -14,7 +14,7 @@
   <string name="bottomsheet_option_word_separator_hyphens">Bindestreck (-)</string>
   <string name="bottomsheet_option_word_separator_spaces">Mellanslag</string>
   <string name="bottomsheet_option_word_separator_periods">Punkter (.)</string>
-  <string name="bottomsheet_option_word_separator_commas">Kommatecken ( , )</string>
+  <string name="bottomsheet_option_word_separator_commas">Kommatecken (,)</string>
   <string name="bottomsheet_option_word_separator_underscores">Understreck (_)</string>
   <string name="bottomsheet_option_word_separator_numbers">Nummer</string>
   <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nummer och symboler</string>

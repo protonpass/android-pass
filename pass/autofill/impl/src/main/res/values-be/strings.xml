@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Выкарыстоўваць запіс уваходу?</string>
   <string name="snackbar_item_move_to_trash_success">Элемент перамешчаны ў сметніцу</string>
   <string name="snackbar_item_move_to_trash_error">Немагчыма перамясціць у сметніцу</string>
+  <string name="snackbar_item_copy_username_success">Імя карыстальніка скапіявана ў буфер абмену</string>
+  <string name="snackbar_item_copy_password_success">Пароль скапіяваны ў буфер абмену</string>
+  <string name="snackbar_item_copy_clipboard_error">Немагчыма скапіяваць у буфер абмену</string>
   <string name="autofill_user_logged_out">Вы не ўвайшлі ў сістэму. Адкрыйце праграму і ўвайдзіце паўторна.</string>
+  <string name="bottomsheet_copy_password">Скапіяваць пароль</string>
+  <string name="bottomsheet_copy_username">Скапіяваць імя карыстальніка</string>
 </resources>

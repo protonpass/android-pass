@@ -35,5 +35,7 @@
   <string name="bottomsheet_leave_vault">Deixa la caixa forta</string>
   <string name="bottomsheet_view_members">Mostra els membres</string>
   <string name="bottomsheet_manage_access">Gestiona l\'accés</string>
+  <string name="bottomsheet_select_vault_read_only">You can only read</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">You can only create items in your primary vault</string>
   <string name="vault_title">Caixa forta</string>
 </resources>

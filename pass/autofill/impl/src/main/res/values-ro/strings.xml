@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Utilizare conectare?</string>
   <string name="snackbar_item_move_to_trash_success">Articolul s-a mutat în gunoi.</string>
   <string name="snackbar_item_move_to_trash_error">Articolul nu s-a putut muta în gunoi.</string>
+  <string name="snackbar_item_copy_username_success">Numele de utilizator s-a copiat în memorie.</string>
+  <string name="snackbar_item_copy_password_success">Parola a fost copiată în memorie.</string>
+  <string name="snackbar_item_copy_clipboard_error">Nu s-a putut copia în memorie.</string>
   <string name="autofill_user_logged_out">V-ați deconectat. Reconectați-vă deschizând aplicația.</string>
+  <string name="bottomsheet_copy_password">Copiere parolă</string>
+  <string name="bottomsheet_copy_username">Copiere nume utilizator</string>
 </resources>

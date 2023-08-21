@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Utilizar o início de sessão?</string>
   <string name="snackbar_item_move_to_trash_success">O item foi movido para o lixo.</string>
   <string name="snackbar_item_move_to_trash_error">Não foi possível mover para o lixo.</string>
+  <string name="snackbar_item_copy_username_success">O nome de usuário foi copiado para a área de transferência.</string>
+  <string name="snackbar_item_copy_password_success">A palavra-passe foi copiada para a área de transferência.</string>
+  <string name="snackbar_item_copy_clipboard_error">Não foi possível copiar para a área de transferência.</string>
   <string name="autofill_user_logged_out">Foi desconectado. Abre a aplicação e inicie sessão novamente.</string>
+  <string name="bottomsheet_copy_password">Copiar a palavra-passe</string>
+  <string name="bottomsheet_copy_username">Copiar o nome de utilizador</string>
 </resources>

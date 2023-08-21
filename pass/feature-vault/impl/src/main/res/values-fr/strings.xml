@@ -35,5 +35,7 @@
   <string name="bottomsheet_leave_vault">Quitter le coffre-fort</string>
   <string name="bottomsheet_view_members">Afficher les membres</string>
   <string name="bottomsheet_manage_access">Gérer l\'accès</string>
+  <string name="bottomsheet_select_vault_read_only">Vous pouvez uniquement lire</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">Vous ne pouvez créer des éléments que dans votre coffre-fort principal.</string>
   <string name="vault_title">Coffre-fort</string>
 </resources>

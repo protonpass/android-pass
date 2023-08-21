@@ -49,7 +49,11 @@
   <string name="sharing_snackbar_vault_not_found">Ce coffre-fort est introuvable.</string>
   <string name="sharing_snackbar_invite_sent_success">L\'invitation a été envoyée.</string>
   <string name="sharing_snackbar_invite_sent_error">L’invitation n’a pas pu être envoyée.</string>
-  <string name="sharing_snackbar_get_vault_members_error">Impossible d\'obtenir les coffres-forts des membres.</string>
+  <string name="sharing_snackbar_get_vault_members_error">Impossible d\'obtenir les membres du coffre-fort.</string>
+  <string name="sharing_snackbar_change_permission_success">Les autorisations ont été modifiées.</string>
+  <string name="sharing_snackbar_change_permission_error">Impossible de modifier les autorisations</string>
+  <string name="sharing_snackbar_remove_member_success">Le membre a été supprimé du coffre-fort.</string>
+  <string name="sharing_snackbar_remove_member_error">Impossible de supprimer du coffre-fort</string>
   <string name="share_summary_title">Résumé</string>
   <string name="share_summary_subtitle">Vous êtes sur le point d\'inviter %1$s dans votre %2$s. Ils auront accès à %3$s et pourront %4$s dans ce coffre-fort.</string>
   <string name="share_summary_vault">coffre-fort %s</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Partager avec d\'autres personnes</string>
   <string name="share_manage_vault_item_count">%d éléments</string>
   <string name="share_manage_vault_invite_pending">Invitation en attente</string>
+  <string name="share_manage_vault_current_user_indicator">Vous</string>
   <string name="share_role_can_view">Consulter</string>
   <string name="share_role_can_edit">Modifier</string>
   <string name="share_role_admin">Administrateur</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Transférer la propriété</string>
+  <string name="sharing_bottomsheet_remove_access">Supprimer l\'\'accès</string>
+  <string name="sharing_bottomsheet_resend_invite">Renvoyer l\'invitation</string>
+  <string name="sharing_bottomsheet_cancel_invite">Annuler l\'invitation</string>
+  <string name="sharing_transfer_ownership_confirm_title">Transférer la propriété</string>
+  <string name="sharing_transfer_ownership_confirm_message">Êtes-vous sûr de vouloir transférer la propriété·à %s·?</string>
+  <string name="sharing_snackbar_cancel_invite_success">L\'invitation a été annulée</string>
+  <string name="sharing_snackbar_cancel_invite_error">Une erreur s\'est produite lors de l\'annulation de l\'invitation.</string>
+  <string name="sharing_snackbar_resend_invite_success">L\'invitation a été renvoyée.</string>
+  <string name="sharing_snackbar_resend_invite_error">Une erreur s\'est produite lors du renvoi de l\'invitation.</string>
+  <string name="sharing_snackbar_too_many_invites_sent">L\'adresse a été sollicitée trop souvent</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Propriété transférée</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Erreur de transfert de propriété</string>
 </resources>

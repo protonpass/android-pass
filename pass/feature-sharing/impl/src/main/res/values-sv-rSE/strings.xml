@@ -50,6 +50,10 @@
   <string name="sharing_snackbar_invite_sent_success">Inbjudan skickad</string>
   <string name="sharing_snackbar_invite_sent_error">Kunde inte skicka inbjudan</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunde inte hämta valvmedlemmar</string>
+  <string name="sharing_snackbar_change_permission_success">Behörigheter ändrade</string>
+  <string name="sharing_snackbar_change_permission_error">Kunde inte ändra behörigheter</string>
+  <string name="sharing_snackbar_remove_member_success">Medlem borttagen från valvet</string>
+  <string name="sharing_snackbar_remove_member_error">Kunde inte ta bort från valvet</string>
   <string name="share_summary_title">Sammanfattning</string>
   <string name="share_summary_subtitle">Du är på väg att bjuda in %1$s till ditt %2$s. De kommer att få åtkomst till %3$s och de kommer att kunna %4$s i detta valv.</string>
   <string name="share_summary_vault">%s valv</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Dela med fler personer</string>
   <string name="share_manage_vault_item_count">%d objekt</string>
   <string name="share_manage_vault_invite_pending">Väntande inbjudan</string>
+  <string name="share_manage_vault_current_user_indicator">Du</string>
   <string name="share_role_can_view">Kan visa</string>
   <string name="share_role_can_edit">Kan redigera</string>
   <string name="share_role_admin">Admin</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Överför ägarskap</string>
+  <string name="sharing_bottomsheet_remove_access">Ta bort åtkomst</string>
+  <string name="sharing_bottomsheet_resend_invite">Skicka inbjudan igen</string>
+  <string name="sharing_bottomsheet_cancel_invite">Avbryt inbjudan</string>
+  <string name="sharing_transfer_ownership_confirm_title">Överför ägarskap</string>
+  <string name="sharing_transfer_ownership_confirm_message">Är du säker att du vill flytta över ditt ägarskap till %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Inbjudan avbruten</string>
+  <string name="sharing_snackbar_cancel_invite_error">Det gick inte avbryta inbjudan</string>
+  <string name="sharing_snackbar_resend_invite_success">Inbjudan skickad</string>
+  <string name="sharing_snackbar_resend_invite_error">Det gick inte skicka inbjudan igen</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Adress har bjudits in för många gånger</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Ägandeskap överfört</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Det gick inte överföra äganderätt</string>
 </resources>

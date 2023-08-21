@@ -27,16 +27,16 @@
     <item quantity="other">PIN salah. %d upaya tersisa.</item>
   </plurals>
   <string name="auth_unlock_app_title">Buka Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
-  <string name="auth_master_password_label">Master password</string>
-  <string name="auth_action_reveal_password">Reveal master password</string>
-  <string name="auth_action_conceal_password">Conceal master password</string>
+  <string name="auth_unlock_app_subtitle">Masukkan kata kunci induk untuk %s</string>
+  <string name="auth_master_password_label">Kata sandi induk</string>
+  <string name="auth_action_reveal_password">Tampilkan kata sandi induk</string>
+  <string name="auth_action_conceal_password">Samarkan kata sandi induk</string>
   <string name="auth_unlock_button">Buka kunci</string>
-  <string name="auth_error_verifying_password">Error verifying your password</string>
+  <string name="auth_error_verifying_password">Terdapat kesalahan dalam memverifikasi kata sandi Anda</string>
   <string name="auth_error_empty_password">Kata sandi tidak boleh kosong</string>
   <string name="auth_error_pin_cannot_be_empty">PIN tidak boleh kosong</string>
-  <string name="auth_error_pin_too_short">PIN should be at least 4 digits</string>
+  <string name="auth_error_pin_too_short">PIN harus mengandung setidaknya 4 digit</string>
   <plurals name="auth_error_wrong_password">
-    <item quantity="other">Incorrect password. %d attempts remaining</item>
+    <item quantity="other">Kata sandi salah. %d upaya tersisa</item>
   </plurals>
 </resources>

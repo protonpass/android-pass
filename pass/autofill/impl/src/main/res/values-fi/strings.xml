@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Käytetäänkö kirjautumistietoa?</string>
   <string name="snackbar_item_move_to_trash_success">Kohde siirrettiin roskakoriin</string>
   <string name="snackbar_item_move_to_trash_error">Ei voitu siirtää roskakoriin</string>
+  <string name="snackbar_item_copy_username_success">Käyttäjätunnus kopioitiin leikepöydälle</string>
+  <string name="snackbar_item_copy_password_success">Salasana kopioitiin leikepöydälle</string>
+  <string name="snackbar_item_copy_clipboard_error">Leikepöydälle kopiointi epäonnistui</string>
   <string name="autofill_user_logged_out">Sinut on kirjattu ulos. Kirjaudu uudelleen avaamalla sovellus.</string>
+  <string name="bottomsheet_copy_password">Kopioi salasana</string>
+  <string name="bottomsheet_copy_username">Kopioi käyttäjätunnus</string>
 </resources>

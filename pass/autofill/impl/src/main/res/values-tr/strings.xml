@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Oturum açma kullanılsın mı?</string>
   <string name="snackbar_item_move_to_trash_success">Öge çöpe atıldı</string>
   <string name="snackbar_item_move_to_trash_error">Çöpe atılamadı</string>
+  <string name="snackbar_item_copy_username_success">Kullanıcı adı panoya kopyalandı</string>
+  <string name="snackbar_item_copy_password_success">Parola panoya kopyalandı</string>
+  <string name="snackbar_item_copy_clipboard_error">Panoya kopyalanamadı</string>
   <string name="autofill_user_logged_out">Oturumunuz kapatıldı. Lütfen uygulamayı yeniden açarak oturum açın.</string>
+  <string name="bottomsheet_copy_password">Parolayı kopyala</string>
+  <string name="bottomsheet_copy_username">Kullanıcı adını kopyala</string>
 </resources>

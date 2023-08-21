@@ -54,8 +54,12 @@
   <string name="sharing_snackbar_invite_sent_success">Запрашэнне адпраўлена</string>
   <string name="sharing_snackbar_invite_sent_error">Немагчыма адправіць запрашэнне</string>
   <string name="sharing_snackbar_get_vault_members_error">Немагчыма атрымаць удзельнікаў сховішча</string>
+  <string name="sharing_snackbar_change_permission_success">Дазволы зменены</string>
+  <string name="sharing_snackbar_change_permission_error">Немагчыма змяніць дазволы</string>
+  <string name="sharing_snackbar_remove_member_success">Удзельнік выдалены са сховішча</string>
+  <string name="sharing_snackbar_remove_member_error">Немагчыма выдаліць са сховішча</string>
   <string name="share_summary_title">Зводка</string>
-  <string name="share_summary_subtitle">Вы збіраецеся запрасіць %1$s да свайго %2$s. Яны атрымаюць доступ да %3$s і змогуць %4$s у гэтым сховішчы.</string>
+  <string name="share_summary_subtitle">Вы збіраецеся запрасіць %1$s у свой %2$s. Яны атрымаюць доступ да %3$s і змогуць %4$s у гэтым сховішчы.</string>
   <string name="share_summary_vault">%s сховішча</string>
   <string name="share_summary_view_items">толькі прагляд элементаў</string>
   <string name="share_summary_create_items">стварыць элементы</string>
@@ -67,7 +71,21 @@
   <string name="share_manage_vault_share_with_more_people">Абагуліць з большай колькасцю людзей</string>
   <string name="share_manage_vault_item_count">Элементаў: %d</string>
   <string name="share_manage_vault_invite_pending">Запрашэнне, якое чакае адказу</string>
+  <string name="share_manage_vault_current_user_indicator">Вы</string>
   <string name="share_role_can_view">Можа праглядаць</string>
   <string name="share_role_can_edit">Можа рэдагаваць</string>
   <string name="share_role_admin">Адміністратар</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Перадаць права ўласнасці</string>
+  <string name="sharing_bottomsheet_remove_access">Выдаліць доступ</string>
+  <string name="sharing_bottomsheet_resend_invite">Адправіць запрашэнне паўторна</string>
+  <string name="sharing_bottomsheet_cancel_invite">Скасаваць запрашэнне</string>
+  <string name="sharing_transfer_ownership_confirm_title">Перадача правоў уласнасці</string>
+  <string name="sharing_transfer_ownership_confirm_message">Вы сапраўды хочаце перадаць свае правы ўласнасці %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Запрашэнне скасавана</string>
+  <string name="sharing_snackbar_cancel_invite_error">Памылка скасавання запрашэння</string>
+  <string name="sharing_snackbar_resend_invite_success">Запрашэнне адпраўлена паўторна</string>
+  <string name="sharing_snackbar_resend_invite_error">Памылка паўторнай адпраўкі запрашэння</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Адрас быў запрошаны занадта шмат разоў</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Правы ўласнасці перададзены</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Памылка перадачы правоў уласнасці</string>
 </resources>

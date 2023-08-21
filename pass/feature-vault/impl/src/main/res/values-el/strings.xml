@@ -33,7 +33,9 @@
   <string name="bottomsheet_delete_vault">Διαγραφή κρύπτης</string>
   <string name="bottomsheet_share_vault">Κοινοποίηση</string>
   <string name="bottomsheet_leave_vault">Αποχώρηση από την κρύπτη</string>
-  <string name="bottomsheet_view_members">Εμφάνιση μελών</string>
+  <string name="bottomsheet_view_members">Προβολή μελών</string>
   <string name="bottomsheet_manage_access">Διαχείριση πρόσβασης</string>
+  <string name="bottomsheet_select_vault_read_only">Μπορείτε μόνο να διαβάσετε</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">Μπορείτε να δημιουργήσετε στοιχεία μόνο στην κύρια κρύπτη</string>
   <string name="vault_title">Κρύπτη</string>
 </resources>

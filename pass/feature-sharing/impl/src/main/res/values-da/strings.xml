@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Fortsætte</string>
+  <string name="share_continue">Fortsæt</string>
   <string name="sharing_can_view">Kan se</string>
   <string name="sharing_can_edit">Kan redigere</string>
   <string name="sharing_can_manage">Kan administrere</string>
@@ -50,6 +50,10 @@
   <string name="sharing_snackbar_invite_sent_success">Invitation sendt</string>
   <string name="sharing_snackbar_invite_sent_error">Kunne ikke sende invitation</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunne ikke hente boksmedlemmer</string>
+  <string name="sharing_snackbar_change_permission_success">Tilladelser ændret</string>
+  <string name="sharing_snackbar_change_permission_error">Kunne ikke ændre tilladelserne</string>
+  <string name="sharing_snackbar_remove_member_success">Medlem fjernet fra boksen</string>
+  <string name="sharing_snackbar_remove_member_error">Kunne ikke fjerne fra boksen</string>
   <string name="share_summary_title">Sammenfatning</string>
   <string name="share_summary_subtitle">Du er ved at invitere %1$s til din %2$s. De vil få adgang til %3$s, og de vil være i stand til %4$s i denne boks.</string>
   <string name="share_summary_vault">%s boks</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Del med flere personer</string>
   <string name="share_manage_vault_item_count">%d elementer</string>
   <string name="share_manage_vault_invite_pending">Afventende invitation</string>
+  <string name="share_manage_vault_current_user_indicator">Dig</string>
   <string name="share_role_can_view">Kan se</string>
   <string name="share_role_can_edit">Kan redigere</string>
   <string name="share_role_admin">Admin</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Overfør ejerskab</string>
+  <string name="sharing_bottomsheet_remove_access">Fjern adgang</string>
+  <string name="sharing_bottomsheet_resend_invite">Send invitation igen</string>
+  <string name="sharing_bottomsheet_cancel_invite">Annuller invitation</string>
+  <string name="sharing_transfer_ownership_confirm_title">Overfør ejerskab</string>
+  <string name="sharing_transfer_ownership_confirm_message">Er du sikker på, at du vil overføre dit ejerskab til %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitation annulleret.</string>
+  <string name="sharing_snackbar_cancel_invite_error">Fejl ved annullering af invitation</string>
+  <string name="sharing_snackbar_resend_invite_success">Invitation sendt igen</string>
+  <string name="sharing_snackbar_resend_invite_error">Fejl ved genudsendelse af invitation</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Adresse er blevet inviteret for mange gange</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Ejerskab overført</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Fejl ved overførsel af ejerskab</string>
 </resources>

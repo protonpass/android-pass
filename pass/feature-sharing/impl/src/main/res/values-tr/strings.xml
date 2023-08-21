@@ -50,6 +50,10 @@
   <string name="sharing_snackbar_invite_sent_success">Davet gönderildi</string>
   <string name="sharing_snackbar_invite_sent_error">Davet gönderilemedi</string>
   <string name="sharing_snackbar_get_vault_members_error">Kasa üyeleri alınamadı</string>
+  <string name="sharing_snackbar_change_permission_success">İzinler değiştirildi</string>
+  <string name="sharing_snackbar_change_permission_error">İzinler değiştirilemedi</string>
+  <string name="sharing_snackbar_remove_member_success">Üye kasadan kaldırıldı</string>
+  <string name="sharing_snackbar_remove_member_error">Kasadan kaldırılamadı</string>
   <string name="share_summary_title">Özet</string>
   <string name="share_summary_subtitle">%1$s kullanıcısını %2$s kasanızı paylaşmaya davet ediyorsunuz. Kullanıcının bu kasada %3$s izni olacak ve %4$s işlemlerini yapabilecek.</string>
   <string name="share_summary_vault">%s kasa</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Başkalarıyla paylaş</string>
   <string name="share_manage_vault_item_count">%d öge</string>
   <string name="share_manage_vault_invite_pending">Bekleyen davet</string>
+  <string name="share_manage_vault_current_user_indicator">Siz</string>
   <string name="share_role_can_view">Görüntüleyebilir</string>
   <string name="share_role_can_edit">Düzenleyebilir</string>
   <string name="share_role_admin">Yönetici</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Sahipliği aktar</string>
+  <string name="sharing_bottomsheet_remove_access">Erişimi kaldır</string>
+  <string name="sharing_bottomsheet_resend_invite">Daveti yeniden gönder</string>
+  <string name="sharing_bottomsheet_cancel_invite">Daveti iptal et</string>
+  <string name="sharing_transfer_ownership_confirm_title">Sahipliği aktar</string>
+  <string name="sharing_transfer_ownership_confirm_message">Sahipliğinizi %s üzerine aktarmak istediğinize emin misiniz?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Davet iptal edildi</string>
+  <string name="sharing_snackbar_cancel_invite_error">Davet iptal edilirken sorun çıktı</string>
+  <string name="sharing_snackbar_resend_invite_success">Davet yeniden gönderildi</string>
+  <string name="sharing_snackbar_resend_invite_error">Davet yeniden gönderilirken sorun çıktı</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Adrese çok fazla sayıda davet gönderilmiş</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Sahiplik aktarıldı</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Sahiplik aktarılırken sorun çıktı</string>
 </resources>

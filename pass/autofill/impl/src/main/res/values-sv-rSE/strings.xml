@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Använd inloggning?</string>
   <string name="snackbar_item_move_to_trash_success">Objekt flyttat till papperskorg</string>
   <string name="snackbar_item_move_to_trash_error">Kunde inte flytta till papperskorg</string>
+  <string name="snackbar_item_copy_username_success">Användarnamn kopierat till urklipp</string>
+  <string name="snackbar_item_copy_password_success">Lösenord kopierat till urklipp</string>
+  <string name="snackbar_item_copy_clipboard_error">Kan inte kopiera till urklipp</string>
   <string name="autofill_user_logged_out">Du har loggats ut. Logga in igen genom att öppna appen.</string>
+  <string name="bottomsheet_copy_password">Kopiera lösenord</string>
+  <string name="bottomsheet_copy_username">Kopiera användarnamn</string>
 </resources>

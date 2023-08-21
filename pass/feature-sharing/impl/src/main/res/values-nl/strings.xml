@@ -49,9 +49,13 @@
   <string name="sharing_snackbar_vault_not_found">Kluis kon niet worden gevonden</string>
   <string name="sharing_snackbar_invite_sent_success">Uitnodiging verzonden</string>
   <string name="sharing_snackbar_invite_sent_error">Kan de uitnodiging niet verzenden</string>
-  <string name="sharing_snackbar_get_vault_members_error">Could not get vault members</string>
+  <string name="sharing_snackbar_get_vault_members_error">Kon geen kluisleden krijgen</string>
+  <string name="sharing_snackbar_change_permission_success">Machtigingen gewijzigd</string>
+  <string name="sharing_snackbar_change_permission_error">Kon machtigingen niet wijzigen</string>
+  <string name="sharing_snackbar_remove_member_success">Lid verwijderd van de kluis</string>
+  <string name="sharing_snackbar_remove_member_error">Kon niet verwijderen van de kluis</string>
   <string name="share_summary_title">Overzicht</string>
-  <string name="share_summary_subtitle">Je staat op het punt %1$s uit te nodigen voor je %2$s. Ze krijgen toegang tot %3$s en kunnen %4$s in deze kluis.</string>
+  <string name="share_summary_subtitle">U staat op het punt %1$s uit te nodigen voor uw%2$s. Ze krijgen toegang tot %3$s en kunnen %4$s in deze kluis.</string>
   <string name="share_summary_vault">%s kluis</string>
   <string name="share_summary_view_items">alleen artikelen bekijken</string>
   <string name="share_summary_create_items">creëer items</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Deel met meer mensen</string>
   <string name="share_manage_vault_item_count">%d items</string>
   <string name="share_manage_vault_invite_pending">Uitnodiging in behandeling</string>
+  <string name="share_manage_vault_current_user_indicator">U</string>
   <string name="share_role_can_view">Kan bekijken</string>
   <string name="share_role_can_edit">Kan bewerken</string>
   <string name="share_role_admin">Beheerder</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Eigendom overdragen</string>
+  <string name="sharing_bottomsheet_remove_access">Toegang verwijderen</string>
+  <string name="sharing_bottomsheet_resend_invite">Uitnodiging opnieuw verzenden</string>
+  <string name="sharing_bottomsheet_cancel_invite">Annuleer uitnodiging</string>
+  <string name="sharing_transfer_ownership_confirm_title">Eigendom overdragen</string>
+  <string name="sharing_transfer_ownership_confirm_message">Weet u zeker dat u het uw eigendom wilt overdragen aan %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Uitnodiging geannuleerd.</string>
+  <string name="sharing_snackbar_cancel_invite_error">Error bij het annuleren van de uitnodiging</string>
+  <string name="sharing_snackbar_resend_invite_success">Uitnodiging opnieuw verzonden</string>
+  <string name="sharing_snackbar_resend_invite_error">Error bij het opnieuw versturen van de uitnodiging</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Adres werd te vaak uitgenodigd</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Eigendom overgedragen</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Error bij het overdragen van eigendom</string>
 </resources>

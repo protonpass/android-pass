@@ -35,5 +35,7 @@
   <string name="bottomsheet_leave_vault">Dejar la bóveda</string>
   <string name="bottomsheet_view_members">Ver miembros</string>
   <string name="bottomsheet_manage_access">Gestionar acceso</string>
+  <string name="bottomsheet_select_vault_read_only">Sólo puede leer</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">Sólo puede crear elementos en su bóveda principal.</string>
   <string name="vault_title">Bóveda</string>
 </resources>

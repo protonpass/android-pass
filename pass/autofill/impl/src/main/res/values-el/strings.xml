@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Χρησιμοποίηση διαπιστευτηρίων;</string>
   <string name="snackbar_item_move_to_trash_success">Το στοιχείο μετακινήθηκε στον κάδο απορριμμάτων</string>
   <string name="snackbar_item_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση στον κάδο απορριμμάτων</string>
+  <string name="snackbar_item_copy_username_success">Το όνομα χρήστη αντιγράφηκε στο πρόχειρο</string>
+  <string name="snackbar_item_copy_password_success">Ο κωδικός πρόσβασης αντιγράφηκε στο πρόχειρο</string>
+  <string name="snackbar_item_copy_clipboard_error">Αδυναμία αντιγραφής στο πρόχειρο</string>
   <string name="autofill_user_logged_out">Έχετε αποσυνδεθεί. Παρακαλούμε συνδεθείτε ξανά ανοίγοντας την εφαρμογή.</string>
+  <string name="bottomsheet_copy_password">Αντιγραφή συνθηματικού</string>
+  <string name="bottomsheet_copy_username">Αντιγραφή ονόματος χρήστη</string>
 </resources>

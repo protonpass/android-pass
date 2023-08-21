@@ -35,5 +35,7 @@
   <string name="bottomsheet_leave_vault">Lämna valv</string>
   <string name="bottomsheet_view_members">Visa medlemmar</string>
   <string name="bottomsheet_manage_access">Hantera åtkomst</string>
+  <string name="bottomsheet_select_vault_read_only">Du kan endast läsa</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">Du kan endast skapa objekt i ditt primära valv</string>
   <string name="vault_title">Valv</string>
 </resources>

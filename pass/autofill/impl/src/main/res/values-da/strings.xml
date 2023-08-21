@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Brug login?</string>
   <string name="snackbar_item_move_to_trash_success">Element flyttet til papirkurv</string>
   <string name="snackbar_item_move_to_trash_error">Kunne ikke flytte til papirkurv</string>
+  <string name="snackbar_item_copy_username_success">Brugernavn kopieret til udklipsholder</string>
+  <string name="snackbar_item_copy_password_success">Adgangskode kopieret til udklipsholder</string>
+  <string name="snackbar_item_copy_clipboard_error">Kunne ikke kopiere til udklipsholder</string>
   <string name="autofill_user_logged_out">Du er blevet logget ud. Log ind igen ved at åbne appen.</string>
+  <string name="bottomsheet_copy_password">Kopiér adgangskode</string>
+  <string name="bottomsheet_copy_username">Kopiér brugernavn</string>
 </resources>

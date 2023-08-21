@@ -50,6 +50,10 @@
   <string name="sharing_snackbar_invite_sent_success">Einladung gesendet</string>
   <string name="sharing_snackbar_invite_sent_error">Fehler beim Senden der Einladung.</string>
   <string name="sharing_snackbar_get_vault_members_error">Fehler beim Abrufen der Tresormitglieder.</string>
+  <string name="sharing_snackbar_change_permission_success">Berechtigungen geändert.</string>
+  <string name="sharing_snackbar_change_permission_error">Fehler beim Ändern der Berechtigungen.</string>
+  <string name="sharing_snackbar_remove_member_success">Mitglied aus dem Tresor entfernt.</string>
+  <string name="sharing_snackbar_remove_member_error">Fehler beim Entfernen aus dem Tresor.</string>
   <string name="share_summary_title">Zusammenfassung</string>
   <string name="share_summary_subtitle">Du lädst damit %1$s zu %2$s ein. Dadurch wird Zugriff zu %3$s gewährt und die eingeladene Person darf %4$s.</string>
   <string name="share_summary_vault">%s Tresor</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Mit weiteren Personen teilen</string>
   <string name="share_manage_vault_item_count">%d Einträge</string>
   <string name="share_manage_vault_invite_pending">Ausstehende Einladung</string>
+  <string name="share_manage_vault_current_user_indicator">Du</string>
   <string name="share_role_can_view">Darf ansehen</string>
   <string name="share_role_can_edit">Darf bearbeiten</string>
   <string name="share_role_admin">Administrator</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Besitzer wechseln</string>
+  <string name="sharing_bottomsheet_remove_access">Zugriff entfernen</string>
+  <string name="sharing_bottomsheet_resend_invite">Einladung erneut senden</string>
+  <string name="sharing_bottomsheet_cancel_invite">Einladung verwerfen</string>
+  <string name="sharing_transfer_ownership_confirm_title">Besitzer ändern</string>
+  <string name="sharing_transfer_ownership_confirm_message">Bist du dir sicher, dass du den Besitzer zu %s ändern willst?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Einladung abgebrochen</string>
+  <string name="sharing_snackbar_cancel_invite_error">Fehler beim Abbrechen der Einladung.</string>
+  <string name="sharing_snackbar_resend_invite_success">Einladung erneut gesendet</string>
+  <string name="sharing_snackbar_resend_invite_error">Fehler beim erneuten Senden der Einladung.</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Diese E-Mail-Adresse wurde zu oft eingeladen.</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Besitzer geändert</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Fehler beim Ändern des Besitzers.</string>
 </resources>

@@ -22,10 +22,10 @@
   <string name="settings_option_privacy_policy">Informativa sulla privacy</string>
   <string name="settings_option_terms_of_service">Termini di servizio</string>
   <string name="settings_primary_vault_section_title">Casseforti</string>
-  <string name="settings_primary_vault_vault_selector_title">Cassaforte primaria</string>
-  <string name="settings_primary_vault_section_subtitle">Non puoi eliminare una cassaforte primaria.</string>
-  <string name="settings_primary_vault_change_success">La cassaforte primaria è stata cambiata</string>
-  <string name="settings_primary_vault_change_error">Impossibile cambiare la cassaforte primaria</string>
+  <string name="settings_primary_vault_vault_selector_title">Cassaforte principale</string>
+  <string name="settings_primary_vault_section_subtitle">Non puoi eliminare una cassaforte principale.</string>
+  <string name="settings_primary_vault_change_success">La cassaforte principale è stata cambiata</string>
+  <string name="settings_primary_vault_change_error">Impossibile cambiare la cassaforte principale</string>
   <string name="settings_privacy_section_title">Privacy</string>
   <string name="settings_use_favicons_preference_title">Usa icone web</string>
   <string name="settings_use_favicons_preference_subtitle">Decidi se mostrare l\'icona del sito web nei tuoi elementi.</string>

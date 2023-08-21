@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="biometric_prompt_title">Aplikasi terkunci</string>
+  <string name="biometric_prompt_title_setup">Pengaturan biometrik</string>
   <string name="biometric_prompt_subtitle">Buka kunci aplikasi dengan kunci perangkat Anda</string>
   <string name="biometric_prompt_cancel">Batalkan</string>
 </resources>

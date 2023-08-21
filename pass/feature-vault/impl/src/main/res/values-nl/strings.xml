@@ -19,7 +19,7 @@
   <string name="vault_delete_dialog_cancel_action">Annuleren</string>
   <string name="vault_delete_dialog_delete_action">Verwijderen</string>
   <string name="vault_leave_dialog_title">Verlaat kluis</string>
-  <string name="vault_leave_dialog_body">Dit verwijderd je toegang tot de kluis __VAULT_NAME__ en al zijn inhoud. Weet je zeker dat je hem wil verlaten?</string>
+  <string name="vault_leave_dialog_body">Dit verwijdert uw toegang tot de kluis __VAULT_NAME__ en al zijn inhoud. Weet u zeker dat u de kluis wil verlaten?</string>
   <string name="vault_leave_dialog_cancel_action">Annuleren</string>
   <string name="vault_leave_dialog_leave_action">Verlaten</string>
   <string name="bottomsheet_close_icon_content_description">Sluit Kluis aanmaken</string>
@@ -35,5 +35,7 @@
   <string name="bottomsheet_leave_vault">Verlaat kluis</string>
   <string name="bottomsheet_view_members">Bekijk leden</string>
   <string name="bottomsheet_manage_access">Beheer toegang</string>
+  <string name="bottomsheet_select_vault_read_only">U kunt alleen lezen</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">U kan alleen items maken voor uw primaire kluis</string>
   <string name="vault_title">Kluis</string>
 </resources>

@@ -48,6 +48,10 @@
   <string name="sharing_snackbar_invite_sent_success">邀請函已寄送</string>
   <string name="sharing_snackbar_invite_sent_error">無法發送邀請</string>
   <string name="sharing_snackbar_get_vault_members_error">無法取得保管庫成員</string>
+  <string name="sharing_snackbar_change_permission_success">權限變更</string>
+  <string name="sharing_snackbar_change_permission_error">無法更新存取權限設定</string>
+  <string name="sharing_snackbar_remove_member_success">從保管庫移除成員</string>
+  <string name="sharing_snackbar_remove_member_error">無法從保管庫移除</string>
   <string name="share_summary_title">摘要</string>
   <string name="share_summary_subtitle">您將邀請%1$s至您的%2$s。他們將取得%3$s權限及將可於保管庫中%4$s。</string>
   <string name="share_summary_vault">%s保管庫</string>
@@ -61,7 +65,21 @@
   <string name="share_manage_vault_share_with_more_people">分享給更多人</string>
   <string name="share_manage_vault_item_count">%d項目</string>
   <string name="share_manage_vault_invite_pending">等待邀請</string>
+  <string name="share_manage_vault_current_user_indicator">您</string>
   <string name="share_role_can_view">可以查看</string>
   <string name="share_role_can_edit">可以編輯</string>
   <string name="share_role_admin">管理員</string>
+  <string name="sharing_bottomsheet_transfer_ownership">轉移所有權</string>
+  <string name="sharing_bottomsheet_remove_access">移除存取權限</string>
+  <string name="sharing_bottomsheet_resend_invite">重新發送邀請</string>
+  <string name="sharing_bottomsheet_cancel_invite">取消邀請</string>
+  <string name="sharing_transfer_ownership_confirm_title">轉移所有權</string>
+  <string name="sharing_transfer_ownership_confirm_message">您確定要將您的所有權轉移給 %s 嗎？</string>
+  <string name="sharing_snackbar_cancel_invite_success">邀請已取消</string>
+  <string name="sharing_snackbar_cancel_invite_error">取消邀請時發生錯誤</string>
+  <string name="sharing_snackbar_resend_invite_success">邀請已成功傳送</string>
+  <string name="sharing_snackbar_resend_invite_error">重新發送邀請時發生錯誤</string>
+  <string name="sharing_snackbar_too_many_invites_sent">該地址已被邀請過多次</string>
+  <string name="sharing_snackbar_transfer_ownership_success">所有權已轉移</string>
+  <string name="sharing_snackbar_transfer_ownership_error">轉移所有權時發生錯誤</string>
 </resources>

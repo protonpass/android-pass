@@ -20,5 +20,10 @@
   <string name="autofill_dialog_associate_title">Użyć danych logowania?</string>
   <string name="snackbar_item_move_to_trash_success">Element został przeniesiony do Kosza</string>
   <string name="snackbar_item_move_to_trash_error">Nie można przenieść do Kosza</string>
+  <string name="snackbar_item_copy_username_success">Nazwa użytkownika została skopiowana do schowka</string>
+  <string name="snackbar_item_copy_password_success">Hasło zostało skopiowane do schowka</string>
+  <string name="snackbar_item_copy_clipboard_error">Nie można skopiować do schowka</string>
   <string name="autofill_user_logged_out">Zostałeś wylogowany. Zaloguj się ponownie, aby otworzyć aplikację.</string>
+  <string name="bottomsheet_copy_password">Kopiuj hasło</string>
+  <string name="bottomsheet_copy_username">Kopiuj nazwę użytkownika</string>
 </resources>

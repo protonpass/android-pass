@@ -50,6 +50,10 @@
   <string name="sharing_snackbar_invite_sent_success">Invitación enviada</string>
   <string name="sharing_snackbar_invite_sent_error">No se pudo enviar la invitación</string>
   <string name="sharing_snackbar_get_vault_members_error">No se pudieron obtener los miembros de la bóveda</string>
+  <string name="sharing_snackbar_change_permission_success">Los permisos han cambiado.</string>
+  <string name="sharing_snackbar_change_permission_error">Error al cambiar los permisos</string>
+  <string name="sharing_snackbar_remove_member_success">El miembro fue eliminado de la bóveda.</string>
+  <string name="sharing_snackbar_remove_member_error">Error al eliminar de la bóveda</string>
   <string name="share_summary_title">Resumen</string>
   <string name="share_summary_subtitle">Está por invitar a %1$s a su %2$s. Obtendrá acceso a %3$s y podrá %4$s en esta bóveda.</string>
   <string name="share_summary_vault">la bóveda %s</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Compartir con más personas</string>
   <string name="share_manage_vault_item_count">%d elementos</string>
   <string name="share_manage_vault_invite_pending">Invitación pendiente</string>
+  <string name="share_manage_vault_current_user_indicator">Usted</string>
   <string name="share_role_can_view">Puede ver</string>
   <string name="share_role_can_edit">Puede editar</string>
   <string name="share_role_admin">Administrador</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Transferir la propiedad</string>
+  <string name="sharing_bottomsheet_remove_access">Eliminar el acceso</string>
+  <string name="sharing_bottomsheet_resend_invite">Reenviar invitación</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancelar invitación</string>
+  <string name="sharing_transfer_ownership_confirm_title">Transferir la propiedad</string>
+  <string name="sharing_transfer_ownership_confirm_message">¿En verdad desea transferir su propiedad a %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitación cancelada</string>
+  <string name="sharing_snackbar_cancel_invite_error">Error al cancelar la invitación</string>
+  <string name="sharing_snackbar_resend_invite_success">Invitación reenviada</string>
+  <string name="sharing_snackbar_resend_invite_error">Error al reenviar la invitación</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Se ha invitado a la dirección demasiadas veces</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Propiedad transferida</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Error al transferir la propiedad</string>
 </resources>

@@ -51,9 +51,9 @@
   <string name="custom_field_hidden_icon_description">Campo personalizzato nascosto</string>
   <string name="custom_field_totp_icon_description">Campo personalizzato 2FA</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Nome titolare della carta</string>
-  <string name="credit_card_number_field_name">Numero carta</string>
-  <string name="credit_card_cvv_field_name">Numero di verifica</string>
+  <string name="credit_card_cardholder_field_name">Nome del titolare della carta</string>
+  <string name="credit_card_number_field_name">Numero della carta</string>
+  <string name="credit_card_cvv_field_name">Codice di verifica</string>
   <string name="credit_card_pin_field_name">Codice PIN</string>
   <string name="credit_card_expiration_date_field_name">Scade il</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Titolare della carta copiato negli appunti</string>

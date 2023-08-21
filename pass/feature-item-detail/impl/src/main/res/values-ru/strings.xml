@@ -8,8 +8,8 @@
   <!-- Alias details -->
   <string name="field_alias_title">Адрес псевдонима</string>
   <string name="alias_copied_to_clipboard">Псевдоним скопирован</string>
-  <string name="alias_detail_field_mailboxes_title">Forwarding to</string>
-  <string name="alias_create_login_from_alias">Create login</string>
+  <string name="alias_detail_field_mailboxes_title">Пересылка на</string>
+  <string name="alias_create_login_from_alias">Создать логин</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Заметка</string>
   <!-- Login details -->

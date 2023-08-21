@@ -35,5 +35,7 @@
   <string name="bottomsheet_leave_vault">Forlad boks</string>
   <string name="bottomsheet_view_members">Vis medlemmer</string>
   <string name="bottomsheet_manage_access">Administrer adgang</string>
+  <string name="bottomsheet_select_vault_read_only">Du kan kun læse</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">Du kan kun oprette elementer i din primære boks</string>
   <string name="vault_title">Boks</string>
 </resources>

@@ -50,6 +50,10 @@
   <string name="sharing_snackbar_invite_sent_success">S\'ha enviat la invitació.</string>
   <string name="sharing_snackbar_invite_sent_error">No s’ha pogut enviar la invitació.</string>
   <string name="sharing_snackbar_get_vault_members_error">No s\'han pogut obtenir els membres de la caixa forta</string>
+  <string name="sharing_snackbar_change_permission_success">S\'han canviat els permisos.</string>
+  <string name="sharing_snackbar_change_permission_error">No s\'ha pogut canviar els permisos.</string>
+  <string name="sharing_snackbar_remove_member_success">S\'ha eliminat el membre de la caixa forta.</string>
+  <string name="sharing_snackbar_remove_member_error">No s\'ha pogut eliminar de la caixa forta.</string>
   <string name="share_summary_title">Resum</string>
   <string name="share_summary_subtitle">Esteu a punt de convidar %1$s al vostre %2$s. Tindran accés a %3$s i podran %4$s en aquesta caixa forta.</string>
   <string name="share_summary_vault">a caixa forta %s</string>
@@ -63,7 +67,21 @@
   <string name="share_manage_vault_share_with_more_people">Comparteix amb més gent</string>
   <string name="share_manage_vault_item_count">%d elements</string>
   <string name="share_manage_vault_invite_pending">Invitació pendent</string>
+  <string name="share_manage_vault_current_user_indicator">Vosaltres</string>
   <string name="share_role_can_view">Pot veure</string>
   <string name="share_role_can_edit">Pot editar</string>
   <string name="share_role_admin">Administrador/a</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Transfereix la propietat</string>
+  <string name="sharing_bottomsheet_remove_access">Suprimeix l\'accés</string>
+  <string name="sharing_bottomsheet_resend_invite">Reenvia la invitació</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancel·la la Invitació</string>
+  <string name="sharing_transfer_ownership_confirm_title">Transfereix la propietat</string>
+  <string name="sharing_transfer_ownership_confirm_message">Are you sure you want to transfer your ownership to %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">S\'ha cancel·lat la invitació.</string>
+  <string name="sharing_snackbar_cancel_invite_error">S\'ha produït un error en cancel·lar la invitació.</string>
+  <string name="sharing_snackbar_resend_invite_success">S\'ha reenviat la invitació.</string>
+  <string name="sharing_snackbar_resend_invite_error">S\'ha produït un error en reenviar la invitació.</string>
+  <string name="sharing_snackbar_too_many_invites_sent">S\'ha convidat a la direcció massa vegades.</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Ownership transferred</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Error transferring ownership</string>
 </resources>

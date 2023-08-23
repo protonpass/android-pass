@@ -38,6 +38,7 @@ val privateProperties = Properties().apply {
 }
 
 val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
+val accountSentryDSN: String? = System.getenv("ACCOUNT_SENTRY_DSN")
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 val testEnvUrl: String = System.getenv("TEST_ENV_URL") ?: "api.proton.black"
 val prodEnvUrl: String = System.getenv("PROD_ENV_URL") ?: "pass-api.proton.me"
@@ -88,6 +89,7 @@ android {
         testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
 
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
+        buildConfigField("String", "ACCOUNT_SENTRY_DSN", accountSentryDSN.toBuildConfigValue())
         buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
     }
 

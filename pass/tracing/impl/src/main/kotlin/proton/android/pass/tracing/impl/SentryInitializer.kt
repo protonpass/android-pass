@@ -43,12 +43,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import io.sentry.SentryLevel
+import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
 import me.proton.core.usersettings.domain.DeviceSettingsHandler
 import me.proton.core.usersettings.domain.onDeviceSettingsChanged
 import me.proton.core.util.android.sentry.TimberLoggerIntegration
+import me.proton.core.util.android.sentry.project.AccountSentryHubBuilder
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.toValue
+import java.util.concurrent.atomic.AtomicBoolean
 
 class SentryInitializer : Initializer<Unit> {
 
@@ -58,9 +61,12 @@ class SentryInitializer : Initializer<Unit> {
             SentryInitializerEntryPoint::class.java
         )
         val appConfig = entryPoint.appConfig()
+        val isCrashReportEnabled = AtomicBoolean(true)
 
         entryPoint.deviceSettingsHandler()
             .onDeviceSettingsChanged { settings ->
+                isCrashReportEnabled.set(settings.isCrashReportEnabled)
+
                 // By default true, but should always minimal sentry logs.
                 if (settings.isCrashReportEnabled) {
                     if (appConfig.sentryDSN?.isNotBlank() == true) {
@@ -85,6 +91,14 @@ class SentryInitializer : Initializer<Unit> {
                     }
                 }
             }
+
+        entryPoint.accountSentryHubBuilder().invoke(
+            sentryDsn = appConfig.accountSentryDSN ?: ""
+        ) { options ->
+            options.beforeSend = SentryOptions.BeforeSendCallback { event, _ ->
+                if (isCrashReportEnabled.get()) event else null
+            }
+        }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
@@ -92,6 +106,7 @@ class SentryInitializer : Initializer<Unit> {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface SentryInitializerEntryPoint {
+        fun accountSentryHubBuilder(): AccountSentryHubBuilder
         fun appConfig(): AppConfig
         fun deviceSettingsHandler(): DeviceSettingsHandler
     }

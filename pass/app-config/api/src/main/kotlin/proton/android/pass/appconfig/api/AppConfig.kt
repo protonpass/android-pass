@@ -29,6 +29,7 @@ interface AppConfig {
     val proxyToken: String?
     val useDefaultPins: Boolean
     val sentryDSN: String?
+    val accountSentryDSN: String?
 }
 
 enum class BuildEnv {

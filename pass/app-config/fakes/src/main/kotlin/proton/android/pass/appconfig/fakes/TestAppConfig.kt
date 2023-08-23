@@ -46,4 +46,6 @@ class TestAppConfig @Inject constructor() : AppConfig {
         get() = true
     override val sentryDSN: String
         get() = ""
+    override val accountSentryDSN: String
+        get() = ""
 }

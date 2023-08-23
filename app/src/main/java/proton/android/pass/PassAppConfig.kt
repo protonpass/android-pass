@@ -33,4 +33,6 @@ class PassAppConfig @Inject constructor() : AppConfig {
     override val proxyToken: String? = BuildConfig.PROXY_TOKEN
     override val useDefaultPins: Boolean = BuildConfig.USE_DEFAULT_PINS
     override val sentryDSN: String? = BuildConfig.SENTRY_DSN.takeIf { !BuildConfig.DEBUG }
+    override val accountSentryDSN: String? =
+        BuildConfig.ACCOUNT_SENTRY_DSN.takeIf { !BuildConfig.DEBUG }
 }

@@ -23,6 +23,7 @@ import androidx.room.RenameTable
 import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.eventmanager.data.db.EventMetadataDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
@@ -154,6 +155,13 @@ object AppDatabaseMigrations {
     val MIGRATION_22_23 = object : Migration(22, 23) {
         override fun migrate(database: SupportSQLiteDatabase) {
             EventMetadataDatabase.MIGRATION_1.migrate(database)
+        }
+    }
+
+    val MIGRATION_26_27 = object : Migration(26, 27) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            UserDatabase.MIGRATION_3.migrate(database)
+            AccountDatabase.MIGRATION_6.migrate(database)
         }
     }
 }

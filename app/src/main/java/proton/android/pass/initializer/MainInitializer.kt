@@ -58,6 +58,7 @@ class MainInitializer : Initializer<Unit> {
     }
 
     override fun dependencies() = listOf(
+        FeatureFlagInitializer::class.java,
         AccountStateHandlerInitializer::class.java,
         CryptoValidatorInitializer::class.java,
         EventManagerInitializer::class.java,

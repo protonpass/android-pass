@@ -62,6 +62,7 @@ object TestUtils {
             displayName = "Display name",
             currency = "EUR",
             credit = 0,
+            createdAtUtc = 0,
             usedSpace = 0,
             maxSpace = 10_000,
             maxUpload = 8_000,

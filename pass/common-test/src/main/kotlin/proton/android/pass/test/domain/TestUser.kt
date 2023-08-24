@@ -34,6 +34,7 @@ object TestUser {
         displayName = null,
         currency = "",
         credit = 0,
+        createdAtUtc = 0,
         usedSpace = 0,
         maxSpace = 0,
         maxUpload = 0,

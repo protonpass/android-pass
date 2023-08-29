@@ -18,6 +18,7 @@
 
 package proton.android.pass
 
+import android.os.Build
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import javax.inject.Inject
@@ -35,4 +36,5 @@ class PassAppConfig @Inject constructor() : AppConfig {
     override val sentryDSN: String? = BuildConfig.SENTRY_DSN.takeIf { !BuildConfig.DEBUG }
     override val accountSentryDSN: String? =
         BuildConfig.ACCOUNT_SENTRY_DSN.takeIf { !BuildConfig.DEBUG }
+    override val androidVersion: Int = Build.VERSION.SDK_INT
 }

@@ -30,6 +30,7 @@ interface AppConfig {
     val useDefaultPins: Boolean
     val sentryDSN: String?
     val accountSentryDSN: String?
+    val androidVersion: Int
 }
 
 enum class BuildEnv {

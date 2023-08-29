@@ -72,6 +72,7 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
+    implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.api)
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.clipboard.api)
@@ -99,6 +100,7 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)
 
+    testImplementation(projects.pass.appConfig.fakes)
     testImplementation(projects.pass.autofill.fakes)
     testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.clipboard.fakes)
@@ -114,6 +116,7 @@ dependencies {
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(projects.pass.appConfig.fakes)
     androidTestImplementation(projects.pass.autofill.fakes)
     androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.commonTest)

@@ -220,6 +220,7 @@ core-paymentIap = { module = "me.proton.core:payment-iap", version.ref = "core" 
 # core-payment-iap-test = { module = "me.proton.core:payment-iap-test", version.ref = "core" }
 core-payment-domain = { module = "me.proton.core:payment-domain", version.ref = "core" }
 core-plan = { module = "me.proton.core:plan", version.ref = "core" }
+core-plan-test = { module = "me.proton.core:plan-test", version.ref = "core" }
 core-presentation = { module = "me.proton.core:presentation", version.ref = "core" }
 core-presentation-compose = { module = "me.proton.core:presentation-compose", version.ref = "core" }
 core-push = { module = "me.proton.core:push", version.ref = "core" }
@@ -306,5 +307,5 @@ onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword", versio
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 
 [bundles]
-core-test = ["core-test-android-instrumented", "core-auth-test", "core-humanVerification-test"]
+core-test = ["core-test-android-instrumented", "core-auth-test", "core-humanVerification-test", "core-plan-test"]
 test-android = ["fusion", "junit", "coroutines-test", "androidx-test-core-ktx", "androidx-test-runner", "androidx-test-rules", "androidx-compose-ui-test", "androidx-compose-ui-test-junit", "androidx-test-uiautomator", "dagger-hilt-android-testing"]

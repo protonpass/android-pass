@@ -25,6 +25,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -77,6 +78,7 @@ fun BottomBar(
             }
         )
         BottomNavigationItem(
+            modifier = Modifier.testTag(BottomBarTestTag.profile),
             selected = bottomBarSelected == BottomBarSelected.Profile,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
             unselectedContentColor = PassTheme.colors.textNorm,
@@ -88,6 +90,9 @@ fun BottomBar(
     }
 }
 
+object BottomBarTestTag {
+    const val profile = "profile"
+}
 
 @Preview
 @Composable

@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -61,6 +62,7 @@ import javax.inject.Inject
 class OnBoardingTipsViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val preferencesRepository: UserPreferencesRepository,
+    private val appConfig: AppConfig,
     observeInvites: ObserveInvites,
     getUserPlan: GetUserPlan,
     ffRepo: FeatureFlagsPreferencesRepository,
@@ -208,7 +210,7 @@ class OnBoardingTipsViewModel @Inject constructor(
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.TIRAMISU)
     private fun needsNotificationPermissions(): Boolean =
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+        appConfig.androidVersion >= Build.VERSION_CODES.TIRAMISU
 
 
     fun clearEvent() {

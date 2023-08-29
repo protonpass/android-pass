@@ -29,6 +29,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
@@ -72,7 +73,10 @@ fun AccountContent(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             AccountInfo(state = state)
-            ManageSubscription(onSubscriptionClick = { onNavigate(AccountNavigation.Subscription) })
+            ManageSubscription(
+                modifier = Modifier.testTag(AccountContentTestTag.subscription),
+                onSubscriptionClick = { onNavigate(AccountNavigation.Subscription) }
+            )
             SignOut(onSignOutClick = { onNavigate(AccountNavigation.SignOut) })
             DeleteAccount(onDeleteAccountClick = onDeleteAccountClick)
             Text(
@@ -83,3 +87,6 @@ fun AccountContent(
     }
 }
 
+object AccountContentTestTag {
+    const val subscription = "subscription"
+}

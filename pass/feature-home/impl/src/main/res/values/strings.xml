@@ -27,9 +27,9 @@
     <string name="home_trial_banner_text">Check out all the exclusive features that are available to you for a limited time.</string>
     <string name="home_trial_banner_settings">Learn more ›</string>
 
-    <string name="home_notification_permission_banner_title">Get notified</string>
-    <string name="home_notification_permission_banner_text">Allow us to send you notifications every time you receive an invitation to join a vault.</string>
-    <string name="home_notification_permission_banner_settings">Grant permission ›</string>
+    <string name="home_notification_permission_banner_title">Get important updates</string>
+    <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
+    <string name="home_notification_permission_banner_settings">Enable permission ›</string>
 
     <string name="home_invite_banner_title">Shared vault invitation</string>
     <string name="home_invite_banner_subtitle">You\'ve been invited to a vault. Tap here to see the invitation.</string>

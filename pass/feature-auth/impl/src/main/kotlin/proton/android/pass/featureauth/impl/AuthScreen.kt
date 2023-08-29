@@ -62,6 +62,7 @@ fun AuthScreen(
                 AuthUiEvent.OnSignOut -> viewModel.onSignOut()
                 is AuthUiEvent.OnTogglePasswordVisibility ->
                     viewModel.onTogglePasswordVisibility(it.value)
+                AuthUiEvent.OnAuthAgainClick -> viewModel.onAuthAgainClick(ctx.toClassHolder())
             }
         }
     )

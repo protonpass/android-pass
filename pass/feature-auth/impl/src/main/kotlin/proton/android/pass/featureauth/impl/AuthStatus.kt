@@ -33,6 +33,11 @@ sealed interface AuthEvent {
     object Unknown : AuthEvent
 }
 
+enum class AuthMethod {
+    Pin,
+    Fingerprint
+}
+
 sealed interface AuthError {
     @JvmInline
     value class WrongPassword(val remainingAttempts: Int) : AuthError
@@ -49,7 +54,8 @@ data class AuthContent(
     val isLoadingState: IsLoadingState,
     val isPasswordVisible: Boolean,
     val error: Option<AuthError>,
-    val passwordError: Option<PasswordError>
+    val passwordError: Option<PasswordError>,
+    val authMethod: Option<AuthMethod>
 ) {
     companion object {
         fun default(address: String) = AuthContent(
@@ -58,7 +64,8 @@ data class AuthContent(
             isLoadingState = IsLoadingState.NotLoading,
             isPasswordVisible = false,
             error = None,
-            passwordError = None
+            passwordError = None,
+            authMethod = None
         )
     }
 }

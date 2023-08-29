@@ -19,12 +19,14 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -32,6 +34,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
@@ -45,6 +48,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.body3Norm
@@ -150,6 +154,24 @@ fun AuthScreenMasterPasswordForm(
             onDoneClick = onSubmit
         )
 
+        if (state.authMethod is Some) {
+            val text = when (state.authMethod.value) {
+                AuthMethod.Pin -> stringResource(R.string.auth_action_enter_pin_instead)
+                AuthMethod.Fingerprint -> stringResource(R.string.auth_action_enter_fingerprint_instead)
+            }
+            Spacer(modifier = Modifier.height(40.dp))
+            Text(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .align(Alignment.CenterHorizontally)
+                    .clickable { onEvent(AuthUiEvent.OnAuthAgainClick) }
+                    .padding(8.dp),
+                text = text,
+                textAlign = TextAlign.Center,
+                color = PassTheme.colors.interactionNormMajor2
+            )
+        }
+
         if (state.error is Some) {
             val errorText = when (val error = state.error.value) {
                 AuthError.UnknownError -> stringResource(R.string.auth_error_verifying_password)
@@ -192,7 +214,8 @@ fun AuthScreenMasterPasswordFormPreview(
                     isLoadingState = IsLoadingState.NotLoading,
                     error = input.second.error,
                     isPasswordVisible = input.second.isPasswordVisible,
-                    passwordError = input.second.passwordError
+                    passwordError = input.second.passwordError,
+                    authMethod = None
                 ),
                 onEvent = {},
                 onSubmit = {}

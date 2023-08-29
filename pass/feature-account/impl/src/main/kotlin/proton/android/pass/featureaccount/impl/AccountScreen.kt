@@ -43,3 +43,7 @@ fun AccountScreen(
         }
     )
 }
+
+object AccountScreenTestTag {
+    const val screen = "AccountScreenTestTag"
+}

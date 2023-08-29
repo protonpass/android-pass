@@ -18,6 +18,7 @@
 
 package proton.android.pass.featurehome.impl
 
+import android.os.Build
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentSetOf
@@ -25,6 +26,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.appconfig.fakes.TestAppConfig
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
@@ -32,12 +34,14 @@ import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsUiState
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsViewModel
 import proton.android.pass.notifications.fakes.TestNotificationManager
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.HasDismissedAutofillBanner
+import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
@@ -58,6 +62,8 @@ class OnBoardingTipsViewModelTest {
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var observeInvites: TestObserveInvites
     private lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
+    private lateinit var notificationManager: TestNotificationManager
+    private lateinit var appConfig: TestAppConfig
 
     @Before
     fun setUp() {
@@ -66,13 +72,16 @@ class OnBoardingTipsViewModelTest {
         getUserPlan = TestGetUserPlan()
         observeInvites = TestObserveInvites()
         ffRepo = TestFeatureFlagsPreferenceRepository()
+        notificationManager = TestNotificationManager()
+        appConfig = TestAppConfig()
         viewModel = OnBoardingTipsViewModel(
             autofillManager = autofillManager,
             preferencesRepository = preferenceRepository,
             observeInvites = observeInvites,
             getUserPlan = getUserPlan,
             ffRepo = ffRepo,
-            notificationManager = TestNotificationManager()
+            notificationManager = notificationManager,
+            appConfig = appConfig
         )
     }
 
@@ -180,6 +189,67 @@ class OnBoardingTipsViewModelTest {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(TRIAL)))
         }
     }
+
+    @Test
+    fun `Should display notification permission banner if not notification permission and banner not dismissed`() =
+        runTest {
+            setupPlan(PlanType.Trial("", "", 1))
+            ffRepo.set(FeatureFlag.SHARING_V1, true)
+            notificationManager.setHasNotificationPermission(false)
+            viewModel.onNotificationPermissionChanged(false)
+            preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
+            appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
+
+            viewModel.state.test {
+                val expected = OnBoardingTipsUiState(persistentSetOf(NOTIFICATION_PERMISSION))
+                assertThat(awaitItem()).isEqualTo(expected)
+            }
+        }
+
+    @Test
+    fun `Should not display notification permission if has permission and banner not dismissed`() =
+        runTest {
+            setupPlan(PlanType.Trial("", "", 1))
+            ffRepo.set(FeatureFlag.SHARING_V1, true)
+            notificationManager.setHasNotificationPermission(true)
+            viewModel.onNotificationPermissionChanged(true)
+            preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
+            appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
+
+            viewModel.state.test {
+                assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
+            }
+        }
+
+    @Test
+    fun `Should not display notification permission if not permission and banner dismissed`() =
+        runTest {
+            setupPlan(PlanType.Trial("", "", 1))
+            ffRepo.set(FeatureFlag.SHARING_V1, true)
+            notificationManager.setHasNotificationPermission(false)
+            viewModel.onNotificationPermissionChanged(false)
+            preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
+            appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
+
+            viewModel.state.test {
+                assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
+            }
+        }
+
+    @Test
+    fun `Should not display notification permission if not permission and banner not dismissed but version LT 13`() =
+        runTest {
+            setupPlan(PlanType.Trial("", "", 1))
+            ffRepo.set(FeatureFlag.SHARING_V1, true)
+            notificationManager.setHasNotificationPermission(false)
+            viewModel.onNotificationPermissionChanged(false)
+            preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
+            appConfig.setAndroidVersion(Build.VERSION_CODES.BASE)
+
+            viewModel.state.test {
+                assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
+            }
+        }
 
     private fun setupPlan(
         planType: PlanType = PlanType.Paid("", "")

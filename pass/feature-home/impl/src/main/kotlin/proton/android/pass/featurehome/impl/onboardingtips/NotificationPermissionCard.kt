@@ -18,12 +18,17 @@
 
 package proton.android.pass.featurehome.impl.onboardingtips
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featurehome.impl.R
@@ -37,10 +42,18 @@ fun NotificationPermissionCard(
 ) {
     SpotlightCard(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.cardInteractionNormMajor1,
+        backgroundColor = PassTheme.colors.interactionNormMajor1,
         title = stringResource(id = R.string.home_notification_permission_banner_title),
         body = stringResource(id = R.string.home_notification_permission_banner_text),
         buttonText = stringResource(id = R.string.home_notification_permission_banner_settings),
+        image = {
+            Image(
+                modifier = Modifier.size(100.dp),
+                alignment = Alignment.CenterEnd,
+                painter = painterResource(id = R.drawable.spotlight_notifications),
+                contentDescription = null
+            )
+        },
         onClick = onClick,
         onDismiss = onDismiss
     )

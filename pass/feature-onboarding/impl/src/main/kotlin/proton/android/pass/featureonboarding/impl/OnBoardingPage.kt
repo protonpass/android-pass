@@ -30,6 +30,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -81,6 +82,7 @@ fun OnBoardingPage(
             )
             CircleButton(
                 modifier = Modifier
+                    .testTag(OnBoardingPageTestTag.mainButton)
                     .padding(32.dp, 0.dp)
                     .fillMaxWidth()
                     .height(48.dp),
@@ -97,6 +99,7 @@ fun OnBoardingPage(
             if (onBoardingPageData.showSkipButton) {
                 ProtonTextButton(
                     modifier = Modifier
+                        .testTag(OnBoardingPageTestTag.skipButton)
                         .padding(32.dp, 0.dp)
                         .fillMaxWidth()
                         .height(48.dp),
@@ -119,3 +122,9 @@ fun OnBoardingPage(
         }
     }
 }
+
+object OnBoardingPageTestTag {
+    const val mainButton = "mainButton"
+    const val skipButton = "skipButton"
+}
+

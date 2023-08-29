@@ -19,6 +19,8 @@
 package proton.android.pass.featureaccount.impl
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.navigation.api.NavItem
@@ -44,6 +46,7 @@ fun NavGraphBuilder.accountGraph(
     ) {
         composable(Account) {
             AccountScreen(
+                modifier = Modifier.testTag(AccountScreenTestTag.screen),
                 onNavigate = onNavigate
             )
         }

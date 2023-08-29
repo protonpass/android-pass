@@ -1,12 +1,12 @@
 {
   "endpoints": {
-    "SYSTEM_ENV": "/api/internal/system/env",
-    "JAIL_UNBAN": "/api/internal/quark/raw::jail:unban",
-    "USER_CREATE": "/api/internal/quark/raw::user:create",
-    "USER_CREATE_ADDRESS": "/api/internal/quark/raw::user:create:address",
-    "PAYMENTS_SEED_PAYMENT_METHOD": "/api/internal/quark/raw::payments:seed-payment-method",
-    "DRIVE_POPULATE_USER_WITH_DATA": "/api/internal/quark/drive:populate",
-    "PAYMENTS_SEED_SUBSCRIBER": "/api/internal/quark/raw::payments:seed-subscriber"
+    "SYSTEM_ENV": "/internal/system/env",
+    "JAIL_UNBAN": "/internal/quark/raw::jail:unban",
+    "USER_CREATE": "/internal/quark/raw::user:create",
+    "USER_CREATE_ADDRESS": "/internal/quark/raw::user:create:address",
+    "PAYMENTS_SEED_PAYMENT_METHOD": "/internal/quark/raw::payments:seed-payment-method",
+    "DRIVE_POPULATE_USER_WITH_DATA": "/internal/quark/drive:populate",
+    "PAYMENTS_SEED_SUBSCRIBER": "/internal/quark/raw::payments:seed-subscriber"
   },
   "constants": {
     "DEFAULT_VERIFICATION_CODE": "666666",

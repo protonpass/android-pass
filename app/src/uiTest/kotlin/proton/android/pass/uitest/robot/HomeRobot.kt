@@ -19,13 +19,22 @@
 package proton.android.pass.uitest.robot
 
 import me.proton.test.fusion.Fusion.node
+import proton.android.pass.composecomponents.impl.bottombar.BottomBarTestTag
 import proton.android.pass.featurehome.impl.HomeScreenTestTag
 
 object HomeRobot : Robot {
 
     private val homeScreen get() = node.withTag(HomeScreenTestTag.screen)
 
-    fun homeScreenDisplayed() {
+    private val profile get() = node.withTag(BottomBarTestTag.profile)
+
+    fun homeScreenDisplayed(): HomeRobot = apply {
         homeScreen.await { assertIsDisplayed() }
+    }
+
+    fun clickProfile(): ProfileRobot {
+        profile.await { assertIsDisplayed() }
+        profile.click()
+        return ProfileRobot
     }
 }

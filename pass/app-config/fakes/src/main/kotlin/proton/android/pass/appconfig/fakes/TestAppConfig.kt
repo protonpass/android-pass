@@ -18,6 +18,7 @@
 
 package proton.android.pass.appconfig.fakes
 
+import android.os.Build
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildEnv
 import proton.android.pass.appconfig.api.BuildFlavor
@@ -26,6 +27,9 @@ import javax.inject.Singleton
 
 @Singleton
 class TestAppConfig @Inject constructor() : AppConfig {
+
+    private var androidVersionValue = Build.VERSION_CODES.TIRAMISU
+
     override val isDebug: Boolean
         get() = false
     override val applicationId: String
@@ -48,4 +52,10 @@ class TestAppConfig @Inject constructor() : AppConfig {
         get() = ""
     override val accountSentryDSN: String
         get() = ""
+    override val androidVersion: Int
+        get() = androidVersionValue
+
+    fun setAndroidVersion(value: Int) {
+        androidVersionValue = value
+    }
 }

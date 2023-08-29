@@ -89,6 +89,10 @@ fun ProfileScreen(
     )
 }
 
+object ProfileScreenTestTag {
+    const val screen = "ProfileScreenTestTag"
+}
+
 @VisibleForTesting
 const val PASS_IMPORT = "https://proton.me/support/pass-import"
 

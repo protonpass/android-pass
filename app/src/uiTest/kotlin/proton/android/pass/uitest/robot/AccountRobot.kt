@@ -19,22 +19,21 @@
 package proton.android.pass.uitest.robot
 
 import me.proton.test.fusion.Fusion.node
-import proton.android.pass.composecomponents.impl.bottombar.BottomBarTestTag
-import proton.android.pass.featurehome.impl.HomeScreenTestTag
+import proton.android.pass.featureaccount.impl.AccountContentTestTag
+import proton.android.pass.featureaccount.impl.AccountScreenTestTag
 
-object HomeRobot : Robot {
+object AccountRobot : Robot {
 
-    private val homeScreen get() = node.withTag(HomeScreenTestTag.screen)
+    private val accountScreen get() = node.withTag(AccountScreenTestTag.screen)
 
-    private val profile get() = node.withTag(BottomBarTestTag.profile)
+    private val subscription get() = node.withTag(AccountContentTestTag.subscription)
 
-    fun homeScreenDisplayed(): HomeRobot = apply {
-        homeScreen.await { assertIsDisplayed() }
+    fun accountScreenDisplayed(): AccountRobot = apply {
+        accountScreen.await { assertIsDisplayed() }
     }
 
-    fun clickProfile(): ProfileRobot {
-        profile.await { assertIsDisplayed() }
-        profile.click()
-        return ProfileRobot
+    fun clickSubscription() {
+        subscription.await { assertIsDisplayed() }
+        subscription.click()
     }
 }

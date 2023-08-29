@@ -19,13 +19,31 @@
 package proton.android.pass.uitest.robot
 
 import me.proton.test.fusion.Fusion.node
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName
+import proton.android.pass.featureonboarding.impl.OnBoardingPageTestTag
 import proton.android.pass.featureonboarding.impl.OnBoardingScreenTestTag
 
 object OnBoardingRobot : Robot {
 
     private val onBoardingScreen get() = node.withTag(OnBoardingScreenTestTag.screen)
+    private val mainButton get() = node.withTag(OnBoardingPageTestTag.mainButton)
+    private val skipButton get() = node.withTag(OnBoardingPageTestTag.skipButton)
 
-    fun onBoardingScreenDisplayed() {
+    fun onBoardingScreenDisplayed(): OnBoardingRobot = apply {
         onBoardingScreen.await { assertIsDisplayed() }
+    }
+
+    fun clickMain(page: OnBoardingPageName): OnBoardingRobot = apply {
+        mainButton.hasAncestor(node.withTag(page.name)).apply {
+            await { assertIsDisplayed() }
+            click()
+        }
+    }
+
+    fun clickSkip(page: OnBoardingPageName): OnBoardingRobot = apply {
+        skipButton.hasAncestor(node.withTag(page.name)).apply {
+            await { assertIsDisplayed() }
+            click()
+        }
     }
 }

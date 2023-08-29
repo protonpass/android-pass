@@ -24,11 +24,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -67,12 +70,23 @@ class AuthViewModel @Inject constructor(
 
     private val eventFlow: MutableStateFlow<AuthEvent> = MutableStateFlow(AuthEvent.Unknown)
     private val formContentFlow: MutableStateFlow<FormContents> = MutableStateFlow(FormContents())
+    private val authMethodFlow: Flow<Option<AuthMethod>> = preferenceRepository
+        .getAppLockTypePreference()
+        .map {
+            when (it) {
+                AppLockTypePreference.None -> None
+                AppLockTypePreference.Biometrics -> AuthMethod.Fingerprint.some()
+                AppLockTypePreference.Pin -> AuthMethod.Pin.some()
+            }
+        }
+        .distinctUntilChanged()
 
     val state: StateFlow<AuthState> = combine(
         eventFlow,
         formContentFlow,
-        observePrimaryUserEmail()
-    ) { event, formContent, userEmail ->
+        observePrimaryUserEmail(),
+        authMethodFlow
+    ) { event, formContent, userEmail, authMethod ->
         AuthState(
             event = event,
             content = AuthContent(
@@ -81,7 +95,8 @@ class AuthViewModel @Inject constructor(
                 isPasswordVisible = formContent.isPasswordVisible,
                 error = formContent.error,
                 passwordError = formContent.passwordError,
-                address = userEmail
+                address = userEmail,
+                authMethod = authMethod
             )
         )
     }
@@ -92,29 +107,7 @@ class AuthViewModel @Inject constructor(
         )
 
     fun init(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
-        when (preferenceRepository.getAppLockTypePreference().first()) {
-            AppLockTypePreference.Biometrics -> when (biometryManager.getBiometryStatus()) {
-                BiometryStatus.CanAuthenticate -> {
-                    val biometricLockState = preferenceRepository.getAppLockState().first()
-                    if (biometricLockState == AppLockState.Disabled) {
-                        // If there is biometry available, but the user does not have it enabled
-                        // we should proceed
-                        eventFlow.update { AuthEvent.Success }
-                    } else {
-                        // If there is biometry available, and the user has it enabled, perform auth
-                        openBiometrics(contextHolder)
-                    }
-                }
-
-                else -> {
-                    // If there is no biometry available, emit success
-                    eventFlow.update { AuthEvent.Success }
-                }
-            }
-
-            AppLockTypePreference.Pin -> eventFlow.update { AuthEvent.EnterPin }
-            AppLockTypePreference.None -> {}
-        }
+        showAuthMethod(contextHolder)
     }
 
     fun onPasswordChanged(value: String) = viewModelScope.launch {
@@ -195,8 +188,38 @@ class AuthViewModel @Inject constructor(
         formContentFlow.update { it.copy(isPasswordVisible = value) }
     }
 
+    fun onAuthAgainClick(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
+        showAuthMethod(contextHolder)
+    }
+
     fun clearEvent() = viewModelScope.launch {
         eventFlow.update { AuthEvent.Unknown }
+    }
+
+    private suspend fun showAuthMethod(contextHolder: ClassHolder<Context>) {
+        when (preferenceRepository.getAppLockTypePreference().first()) {
+            AppLockTypePreference.Biometrics -> when (biometryManager.getBiometryStatus()) {
+                BiometryStatus.CanAuthenticate -> {
+                    val biometricLockState = preferenceRepository.getAppLockState().first()
+                    if (biometricLockState == AppLockState.Disabled) {
+                        // If there is biometry available, but the user does not have it enabled
+                        // we should proceed
+                        eventFlow.update { AuthEvent.Success }
+                    } else {
+                        // If there is biometry available, and the user has it enabled, perform auth
+                        openBiometrics(contextHolder)
+                    }
+                }
+
+                else -> {
+                    // If there is no biometry available, emit success
+                    eventFlow.update { AuthEvent.Success }
+                }
+            }
+
+            AppLockTypePreference.Pin -> eventFlow.update { AuthEvent.EnterPin }
+            AppLockTypePreference.None -> {}
+        }
     }
 
     private suspend fun openBiometrics(contextHolder: ClassHolder<Context>) {

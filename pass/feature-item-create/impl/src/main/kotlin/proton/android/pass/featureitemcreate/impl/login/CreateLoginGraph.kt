@@ -45,7 +45,7 @@ import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
 import proton.pass.domain.ShareId
 
-private const val CREATE_LOGIN_GRAPH = "create_login_graph"
+const val CREATE_LOGIN_GRAPH = "create_login_graph"
 
 object CreateLoginDefaultUsernameArg : OptionalNavArgId {
     override val key = "username"

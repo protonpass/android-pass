@@ -42,6 +42,8 @@ import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.featureauth.impl.AuthViewModel
 import proton.android.pass.featureauth.impl.R
+import proton.android.pass.preferences.AppLockState
+import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.test.CallChecker
@@ -257,6 +259,52 @@ class AuthScreenMasterPasswordTest {
             appDispatchers.advanceTimeBy(2500L)
 
             waitUntil { checker.isCalled }
+        }
+    }
+
+    @Test
+    fun canRetryPin() {
+        userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Pin)
+
+        val checker = CallChecker<Unit>()
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    AuthScreen(
+                        navigation = {
+                            if (it is AuthNavigation.EnterPin) {
+                                checker.call()
+                            }
+                        },
+                        canLogout = true
+                    )
+                }
+            }
+
+            val text = activity.getString(R.string.auth_action_enter_pin_instead)
+            onNodeWithText(text).assertExists().performClick()
+
+            waitUntil { checker.isCalled }
+        }
+    }
+
+    @Test
+    fun canRetryFingerprint() {
+        userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
+        userPreferencesRepository.setAppLockState(AppLockState.Enabled)
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    AuthScreen(navigation = {}, canLogout = true)
+                }
+            }
+
+            val text = activity.getString(R.string.auth_action_enter_fingerprint_instead)
+            onNodeWithText(text).assertExists().performClick()
+
+            waitUntil { biometryManager.hasBeenCalled }
         }
     }
 

@@ -25,10 +25,10 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.data.api.usecases.InviteToVault
+import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.CreateInviteKey
@@ -44,7 +44,8 @@ class InviteToVaultImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val encryptInviteKeys: EncryptInviteKeys,
     private val shareKeyRepository: ShareKeyRepository,
-    private val remoteInviteDataSource: RemoteInviteDataSource
+    private val remoteInviteDataSource: RemoteInviteDataSource,
+    private val localShareDataSource: LocalShareDataSource
 ) : InviteToVault {
 
     @Suppress("ReturnCount")
@@ -63,11 +64,15 @@ class InviteToVaultImpl @Inject constructor(
             primaryUserId
         }
 
+        val share = localShareDataSource.getById(id, shareId)
+            ?: return Result.failure(IllegalStateException("No share with id $shareId"))
+
         val address = runCatching { userAddressRepository.getAddresses(id) }
             .fold(
-                onSuccess = {
-                    it.primary()
+                onSuccess = { addresses ->
+                    val address = addresses.firstOrNull { it.addressId.id == share.addressId }
                         ?: return Result.failure(IllegalStateException("No primary address for inviter user"))
+                    address
                 },
                 onFailure = {
                     PassLogger.w(TAG, it, "Failed to get user addresses")

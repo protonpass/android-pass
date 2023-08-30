@@ -54,7 +54,9 @@ fun AccountContent(
                 actions = {
                     if (state.showUpgradeButton) {
                         UpgradeButton(
-                            modifier = Modifier.padding(12.dp, 0.dp),
+                            modifier = Modifier
+                                .testTag(AccountContentTestTag.upgrade)
+                                .padding(12.dp, 0.dp),
                             onUpgradeClick = { onNavigate(AccountNavigation.Upgrade) }
                         )
                     }
@@ -88,5 +90,6 @@ fun AccountContent(
 }
 
 object AccountContentTestTag {
+    const val upgrade = "upgrade"
     const val subscription = "subscription"
 }

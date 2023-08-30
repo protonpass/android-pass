@@ -26,10 +26,16 @@ object AccountRobot : Robot {
 
     private val accountScreen get() = node.withTag(AccountScreenTestTag.screen)
 
+    private val upgrade get() = node.withTag(AccountContentTestTag.upgrade)
     private val subscription get() = node.withTag(AccountContentTestTag.subscription)
 
     fun accountScreenDisplayed(): AccountRobot = apply {
         accountScreen.await { assertIsDisplayed() }
+    }
+
+    fun clickUpgrade() {
+        upgrade.await { assertIsDisplayed() }
+        upgrade.click()
     }
 
     fun clickSubscription() {

@@ -76,6 +76,7 @@ val BROWSERS = setOf(
     "org.mozilla.fennec_fdroid",
     "org.mozilla.firefox",
     "org.mozilla.firefox_beta",
+    "org.mozilla.focus",
     "org.mozilla.reference.browser",
     "org.mozilla.rocket",
     "org.torproject.torbrowser",

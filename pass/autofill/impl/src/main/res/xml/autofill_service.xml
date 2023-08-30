@@ -80,6 +80,7 @@
     <compatibility-package android:name="org.mozilla.fennec_fdroid" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="org.mozilla.firefox" android:maxLongVersionCode="2015836711" />
     <compatibility-package android:name="org.mozilla.firefox_beta" android:maxLongVersionCode="2015849447" />
+    <compatibility-package android:name="org.mozilla.focus" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="org.mozilla.reference.browser" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="org.mozilla.rocket" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="org.torproject.torbrowser" android:maxLongVersionCode="10000000000" />

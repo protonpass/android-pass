@@ -29,11 +29,12 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStartupError
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.biometry.TestStoreAuthSuccessful
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
@@ -79,7 +80,9 @@ class AuthViewModelTest {
         viewModel.state.test {
             val expected = AuthState.Initial.copy(
                 event = AuthEvent.Unknown,
-                content = AuthContent.default(USER_EMAIL)
+                content = AuthContent.default(USER_EMAIL).copy(
+                    authMethod = Some(AuthMethod.Fingerprint)
+                )
             )
             assertThat(awaitItem()).isEqualTo(expected)
         }
@@ -145,7 +148,9 @@ class AuthViewModelTest {
             assertThat(awaitItem()).isEqualTo(
                 AuthState(
                     event = AuthEvent.Unknown,
-                    content = AuthContent.default(USER_EMAIL)
+                    content = AuthContent.default(USER_EMAIL).copy(
+                        authMethod = Some(AuthMethod.Fingerprint)
+                    )
                 )
             )
         }

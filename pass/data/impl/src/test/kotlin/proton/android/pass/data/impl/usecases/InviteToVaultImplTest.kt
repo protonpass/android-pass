@@ -35,8 +35,11 @@ import proton.android.pass.account.fakes.TestPublicAddressRepository
 import proton.android.pass.account.fakes.TestUserAddressRepository
 import proton.android.pass.crypto.fakes.usecases.TestEncryptInviteKeys
 import proton.android.pass.crypto.fakes.utils.TestUtils
+import proton.android.pass.data.impl.db.entities.ShareEntity
+import proton.android.pass.data.impl.fakes.TestLocalShareDataSource
 import proton.android.pass.data.impl.fakes.TestRemoteInviteDataSource
 import proton.android.pass.data.impl.fakes.TestShareKeyRepository
+import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
 
@@ -48,6 +51,7 @@ class InviteToVaultImplTest {
     private lateinit var accountManager: TestAccountManager
     private lateinit var publicAddressRepository: TestPublicAddressRepository
     private lateinit var userAddressRepository: TestUserAddressRepository
+    private lateinit var localShareDataSource: LocalShareDataSource
 
     @Before
     fun setup() {
@@ -55,6 +59,30 @@ class InviteToVaultImplTest {
         publicAddressRepository = TestPublicAddressRepository()
         accountManager = TestAccountManager()
         userAddressRepository = TestUserAddressRepository()
+        localShareDataSource = TestLocalShareDataSource().apply {
+            val entity = ShareEntity(
+                id = SHARE_ID,
+                userId = USER_ID,
+                addressId = ADDRESS_ID,
+                vaultId = "vaultid-123",
+                targetType = 1,
+                targetId = "vaultid-123",
+                permission = 1,
+                isPrimary = false,
+                content = null,
+                contentKeyRotation = null,
+                contentFormatVersion = null,
+                expirationTime = null,
+                createTime = 0,
+                encryptedContent = null,
+                isActive = true,
+                owner = true,
+                shareRoleId = ShareRole.SHARE_ROLE_ADMIN,
+                targetMembers = 0,
+                shared = false
+            )
+            setGetByIdResponse(Result.success(entity))
+        }
 
         instance = InviteToVaultImpl(
             publicAddressRepository = publicAddressRepository,
@@ -65,6 +93,7 @@ class InviteToVaultImplTest {
                 emitGetShareKeys(listOf(TestUtils.createShareKey().first))
             },
             remoteInviteDataSource = remoteDataSource,
+            localShareDataSource = localShareDataSource
         )
     }
 
@@ -74,7 +103,7 @@ class InviteToVaultImplTest {
         setupPublicAddress()
         setupUserAddress()
 
-        val shareId = ShareId("shareId123")
+        val shareId = ShareId(SHARE_ID)
         val shareRole = ShareRole.Admin
         val res = instance.invoke(
             targetEmail = INVITED_ADDRESS,
@@ -101,7 +130,7 @@ class InviteToVaultImplTest {
 
         val res = instance.invoke(
             targetEmail = INVITED_ADDRESS,
-            shareId = ShareId("shareId123"),
+            shareId = ShareId(SHARE_ID),
             shareRole = ShareRole.Admin
         )
         assertThat(res.isFailure).isTrue()
@@ -115,7 +144,7 @@ class InviteToVaultImplTest {
 
             val res = instance.invoke(
                 targetEmail = INVITED_ADDRESS,
-                shareId = ShareId("shareId123"),
+                shareId = ShareId(SHARE_ID),
                 shareRole = ShareRole.Admin
             )
             assertThat(res.isFailure).isTrue()
@@ -128,7 +157,7 @@ class InviteToVaultImplTest {
 
         val res = instance.invoke(
             targetEmail = INVITED_ADDRESS,
-            shareId = ShareId("shareId123"),
+            shareId = ShareId(SHARE_ID),
             shareRole = ShareRole.Admin
         )
         assertThat(res.isFailure).isTrue()
@@ -155,7 +184,7 @@ class InviteToVaultImplTest {
     }
 
     private fun setupUserAddress() {
-        val addressId = AddressId("AddressId123")
+        val addressId = AddressId(ADDRESS_ID)
         val key = UserAddressKey(
             addressId = addressId,
             version = 1,
@@ -186,5 +215,7 @@ class InviteToVaultImplTest {
         private const val INVITER_ADDRESS = "inviter@local"
         private const val INVITED_ADDRESS = "invited@remote"
         private const val USER_ID = "InviteToVaultImplTest-UserId"
+        private const val SHARE_ID = "InviteToVaultImplTest-ShareId"
+        private const val ADDRESS_ID = "InviteToVaultImplTest-AddressID"
     }
 }

@@ -81,7 +81,7 @@ private fun getHighlightedFields(
         if (noteMatches.any()) {
             noteWithoutNewLines.highlight(noteMatches, highlightColor)
         } else {
-            AnnotatedString(noteWithoutNewLines)
+            AnnotatedString(noteWithoutNewLines.take(MAX_NOTE_CHARS_PREVIEW))
         }
     } else {
         val firstLines = note.lines().take(MAX_LINES_NOTE_DETAIL).joinToString(" ")

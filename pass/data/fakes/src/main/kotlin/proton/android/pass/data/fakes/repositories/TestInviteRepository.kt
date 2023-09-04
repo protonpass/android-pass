@@ -24,6 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.pass.domain.InviteToken
 import proton.pass.domain.PendingInvite
+import proton.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,7 +33,7 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
 
     private val invitesFlow: MutableStateFlow<List<PendingInvite>> = MutableStateFlow(emptyList())
     private var refreshResult: Result<Boolean> = Result.success(false)
-    private var acceptResult: Result<Unit> = Result.success(Unit)
+    private var acceptResult: Result<ShareId> = Result.success(DEFAULT_SHARE_ID)
     private var rejectResult: Result<Unit> = Result.success(Unit)
 
     fun emitInvites(invites: List<PendingInvite>) {
@@ -43,7 +44,7 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
         refreshResult = value
     }
 
-    fun setAcceptResult(value: Result<Unit>) {
+    fun setAcceptResult(value: Result<ShareId>) {
         acceptResult = value
     }
 
@@ -55,11 +56,14 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
 
     override suspend fun refreshInvites(userId: UserId) = refreshResult.getOrThrow()
 
-    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken) {
+    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId =
         acceptResult.getOrThrow()
-    }
 
     override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {
         rejectResult.getOrThrow()
+    }
+
+    companion object {
+        val DEFAULT_SHARE_ID = ShareId("TestInviteRepository-ShareId")
     }
 }

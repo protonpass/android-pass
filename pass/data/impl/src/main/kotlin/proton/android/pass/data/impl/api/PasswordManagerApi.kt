@@ -240,7 +240,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun acceptInvite(
         @Path("inviteId") inviteId: String,
         @Body request: AcceptInviteRequest
-    ): CodeOnlyResponse
+    ): GetShareResponse
 
     @DELETE("$PREFIX/invite/{inviteId}")
     suspend fun rejectInvite(

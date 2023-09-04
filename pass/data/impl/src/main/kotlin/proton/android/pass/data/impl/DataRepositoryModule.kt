@@ -35,6 +35,8 @@ import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.EventRepositoryImpl
 import proton.android.pass.data.impl.repositories.FeatureFlagRepositoryImpl
+import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
+import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
 import proton.android.pass.data.impl.repositories.InviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepositoryImpl
@@ -91,4 +93,9 @@ abstract class DataRepositoryModule {
 
     @Binds
     abstract fun bindInviteRepository(impl: InviteRepositoryImpl): InviteRepository
+
+    @Binds
+    abstract fun bindFetchShareItemStatusRepository(
+        impl: FetchShareItemsStatusRepositoryImpl
+    ): FetchShareItemsStatusRepository
 }

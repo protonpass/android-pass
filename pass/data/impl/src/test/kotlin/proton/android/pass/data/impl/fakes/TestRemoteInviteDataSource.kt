@@ -23,8 +23,10 @@ import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.responses.PendingInviteResponse
+import proton.android.pass.data.impl.responses.ShareResponse
 import proton.pass.domain.InviteToken
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 import javax.inject.Inject
 
 class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource {
@@ -32,6 +34,8 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
     private var sendInviteResult: Result<Unit> = Result.success(Unit)
     private var fetchInvitesResult: Result<List<PendingInviteResponse>> =
         Result.success(emptyList())
+    private var acceptInviteResult: Result<ShareResponse> = Result.success(DEFAULT_RESPONSE)
+
     private var memory: MutableList<Payload> = mutableListOf()
 
     fun getMemory(): List<Payload> = memory
@@ -42,6 +46,10 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
 
     fun setFetchInvitesResult(value: Result<List<PendingInviteResponse>>) {
         fetchInvitesResult = value
+    }
+
+    fun setAcceptInviteResult(value: Result<ShareResponse>) {
+        acceptInviteResult = value
     }
 
     override suspend fun sendInvite(
@@ -56,9 +64,11 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
     override suspend fun fetchInvites(userId: UserId): List<PendingInviteResponse> =
         fetchInvitesResult.getOrThrow()
 
-    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken, body: AcceptInviteRequest) {
-
-    }
+    override suspend fun acceptInvite(
+        userId: UserId,
+        inviteToken: InviteToken,
+        body: AcceptInviteRequest
+    ): ShareResponse = acceptInviteResult.getOrThrow()
 
     override suspend fun rejectInvite(userId: UserId, token: InviteToken) {
     }
@@ -68,4 +78,25 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
         val shareId: ShareId,
         val request: CreateInviteRequest
     )
+
+    companion object {
+        val DEFAULT_RESPONSE = ShareResponse(
+            shareId = "TestRemoteInviteDataSource-ShareId",
+            vaultId = "TestRemoteInviteDataSource-VaultId",
+            addressId = "TestRemoteInviteDataSource-AddressId",
+            primary = true,
+            targetType = 1,
+            targetId = "TestRemoteInviteDataSource-VaultId",
+            permission = 0,
+            content = null,
+            contentKeyRotation = null,
+            contentFormatVersion = null,
+            shareRoleId = ShareRole.Admin.value,
+            targetMembers = 1,
+            owner = true,
+            shared = false,
+            expirationTime = null,
+            createTime = 12_345_678,
+        )
+    }
 }

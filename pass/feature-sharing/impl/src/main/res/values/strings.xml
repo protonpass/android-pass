@@ -42,7 +42,7 @@
     <string name="share_permissions_subtitle">Select the level of access this user will gain when they join your \'%s\' vault.</string>
 
     <string name="sharing_invitation_from">Invitation from %s</string>
-    <string name="sharing_join_shared_vault">Join shared vault</string>
+    <string name="sharing_join_shared_vault">Join and sync</string>
     <string name="sharing_reject_invitation">Reject invitation</string>
 
     <string name="sharing_snackbar_get_invite_error">Could not get invite</string>

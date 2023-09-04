@@ -33,6 +33,8 @@
   <string name="auth_master_password_label">Parolă principală</string>
   <string name="auth_action_reveal_password">Afișare parolă principală</string>
   <string name="auth_action_conceal_password">Ascundere parolă principală</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Folosire cod PIN</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Folosire amprentă</string>
   <string name="auth_unlock_button">Deblocare</string>
   <string name="auth_error_verifying_password">Eroare la verificarea parolei.</string>
   <string name="auth_error_empty_password">Parola nu poate fi goală.</string>

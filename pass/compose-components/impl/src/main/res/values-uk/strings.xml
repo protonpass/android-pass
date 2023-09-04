@@ -33,11 +33,11 @@
   <string name="small_cross_icon_content_description">Піктограма маленький хрест</string>
   <string name="field_note_title">Нотатка</string>
   <string name="field_note_hint">Додати нотатку</string>
-  <string name="linked_apps_title">Пов\'язані застосунки</string>
+  <string name="linked_apps_title">Пов\'язані програми</string>
   <!-- Indicator that indicates lack of internet connectivity -->
   <string name="indicator_no_network">Не в мережі</string>
   <!-- Icon content description -->
-  <string name="missing_app_icon_content_description">Піктограма відсутнього застосунку</string>
+  <string name="missing_app_icon_content_description">Відсутня піктограма програми</string>
   <string name="add_item_icon_content_description">Піктограма додати елемент</string>
   <string name="navigate_back_icon_content_description">Піктограма назад</string>
   <!-- Vault selector -->

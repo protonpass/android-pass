@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="updates_notification_channel_name">Абнаўленні</string>
   <string name="autofill_notification_channel_name">Аўтазапаўненне</string>
   <string name="autofill_notification_copy_to_clipboard_title">Код TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">TOTP быў скапіяваны ў буфер абмену.</string>
+  <string name="updates_new_invite_received_title">Вы атрымалі запрашэнне</string>
+  <string name="updates_new_invite_received_message">Вы былі запрошаны ў сховішча. Адкрыйце праграму, каб убачыць запрашэнне і прыняць яго.</string>
 </resources>

@@ -5,8 +5,8 @@
   <string name="error_credentials_not_found">找不到相對應的憑證</string>
   <string name="error_credentials_not_saved">無法儲存驗證</string>
   <string name="error_loading_items">載入項目失敗</string>
-  <string name="topbar_search_query">於保存庫中搜尋…</string>
-  <string name="topbar_search_query_primary_vault">於主要保存庫中搜尋…</string>
+  <string name="topbar_search_query">於保管庫中搜尋…</string>
+  <string name="topbar_search_query_primary_vault">於主要保管庫中搜尋…</string>
   <string name="topbar_search_query_uninitialized">搜尋…</string>
   <string name="inline_suggestions_open_app">開啟 Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">您的方案僅允許將您主要保管庫中的項目用於自動填入用途。</string>
@@ -22,7 +22,7 @@
   <string name="snackbar_item_move_to_trash_error">無法移至垃圾桶</string>
   <string name="snackbar_item_copy_username_success">使用者名稱已複製到剪貼簿</string>
   <string name="snackbar_item_copy_password_success">密碼已複製至剪貼簿</string>
-  <string name="snackbar_item_copy_clipboard_error">無法複製到剪貼板</string>
+  <string name="snackbar_item_copy_clipboard_error">無法複製至剪貼簿</string>
   <string name="autofill_user_logged_out">您已登出。請重新開啟應用程式以登入。</string>
   <string name="bottomsheet_copy_password">複製密碼</string>
   <string name="bottomsheet_copy_username">複製使用者名稱</string>

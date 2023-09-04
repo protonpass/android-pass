@@ -18,6 +18,7 @@
 
 package proton.android.pass.featuresharing.impl.accept
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -99,13 +100,25 @@ fun AcceptInviteContent(
             color = PassTheme.colors.textWeak
         )
 
-        AcceptInviteButtons(
-            isConfirmLoading = state.isConfirmLoading,
-            isRejectLoading = state.isRejectLoading,
-            areButtonsEnabled = state.areButtonsEnabled,
-            onConfirm = onConfirm,
-            onReject = onReject
-        )
+        if (state.buttonsState is AcceptInviteButtonsState.Show) {
+            AcceptInviteButtons(
+                isConfirmLoading = state.buttonsState.confirmLoading,
+                isRejectLoading = state.buttonsState.rejectLoading,
+                areButtonsEnabled = state.buttonsState.enabled,
+                showReject = !state.buttonsState.hideReject,
+                onConfirm = onConfirm,
+                onReject = onReject
+            )
+
+            AnimatedVisibility(visible = state.progressState is AcceptInviteProgressState.Show) {
+                if (state.progressState is AcceptInviteProgressState.Show) {
+                    AcceptInviteItemSyncStatus(
+                        downloaded = state.progressState.downloaded,
+                        total = state.progressState.total
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -127,9 +140,13 @@ fun AcceptInviteContentPreview(
                         icon = ShareIcon.Icon1,
                         color = ShareColor.Color1
                     ),
-                    isConfirmLoading = input.second,
-                    isRejectLoading = false,
-                    areButtonsEnabled = !input.second
+                    buttonsState = AcceptInviteButtonsState.Show(
+                        confirmLoading = input.second,
+                        rejectLoading = false,
+                        enabled = !input.second,
+                        hideReject = false
+                    ),
+                    progressState = AcceptInviteProgressState.Hide
                 ),
                 onConfirm = {},
                 onReject = {}

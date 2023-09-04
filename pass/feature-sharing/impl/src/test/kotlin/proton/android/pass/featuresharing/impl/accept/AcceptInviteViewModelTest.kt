@@ -71,7 +71,7 @@ class AcceptInviteViewModelTest {
                         invite = TEST_INVITE,
                         isConfirmLoading = false,
                         isRejectLoading = false,
-                        areButtonsEnabled = true,
+                        buttonsState = true,
                     )
                 )
             )
@@ -89,7 +89,7 @@ class AcceptInviteViewModelTest {
                         invite = TEST_INVITE,
                         isConfirmLoading = false,
                         isRejectLoading = false,
-                        areButtonsEnabled = true,
+                        buttonsState = true,
                     )
                 )
             )
@@ -100,7 +100,7 @@ class AcceptInviteViewModelTest {
 
     @Test
     fun `accept error sends snackbar message`() = runTest {
-        acceptInvite.setResult(Result.failure(IllegalStateException("test")))
+        acceptInvite.emitValue(Result.failure(IllegalStateException("test")))
         instance.onConfirm(TEST_INVITE)
         instance.state.test {
             assertThat(awaitItem()).isEqualTo(
@@ -110,7 +110,7 @@ class AcceptInviteViewModelTest {
                         invite = TEST_INVITE,
                         isConfirmLoading = false,
                         isRejectLoading = false,
-                        areButtonsEnabled = true,
+                        buttonsState = true,
                     )
                 )
             )
@@ -130,7 +130,7 @@ class AcceptInviteViewModelTest {
                         invite = TEST_INVITE,
                         isConfirmLoading = false,
                         isRejectLoading = false,
-                        areButtonsEnabled = true,
+                        buttonsState = true,
                     )
                 )
             )
@@ -151,7 +151,7 @@ class AcceptInviteViewModelTest {
                         invite = TEST_INVITE,
                         isConfirmLoading = false,
                         isRejectLoading = false,
-                        areButtonsEnabled = true,
+                        buttonsState = true,
                     )
                 )
             )

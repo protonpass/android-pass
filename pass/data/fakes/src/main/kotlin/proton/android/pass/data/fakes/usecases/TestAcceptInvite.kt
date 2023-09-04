@@ -32,7 +32,7 @@ import javax.inject.Singleton
 class TestAcceptInvite @Inject constructor() : AcceptInvite {
 
     private var result: MutableStateFlow<Result<AcceptInviteStatus>> =
-        MutableStateFlow(Result.success(AcceptInviteStatus.Done))
+        MutableStateFlow(Result.success(AcceptInviteStatus.Done(0)))
     private val memory: MutableList<InviteToken> = mutableListOf()
 
     fun getMemory(): List<InviteToken> = memory

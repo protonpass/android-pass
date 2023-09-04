@@ -56,7 +56,7 @@ class AcceptInviteViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val buttonsFlow: MutableStateFlow<AcceptInviteButtonsState> =
-        MutableStateFlow(AcceptInviteButtonsState.Show.Initial)
+        MutableStateFlow(AcceptInviteButtonsState.Initial)
 
     private val progressFlow: MutableStateFlow<AcceptInviteProgressState> =
         MutableStateFlow(AcceptInviteProgressState.Hide)
@@ -115,7 +115,7 @@ class AcceptInviteViewModel @Inject constructor(
                 PassLogger.w(TAG, it, "Error accepting invite")
                 snackbarDispatcher(SharingSnackbarMessage.InviteAcceptError)
                 buttonsFlow.update {
-                    AcceptInviteButtonsState.Show(
+                    AcceptInviteButtonsState(
                         confirmLoading = false,
                         rejectLoading = false,
                         hideReject = false,
@@ -127,7 +127,7 @@ class AcceptInviteViewModel @Inject constructor(
                 when (status) {
                     AcceptInviteStatus.AcceptingInvite -> {
                         buttonsFlow.update {
-                            AcceptInviteButtonsState.Show(
+                            AcceptInviteButtonsState(
                                 confirmLoading = true,
                                 rejectLoading = false,
                                 hideReject = true,
@@ -140,7 +140,7 @@ class AcceptInviteViewModel @Inject constructor(
                         PassLogger.d(TAG, "Downloading items")
 
                         buttonsFlow.update {
-                            AcceptInviteButtonsState.Show(
+                            AcceptInviteButtonsState(
                                 confirmLoading = true,
                                 rejectLoading = false,
                                 hideReject = true,
@@ -159,7 +159,7 @@ class AcceptInviteViewModel @Inject constructor(
                         PassLogger.d(TAG, "Items downloaded")
 
                         buttonsFlow.update {
-                            AcceptInviteButtonsState.Show(
+                            AcceptInviteButtonsState(
                                 confirmLoading = true,
                                 rejectLoading = false,
                                 hideReject = true,
@@ -183,7 +183,7 @@ class AcceptInviteViewModel @Inject constructor(
         if (invite == null) return@launch
 
         buttonsFlow.update {
-            AcceptInviteButtonsState.Show(
+            AcceptInviteButtonsState(
                 confirmLoading = false,
                 rejectLoading = true,
                 enabled = false,
@@ -204,7 +204,7 @@ class AcceptInviteViewModel @Inject constructor(
             }
 
         buttonsFlow.update {
-            AcceptInviteButtonsState.Show(
+            AcceptInviteButtonsState(
                 confirmLoading = false,
                 rejectLoading = false,
                 enabled = false,

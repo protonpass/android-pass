@@ -100,23 +100,21 @@ fun AcceptInviteContent(
             color = PassTheme.colors.textWeak
         )
 
-        if (state.buttonsState is AcceptInviteButtonsState.Show) {
-            AcceptInviteButtons(
-                isConfirmLoading = state.buttonsState.confirmLoading,
-                isRejectLoading = state.buttonsState.rejectLoading,
-                areButtonsEnabled = state.buttonsState.enabled,
-                showReject = !state.buttonsState.hideReject,
-                onConfirm = onConfirm,
-                onReject = onReject
-            )
+        AcceptInviteButtons(
+            isConfirmLoading = state.buttonsState.confirmLoading,
+            isRejectLoading = state.buttonsState.rejectLoading,
+            areButtonsEnabled = state.buttonsState.enabled,
+            showReject = !state.buttonsState.hideReject,
+            onConfirm = onConfirm,
+            onReject = onReject
+        )
 
-            AnimatedVisibility(visible = state.progressState is AcceptInviteProgressState.Show) {
-                if (state.progressState is AcceptInviteProgressState.Show) {
-                    AcceptInviteItemSyncStatus(
-                        downloaded = state.progressState.downloaded,
-                        total = state.progressState.total
-                    )
-                }
+        AnimatedVisibility(visible = state.progressState is AcceptInviteProgressState.Show) {
+            if (state.progressState is AcceptInviteProgressState.Show) {
+                AcceptInviteItemSyncStatus(
+                    downloaded = state.progressState.downloaded,
+                    total = state.progressState.total
+                )
             }
         }
     }
@@ -140,7 +138,7 @@ fun AcceptInviteContentPreview(
                         icon = ShareIcon.Icon1,
                         color = ShareColor.Color1
                     ),
-                    buttonsState = AcceptInviteButtonsState.Show(
+                    buttonsState = AcceptInviteButtonsState(
                         confirmLoading = input.second,
                         rejectLoading = false,
                         enabled = !input.second,

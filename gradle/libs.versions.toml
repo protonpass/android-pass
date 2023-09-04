@@ -193,6 +193,7 @@ core-accountManager = { module = "me.proton.core:account-manager", version.ref =
 core-accountManager-domain = { module = "me.proton.core:account-manager-domain", version.ref = "core" }
 core-accountManager-presentation-compose = { module = "me.proton.core:account-manager-presentation-compose", version.ref = "core" }
 core-accountRecovery = { module = "me.proton.core:account-recovery", version.ref = "core" }
+core-accountRecovery-test = { module = "me.proton.core:account-recovery-test", version.ref = "core" }
 core-auth = { module = "me.proton.core:auth", version.ref = "core" }
 core-auth-test = { module = "me.proton.core:auth-test", version.ref = "core" }
 core-challenge = { module = "me.proton.core:challenge", version.ref = "core" }
@@ -313,5 +314,5 @@ onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword", versio
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 
 [bundles]
-core-test = ["core-test-android-instrumented", "core-auth-test", "core-humanVerification-test", "core-plan-test"]
+core-test = ["core-test-android-instrumented", "core-accountRecovery-test", "core-auth-test", "core-humanVerification-test", "core-plan-test"]
 test-android = ["fusion", "junit", "coroutines-test", "androidx-test-core-ktx", "androidx-test-runner", "androidx-test-rules", "androidx-compose-ui-test", "androidx-compose-ui-test-junit", "androidx-test-uiautomator", "dagger-hilt-android-testing"]

@@ -20,7 +20,6 @@ package proton.android.pass.featurehome.impl.vault
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -83,25 +82,22 @@ fun VaultDrawerRow(
                 color = PassTheme.colors.textWeak,
             )
         }
-        Box(modifier = Modifier.size(16.dp)) {
-            if (isShared) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_users),
-                    contentDescription = null,
-                    tint = PassTheme.colors.textWeak
-                )
-            }
+        if (isShared) {
+            Icon(
+                modifier = Modifier.size(16.dp),
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_users),
+                contentDescription = null,
+                tint = PassTheme.colors.textWeak
+            )
         }
-        Box(modifier = Modifier.size(16.dp)) {
-            if (isSelected) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_checkmark),
-                    contentDescription = null,
-                    tint = PassTheme.colors.loginInteractionNormMajor1
-                )
-            }
+        if (isSelected) {
+            Icon(
+                modifier = Modifier.size(16.dp),
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_checkmark),
+                contentDescription = null,
+                tint = PassTheme.colors.loginInteractionNormMajor1
+            )
         }
-
         if (showMenuIcon) {
             IconButton(
                 onClick = onOptionsClick,

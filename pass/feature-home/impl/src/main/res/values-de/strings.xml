@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Genieße deine kostenlose Testversion</string>
   <string name="home_trial_banner_text">Schau dir all die exklusiven Funktionen an, die dir für eine begrenzte Zeit zur Verfügung stehen.</string>
   <string name="home_trial_banner_settings">Mehr erfahren ›</string>
+  <string name="home_notification_permission_banner_title">Get important updates</string>
+  <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
+  <string name="home_notification_permission_banner_settings">Berechtigung erteilen ›</string>
   <string name="home_invite_banner_title">Geteilte Safe-Einladung</string>
   <string name="home_invite_banner_subtitle">Du wurdest eingeladen, einem Tresor beizutreten. Tippe hier, um die Einladung anzusehen.</string>
   <!-- Common bottomsheet -->

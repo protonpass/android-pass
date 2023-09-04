@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Ücretsiz denemenizin tadını çıkarın</string>
   <string name="home_trial_banner_text">Tüm ücretli özellikleri sınırlı bir süre için deneyimleyebilirsiniz.</string>
   <string name="home_trial_banner_settings">Ayrıntılı bilgi alın ›</string>
+  <string name="home_notification_permission_banner_title">Önemli güncellemeleri edinin</string>
+  <string name="home_notification_permission_banner_text">Başkaları sizinle bir kasayı paylaştığında öğrenmek için anında bildirimleri açın</string>
+  <string name="home_notification_permission_banner_settings">İzin ver ›</string>
   <string name="home_invite_banner_title">Kasa paylaşma daveti</string>
   <string name="home_invite_banner_subtitle">Sizinle bir kasa paylaşıldı. Daveti görmek için buraya tıklayın.</string>
   <!-- Common bottomsheet -->

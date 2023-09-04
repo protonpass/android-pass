@@ -53,12 +53,12 @@
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Kart sahibinin adı</string>
   <string name="credit_card_number_field_name">Kart numarası</string>
-  <string name="credit_card_cvv_field_name">Doğrulama numarası</string>
-  <string name="credit_card_pin_field_name">PIN numarası</string>
+  <string name="credit_card_cvv_field_name">Güvenlik kodu</string>
+  <string name="credit_card_pin_field_name">PIN kodu</string>
   <string name="credit_card_expiration_date_field_name">Son kullanma tarihi</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Kart sahibi panoya kopyalandı</string>
   <string name="credit_card_number_copied_to_clipboard">Kart numarası panoya kopyalandı</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Doğrulama numarası panoya kopyalandı</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Güvenlik kodu panoya kopyalandı</string>
   <string name="credit_card_pin_copied_to_clipboard">PIN kodu panoya kopyalandı</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Çöpe at</string>

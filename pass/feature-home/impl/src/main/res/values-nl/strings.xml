@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Geniet van uw gratis proefperiode.</string>
   <string name="home_trial_banner_text">Bekijk alle exclusieve functies die voor een beperkte tijd voor u beschikbaar zijn.</string>
   <string name="home_trial_banner_settings">Meer informatie ›</string>
+  <string name="home_notification_permission_banner_title">Krijg belangrijke updates</string>
+  <string name="home_notification_permission_banner_text">Schakel push notificaties in om geïnformeerd te worden wanneer iemand een kluis met u deelt.</string>
+  <string name="home_notification_permission_banner_settings">Toestemming geven ›</string>
   <string name="home_invite_banner_title">Gedeelde kluis uitnodiging</string>
   <string name="home_invite_banner_subtitle">U bent uitgenodigd voor een kluis. Tik hier om de uitnodiging te zien.</string>
   <!-- Common bottomsheet -->

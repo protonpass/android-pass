@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="updates_notification_channel_name">Ενημερώσεις</string>
   <string name="autofill_notification_channel_name">Αυτόματη συμπλήρωση</string>
   <string name="autofill_notification_copy_to_clipboard_title">Κωδικός TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">Ο TOTP έχει αντιγραφεί στο πρόχειρο</string>
+  <string name="updates_new_invite_received_title">Λάβατε μια πρόσκληση</string>
+  <string name="updates_new_invite_received_message">Έχετε προσκληθεί σε μία κρύπτη. Ανοίξτε την εφαρμογή για να δείτε την πρόσκληση και να την αποδεχτείτε.</string>
 </resources>

@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Bucurați-vă de versiunea de încercare</string>
   <string name="home_trial_banner_text">Încercați toate funcțiile exclusive care vă sunt disponibile pentru o perioadă limitată de timp.</string>
   <string name="home_trial_banner_settings">Detalii ›</string>
+  <string name="home_notification_permission_banner_title">Obțineți actualizări importante</string>
+  <string name="home_notification_permission_banner_text">Activați notificările instante pentru a vă informa când alții vă partajează un seif.</string>
+  <string name="home_notification_permission_banner_settings">Activare permisiune</string>
   <string name="home_invite_banner_title">Invitație seif partajat</string>
   <string name="home_invite_banner_subtitle">Aveți o invitație la un seif partajat. Atingeți aici pentru a vedea invitația.</string>
   <!-- Common bottomsheet -->

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="updates_notification_channel_name">Aktualisierungen</string>
   <string name="autofill_notification_channel_name">AutoFill</string>
   <string name="autofill_notification_copy_to_clipboard_title">TOTP-Code</string>
   <string name="autofill_notification_copy_to_clipboard_body">TOTP wurde in die Zwischenablage kopiert.</string>
+  <string name="updates_new_invite_received_title">Du hast eine Einladung erhalten</string>
+  <string name="updates_new_invite_received_message">Du bist zu einem Tresor eingeladen worden. Öffne die App, um die Einladung anzusehen und sie anzunehmen.</string>
 </resources>

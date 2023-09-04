@@ -31,6 +31,8 @@
   <string name="auth_master_password_label">主密碼</string>
   <string name="auth_action_reveal_password">顯示主密碼</string>
   <string name="auth_action_conceal_password">隱藏主密碼</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">改為輸入 PIN</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">改為輸入指紋</string>
   <string name="auth_unlock_button">解鎖</string>
   <string name="auth_error_verifying_password">驗證密碼時發生錯誤</string>
   <string name="auth_error_empty_password">密碼不能為空</string>

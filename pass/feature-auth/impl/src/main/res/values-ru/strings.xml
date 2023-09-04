@@ -34,6 +34,8 @@
   <string name="auth_master_password_label">Мастер-пароль</string>
   <string name="auth_action_reveal_password">Показать мастер-пароль</string>
   <string name="auth_action_conceal_password">Скрыть мастер-пароль</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter PIN instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter fingerprint instead</string>
   <string name="auth_unlock_button">Разблокировать</string>
   <string name="auth_error_verifying_password">Возникла ошибка при проверке вашего пароля</string>
   <string name="auth_error_empty_password">Пароль не может быть пустым</string>

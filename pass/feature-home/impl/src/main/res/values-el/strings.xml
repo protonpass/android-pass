@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Απολαύστε τη δωρεάν δοκιμή σας</string>
   <string name="home_trial_banner_text">Δείτε όλες τις αποκλειστικές λειτουργίες που είναι διαθέσιμες σε εσάς για περιορισμένο χρονικό διάστημα.</string>
   <string name="home_trial_banner_settings">Μάθετε περισσότερα ›</string>
+  <string name="home_notification_permission_banner_title">Λάβετε σημαντικές ενημερώσεις</string>
+  <string name="home_notification_permission_banner_text">Ενεργοποιήστε τις ειδοποιήσεις push για να ενημερώνεστε όταν άλλα άτομα μοιράζονται μαζί σας μια κρύπτη.</string>
+  <string name="home_notification_permission_banner_settings">Ενεργοποίηση άδειας ›</string>
   <string name="home_invite_banner_title">Πρόσκληση κοινόχρηστης κρύπτης</string>
   <string name="home_invite_banner_subtitle">Έχετε προσκληθεί σε μία κρύπτη. Πατήστε εδώ για να δείτε την πρόσκληση.</string>
   <!-- Common bottomsheet -->

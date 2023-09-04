@@ -18,8 +18,17 @@
 
 package proton.android.pass.data.api.usecases
 
+import kotlinx.coroutines.flow.Flow
 import proton.pass.domain.InviteToken
 
+sealed interface AcceptInviteStatus {
+    object AcceptingInvite : AcceptInviteStatus
+    data class DownloadingItems(val downloaded: Int, val total: Int) : AcceptInviteStatus
+
+    @JvmInline
+    value class Done(val items: Int) : AcceptInviteStatus
+}
+
 interface AcceptInvite {
-    suspend operator fun invoke(invite: InviteToken)
+    operator fun invoke(invite: InviteToken): Flow<AcceptInviteStatus>
 }

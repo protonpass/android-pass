@@ -18,7 +18,12 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.AcceptInvite
+import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.pass.domain.InviteToken
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,18 +31,19 @@ import javax.inject.Singleton
 @Singleton
 class TestAcceptInvite @Inject constructor() : AcceptInvite {
 
-    private var result: Result<Unit> = Result.success(Unit)
+    private var result: MutableStateFlow<Result<AcceptInviteStatus>> =
+        MutableStateFlow(Result.success(AcceptInviteStatus.Done))
     private val memory: MutableList<InviteToken> = mutableListOf()
 
     fun getMemory(): List<InviteToken> = memory
 
-    fun setResult(value: Result<Unit>) {
-        result = value
+    fun emitValue(value: Result<AcceptInviteStatus>) {
+        result.update { value }
     }
 
-    override suspend fun invoke(invite: InviteToken) {
+    override fun invoke(invite: InviteToken): Flow<AcceptInviteStatus> {
         memory.add(invite)
-        result.getOrThrow()
+        return result.map { it.getOrThrow() }
     }
 
 }

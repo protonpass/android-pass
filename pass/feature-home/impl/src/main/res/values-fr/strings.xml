@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Profitez de votre essai gratuit.</string>
   <string name="home_trial_banner_text">Découvrez toutes les fonctionnalités exclusives qui vous sont proposées pour une durée limitée.</string>
   <string name="home_trial_banner_settings">En savoir plus ›</string>
+  <string name="home_notification_permission_banner_title">Recevez les mises à jour importantes.</string>
+  <string name="home_notification_permission_banner_text">Activez les notifications push pour savoir quand d\'autres personnes partagent un coffre-fort avec vous.</string>
+  <string name="home_notification_permission_banner_settings">Activer l\'autorisation ›</string>
   <string name="home_invite_banner_title">Invitation à un coffre-fort partagé</string>
   <string name="home_invite_banner_subtitle">Vous avez reçu une invitation à un coffre-fort. Appuyez ici pour voir l\'invitation.</string>
   <!-- Common bottomsheet -->

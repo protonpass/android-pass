@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Nikmati masa uji coba gratis Anda</string>
   <string name="home_trial_banner_text">Lihat semua fitur eksklusif yang tersedia untuk Anda hanya untuk waktu terbatas.</string>
   <string name="home_trial_banner_settings">Pelajari lebih lanjut ›</string>
+  <string name="home_notification_permission_banner_title">Dapatkan berbagai pembaruan penting</string>
+  <string name="home_notification_permission_banner_text">Aktifkan notifikasi push untuk menerima pemberitahuan ketika orang lain berbagi brankas dengan Anda.</string>
+  <string name="home_notification_permission_banner_settings">Aktifkan izin ›</string>
   <string name="home_invite_banner_title">Undangan brankas terbagi</string>
   <string name="home_invite_banner_subtitle">Anda telah diundang ke sebuah brankas. Ketuk di sini untuk melihat undangan.</string>
   <!-- Common bottomsheet -->

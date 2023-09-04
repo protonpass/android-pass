@@ -33,11 +33,11 @@
     <item quantity="other">%d membres</item>
   </plurals>
   <string name="share_with_title">Partager avec</string>
-  <string name="share_with_subtitle">Cet utilisateur recevra une invitation à rejoindre votre coffre-fort \'%s\'.</string>
+  <string name="share_with_subtitle">Cet utilisateur recevra une invitation à rejoindre votre coffre-fort « %s ».</string>
   <string name="share_with_email_hint">Adresse e-mail</string>
   <string name="share_with_email_error">L\'adresse e-mail n\'est pas valide.</string>
   <string name="share_permissions_title">Définir les autorisations</string>
-  <string name="share_permissions_subtitle">Sélectionnez le niveau d\'accès dont bénéficiera cet utilisateur en rejoignant votre coffre-fort \'%s\'.</string>
+  <string name="share_permissions_subtitle">Sélectionnez le niveau d\'accès dont bénéficiera cet utilisateur en rejoignant votre coffre-fort « %s ».</string>
   <string name="sharing_invitation_from">Invitation envoyée par %s</string>
   <string name="sharing_join_shared_vault">Rejoindre le coffre-fort partagé</string>
   <string name="sharing_reject_invitation">Refuser l\'invitation</string>
@@ -57,9 +57,9 @@
   <string name="share_summary_title">Résumé</string>
   <string name="share_summary_subtitle">Vous êtes sur le point d\'inviter %1$s dans votre %2$s. Ils auront accès à %3$s et pourront %4$s dans ce coffre-fort.</string>
   <string name="share_summary_vault">coffre-fort %s</string>
-  <string name="share_summary_view_items">voir uniquement des éléments</string>
+  <string name="share_summary_view_items">uniquement consulter les éléments</string>
   <string name="share_summary_create_items">créer des éléments</string>
-  <string name="share_summary_manage_vault">gérer</string>
+  <string name="share_summary_manage_vault">les gérer</string>
   <string name="share_summary_share_vault">Partager le coffre-fort</string>
   <string name="share_summary_email_title">Utilisateur</string>
   <string name="share_summary_vault_title">Coffre-fort</string>
@@ -72,16 +72,16 @@
   <string name="share_role_can_edit">Modifier</string>
   <string name="share_role_admin">Administrateur</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transférer la propriété</string>
-  <string name="sharing_bottomsheet_remove_access">Supprimer l\'\'accès</string>
+  <string name="sharing_bottomsheet_remove_access">Supprimer l\'accès</string>
   <string name="sharing_bottomsheet_resend_invite">Renvoyer l\'invitation</string>
   <string name="sharing_bottomsheet_cancel_invite">Annuler l\'invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">Transférer la propriété</string>
-  <string name="sharing_transfer_ownership_confirm_message">Êtes-vous sûr de vouloir transférer la propriété·à %s·?</string>
-  <string name="sharing_snackbar_cancel_invite_success">L\'invitation a été annulée</string>
+  <string name="sharing_transfer_ownership_confirm_message">Voulez-vous vraiment transférer la propriété à %s ?</string>
+  <string name="sharing_snackbar_cancel_invite_success">L\'invitation a été annulée.</string>
   <string name="sharing_snackbar_cancel_invite_error">Une erreur s\'est produite lors de l\'annulation de l\'invitation.</string>
   <string name="sharing_snackbar_resend_invite_success">L\'invitation a été renvoyée.</string>
   <string name="sharing_snackbar_resend_invite_error">Une erreur s\'est produite lors du renvoi de l\'invitation.</string>
-  <string name="sharing_snackbar_too_many_invites_sent">L\'adresse a été sollicitée trop souvent</string>
-  <string name="sharing_snackbar_transfer_ownership_success">Propriété transférée</string>
-  <string name="sharing_snackbar_transfer_ownership_error">Erreur de transfert de propriété</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Trop d\'invitations ont été envoyées à cette adresse.</string>
+  <string name="sharing_snackbar_transfer_ownership_success">La propriété a été transférée.</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Une erreur s\'est produite lors du transfert de propriété.</string>
 </resources>

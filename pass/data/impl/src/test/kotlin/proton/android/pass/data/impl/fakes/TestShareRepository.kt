@@ -25,6 +25,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewVault
@@ -119,6 +120,14 @@ class TestShareRepository : ShareRepository {
     override suspend fun deleteSharesForUser(userId: UserId) = deleteSharesResult.getOrThrow()
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
+
+    }
+
+    override suspend fun applyUpdateShareEvent(
+        userId: UserId,
+        shareId: ShareId,
+        event: UpdateShareEvent
+    ) {
 
     }
 }

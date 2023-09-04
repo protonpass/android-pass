@@ -52,7 +52,27 @@ interface ShareRepository {
     suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share
     suspend fun deleteSharesForUser(userId: UserId)
     suspend fun leaveVault(userId: UserId, shareId: ShareId)
+    suspend fun applyUpdateShareEvent(userId: UserId, shareId: ShareId, event: UpdateShareEvent)
 }
+
+data class UpdateShareEvent(
+    val shareId: String,
+    val vaultId: String,
+    val addressId: String,
+    val primary: Boolean,
+    val targetType: Int,
+    val targetId: String,
+    val permission: Int,
+    val content: String?,
+    val contentKeyRotation: Long?,
+    val contentFormatVersion: Int?,
+    val shareRoleId: String,
+    val targetMembers: Int,
+    val owner: Boolean,
+    val shared: Boolean,
+    val expirationTime: Long?,
+    val createTime: Long
+)
 
 data class RefreshSharesResult(
     val allShareIds: Set<ShareId>,

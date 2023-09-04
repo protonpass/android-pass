@@ -25,6 +25,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
@@ -69,9 +70,13 @@ class AcceptInviteViewModelTest {
                     event = AcceptInviteEvent.Unknown,
                     content = AcceptInviteUiContent.Content(
                         invite = TEST_INVITE,
-                        isConfirmLoading = false,
-                        isRejectLoading = false,
-                        buttonsState = true,
+                        buttonsState = AcceptInviteButtonsState(
+                            confirmLoading = false,
+                            rejectLoading = false,
+                            enabled = true,
+                            hideReject = false
+                        ),
+                        progressState = AcceptInviteProgressState.Hide
                     )
                 )
             )
@@ -80,6 +85,9 @@ class AcceptInviteViewModelTest {
 
     @Test
     fun `accept success sends close event and snackbar message`() = runTest {
+        val items = 10
+        acceptInvite.emitValue(Result.success(AcceptInviteStatus.Done(items)))
+
         instance.onConfirm(TEST_INVITE)
         instance.state.test {
             assertThat(awaitItem()).isEqualTo(
@@ -87,9 +95,16 @@ class AcceptInviteViewModelTest {
                     event = AcceptInviteEvent.Close,
                     content = AcceptInviteUiContent.Content(
                         invite = TEST_INVITE,
-                        isConfirmLoading = false,
-                        isRejectLoading = false,
-                        buttonsState = true,
+                        buttonsState = AcceptInviteButtonsState(
+                            confirmLoading = true,
+                            rejectLoading = false,
+                            enabled = false,
+                            hideReject = true
+                        ),
+                        progressState = AcceptInviteProgressState.Show(
+                            downloaded = items,
+                            total = items
+                        )
                     )
                 )
             )
@@ -108,9 +123,13 @@ class AcceptInviteViewModelTest {
                     event = AcceptInviteEvent.Unknown,
                     content = AcceptInviteUiContent.Content(
                         invite = TEST_INVITE,
-                        isConfirmLoading = false,
-                        isRejectLoading = false,
-                        buttonsState = true,
+                        buttonsState = AcceptInviteButtonsState(
+                            confirmLoading = false,
+                            rejectLoading = false,
+                            enabled = true,
+                            hideReject = false
+                        ),
+                        progressState = AcceptInviteProgressState.Hide
                     )
                 )
             )
@@ -128,9 +147,13 @@ class AcceptInviteViewModelTest {
                     event = AcceptInviteEvent.Close,
                     content = AcceptInviteUiContent.Content(
                         invite = TEST_INVITE,
-                        isConfirmLoading = false,
-                        isRejectLoading = false,
-                        buttonsState = true,
+                        buttonsState = AcceptInviteButtonsState(
+                            confirmLoading = false,
+                            rejectLoading = false,
+                            enabled = false,
+                            hideReject = false
+                        ),
+                        progressState = AcceptInviteProgressState.Hide
                     )
                 )
             )
@@ -149,9 +172,13 @@ class AcceptInviteViewModelTest {
                     event = AcceptInviteEvent.Close,
                     content = AcceptInviteUiContent.Content(
                         invite = TEST_INVITE,
-                        isConfirmLoading = false,
-                        isRejectLoading = false,
-                        buttonsState = true,
+                        buttonsState = AcceptInviteButtonsState(
+                            confirmLoading = false,
+                            rejectLoading = false,
+                            enabled = false,
+                            hideReject = false
+                        ),
+                        progressState = AcceptInviteProgressState.Hide
                     )
                 )
             )

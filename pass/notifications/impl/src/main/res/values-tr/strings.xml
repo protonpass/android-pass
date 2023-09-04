@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="updates_notification_channel_name">Güncellemeler</string>
   <string name="autofill_notification_channel_name">Otomatik doldur</string>
   <string name="autofill_notification_copy_to_clipboard_title">Tek kullanımlık kod</string>
   <string name="autofill_notification_copy_to_clipboard_body">Tek kullanımlık kod panoya kopyalandı</string>
+  <string name="updates_new_invite_received_title">Bir davet aldınız</string>
+  <string name="updates_new_invite_received_message">Bir kasaya davet edildiniz. Daveti görmek ve onaylamak için uygulamayı açın.</string>
 </resources>

@@ -19,7 +19,7 @@
 <resources>
   <string name="profile_option_fingerprint_subtitle">Розблоковувати Proton Pass одним дотиком.</string>
   <string name="profile_option_fingerprint">Відбиток пальця</string>
-  <string name="profile_option_app_lock">Блокування застосунку</string>
+  <string name="profile_option_app_lock">Блокування програми</string>
   <string name="enter_your_pin_code">Введіть PIN-код</string>
   <string name="unlock">Розблокувати</string>
   <string name="enter_pin">Введіть PIN-код</string>
@@ -34,6 +34,8 @@
   <string name="auth_master_password_label">Основний пароль</string>
   <string name="auth_action_reveal_password">Показати основний пароль</string>
   <string name="auth_action_conceal_password">Приховати основний пароль</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter PIN instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter fingerprint instead</string>
   <string name="auth_unlock_button">Розблокувати</string>
   <string name="auth_error_verifying_password">Помилка під час перевірки пароля</string>
   <string name="auth_error_empty_password">Пароль не може бути порожнім</string>

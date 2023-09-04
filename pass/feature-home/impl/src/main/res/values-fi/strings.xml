@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Nauti ilmaisesta kokeilusta</string>
   <string name="home_trial_banner_text">Tutustu kaikkiin ainutlaatuisiin ominaisuuksiin, jotka ovat käytettävissäsi rajoitetun ajan.</string>
   <string name="home_trial_banner_settings">Lue lisää ›</string>
+  <string name="home_notification_permission_banner_title">Hanki tärkeät päivitykset</string>
+  <string name="home_notification_permission_banner_text">Ota push-ilmoitukset käyttöön vastaanottaaksesi ilmoituksia muiden käyttäjien jakaessa holvejaan sinulle.</string>
+  <string name="home_notification_permission_banner_settings">Myönnä käyttöoikeus ›</string>
   <string name="home_invite_banner_title">Jettu holvin kutsu</string>
   <string name="home_invite_banner_subtitle">Sinut on kutusuttu holviin. Näytä kutsu napauttamalla tästä.</string>
   <!-- Common bottomsheet -->

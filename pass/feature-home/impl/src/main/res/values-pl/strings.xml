@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Ciesz się darmową wersją próbną</string>
   <string name="home_trial_banner_text">Sprawdź wszystkie dodatkowe funkcje, które możesz przetestować przez ograniczony czas.</string>
   <string name="home_trial_banner_settings">Dowiedz się więcej ›</string>
+  <string name="home_notification_permission_banner_title">Otrzymuj ważne aktualizacje</string>
+  <string name="home_notification_permission_banner_text">Włącz powiadomienia, aby otrzymywać informacje, gdy inne osoby udostępnią Ci sejf.</string>
+  <string name="home_notification_permission_banner_settings">Włącz uprawnienie ›</string>
   <string name="home_invite_banner_title">Zaproszenie do udostępnionego sejfu</string>
   <string name="home_invite_banner_subtitle">Otrzymano zaproszenie do sejfu. Kliknij, aby zobaczyć zaproszenie.</string>
   <!-- Common bottomsheet -->

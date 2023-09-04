@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Атрымлівайце асалоду ад бясплатнай выпрабавальнай версіі</string>
   <string name="home_trial_banner_text">Даведайцеся пра ўсе эксклюзіўныя функцыі, якія будуць даступны вам на працягу абмежаванага часу.</string>
   <string name="home_trial_banner_settings">Даведацца больш ›</string>
+  <string name="home_notification_permission_banner_title">Атрымлівайце важныя абнаўленні</string>
+  <string name="home_notification_permission_banner_text">Уключыце push-апавяшчэнні, каб быць у курсе, калі іншыя абагуляюць сховішча з вамі.</string>
+  <string name="home_notification_permission_banner_settings">Уключыць дазволы ›</string>
   <string name="home_invite_banner_title">Запрашэнне да абагуленага сховішча</string>
   <string name="home_invite_banner_subtitle">Вас запрасілі далучыцца да сховішча. Націсніце тут, каб убачыць запрашэнне.</string>
   <!-- Common bottomsheet -->

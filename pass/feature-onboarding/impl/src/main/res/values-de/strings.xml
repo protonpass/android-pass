@@ -7,7 +7,7 @@
   <string name="on_boarding_fingerprint_title">Schütze deine sensibelsten Daten</string>
   <string name="on_boarding_fingerprint_button">Entsperren mit Fingerabdruck aktivieren</string>
   <string name="on_boarding_last_page_content">Gib deine echte E-Mail-Adresse nicht mehr weiter. Verstecke sie stattdessen mit E-Mail-Aliassen - exklusiv bei Proton Pass.</string>
-  <string name="on_boarding_last_page_title">Entscheide, was in deinem Posteingang landet</string>
+  <string name="on_boarding_last_page_title">Entscheide, was in deinem Posteingang landet.</string>
   <string name="on_boarding_last_page_button">Beginne Proton Pass zu nutzen</string>
   <string name="on_boarding_skip">Nicht jetzt</string>
   <string name="error_biometry_failed_to_start">Biometrische Authentifizierung konnte nicht gestartet werden.</string>

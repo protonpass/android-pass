@@ -38,7 +38,7 @@
   <string name="more_info_modified">Змінено:</string>
   <string name="more_info_autofilled">Автозаповнення:</string>
   <string name="more_info_title">Докладніше</string>
-  <string name="more_info_icon">Піктограма «докладніше»</string>
+  <string name="more_info_icon">Піктограма \"Докладніше\"</string>
   <plurals name="more_info_modified_times">
     <item quantity="one">Один раз</item>
     <item quantity="few">%d рази</item>

@@ -18,7 +18,7 @@
   <string name="profile_fingerprint_lock_enabled">啟用指紋解鎖</string>
   <string name="profile_fingerprint_lock_disabled">關閉指紋解鎖</string>
   <string name="profile_error_performing_operation">操作過程中出錯</string>
-  <string name="profile_app_version_copied_to_clipboard">應用程式版本複製</string>
+  <string name="profile_app_version_copied_to_clipboard">已複製應用程式版本</string>
   <string name="feedback_option_reddit">於Reddit查看Proton</string>
   <string name="feedback_option_mail">傳送訊息給我們</string>
   <string name="feedback_option_vote_new_features">投票給新功能</string>

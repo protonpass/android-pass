@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Aproveite sua avaliação gratuita</string>
   <string name="home_trial_banner_text">Confira todos os recursos exclusivos que estão disponíveis para você por tempo limitado.</string>
   <string name="home_trial_banner_settings">Saiba mais ›</string>
+  <string name="home_notification_permission_banner_title">Obter atualizações importantes</string>
+  <string name="home_notification_permission_banner_text">Ative as notificações push para ser informado quando outros compartilharem um cofre com você</string>
+  <string name="home_notification_permission_banner_settings">Ativar permissão ›</string>
   <string name="home_invite_banner_title">Convite de cofre compartilhado</string>
   <string name="home_invite_banner_subtitle">Você foi convidado para o cofre. Toque aqui para ver o convite.</string>
   <!-- Common bottomsheet -->

@@ -32,6 +32,8 @@
   <string name="auth_master_password_label">Contraseña maestra</string>
   <string name="auth_action_reveal_password">Mostrar la contraseña maestra</string>
   <string name="auth_action_conceal_password">Ocultar la contraseña maestra</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter PIN instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter fingerprint instead</string>
   <string name="auth_unlock_button">Desbloquear</string>
   <string name="auth_error_verifying_password">Error al verificar tu contraseña</string>
   <string name="auth_error_empty_password">La contraseña no puede estar vacía.</string>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Sorting -->
-  <string name="sort_by_title_asc">Başlık (A-Z)</string>
-  <string name="sort_by_title_desc">Başlık (Z-A)</string>
+  <string name="sort_by_title_asc">Başlığa göre (A-Z)</string>
+  <string name="sort_by_title_desc">Başlığa göre (Z-A)</string>
   <string name="sort_by_creation_asc">Eskiden yeniye</string>
   <string name="sort_by_creation_desc">Yeniden eskiye</string>
-  <string name="sort_by_modification_date">En yeni</string>
+  <string name="sort_by_modification_date">Son kullanıma göre</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tümü</string>
   <plurals name="item_list_header_results">

@@ -76,12 +76,12 @@
   <string name="sharing_bottomsheet_resend_invite">Reenviar la invitación</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancelar la invitación</string>
   <string name="sharing_transfer_ownership_confirm_title">Transferir la propiedad</string>
-  <string name="sharing_transfer_ownership_confirm_message">¿Estás seguro de que deseas transferir la propriedad de tu organización a %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">¿Estás seguro de que deseas transferir tu titularidad a %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Invitación cancelada</string>
   <string name="sharing_snackbar_cancel_invite_error">Error al cancelar la invitación</string>
   <string name="sharing_snackbar_resend_invite_success">Se ha reenviado la invitación</string>
   <string name="sharing_snackbar_resend_invite_error">Error al reenviar la invitación</string>
   <string name="sharing_snackbar_too_many_invites_sent">La dirección ha sido invitada demasiadas veces</string>
-  <string name="sharing_snackbar_transfer_ownership_success">Propiedad transferida</string>
-  <string name="sharing_snackbar_transfer_ownership_error">Error al transferir la propiedad</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Titularidad transferida</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Error al transferir la titularidad</string>
 </resources>

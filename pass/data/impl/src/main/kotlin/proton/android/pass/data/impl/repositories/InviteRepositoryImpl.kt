@@ -34,9 +34,9 @@ import proton.android.pass.data.impl.local.InviteAndKeysEntity
 import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
-import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.InviteToken
 import proton.pass.domain.PendingInvite
+import proton.pass.domain.ShareId
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
@@ -107,17 +107,15 @@ class InviteRepositoryImpl @Inject constructor(
         return hasNewInvites
     }
 
-    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken) {
+    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId {
         val invite = localDatasource.getInviteWithKeys(userId, inviteToken).value()
-        if (invite == null) {
-            PassLogger.w(TAG, "Could not find the invite: ${inviteToken.value}")
-            return
-        }
+            ?: throw IllegalStateException("Could not find the invite: ${inviteToken.value}")
 
         val keys = encryptInviteKeys(userId, invite)
         val request = AcceptInviteRequest(keys)
-        remoteDataSource.acceptInvite(userId, inviteToken, request)
+        val responseShare = remoteDataSource.acceptInvite(userId, inviteToken, request)
         localDatasource.removeInvite(userId, inviteToken)
+        return ShareId(responseShare.shareId)
     }
 
     override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {
@@ -137,9 +135,5 @@ class InviteRepositoryImpl @Inject constructor(
             icon = decoded.display.icon.toDomain(),
             color = decoded.display.color.toDomain()
         )
-    }
-
-    companion object {
-        private const val TAG = "InviteRepositoryImpl"
     }
 }

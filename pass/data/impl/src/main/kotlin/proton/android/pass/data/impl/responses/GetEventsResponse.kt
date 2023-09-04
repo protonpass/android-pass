@@ -31,6 +31,8 @@ data class GetEventsResponse(
 
 @Serializable
 data class EventList(
+    @SerialName("UpdatedShare")
+    val shareResponse: ShareResponse?,
     @SerialName("UpdatedItems")
     val updatedItems: List<ItemRevision>,
     @SerialName("DeletedItemIDs")

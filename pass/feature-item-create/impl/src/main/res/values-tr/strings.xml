@@ -13,7 +13,7 @@
   <string name="item_type_alias_description">Yeni uygulamalarda kullanmak için bir takma e-posta adresi alın</string>
   <string name="item_type_note_description">Bir PIN kodu ya da kendinize bir not yazın</string>
   <string name="item_type_credit_card_description">Ödeme bilgilerinizi güvenle kaydedin</string>
-  <string name="item_type_password_description">Güvenli parola oluştur</string>
+  <string name="item_type_password_description">Güvenli bir parola oluşturun</string>
   <!-- Create Login -->
   <string name="title_create_login">Oturum açma kaydı oluştur</string>
   <string name="field_username_title">Kullanıcı adı ya da e-posta adresi</string>
@@ -87,9 +87,9 @@
   <string name="field_cardholder_name_hint">Tam ad</string>
   <string name="field_card_number_title">Kart numarası</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Doğrulama numarası</string>
+  <string name="field_card_cvv_title">Güvenlik kodu</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN numarası</string>
+  <string name="field_card_pin_title">PIN kodu</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Son kullanma tarihi</string>
   <string name="field_card_expiration_date_hint">AA / YYYY</string>

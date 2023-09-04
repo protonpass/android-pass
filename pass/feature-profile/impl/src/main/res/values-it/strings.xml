@@ -39,7 +39,7 @@
   <string name="configure_pin_set_pin_code">Imposta il codice PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Sblocca l\'app con questo codice</string>
   <string name="configure_pin_enter_pin_code">Inserire il codice PIN</string>
-  <string name="configure_pin_repeat_pin_code">Ripetere il codice PIN</string>
+  <string name="configure_pin_repeat_pin_code">Ripeti il codice PIN</string>
   <string name="configure_pin_continue">Continua</string>
   <string name="configure_pin_pin_does_not_match">Il PIN non corrisponde</string>
   <string name="configure_pin_pin_too_short">Il PIN è troppo corto</string>

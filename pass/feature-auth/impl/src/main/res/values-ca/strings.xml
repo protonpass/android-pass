@@ -32,6 +32,8 @@
   <string name="auth_master_password_label">Contrasenya principal</string>
   <string name="auth_action_reveal_password">Mostra la contrasenya principal</string>
   <string name="auth_action_conceal_password">Oculta la contrasenya principal</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter PIN instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter fingerprint instead</string>
   <string name="auth_unlock_button">Desbloqueja</string>
   <string name="auth_error_verifying_password">S\'ha produït un error en verificar la vostra contrasenya.</string>
   <string name="auth_error_empty_password">La contrasenya no pot estar buida.</string>

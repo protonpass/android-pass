@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Goditi la tua prova gratuita</string>
   <string name="home_trial_banner_text">Scopri tutte le funzionalità esclusive che sono disponibili per te per un periodo di tempo limitato.</string>
   <string name="home_trial_banner_settings">Per saperne di più ›</string>
+  <string name="home_notification_permission_banner_title">Ricevi aggiornamenti importanti</string>
+  <string name="home_notification_permission_banner_text">Attiva le notifiche push per essere informato quando altri condividono una cassaforte con te.</string>
+  <string name="home_notification_permission_banner_settings">Fornisci l\'autorizzazione ›</string>
   <string name="home_invite_banner_title">Invito alla cassaforte condivisa</string>
   <string name="home_invite_banner_subtitle">Sei stato invitato in una cassaforte. Tocca qui per vedere l\'invito.</string>
   <!-- Common bottomsheet -->

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="on_boarding_autofill_content">Дозвольте Proton Pass заповнити дані для входу. Не потрібно вводити текст або копіювати-вставляти.</string>
-  <string name="on_boarding_autofill_title">Миттєво входьте в застосунки</string>
+  <string name="on_boarding_autofill_title">Миттєво виконуйте вхід у програмах</string>
   <string name="on_boarding_autofill_button">Автозаповнення з Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Налаштуйте Proton Pass на розблокування за допомогою відбитка пальця, щоб лише ви мали доступ.</string>
   <string name="on_boarding_fingerprint_title">Захистіть свої найвразливіші дані</string>

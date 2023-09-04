@@ -20,6 +20,9 @@
   <string name="home_trial_banner_title">Nyd din gratis prøveperiode</string>
   <string name="home_trial_banner_text">Se alle de eksklusive funktioner, der er tilgængelige for dig i en begrænset periode.</string>
   <string name="home_trial_banner_settings">Lær mere ›</string>
+  <string name="home_notification_permission_banner_title">Få vigtige opdateringer</string>
+  <string name="home_notification_permission_banner_text">Aktivér push-notifikationer for at blive informeret, når andre deler en boks med dig.</string>
+  <string name="home_notification_permission_banner_settings">Aktivér tilladelse ›</string>
   <string name="home_invite_banner_title">Delte boks-invitation</string>
   <string name="home_invite_banner_subtitle">Du er blevet inviteret til en boks. Tryk her for at se invitationen.</string>
   <!-- Common bottomsheet -->

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="updates_notification_channel_name">更新</string>
   <string name="autofill_notification_channel_name">自動填入</string>
   <string name="autofill_notification_copy_to_clipboard_title">TOTP 驗證碼</string>
   <string name="autofill_notification_copy_to_clipboard_body">已將 TOTP 複製到剪貼簿</string>
+  <string name="updates_new_invite_received_title">您已收到邀請</string>
+  <string name="updates_new_invite_received_message">您已被邀請使用保管庫。開啟應用程式以檢視邀請並接受它。</string>
 </resources>

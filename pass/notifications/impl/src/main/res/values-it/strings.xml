@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="updates_notification_channel_name">Aggiornamenti</string>
   <string name="autofill_notification_channel_name">Riempimento automatico</string>
   <string name="autofill_notification_copy_to_clipboard_title">Codice TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">Il codice TOTP è stato copiato negli appunti</string>
+  <string name="updates_new_invite_received_title">Hai ricevuto un invito</string>
+  <string name="updates_new_invite_received_message">Sei stato invitato in una cassaforte. Apri l\'app per visualizzare l\'invito e accettarlo.</string>
 </resources>

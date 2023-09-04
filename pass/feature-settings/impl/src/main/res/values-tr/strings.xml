@@ -9,7 +9,7 @@
   <string name="settings_authentication_preference_description_enabled">Uygulamayı parmak izinizle hızlı ve güvenli bir şekilde açın.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Bu aygıtla kayıtlı bir parmak izi olmadığından, uygulamayla etkileşim için parmak izi kullanılmasını zorunlu kılamazsınız.</string>
   <string name="settings_appearance_preference_title">Tema</string>
-  <string name="settings_appearance_preference_subtitle_match_system">Sisteme uyum sağla</string>
+  <string name="settings_appearance_preference_subtitle_match_system">Sistem ile aynı</string>
   <string name="settings_appearance_preference_subtitle_light">Açık tema</string>
   <string name="settings_appearance_preference_subtitle_dark">Koyu tema</string>
   <string name="settings_fingerprint_lock_enabled">Parmak izi ile kilit açma özelliği açıldı</string>
@@ -17,7 +17,7 @@
   <string name="settings_option_clipboard">Pano</string>
   <string name="settings_application_section_title">Uygulama</string>
   <string name="settings_option_view_logs">Günlükleri görüntüle</string>
-  <string name="settings_option_force_sync">Eşitleme zorlansın</string>
+  <string name="settings_option_force_sync">Şimdi eşitle</string>
   <string name="settings_about_section_title">Hakkında</string>
   <string name="settings_option_privacy_policy">Gizlilik ilkesi</string>
   <string name="settings_option_terms_of_service">Hizmet koşulları</string>
@@ -29,7 +29,7 @@
   <string name="settings_privacy_section_title">Gizlilik</string>
   <string name="settings_use_favicons_preference_title">Site simgeleri kullanılsın</string>
   <string name="settings_use_favicons_preference_subtitle">Ögelerinizde site simgelerini görmek isteyip istemediğinizi seçin.</string>
-  <string name="settings_allow_screenshots_preference_title">Ekran görüntüsü kullanılabilsin</string>
+  <string name="settings_allow_screenshots_preference_title">Ekran görüntüsü alınabilsin</string>
   <string name="settings_allow_screenshots_preference_subtitle">Bu seçenek açıldığında, uygulamanın ekran görüntüsünü alabilirsiniz.</string>
   <string name="settings_clear_icon_cache_success">Simge ön belleği temizlendi</string>
   <string name="settings_clear_icon_cache_error">Simge ön belleği temizlenemedi</string>

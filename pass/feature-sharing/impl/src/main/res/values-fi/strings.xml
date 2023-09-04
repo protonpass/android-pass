@@ -39,7 +39,7 @@
   <string name="share_permissions_title">Määritä käyttöoikeudet</string>
   <string name="share_permissions_subtitle">Valitse käyttöoikeustaso, joka käyttäjälle myönnetään kun he liittyvät holviin \"%s\".</string>
   <string name="sharing_invitation_from">Kutsu käyttäjältä %s</string>
-  <string name="sharing_join_shared_vault">Liitty jaettuun holviin</string>
+  <string name="sharing_join_shared_vault">Liity jaettuun holviin</string>
   <string name="sharing_reject_invitation">Kieltäydy kutsusta</string>
   <string name="sharing_snackbar_get_invite_error">Kutsua ei saatu</string>
   <string name="sharing_snackbar_invite_accepted">Kutsu hyväksyttiin</string>

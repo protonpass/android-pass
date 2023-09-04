@@ -40,6 +40,41 @@ data class AcceptInviteUiState(
 }
 
 @Stable
+sealed interface AcceptInviteButtonsState {
+    @Stable
+    object Hide : AcceptInviteButtonsState
+
+    @Stable
+    data class Show(
+        val confirmLoading: Boolean,
+        val rejectLoading: Boolean,
+        val hideReject: Boolean,
+        val enabled: Boolean
+    ) : AcceptInviteButtonsState {
+        companion object {
+            val Initial = Show(
+                confirmLoading = false,
+                hideReject = false,
+                rejectLoading = false,
+                enabled = true
+            )
+        }
+    }
+}
+
+@Stable
+sealed interface AcceptInviteProgressState {
+    @Stable
+    object Hide : AcceptInviteProgressState
+
+    @Stable
+    data class Show(
+        val downloaded: Int,
+        val total: Int
+    ) : AcceptInviteProgressState
+}
+
+@Stable
 sealed interface AcceptInviteUiContent {
     @Stable
     object Loading : AcceptInviteUiContent
@@ -47,8 +82,7 @@ sealed interface AcceptInviteUiContent {
     @Stable
     data class Content(
         val invite: PendingInvite?,
-        val isConfirmLoading: Boolean,
-        val isRejectLoading: Boolean,
-        val areButtonsEnabled: Boolean,
+        val buttonsState: AcceptInviteButtonsState,
+        val progressState: AcceptInviteProgressState
     ) : AcceptInviteUiContent
 }

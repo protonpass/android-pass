@@ -22,12 +22,13 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.pass.domain.InviteToken
 import proton.pass.domain.PendingInvite
+import proton.pass.domain.ShareId
 
 interface InviteRepository {
 
     fun observeInvites(userId: UserId): Flow<List<PendingInvite>>
     suspend fun refreshInvites(userId: UserId): Boolean
-    suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken)
+    suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId
     suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken)
 
 }

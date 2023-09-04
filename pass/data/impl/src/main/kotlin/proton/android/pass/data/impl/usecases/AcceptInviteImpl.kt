@@ -18,34 +18,56 @@
 
 package proton.android.pass.data.impl.usecases
 
+import androidx.work.WorkManager
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
-import proton.android.pass.data.api.usecases.ApplyPendingEvents
-import proton.android.pass.log.api.PassLogger
+import proton.android.pass.data.api.usecases.AcceptInviteStatus
+import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
+import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
+import proton.android.pass.data.impl.work.FetchShareItemsWorker
 import proton.pass.domain.InviteToken
+import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 class AcceptInviteImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val inviteRepository: InviteRepository,
-    private val applyPendingEvents: ApplyPendingEvents
-) : AcceptInvite {
-    override suspend fun invoke(invite: InviteToken) {
-        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
-        inviteRepository.acceptInvite(userId, invite)
-        runCatching { applyPendingEvents() }
-            .onSuccess {
-                PassLogger.d(TAG, "Sync performed after accepting invite")
-            }
-            .onFailure {
-                PassLogger.w(TAG, it, "Error performing sync after accepting invite")
-            }
-    }
+    private val workManager: WorkManager,
+    private val fetchShareItemsStatusRepository: FetchShareItemsStatusRepository
 
-    companion object {
-        private const val TAG = "AcceptInviteImpl"
+) : AcceptInvite {
+    override fun invoke(invite: InviteToken): Flow<AcceptInviteStatus> = accountManager
+        .getPrimaryUserId()
+        .filterNotNull()
+        .flatMapLatest { userId ->
+            val shareId = inviteRepository.acceptInvite(userId, invite)
+            downloadItems(userId, shareId)
+        }
+        .onStart { emit(AcceptInviteStatus.AcceptingInvite) }
+
+    private fun downloadItems(userId: UserId, shareId: ShareId): Flow<AcceptInviteStatus> {
+        val request = FetchShareItemsWorker.getRequestFor(userId, shareId)
+        workManager.enqueue(request)
+        return fetchShareItemsStatusRepository.observe(shareId)
+            .map {
+                when (it) {
+                    is FetchShareItemsStatus.NotStarted -> AcceptInviteStatus.AcceptingInvite
+                    is FetchShareItemsStatus.Syncing -> AcceptInviteStatus.DownloadingItems(
+                        downloaded = it.current,
+                        total = it.total
+                    )
+                    is FetchShareItemsStatus.Done -> {
+                        fetchShareItemsStatusRepository.clear(shareId)
+                        AcceptInviteStatus.Done(it.items)
+                    }
+                }
+            }
     }
 }

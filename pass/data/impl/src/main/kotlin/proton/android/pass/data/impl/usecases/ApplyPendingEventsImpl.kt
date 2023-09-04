@@ -39,6 +39,7 @@ import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toPendingEvent
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
@@ -116,23 +117,30 @@ class ApplyPendingEventsImpl @Inject constructor(
     ) {
         while (true) {
             val events = eventRepository.getEvents(userId, addressId, shareId)
+            if (events.shareResponse != null) {
+                shareRepository.applyUpdateShareEvent(
+                    userId = userId,
+                    shareId = shareId,
+                    event = events.shareResponse.toDomain()
+                )
+            }
 
-            PassLogger.d(TAG, "Applying events with share id :$shareId")
+            PassLogger.d(TAG, "Applying events with share id: $shareId")
             itemRepository.applyEvents(
-                userId,
-                addressId,
-                shareId,
-                events.toDomain()
+                userId = userId,
+                addressId = addressId,
+                shareId = shareId,
+                events = events.toDomain()
             )
             PassLogger.d(
                 TAG,
                 "Applied events with share id :$shareId. Storing latest event ID"
             )
             eventRepository.storeLatestEventId(
-                userId,
-                addressId,
-                shareId,
-                events.latestEventId
+                userId = userId,
+                addressId = addressId,
+                shareId = shareId,
+                eventId = events.latestEventId
             )
 
             if (!events.eventsPending) break

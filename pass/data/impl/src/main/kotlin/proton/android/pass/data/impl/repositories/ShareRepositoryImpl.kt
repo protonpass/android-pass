@@ -30,6 +30,7 @@ import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
+import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
@@ -43,6 +44,7 @@ import proton.android.pass.crypto.api.usecases.UpdateVault
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
@@ -50,6 +52,7 @@ import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toProto
 import proton.android.pass.data.impl.extensions.toRequest
+import proton.android.pass.data.impl.extensions.toResponse
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
@@ -295,6 +298,18 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.leaveVault(userId, shareId)
         localShareDataSource.deleteShares(setOf(shareId))
+    }
+
+    override suspend fun applyUpdateShareEvent(
+        userId: UserId,
+        shareId: ShareId,
+        event: UpdateShareEvent
+    ) {
+        val asResponse = event.toResponse()
+        val userAddress = userAddressRepository.getAddress(userId, AddressId(asResponse.addressId))
+            ?: return
+
+        storeShares(userAddress, listOf(asResponse))
     }
 
     private suspend fun storeShares(

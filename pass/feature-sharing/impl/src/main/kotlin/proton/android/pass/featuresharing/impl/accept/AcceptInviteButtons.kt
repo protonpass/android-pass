@@ -18,6 +18,7 @@
 
 package proton.android.pass.featuresharing.impl.accept
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,6 +43,7 @@ fun AcceptInviteButtons(
     isConfirmLoading: Boolean,
     isRejectLoading: Boolean,
     areButtonsEnabled: Boolean,
+    showReject: Boolean,
     onConfirm: () -> Unit,
     onReject: () -> Unit
 ) {
@@ -64,20 +66,22 @@ fun AcceptInviteButtons(
             onClick = onConfirm
         )
 
-        LoadingCircleButton(
-            modifier = Modifier.fillMaxWidth(),
-            color = PassTheme.colors.interactionNormMinor1,
-            isLoading = isRejectLoading,
-            buttonEnabled = areButtonsEnabled,
-            text = {
-                Text(
-                    text = stringResource(R.string.sharing_reject_invitation),
-                    style = ProtonTheme.typography.defaultSmallNorm,
-                    color = PassTheme.colors.interactionNormMajor1
-                )
-            },
-            onClick = onReject
-        )
+        AnimatedVisibility(visible = showReject) {
+            LoadingCircleButton(
+                modifier = Modifier.fillMaxWidth(),
+                color = PassTheme.colors.interactionNormMinor1,
+                isLoading = isRejectLoading,
+                buttonEnabled = areButtonsEnabled,
+                text = {
+                    Text(
+                        text = stringResource(R.string.sharing_reject_invitation),
+                        style = ProtonTheme.typography.defaultSmallNorm,
+                        color = PassTheme.colors.interactionNormMajor1
+                    )
+                },
+                onClick = onReject
+            )
+        }
     }
 }
 
@@ -93,6 +97,7 @@ fun AcceptInviteButtonsPreview(
                 isConfirmLoading = confirm,
                 isRejectLoading = reject,
                 areButtonsEnabled = true,
+                showReject = true,
                 onConfirm = {},
                 onReject = {}
             )

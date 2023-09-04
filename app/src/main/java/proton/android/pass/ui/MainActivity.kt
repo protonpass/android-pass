@@ -39,6 +39,8 @@ import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import me.proton.core.compose.component.ProtonCenteredProgress
+import me.proton.core.notification.presentation.deeplink.DeeplinkManager
+import me.proton.core.notification.presentation.deeplink.onActivityCreate
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.log.api.PassLogger
@@ -56,6 +58,9 @@ class MainActivity : FragmentActivity() {
     @Inject
     lateinit var autofillManager: proton.android.pass.autofill.api.AutofillManager
 
+    @Inject
+    lateinit var deeplinkManager: DeeplinkManager
+
     private val launcherViewModel: LauncherViewModel by viewModels()
 
     private val updateResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
@@ -71,6 +76,8 @@ class MainActivity : FragmentActivity() {
         val splashScreen = installSplashScreen()
 
         super.onCreate(savedInstanceState)
+
+        deeplinkManager.onActivityCreate(this, savedInstanceState)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 

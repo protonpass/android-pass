@@ -42,6 +42,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
 import me.proton.core.eventmanager.domain.EventListener
+import me.proton.core.notification.data.NotificationEventListener
+import me.proton.core.push.data.PushEventListener
 import me.proton.core.user.data.UserAddressEventListener
 import me.proton.core.user.data.UserEventListener
 import me.proton.core.usersettings.data.UserSettingsEventListener
@@ -57,10 +59,14 @@ object EventManagerModule {
     @ElementsIntoSet
     @JvmSuppressWildcards
     fun provideEventListenerSet(
+        notificationEventListener: NotificationEventListener,
+        pushEventListener: PushEventListener,
         userEventListener: UserEventListener,
         userAddressEventListener: UserAddressEventListener,
         userSettingsEventListener: UserSettingsEventListener
     ): Set<EventListener<*, *>> = setOf(
+        notificationEventListener,
+        pushEventListener,
         userEventListener,
         userAddressEventListener,
         userSettingsEventListener

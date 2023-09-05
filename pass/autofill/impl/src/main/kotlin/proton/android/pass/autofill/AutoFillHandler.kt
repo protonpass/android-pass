@@ -35,6 +35,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.Utils.getWindowNodes
+import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addSaveInfo
 import proton.android.pass.common.api.toOption
@@ -57,7 +58,8 @@ object AutoFillHandler {
         cancellationSignal: CancellationSignal,
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
-        accountManager: AccountManager
+        accountManager: AccountManager,
+        autofillManager: AutofillManager
     ) {
         val windowNode = getWindowNodes(request.fillContexts.last()).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -78,7 +80,8 @@ object AutoFillHandler {
                     request = request,
                     autofillServiceManager = autofillServiceManager,
                     telemetryManager = telemetryManager,
-                    accountManager = accountManager
+                    accountManager = accountManager,
+                    autofillManager = autofillManager
                 )
             }
 
@@ -95,11 +98,13 @@ object AutoFillHandler {
         request: FillRequest,
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
-        accountManager: AccountManager
+        accountManager: AccountManager,
+        autofillManager: AutofillManager
     ) {
         val currentUser = accountManager.getPrimaryUserId().first()
         if (currentUser == null) {
             PassLogger.i(TAG, "No user found")
+            autofillManager.disableAutofill()
             callback.onSuccess(null)
             return
         }

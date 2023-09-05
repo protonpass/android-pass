@@ -166,14 +166,30 @@ class AssistNodeTraversal {
         }
     }
 
-    fun detectFieldTypeUsingAutofillHint(autofillHint: String): FieldType = when (autofillHint) {
-        View.AUTOFILL_HINT_EMAIL_ADDRESS -> FieldType.Email
-        View.AUTOFILL_HINT_USERNAME -> FieldType.Username
-        View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> FieldType.Password
-        // Support for these fields will be added in the future
-        // View.AUTOFILL_HINT_PHONE -> FieldType.Phone
-        // View.AUTOFILL_HINT_NAME -> FieldType.FullName
-        else -> FieldType.Unknown
+    @Suppress("ReturnCount")
+    fun detectFieldTypeUsingAutofillHint(autofillHint: String): FieldType {
+        when (autofillHint) {
+            View.AUTOFILL_HINT_EMAIL_ADDRESS -> return FieldType.Email
+            View.AUTOFILL_HINT_USERNAME -> return FieldType.Username
+            View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> return FieldType.Password
+            // Support for these fields will be added in the future
+            // View.AUTOFILL_HINT_PHONE -> return FieldType.Phone
+            // View.AUTOFILL_HINT_NAME -> return FieldType.FullName
+        }
+
+        if (autofillHint.lowercase().contains("username")) {
+            return FieldType.Username
+        }
+
+        if (autofillHint.lowercase().contains("email")) {
+            return FieldType.Email
+        }
+
+        if (autofillHint.lowercase().contains("password")) {
+            return FieldType.Password
+        }
+
+        return FieldType.Unknown
     }
 
     private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {

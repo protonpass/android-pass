@@ -73,6 +73,9 @@ class FeatureFlagRepositoryImpl @Inject constructor(
 
         PassLogger.d(TAG, "Fetching feature flags")
         val remoteFeatureFlags = remote.getFeatureFlags(id)
+
+        PassLogger.i(TAG, "Server feature flags: ${remoteFeatureFlags.map { it.name }}")
+
         val localFeatureFlags = local.observeAllFeatureFlags(id).first()
 
         // Pick the LocalFeatureFlags that are not in the remote response
@@ -100,6 +103,9 @@ class FeatureFlagRepositoryImpl @Inject constructor(
             local.storeFeatureFlags(toInsert)
             local.storeFeatureFlags(toUpdate)
         }
+
+        val localFeatureFlagsAfterTx = local.observeAllFeatureFlags(id).first()
+        PassLogger.i(TAG, "App feature flags: ${localFeatureFlagsAfterTx.map { it.name }}")
     }
 
     private fun FeatureFlagToggle.toEntity(

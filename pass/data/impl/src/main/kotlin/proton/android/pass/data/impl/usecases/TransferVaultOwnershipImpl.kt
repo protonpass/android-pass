@@ -18,11 +18,34 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.first
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
+import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.local.LocalShareDataSource
+import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
-class TransferVaultOwnershipImpl @Inject constructor() : TransferVaultOwnership {
+class TransferVaultOwnershipImpl @Inject constructor(
+    private val accountManager: AccountManager,
+    private val apiProvider: ApiProvider,
+    private val localShareDataSource: LocalShareDataSource
+) : TransferVaultOwnership {
     override suspend fun invoke(shareId: ShareId, memberShareId: ShareId) {
+        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+        apiProvider.get<PasswordManagerApi>(userId)
+            .invoke {
+                transferVaultOwnership(
+                    shareId = shareId.id,
+                    request = TransferVaultOwnershipRequest(
+                        newOwnerShareId = memberShareId.id
+                    )
+                )
+            }
+            .valueOrThrow
+
+        localShareDataSource.updateOwnershipStatus(userId, shareId, false)
     }
 }

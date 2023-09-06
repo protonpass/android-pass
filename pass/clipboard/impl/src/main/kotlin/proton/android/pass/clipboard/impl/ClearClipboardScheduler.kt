@@ -18,28 +18,42 @@
 
 package proton.android.pass.clipboard.impl
 
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.encrypt
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ClearClipboardScheduler @Inject constructor(
-    private val workManager: WorkManager,
-    private val keyStoreCrypto: KeyStoreCrypto
+    @ApplicationContext private val applicationContext: Context,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) {
+    @Suppress("MagicNumber")
     fun schedule(delaySeconds: Long, expectedClipboardContents: String) {
-        val data =
-            ClearClipboardWorker.createInputData(expectedClipboardContents.encrypt(keyStoreCrypto))
-        workManager.enqueue(
-            OneTimeWorkRequestBuilder<ClearClipboardWorker>()
-                .setInputData(data)
-                .setInitialDelay(delaySeconds, TimeUnit.SECONDS)
-                .build()
+        val intent = ClearClipboardBroadcastReceiver.prepareIntent(
+            applicationContext,
+            encryptionContextProvider.withEncryptionContext { encrypt(expectedClipboardContents) }
         )
-        PassLogger.i(TAG, "Scheduled ClearClipboardWorker on $delaySeconds seconds")
+
+        val asPendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val delayMilliseconds = delaySeconds * 1000
+        val timeToTriggerInMillis = System.currentTimeMillis() + delayMilliseconds
+        val alarmManager = applicationContext.getSystemService(AlarmManager::class.java)
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            timeToTriggerInMillis,
+            asPendingIntent
+        )
+
+        PassLogger.i(TAG, "Scheduled ClearClipboardBroadcastReceiver on $delaySeconds seconds")
     }
 
     companion object {

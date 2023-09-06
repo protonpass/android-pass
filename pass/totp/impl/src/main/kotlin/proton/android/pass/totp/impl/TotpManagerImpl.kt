@@ -115,7 +115,9 @@ class TotpManagerImpl @Inject constructor(
 
     override fun parse(uri: String): Result<TotpSpec> = OtpUriParser.parse(uri)
 
-    private fun sanitizeSecret(secret: String) = secret.replace(" ", "")
+    private fun sanitizeSecret(secret: String) = secret
+        .replace(" ", "")
+        .replace("-", "")
 
     companion object {
         private const val ONE_SECOND_MILLISECONDS = 1000L

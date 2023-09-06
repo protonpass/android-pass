@@ -118,6 +118,16 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
     )
     abstract suspend fun deleteSharesForUser(userId: String)
 
+    @Query(
+        """
+        UPDATE ${ShareEntity.TABLE}
+        SET ${ShareEntity.Columns.OWNER} = :isOwner
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.ID} = :shareId
+        """
+    )
+    abstract suspend fun updateOwnership(userId: String, shareId: String, isOwner: Boolean)
+
     @Transaction
     open suspend fun evictAndUpsertShares(userId: UserId, vararg entities: ShareEntity) {
         val insertOrUpdateShares = entities.asList().map { it.id }

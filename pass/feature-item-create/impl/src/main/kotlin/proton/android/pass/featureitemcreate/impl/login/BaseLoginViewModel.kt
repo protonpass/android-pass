@@ -266,7 +266,11 @@ abstract class BaseLoginViewModel(
         val newValue = value.replace(" ", "").replace("\n", "")
         loginItemFormMutableState = loginItemFormState.copy(
             urls = loginItemFormState.urls.toMutableList()
-                .apply { this[index] = newValue }
+                .apply {
+                    if (index < this.size) {
+                        this[index] = newValue
+                    }
+                }
         )
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidUrl(index)) }
@@ -541,6 +545,8 @@ abstract class BaseLoginViewModel(
     }
 
     fun onCustomFieldChange(index: Int, value: String) = viewModelScope.launch {
+        if (index >= loginItemFormState.customFields.size) return@launch
+
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply {
                 remove(LoginItemValidationErrors.CustomFieldValidationError.EmptyField(index))
@@ -578,8 +584,9 @@ abstract class BaseLoginViewModel(
         }
 
         customFields[index] = updated
-        loginItemFormMutableState =
-            loginItemFormState.copy(customFields = customFields.toPersistentList())
+        loginItemFormMutableState = loginItemFormState.copy(
+            customFields = customFields.toPersistentList()
+        )
     }
 
     protected fun onUserEditedContent() {

@@ -28,6 +28,7 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TelemetryRequest
+import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
@@ -280,5 +281,11 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun sendInviteReminder(
         @Path("shareId") shareId: String,
         @Path("inviteId") inviteId: String
+    ): CodeOnlyResponse
+
+    @PUT("$PREFIX/vault/{shareId}/owner")
+    suspend fun transferVaultOwnership(
+        @Path("shareId") shareId: String,
+        @Body request: TransferVaultOwnershipRequest
     ): CodeOnlyResponse
 }

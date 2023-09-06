@@ -60,4 +60,12 @@ class LocalShareDataSourceImpl @Inject constructor(
 
     override fun observeActiveVaultCount(userId: UserId): Flow<Int> =
         database.sharesDao().observeActiveVaultCount(userId.id)
+
+    override suspend fun updateOwnershipStatus(userId: UserId, shareId: ShareId, isOwner: Boolean) =
+        database.sharesDao().updateOwnership(
+            userId = userId.id,
+            shareId = shareId.id,
+            isOwner =
+            isOwner
+        )
 }

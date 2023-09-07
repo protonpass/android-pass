@@ -24,7 +24,6 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.CreateUserType
@@ -84,13 +83,6 @@ class TestUserRepository : UserRepository {
     }
 
     override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User {
-        throw IllegalStateException("Not implemented")
-    }
-
-    override fun getUserFlow(
-        sessionUserId: SessionUserId,
-        refresh: Boolean
-    ): Flow<DataResult<User>> {
         throw IllegalStateException("Not implemented")
     }
 

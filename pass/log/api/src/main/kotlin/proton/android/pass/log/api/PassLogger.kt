@@ -20,12 +20,5 @@ package proton.android.pass.log.api
 
 import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.Logger
-import me.proton.core.util.kotlin.LoggerLogTag
-import timber.log.Timber
 
-object PassLogger : Logger by TimberLogger {
-    fun w(tag: String, e: Throwable) = Timber.tag(tag).w(e)
-    fun w(tag: String, e: Throwable, message: String) = Timber.tag(tag).w(e, message)
-    fun w(tag: String, message: String) = Timber.tag(tag).w(message)
-    override fun log(tag: LoggerLogTag, message: String) = i(tag.name, message)
-}
+object PassLogger : Logger by TimberLogger

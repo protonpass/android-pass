@@ -111,8 +111,14 @@ class AutofillManagerImpl @Inject constructor(
     }
 
     override fun disableAutofill() {
-        val autofillManager = context.getSystemService(AndroidAutofillManager::class.java)
-        autofillManager?.disableAutofillServices()
+        runCatching {
+            val autofillManager = context.getSystemService(AndroidAutofillManager::class.java)
+            autofillManager?.disableAutofillServices()
+        }.onSuccess {
+            PassLogger.i(TAG, "Disabled autofill services")
+        }.onFailure {
+            PassLogger.w(TAG, it, "Could not disable autofill services")
+        }
     }
 
     companion object {

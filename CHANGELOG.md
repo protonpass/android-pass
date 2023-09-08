@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.8.3 (2023-09-08)
+
+### Fixes :bug:
+- Crash when clearing the clipboard on some devices.
+- Crash when disabling autofill on older devices.
+
 ## 1.8.2 (2023-09-07)
 
 ### Fixes :bug:

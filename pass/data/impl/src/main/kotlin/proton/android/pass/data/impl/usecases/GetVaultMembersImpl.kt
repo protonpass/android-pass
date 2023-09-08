@@ -90,7 +90,8 @@ class GetVaultMembersImpl @Inject constructor(
         email = userEmail,
         username = userName,
         role = shareRoleId?.let { ShareRole.fromValue(it) },
-        isCurrentUser = userEmail == currentUserEmail
+        isCurrentUser = userEmail == currentUserEmail,
+        isOwner = owner == true
     )
 
     private fun SharePendingInvite.toDomain() = VaultMember.InvitePending(

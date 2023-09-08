@@ -20,6 +20,7 @@ package proton.android.pass.clipboard.impl
 
 import android.content.BroadcastReceiver
 import android.content.ClipData
+import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -51,28 +52,57 @@ class ClearClipboardBroadcastReceiver : BroadcastReceiver() {
             PassLogger.w(TAG, "Could not get expected clipboard contents")
             return
         }
-        val expected = encryptionContextProvider.withEncryptionContext {
-            decrypt(encryptedExpected)
+
+        // Check if it has primary clip
+        if (shouldClearClipboard(context, clipboardManager, encryptedExpected)) {
+            clearClipboard(clipboardManager)
+            PassLogger.i(TAG, "Successfully cleared clipboard")
         }
+    }
 
-        val primaryClip = clipboardManager.primaryClip
-        if (primaryClip != null) {
-            if (primaryClip.itemCount > 0) {
-                val currentContents = primaryClip.getItemAt(0)
-                if (currentContents.text == expected) {
-                    clearClipboard(clipboardManager)
-                    PassLogger.i(TAG, "Successfully cleared clipboard")
+    private fun shouldClearClipboard(
+        context: Context,
+        clipboardManager: ClipboardManager,
+        expected: EncryptedString
+    ): Boolean {
+        if (clipboardManager.hasPrimaryClip()) {
+            if (clipboardManager.primaryClipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) != true) {
+                PassLogger.i(TAG, "Did not clear clipboard as it did not have the expected mime type")
+                return false
+            }
 
+            val primaryClip = clipboardManager.primaryClip
+            if (primaryClip != null) {
+                if (primaryClip.itemCount > 0) {
+                    val currentContents = primaryClip.getItemAt(0)
+                    val decryptedExpected = encryptionContextProvider.withEncryptionContext {
+                        decrypt(expected)
+                    }
+
+                    val clipboardContents = if (currentContents.text != null) {
+                        currentContents.text
+                    } else {
+                        currentContents.coerceToText(context)
+                    }
+
+                    if (clipboardContents == decryptedExpected) {
+                        return true
+                    } else {
+                        PassLogger.i(
+                            TAG,
+                            "Did not clear clipboard as it did not have the expected contents"
+                        )
+                    }
                 } else {
-                    PassLogger.i(
-                        TAG,
-                        "Did not clear clipboard as it did not have the expected contents"
-                    )
+                    PassLogger.i(TAG, "Did not clear clipboard as ItemCount = 0")
                 }
+            } else {
+                PassLogger.i(TAG, "Could not access the clipboard contents")
             }
         } else {
-            PassLogger.i(TAG, "Could not access the clipboard contents")
+            PassLogger.i(TAG, "System does not have PrimaryClip")
         }
+        return false
     }
 
     private fun clearClipboard(clipboardManager: ClipboardManager) {

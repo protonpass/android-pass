@@ -39,6 +39,8 @@ data class ShareMemberResponse(
     val userName: String,
     @SerialName("UserEmail")
     val userEmail: String,
+    @SerialName("Owner")
+    val owner: Boolean? = false,
     @SerialName("TargetType")
     val targetType: Int,
     @SerialName("TargetID")

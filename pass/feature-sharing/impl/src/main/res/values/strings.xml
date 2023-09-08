@@ -77,6 +77,7 @@
     <string name="share_role_can_view">Can view</string>
     <string name="share_role_can_edit">Can edit</string>
     <string name="share_role_admin">Admin</string>
+    <string name="share_role_owner">Owner</string>
 
     <string name="sharing_bottomsheet_transfer_ownership">Transfer ownership</string>
     <string name="sharing_bottomsheet_remove_access">Remove access</string>

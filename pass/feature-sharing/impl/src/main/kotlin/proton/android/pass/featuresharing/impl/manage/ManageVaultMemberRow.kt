@@ -82,7 +82,8 @@ fun ManageVaultMemberRow(
 
     val showActions = when (member) {
         is VaultMemberContent.Member -> when (member.member) {
-            is VaultMember.Member -> canShowActions && !member.member.isCurrentUser
+            is VaultMember.Member ->
+                canShowActions && !member.member.isCurrentUser && !member.member.isOwner
             is VaultMember.InvitePending -> true
         }
         VaultMemberContent.Loading -> false
@@ -177,8 +178,14 @@ private fun UserInfo(
                                     style = ProtonTheme.typography.captionNorm
                                 )
                             }
+
+                            val subtitle = if (memberContent.isOwner) {
+                                stringResource(R.string.share_role_owner)
+                            } else {
+                                role.toShortSummary()
+                            }
                             Text(
-                                text = role.toShortSummary(),
+                                text = subtitle,
                                 style = PassTheme.typography.body3Weak()
                             )
                         }
@@ -208,7 +215,8 @@ fun ManageVaultMemberRowPreview(
             shareId = ShareId("123"),
             username = "some username",
             role = ShareRole.Admin,
-            isCurrentUser = true
+            isCurrentUser = true,
+            isOwner = input.second
         )
     } else {
         VaultMember.InvitePending(email = "invited@email.test", inviteId = InviteId("123"))

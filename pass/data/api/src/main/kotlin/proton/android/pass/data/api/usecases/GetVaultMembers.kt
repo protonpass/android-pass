@@ -29,7 +29,8 @@ sealed class VaultMember(open val email: String) {
         val shareId: ShareId,
         val username: String,
         val role: ShareRole?,
-        val isCurrentUser: Boolean
+        val isCurrentUser: Boolean,
+        val isOwner: Boolean
     ) : VaultMember(email)
 
     data class InvitePending(

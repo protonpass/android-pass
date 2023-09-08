@@ -19,7 +19,6 @@
 package proton.android.pass.ui
 
 import android.os.Bundle
-import android.view.autofill.AutofillManager
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -48,9 +47,13 @@ import proton.android.pass.ui.launcher.LauncherViewModel.State.AccountNeeded
 import proton.android.pass.ui.launcher.LauncherViewModel.State.PrimaryExist
 import proton.android.pass.ui.launcher.LauncherViewModel.State.Processing
 import proton.android.pass.ui.launcher.LauncherViewModel.State.StepNeeded
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
+
+    @Inject
+    lateinit var autofillManager: proton.android.pass.autofill.api.AutofillManager
 
     private val launcherViewModel: LauncherViewModel by viewModels()
 
@@ -118,8 +121,7 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun disableAutofill() {
-        val autofillManager = getSystemService(AutofillManager::class.java)
-        autofillManager.disableAutofillServices()
+        autofillManager.disableAutofill()
     }
 
     private fun setSecureMode() {

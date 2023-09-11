@@ -43,7 +43,7 @@
   <string name="share_permissions_title">Задаць дазволы</string>
   <string name="share_permissions_subtitle">Выберыце ўзровень доступу, які атрымае гэты карыстальнік пасля далучэння да вашага сховішча \'%s\'.</string>
   <string name="sharing_invitation_from">Запрашэнне ад %s</string>
-  <string name="sharing_join_shared_vault">Далучыцца да абагуленага сховішча</string>
+  <string name="sharing_join_shared_vault">Далучыцца і сінхранізаваць</string>
   <string name="sharing_reject_invitation">Адхіліць запрашэнне</string>
   <string name="sharing_snackbar_get_invite_error">Немагчыма атрымаць запрашэнне</string>
   <string name="sharing_snackbar_invite_accepted">Запрашэнне прынята</string>
@@ -75,6 +75,7 @@
   <string name="share_role_can_view">Можа праглядаць</string>
   <string name="share_role_can_edit">Можа рэдагаваць</string>
   <string name="share_role_admin">Адміністратар</string>
+  <string name="share_role_owner">Уладальнік</string>
   <string name="sharing_bottomsheet_transfer_ownership">Перадаць права ўласнасці</string>
   <string name="sharing_bottomsheet_remove_access">Выдаліць доступ</string>
   <string name="sharing_bottomsheet_resend_invite">Адправіць запрашэнне паўторна</string>

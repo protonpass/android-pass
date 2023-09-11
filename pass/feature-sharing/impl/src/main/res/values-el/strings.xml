@@ -39,7 +39,7 @@
   <string name="share_permissions_title">Ορισμός δικαιωμάτων</string>
   <string name="share_permissions_subtitle">Επιλέξτε το επίπεδο πρόσβασης που θα αποκτήσει αυτός ο χρήστης όταν συνδεθεί στη \"%s\" κρύπτη σας.</string>
   <string name="sharing_invitation_from">Πρόσκληση από %s</string>
-  <string name="sharing_join_shared_vault">Συμμετοχή σε κοινόχρηστη κρύπτη</string>
+  <string name="sharing_join_shared_vault">Συμμετάσχετε και συγχρονίστε</string>
   <string name="sharing_reject_invitation">Απόρριψη πρόσκλησης</string>
   <string name="sharing_snackbar_get_invite_error">Δεν ήταν δυνατή η λήψη πρόσκλησης</string>
   <string name="sharing_snackbar_invite_accepted">Η πρόσκληση έγινε αποδεκτή</string>
@@ -71,6 +71,7 @@
   <string name="share_role_can_view">Δυνατότητα προβολής</string>
   <string name="share_role_can_edit">Δυνατότητα επεξεργασίας</string>
   <string name="share_role_admin">Διαχειριστής</string>
+  <string name="share_role_owner">Ιδιοκτήτης</string>
   <string name="sharing_bottomsheet_transfer_ownership">Μεταβίβαση κυριότητας</string>
   <string name="sharing_bottomsheet_remove_access">Αφαίρεση πρόσβασης</string>
   <string name="sharing_bottomsheet_resend_invite">Επανάληψη αποστολής πρόσκλησης</string>

@@ -37,7 +37,7 @@
   <string name="share_permissions_title">Atur perizinan</string>
   <string name="share_permissions_subtitle">Pilih tingkat akses yang didapatkan oleh pengguna ini ketika bergabung ke brankas \'%s\' Anda.</string>
   <string name="sharing_invitation_from">Undangan dari %s</string>
-  <string name="sharing_join_shared_vault">Bergabung brankas terbagi</string>
+  <string name="sharing_join_shared_vault">Gabung dan sinkronkan</string>
   <string name="sharing_reject_invitation">Tolak undangan</string>
   <string name="sharing_snackbar_get_invite_error">Tidak dapat mendapatkan undangan</string>
   <string name="sharing_snackbar_invite_accepted">Undangan diterima</string>
@@ -69,6 +69,7 @@
   <string name="share_role_can_view">Dapat melihat</string>
   <string name="share_role_can_edit">Dapat menyunting</string>
   <string name="share_role_admin">Admin</string>
+  <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfer kepemilikan</string>
   <string name="sharing_bottomsheet_remove_access">Hapus akses</string>
   <string name="sharing_bottomsheet_resend_invite">Kirim ulang undangan</string>

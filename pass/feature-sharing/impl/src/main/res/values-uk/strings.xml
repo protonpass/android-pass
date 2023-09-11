@@ -43,7 +43,7 @@
   <string name="share_permissions_title">Налаштувати дозволи</string>
   <string name="share_permissions_subtitle">Виберіть рівень доступу, який отримає користувач, коли приєднається до сховища \"%s\".</string>
   <string name="sharing_invitation_from">Запрошення від %s</string>
-  <string name="sharing_join_shared_vault">Приєднатися до спільного сховища</string>
+  <string name="sharing_join_shared_vault">Join and sync</string>
   <string name="sharing_reject_invitation">Відхилити запрошення</string>
   <string name="sharing_snackbar_get_invite_error">Не вдалося отримати запрошення</string>
   <string name="sharing_snackbar_invite_accepted">Запрошення прийнято</string>
@@ -75,6 +75,7 @@
   <string name="share_role_can_view">Лише перегляд</string>
   <string name="share_role_can_edit">Може редагувати</string>
   <string name="share_role_admin">Адміністратор</string>
+  <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">Передати право власності</string>
   <string name="sharing_bottomsheet_remove_access">Вилучити доступ</string>
   <string name="sharing_bottomsheet_resend_invite">Повторно надіслати запрошення</string>

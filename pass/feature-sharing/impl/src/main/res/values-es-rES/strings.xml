@@ -39,7 +39,7 @@
   <string name="share_permissions_title">Establecer permisos</string>
   <string name="share_permissions_subtitle">Selecciona el nivel de acceso que obtendrá este usuario cuando se una a tu bóveda \"%s\".</string>
   <string name="sharing_invitation_from">Invitación de %s</string>
-  <string name="sharing_join_shared_vault">Unirte a la bóveda compartida</string>
+  <string name="sharing_join_shared_vault">Unirse y sincronizar</string>
   <string name="sharing_reject_invitation">Rechazar la invitación</string>
   <string name="sharing_snackbar_get_invite_error">No se ha podido obtener la invitación.</string>
   <string name="sharing_snackbar_invite_accepted">Invitación aceptada</string>
@@ -68,9 +68,10 @@
   <string name="share_manage_vault_item_count">%d elementos</string>
   <string name="share_manage_vault_invite_pending">Invitación pendiente</string>
   <string name="share_manage_vault_current_user_indicator">Tú</string>
-  <string name="share_role_can_view">Puede ver</string>
-  <string name="share_role_can_edit">Puede editar</string>
+  <string name="share_role_can_view">Puedes ver</string>
+  <string name="share_role_can_edit">Puedes editar</string>
   <string name="share_role_admin">Administrador</string>
+  <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir la propiedad</string>
   <string name="sharing_bottomsheet_remove_access">Eliminar el acceso</string>
   <string name="sharing_bottomsheet_resend_invite">Reenviar la invitación</string>

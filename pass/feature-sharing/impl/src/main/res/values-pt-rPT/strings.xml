@@ -39,7 +39,7 @@
   <string name="share_permissions_title">Definir as permissões</string>
   <string name="share_permissions_subtitle">Selecione o nível de acesso que este utilizador obterá quando se juntar ao seu cofre \'%s\'.</string>
   <string name="sharing_invitation_from">Convite de %s</string>
-  <string name="sharing_join_shared_vault">Juntar-se ao cofre partilhado</string>
+  <string name="sharing_join_shared_vault">Join and sync</string>
   <string name="sharing_reject_invitation">Rejeitar o convite</string>
   <string name="sharing_snackbar_get_invite_error">Não foi possível obter o convite</string>
   <string name="sharing_snackbar_invite_accepted">O convite foi aceite.</string>
@@ -71,6 +71,7 @@
   <string name="share_role_can_view">Pode ver</string>
   <string name="share_role_can_edit">Pode editar</string>
   <string name="share_role_admin">Administrador</string>
+  <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir a propriedade</string>
   <string name="sharing_bottomsheet_remove_access">Remover o acesso</string>
   <string name="sharing_bottomsheet_resend_invite">Reenviar o convite</string>

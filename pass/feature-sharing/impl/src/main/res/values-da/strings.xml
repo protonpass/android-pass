@@ -39,7 +39,7 @@
   <string name="share_permissions_title">Indstil tilladelser</string>
   <string name="share_permissions_subtitle">Vælg det adgangsniveau, som denne bruger får, når de tilslutter sig din \'%s\'-boks.</string>
   <string name="sharing_invitation_from">Invitation fra %s</string>
-  <string name="sharing_join_shared_vault">Deltag i delt boks</string>
+  <string name="sharing_join_shared_vault">Tilmeld og synkronisér</string>
   <string name="sharing_reject_invitation">Afvis invitation</string>
   <string name="sharing_snackbar_get_invite_error">Kunne ikke hente invitation</string>
   <string name="sharing_snackbar_invite_accepted">Invitation accepteret</string>
@@ -71,6 +71,7 @@
   <string name="share_role_can_view">Kan se</string>
   <string name="share_role_can_edit">Kan redigere</string>
   <string name="share_role_admin">Admin</string>
+  <string name="share_role_owner">Ejer</string>
   <string name="sharing_bottomsheet_transfer_ownership">Overfør ejerskab</string>
   <string name="sharing_bottomsheet_remove_access">Fjern adgang</string>
   <string name="sharing_bottomsheet_resend_invite">Send invitation igen</string>

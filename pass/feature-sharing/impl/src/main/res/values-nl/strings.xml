@@ -39,7 +39,7 @@
   <string name="share_permissions_title">Machtigingen instellen</string>
   <string name="share_permissions_subtitle">Selecteer het toegangsniveau dat deze gebruiker krijgt wanneer hij lid wordt van uw kluis \'%s\'.</string>
   <string name="sharing_invitation_from">Uitnodiging van %s</string>
-  <string name="sharing_join_shared_vault">Deelnemen aan gedeelde kluis</string>
+  <string name="sharing_join_shared_vault">Join and sync</string>
   <string name="sharing_reject_invitation">Uitnodiging afwijzen</string>
   <string name="sharing_snackbar_get_invite_error">Kan geen uitnodiging krijgen</string>
   <string name="sharing_snackbar_invite_accepted">Uitnodiging geaccepteerd</string>
@@ -71,6 +71,7 @@
   <string name="share_role_can_view">Kan bekijken</string>
   <string name="share_role_can_edit">Kan bewerken</string>
   <string name="share_role_admin">Beheerder</string>
+  <string name="share_role_owner">Eigenaar</string>
   <string name="sharing_bottomsheet_transfer_ownership">Eigendom overdragen</string>
   <string name="sharing_bottomsheet_remove_access">Toegang verwijderen</string>
   <string name="sharing_bottomsheet_resend_invite">Uitnodiging opnieuw verzenden</string>

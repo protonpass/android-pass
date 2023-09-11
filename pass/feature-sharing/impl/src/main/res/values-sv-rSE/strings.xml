@@ -39,7 +39,7 @@
   <string name="share_permissions_title">Ställ in behörigheter</string>
   <string name="share_permissions_subtitle">Välj vilken åtkomstnivå denna användare ska erhålla när de går med i ditt \'%s\'-valv.</string>
   <string name="sharing_invitation_from">Inbjudan från %s</string>
-  <string name="sharing_join_shared_vault">Gå med delat valv</string>
+  <string name="sharing_join_shared_vault">Gå med och synkronisera</string>
   <string name="sharing_reject_invitation">Avböj inbjudan</string>
   <string name="sharing_snackbar_get_invite_error">Kunde inte få inbjudan</string>
   <string name="sharing_snackbar_invite_accepted">Inbjudan accepterad</string>
@@ -71,6 +71,7 @@
   <string name="share_role_can_view">Kan visa</string>
   <string name="share_role_can_edit">Kan redigera</string>
   <string name="share_role_admin">Admin</string>
+  <string name="share_role_owner">Ägare</string>
   <string name="sharing_bottomsheet_transfer_ownership">Överför ägarskap</string>
   <string name="sharing_bottomsheet_remove_access">Ta bort åtkomst</string>
   <string name="sharing_bottomsheet_resend_invite">Skicka inbjudan igen</string>

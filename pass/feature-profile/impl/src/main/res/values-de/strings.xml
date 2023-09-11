@@ -41,9 +41,9 @@
   <string name="configure_pin_enter_pin_code">PIN eingeben</string>
   <string name="configure_pin_repeat_pin_code">PIN-Code erneut eingeben</string>
   <string name="configure_pin_continue">Fortfahren</string>
-  <string name="configure_pin_pin_does_not_match">Die PIN stimmt nicht überein.</string>
-  <string name="configure_pin_pin_too_short">Die PIN ist zu kurz.</string>
-  <string name="configure_pin_pin_cannot_be_blank">Die PIN darf nicht leer sein.</string>
+  <string name="configure_pin_pin_does_not_match">Der PIN-Code stimmt nicht überein.</string>
+  <string name="configure_pin_pin_too_short">Der PIN-Code ist zu kurz.</string>
+  <string name="configure_pin_pin_cannot_be_blank">Der PIN-Code darf nicht leer sein.</string>
   <string name="configure_pin_pin_lock_enabled">PIN-Sperre aktiviert</string>
   <string name="configure_pin_pin_lock_disabled">PIN-Sperre deaktiviert</string>
   <string name="profile_option_lock_with">Sperren mit</string>

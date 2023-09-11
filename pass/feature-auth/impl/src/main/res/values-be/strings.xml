@@ -34,8 +34,8 @@
   <string name="auth_master_password_label">Асноўны пароль</string>
   <string name="auth_action_reveal_password">Паказаць асноўны пароль</string>
   <string name="auth_action_conceal_password">Схаваць асноўны пароль</string>
-  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Увядзіце PIN замест гэтага</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Разблакіруйце адбіткам пальца замест гэтага</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Замест гэтага ўвядзіце PIN</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Замест гэтага разблакіруйце адбіткам пальца</string>
   <string name="auth_unlock_button">Разблакіраваць</string>
   <string name="auth_error_verifying_password">Памылка праверкі вашага пароля</string>
   <string name="auth_error_empty_password">Пароль не можа быць пустым</string>

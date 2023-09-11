@@ -43,7 +43,7 @@
   <string name="share_permissions_title">Ustaw uprawnienia</string>
   <string name="share_permissions_subtitle">Wybierz uprawnienia użytkownika dla sejfu \'%s\'.</string>
   <string name="sharing_invitation_from">Zaproszenie od %s</string>
-  <string name="sharing_join_shared_vault">Dołącz do udostępnionego sejfu</string>
+  <string name="sharing_join_shared_vault">Dołącz i synchronizuj</string>
   <string name="sharing_reject_invitation">Odrzuć zaproszenie</string>
   <string name="sharing_snackbar_get_invite_error">Nie można pobrać zaproszenia</string>
   <string name="sharing_snackbar_invite_accepted">Zaproszenie zostało zaakceptowane</string>
@@ -75,6 +75,7 @@
   <string name="share_role_can_view">Odczyt</string>
   <string name="share_role_can_edit">Edycja</string>
   <string name="share_role_admin">Administrator</string>
+  <string name="share_role_owner">Właściciel</string>
   <string name="sharing_bottomsheet_transfer_ownership">Zmień właściciela</string>
   <string name="sharing_bottomsheet_remove_access">Usuń dostęp</string>
   <string name="sharing_bottomsheet_resend_invite">Wyślij ponownie zaproszenie</string>

@@ -6,7 +6,7 @@
   <string name="error_credentials_not_saved">Impossibile salvare le credenziali</string>
   <string name="error_loading_items">Impossibile caricare gli elementi</string>
   <string name="topbar_search_query">Ricerca in tutte le casseforti…</string>
-  <string name="topbar_search_query_primary_vault">Cerca nel vault principale...</string>
+  <string name="topbar_search_query_primary_vault">Ricerca nella cassaforte principale…</string>
   <string name="topbar_search_query_uninitialized">Ricerca…</string>
   <string name="inline_suggestions_open_app">Apri Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Il tuo piano consente solo di utilizzare gli elementi nel tuo caveau principale per scopi di compilazione automatica.</string>

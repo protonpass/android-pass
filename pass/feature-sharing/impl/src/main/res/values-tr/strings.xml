@@ -39,7 +39,7 @@
   <string name="share_permissions_title">İzinleri ayarla</string>
   <string name="share_permissions_subtitle">Bu kullanıcının \'%s\' kasanıza erişme düzeyini seçin.</string>
   <string name="sharing_invitation_from">%s daveti</string>
-  <string name="sharing_join_shared_vault">Paylaşılan kasaya eriş</string>
+  <string name="sharing_join_shared_vault">Katıl ve eşitle</string>
   <string name="sharing_reject_invitation">Daveti reddet</string>
   <string name="sharing_snackbar_get_invite_error">Davet alınamadı</string>
   <string name="sharing_snackbar_invite_accepted">Davet kabul edildi</string>
@@ -71,6 +71,7 @@
   <string name="share_role_can_view">Görüntüleyebilir</string>
   <string name="share_role_can_edit">Düzenleyebilir</string>
   <string name="share_role_admin">Yönetici</string>
+  <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">Sahipliği aktar</string>
   <string name="sharing_bottomsheet_remove_access">Erişimi kaldır</string>
   <string name="sharing_bottomsheet_resend_invite">Daveti yeniden gönder</string>

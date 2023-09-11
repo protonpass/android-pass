@@ -37,7 +37,7 @@
   <string name="share_permissions_title">設定權限</string>
   <string name="share_permissions_subtitle">為此將加入%s保管庫的用戶選取全限等級。</string>
   <string name="sharing_invitation_from">來自%s的邀請</string>
-  <string name="sharing_join_shared_vault">加入共享的保管庫</string>
+  <string name="sharing_join_shared_vault">加入並同步</string>
   <string name="sharing_reject_invitation">拒絕邀請</string>
   <string name="sharing_snackbar_get_invite_error">無法取得邀請</string>
   <string name="sharing_snackbar_invite_accepted">邀請已接受</string>
@@ -69,6 +69,7 @@
   <string name="share_role_can_view">可以查看</string>
   <string name="share_role_can_edit">可以編輯</string>
   <string name="share_role_admin">管理員</string>
+  <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">轉移所有權</string>
   <string name="sharing_bottomsheet_remove_access">移除存取權限</string>
   <string name="sharing_bottomsheet_resend_invite">重新發送邀請</string>

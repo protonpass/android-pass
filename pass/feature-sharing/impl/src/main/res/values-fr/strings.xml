@@ -39,7 +39,7 @@
   <string name="share_permissions_title">Définir les autorisations</string>
   <string name="share_permissions_subtitle">Sélectionnez le niveau d\'accès dont bénéficiera cet utilisateur en rejoignant votre coffre-fort « %s ».</string>
   <string name="sharing_invitation_from">Invitation envoyée par %s</string>
-  <string name="sharing_join_shared_vault">Rejoindre le coffre-fort partagé</string>
+  <string name="sharing_join_shared_vault">Rejoindre et synchroniser</string>
   <string name="sharing_reject_invitation">Refuser l\'invitation</string>
   <string name="sharing_snackbar_get_invite_error">Impossible d\'obtenir l\'invitation</string>
   <string name="sharing_snackbar_invite_accepted">Invitation acceptée</string>
@@ -71,6 +71,7 @@
   <string name="share_role_can_view">Consulter</string>
   <string name="share_role_can_edit">Modifier</string>
   <string name="share_role_admin">Administrateur</string>
+  <string name="share_role_owner">Propriétaire</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transférer la propriété</string>
   <string name="sharing_bottomsheet_remove_access">Supprimer l\'accès</string>
   <string name="sharing_bottomsheet_resend_invite">Renvoyer l\'invitation</string>

@@ -20,9 +20,9 @@
   <string name="home_trial_banner_title">Disfruta de tu prueba gratuita</string>
   <string name="home_trial_banner_text">Echa un vistazo a todas las funciones exclusivas que están disponibles para ti por tiempo limitado.</string>
   <string name="home_trial_banner_settings">Más información ›</string>
-  <string name="home_notification_permission_banner_title">Get important updates</string>
-  <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
-  <string name="home_notification_permission_banner_settings">Enable permission ›</string>
+  <string name="home_notification_permission_banner_title">Obtén actualizaciones importantes</string>
+  <string name="home_notification_permission_banner_text">Habilita las notificaciones push para estar informado de cuando otros compartan una bóveda contigo.</string>
+  <string name="home_notification_permission_banner_settings">Habilitar permiso ›</string>
   <string name="home_invite_banner_title">Invitación de bóveda compartida</string>
   <string name="home_invite_banner_subtitle">Has sido invitado a una bóveda. Toca aquí para ver la invitación.</string>
   <!-- Common bottomsheet -->

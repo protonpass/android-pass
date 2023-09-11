@@ -41,7 +41,7 @@
   <string name="share_permissions_title">Setare permisiuni</string>
   <string name="share_permissions_subtitle">Selectați nivelul de acces pe care îl are acest utilizator la seiful „%s”.</string>
   <string name="sharing_invitation_from">Invitație de la %s</string>
-  <string name="sharing_join_shared_vault">Alăturare la seif partajat</string>
+  <string name="sharing_join_shared_vault">Alăturare și sincronizare</string>
   <string name="sharing_reject_invitation">Refuzare invitație</string>
   <string name="sharing_snackbar_get_invite_error">Nu s-a putut primi invitația.</string>
   <string name="sharing_snackbar_invite_accepted">Invitație acceptată</string>
@@ -73,6 +73,7 @@
   <string name="share_role_can_view">Poate vedea</string>
   <string name="share_role_can_edit">Poate edita</string>
   <string name="share_role_admin">Administrator</string>
+  <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">Schimbare proprietar</string>
   <string name="sharing_bottomsheet_remove_access">Eliminare acces</string>
   <string name="sharing_bottomsheet_resend_invite">Retrimitere invitație</string>

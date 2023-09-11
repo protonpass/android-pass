@@ -32,8 +32,8 @@
   <string name="auth_master_password_label">Κύριος κωδικός</string>
   <string name="auth_action_reveal_password">Εμφάνιση κύριου κωδικού</string>
   <string name="auth_action_conceal_password">Απόκρυψη κύριου κωδικού</string>
-  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter PIN instead</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter fingerprint instead</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Εναλλακτικά, εισαγάγετε το PIN</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Εναλλακτικά εισάγετε δακτυλικό αποτύπωμα</string>
   <string name="auth_unlock_button">Ξεκλείδωμα</string>
   <string name="auth_error_verifying_password">Σφάλμα επαλήθευσης κωδικού</string>
   <string name="auth_error_empty_password">Ο κωδικός δεν μπορεί να είναι κενός</string>

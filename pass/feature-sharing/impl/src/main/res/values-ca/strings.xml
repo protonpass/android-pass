@@ -39,7 +39,7 @@
   <string name="share_permissions_title">Estableix els permisos</string>
   <string name="share_permissions_subtitle">Seleccioneu el nivell d\'accés que obtindrà aquest usuari quan s\'uneixi a la vostra caixa forta \'%s\'.</string>
   <string name="sharing_invitation_from">Invitació de %s</string>
-  <string name="sharing_join_shared_vault">Uniu-vos a la caixa forta compartida</string>
+  <string name="sharing_join_shared_vault">Join and sync</string>
   <string name="sharing_reject_invitation">Rebutja la invitació</string>
   <string name="sharing_snackbar_get_invite_error">No s’ha pogut obtenir la invitació.</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
@@ -71,6 +71,7 @@
   <string name="share_role_can_view">Pot veure</string>
   <string name="share_role_can_edit">Pot editar</string>
   <string name="share_role_admin">Administrador/a</string>
+  <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfereix la propietat</string>
   <string name="sharing_bottomsheet_remove_access">Suprimeix l\'accés</string>
   <string name="sharing_bottomsheet_resend_invite">Reenvia la invitació</string>

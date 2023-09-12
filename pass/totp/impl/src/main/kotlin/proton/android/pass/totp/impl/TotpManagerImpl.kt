@@ -73,7 +73,8 @@ class TotpManagerImpl @Inject constructor(
                 .buildToString()
             Result.success(uri)
         } else {
-            Result.failure(IllegalArgumentException("Secret must be base32 encoded"))
+            val redacted = redactSecret(sanitized)
+            Result.failure(IllegalArgumentException("Secret must be base32 encoded ($redacted)"))
         }
     }
 
@@ -118,6 +119,12 @@ class TotpManagerImpl @Inject constructor(
     private fun sanitizeSecret(secret: String) = secret
         .replace(" ", "")
         .replace("-", "")
+
+    @Suppress("MagicNumber")
+    private fun redactSecret(secret: String) = when {
+        secret.length <= 15 -> secret
+        else -> "${secret.take(10)}...${secret.takeLast(5)}"
+    }
 
     companion object {
         private const val ONE_SECOND_MILLISECONDS = 1000L

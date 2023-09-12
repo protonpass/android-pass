@@ -19,7 +19,6 @@
 package proton.android.pass.ui
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -42,6 +41,7 @@ import kotlinx.coroutines.runBlocking
 import me.proton.core.compose.component.ProtonCenteredProgress
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.setSecureMode
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.ui.launcher.LauncherViewModel
 import proton.android.pass.ui.launcher.LauncherViewModel.State.AccountNeeded
@@ -68,11 +68,7 @@ class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setSecureMode()
-        val splashScreen = if (findViewById<View>(android.R.id.content) != null) {
-            installSplashScreen()
-        } else {
-            null
-        }
+        val splashScreen = installSplashScreen()
 
         super.onCreate(savedInstanceState)
 
@@ -83,8 +79,12 @@ class MainActivity : FragmentActivity() {
 
         setContent {
             val state by launcherViewModel.state.collectAsStateWithLifecycle()
-            splashScreen?.setKeepOnScreenCondition {
-                state == Processing || state == StepNeeded
+            runCatching {
+                splashScreen.setKeepOnScreenCondition {
+                    state == Processing || state == StepNeeded
+                }
+            }.onFailure {
+                PassLogger.w(TAG, it, "Error setting splash screen keep on screen condition")
             }
             LaunchedEffect(state) {
                 launcherViewModel.onUserStateChanced(state)
@@ -141,5 +141,9 @@ class MainActivity : FragmentActivity() {
                 ?: AllowScreenshotsPreference.Disabled
         }
         setSecureMode(setting)
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }

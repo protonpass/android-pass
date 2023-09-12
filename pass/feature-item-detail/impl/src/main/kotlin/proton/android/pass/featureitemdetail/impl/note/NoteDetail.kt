@@ -82,6 +82,7 @@ fun NoteDetail(
                     when (state.itemUiModel.state) {
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
                             canMigrate = state.canMigrate,
+                            showCopyNote = true,
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
@@ -99,6 +100,12 @@ fun NoteDetail(
                                     state.itemUiModel.shareId,
                                     state.itemUiModel.id
                                 )
+                            },
+                            onCopyNote = {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    viewModel.onCopyToClipboard(state.itemUiModel)
+                                }
                             }
                         )
 

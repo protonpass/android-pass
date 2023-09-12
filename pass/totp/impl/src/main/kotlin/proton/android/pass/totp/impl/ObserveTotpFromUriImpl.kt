@@ -19,7 +19,9 @@
 package proton.android.pass.totp.impl
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import proton.android.pass.common.api.flatMap
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
@@ -36,9 +38,16 @@ class ObserveTotpFromUriImpl @Inject constructor(
                     .flatMap { totpManager.parse(it) }
                     .fold(
                         onSuccess = { totpManager.observeCode(it) },
-                        onFailure = { throw it }
+                        onFailure = {
+                            PassLogger.w(TAG, it, "Could not generate URI with defaults")
+                            flow { throw it }
+                        }
                     )
             }
         )
+
+    companion object {
+        private const val TAG = "ObserveTotpFromUriImpl"
+    }
 }
 

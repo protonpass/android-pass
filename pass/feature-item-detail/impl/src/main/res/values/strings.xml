@@ -15,6 +15,8 @@
 
     <!-- Note details -->
     <string name="field_detail_note_title">Note</string>
+    <string name="note_detail_copy_note_to_clipboard">Copy note</string>
+    <string name="note_copied_to_clipboard">Note copied to clipboard</string>
 
     <!-- Login details -->
     <string name="username_copied_to_clipboard">Username copied</string>

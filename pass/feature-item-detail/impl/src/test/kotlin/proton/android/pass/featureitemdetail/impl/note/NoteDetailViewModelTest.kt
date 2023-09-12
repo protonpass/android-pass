@@ -27,6 +27,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
@@ -69,6 +70,7 @@ class NoteDetailViewModelTest {
     private lateinit var restoreItem: TestRestoreItem
     private lateinit var encryptionContextProvider: TestEncryptionContextProvider
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    private lateinit var clipboardManager: TestClipboardManager
 
     @Before
     fun setup() {
@@ -80,6 +82,7 @@ class NoteDetailViewModelTest {
         restoreItem = TestRestoreItem()
         encryptionContextProvider = TestEncryptionContextProvider()
         canPerformPaidAction = TestCanPerformPaidAction()
+        clipboardManager = TestClipboardManager()
         instance = NoteDetailViewModel(
             snackbarDispatcher = snackbarDispatcher,
             telemetryManager = telemetryManager,
@@ -92,7 +95,8 @@ class NoteDetailViewModelTest {
             trashItem = trashItem,
             deleteItem = deleteItem,
             restoreItem = restoreItem,
-            canPerformPaidAction = canPerformPaidAction
+            canPerformPaidAction = canPerformPaidAction,
+            clipboardManager = clipboardManager
         )
     }
 
@@ -266,12 +270,20 @@ class NoteDetailViewModelTest {
         }
     }
 
+    @Test
+    fun `copy note to clipboard copies note to clipboard`() = runTest {
+        val noteContents = "note-contents"
+        val item = initialSetup(note = noteContents)
+        instance.onCopyToClipboard(item.toUiModel(TestEncryptionContext))
+        assertThat(clipboardManager.getContents()).isEqualTo(noteContents)
+    }
+
     private fun initialSetup(
         note: String = "note",
         hasMoreThanOneVault: Boolean = true,
         shareRole: ShareRole = ShareRole.Admin,
     ): Item {
-        val item = createEncryptedItem(note)
+        val item = createEncryptedItem(note = note)
         val value = ItemWithVaultInfo(
             item = item,
             vault = TEST_VAULT.copy(role = shareRole),

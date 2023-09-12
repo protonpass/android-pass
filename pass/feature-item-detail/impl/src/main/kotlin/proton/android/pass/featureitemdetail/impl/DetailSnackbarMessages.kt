@@ -33,15 +33,11 @@ enum class DetailSnackbarMessages(
     PasswordCopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
     WebsiteCopiedToClipboard(R.string.website_copied_to_clipboard, SnackbarType.NORM, true),
     TotpCopiedToClipboard(R.string.totp_copied_to_clipboard, SnackbarType.NORM, true),
+    NoteCopiedToClipboard(R.string.note_copied_to_clipboard, SnackbarType.NORM, true),
     CardHolderCopiedToClipboard(R.string.credit_card_cardholder_copied_to_clipboard, SnackbarType.NORM, true),
     CardNumberCopiedToClipboard(R.string.credit_card_number_copied_to_clipboard, SnackbarType.NORM, true),
     CardVerificationNumberCopiedToClipboard(
         id = R.string.credit_card_verifcation_number_copied_to_clipboard,
-        type = SnackbarType.NORM,
-        isClipboard = true
-    ),
-    CardPinCopiedToClipboard(
-        id = R.string.credit_card_pin_copied_to_clipboard,
         type = SnackbarType.NORM,
         isClipboard = true
     ),

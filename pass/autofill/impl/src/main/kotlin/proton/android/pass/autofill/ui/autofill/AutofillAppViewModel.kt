@@ -23,7 +23,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
@@ -34,7 +33,6 @@ import proton.android.pass.autofill.service.R
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
@@ -64,20 +62,20 @@ class AutofillAppViewModel @Inject constructor(
     fun getMappings(
         autofillItem: AutofillItem,
         autofillAppState: AutofillAppState
-    ): AutofillMappings =
-        encryptionContextProvider.withEncryptionContext {
-            handleTotpUri(this@withEncryptionContext, autofillItem.totp)
-            updateAutofillItem(
-                UpdateAutofillItemData(
-                    shareId = ShareId(autofillItem.shareId),
-                    itemId = ItemId(autofillItem.itemId),
-                    packageInfo = autofillAppState.packageInfoUi.toOption()
-                        .map(PackageInfoUi::toPackageInfo),
-                    url = autofillAppState.webDomain,
-                    shouldAssociate = false
-                )
+    ): AutofillMappings {
+        handleTotpUri(autofillItem.totp)
+        updateAutofillItem(
+            UpdateAutofillItemData(
+                shareId = ShareId(autofillItem.shareId),
+                itemId = ItemId(autofillItem.itemId),
+                packageInfo = autofillAppState.packageInfoUi.toOption()
+                    .map(PackageInfoUi::toPackageInfo),
+                url = autofillAppState.webDomain,
+                shouldAssociate = false
             )
+        )
 
+        return encryptionContextProvider.withEncryptionContext {
             ItemFieldMapper.mapFields(
                 encryptionContext = this@withEncryptionContext,
                 autofillItem = autofillItem,
@@ -87,21 +85,21 @@ class AutofillAppViewModel @Inject constructor(
                 parentIdList = autofillAppState.parentIdList
             )
         }
+    }
+
 
     fun onAutofillItemSelected(source: AutofillTriggerSource) = viewModelScope.launch {
         telemetryManager.sendEvent(AutofillDone(source))
         inAppReviewTriggerMetrics.incrementItemAutofillCount()
     }
 
-    private fun handleTotpUri(encryptionContext: EncryptionContext, totp: EncryptedString?) {
+    private fun handleTotpUri(totp: EncryptedString?) {
         if (totp == null) return
 
-        val totpUri = encryptionContext.decrypt(totp)
-        val copyTotpToClipboard = runBlocking {
-            preferenceRepository.getCopyTotpToClipboardEnabled().first()
-        }
-        if (totpUri.isNotBlank() && copyTotpToClipboard.value()) {
-            viewModelScope.launch {
+        val totpUri = encryptionContextProvider.withEncryptionContext { decrypt(totp) }
+        viewModelScope.launch {
+            val copyTotpToClipboard = preferenceRepository.getCopyTotpToClipboardEnabled().first()
+            if (totpUri.isNotBlank() && copyTotpToClipboard.value()) {
                 getTotpCodeFromUri(totpUri)
                     .onSuccess {
                         clipboardManager.copyToClipboard(it)

@@ -18,6 +18,7 @@
 
 package proton.android.pass.featuresettings.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
@@ -78,20 +79,24 @@ fun NavGraphBuilder.settingsGraph(
             )
         }
         bottomSheet(ThemeSelector) {
+            BackHandler { onNavigate(SettingsNavigation.DismissBottomSheet) }
             ThemeSelectionBottomSheet(onNavigate = onNavigate)
         }
         composable(LogView) {
             LogViewScreen(onUpClick = { onNavigate(SettingsNavigation.Close) })
         }
         bottomSheet(ClipboardSettings) {
+            BackHandler { onNavigate(SettingsNavigation.DismissBottomSheet) }
             ClipboardBottomSheet(
                 onClearClipboardSettingClick = { onNavigate(SettingsNavigation.ClearClipboardSettings) },
             )
         }
         bottomSheet(ClearClipboardOptions) {
+            BackHandler { onNavigate(SettingsNavigation.DismissBottomSheet) }
             ClearClipboardOptionsBottomSheet(onNavigate = onNavigate)
         }
         bottomSheet(SelectPrimaryVault) {
+            BackHandler { onNavigate(SettingsNavigation.DismissBottomSheet) }
             SelectPrimaryVaultBottomSheet(
                 onNavigate = onNavigate
             )

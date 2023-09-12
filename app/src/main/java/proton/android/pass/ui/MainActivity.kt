@@ -19,6 +19,7 @@
 package proton.android.pass.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -67,7 +68,11 @@ class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setSecureMode()
-        val splashScreen = installSplashScreen()
+        val splashScreen = if (findViewById<View>(android.R.id.content) != null) {
+            installSplashScreen()
+        } else {
+            null
+        }
 
         super.onCreate(savedInstanceState)
 
@@ -78,7 +83,7 @@ class MainActivity : FragmentActivity() {
 
         setContent {
             val state by launcherViewModel.state.collectAsStateWithLifecycle()
-            splashScreen.setKeepOnScreenCondition {
+            splashScreen?.setKeepOnScreenCondition {
                 state == Processing || state == StepNeeded
             }
             LaunchedEffect(state) {

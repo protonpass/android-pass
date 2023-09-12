@@ -2,6 +2,8 @@
 
 ### Features :tada:
 
+- Allow to copy note contents to clipboard from note detail screen.
+
 ### Fixes :bug:
 
 ### Other

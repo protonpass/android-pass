@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
@@ -52,12 +53,14 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNot
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotRestored
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemPermanentlyDeleted
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRestored
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.NoteCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import proton.pass.domain.canUpdate
@@ -72,6 +75,7 @@ class NoteDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
+    private val clipboardManager: ClipboardManager,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle
@@ -186,6 +190,12 @@ class NoteDetailViewModel @Inject constructor(
             snackbarDispatcher(ItemNotRestored)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    fun onCopyToClipboard(itemUiModel: ItemUiModel) = viewModelScope.launch {
+        val contents = itemUiModel.contents as? ItemContents.Note ?: return@launch
+        clipboardManager.copyToClipboard(contents.note, isSecure = false)
+        snackbarDispatcher(NoteCopiedToClipboard)
     }
 
     companion object {

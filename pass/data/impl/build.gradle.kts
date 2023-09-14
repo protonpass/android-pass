@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.core.observability)
     implementation(libs.core.payment)
     implementation(libs.core.push)
+    implementation(libs.core.telemetry)
     implementation(libs.core.user)
     implementation(libs.core.userSettings)
     implementation(libs.core.utilKotlin)

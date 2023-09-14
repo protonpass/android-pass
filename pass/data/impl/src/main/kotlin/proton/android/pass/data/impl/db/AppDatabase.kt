@@ -61,6 +61,8 @@ import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
 import me.proton.core.push.data.local.db.PushConverters
 import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.push.data.local.db.PushEntity
+import me.proton.core.telemetry.data.db.TelemetryDatabase
+import me.proton.core.telemetry.data.entity.TelemetryEventEntity
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserConverters
 import me.proton.core.user.data.db.UserDatabase
@@ -113,6 +115,7 @@ import proton.android.pass.data.impl.db.entities.TelemetryEntity
         UserSettingsEntity::class,
         NotificationEntity::class,
         PushEntity::class,
+        TelemetryEventEntity::class,
         // Pass
         ItemEntity::class,
         ShareEntity::class,
@@ -177,10 +180,11 @@ abstract class AppDatabase :
     UserDatabase,
     UserSettingsDatabase,
     NotificationDatabase,
-    PushDatabase {
+    PushDatabase,
+    TelemetryDatabase {
 
     companion object {
-        const val VERSION = 27
+        const val VERSION = 28
 
         const val DB_NAME = "db-passkey"
 
@@ -196,6 +200,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_18_19,
             AppDatabaseMigrations.MIGRATION_22_23,
             AppDatabaseMigrations.MIGRATION_26_27,
+            AppDatabaseMigrations.MIGRATION_27_28,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

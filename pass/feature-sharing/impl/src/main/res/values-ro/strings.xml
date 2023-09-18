@@ -73,7 +73,7 @@
   <string name="share_role_can_view">Poate vedea</string>
   <string name="share_role_can_edit">Poate edita</string>
   <string name="share_role_admin">Administrator</string>
-  <string name="share_role_owner">Owner</string>
+  <string name="share_role_owner">Proprietar</string>
   <string name="sharing_bottomsheet_transfer_ownership">Schimbare proprietar</string>
   <string name="sharing_bottomsheet_remove_access">Eliminare acces</string>
   <string name="sharing_bottomsheet_resend_invite">Retrimitere invitație</string>

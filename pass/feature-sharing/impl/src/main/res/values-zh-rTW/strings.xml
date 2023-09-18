@@ -69,7 +69,7 @@
   <string name="share_role_can_view">可以查看</string>
   <string name="share_role_can_edit">可以編輯</string>
   <string name="share_role_admin">管理員</string>
-  <string name="share_role_owner">Owner</string>
+  <string name="share_role_owner">擁有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">轉移所有權</string>
   <string name="sharing_bottomsheet_remove_access">移除存取權限</string>
   <string name="sharing_bottomsheet_resend_invite">重新發送邀請</string>

@@ -12,6 +12,8 @@
   <string name="alias_create_login_from_alias">Oturum açma kaydı oluştur</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Not</string>
+  <string name="note_detail_copy_note_to_clipboard">Notu kopyala</string>
+  <string name="note_copied_to_clipboard">Not panoya kopyalandı</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">Kullanıcı adı kopyalandı</string>
   <string name="password_copied_to_clipboard">Parola kopyalandı</string>

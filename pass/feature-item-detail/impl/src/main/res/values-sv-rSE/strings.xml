@@ -12,6 +12,8 @@
   <string name="alias_create_login_from_alias">Skapa inloggning</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Anteckning</string>
+  <string name="note_detail_copy_note_to_clipboard">Kopiera anteckning</string>
+  <string name="note_copied_to_clipboard">Anteckning kopierad till urklipp</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">Användarnamn kopierad</string>
   <string name="password_copied_to_clipboard">Lösenord kopierat</string>

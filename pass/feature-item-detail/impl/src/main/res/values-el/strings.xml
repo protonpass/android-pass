@@ -12,6 +12,8 @@
   <string name="alias_create_login_from_alias">Δημιουργία σύνδεσης</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Σημείωση</string>
+  <string name="note_detail_copy_note_to_clipboard">Αντιγραφή σημείωσης</string>
+  <string name="note_copied_to_clipboard">Η σημείωση αντιγράφηκε στο πρόχειρο</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">Το όνομα χρήστη αντιγράφηκε</string>
   <string name="password_copied_to_clipboard">Ο κωδικός πρόσβασης αντιγράφηκε</string>

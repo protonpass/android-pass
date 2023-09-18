@@ -71,7 +71,7 @@
   <string name="share_manage_vault_share_with_more_people">Share with more people</string>
   <string name="share_manage_vault_item_count">%d items</string>
   <string name="share_manage_vault_invite_pending">Pending invite</string>
-  <string name="share_manage_vault_current_user_indicator">You</string>
+  <string name="share_manage_vault_current_user_indicator">Вы</string>
   <string name="share_role_can_view">Can view</string>
   <string name="share_role_can_edit">Can edit</string>
   <string name="share_role_admin">Admin</string>

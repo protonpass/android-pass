@@ -12,6 +12,8 @@
   <string name="alias_create_login_from_alias">Crea un inici de sessió</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Nota</string>
+  <string name="note_detail_copy_note_to_clipboard">Copia la nota</string>
+  <string name="note_copied_to_clipboard">Note copied to clipboard</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">S\'ha copiat el nom d\'usuari</string>
   <string name="password_copied_to_clipboard">S\'ha copiat la contrasenya</string>

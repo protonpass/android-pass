@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Metin</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Metin özel alanı</string>
   <string name="bottomsheet_custom_field_type_hidden">Gizli</string>
-  <string name="bottomsheet_custom_field_type_totp">İki adımlı doğrulama kodu (tek kullanımlık)</string>
+  <string name="bottomsheet_custom_field_type_totp">İki adımlı doğrulama parolası (tek kullanımlık)</string>
   <string name="bottomsheet_custom_field_option_edit">Başlığı düzenle</string>
   <string name="bottomsheet_custom_field_option_remove">Alanı kaldır</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Özel alanı kaldır</string>
@@ -101,7 +101,7 @@
   <!--  Common create items  -->
   <string name="changes_saved">Değişiklikler kaydedildi</string>
   <!--  Totp  -->
-  <string name="totp_create_login_field_title">İki adımlı doğrulama kodu (tek kullanımlık)</string>
+  <string name="totp_create_login_field_title">İki adımlı doğrulama parolası (tek kullanımlık)</string>
   <string name="totp_create_login_field_invalid">İki adımlı doğrulama parolası geçersiz</string>
   <string name="totp_create_login_field_placeholder">İki adımlı doğrulama parolası ekle</string>
   <string name="close_scree_icon_content_description">Ekranı kapat düğmesi</string>

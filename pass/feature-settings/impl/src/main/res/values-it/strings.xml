@@ -31,7 +31,7 @@
   <string name="settings_use_favicons_preference_subtitle">Decidi se mostrare l\'icona del sito web nei tuoi elementi.</string>
   <string name="settings_allow_screenshots_preference_title">Consenti screenshot</string>
   <string name="settings_allow_screenshots_preference_subtitle">Se abilitato, potrai catturare screenshot dell\'applicazione.</string>
-  <string name="settings_clear_icon_cache_success">Cache delle icone svuotata con successo</string>
+  <string name="settings_clear_icon_cache_success">Cache delle icone cancellata</string>
   <string name="settings_clear_icon_cache_error">Impossibile cancellare la cache dell\'icona</string>
   <string name="settings_share_telemetry">Condividi l\'utilizzo anonimo</string>
   <string name="settings_share_crashes">Condividi report anonimi sugli arresti anomali</string>

@@ -12,6 +12,8 @@
   <string name="alias_create_login_from_alias">Utwórz dane logowania</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Notatka</string>
+  <string name="note_detail_copy_note_to_clipboard">Kopiuj notatkę</string>
+  <string name="note_copied_to_clipboard">Notatka została skopiowana do schowka</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">Nazwa użytkownika została skopiowana</string>
   <string name="password_copied_to_clipboard">Hasło zostało skopiowane</string>

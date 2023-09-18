@@ -52,8 +52,8 @@
   <string name="most_recent_this_week">Ostatni tydzień</string>
   <string name="most_recent_last_two_weeks">Ostatnie 2 tygodnie</string>
   <string name="most_recent_last_30_days">Ostatni miesiąc</string>
-  <string name="most_recent_last_60_days">Ostatnie 60 dni</string>
-  <string name="most_recent_last_90_days">Ostatnie 90 dni</string>
+  <string name="most_recent_last_60_days">Ostatnie 2 miesiące</string>
+  <string name="most_recent_last_90_days">Ostatnie 3 miesiące</string>
   <string name="most_recent_within_the_last_year">Ostatni rok</string>
   <string name="most_recent_more_than_1_year">Ponad rok</string>
   <!-- Search Top Bar -->

@@ -5,8 +5,8 @@
   <string name="snackbar_cannot_create_more_vaults_error">無法創建更多保管庫</string>
   <string name="snackbar_edit_vault_success">已編輯保管庫</string>
   <string name="snackbar_edit_vault_error">保管庫無法編輯</string>
-  <string name="snackbar_delete_vault_success">已刪除保管庫</string>
-  <string name="snackbar_delete_vault_error">無法刪除保管庫</string>
+  <string name="snackbar_delete_vault_success">保管庫已刪除</string>
+  <string name="snackbar_delete_vault_error">保管庫未刪除</string>
   <string name="snackbar_leave_vault_success">剩餘保管庫</string>
   <string name="snackbar_leave_vault_error">無法離開保管庫</string>
   <string name="snackbar_retrieve_vault_error">查詢不到保管庫</string>

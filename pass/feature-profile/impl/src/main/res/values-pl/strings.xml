@@ -31,8 +31,8 @@
   <string name="app_lock_four_hours">Po 4 godzinach</string>
   <string name="profile_account_plan_name_trial">Darmowa wersja próbna</string>
   <string name="app_lock_config_none">Brak</string>
-  <string name="app_lock_config_biometric">Biometria</string>
-  <string name="app_lock_config_pin_code">Kod PIN</string>
+  <string name="app_lock_config_biometric">Biometrii</string>
+  <string name="app_lock_config_pin_code">Kodu PIN</string>
   <string name="app_lock_config_unlock_with">Odblokuj za pomocą</string>
   <string name="app_lock_config_app_lock_time">Automatyczna blokada</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Użyj blokady systemu, kiedy biometria nie działa</string>

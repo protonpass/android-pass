@@ -11,7 +11,7 @@
     <item quantity="one">Pozostał 1 dzień wersji próbnej</item>
     <item quantity="few">Pozostały %d dni wersji próbnej</item>
     <item quantity="many">Pozostało %d dni wersji próbnej</item>
-    <item quantity="other">Pozostało %d dni wersji próbnej</item>
+    <item quantity="other">Pozostało %d dnia wersji próbnej</item>
   </plurals>
   <string name="trial_learn_more">Dowiedz się więcej</string>
 </resources>

@@ -13,7 +13,7 @@
   <string name="bottomsheet_option_include_numbers">Уключаць лічбы (0-9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Злучкі ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Прабелы</string>
-  <string name="bottomsheet_option_word_separator_periods">Перыяды ( . )</string>
+  <string name="bottomsheet_option_word_separator_periods">Кропкі ( . )</string>
   <string name="bottomsheet_option_word_separator_commas">Коскі ( , )</string>
   <string name="bottomsheet_option_word_separator_underscores">Падкрэсліванні ( _ )</string>
   <string name="bottomsheet_option_word_separator_numbers">Лічбы</string>

@@ -71,7 +71,7 @@
   <string name="share_role_can_view">Görüntüleyebilir</string>
   <string name="share_role_can_edit">Düzenleyebilir</string>
   <string name="share_role_admin">Yönetici</string>
-  <string name="share_role_owner">Owner</string>
+  <string name="share_role_owner">Sahibi</string>
   <string name="sharing_bottomsheet_transfer_ownership">Sahipliği aktar</string>
   <string name="sharing_bottomsheet_remove_access">Erişimi kaldır</string>
   <string name="sharing_bottomsheet_resend_invite">Daveti yeniden gönder</string>

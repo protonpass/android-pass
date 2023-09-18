@@ -32,8 +32,8 @@
   <string name="auth_master_password_label">Palavra-passe principal</string>
   <string name="auth_action_reveal_password">Mostrar a palavra-passe principal</string>
   <string name="auth_action_conceal_password">Ocultar a palavra-passe principal</string>
-  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter PIN instead</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter fingerprint instead</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Em vez disso, introduzir o PIN</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Em vez disso, introduzir a impressão digital</string>
   <string name="auth_unlock_button">Desbloquear</string>
   <string name="auth_error_verifying_password">Erro ao verificar a sua palavra-passe</string>
   <string name="auth_error_empty_password">A palavra-passe não pode estar vazia.</string>

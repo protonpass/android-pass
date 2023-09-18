@@ -20,9 +20,9 @@
   <string name="home_trial_banner_title">Оцініть усі переваги з безплатною пробною версією</string>
   <string name="home_trial_banner_text">Ознайомтеся з усіма ексклюзивними функціями протягом обмеженого часу.</string>
   <string name="home_trial_banner_settings">Докладніше ›</string>
-  <string name="home_notification_permission_banner_title">Get important updates</string>
-  <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
-  <string name="home_notification_permission_banner_settings">Enable permission ›</string>
+  <string name="home_notification_permission_banner_title">Отримувати важливі оновлення</string>
+  <string name="home_notification_permission_banner_text">Увімкнути push-сповіщення для інформування коли інші діляться сховищем з вами.</string>
+  <string name="home_notification_permission_banner_settings">Активувати дозволи</string>
   <string name="home_invite_banner_title">Запрошення до спільного сховища</string>
   <string name="home_invite_banner_subtitle">Вас запросили в сховище. Натисніть тут, щоб побачити запрошення.</string>
   <!-- Common bottomsheet -->

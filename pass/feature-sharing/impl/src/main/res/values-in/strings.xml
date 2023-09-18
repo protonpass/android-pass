@@ -69,7 +69,7 @@
   <string name="share_role_can_view">Dapat melihat</string>
   <string name="share_role_can_edit">Dapat menyunting</string>
   <string name="share_role_admin">Admin</string>
-  <string name="share_role_owner">Owner</string>
+  <string name="share_role_owner">Pemilik</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfer kepemilikan</string>
   <string name="sharing_bottomsheet_remove_access">Hapus akses</string>
   <string name="sharing_bottomsheet_resend_invite">Kirim ulang undangan</string>

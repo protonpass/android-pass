@@ -9,11 +9,11 @@
   <string name="action_note">Нататка</string>
   <string name="action_credit_card">Крэдытная картка</string>
   <string name="action_password">Пароль</string>
-  <string name="item_type_login_description">Дадаць запіс уваходу для праграм або сайтаў</string>
-  <string name="item_type_alias_description">Атрымаць псеўданім электроннай пошты для выкарыстання ў новых праграмах</string>
-  <string name="item_type_note_description">Запісаць PIN, код або нататку для сябе</string>
-  <string name="item_type_credit_card_description">Бяспечна захаваць сваю плацежную інфармацыю</string>
-  <string name="item_type_password_description">Згенерыруйце надзейны пароль</string>
+  <string name="item_type_login_description">Дадайце запіс уваходу для праграм або сайтаў</string>
+  <string name="item_type_alias_description">Атрымайце псеўданім электроннай пошты для выкарыстання ў новых праграмах</string>
+  <string name="item_type_note_description">Запішыце PIN, код або нататку для сябе</string>
+  <string name="item_type_credit_card_description">Бяспечна захоўвайце сваю плацежную інфармацыю</string>
+  <string name="item_type_password_description">Згенерыраваць надзейны пароль</string>
   <!-- Create Login -->
   <string name="title_create_login">Стварыць запіс уваходу</string>
   <string name="field_username_title">Імя карыстальніка або адрас электроннай пошты</string>

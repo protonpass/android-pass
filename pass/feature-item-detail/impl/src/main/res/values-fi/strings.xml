@@ -12,6 +12,8 @@
   <string name="alias_create_login_from_alias">Luo kirjautumistieto</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Muistiinpano</string>
+  <string name="note_detail_copy_note_to_clipboard">Kopioi muistiinpano</string>
+  <string name="note_copied_to_clipboard">Muistiinpano kopioitiin leikepöydälle</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">Käyttäjätunnus kopioitiin</string>
   <string name="password_copied_to_clipboard">Salasana kopioitiin</string>

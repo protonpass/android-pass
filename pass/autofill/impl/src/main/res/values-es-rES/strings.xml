@@ -13,16 +13,16 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Sugerencias para %s</string>
   <string name="autofill_associate_web_app_name_dialog_title">Utilizar los datos de inicio de sesión de \"%s\" en esta aplicación o este sitio web.</string>
-  <string name="autofill_dialog_associate_and_autofill">Usar siempre.</string>
+  <string name="autofill_dialog_associate_and_autofill">Utilizar siempre</string>
   <string name="autofill_dialog_just_autofill">Utilizar una vez</string>
   <string name="autofill_dialog_cancel">Cancelar</string>
-  <string name="autofill_notification_copy_to_clipboard">Código TOTP copiado al portapapeles.</string>
+  <string name="autofill_notification_copy_to_clipboard">El código TOTP ha sido copiado al portapapeles.</string>
   <string name="autofill_dialog_associate_title">¿Utilizar el inicio de sesión?</string>
   <string name="snackbar_item_move_to_trash_success">Elemento movido a la papelera.</string>
   <string name="snackbar_item_move_to_trash_error">No se ha podido mover a la papelera.</string>
-  <string name="snackbar_item_copy_username_success">Se ha copiado el nombre de usuario en el portapapeles</string>
-  <string name="snackbar_item_copy_password_success">La contraseña se ha copiado en el portapapeles</string>
-  <string name="snackbar_item_copy_clipboard_error">No se ha podio copiar en el portapapeles</string>
+  <string name="snackbar_item_copy_username_success">El nombre de usuario ha sido copiado al portapapeles.</string>
+  <string name="snackbar_item_copy_password_success">La contraseña ha sido copiada en el portapapeles.</string>
+  <string name="snackbar_item_copy_clipboard_error">No se ha podio copiar en el portapapeles.</string>
   <string name="autofill_user_logged_out">Se ha cerrado la sesión. Inicia sesión de nuevo abriendo la aplicación.</string>
   <string name="bottomsheet_copy_password">Copiar contraseña</string>
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>

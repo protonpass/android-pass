@@ -52,8 +52,8 @@
   <string name="vault_delete_dialog_title">刪除保管庫</string>
   <string name="vault_delete_dialog_cancel_action">取消</string>
   <string name="vault_delete_dialog_delete_action">刪除</string>
-  <string name="snackbar_delete_vault_success">已刪除保管庫</string>
-  <string name="snackbar_delete_vault_error">無法刪除保管庫</string>
+  <string name="snackbar_delete_vault_success">保管庫已刪除</string>
+  <string name="snackbar_delete_vault_error">保管庫未刪除</string>
   <!-- Search top bar -->
   <string name="search_topbar_placeholder_all_vaults">於保管庫中搜尋</string>
   <string name="search_topbar_placeholder_vault">於%s中搜尋</string>

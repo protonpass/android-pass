@@ -12,6 +12,8 @@
   <string name="alias_create_login_from_alias">創建登入</string>
   <!-- Note details -->
   <string name="field_detail_note_title">備註</string>
+  <string name="note_detail_copy_note_to_clipboard">複製備註</string>
+  <string name="note_copied_to_clipboard">備註已複製到剪貼簿</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">已複製使用者名稱</string>
   <string name="password_copied_to_clipboard">已複製密碼</string>

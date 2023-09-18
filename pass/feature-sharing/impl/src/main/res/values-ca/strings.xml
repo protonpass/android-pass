@@ -71,7 +71,7 @@
   <string name="share_role_can_view">Pot veure</string>
   <string name="share_role_can_edit">Pot editar</string>
   <string name="share_role_admin">Administrador/a</string>
-  <string name="share_role_owner">Owner</string>
+  <string name="share_role_owner">Propietari</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfereix la propietat</string>
   <string name="sharing_bottomsheet_remove_access">Suprimeix l\'accés</string>
   <string name="sharing_bottomsheet_resend_invite">Reenvia la invitació</string>

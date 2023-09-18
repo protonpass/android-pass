@@ -12,6 +12,8 @@
   <string name="alias_create_login_from_alias">Стварыць запіс уваходу</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Нататка</string>
+  <string name="note_detail_copy_note_to_clipboard">Скапіяваць нататку</string>
+  <string name="note_copied_to_clipboard">Нататка скапіявана ў буфер абмену</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">Імя карыстальніка скапіявана</string>
   <string name="password_copied_to_clipboard">Пароль скапіяваны</string>

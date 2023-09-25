@@ -5,11 +5,11 @@
   <string name="profile_option_account">Account</string>
   <string name="profile_help_center">Centro Assistenza</string>
   <string name="profile_security">Sicurezza</string>
-  <string name="profile_option_feedback">Suggerimento</string>
+  <string name="profile_option_feedback">Feedback</string>
   <string name="profile_option_import_export">Importa/esporta</string>
   <string name="profile_option_rating">Valuta l\'applicazione</string>
-  <string name="profile_option_autofill">Riempimento automatico</string>
-  <string name="profile_option_autofill_subtitle">Compila automaticamente gli username e le password.</string>
+  <string name="profile_option_autofill">Compilazione automatica</string>
+  <string name="profile_option_autofill_subtitle">Compila automaticamente i nomi utente e le password.</string>
   <string name="profile_option_fingerprint">Impronta digitale</string>
   <string name="profile_option_automatic_app_lock">Blocco automatico dell\'app.</string>
   <string name="profile_option_advanced">Avanzata</string>

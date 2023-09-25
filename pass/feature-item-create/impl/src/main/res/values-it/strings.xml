@@ -27,8 +27,8 @@
   <string name="sticky_button_generate_password">Crea una nuova password</string>
   <string name="sticky_button_create_alias">Hide-my-email</string>
   <string name="sticky_button_use_account_email">Usa %s</string>
-  <string name="create_login_item_creation_error">Impossibile creare l\'accesso</string>
-  <string name="create_login_item_update_error">Impossibile aggiornare l\'accesso</string>
+  <string name="create_login_item_creation_error">Impossibile creare il login</string>
+  <string name="create_login_item_update_error">Impossibile aggiornare il login</string>
   <string name="create_login_init_error">Impossibile inizializzare il login</string>
   <string name="create_login_invalid_totp">Il contenuto 2FA non è valido</string>
   <string name="login_created">Login creato</string>
@@ -108,7 +108,7 @@
   <string name="totp_paste_code_action">Incolla codice</string>
   <string name="totp_scan_code_action">Scansiona codice</string>
   <string name="field_cannot_be_empty">Questo campo non può rimanere vuoto</string>
-  <string name="camera_permission_explanation">Per poter utilizzare questa funzionalità è richiesto il permesso Camera.</string>
+  <string name="camera_permission_explanation">Autorizzazione alla fotocamera richiesta per rendere disponibile questa funzionalità.</string>
   <string name="camera_permission_open_settings">Apri impostazioni</string>
   <!--  Totp limit  -->
   <string name="mfa_limit_reached">Limite 2FA raggiunto</string>

@@ -14,12 +14,12 @@
   <string name="snackbar_get_vault_list_error">Impossibile caricare la lista delle casseforti</string>
   <string name="snackbar_get_upgrade_info_error">Impossibile preparare la lista delle casseforti</string>
   <string name="vault_delete_dialog_title">Elimina cassaforte</string>
-  <string name="vault_delete_dialog_body">Ciò eliminerà definitivamente la cassaforte __VAULT_NAME__ e tutti i suoi contenuti. Inserire il nome della cassaforte per confermare.</string>
+  <string name="vault_delete_dialog_body">Questo eliminerà definitivamente la cassaforte __VAULT_NAME__ e tutti i suoi contenuti. Inserisci il nome della cassaforte per confermare l\'eliminazione.</string>
   <string name="vault_delete_dialog_placeholder">Nome cassaforte</string>
   <string name="vault_delete_dialog_cancel_action">Annulla</string>
   <string name="vault_delete_dialog_delete_action">Elimina</string>
   <string name="vault_leave_dialog_title">Abbandona cassaforte</string>
-  <string name="vault_leave_dialog_body">Questo rimuoverà il tuo accesso dal vault __VAULT_NAME__ e da tutti i suoi contenuti. Sei sicuro di voler proseguire?</string>
+  <string name="vault_leave_dialog_body">Questo rimuoverà il tuo accesso alla cassaforte __VAULT_NAME__ e a tutti i suoi contenuti. Sei sicuro di volerla abbandonare?</string>
   <string name="vault_leave_dialog_cancel_action">Annulla</string>
   <string name="vault_leave_dialog_leave_action">Abbandona</string>
   <string name="bottomsheet_close_icon_content_description">Chiudi creazione cassaforte</string>

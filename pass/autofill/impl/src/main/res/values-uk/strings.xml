@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Не знайдено відповідних відображених полів</string>
+  <string name="error_cant_find_matching_fields">Не знайдено відповідних зображених полів</string>
   <string name="autofill_authenticate_prompt">Отримати з Proton Pass</string>
   <string name="error_credentials_not_found">Не знайдено відповідних облікових даних</string>
   <string name="error_credentials_not_saved">Не вдалося зберегти облікові дані</string>

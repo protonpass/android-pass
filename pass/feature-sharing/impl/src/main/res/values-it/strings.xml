@@ -33,13 +33,13 @@
     <item quantity="other">%d membri</item>
   </plurals>
   <string name="share_with_title">Condividi con</string>
-  <string name="share_with_subtitle">Questo utente riceverà un invito a unirsi al tuo vault \'%s\'.</string>
-  <string name="share_with_email_hint">Indirizzo e-mail</string>
+  <string name="share_with_subtitle">Questo utente riceverà un invito a unirsi alla tua cassaforte \'%s\'.</string>
+  <string name="share_with_email_hint">Indirizzo email</string>
   <string name="share_with_email_error">Indirizzo email non valido</string>
-  <string name="share_permissions_title">Imposta i permessi</string>
+  <string name="share_permissions_title">Imposta le autorizzazioni</string>
   <string name="share_permissions_subtitle">Seleziona il livello di accesso che questo utente otterrà quando si unirà alla tua cassaforte \'%s\'.</string>
   <string name="sharing_invitation_from">Invito da %s</string>
-  <string name="sharing_join_shared_vault">Partecipa e sincronizza</string>
+  <string name="sharing_join_shared_vault">Unisciti e sincronizza</string>
   <string name="sharing_reject_invitation">Rifiuta l\'invito</string>
   <string name="sharing_snackbar_get_invite_error">Impossibile ottenere l\'invito</string>
   <string name="sharing_snackbar_invite_accepted">Invito accettato</string>
@@ -49,9 +49,9 @@
   <string name="sharing_snackbar_vault_not_found">Impossibile trovare la cassaforte</string>
   <string name="sharing_snackbar_invite_sent_success">Invito spedito</string>
   <string name="sharing_snackbar_invite_sent_error">Impossibile inviare l\'invito</string>
-  <string name="sharing_snackbar_get_vault_members_error">Impossibile ottenere i membri del vault</string>
-  <string name="sharing_snackbar_change_permission_success">Autorizzazioni modificate</string>
-  <string name="sharing_snackbar_change_permission_error">Impossibile modificare le autorizzazioni</string>
+  <string name="sharing_snackbar_get_vault_members_error">Impossibile ottenere i membri della cassaforte</string>
+  <string name="sharing_snackbar_change_permission_success">Autorizzazioni cambiate</string>
+  <string name="sharing_snackbar_change_permission_error">Impossibile cambiare le autorizzazioni</string>
   <string name="sharing_snackbar_remove_member_success">Membro rimosso dalla cassaforte</string>
   <string name="sharing_snackbar_remove_member_error">Impossibile rimuovere dalla cassaforte</string>
   <string name="share_summary_title">Riepilogo</string>

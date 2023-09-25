@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="title_settings">Impostazioni</string>
-  <string name="settings_autofill_section_title">Riempimento automatico</string>
-  <string name="settings_autofill_preference_title">Riempimento automatico</string>
-  <string name="settings_autofill_preference_description">Per accedere in maniera più semplice e veloce, permetti a Proton Pass di compilare i tuoi username e le tue password.</string>
+  <string name="settings_autofill_section_title">Compilazione automatica</string>
+  <string name="settings_autofill_preference_title">Compilazione automatica</string>
+  <string name="settings_autofill_preference_description">Per accedere in maniera più semplice e veloce, permetti a Proton Pass di compilare i tuoi nomi utente e le tue password.</string>
   <string name="settings_authentication_section_title">Autenticazione</string>
   <string name="settings_authentication_preference_title">Sblocco con impronta</string>
   <string name="settings_authentication_preference_description_enabled">Richiede Apertura rapida e sicura dell\'applicazione tramite impronta.</string>
@@ -34,13 +34,13 @@
   <string name="settings_clear_icon_cache_success">Cache delle icone cancellata</string>
   <string name="settings_clear_icon_cache_error">Impossibile cancellare la cache dell\'icona</string>
   <string name="settings_share_telemetry">Condividi l\'utilizzo anonimo</string>
-  <string name="settings_share_crashes">Condividi report anonimi sugli arresti anomali</string>
+  <string name="settings_share_crashes">Condividi segnalazioni anonime sugli arresti anomali</string>
   <string name="settings_preference_updated">La tua preferenza è stata aggiornata</string>
   <string name="view_logs_title">Visualizza i log</string>
   <string name="clipboard_bottomsheet_title">Appunti</string>
   <string name="clipboard_option_clear_clipboard_label">Cancella appunti</string>
   <string name="clipboard_option_copy_totp_code">Copia codici di autenticazione</string>
-  <string name="clipboard_option_copy_totp_code_hint">Copia automaticamente i codici di autenticazione quanto utilizzi il riempimento automatico.</string>
+  <string name="clipboard_option_copy_totp_code_hint">Copia automaticamente i codici di autenticazione quanto utilizzi la compilazione automatica.</string>
   <string name="clipboard_option_clear_clipboard_never">Mai</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Dopo 60 secondi</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Dopo 180 secondi</string>

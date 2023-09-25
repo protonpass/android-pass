@@ -31,7 +31,7 @@
   <string name="settings_use_favicons_preference_subtitle">Tentukan apakah Anda ingin melihat ikon situs web pada item Anda.</string>
   <string name="settings_allow_screenshots_preference_title">Izinkan tangkapan layar</string>
   <string name="settings_allow_screenshots_preference_subtitle">Jika diaktifkan, Anda akan dapat mengambil tangkapan layar dari aplikasi.</string>
-  <string name="settings_clear_icon_cache_success">Tembolok ikon dihapus</string>
+  <string name="settings_clear_icon_cache_success">Cache ikon dihapus</string>
   <string name="settings_clear_icon_cache_error">Cache ikon tidak dapat dibersihkan</string>
   <string name="settings_share_telemetry">Bagikan statistik pemakaian anonim</string>
   <string name="settings_share_crashes">Bagikan laporan crash anonim</string>

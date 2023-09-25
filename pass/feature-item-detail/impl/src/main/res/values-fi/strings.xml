@@ -57,7 +57,7 @@
   <string name="credit_card_number_field_name">Kortin numero</string>
   <string name="credit_card_cvv_field_name">Turvakoodi</string>
   <string name="credit_card_pin_field_name">PIN-koodi</string>
-  <string name="credit_card_expiration_date_field_name">Erääntyy</string>
+  <string name="credit_card_expiration_date_field_name">Voimassaolo päättyy</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Kortinhaltija kopioitiin leikepöydälle</string>
   <string name="credit_card_number_copied_to_clipboard">Kortin numero kopioitiin leikepöydälle</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Turvakoodi kopioitiin leikepöydälle</string>

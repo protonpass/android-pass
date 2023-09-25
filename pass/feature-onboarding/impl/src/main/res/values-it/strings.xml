@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Permetti a Proton Pass di inserire i dati di accesso per te. Gli inserimenti manuali e i copia-incolla non saranno più necessari.</string>
+  <string name="on_boarding_autofill_content">Permetti a Proton Pass di inserire i dati di accesso per te. Scriverli o fare copia-incolla manualmente non sarà più necessario.</string>
   <string name="on_boarding_autofill_title">Accedi immediatamente alle app</string>
   <string name="on_boarding_autofill_button">Compilazione automatica con Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Imposta lo sblocco tramite impronta, in questo modo solo tu avrai accesso a Proton Pass.</string>

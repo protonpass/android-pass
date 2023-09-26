@@ -18,6 +18,10 @@
 
 package proton.android.pass.test
 
+import proton.pass.domain.PlanType
+
 object TestConstants {
     const val BULLET = "•"
+
+    val FreePlanType: PlanType = PlanType.Free("free", "Proton Free")
 }

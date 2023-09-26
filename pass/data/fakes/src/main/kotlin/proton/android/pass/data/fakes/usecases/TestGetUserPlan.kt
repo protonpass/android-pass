@@ -45,7 +45,7 @@ class TestGetUserPlan @Inject constructor() : GetUserPlan {
 
     companion object {
         val DEFAULT_PLAN = Plan(
-            planType = PlanType.Free,
+            planType = PlanType.Free("free", "Proton Free"),
             hideUpgrade = false,
             vaultLimit = PlanLimit.Limited(10),
             aliasLimit = PlanLimit.Limited(10),

@@ -41,6 +41,7 @@ import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBotto
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectedVaultArg
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.TestConstants
 import proton.android.pass.test.waitUntilExists
 import proton.pass.domain.Plan
 import proton.pass.domain.PlanLimit
@@ -82,7 +83,7 @@ class SelectVaultBottomSheetTest {
 
     @Test
     fun canSelectVaultWithFreePlanAndOneVault() {
-        setupPlan(true, PlanType.Free)
+        setupPlan(true, TestConstants.FreePlanType)
         setupVaults(1)
 
         val checker = CallChecker<ShareId>()
@@ -111,7 +112,7 @@ class SelectVaultBottomSheetTest {
     @Test
     fun canSelectPrimaryVaultWithFreePlanAndMultipleVaults() {
         val primaryIndex = 1
-        setupPlan(true, PlanType.Free)
+        setupPlan(true, TestConstants.FreePlanType)
         setupVaults(3, primaryIndex = primaryIndex)
 
         val checker = CallChecker<ShareId>()
@@ -140,7 +141,7 @@ class SelectVaultBottomSheetTest {
 
     @Test
     fun cannotSelectOtherVaultWithFreePlanAndMultipleVaults() {
-        setupPlan(true, PlanType.Free)
+        setupPlan(true, TestConstants.FreePlanType)
         setupVaults(3, primaryIndex = 1)
 
         val checker = CallChecker<ShareId>()
@@ -168,7 +169,7 @@ class SelectVaultBottomSheetTest {
 
     @Test
     fun canGoToUpgradeInFreePlan() {
-        setupPlan(true, PlanType.Free)
+        setupPlan(true, TestConstants.FreePlanType)
         setupVaults(1)
 
         val checker = CallChecker<Unit>()
@@ -302,7 +303,7 @@ class SelectVaultBottomSheetTest {
     }
 
     private fun setupPlan(canUpgrade: Boolean, planType: PlanType) {
-        canPerformPaidAction.setResult(planType != PlanType.Free)
+        canPerformPaidAction.setResult(planType != TestConstants.FreePlanType)
         observeUpgradeInfo.setResult(
             UpgradeInfo(
                 isUpgradeAvailable = canUpgrade,

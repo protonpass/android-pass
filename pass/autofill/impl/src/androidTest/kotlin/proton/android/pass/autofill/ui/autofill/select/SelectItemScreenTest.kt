@@ -50,6 +50,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.TestConstants
 import proton.android.pass.test.waitUntilExists
 import proton.pass.domain.HiddenState
 import proton.pass.domain.Item
@@ -173,7 +174,7 @@ class SelectItemScreenTest {
             vaults = 2,
             suggestions = 0,
             otherItems = 0,
-            planType = PlanType.Free
+            planType = TestConstants.FreePlanType
         )
 
         upgradeTest()
@@ -185,7 +186,7 @@ class SelectItemScreenTest {
             vaults = 2,
             suggestions = 2,
             otherItems = 0,
-            planType = PlanType.Free
+            planType = TestConstants.FreePlanType
         )
 
         upgradeTest()
@@ -197,7 +198,7 @@ class SelectItemScreenTest {
             vaults = 2,
             suggestions = 0,
             otherItems = 2,
-            planType = PlanType.Free
+            planType = TestConstants.FreePlanType
         )
 
         upgradeTest()
@@ -209,7 +210,7 @@ class SelectItemScreenTest {
             vaults = 2,
             suggestions = 2,
             otherItems = 2,
-            planType = PlanType.Free
+            planType = TestConstants.FreePlanType
         )
 
         upgradeTest()

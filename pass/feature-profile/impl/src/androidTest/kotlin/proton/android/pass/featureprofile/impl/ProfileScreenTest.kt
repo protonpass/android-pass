@@ -44,6 +44,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveMFACount
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.TestConstants
 import proton.android.pass.test.waitUntilExists
 import proton.pass.domain.Plan
 import proton.pass.domain.PlanLimit
@@ -136,7 +137,7 @@ class ProfileScreenTest {
 
     @Test
     fun showsUpgradeButtonIfPlanIsFreeAndUpgradeIsAvailable() {
-        setupPlan(PlanType.Free, true)
+        setupPlan(TestConstants.FreePlanType, true)
 
         val checker = CallChecker<Unit>()
 
@@ -163,7 +164,7 @@ class ProfileScreenTest {
 
     @Test
     fun doesNotShowUpgradeButtonIfPlanIsFreeAndUpgradeIsNotAvailable() {
-        setupPlan(PlanType.Free, false)
+        setupPlan(TestConstants.FreePlanType, false)
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {

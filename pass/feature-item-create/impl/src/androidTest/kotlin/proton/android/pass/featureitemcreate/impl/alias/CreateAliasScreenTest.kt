@@ -242,9 +242,9 @@ class CreateAliasScreenTest {
 
 
     private fun setupPlan(plan: PlanType, totpLimit: PlanLimit = PlanLimit.Unlimited) {
-        canPerformPaidAction.setResult(plan != PlanType.Free)
+        canPerformPaidAction.setResult(plan !is PlanType.Free)
         val upgradeInfo = UpgradeInfo(
-            isUpgradeAvailable = plan == PlanType.Free,
+            isUpgradeAvailable = plan is PlanType.Free,
             plan = Plan(
                 planType = plan,
                 hideUpgrade = false,

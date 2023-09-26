@@ -240,6 +240,7 @@ android {
 
 dependencies {
     implementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
+    implementation(files("../pass/common-rust/impl/libs/lib-release.aar"))
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.navigation.material)
     implementation(libs.accompanist.insets)
@@ -291,6 +292,11 @@ dependencies {
     implementation(libs.core.user)
     implementation(libs.core.userSettings)
     implementation(libs.core.utilAndroidDagger)
+    implementation(libs.java.jna) {
+        artifact {
+            type = "aar"
+        }
+    }
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
@@ -310,6 +316,8 @@ dependencies {
     implementation(projects.pass.clipboard.impl)
     implementation(projects.pass.common.api)
     implementation(projects.pass.common.impl)
+    implementation(projects.pass.commonRust.api)
+    implementation(projects.pass.commonRust.impl)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.commonUiModels.api)

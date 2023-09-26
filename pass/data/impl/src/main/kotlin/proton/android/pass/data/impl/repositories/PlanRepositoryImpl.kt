@@ -130,7 +130,10 @@ class PlanRepositoryImpl @Inject constructor(
                     remainingDays = remainingTrialDays
                 )
             } else {
-                PlanType.Free
+                PlanType.Free(
+                    internal = internalName,
+                    humanReadable = displayName
+                )
             }
 
             PlanType.PLAN_NAME_PLUS -> if (isTrial) {

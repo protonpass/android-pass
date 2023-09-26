@@ -29,6 +29,7 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
 import proton.android.pass.data.impl.local.ItemWithTotp
+import proton.android.pass.test.TestConstants
 import proton.pass.domain.ItemId
 import proton.pass.domain.Plan
 import proton.pass.domain.PlanLimit
@@ -79,7 +80,7 @@ class CanDisplayTotpImplTest {
 
     @Test
     fun `free plan can display first N totps`() = runTest {
-        setupWithPlan(PlanType.Free, totpLimit = 3)
+        setupWithPlan(TestConstants.FreePlanType, totpLimit = 3)
 
         val items = setupWithItems(10)
         // First 3 totps should be allowed

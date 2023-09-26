@@ -131,7 +131,7 @@ class ProfileViewModel @Inject constructor(
             is LoadingResult.Success -> {
                 val info = upgradeInfo.data
                 when (val plan = info.plan.planType) {
-                    PlanType.Free -> PlanInfo.Hide to info.isUpgradeAvailable
+                    is PlanType.Free -> PlanInfo.Hide to info.isUpgradeAvailable
                     is PlanType.Paid -> PlanInfo.Unlimited(
                         planName = plan.humanReadable,
                         accountType = AccountType.Unlimited

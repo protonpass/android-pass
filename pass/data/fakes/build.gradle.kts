@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonTest)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.crypto.fakes)
     implementation(projects.pass.dataModels.api)

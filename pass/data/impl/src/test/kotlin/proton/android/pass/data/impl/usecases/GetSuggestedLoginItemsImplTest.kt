@@ -39,6 +39,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.TestItem
 import proton.pass.domain.Item
 import proton.pass.domain.Plan
@@ -163,7 +164,7 @@ class GetSuggestedLoginItemsImplTest {
             )
         )
         observeVaults.sendResult(Result.success(vaults))
-        getUserPlan.setResult(Result.success(createPlan(PlanType.Free)))
+        getUserPlan.setResult(Result.success(createPlan(TestConstants.FreePlanType)))
 
         filter.setFilter { true }
 

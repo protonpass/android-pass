@@ -55,6 +55,7 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
@@ -468,7 +469,7 @@ class CreateLoginScreenTest {
 
     @Test
     fun clickOnUpgradeRedirectsToUpgrade() {
-        setupPlan(PlanType.Free, totpLimit = PlanLimit.Limited(0))
+        setupPlan(TestConstants.FreePlanType, totpLimit = PlanLimit.Limited(0))
         val checker = CallChecker<Unit>()
         composeTestRule.apply {
             setContent {
@@ -577,9 +578,9 @@ class CreateLoginScreenTest {
     }
 
     private fun setupPlan(plan: PlanType, totpLimit: PlanLimit = PlanLimit.Unlimited) {
-        canPerformPaidAction.setResult(plan != PlanType.Free)
+        canPerformPaidAction.setResult(plan !is PlanType.Free)
         val upgradeInfo = UpgradeInfo(
-            isUpgradeAvailable = plan == PlanType.Free,
+            isUpgradeAvailable = plan is PlanType.Free,
             plan = Plan(
                 planType = plan,
                 hideUpgrade = false,

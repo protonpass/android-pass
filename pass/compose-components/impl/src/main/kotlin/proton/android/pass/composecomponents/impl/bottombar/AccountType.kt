@@ -33,7 +33,7 @@ enum class AccountType {
 
     companion object {
         fun fromPlan(planType: PlanType): AccountType = when (planType) {
-            PlanType.Free -> Free
+            is PlanType.Free -> Free
             is PlanType.Paid -> Unlimited
             is PlanType.Trial -> Trial
             is PlanType.Unknown -> Free

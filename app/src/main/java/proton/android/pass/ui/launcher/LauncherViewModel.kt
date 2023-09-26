@@ -75,6 +75,7 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.common.api.flatMap
+import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ClearUserData
@@ -104,8 +105,15 @@ class LauncherViewModel @Inject constructor(
     private val clearUserData: ClearUserData,
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
-    private val autofillManager: AutofillManager
+    private val autofillManager: AutofillManager,
+    commonLibraryVersionChecker: CommonLibraryVersionChecker
 ) : ViewModel() {
+
+    init {
+        val version = runCatching { commonLibraryVersionChecker.getVersion() }
+            .getOrElse { "Unknown" }
+        PassLogger.i(TAG, "Common library version: $version")
+    }
 
     val state: StateFlow<State> = accountManager.getAccounts()
         .map { accounts ->

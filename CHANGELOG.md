@@ -6,7 +6,11 @@
 
 ### Fixes :bug:
 
+- Display proper plan name in the account screen.
+
 ### Other
+
+- Updated translations.
 
 ## 1.8.3 (2023-09-08)
 

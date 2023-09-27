@@ -48,6 +48,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -89,6 +90,7 @@ open class CreateAliasViewModel @Inject constructor(
     protected val draftRepository: DraftRepository,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val aliasPrefixValidator: AliasPrefixValidator,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
@@ -297,7 +299,10 @@ open class CreateAliasViewModel @Inject constructor(
         }
 
         val mailboxes = aliasItem.mailboxes.filter { it.selected }.map { it.model }
-        val aliasItemValidationErrors = aliasItem.validate(allowEmptyTitle = isDraft)
+        val aliasItemValidationErrors = aliasItem.validate(
+            allowEmptyTitle = isDraft,
+            aliasPrefixValidator = aliasPrefixValidator
+        )
         if (aliasItemValidationErrors.isNotEmpty()) {
             PassLogger.w(
                 TAG,

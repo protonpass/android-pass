@@ -19,8 +19,9 @@
 package proton.android.pass.featureitemcreate.impl.alias
 
 import com.google.common.truth.Truth.assertThat
-import me.proton.core.util.kotlin.times
 import org.junit.Test
+import proton.android.pass.commonrust.api.AliasPrefixError
+import proton.android.pass.commonrust.fakes.TestAliasPrefixValidator
 
 class AliasItemValidationTest {
 
@@ -28,7 +29,7 @@ class AliasItemValidationTest {
     fun `empty title should return an error`() {
         val item = itemWithContents(title = "")
 
-        val res = item.validate(allowEmptyTitle = false)
+        val res = item.validate(allowEmptyTitle = false, aliasPrefixValidator = successValidator)
         assertThat(res.size).isEqualTo(1)
         assertThat(res.first()).isEqualTo(AliasItemValidationErrors.BlankTitle)
     }
@@ -37,7 +38,7 @@ class AliasItemValidationTest {
     fun `empty title allowing empty title should be ok`() {
         val item = itemWithContents(title = "")
 
-        val res = item.validate(allowEmptyTitle = true)
+        val res = item.validate(allowEmptyTitle = true, aliasPrefixValidator = successValidator)
         assertThat(res).isEmpty()
     }
 
@@ -45,7 +46,10 @@ class AliasItemValidationTest {
     fun `empty alias should return an error`() {
         val item = itemWithContents(prefix = "")
 
-        val res = item.validate(allowEmptyTitle = false)
+        val res = item.validate(
+            allowEmptyTitle = false,
+            aliasPrefixValidator = errorValidator(AliasPrefixError.PrefixEmpty)
+        )
         assertThat(res.size).isEqualTo(1)
         assertThat(res.first()).isEqualTo(AliasItemValidationErrors.BlankPrefix)
     }
@@ -54,98 +58,12 @@ class AliasItemValidationTest {
     fun `alias with invalid characters return an error`() {
         val item = itemWithContents(prefix = "abc!=()")
 
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
-    }
-
-    @Test
-    fun `alias with valid special characters should not return error`() {
-        val item = itemWithContents(prefix = "a.b_c-d")
-
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res.isEmpty()).isTrue()
-    }
-
-    @Test
-    fun `alias starting with dot should return error`() {
-        val item = itemWithContents(prefix = ".somealias")
-
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
-    }
-
-    @Test
-    fun `alias ending with dot should return error`() {
-        val item = itemWithContents(prefix = "somealias.")
-
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
-    }
-
-    @Test
-    fun `alias containing two dots should return error`() {
-        val item = itemWithContents(prefix = "some..alias")
-
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
-    }
-
-    @Test
-    fun `alias containing two non-consecutive dots should not return error`() {
-        val item = itemWithContents(prefix = "so.me.alias")
-
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res.isEmpty()).isTrue()
-    }
-
-    @Test
-    fun `alias containing uppercase should return error`() {
-        val item = itemWithContents(prefix = "someAlias")
-
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
-    }
-
-    @Test
-    fun `empty mailboxes should return an error`() {
-        val item = itemWithContents(mailboxes = emptyList())
-
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.NoMailboxes)
-    }
-
-    @Test
-    fun `no mailbox selected should return an error`() {
-        val item = itemWithContents(
-            mailboxes = listOf(SelectedAliasMailboxUiModel(AliasMailboxUiModel(1, "email"), false))
+        val res = item.validate(
+            allowEmptyTitle = false,
+            aliasPrefixValidator = errorValidator(AliasPrefixError.InvalidCharacter)
         )
-
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.NoMailboxes)
-    }
-
-    @Test
-    fun `prefix too long should return an error`() {
-        val item = itemWithContents(prefix = "a".times(AliasItemFormState.MAX_PREFIX_LENGTH + 1))
-
-        val res = item.validate(allowEmptyTitle = false)
         assertThat(res.size).isEqualTo(1)
         assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
-    }
-
-    @Test
-    fun `prefix exactly MAX_PREFIX_LENGTH long should not return error`() {
-        val item = itemWithContents(prefix = "a".times(AliasItemFormState.MAX_PREFIX_LENGTH))
-
-        val res = item.validate(allowEmptyTitle = false)
-        assertThat(res).isEmpty()
     }
 
     private fun itemWithContents(
@@ -156,8 +74,23 @@ class AliasItemValidationTest {
         return AliasItemFormState(
             title = title,
             prefix = prefix,
-            mailboxes = mailboxes ?: listOf(SelectedAliasMailboxUiModel(AliasMailboxUiModel(1, "email"), true))
+            mailboxes = mailboxes ?: listOf(
+                SelectedAliasMailboxUiModel(
+                    AliasMailboxUiModel(
+                        1,
+                        "email"
+                    ),
+                    true
+                )
+            )
         )
+    }
+
+    companion object {
+        private val successValidator = TestAliasPrefixValidator()
+        private fun errorValidator(error: AliasPrefixError) = TestAliasPrefixValidator().apply {
+            setResult(Result.failure(error))
+        }
     }
 
 }

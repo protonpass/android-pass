@@ -27,6 +27,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.commonrust.fakes.TestAliasPrefixValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
@@ -249,7 +250,8 @@ class CreateAliasViewModelTest {
             canPerformPaidAction = canPerformPaidAction,
             draftRepository = draftRepository,
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
-            encryptionContextProvider = TestEncryptionContextProvider()
+            encryptionContextProvider = TestEncryptionContextProvider(),
+            aliasPrefixValidator = TestAliasPrefixValidator()
         ).apply {
             setDraftStatus(isDraft)
         }

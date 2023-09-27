@@ -75,6 +75,7 @@ dependencies {
     implementation(projects.pass.biometry.fakes)
     implementation(projects.pass.clipboard.fakes)
     implementation(projects.pass.common.fakes)
+    implementation(projects.pass.commonRust.fakes)
     implementation(projects.pass.commonTest)
     implementation(projects.pass.commonUi.fakes)
     implementation(projects.pass.crypto.fakes)

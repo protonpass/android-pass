@@ -24,7 +24,9 @@ import kotlinx.parcelize.Parcelize
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.featureitemcreate.impl.alias.AliasUtils.areAllAliasCharactersValid
+import proton.android.pass.commonrust.api.AliasPrefixError
+import proton.android.pass.commonrust.api.AliasPrefixValidator
+import proton.android.pass.log.api.PassLogger
 
 @Parcelize
 @Immutable
@@ -39,23 +41,20 @@ data class AliasItemFormState(
     val aliasToBeCreated: String? = null
 ) : Parcelable {
 
-    fun validate(allowEmptyTitle: Boolean): Set<AliasItemValidationErrors> {
+    fun validate(allowEmptyTitle: Boolean, aliasPrefixValidator: AliasPrefixValidator): Set<AliasItemValidationErrors> {
         val mutableSet = mutableSetOf<AliasItemValidationErrors>()
+
         if (!allowEmptyTitle) {
             if (title.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankTitle)
         }
 
-        if (prefix.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankPrefix)
-
-        if (prefix.startsWith(".")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
-
-        if (prefix.endsWith(".")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
-
-        if (prefix.contains("..")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
-
-        if (prefix.length > MAX_PREFIX_LENGTH) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
-
-        if (!areAllAliasCharactersValid(prefix)) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+        aliasPrefixValidator.validate(prefix).onFailure {
+            if (it is AliasPrefixError) {
+                mutableSet.add(it.toError())
+            } else {
+                PassLogger.w(TAG, it, "Error validating alias prefix")
+            }
+        }
 
         if (mailboxes.count { it.selected } == 0) mutableSet.add(AliasItemValidationErrors.NoMailboxes)
 
@@ -63,6 +62,7 @@ data class AliasItemFormState(
     }
 
     companion object {
+        private const val TAG = "AliasItemFormState"
         const val MAX_PREFIX_LENGTH: Int = 40
 
         fun default(title: Option<String>): AliasItemFormState = when (title) {
@@ -80,4 +80,13 @@ sealed interface AliasItemValidationErrors {
     object BlankPrefix : AliasItemValidationErrors
     object InvalidAliasContent : AliasItemValidationErrors
     object NoMailboxes : AliasItemValidationErrors
+}
+
+fun AliasPrefixError.toError(): AliasItemValidationErrors = when (this) {
+    AliasPrefixError.DotAtTheBeginning -> AliasItemValidationErrors.InvalidAliasContent
+    AliasPrefixError.DotAtTheEnd -> AliasItemValidationErrors.InvalidAliasContent
+    AliasPrefixError.InvalidCharacter -> AliasItemValidationErrors.InvalidAliasContent
+    AliasPrefixError.PrefixEmpty -> AliasItemValidationErrors.BlankPrefix
+    AliasPrefixError.PrefixTooLong -> AliasItemValidationErrors.InvalidAliasContent
+    AliasPrefixError.TwoConsecutiveDots -> AliasItemValidationErrors.InvalidAliasContent
 }

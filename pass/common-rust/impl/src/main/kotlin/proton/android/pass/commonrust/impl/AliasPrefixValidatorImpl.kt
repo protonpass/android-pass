@@ -18,10 +18,27 @@
 
 package proton.android.pass.commonrust.impl
 
+import proton.android.pass.commonrust.AliasPrefixException
+import proton.android.pass.commonrust.api.AliasPrefixError
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.validateAliasPrefix
 import javax.inject.Inject
 
 class AliasPrefixValidatorImpl @Inject constructor() : AliasPrefixValidator {
-    override fun validate(prefix: String) = runCatching { validateAliasPrefix(prefix) }
+    override fun validate(prefix: String) = runCatching {
+        validateAliasPrefix(prefix)
+    }.fold(
+        onSuccess = { Result.success(Unit) },
+        onFailure = {
+            when (it) {
+                is AliasPrefixException.DotAtTheBeginning -> Result.failure(AliasPrefixError.DotAtTheBeginning)
+                is AliasPrefixException.DotAtTheEnd -> Result.failure(AliasPrefixError.DotAtTheEnd)
+                is AliasPrefixException.InvalidCharacter -> Result.failure(AliasPrefixError.InvalidCharacter)
+                is AliasPrefixException.PrefixEmpty -> Result.failure(AliasPrefixError.PrefixEmpty)
+                is AliasPrefixException.PrefixTooLong -> Result.failure(AliasPrefixError.PrefixTooLong)
+                is AliasPrefixException.TwoConsecutiveDots -> Result.failure(AliasPrefixError.TwoConsecutiveDots)
+                else -> Result.failure(it)
+            }
+        }
+    )
 }

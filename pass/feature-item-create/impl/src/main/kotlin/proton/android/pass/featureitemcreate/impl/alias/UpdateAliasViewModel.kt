@@ -40,6 +40,7 @@ import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.some
+import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
@@ -78,6 +79,7 @@ class UpdateAliasViewModel @Inject constructor(
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
+    private val aliasPrefixValidator: AliasPrefixValidator,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
@@ -273,7 +275,10 @@ class UpdateAliasViewModel @Inject constructor(
             return false
         }
 
-        val aliasItemValidationErrors = aliasItemFormState.validate(allowEmptyTitle = false)
+        val aliasItemValidationErrors = aliasItemFormState.validate(
+            allowEmptyTitle = false,
+            aliasPrefixValidator = aliasPrefixValidator
+        )
         if (aliasItemValidationErrors.isNotEmpty()) {
             PassLogger.i(TAG, "alias item validation has failed: $aliasItemValidationErrors")
             aliasItemValidationErrorsState.update { aliasItemValidationErrors }

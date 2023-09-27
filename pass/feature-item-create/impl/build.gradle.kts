@@ -75,6 +75,7 @@ dependencies {
 
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
@@ -102,6 +103,7 @@ dependencies {
     testImplementation(libs.kotlinx.datetime)
     testImplementation(projects.pass.account.fakes)
     testImplementation(projects.pass.clipboard.fakes)
+    testImplementation(projects.pass.commonRust.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.crypto.fakes)
@@ -118,6 +120,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(projects.pass.account.fakes)
     androidTestImplementation(projects.pass.clipboard.fakes)
+    androidTestImplementation(projects.pass.commonRust.fakes)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.commonUi.fakes)
     androidTestImplementation(projects.pass.crypto.fakes)

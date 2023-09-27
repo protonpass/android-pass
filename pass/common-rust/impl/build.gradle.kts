@@ -12,10 +12,6 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-
-//        ndk {
-//            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
-//        }
     }
     
     compileOptions {
@@ -36,7 +32,7 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.commonRust.api)
 
-    implementation(files("libs/lib-release.aar"))
+    compileOnly(files("libs/lib-release.aar"))
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.java.jna) {

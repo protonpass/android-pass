@@ -47,7 +47,7 @@ internal fun CreateAliasSection(
             enabled = canEdit,
             prefix = state.prefix,
             suffix = state.selectedSuffix,
-            isError = onAliasRequiredError && onInvalidAliasError,
+            isError = onAliasRequiredError || onInvalidAliasError,
             canSelectSuffix = canSelectSuffix,
             onPrefixChanged = onChange,
             onSuffixClicked = onSuffixClick

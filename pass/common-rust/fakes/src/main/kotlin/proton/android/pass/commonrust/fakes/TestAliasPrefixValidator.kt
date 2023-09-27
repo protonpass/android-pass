@@ -16,17 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonrust.api
+package proton.android.pass.commonrust.fakes
 
-sealed class AliasPrefixError(override val message: String) : RuntimeException(message) {
-    object DotAtTheBeginning : AliasPrefixError("DotAtTheBeginning")
-    object DotAtTheEnd : AliasPrefixError("DotAtTheEnd")
-    object InvalidCharacter : AliasPrefixError("InvalidCharacter")
-    object PrefixEmpty : AliasPrefixError("PrefixEmpty")
-    object PrefixTooLong : AliasPrefixError("PrefixTooLong")
-    object TwoConsecutiveDots : AliasPrefixError("TwoConsecutiveDots")
-}
+import proton.android.pass.commonrust.api.AliasPrefixValidator
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface AliasPrefixValidator {
-    fun validate(prefix: String): Result<Unit>
+@Singleton
+class TestAliasPrefixValidator @Inject constructor() : AliasPrefixValidator {
+
+    private var result: Result<Unit> = Result.success(Unit)
+
+    fun setResult(value: Result<Unit>) {
+        result = value
+    }
+
+    override fun validate(prefix: String): Result<Unit> = result
 }

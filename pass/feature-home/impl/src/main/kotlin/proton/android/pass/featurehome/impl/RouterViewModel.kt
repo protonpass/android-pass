@@ -21,6 +21,7 @@ package proton.android.pass.featurehome.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -29,6 +30,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -39,9 +41,15 @@ class RouterViewModel @Inject constructor(
     itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
+    private val showSyncDialogFlow: Flow<SyncState> = combine(
+        itemSyncStatusRepository.observeSyncStatus(),
+        itemSyncStatusRepository.observeMode(),
+        ::SyncState
+    )
+
     val eventStateFlow: StateFlow<RouterEvent> = combine(
         userPreferencesRepository.getHasCompletedOnBoarding(),
-        itemSyncStatusRepository.observeSyncStatus(),
+        showSyncDialogFlow,
         ::routerEvent
     ).stateIn(
         scope = viewModelScope,
@@ -49,22 +57,27 @@ class RouterViewModel @Inject constructor(
         initialValue = runBlocking {
             val hasCompletedOnBoarding =
                 userPreferencesRepository.getHasCompletedOnBoarding().first()
-            val syncStatus = itemSyncStatusRepository.observeSyncStatus().first()
+            val syncStatus = showSyncDialogFlow.first()
             routerEvent(hasCompletedOnBoarding, syncStatus)
         }
     )
 
     private fun routerEvent(
         hasCompletedOnBoarding: HasCompletedOnBoarding,
-        syncStatus: ItemSyncStatus
+        syncState: SyncState
     ) = when {
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
-        syncStatus.isSyncing() -> RouterEvent.SyncDialog
+        syncState.syncStatus.isSyncing() && syncState.syncMode == SyncMode.ShownToUser -> RouterEvent.SyncDialog
         else -> RouterEvent.None
     }
 
     private fun ItemSyncStatus.isSyncing() =
         this is ItemSyncStatus.Syncing || this is ItemSyncStatus.Started
+
+    private data class SyncState(
+        val syncStatus: ItemSyncStatus,
+        val syncMode: SyncMode
+    )
 }
 
 enum class RouterEvent {

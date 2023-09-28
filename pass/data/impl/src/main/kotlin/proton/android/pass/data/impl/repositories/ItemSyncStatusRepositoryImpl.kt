@@ -25,6 +25,7 @@ import kotlinx.coroutines.sync.withLock
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -38,6 +39,10 @@ class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusReposit
     private val accSyncStatus: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
         MutableSharedFlow(replay = 1, extraBufferCapacity = 1)
     private val payloadMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
+    private val modeFlow: MutableSharedFlow<SyncMode> = MutableSharedFlow<SyncMode>(
+        replay = 1, extraBufferCapacity = 1
+    ).apply { tryEmit(SyncMode.Background) }
+
     private val mutex: Mutex = Mutex()
 
     override suspend fun emit(status: ItemSyncStatus) {
@@ -77,6 +82,16 @@ class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusReposit
         }
         syncStatus.tryEmit(status)
     }
+
+    override suspend fun setMode(mode: SyncMode) {
+        modeFlow.emit(mode)
+    }
+
+    override fun trySetMode(mode: SyncMode) {
+        modeFlow.tryEmit(mode)
+    }
+
+    override fun observeMode(): Flow<SyncMode> = modeFlow
 
     override suspend fun clear() {
         payloadMutableMap.clear()

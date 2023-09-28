@@ -30,6 +30,7 @@ import me.proton.android.pass.preferences.BooleanPrefProto
 import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
+import proton.android.pass.preferences.FeatureFlag.REMOVE_PRIMARY_VAULT
 import proton.android.pass.preferences.FeatureFlag.SHARING_V1
 import java.io.IOException
 import javax.inject.Inject
@@ -46,6 +47,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> getFeatureFlag(featureFlag.key) { autofillDebugModeEnabled.value }
             SHARING_V1 -> getFeatureFlag(featureFlag.key) { sharingV1Enabled.value }
+            REMOVE_PRIMARY_VAULT -> getFeatureFlag(featureFlag.key) { removePrimaryVaultEnabled.value }
         }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =
@@ -55,6 +57,9 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             }
             SHARING_V1 -> setFeatureFlag {
                 sharingV1Enabled = boolFlagPrefProto(value)
+            }
+            REMOVE_PRIMARY_VAULT -> setFeatureFlag {
+                removePrimaryVaultEnabled = boolFlagPrefProto(value)
             }
         }
 

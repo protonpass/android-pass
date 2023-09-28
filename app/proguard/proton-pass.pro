@@ -8,3 +8,6 @@
 -keepclassmembernames class androidx.compose.material.ModalBottomSheetState {
     <methods>;
 }
+
+# Generated kotlin bindings for Rust library
+-keep class proton.android.pass.commonrust.** { *; }

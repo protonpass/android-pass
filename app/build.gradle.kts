@@ -292,11 +292,7 @@ dependencies {
     implementation(libs.core.user)
     implementation(libs.core.userSettings)
     implementation(libs.core.utilAndroidDagger)
-    implementation(libs.java.jna) {
-        artifact {
-            type = "aar"
-        }
-    }
+    implementation("net.java.dev.jna:jna:5.13.0@aar")
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)

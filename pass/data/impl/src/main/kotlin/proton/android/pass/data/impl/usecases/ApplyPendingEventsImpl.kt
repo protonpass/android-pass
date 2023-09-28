@@ -35,6 +35,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
@@ -71,6 +72,7 @@ class ApplyPendingEventsImpl @Inject constructor(
             val refreshSharesResult = shareRepository.refreshShares(user.userId)
             if (refreshSharesResult.allShareIds.isEmpty()) {
                 PassLogger.d(TAG, "Received an empty list of shares, creating default vault")
+                itemSyncStatusRepository.setMode(SyncMode.Background)
                 createDefaultVault(user.userId)
                 itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(false))
             } else {
@@ -134,7 +136,7 @@ class ApplyPendingEventsImpl @Inject constructor(
             )
             PassLogger.d(
                 TAG,
-                "Applied events with share id :$shareId. Storing latest event ID"
+                "Applied events with share id: $shareId. Storing latest event ID"
             )
             eventRepository.storeLatestEventId(
                 userId = userId,

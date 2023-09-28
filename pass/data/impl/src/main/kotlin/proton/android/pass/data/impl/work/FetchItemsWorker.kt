@@ -47,6 +47,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.impl.R
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ShareId
@@ -72,6 +73,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         val availableCores = Runtime.getRuntime().availableProcessors()
         val maxParallelAsyncCalls = (availableCores / 2).coerceAtLeast(1)
         val semaphore = Semaphore(maxParallelAsyncCalls)
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
         val results = withContext(Dispatchers.IO) {
             shareIds.map { shareId ->
                 async {
@@ -91,7 +93,7 @@ open class FetchItemsWorker @AssistedInject constructor(
                                     total = progress.total
                                 )
                             )
-                            PassLogger.d(TAG, "ShareId $shareId  progress: $progress")
+                            PassLogger.d(TAG, "ShareId $shareId progress: $progress")
                         }.collect()
                     }.onFailure {
                         PassLogger.w(TAG, it, "Error refreshing items on share ${shareId.id}")
@@ -110,6 +112,7 @@ open class FetchItemsWorker @AssistedInject constructor(
                 itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = hasItems.get()))
             }
         }
+        itemSyncStatusRepository.setMode(SyncMode.Background)
         return Result.success()
     }
 

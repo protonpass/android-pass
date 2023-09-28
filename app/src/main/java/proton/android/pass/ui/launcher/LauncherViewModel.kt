@@ -78,6 +78,7 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
@@ -149,6 +150,7 @@ class LauncherViewModel @Inject constructor(
 
                 if (result != null) {
                     PassLogger.i(TAG, "Sending User Access")
+                    itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
                     itemSyncStatusRepository.emit(ItemSyncStatus.Started)
                 }
             }

@@ -35,11 +35,7 @@ dependencies {
     compileOnly(files("libs/lib-release.aar"))
 
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.java.jna) {
-        artifact {
-            type = "aar"
-        }
-    }
+    implementation("net.java.dev.jna:jna:5.13.0@aar")
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

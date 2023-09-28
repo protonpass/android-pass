@@ -34,10 +34,18 @@ data class ItemSyncStatusPayload(
     val total: Int
 )
 
+sealed interface SyncMode {
+    object ShownToUser : SyncMode
+    object Background : SyncMode
+}
+
 interface ItemSyncStatusRepository {
     suspend fun emit(status: ItemSyncStatus)
     fun tryEmit(status: ItemSyncStatus)
+    suspend fun setMode(mode: SyncMode)
+    fun trySetMode(mode: SyncMode)
     suspend fun clear()
+    fun observeMode(): Flow<SyncMode>
     fun observeSyncStatus(): Flow<ItemSyncStatus>
     fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>>
 }

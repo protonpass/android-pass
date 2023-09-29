@@ -29,10 +29,13 @@ import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
-import proton.android.pass.data.fakes.usecases.TestGetVaultById
+import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.TestUtils
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 
@@ -47,7 +50,8 @@ class VaultOptionsViewModelTest {
     private lateinit var canMigrateVault: TestCanMigrateVault
     private lateinit var canShareVault: TestCanShareVault
     private lateinit var canManageVaultAccess: TestCanManageVaultAccess
-    private lateinit var getVaultById: TestGetVaultById
+    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
 
     @Before
     fun setup() {
@@ -55,17 +59,9 @@ class VaultOptionsViewModelTest {
         canShareVault = TestCanShareVault()
         canMigrateVault = TestCanMigrateVault()
         canManageVaultAccess = TestCanManageVaultAccess()
-        getVaultById = TestGetVaultById()
-        instance = VaultOptionsViewModel(
-            snackbarDispatcher = snackbarDispatcher,
-            savedStateHandle = TestSavedStateHandleProvider().apply {
-                get()[CommonNavArgId.ShareId.key] = SHARE_ID
-            },
-            canMigrateVault = canMigrateVault,
-            getVaultById = getVaultById,
-            canShareVault = canShareVault,
-            canManageVaultAccess = canManageVaultAccess
-        )
+        observeVaults = TestObserveVaults()
+        ffRepo = TestFeatureFlagsPreferenceRepository()
+        setNavShareId(ShareId(SHARE_ID))
     }
 
     @Test
@@ -280,6 +276,49 @@ class VaultOptionsViewModelTest {
         }
     }
 
+    // RemovePrimaryVault tests
+    @Test
+    fun `if RemovePrimaryVault enabled cannot remove last owned vault if primary`() = runTest {
+        ffRepo.set(FeatureFlag.REMOVE_PRIMARY_VAULT, true)
+        val ownedVault = vaultWith(isPrimary = false, owned = true)
+        val vaults = listOf(
+            vaultWith(isPrimary = false, owned = false),
+            ownedVault,
+            vaultWith(isPrimary = false, owned = false),
+        )
+        setNavShareId(ownedVault.shareId)
+        observeVaults.sendResult(Result.success(vaults))
+
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
+
+            val casted = item as VaultOptionsUiState.Success
+            assertThat(casted.showDelete).isFalse()
+        }
+    }
+
+    @Test
+    fun `if RemovePrimaryVault enabled cannot remove last owned vault if not primary`() = runTest {
+        ffRepo.set(FeatureFlag.REMOVE_PRIMARY_VAULT, true)
+        val ownedVault = vaultWith(isPrimary = true, owned = true)
+        val vaults = listOf(
+            vaultWith(isPrimary = false, owned = false),
+            ownedVault,
+            vaultWith(isPrimary = false, owned = false),
+        )
+        setNavShareId(ownedVault.shareId)
+        observeVaults.sendResult(Result.success(vaults))
+
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
+
+            val casted = item as VaultOptionsUiState.Success
+            assertThat(casted.showDelete).isFalse()
+        }
+    }
+
     private fun emitDefaultVault(
         primary: Boolean = true,
         owned: Boolean = true,
@@ -294,8 +333,31 @@ class VaultOptionsViewModelTest {
             shared = shared
         )
 
-        getVaultById.emitValue(defaultVault)
+        observeVaults.sendResult(Result.success(listOf(defaultVault)))
         return defaultVault
+    }
+
+    private fun vaultWith(isPrimary: Boolean, owned: Boolean): Vault = Vault(
+        shareId = ShareId("ShareId-${TestUtils.randomString()}"),
+        name = "Some vault",
+        isPrimary = isPrimary,
+        isOwned = owned,
+        members = 1,
+        shared = false
+    )
+
+    private fun setNavShareId(shareId: ShareId) {
+        instance = VaultOptionsViewModel(
+            snackbarDispatcher = snackbarDispatcher,
+            savedStateHandle = TestSavedStateHandleProvider().apply {
+                get()[CommonNavArgId.ShareId.key] = shareId.id
+            },
+            canMigrateVault = canMigrateVault,
+            observeVaults = observeVaults,
+            canShareVault = canShareVault,
+            canManageVaultAccess = canManageVaultAccess,
+            featureFlagRepository = ffRepo
+        )
     }
 
     companion object {

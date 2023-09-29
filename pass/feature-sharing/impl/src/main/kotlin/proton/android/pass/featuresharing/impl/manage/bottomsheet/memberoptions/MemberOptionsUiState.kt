@@ -55,6 +55,12 @@ sealed interface MemberOptionsUiEvent {
     object RemoveMember : MemberOptionsUiEvent
 }
 
+enum class TransferOwnershipState {
+    Hide,
+    Disabled,
+    Enabled
+}
+
 
 @Stable
 sealed interface MemberOptionsEvent {
@@ -76,7 +82,7 @@ sealed interface MemberOptionsEvent {
 @Stable
 data class MemberOptionsUiState(
     val memberRole: ShareRole,
-    val showTransferOwnership: Boolean,
+    val transferOwnership: TransferOwnershipState,
     val event: MemberOptionsEvent,
     val loadingOption: LoadingOption?,
     val isLoading: IsLoadingState
@@ -84,7 +90,7 @@ data class MemberOptionsUiState(
     companion object {
         val Initial = MemberOptionsUiState(
             memberRole = ShareRole.Read,
-            showTransferOwnership = false,
+            transferOwnership = TransferOwnershipState.Hide,
             event = MemberOptionsEvent.Unknown,
             loadingOption = null,
             isLoading = IsLoadingState.NotLoading

@@ -26,7 +26,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.data.fakes.usecases.TestGetVaultById
+import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestRemoveMemberFromVault
 import proton.android.pass.data.fakes.usecases.TestSetVaultMemberPermission
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
@@ -37,9 +37,12 @@ import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberoptions.
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberoptions.MemberOptionsUiState
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberoptions.MemberOptionsViewModel
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberoptions.MemberPermissionLevel
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberoptions.TransferOwnershipState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
@@ -55,7 +58,8 @@ class MemberOptionsViewModelTest {
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var removeMemberFromVault: TestRemoveMemberFromVault
     private lateinit var setVaultMemberPermission: TestSetVaultMemberPermission
-    private lateinit var getVaultById: TestGetVaultById
+    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
 
 
     @Before
@@ -63,12 +67,14 @@ class MemberOptionsViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         removeMemberFromVault = TestRemoveMemberFromVault()
         setVaultMemberPermission = TestSetVaultMemberPermission()
-        getVaultById = TestGetVaultById()
+        observeVaults = TestObserveVaults()
+        ffRepo = TestFeatureFlagsPreferenceRepository()
     }
 
     @Test
     fun `emit initial state`() = runTest {
         setupTest()
+        emitVault(false)
         instance.state.test {
             assertThat(awaitItem()).isEqualTo(MemberOptionsUiState.Initial)
         }
@@ -80,7 +86,7 @@ class MemberOptionsViewModelTest {
         emitVault(owned = true)
         instance.state.test {
             val item = awaitItem()
-            assertThat(item.showTransferOwnership).isTrue()
+            assertThat(item.transferOwnership).isEqualTo(TransferOwnershipState.Enabled)
         }
     }
 
@@ -91,7 +97,7 @@ class MemberOptionsViewModelTest {
             emitVault(owned = true)
             instance.state.test {
                 val item = awaitItem()
-                assertThat(item.showTransferOwnership).isFalse()
+                assertThat(item.transferOwnership).isEqualTo(TransferOwnershipState.Hide)
             }
         }
 
@@ -101,7 +107,7 @@ class MemberOptionsViewModelTest {
         emitVault(owned = false)
         instance.state.test {
             val item = awaitItem()
-            assertThat(item.showTransferOwnership).isFalse()
+            assertThat(item.transferOwnership).isEqualTo(TransferOwnershipState.Hide)
         }
     }
 
@@ -182,6 +188,80 @@ class MemberOptionsViewModelTest {
         assertThat(message).isInstanceOf(SharingSnackbarMessage.ChangeMemberPermissionError::class.java)
     }
 
+    // RemovePrimaryVault tests
+    @Test
+    fun `if RemovePrimaryVault enabled allow to transfer ownership if not the last owned vault`() = runTest {
+        ffRepo.set(FeatureFlag.REMOVE_PRIMARY_VAULT, true)
+        val ownedVault = vaultWith(USER_SHARE_ID, owned = true)
+        val vaults = listOf(
+            vaultWith(shareId = "shareId-also-owned", owned = true),
+            ownedVault,
+            vaultWith(shareId = "shareId-not-owned", owned = false)
+        )
+        observeVaults.sendResult(Result.success(vaults))
+        setupTest(memberRole = ShareRole.Admin)
+
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item.transferOwnership).isEqualTo(TransferOwnershipState.Enabled)
+        }
+    }
+
+    @Test
+    fun `if RemovePrimaryVault enabled do not allow to transfer ownership if is the last owned vault`() = runTest {
+        ffRepo.set(FeatureFlag.REMOVE_PRIMARY_VAULT, true)
+        val ownedVault = vaultWith(USER_SHARE_ID, owned = true)
+        val vaults = listOf(
+            vaultWith(shareId = "shareId-not-owned", owned = false),
+            ownedVault,
+            vaultWith(shareId = "shareId-not-owned", owned = false)
+        )
+        observeVaults.sendResult(Result.success(vaults))
+        setupTest(memberRole = ShareRole.Admin)
+
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item.transferOwnership).isEqualTo(TransferOwnershipState.Disabled)
+        }
+    }
+
+    @Test
+    fun `if RemovePrimaryVault enabled hide transfer ownership if member is not admin`() = runTest {
+        ffRepo.set(FeatureFlag.REMOVE_PRIMARY_VAULT, true)
+        val ownedVault = vaultWith(USER_SHARE_ID, owned = true)
+        val vaults = listOf(
+            vaultWith(shareId = "shareId-also-owned", owned = true),
+            ownedVault,
+            vaultWith(shareId = "shareId-not-owned", owned = false)
+        )
+        observeVaults.sendResult(Result.success(vaults))
+        setupTest(memberRole = ShareRole.Write)
+
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item.transferOwnership).isEqualTo(TransferOwnershipState.Hide)
+        }
+    }
+
+    @Test
+    fun `if RemovePrimaryVault enabled hide transfer ownership if vault is not owned`() = runTest {
+        ffRepo.set(FeatureFlag.REMOVE_PRIMARY_VAULT, true)
+        val ownedVault = vaultWith(USER_SHARE_ID, owned = false)
+        val vaults = listOf(
+            vaultWith(shareId = "shareId-also-owned", owned = true),
+            ownedVault,
+            vaultWith(shareId = "shareId-not-owned", owned = false)
+        )
+        observeVaults.sendResult(Result.success(vaults))
+        setupTest(memberRole = ShareRole.Admin)
+
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item.transferOwnership).isEqualTo(TransferOwnershipState.Hide)
+        }
+    }
+
+
     private fun setupTest(memberRole: ShareRole = ShareRole.Read) {
         val savedStateHandle = TestSavedStateHandleProvider()
         savedStateHandle.get().apply {
@@ -196,7 +276,8 @@ class MemberOptionsViewModelTest {
             removeMemberFromVault = removeMemberFromVault,
             setVaultMemberPermission = setVaultMemberPermission,
             savedState = savedStateHandle,
-            getVaultById = getVaultById
+            observeVaults = observeVaults,
+            ffRepo = ffRepo
         )
     }
 
@@ -207,8 +288,15 @@ class MemberOptionsViewModelTest {
             isPrimary = false,
             isOwned = owned
         )
-        getVaultById.emitValue(vault)
+        observeVaults.sendResult(Result.success(listOf(vault)))
     }
+
+    private fun vaultWith(shareId: String, owned: Boolean) = Vault(
+        name = "Some vault $shareId",
+        shareId = ShareId(shareId),
+        isPrimary = false,
+        isOwned = owned
+    )
 
     companion object {
         private const val USER_SHARE_ID = "MemberOptionsViewModelTest-USER_SHARE_ID"

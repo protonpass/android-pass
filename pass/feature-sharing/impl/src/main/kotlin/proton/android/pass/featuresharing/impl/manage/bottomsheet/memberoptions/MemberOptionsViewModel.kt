@@ -27,13 +27,16 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RemoveMemberFromVault
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
@@ -44,7 +47,10 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.pass.domain.ShareId
+import proton.pass.domain.SharePermission
 import proton.pass.domain.SharePermissionFlag
 import proton.pass.domain.ShareRole
 import proton.pass.domain.Vault
@@ -58,7 +64,8 @@ class MemberOptionsViewModel @Inject constructor(
     private val removeMemberFromVault: RemoveMemberFromVault,
     private val setVaultMemberPermission: SetVaultMemberPermission,
     savedState: SavedStateHandleProvider,
-    getVaultById: GetVaultById
+    observeVaults: ObserveVaults,
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val vaultShareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
@@ -73,25 +80,56 @@ class MemberOptionsViewModel @Inject constructor(
     private val loadingOptionFlow: MutableStateFlow<LoadingOption?> =
         MutableStateFlow(null)
 
-    private val getVaultFlow: Flow<Vault> = getVaultById(shareId = vaultShareId)
+    private val getVaultFlow: Flow<LoadingResult<VaultsInfo>> = observeVaults().map { vaults ->
+        val selectedVault = vaults.firstOrNull { it.shareId == vaultShareId }
+        if (selectedVault == null) {
+            eventFlow.update { MemberOptionsEvent.Close(refresh = false) }
+            throw IllegalArgumentException("Cannot find vault with shareId $vaultShareId")
+        }
+        VaultsInfo(
+            vaults = vaults,
+            selectedVault = selectedVault
+        )
+    }
+        .asLoadingResult()
         .distinctUntilChanged()
 
     val state: StateFlow<MemberOptionsUiState> = combine(
         getVaultFlow,
         eventFlow,
         isLoadingFlow,
-        loadingOptionFlow
-    ) { vault, event, isLoading, loadingOption ->
+        loadingOptionFlow,
+        ffRepo.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
+    ) { vaultInfo, event, isLoading, loadingOption, removePrimaryVaultEnabled ->
         val memberPermissions = shareRole.toPermissions()
-        val showTransferOwnership =
-            vault.isOwned && memberPermissions.hasFlag(SharePermissionFlag.Admin)
-        MemberOptionsUiState(
-            memberRole = shareRole,
-            showTransferOwnership = showTransferOwnership,
-            event = event,
-            isLoading = isLoading,
-            loadingOption = loadingOption
-        )
+
+        when (vaultInfo) {
+            LoadingResult.Loading,
+            is LoadingResult.Error -> MemberOptionsUiState(
+                memberRole = shareRole,
+                transferOwnership = TransferOwnershipState.Hide,
+                event = event,
+                isLoading = isLoading,
+                loadingOption = loadingOption
+            )
+
+            is LoadingResult.Success -> {
+                val showTransferOwnership = canShowTransferOwnership(
+                    memberPermissions = memberPermissions,
+                    vaults = vaultInfo.data.vaults,
+                    selectedVault = vaultInfo.data.selectedVault,
+                    removePrimaryVaultEnabled = removePrimaryVaultEnabled
+                )
+                MemberOptionsUiState(
+                    memberRole = shareRole,
+                    transferOwnership = showTransferOwnership,
+                    event = event,
+                    isLoading = isLoading,
+                    loadingOption = loadingOption
+                )
+            }
+        }
+
     }
         .stateIn(
             scope = viewModelScope,
@@ -153,6 +191,37 @@ class MemberOptionsViewModel @Inject constructor(
     fun clearEvent() = viewModelScope.launch {
         eventFlow.update { MemberOptionsEvent.Unknown }
     }
+
+    private fun canShowTransferOwnership(
+        vaults: List<Vault>,
+        selectedVault: Vault,
+        memberPermissions: SharePermission,
+        removePrimaryVaultEnabled: Boolean
+    ): TransferOwnershipState {
+        // Mandatory: for transfering ownership, user must be owner and the target must be admin
+        val minimumRequirementsMatch = selectedVault.isOwned && memberPermissions.hasFlag(SharePermissionFlag.Admin)
+        if (!minimumRequirementsMatch) {
+            return TransferOwnershipState.Hide
+        }
+
+        return if (!removePrimaryVaultEnabled) {
+            // Old behaviour: Only minimum requirement needed
+            TransferOwnershipState.Enabled
+        } else {
+            // New behaviour: Minimum requirement needed + check if user owns more than one vault
+            val ownsMoreThanOneVault = vaults.count { it.isOwned } > 1
+            if (ownsMoreThanOneVault) {
+                TransferOwnershipState.Enabled
+            } else {
+                TransferOwnershipState.Disabled
+            }
+        }
+    }
+
+    private data class VaultsInfo(
+        val vaults: List<Vault>,
+        val selectedVault: Vault
+    )
 
     companion object {
         private const val TAG = "MemberOptionsViewModel"

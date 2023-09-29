@@ -74,11 +74,22 @@ fun MemberOptionsContent(
         bottomSheetDivider(),
     )
 
-    if (state.showTransferOwnership) {
-        itemList += transferOwnership(enabled = enabled) {
-            onEvent(MemberOptionsUiEvent.TransferOwnership)
+    when (state.transferOwnership) {
+        TransferOwnershipState.Hide -> {}
+        TransferOwnershipState.Disabled -> {
+            itemList += transferOwnership(
+                enabled = false,
+                subtitle = stringResource(id = R.string.sharing_bottomsheet_transfer_ownership_disabled_subtitle)
+            )
+            itemList += bottomSheetDivider()
         }
-        itemList += bottomSheetDivider()
+
+        TransferOwnershipState.Enabled -> {
+            itemList += transferOwnership(enabled = enabled) {
+                onEvent(MemberOptionsUiEvent.TransferOwnership)
+            }
+            itemList += bottomSheetDivider()
+        }
     }
 
     itemList += removeAccess(
@@ -184,7 +195,11 @@ private fun permissionRow(
         override val isDivider = false
     }
 
-private fun transferOwnership(enabled: Boolean, onClick: () -> Unit): BottomSheetItem =
+private fun transferOwnership(
+    enabled: Boolean,
+    subtitle: String? = null,
+    onClick: (() -> Unit)? = null
+): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
             get() = {
@@ -199,7 +214,14 @@ private fun transferOwnership(enabled: Boolean, onClick: () -> Unit): BottomShee
                 )
             }
         override val subtitle: (@Composable () -> Unit)?
-            get() = null
+            get() = if (subtitle != null) {
+                {
+                    BottomSheetItemSubtitle(
+                        text = subtitle,
+                        maxLines = 1
+                    )
+                }
+            } else null
         override val leftIcon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_shield_half_filled) }
         override val endIcon: (@Composable () -> Unit)?
@@ -262,7 +284,7 @@ fun MemberOptionsContentPreview(
                 state = MemberOptionsUiState(
                     memberRole = ShareRole.Admin,
                     loadingOption = input.second.loadingOption,
-                    showTransferOwnership = input.second.showTransferOwnership,
+                    transferOwnership = input.second.showTransferOwnership,
                     isLoading = input.second.isLoading,
                     event = MemberOptionsEvent.Unknown
                 ),

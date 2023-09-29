@@ -69,12 +69,14 @@ dependencies {
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.preferences.api)
 
+    testImplementation(projects.pass.account.fakes)
     testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
-    testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.preferences.fakes)
 
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine)
@@ -86,4 +88,5 @@ dependencies {
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
 }

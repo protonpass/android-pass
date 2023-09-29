@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -47,6 +46,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -61,7 +62,8 @@ class SettingsViewModel @Inject constructor(
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
     syncStatusRepository: ItemSyncStatusRepository,
-    observeVaults: ObserveVaults
+    observeVaults: ObserveVaults,
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val themeState: Flow<ThemePreference> = preferencesRepository
@@ -98,32 +100,36 @@ class SettingsViewModel @Inject constructor(
         useFaviconsState
     ) { theme, totp, favicons -> PreferencesState(theme, totp, favicons) }
 
-    private val primaryVaultFlow: Flow<PrimaryVaultWrapper> = observeVaults()
-        .asLoadingResult()
-        .map { res ->
-            when (res) {
-                LoadingResult.Loading -> PrimaryVaultWrapper(
-                    primaryVault = None,
-                    showSelector = false
+    private val primaryVaultFlow: Flow<PrimaryVaultWrapper> = combine(
+        observeVaults().asLoadingResult(),
+        ffRepo.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
+    ) { res, removePrimaryVault ->
+        if (removePrimaryVault) {
+            return@combine PrimaryVaultWrapper(primaryVault = None, showSelector = false)
+        }
+        when (res) {
+            LoadingResult.Loading -> PrimaryVaultWrapper(
+                primaryVault = None,
+                showSelector = false
+            )
+
+            is LoadingResult.Error -> {
+                PassLogger.e(TAG, res.exception, "Error observing vaults")
+                PrimaryVaultWrapper(primaryVault = None, showSelector = false)
+            }
+
+            is LoadingResult.Success -> {
+                val primary = res.data.firstOrNull { it.isPrimary }
+                    ?: res.data.firstOrNull()
+
+                PrimaryVaultWrapper(
+                    primaryVault = primary.toOption(),
+                    showSelector = res.data.size > 1
                 )
 
-                is LoadingResult.Error -> {
-                    PassLogger.e(TAG, res.exception, "Error observing vaults")
-                    PrimaryVaultWrapper(primaryVault = None, showSelector = false)
-                }
-
-                is LoadingResult.Success -> {
-                    val primary = res.data.firstOrNull { it.isPrimary }
-                        ?: res.data.firstOrNull()
-
-                    PrimaryVaultWrapper(
-                        primaryVault = primary.toOption(),
-                        showSelector = res.data.size > 1
-                    )
-
-                }
             }
         }
+    }
 
     private data class PrimaryVaultWrapper(
         val primaryVault: Option<Vault>,

@@ -32,25 +32,30 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotFindVaultError
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotGetVaultListError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.pass.domain.ShareId
+import proton.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltViewModel
 class VaultOptionsViewModel @Inject constructor(
     snackbarDispatcher: SnackbarDispatcher,
-    getVaultById: GetVaultById,
+    observeVaults: ObserveVaults,
     canShareVault: CanShareVault,
     canMigrateVault: CanMigrateVault,
     canManageVaultAccess: CanManageVaultAccess,
-    savedStateHandle: SavedStateHandleProvider
+    savedStateHandle: SavedStateHandleProvider,
+    featureFlagRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val navShareId: ShareId =
@@ -60,23 +65,33 @@ class VaultOptionsViewModel @Inject constructor(
         .distinctUntilChanged()
 
     val state: StateFlow<VaultOptionsUiState> = combine(
-        getVaultById(shareId = navShareId).asLoadingResult(),
+        observeVaults().asLoadingResult(),
+        featureFlagRepository.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT),
         canShare
-    ) { vaultResult, canShare ->
-        val selectedVault = when (vaultResult) {
-            is LoadingResult.Error -> return@combine run {
+    ) { vaultResult, removePrimaryVaultEnabled, canShare ->
+        val (allVaults, selectedVault) = when (vaultResult) {
+            is LoadingResult.Error -> {
                 snackbarDispatcher(CannotGetVaultListError)
                 PassLogger.w(TAG, vaultResult.exception, "Cannot get vault")
-                VaultOptionsUiState.Error
+                return@combine VaultOptionsUiState.Error
             }
 
             LoadingResult.Loading -> return@combine VaultOptionsUiState.Loading
-            is LoadingResult.Success -> vaultResult.data
+            is LoadingResult.Success -> {
+                val selectedVault = vaultResult.data.find { it.shareId == navShareId }
+                if (selectedVault == null) {
+                    snackbarDispatcher(CannotFindVaultError)
+                    PassLogger.w(TAG, "Cannot find vault with shareId $navShareId")
+                    return@combine VaultOptionsUiState.Error
+                }
+                vaultResult.data to selectedVault
+            }
         }
+
+        val canDelete = canDeleteVault(allVaults, selectedVault, removePrimaryVaultEnabled)
 
         val canEdit = selectedVault.isOwned
         val canMigrate = canMigrateVault(navShareId)
-        val canDelete = !selectedVault.isPrimary && selectedVault.isOwned
         val canLeave = !selectedVault.isOwned
 
         val vaultAccessData = canManageVaultAccess(selectedVault)
@@ -102,6 +117,21 @@ class VaultOptionsViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = VaultOptionsUiState.Uninitialised
     )
+
+    private fun canDeleteVault(
+        allVaults: List<Vault>,
+        selectedVault: Vault,
+        removePrimaryVaultEnabled: Boolean
+    ): Boolean = if (!removePrimaryVaultEnabled) {
+        !selectedVault.isPrimary && selectedVault.isOwned
+    } else {
+        val ownedVaultsCount = allVaults.count { it.isOwned }
+        when {
+            !selectedVault.isOwned -> false // Cannot remove vault if is not owned
+            ownedVaultsCount == 1 -> false // Cannot remove vault if is the last owned one
+            else -> true
+        }
+    }
 
     companion object {
         private const val TAG = "VaultOptionsViewModel"

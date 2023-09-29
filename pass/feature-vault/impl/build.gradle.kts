@@ -64,6 +64,7 @@ dependencies {
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.protos)
 
     debugImplementation(libs.androidx.compose.uiTooling)
@@ -82,6 +83,7 @@ dependencies {
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.preferences.fakes)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
@@ -94,5 +96,6 @@ dependencies {
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.inAppReview.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
 }

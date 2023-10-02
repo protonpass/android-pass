@@ -168,7 +168,8 @@ internal fun HomeContent(
                 )
             }
 
-            if (shouldShowItemListHeader(uiState)) {
+            val showItemListHeader = remember(uiState) { shouldShowItemListHeader(uiState) }
+            if (showItemListHeader) {
                 val count = remember(uiState.homeListUiState.items) {
                     uiState.homeListUiState.items.map { it.items }.flatten().count()
                 }
@@ -185,9 +186,13 @@ internal fun HomeContent(
                 )
             }
 
-            if (shouldShowRecentSearchHeader(uiState)) {
+            val showRecentSearchHeader = remember(uiState) { shouldShowRecentSearchHeader(uiState) }
+            if (showRecentSearchHeader) {
+                val itemCount = remember(uiState.homeListUiState.items) {
+                    uiState.homeListUiState.items.map { it.items }.flatten().count()
+                }
                 RecentSearchListHeader(
-                    itemCount = uiState.homeListUiState.items.map { it.items }.flatten().count(),
+                    itemCount = itemCount,
                     onClearRecentSearchClick = onClearRecentSearchClick
                 )
             }

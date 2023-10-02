@@ -10,7 +10,7 @@
     <string name="word_count">%s words</string>
     <string name="word_separator">Word separator</string>
     <string name="bottomsheet_option_capital_letters">Capital letters (A–Z)</string>
-    <string name="bottomsheet_option_capitalise">Capitalise</string>
+    <string name="bottomsheet_option_capitalise">Capitalize</string>
     <string name="bottomsheet_option_include_numbers">Include numbers (0–9)</string>
     <string name="bottomsheet_option_word_separator_hyphens">Hyphens ( - )</string>
     <string name="bottomsheet_option_word_separator_spaces">Spaces</string>

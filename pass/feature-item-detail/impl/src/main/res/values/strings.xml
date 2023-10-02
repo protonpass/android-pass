@@ -4,7 +4,7 @@
     <string name="action_open">Open</string>
     <string name="action_copy">Copy</string>
     <!-- Detail -->
-    <string name="detail_init_error">Could not initialise the element</string>
+    <string name="detail_init_error">Could not initialize the element</string>
     <string name="top_bar_edit_button_text">Edit</string>
 
     <!-- Alias details -->
@@ -67,7 +67,7 @@
     <string name="credit_card_cardholder_field_name">Cardholder name</string>
     <string name="credit_card_number_field_name">Card number</string>
     <string name="credit_card_cvv_field_name">Verification number</string>
-    <string name="credit_card_pin_field_name">PIN number</string>
+    <string name="credit_card_pin_field_name">PIN code</string>
     <string name="credit_card_expiration_date_field_name">Expires on</string>
     <string name="credit_card_cardholder_copied_to_clipboard">Cardholder copied to clipboard</string>
     <string name="credit_card_number_copied_to_clipboard">Card number copied to clipboard</string>

@@ -28,7 +28,6 @@ enum class HomeSnackbarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     ObserveItemsError(R.string.error_observing_items, SnackbarType.ERROR),
-    ObserveShareError(R.string.error_observing_share, SnackbarType.ERROR),
     RefreshError(R.string.error_refreshing, SnackbarType.ERROR),
     LoginMovedToTrash(R.string.home_snackbar_login_moved_to_trash, SnackbarType.SUCCESS),
     AliasMovedToTrash(R.string.home_snackbar_alias_moved_to_trash, SnackbarType.SUCCESS),

@@ -11,9 +11,6 @@
     <string name="profile_option_rating">Rate app</string>
     <string name="profile_option_autofill">Autofill</string>
     <string name="profile_option_autofill_subtitle">Automatically fill in your usernames and passwords.</string>
-    <string name="profile_option_fingerprint">Fingerprint</string>
-    <string name="profile_option_automatic_app_lock">Automatic app locking</string>
-    <string name="profile_option_advanced">Advanced</string>
 
     <string name="profile_error_biometry_failed_to_start">Could not start the biometric authentication</string>
     <string name="profile_error_biometry_failed_to_authenticate">Failed to authenticate</string>
@@ -37,7 +34,6 @@
     <string name="app_lock_config_none">None</string>
     <string name="app_lock_config_biometric">Biometric</string>
     <string name="app_lock_config_pin_code">PIN code</string>
-    <string name="app_lock_config_unlock_with">Unlock with</string>
     <string name="app_lock_config_app_lock_time">Automatic lock</string>
     <string name="app_lock_config_use_system_lock_when_biometric_fails">Use system lock when biometric fails</string>
     <string name="configure_pin_set_pin_code">Set PIN code</string>

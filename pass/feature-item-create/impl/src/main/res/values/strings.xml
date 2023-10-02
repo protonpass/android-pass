@@ -86,8 +86,6 @@
     <string name="create_note_item_update_error">Could not update Note</string>
     <string name="create_note_init_error">Could not initialize Note</string>
     <string name="note_created">Note created</string>
-    <string name="edit_note_snackbar_note_moved_to_trash">Note moved to trash</string>
-    <string name="edit_note_snackbar_note_moved_to_trash_error">Could not delete note</string>
 
     <!-- Create Alias -->
     <string name="title_create_alias">Create alias</string>
@@ -109,7 +107,6 @@
     <string name="create_alias_item_update_error">Could not update Alias</string>
     <string name="create_alias_init_error">Could not initialize Alias</string>
     <string name="alias_created">Alias created</string>
-    <string name="alias_moved_to_trash">Alias moved to trash</string>
     <string name="cannot_retrieve_alias_options">Cannot retrieve alias options</string>
     <string name="alias_mailbox_dialog_title">Forward to</string>
 

@@ -21,7 +21,10 @@
     <string name="bottomsheet_move_to_trash">Move to trash</string>
 
     <!-- Actions -->
-    <string name="action_content_description_menu">Open item action menu</string>
+    <string
+        name="action_content_description_menu"
+        comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu"
+    >Open item action menu</string>
     <string name="action_upgrade_now">Upgrade now</string>
 
     <!-- Empty list -->

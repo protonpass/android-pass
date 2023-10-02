@@ -77,6 +77,7 @@
   <string name="share_role_admin">Адміністратар</string>
   <string name="share_role_owner">Уладальнік</string>
   <string name="sharing_bottomsheet_transfer_ownership">Перадаць права ўласнасці</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можаце перанесці апошняе сховішча, якое належала вам.</string>
   <string name="sharing_bottomsheet_remove_access">Выдаліць доступ</string>
   <string name="sharing_bottomsheet_resend_invite">Адправіць запрашэнне паўторна</string>
   <string name="sharing_bottomsheet_cancel_invite">Скасаваць запрашэнне</string>

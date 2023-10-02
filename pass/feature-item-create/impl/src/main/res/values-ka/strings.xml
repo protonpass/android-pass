@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">შენახვა</string>
+  <string name="action_remove">წაშლა</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">შესვლა</string>
+  <string name="action_alias">ფსევდონიმი</string>
+  <string name="action_note">შენიშვნა</string>
+  <string name="action_credit_card">საკრედიტო ბარათი</string>
+  <string name="action_password">პაროლი</string>
+  <string name="item_type_login_description">აპისთვის ან საიტისთვის შესვლის დეტალების დამატება</string>
+  <string name="item_type_alias_description">მიიღეთ ელფოსტის ფსევდონიმი ახალ აპებზე გამოსაყენებლად</string>
+  <string name="item_type_note_description">PIN კოდი სადმე საიმედო ადგილას ჩაიწერეთ</string>
+  <string name="item_type_credit_card_description">უსაფრთხოდ შეინახეთ თქვენი გადახდის ინფორმაცია</string>
+  <string name="item_type_password_description">უსაფრთხო პაროლის გენერირება</string>
+  <!-- Create Login -->
+  <string name="title_create_login">შესვლის ჩანაწერის შექმნა</string>
+  <string name="field_username_title">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
+  <string name="field_username_hint">დაამატეთ მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
+  <string name="field_password_title">პაროლი</string>
+  <string name="field_password_hint">პაროლის დამატება</string>
+  <string name="field_website_address_title">საიტი</string>
+  <string name="field_website_address_invalid">არასწორი URL</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">დამატება</string>
+  <string name="sticky_button_generate_password">ახალი პაროლის გენერირება</string>
+  <string name="sticky_button_create_alias">Hide my email</string>
+  <string name="sticky_button_use_account_email">%s-ის გამოყენება</string>
+  <string name="create_login_item_creation_error">შესვლის ჩანაწერის შექმნის შეცდომა</string>
+  <string name="create_login_item_update_error">შესვლის ჩანაწერის განახლების შეცდომა</string>
+  <string name="create_login_init_error">შესვლის ჩანაწერის ინიციალიზაციის შეცდომა</string>
+  <string name="create_login_invalid_totp">2FA-ს შემცველობა არასწორია</string>
+  <string name="login_created">შესვლის ჩანაწერი შეიქმნა</string>
+  <string name="bottomsheet_modify_alias_title">ფსევდონიმის ჩასწორება</string>
+  <string name="bottomsheet_custom_field_type_text">ტექსტი</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">ტექსტური ხელით მითითებული ველი</string>
+  <string name="bottomsheet_custom_field_type_hidden">დამალული</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA საიდუმლო (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">სათაურის ჩასწორება</string>
+  <string name="bottomsheet_custom_field_option_remove">ველის წაშლა</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">ხელით მითითებული ველის წაშლა</string>
+  <string name="create_login_add_custom_field_button">მეტის დამატება</string>
+  <string name="custom_field_hidden_placeholder">თქვენი დამალული შემცველობა</string>
+  <string name="custom_field_hidden_icon_content_description">დამალული ხელით მითითებული ველის ხატულა</string>
+  <string name="custom_field_text_placeholder">თქვენი შემცველობა</string>
+  <string name="custom_field_dialog_title">არასტანდარტული ველის სახელი</string>
+  <string name="custom_field_dialog_body">შეიყვანეთ თქვენი ხელით მითითებული ველის სახელი</string>
+  <string name="custom_field_dialog_placeholder">არცერთი ხელით მითითებული ველი</string>
+  <string name="custom_field_options_content_description">ხელით მითითებული ველის მორგება</string>
+  <!-- Create Note -->
+  <string name="title_create_note">შენიშვნის შექმნა</string>
+  <string name="create_note_item_creation_error">შენიშვნის შექმნის შეცდომა</string>
+  <string name="create_note_item_update_error">შენიშვნის განახლების შეცდომა</string>
+  <string name="create_note_init_error">შენიშვნის ინიციალიზაციის შეცდომა</string>
+  <string name="create_note_empty_share_id">გაზიარებულის ID ცარიელი ვერ იქნება</string>
+  <string name="note_created">შენიშვნა შეიქმნა</string>
+  <string name="edit_note_snackbar_note_moved_to_trash">შენიშვნა გადატანილია ნაგვის ყუთში</string>
+  <string name="edit_note_snackbar_note_moved_to_trash_error">შენიშვნის წაშლის შეცდომა</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">ფსევდონიმის შექმნა</string>
+  <string name="field_alias_title">ფსევდონიმის მისამართი</string>
+  <string name="field_alias_hint">ფსევდონიმის მომხმარებლის სახელი</string>
+  <string name="field_mailboxes_creation_title">გადაგზავნა</string>
+  <string name="field_mailboxes_edit_title">გადამისამართება</string>
+  <string name="field_alias_you_are_about_to_create">აპირებთ, შექმნათ</string>
+  <string name="field_alias_prefix">პრეფიქსი</string>
+  <string name="field_alias_suffix">სუფიქსი</string>
+  <string name="alias_bottomsheet_alias_title">ფსევდონიმი</string>
+  <string name="alias_bottomsheet_suffix_title">სუფიქსი</string>
+  <string name="create_alias_item_creation_error">ფსევდონიმის შექმნის შეცდომა</string>
+  <string name="create_alias_cannot_create_more_aliases_error">მეტი ფსევდონიმის დამატება შეუძლებელია</string>
+  <string name="create_alias_email_not_validated_error">თქვენი ელფოსტის გადამოწმების გარეშე ფსევდონიმების შექმნა აკრძალულია</string>
+  <string name="alias_rate_limited">ახლახან, მეტისმეტად, ბევრი ფსევდონიმი შექმენით</string>
+  <string name="create_alias_item_update_error">ფსევდონიმის განახლების შეცდომა</string>
+  <string name="create_alias_init_error">ფსევდონიმის ინიციალიზაციის შეცდომა</string>
+  <string name="create_alias_empty_share_id">გაზიარებულის ID ცარიელი ვერ იქნება</string>
+  <string name="alias_created">ფსევდონიმი შეიქმნა</string>
+  <string name="alias_moved_to_trash">ფსევდონიმი გადატანილია ნაგვის ყუთში</string>
+  <string name="cannot_retrieve_alias_options">ფსევდონიმის პარამეტების მიღების შეცდომა</string>
+  <string name="alias_mailbox_dialog_title">გადაგზავნა</string>
+  <!-- Create note -->
+  <string name="note_hint">შენიშვნა</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">საკრედიტო ბარათის შექმნა</string>
+  <string name="field_cardholder_name_title">ბარათის მფლობლის სახელი</string>
+  <string name="field_cardholder_name_hint">სრული სახელი</string>
+  <string name="field_card_number_title">ბარათის ნომერი</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">გადამოწმების ნომერი</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">PIN კოდი</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">ვადა იწურება</string>
+  <string name="field_card_expiration_date_hint">თთ / წწწწ</string>
+  <string name="field_card_expiration_date_error">ვადის ამოწურვის თარიღი არასწორია</string>
+  <string name="create_credit_card_item_creation_error">საკრედიტო ბარათის შექმნის შეცდომა</string>
+  <string name="create_credit_card_item_creation_success">საკრედიტო ბარათი შეიქმნა</string>
+  <string name="credit_card_init_error">საკრედიტო ბარათის ინიციალიზაციის შეცდომა</string>
+  <string name="credit_card_item_update_error">საკრედიტო ბარათის განახლების შეცდომა</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">ცვლილებები შენახულია</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">2FA საიდუმლო (TOTP)</string>
+  <string name="totp_create_login_field_invalid">არასწორი 2FA საიდუმლო</string>
+  <string name="totp_create_login_field_placeholder">2FA საიდუმლო გასაღების დამატება</string>
+  <string name="close_scree_icon_content_description">ეკრანის დახურვის ღილაკი</string>
+  <string name="totp_paste_code_action">კოდის ჩასმა</string>
+  <string name="totp_scan_code_action">კოდის სკანირება</string>
+  <string name="field_cannot_be_empty">ეს ველი ცარიელი ვერ იქნება</string>
+  <string name="camera_permission_explanation">ამ ფუნქციას კამერასთან წვდომა სჭირდება.</string>
+  <string name="camera_permission_open_settings">მორგების ფანჯრის გახსნა</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">მიღწეულია 2FA-ის ლიმიტი</string>
+  <string name="upgrade">გაუმჯობესება</string>
+  <string name="mfa_icon_content_description">2FA-ის ხატულა</string>
+  <string name="select_suffix_upgrade_for_custom_domains">დომენის ხელით მისათითებლად საჭიროა სატარიფო გეგმის აწევა</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">აწიეთ ტარიფი მეტი საფოსტო ყუთისთვის</string>
+  <string name="create_alias_content_limit_banner">მიაღწიეთ შესაძლო ფსევდონიმების რაოდენობს ზღვარს. სატარიფო გეგმის აწევის შემთხვევაში ფსევდონიმების რაოდენობა უსაზღვროა.</string>
+</resources>

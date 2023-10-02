@@ -71,6 +71,7 @@
   <string name="share_role_admin">管理員</string>
   <string name="share_role_owner">擁有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">轉移所有權</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
   <string name="sharing_bottomsheet_remove_access">移除存取權限</string>
   <string name="sharing_bottomsheet_resend_invite">重新發送邀請</string>
   <string name="sharing_bottomsheet_cancel_invite">取消邀請</string>

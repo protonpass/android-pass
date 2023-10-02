@@ -5,7 +5,7 @@
   <string name="settings_autofill_preference_title">Αυτόματη συμπλήρωση</string>
   <string name="settings_autofill_preference_description">Για γρήγορες, εύκολες συνδέσεις, αφήστε το Proton Pass να συμπληρώσει τα ονόματα χρήστη και τους κωδικούς πρόσβασής σας.</string>
   <string name="settings_authentication_section_title">Ταυτοποίηση</string>
-  <string name="settings_authentication_preference_title">Ξεκλείδωμα με δακτυλικό αποτυπώμα</string>
+  <string name="settings_authentication_preference_title">Ξεκλείδωμα με δακτυλικό αποτύπωμα</string>
   <string name="settings_authentication_preference_description_enabled">Απαίτηση ανοίγματος γρήγορα και με ασφάλεια την εφαρμογή με το δακτυλικό σας αποτύπωμα.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Δεν μπορείτε να απαιτήσετε το δακτυλικό σας αποτύπωμα για αλληλεπίδραση με την εφαρμογή, καθώς δεν υπάρχουν καταχωρημένα δακτυλικά αποτυπώματα σε αυτήν τη συσκευή.</string>
   <string name="settings_appearance_preference_title">Θέμα</string>
@@ -43,5 +43,5 @@
   <string name="clipboard_option_copy_totp_code_hint">Αυτόματη αντιγραφή κωδικών ελέγχου ταυτότητας κατά τη χρήση της αυτόματης συμπλήρωσης.</string>
   <string name="clipboard_option_clear_clipboard_never">Ποτέ</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Mετά από 60 δευτερόλεπτα</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">Mετά από 180 δευτερόλεπτα</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Μετά από 180 δευτερόλεπτα</string>
 </resources>

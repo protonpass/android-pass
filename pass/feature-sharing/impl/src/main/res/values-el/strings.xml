@@ -60,7 +60,7 @@
   <string name="share_summary_view_items">μόνο προβολή στοιχείων</string>
   <string name="share_summary_create_items">δημιουργία στοιχείων</string>
   <string name="share_summary_manage_vault">διαχείριση</string>
-  <string name="share_summary_share_vault">κοινή χρήση κρύπτης</string>
+  <string name="share_summary_share_vault">Κοινή χρήση κρύπτης</string>
   <string name="share_summary_email_title">Χρήστης</string>
   <string name="share_summary_vault_title">Κρύπτη</string>
   <string name="share_summary_permissions_title">Δικαιώματα</string>
@@ -73,6 +73,7 @@
   <string name="share_role_admin">Διαχειριστής</string>
   <string name="share_role_owner">Ιδιοκτήτης</string>
   <string name="sharing_bottomsheet_transfer_ownership">Μεταβίβαση κυριότητας</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Δεν μπορείτε να μεταφέρετε την τελευταία κρύπτη που κατέχετε.</string>
   <string name="sharing_bottomsheet_remove_access">Αφαίρεση πρόσβασης</string>
   <string name="sharing_bottomsheet_resend_invite">Επανάληψη αποστολής πρόσκλησης</string>
   <string name="sharing_bottomsheet_cancel_invite">Ακύρωση πρόσκλησης</string>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="title_settings">მორგება</string>
+  <string name="settings_autofill_section_title">ავტომატური შევსება</string>
+  <string name="settings_autofill_preference_title">ავტომატური შევსება</string>
+  <string name="settings_autofill_preference_description">სწრაფი, ადვილი შესვლისთვის მიეცით საშუალება Proton VPN-ს, თქვენი მომხმარებელი და პაროლი შეავსოს.</string>
+  <string name="settings_authentication_section_title">ავთენტიკაცია</string>
+  <string name="settings_authentication_preference_title">ანაბეჭდით განბლოკვა</string>
+  <string name="settings_authentication_preference_description_enabled">აპის სწრაფად და უსაფრთხოდ გახსნა თქვენი ანაბეჭდით.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">თუ მოწყობილობაზე ანაბეჭდები რეგისტრირებული არაა, აპთან ურთიერთობისთვის ანაბეჭდით ავთენტიკაციას ვერ მოითხოვთ.</string>
+  <string name="settings_appearance_preference_title">თემა</string>
+  <string name="settings_appearance_preference_subtitle_match_system">სისტემის შესაბამისი</string>
+  <string name="settings_appearance_preference_subtitle_light">ნათელი რეჟიმი</string>
+  <string name="settings_appearance_preference_subtitle_dark">მუქი რეჟიმი</string>
+  <string name="settings_fingerprint_lock_enabled">ანაბეჭდით განბლოკვა ჩართულია</string>
+  <string name="settings_error_performing_operation">ოპერაციის შესრულების შეცდომა</string>
+  <string name="settings_option_clipboard">ბუფერი</string>
+  <string name="settings_application_section_title">აპლიკაცია</string>
+  <string name="settings_option_view_logs">ჟურნალის ნახვა</string>
+  <string name="settings_option_force_sync">ნაძალადევი სინქრონიზაცია</string>
+  <string name="settings_about_section_title">შესახებ</string>
+  <string name="settings_option_privacy_policy">კონფიდენციალობის პოლიტიკა</string>
+  <string name="settings_option_terms_of_service">მომსახურების პირობები</string>
+  <string name="settings_primary_vault_section_title">საცავები</string>
+  <string name="settings_primary_vault_vault_selector_title">ძირითადი საცავი</string>
+  <string name="settings_primary_vault_section_subtitle">ძირითად საცავს ვერ წაშლით</string>
+  <string name="settings_primary_vault_change_success">ძირითადი საცავი შეიცვალა</string>
+  <string name="settings_primary_vault_change_error">ძირითადი საცავის შეცვლა შეუძლებელია</string>
+  <string name="settings_privacy_section_title">კონფიდენციალობა</string>
+  <string name="settings_use_favicons_preference_title">ვების ხატულების გამოყენება</string>
+  <string name="settings_use_favicons_preference_subtitle">გადაწყვიტეთ, გნებავთ, დაინახოთ თქვენს ელემენტებზე ვებგვერდის ხატულები, თუ არა.</string>
+  <string name="settings_allow_screenshots_preference_title">ეკრანის ანაბეჭდების დაშვება</string>
+  <string name="settings_allow_screenshots_preference_subtitle">თუ ჩართულია, აპის ეკრანის ანაბეჭდის გადაღების უფლება გექნებათ.</string>
+  <string name="settings_clear_icon_cache_success">ხატულების კეში გაწმენდლია</string>
+  <string name="settings_clear_icon_cache_error">ხატულების კეშის გასუფთავების შეცდომა</string>
+  <string name="settings_share_telemetry">ანონიმური გამოყენების გაზიარება</string>
+  <string name="settings_share_crashes">ავარიის ანონიმური ანგარიშების გაზიარება</string>
+  <string name="settings_preference_updated">თქვენი პარამეტრები განახლდა</string>
+  <string name="view_logs_title">ჟურნალის ნახვა</string>
+  <string name="clipboard_bottomsheet_title">ბუფერი</string>
+  <string name="clipboard_option_clear_clipboard_label">გაცვლის ბუფერის გასუფთავება</string>
+  <string name="clipboard_option_copy_totp_code">ავთენტიკაციის კოდების კოპირება</string>
+  <string name="clipboard_option_copy_totp_code_hint">ავტომატური შევსების გამოყენებისას ავთენტიკაციის კოდის ავტომატური კოპირება.</string>
+  <string name="clipboard_option_clear_clipboard_never">არასოდეს</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">60 წამის შემდეგ</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">180 წამის შემდეგ</string>
+</resources>

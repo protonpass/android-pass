@@ -23,7 +23,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,7 +38,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
@@ -83,7 +81,10 @@ fun MoreInfo(
     ) {
         var showMoreInfo by remember { mutableStateOf(shouldShowMoreInfoInitially) }
         var rotation by remember { mutableStateOf(0f) }
-        val displayRotation by animateFloatAsState(targetValue = rotation)
+        val displayRotation by animateFloatAsState(
+            targetValue = rotation,
+            label = "displayRotation"
+        )
 
         Row(
             modifier = Modifier
@@ -187,9 +188,8 @@ private fun MoreInfoLastAutofilledContent(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun ColumnScope.MoreInfoModifiedContent(
+private fun MoreInfoModifiedContent(
     modifier: Modifier = Modifier,
     moreInfoUiState: MoreInfoUiState
 ) {

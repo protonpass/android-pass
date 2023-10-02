@@ -4,7 +4,7 @@
   <string name="home_empty_vault_title">Brankas Anda kosong</string>
   <string name="home_empty_vault_subtitle">Mulailah dengan membuat item pertama Anda.</string>
   <string name="home_empty_vault_create_login">Buat login</string>
-  <string name="home_empty_vault_create_alias">Buat alias Hide My Email</string>
+  <string name="home_empty_vault_create_alias">Buat alias Hide My Surel</string>
   <string name="home_empty_vault_create_note">Buat catatan</string>
   <string name="error_observing_items">Terdapat kesalahan dalam mengamati item</string>
   <string name="error_observing_share">Terdapat kesalahan dalam mengamati share</string>
@@ -28,7 +28,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Salin kata sandi</string>
   <string name="bottomsheet_copy_username">Salin nama pengguna</string>
-  <string name="bottomsheet_copy_alias">Salin alamat email</string>
+  <string name="bottomsheet_copy_alias">Salin alamat surel</string>
   <string name="bottomsheet_copy_number">Salin nomor</string>
   <string name="bottomsheet_copy_cvv">Salin CVV</string>
   <string name="bottomsheet_copy_note">Salin catatan</string>

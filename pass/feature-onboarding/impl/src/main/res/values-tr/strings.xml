@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Proton Pass uygulamasının oturum açma bilgilerinizi sizin için doldurmasına izin verin. Yazmanız veya kopyalayıp yapıştırmanız gerekmez.</string>
+  <string name="on_boarding_autofill_content">Proton Pass oturum açma bilgilerinizi sizin için doldurabilir. Yazmanız veya kopyalayıp yapıştırmanız gerekmez.</string>
   <string name="on_boarding_autofill_title">Uygulamalarda anında oturum açın</string>
-  <string name="on_boarding_autofill_button">Proton Pass ile otomatik doldurma</string>
-  <string name="on_boarding_fingerprint_content">Yalnızca sizin erişebilmeniz için Proton Pass kilidini parmak izinizle açacak şekilde ayarlayın.</string>
+  <string name="on_boarding_autofill_button">Proton Pass ile otomatik doldur</string>
+  <string name="on_boarding_fingerprint_content">Yalnızca sizin erişebilmeniz için Proton Pass kilidini parmak izinizle açılacak şekilde ayarlayın.</string>
   <string name="on_boarding_fingerprint_title">En önemli verilerinizi koruyun</string>
   <string name="on_boarding_fingerprint_button">Kilidi parmak izi ile aç</string>
   <string name="on_boarding_last_page_content">Gerçek e-posta adresinizi paylaşmayın. Onun yerine, Proton Pass takma adlarıyla e-posta adresinizi gizleyin.</string>

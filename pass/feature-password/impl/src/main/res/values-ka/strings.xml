@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">კოპირება და დახურვა</string>
+  <string name="password_copied_to_clipboard">პაროლი დაკოპირდა</string>
+  <string name="bottomsheet_generate_password_title">პაროლის გენერირება</string>
+  <string name="password_type">ტიპი</string>
+  <string name="special_characters">სპეცსიმბოლოები (!&amp;*)</string>
+  <string name="character_count">%s სიმბოლო</string>
+  <string name="word_count">%s სიტყვა</string>
+  <string name="word_separator">სიტყვების განმაცალკევებელი</string>
+  <string name="bottomsheet_option_capital_letters">მაღალი რეგისტრის სიმბოლოები (A-Z)</string>
+  <string name="bottomsheet_option_capitalise">ზედა რეგისტრში გადაყვანა</string>
+  <string name="bottomsheet_option_include_numbers">რიცხვების ჩათვლით (0-9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">დეფისები ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">ადგილები</string>
+  <string name="bottomsheet_option_word_separator_periods">წერტილები ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">მძიმეები ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">ხაზგასმები ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">რიცხვები</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">ციფრები და სიმბოლოები</string>
+  <string name="regenerate_password_icon_content_description">პაროლის გენერირების ღილაკი</string>
+  <string name="password_mode_memorable">ადვილად დასამახსოვრებელი პაროლი</string>
+  <string name="password_mode_random">შემთხვევითი პაროლი</string>
+  <string name="password_mode_icon">პაროლის რეჟიმის ხატულა</string>
+  <string name="password_words_separator_icon">პაროლის სიტყვების გამყოფი</string>
+</resources>

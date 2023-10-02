@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">ანგარიში</string>
+  <string name="account_username_label">მომხმარებლის სახელი</string>
+  <string name="account_subscription_label">გამოწერის გეგმა</string>
+  <string name="account_permanently_delete_warning">თქვენი ანგარიში და მონაცემები სამუდამოდ წაიშლება. ანგარიშის რეაქტივაციას ვეღარ შეძლებთ.</string>
+  <string name="account_delete_account">ანგარიშის წაშლა</string>
+  <string name="account_delete_account_icon_content_description">ანგარიშის წაშლის ღილაკი</string>
+  <string name="account_sign_out">გასვლა</string>
+  <string name="account_sign_out_icon_content_description">გასვლის ღილაკი</string>
+  <string name="account_manage_subscription">გამოწერის მართვა</string>
+  <string name="account_get_user_info_error">მომხმარებლის ინფორმაციის მიღების შეცდომა</string>
+  <string name="manage_subscription_icon_content_description">გამოწერის ღილაკის მართვა</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">გახვალთ?</string>
+  <string name="alert_confirm_sign_out_message">დარწმუნებული ბრძანდებით, რომ გნებავთ, გახვიდეთ?</string>
+</resources>

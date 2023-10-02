@@ -7,7 +7,7 @@
   <string name="snackbar_edit_vault_error">Tresor nicht bearbeitet</string>
   <string name="snackbar_delete_vault_success">Tresor gelöscht</string>
   <string name="snackbar_delete_vault_error">Tresor nicht gelöscht</string>
-  <string name="snackbar_leave_vault_success">Tresor verlassen</string>
+  <string name="snackbar_leave_vault_success">Tresor wurde verlassen</string>
   <string name="snackbar_leave_vault_error">Fehler beim Verlassen des Tresors.</string>
   <string name="snackbar_retrieve_vault_error">Tresor nicht gefunden</string>
   <string name="snackbar_find_vault_error">Ausgewählter Tresor konnte nicht gefunden werden</string>
@@ -19,7 +19,7 @@
   <string name="vault_delete_dialog_cancel_action">Abbrechen</string>
   <string name="vault_delete_dialog_delete_action">Löschen</string>
   <string name="vault_leave_dialog_title">Tresor verlassen</string>
-  <string name="vault_leave_dialog_body">Dadurch wird dein Zugriff auf den Tresor __VAULT_NAME__ und alle seine Inhalte entfernt. Bist du sicher, dass ihn verlassen willst?</string>
+  <string name="vault_leave_dialog_body">Dadurch wird dein Zugriff auf den Tresor __VAULT_NAME__ und alle seine Inhalte entfernt. Bist du sicher, dass du ihn verlassen willst?</string>
   <string name="vault_leave_dialog_cancel_action">Abbrechen</string>
   <string name="vault_leave_dialog_leave_action">Verlassen</string>
   <string name="bottomsheet_close_icon_content_description">Erstellten Tresor schließen</string>

@@ -28,7 +28,7 @@
   <string name="item_restored_message_error">Terdapat kesalahan dalam memulihkan item</string>
   <string name="login_item_generate_totp_error">Terdapat kesalahan dalam menghasilkan kode 2FA</string>
   <string name="login_item_view_alias_button">Tampilkan alias</string>
-  <string name="field_username">Nama pengguna atau alamat email</string>
+  <string name="field_username">Nama pengguna atau alamat surel</string>
   <string name="field_password">Kata sandi</string>
   <string name="websites_section_title">Situs web</string>
   <string name="totp_section_title">Token 2FA (TOTP)</string>

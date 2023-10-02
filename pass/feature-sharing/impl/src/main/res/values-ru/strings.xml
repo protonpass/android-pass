@@ -77,6 +77,7 @@
   <string name="share_role_admin">Admin</string>
   <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfer ownership</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
   <string name="sharing_bottomsheet_remove_access">Remove access</string>
   <string name="sharing_bottomsheet_resend_invite">Resend invite</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancel invite</string>

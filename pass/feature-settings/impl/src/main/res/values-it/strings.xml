@@ -7,7 +7,7 @@
   <string name="settings_authentication_section_title">Autenticazione</string>
   <string name="settings_authentication_preference_title">Sblocco con impronta</string>
   <string name="settings_authentication_preference_description_enabled">Richiede Apertura rapida e sicura dell\'applicazione tramite impronta.</string>
-  <string name="settings_authentication_preference_description_no_fingerprint">Non puoi impostare l\'utilizzo dell\'impronta nell\'applicazione poiché non sono state registrate impronte su questo dispositivo.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">Non puoi richiedere l\'utilizzo della tua impronta digitale per interagire con l\'app poiché non ci sono impronte registrate su questo dispositivo.</string>
   <string name="settings_appearance_preference_title">Tema</string>
   <string name="settings_appearance_preference_subtitle_match_system">Impostazione predefinita di sistema</string>
   <string name="settings_appearance_preference_subtitle_light">Modalità chiara</string>

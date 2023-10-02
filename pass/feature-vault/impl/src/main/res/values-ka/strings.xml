@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">საცავი შეიქმნა</string>
+  <string name="snackbar_create_vault_error">საცავი არ შექმნილა</string>
+  <string name="snackbar_cannot_create_more_vaults_error">მეტი საცავის შექმნა შეუძლებელია</string>
+  <string name="snackbar_edit_vault_success">საცავი ჩასწორდა</string>
+  <string name="snackbar_edit_vault_error">საცავი არ ჩასწორებულა</string>
+  <string name="snackbar_delete_vault_success">საცავი წაიშალა</string>
+  <string name="snackbar_delete_vault_error">საცავი არ წაშლილა</string>
+  <string name="snackbar_leave_vault_success">საცავი დატოვებულია</string>
+  <string name="snackbar_leave_vault_error">საცავის დატოვების შეცდომა</string>
+  <string name="snackbar_retrieve_vault_error">საცავი ვერ ვიპოვე</string>
+  <string name="snackbar_find_vault_error">არჩეული საცავის მოძებნა შეუძლებელია</string>
+  <string name="snackbar_get_vault_list_error">საცავების სიის ჩატვირთვა შეუძლებელია</string>
+  <string name="snackbar_get_upgrade_info_error">საცავების სიის მომზადების შეცდომა</string>
+  <string name="vault_delete_dialog_title">საცავის წაშლა</string>
+  <string name="vault_delete_dialog_body">ეს სამუდამოდ წაშლის საცავს __VAULT_NAME__ და მის შემცველობას. წაშლის დასადასტურებლად შეიყვანეთ საცავის სახელი.</string>
+  <string name="vault_delete_dialog_placeholder">საცავის სახელი</string>
+  <string name="vault_delete_dialog_cancel_action">გაუქმება</string>
+  <string name="vault_delete_dialog_delete_action">წაშლა</string>
+  <string name="vault_leave_dialog_title">საცავის დატოვება</string>
+  <string name="vault_leave_dialog_body">ეს საცავიდან __VAULT_NAME__ და მისი შემცველობისგან თქვენს წვდომებს წაშლის. მართლა გნებავთ, გახვიდეთ?</string>
+  <string name="vault_leave_dialog_cancel_action">გაუქმება</string>
+  <string name="vault_leave_dialog_leave_action">გასვლა</string>
+  <string name="bottomsheet_close_icon_content_description">საცავის შექმნის დახურვა</string>
+  <string name="bottomsheet_create_vault_button">საცავის შექმნა</string>
+  <string name="bottomsheet_edit_vault_button">შენახვა</string>
+  <string name="bottomsheet_cannot_create_more_vaults">მიაღწიეთ შესაძლო საცავების რაოდენობს ზღვარს. სატარიფო გეგმის აწევის შემთხვევაში საცავების რაოდენობა უსაზღვროა.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">სხვა საცავებთან ურთიერთობისთვის ტარიფის აწევა გჭირდებათ.</string>
+  <string name="bottomsheet_upgrade_now">ტარიფის განახლება</string>
+  <string name="bottomsheet_edit">ჩასწორება</string>
+  <string name="bottomsheet_migrate">ყველა ელემენტის სხვა საცავში გადატანა</string>
+  <string name="bottomsheet_delete_vault">საცავის წაშლა</string>
+  <string name="bottomsheet_share_vault">გაზიარება</string>
+  <string name="bottomsheet_leave_vault">საცავის დატოვება</string>
+  <string name="bottomsheet_view_members">წევრების ნახვა</string>
+  <string name="bottomsheet_manage_access">წვდომის მართვა</string>
+  <string name="bottomsheet_select_vault_read_only">შეგიძლიათ, მხოლოდ, წაიკითხოთ</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">ჩანაწერების შექმნა, მხოლოდ, ძირითად საცავში შეგიძლიათ</string>
+  <string name="vault_title">საცავი</string>
+</resources>

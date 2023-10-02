@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">აპლიკაცია ჩაკეტილია</string>
+  <string name="biometric_prompt_title_setup">ბიომეტრიის მორგება</string>
+  <string name="biometric_prompt_subtitle">განბლოკვა თქვენი მოწყობილობის ბლოკით</string>
+  <string name="biometric_prompt_cancel">გაუქმება</string>
+</resources>

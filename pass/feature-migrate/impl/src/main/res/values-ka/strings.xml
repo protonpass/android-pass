@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">გადავიტანო ეს ელემენტი შემდეგ საცავში?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">გადავიტანო ყველა ელემენტი შემდეგ საცავში?</string>
+  <string name="migrate_item_confirm_confirm_button">გადატანა</string>
+  <string name="migrate_item_success_snackbar">ელემენტი გადატანილია</string>
+  <string name="migrate_item_error_snackbar">ელემენტის გადატანის შეცდომა</string>
+  <string name="migrate_all_items_success_snackbar">ყველა ელემენტი გადატანილია</string>
+  <string name="migrate_all_items_error_snackbar">ყველა საცავის ელემენტის გადატანის შეცდომა</string>
+  <string name="migrate_init_error_snackbar">მიგრაციის ეკრანის მომზადება შეუძლებელია</string>
+</resources>

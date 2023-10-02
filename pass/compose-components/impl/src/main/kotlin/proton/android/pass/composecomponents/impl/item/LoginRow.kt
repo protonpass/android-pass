@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -45,7 +45,7 @@ fun LoginRow(
     vaultIcon: Int? = null,
     canLoadExternalImages: Boolean,
 ) {
-    val content = item.contents as ItemContents.Login
+    val content = remember(item.contents) { item.contents as ItemContents.Login }
 
     val highlightColor = PassTheme.colors.interactionNorm
     val fields = remember(content.title, content.username, content.note, content.urls, highlight) {
@@ -59,12 +59,18 @@ fun LoginRow(
         )
     }
 
+    val subtitles = (
+        listOfNotNull(fields.username, fields.note) + fields.websites
+        ).toPersistentList()
+
     ItemRow(
         modifier = modifier,
         icon = {
-            val sortedPackages = content.packageInfoSet.sortedBy { it.packageName.value }
-            val packageName = sortedPackages.firstOrNull()?.packageName?.value
-            val website = content.urls.firstOrNull()
+            val sortedPackages = remember {
+                content.packageInfoSet.sortedBy { it.packageName.value }
+            }
+            val packageName = remember { sortedPackages.firstOrNull()?.packageName?.value }
+            val website = remember { content.urls.firstOrNull() }
             LoginIcon(
                 text = fields.title.text,
                 canLoadExternalImages = canLoadExternalImages,
@@ -73,12 +79,7 @@ fun LoginRow(
             )
         },
         title = fields.title,
-        subtitles = (
-            listOfNotNull(
-                fields.username,
-                fields.note
-            ) + fields.websites
-            ).toImmutableList(),
+        subtitles = subtitles,
         vaultIcon = vaultIcon
     )
 }

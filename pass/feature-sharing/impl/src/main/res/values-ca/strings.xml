@@ -73,6 +73,7 @@
   <string name="share_role_admin">Administrador/a</string>
   <string name="share_role_owner">Propietari</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfereix la propietat</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
   <string name="sharing_bottomsheet_remove_access">Suprimeix l\'accés</string>
   <string name="sharing_bottomsheet_resend_invite">Reenvia la invitació</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancel·la la Invitació</string>

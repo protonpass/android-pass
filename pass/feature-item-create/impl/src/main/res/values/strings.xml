@@ -70,7 +70,7 @@
     <string name="bottomsheet_custom_field_option_remove">Remove field</string>
     <string name="bottomsheet_custom_field_option_remove_content_description">Remove custom field</string>
 
-    <string name="create_login_add_custom_field_button">Add more</string>
+    <string name="create_login_add_custom_field_button">Add another field</string>
     <string name="custom_field_hidden_placeholder">Your hidden content</string>
     <string name="custom_field_hidden_icon_content_description">Hidden custom field icon</string>
     <string name="custom_field_text_placeholder">Your content</string>

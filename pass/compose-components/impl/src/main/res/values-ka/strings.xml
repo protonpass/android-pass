@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">სათაური (A-Z)</string>
+  <string name="sort_by_title_desc">სათაური (Z-A)</string>
+  <string name="sort_by_creation_asc">უძველესიდან ახლისკენ</string>
+  <string name="sort_by_creation_desc">უახლესიდან ძველისკენ</string>
+  <string name="sort_by_modification_date">უახლესი</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">ყველა</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">შედეგი</item>
+    <item quantity="other">შედეგი</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">დასტური</string>
+  <string name="bottomsheet_cancel_button">გაუქმება</string>
+  <string name="bottomsheet_move_to_trash">ნაგვის ყუთში გადატანა</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu">ელემენტის ქმედების მენიუს გახსნა</string>
+  <string name="action_upgrade_now">ტარიფის განახლება</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">დაამატეთ თქვენი პირველი ელემენტი</string>
+  <string name="empty_search_results_title">შედეგების გარეშე</string>
+  <string name="empty_list_open_extension">ვებ-გაფართოებაზე გადასვლა</string>
+  <string name="empty_list_create_item_button">ახალი ელემენტის შექმნა</string>
+  <!-- Field -->
+  <string name="field_title_title">სათაური</string>
+  <string name="field_title_hint">უსათაურო</string>
+  <string name="field_title_required">სათაური აუცილებელია</string>
+  <string name="small_cross_icon_content_description">პატარა ჯვრის ხატულა</string>
+  <string name="field_note_title">შენიშვნა</string>
+  <string name="field_note_hint">შენიშვნის დამატება</string>
+  <string name="linked_apps_title">მიბმული აპები</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">ოფლაინი</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">აპის ხატულა ვერ ვიპოვე</string>
+  <string name="add_item_icon_content_description">ელემენტის დამატების ხატულა</string>
+  <string name="navigate_back_icon_content_description">უკან დაბრუნების ხატულა</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">საცავი</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">ელემენტების სია</string>
+  <string name="bottom_bar_add_item_icon_content_description">ელემენტის დამატება</string>
+  <string name="bottom_bar_profile_icon_content_description">პროფილი</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">დღეს</string>
+  <string name="most_recent_yesterday">გუშინ</string>
+  <string name="most_recent_this_week">ამ კვირას</string>
+  <string name="most_recent_last_two_weeks">ბოლო ორი კვირის განმავლობაში</string>
+  <string name="most_recent_last_30_days">ბოლო 30 დღე</string>
+  <string name="most_recent_last_60_days">ბოლო 60 დღე</string>
+  <string name="most_recent_last_90_days">ბოლო 90 დღე</string>
+  <string name="most_recent_within_the_last_year">ბოლო წელიწადში</string>
+  <string name="most_recent_more_than_1_year">1 წელიწადზე მეტი</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">ძებნის ხატულა</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">პარამეტრების ხატულა</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 ელემენტი</item>
+    <item quantity="other">%d ელემენტი</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">გავაუქმო ცვლილებები?</string>
+  <string name="confirm_close_dialog_message">გაქვთ შეუნახავი ცვლილებები. დარწმუნებული ბრძანდებით, რომ გნებავთ, მოაცილოთ ისინი?</string>
+  <string name="confirm_close_dialog_close_button">მოცილება</string>
+  <!-- Upgrade -->
+  <string name="upgrade">გაუმჯობესება</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">დამატებითი პარამეტრები</string>
+  <string name="hide_advanced_options">დამატებითი პარამეტრების დამალვა</string>
+</resources>

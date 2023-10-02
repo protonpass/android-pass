@@ -21,6 +21,7 @@ package proton.android.pass.featureitemdetail.impl.common
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.overlineWeak
 
@@ -30,6 +31,7 @@ fun MoreInfoText(modifier: Modifier = Modifier, text: String) {
         modifier = modifier,
         text = text,
         style = ProtonTheme.typography.overlineWeak,
-        maxLines = 1
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }

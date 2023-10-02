@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="updates_notification_channel_name">განახლებები</string>
+  <string name="autofill_notification_channel_name">ავტომატური შევსება</string>
+  <string name="autofill_notification_copy_to_clipboard_title">TOTP კოდი</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP-ი დაკოპირდა გაცვლის ბუფერში</string>
+  <string name="updates_new_invite_received_title">მიიღეთ მოსაწვევი</string>
+  <string name="updates_new_invite_received_message">თქვენ მიგიწვიეს საცავში. მოწვევის მისაღებად და მასზე დასათანხმებლად გახსენით აპი.</string>
+</resources>

@@ -21,7 +21,7 @@
   <string name="action_upgrade_now">Αναβάθμιση τώρα</string>
   <!-- Empty list -->
   <string name="empty_list_title">Προσθέστε το πρώτο σας στοιχείο</string>
-  <string name="empty_search_results_title">Δεν βρέθηκε αποτέλεσμα</string>
+  <string name="empty_search_results_title">Δε βρέθηκε αποτέλεσμα</string>
   <string name="empty_list_open_extension">Επισκεφτείτε την επέκταση ιστού</string>
   <string name="empty_list_create_item_button">Δημιουργία νέου στοιχείου</string>
   <!-- Field -->
@@ -65,7 +65,7 @@
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Απόρριψη αλλαγών;</string>
-  <string name="confirm_close_dialog_message">Έχετε μη αποθηκευμένες αλλαγές, είστε σίγουροι πως θέλετε να τις απορρίψετε;</string>
+  <string name="confirm_close_dialog_message">Έχετε μην αποθηκευμένες αλλαγές, είστε σίγουροι πως θέλετε να τις απορρίψετε;</string>
   <string name="confirm_close_dialog_close_button">Απόρριψη</string>
   <!-- Upgrade -->
   <string name="upgrade">Αναβάθμιση</string>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">გაგრძელება</string>
+  <string name="sharing_can_view">შეუძლია, ნახოს</string>
+  <string name="sharing_can_edit">შეუძლია, ჩაასწოროს</string>
+  <string name="sharing_can_manage">შეუძლია, მართოს</string>
+  <string name="sharing_can_view_description">შეუძლია ამ საცავის ელემენტების დათვალიერება.</string>
+  <string name="sharing_can_edit_description">შეუძლია ამ საცავის ელემენტების ჩასწორება/წაშლა და გატანა.</string>
+  <string name="sharing_can_manage_description">შეუძლია ამ საცავზე წვდომების მინიჭება და ჩამორთმევა.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d ელემენტი</item>
+    <item quantity="other">%d ელემენტი</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d წევრი</item>
+    <item quantity="other">%d წევრი</item>
+  </plurals>
+  <string name="share_with_title">გაზიარება</string>
+  <string name="share_with_subtitle">ეს მომხმარებელი მიიღებს მოსაწვევს, შემოუერთდეს თქვენს საცავს \'%s\'.</string>
+  <string name="share_with_email_hint">ელფოსტის მისამართი</string>
+  <string name="share_with_email_error">არასწორი ელფოსტის მისამართი</string>
+  <string name="share_permissions_title">წვდომების დაყენება</string>
+  <string name="share_permissions_subtitle">აირჩიეთ წვდომის დონე, რომელსაც მომხმარებელი შეიძენს, როცა ის თქვენს \'%s\' საცავს შემოუერთდება.</string>
+  <string name="sharing_invitation_from">მოსაწვევი %s-სგან</string>
+  <string name="sharing_join_shared_vault">შემოგვიერთდით და დასინქრონდით</string>
+  <string name="sharing_reject_invitation">მოსაწვევის უარყოფა</string>
+  <string name="sharing_snackbar_get_invite_error">მოსაწვევის მიღება შეუძლებელია</string>
+  <string name="sharing_snackbar_invite_accepted">მოწვევა მიღებულია</string>
+  <string name="sharing_snackbar_invite_accept_error">მოსაწვევის დათანხმების შეცდომა</string>
+  <string name="sharing_snackbar_invite_rejected">მოწვევა უარყოფილია</string>
+  <string name="sharing_snackbar_invite_reject_error">მოსაწვევის უარყოფის შეცდომა</string>
+  <string name="sharing_snackbar_vault_not_found">საცავი ვერ ვიპოვე</string>
+  <string name="sharing_snackbar_invite_sent_success">მოსაწვევი გაგზავნილია</string>
+  <string name="sharing_snackbar_invite_sent_error">მოსაწვევის გაგზავნის შეცდომა</string>
+  <string name="sharing_snackbar_get_vault_members_error">საცავის წევრების მიღება შეუძლებელია</string>
+  <string name="sharing_snackbar_change_permission_success">წვდომები შეიცვალა</string>
+  <string name="sharing_snackbar_change_permission_error">წვდომების შეცვლა შეუძლებელია</string>
+  <string name="sharing_snackbar_remove_member_success">წევრი წაიშალა საცავიდან</string>
+  <string name="sharing_snackbar_remove_member_error">საცავიდან წაშლის შეცდომა</string>
+  <string name="share_summary_title">შეჯამება</string>
+  <string name="share_summary_subtitle">აპირებთ, %1$s თქვენს %2$s-ში მოიწვიოთ. ისინი მიიღებენ წვდომას %3$s-სთან და ექნებათ საშუალება, %4$s ამ საცავში.</string>
+  <string name="share_summary_vault">%s საცავი</string>
+  <string name="share_summary_view_items">მხოლოდ შეუძლია, ნახოს ელემენტები</string>
+  <string name="share_summary_create_items">ელემენტების შექმნა</string>
+  <string name="share_summary_manage_vault">მართვა</string>
+  <string name="share_summary_share_vault">საცავის გაზიარება</string>
+  <string name="share_summary_email_title">მომხმარებელი</string>
+  <string name="share_summary_vault_title">საცავი</string>
+  <string name="share_summary_permissions_title">წვდომები</string>
+  <string name="share_manage_vault_share_with_more_people">გაუზიარეთ მეტს</string>
+  <string name="share_manage_vault_item_count">%d ელემენტი</string>
+  <string name="share_manage_vault_invite_pending">მომლოდინე მოსაწვევი</string>
+  <string name="share_manage_vault_current_user_indicator">თქვენ</string>
+  <string name="share_role_can_view">შეუძლია, ნახოს</string>
+  <string name="share_role_can_edit">შეუძლია, ჩაასწოროს</string>
+  <string name="share_role_admin">ადმინისტრატორი</string>
+  <string name="share_role_owner">მფლობელი</string>
+  <string name="sharing_bottomsheet_transfer_ownership">მფლობელობის გადაცემა</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
+  <string name="sharing_bottomsheet_remove_access">წვდომის გაუქმება</string>
+  <string name="sharing_bottomsheet_resend_invite">მოსაწვევის თავიდან გაგზავნა</string>
+  <string name="sharing_bottomsheet_cancel_invite">მოსაწვევის გაუქმება</string>
+  <string name="sharing_transfer_ownership_confirm_title">მფლობელობის გადაცემა</string>
+  <string name="sharing_transfer_ownership_confirm_message">დარწმუნებული ბრძანდებით, რომ მფლობელობის %s-სთვის გადაცემა, გნებავთ?</string>
+  <string name="sharing_snackbar_cancel_invite_success">მოწვევა გაუქმებულია</string>
+  <string name="sharing_snackbar_cancel_invite_error">მოწვევის გაუქმების შეცდომა</string>
+  <string name="sharing_snackbar_resend_invite_success">მოსაწვევი გაგზავნილია</string>
+  <string name="sharing_snackbar_resend_invite_error">მოწვევის თავიდან გაგზავნის შეცდომა</string>
+  <string name="sharing_snackbar_too_many_invites_sent">მისამართი, მეტისმეტად, ბევრჯერ მოიწვიეთ</string>
+  <string name="sharing_snackbar_transfer_ownership_success">მფლობელობა გადაცემულია</string>
+  <string name="sharing_snackbar_transfer_ownership_error">მფლობელობის გადაცემის შეცდომა</string>
+</resources>

@@ -32,7 +32,7 @@
     <string name="settings_option_terms_of_service">Terms of service</string>
     <string name="settings_primary_vault_section_title">Vaults</string>
     <string name="settings_primary_vault_vault_selector_title">Primary vault</string>
-    <string name="settings_primary_vault_section_subtitle">You can\'t delete a primary vault.</string>
+    <string name="settings_primary_vault_section_subtitle">You can\'t delete the primary vault.</string>
     <string name="settings_primary_vault_change_success">The primary vault has been changed</string>
     <string name="settings_primary_vault_change_error">Could not change the primary vault</string>
 
@@ -54,6 +54,6 @@
     <string name="clipboard_option_copy_totp_code">Copy authentication codes</string>
     <string name="clipboard_option_copy_totp_code_hint">Automatically copy authentication codes when using autofill.</string>
     <string name="clipboard_option_clear_clipboard_never">Never</string>
-    <string name="clipboard_option_clear_clipboard_after_60_seconds">After 60 seconds</string>
-    <string name="clipboard_option_clear_clipboard_after_180_seconds">After 180 seconds</string>
+    <string name="clipboard_option_clear_clipboard_after_60_seconds">After 1 minute</string>
+    <string name="clipboard_option_clear_clipboard_after_180_seconds">After 3 minutes</string>
 </resources>

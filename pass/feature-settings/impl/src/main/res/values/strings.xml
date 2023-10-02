@@ -13,7 +13,10 @@
     <string name="settings_authentication_preference_description_no_fingerprint">You cannot require your fingerprint for interacting with the app as there are no fingerprints registered on this device.</string>
 
     <string name="settings_appearance_preference_title">Theme</string>
-    <string name="settings_appearance_preference_subtitle_match_system">Match system</string>
+    <string
+        name="settings_appearance_preference_subtitle_match_system"
+        comment="Subtitle for the appearance preference when the theme is set to match the system theme"
+    >Match system</string>
     <string name="settings_appearance_preference_subtitle_light">Light mode</string>
     <string name="settings_appearance_preference_subtitle_dark">Dark mode</string>
 

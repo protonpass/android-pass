@@ -21,6 +21,7 @@ package proton.android.pass.composecomponents.impl.container
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -41,6 +42,9 @@ fun CircleTextIcon(
     size: Int = 40,
     shape: Shape
 ) {
+    val textToShow = remember(text) {
+        text.filter { !it.isWhitespace() }.take(2).uppercase()
+    }
     BoxedIcon(
         modifier = modifier,
         backgroundColor = backgroundColor,
@@ -48,7 +52,7 @@ fun CircleTextIcon(
         shape = shape
     ) {
         Text(
-            text = text.filter { !it.isWhitespace() }.take(2).uppercase(),
+            text = textToShow,
             color = textColor,
             style = ProtonTheme.typography.defaultNorm,
             textAlign = TextAlign.Center

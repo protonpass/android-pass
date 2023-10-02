@@ -96,7 +96,8 @@ fun LoginIcon(
                 } else PassTheme.colors.loginInteractionNormMinor2,
                 animationSpec = tween(
                     durationMillis = CROSSFADE_ANIMATION_MS
-                )
+                ),
+                label = "backgroundColor"
             )
         } else {
             remember { mutableStateOf(Color.White) }

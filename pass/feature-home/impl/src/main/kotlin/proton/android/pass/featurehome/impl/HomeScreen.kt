@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -143,28 +144,38 @@ fun HomeScreen(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                     canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
-                    onCopyUsername = {
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.copyToClipboard(it, HomeClipboardType.Username)
-                    },
-                    onCopyPassword = {
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.copyToClipboard(it, HomeClipboardType.Password)
-                    },
-                    onEdit = { shareId, itemId ->
-                        scope.launch { bottomSheetState.hide() }
-                        onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
-                    },
-                    onMoveToTrash = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeViewModel.sendItemToTrash(it)
+                    onCopyUsername = remember {
+                        {
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.copyToClipboard(it, HomeClipboardType.Username)
                         }
                     },
-                    onRemoveFromRecentSearch = { shareId, itemId ->
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeViewModel.onClearRecentSearch(shareId, itemId)
+                    onCopyPassword = remember {
+                        {
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.copyToClipboard(it, HomeClipboardType.Password)
+                        }
+                    },
+                    onEdit = remember {
+                        { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
+                        }
+                    },
+                    onMoveToTrash = remember {
+                        {
+                            scope.launch {
+                                bottomSheetState.hide()
+                                homeViewModel.sendItemToTrash(it)
+                            }
+                        }
+                    },
+                    onRemoveFromRecentSearch = remember {
+                        { shareId, itemId ->
+                            scope.launch {
+                                bottomSheetState.hide()
+                                homeViewModel.onClearRecentSearch(shareId, itemId)
+                            }
                         }
                     }
                 )
@@ -172,24 +183,32 @@ fun HomeScreen(
                 AliasOptions -> AliasOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
-                    onCopyAlias = {
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.copyToClipboard(it, HomeClipboardType.Alias)
-                    },
-                    onEdit = { shareId, itemId ->
-                        scope.launch { bottomSheetState.hide() }
-                        onNavigateEvent(HomeNavigation.EditAlias(shareId, itemId))
-                    },
-                    onMoveToTrash = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            aliasToBeTrashed = it
+                    onCopyAlias = remember {
+                        {
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.copyToClipboard(it, HomeClipboardType.Alias)
                         }
                     },
-                    onRemoveFromRecentSearch = { shareId, itemId ->
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeViewModel.onClearRecentSearch(shareId, itemId)
+                    onEdit = remember {
+                        { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            onNavigateEvent(HomeNavigation.EditAlias(shareId, itemId))
+                        }
+                    },
+                    onMoveToTrash = remember {
+                        {
+                            scope.launch {
+                                bottomSheetState.hide()
+                                aliasToBeTrashed = it
+                            }
+                        }
+                    },
+                    onRemoveFromRecentSearch = remember {
+                        { shareId, itemId ->
+                            scope.launch {
+                                bottomSheetState.hide()
+                                homeViewModel.onClearRecentSearch(shareId, itemId)
+                            }
                         }
                     }
                 )
@@ -197,24 +216,32 @@ fun HomeScreen(
                 NoteOptions -> NoteOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
-                    onCopyNote = {
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.copyToClipboard(it, HomeClipboardType.Note)
-                    },
-                    onEdit = { shareId, itemId ->
-                        scope.launch { bottomSheetState.hide() }
-                        onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
-                    },
-                    onMoveToTrash = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeViewModel.sendItemToTrash(it)
+                    onCopyNote = remember {
+                        {
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.copyToClipboard(it, HomeClipboardType.Note)
                         }
                     },
-                    onRemoveFromRecentSearch = { shareId, itemId ->
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeViewModel.onClearRecentSearch(shareId, itemId)
+                    onEdit = remember {
+                        { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
+                        }
+                    },
+                    onMoveToTrash = remember {
+                        {
+                            scope.launch {
+                                bottomSheetState.hide()
+                                homeViewModel.sendItemToTrash(it)
+                            }
+                        }
+                    },
+                    onRemoveFromRecentSearch = remember {
+                        { shareId, itemId ->
+                            scope.launch {
+                                bottomSheetState.hide()
+                                homeViewModel.onClearRecentSearch(shareId, itemId)
+                            }
                         }
                     }
                 )
@@ -222,44 +249,58 @@ fun HomeScreen(
                 CreditCardOptions -> CreditCardOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
-                    onCopyNumber = {
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardNumber)
-                    },
-                    onCopyCvv = {
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardCvv)
-                    },
-                    onEdit = { shareId, itemId ->
-                        scope.launch { bottomSheetState.hide() }
-                        onNavigateEvent(HomeNavigation.EditCreditCard(shareId, itemId))
-                    },
-                    onMoveToTrash = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeViewModel.sendItemToTrash(it)
+                    onCopyNumber = remember {
+                        {
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardNumber)
                         }
                     },
-                    onRemoveFromRecentSearch = { shareId, itemId ->
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeViewModel.onClearRecentSearch(shareId, itemId)
+                    onCopyCvv = remember {
+                        {
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardCvv)
+                        }
+                    },
+                    onEdit = remember {
+                        { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            onNavigateEvent(HomeNavigation.EditCreditCard(shareId, itemId))
+                        }
+                    },
+                    onMoveToTrash = remember {
+                        {
+                            scope.launch {
+                                bottomSheetState.hide()
+                                homeViewModel.sendItemToTrash(it)
+                            }
+                        }
+                    },
+                    onRemoveFromRecentSearch = remember {
+                        { shareId, itemId ->
+                            scope.launch {
+                                bottomSheetState.hide()
+                                homeViewModel.onClearRecentSearch(shareId, itemId)
+                            }
                         }
                     }
                 )
 
                 TrashItemOptions -> TrashItemBottomSheetContents(
                     itemUiModel = selectedItem!!,
-                    onRestoreItem = { shareId, itemId ->
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeViewModel.restoreItem(shareId, itemId)
+                    onRestoreItem = remember {
+                        { shareId, itemId ->
+                            scope.launch {
+                                bottomSheetState.hide()
+                                homeViewModel.restoreItem(shareId, itemId)
+                            }
                         }
                     },
-                    onDeleteItem = { _, _ ->
-                        scope.launch {
-                            bottomSheetState.hide()
-                            shouldShowDeleteItemDialog = true
+                    onDeleteItem = remember {
+                        { _, _ ->
+                            scope.launch {
+                                bottomSheetState.hide()
+                                shouldShowDeleteItemDialog = true
+                            }
                         }
                     },
                     icon = {
@@ -285,16 +326,20 @@ fun HomeScreen(
                 )
 
                 TrashOptions -> TrashAllBottomSheetContents(
-                    onEmptyTrash = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            shouldShowClearTrashDialog = true
+                    onEmptyTrash = remember {
+                        {
+                            scope.launch {
+                                bottomSheetState.hide()
+                                shouldShowClearTrashDialog = true
+                            }
                         }
                     },
-                    onRestoreAll = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            shouldShowRestoreAllDialog = true
+                    onRestoreAll = remember {
+                        {
+                            scope.launch {
+                                bottomSheetState.hide()
+                                shouldShowRestoreAllDialog = true
+                            }
                         }
                     }
                 )
@@ -311,23 +356,29 @@ fun HomeScreen(
                     homeVaultSelection = drawerUiState.vaultSelection,
                     list = drawerUiState.shares,
                     totalTrashedItems = drawerUiState.totalTrashedItems,
-                    onAllVaultsClick = {
-                        scope.launch { drawerState.close() }
-                        vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
-                        homeViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
+                    onAllVaultsClick = remember {
+                        {
+                            scope.launch { drawerState.close() }
+                            vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
+                            homeViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
+                        }
                     },
-                    onVaultClick = {
-                        scope.launch { drawerState.close() }
-                        vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
-                        homeViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
+                    onVaultClick = remember {
+                        {
+                            scope.launch { drawerState.close() }
+                            vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
+                            homeViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
+                        }
                     },
-                    onTrashClick = {
-                        scope.launch { drawerState.close() }
-                        vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Trash)
-                        homeViewModel.setVaultSelection(VaultSelectionOption.Trash)
+                    onTrashClick = remember {
+                        {
+                            scope.launch { drawerState.close() }
+                            vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Trash)
+                            homeViewModel.setVaultSelection(VaultSelectionOption.Trash)
+                        }
                     },
-                    onCreateVaultClick = { onNavigateEvent(HomeNavigation.CreateVault) },
-                    onVaultOptionsClick = { onNavigateEvent(HomeNavigation.VaultOptions(it.id)) }
+                    onCreateVaultClick = remember { { onNavigateEvent(HomeNavigation.CreateVault) } },
+                    onVaultOptionsClick = remember { { onNavigateEvent(HomeNavigation.VaultOptions(it.id)) } }
                 )
             }
         ) {
@@ -335,88 +386,111 @@ fun HomeScreen(
                 modifier = Modifier.background(PassTheme.colors.backgroundStrong),
                 uiState = homeUiState,
                 shouldScrollToTop = homeUiState.homeListUiState.shouldScrollToTop,
-                onItemClick = { item ->
-                    homeViewModel.onItemClicked(item.shareId, item.id)
-                    onNavigateEvent(HomeNavigation.ItemDetail(item.shareId, item.id))
+                onItemClick = remember {
+                    { item ->
+                        homeViewModel.onItemClicked(item.shareId, item.id)
+                        onNavigateEvent(HomeNavigation.ItemDetail(item.shareId, item.id))
+                    }
                 },
-                onSearchQueryChange = { homeViewModel.onSearchQueryChange(it) },
-                onEnterSearch = { homeViewModel.onEnterSearch() },
-                onStopSearch = { homeViewModel.onStopSearching() },
-                onDrawerIconClick = { scope.launch { drawerState.open() } },
-                onSortingOptionsClick = {
-                    onNavigateEvent(SortingBottomsheet(homeUiState.homeListUiState.sortingType))
+                onSearchQueryChange = remember { { homeViewModel.onSearchQueryChange(it) } },
+                onEnterSearch = remember { { homeViewModel.onEnterSearch() } },
+                onStopSearch = remember { { homeViewModel.onStopSearching() } },
+                onDrawerIconClick = remember { { scope.launch { drawerState.open() } } },
+                onSortingOptionsClick = remember {
+                    {
+                        onNavigateEvent(SortingBottomsheet(homeUiState.homeListUiState.sortingType))
+                    }
                 },
-                onAddItemClick = { shareId: Option<ShareId>, itemTypeUiState: ItemTypeUiState ->
-                    onNavigateEvent(HomeNavigation.AddItem(shareId, itemTypeUiState))
+                onAddItemClick = remember {
+                    { shareId: Option<ShareId>, itemTypeUiState: ItemTypeUiState ->
+                        onNavigateEvent(HomeNavigation.AddItem(shareId, itemTypeUiState))
+                    }
                 },
-                onItemMenuClick = { item ->
-                    selectedItem = item
-                    currentBottomSheet =
-                        if (isTrashMode) {
-                            TrashItemOptions
-                        } else {
-                            when (item.contents) {
-                                is ItemContents.Alias -> AliasOptions
-                                is ItemContents.Login -> LoginOptions
-                                is ItemContents.Note -> NoteOptions
-                                is ItemContents.CreditCard -> CreditCardOptions
-                                is ItemContents.Unknown -> LoginOptions
+                onItemMenuClick = remember {
+                    { item ->
+                        selectedItem = item
+                        currentBottomSheet =
+                            if (isTrashMode) {
+                                TrashItemOptions
+                            } else {
+                                when (item.contents) {
+                                    is ItemContents.Alias -> AliasOptions
+                                    is ItemContents.Login -> LoginOptions
+                                    is ItemContents.Note -> NoteOptions
+                                    is ItemContents.CreditCard -> CreditCardOptions
+                                    is ItemContents.Unknown -> LoginOptions
+                                }
                             }
-                        }
-                    scope.launch { bottomSheetState.show() }
+                        scope.launch { bottomSheetState.show() }
+                    }
                 },
-                onRefresh = { homeViewModel.onRefresh() },
-                onScrollToTop = { homeViewModel.onScrollToTop() },
-                onProfileClick = { onNavigateEvent(HomeNavigation.Profile) },
-                onItemTypeSelected = { homeViewModel.setItemTypeSelection(it) },
-                onTrashActionsClick = {
-                    currentBottomSheet = TrashOptions
-                    scope.launch { bottomSheetState.show() }
+                onRefresh = remember { { homeViewModel.onRefresh() } },
+                onScrollToTop = remember { { homeViewModel.onScrollToTop() } },
+                onProfileClick = remember { { onNavigateEvent(HomeNavigation.Profile) } },
+                onItemTypeSelected = remember { { homeViewModel.setItemTypeSelection(it) } },
+                onTrashActionsClick = remember {
+                    {
+                        currentBottomSheet = TrashOptions
+                        scope.launch { bottomSheetState.show() }
+                    }
                 },
                 onClearRecentSearchClick = homeViewModel::onClearAllRecentSearch,
-                onTrialInfoClick = { onNavigateEvent(HomeNavigation.TrialInfo) },
-                onInviteClick = { onNavigateEvent(HomeNavigation.OpenInvite) }
+                onTrialInfoClick = remember { { onNavigateEvent(HomeNavigation.TrialInfo) } },
+                onInviteClick = remember { { onNavigateEvent(HomeNavigation.OpenInvite) } }
             )
 
             ConfirmRestoreAllDialog(
                 show = shouldShowRestoreAllDialog,
                 isLoading = actionState == ActionState.Loading,
-                onDismiss = {
-                    shouldShowRestoreAllDialog = false
+                onDismiss = remember {
+                    {
+                        shouldShowRestoreAllDialog = false
+                    }
                 },
-                onConfirm = {
-                    homeViewModel.restoreItems()
+                onConfirm = remember {
+                    {
+                        homeViewModel.restoreItems()
+                    }
                 }
             )
 
             ConfirmClearTrashDialog(
                 show = shouldShowClearTrashDialog,
                 isLoading = actionState == ActionState.Loading,
-                onDismiss = {
-                    shouldShowClearTrashDialog = false
+                onDismiss = remember {
+                    {
+                        shouldShowClearTrashDialog = false
+                    }
                 },
-                onConfirm = {
-                    homeViewModel.clearTrash()
+                onConfirm = remember {
+                    {
+                        homeViewModel.clearTrash()
+                    }
                 }
             )
 
             ConfirmDeleteItemDialog(
                 isLoading = actionState == ActionState.Loading,
                 show = shouldShowDeleteItemDialog,
-                onConfirm = {
-                    val itemUiModel = selectedItem ?: return@ConfirmDeleteItemDialog
-                    homeViewModel.deleteItem(itemUiModel)
+                onConfirm = remember {
+                    {
+                        selectedItem?.let {
+                            homeViewModel.deleteItem(it)
+                        }
+                    }
                 },
-                onDismiss = { shouldShowDeleteItemDialog = false }
+                onDismiss = remember { { shouldShowDeleteItemDialog = false } }
             )
 
             ConfirmTrashAliasDialog(
                 show = aliasToBeTrashed != null,
-                onConfirm = {
-                    homeViewModel.sendItemToTrash(aliasToBeTrashed)
-                    aliasToBeTrashed = null
+                onConfirm = remember {
+                    {
+                        homeViewModel.sendItemToTrash(aliasToBeTrashed)
+                        aliasToBeTrashed = null
+                    }
                 },
-                onDismiss = { aliasToBeTrashed = null }
+                onDismiss = remember { { aliasToBeTrashed = null } }
             )
         }
     }

@@ -2,15 +2,27 @@
 
 ### Features :tada:
 
+### Fixes :bug:
+
+### Other
+
+## 1.9.0 (2023-10-03)
+
+### Features :tada:
+
 - Allow to copy note contents to clipboard from note detail screen.
+- Use the new common library for validations.
+- Improved scroll responsiveness.
 
 ### Fixes :bug:
 
 - Display proper plan name in the account screen.
+- Home screen getting stuck on account creation.
 
 ### Other
 
 - Updated translations.
+- Updated dependencies.
 
 ## 1.8.3 (2023-09-08)
 

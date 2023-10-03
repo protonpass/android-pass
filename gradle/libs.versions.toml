@@ -41,7 +41,7 @@ commons-codec = "1.15"
 # Compose marker
 compose-stable-marker = "1.0.0"
 # Core
-core = "17.0.0"
+core = "17.0.1"
 # Dagger
 dagger = "2.46.1"
 # Google

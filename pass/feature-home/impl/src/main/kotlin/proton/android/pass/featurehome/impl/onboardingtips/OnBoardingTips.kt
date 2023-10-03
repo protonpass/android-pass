@@ -108,6 +108,7 @@ private fun NotificationPermissionLaunchedEffect(
                                 Uri.fromParts("package", activity.packageName, null)
                             )
                         )
+                        onPermissionRequested()
                     } catch (e: ActivityNotFoundException) {
                         PassLogger.d(TAG, e, "Settings not found")
                     }

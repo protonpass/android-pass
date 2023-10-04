@@ -356,6 +356,7 @@ fun HomeScreen(
                     homeVaultSelection = drawerUiState.vaultSelection,
                     list = drawerUiState.shares,
                     totalTrashedItems = drawerUiState.totalTrashedItems,
+                    canCreateVault = drawerUiState.canCreateVault,
                     onAllVaultsClick = remember {
                         {
                             scope.launch { drawerState.close() }

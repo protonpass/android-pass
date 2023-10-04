@@ -31,6 +31,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
@@ -39,18 +40,21 @@ import javax.inject.Inject
 @HiltViewModel
 class VaultDrawerViewModel @Inject constructor(
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
+    canCreateVault: CanCreateVault,
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository
 ) : ViewModel() {
 
     val drawerUiState: StateFlow<VaultDrawerUiState> = combine(
         observeVaultsWithItemCount().asLoadingResult(),
-        homeSearchOptionsRepository.observeVaultSelectionOption()
-    ) { shares, selectedVault ->
+        homeSearchOptionsRepository.observeVaultSelectionOption(),
+        canCreateVault()
+    ) { shares, selectedVault, canCreateVault ->
         when (shares) {
             LoadingResult.Loading -> VaultDrawerUiState(
                 vaultSelection = selectedVault,
                 shares = persistentListOf(),
-                totalTrashedItems = 0
+                totalTrashedItems = 0,
+                canCreateVault = false
             )
 
             is LoadingResult.Error -> {
@@ -58,7 +62,8 @@ class VaultDrawerViewModel @Inject constructor(
                 VaultDrawerUiState(
                     vaultSelection = selectedVault,
                     shares = persistentListOf(),
-                    totalTrashedItems = 0
+                    totalTrashedItems = 0,
+                    canCreateVault = false
                 )
             }
 
@@ -81,7 +86,8 @@ class VaultDrawerViewModel @Inject constructor(
                 VaultDrawerUiState(
                     vaultSelection = selectedVault,
                     shares = sharesWithCount,
-                    totalTrashedItems = totalTrashed
+                    totalTrashedItems = totalTrashed,
+                    canCreateVault = canCreateVault
                 )
             }
         }
@@ -89,9 +95,10 @@ class VaultDrawerViewModel @Inject constructor(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = VaultDrawerUiState(
-            VaultSelectionOption.AllVaults,
-            persistentListOf(),
-            0
+            vaultSelection = VaultSelectionOption.AllVaults,
+            shares = persistentListOf(),
+            totalTrashedItems = 0,
+            canCreateVault = false
         )
     )
 

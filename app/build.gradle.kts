@@ -183,7 +183,9 @@ android {
         }
         create("prod") {
             dimension = "env"
-            buildConfigField("Boolean", "USE_DEFAULT_PINS", isCustomBuild.toString())
+            // If we are creating a custom build (prod build that points to scientist env)
+            // do not use the default pins
+            buildConfigField("Boolean", "USE_DEFAULT_PINS", (!isCustomBuild).toString())
             buildConfigField("String", "HOST", prodEnvUrl.toBuildConfigValue())
             buildConfigField("String", "HV_HOST", prodHvUrl.toBuildConfigValue())
         }

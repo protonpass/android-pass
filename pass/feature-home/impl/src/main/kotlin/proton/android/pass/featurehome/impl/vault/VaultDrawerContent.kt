@@ -45,6 +45,7 @@ fun VaultDrawerContent(
     homeVaultSelection: VaultSelectionOption,
     list: ImmutableList<ShareUiModelWithItemCount>,
     totalTrashedItems: Long,
+    canCreateVault: Boolean,
     onAllVaultsClick: () -> Unit,
     onVaultClick: (ShareId) -> Unit,
     onVaultOptionsClick: (ShareUiModelWithItemCount) -> Unit,
@@ -64,20 +65,23 @@ fun VaultDrawerContent(
             onVaultClick = onVaultClick,
             onTrashClick = onTrashClick
         )
-        CircleButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            contentPadding = PaddingValues(14.dp),
-            color = PassTheme.colors.loginInteractionNormMinor1,
-            elevation = ButtonDefaults.elevation(0.dp),
-            onClick = onCreateVaultClick
-        ) {
-            Text(
-                text = stringResource(R.string.vault_drawer_create_vault),
-                color = PassTheme.colors.loginInteractionNormMajor2,
-                style = PassTheme.typography.body3Norm()
-            )
+
+        if (canCreateVault) {
+            CircleButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                contentPadding = PaddingValues(14.dp),
+                color = PassTheme.colors.loginInteractionNormMinor1,
+                elevation = ButtonDefaults.elevation(0.dp),
+                onClick = onCreateVaultClick
+            ) {
+                Text(
+                    text = stringResource(R.string.vault_drawer_create_vault),
+                    color = PassTheme.colors.loginInteractionNormMajor2,
+                    style = PassTheme.typography.body3Norm()
+                )
+            }
         }
     }
 }

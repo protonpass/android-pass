@@ -88,6 +88,7 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
+import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
@@ -103,6 +104,7 @@ import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
+import proton.android.pass.data.fakes.usecases.TestCanCreateVault
 import proton.android.pass.data.fakes.usecases.TestCanDisplayTotp
 import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
@@ -490,4 +492,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindTransferOwnership(impl: TestTransferVaultOwnership): TransferVaultOwnership
+
+    @Binds
+    abstract fun bindCanCreateVault(impl: TestCanCreateVault): CanCreateVault
 }

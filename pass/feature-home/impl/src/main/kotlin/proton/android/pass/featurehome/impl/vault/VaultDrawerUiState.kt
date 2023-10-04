@@ -27,5 +27,6 @@ import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 data class VaultDrawerUiState(
     val vaultSelection: VaultSelectionOption,
     val shares: ImmutableList<ShareUiModelWithItemCount>,
-    val totalTrashedItems: Long
+    val totalTrashedItems: Long,
+    val canCreateVault: Boolean
 )

@@ -30,7 +30,8 @@ data class Vault(
     val isOwned: Boolean = true,
     val role: ShareRole = ShareRole.Admin,
     val members: Int = 1,
-    val shared: Boolean = false
+    val shared: Boolean = false,
+    val maxMembers: Int = 10
 )
 
 fun List<Vault>.sorted(): List<Vault> = sortedBy { it.name.lowercase() }

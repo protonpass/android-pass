@@ -85,7 +85,9 @@ data class ShareEntity(
     @ColumnInfo(name = Columns.TARGET_MEMBERS, defaultValue = "1")
     val targetMembers: Int,
     @ColumnInfo(name = Columns.SHARED, defaultValue = "0")
-    val shared: Boolean
+    val shared: Boolean,
+    @ColumnInfo(name = Columns.TARGET_MAX_MEMBERS, defaultValue = "10")
+    val targetMaxMembers: Int
 ) {
     object Columns {
         const val ID = "id"
@@ -107,6 +109,7 @@ data class ShareEntity(
         const val OWNER = "owner"
         const val TARGET_MEMBERS = "target_members"
         const val SHARED = "shared"
+        const val TARGET_MAX_MEMBERS = "target_max_members"
     }
 
     companion object {

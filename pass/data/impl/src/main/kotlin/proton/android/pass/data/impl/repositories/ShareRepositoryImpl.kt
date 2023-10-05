@@ -506,6 +506,7 @@ class ShareRepositoryImpl @Inject constructor(
         localShare.shareRoleId != remoteShare.shareRoleId -> true
         localShare.targetMembers != remoteShare.targetMembers -> true
         localShare.shared != remoteShare.shared -> true
+        localShare.targetMaxMembers != remoteShare.targetMaxMembers -> true
 
         else -> false
     }

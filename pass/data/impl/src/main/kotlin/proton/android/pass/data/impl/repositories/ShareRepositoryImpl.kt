@@ -429,7 +429,8 @@ class ShareRepositoryImpl @Inject constructor(
             shareRoleId = shareResponse.shareRoleId,
             owner = shareResponse.owner,
             targetMembers = shareResponse.targetMembers,
-            shared = shareResponse.shared
+            shared = shareResponse.shared,
+            targetMaxMembers = shareResponse.targetMaxMembers
         )
     }
 

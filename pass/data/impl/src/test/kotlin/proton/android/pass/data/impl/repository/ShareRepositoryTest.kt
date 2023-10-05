@@ -145,7 +145,8 @@ class ShareRepositoryTest {
         owner = isOwner,
         shareRoleId = shareRole.value,
         targetMembers = memberCount,
-        shared = shared
+        shared = shared,
+        targetMaxMembers = maxMembers
     )
 
     private fun Share.toEntity(): ShareEntity = ShareEntity(
@@ -167,7 +168,8 @@ class ShareRepositoryTest {
         owner = isOwner,
         shareRoleId = shareRole.value,
         targetMembers = memberCount,
-        shared = shared
+        shared = shared,
+        targetMaxMembers = maxMembers
     )
 
     companion object {

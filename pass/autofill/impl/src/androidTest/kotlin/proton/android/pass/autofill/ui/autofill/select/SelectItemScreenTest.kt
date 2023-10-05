@@ -370,6 +370,7 @@ class SelectItemScreenTest {
         observeUpgradeInfo.setResult(
             UpgradeInfo(
                 isUpgradeAvailable = true,
+                isSubscriptionAvailable = true,
                 plan = plan,
                 totalVaults = 1,
                 totalAlias = 1,

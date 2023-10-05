@@ -39,7 +39,8 @@ fun Share.toVault(encryptionContextProvider: EncryptionContextProvider): Option<
             members = memberCount,
             isOwned = isOwner,
             role = shareRole,
-            shared = shared
+            shared = shared,
+            maxMembers = maxMembers
         )
     }
 

@@ -307,6 +307,7 @@ class SelectVaultBottomSheetTest {
         observeUpgradeInfo.setResult(
             UpgradeInfo(
                 isUpgradeAvailable = canUpgrade,
+                isSubscriptionAvailable = canUpgrade,
                 plan = Plan(
                     planType = planType,
                     hideUpgrade = false,

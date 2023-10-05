@@ -79,7 +79,8 @@ class InviteToVaultImplTest {
                 owner = true,
                 shareRoleId = ShareRole.SHARE_ROLE_ADMIN,
                 targetMembers = 0,
-                shared = false
+                shared = false,
+                targetMaxMembers = 0
             )
             setGetByIdResponse(Result.success(entity))
         }

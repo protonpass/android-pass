@@ -36,14 +36,10 @@ class CanShareVaultImpl @Inject constructor(
 ) : CanShareVault {
 
     override suspend fun invoke(shareId: ShareId): Boolean {
-        val vault = runCatching { getVaultById(shareId = shareId).first() }
-            .fold(
-                onSuccess = { vault -> vault },
-                onFailure = {
-                    PassLogger.w(TAG, it, "canShare vault not found")
-                    return false
-                }
-            )
+        val vault = runCatching { getVaultById(shareId = shareId).first() }.getOrElse {
+            PassLogger.w(TAG, it, "canShare vault not found")
+            return false
+        }
 
         return invoke(vault)
     }
@@ -53,6 +49,7 @@ class CanShareVaultImpl @Inject constructor(
         if (!isSharingEnabled) return false
 
         return when {
+            vault.members >= vault.maxMembers -> false
             vault.isPrimary -> false
             vault.isOwned -> true
             vault.role == ShareRole.Admin -> true

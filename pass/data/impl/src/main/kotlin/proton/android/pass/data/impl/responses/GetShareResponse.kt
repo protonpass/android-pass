@@ -53,6 +53,8 @@ data class ShareResponse(
     val contentFormatVersion: Int?,
     @SerialName("ShareRoleID")
     val shareRoleId: String,
+    @SerialName("TargetMaxMembers")
+    val targetMaxMembers: Int,
     @SerialName("TargetMembers")
     val targetMembers: Int,
     @SerialName("Owner")

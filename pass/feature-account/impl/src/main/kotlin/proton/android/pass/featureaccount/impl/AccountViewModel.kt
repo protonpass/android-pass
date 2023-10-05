@@ -59,25 +59,25 @@ class AccountViewModel @Inject constructor(
                     planName = upgradeInfoResult.data.plan.planType.humanReadableName()
                 )
         }
-        val showUpgradeButton = when (upgradeInfoResult) {
-            is LoadingResult.Error -> false
-            LoadingResult.Loading -> false
-            is LoadingResult.Success -> upgradeInfoResult.data.isUpgradeAvailable
-        }
+        val upgradeInfoSuccess = upgradeInfoResult as? LoadingResult.Success
+        val isUpgradeAvailable = upgradeInfoSuccess?.data?.isUpgradeAvailable ?: false
+        val isSubscriptionAvailable = upgradeInfoSuccess?.data?.isSubscriptionAvailable ?: false
         when (userResult) {
             LoadingResult.Loading -> AccountUiState.Initial
             is LoadingResult.Error -> AccountUiState(
                 email = null,
                 plan = PlanSection.Hide,
                 isLoadingState = IsLoadingState.NotLoading,
-                showUpgradeButton = showUpgradeButton
+                showUpgradeButton = isUpgradeAvailable,
+                showSubscriptionButton = isSubscriptionAvailable
             )
 
             is LoadingResult.Success -> AccountUiState(
                 email = userResult.data.email,
                 plan = plan,
                 isLoadingState = IsLoadingState.NotLoading,
-                showUpgradeButton = showUpgradeButton
+                showUpgradeButton = isUpgradeAvailable,
+                showSubscriptionButton = isSubscriptionAvailable
             )
         }
     }

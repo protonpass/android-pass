@@ -82,6 +82,7 @@ class AccountViewModelTest {
             UpgradeInfo(
                 plan = plan,
                 isUpgradeAvailable = false,
+                isSubscriptionAvailable = false,
                 totalVaults = 0,
                 totalAlias = 0,
                 totalTotp = 0

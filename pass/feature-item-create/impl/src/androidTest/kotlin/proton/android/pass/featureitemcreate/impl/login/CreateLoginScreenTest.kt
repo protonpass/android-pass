@@ -581,6 +581,7 @@ class CreateLoginScreenTest {
         canPerformPaidAction.setResult(plan !is PlanType.Free)
         val upgradeInfo = UpgradeInfo(
             isUpgradeAvailable = plan is PlanType.Free,
+            isSubscriptionAvailable = true,
             plan = Plan(
                 planType = plan,
                 hideUpgrade = false,

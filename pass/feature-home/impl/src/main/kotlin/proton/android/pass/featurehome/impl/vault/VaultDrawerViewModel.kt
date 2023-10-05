@@ -54,7 +54,7 @@ class VaultDrawerViewModel @Inject constructor(
                 vaultSelection = selectedVault,
                 shares = persistentListOf(),
                 totalTrashedItems = 0,
-                canCreateVault = false
+                canCreateVault = canCreateVault
             )
 
             is LoadingResult.Error -> {
@@ -63,7 +63,7 @@ class VaultDrawerViewModel @Inject constructor(
                     vaultSelection = selectedVault,
                     shares = persistentListOf(),
                     totalTrashedItems = 0,
-                    canCreateVault = false
+                    canCreateVault = canCreateVault
                 )
             }
 

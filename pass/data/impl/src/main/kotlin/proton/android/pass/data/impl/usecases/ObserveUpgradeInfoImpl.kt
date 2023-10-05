@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import me.proton.core.payment.domain.PaymentManager
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
@@ -45,16 +44,17 @@ class ObserveUpgradeInfoImpl @Inject constructor(
     override fun invoke(forceRefresh: Boolean): Flow<UpgradeInfo> = observeCurrentUser()
         .distinctUntilChanged()
         .flatMapLatest { user ->
+            val isSubscriptionAvailable = paymentManager.isSubscriptionAvailable(user.userId)
+            val isUpgradeAvailable = paymentManager.isUpgradeAvailable()
             combine(
                 planRepository.sendUserAccessAndObservePlan(
                     userId = user.userId,
                     forceRefresh = forceRefresh
                 ),
-                flowOf(paymentManager.isUpgradeAvailable()),
                 observeMFACount(),
                 observeItemCount(itemState = null),
                 observeVaultCount(user.userId)
-            ) { plan, isUpgradeAvailable, mfaCount, itemCount, vaultCount ->
+            ) { plan, mfaCount, itemCount, vaultCount ->
                 val isPaid = plan.planType is PlanType.Paid
                 val displayUpgrade = when {
                     plan.hideUpgrade -> false
@@ -62,6 +62,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                 }
                 UpgradeInfo(
                     isUpgradeAvailable = displayUpgrade,
+                    isSubscriptionAvailable = isSubscriptionAvailable,
                     plan = plan.copy(
                         vaultLimit = plan.vaultLimit,
                         aliasLimit = plan.aliasLimit,

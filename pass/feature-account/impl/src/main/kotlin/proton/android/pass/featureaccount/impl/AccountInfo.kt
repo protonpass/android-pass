@@ -67,7 +67,8 @@ fun AccountInfoPreview(
                     email = "myemail@proton.me",
                     plan = PlanSection.Data("Free"),
                     isLoadingState = IsLoadingState.NotLoading,
-                    showUpgradeButton = true
+                    showUpgradeButton = true,
+                    showSubscriptionButton = true
                 )
             )
         }

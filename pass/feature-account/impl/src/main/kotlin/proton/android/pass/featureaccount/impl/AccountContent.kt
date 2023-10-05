@@ -75,10 +75,12 @@ fun AccountContent(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             AccountInfo(state = state)
-            ManageSubscription(
-                modifier = Modifier.testTag(AccountContentTestTag.subscription),
-                onSubscriptionClick = { onNavigate(AccountNavigation.Subscription) }
-            )
+            if (state.showSubscriptionButton) {
+                ManageSubscription(
+                    modifier = Modifier.testTag(AccountContentTestTag.subscription),
+                    onSubscriptionClick = { onNavigate(AccountNavigation.Subscription) }
+                )
+            }
             SignOut(onSignOutClick = { onNavigate(AccountNavigation.SignOut) })
             DeleteAccount(onDeleteAccountClick = onDeleteAccountClick)
             Text(

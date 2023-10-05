@@ -42,6 +42,7 @@ class TestObserveUpgradeInfo @Inject constructor() : ObserveUpgradeInfo {
 
     companion object {
         val DEFAULT = UpgradeInfo(
+            isSubscriptionAvailable = false,
             isUpgradeAvailable = false,
             plan = Plan(
                 planType = TestConstants.FreePlanType,

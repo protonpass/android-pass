@@ -28,6 +28,7 @@ interface ObserveUpgradeInfo {
 
 data class UpgradeInfo(
     val isUpgradeAvailable: Boolean,
+    val isSubscriptionAvailable: Boolean,
     val plan: Plan,
     val totalVaults: Int,
     val totalAlias: Int,

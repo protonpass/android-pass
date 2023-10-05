@@ -38,6 +38,7 @@ fun UpdateShareEvent.toResponse(): ShareResponse = ShareResponse(
     shared = shared,
     expirationTime = expirationTime,
     createTime = createTime,
+    targetMaxMembers = targetMaxMembers
 )
 
 fun ShareResponse.toDomain(): UpdateShareEvent = UpdateShareEvent(
@@ -57,4 +58,5 @@ fun ShareResponse.toDomain(): UpdateShareEvent = UpdateShareEvent(
     shared = shared,
     expirationTime = expirationTime,
     createTime = createTime,
+    targetMaxMembers = targetMaxMembers
 )

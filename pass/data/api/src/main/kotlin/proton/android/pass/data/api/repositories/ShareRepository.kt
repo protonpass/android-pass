@@ -71,7 +71,8 @@ data class UpdateShareEvent(
     val owner: Boolean,
     val shared: Boolean,
     val expirationTime: Long?,
-    val createTime: Long
+    val createTime: Long,
+    val targetMaxMembers: Int
 )
 
 data class RefreshSharesResult(

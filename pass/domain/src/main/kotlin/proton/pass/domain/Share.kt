@@ -46,5 +46,6 @@ data class Share(
     val shareRole: ShareRole,
     val isOwner: Boolean,
     val memberCount: Int = 1,
-    val shared: Boolean = false
+    val shared: Boolean = false,
+    val maxMembers: Int = 10
 )

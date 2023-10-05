@@ -320,6 +320,7 @@ class ProfileScreenTest {
         )
         val upgradeInfo = UpgradeInfo(
             isUpgradeAvailable = isUpgradeAvailable,
+            isSubscriptionAvailable = isUpgradeAvailable,
             plan = plan,
             totalVaults = 0,
             totalAlias = 0,

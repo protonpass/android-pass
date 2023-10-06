@@ -6,6 +6,16 @@
 
 ### Other
 
+## 1.9.1 (2023-10-06)
+
+### Features :tada:
+
+- Add context to cryptographic signatures.
+
+### Other
+
+- Updated dependencies.
+
 ## 1.9.0 (2023-10-03)
 
 ### Features :tada:

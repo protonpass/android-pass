@@ -50,6 +50,7 @@ import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.preferences.HasCompletedOnBoarding
@@ -65,6 +66,7 @@ import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
+import proton.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.featuretrash.R as TrashR
@@ -86,6 +88,9 @@ class HomeScreenTest {
 
     @Inject
     lateinit var observeVaults: TestObserveVaults
+
+    @Inject
+    lateinit var observeVaultsWithItemCount: TestObserveVaultsWithItemCount
 
     @Inject
     lateinit var observeSearchEntry: TestObserveSearchEntry
@@ -141,6 +146,19 @@ class HomeScreenTest {
 
     @Test
     fun canNavigateToCreateVault() {
+        val vault = VaultWithItemCount(
+            vault = Vault(
+                shareId = ShareId("ShareId-canNavigateToCreateVault"),
+                name = "Vault canNavigateToCreateVault",
+                color = ShareColor.Color1,
+                icon = ShareIcon.Icon1,
+                isPrimary = false
+            ),
+            activeItemCount = 0,
+            trashedItemCount = 0
+        )
+        observeVaultsWithItemCount.sendResult(Result.success(listOf(vault)))
+
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             PassTheme(isDark = true) {

@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -59,9 +60,10 @@ class AccountViewModel @Inject constructor(
                     planName = upgradeInfoResult.data.plan.planType.humanReadableName()
                 )
         }
-        val upgradeInfoSuccess = upgradeInfoResult as? LoadingResult.Success
-        val isUpgradeAvailable = upgradeInfoSuccess?.data?.isUpgradeAvailable ?: false
-        val isSubscriptionAvailable = upgradeInfoSuccess?.data?.isSubscriptionAvailable ?: false
+
+        val upgradeInfoSuccess = upgradeInfoResult.getOrNull()
+        val isUpgradeAvailable = upgradeInfoSuccess?.isUpgradeAvailable ?: false
+        val isSubscriptionAvailable = upgradeInfoSuccess?.isSubscriptionAvailable ?: false
         when (userResult) {
             LoadingResult.Loading -> AccountUiState.Initial
             is LoadingResult.Error -> AccountUiState(

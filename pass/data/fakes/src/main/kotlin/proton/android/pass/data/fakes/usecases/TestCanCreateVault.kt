@@ -19,8 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onStart
-import proton.android.pass.common.api.FlowUtils.testFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,7 +27,7 @@ import javax.inject.Singleton
 @Singleton
 class TestCanCreateVault @Inject constructor() : CanCreateVault {
 
-    private val resultFlow = testFlow<Boolean>().apply { onStart { emit(true) } }
+    private val resultFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     fun sendValue(value: Boolean) {
         resultFlow.tryEmit(value)

@@ -19,6 +19,7 @@
 package proton.android.pass.crypto.impl.usecases
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.key.domain.encryptAndSignData
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
@@ -31,6 +32,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
+import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import proton.pass.domain.key.ShareKey
 import javax.inject.Inject
 
@@ -42,7 +44,8 @@ class EncryptInviteKeysImpl @Inject constructor(
     override fun invoke(
         inviterAddressKey: PrivateKey,
         shareKeys: List<ShareKey>,
-        targetAddressKey: PublicKey
+        targetAddressKey: PublicKey,
+        invitedUserMode: InvitedUserMode
     ): EncryptedInviteShareKeyList {
         // Set up targetAddressKey
         val targetAddressPublicKeyRing = PublicKeyRing(listOf(targetAddressKey))
@@ -72,6 +75,13 @@ class EncryptInviteKeysImpl @Inject constructor(
                 val armoredEncrypted = keyHolder.encryptAndSignData(
                     data = decryptedKey.key,
                     encryptKeyRing = targetAddressPublicKeyRing,
+                    signatureContext = SignatureContext(
+                        value = when (invitedUserMode) {
+                            InvitedUserMode.EXISTING_USER -> Constants.SIGNATURE_CONTEXT_EXISTING_USER
+                            InvitedUserMode.NEW_USER -> Constants.SIGNATURE_CONTEXT_NEW_USER
+                        },
+                        isCritical = true
+                    )
                 )
                 val unarmoredEncrypted = cryptoContext.pgpCrypto.getUnarmored(armoredEncrypted)
                 EncryptedInviteKey(

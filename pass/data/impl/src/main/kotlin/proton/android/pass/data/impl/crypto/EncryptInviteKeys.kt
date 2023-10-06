@@ -25,6 +25,7 @@ import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.crypto.api.usecases.AcceptInvite
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
+import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import proton.android.pass.data.impl.local.InviteAndKeysEntity
 import proton.android.pass.data.impl.requests.InviteKeyRotation
 import javax.inject.Inject
@@ -32,7 +33,8 @@ import javax.inject.Inject
 interface EncryptInviteKeys {
     suspend operator fun invoke(
         userId: UserId,
-        invite: InviteAndKeysEntity
+        invite: InviteAndKeysEntity,
+        invitedUserMode: InvitedUserMode
     ): List<InviteKeyRotation>
 }
 
@@ -44,7 +46,8 @@ class EncryptInviteKeysImpl @Inject constructor(
 ) : EncryptInviteKeys {
     override suspend fun invoke(
         userId: UserId,
-        invite: InviteAndKeysEntity
+        invite: InviteAndKeysEntity,
+        invitedUserMode: InvitedUserMode
     ): List<InviteKeyRotation> {
         val user = userRepository.getUser(userId)
         val address = addressRepository.getAddresses(userId).primary()
@@ -66,7 +69,8 @@ class EncryptInviteKeysImpl @Inject constructor(
             invitedUser = user,
             invitedUserAddressKeys = privateAddressKeys,
             inviterAddressKeys = inviterAddressKeys,
-            keys = inviteKeys
+            keys = inviteKeys,
+            invitedUserMode = invitedUserMode
         )
 
         return encryptedKeys.keys.map {

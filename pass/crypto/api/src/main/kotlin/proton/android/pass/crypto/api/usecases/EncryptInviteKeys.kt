@@ -25,6 +25,11 @@ import proton.pass.domain.key.ShareKey
 @JvmInline
 value class EncryptedInviteShareKeyList(val keys: List<EncryptedInviteKey>)
 
+enum class InvitedUserMode {
+    EXISTING_USER,
+    NEW_USER
+}
+
 data class EncryptedInviteKey(
     val keyRotation: Long,
     val key: String
@@ -35,7 +40,8 @@ interface EncryptInviteKeys {
     operator fun invoke(
         inviterAddressKey: PrivateKey,
         shareKeys: List<ShareKey>,
-        targetAddressKey: PublicKey
+        targetAddressKey: PublicKey,
+        invitedUserMode: InvitedUserMode
     ): EncryptedInviteShareKeyList
 
 }

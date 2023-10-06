@@ -27,6 +27,7 @@ import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
+import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
@@ -123,7 +124,8 @@ class InviteToVaultImpl @Inject constructor(
             encryptInviteKeys(
                 inviterAddressKey = inviterAddressKey,
                 shareKeys = shareKeys,
-                targetAddressKey = targetUserAddress.primaryKey.publicKey
+                targetAddressKey = targetUserAddress.primaryKey.publicKey,
+                invitedUserMode = InvitedUserMode.EXISTING_USER
             )
         }.fold(
             onSuccess = { it },

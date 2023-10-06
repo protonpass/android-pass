@@ -21,6 +21,7 @@ package proton.android.pass.crypto.impl.usecases
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -29,6 +30,7 @@ import me.proton.core.user.domain.entity.AddressId
 import org.junit.Test
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
+import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils
@@ -59,7 +61,8 @@ class EncryptInviteKeysImplTest {
                 isActive = true,
                 canEncrypt = true,
                 canVerify = true,
-            )
+            ),
+            invitedUserMode = InvitedUserMode.EXISTING_USER
         )
         // Verify same number of share keys is returned
         assertEquals(shareKeyList.size, res.keys.size)
@@ -80,6 +83,10 @@ class EncryptInviteKeysImplTest {
                 message = armoredDecodedKey,
                 publicKeys = listOf(inviterPublicKey.key),
                 unlockedKeys = targetAddressKeyKeyRing.unlockedKeys.map { it.unlockedKey.value },
+                verificationContext = VerificationContext(
+                    value = Constants.SIGNATURE_CONTEXT_EXISTING_USER,
+                    required = VerificationContext.ContextRequirement.Required.Always
+                )
             )
             assertEquals(decryptedData.status, VerificationStatus.Success)
 

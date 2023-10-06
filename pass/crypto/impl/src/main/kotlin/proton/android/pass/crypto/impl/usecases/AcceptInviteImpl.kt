@@ -19,6 +19,7 @@
 package proton.android.pass.crypto.impl.usecases
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.decryptAndVerifyData
 import me.proton.core.key.domain.encryptAndSignData
@@ -38,6 +39,7 @@ import proton.android.pass.crypto.api.usecases.AcceptInvite
 import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKey
 import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKeyList
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
+import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import javax.inject.Inject
 
 class AcceptInviteImpl @Inject constructor(
@@ -48,7 +50,8 @@ class AcceptInviteImpl @Inject constructor(
         invitedUser: User,
         invitedUserAddressKeys: List<PrivateKey>,
         inviterAddressKeys: List<PublicKey>,
-        keys: List<EncryptedInviteKey>
+        keys: List<EncryptedInviteKey>,
+        invitedUserMode: InvitedUserMode
     ): EncryptedInviteAcceptKeyList {
 
         // KeyHolder that contains the invited user address keys
@@ -74,7 +77,14 @@ class AcceptInviteImpl @Inject constructor(
                 // Decrypt it and verify signature with the inviter address key
                 val decryptedKey = keyHolderContext.decryptAndVerifyData(
                     message = cryptoContext.pgpCrypto.getArmored(decodedEncryptedKey),
-                    verifyKeyRing = inviterUserPublicKeyRing
+                    verifyKeyRing = inviterUserPublicKeyRing,
+                    verificationContext = VerificationContext(
+                        value = when (invitedUserMode) {
+                            InvitedUserMode.EXISTING_USER -> Constants.SIGNATURE_CONTEXT_EXISTING_USER
+                            InvitedUserMode.NEW_USER -> Constants.SIGNATURE_CONTEXT_NEW_USER
+                        },
+                        required = VerificationContext.ContextRequirement.Required.Always
+                    )
                 )
                 // Check signature verification
                 if (decryptedKey.status != VerificationStatus.Success) {

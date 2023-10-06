@@ -19,6 +19,7 @@
 package proton.android.pass.featureaccount.impl
 
 import android.content.Intent
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
@@ -28,10 +29,17 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.espresso.intent.rule.IntentsRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.waitUntilExists
+import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @HiltAndroidTest
@@ -46,69 +54,133 @@ class AccountScreenTest {
     @get:Rule(order = 2)
     val intentsRule = IntentsRule()
 
+    @Inject
+    lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+
+    @Inject
+    lateinit var observeCurrentUser: TestObserveCurrentUser
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+        observeCurrentUser.sendUser(TestUser.create(email = "test@test.test", name = "test user"))
+    }
+
     @Test
     fun accountScreenOnSignOutIsCalled() {
         val checker = CallChecker<Unit>()
-        composeTestRule.setContent {
-            AccountScreen(
-                onNavigate = { if (it is AccountNavigation.SignOut) checker.call() }
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    AccountScreen(
+                        onNavigate = { if (it is AccountNavigation.SignOut) checker.call() }
+                    )
+                }
+            }
+
+            val contentDescription = activity.getString(
+                R.string.account_sign_out_icon_content_description
             )
+            onNodeWithContentDescription(contentDescription).performClick()
+            waitUntil { checker.isCalled }
         }
-        composeTestRule
-            .onNodeWithContentDescription(
-                composeTestRule.activity.getString(
-                    R.string.account_sign_out_icon_content_description
-                )
-            )
-            .performClick()
-        assert(checker.isCalled)
+
     }
 
     @Test
     fun accountScreenOnBackIsCalled() {
         val checker = CallChecker<Unit>()
-        composeTestRule.setContent {
-            AccountScreen(
-                onNavigate = { if (it is AccountNavigation.Back) checker.call() }
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    AccountScreen(
+                        onNavigate = { if (it is AccountNavigation.Back) checker.call() }
+                    )
+                }
+            }
+            val contentDescription = activity.getString(
+                CompR.string.navigate_back_icon_content_description
             )
+            onNodeWithContentDescription(contentDescription).performClick()
+
+            waitUntil { checker.isCalled }
         }
-        composeTestRule
-            .onNodeWithContentDescription(
-                composeTestRule.activity.getString(CompR.string.navigate_back_icon_content_description)
-            )
-            .performClick()
-        assert(checker.isCalled)
+
+
     }
 
     @Test
     fun accountScreenOnDeleteOpensWebsite() {
-        composeTestRule.setContent {
-            AccountScreen(
-                onNavigate = {}
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    AccountScreen(
+                        onNavigate = {}
+                    )
+                }
+            }
+
+            val contentDescription = activity.getString(
+                R.string.account_delete_account_icon_content_description
             )
+            onNodeWithContentDescription(contentDescription).performClick()
+
         }
-        composeTestRule
-            .onNodeWithContentDescription(
-                composeTestRule.activity.getString(R.string.account_delete_account_icon_content_description)
-            )
-            .performClick()
+
         intended(hasAction(Intent.ACTION_VIEW))
         intended(hasData("https://account.proton.me/u/0/pass/account-password"))
     }
 
     @Test
     fun accountScreenOnManageSubscription() {
+        val updated = TestObserveUpgradeInfo.DEFAULT.copy(
+            isUpgradeAvailable = true,
+            isSubscriptionAvailable = true
+        )
+        observeUpgradeInfo.setResult(updated)
+
+
         val checker = CallChecker<Unit>()
-        composeTestRule.setContent {
-            AccountScreen(
-                onNavigate = { if (it is AccountNavigation.Subscription) checker.call() }
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    AccountScreen(
+                        onNavigate = { if (it is AccountNavigation.Subscription) checker.call() }
+                    )
+                }
+            }
+
+            val contentDescription = activity.getString(
+                R.string.manage_subscription_icon_content_description
             )
+            waitUntilExists(hasContentDescription(contentDescription))
+            onNodeWithContentDescription(contentDescription).performClick()
+
+            waitUntil { checker.isCalled }
         }
-        composeTestRule
-            .onNodeWithContentDescription(
-                composeTestRule.activity.getString(R.string.manage_subscription_icon_content_description)
+    }
+
+    @Test
+    fun accountScreenDoesNotShowManageSubscriptionIfSubscriptionNotAvailable() {
+        val updated = TestObserveUpgradeInfo.DEFAULT.copy(
+            isUpgradeAvailable = true,
+            isSubscriptionAvailable = false
+        )
+        observeUpgradeInfo.setResult(updated)
+
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    AccountScreen(
+                        onNavigate = {}
+                    )
+                }
+            }
+
+            val contentDescription = activity.getString(
+                R.string.manage_subscription_icon_content_description
             )
-            .performClick()
-        assert(checker.isCalled)
+            onNode(hasContentDescription(contentDescription)).assertDoesNotExist()
+        }
     }
 }

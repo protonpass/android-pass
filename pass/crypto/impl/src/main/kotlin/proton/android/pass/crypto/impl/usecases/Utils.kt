@@ -20,6 +20,11 @@ package proton.android.pass.crypto.impl.usecases
 
 import java.util.UUID
 
+object Constants {
+    const val SIGNATURE_CONTEXT_EXISTING_USER = "pass.invite.vault.existing-user"
+    const val SIGNATURE_CONTEXT_NEW_USER = "pass.invite.vault.new-user"
+}
+
 object Utils {
     private const val PASSPHRASE_LENGTH = 32
 

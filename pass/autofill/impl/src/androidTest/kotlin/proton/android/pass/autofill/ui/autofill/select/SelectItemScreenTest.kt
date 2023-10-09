@@ -48,6 +48,8 @@ import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
@@ -88,9 +90,13 @@ class SelectItemScreenTest {
     @Inject
     lateinit var observeActiveItems: TestObserveActiveItems
 
+    @Inject
+    lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
+
     @Before
     fun setup() {
         hiltRule.inject()
+        ffRepo.set(FeatureFlag.REMOVE_PRIMARY_VAULT, false)
     }
 
     // Click on item

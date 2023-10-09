@@ -103,10 +103,11 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
 
+    testImplementation(projects.pass.account.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
-    testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.preferences.fakes)
 
     androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(projects.pass.commonTest)

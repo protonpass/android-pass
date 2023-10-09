@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Evaluare aplicație</string>
   <string name="profile_option_autofill">Autocompletare</string>
   <string name="profile_option_autofill_subtitle">Completați automat numele de utilizator și parolele.</string>
-  <string name="profile_option_fingerprint">Amprenta</string>
-  <string name="profile_option_automatic_app_lock">Blocare automată aplicație</string>
-  <string name="profile_option_advanced">Avansat</string>
   <string name="profile_error_biometry_failed_to_start">Nu s-a putut porni autentificarea biometrică.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Autentificare nereușită.</string>
   <string name="profile_fingerprint_lock_enabled">Deblocare cu amprentă activată</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Fără</string>
   <string name="app_lock_config_biometric">Biometric</string>
   <string name="app_lock_config_pin_code">Cod PIN</string>
-  <string name="app_lock_config_unlock_with">Deblocați cu</string>
   <string name="app_lock_config_app_lock_time">Blocare automată</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Folosire blocare sistem când cel biometric eșuează</string>
   <string name="configure_pin_set_pin_code">Setare cod PIN</string>

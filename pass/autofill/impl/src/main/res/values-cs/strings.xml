@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_cant_find_matching_fields">Nebyla nalezena žádná odpovídající zobrazená pole</string>
+  <string name="autofill_authenticate_prompt">Získat z Proton Pass</string>
+  <string name="error_credentials_not_found">Nebyly nalezeny žádné odpovídající přihlašovací údaje</string>
+  <string name="error_credentials_not_saved">Přihlašovací údaje nelze uložit.</string>
+  <string name="error_loading_items">Nelze načíst položky.</string>
+  <string name="topbar_search_query">Hledat ve všech trezorech...</string>
+  <string name="topbar_search_query_primary_vault">Hledat v primárních trezorech...</string>
+  <string name="topbar_search_query_uninitialized">Hledat…</string>
+  <string name="inline_suggestions_open_app">Otevřit Proton Pass</string>
+  <string name="autofill_only_searching_in_primary_vault">Váš tarif umožňuje používat položky v primárním trezoru pouze pro účely automatického vyplňování.</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="autofill_suggestions_for_placeholder">Návrhy pro %s</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Použít přihlašovací údaje z \"%s\" v této aplikaci nebo webové stránce.</string>
+  <string name="autofill_dialog_associate_and_autofill">Použít vždy</string>
+  <string name="autofill_dialog_just_autofill">Použít jednou</string>
+  <string name="autofill_dialog_cancel">Zrušit</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTP byl zkopírován do schránky</string>
+  <string name="autofill_dialog_associate_title">Použít přihlášení?</string>
+  <string name="snackbar_item_move_to_trash_success">Položka přesunuta do koše</string>
+  <string name="snackbar_item_move_to_trash_error">Nelze přesunout do koše</string>
+  <string name="snackbar_item_copy_username_success">Uživatelské jméno bylo zkopírováno do schránky</string>
+  <string name="snackbar_item_copy_password_success">Heslo bylo zkopírováno do schránky</string>
+  <string name="snackbar_item_copy_clipboard_error">Nelze kopírovat do schránky</string>
+  <string name="autofill_user_logged_out">Byli jste odhlášeni. Přihlaste se prosím znovu otevřením aplikace.</string>
+  <string name="bottomsheet_copy_password">Kopírovat heslo</string>
+  <string name="bottomsheet_copy_username">Kopírovat uživatelské jméno</string>
+</resources>

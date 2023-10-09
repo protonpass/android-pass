@@ -4,10 +4,9 @@
   <string name="home_empty_vault_title">Seiful este gol</string>
   <string name="home_empty_vault_subtitle">Începeți prin crearea primului articol.</string>
   <string name="home_empty_vault_create_login">Creare autentificare</string>
-  <string name="home_empty_vault_create_alias">Creare un alias Hide My Email</string>
+  <string name="home_empty_vault_create_alias">Creare alias hide-my-email</string>
   <string name="home_empty_vault_create_note">Creare o notă</string>
-  <string name="error_observing_items">Eroare observare articole.</string>
-  <string name="error_observing_share">Eroare observare partajare.</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Eroare la încărcarea articolelor</string>
   <string name="error_refreshing">Eroare executare împrospătare.</string>
   <string name="home_snackbar_login_moved_to_trash">Autentificarea s-a mutat în gunoi.</string>
   <string name="home_snackbar_alias_moved_to_trash">Aliasul s-a mutat în gunoi.</string>
@@ -39,8 +38,7 @@
   <string name="username_copied_to_clipboard">Nume de utilizator copiat</string>
   <string name="password_copied_to_clipboard">Parola s-a copiat</string>
   <string name="credit_card_number_copied_to_clipboard">Cardul de credit s-a copiat.</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN card de credit copiat.</string>
-  <string name="credit_card_cvv_copied_to_clipboard">CVV card de credit a fost copiat.</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Codul CVV (CVC) a fost copiat.</string>
   <string name="item_too_long_copied_to_clipboard">Conținutul a fost prea lung, s-a copiat parțial în memorie.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Seifuri</string>

@@ -17,12 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="profile_option_fingerprint_subtitle">Lås upp Proton Pass med ett tryck.</string>
-  <string name="profile_option_fingerprint">Fingeravtryck</string>
-  <string name="profile_option_app_lock">Applås</string>
   <string name="enter_your_pin_code">Ange din PIN-kod</string>
   <string name="unlock">Lås upp</string>
-  <string name="enter_pin">Ange PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Felaktig PIN. %d försök återstår.</item>
     <item quantity="other">Felaktig PIN. %d försök återstår.</item>
@@ -38,7 +34,6 @@
   <string name="auth_error_verifying_password">Det gick inte att verifiera ditt lösenord</string>
   <string name="auth_error_empty_password">Lösenord kan inte vara tomt</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kan inte vara tom</string>
-  <string name="auth_error_pin_too_short">PIN ska vara minst 4 siffror</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Felaktigt lösenord. %d försök återstår</item>
     <item quantity="other">Felaktigt lösenord. %d försök återstår</item>

@@ -9,7 +9,7 @@
   <string name="settings_authentication_preference_description_enabled">Abra la aplicación de forma rápida y segura con su huella dactilar.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">No puede solicitar su huella dactilar para interactuar con la app, ya que no hay huellas dactilares registradas en este dispositivo.</string>
   <string name="settings_appearance_preference_title">Tema</string>
-  <string name="settings_appearance_preference_subtitle_match_system">Del sistema</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Del sistema</string>
   <string name="settings_appearance_preference_subtitle_light">Modo claro</string>
   <string name="settings_appearance_preference_subtitle_dark">Modo oscuro</string>
   <string name="settings_fingerprint_lock_enabled">Desbloqueo de huella dactilar habilitado</string>
@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">Términos de uso</string>
   <string name="settings_primary_vault_section_title">Bóvedas</string>
   <string name="settings_primary_vault_vault_selector_title">Bóveda principal</string>
-  <string name="settings_primary_vault_section_subtitle">No puede eliminar una bóveda principal.</string>
+  <string name="settings_primary_vault_section_subtitle">No puede eliminar la bóveda principal.</string>
   <string name="settings_primary_vault_change_success">La bóveda principal ha sido cambiada</string>
   <string name="settings_primary_vault_change_error">No se pudo cambiar la bóveda principal</string>
   <string name="settings_privacy_section_title">Privacidad</string>
@@ -42,6 +42,6 @@
   <string name="clipboard_option_copy_totp_code">Copiar códigos de autenticación</string>
   <string name="clipboard_option_copy_totp_code_hint">Copiar automáticamente los códigos de autenticación al usar el completado automático.</string>
   <string name="clipboard_option_clear_clipboard_never">Nunca</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">Después de 60 segundos</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">Después de 180 segundos</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Después de 1 minuto</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Después de 3 minutos</string>
 </resources>

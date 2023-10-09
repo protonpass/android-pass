@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
@@ -38,33 +39,98 @@ fun getShareUiStateFlow(
     selectedShareIdState: Flow<Option<ShareId>>,
     observeAllVaultsFlow: Flow<LoadingResult<List<VaultWithItemCount>>>,
     canPerformPaidAction: Flow<LoadingResult<Boolean>>,
+    removePrimaryVaultFlow: Flow<Boolean>,
     viewModelScope: CoroutineScope,
     tag: String
 ): StateFlow<ShareUiState> = combine(
     navShareIdState,
     selectedShareIdState,
     observeAllVaultsFlow,
-    canPerformPaidAction
-) { navShareId, selectedShareId, allSharesResult, canDoPaidAction ->
+    canPerformPaidAction,
+    removePrimaryVaultFlow
+) { navShareId, selectedShareId, allSharesResult, canDoPaidAction, removePrimaryVault ->
     val allShares = when (allSharesResult) {
         is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
         LoadingResult.Loading -> return@combine ShareUiState.Loading
         is LoadingResult.Success -> allSharesResult.data
     }
+
+    if (removePrimaryVault) {
+        shareUiStateWithRemovePrimaryVault(
+            tag = tag,
+            allShares = allShares,
+            navShareId = navShareId,
+            selectedShareId = selectedShareId
+        )
+    } else {
+        shareUiStateWithoutRemovePrimaryVault(
+            tag = tag,
+            allShares = allShares,
+            navShareId = navShareId,
+            selectedShareId = selectedShareId,
+            canDoPaidAction = canDoPaidAction,
+        )
+    }
+}.stateIn(
+    scope = viewModelScope,
+    started = SharingStarted.WhileSubscribed(5_000),
+    initialValue = ShareUiState.NotInitialised
+)
+
+private fun shareUiStateWithRemovePrimaryVault(
+    tag: String,
+    allShares: List<VaultWithItemCount>,
+    selectedShareId: Option<ShareId>,
+    navShareId: Option<ShareId>
+): ShareUiState {
+    val writeableVaults = allShares.filter { it.vault.role.toPermissions().canCreate() }
+    if (writeableVaults.isEmpty()) {
+        PassLogger.w(tag, "No writeable shares (numShares: ${allShares.size})")
+        return ShareUiState.Error(ShareError.EmptyShareList)
+    }
+
+    val selectedVault = if (selectedShareId is Some) {
+        // Pick the selected vault if it is writeable
+        // otherwise, pick the nav vault if it is writeable
+        // otherwise, just the first writeable vault
+        writeableVaults.firstOrNull { it.vault.shareId == selectedShareId.value() }
+            ?: writeableVaults.firstOrNull { it.vault.shareId == navShareId.value() }
+            ?: writeableVaults.first()
+    } else {
+        // Pick the nav vault if it is writeable
+        // otherwise, just the first writeable vault
+        writeableVaults.firstOrNull { it.vault.shareId == navShareId.value() }
+            ?: writeableVaults.first()
+    }
+
+    return ShareUiState.Success(
+        vaultList = allShares,
+        currentVault = selectedVault
+    )
+}
+
+@Suppress("ReturnCount")
+private fun shareUiStateWithoutRemovePrimaryVault(
+    tag: String,
+    allShares: List<VaultWithItemCount>,
+    selectedShareId: Option<ShareId>,
+    navShareId: Option<ShareId>,
+    canDoPaidAction: LoadingResult<Boolean>
+): ShareUiState {
     val canSwitchVaults = when (canDoPaidAction) {
-        is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.UpgradeInfoNotAvailable)
-        LoadingResult.Loading -> return@combine ShareUiState.Loading
+        is LoadingResult.Error -> return ShareUiState.Error(ShareError.UpgradeInfoNotAvailable)
+        LoadingResult.Loading -> return ShareUiState.Loading
         is LoadingResult.Success -> canDoPaidAction.data
     }
 
     if (allShares.isEmpty()) {
-        return@combine ShareUiState.Error(ShareError.EmptyShareList)
+        return ShareUiState.Error(ShareError.EmptyShareList)
     }
     val selectedVault = if (!canSwitchVaults) {
         val primaryVault = allShares.firstOrNull { it.vault.isPrimary }
         if (primaryVault == null) {
             PassLogger.w(tag, "No primary vault found")
-            return@combine ShareUiState.Error(ShareError.NoPrimaryVault)
+            return ShareUiState.Error(ShareError.NoPrimaryVault)
         }
         primaryVault
     } else {
@@ -74,7 +140,7 @@ fun getShareUiStateFlow(
 
         val primaryVault = allShares.firstOrNull { it.vault.isPrimary }
             ?: allShares.firstOrNull()
-            ?: return@combine ShareUiState.Error(ShareError.EmptyShareList)
+            ?: return ShareUiState.Error(ShareError.EmptyShareList)
 
         if (selectedOrNavVault != null) {
             val selectedVaultPermissions = selectedOrNavVault.vault.role.toPermissions()
@@ -91,13 +157,9 @@ fun getShareUiStateFlow(
             primaryVault
         }
     }
-    ShareUiState.Success(
+    return ShareUiState.Success(
         vaultList = allShares,
         currentVault = selectedVault
     )
-}.stateIn(
-    scope = viewModelScope,
-    started = SharingStarted.WhileSubscribed(5_000),
-    initialValue = ShareUiState.NotInitialised
-)
+}
 

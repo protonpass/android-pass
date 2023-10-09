@@ -40,6 +40,7 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.alias.IsEditAliasNavArg
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -57,7 +58,8 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     draftRepository: DraftRepository,
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     encryptionContextProvider: EncryptionContextProvider,
-    aliasPrefixValidator: AliasPrefixValidator
+    aliasPrefixValidator: AliasPrefixValidator,
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : CreateAliasViewModel(
     accountManager = accountManager,
     createAlias = createAlias,
@@ -71,7 +73,8 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     inAppReviewTriggerMetrics = inAppReviewTriggerMetrics,
     canPerformPaidAction = canPerformPaidAction,
     encryptionContextProvider = encryptionContextProvider,
-    aliasPrefixValidator = aliasPrefixValidator
+    aliasPrefixValidator = aliasPrefixValidator,
+    ffRepo = ffRepo
 ) {
 
     private val isEditMode: Boolean = savedStateHandleProvider.get()

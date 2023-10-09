@@ -74,6 +74,8 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
@@ -95,7 +97,8 @@ open class CreateAliasViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    canPerformPaidAction: CanPerformPaidAction
+    canPerformPaidAction: CanPerformPaidAction,
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : BaseAliasViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -126,12 +129,13 @@ open class CreateAliasViewModel @Inject constructor(
         observeVaults().distinctUntilChanged()
 
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
-        flowOf(navShareId),
-        selectedShareIdState,
-        observeAllVaultsFlow.asLoadingResult(),
-        canPerformPaidAction().asLoadingResult(),
-        viewModelScope,
-        TAG
+        navShareIdState = flowOf(navShareId),
+        selectedShareIdState = selectedShareIdState,
+        observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
+        canPerformPaidAction = canPerformPaidAction().asLoadingResult(),
+        removePrimaryVaultFlow = ffRepo.get(FeatureFlag.REMOVE_PRIMARY_VAULT),
+        viewModelScope = viewModelScope,
+        tag = TAG
     )
 
     private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = shareUiState

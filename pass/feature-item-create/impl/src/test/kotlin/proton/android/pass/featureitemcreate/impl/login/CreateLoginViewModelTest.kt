@@ -54,6 +54,8 @@ import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiMo
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -107,7 +109,10 @@ internal class CreateLoginViewModelTest {
             draftRepository = TestDraftRepository(),
             observeUpgradeInfo = observeUpgradeInfo,
             canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
-            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics()
+            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
+            ffRepo = TestFeatureFlagsPreferenceRepository().apply {
+                set(FeatureFlag.REMOVE_PRIMARY_VAULT, false)
+            }
         )
     }
 

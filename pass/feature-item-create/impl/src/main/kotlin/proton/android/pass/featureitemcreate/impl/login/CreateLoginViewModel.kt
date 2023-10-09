@@ -77,6 +77,8 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -85,6 +87,7 @@ import proton.pass.domain.VaultWithItemCount
 import proton.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class CreateLoginViewModel @Inject constructor(
     private val createItem: CreateItem,
@@ -102,6 +105,7 @@ class CreateLoginViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction,
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -141,12 +145,13 @@ class CreateLoginViewModel @Inject constructor(
         observeVaults().distinctUntilChanged()
 
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
-        flowOf(navShareId),
-        selectedShareIdState,
-        observeAllVaultsFlow.asLoadingResult(),
-        canPerformPaidAction().asLoadingResult(),
-        viewModelScope,
-        TAG
+        navShareIdState = flowOf(navShareId),
+        selectedShareIdState = selectedShareIdState,
+        observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
+        canPerformPaidAction = canPerformPaidAction().asLoadingResult(),
+        removePrimaryVaultFlow = ffRepo.get(FeatureFlag.REMOVE_PRIMARY_VAULT),
+        viewModelScope = viewModelScope,
+        tag = TAG
     )
 
     val createLoginUiState: StateFlow<CreateLoginUiState> = combine(

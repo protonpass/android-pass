@@ -38,6 +38,8 @@ import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.TestItem
@@ -96,7 +98,10 @@ class GetSuggestedLoginItemsImplTest {
             observeVaults = observeVaults,
             observeActiveItems = observeActiveItems,
             suggestionItemFilter = filter,
-            suggestionSorter = FakeSuggestionSorter()
+            suggestionSorter = FakeSuggestionSorter(),
+            ffRepo = TestFeatureFlagsPreferenceRepository().apply {
+                set(FeatureFlag.REMOVE_PRIMARY_VAULT, false)
+            }
         )
     }
 

@@ -45,17 +45,25 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun upsertItems(items: List<ItemEntity>) =
         database.itemsDao().insertOrUpdate(*items.toTypedArray())
 
-    override fun observeItemsForShare(
+    override fun observeItemsForShares(
         userId: UserId,
-        shareId: ShareId,
+        shareIds: List<ShareId>,
         itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> =
         if (filter == ItemTypeFilter.All) {
-            database.itemsDao().observerAllForShare(userId.id, shareId.id, itemState?.value)
+            database.itemsDao().observeAllForShares(
+                userId = userId.id,
+                shareIds = shareIds.map { it.id },
+                itemState = itemState?.value
+            )
         } else {
-            database.itemsDao()
-                .observeAllForShare(userId.id, shareId.id, itemState?.value, filter.value())
+            database.itemsDao().observeAllForShare(
+                userId = userId.id,
+                shareIds = shareIds.map { it.id },
+                itemState = itemState?.value,
+                itemType = filter.value()
+            )
         }
 
     override fun observeItems(

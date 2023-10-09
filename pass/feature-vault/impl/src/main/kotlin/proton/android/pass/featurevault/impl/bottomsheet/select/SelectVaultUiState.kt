@@ -52,6 +52,7 @@ sealed interface SelectVaultUiState {
     data class Success(
         val vaults: ImmutableList<VaultWithStatus>,
         val selected: VaultWithItemCount,
-        val showUpgradeMessage: Boolean
+        val showUpgradeMessage: Boolean,
+        val removePrimaryVaultEnabled: Boolean
     ) : SelectVaultUiState
 }

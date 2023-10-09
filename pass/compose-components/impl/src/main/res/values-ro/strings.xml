@@ -18,7 +18,7 @@
   <string name="bottomsheet_cancel_button">Anulare</string>
   <string name="bottomsheet_move_to_trash">Mutare în gunoi</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Meniu acțiune deschidere articol</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
   <string name="action_upgrade_now">Modificare</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adăugați primul articol</string>

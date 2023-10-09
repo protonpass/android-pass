@@ -6,10 +6,10 @@
   <string name="settings_autofill_preference_description">Pour des connexions rapides et faciles, laissez Proton Pass compléter vos noms d\'utilisateur et vos mots de passe.</string>
   <string name="settings_authentication_section_title">Authentification</string>
   <string name="settings_authentication_preference_title">Déverrouillage par empreinte digitale</string>
-  <string name="settings_authentication_preference_description_enabled">Ouvrez l\'application rapidement et en toute sécurité avec votre empreinte digitale.</string>
+  <string name="settings_authentication_preference_description_enabled">Ouvrez l\'application de manière rapide et sécurisée avec votre empreinte digitale.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Vous ne pouvez pas utiliser votre empreinte digitale pour interagir avec l\'application parce qu\'il n\'y a aucune empreinte digitale enregistrée sur cet appareil.</string>
   <string name="settings_appearance_preference_title">Thème</string>
-  <string name="settings_appearance_preference_subtitle_match_system">Identique aux préférences de votre système</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Identique aux préférences de votre système</string>
   <string name="settings_appearance_preference_subtitle_light">Mode Clair</string>
   <string name="settings_appearance_preference_subtitle_dark">Thème sombre</string>
   <string name="settings_fingerprint_lock_enabled">Déverrouillage par empreinte digitale activé</string>
@@ -42,6 +42,6 @@
   <string name="clipboard_option_copy_totp_code">Copier les codes d\'authentification</string>
   <string name="clipboard_option_copy_totp_code_hint">Copier automatiquement les codes d\'authentification en utilisant le remplissage automatique.</string>
   <string name="clipboard_option_clear_clipboard_never">Jamais</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">Après 60 secondes</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Après 1 minute</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Après 3 minutes</string>
 </resources>

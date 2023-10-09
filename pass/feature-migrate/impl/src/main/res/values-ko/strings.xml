@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">다음 금고로 항목을 이동할까요?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">다음 금고로 모든 항목을 이동할까요?</string>
+  <string name="migrate_item_confirm_confirm_button">이동</string>
+  <string name="migrate_item_success_snackbar">항목을 이동했습니다.</string>
+  <string name="migrate_item_error_snackbar">항목 이동 오류</string>
+  <string name="migrate_all_items_success_snackbar">모든 항목이 삭제되었습니다</string>
+  <string name="migrate_all_items_error_snackbar">모든 금고 항목 이동 중 오류</string>
+  <string name="migrate_init_error_snackbar">마이그레이션 창을 준비할 수 없습니다.</string>
+</resources>

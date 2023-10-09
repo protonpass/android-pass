@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">Ваша сховішча нічога не змяшчае</string>
   <string name="home_empty_vault_subtitle">Пачніце са стварэння вашага першага элемента.</string>
   <string name="home_empty_vault_create_login">Стварыць запіс уваходу</string>
-  <string name="home_empty_vault_create_alias">Стварыць псеўданім Hide-my-email</string>
+  <string name="home_empty_vault_create_alias">Стварэнне псеўданіма Hide-my-email</string>
   <string name="home_empty_vault_create_note">Стварыць нататку</string>
-  <string name="error_observing_items">Памылка назірання за элементамі</string>
-  <string name="error_observing_share">Памылка назірання за абагуленнем</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Памылка загрузкі элементаў</string>
   <string name="error_refreshing">Памылка падчас абнаўлення</string>
   <string name="home_snackbar_login_moved_to_trash">Запіс уваходу перамешчаны ў сметніцу</string>
   <string name="home_snackbar_alias_moved_to_trash">Псеўданім перамешчаны ў сметніцу</string>
   <string name="home_snackbar_note_moved_to_trash">Нататка перамешчана ў сметніцу</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Крэдытная картка перамешчана ў сметніцу</string>
-  <string name="home_snackbar_move_to_trash_error">Немагчыма перамясціць у сметніцу</string>
+  <string name="home_snackbar_move_to_trash_error">Немагчыма выдаліць элемент у сметніцу</string>
   <string name="home_autofill_banner_title">Атрымлівайце асалоду ад магіі аўтазапаўнення</string>
   <string name="home_autofill_banner_text">Ваша імя карыстальніка і пароль запаўняюцца імгненна.</string>
   <string name="home_autofill_banner_settings">Уключыць аўтазапаўненне ›</string>
@@ -39,7 +38,6 @@
   <string name="username_copied_to_clipboard">Імя карыстальніка скапіявана</string>
   <string name="password_copied_to_clipboard">Пароль скапіяваны</string>
   <string name="credit_card_number_copied_to_clipboard">Нумар крэдытнай карткі скапіяваны</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN крэдытнай карткі скапіяваны</string>
   <string name="credit_card_cvv_copied_to_clipboard">CVV крэдытнай карткі скапіяваны</string>
   <string name="item_too_long_copied_to_clipboard">Занадта доўгае змесціва. Частка скапіявана ў буфер абмену</string>
   <!-- Vault drawer -->

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Uložit</string>
+  <string name="action_remove">Odstranit</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Přihlásit se</string>
+  <string name="action_alias">Alias</string>
+  <string name="action_note">Poznámka</string>
+  <string name="action_credit_card">Platební karta</string>
+  <string name="action_password">Heslo</string>
+  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Přidání přihlašovacích údajů k aplikaci nebo webové stránce</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Získání aliasu e-mailu pro použití v nových aplikacích</string>
+  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Zaznamenejte si pro sebe PIN, kód nebo poznámku</string>
+  <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpečné ukládání vašich platebních údajů</string>
+  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Vygenerovat bezpečné heslo</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Vytvořit přihlášení</string>
+  <string name="field_username_title">Uživatelské jméno nebo e-mailová adresa</string>
+  <string name="field_username_hint">Přidat uživatelské jméno nebo e-mailovou adresu</string>
+  <string name="field_password_title">Heslo</string>
+  <string name="field_password_hint">Přidat heslo</string>
+  <string name="field_website_address_title">Webová stránka</string>
+  <string name="field_website_address_invalid">Invalid URL</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Přidat</string>
+  <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Vygenerovat nové heslo</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide my email</string>
+  <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Použít %s</string>
+  <string name="create_login_item_creation_error">Nelze vytvořit přihlášení</string>
+  <string name="create_login_item_update_error">Nelze aktualizovat přihlášení</string>
+  <string name="create_login_init_error">Could not initialize Login</string>
+  <string name="create_login_invalid_totp">Obsah 2FA je neplatný</string>
+  <string name="login_created">Přihlášení vytvořeno</string>
+  <string name="bottomsheet_modify_alias_title">Upravit alias</string>
+  <string name="bottomsheet_custom_field_type_text">Text</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Vlastní textové pole</string>
+  <string name="bottomsheet_custom_field_type_hidden">Skryté</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA secret (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Upravit název</string>
+  <string name="bottomsheet_custom_field_option_remove">Odebrat pole</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Odebrat vlastní pole</string>
+  <string name="create_login_add_custom_field_button">Add another field</string>
+  <string name="custom_field_hidden_placeholder">Váš skrytý obsah</string>
+  <string name="custom_field_hidden_icon_content_description">Ikona vlastního skrytého pole</string>
+  <string name="custom_field_text_placeholder">Váš obsah</string>
+  <string name="custom_field_dialog_title">Název vlastního pole</string>
+  <string name="custom_field_dialog_body">Zadejte název vlastního pole</string>
+  <string name="custom_field_dialog_placeholder">Název vlastního pole</string>
+  <string name="custom_field_options_content_description">Možnosti vlastního pole</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Vytvořit poznámku</string>
+  <string name="create_note_item_creation_error">Nelze vytvořit poznámku</string>
+  <string name="create_note_item_update_error">Nelze aktualizovat poznámku</string>
+  <string name="create_note_init_error">Could not initialize Note</string>
+  <string name="note_created">Poznámka vytvořena</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Vytvořit alias</string>
+  <string name="field_alias_title">Alias adresa</string>
+  <string name="field_alias_hint">Alias uživatelského jména</string>
+  <string name="field_mailboxes_creation_title">Přeposlat na</string>
+  <string name="field_mailboxes_edit_title">Přeposílám</string>
+  <string name="field_alias_you_are_about_to_create">Chystáte se vytvořit</string>
+  <string name="field_alias_prefix">Předpona</string>
+  <string name="field_alias_suffix">Přípona</string>
+  <string name="alias_bottomsheet_alias_title">Alias</string>
+  <string name="alias_bottomsheet_suffix_title">Přípona</string>
+  <string name="create_alias_item_creation_error">Nelze vytvořit alias</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Nemůžete vytvářet další aliasy</string>
+  <string name="create_alias_email_not_validated_error">Nemůžete vytvářet aliasy bez předchozího ověření vašeho e-mailu.</string>
+  <string name="alias_rate_limited">Příliš mnoho aliasů vytvořených v poslední době</string>
+  <string name="create_alias_item_update_error">Nelze aktualizovat alias</string>
+  <string name="create_alias_init_error">Could not initialize Alias</string>
+  <string name="alias_created">Alias byl vytvořen</string>
+  <string name="cannot_retrieve_alias_options">Nelze načíst možnosti aliasu</string>
+  <string name="alias_mailbox_dialog_title">Přeposlat na</string>
+  <!-- Create note -->
+  <string name="note_hint">Poznámka</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Vytvořit platební kartu</string>
+  <string name="field_cardholder_name_title">Jméno držitele karty</string>
+  <string name="field_cardholder_name_hint">Jméno a příjmení</string>
+  <string name="field_card_number_title">Číslo karty</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Číslo pro ověření</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">Číslo PIN</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Vyprší dne</string>
+  <string name="field_card_expiration_date_hint">MM / RRRR</string>
+  <string name="field_card_expiration_date_error">Neplatné datum vypršení</string>
+  <string name="create_credit_card_item_creation_error">Nelze vytvořit platební kartu</string>
+  <string name="create_credit_card_item_creation_success">Platební karta vytvořena</string>
+  <string name="credit_card_init_error">Could not initialize credit card</string>
+  <string name="credit_card_item_update_error">Nelze aktualizovat platební kartu</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Změny uloženy</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">2FA secret (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Neplatný secret 2FA</string>
+  <string name="totp_create_login_field_placeholder">Přidat 2FA secret</string>
+  <string name="close_scree_icon_content_description">Tlačítko zavření obrazovky</string>
+  <string name="totp_paste_code_action">Vložit kód</string>
+  <string name="totp_scan_code_action">Skenovat kód</string>
+  <string name="field_cannot_be_empty">Toto pole nesmí být prázdné</string>
+  <string name="camera_permission_explanation">Pro tuto funkci je nutné povolit přístup k fotoaparátu.</string>
+  <string name="camera_permission_open_settings">Otevřít nastavení</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">Dosažen limit 2FA</string>
+  <string name="upgrade">Rozšířit</string>
+  <string name="mfa_icon_content_description">Ikona 2FA</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Navyšte tarif pro vlastní domény</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Navyšte tarif pro více schránek</string>
+  <string name="create_alias_content_limit_banner">Dosáhli jste limitu aliasů, které můžete vytvořit. Po navýšení předplatného můžete vytvářet neomezený počet aliasů.</string>
+</resources>

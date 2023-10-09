@@ -61,7 +61,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">ბარათის მფლობელი ბაფერში დაკოპირდა</string>
   <string name="credit_card_number_copied_to_clipboard">ბარათის ნომერი დაკოპირებულია გაცვლის ბუფერში</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">გადამოწმების ნომერი დაკოპირებულია მიმოცვლის ბუფერში</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN კოდი ბუფერში დაკოპირდა</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">ნაგვის ყუთში გადატანა</string>
   <string name="migrate_item_detail_bottom_sheet">სხვა საცავში გადატანა</string>

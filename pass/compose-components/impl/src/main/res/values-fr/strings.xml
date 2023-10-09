@@ -14,10 +14,10 @@
   </plurals>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Confirmer</string>
-  <string name="bottomsheet_cancel_button">Oui annuler</string>
+  <string name="bottomsheet_cancel_button">Annuler</string>
   <string name="bottomsheet_move_to_trash">Déplacer dans la corbeille</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Ouvrir le menu d\'action de l\'élément</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ouvrir le menu d\'action de l\'élément</string>
   <string name="action_upgrade_now">Changer d\'abonnement</string>
   <!-- Empty list -->
   <string name="empty_list_title">Ajoutez votre premier élément</string>
@@ -64,9 +64,9 @@
     <item quantity="other">%d éléments</item>
   </plurals>
   <!-- Confirm close dialog -->
-  <string name="confirm_close_dialog_title">Annuler les modifications ?</string>
-  <string name="confirm_close_dialog_message">Des modifications n\'ont pas été enregistrées. Voulez-vous vraiment les annuler ?</string>
-  <string name="confirm_close_dialog_close_button">Non</string>
+  <string name="confirm_close_dialog_title">Abandonner les modifications ?</string>
+  <string name="confirm_close_dialog_message">Des modifications n\'ont pas été enregistrées. Voulez-vous vraiment les abandonner ?</string>
+  <string name="confirm_close_dialog_close_button">Abandonner</string>
   <!-- Upgrade -->
   <string name="upgrade">Changer d\'abonnement</string>
   <!-- Advanced options -->

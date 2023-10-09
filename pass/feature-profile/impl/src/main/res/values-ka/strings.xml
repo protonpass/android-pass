@@ -10,9 +10,6 @@
   <string name="profile_option_rating">შეაფასეთ აპლიკაცია</string>
   <string name="profile_option_autofill">ავტომატური შევსება</string>
   <string name="profile_option_autofill_subtitle">მომხმარებლის სახელებისა და პაროლების ავტომატური შევსება.</string>
-  <string name="profile_option_fingerprint">ანაბეჭდი</string>
-  <string name="profile_option_automatic_app_lock">ავტომატური აპის დაბლოკვა</string>
-  <string name="profile_option_advanced">დამატებით</string>
   <string name="profile_error_biometry_failed_to_start">ბიომეტრიული ავთენტიკაციის გაშვება შეუძლებელია</string>
   <string name="profile_error_biometry_failed_to_authenticate">ავთენტიკაციის შეცდომა</string>
   <string name="profile_fingerprint_lock_enabled">ანაბეჭდით განბლოკვა ჩართულია</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">არცერთი</string>
   <string name="app_lock_config_biometric">ბიომეტრიული</string>
   <string name="app_lock_config_pin_code">PIN კოდი</string>
-  <string name="app_lock_config_unlock_with">განბლოკვის მექანიზმი</string>
   <string name="app_lock_config_app_lock_time">ავტომატური დაბლოკვა</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">ბიომეტრიული შესვლის ჩავარდნის შემთხვევაში სისტემური ბლოკის გამოყენება</string>
   <string name="configure_pin_set_pin_code">PIN-კოდის დაყენება</string>

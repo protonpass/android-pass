@@ -17,7 +17,7 @@
   <string name="bottomsheet_cancel_button">გაუქმება</string>
   <string name="bottomsheet_move_to_trash">ნაგვის ყუთში გადატანა</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">ელემენტის ქმედების მენიუს გახსნა</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
   <string name="action_upgrade_now">ტარიფის განახლება</string>
   <!-- Empty list -->
   <string name="empty_list_title">დაამატეთ თქვენი პირველი ელემენტი</string>

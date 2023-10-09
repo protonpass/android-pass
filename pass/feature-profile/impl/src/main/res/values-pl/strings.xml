@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Oceń aplikację</string>
   <string name="profile_option_autofill">Autouzupełnianie</string>
   <string name="profile_option_autofill_subtitle">Automatycznie uzupełniaj nazwy użytkowników i hasła.</string>
-  <string name="profile_option_fingerprint">Odcisk palca</string>
-  <string name="profile_option_automatic_app_lock">Automatyczne blokowanie aplikacji</string>
-  <string name="profile_option_advanced">Zaawansowane</string>
   <string name="profile_error_biometry_failed_to_start">Nie można rozpocząć uwierzytelniania biometrycznego</string>
   <string name="profile_error_biometry_failed_to_authenticate">Nie udało się uwierzytelnić</string>
   <string name="profile_fingerprint_lock_enabled">Odblokowywanie odciskiem palca zostało włączone</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Brak</string>
   <string name="app_lock_config_biometric">Biometrii</string>
   <string name="app_lock_config_pin_code">Kodu PIN</string>
-  <string name="app_lock_config_unlock_with">Odblokuj za pomocą</string>
   <string name="app_lock_config_app_lock_time">Automatyczna blokada</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Użyj blokady systemu, kiedy biometria nie działa</string>
   <string name="configure_pin_set_pin_code">Ustaw kod PIN</string>

@@ -6,14 +6,13 @@
   <string name="home_empty_vault_create_login">Crea un login</string>
   <string name="home_empty_vault_create_alias">Crea un alias Hide-my-email</string>
   <string name="home_empty_vault_create_note">Crea una nota</string>
-  <string name="error_observing_items">Errore negli elementi</string>
-  <string name="error_observing_share">Errore nella condivisione</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Errore durante il caricamento degli elementi</string>
   <string name="error_refreshing">Errore durante l\'aggiornamento</string>
   <string name="home_snackbar_login_moved_to_trash">Login spostato nel cestino</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias spostato nel cestino</string>
   <string name="home_snackbar_note_moved_to_trash">Nota spostata nel cestino</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Carta di credito spostata nel cestino</string>
-  <string name="home_snackbar_move_to_trash_error">Impossibile spostare nel cestino</string>
+  <string name="home_snackbar_move_to_trash_error">Impossibile spostare l\'elemento nel cestino</string>
   <string name="home_autofill_banner_title">Goditi la magia della compilazione automatica</string>
   <string name="home_autofill_banner_text">Un tocco e voilà! Il tuo nome utente e la tua password vengono compilati all\'istante.</string>
   <string name="home_autofill_banner_settings">Attiva Compilazione automatica ›</string>
@@ -30,7 +29,7 @@
   <string name="bottomsheet_copy_username">Copia nome utente</string>
   <string name="bottomsheet_copy_alias">Copia indirizzo email</string>
   <string name="bottomsheet_copy_number">Copia il numero</string>
-  <string name="bottomsheet_copy_cvv">Copia il codice CVV</string>
+  <string name="bottomsheet_copy_cvv">Copia CVC</string>
   <string name="bottomsheet_copy_note">Copia nota</string>
   <string name="bottomsheet_edit">Modifica</string>
   <!-- Clipboard -->
@@ -39,8 +38,7 @@
   <string name="username_copied_to_clipboard">Nome utente copiato</string>
   <string name="password_copied_to_clipboard">Password copiata</string>
   <string name="credit_card_number_copied_to_clipboard">Numero carta di credito copiato</string>
-  <string name="credit_card_pin_copied_to_clipboard">Pin della carta di credito copiato</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Cvv carta di credito copiato</string>
+  <string name="credit_card_cvv_copied_to_clipboard">CVC copiato</string>
   <string name="item_too_long_copied_to_clipboard">Contenuto troppo lungo, è stato copiato solo parzialmente negli appunti</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Casseforti</string>

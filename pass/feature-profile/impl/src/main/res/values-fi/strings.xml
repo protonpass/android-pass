@@ -10,16 +10,13 @@
   <string name="profile_option_rating">Arvioi sovellus</string>
   <string name="profile_option_autofill">Automaattitäyttö</string>
   <string name="profile_option_autofill_subtitle">Täytä käyttäjätunnukset ja salasanat automaattisesti.</string>
-  <string name="profile_option_fingerprint">Sormenjälki</string>
-  <string name="profile_option_automatic_app_lock">Sovelluksen automaattinen lukitus</string>
-  <string name="profile_option_advanced">Lisäasetukset</string>
   <string name="profile_error_biometry_failed_to_start">Biometristä todennusta ei voitu aloittaa</string>
   <string name="profile_error_biometry_failed_to_authenticate">Todennus epäonnistui</string>
   <string name="profile_fingerprint_lock_enabled">Sormenjälkilukitus otettiin käyttöön</string>
   <string name="profile_fingerprint_lock_disabled">Sormenjälkilukitus poistettiin käytöstä</string>
   <string name="profile_error_performing_operation">Virhe suoritettaessa toimintoa</string>
   <string name="profile_app_version_copied_to_clipboard">Sovelluksen versio kopioitiin</string>
-  <string name="feedback_option_reddit">Näytä Proton Redditissä</string>
+  <string name="feedback_option_reddit">Tutustu Protonin Reddit-yhteisöön</string>
   <string name="feedback_option_mail">Lähetä meille viesti</string>
   <string name="feedback_option_vote_new_features">Äänestä uusia ominaisuuksia</string>
   <string name="app_lock_immediately">Välittömästi</string>
@@ -33,11 +30,10 @@
   <string name="app_lock_config_none">Ei määritetty</string>
   <string name="app_lock_config_biometric">Biometrialla</string>
   <string name="app_lock_config_pin_code">PIN-koodilla</string>
-  <string name="app_lock_config_unlock_with">Avaa lukitus</string>
-  <string name="app_lock_config_app_lock_time">Automaattinen lukitus</string>
+  <string name="app_lock_config_app_lock_time">Lukitse automaattisesti</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Käytä järjestelmän lukitustapaa biometrisen todennuksen epäonnistuessa</string>
   <string name="configure_pin_set_pin_code">Aseta PIN-koodi</string>
-  <string name="configure_pin_unlock_the_app_with_this_code">Avaa sovelluksen lukitus tällä koodilla</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Avaa sovelluksen lukitus tällä koodilla.</string>
   <string name="configure_pin_enter_pin_code">Syötä PIN-koodi</string>
   <string name="configure_pin_repeat_pin_code">Toista PIN-koodi</string>
   <string name="configure_pin_continue">Jatka</string>
@@ -46,7 +42,7 @@
   <string name="configure_pin_pin_cannot_be_blank">PIN-koodi ei voi olla tyhjä</string>
   <string name="configure_pin_pin_lock_enabled">PIN-lukitus otettiin käyttöön</string>
   <string name="configure_pin_pin_lock_disabled">PIN-lukitus poistettiin käytöstä</string>
-  <string name="profile_option_lock_with">Lukitse</string>
+  <string name="profile_option_lock_with">Lukitus</string>
   <string name="profile_option_unlock_with">Avaa lukitus</string>
   <string name="profile_option_change_pin_code">Vaihda PIN-koodi</string>
 </resources>

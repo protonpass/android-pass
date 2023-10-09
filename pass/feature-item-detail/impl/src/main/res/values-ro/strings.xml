@@ -3,7 +3,7 @@
   <string name="action_open">Deschidere</string>
   <string name="action_copy">Copiere</string>
   <!-- Detail -->
-  <string name="detail_init_error">Articolul nu s-a putut inițializa.</string>
+  <string name="detail_init_error">Elementul nu s-a putut inițializa.</string>
   <string name="top_bar_edit_button_text">Editare</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adresă alias</string>
@@ -62,7 +62,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">Titularul cardului a fost copiat în memorie.</string>
   <string name="credit_card_number_copied_to_clipboard">Numărul cardului a fost copiat în memorie.</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Numărul de verificare a fost copiat în memorie.</string>
-  <string name="credit_card_pin_copied_to_clipboard">Codul PIN a fost copiat în memorie.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mutare în gunoi</string>
   <string name="migrate_item_detail_bottom_sheet">Mutare în alt seif</string>

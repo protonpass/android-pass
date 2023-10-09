@@ -9,11 +9,11 @@
   <string name="action_note">Nota</string>
   <string name="action_credit_card">Carta di credito</string>
   <string name="action_password">Password</string>
-  <string name="item_type_login_description">Aggiungi i dettagli di accesso per un\'app o un sito</string>
-  <string name="item_type_alias_description">Ottieni un alias email da utilizzare nelle nuove applicazioni</string>
-  <string name="item_type_note_description">Appuntati un PIN, un codice o una nota personale</string>
-  <string name="item_type_credit_card_description">Memorizza in modo sicuro le informazioni di pagamento</string>
-  <string name="item_type_password_description">Genera una password sicura</string>
+  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Aggiungi i dettagli di accesso per un\'app o un sito</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Ottieni un alias email da utilizzare nelle nuove applicazioni</string>
+  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Appuntati un PIN, un codice o una nota personale</string>
+  <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Memorizza in modo sicuro le informazioni di pagamento</string>
+  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genera una password sicura</string>
   <!-- Create Login -->
   <string name="title_create_login">Crea login</string>
   <string name="field_username_title">Nome utente o indirizzo email</string>
@@ -21,12 +21,12 @@
   <string name="field_password_title">Password</string>
   <string name="field_password_hint">Aggiungi password</string>
   <string name="field_website_address_title">Sito web</string>
-  <string name="field_website_address_invalid">Url non valido</string>
+  <string name="field_website_address_invalid">URL non valido</string>
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Aggiungi</string>
-  <string name="sticky_button_generate_password">Crea una nuova password</string>
-  <string name="sticky_button_create_alias">Hide-my-email</string>
-  <string name="sticky_button_use_account_email">Usa %s</string>
+  <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Crea una nuova password</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide-my-email</string>
+  <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Usa %s</string>
   <string name="create_login_item_creation_error">Impossibile creare il login</string>
   <string name="create_login_item_update_error">Impossibile aggiornare il login</string>
   <string name="create_login_init_error">Impossibile inizializzare il login</string>
@@ -40,7 +40,7 @@
   <string name="bottomsheet_custom_field_option_edit">Modifica titolo</string>
   <string name="bottomsheet_custom_field_option_remove">Rimuovi campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Rimuovi il campo personalizzato</string>
-  <string name="create_login_add_custom_field_button">Aggiungi altro</string>
+  <string name="create_login_add_custom_field_button">Aggiungi un altro campo</string>
   <string name="custom_field_hidden_placeholder">Il tuo contenuto nascosto</string>
   <string name="custom_field_hidden_icon_content_description">Icona campo personalizzato nascosto</string>
   <string name="custom_field_text_placeholder">Il tuo contenuto</string>
@@ -53,10 +53,7 @@
   <string name="create_note_item_creation_error">Impossibile creare la nota</string>
   <string name="create_note_item_update_error">Impossibile aggiornare la nota</string>
   <string name="create_note_init_error">Impossibile inizializzare la nota</string>
-  <string name="create_note_empty_share_id">L\'Id condivisione non può essere vuoto</string>
   <string name="note_created">Nota creata</string>
-  <string name="edit_note_snackbar_note_moved_to_trash">Nota spostata nel cestino</string>
-  <string name="edit_note_snackbar_note_moved_to_trash_error">Impossibile eliminare la nota</string>
   <!-- Create Alias -->
   <string name="title_create_alias">Crea alias</string>
   <string name="field_alias_title">Indirizzi alias</string>
@@ -74,9 +71,7 @@
   <string name="alias_rate_limited">Troppi alias testati recentemente</string>
   <string name="create_alias_item_update_error">Impossibile aggiornare l\'Alias</string>
   <string name="create_alias_init_error">Impossibile inizializzare l\'alias</string>
-  <string name="create_alias_empty_share_id">L\'Id condivisione non può essere vuoto</string>
   <string name="alias_created">Alias creato</string>
-  <string name="alias_moved_to_trash">Alias spostato nel cestino</string>
   <string name="cannot_retrieve_alias_options">Impossibile recuperare le opzioni degli alias</string>
   <string name="alias_mailbox_dialog_title">Inoltra a</string>
   <!-- Create note -->
@@ -87,7 +82,7 @@
   <string name="field_cardholder_name_hint">Nome completo</string>
   <string name="field_card_number_title">Numero carta</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Numero di verifica</string>
+  <string name="field_card_cvv_title">Codice di verifica</string>
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">Codice PIN</string>
   <string name="field_card_pin_hint">123456</string>

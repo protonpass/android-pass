@@ -17,7 +17,7 @@
   <string name="bottomsheet_cancel_button">Cancelar</string>
   <string name="bottomsheet_move_to_trash">Mover para lixeira</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Abrir menu de ação do item</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menu de ação do item</string>
   <string name="action_upgrade_now">Fazer upgrade agora</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adicione seu primeiro item</string>
@@ -33,7 +33,7 @@
   <string name="field_note_hint">Adicionar nota</string>
   <string name="linked_apps_title">Aplicativos vinculados</string>
   <!-- Indicator that indicates lack of internet connectivity -->
-  <string name="indicator_no_network">Offline</string>
+  <string name="indicator_no_network">Off-line</string>
   <!-- Icon content description -->
   <string name="missing_app_icon_content_description">Ícone de aplicativo ausente</string>
   <string name="add_item_icon_content_description">Ícone de adicionar item</string>

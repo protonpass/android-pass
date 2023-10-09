@@ -9,7 +9,7 @@
   <string name="word_count">%s palavras</string>
   <string name="word_separator">Separador de palavras</string>
   <string name="bottomsheet_option_capital_letters">Letras maiúsculas (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Maiúsculas</string>
+  <string name="bottomsheet_option_capitalise">Capitalize</string>
   <string name="bottomsheet_option_include_numbers">Incluir números (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Hífens ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Espaços</string>

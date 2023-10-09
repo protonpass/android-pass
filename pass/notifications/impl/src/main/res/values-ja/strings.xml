@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="updates_notification_channel_name">更新情報</string>
+  <string name="autofill_notification_channel_name">自動入力</string>
+  <string name="autofill_notification_copy_to_clipboard_title">TOTP code</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP has been copied to clipboard</string>
+  <string name="updates_new_invite_received_title">招待状を受け取りました</string>
+  <string name="updates_new_invite_received_message">保管庫に招待されました。アプリを開いて招待を確認し、承諾してください。</string>
+</resources>

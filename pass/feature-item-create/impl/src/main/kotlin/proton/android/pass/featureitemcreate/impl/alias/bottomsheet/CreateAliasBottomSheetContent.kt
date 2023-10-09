@@ -212,7 +212,6 @@ fun CreateAliasBottomSheetContentPreview(
                     title = "some title",
                     prefix = "some alias",
                     note = "",
-                    mailboxTitle = "mailbox title",
                     aliasOptions = AliasOptionsUiModel(
                         suffixes = listOf(
                             AliasSuffixUiModel(

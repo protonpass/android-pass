@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Užijte si bezplatnou zkušební verzi</string>
+  <string name="trial_subtitle">Pro správu hesel na vyšší úrovni:</string>
+  <string name="trial_feature_1">20 trezorů</string>
+  <string name="trial_feature_2">Neomezený počet e-mailových aliasů</string>
+  <string name="trial_feature_3">Integrovaný ověřovací modul 2FA</string>
+  <string name="trial_feature_4">Vlastní pole</string>
+  <string name="trial_button_text">Navyšte tarif pro zachování těchto funkcí</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Do konce zkušebního období zbývá 1 den</item>
+    <item quantity="few">Do konce zkušebního období zbývají %d dny</item>
+    <item quantity="many">Do konce zkušebního období zbývá %d dnů</item>
+    <item quantity="other">Do konce zkušebního období zbývá %d dnů</item>
+  </plurals>
+  <string name="trial_learn_more">Více informací</string>
+</resources>

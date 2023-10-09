@@ -56,12 +56,11 @@
   <string name="credit_card_cardholder_field_name">Naam van de kaarthouder</string>
   <string name="credit_card_number_field_name">Kaartnummer</string>
   <string name="credit_card_cvv_field_name">Verificatienummer</string>
-  <string name="credit_card_pin_field_name">Pincode</string>
+  <string name="credit_card_pin_field_name">PIN-code</string>
   <string name="credit_card_expiration_date_field_name">Vervalt op</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Kaarthouder gekopieerd naar klembord</string>
   <string name="credit_card_number_copied_to_clipboard">Kaartnummer gekopieerd naar klembord</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Verificatienummer gekopieerd naar klembord</string>
-  <string name="credit_card_pin_copied_to_clipboard">Pincode gekopieerd naar klembord</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Verplaats naar prullenbak</string>
   <string name="migrate_item_detail_bottom_sheet">Verplaatsen naar andere kluis</string>

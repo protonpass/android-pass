@@ -56,12 +56,11 @@
   <string name="credit_card_cardholder_field_name">Kortholderens navn</string>
   <string name="credit_card_number_field_name">Kortnummer</string>
   <string name="credit_card_cvv_field_name">Verifikationsnummer</string>
-  <string name="credit_card_pin_field_name">PIN-nummer</string>
+  <string name="credit_card_pin_field_name">Pinkode</string>
   <string name="credit_card_expiration_date_field_name">Udløber</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Kortholder kopieret til udklipsholder</string>
   <string name="credit_card_number_copied_to_clipboard">Kortnummer kopieret til udklipsholder</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Verifikationsnummer kopieret til udklipsholder</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN kopieret til udklipsholder.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Flyt til papirkurv</string>
   <string name="migrate_item_detail_bottom_sheet">Flyt til en anden boks</string>

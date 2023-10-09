@@ -17,7 +17,7 @@
   <string name="bottomsheet_cancel_button">Cancelar</string>
   <string name="bottomsheet_move_to_trash">Mover a la papelera</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Abrir menú de acciones del elemento</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menú de acciones del elemento</string>
   <string name="action_upgrade_now">Mejorar ahora</string>
   <!-- Empty list -->
   <string name="empty_list_title">Añada su primer elemento</string>
@@ -65,7 +65,7 @@
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">¿Descartar cambios?</string>
-  <string name="confirm_close_dialog_message">Tiene cambios sin guardar. ¿En verdad desea descartarlos?</string>
+  <string name="confirm_close_dialog_message">Tiene cambios sin guardar. ¿Está seguro de que quiere descartarlos?</string>
   <string name="confirm_close_dialog_close_button">Descartar</string>
   <!-- Upgrade -->
   <string name="upgrade">Mejorar</string>

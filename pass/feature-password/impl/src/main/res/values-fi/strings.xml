@@ -9,7 +9,7 @@
   <string name="word_count">%s sanaa</string>
   <string name="word_separator">Sanojen erotin</string>
   <string name="bottomsheet_option_capital_letters">Isot kirjaimet (A-Z)</string>
-  <string name="bottomsheet_option_capitalise">Isot alkukirjaimet</string>
+  <string name="bottomsheet_option_capitalise">Isot kirjaimet</string>
   <string name="bottomsheet_option_include_numbers">Sisällytä numerot (0-9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Yhdysmerkki ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Välilyönti</string>

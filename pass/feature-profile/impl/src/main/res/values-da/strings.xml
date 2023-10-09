@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Bedøm app</string>
   <string name="profile_option_autofill">Autofyld</string>
   <string name="profile_option_autofill_subtitle">Udfyld automatisk dine brugernavne og adgangskoder.</string>
-  <string name="profile_option_fingerprint">Fingeraftryk</string>
-  <string name="profile_option_automatic_app_lock">Automatisk låsning af app</string>
-  <string name="profile_option_advanced">Avanceret</string>
   <string name="profile_error_biometry_failed_to_start">Kunne ikke starte den biometriske godkendelse</string>
   <string name="profile_error_biometry_failed_to_authenticate">Kunne ikke godkende</string>
   <string name="profile_fingerprint_lock_enabled">Oplåsning med fingeraftryk aktiveret</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Ingen</string>
   <string name="app_lock_config_biometric">Biometrisk</string>
   <string name="app_lock_config_pin_code">Pinkode</string>
-  <string name="app_lock_config_unlock_with">Lås op med</string>
   <string name="app_lock_config_app_lock_time">Automatisk lås</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Brug systemlås, når biometrien svigter</string>
   <string name="configure_pin_set_pin_code">Indstil pinkode</string>

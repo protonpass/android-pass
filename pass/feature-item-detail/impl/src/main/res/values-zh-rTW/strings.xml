@@ -3,7 +3,7 @@
   <string name="action_open">開啟</string>
   <string name="action_copy">複製</string>
   <!-- Detail -->
-  <string name="detail_init_error">無法初始化元素</string>
+  <string name="detail_init_error">Could not initialize the element</string>
   <string name="top_bar_edit_button_text">編輯</string>
   <!-- Alias details -->
   <string name="field_alias_title">別名地址</string>
@@ -55,12 +55,11 @@
   <string name="credit_card_cardholder_field_name">持卡人姓名</string>
   <string name="credit_card_number_field_name">卡號</string>
   <string name="credit_card_cvv_field_name">驗證碼</string>
-  <string name="credit_card_pin_field_name">個人識別號碼</string>
+  <string name="credit_card_pin_field_name">PIN code</string>
   <string name="credit_card_expiration_date_field_name">到期日</string>
   <string name="credit_card_cardholder_copied_to_clipboard">卡片資料已複製至剪貼簿</string>
   <string name="credit_card_number_copied_to_clipboard">卡片號碼已複製至剪貼簿</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">驗證碼已複製到剪貼簿</string>
-  <string name="credit_card_pin_copied_to_clipboard">個人識別號碼已複製到剪貼簿</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">移至垃圾桶</string>
   <string name="migrate_item_detail_bottom_sheet">移動到另一個保管庫</string>

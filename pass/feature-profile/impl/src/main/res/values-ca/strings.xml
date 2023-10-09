@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Valora l\'aplicació</string>
   <string name="profile_option_autofill">Emplenament automàtic</string>
   <string name="profile_option_autofill_subtitle">Ompliu automàticament els vostres noms d\'usuari i contrasenyes.</string>
-  <string name="profile_option_fingerprint">Empremta digital</string>
-  <string name="profile_option_automatic_app_lock">Bloqueig automàtic de l\'aplicació</string>
-  <string name="profile_option_advanced">Avançat</string>
   <string name="profile_error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
   <string name="profile_fingerprint_lock_enabled">S\'ha habilitat el desbloqueig per empremta digital</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Cap</string>
   <string name="app_lock_config_biometric">Biomètric</string>
   <string name="app_lock_config_pin_code">Codi PIN</string>
-  <string name="app_lock_config_unlock_with">Desbloqueja amb</string>
   <string name="app_lock_config_app_lock_time">Bloqueig automàtic</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Utilitzeu el bloqueig del sistema quan la característica biomètrica no funcioni.</string>
   <string name="configure_pin_set_pin_code">Establiu el codi PIN</string>

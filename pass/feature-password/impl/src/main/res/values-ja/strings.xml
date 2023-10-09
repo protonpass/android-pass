@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">コピーして閉じる</string>
+  <string name="password_copied_to_clipboard">パスワードをコピーしました</string>
+  <string name="bottomsheet_generate_password_title">パスワードを生成する</string>
+  <string name="password_type">種別</string>
+  <string name="special_characters">特殊文字 (!&amp;*)</string>
+  <string name="character_count">%s 文字</string>
+  <string name="word_count">%s 語</string>
+  <string name="word_separator">区切り文字</string>
+  <string name="bottomsheet_option_capital_letters">英文字の大文字 (A～Z)</string>
+  <string name="bottomsheet_option_capitalise">Capitalize</string>
+  <string name="bottomsheet_option_include_numbers">数字を含める (0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">ハイフン ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">スペース</string>
+  <string name="bottomsheet_option_word_separator_periods">ピリオド ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">カンマ ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">アンダースコア ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">数字</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">数字と記号</string>
+  <string name="regenerate_password_icon_content_description">パスワードの再生成ボタン</string>
+  <string name="password_mode_memorable">覚えやすいパスワード</string>
+  <string name="password_mode_random">ランダムなパスワード</string>
+  <string name="password_mode_icon">パスワードモードアイコン</string>
+  <string name="password_words_separator_icon">パスワード区切り文字</string>
+</resources>

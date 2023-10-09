@@ -9,7 +9,7 @@
   <string name="word_count">%s 個字</string>
   <string name="word_separator">單字分隔字元</string>
   <string name="bottomsheet_option_capital_letters">大寫字母(A–Z)</string>
-  <string name="bottomsheet_option_capitalise">大寫</string>
+  <string name="bottomsheet_option_capitalise">Capitalize</string>
   <string name="bottomsheet_option_include_numbers">包含數字(0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">連字號 ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">空格</string>

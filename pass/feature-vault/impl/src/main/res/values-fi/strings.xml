@@ -19,7 +19,7 @@
   <string name="vault_delete_dialog_cancel_action">Peruuta</string>
   <string name="vault_delete_dialog_delete_action">Poista</string>
   <string name="vault_leave_dialog_title">Poistu holvista</string>
-  <string name="vault_leave_dialog_body">Tämä poistaa pääsysi holviin __VAULT_NAME__ ja sen sisältöön. Oletko varma, että haluat poistua?</string>
+  <string name="vault_leave_dialog_body">Tämä mitätöi käyttöoikeutesi holviin __VAULT_NAME__ ja sen sisältöön. Haluatko varmasti poistua siitä?</string>
   <string name="vault_leave_dialog_cancel_action">Peruuta</string>
   <string name="vault_leave_dialog_leave_action">Poistu</string>
   <string name="bottomsheet_close_icon_content_description">Sulje holvin luonti</string>
@@ -34,8 +34,8 @@
   <string name="bottomsheet_share_vault">Jaa</string>
   <string name="bottomsheet_leave_vault">Poistu holvista</string>
   <string name="bottomsheet_view_members">Näytä jäsenet</string>
-  <string name="bottomsheet_manage_access">Hallinnoi pääsyä</string>
-  <string name="bottomsheet_select_vault_read_only">Vain lukuoikeus</string>
+  <string name="bottomsheet_manage_access">Hallitse käyttöoikeuksia</string>
+  <string name="bottomsheet_select_vault_read_only">Voit vain tarkastella</string>
   <string name="bottomsheet_select_vault_not_primary_vault">Voit luoda kohteita vain ensisijaiseen holviisi</string>
   <string name="vault_title">Holvi</string>
 </resources>

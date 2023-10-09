@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">Brankas Anda kosong</string>
   <string name="home_empty_vault_subtitle">Mulailah dengan membuat item pertama Anda.</string>
   <string name="home_empty_vault_create_login">Buat login</string>
-  <string name="home_empty_vault_create_alias">Buat alias Hide My Surel</string>
+  <string name="home_empty_vault_create_alias">Buat alias Hide-my-email</string>
   <string name="home_empty_vault_create_note">Buat catatan</string>
-  <string name="error_observing_items">Terdapat kesalahan dalam mengamati item</string>
-  <string name="error_observing_share">Terdapat kesalahan dalam mengamati share</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Terdapat kesalahan dalam memuat item</string>
   <string name="error_refreshing">Terjadi kesalahan saat memuat ulang</string>
   <string name="home_snackbar_login_moved_to_trash">Login dipindahkan ke sampah</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias dipindahkan ke sampah</string>
   <string name="home_snackbar_note_moved_to_trash">Catatan dipindahkan ke sampah</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kartu kredit dipindahkan ke tempat sampah</string>
-  <string name="home_snackbar_move_to_trash_error">Tidak dapat memindahkan ke tempat sampah</string>
+  <string name="home_snackbar_move_to_trash_error">Item tidak dapat dipindahkan ke sampah</string>
   <string name="home_autofill_banner_title">Nikmati keajaiban Isi Otomatis</string>
   <string name="home_autofill_banner_text">Satu ketukan saja dan—presto!—nama pengguna dan kata sandi Anda akan diisi secara instan.</string>
   <string name="home_autofill_banner_settings">Aktifkan Isi Otomatis ›</string>
@@ -39,7 +38,6 @@
   <string name="username_copied_to_clipboard">Nama pengguna disalin</string>
   <string name="password_copied_to_clipboard">Kata sandi disalin</string>
   <string name="credit_card_number_copied_to_clipboard">Nomor kartu kredit disalin</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN kartu kredit disalin</string>
   <string name="credit_card_cvv_copied_to_clipboard">CVV kartu kredit disalin</string>
   <string name="item_too_long_copied_to_clipboard">Konten terlalu panjang, sebagian disalin ke papan klip</string>
   <!-- Vault drawer -->

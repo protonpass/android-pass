@@ -16,7 +16,7 @@
   <string name="bottomsheet_cancel_button">Batalkan</string>
   <string name="bottomsheet_move_to_trash">Pindahkan ke sampah</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Buka menu tindakan item</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Buka menu tindakan item</string>
   <string name="action_upgrade_now">Tingkatkan sekarang</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tambahkan item pertama Anda</string>

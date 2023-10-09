@@ -60,7 +60,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">Nama pemegang kartu disalin ke papan klip</string>
   <string name="credit_card_number_copied_to_clipboard">Nomor kartu disalin ke papan klip</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Nomor verifikasi disalin ke papan klip</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN disalin ke papan klip</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Pindahkan ke sampah</string>
   <string name="migrate_item_detail_bottom_sheet">Pindahkan ke brankas lainnya</string>

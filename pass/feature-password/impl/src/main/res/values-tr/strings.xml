@@ -9,7 +9,7 @@
   <string name="word_count">%s sözcük</string>
   <string name="word_separator">Sözcük ayracı</string>
   <string name="bottomsheet_option_capital_letters">Büyük harfler (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Büyüt</string>
+  <string name="bottomsheet_option_capitalise">Harfleri büyüt</string>
   <string name="bottomsheet_option_include_numbers">Sayılar katılsın (0-9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Tire ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Boşluk</string>

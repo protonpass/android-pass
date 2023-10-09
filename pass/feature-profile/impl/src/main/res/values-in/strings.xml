@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Nilai aplikasi</string>
   <string name="profile_option_autofill">Isi otomatis</string>
   <string name="profile_option_autofill_subtitle">Isi nama pengguna dan kata sandi Anda secara otomatis.</string>
-  <string name="profile_option_fingerprint">Sidik jari</string>
-  <string name="profile_option_automatic_app_lock">Penguncian aplikasi otomatis</string>
-  <string name="profile_option_advanced">Lanjutan</string>
   <string name="profile_error_biometry_failed_to_start">Proses autentikasi biometrik tidak dapat dimulai</string>
   <string name="profile_error_biometry_failed_to_authenticate">Gagal mengautentikasi</string>
   <string name="profile_fingerprint_lock_enabled">Pembukaan kunci dengan sidik jari diaktifkan</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Tidak ada</string>
   <string name="app_lock_config_biometric">Biometrik</string>
   <string name="app_lock_config_pin_code">Kode PIN</string>
-  <string name="app_lock_config_unlock_with">Buka kunci dengan</string>
   <string name="app_lock_config_app_lock_time">Penguncian otomatis</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Gunakan kunci sistem ketika biometrik gagal</string>
   <string name="configure_pin_set_pin_code">Tetapkan kode PIN</string>

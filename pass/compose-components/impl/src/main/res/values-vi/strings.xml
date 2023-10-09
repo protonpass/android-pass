@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Tiêu đề (A-Z)</string>
+  <string name="sort_by_title_desc">Tiêu đề (Z-A)</string>
+  <string name="sort_by_creation_asc">Cũ nhất đến mới nhất</string>
+  <string name="sort_by_creation_desc">Mới nhất đến cũ nhất</string>
+  <string name="sort_by_modification_date">Gần đây nhất</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Tất cả</string>
+  <plurals name="item_list_header_results">
+    <item quantity="other">kết quả</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Xác nhận</string>
+  <string name="bottomsheet_cancel_button">Hủy</string>
+  <string name="bottomsheet_move_to_trash">Chuyển tới thùng rác</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu tùy chọn nội dung</string>
+  <string name="action_upgrade_now">Nâng cấp ngay</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Thêm nội dung đầu tiên của bạn</string>
+  <string name="empty_search_results_title">Không có kết quả được tìm thấy</string>
+  <string name="empty_list_open_extension">Mở trang web phần mở rộng</string>
+  <string name="empty_list_create_item_button">Tạo nội dung mới</string>
+  <!-- Field -->
+  <string name="field_title_title">Tiêu đề</string>
+  <string name="field_title_hint">Không có tiêu đề</string>
+  <string name="field_title_required">Tiêu đề bắt buộc</string>
+  <string name="small_cross_icon_content_description">Biểu tượng chữ thập nhỏ.</string>
+  <string name="field_note_title">Ghi chú</string>
+  <string name="field_note_hint">Thêm ghi chú</string>
+  <string name="linked_apps_title">Các ứng dụng liên kết</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Ngoại tuyến</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Thiếu biểu tượng ứng dụng</string>
+  <string name="add_item_icon_content_description">Thêm biểu tượng nội dung</string>
+  <string name="navigate_back_icon_content_description">Biểu tượng quay lại</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Kho lưu trữ</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Liệt kê nội dung</string>
+  <string name="bottom_bar_add_item_icon_content_description">Thêm nội dung</string>
+  <string name="bottom_bar_profile_icon_content_description">Hồ sơ</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Hôm nay</string>
+  <string name="most_recent_yesterday">Hôm qua</string>
+  <string name="most_recent_this_week">Tuần này</string>
+  <string name="most_recent_last_two_weeks">Hai tuần gần đây</string>
+  <string name="most_recent_last_30_days">30 ngày gần đây</string>
+  <string name="most_recent_last_60_days">60 ngày gần đây</string>
+  <string name="most_recent_last_90_days">90 ngày gần đây</string>
+  <string name="most_recent_within_the_last_year">Trong năm qua</string>
+  <string name="most_recent_more_than_1_year">Hơn 1 năm</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Biểu tượng tìm kiếm</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Biểu tượng tùy chọn</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="other">%d nội dung</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Hủy thay đổi?</string>
+  <string name="confirm_close_dialog_message">Bạn có các thay đổi chưa được lưu, bạn có muốn loại bỏ chúng không?</string>
+  <string name="confirm_close_dialog_close_button">Bỏ</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Nâng cấp</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Tùy chọn nâng cao</string>
+  <string name="hide_advanced_options">Ẩn tùy chọn nâng cao</string>
+</resources>

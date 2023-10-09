@@ -17,7 +17,7 @@
   <string name="bottomsheet_cancel_button">Peruuta</string>
   <string name="bottomsheet_move_to_trash">Siirrä roskakoriin</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Avaa kohteen toimintovalikko</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Avaa kohteen toimintovalikko</string>
   <string name="action_upgrade_now">Päivitä nyt</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
@@ -47,12 +47,12 @@
   <!-- List group by most recents -->
   <string name="most_recent_today">Tänään</string>
   <string name="most_recent_yesterday">Eilen</string>
-  <string name="most_recent_this_week">Viikon aikana</string>
-  <string name="most_recent_last_two_weeks">Kahden viikon aikana</string>
-  <string name="most_recent_last_30_days">30 päivän aikana</string>
-  <string name="most_recent_last_60_days">60 päivän aikana</string>
-  <string name="most_recent_last_90_days">90 päivän aikana</string>
-  <string name="most_recent_within_the_last_year">Vuoden aikana</string>
+  <string name="most_recent_this_week">Viimeisen 7 päivän sisällä</string>
+  <string name="most_recent_last_two_weeks">Viimeisen 14 päivän sisällä</string>
+  <string name="most_recent_last_30_days">Viimeisen 30 päivän sisällä</string>
+  <string name="most_recent_last_60_days">Viimeisen 60 päivän sisällä</string>
+  <string name="most_recent_last_90_days">Viimeisen 90 päivän sisällä</string>
+  <string name="most_recent_within_the_last_year">Viimeisen vuoden sisällä</string>
   <string name="most_recent_more_than_1_year">Yli vuosi sitten</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Hakukuvake</string>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="title_settings">Cài đặt</string>
+  <string name="settings_autofill_section_title">Tự động điền</string>
+  <string name="settings_autofill_preference_title">Tự động điền</string>
+  <string name="settings_autofill_preference_description">Để đăng nhập nhanh gọn lẹ, để Proton Pass điền các tên đăng nhập và mật khẩu của bạn.</string>
+  <string name="settings_authentication_section_title">Xác thực</string>
+  <string name="settings_authentication_preference_title">Mở khoá vân tay</string>
+  <string name="settings_authentication_preference_description_enabled">Quickly and securely open the app with your fingerprint.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">Bạn không thể dùng vân tay của mình để tương tác với ứng dụng vì không có vân tay nào được đăng ký trên thiết bị này.</string>
+  <string name="settings_appearance_preference_title">Chủ đề</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Theo hệ thống</string>
+  <string name="settings_appearance_preference_subtitle_light">Chế độ sáng</string>
+  <string name="settings_appearance_preference_subtitle_dark">Chế độ tối</string>
+  <string name="settings_fingerprint_lock_enabled">Đã bật mở khóa bằng vân tay</string>
+  <string name="settings_error_performing_operation">Lỗi thực hiện thao tác</string>
+  <string name="settings_option_clipboard">Bộ nhớ tạm</string>
+  <string name="settings_application_section_title">Ứng dụng</string>
+  <string name="settings_option_view_logs">Xem nhật kí</string>
+  <string name="settings_option_force_sync">Buộc đồng bộ hóa</string>
+  <string name="settings_about_section_title">Giới thiệu</string>
+  <string name="settings_option_privacy_policy">Chính sách riêng tư</string>
+  <string name="settings_option_terms_of_service">Điều khoản dịch vụ</string>
+  <string name="settings_primary_vault_section_title">Kho lưu trữ</string>
+  <string name="settings_primary_vault_vault_selector_title">Kho lưu trữ chính</string>
+  <string name="settings_primary_vault_section_subtitle">You can\'t delete the primary vault.</string>
+  <string name="settings_primary_vault_change_success">Kho lưu trữ chính đã thay đổi</string>
+  <string name="settings_primary_vault_change_error">Không thể thay đổi kho lưu trữ chính</string>
+  <string name="settings_privacy_section_title">Riêng tư</string>
+  <string name="settings_use_favicons_preference_title">Sử dụng biểu tượng trang web</string>
+  <string name="settings_use_favicons_preference_subtitle">Quyết định xem bạn có muốn xem các biểu tượng trang web trên các nội dung của mình không.</string>
+  <string name="settings_allow_screenshots_preference_title">Cho phép chụp màn hình</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Nếu bật, bạn sẽ có thể chụp màn hình ứng dụng này.</string>
+  <string name="settings_clear_icon_cache_success">Đã xóa bộ nhớ đệm biểu tượng</string>
+  <string name="settings_clear_icon_cache_error">Không thể xóa bộ nhớ đệm biểu tượng</string>
+  <string name="settings_share_telemetry">Chia sẻ dữ liệu sử dụng ẩn danh</string>
+  <string name="settings_share_crashes">Chia sẽ báo cáo dừng đột ngột ẩn danh</string>
+  <string name="settings_preference_updated">Tùy chọn của bạn đã được cập nhật</string>
+  <string name="view_logs_title">Xem nhật kí</string>
+  <string name="clipboard_bottomsheet_title">Bộ nhớ tạm</string>
+  <string name="clipboard_option_clear_clipboard_label">Xóa bộ nhớ tạm</string>
+  <string name="clipboard_option_copy_totp_code">Sao chép mã xác thực</string>
+  <string name="clipboard_option_copy_totp_code_hint">Tự động sao chép mã xác thực khi bật tự động điền.</string>
+  <string name="clipboard_option_clear_clipboard_never">Không bao giờ</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">After 1 minute</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">After 3 minutes</string>
+</resources>

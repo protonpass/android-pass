@@ -17,12 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="profile_option_fingerprint_subtitle">Ontgrendel Proton Pass met een aanraking.</string>
-  <string name="profile_option_fingerprint">Vingerafdruk</string>
-  <string name="profile_option_app_lock">Appvergrendeling</string>
   <string name="enter_your_pin_code">Voer uw pincode in</string>
   <string name="unlock">Ontgrendelen</string>
-  <string name="enter_pin">Pincode invoeren</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Onjuiste pincode. %d resterende poging.</item>
     <item quantity="other">Onjuiste pincode. %d resterende pogingen.</item>
@@ -38,7 +34,6 @@
   <string name="auth_error_verifying_password">Fout bij het verifiëren van uw wachtwoord</string>
   <string name="auth_error_empty_password">Wachtwoord kan niet leeg zijn</string>
   <string name="auth_error_pin_cannot_be_empty">Pincode mag niet leeg zijn</string>
-  <string name="auth_error_pin_too_short">De pincode moet minimaal 4 cijfers bevatten</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Incorrect wachtwoord. %d resterende poging</item>
     <item quantity="other">Incorrect wachtwoord. %d resterende pogingen</item>

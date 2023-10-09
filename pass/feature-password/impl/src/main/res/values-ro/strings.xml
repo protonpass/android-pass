@@ -9,7 +9,7 @@
   <string name="word_count">%s cuvinte</string>
   <string name="word_separator">Separator cuvinte</string>
   <string name="bottomsheet_option_capital_letters">Majuscule (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Scriere cu majuscule</string>
+  <string name="bottomsheet_option_capitalise">Litere mari</string>
   <string name="bottomsheet_option_include_numbers">Includere cifre (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Cratimă ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Spații</string>

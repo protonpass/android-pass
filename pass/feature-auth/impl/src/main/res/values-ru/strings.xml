@@ -17,12 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="profile_option_fingerprint_subtitle">Разблокируйте Proton Pass прикосновением.</string>
-  <string name="profile_option_fingerprint">Fingerprint</string>
-  <string name="profile_option_app_lock">Блокировка приложения</string>
   <string name="enter_your_pin_code">Введите PIN-код.</string>
   <string name="unlock">Разблокировать</string>
-  <string name="enter_pin">Введите PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Неправильный PIN-код. Осталась %d попытка.</item>
     <item quantity="few">Неправильный PIN-код. Осталось %d попытки.</item>
@@ -40,7 +36,6 @@
   <string name="auth_error_verifying_password">Возникла ошибка при проверке вашего пароля</string>
   <string name="auth_error_empty_password">Пароль не может быть пустым</string>
   <string name="auth_error_pin_cannot_be_empty">Пин-код не может быть пустым</string>
-  <string name="auth_error_pin_too_short">Пин-код должен состоять хотя бы из четырех цифр</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Неправильный пароль. Осталась %d попытка</item>
     <item quantity="few">Неправильный пароль. Осталось %d попытки</item>

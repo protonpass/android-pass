@@ -6,10 +6,10 @@
   <string name="settings_autofill_preference_description">已快速更容易登入，使用Proton Pass填入使用者名稱和密碼。</string>
   <string name="settings_authentication_section_title">驗證</string>
   <string name="settings_authentication_preference_title">指紋解鎖</string>
-  <string name="settings_authentication_preference_description_enabled">需要更快和安全的指紋驗證</string>
+  <string name="settings_authentication_preference_description_enabled">Quickly and securely open the app with your fingerprint.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">您無法要求指紋驗證因為此裝置無驗證系統</string>
   <string name="settings_appearance_preference_title">主題</string>
-  <string name="settings_appearance_preference_subtitle_match_system">匹配系統</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">匹配系統</string>
   <string name="settings_appearance_preference_subtitle_light">淺色模式</string>
   <string name="settings_appearance_preference_subtitle_dark">深色模式</string>
   <string name="settings_fingerprint_lock_enabled">啟用指紋解鎖</string>
@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">服務條款</string>
   <string name="settings_primary_vault_section_title">保管庫</string>
   <string name="settings_primary_vault_vault_selector_title">主要的保管庫</string>
-  <string name="settings_primary_vault_section_subtitle">您無法刪除主要保管庫</string>
+  <string name="settings_primary_vault_section_subtitle">You can\'t delete the primary vault.</string>
   <string name="settings_primary_vault_change_success">主要的保管庫已變更</string>
   <string name="settings_primary_vault_change_error">無法變更主要保管庫</string>
   <string name="settings_privacy_section_title">隱私</string>
@@ -42,6 +42,6 @@
   <string name="clipboard_option_copy_totp_code">複製驗證代碼</string>
   <string name="clipboard_option_copy_totp_code_hint">於使用自動填入時自動複製驗證代碼</string>
   <string name="clipboard_option_clear_clipboard_never">從不</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">60秒後</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">180秒後</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">After 1 minute</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">After 3 minutes</string>
 </resources>

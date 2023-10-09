@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">続く</string>
+  <string name="sharing_can_view">閲覧可能</string>
+  <string name="sharing_can_edit">編集することができます</string>
+  <string name="sharing_can_manage">管理できる</string>
+  <string name="sharing_can_view_description">この 保管庫 内のアイテムを表示できます。</string>
+  <string name="sharing_can_edit_description">この 保管庫 内のアイテムを作成、編集、削除、エクスポートできます。</string>
+  <string name="sharing_can_manage_description">このボールトへのアクセスを許可および取り消しできます。</string>
+  <plurals name="sharing_item_count">
+    <item quantity="other">%d 個</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="other">%d メンバー</item>
+  </plurals>
+  <string name="share_with_title">と共有する</string>
+  <string name="share_with_subtitle">このユーザーは、\'%s\' ボ保管庫に参加するための招待状を受け取ります。</string>
+  <string name="share_with_email_hint">メールアドレス</string>
+  <string name="share_with_email_error">無効なメールアドレス</string>
+  <string name="share_permissions_title">権限を設定する</string>
+  <string name="share_permissions_subtitle">このユーザーが \'%s\' 保管庫に参加するときに得られるアクセス レベルを選択します。</string>
+  <string name="sharing_invitation_from">%s からの招待</string>
+  <string name="sharing_join_shared_vault">参加と同期</string>
+  <string name="sharing_reject_invitation">招待を拒否する</string>
+  <string name="sharing_snackbar_get_invite_error">招待状が届かない</string>
+  <string name="sharing_snackbar_invite_accepted">招待を受ける</string>
+  <string name="sharing_snackbar_invite_accept_error">招待の受け入れエラー</string>
+  <string name="sharing_snackbar_invite_rejected">招待を拒否</string>
+  <string name="sharing_snackbar_invite_reject_error">招待の拒否エラー</string>
+  <string name="sharing_snackbar_vault_not_found">保管庫が見つかりません</string>
+  <string name="sharing_snackbar_invite_sent_success">招待状送付</string>
+  <string name="sharing_snackbar_invite_sent_error">招待状を送信できませんでした</string>
+  <string name="sharing_snackbar_get_vault_members_error">保管庫メンバーを取得できませんでした</string>
+  <string name="sharing_snackbar_change_permission_success">権限の変更</string>
+  <string name="sharing_snackbar_change_permission_error">権限を変更できませんでした</string>
+  <string name="sharing_snackbar_remove_member_success">メンバーが保管庫から削除されました</string>
+  <string name="sharing_snackbar_remove_member_error">保管庫から削除できませんでした</string>
+  <string name="share_summary_title">概要</string>
+  <string name="share_summary_subtitle">%1$s を %2$s に招待しようとしています。 彼らは %3$s にアクセスできるようになり、この 保管庫 で %4$s できるようになります。</string>
+  <string name="share_summary_vault">%s 保管庫</string>
+  <string name="share_summary_view_items">アイテムのみを表示する</string>
+  <string name="share_summary_create_items">アイテムを作成する</string>
+  <string name="share_summary_manage_vault">管理</string>
+  <string name="share_summary_share_vault">保管庫を共有する</string>
+  <string name="share_summary_email_title">ユーザー</string>
+  <string name="share_summary_vault_title">保管庫</string>
+  <string name="share_summary_permissions_title">権限</string>
+  <string name="share_manage_vault_share_with_more_people">より多くの人たちと共有する</string>
+  <string name="share_manage_vault_item_count">%d 個のアイテム</string>
+  <string name="share_manage_vault_invite_pending">保留中の招待</string>
+  <string name="share_manage_vault_current_user_indicator">あなた</string>
+  <string name="share_role_can_view">閲覧可能</string>
+  <string name="share_role_can_edit">編集可能</string>
+  <string name="share_role_admin">管理者</string>
+  <string name="share_role_owner">所有者</string>
+  <string name="sharing_bottomsheet_transfer_ownership">所有権の移転</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">最後に所有していたボールトを譲渡することはできません。</string>
+  <string name="sharing_bottomsheet_remove_access">アクセス権の削除</string>
+  <string name="sharing_bottomsheet_resend_invite">招待を再送信する</string>
+  <string name="sharing_bottomsheet_cancel_invite">招待をキャンセルする</string>
+  <string name="sharing_transfer_ownership_confirm_title">所有権の移転</string>
+  <string name="sharing_transfer_ownership_confirm_message">所有権を %s に譲渡してもよろしいですか?</string>
+  <string name="sharing_snackbar_cancel_invite_success">招待がキャンセルされました</string>
+  <string name="sharing_snackbar_cancel_invite_error">招待のキャンセル中にエラーが発生しました</string>
+  <string name="sharing_snackbar_resend_invite_success">招待状再送</string>
+  <string name="sharing_snackbar_resend_invite_error">招待状の再送エラー</string>
+  <string name="sharing_snackbar_too_many_invites_sent">アドレスは何度も招待されている</string>
+  <string name="sharing_snackbar_transfer_ownership_success">所有権移転</string>
+  <string name="sharing_snackbar_transfer_ownership_error">所有権移転エラー</string>
+</resources>

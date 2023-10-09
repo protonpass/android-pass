@@ -312,7 +312,6 @@ internal class CreateLoginViewModelTest {
             title = TestUtils.randomString(),
             prefix = TestUtils.randomString(),
             note = TestUtils.randomString(),
-            mailboxTitle = TestUtils.randomString(),
             aliasOptions = AliasOptionsUiModel(
                 suffixes = listOf(suffix),
                 mailboxes = listOf(mailbox)

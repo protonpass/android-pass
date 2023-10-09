@@ -38,9 +38,10 @@ data class ItemWithTotp(
 interface LocalItemDataSource {
     suspend fun upsertItem(item: ItemEntity)
     suspend fun upsertItems(items: List<ItemEntity>)
-    fun observeItemsForShare(
+
+    fun observeItemsForShares(
         userId: UserId,
-        shareId: ShareId,
+        shareIds: List<ShareId>,
         itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>>

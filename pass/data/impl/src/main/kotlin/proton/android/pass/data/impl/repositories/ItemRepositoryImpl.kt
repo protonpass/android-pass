@@ -252,9 +252,15 @@ class ItemRepositoryImpl @Inject constructor(
         itemTypeFilter: ItemTypeFilter
     ): Flow<List<Item>> =
         when (shareSelection) {
-            is ShareSelection.Share -> localItemDataSource.observeItemsForShare(
+            is ShareSelection.Share -> localItemDataSource.observeItemsForShares(
                 userId = userId,
-                shareId = shareSelection.shareId,
+                shareIds = listOf(shareSelection.shareId),
+                itemState = itemState,
+                filter = itemTypeFilter
+            )
+            is ShareSelection.Shares -> localItemDataSource.observeItemsForShares(
+                userId = userId,
+                shareIds = shareSelection.shareIds,
                 itemState = itemState,
                 filter = itemTypeFilter
             )
@@ -583,9 +589,9 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun migrateItems(userId: UserId, source: ShareId, destination: ShareId) {
-        val items = localItemDataSource.observeItemsForShare(
+        val items = localItemDataSource.observeItemsForShares(
             userId = userId,
-            shareId = source,
+            shareIds = listOf(source),
             itemState = ItemState.Active,
             filter = ItemTypeFilter.All
         ).first()

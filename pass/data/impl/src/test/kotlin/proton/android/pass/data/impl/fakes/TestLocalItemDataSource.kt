@@ -63,9 +63,9 @@ class TestLocalItemDataSource : LocalItemDataSource {
         memory.addAll(items)
     }
 
-    override fun observeItemsForShare(
+    override fun observeItemsForShares(
         userId: UserId,
-        shareId: ShareId,
+        shareIds: List<ShareId>,
         itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> = flowOf(memory)

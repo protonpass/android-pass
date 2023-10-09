@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="enter_your_pin_code">PIN 코드를 입력하세요</string>
+  <string name="unlock">잠금 해제</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="other">잘못된 PIN입니다. %d회 남았습니다.</item>
+  </plurals>
+  <string name="auth_unlock_app_title">Proton Pass 잠금 해제</string>
+  <string name="auth_unlock_app_subtitle">%s의 마스터 비밀번호 입력</string>
+  <string name="auth_master_password_label">마스터 비밀번호</string>
+  <string name="auth_action_reveal_password">마스터 비밀번호 보이기</string>
+  <string name="auth_action_conceal_password">마스터 비밀번호 숨기기</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">대신 PIN 입력</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">대신 지문 인식 사용</string>
+  <string name="auth_unlock_button">잠금 해제</string>
+  <string name="auth_error_verifying_password">비밀번호를 확인하는 데 오류가 발생했습니다</string>
+  <string name="auth_error_empty_password">비밀번호는 비울 수 없습니다</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN은 비울 수 없습니다</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="other">잘못된 비밀번호입니다. %d회 남았습니다</item>
+  </plurals>
+</resources>

@@ -3,7 +3,7 @@
   <string name="action_open">Obre</string>
   <string name="action_copy">Copia</string>
   <!-- Detail -->
-  <string name="detail_init_error">No s\'ha pogut inicialitzar l\'element</string>
+  <string name="detail_init_error">No s\'ha pogut inicialitzar l\'element.</string>
   <string name="top_bar_edit_button_text">Edita</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adreça d\'àlies</string>
@@ -13,7 +13,7 @@
   <!-- Note details -->
   <string name="field_detail_note_title">Nota</string>
   <string name="note_detail_copy_note_to_clipboard">Copia la nota</string>
-  <string name="note_copied_to_clipboard">Note copied to clipboard</string>
+  <string name="note_copied_to_clipboard">S\'ha copiat la nota al porta-retalls</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">S\'ha copiat el nom d\'usuari</string>
   <string name="password_copied_to_clipboard">S\'ha copiat la contrasenya</string>
@@ -56,12 +56,11 @@
   <string name="credit_card_cardholder_field_name">Nom del titular de la targeta</string>
   <string name="credit_card_number_field_name">Número de la targeta</string>
   <string name="credit_card_cvv_field_name">Número de verificació</string>
-  <string name="credit_card_pin_field_name">Code PIN</string>
+  <string name="credit_card_pin_field_name">Codi PIN</string>
   <string name="credit_card_expiration_date_field_name">Caduca el</string>
   <string name="credit_card_cardholder_copied_to_clipboard">S\'ha copiat el titular de la targeta al porta-retalls</string>
   <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta al porta-retalls</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">S\'ha copiat el número de verificació al porta-retalls</string>
-  <string name="credit_card_pin_copied_to_clipboard">S\'ha copiat el PIN al porta-retalls</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mou a la paperera</string>
   <string name="migrate_item_detail_bottom_sheet">Mou a una altra caixa forta</string>

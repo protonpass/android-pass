@@ -17,7 +17,7 @@
   <string name="bottomsheet_cancel_button">Cancel·la</string>
   <string name="bottomsheet_move_to_trash">Mou a la paperera</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Obre el menú d\'acció de l\'element</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Obre el menú d\'acció de l\'element</string>
   <string name="action_upgrade_now">Millora ara</string>
   <!-- Empty list -->
   <string name="empty_list_title">Afegeix el primer element</string>

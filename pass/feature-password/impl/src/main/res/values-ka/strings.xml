@@ -9,7 +9,7 @@
   <string name="word_count">%s სიტყვა</string>
   <string name="word_separator">სიტყვების განმაცალკევებელი</string>
   <string name="bottomsheet_option_capital_letters">მაღალი რეგისტრის სიმბოლოები (A-Z)</string>
-  <string name="bottomsheet_option_capitalise">ზედა რეგისტრში გადაყვანა</string>
+  <string name="bottomsheet_option_capitalise">მაღალ რეგისტრში</string>
   <string name="bottomsheet_option_include_numbers">რიცხვების ჩათვლით (0-9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">დეფისები ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">ადგილები</string>

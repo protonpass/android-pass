@@ -9,11 +9,11 @@
   <string name="action_note">Catatan</string>
   <string name="action_credit_card">Kartu kredit</string>
   <string name="action_password">Kata sandi</string>
-  <string name="item_type_login_description">Tambahkan rincian login untuk aplikasi atau situs</string>
-  <string name="item_type_alias_description">Dapatkan alamat surel samaran untuk digunakan pada aplikasi baru</string>
-  <string name="item_type_note_description">Tulis PIN, kode, atau catatan untuk diri Anda sendiri</string>
-  <string name="item_type_credit_card_description">Simpan informasi pembayaran Anda dengan aman</string>
-  <string name="item_type_password_description">Hasilkan kata sandi yang aman</string>
+  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Tambahkan rincian login untuk aplikasi atau situs</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Dapatkan alamat surel samaran untuk digunakan pada aplikasi baru</string>
+  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Tulis PIN, kode, atau catatan untuk diri Anda sendiri</string>
+  <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Simpan informasi pembayaran Anda dengan aman</string>
+  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Hasilkan kata sandi yang aman</string>
   <!-- Create Login -->
   <string name="title_create_login">Buat login</string>
   <string name="field_username_title">Nama pengguna atau alamat surel</string>
@@ -24,12 +24,12 @@
   <string name="field_website_address_invalid">URL tidak valid</string>
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Tambah</string>
-  <string name="sticky_button_generate_password">Buat kata sandi baru</string>
-  <string name="sticky_button_create_alias">Hide-my-surel</string>
-  <string name="sticky_button_use_account_email">Gunakan %s</string>
+  <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Buat kata sandi baru</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide my email</string>
+  <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Gunakan %s</string>
   <string name="create_login_item_creation_error">Tidak dapat menghasilkan Login</string>
   <string name="create_login_item_update_error">Login tidak dapat diperbarui</string>
-  <string name="create_login_init_error">Login tidak dapat dimulai</string>
+  <string name="create_login_init_error">Login tidak dapat dinisialisasi</string>
   <string name="create_login_invalid_totp">Konten 2FA tidak valid</string>
   <string name="login_created">Login dihasilkan</string>
   <string name="bottomsheet_modify_alias_title">Sesuaikan alias</string>
@@ -40,7 +40,7 @@
   <string name="bottomsheet_custom_field_option_edit">Sunting judul</string>
   <string name="bottomsheet_custom_field_option_remove">Hapus kolom</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Hapus kolom khusus</string>
-  <string name="create_login_add_custom_field_button">Tambahkan lagi</string>
+  <string name="create_login_add_custom_field_button">Tambah kolom lainnya</string>
   <string name="custom_field_hidden_placeholder">Konten tersembunyi Anda</string>
   <string name="custom_field_hidden_icon_content_description">Ikon kolom khusus tersembunyi</string>
   <string name="custom_field_text_placeholder">Konten Anda</string>
@@ -52,11 +52,8 @@
   <string name="title_create_note">Buat catatan</string>
   <string name="create_note_item_creation_error">Catatan tidak dapat dibuat</string>
   <string name="create_note_item_update_error">Catatan tidak dapat diperbarui</string>
-  <string name="create_note_init_error">Catatan tidak dapat dimulai</string>
-  <string name="create_note_empty_share_id">ID pembagian tidak boleh kosong</string>
+  <string name="create_note_init_error">Note tidak dapat diinisialisasi</string>
   <string name="note_created">Catatan dibuat</string>
-  <string name="edit_note_snackbar_note_moved_to_trash">Catatan dipindahkan ke sampah</string>
-  <string name="edit_note_snackbar_note_moved_to_trash_error">Catatan tidak dapat dihapus</string>
   <!-- Create Alias -->
   <string name="title_create_alias">Buat alias</string>
   <string name="field_alias_title">Alamat alias</string>
@@ -73,10 +70,8 @@
   <string name="create_alias_email_not_validated_error">Anda harus memverifikasi alamat surel Anda terlebih dahulu sebelum membuat alias</string>
   <string name="alias_rate_limited">Terlalu banyak alias yang dibuat baru-baru ini</string>
   <string name="create_alias_item_update_error">Alias tidak dapat diperbarui</string>
-  <string name="create_alias_init_error">Alias tidak dapat dimulai</string>
-  <string name="create_alias_empty_share_id">Id share tidak boleh kosong</string>
+  <string name="create_alias_init_error">Alias tidak dapat diinisialisasi</string>
   <string name="alias_created">Alias dibuat</string>
-  <string name="alias_moved_to_trash">Alias dipindahkan ke sampah</string>
   <string name="cannot_retrieve_alias_options">Tidak dapat menerima opsi alias</string>
   <string name="alias_mailbox_dialog_title">Teruskan ke</string>
   <!-- Create note -->

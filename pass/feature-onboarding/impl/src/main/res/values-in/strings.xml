@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Atur Proton Pass untuk membuka kunci dengan sidik jari Anda sehingga hanya Anda yang memiliki akses.</string>
   <string name="on_boarding_fingerprint_title">Lindungi data Anda yang paling sensitif</string>
   <string name="on_boarding_fingerprint_button">Aktifkan kunci sidik jari</string>
-  <string name="on_boarding_last_page_content">Berhenti membagikan alamat surel asli Anda. Sebaliknya, sembunyikan dengan alias surel—sebuah fitur eksklusif dalam Proton Pass.</string>
+  <string name="on_boarding_last_page_content">Berhentilah membagikan alamat surel asli Anda. Sebaliknya, sembunyikan alamat ini dengan alias surel—fitur eksklusif yang tersedia dengan Proton Pass.</string>
   <string name="on_boarding_last_page_title">Kendalikan apa-apa saja yang diterima oleh kotak masuk Anda</string>
   <string name="on_boarding_last_page_button">Mulai menggunakan Proton Pass</string>
   <string name="on_boarding_skip">Tidak sekarang</string>

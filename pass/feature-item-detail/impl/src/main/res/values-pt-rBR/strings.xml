@@ -61,7 +61,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">Nome do titular do cartão copiado para a área de transferência</string>
   <string name="credit_card_number_copied_to_clipboard">Número do cartão copiado para a área de transferência</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Número de verificação copiado para a área de transferência</string>
-  <string name="credit_card_pin_copied_to_clipboard">O código PIN foi copiado para a área de transferência.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mover para a lixeira</string>
   <string name="migrate_item_detail_bottom_sheet">Mover para outro cofre</string>

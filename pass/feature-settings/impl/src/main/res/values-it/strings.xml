@@ -6,10 +6,10 @@
   <string name="settings_autofill_preference_description">Per accedere in maniera più semplice e veloce, permetti a Proton Pass di compilare i tuoi nomi utente e le tue password.</string>
   <string name="settings_authentication_section_title">Autenticazione</string>
   <string name="settings_authentication_preference_title">Sblocco con impronta</string>
-  <string name="settings_authentication_preference_description_enabled">Richiede Apertura rapida e sicura dell\'applicazione tramite impronta.</string>
+  <string name="settings_authentication_preference_description_enabled">Apri l\'app in modo rapido e sicuro con la tua impronta digitale.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Non puoi richiedere l\'utilizzo della tua impronta digitale per interagire con l\'app poiché non ci sono impronte registrate su questo dispositivo.</string>
   <string name="settings_appearance_preference_title">Tema</string>
-  <string name="settings_appearance_preference_subtitle_match_system">Impostazione predefinita di sistema</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Impostazione predefinita di sistema</string>
   <string name="settings_appearance_preference_subtitle_light">Modalità chiara</string>
   <string name="settings_appearance_preference_subtitle_dark">Modalità scura</string>
   <string name="settings_fingerprint_lock_enabled">Sblocco tramite impronta abilitato</string>
@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">Termini di servizio</string>
   <string name="settings_primary_vault_section_title">Casseforti</string>
   <string name="settings_primary_vault_vault_selector_title">Cassaforte principale</string>
-  <string name="settings_primary_vault_section_subtitle">Non puoi eliminare una cassaforte principale.</string>
+  <string name="settings_primary_vault_section_subtitle">Non puoi eliminare la cassaforte principale.</string>
   <string name="settings_primary_vault_change_success">La cassaforte principale è stata cambiata</string>
   <string name="settings_primary_vault_change_error">Impossibile cambiare la cassaforte principale</string>
   <string name="settings_privacy_section_title">Privacy</string>
@@ -42,6 +42,6 @@
   <string name="clipboard_option_copy_totp_code">Copia codici di autenticazione</string>
   <string name="clipboard_option_copy_totp_code_hint">Copia automaticamente i codici di autenticazione quanto utilizzi la compilazione automatica.</string>
   <string name="clipboard_option_clear_clipboard_never">Mai</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">Dopo 60 secondi</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">Dopo 180 secondi</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Dopo 1 minuto</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Dopo 3 minuti</string>
 </resources>

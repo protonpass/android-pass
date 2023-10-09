@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">タイトル (A-Z)</string>
+  <string name="sort_by_title_desc">タイトル (Z-A)</string>
+  <string name="sort_by_creation_asc">古いものから新しいものへ</string>
+  <string name="sort_by_creation_desc">新しいものから古いものへ</string>
+  <string name="sort_by_modification_date">最も最近のもの</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">すべて</string>
+  <plurals name="item_list_header_results">
+    <item quantity="other">結果</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">確認</string>
+  <string name="bottomsheet_cancel_button">キャンセル</string>
+  <string name="bottomsheet_move_to_trash">ごみ箱に移動</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">アイテムアクションメニューを開く</string>
+  <string name="action_upgrade_now">今すぐアップグレード</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">最初の項目を追加</string>
+  <string name="empty_search_results_title">結果が見つかりません</string>
+  <string name="empty_list_open_extension">Web 拡張機能にアクセス</string>
+  <string name="empty_list_create_item_button">新しいアイテムを作成する</string>
+  <!-- Field -->
+  <string name="field_title_title">タイトル</string>
+  <string name="field_title_hint">タイトルなし</string>
+  <string name="field_title_required">タイトルは必須です</string>
+  <string name="small_cross_icon_content_description">小さな十字アイコン</string>
+  <string name="field_note_title">メモ</string>
+  <string name="field_note_hint">メモを追加</string>
+  <string name="linked_apps_title">リンクされたアプリ</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">オフライン</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">アプリのアイコンが見つかりませんでした</string>
+  <string name="add_item_icon_content_description">項目のアイコンを追加</string>
+  <string name="navigate_back_icon_content_description">戻るアイコン</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">保管庫</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">リスト項目</string>
+  <string name="bottom_bar_add_item_icon_content_description">項目を追加</string>
+  <string name="bottom_bar_profile_icon_content_description">プロファイル</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">今日</string>
+  <string name="most_recent_yesterday">昨日</string>
+  <string name="most_recent_this_week">今週</string>
+  <string name="most_recent_last_two_weeks">過去 2 週間</string>
+  <string name="most_recent_last_30_days">過去30日間</string>
+  <string name="most_recent_last_60_days">過去 60 日間</string>
+  <string name="most_recent_last_90_days">過去 90 日間</string>
+  <string name="most_recent_within_the_last_year">過去 1 年以内</string>
+  <string name="most_recent_more_than_1_year">1年以上</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">検索アイコン</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">設定アイコン</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="other">%d 項目</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">変更を破棄しますか?</string>
+  <string name="confirm_close_dialog_message">保存されていない変更がありますが、本当に破棄してよろしいですか?</string>
+  <string name="confirm_close_dialog_close_button">破棄</string>
+  <!-- Upgrade -->
+  <string name="upgrade">アップグレード</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">詳細設定</string>
+  <string name="hide_advanced_options">詳細設定を非表示</string>
+</resources>

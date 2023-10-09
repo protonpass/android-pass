@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Tài khoản</string>
+  <string name="account_username_label">Tên người dùng</string>
+  <string name="account_subscription_label">Gói đăng ký</string>
+  <string name="account_permanently_delete_warning">Điều này sẽ xóa vĩnh viễn tài khoản của bạn và tất cả dữ liệu của nó. Bạn sẽ không thể kích hoạt lại tài khoản này.</string>
+  <string name="account_delete_account">Xóa tài khoản</string>
+  <string name="account_delete_account_icon_content_description">Nút xóa tài khoản</string>
+  <string name="account_sign_out">Đăng xuất</string>
+  <string name="account_sign_out_icon_content_description">Nút đăng xuất</string>
+  <string name="account_manage_subscription">Quản lý gói đăng ký</string>
+  <string name="account_get_user_info_error">Không thể lấy thông tin người dùng</string>
+  <string name="manage_subscription_icon_content_description">Nút quản lý gói đăng ký</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Đăng xuất?</string>
+  <string name="alert_confirm_sign_out_message">Bạn có chắc muốn đăng xuất không?</string>
+</resources>

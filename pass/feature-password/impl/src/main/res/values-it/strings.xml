@@ -9,7 +9,7 @@
   <string name="word_count">%s parole</string>
   <string name="word_separator">Separatore parole</string>
   <string name="bottomsheet_option_capital_letters">Lettere maiuscole (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Maiuscole</string>
+  <string name="bottomsheet_option_capitalise">Maiuscolo</string>
   <string name="bottomsheet_option_include_numbers">Include numeri (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Trattini ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Spazi</string>

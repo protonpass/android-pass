@@ -19,7 +19,7 @@
   <string name="bottomsheet_cancel_button">Anuluj</string>
   <string name="bottomsheet_move_to_trash">Przenieś do Kosza</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Otwórz menu akcji elementu</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otwórz menu akcji elementu</string>
   <string name="action_upgrade_now">Ulepsz teraz</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodaj pierwszy element</string>

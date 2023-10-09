@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Налаштуйте Proton Pass на розблокування за допомогою відбитка пальця, щоб лише ви мали доступ.</string>
   <string name="on_boarding_fingerprint_title">Захистіть свої найвразливіші дані</string>
   <string name="on_boarding_fingerprint_button">Увімкніть розблокування відбитком пальця</string>
-  <string name="on_boarding_last_page_content">Припиніть повідомляти свою справжню електронну адресу. Натомість приховайте її за допомогою псевдонімів електронної пошти — це ексклюзив Proton Pass.</string>
+  <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead, hide it with email aliases—a Proton Pass exclusive.</string>
   <string name="on_boarding_last_page_title">Контролюйте, що потрапляє до вашої поштової скриньки.</string>
   <string name="on_boarding_last_page_button">Почніть користуватися Proton Pass</string>
   <string name="on_boarding_skip">Не зараз</string>

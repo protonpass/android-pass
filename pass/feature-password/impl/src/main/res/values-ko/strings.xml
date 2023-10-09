@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">복사 및 닫기</string>
+  <string name="password_copied_to_clipboard">비밀번호 복사됨</string>
+  <string name="bottomsheet_generate_password_title">비밀번호 생성</string>
+  <string name="password_type">유형</string>
+  <string name="special_characters">특수 문자 (!&amp;*)</string>
+  <string name="character_count">%s글자</string>
+  <string name="word_count">%s단어</string>
+  <string name="word_separator">Word Separator</string>
+  <string name="bottomsheet_option_capital_letters">대문자 알파벳 (A-Z)</string>
+  <string name="bottomsheet_option_capitalise">대문자로</string>
+  <string name="bottomsheet_option_include_numbers">숫자 포함 (0~9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">하이픈 ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">공백</string>
+  <string name="bottomsheet_option_word_separator_periods">구두점 ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">콤마 ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">밑줄 표시 (  _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">숫자</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">숫자 및 기호</string>
+  <string name="regenerate_password_icon_content_description">비밀번호 버튼 재생성</string>
+  <string name="password_mode_memorable">기억할 만한 비밀번호</string>
+  <string name="password_mode_random">랜덤 비밀번호</string>
+  <string name="password_mode_icon">비밀번호 모드 아이콘</string>
+  <string name="password_words_separator_icon">비밀번호 단어 구분 기호</string>
+</resources>

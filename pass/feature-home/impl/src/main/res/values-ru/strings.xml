@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">Ваше хранилище пусто</string>
   <string name="home_empty_vault_subtitle">Начните с создания первого элемента.</string>
   <string name="home_empty_vault_create_login">Создать логин</string>
-  <string name="home_empty_vault_create_alias">Создать псевдоним Hide My Email</string>
+  <string name="home_empty_vault_create_alias">Создать псевдоним hide-my-email</string>
   <string name="home_empty_vault_create_note">Создать заметку</string>
-  <string name="error_observing_items">Ошибка наблюдения за элементами</string>
-  <string name="error_observing_share">Ошибка наблюдения за долей</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Ошибка загрузки событий</string>
   <string name="error_refreshing">Ошибка выполнения обновления</string>
   <string name="home_snackbar_login_moved_to_trash">Логин перемещён в корзину</string>
   <string name="home_snackbar_alias_moved_to_trash">Псевдоним перемещен в корзину</string>
   <string name="home_snackbar_note_moved_to_trash">Заметка перемещена в корзину</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Кредитная карта перемещена в корзину</string>
-  <string name="home_snackbar_move_to_trash_error">Не могу переместить в корзину</string>
+  <string name="home_snackbar_move_to_trash_error">Элемент не может быть перемещен в корзину</string>
   <string name="home_autofill_banner_title">Насладитесь волшебством автозаполнения</string>
   <string name="home_autofill_banner_text">Одно касание и - престо! - ваше имя пользователя и пароль заполняются мгновенно.</string>
   <string name="home_autofill_banner_settings">Включить автозаполнение ›</string>
@@ -39,8 +38,7 @@
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
   <string name="credit_card_number_copied_to_clipboard">Номер кредитной карты скопирован</string>
-  <string name="credit_card_pin_copied_to_clipboard">Pin-код кредитной карты скопирован</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Cvv-код кредитной карты скопирован</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Код CVV карты скопирован</string>
   <string name="item_too_long_copied_to_clipboard">Содержимое было слишком длинным, в буфер обмена скопирована только часть</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Хранилища</string>

@@ -17,12 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="profile_option_fingerprint_subtitle">Deblocați Proton Pass cu o atingere.</string>
-  <string name="profile_option_fingerprint">Amprenta</string>
-  <string name="profile_option_app_lock">Blocare aplicații</string>
   <string name="enter_your_pin_code">Introduceți codul PIN</string>
   <string name="unlock">Deblocare</string>
-  <string name="enter_pin">Introduceți codul PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">PIN incorect. A mai rămas %d încercare.</item>
     <item quantity="few">PIN incorect, %d încercări rămase.</item>
@@ -39,7 +35,6 @@
   <string name="auth_error_verifying_password">Eroare la verificarea parolei.</string>
   <string name="auth_error_empty_password">Parola nu poate fi goală.</string>
   <string name="auth_error_pin_cannot_be_empty">Codul PIN nu poate fi gol.</string>
-  <string name="auth_error_pin_too_short">Codul PIN trebuie să aibă minim 4 cifre.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Parola nu este corectă. Încercări rămase: [%d]</item>
     <item quantity="few">Parola nu este corectă. Încercări rămase: [%d]</item>

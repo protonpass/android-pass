@@ -3,7 +3,7 @@
   <string name="account_title">Akun</string>
   <string name="account_username_label">Nama pengguna</string>
   <string name="account_subscription_label">Paket langganan</string>
-  <string name="account_permanently_delete_warning">Ini akan menghapus akun Anda secara permanen beserta seluruh datanya. Anda tidak akan bisa mengaktifkan ulang akun ini.</string>
+  <string name="account_permanently_delete_warning">Tindakan ini akan menghapus akun Anda beserta seluruh datanya secara permanen. Anda tidak akan dapat mengaktifkan ulang akun ini.</string>
   <string name="account_delete_account">Hapus akun</string>
   <string name="account_delete_account_icon_content_description">Tombol hapus akun</string>
   <string name="account_sign_out">Keluar</string>

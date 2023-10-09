@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">Η κρύπτη σας είναι άδεια</string>
   <string name="home_empty_vault_subtitle">Ξεκινήστε δημιουργώντας το πρώτο σας στοιχείο.</string>
   <string name="home_empty_vault_create_login">Δημιουργία σύνδεσης</string>
-  <string name="home_empty_vault_create_alias">Δημιουργία ψευδώνυμου απόκρυψης email</string>
+  <string name="home_empty_vault_create_alias">Δημιουργήστε ένα hide-my-email ψευδώνυμο</string>
   <string name="home_empty_vault_create_note">Δημιουργία σημείωσης</string>
-  <string name="error_observing_items">Σφάλμα κατά την παρατήρηση στοιχείων</string>
-  <string name="error_observing_share">Σφάλμα κατά την παρατήρηση κοινής χρήσης</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Σφάλμα κατά τη φόρτωση στοιχείων</string>
   <string name="error_refreshing">Σφάλμα κατά την εκτέλεση ανανέωσης</string>
   <string name="home_snackbar_login_moved_to_trash">Η σύνδεση μεταφέρθηκε στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_alias_moved_to_trash">Το ψευδώνυμο μεταφέρθηκε στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_note_moved_to_trash">Η σημείωση μετακινήθηκε στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Η πιστωτική κάρτα μεταφέρθηκε στον κάδο απορριμμάτων</string>
-  <string name="home_snackbar_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση στον κάδο απορριμμάτων</string>
+  <string name="home_snackbar_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση του στοιχείου στον κάδο απορριμμάτων</string>
   <string name="home_autofill_banner_title">Απολαύστε τη μαγεία της Αυτόματης Συμπλήρωσης</string>
   <string name="home_autofill_banner_text">Ένα πάτημα και—presto!—το όνομα χρήστη και ο κωδικός πρόσβασής σας συμπληρώνονται αμέσως.</string>
   <string name="home_autofill_banner_settings">Ενεργοποίηση Αυτόματης Συμπλήρωσης ›</string>
@@ -39,7 +38,6 @@
   <string name="username_copied_to_clipboard">Το όνομα χρήστη αντιγράφηκε</string>
   <string name="password_copied_to_clipboard">Ο κωδικός πρόσβασης αντιγράφηκε</string>
   <string name="credit_card_number_copied_to_clipboard">Ο αριθμός της πιστωτικής κάρτας αντιγράφηκε</string>
-  <string name="credit_card_pin_copied_to_clipboard">Το PIN της πιστωτικής κάρτας αντιγράφηκε</string>
   <string name="credit_card_cvv_copied_to_clipboard">Το CVV της πιστωτικής κάρτας αντιγράφηκε</string>
   <string name="item_too_long_copied_to_clipboard">Το περιεχόμενο ήταν πολύ μεγάλο, και έχει μερικώς αντιγραφεί στο πρόχειρο</string>
   <!-- Vault drawer -->

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="enter_your_pin_code">Zadejte PIN kód</string>
+  <string name="unlock">Odemknout</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="one">Nesprávný PIN kód. Zbývá %d pokus.</item>
+    <item quantity="few">Nesprávný PIN kód. Zbývají %d pokusy.</item>
+    <item quantity="many">Nesprávný PIN kód. Zbývá %d pokusů.</item>
+    <item quantity="other">Nesprávný PIN kód. Zbývá %d pokusů.</item>
+  </plurals>
+  <string name="auth_unlock_app_title">Odemknout Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Zadejte hlavní heslo pro %s</string>
+  <string name="auth_master_password_label">Hlavní heslo</string>
+  <string name="auth_action_reveal_password">Zobrazit hlavní heslo</string>
+  <string name="auth_action_conceal_password">Skrýt hlavní heslo</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Zadat raději PIN</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Použít raději otisk prstu</string>
+  <string name="auth_unlock_button">Odemknout</string>
+  <string name="auth_error_verifying_password">Chyba při ověřování hesla</string>
+  <string name="auth_error_empty_password">Heslo nemůže být prázdné</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN kód nemůže být prázdný</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="one">Nesprávné heslo. Zbývá %d pokus</item>
+    <item quantity="few">Nesprávné heslo. Zbývají %d pokusy</item>
+    <item quantity="many">Nesprávné heslo. Zbývá %d pokusů</item>
+    <item quantity="other">Nesprávné heslo. Zbývá %d pokusů</item>
+  </plurals>
+</resources>

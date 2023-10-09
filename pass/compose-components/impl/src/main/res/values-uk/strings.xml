@@ -19,7 +19,7 @@
   <string name="bottomsheet_cancel_button">Скасувати</string>
   <string name="bottomsheet_move_to_trash">Перемістити до смітника</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Відкрити меню дій елемента</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Відкрити меню дій елемента</string>
   <string name="action_upgrade_now">Покращити</string>
   <!-- Empty list -->
   <string name="empty_list_title">Додайте свій перший елемент</string>

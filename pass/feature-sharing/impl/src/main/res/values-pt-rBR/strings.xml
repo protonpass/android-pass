@@ -73,7 +73,7 @@
   <string name="share_role_admin">Administrador</string>
   <string name="share_role_owner">Proprietário</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir a propriedade</string>
-  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Você não pode transferir o seu último cofre possuído.</string>
   <string name="sharing_bottomsheet_remove_access">Remover o acesso</string>
   <string name="sharing_bottomsheet_resend_invite">Reenviar o convite</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancelar o convite</string>

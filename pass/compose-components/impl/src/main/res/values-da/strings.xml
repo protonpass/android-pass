@@ -17,7 +17,7 @@
   <string name="bottomsheet_cancel_button">Annullér</string>
   <string name="bottomsheet_move_to_trash">Flyt til papirkurv</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Åbn handlingsmenu for element</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åbn handlingsmenu for element</string>
   <string name="action_upgrade_now">Opgradér nu</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tilføj dit første element</string>

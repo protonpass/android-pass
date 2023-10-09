@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Tiếp tục</string>
+  <string name="sharing_can_view">Cho phép xem</string>
+  <string name="sharing_can_edit">Cho phép chỉnh sửa</string>
+  <string name="sharing_can_manage">Cho phép quản lý</string>
+  <string name="sharing_can_view_description">Cho phép xem nội dung trong kho lưu trữ này.</string>
+  <string name="sharing_can_edit_description">Cho phép tạo, chỉnh sửa, xóa và xuất nội dung trong kho lưu trữ này.</string>
+  <string name="sharing_can_manage_description">Cho phép cấp và thu hồi quyền truy cập vào kho lưu trữ này.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="other">%d nội dung</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="other">%d thành viên</item>
+  </plurals>
+  <string name="share_with_title">Chia sẻ với</string>
+  <string name="share_with_subtitle">Người dùng này sẽ nhận được lời mời tham gia kho lưu trữ \'%s\' của bạn.</string>
+  <string name="share_with_email_hint">Địa chỉ email</string>
+  <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
+  <string name="share_permissions_title">Thiết lập quyền</string>
+  <string name="share_permissions_subtitle">Chọn cấp truy cập người dùng này sẽ nhận khi tham gia vào kho lưu trữ \'%s\' của bạn.</string>
+  <string name="sharing_invitation_from">Lời mời từ %s</string>
+  <string name="sharing_join_shared_vault">Tham gia và đồng bộ</string>
+  <string name="sharing_reject_invitation">Từ chối lời mời</string>
+  <string name="sharing_snackbar_get_invite_error">Không thể lấy lời mời</string>
+  <string name="sharing_snackbar_invite_accepted">Đã chấp nhận lời mời</string>
+  <string name="sharing_snackbar_invite_accept_error">Lỗi khi chấp nhận lời mời</string>
+  <string name="sharing_snackbar_invite_rejected">Đã từ chối lời mời</string>
+  <string name="sharing_snackbar_invite_reject_error">Lỗi khi từ chối lời mời</string>
+  <string name="sharing_snackbar_vault_not_found">Không thể tìm thấy kho lưu trữ</string>
+  <string name="sharing_snackbar_invite_sent_success">Đã gửi lời mời</string>
+  <string name="sharing_snackbar_invite_sent_error">Không thể gửi lời mời</string>
+  <string name="sharing_snackbar_get_vault_members_error">Không thể lấy thành viên kho lưu trữ</string>
+  <string name="sharing_snackbar_change_permission_success">Đã thay đổi quyền</string>
+  <string name="sharing_snackbar_change_permission_error">Không thể thay đổi quyền</string>
+  <string name="sharing_snackbar_remove_member_success">Đã xóa thành viên khỏi kho lưu trữ</string>
+  <string name="sharing_snackbar_remove_member_error">Không thể xóa khỏi kho lưu trữ</string>
+  <string name="share_summary_title">Tóm tắt</string>
+  <string name="share_summary_subtitle">Bạn đang chuẩn bị mời %1$s vào %2$s của bạn. Họ sẽ có quyền truy cập vào %3$s và họ có thể %4$s trong kho lưu trữ này.</string>
+  <string name="share_summary_vault">kho lưu trữ %s</string>
+  <string name="share_summary_view_items">chỉ xem nội dung</string>
+  <string name="share_summary_create_items">tạo nội dung</string>
+  <string name="share_summary_manage_vault">quản lý</string>
+  <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
+  <string name="share_summary_email_title">Người dùng</string>
+  <string name="share_summary_vault_title">Kho lưu trữ</string>
+  <string name="share_summary_permissions_title">Quyền</string>
+  <string name="share_manage_vault_share_with_more_people">Chia sẽ với nhiều người hơn</string>
+  <string name="share_manage_vault_item_count">%d nội dung</string>
+  <string name="share_manage_vault_invite_pending">Lời mời đang chờ</string>
+  <string name="share_manage_vault_current_user_indicator">Bạn</string>
+  <string name="share_role_can_view">Có thể xem</string>
+  <string name="share_role_can_edit">Cho phép chỉnh sửa</string>
+  <string name="share_role_admin">Quản trị viên</string>
+  <string name="share_role_owner">Chủ sở hữu</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Chuyển quyền sở hữu</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
+  <string name="sharing_bottomsheet_remove_access">Xóa quyền truy cập</string>
+  <string name="sharing_bottomsheet_resend_invite">Gửi lại lời mời</string>
+  <string name="sharing_bottomsheet_cancel_invite">Hủy lời mời</string>
+  <string name="sharing_transfer_ownership_confirm_title">Chuyển quyền sở hữu</string>
+  <string name="sharing_transfer_ownership_confirm_message">Bạn có chắc chắn muốn chuyển quyền sở hữu tới %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Đã hủy lời mời</string>
+  <string name="sharing_snackbar_cancel_invite_error">Lỗi khi hủy lời mời</string>
+  <string name="sharing_snackbar_resend_invite_success">Đã gửi lại lời mời</string>
+  <string name="sharing_snackbar_resend_invite_error">Lỗi khi gửi lại lời mời</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Địa chỉ đã được mời quá nhiều lần</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Đã chuyển quyền sở hữu</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Lỗi khi chuyển quyền sở hữu</string>
+</resources>

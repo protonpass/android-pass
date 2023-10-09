@@ -17,7 +17,7 @@
   <string name="bottomsheet_cancel_button">Annuleer</string>
   <string name="bottomsheet_move_to_trash">Verplaats naar prullenbak</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Actiemenu item openen</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>
   <!-- Empty list -->
   <string name="empty_list_title">Voeg uw eerste item toe</string>

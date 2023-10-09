@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="updates_notification_channel_name">Aktualizace</string>
+  <string name="autofill_notification_channel_name">Automatické vyplňování</string>
+  <string name="autofill_notification_copy_to_clipboard_title">TOTP code</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP has been copied to clipboard</string>
+  <string name="updates_new_invite_received_title">Obdrželi jste pozvánku</string>
+  <string name="updates_new_invite_received_message">Byli jste pozváni do trezoru. Otevřete aplikaci a přijměte zobrazenou pozvánku.</string>
+</resources>

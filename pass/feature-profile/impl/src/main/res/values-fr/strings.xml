@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Évaluer l\'application</string>
   <string name="profile_option_autofill">Remplissage automatique</string>
   <string name="profile_option_autofill_subtitle">Vos noms d\'utilisateur et vos mots de passe sont automatiquement complétés.</string>
-  <string name="profile_option_fingerprint">Empreinte digitale</string>
-  <string name="profile_option_automatic_app_lock">Verrouillage automatique de l\'application</string>
-  <string name="profile_option_advanced">Avancé</string>
   <string name="profile_error_biometry_failed_to_start">Impossible de lancer l\'authentification biométrique</string>
   <string name="profile_error_biometry_failed_to_authenticate">L\'authentification n\'a pas abouti.</string>
   <string name="profile_fingerprint_lock_enabled">Déverrouillage par empreinte digitale activé</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Aucun verrouillage</string>
   <string name="app_lock_config_biometric">Biométrie</string>
   <string name="app_lock_config_pin_code">Code PIN</string>
-  <string name="app_lock_config_unlock_with">Déverrouiller avec</string>
   <string name="app_lock_config_app_lock_time">Verrouillage automatique</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Utiliser le verrouillage du système quand la biométrie ne fonctionne pas.</string>
   <string name="configure_pin_set_pin_code">Définir le code PIN</string>

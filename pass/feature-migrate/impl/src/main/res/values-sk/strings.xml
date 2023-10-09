@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Presunúť túto položku do nasledujúceho trezoru?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Presunúť všetky položky do nasledujúceho trezoru?</string>
+  <string name="migrate_item_confirm_confirm_button">Presunúť</string>
+  <string name="migrate_item_success_snackbar">Položka presunutá</string>
+  <string name="migrate_item_error_snackbar">Chyba pri presúvaní položky</string>
+  <string name="migrate_all_items_success_snackbar">Všetky položky presunuté</string>
+  <string name="migrate_all_items_error_snackbar">Chyba pri presúvaní všetkých položiek</string>
+  <string name="migrate_init_error_snackbar">Nepodarilo sa pripraviť obrazovku migrácie</string>
+</resources>

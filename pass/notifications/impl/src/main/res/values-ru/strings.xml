@@ -2,8 +2,8 @@
 <resources>
   <string name="updates_notification_channel_name">Updates</string>
   <string name="autofill_notification_channel_name">Автозаполнение</string>
-  <string name="autofill_notification_copy_to_clipboard_title">Код Totp</string>
-  <string name="autofill_notification_copy_to_clipboard_body">Totp скопирован в буфер обмена</string>
+  <string name="autofill_notification_copy_to_clipboard_title">Код TOTP</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP has been copied to clipboard</string>
   <string name="updates_new_invite_received_title">You have received an invite</string>
   <string name="updates_new_invite_received_message">You have been invited to a vault. Open the app to see the invite and accept it.</string>
 </resources>

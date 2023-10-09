@@ -3,7 +3,7 @@
   <string name="action_open">Открыть</string>
   <string name="action_copy">Копировать</string>
   <!-- Detail -->
-  <string name="detail_init_error">Could not initialise the element</string>
+  <string name="detail_init_error">Could not initialize the element</string>
   <string name="top_bar_edit_button_text">Изменить</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адрес псевдонима</string>
@@ -58,12 +58,11 @@
   <string name="credit_card_cardholder_field_name">Cardholder name</string>
   <string name="credit_card_number_field_name">Номер карты</string>
   <string name="credit_card_cvv_field_name">Verification number</string>
-  <string name="credit_card_pin_field_name">ПИН-код</string>
+  <string name="credit_card_pin_field_name">PIN-код</string>
   <string name="credit_card_expiration_date_field_name">Срок действия</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Владелец карты скопирован в буфер обмена</string>
   <string name="credit_card_number_copied_to_clipboard">Номер карты скопирован в буфер обмена</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Проверочный код скопирован в буфер обмена</string>
-  <string name="credit_card_pin_copied_to_clipboard">ПИН-код скопирован в буфер обмена</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Переместить в корзину</string>
   <string name="migrate_item_detail_bottom_sheet">Переместить в другое хранилище</string>

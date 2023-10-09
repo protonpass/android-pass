@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 個の保管庫</string>
+  <string name="unlimited_email_alias">無制限のメールエイリアス</string>
+  <string name="custom_fields">カスタムフィールド</string>
+  <string name="restart_to_complete_the_update">アップデートを完了させるために再起動</string>
+  <string name="action_restart">再起動</string>
+</resources>

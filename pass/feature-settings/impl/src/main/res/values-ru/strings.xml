@@ -6,10 +6,10 @@
   <string name="settings_autofill_preference_description">For fast, easy logins, let Proton Pass fill in your usernames and passwords.</string>
   <string name="settings_authentication_section_title">Аутентификация</string>
   <string name="settings_authentication_preference_title">Fingerprint unlock</string>
-  <string name="settings_authentication_preference_description_enabled">Require Quickly and securely open the app with your fingerprint.</string>
+  <string name="settings_authentication_preference_description_enabled">South Carolina</string>
   <string name="settings_authentication_preference_description_no_fingerprint">You cannot require your fingerprint for interacting with the app as there are no fingerprints registered on this device.</string>
   <string name="settings_appearance_preference_title">Тема</string>
-  <string name="settings_appearance_preference_subtitle_match_system">Match system</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Match system</string>
   <string name="settings_appearance_preference_subtitle_light">Светлая тема</string>
   <string name="settings_appearance_preference_subtitle_dark">Тёмная тема</string>
   <string name="settings_fingerprint_lock_enabled">Fingerprint unlock enabled</string>
@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">Условия использования</string>
   <string name="settings_primary_vault_section_title">Vaults</string>
   <string name="settings_primary_vault_vault_selector_title">Primary vault</string>
-  <string name="settings_primary_vault_section_subtitle">You can\'t delete a primary vault.</string>
+  <string name="settings_primary_vault_section_subtitle">Вы не можете удалить первичное хранилище.</string>
   <string name="settings_primary_vault_change_success">The primary vault has been changed</string>
   <string name="settings_primary_vault_change_error">Could not change the primary vault</string>
   <string name="settings_privacy_section_title">Конфиденциальность</string>
@@ -42,6 +42,6 @@
   <string name="clipboard_option_copy_totp_code">Копировать коды аутентификации</string>
   <string name="clipboard_option_copy_totp_code_hint">Автоматическое копирование кодов аутентификации при использовании автозаполнения.</string>
   <string name="clipboard_option_clear_clipboard_never">Никогда</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">Через 60 секунд</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">Через 180 секунд</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Через 1 минуту</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Через 3 минуты</string>
 </resources>

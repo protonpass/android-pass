@@ -19,7 +19,7 @@
   <string name="bottomsheet_cancel_button">Отменить</string>
   <string name="bottomsheet_move_to_trash">Переместить в корзину</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Открыть меню действий с элементом</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
   <!-- Empty list -->
   <string name="empty_list_title">Добавьте свой первый элемент</string>

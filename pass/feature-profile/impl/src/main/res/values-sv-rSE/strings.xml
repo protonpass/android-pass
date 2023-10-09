@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Betygsätt app</string>
   <string name="profile_option_autofill">Fyll automatiskt</string>
   <string name="profile_option_autofill_subtitle">Fyll i dina användarnamn och lösenord automatiskt.</string>
-  <string name="profile_option_fingerprint">Fingeravtryck</string>
-  <string name="profile_option_automatic_app_lock">Automatisk applåsning</string>
-  <string name="profile_option_advanced">Avancerad</string>
   <string name="profile_error_biometry_failed_to_start">Kunde inte starta den biometriska autentiseringen</string>
   <string name="profile_error_biometry_failed_to_authenticate">Misslyckades att autentisera</string>
   <string name="profile_fingerprint_lock_enabled">Fingeravtrycksupplåsning aktiverat</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Ingen</string>
   <string name="app_lock_config_biometric">Biometrisk</string>
   <string name="app_lock_config_pin_code">PIN-kod</string>
-  <string name="app_lock_config_unlock_with">Lås upp med</string>
   <string name="app_lock_config_app_lock_time">Automatiskt lås</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Använd systemlås när biometriska misslyckas</string>
   <string name="configure_pin_set_pin_code">Ställ in PIN-kod</string>

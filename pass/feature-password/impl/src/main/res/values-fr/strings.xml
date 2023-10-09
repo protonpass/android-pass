@@ -9,7 +9,7 @@
   <string name="word_count">%s mots</string>
   <string name="word_separator">Séparateur de mots</string>
   <string name="bottomsheet_option_capital_letters">Lettres majuscules (A-Z)</string>
-  <string name="bottomsheet_option_capitalise">Majuscules</string>
+  <string name="bottomsheet_option_capitalise">Ajouter des majuscules</string>
   <string name="bottomsheet_option_include_numbers">Ajouter des chiffres (0-9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Tirets ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Espaces</string>

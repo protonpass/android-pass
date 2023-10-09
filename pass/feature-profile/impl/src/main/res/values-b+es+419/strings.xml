@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Calificar app</string>
   <string name="profile_option_autofill">Completar automáticamente</string>
   <string name="profile_option_autofill_subtitle">Complete automáticamente sus nombres de usuario y contraseñas.</string>
-  <string name="profile_option_fingerprint">Huella dactilar</string>
-  <string name="profile_option_automatic_app_lock">Bloqueo automático de la app</string>
-  <string name="profile_option_advanced">Avanzado</string>
   <string name="profile_error_biometry_failed_to_start">No se pudo iniciar la autenticación biométrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">Error al autenticar</string>
   <string name="profile_fingerprint_lock_enabled">Desbloqueo de huella dactilar habilitado</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Ninguno</string>
   <string name="app_lock_config_biometric">Biométrico</string>
   <string name="app_lock_config_pin_code">Código PIN</string>
-  <string name="app_lock_config_unlock_with">Desbloquear con</string>
   <string name="app_lock_config_app_lock_time">Bloqueo automático</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Usar el bloqueo del sistema cuando el biométrico no funcione</string>
   <string name="configure_pin_set_pin_code">Establecer código PIN</string>

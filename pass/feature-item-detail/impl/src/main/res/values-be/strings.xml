@@ -63,7 +63,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">Трымальнік карткі скапіяваны ў буфер абмену</string>
   <string name="credit_card_number_copied_to_clipboard">Нумар карткі скапіяваны ў буфер абмену.</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Праверачны нумар скапіяваны ў буфер абмену</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN скапіяваны ў буфер абмену</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Перамясціць у сметніцу</string>
   <string name="migrate_item_detail_bottom_sheet">Перамясціць у іншае сховішча</string>

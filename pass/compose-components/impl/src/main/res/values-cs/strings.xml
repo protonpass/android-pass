@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Název (A-Z)</string>
+  <string name="sort_by_title_desc">Název (Z-A)</string>
+  <string name="sort_by_creation_asc">Od nejstarších k nejnovějším</string>
+  <string name="sort_by_creation_desc">Od nejnovějších k nejstarším</string>
+  <string name="sort_by_modification_date">Nejnovější</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Vše</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">výsledek</item>
+    <item quantity="few">výsledky</item>
+    <item quantity="many">výsledků</item>
+    <item quantity="other">výsledků</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Potvrdit</string>
+  <string name="bottomsheet_cancel_button">Zrušit</string>
+  <string name="bottomsheet_move_to_trash">Přesunout do koše</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otevřít nabídku akcí položky</string>
+  <string name="action_upgrade_now">Navýšit nyní</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Přidejte svou první položku</string>
+  <string name="empty_search_results_title">Nebyl nalezen žádný výsledek</string>
+  <string name="empty_list_open_extension">Navštivte webové rozšíření</string>
+  <string name="empty_list_create_item_button">Vytvořit novou položku</string>
+  <!-- Field -->
+  <string name="field_title_title">Název</string>
+  <string name="field_title_hint">Bez názvu</string>
+  <string name="field_title_required">Název je povinný</string>
+  <string name="small_cross_icon_content_description">Ikona malého kříže</string>
+  <string name="field_note_title">Poznámka</string>
+  <string name="field_note_hint">Přidat poznámku</string>
+  <string name="linked_apps_title">Propojené aplikace</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Offline</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Chybějící ikona aplikace</string>
+  <string name="add_item_icon_content_description">Ikona přidání položky</string>
+  <string name="navigate_back_icon_content_description">Ikona pro návrat zpět</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Trezor</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Seznam položek</string>
+  <string name="bottom_bar_add_item_icon_content_description">Přidat položku</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Dnes</string>
+  <string name="most_recent_yesterday">Včera</string>
+  <string name="most_recent_this_week">Tento týden</string>
+  <string name="most_recent_last_two_weeks">Poslední dva týdny</string>
+  <string name="most_recent_last_30_days">Posledních 30 dní</string>
+  <string name="most_recent_last_60_days">Posledních 60 dní</string>
+  <string name="most_recent_last_90_days">Posledních 90 dní</string>
+  <string name="most_recent_within_the_last_year">Minulý rok</string>
+  <string name="most_recent_more_than_1_year">Více než 1 rok</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Ikona vyhledávání</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Ikona možnosti</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 položka</item>
+    <item quantity="few">%d položky</item>
+    <item quantity="many">%d položek</item>
+    <item quantity="other">%d položek</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Zahodit změny?</string>
+  <string name="confirm_close_dialog_message">Máte neuložené změny, určitě je chcete zahodit?</string>
+  <string name="confirm_close_dialog_close_button">Zahodit</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Rozšířit</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Rozšířené možnosti</string>
+  <string name="hide_advanced_options">Skrýt rozšířené možnosti</string>
+</resources>

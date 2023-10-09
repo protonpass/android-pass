@@ -17,12 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="profile_option_fingerprint_subtitle">Avaa Proton Passin lukitus kosketuksella.</string>
-  <string name="profile_option_fingerprint">Sormenjälki</string>
-  <string name="profile_option_app_lock">Sovelluksen lukitus</string>
   <string name="enter_your_pin_code">Syötä PIN-koodisi</string>
   <string name="unlock">Avaa</string>
-  <string name="enter_pin">Syötä PIN-koodi</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Virheellinen PIN-koodi. %d yritys jäljellä.</item>
     <item quantity="other">Virheellinen PIN-koodi. %d yritystä jäljellä.</item>
@@ -38,7 +34,6 @@
   <string name="auth_error_verifying_password">Salasanan vahvistusvirhe</string>
   <string name="auth_error_empty_password">Salasana ei voi olla tyhjä</string>
   <string name="auth_error_pin_cannot_be_empty">PIN-koodi ei voi olla tyhjä</string>
-  <string name="auth_error_pin_too_short">PIN-koodin on oltava vähintään 4-numeroa</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Virheellinen salasana. %d yritys jäljellä</item>
     <item quantity="other">Virheellinen salasana. %d yritystä jäljellä</item>

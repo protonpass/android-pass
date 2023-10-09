@@ -6,14 +6,13 @@
   <string name="home_empty_vault_create_login">Utwórz dane logowania</string>
   <string name="home_empty_vault_create_alias">Utwórz alias hide-my-email</string>
   <string name="home_empty_vault_create_note">Utwórz notatkę</string>
-  <string name="error_observing_items">Wystąpił błąd podczas obserwowania elementów</string>
-  <string name="error_observing_share">Wystąpił błąd podczas obserwowania udostępnionego obiektu</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Wystąpił błąd podczas ładowania elementów</string>
   <string name="error_refreshing">Wystąpił błąd podczas odświeżania</string>
   <string name="home_snackbar_login_moved_to_trash">Dane logowania zostały przeniesione do Kosza</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias został przeniesiony do Kosza</string>
   <string name="home_snackbar_note_moved_to_trash">Notatka została przeniesiona do Kosza</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Karta płatnicza została przeniesiona do Kosza</string>
-  <string name="home_snackbar_move_to_trash_error">Nie można przenieść do Kosza</string>
+  <string name="home_snackbar_move_to_trash_error">Przenoszenie elementu do Kosza nie powiodło się</string>
   <string name="home_autofill_banner_title">Ciesz się magią autouzupełniania</string>
   <string name="home_autofill_banner_text">Jedno kliknięcie i gotowe! Nazwa użytkownika i hasło są uzupełnione.</string>
   <string name="home_autofill_banner_settings">Włącz autouzupełnianie ›</string>
@@ -39,7 +38,6 @@
   <string name="username_copied_to_clipboard">Nazwa użytkownika została skopiowana</string>
   <string name="password_copied_to_clipboard">Hasło zostało skopiowane</string>
   <string name="credit_card_number_copied_to_clipboard">Numer karty płatniczej został skopiowany</string>
-  <string name="credit_card_pin_copied_to_clipboard">Kod PIN karty płatniczej został skopiowany</string>
   <string name="credit_card_cvv_copied_to_clipboard">Kod CVV karty płatniczej został skopiowany</string>
   <string name="item_too_long_copied_to_clipboard">Zawartość jest zbyt długa, więc została częściowo skopiowana do schowka</string>
   <!-- Vault drawer -->

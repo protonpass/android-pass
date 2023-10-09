@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="enter_your_pin_code">Nhập mã PIN của bạn</string>
+  <string name="unlock">Mở khóa</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="other">Mã PIN không chính xác, %d lần thử còn lại.</item>
+  </plurals>
+  <string name="auth_unlock_app_title">Mở khóa Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">Nhập mật khẩu chủ cho %s</string>
+  <string name="auth_master_password_label">Mật khẩu chủ</string>
+  <string name="auth_action_reveal_password">Hiển thị mật khẩu chủ</string>
+  <string name="auth_action_conceal_password">Ẩn mật khẩu chủ</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Sử dụng PIN thay thế</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Sử dụng vân tay thay thế</string>
+  <string name="auth_unlock_button">Mở khóa</string>
+  <string name="auth_error_verifying_password">Lỗi xác minh mật khẩu.</string>
+  <string name="auth_error_empty_password">Mật khẩu không được để trống</string>
+  <string name="auth_error_pin_cannot_be_empty">Mã PIN không được để trống</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="other">Mật khẩu không chính xác. %d lần thử còn lại</item>
+  </plurals>
+</resources>

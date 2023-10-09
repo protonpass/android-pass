@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">계속하기</string>
+  <string name="sharing_can_view">보기 가능</string>
+  <string name="sharing_can_edit">편집 가능</string>
+  <string name="sharing_can_manage">관리 가능</string>
+  <string name="sharing_can_view_description">이 금고에서 항목을 확인 가능합니다.</string>
+  <string name="sharing_can_edit_description">이 금고에서 항목을 생성, 편집, 삭제 및 불러올 수 있습니다.</string>
+  <string name="sharing_can_manage_description">이 금고의 접근을 허용 및 취소할 수 있습니다.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="other">%d개 항목</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="other">%d명 회원</item>
+  </plurals>
+  <string name="share_with_title">공유 대상:</string>
+  <string name="share_with_subtitle">이 사용자가 곧 \'%s\' 금고에 참여할 초대장을 받게 됩니다.</string>
+  <string name="share_with_email_hint">이메일 주소</string>
+  <string name="share_with_email_error">유효하지 않은 이메일 주소입니다.</string>
+  <string name="share_permissions_title">권한 설정</string>
+  <string name="share_permissions_subtitle">이 사용자가 \'%s\' 금고에 참여할 때의 권한 수준을 선택하십시오.</string>
+  <string name="sharing_invitation_from">%s님의 초대</string>
+  <string name="sharing_join_shared_vault">참가 및 동기화</string>
+  <string name="sharing_reject_invitation">초대 거절</string>
+  <string name="sharing_snackbar_get_invite_error">초대할 수 없습니다</string>
+  <string name="sharing_snackbar_invite_accepted">초대가 수락됨</string>
+  <string name="sharing_snackbar_invite_accept_error">초대 수락 중 오류</string>
+  <string name="sharing_snackbar_invite_rejected">초대가 거부됨</string>
+  <string name="sharing_snackbar_invite_reject_error">초대 거부 중 오류</string>
+  <string name="sharing_snackbar_vault_not_found">금고를 찾을 수 없습니다</string>
+  <string name="sharing_snackbar_invite_sent_success">초대장을 보냈습니다</string>
+  <string name="sharing_snackbar_invite_sent_error">초대를 전송할 수 없습니다</string>
+  <string name="sharing_snackbar_get_vault_members_error">금고 사용자를 불러올 수 없습니다</string>
+  <string name="sharing_snackbar_change_permission_success">권한 변경됨</string>
+  <string name="sharing_snackbar_change_permission_error">권한을 변경할 수 없습니다.</string>
+  <string name="sharing_snackbar_remove_member_success">구성원이 금고로 부터 삭제되었습니다</string>
+  <string name="sharing_snackbar_remove_member_error">금고로 부터 삭제할 수 없습니다</string>
+  <string name="share_summary_title">요약</string>
+  <string name="share_summary_subtitle">%1$s을(를) %2$s에 초대하려고 합니다. %3$s에 접근할 수 있으며, 이 금고에서 %4$s 할 수 있습니다.</string>
+  <string name="share_summary_vault">%s개 금고</string>
+  <string name="share_summary_view_items">항목만 볼 수 있음</string>
+  <string name="share_summary_create_items">항목 생성</string>
+  <string name="share_summary_manage_vault">관리</string>
+  <string name="share_summary_share_vault">금고 공유</string>
+  <string name="share_summary_email_title">사용자</string>
+  <string name="share_summary_vault_title">금고</string>
+  <string name="share_summary_permissions_title">권한</string>
+  <string name="share_manage_vault_share_with_more_people">더 많은 사람과 공유</string>
+  <string name="share_manage_vault_item_count">%d개 항목</string>
+  <string name="share_manage_vault_invite_pending">초대 대기</string>
+  <string name="share_manage_vault_current_user_indicator">나</string>
+  <string name="share_role_can_view">보기 가능</string>
+  <string name="share_role_can_edit">편집 가능</string>
+  <string name="share_role_admin">관리자</string>
+  <string name="share_role_owner">소유자</string>
+  <string name="sharing_bottomsheet_transfer_ownership">소유권 이전</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">마지막에 소유했던 금고를 이전할 수 없습니다.</string>
+  <string name="sharing_bottomsheet_remove_access">접근 제거</string>
+  <string name="sharing_bottomsheet_resend_invite">초대 재전송</string>
+  <string name="sharing_bottomsheet_cancel_invite">초대 취소</string>
+  <string name="sharing_transfer_ownership_confirm_title">소유권 이전</string>
+  <string name="sharing_transfer_ownership_confirm_message">%s 님에게 소유권을 이전하시겠습니까?</string>
+  <string name="sharing_snackbar_cancel_invite_success">초대 취소됨</string>
+  <string name="sharing_snackbar_cancel_invite_error">초대 취소 실패</string>
+  <string name="sharing_snackbar_resend_invite_success">초대 다시 보내기</string>
+  <string name="sharing_snackbar_resend_invite_error">초대 재전송 실패</string>
+  <string name="sharing_snackbar_too_many_invites_sent">이 주소로 너무 많이 초대했습니다.</string>
+  <string name="sharing_snackbar_transfer_ownership_success">소유권이 이전되었습니다.</string>
+  <string name="sharing_snackbar_transfer_ownership_error">소유권 이전 실패</string>
+</resources>

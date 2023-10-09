@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">アカウント</string>
+  <string name="account_username_label">ユーザー名</string>
+  <string name="account_subscription_label">サブスクリプションのプラン</string>
+  <string name="account_permanently_delete_warning">この操作により、アカウントとそのすべてのデータが永久に削除されます。このアカウントを再度有効にすることはできません。</string>
+  <string name="account_delete_account">アカウントを削除</string>
+  <string name="account_delete_account_icon_content_description">アカウント削除ボタン</string>
+  <string name="account_sign_out">サインアウト</string>
+  <string name="account_sign_out_icon_content_description">サインアウトボタン</string>
+  <string name="account_manage_subscription">サブスクリプションを管理</string>
+  <string name="account_get_user_info_error">ユーザー情報を取得できませんでした</string>
+  <string name="manage_subscription_icon_content_description">サブスクリプション管理ボタン</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">サインアウトしますか？</string>
+  <string name="alert_confirm_sign_out_message">サインアウトしてよろしいでしょうか?</string>
+</resources>

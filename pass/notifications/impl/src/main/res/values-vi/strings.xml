@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="updates_notification_channel_name">Cập nhật</string>
+  <string name="autofill_notification_channel_name">Tự động điền</string>
+  <string name="autofill_notification_copy_to_clipboard_title">TOTP code</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP has been copied to clipboard</string>
+  <string name="updates_new_invite_received_title">Bạn đã nhận được một lời mời</string>
+  <string name="updates_new_invite_received_message">Bạn đã nhận được lời mời vào một kho lưu trữ. Mở ứng dụng để xem lời mời và chấp nhận nó.</string>
+</resources>

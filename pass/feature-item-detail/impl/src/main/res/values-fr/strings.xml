@@ -3,7 +3,7 @@
   <string name="action_open">Ouvrir</string>
   <string name="action_copy">Copier</string>
   <!-- Detail -->
-  <string name="detail_init_error">Impossible d\'initialiser l\'élément</string>
+  <string name="detail_init_error">L\'élément n\'a pas pu être initialisé.</string>
   <string name="top_bar_edit_button_text">Modifier</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adresse de l\'alias</string>
@@ -61,7 +61,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">Le titulaire de la carte a été copié dans le presse-papiers.</string>
   <string name="credit_card_number_copied_to_clipboard">Le numéro de la carte a été copié dans le presse-papiers.</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Le numéro de vérification a été copié dans le presse-papiers.</string>
-  <string name="credit_card_pin_copied_to_clipboard">Le code PIN a été copié dans le presse-papiers.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Déplacer dans la corbeille</string>
   <string name="migrate_item_detail_bottom_sheet">Déplacer vers un autre coffre-fort</string>

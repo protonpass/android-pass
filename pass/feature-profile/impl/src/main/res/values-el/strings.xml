@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Βαθμολογήστε την εφαρμογή</string>
   <string name="profile_option_autofill">Αυτόματη συμπλήρωση</string>
   <string name="profile_option_autofill_subtitle">Συμπληρώστε αυτόματα τα ονόματα χρήστη και τους κωδικούς πρόσβασής σας.</string>
-  <string name="profile_option_fingerprint">Δακτυλικό αποτύπωμα</string>
-  <string name="profile_option_automatic_app_lock">Αυτόματο κλείδωμα εφαρμογής</string>
-  <string name="profile_option_advanced">Προχωρημένα</string>
   <string name="profile_error_biometry_failed_to_start">Αδυναμία εκκίνησης της βιομετρικής ταυτοποίησης</string>
   <string name="profile_error_biometry_failed_to_authenticate">Αποτυχία επαλήθευσης</string>
   <string name="profile_fingerprint_lock_enabled">Ενεργοποιημένο ξεκλείδωμα δακτυλικών αποτυπωμάτων</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Κανένα</string>
   <string name="app_lock_config_biometric">Βιομετρικό</string>
   <string name="app_lock_config_pin_code">Κωδικός PIN</string>
-  <string name="app_lock_config_unlock_with">Ξεκλείδωμα με</string>
   <string name="app_lock_config_app_lock_time">Αυτόματο κλείδωμα</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Κλείδωμα του συστήματος όταν αποτυγχάνει το βιομετρικό</string>
   <string name="configure_pin_set_pin_code">Ορισμός κωδικού PIN</string>

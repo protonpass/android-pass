@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">O seu cofre está vazio.</string>
   <string name="home_empty_vault_subtitle">Comece por criar o seu primeiro item.</string>
   <string name="home_empty_vault_create_login">Criar um acesso</string>
-  <string name="home_empty_vault_create_alias">Crie um alias Hide-my-email</string>
+  <string name="home_empty_vault_create_alias">Create a Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Criar uma nota</string>
-  <string name="error_observing_items">Erro ao observar itens</string>
-  <string name="error_observing_share">Erro ao observar partilha</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Error loading items</string>
   <string name="error_refreshing">Erro ao efetuar a actualização</string>
   <string name="home_snackbar_login_moved_to_trash">Login movido para o lixo</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias movido para o lixo</string>
   <string name="home_snackbar_note_moved_to_trash">A nota foi movida para o lixo.</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Cartão de crédito movido para o lixo</string>
-  <string name="home_snackbar_move_to_trash_error">Não foi possível mover para o lixo</string>
+  <string name="home_snackbar_move_to_trash_error">Item could not be moved to trash</string>
   <string name="home_autofill_banner_title">Desfrute da magia do preenchimento automático</string>
   <string name="home_autofill_banner_text">Um clique e já está! O seu nome de utilizador e a sua palavra-passe são preenchidos instantaneamente.</string>
   <string name="home_autofill_banner_settings">Ativar o preenchimento automático ›</string>
@@ -39,8 +38,7 @@
   <string name="username_copied_to_clipboard">O nome de utilizador foi copiado.</string>
   <string name="password_copied_to_clipboard">A palavra-passe foi copiada.</string>
   <string name="credit_card_number_copied_to_clipboard">O número do cartão de crédito foi copiado.</string>
-  <string name="credit_card_pin_copied_to_clipboard">O código PIN do cartão de crédito foi copiado.</string>
-  <string name="credit_card_cvv_copied_to_clipboard">O código CVV do cartão de crédito foi copiado.</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Credit card CVV copied</string>
   <string name="item_too_long_copied_to_clipboard">O conteúdo é demasiado longo. Foi parcialmente copiado para a área de transferência.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Cofres</string>

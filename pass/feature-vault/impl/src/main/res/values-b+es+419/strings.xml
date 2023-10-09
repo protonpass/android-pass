@@ -19,7 +19,7 @@
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
   <string name="vault_delete_dialog_delete_action">Eliminar</string>
   <string name="vault_leave_dialog_title">Dejar la bóveda</string>
-  <string name="vault_leave_dialog_body">Esto eliminará su acceso de la bóveda __VAULT_NAME__ y todo su contenido. ¿En verdad desea dejarla?</string>
+  <string name="vault_leave_dialog_body">Esto eliminará su acceso de la bóveda __VAULT_NAME__ y todo su contenido. ¿Está seguro de que quiere dejarla?</string>
   <string name="vault_leave_dialog_cancel_action">Cancelar</string>
   <string name="vault_leave_dialog_leave_action">Dejar</string>
   <string name="bottomsheet_close_icon_content_description">Cerrar crear bóveda</string>

@@ -9,7 +9,7 @@
   <string name="word_count">%s woorden</string>
   <string name="word_separator">Woordscheidingsteken</string>
   <string name="bottomsheet_option_capital_letters">Hoofdletters (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Kapitaliseren</string>
+  <string name="bottomsheet_option_capitalise">Hoofdletters</string>
   <string name="bottomsheet_option_include_numbers">Nummers toevoegen (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Koppeltekens ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Spaties</string>

@@ -17,7 +17,7 @@
   <string name="bottomsheet_cancel_button">Annulla</string>
   <string name="bottomsheet_move_to_trash">Sposta nel cestino</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Azione menu apri elemento</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Azione menu apri elemento</string>
   <string name="action_upgrade_now">Effettua l\'upgrade adesso</string>
   <!-- Empty list -->
   <string name="empty_list_title">Aggiungi il tuo primo elemento</string>

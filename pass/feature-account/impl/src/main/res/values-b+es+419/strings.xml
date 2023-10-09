@@ -13,5 +13,5 @@
   <string name="manage_subscription_icon_content_description">Botón de gestionar suscripción</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">¿Cerrar sesión?</string>
-  <string name="alert_confirm_sign_out_message">¿En verdad desea cerrar sesión?</string>
+  <string name="alert_confirm_sign_out_message">¿Está seguro de que quiere cerrar sesión?</string>
 </resources>

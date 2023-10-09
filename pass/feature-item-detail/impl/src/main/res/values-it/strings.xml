@@ -39,7 +39,7 @@
   <string name="more_info_created">Creato:</string>
   <string name="more_info_modified">Modificato:</string>
   <string name="more_info_autofilled">Compilazione automatica:</string>
-  <string name="more_info_title">Ulteriori informazioni</string>
+  <string name="more_info_title">Più informazioni</string>
   <string name="more_info_icon">Icona più informazioni</string>
   <plurals name="more_info_modified_times">
     <item quantity="one">Una volta</item>
@@ -61,7 +61,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">Titolare della carta copiato negli appunti</string>
   <string name="credit_card_number_copied_to_clipboard">Numero carta copiato negli appunti</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Numero di verifica copiato negli appunti</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN copiato negli appunti</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Sposta nel cestino</string>
   <string name="migrate_item_detail_bottom_sheet">Sposta in un\'altra cassaforte</string>

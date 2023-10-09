@@ -17,12 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="profile_option_fingerprint_subtitle">Lås op for Proton Pass med et tryk.</string>
-  <string name="profile_option_fingerprint">Fingeraftryk</string>
-  <string name="profile_option_app_lock">App-lås</string>
   <string name="enter_your_pin_code">Indtast din pinkode</string>
   <string name="unlock">Lås op</string>
-  <string name="enter_pin">Indtast pinkode</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Forkert pinkode, %d forsøg tilbage.</item>
     <item quantity="other">Forkert pinkode, %d forsøg tilbage.</item>
@@ -38,7 +34,6 @@
   <string name="auth_error_verifying_password">Fejl ved bekræftelse af din adgangskode</string>
   <string name="auth_error_empty_password">Adgangskode kan ikke være tom</string>
   <string name="auth_error_pin_cannot_be_empty">Pinkode må ikke være tom</string>
-  <string name="auth_error_pin_too_short">Pinkoden skal være på mindst 4 tegn</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Forkert adgangskode. %d forsøg tilbage</item>
     <item quantity="other">Forkert adgangskode. %d forsøg tilbage</item>

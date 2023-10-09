@@ -3,7 +3,7 @@
   <string name="updates_notification_channel_name">Updates</string>
   <string name="autofill_notification_channel_name">Autom. aanvullen</string>
   <string name="autofill_notification_copy_to_clipboard_title">TOTP-code</string>
-  <string name="autofill_notification_copy_to_clipboard_body">TOTP is naar het klembord gekopieerd</string>
+  <string name="autofill_notification_copy_to_clipboard_body">De TOTP-code is naar het klembord gekopieerd.</string>
   <string name="updates_new_invite_received_title">U heeft een uitnodiging ontvangen</string>
   <string name="updates_new_invite_received_message">U bent uitgenodigd tot een kluis. Open de app om de uitnodiging te zien en te accepteren.</string>
 </resources>

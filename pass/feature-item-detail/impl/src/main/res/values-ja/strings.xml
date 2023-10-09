@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">開く</string>
+  <string name="action_copy">コピー</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Could not initialize the element</string>
+  <string name="top_bar_edit_button_text">編集</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">エイリアスのアドレス</string>
+  <string name="alias_copied_to_clipboard">コピーされたエイリアス</string>
+  <string name="alias_detail_field_mailboxes_title">転送先</string>
+  <string name="alias_create_login_from_alias">ログイン情報を作成</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">メモ</string>
+  <string name="note_detail_copy_note_to_clipboard">メモをコピー</string>
+  <string name="note_copied_to_clipboard">メモがクリップボードにコピーされました</string>
+  <!-- Login details -->
+  <string name="username_copied_to_clipboard">ユーザー名をコピーしました</string>
+  <string name="password_copied_to_clipboard">パスワードをコピーしました</string>
+  <string name="website_copied_to_clipboard">コピーされたウェブサイト</string>
+  <string name="totp_copied_to_clipboard">コピーされた TOTP コード</string>
+  <string name="field_copied_to_clipboard">コピーされたフィールド</string>
+  <string name="move_item_to_trash_message">項目をごみ箱に移動されました</string>
+  <string name="error_move_item_to_trash_message">ごみ箱への移動中のエラー</string>
+  <string name="item_permanently_deleted_message">項目は永久に削除されました</string>
+  <string name="item_permanently_deleted_message_error">項目の削除エラー</string>
+  <string name="item_restored_message">項目を復旧</string>
+  <string name="item_restored_message_error">項目の復元中エラー</string>
+  <string name="login_item_generate_totp_error">2要素認証コードの生成中エラー</string>
+  <string name="login_item_view_alias_button">エイリアスを表示</string>
+  <string name="field_username">ユーザー名またはメールアドレス</string>
+  <string name="field_password">パスワード</string>
+  <string name="websites_section_title">ウェブサイト</string>
+  <string name="totp_section_title">2 要素認証トークン (TOTP)</string>
+  <string name="action_reveal_password">パスワードを表示する</string>
+  <string name="action_conceal_password">パスワードを隠す</string>
+  <string name="action_reveal_number">数を表示</string>
+  <string name="action_conceal_number">数を隠す</string>
+  <string name="more_info_created">作成:</string>
+  <string name="more_info_modified">更新:</string>
+  <string name="more_info_autofilled">自動入力:</string>
+  <string name="more_info_title">詳細情報</string>
+  <string name="more_info_icon">詳細情報アイコン</string>
+  <plurals name="more_info_modified_times">
+    <item quantity="other">%d 回</item>
+  </plurals>
+  <string name="more_info_last_time_modified">%s に最後の使用</string>
+  <string name="open_menu_icon_content_description">メニューを開くボタン</string>
+  <string name="mfa_limit_reached">2要素認証 制限に達しました</string>
+  <string name="mfa_icon_content_description">2要素認証 アイコン</string>
+  <string name="custom_field_text_icon_description">テキストのカスタムフィールド</string>
+  <string name="custom_field_hidden_icon_description">カスタムフィールドを非表示</string>
+  <string name="custom_field_totp_icon_description">2 要素認証のカスタムフィールド</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">カードの名義人名</string>
+  <string name="credit_card_number_field_name">カード番号</string>
+  <string name="credit_card_cvv_field_name">セキュリティコード</string>
+  <string name="credit_card_pin_field_name">PIN code</string>
+  <string name="credit_card_expiration_date_field_name">有効期限</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">カードの名義がクリップボードにコピーされました</string>
+  <string name="credit_card_number_copied_to_clipboard">カード番号がクリップボードにコピーされました</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">認証番号がクリップボードにコピーされました</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">ごみ箱に移動</string>
+  <string name="migrate_item_detail_bottom_sheet">別の保管庫に移動</string>
+  <!-- More info -->
+  <string name="date_today">今日 %s</string>
+  <string name="date_yesterday">昨日 %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">LLLL dd HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">yyyy LLLL dd HH:mm</string>
+</resources>

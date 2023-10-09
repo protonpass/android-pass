@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">Uw kluis is leeg.</string>
   <string name="home_empty_vault_subtitle">Ga aan de slag door uw eerste item te maken.</string>
   <string name="home_empty_vault_create_login">Login aanmaken</string>
-  <string name="home_empty_vault_create_alias">Maak een Hide-my-email-alias</string>
+  <string name="home_empty_vault_create_alias">Maak een hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Notitie aanmaken</string>
-  <string name="error_observing_items">Fout op items</string>
-  <string name="error_observing_share">Fout bij het delen</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fout bij het laden van items</string>
   <string name="error_refreshing">Fout bij vernieuwen</string>
   <string name="home_snackbar_login_moved_to_trash">Login verplaatst naar prullenbak</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias verplaatst naar prullenbak</string>
   <string name="home_snackbar_note_moved_to_trash">Notitie verplaatst naar prullenbak</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kredietkaart verplaatst naar prullenbak</string>
-  <string name="home_snackbar_move_to_trash_error">Kon niet verplaatsen naar prullenbak</string>
+  <string name="home_snackbar_move_to_trash_error">Item kon niet verplaatst worden naar prullenbak.</string>
   <string name="home_autofill_banner_title">Geniet van de magie van Automatisch aanvullen</string>
   <string name="home_autofill_banner_text">Eén keer tikken en je gebruikersnaam en wachtwoord zijn direct ingevuld.</string>
   <string name="home_autofill_banner_settings">Automatisch aanvullen inschakelen ›</string>
@@ -39,7 +38,6 @@
   <string name="username_copied_to_clipboard">Gebruikersnaam gekopieerd</string>
   <string name="password_copied_to_clipboard">Wachtwoord gekopieerd</string>
   <string name="credit_card_number_copied_to_clipboard">Kredietkaartnummer gekopieerd</string>
-  <string name="credit_card_pin_copied_to_clipboard">Kredietkaartpin gekopieerd</string>
   <string name="credit_card_cvv_copied_to_clipboard">Kredietkaart-CVV gekopieerd</string>
   <string name="item_too_long_copied_to_clipboard">Inhoud was te lang, gedeeltelijk gekopieerd naar het klembord</string>
   <!-- Vault drawer -->

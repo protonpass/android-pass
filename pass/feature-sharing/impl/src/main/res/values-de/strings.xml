@@ -77,7 +77,7 @@
   <string name="sharing_bottomsheet_remove_access">Zugriff entfernen</string>
   <string name="sharing_bottomsheet_resend_invite">Einladung erneut senden</string>
   <string name="sharing_bottomsheet_cancel_invite">Einladung verwerfen</string>
-  <string name="sharing_transfer_ownership_confirm_title">Besitzer ändern</string>
+  <string name="sharing_transfer_ownership_confirm_title">Inhaberschaft übertragen</string>
   <string name="sharing_transfer_ownership_confirm_message">Bist du dir sicher, dass du den Besitzer zu %s ändern willst?</string>
   <string name="sharing_snackbar_cancel_invite_success">Einladung abgebrochen</string>
   <string name="sharing_snackbar_cancel_invite_error">Fehler beim Abbrechen der Einladung.</string>

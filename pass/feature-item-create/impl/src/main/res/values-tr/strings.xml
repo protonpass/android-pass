@@ -9,11 +9,11 @@
   <string name="action_note">Not</string>
   <string name="action_credit_card">Kredi kartı</string>
   <string name="action_password">Parola</string>
-  <string name="item_type_login_description">Bir uygulama ya da sitenin oturum açma bilgilerini ekleyin</string>
-  <string name="item_type_alias_description">Yeni uygulamalarda kullanmak için bir takma e-posta adresi alın</string>
-  <string name="item_type_note_description">Bir PIN kodu ya da kendinize bir not yazın</string>
-  <string name="item_type_credit_card_description">Ödeme bilgilerinizi güvenle kaydedin</string>
-  <string name="item_type_password_description">Güvenli bir parola oluşturun</string>
+  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Bir uygulama ya da sitenin oturum açma bilgilerini ekleyin</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Yeni uygulamalarda kullanmak için bir takma e-posta adresi alın</string>
+  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Bir PIN kodu ya da kendinize bir not yazın</string>
+  <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Ödeme bilgilerinizi güvenle kaydedin</string>
+  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Güvenli bir parola oluşturun</string>
   <!-- Create Login -->
   <string name="title_create_login">Oturum açma kaydı oluştur</string>
   <string name="field_username_title">Kullanıcı adı ya da e-posta adresi</string>
@@ -24,9 +24,9 @@
   <string name="field_website_address_invalid">Adres geçersiz</string>
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Ekle</string>
-  <string name="sticky_button_generate_password">Yeni parola oluştur</string>
-  <string name="sticky_button_create_alias">Hide My Email</string>
-  <string name="sticky_button_use_account_email">%s kullanılsın</string>
+  <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Yeni parola oluştur</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide My Email</string>
+  <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">%s kullanılsın</string>
   <string name="create_login_item_creation_error">Oturum açma kaydı oluşturulamadı</string>
   <string name="create_login_item_update_error">Oturum açma kaydı güncellenemedi</string>
   <string name="create_login_init_error">Oturum açma hazırlanamadı</string>
@@ -40,7 +40,7 @@
   <string name="bottomsheet_custom_field_option_edit">Başlığı düzenle</string>
   <string name="bottomsheet_custom_field_option_remove">Alanı kaldır</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Özel alanı kaldır</string>
-  <string name="create_login_add_custom_field_button">Başka ekle</string>
+  <string name="create_login_add_custom_field_button">Başka bir alan ekle</string>
   <string name="custom_field_hidden_placeholder">Gizli içeriğiniz</string>
   <string name="custom_field_hidden_icon_content_description">Gizli özel alan simgesi</string>
   <string name="custom_field_text_placeholder">İçeriğiniz</string>
@@ -53,10 +53,7 @@
   <string name="create_note_item_creation_error">Not oluşturulamadı</string>
   <string name="create_note_item_update_error">Not güncellenemedi</string>
   <string name="create_note_init_error">Not hazırlanamadı</string>
-  <string name="create_note_empty_share_id">Paylaşım kimliği boş olamaz</string>
   <string name="note_created">Not oluşturuldu</string>
-  <string name="edit_note_snackbar_note_moved_to_trash">Not çöpe atıldı</string>
-  <string name="edit_note_snackbar_note_moved_to_trash_error">Not silinemedi</string>
   <!-- Create Alias -->
   <string name="title_create_alias">Takma ad oluştur</string>
   <string name="field_alias_title">Takma ad adresi</string>
@@ -74,9 +71,7 @@
   <string name="alias_rate_limited">Kısa sürede çok fazla sayıda takma ad oluşturuldu</string>
   <string name="create_alias_item_update_error">Takma ad güncellenemedi</string>
   <string name="create_alias_init_error">Takma ad hazırlanamadı</string>
-  <string name="create_alias_empty_share_id">Paylaşım kimliği boş olamaz</string>
   <string name="alias_created">Takma ad oluşturuldu</string>
-  <string name="alias_moved_to_trash">Takma ad çöpe atıldı</string>
   <string name="cannot_retrieve_alias_options">Takma ad seçenekleri alınamadı</string>
   <string name="alias_mailbox_dialog_title">Şuraya ilet</string>
   <!-- Create note -->

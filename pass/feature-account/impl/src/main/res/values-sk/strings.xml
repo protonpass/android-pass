@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Účet</string>
+  <string name="account_username_label">Používateľské meno</string>
+  <string name="account_subscription_label">Predplatné</string>
+  <string name="account_permanently_delete_warning">Týmto sa natrvalo vymaže váš účet a všetky jeho dáta. Tento účet už nebude možné znovu aktivovať.</string>
+  <string name="account_delete_account">Odstrániť účet.</string>
+  <string name="account_delete_account_icon_content_description">Tlačidlo odstránenia účtu</string>
+  <string name="account_sign_out">Odhlásiť sa</string>
+  <string name="account_sign_out_icon_content_description">Tlačidlo odhlásenia</string>
+  <string name="account_manage_subscription">Spravovať predplatné</string>
+  <string name="account_get_user_info_error">Nepodarilo sa získať informácie o používateľovi</string>
+  <string name="manage_subscription_icon_content_description">Tlačidlo správy predplatného</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Odhlásiť sa?</string>
+  <string name="alert_confirm_sign_out_message">Naozaj sa chcete odhlásiť?</string>
+</resources>

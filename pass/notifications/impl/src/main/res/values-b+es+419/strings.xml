@@ -3,7 +3,7 @@
   <string name="updates_notification_channel_name">Actualizaciones</string>
   <string name="autofill_notification_channel_name">Completar automáticamente</string>
   <string name="autofill_notification_copy_to_clipboard_title">Código TOTP</string>
-  <string name="autofill_notification_copy_to_clipboard_body">Código TOTP copiado al portapapeles</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP copiado al portapapeles</string>
   <string name="updates_new_invite_received_title">Ha recibido una invitación</string>
   <string name="updates_new_invite_received_message">Se le ha invitado a una bóveda. Abra la app para ver la invitación y aceptarla.</string>
 </resources>

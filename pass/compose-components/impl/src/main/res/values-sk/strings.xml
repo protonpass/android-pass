@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Názov (A-Z)</string>
+  <string name="sort_by_title_desc">Názov (Z-A)</string>
+  <string name="sort_by_creation_asc">Od najstaršieho po najnovšie</string>
+  <string name="sort_by_creation_desc">Od najnovšieho po najstaršie</string>
+  <string name="sort_by_modification_date">Najnovšie</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Všetko</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">výsledok</item>
+    <item quantity="few">výsledky</item>
+    <item quantity="many">výsledkov</item>
+    <item quantity="other">výsledkov</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Potvrdiť</string>
+  <string name="bottomsheet_cancel_button">Zrušiť</string>
+  <string name="bottomsheet_move_to_trash">Presunúť do koša</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ponuka akcií otvorenia položky</string>
+  <string name="action_upgrade_now">Upgradovať teraz</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Pridajte prvú položku</string>
+  <string name="empty_search_results_title">Žiadne nájdené výsledky</string>
+  <string name="empty_list_open_extension">Navštíviť webové rozšírenie</string>
+  <string name="empty_list_create_item_button">Vytvoriť novú položku</string>
+  <!-- Field -->
+  <string name="field_title_title">Názov</string>
+  <string name="field_title_hint">Bez názvu</string>
+  <string name="field_title_required">Názov je povinný</string>
+  <string name="small_cross_icon_content_description">Ikona malého kríža</string>
+  <string name="field_note_title">Poznámka</string>
+  <string name="field_note_hint">Pridať poznámku</string>
+  <string name="linked_apps_title">Prepojené aplikácie</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Offline</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Ikona chýbajúcej aplikácie</string>
+  <string name="add_item_icon_content_description">Ikona pridania položky</string>
+  <string name="navigate_back_icon_content_description">Ikona návratu späť</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Trezor</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Zoznam položiek</string>
+  <string name="bottom_bar_add_item_icon_content_description">Pridať položku</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Dnes</string>
+  <string name="most_recent_yesterday">Včera</string>
+  <string name="most_recent_this_week">Tento týždeň</string>
+  <string name="most_recent_last_two_weeks">Posledné 2 týždne</string>
+  <string name="most_recent_last_30_days">Posledných 30 dní</string>
+  <string name="most_recent_last_60_days">Posledných 60 dní</string>
+  <string name="most_recent_last_90_days">Posledných 90 dní</string>
+  <string name="most_recent_within_the_last_year">Za posledný rok</string>
+  <string name="most_recent_more_than_1_year">Viac ako 1 rok</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Ikona vyhľadávania</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Ikona možnosti</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 položka</item>
+    <item quantity="few">%d položky</item>
+    <item quantity="many">%d položiek</item>
+    <item quantity="other">%d položiek</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Zahodiť zmeny?</string>
+  <string name="confirm_close_dialog_message">Máte neuložené zmeny, naozaj ich chcete zahodiť?</string>
+  <string name="confirm_close_dialog_close_button">Zahodiť</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Upgradovať</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Rozšírené možnosti</string>
+  <string name="hide_advanced_options">Skryť rozšírené možnosti</string>
+</resources>

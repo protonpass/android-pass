@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Configure o Proton Pass para desbloquear com a sua impressão digital, assim, apenas você terá acesso.</string>
   <string name="on_boarding_fingerprint_title">Proteja os seus dados mais sensíveis</string>
   <string name="on_boarding_fingerprint_button">Ativar o desbloqueio por impressão digital</string>
-  <string name="on_boarding_last_page_content">Pare de partilhar o seu endereço de e-mail real. Em vez disso, oculte-o com aliases de email, uma exclusividade do Proton Pass.</string>
+  <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead, hide it with email aliases—a Proton Pass exclusive.</string>
   <string name="on_boarding_last_page_title">Controle o que chega na sua caixa de entrada.</string>
   <string name="on_boarding_last_page_button">Comece a utilizar o Proton Pass</string>
   <string name="on_boarding_skip">Agora não</string>

@@ -94,6 +94,8 @@ import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -102,9 +104,13 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
+import proton.pass.domain.Vault
+import proton.pass.domain.canCreate
+import proton.pass.domain.toPermissions
 import java.net.URI
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class SelectItemViewModel @Inject constructor(
     private val updateAutofillItem: UpdateAutofillItem,
@@ -122,6 +128,7 @@ class SelectItemViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     observeUpgradeInfo: ObserveUpgradeInfo,
     clock: Clock,
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     init {
@@ -169,10 +176,11 @@ class SelectItemViewModel @Inject constructor(
 
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         planTypeFlow,
-        vaultsFlow
-    ) { plan, vaults -> plan to vaults }
-        .flatMapLatest { planAndVaults ->
-            val (planType, vaultsRes) = planAndVaults
+        vaultsFlow,
+        ffRepo.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
+    ) { plan, vaults, removePrimaryVaultFlag -> Triple(plan, vaults, removePrimaryVaultFlag) }
+        .flatMapLatest { data ->
+            val (planType, vaultsRes, removePrimaryVaultFlag) = data
 
             val vaults = when (vaultsRes) {
                 is LoadingResult.Success -> vaultsRes.data
@@ -184,15 +192,8 @@ class SelectItemViewModel @Inject constructor(
                 LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
             }
 
-            val selection = when (planType) {
-                is PlanType.Paid, is PlanType.Trial -> ShareSelection.AllShares
-                else -> {
-                    val primaryVault = vaults.firstOrNull { it.isPrimary }
-                        ?: vaults.firstOrNull()
-                        ?: return@flatMapLatest flowOf(LoadingResult.Error(IllegalStateException("No vaults found")))
-                    ShareSelection.Share(primaryVault.shareId)
-                }
-            }
+            val selection = getShareSelection(planType, vaults, removePrimaryVaultFlag)
+                ?: return@flatMapLatest flowOf(LoadingResult.Error(IllegalStateException("No vaults found")))
 
             observeActiveItems(
                 filter = ItemTypeFilter.Logins,
@@ -476,6 +477,27 @@ class SelectItemViewModel @Inject constructor(
                     .onFailure {
                         PassLogger.w(TAG, "Could not copy totp code")
                     }
+            }
+        }
+    }
+
+    private fun getShareSelection(
+        planType: PlanType,
+        vaults: List<Vault>,
+        removePrimaryVaultFeatureFlag: Boolean
+    ): ShareSelection? {
+        return when (planType) {
+            is PlanType.Paid, is PlanType.Trial -> ShareSelection.AllShares
+            else -> if (removePrimaryVaultFeatureFlag) {
+                val writeableVaults = vaults
+                    .filter { it.role.toPermissions().canCreate() }
+                    .map { it.shareId }
+                ShareSelection.Shares(writeableVaults)
+            } else {
+                val primaryVault = vaults.firstOrNull { it.isPrimary }
+                    ?: vaults.firstOrNull()
+                    ?: return null
+                ShareSelection.Share(primaryVault.shareId)
             }
         }
     }

@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -31,10 +32,14 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.pass.domain.Item
 import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
+import proton.pass.domain.canCreate
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 class GetSuggestedLoginItemsImpl @Inject constructor(
@@ -42,7 +47,8 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
     private val observeActiveItems: ObserveActiveItems,
     private val suggestionItemFilter: SuggestionItemFilterer,
     private val suggestionSorter: SuggestionSorter,
-    private val observeVaults: ObserveVaults
+    private val observeVaults: ObserveVaults,
+    private val ffRepo: FeatureFlagsPreferencesRepository
 ) : GetSuggestedLoginItems {
     override fun invoke(
         packageName: Option<String>,
@@ -51,11 +57,33 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
         .flatMapLatest {
             val flow = when (it.planType) {
                 is PlanType.Paid, is PlanType.Trial -> observeActiveItems(filter = ItemTypeFilter.Logins)
-                else -> observeActiveItemsForPrimaryVault()
+                else -> {
+                    val isRemovePrimaryVaultFlagEnabled = ffRepo
+                        .get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
+                        .firstOrNull()
+                        ?: false
+
+                    if (isRemovePrimaryVaultFlagEnabled) {
+                        observeActiveItemsForWriteableVaults()
+                    } else {
+                        observeActiveItemsForPrimaryVault()
+                    }
+                }
             }
             flow
                 .map { items -> suggestionItemFilter.filter(items, packageName, url) }
                 .map { suggestions -> suggestionSorter.sort(suggestions, url) }
+        }
+
+    private fun observeActiveItemsForWriteableVaults(): Flow<List<Item>> = observeVaults()
+        .flatMapLatest { vaults ->
+            val writeableVaults = vaults
+                .filter { it.role.toPermissions().canCreate() }
+                .map { it.shareId }
+            observeActiveItems(
+                filter = ItemTypeFilter.Logins,
+                shareSelection = ShareSelection.Shares(writeableVaults)
+            )
         }
 
     private fun observeActiveItemsForPrimaryVault(): Flow<List<Item>> = getPrimaryVault()

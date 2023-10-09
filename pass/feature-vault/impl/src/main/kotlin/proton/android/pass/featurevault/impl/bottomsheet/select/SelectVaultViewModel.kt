@@ -31,26 +31,27 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
-import proton.pass.domain.canCreate
-import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel
 class SelectVaultViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val canCreateItemInVault: CanCreateItemInVault,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandle: SavedStateHandleProvider,
-    canPerformPaidAction: CanPerformPaidAction
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val selected: ShareId = ShareId(savedStateHandle.get().require(SelectedVaultArg.key))
@@ -58,14 +59,14 @@ class SelectVaultViewModel @Inject constructor(
     val state: StateFlow<SelectVaultUiState> = combine(
         observeVaultsWithItemCount().asLoadingResult(),
         observeUpgradeInfo().asLoadingResult(),
-        canPerformPaidAction().asLoadingResult()
-    ) { vaultsResult, upgradeResult, selectOtherVaultResult ->
+        ffRepo.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
+    ) { vaultsResult, upgradeResult, removePrimaryVault ->
         when (vaultsResult) {
             LoadingResult.Loading -> SelectVaultUiState.Loading
             is LoadingResult.Success -> successState(
                 vaults = vaultsResult.data,
-                selectOtherVaultResult = selectOtherVaultResult,
-                upgradeResult = upgradeResult
+                upgradeResult = upgradeResult,
+                removePrimaryVault = removePrimaryVault
             )
 
             is LoadingResult.Error -> {
@@ -82,46 +83,36 @@ class SelectVaultViewModel @Inject constructor(
 
     private suspend fun successState(
         vaults: List<VaultWithItemCount>,
-        selectOtherVaultResult: LoadingResult<Boolean>,
-        upgradeResult: LoadingResult<UpgradeInfo>
+        upgradeResult: LoadingResult<UpgradeInfo>,
+        removePrimaryVault: Boolean
     ): SelectVaultUiState {
-        val canSelectOtherVault = selectOtherVaultResult.getOrNull() ?: false
-
-        val showUpgradeMessage = if (canSelectOtherVault) {
-            false
-        } else {
-            upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
-        }
+        val showUpgradeMessage = upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
 
         val shares = vaults.map { it.vault.shareId }
         return if (shares.contains(selected)) {
             val selectedVault = vaults.first { it.vault.shareId == selected }
             val vaultsList = vaults.map { vault ->
-                val permissions = vault.vault.role.toPermissions()
-                when {
-                    vault.vault.isPrimary -> VaultWithStatus(
-                        vault = vault,
-                        status = VaultStatus.Selectable
-                    )
-                    !canSelectOtherVault -> VaultWithStatus(
-                        vault = vault,
-                        status = VaultStatus.Disabled(VaultStatus.Reason.Downgraded)
-                    )
-                    !permissions.canCreate() -> VaultWithStatus(
-                        vault = vault,
-                        status = VaultStatus.Disabled(VaultStatus.Reason.ReadOnly)
-                    )
-                    else -> VaultWithStatus(
-                        vault = vault,
-                        status = VaultStatus.Selectable
-                    )
+                val status = if (canCreateItemInVault(vault.vault)) {
+                    VaultStatus.Selectable
+                } else {
+                    if (vault.vault.isOwned) {
+                        VaultStatus.Disabled(VaultStatus.Reason.Downgraded)
+                    } else {
+                        VaultStatus.Disabled(VaultStatus.Reason.ReadOnly)
+                    }
                 }
+
+                VaultWithStatus(
+                    vault = vault,
+                    status = status
+                )
             }
 
             SelectVaultUiState.Success(
                 vaults = vaultsList.toImmutableList(),
                 selected = selectedVault,
-                showUpgradeMessage = showUpgradeMessage
+                showUpgradeMessage = showUpgradeMessage,
+                removePrimaryVaultEnabled = removePrimaryVault
             )
         } else {
             PassLogger.w(TAG, "Error finding current vault")

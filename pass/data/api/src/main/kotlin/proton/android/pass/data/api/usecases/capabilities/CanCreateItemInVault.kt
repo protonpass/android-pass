@@ -21,21 +21,5 @@ package proton.android.pass.data.api.usecases.capabilities
 import proton.pass.domain.Vault
 
 interface CanCreateItemInVault {
-    suspend operator fun invoke(vault: Vault): CanCreateResult
-
-    sealed interface CanCreateResult {
-        object CanCreate : CanCreateResult
-        data class CannotCreate(val reason: Reason) : CanCreateResult
-
-        fun value(): Boolean = when (this) {
-            is CanCreate -> true
-            is CannotCreate -> false
-        }
-
-        sealed interface Reason {
-            object NoCreatePermission : Reason
-            object Downgraded : Reason
-            object Unknown : Reason
-        }
-    }
+    operator fun invoke(vault: Vault): Boolean
 }

@@ -26,15 +26,11 @@ import javax.inject.Singleton
 @Singleton
 class TestCanCreateItemInVault @Inject constructor() : CanCreateItemInVault {
 
-    private var result: Result<CanCreateItemInVault.CanCreateResult> = Result.success(
-        CanCreateItemInVault.CanCreateResult.CanCreate
-    )
+    private var result = true
 
-    fun setResult(value: Result<CanCreateItemInVault.CanCreateResult>) {
+    fun setResult(value: Boolean) {
         result = value
     }
 
-    override suspend fun invoke(vault: Vault): CanCreateItemInVault.CanCreateResult =
-        result.getOrThrow()
-
+    override fun invoke(vault: Vault) = result
 }

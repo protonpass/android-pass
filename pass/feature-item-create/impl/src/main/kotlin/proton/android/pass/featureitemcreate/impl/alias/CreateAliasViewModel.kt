@@ -195,8 +195,6 @@ open class CreateAliasViewModel @Inject constructor(
                         .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
                 }
 
-                val mailboxTitle = getMailboxTitle(mailboxes)
-
                 val suffix = if (
                     selectedSuffix is Some &&
                     aliasOptions.suffixes.contains(selectedSuffix.value)
@@ -215,7 +213,6 @@ open class CreateAliasViewModel @Inject constructor(
                     aliasOptions = aliasOptions,
                     selectedSuffix = suffix,
                     mailboxes = mailboxes,
-                    mailboxTitle = mailboxTitle,
                     aliasToBeCreated = aliasToBeCreated
                 )
             }

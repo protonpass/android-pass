@@ -67,14 +67,14 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
         SELECT * FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
-    abstract fun observerAllForShare(
+    abstract fun observeAllForShares(
         userId: String,
-        shareId: String,
+        shareIds: List<String>,
         itemState: Int?
     ): Flow<List<ItemEntity>>
 
@@ -82,7 +82,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
         SELECT * FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
           AND ${ItemEntity.Columns.ITEM_TYPE} = :itemType
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
@@ -90,7 +90,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     )
     abstract fun observeAllForShare(
         userId: String,
-        shareId: String,
+        shareIds: List<String>,
         itemState: Int?,
         itemType: Int
     ): Flow<List<ItemEntity>>

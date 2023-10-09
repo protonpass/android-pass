@@ -107,8 +107,19 @@ class UpdateAliasViewModel @Inject constructor(
     val updateAliasUiState: StateFlow<UpdateAliasUiState> = combine(
         flowOf(navShareId),
         baseAliasUiState,
-        ::UpdateAliasUiState
-    ).stateIn(
+        selectedMailboxListState
+    ) { shareId, aliasUiState, mailboxList ->
+        aliasItemFormMutableState = aliasItemFormState.copy(
+            mailboxes = aliasItemFormState.mailboxes.map {
+                it.copy(selected = mailboxList.contains(it.model.id))
+            }
+        )
+
+        UpdateAliasUiState(
+            selectedShareId = shareId,
+            baseAliasUiState = aliasUiState
+        )
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = UpdateAliasUiState.Initial
@@ -192,7 +203,6 @@ class UpdateAliasViewModel @Inject constructor(
                         selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                         mailboxes = mailboxes,
                         aliasToBeCreated = email,
-                        mailboxTitle = getMailboxTitle(mailboxes)
                     )
                 } else {
                     aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
@@ -204,7 +214,6 @@ class UpdateAliasViewModel @Inject constructor(
                             selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                             mailboxes = mailboxes,
                             aliasToBeCreated = email,
-                            mailboxTitle = getMailboxTitle(mailboxes)
                         )
                     }
                 }

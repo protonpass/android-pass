@@ -3,7 +3,7 @@
   <string name="action_open">Öffnen</string>
   <string name="action_copy">Kopieren</string>
   <!-- Detail -->
-  <string name="detail_init_error">Element konnte nicht initialisiert werden</string>
+  <string name="detail_init_error">Fehler beim Initialisieren des Elements</string>
   <string name="top_bar_edit_button_text">Bearbeiten</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias-Adresse</string>
@@ -61,7 +61,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">Name des Karteninhabers in die Zwischenablage kopiert</string>
   <string name="credit_card_number_copied_to_clipboard">Kartennummer in die Zwischenablage kopiert</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Kartenprüfnummer in die Zwischenablage kopiert</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN in die Zwischenablage kopiert</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">In Papierkorb verschieben</string>
   <string name="migrate_item_detail_bottom_sheet">In einen anderen Tresor verschieben</string>

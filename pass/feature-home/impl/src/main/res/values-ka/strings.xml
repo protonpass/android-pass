@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">თქვენი საცავი ცარიელია</string>
   <string name="home_empty_vault_subtitle">დაიწყეთ თქვენი პირველი ელემენტი შექმნით.</string>
   <string name="home_empty_vault_create_login">შესვლის ჩანაწერის შექმნა</string>
-  <string name="home_empty_vault_create_alias">შექმენით Hide My Email-ის ფსევდონიმი</string>
+  <string name="home_empty_vault_create_alias">Hide-my-email-ის ფსევდონიმის შექმნა</string>
   <string name="home_empty_vault_create_note">შენიშვნის შექმნა</string>
-  <string name="error_observing_items">ელემენტების დათვალიერების შეცდომა</string>
-  <string name="error_observing_share">გაზიარებულის დათვალიერების შეცდომა</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">ელემენტების ჩატვირთვის შეცდომა</string>
   <string name="error_refreshing">განახლების შეცდომა</string>
   <string name="home_snackbar_login_moved_to_trash">შესვლის ჩანაწერი გადატანილია ნაგვის ყუთში</string>
   <string name="home_snackbar_alias_moved_to_trash">ფსევდონიმი გადატანილია ნაგვის ყუთში</string>
   <string name="home_snackbar_note_moved_to_trash">შენიშვნა გადატანილია ნაგვის ყუთში</string>
   <string name="home_snackbar_credit_card_moved_to_trash">საკრედიტო ბარათი ნაგვის ყუთშია გადატანილი</string>
-  <string name="home_snackbar_move_to_trash_error">სანაგვე ყუთში გადატანის შეცდომა</string>
+  <string name="home_snackbar_move_to_trash_error">ელემენტის ნაგვის ყუთში გადატანის შეცდომა</string>
   <string name="home_autofill_banner_title">ისიამოვნეთ ავტომატური შევსების ჯადოქრობით</string>
   <string name="home_autofill_banner_text">ერთი დატყაპუნება და-ეგაა!-თქვენი მომხმარებლის სახელი და პაროლი ავტომატურად შეივსება.</string>
   <string name="home_autofill_banner_settings">ავტომატური შევსების ჩართვა ›</string>
@@ -39,7 +38,6 @@
   <string name="username_copied_to_clipboard">მომხმარებლის სახელი დაკოპირდა</string>
   <string name="password_copied_to_clipboard">პაროლი დაკოპირდა</string>
   <string name="credit_card_number_copied_to_clipboard">საკრედიტო ბარათის ნომერი დაკოპირდა</string>
-  <string name="credit_card_pin_copied_to_clipboard">საკრედიტო ბარათის PIN კოდი დაკოპირდა</string>
   <string name="credit_card_cvv_copied_to_clipboard">საკრედიტო ბარათის CVV კოდი დაკოპირდა</string>
   <string name="item_too_long_copied_to_clipboard">შემცველობა მეტისმეტად გრძელია, ბუფერში, მხოლოდ, ნაწილობრივ დაკოპირდა</string>
   <!-- Vault drawer -->

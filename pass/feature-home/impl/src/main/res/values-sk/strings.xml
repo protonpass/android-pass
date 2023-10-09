@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Home -->
+  <string name="home_empty_vault_title">Váš trezor je prázdny</string>
+  <string name="home_empty_vault_subtitle">Začnite vytvorením prvej položky.</string>
+  <string name="home_empty_vault_create_login">Vytvoriť prihlásenie</string>
+  <string name="home_empty_vault_create_alias">Vytvoriť hide-my-email alias</string>
+  <string name="home_empty_vault_create_note">Vytvoriť poznámku</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Chyba pri načítaní položiek</string>
+  <string name="error_refreshing">Chyba pri obnovovaní</string>
+  <string name="home_snackbar_login_moved_to_trash">Prihlásenie presunuté do koša</string>
+  <string name="home_snackbar_alias_moved_to_trash">Alias presunutý do koša</string>
+  <string name="home_snackbar_note_moved_to_trash">Poznámka presunutá do koša</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">Platobná karta presunutá do koša</string>
+  <string name="home_snackbar_move_to_trash_error">Položka nemôže byť presunutá do koša</string>
+  <string name="home_autofill_banner_title">Vychutnajte si čaro automatického vypĺňania</string>
+  <string name="home_autofill_banner_text">Jedno ťuknutie a hotovo! Vaše používateľské meno a heslo sa okamžite vyplní.</string>
+  <string name="home_autofill_banner_settings">Zapnúť automatické vypĺňanie ›</string>
+  <string name="home_trial_banner_title">Užite si bezplatné skúšobné obdobie</string>
+  <string name="home_trial_banner_text">Pozrite si všetky exkluzívne funkcie, ktoré máte k dispozícii na obmedzený čas.</string>
+  <string name="home_trial_banner_settings">Viac informácií ›</string>
+  <string name="home_notification_permission_banner_title">Získajte dôležité novinky</string>
+  <string name="home_notification_permission_banner_text">Povoľte push oznámenia, aby ste boli informovaní, keď s vami ostatní zdieľajú trezor.</string>
+  <string name="home_notification_permission_banner_settings">Povoľte povolenie ›</string>
+  <string name="home_invite_banner_title">Pozvánka do zdieľaného trezora</string>
+  <string name="home_invite_banner_subtitle">Boli ste pozvaní do trezora. Klepnutím sem pre zobrazenie pozvánky.</string>
+  <!-- Common bottomsheet -->
+  <string name="bottomsheet_copy_password">Kopírovať heslo</string>
+  <string name="bottomsheet_copy_username">Kopírovať meno používateľa</string>
+  <string name="bottomsheet_copy_alias">Kopírovať emailovú adresu</string>
+  <string name="bottomsheet_copy_number">Kopírovať číslo</string>
+  <string name="bottomsheet_copy_cvv">Kopírovať CVV</string>
+  <string name="bottomsheet_copy_note">Kopírovať poznámku</string>
+  <string name="bottomsheet_edit">Upraviť</string>
+  <!-- Clipboard -->
+  <string name="alias_copied_to_clipboard">Alias skopírovaný</string>
+  <string name="note_copied_to_clipboard">Poznámka skopírovaná</string>
+  <string name="username_copied_to_clipboard">Požívateľské meno skopírované</string>
+  <string name="password_copied_to_clipboard">Heslo skopírované</string>
+  <string name="credit_card_number_copied_to_clipboard">Číslo platobnej karty skopírované</string>
+  <string name="credit_card_cvv_copied_to_clipboard">CVV platobnej karty skopírovaný</string>
+  <string name="item_too_long_copied_to_clipboard">Obsah bol príliš dlhý, čiastočne skopírovaný do schránky</string>
+  <!-- Vault drawer -->
+  <string name="vault_drawer_vaults_title">Trezory</string>
+  <string name="vault_drawer_vaults_item_count">%d položiek</string>
+  <string name="vault_drawer_create_vault">Vytvoriť trezor</string>
+  <string name="vault_drawer_item_trash">Kôš</string>
+  <string name="vault_drawer_all_vaults">Všetky trezory</string>
+  <!-- Vault management -->
+  <string name="vault_delete_dialog_title">Odstrániť trezor</string>
+  <string name="vault_delete_dialog_cancel_action">Zrušiť</string>
+  <string name="vault_delete_dialog_delete_action">Odstrániť</string>
+  <string name="snackbar_delete_vault_success">Trezor odstránený</string>
+  <string name="snackbar_delete_vault_error">Trezor nebol odstránený</string>
+  <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_vaults">Vyhľadávať vo všetkých trezoroch...</string>
+  <string name="search_topbar_placeholder_vault">Vyhľadávať v %s...</string>
+  <string name="search_topbar_placeholder_trash">Vyhľadávať v koši...</string>
+  <string name="item_type_filter_list_icon_content_description">Ikona typu položky</string>
+  <string name="item_type_filter_all">Všetko</string>
+  <string name="item_type_filter_login">Prihlásenie</string>
+  <string name="item_type_filter_alias">Alias</string>
+  <string name="item_type_filter_note">Poznámka</string>
+  <string name="item_type_filter_credit_card">Karta</string>
+  <!-- Trash -->
+  <string name="trash_empty_list_title">Kôš je prázdny</string>
+  <string name="trash_empty_list_message">Položky presunuté do koša sa zobrazujú tu.</string>
+  <string name="bottomsheet_trash_all_items_title">Kôš</string>
+  <string name="bottomsheet_restore_all_items">Obnoviť všetky položky</string>
+  <string name="bottomsheet_empty_trash">Vyprázdniť kôš</string>
+  <string name="trash_error_clearing_trash">Chyba pri vymazávaní koša</string>
+  <string name="trash_error_restoring_items">Chyba pri obnovení položiek</string>
+  <string name="trash_error_deleting_item">Chyba pri odstraňovaní položky</string>
+  <!-- Alerts -->
+  <string name="alert_confirm_clear_trash_title">Vyprázdniť kôš?</string>
+  <string name="alert_confirm_clear_trash_message">Naozaj chcete vyprázdniť kôš? Všetky položky v koši budú natrvalo vymazané</string>
+  <string name="alert_confirm_restore_all_title">Obnoviť všetky položky?</string>
+  <string name="alert_confirm_restore_all_message">Naozaj chcete obnoviť všetky položky z koša?</string>
+  <!-- Recent search -->
+  <string name="recent_search_header_count">Nedávne vyhľadávania</string>
+  <string name="recent_search_clear">Vymazať</string>
+  <string name="recent_search_remove_item">Odstrániť z nedávnych vyhľadávaní</string>
+</resources>

@@ -61,7 +61,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">Kart sahibi panoya kopyalandı</string>
   <string name="credit_card_number_copied_to_clipboard">Kart numarası panoya kopyalandı</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Güvenlik kodu panoya kopyalandı</string>
-  <string name="credit_card_pin_copied_to_clipboard">PIN kodu panoya kopyalandı</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Çöpe at</string>
   <string name="migrate_item_detail_bottom_sheet">Başka bir kasaya taşı</string>

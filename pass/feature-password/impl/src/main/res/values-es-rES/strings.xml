@@ -2,7 +2,7 @@
 <resources>
   <string name="generate_password_copy">Copiar y cerrar</string>
   <string name="password_copied_to_clipboard">Contraseña copiada</string>
-  <string name="bottomsheet_generate_password_title">Generar una contraseña</string>
+  <string name="bottomsheet_generate_password_title">Generar contraseña</string>
   <string name="password_type">Tipo</string>
   <string name="special_characters">Caracteres especiales (!&amp;*)</string>
   <string name="character_count">%s caracteres</string>

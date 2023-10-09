@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Avaliar a aplicação</string>
   <string name="profile_option_autofill">Preenchimento automático</string>
   <string name="profile_option_autofill_subtitle">Preencha automaticamente os seus nomes de utilizador e palavras-passe.</string>
-  <string name="profile_option_fingerprint">Impressão digital</string>
-  <string name="profile_option_automatic_app_lock">Bloqueio automático da aplicação</string>
-  <string name="profile_option_advanced">Avançado</string>
   <string name="profile_error_biometry_failed_to_start">Não foi possível iniciar a autenticação biométrica.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Erro ao autenticar</string>
   <string name="profile_fingerprint_lock_enabled">O desbloqueio por impressão digital foi ativado.</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Nenhum</string>
   <string name="app_lock_config_biometric">Biométrico</string>
   <string name="app_lock_config_pin_code">Código PIN</string>
-  <string name="app_lock_config_unlock_with">Desbloquear com</string>
   <string name="app_lock_config_app_lock_time">Bloqueio automático</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Utiliza o bloqueio do sistema quando o biométrico não funciona</string>
   <string name="configure_pin_set_pin_code">Definir o código PIN</string>

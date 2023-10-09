@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Оцінити програму</string>
   <string name="profile_option_autofill">Автозаповнення</string>
   <string name="profile_option_autofill_subtitle">Автоматично заповнюйте ім\'я користувача і паролі.</string>
-  <string name="profile_option_fingerprint">Відбиток пальця</string>
-  <string name="profile_option_automatic_app_lock">Автоблокування програми</string>
-  <string name="profile_option_advanced">Додатково</string>
   <string name="profile_error_biometry_failed_to_start">Не вдалося запустити біометричну автентифікацію</string>
   <string name="profile_error_biometry_failed_to_authenticate">Не вдалося здійснити автентифікацію</string>
   <string name="profile_fingerprint_lock_enabled">Розблокування відбитком пальця ввімкнено</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Немає</string>
   <string name="app_lock_config_biometric">Біометрія</string>
   <string name="app_lock_config_pin_code">PIN-код</string>
-  <string name="app_lock_config_unlock_with">Розблокувати за допомогою</string>
   <string name="app_lock_config_app_lock_time">Автоматичне блокування</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Використовувати системне блокування при біометричному збої</string>
   <string name="configure_pin_set_pin_code">Встановити PIN-код</string>

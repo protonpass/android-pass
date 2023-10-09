@@ -10,9 +10,6 @@
   <string name="profile_option_rating">Waardeer app</string>
   <string name="profile_option_autofill">Autom. aanvullen</string>
   <string name="profile_option_autofill_subtitle">Vul automatisch uw gebruikersnamen en wachtwoorden in.</string>
-  <string name="profile_option_fingerprint">Vingerafdruk</string>
-  <string name="profile_option_automatic_app_lock">Automatische app-vergrendeling</string>
-  <string name="profile_option_advanced">Geavanceerd</string>
   <string name="profile_error_biometry_failed_to_start">Kan de biometrische authenticatie niet starten</string>
   <string name="profile_error_biometry_failed_to_authenticate">Authenticatie mislukt</string>
   <string name="profile_fingerprint_lock_enabled">Vingerafdrukontgrendeling ingeschakeld</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Geen</string>
   <string name="app_lock_config_biometric">Biometrie</string>
   <string name="app_lock_config_pin_code">Pincode</string>
-  <string name="app_lock_config_unlock_with">Ontgrendel met</string>
   <string name="app_lock_config_app_lock_time">Automatisch slot</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Gebruik systeemvergrendeling wanneer biometrische gegevens niet werken</string>
   <string name="configure_pin_set_pin_code">Pincode instellen</string>

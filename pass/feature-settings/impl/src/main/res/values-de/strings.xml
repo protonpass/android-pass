@@ -6,10 +6,10 @@
   <string name="settings_autofill_preference_description">Um dich schnell und einfach anzumelden, überlasse Proton Pass das Ausfüllen deiner Benutzernamen und Passwörter.</string>
   <string name="settings_authentication_section_title">Authentifizierung</string>
   <string name="settings_authentication_preference_title">Entsperren mit Fingerabdruck</string>
-  <string name="settings_authentication_preference_description_enabled">Öffne die App schnell und sicher mit deinem Fingerabdruck.</string>
+  <string name="settings_authentication_preference_description_enabled">Quickly and securely open the app with your fingerprint.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Du kannst deinen Fingerabdruck nicht für die Interaktion mit der App einstellen, da auf diesem Gerät keine Fingerabdrücke registriert sind.</string>
   <string name="settings_appearance_preference_title">Farbschema</string>
-  <string name="settings_appearance_preference_subtitle_match_system">Systemeinstellung verwenden</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Systemeinstellung verwenden</string>
   <string name="settings_appearance_preference_subtitle_light">Heller Modus</string>
   <string name="settings_appearance_preference_subtitle_dark">Dunkler Modus</string>
   <string name="settings_fingerprint_lock_enabled">Entsperren mit Fingerabdruck aktiviert</string>
@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">Nutzungsbedingungen</string>
   <string name="settings_primary_vault_section_title">Tresore</string>
   <string name="settings_primary_vault_vault_selector_title">Primärer Tresor</string>
-  <string name="settings_primary_vault_section_subtitle">Ein primärer Tresor kann nicht gelöscht werden.</string>
+  <string name="settings_primary_vault_section_subtitle">Der primäre Tresor kann nicht gelöscht werden.</string>
   <string name="settings_primary_vault_change_success">Der primäre Tresor wurde geändert.</string>
   <string name="settings_primary_vault_change_error">Primärer Tresor konnte nicht geändert werden.</string>
   <string name="settings_privacy_section_title">Datenschutz</string>
@@ -42,6 +42,6 @@
   <string name="clipboard_option_copy_totp_code">Authentifizierungscodes kopieren</string>
   <string name="clipboard_option_copy_totp_code_hint">Authentifizierungscodes beim Verwenden von AutoFill automatisch kopieren.</string>
   <string name="clipboard_option_clear_clipboard_never">Niemals</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">Nach 60 Sekunden</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">Nach 180 Sekunden</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Nach 1 Minute</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Nach 3 Minuten</string>
 </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20개 금고</string>
+  <string name="unlimited_email_alias">무제한 나의 이메일 별명</string>
+  <string name="custom_fields">사용자 지정 필드</string>
+  <string name="restart_to_complete_the_update">이 업데이트를 완료하려면 재시작 하십시오</string>
+  <string name="action_restart">재시작</string>
+</resources>

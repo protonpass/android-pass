@@ -3,7 +3,7 @@
   <string name="updates_notification_channel_name">Opdateringer</string>
   <string name="autofill_notification_channel_name">Autofyld</string>
   <string name="autofill_notification_copy_to_clipboard_title">TOTP-kode</string>
-  <string name="autofill_notification_copy_to_clipboard_body">TOTP er kopieret til udklipsholderen.</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP er kopieret til udklipsholder</string>
   <string name="updates_new_invite_received_title">Du har modtaget en invitation</string>
   <string name="updates_new_invite_received_message">Du er blevet inviteret til en boks. Åbn appen for at se invitationen og acceptere den.</string>
 </resources>

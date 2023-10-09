@@ -56,12 +56,11 @@
   <string name="credit_card_cardholder_field_name">Όνομα κατόχου κάρτας</string>
   <string name="credit_card_number_field_name">Αριθμός κάρτας</string>
   <string name="credit_card_cvv_field_name">Αριθμός επαλήθευσης</string>
-  <string name="credit_card_pin_field_name">Αριθμός PIN</string>
+  <string name="credit_card_pin_field_name">Κωδικός PIN</string>
   <string name="credit_card_expiration_date_field_name">Λήγει στις</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Ο κάτοχος της κάρτας αντιγράφηκε στο πρόχειρο</string>
   <string name="credit_card_number_copied_to_clipboard">Ο αριθμός της κάρτας αντιγράφηκε στο πρόχειρο</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Ο αριθμός επαλήθευσης αντιγράφηκε στο πρόχειρο</string>
-  <string name="credit_card_pin_copied_to_clipboard">Το PIN αντιγράφηκε στο πρόχειρο</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Μετακίνηση στον κάδο απορριμμάτων</string>
   <string name="migrate_item_detail_bottom_sheet">Μετακίνηση σε άλλη κρύπτη</string>

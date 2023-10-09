@@ -9,7 +9,7 @@
   <string name="word_count">%s ord</string>
   <string name="word_separator">Ordavgränsare</string>
   <string name="bottomsheet_option_capital_letters">Versaler (A–Ö)</string>
-  <string name="bottomsheet_option_capitalise">Versaler</string>
+  <string name="bottomsheet_option_capitalise">Kapitalisera</string>
   <string name="bottomsheet_option_include_numbers">Inkludera siffror (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Bindestreck (-)</string>
   <string name="bottomsheet_option_word_separator_spaces">Mellanslag</string>

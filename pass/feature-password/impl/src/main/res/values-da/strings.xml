@@ -9,7 +9,7 @@
   <string name="word_count">%s ord</string>
   <string name="word_separator">Ordseparator</string>
   <string name="bottomsheet_option_capital_letters">Store bogstaver (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Brug store bogstaver</string>
+  <string name="bottomsheet_option_capitalise">Ændr til versaler</string>
   <string name="bottomsheet_option_include_numbers">Inkluder tal (0-9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Bindestreger ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Mellemrum</string>

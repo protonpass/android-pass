@@ -61,7 +61,6 @@
   <string name="credit_card_cardholder_copied_to_clipboard">Nombre del titular de la tarjeta copiado al portapapeles.</string>
   <string name="credit_card_number_copied_to_clipboard">Número de tarjeta copiado al portapapeles.</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Código de verificación copiado al portapapeles.</string>
-  <string name="credit_card_pin_copied_to_clipboard">Código PIN copiado al portapapeles.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mover a la papelera</string>
   <string name="migrate_item_detail_bottom_sheet">Mover a otra bóveda</string>

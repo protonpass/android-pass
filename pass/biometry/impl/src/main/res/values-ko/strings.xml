@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">앱 잠김</string>
+  <string name="biometric_prompt_title_setup">생체 인식 설정</string>
+  <string name="biometric_prompt_subtitle">사용자의 기기 잠금으로 잠금 해제</string>
+  <string name="biometric_prompt_cancel">취소</string>
+</resources>

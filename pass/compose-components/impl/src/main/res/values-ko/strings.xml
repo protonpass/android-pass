@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">제목 (A-Z)</string>
+  <string name="sort_by_title_desc">제목 (Z-A)</string>
+  <string name="sort_by_creation_asc">오래된 항목 순</string>
+  <string name="sort_by_creation_desc">최신 항목 순</string>
+  <string name="sort_by_modification_date">가장 최근순</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">전체</string>
+  <plurals name="item_list_header_results">
+    <item quantity="other">결과</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">확인</string>
+  <string name="bottomsheet_cancel_button">취소</string>
+  <string name="bottomsheet_move_to_trash">휴지통으로 이동</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">항목을 액션 매뉴서 열기</string>
+  <string name="action_upgrade_now">지금 업그레이드</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">첫 번째 항목 추가</string>
+  <string name="empty_search_results_title">결과가 없습니다</string>
+  <string name="empty_list_open_extension">웹 확장 방문하기</string>
+  <string name="empty_list_create_item_button">새 항목 생성</string>
+  <!-- Field -->
+  <string name="field_title_title">제목</string>
+  <string name="field_title_hint">제목 없음</string>
+  <string name="field_title_required">제목 필수</string>
+  <string name="small_cross_icon_content_description">작은 십자가 아이콘</string>
+  <string name="field_note_title">메모</string>
+  <string name="field_note_hint">메모 추가</string>
+  <string name="linked_apps_title">연결된 앱</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">오프라인</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">앱 아이콘 없음</string>
+  <string name="add_item_icon_content_description">항목 아이콘 추가</string>
+  <string name="navigate_back_icon_content_description">뒤로 가기 아이콘 </string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">금고</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">항목 목록</string>
+  <string name="bottom_bar_add_item_icon_content_description">항목 추가</string>
+  <string name="bottom_bar_profile_icon_content_description">프로필</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">오늘</string>
+  <string name="most_recent_yesterday">어제</string>
+  <string name="most_recent_this_week">이번 주</string>
+  <string name="most_recent_last_two_weeks">지난 2주</string>
+  <string name="most_recent_last_30_days">최근 30일</string>
+  <string name="most_recent_last_60_days">최근 60일</string>
+  <string name="most_recent_last_90_days">최근 90일</string>
+  <string name="most_recent_within_the_last_year">작년 이내</string>
+  <string name="most_recent_more_than_1_year">1년 이상</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">아이콘 검색</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">옵션 아이콘</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="other">%d개 항목</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">변경 사항을 취소할까요?</string>
+  <string name="confirm_close_dialog_message">저장되지 않은 변경 사항이 있어요. 정말 나가시겠어요?</string>
+  <string name="confirm_close_dialog_close_button">저장 안 함</string>
+  <!-- Upgrade -->
+  <string name="upgrade">업그레이드</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">고급 옵션</string>
+  <string name="hide_advanced_options">고급 옵션 숨기기</string>
+</resources>

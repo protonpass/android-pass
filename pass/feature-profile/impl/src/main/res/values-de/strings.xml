@@ -10,9 +10,6 @@
   <string name="profile_option_rating">App bewerten</string>
   <string name="profile_option_autofill">AutoFill</string>
   <string name="profile_option_autofill_subtitle">Benutzernamen und Passwörter automatisch ausfüllen.</string>
-  <string name="profile_option_fingerprint">Fingerabdruck</string>
-  <string name="profile_option_automatic_app_lock">Automatisches Sperren der App</string>
-  <string name="profile_option_advanced">Erweitert</string>
   <string name="profile_error_biometry_failed_to_start">Biometrische Authentifizierung konnte nicht gestartet werden.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Authentifizierung fehlgeschlagen.</string>
   <string name="profile_fingerprint_lock_enabled">Entsperren mit Fingerabdruck aktiviert</string>
@@ -33,7 +30,6 @@
   <string name="app_lock_config_none">Keine</string>
   <string name="app_lock_config_biometric">Biometrie</string>
   <string name="app_lock_config_pin_code">PIN-Code</string>
-  <string name="app_lock_config_unlock_with">Entsperren mit</string>
   <string name="app_lock_config_app_lock_time">Automatische Sperre</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Systemsperre verwenden, wenn Biometrie fehlschlägt</string>
   <string name="configure_pin_set_pin_code">PIN-Code festlegen</string>

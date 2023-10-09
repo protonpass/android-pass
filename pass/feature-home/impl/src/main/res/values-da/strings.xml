@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">Din boks er tom</string>
   <string name="home_empty_vault_subtitle">Kom i gang ved at oprette dit første element.</string>
   <string name="home_empty_vault_create_login">Opret et login</string>
-  <string name="home_empty_vault_create_alias">Opret et Hide My Email-alias</string>
+  <string name="home_empty_vault_create_alias">Opret et Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Opret en note</string>
-  <string name="error_observing_items">Fejl ved observation af elementer</string>
-  <string name="error_observing_share">Fejl under observation af deling</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fejl ved indlæsning af elementer</string>
   <string name="error_refreshing">Fejl ved opdatering</string>
   <string name="home_snackbar_login_moved_to_trash">Login flyttet til papirkurv</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias flyttet til papirkurv</string>
   <string name="home_snackbar_note_moved_to_trash">Note flyttet til papirkurv</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kredirkort flyttet til papirkurv</string>
-  <string name="home_snackbar_move_to_trash_error">Kunne ikke flytte til papirkurv</string>
+  <string name="home_snackbar_move_to_trash_error">Element kunne ikke flyttes til papirkurven</string>
   <string name="home_autofill_banner_title">Nyd magien ved autofyld</string>
   <string name="home_autofill_banner_text">Et tryk, og dit brugernavn og din adgangskode udfyldes øjeblikkeligt.</string>
   <string name="home_autofill_banner_settings">Slå autofyld til ›</string>
@@ -39,8 +38,7 @@
   <string name="username_copied_to_clipboard">Brugernavn kopieret</string>
   <string name="password_copied_to_clipboard">Adgangskode kopieret</string>
   <string name="credit_card_number_copied_to_clipboard">Kreditkortnummer kopieret</string>
-  <string name="credit_card_pin_copied_to_clipboard">Kreditkort-pinkode kopieret</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Kreditkort CVV kopieret</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Kreditkort-CVV kopieret</string>
   <string name="item_too_long_copied_to_clipboard">Indholdet var for langt, delvist kopieret til udklipsholderen</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Bokse</string>

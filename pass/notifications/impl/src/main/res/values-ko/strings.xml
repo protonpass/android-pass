@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="updates_notification_channel_name">업데이트</string>
+  <string name="autofill_notification_channel_name">자동 완성</string>
+  <string name="autofill_notification_copy_to_clipboard_title">TOTP 복사됨</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP를 클립보드에 복사했습니다</string>
+  <string name="updates_new_invite_received_title">초대를 받았습니다.</string>
+  <string name="updates_new_invite_received_message">최근 금고에 초대되었습니다. 앱을 실행하여 초대를 확인 및 수락하세요.</string>
+</resources>

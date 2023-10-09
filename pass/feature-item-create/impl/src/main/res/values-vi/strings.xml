@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Actions -->
+  <string name="action_save">Lưu</string>
+  <string name="action_remove">Xóa</string>
+  <!-- Create item bottomsheet -->
+  <string name="action_login">Đăng nhập</string>
+  <string name="action_alias">Bí danh</string>
+  <string name="action_note">Ghi chú</string>
+  <string name="action_credit_card">Thẻ tín dụng</string>
+  <string name="action_password">Mật khẩu</string>
+  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Thêm thông tin đăng nhập cho một ừng dụng hoặc một trang web</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Tạo một bí danh email để sử dụng trên các ứng dụng mới</string>
+  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Ghi lại một mã PIN, mã thường, hay một ghi chú cho bản thân</string>
+  <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Lưu trữ an toàn thông tin thanh toán của bạn</string>
+  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Tạo một mật khẩu bảo mật</string>
+  <!-- Create Login -->
+  <string name="title_create_login">Tạo đăng nhập</string>
+  <string name="field_username_title">Tên đăng nhập hoặc Email</string>
+  <string name="field_username_hint">Thêm tên đăng nhập hoặc địa chỉ email</string>
+  <string name="field_password_title">Mật khẩu</string>
+  <string name="field_password_hint">Thêm mật khẩu</string>
+  <string name="field_website_address_title">Trang web</string>
+  <string name="field_website_address_invalid">Invalid URL</string>
+  <string name="field_website_address_hint">https://</string>
+  <string name="field_website_add_another">Thêm</string>
+  <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Tạo một mật khẩu mới</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide My Email</string>
+  <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Dùng %s</string>
+  <string name="create_login_item_creation_error">Không thể tạo đăng nhập</string>
+  <string name="create_login_item_update_error">Không thể cập nhật đăng nhập</string>
+  <string name="create_login_init_error">Could not initialize Login</string>
+  <string name="create_login_invalid_totp">Nội dung 2FA không hợp lệ</string>
+  <string name="login_created">Đã tạo đăng nhập</string>
+  <string name="bottomsheet_modify_alias_title">Chỉnh sửa bí danh</string>
+  <string name="bottomsheet_custom_field_type_text">Văn bản</string>
+  <string name="bottomsheet_custom_field_type_text_content_description">Trường văn bản tùy chỉnh</string>
+  <string name="bottomsheet_custom_field_type_hidden">Ẩn</string>
+  <string name="bottomsheet_custom_field_type_totp">Mã bảo mật 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Sửa tiêu đề</string>
+  <string name="bottomsheet_custom_field_option_remove">Xóa trường</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Xóa trường tùy chỉnh</string>
+  <string name="create_login_add_custom_field_button">Add another field</string>
+  <string name="custom_field_hidden_placeholder">Nội dung ẩn của bạn</string>
+  <string name="custom_field_hidden_icon_content_description">Biểu tượng trường nội dung tùy chỉnh ẩn</string>
+  <string name="custom_field_text_placeholder">Nội dung của bạn</string>
+  <string name="custom_field_dialog_title">Tên trường tùy chọn</string>
+  <string name="custom_field_dialog_body">Nhập tên cho trường tùy chỉnh của bạn</string>
+  <string name="custom_field_dialog_placeholder">Tên của trường tùy chỉnh</string>
+  <string name="custom_field_options_content_description">Tùy chọn trường tùy chỉnh</string>
+  <!-- Create Note -->
+  <string name="title_create_note">Tạo ghi chú</string>
+  <string name="create_note_item_creation_error">Không thể tạo ghi chú</string>
+  <string name="create_note_item_update_error">Không thể cập nhật ghi chú</string>
+  <string name="create_note_init_error">Could not initialize Note</string>
+  <string name="note_created">Đã tạo ghi chú</string>
+  <!-- Create Alias -->
+  <string name="title_create_alias">Tạo bí danh</string>
+  <string name="field_alias_title">Địa chỉ bí danh</string>
+  <string name="field_alias_hint">Tên bí danh</string>
+  <string name="field_mailboxes_creation_title">Chuyển tiếp đến</string>
+  <string name="field_mailboxes_edit_title">Chuyển tiếp đến</string>
+  <string name="field_alias_you_are_about_to_create">Bạn đang chuẩn bị tạo</string>
+  <string name="field_alias_prefix">Tiền tố</string>
+  <string name="field_alias_suffix">Hậu tố</string>
+  <string name="alias_bottomsheet_alias_title">Bí danh</string>
+  <string name="alias_bottomsheet_suffix_title">Hậu tố</string>
+  <string name="create_alias_item_creation_error">Không thể tạo bí danh</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Bạn không thể tạo thêm bí danh</string>
+  <string name="create_alias_email_not_validated_error">Bạn không thể tạo bí danh khi chưa xác thực email của mình</string>
+  <string name="alias_rate_limited">Quá nhiều bí danh được tạo gần đây</string>
+  <string name="create_alias_item_update_error">Không thể cập nhật bí danh</string>
+  <string name="create_alias_init_error">Could not initialize Alias</string>
+  <string name="alias_created">Đã tạo bí danh</string>
+  <string name="cannot_retrieve_alias_options">Không thể lấy tùy chọn bí danh</string>
+  <string name="alias_mailbox_dialog_title">Chuyển tiếp đến</string>
+  <!-- Create note -->
+  <string name="note_hint">Ghi chú</string>
+  <!-- Create Credit Card -->
+  <string name="title_create_credit_card">Tạo thẻ</string>
+  <string name="field_cardholder_name_title">Tên chủ thẻ</string>
+  <string name="field_cardholder_name_hint">Tên đầy đủ</string>
+  <string name="field_card_number_title">Số thẻ</string>
+  <string name="field_card_number_hint">1234 1234 1234 1234</string>
+  <string name="field_card_cvv_title">Số CVV</string>
+  <string name="field_card_cvv_hint">123</string>
+  <string name="field_card_pin_title">Mã PIN</string>
+  <string name="field_card_pin_hint">123456</string>
+  <string name="field_card_expiration_date_title">Hết hạn vào</string>
+  <string name="field_card_expiration_date_hint">MM / YYYY</string>
+  <string name="field_card_expiration_date_error">Ngày hết hạn không hợp lệ</string>
+  <string name="create_credit_card_item_creation_error">Không thể tạo thẻ</string>
+  <string name="create_credit_card_item_creation_success">Đã tạo thẻ</string>
+  <string name="credit_card_init_error">Could not initialize credit card</string>
+  <string name="credit_card_item_update_error">Không thể cập nhật thẻ</string>
+  <!--  Common create items  -->
+  <string name="changes_saved">Đã lưu thay đổi</string>
+  <!--  Totp  -->
+  <string name="totp_create_login_field_title">Mã bảo mật 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Mã bảo mật 2FA không hợp lệ</string>
+  <string name="totp_create_login_field_placeholder">Thêm mã bảo mật 2FA</string>
+  <string name="close_scree_icon_content_description">Nút đóng màn hình</string>
+  <string name="totp_paste_code_action">Dán mã</string>
+  <string name="totp_scan_code_action">Quét mã</string>
+  <string name="field_cannot_be_empty">Trường này không đươc để trống</string>
+  <string name="camera_permission_explanation">Quyền truy cập máy ảnh là cần thiết để tính năng này hoạt động.</string>
+  <string name="camera_permission_open_settings">Mở cài đặt</string>
+  <!--  Totp limit  -->
+  <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
+  <string name="upgrade">Nâng cấp</string>
+  <string name="mfa_icon_content_description">biểu tượng 2FA</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Nâng cấp để dùng tên miền tùy chọn</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Nâng cấp để thêm nhiều hộp thư hơn</string>
+  <string name="create_alias_content_limit_banner">Bạn đã đạt giới hạn bí danh bạn có thể tạo. Tạo không giới hạn bí danh khi bạn nâng cấp gói đăng ký của mình.</string>
+</resources>

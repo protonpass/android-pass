@@ -17,7 +17,7 @@
   <string name="bottomsheet_cancel_button">Avbryt</string>
   <string name="bottomsheet_move_to_trash">Flytta till papperskorg</string>
   <!-- Actions -->
-  <string name="action_content_description_menu">Öppna åtgärdsmeny för objekt</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öppna åtgärdsmeny för objekt</string>
   <string name="action_upgrade_now">Uppgradera nu</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lägg till ditt första objekt</string>

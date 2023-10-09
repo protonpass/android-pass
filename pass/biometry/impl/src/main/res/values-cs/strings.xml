@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">Aplikace uzamčena</string>
+  <string name="biometric_prompt_title_setup">Nastavení biometriky</string>
+  <string name="biometric_prompt_subtitle">Odemkněte pomocí zámku zařízení</string>
+  <string name="biometric_prompt_cancel">Zrušit</string>
+</resources>

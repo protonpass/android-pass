@@ -17,12 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="profile_option_fingerprint_subtitle">Desbloqueie o Proton Pass com um toque.</string>
-  <string name="profile_option_fingerprint">Impressão digital</string>
-  <string name="profile_option_app_lock">Bloqueio do aplicativo</string>
   <string name="enter_your_pin_code">Digite seu código PIN</string>
   <string name="unlock">Desbloquear</string>
-  <string name="enter_pin">Inserir PIN</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">O código PIN é incorreto. Resta %d tentativa.</item>
     <item quantity="other">O código PIN é incorreto. Restam %d tentativas.</item>
@@ -38,7 +34,6 @@
   <string name="auth_error_verifying_password">Erro ao verificar a sua senha</string>
   <string name="auth_error_empty_password">A senha não pode estar em branco</string>
   <string name="auth_error_pin_cannot_be_empty">O código PIN não pode estar vazio</string>
-  <string name="auth_error_pin_too_short">O código PIN deve ter pelo menos 4 dígitos</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">A senha é incorreta. Resta %d tentativa.</item>
     <item quantity="other">A senha é incorreta. Restam %d tentativas.</item>

@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">Tu bóveda está vacía.</string>
   <string name="home_empty_vault_subtitle">Empieza creando tu primer elemento.</string>
   <string name="home_empty_vault_create_login">Crear un inicio de sesión</string>
-  <string name="home_empty_vault_create_alias">Crear un alias de Hide-my-email</string>
+  <string name="home_empty_vault_create_alias">Crear un alias de hide-my-email</string>
   <string name="home_empty_vault_create_note">Crear nota</string>
-  <string name="error_observing_items">Se ha producido un error con los elementos.</string>
-  <string name="error_observing_share">Se ha producido un error de compartición.</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Error al cargar los elementos</string>
   <string name="error_refreshing">Error al ejecutar la actualización</string>
   <string name="home_snackbar_login_moved_to_trash">Inicio de sesión movido a la papelera</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias movido a la papelera</string>
   <string name="home_snackbar_note_moved_to_trash">Nota movida a la papelera</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Tarjeta de crédito movida a la papelera.</string>
-  <string name="home_snackbar_move_to_trash_error">No se ha podido mover a la papelera.</string>
+  <string name="home_snackbar_move_to_trash_error">No se ha podio mover el elemento a la papelera.</string>
   <string name="home_autofill_banner_title">Disfruta de la magia de AutoFill</string>
   <string name="home_autofill_banner_text">¡Una pulsación y listo! Tu nombre de usuario y contraseña se rellenan al instante.</string>
   <string name="home_autofill_banner_settings">Activar AutoFill ›</string>
@@ -39,8 +38,7 @@
   <string name="username_copied_to_clipboard">Nombre de usuario copiado</string>
   <string name="password_copied_to_clipboard">Contraseña copiada</string>
   <string name="credit_card_number_copied_to_clipboard">Número de tarjeta copiado.</string>
-  <string name="credit_card_pin_copied_to_clipboard">Se ha copiado el código PIN de la tarjeta de crédito.</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Código CVV de la tarjeta copiado.</string>
+  <string name="credit_card_cvv_copied_to_clipboard">El código CVV de la tarjeta de crédito ha sido copiado</string>
   <string name="item_too_long_copied_to_clipboard">El contenido es demasiado largo. Se ha copiado parcialmente al portapapeles.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Bóvedas</string>

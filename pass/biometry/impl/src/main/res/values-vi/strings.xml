@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">Ứng dụng đã khóa</string>
+  <string name="biometric_prompt_title_setup">Thiết lập sinh trắc học</string>
+  <string name="biometric_prompt_subtitle">Mở khóa bằng mật khẩu thiết bị</string>
+  <string name="biometric_prompt_cancel">Hủy</string>
+</resources>

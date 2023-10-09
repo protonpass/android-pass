@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Sao chép và đóng</string>
+  <string name="password_copied_to_clipboard">Đã sao chép mật khẩu</string>
+  <string name="bottomsheet_generate_password_title">Tạo mật khẩu</string>
+  <string name="password_type">Dạng</string>
+  <string name="special_characters">Ký tự đặc biệt (!&amp;*)</string>
+  <string name="character_count">%s ký tự</string>
+  <string name="word_count">%s từ</string>
+  <string name="word_separator">Dấu tách từ</string>
+  <string name="bottomsheet_option_capital_letters">Chữ cái in hoa (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Capitalize</string>
+  <string name="bottomsheet_option_include_numbers">Thêm số (0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Dấu gạch ngang ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Khoảng trắng</string>
+  <string name="bottomsheet_option_word_separator_periods">Dấu chấm ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Dấu phẩy ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Dấu gạch dưới ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Số</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Số và ký tự</string>
+  <string name="regenerate_password_icon_content_description">Nút tạo lại mật khẩu</string>
+  <string name="password_mode_memorable">Mật khẩu dễ nhớ</string>
+  <string name="password_mode_random">Mật khẩu ngẫu nhiên</string>
+  <string name="password_mode_icon">Biểu tượng chế độ mật khẩu</string>
+  <string name="password_words_separator_icon">Dấu tách từ cho mật khẩu</string>
+</resources>

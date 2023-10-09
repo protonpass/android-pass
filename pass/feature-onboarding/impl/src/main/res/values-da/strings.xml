@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Indstil Proton Pass til at låse op med dit fingeraftryk, så kun du har adgang.</string>
   <string name="on_boarding_fingerprint_title">Beskyt dine mest følsomme data</string>
   <string name="on_boarding_fingerprint_button">Aktivér fingeraftryksoplåsning</string>
-  <string name="on_boarding_last_page_content">Hold op med at dele din rigtige e-mailadresse. Skjul den i stedet med e-mail-alias - eksklusivt for Proton Pass.</string>
+  <string name="on_boarding_last_page_content">Stop med at dele din rigtige e-mailadresse. Skjul den i stedet med e-mail-aliasser - en eksklusiv Proton Pass-løsning.</string>
   <string name="on_boarding_last_page_title">Få kontrol over, hvad der lander i din indbakke</string>
   <string name="on_boarding_last_page_button">Begynd at bruge Proton Pass</string>
   <string name="on_boarding_skip">Ikke nu</string>

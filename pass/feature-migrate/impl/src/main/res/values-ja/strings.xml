@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">このアイテムを次の保管庫に移動しますか？</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">すべてのアイテムを次の保管庫に移動しますか？</string>
+  <string name="migrate_item_confirm_confirm_button">移動</string>
+  <string name="migrate_item_success_snackbar">アイテム移動</string>
+  <string name="migrate_item_error_snackbar">アイテムの移動エラー</string>
+  <string name="migrate_all_items_success_snackbar">すべてのアイテムが移動</string>
+  <string name="migrate_all_items_error_snackbar">すべての保管庫アイテムの移動エラー</string>
+  <string name="migrate_init_error_snackbar">移行画面を準備できませんでした</string>
+</resources>

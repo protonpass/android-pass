@@ -4,16 +4,15 @@
   <string name="home_empty_vault_title">Su bóveda está vacía</string>
   <string name="home_empty_vault_subtitle">Comience creando su primer elemento.</string>
   <string name="home_empty_vault_create_login">Crear inicio de sesión</string>
-  <string name="home_empty_vault_create_alias">Crear alias de Hide-my-email</string>
+  <string name="home_empty_vault_create_alias">Crear un alias de hide-my-email</string>
   <string name="home_empty_vault_create_note">Crear una nota</string>
-  <string name="error_observing_items">Se produjo un error con los elementos.</string>
-  <string name="error_observing_share">Se produjo un error de compartición.</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Error al cargar los elementos</string>
   <string name="error_refreshing">Error al ejecutar la actualización</string>
   <string name="home_snackbar_login_moved_to_trash">Inicio de sesión movido a la papelera</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias movido a la papelera</string>
   <string name="home_snackbar_note_moved_to_trash">Nota movida a la papelera</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Tarjeta de crédito movida a la papelera</string>
-  <string name="home_snackbar_move_to_trash_error">No se pudo mover a la papelera</string>
+  <string name="home_snackbar_move_to_trash_error">No se pudo mover el elemento a la papelera</string>
   <string name="home_autofill_banner_title">Disfrute de la magia del completado automático</string>
   <string name="home_autofill_banner_text">¡Una pulsación y listo! Su nombre de usuario y contraseña se completan al instante.</string>
   <string name="home_autofill_banner_settings">Activar el completado automático ›</string>
@@ -39,8 +38,7 @@
   <string name="username_copied_to_clipboard">Nombre de usuario copiado</string>
   <string name="password_copied_to_clipboard">Contraseña copiada</string>
   <string name="credit_card_number_copied_to_clipboard">Número de tarjeta de crédito copiado.</string>
-  <string name="credit_card_pin_copied_to_clipboard">El código PIN de la tarjeta de crédito fue copiado.</string>
-  <string name="credit_card_cvv_copied_to_clipboard">El código CVV de la tarjeta de crédito fue copiado.</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Código CVV de la tarjeta de crédito copiado</string>
   <string name="item_too_long_copied_to_clipboard">El contenido es muy largo. Fue copiado parcialmente al portapapeles.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Bóvedas</string>
@@ -75,7 +73,7 @@
   <string name="trash_error_deleting_item">Error al eliminar el elemento</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">¿Vaciar la papelera?</string>
-  <string name="alert_confirm_clear_trash_message">¿En verdad desea vaciar la papelera? Todos sus elementos se eliminarán permanentemente.</string>
+  <string name="alert_confirm_clear_trash_message">¿Está seguro de que quiere vaciar la papelera? Todos sus elementos se eliminarán permanentemente.</string>
   <string name="alert_confirm_restore_all_title">¿Restaurar todos los elementos?</string>
   <string name="alert_confirm_restore_all_message">¿Esta seguro que desea restaurar todos los elementos eliminados?</string>
   <!-- Recent search -->

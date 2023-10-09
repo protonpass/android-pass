@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Pokračovať</string>
+  <string name="sharing_can_view">Môže zobraziť</string>
+  <string name="sharing_can_edit">Môže upravovať</string>
+  <string name="sharing_can_manage">Môže spravovať</string>
+  <string name="sharing_can_view_description">Môže zobraziť položky v tomto trezore</string>
+  <string name="sharing_can_edit_description">Môžete vytvárať, upravovať, mazať a exportovať položky v tomto trezore.</string>
+  <string name="sharing_can_manage_description">Môže udeliť alebo zrušiť prístup k tomuto trezoru.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d položka</item>
+    <item quantity="few">%d položky</item>
+    <item quantity="many">%d položiek</item>
+    <item quantity="other">%d položiek</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d člen</item>
+    <item quantity="few">%d členovia</item>
+    <item quantity="many">%d členov</item>
+    <item quantity="other">%d členov</item>
+  </plurals>
+  <string name="share_with_title">Zdieľať s</string>
+  <string name="share_with_subtitle">Tento používateľ dostane pozvánku do vášho trezora \"%s\".</string>
+  <string name="share_with_email_hint">Emailová adresa</string>
+  <string name="share_with_email_error">Neplatná emailová adresa</string>
+  <string name="share_permissions_title">Nastaviť oprávnenia</string>
+  <string name="share_permissions_subtitle">Vyberte úroveň prístupu, ktorú tento používateľ získa, keď sa pripojí k vášmu trezoru \'%s\'.</string>
+  <string name="sharing_invitation_from">Pozvánka od %s</string>
+  <string name="sharing_join_shared_vault">Pripojiť a synchronizovať</string>
+  <string name="sharing_reject_invitation">Odmietnuť pozvánku</string>
+  <string name="sharing_snackbar_get_invite_error">Nepodarilo sa získať pozvánku</string>
+  <string name="sharing_snackbar_invite_accepted">Pozvánka prijatá</string>
+  <string name="sharing_snackbar_invite_accept_error">Chyba pri prijatí pozvánky</string>
+  <string name="sharing_snackbar_invite_rejected">Pozvánka odmietnutá</string>
+  <string name="sharing_snackbar_invite_reject_error">Chyba pri odmietnutí pozvánky</string>
+  <string name="sharing_snackbar_vault_not_found">Trezor sa nepodarilo nájsť</string>
+  <string name="sharing_snackbar_invite_sent_success">Pozvánka odoslaná</string>
+  <string name="sharing_snackbar_invite_sent_error">Nepodarilo sa odoslať pozvánku</string>
+  <string name="sharing_snackbar_get_vault_members_error">Nepodarilo sa získať členov trezoru</string>
+  <string name="sharing_snackbar_change_permission_success">Oprávnenia zmenené</string>
+  <string name="sharing_snackbar_change_permission_error">Oprávnenia sa nepodarilo zmeniť</string>
+  <string name="sharing_snackbar_remove_member_success">Člen odstránený z trezoru</string>
+  <string name="sharing_snackbar_remove_member_error">Nepodarilo sa odstrániť z trezoru</string>
+  <string name="share_summary_title">Zhrnutie</string>
+  <string name="share_summary_subtitle">Chystáte sa pozvať %1$s do svojho %2$s. Získajú prístup k %3$s a budú môcť %4$s v tomto trezore.</string>
+  <string name="share_summary_vault">%s trezor</string>
+  <string name="share_summary_view_items">iba zobrazenie položiek</string>
+  <string name="share_summary_create_items">vytvoriť položky</string>
+  <string name="share_summary_manage_vault">spravovať</string>
+  <string name="share_summary_share_vault">Zdielať trezor</string>
+  <string name="share_summary_email_title">Používateľ</string>
+  <string name="share_summary_vault_title">Trezor</string>
+  <string name="share_summary_permissions_title">Oprávnenia</string>
+  <string name="share_manage_vault_share_with_more_people">Zdieľať s viacerými ľudmi</string>
+  <string name="share_manage_vault_item_count">%d položky</string>
+  <string name="share_manage_vault_invite_pending">Čakajúca pozvánka</string>
+  <string name="share_manage_vault_current_user_indicator">Vy</string>
+  <string name="share_role_can_view">Môže prezerať</string>
+  <string name="share_role_can_edit">Môže upravovať</string>
+  <string name="share_role_admin">Admin</string>
+  <string name="share_role_owner">Vlastník</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Prevod vlastníctva</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nemôžete preniesť svoj naposledy vlastnený trezor.</string>
+  <string name="sharing_bottomsheet_remove_access">Odstrániť prístup</string>
+  <string name="sharing_bottomsheet_resend_invite">Znova odoslať pozvánku</string>
+  <string name="sharing_bottomsheet_cancel_invite">Zrušiť pozvánku</string>
+  <string name="sharing_transfer_ownership_confirm_title">Previesť vlastníctvo</string>
+  <string name="sharing_transfer_ownership_confirm_message">Naozaj chcete previesť vlastníctvo na %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Pozvánka zrušená</string>
+  <string name="sharing_snackbar_cancel_invite_error">Chyba pri rušení pozvánky</string>
+  <string name="sharing_snackbar_resend_invite_success">Pozvánka bola odoslaná znova</string>
+  <string name="sharing_snackbar_resend_invite_error">Chyba pri opätovnom poslaní pozvánky</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Adresa bola pozvaná príliš veľakrát</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Vlastníctvo prevedené</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Chyba pri prevode vlastníctva</string>
+</resources>

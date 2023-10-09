@@ -3,7 +3,7 @@
   <string name="updates_notification_channel_name">Actualitzacions</string>
   <string name="autofill_notification_channel_name">Emplenament automàtic</string>
   <string name="autofill_notification_copy_to_clipboard_title">Codi TOTP</string>
-  <string name="autofill_notification_copy_to_clipboard_body">S\'ha copiat el codi TOTP al porta-retalls</string>
-  <string name="updates_new_invite_received_title">You have received an invite</string>
+  <string name="autofill_notification_copy_to_clipboard_body">S\'ha copiat el codi TOTP al porta-retalls.</string>
+  <string name="updates_new_invite_received_title">Heu rebut una invitació.</string>
   <string name="updates_new_invite_received_message">You have been invited to a vault. Open the app to see the invite and accept it.</string>
 </resources>

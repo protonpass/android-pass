@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Setați deblocarea Proton Pass cu amprenta, pentru a avea acces exclusiv.</string>
   <string name="on_boarding_fingerprint_title">Protejați-vă cele mai importante date</string>
   <string name="on_boarding_fingerprint_button">Activare deblocare cu amprenta</string>
-  <string name="on_boarding_last_page_content">Nu vă mai partajați adresa de e-mail reală. În schimb, ascundeți-o cu aliasuri de e-mail - exclusiv cu Proton Pass.</string>
+  <string name="on_boarding_last_page_content">Nu vă mai partajați adresa de e-mail reală. În schimb, ascundeți-o cu aliasuri de e-mail — exclusiv cu Proton Pass.</string>
   <string name="on_boarding_last_page_title">Controlați ce sosește în adresa de e-mail</string>
   <string name="on_boarding_last_page_button">Începeți să utilizați Proton Pass</string>
   <string name="on_boarding_skip">Nu acum</string>

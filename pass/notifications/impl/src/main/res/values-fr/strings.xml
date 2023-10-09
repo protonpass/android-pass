@@ -2,7 +2,7 @@
 <resources>
   <string name="updates_notification_channel_name">Mises à jour</string>
   <string name="autofill_notification_channel_name">Remplissage automatique</string>
-  <string name="autofill_notification_copy_to_clipboard_title">Code TOTP (mot de passe à usage unique basé sur le temps)</string>
+  <string name="autofill_notification_copy_to_clipboard_title">Code TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">Le mot de passe à usage unique basé sur le temps (TOTP) a été copié dans le presse-papiers.</string>
   <string name="updates_new_invite_received_title">Vous avez reçu une invitation.</string>
   <string name="updates_new_invite_received_message">Vous avez reçu une invitation à un coffre-fort. Ouvrez l\'application pour la voir et l\'accepter.</string>

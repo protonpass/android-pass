@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 kho lưu trữ</string>
+  <string name="unlimited_email_alias">Không giới hạn email bí danh</string>
+  <string name="custom_fields">Trường tùy chỉnh</string>
+  <string name="restart_to_complete_the_update">Mở lại để hoàn tất cập nhật</string>
+  <string name="action_restart">Mở lại</string>
+</resources>

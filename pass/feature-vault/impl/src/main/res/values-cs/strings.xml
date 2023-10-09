@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Trezor vytvořen</string>
+  <string name="snackbar_create_vault_error">Trezor nebyl vytvořen</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Nelze vytvořit další trezory</string>
+  <string name="snackbar_edit_vault_success">Trezor byl upraven</string>
+  <string name="snackbar_edit_vault_error">Trezor nebyl upraven</string>
+  <string name="snackbar_delete_vault_success">Trezor smazán</string>
+  <string name="snackbar_delete_vault_error">Trezor nebyl smazán</string>
+  <string name="snackbar_leave_vault_success">Trezor opuštěn</string>
+  <string name="snackbar_leave_vault_error">Nepodařilo se opustit trezor</string>
+  <string name="snackbar_retrieve_vault_error">Trezor nenalezen</string>
+  <string name="snackbar_find_vault_error">Nelze najít vybraný trezor</string>
+  <string name="snackbar_get_vault_list_error">Seznam trezorů nelze načíst</string>
+  <string name="snackbar_get_upgrade_info_error">Nelze připravit seznam trezorů</string>
+  <string name="vault_delete_dialog_title">Smazat trezor</string>
+  <string name="vault_delete_dialog_body">Toto trvale smaže trezor __VAULT_NAME__ a veškerý jeho obsah. Zadejte název trezoru pro potvrzení smazání.</string>
+  <string name="vault_delete_dialog_placeholder">Název trezoru</string>
+  <string name="vault_delete_dialog_cancel_action">Zrušit</string>
+  <string name="vault_delete_dialog_delete_action">Smazat</string>
+  <string name="vault_leave_dialog_title">Opustit trezor</string>
+  <string name="vault_leave_dialog_body">Toto odebere váš přístup k trezoru __VAULT_NAME__ a veškerému jeho obsahu. Opravdu ho chcete opustit?</string>
+  <string name="vault_leave_dialog_cancel_action">Zpět</string>
+  <string name="vault_leave_dialog_leave_action">Opustit</string>
+  <string name="bottomsheet_close_icon_content_description">Zavřít vytvoření trezoru</string>
+  <string name="bottomsheet_create_vault_button">Vytvořit trezor</string>
+  <string name="bottomsheet_edit_vault_button">Uložit</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Dosáhli jste limitu trezorů, které můžete vytvořit. Po navýšení předplatného můžete vytvářet neomezený počet trezorů.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Chcete-li používat další trezory, musíte svůj účet navýšit.</string>
+  <string name="bottomsheet_upgrade_now">Navýšit nyní</string>
+  <string name="bottomsheet_edit">Upravit</string>
+  <string name="bottomsheet_migrate">Přesunout všechny položky do jiného trezoru</string>
+  <string name="bottomsheet_delete_vault">Smazat trezor</string>
+  <string name="bottomsheet_share_vault">Sdílet</string>
+  <string name="bottomsheet_leave_vault">Opustit trezor</string>
+  <string name="bottomsheet_view_members">Zobrazit členy</string>
+  <string name="bottomsheet_manage_access">Spravovat přístup</string>
+  <string name="bottomsheet_select_vault_read_only">Můžete pouze číst</string>
+  <string name="bottomsheet_select_vault_not_primary_vault">Položky můžete vytvářet pouze ve svém primárním trezoru</string>
+  <string name="vault_title">Trezor</string>
+</resources>

@@ -32,6 +32,7 @@ import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestCanCreateItemInVault
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
@@ -75,6 +76,9 @@ class SelectVaultBottomSheetTest {
 
     @Inject
     lateinit var canPerformPaidAction: TestCanPerformPaidAction
+
+    @Inject
+    lateinit var canCreateItemInVault: TestCanCreateItemInVault
 
     @Before
     fun setup() {
@@ -143,6 +147,9 @@ class SelectVaultBottomSheetTest {
     fun cannotSelectOtherVaultWithFreePlanAndMultipleVaults() {
         setupPlan(true, TestConstants.FreePlanType)
         setupVaults(3, primaryIndex = 1)
+        canCreateItemInVault.setResult(shareIdForIndex(0), false)
+        canCreateItemInVault.setResult(shareIdForIndex(1), true)
+        canCreateItemInVault.setResult(shareIdForIndex(2), false)
 
         val checker = CallChecker<ShareId>()
         composeTestRule.apply {
@@ -268,6 +275,8 @@ class SelectVaultBottomSheetTest {
         )
         savedStateHandle.get()[SelectedVaultArg.key] = shareIdForIndex(0).id
         observeVaultsWithItemCount.sendResult(Result.success(vaults))
+        canCreateItemInVault.setResult(shareIdForIndex(0), true)
+        canCreateItemInVault.setResult(shareIdForIndex(1), false)
 
 
         composeTestRule.apply {

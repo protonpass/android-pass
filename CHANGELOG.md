@@ -4,9 +4,17 @@
 
 ### Fixes :bug:
 
+### Other
+
+## 1.9.2 (2023-10-10) 
+
+### Fixes :bug:
+
 - Alias mailboxes can be edited again.
 
 ### Other
+
+- Updated translations.
 
 ## 1.9.1 (2023-10-06)
 

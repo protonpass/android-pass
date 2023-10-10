@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
+import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,11 +27,19 @@ import javax.inject.Singleton
 @Singleton
 class TestCanCreateItemInVault @Inject constructor() : CanCreateItemInVault {
 
-    private var result = true
+    private var result: MutableMap<ShareId, Boolean> = mutableMapOf()
+    private var default = true
 
-    fun setResult(value: Boolean) {
-        result = value
+    fun setResult(key: ShareId, value: Boolean) {
+        result[key] = value
     }
 
-    override fun invoke(vault: Vault) = result
+    fun setDefault(value: Boolean) {
+        default = value
+    }
+
+    override fun invoke(vault: Vault) = result.getOrDefault(
+        key = vault.shareId,
+        defaultValue = default
+    )
 }

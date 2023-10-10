@@ -176,7 +176,10 @@ class ShareRepositoryImpl @Inject constructor(
                         shareRoleId = remoteShare.shareRoleId,
                         isPrimary = remoteShare.primary,
                         targetMembers = remoteShare.targetMembers,
-                        shared = remoteShare.shared
+                        shared = remoteShare.shared,
+                        permission = remoteShare.permission,
+                        targetMaxMembers = remoteShare.targetMaxMembers,
+                        expirationTime = remoteShare.expirationTime,
                     )
                 }
 
@@ -504,9 +507,11 @@ class ShareRepositoryImpl @Inject constructor(
         localShare.isPrimary != remoteShare.primary -> true
         localShare.owner != remoteShare.owner -> true
         localShare.shareRoleId != remoteShare.shareRoleId -> true
+        localShare.permission != remoteShare.permission -> true
         localShare.targetMembers != remoteShare.targetMembers -> true
         localShare.shared != remoteShare.shared -> true
         localShare.targetMaxMembers != remoteShare.targetMaxMembers -> true
+        localShare.expirationTime != remoteShare.expirationTime -> true
 
         else -> false
     }

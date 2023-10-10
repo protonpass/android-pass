@@ -174,10 +174,14 @@ class SelectItemViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
+    private val removePrimaryVaultFlow: Flow<Boolean> = ffRepo
+        .get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
+        .distinctUntilChanged()
+
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         planTypeFlow,
         vaultsFlow,
-        ffRepo.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
+        removePrimaryVaultFlow
     ) { plan, vaults, removePrimaryVaultFlag -> Triple(plan, vaults, removePrimaryVaultFlag) }
         .flatMapLatest { data ->
             val (planType, vaultsRes, removePrimaryVaultFlag) = data
@@ -317,7 +321,8 @@ class SelectItemViewModel @Inject constructor(
         shouldScrollToTopFlow,
         preferenceRepository.getUseFaviconsPreference(),
         planTypeFlow,
-        observeUpgradeInfo().asLoadingResult()
+        observeUpgradeInfo().asLoadingResult(),
+        removePrimaryVaultFlow
     ) { itemsResult,
         shares,
         isRefreshing,
@@ -327,7 +332,8 @@ class SelectItemViewModel @Inject constructor(
         shouldScrollToTop,
         useFavicons,
         plan,
-        upgradeInfo ->
+        upgradeInfo,
+        removePrimaryVault ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
@@ -368,7 +374,8 @@ class SelectItemViewModel @Inject constructor(
                 inSearchMode = search.isInSearchMode,
                 isProcessingSearch = search.isProcessingSearch,
                 searchInMode = searchIn
-            )
+            ),
+            isRemovePrimaryVaultEnabled = removePrimaryVault
         )
     }
         .stateIn(

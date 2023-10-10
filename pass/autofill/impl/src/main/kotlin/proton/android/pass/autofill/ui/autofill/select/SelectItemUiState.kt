@@ -41,12 +41,14 @@ sealed interface SearchInMode {
 @Immutable
 data class SelectItemUiState(
     val listUiState: SelectItemListUiState,
-    val searchUiState: SearchUiState
+    val searchUiState: SearchUiState,
+    val isRemovePrimaryVaultEnabled: Boolean
 ) {
     companion object {
         val Loading = SelectItemUiState(
             listUiState = SelectItemListUiState.Loading,
-            searchUiState = SearchUiState.Initial
+            searchUiState = SearchUiState.Initial,
+            isRemovePrimaryVaultEnabled = false
         )
     }
 }

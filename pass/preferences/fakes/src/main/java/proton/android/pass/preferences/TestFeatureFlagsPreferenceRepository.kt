@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.REMOVE_PRIMARY_VAULT
+import proton.android.pass.preferences.FeatureFlag.SHARING_NEW_USERS
 import proton.android.pass.preferences.FeatureFlag.SHARING_V1
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -38,6 +39,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
             REMOVE_PRIMARY_VAULT -> it.getOrDefault(REMOVE_PRIMARY_VAULT, false) as T
+            SHARING_NEW_USERS -> it.getOrDefault(SHARING_V1, false) as T
             SHARING_V1 -> it.getOrDefault(SHARING_V1, false) as T
         }
     }

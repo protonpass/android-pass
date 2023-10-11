@@ -53,6 +53,7 @@ fun ManageVaultContent(
         Column(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
                 .padding(padding),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {

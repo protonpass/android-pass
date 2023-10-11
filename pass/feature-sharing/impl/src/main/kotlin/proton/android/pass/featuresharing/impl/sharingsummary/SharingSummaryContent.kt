@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.body3Norm
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.featuresharing.impl.R
@@ -74,9 +75,12 @@ fun SharingSummaryContent(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            SummarySection(state = state)
-            VaultRowSection(vaultWithItemCount = state.vaultWithItemCount)
+            Text(
+                text = stringResource(R.string.share_summary_title),
+                style = PassTheme.typography.heroNorm()
+            )
             ShareToEmailSection(email = state.email)
+            VaultRowSection(vaultWithItemCount = state.vaultWithItemCount)
             PermissionSummarySection(sharingType = state.sharingType)
         }
     }

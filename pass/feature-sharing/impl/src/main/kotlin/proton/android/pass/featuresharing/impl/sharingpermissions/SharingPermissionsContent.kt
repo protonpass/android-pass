@@ -34,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.body3Norm
-import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
@@ -86,12 +85,6 @@ fun SharingPermissionsContent(
                 text = stringResource(R.string.share_permissions_title),
                 style = PassTheme.typography.heroNorm()
             )
-            state.vaultName?.let { name ->
-                Text(
-                    text = stringResource(R.string.share_permissions_subtitle, name),
-                    style = PassTheme.typography.body3Weak()
-                )
-            }
             ShareToEmail(email = state.email)
             SettingRadio(
                 modifier = Modifier.roundedContainer(

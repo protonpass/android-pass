@@ -36,7 +36,12 @@ fun SharingPermissionsScreen(
     LaunchedEffect(state.event) {
         when (val event = state.event) {
             is SharingPermissionsEvents.NavigateToSummary -> onNavigateEvent(
-                SharingNavigation.Summary(event.shareId, event.email, event.permission)
+                SharingNavigation.Summary(
+                    shareId = event.shareId,
+                    email = event.email,
+                    permission = event.permission,
+                    mode = event.mode
+                )
             )
 
             SharingPermissionsEvents.Unknown -> {}

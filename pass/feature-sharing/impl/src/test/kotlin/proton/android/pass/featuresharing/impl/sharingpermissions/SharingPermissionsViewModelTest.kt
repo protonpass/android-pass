@@ -27,6 +27,8 @@ import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.featuresharing.impl.EmailNavArgId
+import proton.android.pass.featuresharing.impl.SharingWithUserModeArgId
+import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
 import proton.pass.domain.ShareId
@@ -46,6 +48,7 @@ class SharingPermissionsViewModelTest {
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = "my share id"
             get()[EmailNavArgId.key] = "test@example.com"
+            get()[SharingWithUserModeArgId.key] = SharingWithUserModeType.ExistingUser.name
         }
         viewModel = SharingPermissionsViewModel(
             getVaultById = getVaultById,
@@ -83,6 +86,7 @@ class SharingPermissionsViewModelTest {
             assertThat(navigationEvent.shareId).isEqualTo(ShareId("my share id"))
             assertThat(navigationEvent.email).isEqualTo("test@example.com")
             assertThat(navigationEvent.permission).isEqualTo(SharingType.Read.ordinal)
+            assertThat(navigationEvent.mode).isEqualTo(SharingWithUserModeType.NewUser)
         }
     }
 

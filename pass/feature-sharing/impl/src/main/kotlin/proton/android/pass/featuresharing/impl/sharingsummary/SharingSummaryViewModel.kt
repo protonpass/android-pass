@@ -107,7 +107,8 @@ class SharingSummaryViewModel @Inject constructor(
                 inviteToVault(
                     targetEmail = email,
                     shareId = shareId,
-                    shareRole = sharingType.toShareRole()
+                    shareRole = sharingType.toShareRole(),
+                    userMode = InviteToVault.UserMode.ExistingUser
                 )
                     .onSuccess {
                         isLoadingStateFlow.update { IsLoadingState.NotLoading }

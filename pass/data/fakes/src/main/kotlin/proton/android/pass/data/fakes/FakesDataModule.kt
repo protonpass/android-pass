@@ -46,6 +46,7 @@ import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAliasDetails
+import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
@@ -128,6 +129,7 @@ import proton.android.pass.data.fakes.usecases.TestDeleteItem
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
 import proton.android.pass.data.fakes.usecases.TestGetAliasDetails
+import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetItemByAliasEmail
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
@@ -500,4 +502,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindCanCreateItemInVault(impl: TestCanCreateItemInVault): CanCreateItemInVault
+
+    @Binds
+    abstract fun bindGetInviteUserMode(impl: TestGetInviteUserMode): GetInviteUserMode
 }

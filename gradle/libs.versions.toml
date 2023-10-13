@@ -71,6 +71,8 @@ collections = "0.3.5"
 coroutines = "1.6.4"
 datetime = "0.4.0"
 serializationJson = "1.4.1"
+#Pass
+passCommon = "0.3.0"
 # Sentry
 sentry = "6.18.1"
 # Showkase
@@ -271,6 +273,9 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 # Material
 material = { module = "com.google.android.material:material", version.ref = "material" }
+
+# Pass
+pass-common = { module = "me.proton.pass.common:lib", version.ref = "passCommon" }
 
 # Sentry
 sentry = { module = "io.sentry:sentry", version.ref = "sentry" }

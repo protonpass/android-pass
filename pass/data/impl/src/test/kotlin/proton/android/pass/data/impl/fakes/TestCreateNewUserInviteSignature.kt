@@ -16,16 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.sharingwith
+package proton.android.pass.data.impl.fakes
 
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
-import proton.pass.domain.ShareId
+import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.data.impl.crypto.CreateNewUserInviteSignature
+import proton.pass.domain.key.ShareKey
 
-sealed interface SharingWithEvents {
-    data class NavigateToPermissions(
-        val shareId: ShareId,
-        val email: String,
-        val userMode: SharingWithUserModeType
-    ) : SharingWithEvents
-    object Unknown : SharingWithEvents
+class TestCreateNewUserInviteSignature : CreateNewUserInviteSignature {
+
+    var result: Result<String> = Result.success("")
+        private set
+
+    var hasBeenInvoked: Boolean = false
+        private set
+
+    override fun invoke(
+        inviterUserAddress: UserAddress,
+        email: String,
+        vaultKey: ShareKey
+    ): Result<String> {
+        hasBeenInvoked = true
+        return result
+    }
 }

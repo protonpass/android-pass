@@ -26,10 +26,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.account.fakes.TestPublicAddressRepository
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.data.api.usecases.InviteUserMode
+import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
-import proton.android.pass.featuresharing.impl.sharingwith.EmailNotValidReason.NotShareable
+import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.featuresharing.impl.sharingwith.EmailNotValidReason.NotValid
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
@@ -41,7 +42,7 @@ class SharingWithViewModelTest {
     private lateinit var viewModel: SharingWithViewModel
     private lateinit var getVaultById: TestGetVaultById
     private lateinit var accountManager: TestAccountManager
-    private lateinit var publicAddressRepository: TestPublicAddressRepository
+    private lateinit var getInviteUserMode: TestGetInviteUserMode
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
 
     @get:Rule
@@ -52,15 +53,15 @@ class SharingWithViewModelTest {
     fun setUp() {
         getVaultById = TestGetVaultById()
         accountManager = TestAccountManager()
-        publicAddressRepository = TestPublicAddressRepository()
+        getInviteUserMode = TestGetInviteUserMode()
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-            get()[CommonNavArgId.ShareId.key] = "my share id"
+            get()[CommonNavArgId.ShareId.key] = SHARE_ID
         }
         viewModel = SharingWithViewModel(
             getVaultById = getVaultById,
-            publicAddressRepository = publicAddressRepository,
             accountManager = accountManager,
-            savedStateHandleProvider = savedStateHandleProvider
+            savedStateHandleProvider = savedStateHandleProvider,
+            getInviteUserMode = getInviteUserMode,
         )
     }
 
@@ -75,7 +76,6 @@ class SharingWithViewModelTest {
     @Test
     fun `onEmailSubmit with valid email should update emailNotValidReason to null`() = runTest {
         accountManager.sendPrimaryUserId(UserId("primary-user-id"))
-        publicAddressRepository.setAddress(address = "myemail@proton.me")
         viewModel.onEmailChange("test@example.com")
         viewModel.onEmailSubmit()
         viewModel.state.test {
@@ -87,7 +87,6 @@ class SharingWithViewModelTest {
     fun `onEmailSubmit with invalid email should update emailNotValidReason to NotValid`() =
         runTest {
             accountManager.sendPrimaryUserId(UserId("primary-user-id"))
-            publicAddressRepository.setAddress(address = "myemail@proton.me")
             viewModel.onEmailChange("invalid-email")
             viewModel.state.test {
                 skipItems(1)
@@ -97,38 +96,75 @@ class SharingWithViewModelTest {
         }
 
     @Test
-    fun `onEmailSubmit with not Proton email should update emailNotValidReason to NotShareable`() =
+    fun `onEmailSubmit with not Proton email should navigate to permissions with NewUser`() =
         runTest {
+            val invitedEmail = "test@example.com"
             accountManager.sendPrimaryUserId(UserId("primary-user-id"))
-            publicAddressRepository.setAddress(address = "myemail@proton.me")
-            viewModel.onEmailChange("test@example.com")
+            getInviteUserMode.setResult(Result.success(InviteUserMode.NewUser))
+            viewModel.onEmailChange(invitedEmail)
             viewModel.state.test {
                 skipItems(1)
                 viewModel.onEmailSubmit()
                 val item = awaitItem()
-                assertThat(item.emailNotValidReason).isEqualTo(NotShareable)
+                assertThat(item.emailNotValidReason).isNull()
+                assertThat(item.event).isEqualTo(
+                    SharingWithEvents.NavigateToPermissions(
+                        shareId = ShareId(SHARE_ID),
+                        email = invitedEmail,
+                        userMode = SharingWithUserModeType.NewUser
+                    )
+                )
+            }
+        }
+
+    @Test
+    fun `error in getInviteUserMode should propagate`() =
+        runTest {
+            val invitedEmail = "test@example.com"
+            accountManager.sendPrimaryUserId(UserId("primary-user-id"))
+            getInviteUserMode.setResult(Result.failure(IllegalStateException("test")))
+            viewModel.onEmailChange(invitedEmail)
+            viewModel.state.test {
+                skipItems(1)
+                viewModel.onEmailSubmit()
+                val item = awaitItem()
+                assertThat(item.emailNotValidReason).isEqualTo(EmailNotValidReason.CannotGetEmailInfo)
+                assertThat(item.event).isEqualTo(SharingWithEvents.Unknown)
             }
         }
 
     @Test
     fun `state should be updated correctly after combining flows`() = runTest {
+        val invitedEmail = "myemail@proton.me"
+
         accountManager.sendPrimaryUserId(UserId("primary-user-id"))
-        publicAddressRepository.setAddress(address = "myemail@proton.me")
         val testVault = Vault(
-            shareId = ShareId(id = ""),
+            shareId = ShareId(id = SHARE_ID),
             name = "vault name",
             isPrimary = false
         )
         getVaultById.emitValue(testVault)
-        viewModel.onEmailChange("test@example.com")
-        viewModel.onEmailSubmit()
+        viewModel.onEmailChange(invitedEmail)
 
+        viewModel.onEmailSubmit()
         viewModel.state.test {
+            skipItems(1)
             val currentState = awaitItem()
-            assertThat(currentState.email).isEqualTo("test@example.com")
+            assertThat(currentState.email).isEqualTo(invitedEmail)
             assertThat(currentState.vaultName).isEqualTo(testVault.name)
             assertThat(currentState.emailNotValidReason).isNull()
             assertThat(currentState.isVaultNotFound).isFalse()
+            assertThat(currentState.event).isEqualTo(
+                SharingWithEvents.NavigateToPermissions(
+                    shareId = ShareId(SHARE_ID),
+                    email = invitedEmail,
+                    userMode = SharingWithUserModeType.ExistingUser
+                )
+            )
         }
+    }
+
+    companion object {
+        private const val SHARE_ID = "SharingWithViewModelTest-ShareID"
     }
 }

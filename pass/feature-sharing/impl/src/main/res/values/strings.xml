@@ -36,6 +36,10 @@
     <string name="share_with_title">Share with</string>
     <string name="share_with_email_hint">Email address</string>
     <string name="share_with_email_error">Invalid email address</string>
+    <string
+        name="share_with_email_cannot_get_email_info"
+        comment="error message that will appear when the user tries to share with an email address that cannot be retrieved"
+    >Cannot retrieve the invited user information</string>
 
     <string name="share_permissions_title">Set access level</string>
 

@@ -16,16 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.sharingwith
+package proton.android.pass.data.fakes.usecases
 
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
-import proton.pass.domain.ShareId
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.GetInviteUserMode
+import proton.android.pass.data.api.usecases.InviteUserMode
+import javax.inject.Inject
+import javax.inject.Singleton
 
-sealed interface SharingWithEvents {
-    data class NavigateToPermissions(
-        val shareId: ShareId,
-        val email: String,
-        val userMode: SharingWithUserModeType
-    ) : SharingWithEvents
-    object Unknown : SharingWithEvents
+@Singleton
+class TestGetInviteUserMode @Inject constructor() : GetInviteUserMode {
+
+    private var result: Result<InviteUserMode> = Result.success(InviteUserMode.ExistingUser)
+
+    fun setResult(value: Result<InviteUserMode>) {
+        result = value
+    }
+
+    override suspend fun invoke(userId: UserId, email: String): Result<InviteUserMode> = result
 }

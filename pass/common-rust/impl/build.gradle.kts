@@ -32,10 +32,8 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.commonRust.api)
 
-    compileOnly(files("libs/lib-release.aar"))
-
     implementation(libs.kotlinx.coroutines.core)
-    implementation("net.java.dev.jna:jna:5.13.0@aar")
+    implementation(libs.pass.common)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

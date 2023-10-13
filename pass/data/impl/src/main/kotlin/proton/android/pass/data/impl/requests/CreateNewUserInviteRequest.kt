@@ -16,22 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.impl.usecases
+package proton.android.pass.data.impl.requests
 
-import java.util.UUID
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-object Utils {
-    private const val PASSPHRASE_LENGTH = 32
-
-    fun generatePassphrase() = getRandomString(PASSPHRASE_LENGTH)
-
-    fun generateUuid(): String = UUID.randomUUID().toString()
-
-    private fun getRandomString(length: Int): String {
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        return (1..length)
-            .map { allowedChars.random() }
-            .joinToString("")
-    }
-}
-
+@Serializable
+data class CreateNewUserInviteRequest(
+    @SerialName("Email")
+    val email: String,
+    @SerialName("TargetType")
+    val targetType: Int,
+    @SerialName("Signature")
+    val signature: String,
+    @SerialName("ShareRoleID")
+    val shareRoleId: String,
+    @SerialName("ItemID")
+    val itemId: String? = null,
+    @SerialName("ExpirationTime")
+    val expirationTime: Long? = null
+)

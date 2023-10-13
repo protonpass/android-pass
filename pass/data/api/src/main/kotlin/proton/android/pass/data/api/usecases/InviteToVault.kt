@@ -24,11 +24,17 @@ import proton.pass.domain.ShareRole
 
 interface InviteToVault {
 
+    enum class UserMode {
+        ExistingUser,
+        NewUser
+    }
+
     suspend operator fun invoke(
         userId: UserId? = null,
         targetEmail: String,
         shareId: ShareId,
-        shareRole: ShareRole
+        shareRole: ShareRole,
+        userMode: UserMode
     ): Result<Unit>
 
 }

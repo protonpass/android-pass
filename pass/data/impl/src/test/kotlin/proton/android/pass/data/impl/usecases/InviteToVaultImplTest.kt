@@ -113,7 +113,7 @@ class InviteToVaultImplTest {
         )
         assertThat(res.isSuccess).isTrue()
 
-        val memory = remoteDataSource.getMemory()
+        val memory = remoteDataSource.getInviteMemory()
         assertThat(memory.size).isEqualTo(1)
 
         val memoryValue = memory.first()

@@ -22,6 +22,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
+import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.pass.domain.InviteToken
@@ -36,9 +37,11 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
         Result.success(emptyList())
     private var acceptInviteResult: Result<ShareResponse> = Result.success(DEFAULT_RESPONSE)
 
-    private var memory: MutableList<Payload> = mutableListOf()
+    private var memory: MutableList<InvitePayload> = mutableListOf()
+    private var newUserInviteMemory: MutableList<NewUserInvitePayload> = mutableListOf()
 
-    fun getMemory(): List<Payload> = memory
+    fun getInviteMemory(): List<InvitePayload> = memory
+    fun getNewUserInviteMemory(): List<NewUserInvitePayload> = newUserInviteMemory
 
     fun setSendInviteResult(value: Result<Unit>) {
         sendInviteResult = value
@@ -57,7 +60,16 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
         shareId: ShareId,
         request: CreateInviteRequest
     ) {
-        memory.add(Payload(userId, shareId, request))
+        memory.add(InvitePayload(userId, shareId, request))
+        sendInviteResult.getOrThrow()
+    }
+
+    override suspend fun sendNewUserInvite(
+        userId: UserId,
+        shareId: ShareId,
+        request: CreateNewUserInviteRequest
+    ) {
+        newUserInviteMemory.add(NewUserInvitePayload(userId, shareId, request))
         sendInviteResult.getOrThrow()
     }
 
@@ -73,10 +85,16 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
     override suspend fun rejectInvite(userId: UserId, token: InviteToken) {
     }
 
-    data class Payload(
+    data class InvitePayload(
         val userId: UserId,
         val shareId: ShareId,
         val request: CreateInviteRequest
+    )
+
+    data class NewUserInvitePayload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val request: CreateNewUserInviteRequest
     )
 
     companion object {

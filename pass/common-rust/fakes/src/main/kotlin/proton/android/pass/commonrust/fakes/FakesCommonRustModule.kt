@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonrust.api.AliasPrefixValidator
+import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -30,4 +31,9 @@ abstract class FakesCommonRustModule {
 
     @Binds
     abstract fun bindAliasPrefixValidator(impl: TestAliasPrefixValidator): AliasPrefixValidator
+
+    @Binds
+    abstract fun bindNewUserInviteSignatureBodyCreator(
+        impl: TestNewUserInviteSignatureBodyCreator
+    ): NewUserInviteSignatureBodyCreator
 }

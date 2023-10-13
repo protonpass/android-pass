@@ -38,6 +38,7 @@ class TestInviteToVault @Inject constructor() : InviteToVault {
         userId: UserId?,
         targetEmail: String,
         shareId: ShareId,
-        shareRole: ShareRole
+        shareRole: ShareRole,
+        userMode: InviteToVault.UserMode
     ): Result<Unit> = result
 }

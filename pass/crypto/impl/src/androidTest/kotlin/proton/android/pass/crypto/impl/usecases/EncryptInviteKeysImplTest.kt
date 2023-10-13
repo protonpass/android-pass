@@ -30,6 +30,7 @@ import me.proton.core.user.domain.entity.AddressId
 import org.junit.Test
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
+import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider

@@ -50,6 +50,11 @@ object PermissionNavArgId : NavArgId {
     override val navType: NavType<*> = NavType.IntType
 }
 
+object SharingWithUserModeArgId : NavArgId {
+    override val key: String = "sharing_with_user_mode"
+    override val navType: NavType<*> = NavType.StringType
+}
+
 object SharingWith : NavItem(
     baseRoute = "sharing/with/screen",
     navArgIds = listOf(CommonNavArgId.ShareId)
@@ -57,21 +62,27 @@ object SharingWith : NavItem(
     fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
 }
 
+enum class SharingWithUserModeType {
+    ExistingUser,
+    NewUser
+}
+
 object SharingPermissions : NavItem(
     baseRoute = "sharing/permissions/screen",
-    navArgIds = listOf(CommonNavArgId.ShareId, EmailNavArgId)
+    navArgIds = listOf(CommonNavArgId.ShareId, EmailNavArgId, SharingWithUserModeArgId)
 ) {
-    fun createRoute(shareId: ShareId, email: String) = "$baseRoute/${shareId.id}/$email"
+    fun createRoute(shareId: ShareId, email: String, mode: SharingWithUserModeType) =
+        "$baseRoute/${shareId.id}/$email/${mode.name}"
 }
 
 object AcceptInvite : NavItem("sharing/accept", navItemType = NavItemType.Bottomsheet)
 
 object SharingSummary : NavItem(
     baseRoute = "sharing/summary/screen",
-    navArgIds = listOf(CommonNavArgId.ShareId, EmailNavArgId, PermissionNavArgId)
+    navArgIds = listOf(CommonNavArgId.ShareId, EmailNavArgId, PermissionNavArgId, SharingWithUserModeArgId)
 ) {
-    fun createRoute(shareId: ShareId, email: String, permission: Int) =
-        "$baseRoute/${shareId.id}/$email/$permission"
+    fun createRoute(shareId: ShareId, email: String, permission: Int, mode: SharingWithUserModeType) =
+        "$baseRoute/${shareId.id}/$email/$permission/${mode.name}"
 }
 
 object ManageVault : NavItem(
@@ -86,9 +97,18 @@ sealed interface SharingNavigation {
 
     @JvmInline
     value class CloseBottomSheet(val refresh: Boolean) : SharingNavigation
-    data class Permissions(val shareId: ShareId, val email: String) : SharingNavigation
-    data class Summary(val shareId: ShareId, val email: String, val permission: Int) :
-        SharingNavigation
+    data class Permissions(
+        val shareId: ShareId,
+        val email: String,
+        val mode: SharingWithUserModeType
+    ) : SharingNavigation
+
+    data class Summary(
+        val shareId: ShareId,
+        val email: String,
+        val permission: Int,
+        val mode: SharingWithUserModeType
+    ) : SharingNavigation
 
     @JvmInline
     value class ShareVault(val shareId: ShareId) : SharingNavigation

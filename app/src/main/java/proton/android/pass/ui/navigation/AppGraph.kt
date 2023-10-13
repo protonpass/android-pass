@@ -843,12 +843,21 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.Permissions -> appNavigator.navigate(
                 destination = SharingPermissions,
-                route = SharingPermissions.createRoute(it.shareId, it.email)
+                route = SharingPermissions.createRoute(
+                    shareId = it.shareId,
+                    email = it.email,
+                    mode = it.mode
+                )
             )
 
             is SharingNavigation.Summary -> appNavigator.navigate(
                 destination = SharingSummary,
-                route = SharingSummary.createRoute(it.shareId, it.email, it.permission)
+                route = SharingSummary.createRoute(
+                    shareId = it.shareId,
+                    email = it.email,
+                    permission = it.permission,
+                    mode = it.mode
+                )
             )
 
             is SharingNavigation.ShareVault -> appNavigator.navigate(

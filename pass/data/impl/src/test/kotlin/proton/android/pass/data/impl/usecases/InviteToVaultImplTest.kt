@@ -23,8 +23,6 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
-import me.proton.core.key.domain.entity.key.PublicAddressKey
-import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
@@ -35,7 +33,9 @@ import proton.android.pass.account.fakes.TestPublicAddressRepository
 import proton.android.pass.account.fakes.TestUserAddressRepository
 import proton.android.pass.crypto.fakes.usecases.TestEncryptInviteKeys
 import proton.android.pass.crypto.fakes.utils.TestUtils
+import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.impl.db.entities.ShareEntity
+import proton.android.pass.data.impl.fakes.TestCreateNewUserInviteSignature
 import proton.android.pass.data.impl.fakes.TestLocalShareDataSource
 import proton.android.pass.data.impl.fakes.TestRemoteInviteDataSource
 import proton.android.pass.data.impl.fakes.TestShareKeyRepository
@@ -52,6 +52,7 @@ class InviteToVaultImplTest {
     private lateinit var publicAddressRepository: TestPublicAddressRepository
     private lateinit var userAddressRepository: TestUserAddressRepository
     private lateinit var localShareDataSource: LocalShareDataSource
+    private lateinit var createNewUserInviteSignature: TestCreateNewUserInviteSignature
 
     @Before
     fun setup() {
@@ -59,6 +60,7 @@ class InviteToVaultImplTest {
         publicAddressRepository = TestPublicAddressRepository()
         accountManager = TestAccountManager()
         userAddressRepository = TestUserAddressRepository()
+        createNewUserInviteSignature = TestCreateNewUserInviteSignature()
         localShareDataSource = TestLocalShareDataSource().apply {
             val entity = ShareEntity(
                 id = SHARE_ID,
@@ -94,7 +96,8 @@ class InviteToVaultImplTest {
                 emitGetShareKeys(listOf(TestUtils.createShareKey().first))
             },
             remoteInviteDataSource = remoteDataSource,
-            localShareDataSource = localShareDataSource
+            localShareDataSource = localShareDataSource,
+            createNewUserInviteSignature = createNewUserInviteSignature
         )
     }
 
@@ -109,7 +112,8 @@ class InviteToVaultImplTest {
         val res = instance.invoke(
             targetEmail = INVITED_ADDRESS,
             shareId = shareId,
-            shareRole = shareRole
+            shareRole = shareRole,
+            userMode = InviteToVault.UserMode.ExistingUser
         )
         assertThat(res.isSuccess).isTrue()
 
@@ -121,6 +125,7 @@ class InviteToVaultImplTest {
         assertThat(memoryValue.shareId).isEqualTo(shareId)
         assertThat(memoryValue.request.email).isEqualTo(INVITED_ADDRESS)
         assertThat(memoryValue.request.shareRoleId).isEqualTo(shareRole.value)
+        assertThat(createNewUserInviteSignature.hasBeenInvoked).isFalse()
     }
 
     @Test
@@ -132,7 +137,8 @@ class InviteToVaultImplTest {
         val res = instance.invoke(
             targetEmail = INVITED_ADDRESS,
             shareId = ShareId(SHARE_ID),
-            shareRole = ShareRole.Admin
+            shareRole = ShareRole.Admin,
+            userMode = InviteToVault.UserMode.ExistingUser
         )
         assertThat(res.isFailure).isTrue()
     }
@@ -146,7 +152,8 @@ class InviteToVaultImplTest {
             val res = instance.invoke(
                 targetEmail = INVITED_ADDRESS,
                 shareId = ShareId(SHARE_ID),
-                shareRole = ShareRole.Admin
+                shareRole = ShareRole.Admin,
+                userMode = InviteToVault.UserMode.ExistingUser
             )
             assertThat(res.isFailure).isTrue()
         }
@@ -159,9 +166,37 @@ class InviteToVaultImplTest {
         val res = instance.invoke(
             targetEmail = INVITED_ADDRESS,
             shareId = ShareId(SHARE_ID),
-            shareRole = ShareRole.Admin
+            shareRole = ShareRole.Admin,
+            userMode = InviteToVault.UserMode.ExistingUser
         )
         assertThat(res.isFailure).isTrue()
+    }
+
+    @Test
+    fun `invite NewUser to vault returns success`() = runTest {
+        setupAccountManager()
+        setupPublicAddress()
+        setupUserAddress()
+
+        val shareId = ShareId(SHARE_ID)
+        val shareRole = ShareRole.Admin
+        val res = instance.invoke(
+            targetEmail = INVITED_ADDRESS,
+            shareId = shareId,
+            shareRole = shareRole,
+            userMode = InviteToVault.UserMode.NewUser
+        )
+        assertThat(res.isSuccess).isTrue()
+
+        val memory = remoteDataSource.getNewUserInviteMemory()
+        assertThat(memory.size).isEqualTo(1)
+
+        val memoryValue = memory.first()
+        assertThat(memoryValue.userId).isEqualTo(UserId(USER_ID))
+        assertThat(memoryValue.shareId).isEqualTo(shareId)
+        assertThat(memoryValue.request.email).isEqualTo(INVITED_ADDRESS)
+        assertThat(memoryValue.request.shareRoleId).isEqualTo(shareRole.value)
+        assertThat(createNewUserInviteSignature.hasBeenInvoked).isTrue()
     }
 
     private fun setupAccountManager(userId: UserId? = UserId(USER_ID)) {
@@ -169,19 +204,7 @@ class InviteToVaultImplTest {
     }
 
     private fun setupPublicAddress() {
-        val key = PublicKey(
-            key = "InvitedKey",
-            isPrimary = true,
-            isActive = true,
-            canEncrypt = true,
-            canVerify = true
-        )
-        val publicAddressKey = PublicAddressKey(
-            email = INVITED_ADDRESS,
-            flags = 0,
-            publicKey = key
-        )
-        publicAddressRepository.setAddress(INVITED_ADDRESS, listOf(publicAddressKey))
+        publicAddressRepository.setAddressWithDefaultKey(INVITED_ADDRESS)
     }
 
     private fun setupUserAddress() {

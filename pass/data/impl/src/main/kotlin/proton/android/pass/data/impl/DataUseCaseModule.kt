@@ -43,6 +43,7 @@ import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
 import proton.android.pass.data.api.usecases.GetAliasDetails
+import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
@@ -125,6 +126,7 @@ import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
 import proton.android.pass.data.impl.usecases.GetAliasDetailsImpl
+import proton.android.pass.data.impl.usecases.GetInviteUserModeImpl
 import proton.android.pass.data.impl.usecases.GetItemByAliasEmailImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdWithVaultImpl
@@ -436,4 +438,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCanCreateItemInVault(impl: CanCreateItemInVaultImpl): CanCreateItemInVault
+
+    @Binds
+    abstract fun bindGetInviteUserMode(impl: GetInviteUserModeImpl): GetInviteUserMode
 }

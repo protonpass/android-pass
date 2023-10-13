@@ -39,7 +39,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
             REMOVE_PRIMARY_VAULT -> it.getOrDefault(REMOVE_PRIMARY_VAULT, false) as T
-            SHARING_NEW_USERS -> it.getOrDefault(SHARING_V1, false) as T
+            SHARING_NEW_USERS -> it.getOrDefault(SHARING_NEW_USERS, false) as T
             SHARING_V1 -> it.getOrDefault(SHARING_V1, false) as T
         }
     }

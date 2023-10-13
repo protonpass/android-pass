@@ -22,6 +22,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.data.impl.crypto.CreateNewUserInviteSignature
+import proton.android.pass.data.impl.crypto.CreateNewUserInviteSignatureImpl
 import proton.android.pass.data.impl.crypto.EncryptInviteKeys
 import proton.android.pass.data.impl.crypto.EncryptInviteKeysImpl
 import proton.android.pass.data.impl.crypto.ReencryptInviteContents
@@ -54,4 +56,9 @@ abstract class DataCryptoModule {
     abstract fun bindEncryptInviteKeys(
         impl: EncryptInviteKeysImpl
     ): EncryptInviteKeys
+
+    @Binds
+    abstract fun bindCreateNewUserInviteSignature(
+        impl: CreateNewUserInviteSignatureImpl
+    ): CreateNewUserInviteSignature
 }

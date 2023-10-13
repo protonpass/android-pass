@@ -16,22 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.impl.usecases
+package proton.android.pass.commonrust.fakes
 
-import java.util.UUID
+import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object Utils {
-    private const val PASSPHRASE_LENGTH = 32
+@Singleton
+class TestNewUserInviteSignatureBodyCreator @Inject constructor() : NewUserInviteSignatureBodyCreator {
 
-    fun generatePassphrase() = getRandomString(PASSPHRASE_LENGTH)
+    private var result: ByteArray = byteArrayOf()
 
-    fun generateUuid(): String = UUID.randomUUID().toString()
-
-    private fun getRandomString(length: Int): String {
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        return (1..length)
-            .map { allowedChars.random() }
-            .joinToString("")
+    fun setResult(value: ByteArray) {
+        result = value
     }
-}
 
+    override fun create(email: String, vaultKey: ByteArray): ByteArray = result
+}

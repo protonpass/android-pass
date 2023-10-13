@@ -33,6 +33,7 @@ import me.proton.core.key.domain.publicKey
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.crypto.api.Base64
+import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.crypto.api.usecases.AcceptInvite

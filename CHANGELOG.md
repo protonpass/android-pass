@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.9.3 (2023-10-13)
+
+### Other
+
+- Wording in some screens.
+
 ## 1.9.2 (2023-10-10) 
 
 ### Fixes :bug:

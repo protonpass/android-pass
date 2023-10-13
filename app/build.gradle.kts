@@ -242,7 +242,6 @@ android {
 
 dependencies {
     implementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
-    implementation(files("../pass/common-rust/impl/libs/lib-release.aar"))
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.navigation.material)
     implementation(libs.accompanist.insets)
@@ -294,11 +293,11 @@ dependencies {
     implementation(libs.core.user)
     implementation(libs.core.userSettings)
     implementation(libs.core.utilAndroidDagger)
-    implementation("net.java.dev.jna:jna:5.13.0@aar")
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
     implementation(libs.okhttp)
+    implementation(libs.pass.common)
     implementation(libs.plumber)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)

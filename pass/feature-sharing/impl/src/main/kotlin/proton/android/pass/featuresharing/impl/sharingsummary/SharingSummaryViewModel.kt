@@ -41,6 +41,8 @@ import proton.android.pass.featuresharing.impl.PermissionNavArgId
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentError
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentSuccess
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.VaultNotFound
+import proton.android.pass.featuresharing.impl.SharingWithUserModeArgId
+import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -57,11 +59,17 @@ class SharingSummaryViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
 ) : ViewModel() {
 
-    private val shareId: ShareId =
-        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
+    private val shareId: ShareId = ShareId(
+        savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key)
+    )
     private val email: String = savedStateHandleProvider.get().require(EmailNavArgId.key)
-    private val sharingType: SharingType =
-        SharingType.values()[savedStateHandleProvider.get().require(PermissionNavArgId.key)]
+    private val sharingType: SharingType = SharingType
+        .values()[savedStateHandleProvider.get().require(PermissionNavArgId.key)]
+    private val userMode: SharingWithUserModeType = SharingWithUserModeType
+        .values()
+        .first {
+            it.name == savedStateHandleProvider.get().require(SharingWithUserModeArgId.key)
+        }
 
     private val isLoadingStateFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -108,19 +116,17 @@ class SharingSummaryViewModel @Inject constructor(
                     targetEmail = email,
                     shareId = shareId,
                     shareRole = sharingType.toShareRole(),
-                    userMode = InviteToVault.UserMode.ExistingUser
-                )
-                    .onSuccess {
-                        isLoadingStateFlow.update { IsLoadingState.NotLoading }
-                        snackbarDispatcher(InviteSentSuccess)
-                        PassLogger.i(TAG, "Invite sent successfully")
-                        eventFlow.update { SharingSummaryEvent.Shared }
-                    }
-                    .onFailure {
-                        isLoadingStateFlow.update { IsLoadingState.NotLoading }
-                        snackbarDispatcher(InviteSentError)
-                        PassLogger.w(TAG, it, "Error sending invite")
-                    }
+                    userMode = userMode.toUserMode()
+                ).onSuccess {
+                    isLoadingStateFlow.update { IsLoadingState.NotLoading }
+                    snackbarDispatcher(InviteSentSuccess)
+                    PassLogger.i(TAG, "Invite sent successfully")
+                    eventFlow.update { SharingSummaryEvent.Shared }
+                }.onFailure {
+                    isLoadingStateFlow.update { IsLoadingState.NotLoading }
+                    snackbarDispatcher(InviteSentError)
+                    PassLogger.w(TAG, it, "Error sending invite")
+                }
             } else {
                 snackbarDispatcher(VaultNotFound)
             }
@@ -129,6 +135,11 @@ class SharingSummaryViewModel @Inject constructor(
     companion object {
         private const val TAG = "SharingSummaryViewModel"
     }
+}
+
+private fun SharingWithUserModeType.toUserMode(): InviteToVault.UserMode = when (this) {
+    SharingWithUserModeType.ExistingUser -> InviteToVault.UserMode.ExistingUser
+    SharingWithUserModeType.NewUser -> InviteToVault.UserMode.NewUser
 }
 
 fun SharingType.toShareRole(): ShareRole = when (this) {

@@ -24,6 +24,7 @@ import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
+import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
@@ -232,6 +233,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun inviteUser(
         @Path("shareId") shareId: String,
         @Body request: CreateInviteRequest
+    ): CodeOnlyResponse
+
+    @POST("$PREFIX/share/{shareId}/new_user_invite")
+    suspend fun inviteNewUser(
+        @Path("shareId") shareId: String,
+        @Body request: CreateNewUserInviteRequest
     ): CodeOnlyResponse
 
     @GET("$PREFIX/invite")

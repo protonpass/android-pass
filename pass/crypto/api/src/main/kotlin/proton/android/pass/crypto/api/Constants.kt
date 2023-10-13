@@ -16,22 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.impl.usecases
+package proton.android.pass.crypto.api
 
-import java.util.UUID
-
-object Utils {
-    private const val PASSPHRASE_LENGTH = 32
-
-    fun generatePassphrase() = getRandomString(PASSPHRASE_LENGTH)
-
-    fun generateUuid(): String = UUID.randomUUID().toString()
-
-    private fun getRandomString(length: Int): String {
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        return (1..length)
-            .map { allowedChars.random() }
-            .joinToString("")
-    }
+object Constants {
+    const val SIGNATURE_CONTEXT_EXISTING_USER = "pass.invite.vault.existing-user"
+    const val SIGNATURE_CONTEXT_NEW_USER = "pass.invite.vault.new-user"
 }
-

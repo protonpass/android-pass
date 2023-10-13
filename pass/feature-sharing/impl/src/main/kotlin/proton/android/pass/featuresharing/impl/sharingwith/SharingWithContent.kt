@@ -103,7 +103,16 @@ fun SharingWithContent(
                     )
                 },
                 isError = state.emailNotValidReason != null,
-                errorMessage = stringResource(R.string.share_with_email_error),
+                errorMessage = when (state.emailNotValidReason) {
+                    EmailNotValidReason.NotValid -> stringResource(R.string.share_with_email_error)
+                    EmailNotValidReason.CannotGetEmailInfo -> stringResource(
+                        id = R.string.share_with_email_cannot_get_email_info
+                    )
+                    EmailNotValidReason.UserIdNotFound -> stringResource(
+                        id = R.string.share_with_email_error
+                    )
+                    null -> ""
+                },
                 textStyle = ProtonTheme.typography.subheadlineNorm,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     capitalization = KeyboardCapitalization.None,

@@ -198,7 +198,6 @@ class InviteToVaultImpl @Inject constructor(
             targetType = TARGET_TYPE_VAULT,
             shareRoleId = shareRole.value,
             signature = signature
-
         )
         return Result.success(request)
     }

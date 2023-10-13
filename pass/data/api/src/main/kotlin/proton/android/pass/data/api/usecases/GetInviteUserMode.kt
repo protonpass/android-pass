@@ -16,16 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.sharingwith
+package proton.android.pass.data.api.usecases
 
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
-import proton.pass.domain.ShareId
+import me.proton.core.domain.entity.UserId
 
-sealed interface SharingWithEvents {
-    data class NavigateToPermissions(
-        val shareId: ShareId,
-        val email: String,
-        val userMode: SharingWithUserModeType
-    ) : SharingWithEvents
-    object Unknown : SharingWithEvents
+enum class InviteUserMode {
+    ExistingUser,
+    NewUser
+}
+
+interface GetInviteUserMode {
+    suspend operator fun invoke(userId: UserId, email: String): Result<InviteUserMode>
 }

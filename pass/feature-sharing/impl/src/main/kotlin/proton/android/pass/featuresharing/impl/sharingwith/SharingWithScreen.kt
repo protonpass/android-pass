@@ -36,7 +36,11 @@ fun SharingWithScreen(
     LaunchedEffect(state.event) {
         when (val event = state.event) {
             is SharingWithEvents.NavigateToPermissions -> onNavigateEvent(
-                SharingNavigation.Permissions(event.shareId, event.email)
+                SharingNavigation.Permissions(
+                    shareId = event.shareId,
+                    email = event.email,
+                    mode = event.userMode
+                )
             )
 
             SharingWithEvents.Unknown -> {}

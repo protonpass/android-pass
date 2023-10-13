@@ -235,7 +235,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: CreateInviteRequest
     ): CodeOnlyResponse
 
-    @POST("$PREFIX/share/{shareId}/new_user_invite")
+    @POST("$PREFIX/share/{shareId}/invite/new_user")
     suspend fun inviteNewUser(
         @Path("shareId") shareId: String,
         @Body request: CreateNewUserInviteRequest

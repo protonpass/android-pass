@@ -34,6 +34,8 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.featuresharing.impl.EmailNavArgId
+import proton.android.pass.featuresharing.impl.SharingWithUserModeArgId
+import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
@@ -47,6 +49,11 @@ class SharingPermissionsViewModel @Inject constructor(
     private val shareId: ShareId =
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val email: String = savedStateHandleProvider.get().require(EmailNavArgId.key)
+    private val userMode: SharingWithUserModeType = SharingWithUserModeType
+        .values()
+        .first {
+            it.name == savedStateHandleProvider.get().require(SharingWithUserModeArgId.key)
+        }
 
     private val sharingTypeState: MutableStateFlow<SharingType> = MutableStateFlow(SharingType.Read)
     private val eventState: MutableStateFlow<SharingPermissionsEvents> =
@@ -79,7 +86,8 @@ class SharingPermissionsViewModel @Inject constructor(
             SharingPermissionsEvents.NavigateToSummary(
                 shareId = shareId,
                 email = email,
-                permission = sharingTypeState.value.ordinal
+                permission = sharingTypeState.value.ordinal,
+                mode = userMode
             )
         }
     }

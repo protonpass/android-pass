@@ -10,6 +10,7 @@
   <string name="topbar_search_query_uninitialized">Buscar…</string>
   <string name="inline_suggestions_open_app">Abrir Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Tu plan solo permite utilizar los elementos en tu bóveda principal para la función de rellenado automático.</string>
+  <string name="autofill_only_searching_in_oldest_vaults">Tu plan solo permite utilizar los elementos en tus bóvedas más antiguas para la función de rellenado automático.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Sugerencias para %s</string>
   <string name="autofill_associate_web_app_name_dialog_title">Utilizar los datos de inicio de sesión de \"%s\" en esta aplicación o este sitio web.</string>

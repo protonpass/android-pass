@@ -18,9 +18,9 @@
   -->
 <resources>
   <string name="share_continue">Fortsätt</string>
-  <string name="sharing_can_view">Kan visa</string>
-  <string name="sharing_can_edit">Kan redigera</string>
-  <string name="sharing_can_manage">Kan hantera</string>
+  <string name="sharing_can_view">Läsare</string>
+  <string name="sharing_can_edit">Redaktör</string>
+  <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">Kan visa objekt i detta valv</string>
   <string name="sharing_can_edit_description">Kan skapa, redigera, ta bort och exportera objekt i detta valv.</string>
   <string name="sharing_can_manage_description">Kan bevilja och återkalla åtkomst till detta valv.</string>
@@ -33,12 +33,10 @@
     <item quantity="other">%d medlemmar</item>
   </plurals>
   <string name="share_with_title">Dela med</string>
-  <string name="share_with_subtitle">Denna användare kommer få en inbjudan att gå med i ditt \'%s\'-valv.</string>
   <string name="share_with_email_hint">E-postadress</string>
   <string name="share_with_email_error">Ogiltig e-postadress</string>
-  <string name="share_permissions_title">Ställ in behörigheter</string>
-  <string name="share_permissions_subtitle">Välj vilken åtkomstnivå denna användare ska erhålla när de går med i ditt \'%s\'-valv.</string>
-  <string name="sharing_invitation_from">Inbjudan från %s</string>
+  <string name="share_permissions_title">Ställ in åtkomstnivå</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s bjöd in dig för att komma åt objekt i</string>
   <string name="sharing_join_shared_vault">Gå med och synkronisera</string>
   <string name="sharing_reject_invitation">Avböj inbjudan</string>
   <string name="sharing_snackbar_get_invite_error">Kunde inte få inbjudan</string>
@@ -54,19 +52,16 @@
   <string name="sharing_snackbar_change_permission_error">Kunde inte ändra behörigheter</string>
   <string name="sharing_snackbar_remove_member_success">Medlem borttagen från valvet</string>
   <string name="sharing_snackbar_remove_member_error">Kunde inte ta bort från valvet</string>
-  <string name="share_summary_title">Sammanfattning</string>
+  <string name="share_summary_title">Granska och dela</string>
   <string name="share_summary_subtitle">Du är på väg att bjuda in %1$s till ditt %2$s. De kommer att få åtkomst till %3$s och de kommer att kunna %4$s i detta valv.</string>
   <string name="share_summary_vault">%s valv</string>
-  <string name="share_summary_view_items">endast visa objekt</string>
-  <string name="share_summary_create_items">skapa objekt</string>
-  <string name="share_summary_manage_vault">hantera</string>
   <string name="share_summary_share_vault">Dela valv</string>
-  <string name="share_summary_email_title">Användare</string>
+  <string name="share_summary_email_title">Dela med</string>
   <string name="share_summary_vault_title">Valv</string>
-  <string name="share_summary_permissions_title">Behörigheter</string>
+  <string name="share_summary_permissions_title">Åtkomstnivå</string>
   <string name="share_manage_vault_share_with_more_people">Dela med fler personer</string>
   <string name="share_manage_vault_item_count">%d objekt</string>
-  <string name="share_manage_vault_invite_pending">Väntande inbjudan</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Inbjudan skickad</string>
   <string name="share_manage_vault_current_user_indicator">Du</string>
   <string name="share_role_can_view">Kan visa</string>
   <string name="share_role_can_edit">Kan redigera</string>
@@ -74,11 +69,11 @@
   <string name="share_role_owner">Ägare</string>
   <string name="sharing_bottomsheet_transfer_ownership">Överför ägarskap</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan inte överföra ditt sista ägda valv.</string>
-  <string name="sharing_bottomsheet_remove_access">Ta bort åtkomst</string>
+  <string name="sharing_bottomsheet_remove_access">Återkalla åtkomst</string>
   <string name="sharing_bottomsheet_resend_invite">Skicka inbjudan igen</string>
   <string name="sharing_bottomsheet_cancel_invite">Avbryt inbjudan</string>
   <string name="sharing_transfer_ownership_confirm_title">Överför ägarskap</string>
-  <string name="sharing_transfer_ownership_confirm_message">Är du säker att du vill flytta över ditt ägarskap till %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Vill du överföra äganderätten till detta valv till %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Inbjudan avbruten</string>
   <string name="sharing_snackbar_cancel_invite_error">Det gick inte avbryta inbjudan</string>
   <string name="sharing_snackbar_resend_invite_success">Inbjudan skickad</string>

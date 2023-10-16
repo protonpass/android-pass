@@ -18,9 +18,9 @@
   -->
 <resources>
   <string name="share_continue">Continua</string>
-  <string name="sharing_can_view">Può visualizzare</string>
-  <string name="sharing_can_edit">Può modificare</string>
-  <string name="sharing_can_manage">Può gestire</string>
+  <string name="sharing_can_view">Visualizzatore</string>
+  <string name="sharing_can_edit">Editor</string>
+  <string name="sharing_can_manage">Amministratore</string>
   <string name="sharing_can_view_description">Può visualizzare gli elementi in questa cassaforte.</string>
   <string name="sharing_can_edit_description">Può creare, modificare, eliminare ed esportare gli elementi in questa cassaforte.</string>
   <string name="sharing_can_manage_description">Può concedere e revocare l\'accesso a questa cassaforte.</string>
@@ -33,12 +33,10 @@
     <item quantity="other">%d membri</item>
   </plurals>
   <string name="share_with_title">Condividi con</string>
-  <string name="share_with_subtitle">Questo utente riceverà un invito a unirsi alla tua cassaforte \'%s\'.</string>
   <string name="share_with_email_hint">Indirizzo email</string>
   <string name="share_with_email_error">Indirizzo email non valido</string>
-  <string name="share_permissions_title">Imposta le autorizzazioni</string>
-  <string name="share_permissions_subtitle">Seleziona il livello di accesso che questo utente otterrà quando si unirà alla tua cassaforte \'%s\'.</string>
-  <string name="sharing_invitation_from">Invito da %s</string>
+  <string name="share_permissions_title">Imposta livello di accesso</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s ti invita ad accedere agli elementi in</string>
   <string name="sharing_join_shared_vault">Unisciti e sincronizza</string>
   <string name="sharing_reject_invitation">Rifiuta l\'invito</string>
   <string name="sharing_snackbar_get_invite_error">Impossibile ottenere l\'invito</string>
@@ -54,19 +52,16 @@
   <string name="sharing_snackbar_change_permission_error">Impossibile cambiare le autorizzazioni</string>
   <string name="sharing_snackbar_remove_member_success">Membro rimosso dalla cassaforte</string>
   <string name="sharing_snackbar_remove_member_error">Impossibile rimuovere dalla cassaforte</string>
-  <string name="share_summary_title">Riepilogo</string>
+  <string name="share_summary_title">Controlla e condividi</string>
   <string name="share_summary_subtitle">Stai per invitare %1$s nel tuo %2$s. Avranno accesso a %3$s e potranno accedere a %4$s in questo caveau.</string>
   <string name="share_summary_vault">la cassaforte %s</string>
-  <string name="share_summary_view_items">visualizza solo gli elementi</string>
-  <string name="share_summary_create_items">creare oggetti</string>
-  <string name="share_summary_manage_vault">gestire</string>
   <string name="share_summary_share_vault">Condividi caveau</string>
-  <string name="share_summary_email_title">Utente</string>
+  <string name="share_summary_email_title">Condividi con</string>
   <string name="share_summary_vault_title">Caveau</string>
-  <string name="share_summary_permissions_title">Autorizzazioni</string>
+  <string name="share_summary_permissions_title">Livello di accesso</string>
   <string name="share_manage_vault_share_with_more_people">Condividi con più persone</string>
   <string name="share_manage_vault_item_count">%d elementi</string>
-  <string name="share_manage_vault_invite_pending">Invito in attesa</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invito spedito</string>
   <string name="share_manage_vault_current_user_indicator">Tu</string>
   <string name="share_role_can_view">Può vedere</string>
   <string name="share_role_can_edit">Può modificare</string>
@@ -74,11 +69,11 @@
   <string name="share_role_owner">Proprietario</string>
   <string name="sharing_bottomsheet_transfer_ownership">Trasferisci proprietà</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Non puoi trasferire la tua unica cassaforte.</string>
-  <string name="sharing_bottomsheet_remove_access">Rimuovi accesso</string>
-  <string name="sharing_bottomsheet_resend_invite">Invia di nuovo l\'invito</string>
-  <string name="sharing_bottomsheet_cancel_invite">Annulla l\'invito</string>
+  <string name="sharing_bottomsheet_remove_access">Revoca accesso</string>
+  <string name="sharing_bottomsheet_resend_invite">Invia nuovamente l\'invito</string>
+  <string name="sharing_bottomsheet_cancel_invite">Annulla invito</string>
   <string name="sharing_transfer_ownership_confirm_title">Trasferimento della proprietà</string>
-  <string name="sharing_transfer_ownership_confirm_message">Sei sicuro di voler trasferire la tua proprietà a %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Trasferire la proprietà di questa cassaforte a %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Invito annullato</string>
   <string name="sharing_snackbar_cancel_invite_error">Errore durante l\'annullamento dell\'invito</string>
   <string name="sharing_snackbar_resend_invite_success">Invito rispedito</string>

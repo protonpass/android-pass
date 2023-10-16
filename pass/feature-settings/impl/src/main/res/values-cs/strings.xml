@@ -6,7 +6,7 @@
   <string name="settings_autofill_preference_description">Pro rychlé a snadné přihlášování nechte Proton Pass vyplňovat vaše uživatelská jména a hesla.</string>
   <string name="settings_authentication_section_title">Ověřování</string>
   <string name="settings_authentication_preference_title">Odemknout pomocí otisku prstu</string>
-  <string name="settings_authentication_preference_description_enabled">Quickly and securely open the app with your fingerprint.</string>
+  <string name="settings_authentication_preference_description_enabled">Rychlé a bezpečné otevření aplikace pomocí otisku prstu.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Pro interakci s aplikací nemůžete vyžadovat otisk prstu, protože v tomto zařízení nejsou žádné otisky prstů registrovány.</string>
   <string name="settings_appearance_preference_title">Motiv</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Podle nastavení systému</string>
@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">Podmínky použití</string>
   <string name="settings_primary_vault_section_title">Trezory</string>
   <string name="settings_primary_vault_vault_selector_title">Primární trezor</string>
-  <string name="settings_primary_vault_section_subtitle">You can\'t delete the primary vault.</string>
+  <string name="settings_primary_vault_section_subtitle">Primární trezor nelze smazat.</string>
   <string name="settings_primary_vault_change_success">Primární trezor byl změněn</string>
   <string name="settings_primary_vault_change_error">Nelze změnit primární trezor</string>
   <string name="settings_privacy_section_title">Soukromí</string>
@@ -42,6 +42,6 @@
   <string name="clipboard_option_copy_totp_code">Kopírovat ověřovací kódy</string>
   <string name="clipboard_option_copy_totp_code_hint">Automaticky kopírovat ověřovací kódy při použití automatického vyplňování.</string>
   <string name="clipboard_option_clear_clipboard_never">Nikdy</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">After 1 minute</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">After 3 minutes</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Po 1 minutě</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Po 3 minutách</string>
 </resources>

@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Stelle Proton Pass so ein, dass es mit deinem Fingerabdruck entsperrt wird, damit nur du Zugang hast.</string>
   <string name="on_boarding_fingerprint_title">Schütze deine sensibelsten Daten</string>
   <string name="on_boarding_fingerprint_button">Entsperren mit Fingerabdruck aktivieren</string>
-  <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead, hide it with email aliases—a Proton Pass exclusive.</string>
+  <string name="on_boarding_last_page_content">Gib deine echte E-Mail-Adresse nicht mehr weiter. Verstecke sie stattdessen mit E-Mail-Aliassen - exklusiv bei Proton Pass.</string>
   <string name="on_boarding_last_page_title">Entscheide, was in deinem Posteingang landet.</string>
   <string name="on_boarding_last_page_button">Beginne Proton Pass zu nutzen</string>
   <string name="on_boarding_skip">Nicht jetzt</string>

@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">გაგრძელება</string>
-  <string name="sharing_can_view">შეუძლია, ნახოს</string>
-  <string name="sharing_can_edit">შეუძლია, ჩაასწოროს</string>
-  <string name="sharing_can_manage">შეუძლია, მართოს</string>
+  <string name="sharing_can_view">მთვალიერებელი</string>
+  <string name="sharing_can_edit">რედაქტორი</string>
+  <string name="sharing_can_manage">ადმინისტრატორი</string>
   <string name="sharing_can_view_description">შეუძლია ამ საცავის ელემენტების დათვალიერება.</string>
-  <string name="sharing_can_edit_description">შეუძლია ამ საცავის ელემენტების ჩასწორება/წაშლა და გატანა.</string>
+  <string name="sharing_can_edit_description">შეუძლია ამ საცავის ელემენტების ჩასწორება, წაშლა და გატანა.</string>
   <string name="sharing_can_manage_description">შეუძლია ამ საცავზე წვდომების მინიჭება და ჩამორთმევა.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d ელემენტი</item>
@@ -33,12 +33,10 @@
     <item quantity="other">%d წევრი</item>
   </plurals>
   <string name="share_with_title">გაზიარება</string>
-  <string name="share_with_subtitle">ეს მომხმარებელი მიიღებს მოსაწვევს, შემოუერთდეს თქვენს საცავს \'%s\'.</string>
   <string name="share_with_email_hint">ელფოსტის მისამართი</string>
   <string name="share_with_email_error">არასწორი ელფოსტის მისამართი</string>
-  <string name="share_permissions_title">წვდომების დაყენება</string>
-  <string name="share_permissions_subtitle">აირჩიეთ წვდომის დონე, რომელსაც მომხმარებელი შეიძენს, როცა ის თქვენს \'%s\' საცავს შემოუერთდება.</string>
-  <string name="sharing_invitation_from">მოსაწვევი %s-სგან</string>
+  <string name="share_permissions_title">წვდომის დონის დაყენება</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s გიწვევთ ელემენტებზე წვდომსთვის</string>
   <string name="sharing_join_shared_vault">შემოგვიერთდით და დასინქრონდით</string>
   <string name="sharing_reject_invitation">მოსაწვევის უარყოფა</string>
   <string name="sharing_snackbar_get_invite_error">მოსაწვევის მიღება შეუძლებელია</string>
@@ -54,19 +52,16 @@
   <string name="sharing_snackbar_change_permission_error">წვდომების შეცვლა შეუძლებელია</string>
   <string name="sharing_snackbar_remove_member_success">წევრი წაიშალა საცავიდან</string>
   <string name="sharing_snackbar_remove_member_error">საცავიდან წაშლის შეცდომა</string>
-  <string name="share_summary_title">შეჯამება</string>
+  <string name="share_summary_title">მიმოხილვა და გაზიარება</string>
   <string name="share_summary_subtitle">აპირებთ, %1$s თქვენს %2$s-ში მოიწვიოთ. ისინი მიიღებენ წვდომას %3$s-სთან და ექნებათ საშუალება, %4$s ამ საცავში.</string>
   <string name="share_summary_vault">%s საცავი</string>
-  <string name="share_summary_view_items">მხოლოდ შეუძლია, ნახოს ელემენტები</string>
-  <string name="share_summary_create_items">ელემენტების შექმნა</string>
-  <string name="share_summary_manage_vault">მართვა</string>
   <string name="share_summary_share_vault">საცავის გაზიარება</string>
-  <string name="share_summary_email_title">მომხმარებელი</string>
+  <string name="share_summary_email_title">გაზიარება</string>
   <string name="share_summary_vault_title">საცავი</string>
-  <string name="share_summary_permissions_title">წვდომები</string>
+  <string name="share_summary_permissions_title">წვდომის დონე</string>
   <string name="share_manage_vault_share_with_more_people">გაუზიარეთ მეტს</string>
   <string name="share_manage_vault_item_count">%d ელემენტი</string>
-  <string name="share_manage_vault_invite_pending">მომლოდინე მოსაწვევი</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">მოსაწვევი გაგზავნილია</string>
   <string name="share_manage_vault_current_user_indicator">თქვენ</string>
   <string name="share_role_can_view">შეუძლია, ნახოს</string>
   <string name="share_role_can_edit">შეუძლია, ჩაასწოროს</string>
@@ -78,7 +73,7 @@
   <string name="sharing_bottomsheet_resend_invite">მოსაწვევის თავიდან გაგზავნა</string>
   <string name="sharing_bottomsheet_cancel_invite">მოსაწვევის გაუქმება</string>
   <string name="sharing_transfer_ownership_confirm_title">მფლობელობის გადაცემა</string>
-  <string name="sharing_transfer_ownership_confirm_message">დარწმუნებული ბრძანდებით, რომ მფლობელობის %s-სთვის გადაცემა, გნებავთ?</string>
+  <string name="sharing_transfer_ownership_confirm_message">გადავცე ამ საცავს ფლობის უფლება %s-ს?</string>
   <string name="sharing_snackbar_cancel_invite_success">მოწვევა გაუქმებულია</string>
   <string name="sharing_snackbar_cancel_invite_error">მოწვევის გაუქმების შეცდომა</string>
   <string name="sharing_snackbar_resend_invite_success">მოსაწვევი გაგზავნილია</string>

@@ -6,7 +6,7 @@
   <string name="settings_autofill_preference_description">迅速で簡単なログインのために、ユーザー名とパスワードの入力はProton Passにお任せください。</string>
   <string name="settings_authentication_section_title">認証</string>
   <string name="settings_authentication_preference_title">指紋ロック解除</string>
-  <string name="settings_authentication_preference_description_enabled">Quickly and securely open the app with your fingerprint.</string>
+  <string name="settings_authentication_preference_description_enabled">指紋を使って、迅速かつ安全にアプリを開きます。</string>
   <string name="settings_authentication_preference_description_no_fingerprint">このデバイスには指紋が登録されていないため、アプリを操作するために指紋を要求することはできません。</string>
   <string name="settings_appearance_preference_title">テーマ</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">マッチシステム</string>
@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">利用規約</string>
   <string name="settings_primary_vault_section_title">保管庫</string>
   <string name="settings_primary_vault_vault_selector_title">プライマリ保管庫</string>
-  <string name="settings_primary_vault_section_subtitle">You can\'t delete the primary vault.</string>
+  <string name="settings_primary_vault_section_subtitle">プライマリのフォルダーは削除できません。</string>
   <string name="settings_primary_vault_change_success">プライマリー保管庫が変更されました</string>
   <string name="settings_primary_vault_change_error">プライマリ保管庫を変更できませんでした</string>
   <string name="settings_privacy_section_title">プライバシー</string>
@@ -42,6 +42,6 @@
   <string name="clipboard_option_copy_totp_code">認証コードをコピーする</string>
   <string name="clipboard_option_copy_totp_code_hint">オートフィル使用時に認証コードを自動的にコピーします。</string>
   <string name="clipboard_option_clear_clipboard_never">しない</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">After 1 minute</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">After 3 minutes</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">1分後</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">3分後</string>
 </resources>

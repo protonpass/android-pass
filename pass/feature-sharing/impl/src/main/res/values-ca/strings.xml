@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Continua</string>
-  <string name="sharing_can_view">Pot veure</string>
-  <string name="sharing_can_edit">Pot editar</string>
-  <string name="sharing_can_manage">Pot gestionar</string>
+  <string name="sharing_can_view">Visualitzador</string>
+  <string name="sharing_can_edit">Editor</string>
+  <string name="sharing_can_manage">Administardor</string>
   <string name="sharing_can_view_description">Permet veure els elements d\'aquesta caixa forte.</string>
-  <string name="sharing_can_edit_description">Permet crear, editar, suprimir i exportar elements en aquesta caixa forta.</string>
+  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
   <string name="sharing_can_manage_description">Permet concedir i revocar accés a aquesta caixa forta.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d element</item>
@@ -33,12 +33,10 @@
     <item quantity="other">%d membres</item>
   </plurals>
   <string name="share_with_title">Comparteix amb</string>
-  <string name="share_with_subtitle">Aquest usuari rebrà una invitació per unir-se a la vostra caixa forta \'%s\'.</string>
   <string name="share_with_email_hint">Adreça de correu electrònic</string>
   <string name="share_with_email_error">L\'adreça de correu electrònic no és vàlida.</string>
-  <string name="share_permissions_title">Estableix els permisos</string>
-  <string name="share_permissions_subtitle">Seleccioneu el nivell d\'accés que obtindrà aquest usuari quan s\'uneixi a la vostra caixa forta \'%s\'.</string>
-  <string name="sharing_invitation_from">Invitació de %s</string>
+  <string name="share_permissions_title">Estableix el nivell d`accés</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
   <string name="sharing_join_shared_vault">Uniu-vos i sincronitzeu</string>
   <string name="sharing_reject_invitation">Rebutja la invitació</string>
   <string name="sharing_snackbar_get_invite_error">No s’ha pogut obtenir la invitació.</string>
@@ -54,36 +52,33 @@
   <string name="sharing_snackbar_change_permission_error">No s\'ha pogut canviar els permisos.</string>
   <string name="sharing_snackbar_remove_member_success">S\'ha eliminat el membre de la caixa forta.</string>
   <string name="sharing_snackbar_remove_member_error">No s\'ha pogut eliminar de la caixa forta.</string>
-  <string name="share_summary_title">Resum</string>
+  <string name="share_summary_title">Reviseu i comparteu</string>
   <string name="share_summary_subtitle">Esteu a punt de convidar %1$s al vostre %2$s. Tindran accés a %3$s i podran %4$s en aquesta caixa forta.</string>
   <string name="share_summary_vault">a caixa forta %s</string>
-  <string name="share_summary_view_items">només veure elements</string>
-  <string name="share_summary_create_items">crear elements</string>
-  <string name="share_summary_manage_vault">gestionar</string>
   <string name="share_summary_share_vault">Comparteix la caixa forta</string>
-  <string name="share_summary_email_title">Usuari</string>
+  <string name="share_summary_email_title">Comparteix amb</string>
   <string name="share_summary_vault_title">Caixa forta</string>
-  <string name="share_summary_permissions_title">Permisos</string>
+  <string name="share_summary_permissions_title">Nivell d\'accés</string>
   <string name="share_manage_vault_share_with_more_people">Comparteix amb més gent</string>
   <string name="share_manage_vault_item_count">%d elements</string>
-  <string name="share_manage_vault_invite_pending">Invitació pendent</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">S\'ha enviat la invitació.</string>
   <string name="share_manage_vault_current_user_indicator">Vosaltres</string>
   <string name="share_role_can_view">Pot veure</string>
   <string name="share_role_can_edit">Pot editar</string>
   <string name="share_role_admin">Administrador/a</string>
   <string name="share_role_owner">Propietari</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfereix la propietat</string>
-  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
-  <string name="sharing_bottomsheet_remove_access">Suprimeix l\'accés</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">No podeu transferir la vostra última caixa forta que heu tingut en propietat.</string>
+  <string name="sharing_bottomsheet_remove_access">Revoca l\'accés</string>
   <string name="sharing_bottomsheet_resend_invite">Reenvia la invitació</string>
-  <string name="sharing_bottomsheet_cancel_invite">Cancel·la la Invitació</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancel·la la invitació</string>
   <string name="sharing_transfer_ownership_confirm_title">Transfereix la propietat</string>
-  <string name="sharing_transfer_ownership_confirm_message">Are you sure you want to transfer your ownership to %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">S\'ha cancel·lat la invitació.</string>
+  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
   <string name="sharing_snackbar_cancel_invite_error">S\'ha produït un error en cancel·lar la invitació.</string>
   <string name="sharing_snackbar_resend_invite_success">S\'ha reenviat la invitació.</string>
   <string name="sharing_snackbar_resend_invite_error">S\'ha produït un error en reenviar la invitació.</string>
   <string name="sharing_snackbar_too_many_invites_sent">S\'ha convidat a la direcció massa vegades.</string>
-  <string name="sharing_snackbar_transfer_ownership_success">Ownership transferred</string>
-  <string name="sharing_snackbar_transfer_ownership_error">Error transferring ownership</string>
+  <string name="sharing_snackbar_transfer_ownership_success">S\'ha transferit la propietat.</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Error transferint la propietat</string>
 </resources>

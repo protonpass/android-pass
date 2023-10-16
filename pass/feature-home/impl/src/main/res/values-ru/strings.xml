@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Get important updates</string>
   <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
   <string name="home_notification_permission_banner_settings">Enable permission ›</string>
-  <string name="home_invite_banner_title">Приглашение в общее хранилище</string>
-  <string name="home_invite_banner_subtitle">Вы были приглашены в хранилище. Тапните здесь, чтобы увидеть приглашение.</string>
+  <string name="home_invite_banner_title">Vault shared with you</string>
+  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Скопировать пароль</string>
   <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>

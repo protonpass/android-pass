@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.crypto
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.repository.PublicAddressRepository
-import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.crypto.api.usecases.AcceptInvite
@@ -50,8 +49,9 @@ class EncryptInviteKeysImpl @Inject constructor(
         invitedUserMode: InvitedUserMode
     ): List<InviteKeyRotation> {
         val user = userRepository.getUser(userId)
-        val address = addressRepository.getAddresses(userId).primary()
-            ?: throw IllegalStateException("User has no primary address")
+        val address = addressRepository.getAddresses(userId).firstOrNull { address ->
+            address.email == invite.inviteEntity.invitedEmail
+        } ?: throw IllegalStateException("Could not find invited address for user")
 
         val privateAddressKeys = address.keys.map { it.privateKey }
         val inviterAddressKeys = publicAddressRepository

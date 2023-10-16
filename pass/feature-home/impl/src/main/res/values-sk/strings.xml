@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Získajte dôležité novinky</string>
   <string name="home_notification_permission_banner_text">Povoľte push oznámenia, aby ste boli informovaní, keď s vami ostatní zdieľajú trezor.</string>
   <string name="home_notification_permission_banner_settings">Povoľte povolenie ›</string>
-  <string name="home_invite_banner_title">Pozvánka do zdieľaného trezora</string>
-  <string name="home_invite_banner_subtitle">Boli ste pozvaní do trezora. Klepnutím sem pre zobrazenie pozvánky.</string>
+  <string name="home_invite_banner_title">Trezor zdieľaný s vami</string>
+  <string name="home_invite_banner_subtitle">Ste pozvaný do zdieľaného trezoru. Kliknite pre podrobnosti.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopírovať heslo</string>
   <string name="bottomsheet_copy_username">Kopírovať meno používateľa</string>

@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Otrzymuj ważne aktualizacje</string>
   <string name="home_notification_permission_banner_text">Włącz powiadomienia, aby otrzymywać informacje, gdy inne osoby udostępnią Ci sejf.</string>
   <string name="home_notification_permission_banner_settings">Włącz uprawnienie ›</string>
-  <string name="home_invite_banner_title">Zaproszenie do udostępnionego sejfu</string>
-  <string name="home_invite_banner_subtitle">Otrzymano zaproszenie do sejfu. Kliknij, aby zobaczyć zaproszenie.</string>
+  <string name="home_invite_banner_title">Udostępniony sejf</string>
+  <string name="home_invite_banner_subtitle">Otrzymano zaproszenie do sejfu. Kliknij, aby zobaczyć szczegóły.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiuj hasło</string>
   <string name="bottomsheet_copy_username">Kopiuj nazwę użytkownika</string>

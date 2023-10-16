@@ -5,5 +5,5 @@
   <string name="autofill_notification_copy_to_clipboard_title">Codi TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">S\'ha copiat el codi TOTP al porta-retalls.</string>
   <string name="updates_new_invite_received_title">Heu rebut una invitació.</string>
-  <string name="updates_new_invite_received_message">You have been invited to a vault. Open the app to see the invite and accept it.</string>
+  <string name="updates_new_invite_received_message">Heu estat convidat a una caixa forta. Obreu l\'aplicació per veure la invitació i acceptar-la.</string>
 </resources>

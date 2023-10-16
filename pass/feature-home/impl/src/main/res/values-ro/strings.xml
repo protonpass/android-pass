@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Obțineți actualizări importante</string>
   <string name="home_notification_permission_banner_text">Activați notificările instante pentru a vă informa când alții vă partajează un seif.</string>
   <string name="home_notification_permission_banner_settings">Activare permisiune</string>
-  <string name="home_invite_banner_title">Invitație seif partajat</string>
-  <string name="home_invite_banner_subtitle">Aveți o invitație la un seif partajat. Atingeți aici pentru a vedea invitația.</string>
+  <string name="home_invite_banner_title">Vault shared with you</string>
+  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiere parolă</string>
   <string name="bottomsheet_copy_username">Copiere nume utilizator</string>

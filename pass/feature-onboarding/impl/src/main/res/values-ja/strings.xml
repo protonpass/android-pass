@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Proton Passを指紋でロック解除するように設定すると、あなただけがアクセスできるようになります。</string>
   <string name="on_boarding_fingerprint_title">最も機密性の高いデータを保護</string>
   <string name="on_boarding_fingerprint_button">指紋ロック解除を有効にする</string>
-  <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead, hide it with email aliases—a Proton Pass exclusive.</string>
+  <string name="on_boarding_last_page_content">本物のメールアドレスの共有をやめましょう。代わりに、メールエイリアスを使用して隠しましょう－Proton Pass限定機能。</string>
   <string name="on_boarding_last_page_title">受信箱の中身を管理する</string>
   <string name="on_boarding_last_page_button">Proton Passの使用開始</string>
   <string name="on_boarding_skip">今はしない</string>

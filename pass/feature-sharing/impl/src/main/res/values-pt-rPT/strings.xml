@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Continuar</string>
-  <string name="sharing_can_view">Pode ver</string>
-  <string name="sharing_can_edit">Pode editar</string>
-  <string name="sharing_can_manage">Pode gerir</string>
+  <string name="sharing_can_view">Viewer</string>
+  <string name="sharing_can_edit">Editor</string>
+  <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">Pode ver os itens para esse cofre.</string>
-  <string name="sharing_can_edit_description">Pode criar, editar, eliminar e exportar itens para esse cofre.</string>
+  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
   <string name="sharing_can_manage_description">Pode conceder ou revogar acesso para esse cofre.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d item</item>
@@ -33,12 +33,10 @@
     <item quantity="other">%d membros</item>
   </plurals>
   <string name="share_with_title">Partilhar com</string>
-  <string name="share_with_subtitle">Este utilizador receberá um convite para juntar-se ao seu cofre \'%s\'.</string>
   <string name="share_with_email_hint">Endereço de e-mail</string>
   <string name="share_with_email_error">O endereço de e-mail é inválido.</string>
-  <string name="share_permissions_title">Definir as permissões</string>
-  <string name="share_permissions_subtitle">Selecione o nível de acesso que este utilizador obterá quando se juntar ao seu cofre \'%s\'.</string>
-  <string name="sharing_invitation_from">Convite de %s</string>
+  <string name="share_permissions_title">Set access level</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
   <string name="sharing_join_shared_vault">Juntar e sincronizar</string>
   <string name="sharing_reject_invitation">Rejeitar o convite</string>
   <string name="sharing_snackbar_get_invite_error">Não foi possível obter o convite</string>
@@ -54,19 +52,16 @@
   <string name="sharing_snackbar_change_permission_error">Não foi possível mudar as permissões.</string>
   <string name="sharing_snackbar_remove_member_success">O membro foi removido do cofre.</string>
   <string name="sharing_snackbar_remove_member_error">Não foi possível remover do cofre.</string>
-  <string name="share_summary_title">Resumo</string>
+  <string name="share_summary_title">Review and share</string>
   <string name="share_summary_subtitle">Está prestes a convidar %1$s para o seu %2$s. Eles terão acesso a %3$s e poderão %4$s nesse cofre.</string>
   <string name="share_summary_vault">o cofre %s</string>
-  <string name="share_summary_view_items">apenas ver os itens</string>
-  <string name="share_summary_create_items">criar itens</string>
-  <string name="share_summary_manage_vault">gerir</string>
   <string name="share_summary_share_vault">Partilhar o cofre</string>
-  <string name="share_summary_email_title">Utilizador</string>
+  <string name="share_summary_email_title">Share with</string>
   <string name="share_summary_vault_title">Cofre</string>
-  <string name="share_summary_permissions_title">Permissões</string>
+  <string name="share_summary_permissions_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Partilhar com mais pessoas</string>
   <string name="share_manage_vault_item_count">%d itens</string>
-  <string name="share_manage_vault_invite_pending">Convite pendente</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
   <string name="share_manage_vault_current_user_indicator">Você</string>
   <string name="share_role_can_view">Pode ver</string>
   <string name="share_role_can_edit">Pode editar</string>
@@ -74,12 +69,12 @@
   <string name="share_role_owner">Dono</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir a propriedade</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
-  <string name="sharing_bottomsheet_remove_access">Remover o acesso</string>
-  <string name="sharing_bottomsheet_resend_invite">Reenviar o convite</string>
-  <string name="sharing_bottomsheet_cancel_invite">Cancelar o convite</string>
+  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
+  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">Transferir a propriedade</string>
-  <string name="sharing_transfer_ownership_confirm_message">Tem a certeza de que pretende transferir a sua propriedade para %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">O convite foi cancelado.</string>
+  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
   <string name="sharing_snackbar_cancel_invite_error">Erro ao cancelar o convite</string>
   <string name="sharing_snackbar_resend_invite_success">O convite foi reenviado.</string>
   <string name="sharing_snackbar_resend_invite_error">Erro ao reenviar o convite</string>

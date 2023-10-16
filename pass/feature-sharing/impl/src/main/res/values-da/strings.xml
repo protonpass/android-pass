@@ -18,9 +18,9 @@
   -->
 <resources>
   <string name="share_continue">Fortsæt</string>
-  <string name="sharing_can_view">Kan se</string>
-  <string name="sharing_can_edit">Kan redigere</string>
-  <string name="sharing_can_manage">Kan administrere</string>
+  <string name="sharing_can_view">Seer</string>
+  <string name="sharing_can_edit">Redaktør</string>
+  <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">Kan se elementer i denne boks.</string>
   <string name="sharing_can_edit_description">Kan oprette, redigere, slette og eksportere elementer i denne boks.</string>
   <string name="sharing_can_manage_description">Kan give og tilbagekalde adgang til denne boks.</string>
@@ -33,12 +33,10 @@
     <item quantity="other">%d medlemmer</item>
   </plurals>
   <string name="share_with_title">Del med</string>
-  <string name="share_with_subtitle">Denne bruger vil modtage en invitation til at deltage i din \'%s\'-boks.</string>
   <string name="share_with_email_hint">E-mailadresse</string>
   <string name="share_with_email_error">Ugyldig e-mailadresse</string>
-  <string name="share_permissions_title">Indstil tilladelser</string>
-  <string name="share_permissions_subtitle">Vælg det adgangsniveau, som denne bruger får, når de tilslutter sig din \'%s\'-boks.</string>
-  <string name="sharing_invitation_from">Invitation fra %s</string>
+  <string name="share_permissions_title">Angiv adgangsniveau</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s inviterer dig til at tilgå elementer i</string>
   <string name="sharing_join_shared_vault">Tilmeld og synkronisér</string>
   <string name="sharing_reject_invitation">Afvis invitation</string>
   <string name="sharing_snackbar_get_invite_error">Kunne ikke hente invitation</string>
@@ -54,19 +52,16 @@
   <string name="sharing_snackbar_change_permission_error">Kunne ikke ændre tilladelserne</string>
   <string name="sharing_snackbar_remove_member_success">Medlem fjernet fra boksen</string>
   <string name="sharing_snackbar_remove_member_error">Kunne ikke fjerne fra boksen</string>
-  <string name="share_summary_title">Sammenfatning</string>
+  <string name="share_summary_title">Gennemgå og del</string>
   <string name="share_summary_subtitle">Du er ved at invitere %1$s til din %2$s. De vil få adgang til %3$s, og de vil være i stand til %4$s i denne boks.</string>
   <string name="share_summary_vault">%s boks</string>
-  <string name="share_summary_view_items">kun se elementer</string>
-  <string name="share_summary_create_items">oprette elementer</string>
-  <string name="share_summary_manage_vault">administrere</string>
   <string name="share_summary_share_vault">Del boks</string>
-  <string name="share_summary_email_title">Bruger</string>
+  <string name="share_summary_email_title">Del med</string>
   <string name="share_summary_vault_title">Boks</string>
-  <string name="share_summary_permissions_title">Tilladelser</string>
+  <string name="share_summary_permissions_title">Adgangsniveau</string>
   <string name="share_manage_vault_share_with_more_people">Del med flere personer</string>
   <string name="share_manage_vault_item_count">%d elementer</string>
-  <string name="share_manage_vault_invite_pending">Afventende invitation</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sendt</string>
   <string name="share_manage_vault_current_user_indicator">Dig</string>
   <string name="share_role_can_view">Kan se</string>
   <string name="share_role_can_edit">Kan redigere</string>
@@ -74,12 +69,12 @@
   <string name="share_role_owner">Ejer</string>
   <string name="sharing_bottomsheet_transfer_ownership">Overfør ejerskab</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan ikke overføre din sidst ejede boks.</string>
-  <string name="sharing_bottomsheet_remove_access">Fjern adgang</string>
-  <string name="sharing_bottomsheet_resend_invite">Send invitation igen</string>
-  <string name="sharing_bottomsheet_cancel_invite">Annuller invitation</string>
+  <string name="sharing_bottomsheet_remove_access">Tilbagekald adgang</string>
+  <string name="sharing_bottomsheet_resend_invite">Gensend invitation</string>
+  <string name="sharing_bottomsheet_cancel_invite">Annullér invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">Overfør ejerskab</string>
-  <string name="sharing_transfer_ownership_confirm_message">Er du sikker på, at du vil overføre dit ejerskab til %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Invitation annulleret.</string>
+  <string name="sharing_transfer_ownership_confirm_message">Overdrag ejerskab af denne boks til %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitation annulleret</string>
   <string name="sharing_snackbar_cancel_invite_error">Fejl ved annullering af invitation</string>
   <string name="sharing_snackbar_resend_invite_success">Invitation sendt igen</string>
   <string name="sharing_snackbar_resend_invite_error">Fejl ved genudsendelse af invitation</string>

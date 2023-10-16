@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Fortfahren</string>
-  <string name="sharing_can_view">Darf ansehen</string>
-  <string name="sharing_can_edit">Darf bearbeiten</string>
-  <string name="sharing_can_manage">Darf verwalten</string>
+  <string name="sharing_can_view">Betrachter</string>
+  <string name="sharing_can_edit">Bearbeiter</string>
+  <string name="sharing_can_manage">Administrator</string>
   <string name="sharing_can_view_description">Darf Einträge in diesem Tresor anzeigen.</string>
-  <string name="sharing_can_edit_description">Darf Einträge in diesem Tresor erstellen, bearbeiten, löschen und exportieren.</string>
+  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
   <string name="sharing_can_manage_description">Darf Zugriff auf diesen Tresor gewähren oder widerrufen.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d Eintrag</item>
@@ -33,12 +33,10 @@
     <item quantity="other">%d Mitglieder</item>
   </plurals>
   <string name="share_with_title">Teilen mit</string>
-  <string name="share_with_subtitle">Dieser Benutzer erhält eine Einladung, deinem Tresor \'%s\' beizutreten.</string>
   <string name="share_with_email_hint">E‐Mail‐Adresse</string>
   <string name="share_with_email_error">Ungültige E-Mail-Adresse</string>
-  <string name="share_permissions_title">Berechtigungen festlegen</string>
-  <string name="share_permissions_subtitle">Wähle die Zugriffsstufe, die dieser Benutzer erhält, wenn er deinem Tresor \'%s\' beitritt.</string>
-  <string name="sharing_invitation_from">Einladung von %s</string>
+  <string name="share_permissions_title">Set access level</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
   <string name="sharing_join_shared_vault">Beitreten und synchronisieren</string>
   <string name="sharing_reject_invitation">Einladung ablehnen</string>
   <string name="sharing_snackbar_get_invite_error">Fehler beim Abrufen der Einladung.</string>
@@ -54,19 +52,16 @@
   <string name="sharing_snackbar_change_permission_error">Fehler beim Ändern der Berechtigungen.</string>
   <string name="sharing_snackbar_remove_member_success">Mitglied aus dem Tresor entfernt.</string>
   <string name="sharing_snackbar_remove_member_error">Fehler beim Entfernen aus dem Tresor.</string>
-  <string name="share_summary_title">Zusammenfassung</string>
+  <string name="share_summary_title">Review and share</string>
   <string name="share_summary_subtitle">Du lädst damit %1$s zu %2$s ein. Dadurch wird Zugriff zu %3$s gewährt und die eingeladene Person darf %4$s.</string>
   <string name="share_summary_vault">%s Tresor</string>
-  <string name="share_summary_view_items">Einträge anzeigen</string>
-  <string name="share_summary_create_items">Einträge erstellen</string>
-  <string name="share_summary_manage_vault">verwalten</string>
   <string name="share_summary_share_vault">Tresor teilen</string>
-  <string name="share_summary_email_title">Benutzer</string>
+  <string name="share_summary_email_title">Share with</string>
   <string name="share_summary_vault_title">Tresor</string>
-  <string name="share_summary_permissions_title">Berechtigungen</string>
+  <string name="share_summary_permissions_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Mit weiteren Personen teilen</string>
   <string name="share_manage_vault_item_count">%d Einträge</string>
-  <string name="share_manage_vault_invite_pending">Ausstehende Einladung</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
   <string name="share_manage_vault_current_user_indicator">Du</string>
   <string name="share_role_can_view">Darf ansehen</string>
   <string name="share_role_can_edit">Darf bearbeiten</string>
@@ -74,12 +69,12 @@
   <string name="share_role_owner">Besitzer</string>
   <string name="sharing_bottomsheet_transfer_ownership">Inhaberschaft übertragen</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kannst deinen letzten Tresor nicht übertragen.</string>
-  <string name="sharing_bottomsheet_remove_access">Zugriff entfernen</string>
-  <string name="sharing_bottomsheet_resend_invite">Einladung erneut senden</string>
-  <string name="sharing_bottomsheet_cancel_invite">Einladung verwerfen</string>
+  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
+  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">Inhaberschaft übertragen</string>
-  <string name="sharing_transfer_ownership_confirm_message">Bist du dir sicher, dass du den Besitzer zu %s ändern willst?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Einladung abgebrochen</string>
+  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
   <string name="sharing_snackbar_cancel_invite_error">Fehler beim Abbrechen der Einladung.</string>
   <string name="sharing_snackbar_resend_invite_success">Einladung erneut gesendet</string>
   <string name="sharing_snackbar_resend_invite_error">Fehler beim erneuten Senden der Einladung.</string>

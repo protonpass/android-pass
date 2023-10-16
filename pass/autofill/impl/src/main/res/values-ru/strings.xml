@@ -10,6 +10,7 @@
   <string name="topbar_search_query_uninitialized">Поиск…</string>
   <string name="inline_suggestions_open_app">Открыть Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Ваш тариф позволяет использовать для автозаполнения только основное хранилище</string>
+  <string name="autofill_only_searching_in_oldest_vaults">Your plan only allows to use items in your oldest vaults for autofill purposes.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Предложения для %s</string>
   <string name="autofill_associate_web_app_name_dialog_title">Использовать информацию для входа из \"%s\" в этом приложении или на сайте.</string>

@@ -10,6 +10,7 @@
   <string name="topbar_search_query_uninitialized">Vyhľadávať…</string>
   <string name="inline_suggestions_open_app">Otvoriť Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Váš plán umožňuje používať položky vo vašom primárnom trezore iba na účely automatického dopĺňania.</string>
+  <string name="autofill_only_searching_in_oldest_vaults">Váš plán umožňuje používať na účely automatického vypĺňania iba položky v najstarších trezoroch.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Návrhy pre %s</string>
   <string name="autofill_associate_web_app_name_dialog_title">Použite prihlasovacie údaje z \"%s\" v tejto aplikácii alebo na webovej stránke.</string>

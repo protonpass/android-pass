@@ -10,6 +10,7 @@
   <string name="topbar_search_query_uninitialized">検索...</string>
   <string name="inline_suggestions_open_app">Proton Pass を開く</string>
   <string name="autofill_only_searching_in_primary_vault">あなたのプランでは、プライマリー保存庫内のアイテムのみを自動入力に使用できます。</string>
+  <string name="autofill_only_searching_in_oldest_vaults">あなたのプランでは、自動入力の目的で最も古いフォルダーにあるアイテムのみを使用できます。</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">%s への提案</string>
   <string name="autofill_associate_web_app_name_dialog_title">このアプリやウェブサイトでの “%s” によるログイン詳細を使用</string>

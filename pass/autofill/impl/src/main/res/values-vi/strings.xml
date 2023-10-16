@@ -10,6 +10,7 @@
   <string name="topbar_search_query_uninitialized">Tìm kiếm…</string>
   <string name="inline_suggestions_open_app">Mở Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Gói của bạn chỉ cho phép sử dụng các nội dung trong kho lưu trữ chính để tự động điền.</string>
+  <string name="autofill_only_searching_in_oldest_vaults">Gói của bạn chỉ cho phép sử dụng các nội dung trong kho lưu trữ cũ nhất để tự động điền.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Gợi ý cho %s</string>
   <string name="autofill_associate_web_app_name_dialog_title">Sử dụng thông tin đăng nhập từ \"%s\" cho ứng dụng hoặc trang web.</string>

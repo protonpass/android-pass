@@ -19,11 +19,11 @@
   <string name="home_trial_banner_title">Gaudeix d\'una prova gratuïta</string>
   <string name="home_trial_banner_text">Consulteu totes les característiques exclusives disponibles per un temps limitat.</string>
   <string name="home_trial_banner_settings">Saber-ne més ›</string>
-  <string name="home_notification_permission_banner_title">Get important updates</string>
-  <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
-  <string name="home_notification_permission_banner_settings">Enable permission ›</string>
-  <string name="home_invite_banner_title">Invitació a una caixa forta compartida</string>
-  <string name="home_invite_banner_subtitle">Heu rebut una invitació a una caixa forta. Toqueu aquí per veure la invitació.</string>
+  <string name="home_notification_permission_banner_title">Obteniu actualitzacions importants</string>
+  <string name="home_notification_permission_banner_text">Habiliteu les notificacions push per rebre una notificació quan altres persones comparteixin una caixa forta amb vosaltres.</string>
+  <string name="home_notification_permission_banner_settings">Habilitar permisos ›</string>
+  <string name="home_invite_banner_title">Caixa forta compartida amb vosaltres</string>
+  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia la contrasenya</string>
   <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>

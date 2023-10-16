@@ -10,6 +10,7 @@
   <string name="topbar_search_query_uninitialized">검색...</string>
   <string name="inline_suggestions_open_app">Proton Pass 열기</string>
   <string name="autofill_only_searching_in_primary_vault">사용자의 요금제에서 오직 개인 금고 내의 항목에서만 자동 완성이 가능합니다.</string>
+  <string name="autofill_only_searching_in_oldest_vaults">사용자의 요금제에서 오래된 금고에 한하는 항목에서만 자동 완성이 가능합니다.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">%s의 추천</string>
   <string name="autofill_associate_web_app_name_dialog_title">이 앱 및 웹사이트에서 \"%s\"으로 부터 로그인 상세 정보를 사용하세요.</string>

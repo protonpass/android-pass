@@ -34,12 +34,14 @@ import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.SharingNavigation
+import proton.pass.domain.NewUserInviteId
 
 @Composable
 fun ManageVaultContent(
     modifier: Modifier = Modifier,
     state: ManageVaultUiState,
-    onNavigateEvent: (SharingNavigation) -> Unit
+    onNavigateEvent: (SharingNavigation) -> Unit,
+    onConfirmInviteClick: (NewUserInviteId) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -92,7 +94,8 @@ fun ManageVaultContent(
                             }
                         }
                     }
-                }
+                },
+                onConfirmInviteClick = onConfirmInviteClick
             )
             if (state.showShareButton) {
                 CircleButton(

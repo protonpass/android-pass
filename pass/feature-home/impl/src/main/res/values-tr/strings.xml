@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Önemli güncellemeleri edinin</string>
   <string name="home_notification_permission_banner_text">Başkaları sizinle bir kasayı paylaştığında öğrenmek için anında bildirimleri açın</string>
   <string name="home_notification_permission_banner_settings">İzin ver ›</string>
-  <string name="home_invite_banner_title">Kasa paylaşma daveti</string>
-  <string name="home_invite_banner_subtitle">Sizinle bir kasa paylaşıldı. Daveti görmek için buraya tıklayın.</string>
+  <string name="home_invite_banner_title">Vault shared with you</string>
+  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Parolayı kopyala</string>
   <string name="bottomsheet_copy_username">Kullanıcı adını kopyala</string>

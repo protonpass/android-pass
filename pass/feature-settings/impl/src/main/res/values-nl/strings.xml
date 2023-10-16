@@ -6,7 +6,7 @@
   <string name="settings_autofill_preference_description">Laat Proton Pass uw gebruikersnamen en wachtwoorden invullen om snel en gemakkelijk in te loggen.</string>
   <string name="settings_authentication_section_title">Authenticatie</string>
   <string name="settings_authentication_preference_title">Vingerafdruk ontgrendelen</string>
-  <string name="settings_authentication_preference_description_enabled">Open de app snel en veilig met je vingerafdruk.</string>
+  <string name="settings_authentication_preference_description_enabled">Open de app snel en veilig met uw vingerafdruk.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">U kunt uw vingerafdruk niet nodig hebben voor interactie met de app, aangezien er geen vingerafdrukken zijn geregistreerd op dit apparaat.</string>
   <string name="settings_appearance_preference_title">Thema</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Match systeem</string>

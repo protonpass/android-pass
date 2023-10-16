@@ -4,15 +4,15 @@
   <string name="home_empty_vault_title">保管庫は空っぽです</string>
   <string name="home_empty_vault_subtitle">最初の項目を作成して始めましょう。</string>
   <string name="home_empty_vault_create_login">ログイン情報を作成</string>
-  <string name="home_empty_vault_create_alias">Create a Hide-my-email alias</string>
+  <string name="home_empty_vault_create_alias">Hide-my-emailエイリアスを作成</string>
   <string name="home_empty_vault_create_note">メモを作成</string>
-  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Error loading items</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">アイテムの読み込みに失敗</string>
   <string name="error_refreshing">更新実行中のエラー</string>
   <string name="home_snackbar_login_moved_to_trash">ログイン情報がごみ箱に移動されました</string>
   <string name="home_snackbar_alias_moved_to_trash">エイリアスがごみ箱に移動されました</string>
   <string name="home_snackbar_note_moved_to_trash">ノートがごみ箱に移動されました</string>
   <string name="home_snackbar_credit_card_moved_to_trash">クレジットカード情報がごみ箱に移動されました</string>
-  <string name="home_snackbar_move_to_trash_error">Item could not be moved to trash</string>
+  <string name="home_snackbar_move_to_trash_error">アイテムをゴミ箱への移動に失敗</string>
   <string name="home_autofill_banner_title">自動入力マジックをお楽しみください</string>
   <string name="home_autofill_banner_text">ワンタップでユーザー名とパスワードが即座に入力される。</string>
   <string name="home_autofill_banner_settings">自動入力を有効にする ›</string>
@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">重要な最新情報を入手する</string>
   <string name="home_notification_permission_banner_text">プッシュ通知を有効にすると、他の人があなたと保管庫を共有したときに通知されます。</string>
   <string name="home_notification_permission_banner_settings">権限を有効にする ›</string>
-  <string name="home_invite_banner_title">保管庫への招待を共有</string>
-  <string name="home_invite_banner_subtitle">保管庫への招待を受けました。ここをタップして招待状をご確認ください。</string>
+  <string name="home_invite_banner_title">あなたと共有しているフォルダー</string>
+  <string name="home_invite_banner_subtitle">共有フォルダーへの招待があります。詳細はタップしてください。</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">パスワードをコピー</string>
   <string name="bottomsheet_copy_username">ユーザー名をコピー</string>
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">ユーザー名をコピーしました</string>
   <string name="password_copied_to_clipboard">パスワードをコピーしました</string>
   <string name="credit_card_number_copied_to_clipboard">クレジットカード番号をコピーしました</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Credit card CVV copied</string>
+  <string name="credit_card_cvv_copied_to_clipboard">クレジットカードのCVVをコピーしました</string>
   <string name="item_too_long_copied_to_clipboard">内容が長すぎるため、部分的にクリップボードにコピーされた。</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">保管庫</string>

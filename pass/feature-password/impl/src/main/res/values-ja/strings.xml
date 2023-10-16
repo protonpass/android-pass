@@ -9,7 +9,7 @@
   <string name="word_count">%s 語</string>
   <string name="word_separator">区切り文字</string>
   <string name="bottomsheet_option_capital_letters">英文字の大文字 (A～Z)</string>
-  <string name="bottomsheet_option_capitalise">Capitalize</string>
+  <string name="bottomsheet_option_capitalise">大文字にする</string>
   <string name="bottomsheet_option_include_numbers">数字を含める (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">ハイフン ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">スペース</string>

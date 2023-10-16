@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Працягнуць</string>
-  <string name="sharing_can_view">Можа праглядаць</string>
-  <string name="sharing_can_edit">Можа рэдагаваць</string>
-  <string name="sharing_can_manage">Можа кіраваць</string>
+  <string name="sharing_can_view">Viewer</string>
+  <string name="sharing_can_edit">Editor</string>
+  <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">Можа праглядаць элементы ў гэтым сховішчы.</string>
-  <string name="sharing_can_edit_description">Можа ствараць, рэдагаваць, выдаляць і экспартаваць элементы ў гэтым сховішчы.</string>
+  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
   <string name="sharing_can_manage_description">Можа даваць і адклікаць дазвол на доступ да гэтага сховішча.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d элемент</item>
@@ -37,12 +37,10 @@
     <item quantity="other">%d удзельнікаў</item>
   </plurals>
   <string name="share_with_title">Абагуліць з</string>
-  <string name="share_with_subtitle">Гэты карыстальнік атрымае запрашэнне на далучэнне да вашага сховішча \'%s\'.</string>
   <string name="share_with_email_hint">Адрас электроннай пошты</string>
   <string name="share_with_email_error">Памылковы адрас электроннай пошты</string>
-  <string name="share_permissions_title">Задаць дазволы</string>
-  <string name="share_permissions_subtitle">Выберыце ўзровень доступу, які атрымае гэты карыстальнік пасля далучэння да вашага сховішча \'%s\'.</string>
-  <string name="sharing_invitation_from">Запрашэнне ад %s</string>
+  <string name="share_permissions_title">Set access level</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
   <string name="sharing_join_shared_vault">Далучыцца і сінхранізаваць</string>
   <string name="sharing_reject_invitation">Адхіліць запрашэнне</string>
   <string name="sharing_snackbar_get_invite_error">Немагчыма атрымаць запрашэнне</string>
@@ -58,19 +56,16 @@
   <string name="sharing_snackbar_change_permission_error">Немагчыма змяніць дазволы</string>
   <string name="sharing_snackbar_remove_member_success">Удзельнік выдалены са сховішча</string>
   <string name="sharing_snackbar_remove_member_error">Немагчыма выдаліць са сховішча</string>
-  <string name="share_summary_title">Зводка</string>
+  <string name="share_summary_title">Review and share</string>
   <string name="share_summary_subtitle">Вы збіраецеся запрасіць %1$s у свой %2$s. Яны атрымаюць доступ да %3$s і змогуць %4$s у гэтым сховішчы.</string>
   <string name="share_summary_vault">%s сховішча</string>
-  <string name="share_summary_view_items">толькі прагляд элементаў</string>
-  <string name="share_summary_create_items">стварыць элементы</string>
-  <string name="share_summary_manage_vault">кіраваць</string>
   <string name="share_summary_share_vault">Абагуліць сховішча</string>
-  <string name="share_summary_email_title">Карыстальнік</string>
+  <string name="share_summary_email_title">Share with</string>
   <string name="share_summary_vault_title">Сховішча</string>
-  <string name="share_summary_permissions_title">Дазволы</string>
+  <string name="share_summary_permissions_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Абагуліць з большай колькасцю людзей</string>
   <string name="share_manage_vault_item_count">Элементаў: %d</string>
-  <string name="share_manage_vault_invite_pending">Запрашэнне, якое чакае адказу</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
   <string name="share_manage_vault_current_user_indicator">Вы</string>
   <string name="share_role_can_view">Можа праглядаць</string>
   <string name="share_role_can_edit">Можа рэдагаваць</string>
@@ -78,12 +73,12 @@
   <string name="share_role_owner">Уладальнік</string>
   <string name="sharing_bottomsheet_transfer_ownership">Перадаць права ўласнасці</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можаце перанесці апошняе сховішча, якое належала вам.</string>
-  <string name="sharing_bottomsheet_remove_access">Выдаліць доступ</string>
-  <string name="sharing_bottomsheet_resend_invite">Адправіць запрашэнне паўторна</string>
-  <string name="sharing_bottomsheet_cancel_invite">Скасаваць запрашэнне</string>
+  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
+  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">Перадача правоў уласнасці</string>
-  <string name="sharing_transfer_ownership_confirm_message">Вы сапраўды хочаце перадаць свае правы ўласнасці %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Запрашэнне скасавана</string>
+  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
   <string name="sharing_snackbar_cancel_invite_error">Памылка скасавання запрашэння</string>
   <string name="sharing_snackbar_resend_invite_success">Запрашэнне адпраўлена паўторна</string>
   <string name="sharing_snackbar_resend_invite_error">Памылка паўторнай адпраўкі запрашэння</string>

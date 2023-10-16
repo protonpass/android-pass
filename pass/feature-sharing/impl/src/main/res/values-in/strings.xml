@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Lanjutkan</string>
-  <string name="sharing_can_view">Dapat melihat</string>
-  <string name="sharing_can_edit">Dapat menyunting</string>
-  <string name="sharing_can_manage">Dapat mengelola</string>
+  <string name="sharing_can_view">Pengamat</string>
+  <string name="sharing_can_edit">Penyunting</string>
+  <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">Dapat melihat item dalam brankas ini.</string>
-  <string name="sharing_can_edit_description">Dapat membuat, menyunting, dan mengekspor item dalam brankas ini.</string>
+  <string name="sharing_can_edit_description">Dapat membuat, menyunting, menghapus, dan mengekspor item dalam brankas ini.</string>
   <string name="sharing_can_manage_description">Dapat memberikan dan mencabut izin akses ke brankas ini.</string>
   <plurals name="sharing_item_count">
     <item quantity="other">%d item</item>
@@ -31,12 +31,10 @@
     <item quantity="other">%d anggota</item>
   </plurals>
   <string name="share_with_title">Bagikan dengan</string>
-  <string name="share_with_subtitle">Pengguna ini akan menerima undangan untuk bergabung ke brankas \'%s\' Anda.</string>
   <string name="share_with_email_hint">Alamat surel</string>
   <string name="share_with_email_error">Alamat surel tidak valid</string>
-  <string name="share_permissions_title">Atur perizinan</string>
-  <string name="share_permissions_subtitle">Pilih tingkat akses yang didapatkan oleh pengguna ini ketika bergabung ke brankas \'%s\' Anda.</string>
-  <string name="sharing_invitation_from">Undangan dari %s</string>
+  <string name="share_permissions_title">Tentukan tingkatan akses</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mengundan Anda untuk mengakses item pada</string>
   <string name="sharing_join_shared_vault">Gabung dan sinkronkan</string>
   <string name="sharing_reject_invitation">Tolak undangan</string>
   <string name="sharing_snackbar_get_invite_error">Undangan tidak dapat diperoleh</string>
@@ -52,19 +50,16 @@
   <string name="sharing_snackbar_change_permission_error">Tidak dapat mengubah izin</string>
   <string name="sharing_snackbar_remove_member_success">Anggota dikeluarkan dari brankas</string>
   <string name="sharing_snackbar_remove_member_error">Tidak dapat menghapus dari brankas</string>
-  <string name="share_summary_title">Rangkuman</string>
+  <string name="share_summary_title">Kaji dan bagikan</string>
   <string name="share_summary_subtitle">Anda akan mengundang %1$s ke %2$s Anda. Mereka akan mendapatkan akses ke %3$s dan mereka akan dapat %4$s dalam brankas ini.</string>
   <string name="share_summary_vault">%s brankas</string>
-  <string name="share_summary_view_items">hanya tampilkan item</string>
-  <string name="share_summary_create_items">buat item</string>
-  <string name="share_summary_manage_vault">kelola</string>
   <string name="share_summary_share_vault">Bagikan brankas</string>
-  <string name="share_summary_email_title">Pengguna</string>
+  <string name="share_summary_email_title">Bagikan dengan</string>
   <string name="share_summary_vault_title">Brankas</string>
-  <string name="share_summary_permissions_title">Izin</string>
+  <string name="share_summary_permissions_title">Tingkat akses</string>
   <string name="share_manage_vault_share_with_more_people">Bagikan dengan lebih banyak orang</string>
   <string name="share_manage_vault_item_count">%d item</string>
-  <string name="share_manage_vault_invite_pending">Undangan tertunda</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Undangan dikirim</string>
   <string name="share_manage_vault_current_user_indicator">Anda</string>
   <string name="share_role_can_view">Dapat melihat</string>
   <string name="share_role_can_edit">Dapat menyunting</string>
@@ -72,13 +67,13 @@
   <string name="share_role_owner">Pemilik</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfer kepemilikan</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Anda tidak dapat mentransfer brankas terakhir yang Anda miliki.</string>
-  <string name="sharing_bottomsheet_remove_access">Hapus akses</string>
+  <string name="sharing_bottomsheet_remove_access">Cabut akses</string>
   <string name="sharing_bottomsheet_resend_invite">Kirim ulang undangan</string>
   <string name="sharing_bottomsheet_cancel_invite">Batalkan undangan</string>
   <string name="sharing_transfer_ownership_confirm_title">Transfer kepemilikan</string>
-  <string name="sharing_transfer_ownership_confirm_message">Apakah Anda yakin untuk mentransfer kepemilikan Anda ke %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Transfer kepemilikan brankas ini ke %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Undangan dibatalkan</string>
-  <string name="sharing_snackbar_cancel_invite_error">Terjadi kesalahan membatalkan undangan</string>
+  <string name="sharing_snackbar_cancel_invite_error">Terdapat kesalahan dalam membatalkan undangan</string>
   <string name="sharing_snackbar_resend_invite_success">Undangan dikirim ulang</string>
   <string name="sharing_snackbar_resend_invite_error">Terjadi kesalahan mengirimkan ulang undangan</string>
   <string name="sharing_snackbar_too_many_invites_sent">Alamat telah diundang beberapa kali</string>

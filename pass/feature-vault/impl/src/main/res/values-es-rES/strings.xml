@@ -37,5 +37,6 @@
   <string name="bottomsheet_manage_access">Gestionar el acceso</string>
   <string name="bottomsheet_select_vault_read_only">Sólo puedes leer</string>
   <string name="bottomsheet_select_vault_not_primary_vault">Sólo puedes crear artículos en tu caja fuerte principal</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Solo puedes crear elementos en tu caja fuerte más antigua.</string>
   <string name="vault_title">Bóveda</string>
 </resources>

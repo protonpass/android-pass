@@ -6,7 +6,7 @@
   <string name="settings_autofill_preference_description">Để đăng nhập nhanh gọn lẹ, để Proton Pass điền các tên đăng nhập và mật khẩu của bạn.</string>
   <string name="settings_authentication_section_title">Xác thực</string>
   <string name="settings_authentication_preference_title">Mở khoá vân tay</string>
-  <string name="settings_authentication_preference_description_enabled">Quickly and securely open the app with your fingerprint.</string>
+  <string name="settings_authentication_preference_description_enabled">Mở khóa ứng dụng nhanh chóng và bảo mật với vân tay của bạn.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Bạn không thể dùng vân tay của mình để tương tác với ứng dụng vì không có vân tay nào được đăng ký trên thiết bị này.</string>
   <string name="settings_appearance_preference_title">Chủ đề</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Theo hệ thống</string>
@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">Điều khoản dịch vụ</string>
   <string name="settings_primary_vault_section_title">Kho lưu trữ</string>
   <string name="settings_primary_vault_vault_selector_title">Kho lưu trữ chính</string>
-  <string name="settings_primary_vault_section_subtitle">You can\'t delete the primary vault.</string>
+  <string name="settings_primary_vault_section_subtitle">Bạn không thể xóa kho lưu trữ chính</string>
   <string name="settings_primary_vault_change_success">Kho lưu trữ chính đã thay đổi</string>
   <string name="settings_primary_vault_change_error">Không thể thay đổi kho lưu trữ chính</string>
   <string name="settings_privacy_section_title">Riêng tư</string>
@@ -42,6 +42,6 @@
   <string name="clipboard_option_copy_totp_code">Sao chép mã xác thực</string>
   <string name="clipboard_option_copy_totp_code_hint">Tự động sao chép mã xác thực khi bật tự động điền.</string>
   <string name="clipboard_option_clear_clipboard_never">Không bao giờ</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">After 1 minute</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">After 3 minutes</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Sau 1 phút</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Sau 3 phút</string>
 </resources>

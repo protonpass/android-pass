@@ -18,9 +18,9 @@
   -->
 <resources>
   <string name="share_continue">Continuar</string>
-  <string name="sharing_can_view">Puede ver</string>
-  <string name="sharing_can_edit">Puede editar</string>
-  <string name="sharing_can_manage">Puede gestionar</string>
+  <string name="sharing_can_view">Visualizador</string>
+  <string name="sharing_can_edit">Editor</string>
+  <string name="sharing_can_manage">Administrador</string>
   <string name="sharing_can_view_description">Permite ver los elementos en esta bóveda.</string>
   <string name="sharing_can_edit_description">Permite crear, editar, eliminar y exportar los elementos en esta bóveda.</string>
   <string name="sharing_can_manage_description">Permite conceder y revocar acceso a esta bóveda.</string>
@@ -33,12 +33,10 @@
     <item quantity="other">%d miembros</item>
   </plurals>
   <string name="share_with_title">Compartir con</string>
-  <string name="share_with_subtitle">Este usuario recibirá una invitación para unirse a tu bóveda \'%s\'.</string>
   <string name="share_with_email_hint">Dirección de correo electrónico</string>
   <string name="share_with_email_error">La dirección de correo electrónico no es válida.</string>
-  <string name="share_permissions_title">Establecer permisos</string>
-  <string name="share_permissions_subtitle">Selecciona el nivel de acceso que obtendrá este usuario cuando se una a tu bóveda \"%s\".</string>
-  <string name="sharing_invitation_from">Invitación de %s</string>
+  <string name="share_permissions_title">Configurar el nivel de acceso</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s te invita a acceder a elementos en</string>
   <string name="sharing_join_shared_vault">Unirse y sincronizar</string>
   <string name="sharing_reject_invitation">Rechazar la invitación</string>
   <string name="sharing_snackbar_get_invite_error">No se ha podido obtener la invitación.</string>
@@ -54,19 +52,16 @@
   <string name="sharing_snackbar_change_permission_error">Error al modifcar los permisos</string>
   <string name="sharing_snackbar_remove_member_success">El miembro ha sido eliminado de la bóveda.</string>
   <string name="sharing_snackbar_remove_member_error">Error al eliminar de la bóveda</string>
-  <string name="share_summary_title">Resumen</string>
+  <string name="share_summary_title">Revisar y compartir</string>
   <string name="share_summary_subtitle">Estás a punto de invitar a %1$s a tu %2$s. Tendrá acceso a %3$s y podrá %4$s en esta bóveda.</string>
   <string name="share_summary_vault">la bóveda %s</string>
-  <string name="share_summary_view_items">ver solo elementos</string>
-  <string name="share_summary_create_items">crear elementos</string>
-  <string name="share_summary_manage_vault">gestionar</string>
   <string name="share_summary_share_vault">Compartir la bóveda</string>
-  <string name="share_summary_email_title">Usuario</string>
+  <string name="share_summary_email_title">Compartir con</string>
   <string name="share_summary_vault_title">Bóveda</string>
-  <string name="share_summary_permissions_title">Permisos</string>
+  <string name="share_summary_permissions_title">Nivel de acceso</string>
   <string name="share_manage_vault_share_with_more_people">Compartir con más personas</string>
   <string name="share_manage_vault_item_count">%d elementos</string>
-  <string name="share_manage_vault_invite_pending">Invitación pendiente</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">La invitación ha sido enviada.</string>
   <string name="share_manage_vault_current_user_indicator">Tú</string>
   <string name="share_role_can_view">Puedes ver</string>
   <string name="share_role_can_edit">Puedes editar</string>
@@ -74,12 +69,12 @@
   <string name="share_role_owner">Propietario</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir la propiedad</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">No puedes transferir tu última bóveda propia.</string>
-  <string name="sharing_bottomsheet_remove_access">Eliminar el acceso</string>
+  <string name="sharing_bottomsheet_remove_access">Revocar el acceso</string>
   <string name="sharing_bottomsheet_resend_invite">Reenviar la invitación</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancelar la invitación</string>
   <string name="sharing_transfer_ownership_confirm_title">Transferir la propiedad</string>
-  <string name="sharing_transfer_ownership_confirm_message">¿Estás seguro de que deseas transferir tu titularidad a %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Invitación cancelada</string>
+  <string name="sharing_transfer_ownership_confirm_message">¿Transferir la propiedad de esta bóveda a %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">La invitación ha sido cancelada.</string>
   <string name="sharing_snackbar_cancel_invite_error">Error al cancelar la invitación</string>
   <string name="sharing_snackbar_resend_invite_success">Se ha reenviado la invitación</string>
   <string name="sharing_snackbar_resend_invite_error">Error al reenviar la invitación</string>

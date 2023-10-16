@@ -38,6 +38,7 @@ import proton.android.pass.data.api.usecases.CheckPin
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
+import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
@@ -119,6 +120,7 @@ import proton.android.pass.data.fakes.usecases.TestCheckPin
 import proton.android.pass.data.fakes.usecases.TestClearPin
 import proton.android.pass.data.fakes.usecases.TestClearTrash
 import proton.android.pass.data.fakes.usecases.TestClearUserData
+import proton.android.pass.data.fakes.usecases.TestConfirmNewUserInvite
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
@@ -505,4 +507,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetInviteUserMode(impl: TestGetInviteUserMode): GetInviteUserMode
+
+    @Binds
+    abstract fun bindConfirmNewUserInvite(impl: TestConfirmNewUserInvite): ConfirmNewUserInvite
 }

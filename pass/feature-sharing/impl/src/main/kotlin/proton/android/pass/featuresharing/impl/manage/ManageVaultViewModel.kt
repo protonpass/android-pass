@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,12 +43,13 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.NewUserInviteId
@@ -63,9 +65,9 @@ class ManageVaultViewModel @Inject constructor(
     getVaultMembers: GetVaultMembers,
     getVaultById: GetVaultWithItemCountById,
     savedStateHandleProvider: SavedStateHandleProvider,
-    observeCurrentUser: ObserveCurrentUser,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val canShareVault: CanShareVault
+    private val canShareVault: CanShareVault,
+    private val confirmNewUserInvite: ConfirmNewUserInvite
 ) : ViewModel() {
 
     private val navShareId: ShareId =
@@ -83,6 +85,7 @@ class ManageVaultViewModel @Inject constructor(
 
     private val eventFlow: MutableStateFlow<ManageVaultEvent> =
         MutableStateFlow(ManageVaultEvent.Unknown)
+
     private val vaultFlow: Flow<VaultWithItemCount> = getVaultById(shareId = navShareId)
         .catch {
             snackbarDispatcher(SharingSnackbarMessage.GetMembersInfoError)
@@ -98,22 +101,30 @@ class ManageVaultViewModel @Inject constructor(
         .map { it.vault.role.toPermissions().hasFlag(SharePermissionFlag.Admin) }
         .distinctUntilChanged()
 
+    private val invitesBeingConfirmedMutableFlow: MutableStateFlow<Set<NewUserInviteId>> =
+        MutableStateFlow(emptySet())
+
+    private val invitesBeingConfirmedFlow: Flow<Set<NewUserInviteId>> =
+        invitesBeingConfirmedMutableFlow
+
     val state: StateFlow<ManageVaultUiState> = combineN(
         membersFlow,
         vaultFlow,
         showShareButtonFlow,
         canEditFlow,
         eventFlow,
-        observeCurrentUser()
-    ) { vaultMembers, vault, showShareButton, canEdit, event, currentUser ->
+        invitesBeingConfirmedFlow.distinctUntilChanged()
+    ) { vaultMembers, vault, showShareButton, canEdit, event, invitesBeingConfirmed ->
         val content = when (vaultMembers) {
             is LoadingResult.Error -> ManageVaultUiContent.Loading
             LoadingResult.Loading -> ManageVaultUiContent.Loading
             is LoadingResult.Success -> {
                 val partitioned = partitionMembers(vaultMembers.data)
+
                 ManageVaultUiContent.Content(
                     vaultMembers = partitioned.members,
                     invites = partitioned.invites,
+                    loadingInvites = invitesBeingConfirmed.toImmutableSet(),
                     canEdit = canEdit
                 )
             }
@@ -140,7 +151,28 @@ class ManageVaultViewModel @Inject constructor(
     }
 
     fun onConfirmInvite(inviteId: NewUserInviteId) = viewModelScope.launch {
+        val isAlreadyRunning = invitesBeingConfirmedMutableFlow.value.contains(inviteId)
+        if (isAlreadyRunning) return@launch
 
+        invitesBeingConfirmedMutableFlow.update { it + inviteId }
+
+        PassLogger.i(TAG, "Confirming invite ${inviteId.value}")
+        runCatching {
+            confirmNewUserInvite(navShareId, inviteId)
+        }.onSuccess {
+            PassLogger.i(TAG, "Confirmed invite ${inviteId.value}")
+            snackbarDispatcher(SharingSnackbarMessage.ConfirmInviteSuccess)
+            refreshFlow.update { true }
+        }.onFailure {
+            PassLogger.w(TAG, "Error confirming invite ${inviteId.value}")
+            snackbarDispatcher(SharingSnackbarMessage.ConfirmInviteError)
+        }
+
+        invitesBeingConfirmedMutableFlow.update {
+            val asMutable = it.toMutableSet()
+            asMutable.remove(inviteId)
+            asMutable
+        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -190,5 +222,9 @@ class ManageVaultViewModel @Inject constructor(
         val members: ImmutableList<VaultMember.Member>,
         val invites: ImmutableList<VaultMember>
     )
+
+    companion object {
+        private const val TAG = "ManageVaultViewModel"
+    }
 
 }

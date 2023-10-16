@@ -47,6 +47,10 @@ enum class SharingSnackbarMessage(
     ResendInviteError(R.string.sharing_snackbar_resend_invite_error, SnackbarType.ERROR),
     TooManyInvitesSentError(R.string.sharing_snackbar_too_many_invites_sent, SnackbarType.ERROR),
 
+    ConfirmInviteSuccess(R.string.sharing_snackbar_confirm_invite_success, SnackbarType.NORM),
+    ConfirmInviteError(R.string.sharing_snackbar_confirm_invite_error, SnackbarType.ERROR),
+
+
     TransferOwnershipSuccess(R.string.sharing_snackbar_transfer_ownership_success, SnackbarType.NORM),
     TransferOwnershipError(R.string.sharing_snackbar_transfer_ownership_error, SnackbarType.ERROR),
 }

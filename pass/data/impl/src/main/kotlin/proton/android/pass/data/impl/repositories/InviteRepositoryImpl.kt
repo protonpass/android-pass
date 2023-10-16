@@ -79,6 +79,7 @@ class InviteRepositoryImpl @Inject constructor(
                 token = invite.inviteToken,
                 userId = userId.id,
                 inviterEmail = invite.inviterEmail,
+                invitedEmail = invite.invitedEmail,
                 memberCount = vaultData.memberCount,
                 itemCount = vaultData.itemCount,
                 reminderCount = invite.remindersSent,

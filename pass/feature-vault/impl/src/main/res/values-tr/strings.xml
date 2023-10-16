@@ -37,5 +37,6 @@
   <string name="bottomsheet_manage_access">Erişim yönetimi</string>
   <string name="bottomsheet_select_vault_read_only">Yalnızca okuyabilirsiniz</string>
   <string name="bottomsheet_select_vault_not_primary_vault">Yalnızca birincil kasanızda ögeler oluşturabilirsiniz</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Yalnızca en eski kasanızda ögeler oluşturabilirsiniz</string>
   <string name="vault_title">Kasa</string>
 </resources>

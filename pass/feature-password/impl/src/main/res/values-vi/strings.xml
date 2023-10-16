@@ -9,7 +9,7 @@
   <string name="word_count">%s từ</string>
   <string name="word_separator">Dấu tách từ</string>
   <string name="bottomsheet_option_capital_letters">Chữ cái in hoa (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Capitalize</string>
+  <string name="bottomsheet_option_capitalise">Viết hoa</string>
   <string name="bottomsheet_option_include_numbers">Thêm số (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Dấu gạch ngang ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Khoảng trắng</string>

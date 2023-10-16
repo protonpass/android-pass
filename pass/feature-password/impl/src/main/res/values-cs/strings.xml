@@ -9,7 +9,7 @@
   <string name="word_count">%s slov</string>
   <string name="word_separator">Oddělovač slov</string>
   <string name="bottomsheet_option_capital_letters">Velká písmena (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Capitalize</string>
+  <string name="bottomsheet_option_capitalise">Velkými písmeny</string>
   <string name="bottomsheet_option_include_numbers">Včetně číslic (0-9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Pomlčky ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Mezery</string>

@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Doorgaan</string>
-  <string name="sharing_can_view">Kan bekijken</string>
-  <string name="sharing_can_edit">Kan bewerken</string>
-  <string name="sharing_can_manage">Kan beheren</string>
+  <string name="sharing_can_view">Viewer</string>
+  <string name="sharing_can_edit">Editor</string>
+  <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">Kan items bekijken in deze kluis.</string>
-  <string name="sharing_can_edit_description">Kan items aanmaken, bewerken, verwijderen en exporteren in deze kluis.</string>
+  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
   <string name="sharing_can_manage_description">Kan toegang tot deze kluis verlenen en intrekken.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d item</item>
@@ -33,12 +33,10 @@
     <item quantity="other">%d leden</item>
   </plurals>
   <string name="share_with_title">Deel met</string>
-  <string name="share_with_subtitle">Deze gebruiker ontvangt een uitnodiging om lid te worden van uw kluis \'%s\'.</string>
   <string name="share_with_email_hint">E-mailadres</string>
   <string name="share_with_email_error">Ongeldig e-mailadres</string>
-  <string name="share_permissions_title">Machtigingen instellen</string>
-  <string name="share_permissions_subtitle">Selecteer het toegangsniveau dat deze gebruiker krijgt wanneer hij lid wordt van uw kluis \'%s\'.</string>
-  <string name="sharing_invitation_from">Uitnodiging van %s</string>
+  <string name="share_permissions_title">Set access level</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
   <string name="sharing_join_shared_vault">Samenvoegen en synchroniseren.</string>
   <string name="sharing_reject_invitation">Uitnodiging afwijzen</string>
   <string name="sharing_snackbar_get_invite_error">Kan geen uitnodiging krijgen</string>
@@ -54,19 +52,16 @@
   <string name="sharing_snackbar_change_permission_error">Kon machtigingen niet wijzigen</string>
   <string name="sharing_snackbar_remove_member_success">Lid verwijderd van de kluis</string>
   <string name="sharing_snackbar_remove_member_error">Kon niet verwijderen van de kluis</string>
-  <string name="share_summary_title">Overzicht</string>
+  <string name="share_summary_title">Review and share</string>
   <string name="share_summary_subtitle">U staat op het punt %1$s uit te nodigen voor uw%2$s. Ze krijgen toegang tot %3$s en kunnen %4$s in deze kluis.</string>
   <string name="share_summary_vault">%s kluis</string>
-  <string name="share_summary_view_items">alleen artikelen bekijken</string>
-  <string name="share_summary_create_items">creëer items</string>
-  <string name="share_summary_manage_vault">beheer</string>
   <string name="share_summary_share_vault">Kluis delen</string>
-  <string name="share_summary_email_title">Gebruiker</string>
+  <string name="share_summary_email_title">Share with</string>
   <string name="share_summary_vault_title">Kluis</string>
-  <string name="share_summary_permissions_title">Rechten</string>
+  <string name="share_summary_permissions_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Deel met meer mensen</string>
   <string name="share_manage_vault_item_count">%d items</string>
-  <string name="share_manage_vault_invite_pending">Uitnodiging in behandeling</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
   <string name="share_manage_vault_current_user_indicator">U</string>
   <string name="share_role_can_view">Kan bekijken</string>
   <string name="share_role_can_edit">Kan bewerken</string>
@@ -74,12 +69,12 @@
   <string name="share_role_owner">Eigenaar</string>
   <string name="sharing_bottomsheet_transfer_ownership">Eigendom overdragen</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
-  <string name="sharing_bottomsheet_remove_access">Toegang verwijderen</string>
-  <string name="sharing_bottomsheet_resend_invite">Uitnodiging opnieuw verzenden</string>
-  <string name="sharing_bottomsheet_cancel_invite">Annuleer uitnodiging</string>
+  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
+  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">Eigendom overdragen</string>
-  <string name="sharing_transfer_ownership_confirm_message">Weet u zeker dat u het uw eigendom wilt overdragen aan %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Uitnodiging geannuleerd.</string>
+  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
   <string name="sharing_snackbar_cancel_invite_error">Error bij het annuleren van de uitnodiging</string>
   <string name="sharing_snackbar_resend_invite_success">Uitnodiging opnieuw verzonden</string>
   <string name="sharing_snackbar_resend_invite_error">Error bij het opnieuw versturen van de uitnodiging</string>

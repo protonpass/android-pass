@@ -37,5 +37,6 @@
   <string name="bottomsheet_manage_access">Gestisci accesso</string>
   <string name="bottomsheet_select_vault_read_only">Puoi solo leggere</string>
   <string name="bottomsheet_select_vault_not_primary_vault">Puoi creare elementi solo nella cassaforte principale</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Puoi creare elementi solamente nelle tue casseforti più vecchie</string>
   <string name="vault_title">Cassaforte</string>
 </resources>

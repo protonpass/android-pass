@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">მიიღეთ მნიშვნელოვანი განახლებები</string>
   <string name="home_notification_permission_banner_text">ჩართეთ პუშ-გაფრთხილებები, რათა გაიგოთ, როცა სხვები საცავს გაგიზიარებენ.</string>
   <string name="home_notification_permission_banner_settings">წვდომის ჩართვა ›</string>
-  <string name="home_invite_banner_title">გაზიარებული საცავის მოსაწვევი</string>
-  <string name="home_invite_banner_subtitle">მოგიწვიეს საცავში. დაატყაპუნეთ მოსაწვევის სანახავად.</string>
+  <string name="home_invite_banner_title">თქვენთან გაზიარებული საცავი</string>
+  <string name="home_invite_banner_subtitle">მოგიწვიეს გაზიარებულ საცავში. დეტალებისთვის დაატყაპუნეთ.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">პაროლის კოპირება</string>
   <string name="bottomsheet_copy_username">მომხმარებლის სახელის კოპირება</string>

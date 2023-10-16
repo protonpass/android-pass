@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Dapatkan berbagai pembaruan penting</string>
   <string name="home_notification_permission_banner_text">Aktifkan notifikasi push untuk menerima pemberitahuan ketika orang lain berbagi brankas dengan Anda.</string>
   <string name="home_notification_permission_banner_settings">Aktifkan izin ›</string>
-  <string name="home_invite_banner_title">Undangan brankas terbagi</string>
-  <string name="home_invite_banner_subtitle">Anda telah diundang ke sebuah brankas. Ketuk di sini untuk melihat undangan.</string>
+  <string name="home_invite_banner_title">Brankas yang dibagikan dengan Anda</string>
+  <string name="home_invite_banner_subtitle">Anda telah diundang ke brankas bersama. Klik di sini untuk rincian lebih lanjut.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Salin kata sandi</string>
   <string name="bottomsheet_copy_username">Salin nama pengguna</string>

@@ -26,7 +26,9 @@ data class GetSharePendingInvitesResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Invites")
-    val invites: List<SharePendingInvite>
+    val invites: List<SharePendingInvite>,
+    @SerialName("NewUserInvites")
+    val newUserInvites: List<ShareNewUserPendingInvite>
 )
 
 @Serializable
@@ -43,6 +45,30 @@ data class SharePendingInvite(
     val targetID: String,
     @SerialName("RemindersSent")
     val remindersSent: Int,
+    @SerialName("CreateTime")
+    val createTime: Long,
+    @SerialName("ModifyTime")
+    val modifyTime: Long
+)
+
+@Serializable
+data class ShareNewUserPendingInvite(
+    @SerialName("NewUserInviteID")
+    val newUserInviteId: String,
+    @SerialName("State")
+    val state: Int,
+    @SerialName("TargetType")
+    val targetType: Int,
+    @SerialName("TargetID")
+    val targetId: String,
+    @SerialName("ShareRoleID")
+    val shareRoleId: String,
+    @SerialName("InvitedEmail")
+    val invitedEmail: String,
+    @SerialName("InviterEmail")
+    val inviterEmail: String,
+    @SerialName("Signature")
+    val signature: String,
     @SerialName("CreateTime")
     val createTime: Long,
     @SerialName("ModifyTime")

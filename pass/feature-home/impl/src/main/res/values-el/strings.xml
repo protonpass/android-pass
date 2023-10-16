@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Λάβετε σημαντικές ενημερώσεις</string>
   <string name="home_notification_permission_banner_text">Ενεργοποιήστε τις ειδοποιήσεις push για να ενημερώνεστε όταν άλλα άτομα μοιράζονται μαζί σας μια κρύπτη.</string>
   <string name="home_notification_permission_banner_settings">Ενεργοποίηση άδειας ›</string>
-  <string name="home_invite_banner_title">Πρόσκληση κοινόχρηστης κρύπτης</string>
-  <string name="home_invite_banner_subtitle">Έχετε προσκληθεί σε μία κρύπτη. Πατήστε εδώ για να δείτε την πρόσκληση.</string>
+  <string name="home_invite_banner_title">Η κρύπτη που έχει κοινοποιηθεί σε εσάς</string>
+  <string name="home_invite_banner_subtitle">Έχετε προσκληθεί σε κοινόχρηστη κρύπτη. Πατήστε για λεπτομέρειες.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Αντιγραφή συνθηματικού</string>
   <string name="bottomsheet_copy_username">Αντιγραφή ονόματος χρήστη</string>

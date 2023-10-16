@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Thiết lập mở khóa Proton Pass với vân tay để chỉ có bạn mới có thể truy cập vào.</string>
   <string name="on_boarding_fingerprint_title">Bảo vệ dữ liệu nhạy cảm nhất của bạn</string>
   <string name="on_boarding_fingerprint_button">Bật mở khóa bằng vân tay</string>
-  <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead, hide it with email aliases—a Proton Pass exclusive.</string>
+  <string name="on_boarding_last_page_content">Ngừng chia sẻ địa chỉ email thật của bạn. Thay vào đó hãy giấu nó bằng các email bí danh - độc quyền trên Proton Pass.</string>
   <string name="on_boarding_last_page_title">Quản lý những gì vào hộp thư đến của bạn</string>
   <string name="on_boarding_last_page_button">Bắt đầu dùng Proton Pass</string>
   <string name="on_boarding_skip">Không phải bây giờ</string>

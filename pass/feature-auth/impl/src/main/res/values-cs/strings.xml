@@ -30,7 +30,7 @@
   <string name="auth_master_password_label">Hlavní heslo</string>
   <string name="auth_action_reveal_password">Zobrazit hlavní heslo</string>
   <string name="auth_action_conceal_password">Skrýt hlavní heslo</string>
-  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Zadat raději PIN</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Použít raději PIN</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Použít raději otisk prstu</string>
   <string name="auth_unlock_button">Odemknout</string>
   <string name="auth_error_verifying_password">Chyba při ověřování hesla</string>

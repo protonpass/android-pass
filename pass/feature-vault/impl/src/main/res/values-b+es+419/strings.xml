@@ -37,5 +37,6 @@
   <string name="bottomsheet_manage_access">Gestionar acceso</string>
   <string name="bottomsheet_select_vault_read_only">Sólo puede leer</string>
   <string name="bottomsheet_select_vault_not_primary_vault">Sólo puede crear elementos en su bóveda principal.</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Sólo puede crear elementos en su bóvedas antiguas</string>
   <string name="vault_title">Bóveda</string>
 </resources>

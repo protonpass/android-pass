@@ -10,6 +10,7 @@
   <string name="topbar_search_query_uninitialized">Suchen…</string>
   <string name="inline_suggestions_open_app">Proton Pass öffnen</string>
   <string name="autofill_only_searching_in_primary_vault">Dein Abonnement erlaubt nur die Verwendung von Einträgen in deinem primären Tresor für das automatische Ausfüllen.</string>
+  <string name="autofill_only_searching_in_oldest_vaults">Dein Abonnement erlaubt nur die Verwendung von Einträgen in deinem ältesten Tresor für das automatische Ausfüllen.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Vorschläge für %s</string>
   <string name="autofill_associate_web_app_name_dialog_title">Die Zugangsdaten von \"%s\" auf dieser App oder Website verwenden.</string>

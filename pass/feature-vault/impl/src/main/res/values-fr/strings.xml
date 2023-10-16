@@ -37,5 +37,6 @@
   <string name="bottomsheet_manage_access">Gérer l\'accès</string>
   <string name="bottomsheet_select_vault_read_only">Vous pouvez uniquement consulter.</string>
   <string name="bottomsheet_select_vault_not_primary_vault">Vous ne pouvez créer des éléments que dans votre coffre-fort principal.</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Vous ne pouvez créer des éléments que dans vos coffres-forts les plus anciens.</string>
   <string name="vault_title">Coffre-fort</string>
 </resources>

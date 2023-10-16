@@ -4,7 +4,7 @@
   <string name="home_empty_vault_title">Dein Tresor ist leer.</string>
   <string name="home_empty_vault_subtitle">Erstelle einen ersten Eintrag</string>
   <string name="home_empty_vault_create_login">Einen Login erstellen</string>
-  <string name="home_empty_vault_create_alias">Create a Hide-my-email alias</string>
+  <string name="home_empty_vault_create_alias">Einen hide-my-email-Alias erstellen</string>
   <string name="home_empty_vault_create_note">Eine Notiz erstellen</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fehler beim Laden der Einträge.</string>
   <string name="error_refreshing">Fehler beim Aktualisieren</string>
@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Erhalte wichtige Informationen</string>
   <string name="home_notification_permission_banner_text">Aktiviere Push-Benachrichtigungen, um informiert zu werden, wenn andere einen Tresor mit dir teilen.</string>
   <string name="home_notification_permission_banner_settings">Berechtigung erteilen ›</string>
-  <string name="home_invite_banner_title">Geteilte Tresoreinladung</string>
-  <string name="home_invite_banner_subtitle">Du wurdest eingeladen, einem Tresor beizutreten. Tippe hier, um die Einladung anzusehen.</string>
+  <string name="home_invite_banner_title">Mit dir geteilter Tresor</string>
+  <string name="home_invite_banner_subtitle">Du wurdest zu einem geteilten Tresor eingeladen. Tippe für Details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Passwort kopieren</string>
   <string name="bottomsheet_copy_username">Benutzername kopieren</string>
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">Benutzername kopiert</string>
   <string name="password_copied_to_clipboard">Passwort kopiert</string>
   <string name="credit_card_number_copied_to_clipboard">Kreditkartennummer kopiert</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Credit card CVV copied</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Kreditkarten-Prüfziffer kopiert</string>
   <string name="item_too_long_copied_to_clipboard">Inhalt war zu lang und wurde nur teilweise in die Zwischenablage kopiert.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Tresore</string>

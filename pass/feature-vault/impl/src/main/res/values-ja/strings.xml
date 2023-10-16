@@ -37,5 +37,6 @@
   <string name="bottomsheet_manage_access">アクセス管理</string>
   <string name="bottomsheet_select_vault_read_only">読み取り専用</string>
   <string name="bottomsheet_select_vault_not_primary_vault">アイテムの作成はプライマリー保管庫内でのみ行えます</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">あなたは最も古いフォルダー内でのみアイテムを作成できます</string>
   <string name="vault_title">保管庫</string>
 </resources>

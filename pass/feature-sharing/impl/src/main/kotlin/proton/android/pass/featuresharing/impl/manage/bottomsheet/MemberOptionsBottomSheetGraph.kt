@@ -33,6 +33,7 @@ import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.dialog
 import proton.pass.domain.InviteId
+import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
 
@@ -41,12 +42,41 @@ object InviteIdArg : NavArgId {
     override val navType = NavType.StringType
 }
 
+object InviteTypeArg : NavArgId {
+    override val key = "inviteType"
+    override val navType = NavType.StringType
+}
+
+sealed interface InviteTypeValue {
+
+    fun type(): String
+    fun value(): String
+
+    @JvmInline
+    value class ExistingUserInvite(val inviteId: InviteId) : InviteTypeValue {
+        override fun type() = INVITE_TYPE_EXISTING_USER
+        override fun value() = inviteId.value
+    }
+
+    @JvmInline
+    value class NewUserInvite(val inviteId: NewUserInviteId) : InviteTypeValue {
+        override fun type() = INVITE_TYPE_NEW_USER
+        override fun value() = inviteId.value
+    }
+
+    companion object {
+        const val INVITE_TYPE_EXISTING_USER = "existingUser"
+        const val INVITE_TYPE_NEW_USER = "newUser"
+    }
+}
+
 object InviteOptionsBottomSheet : NavItem(
     baseRoute = "sharing/manage/invite/bottomsheet",
-    navArgIds = listOf(CommonNavArgId.ShareId, InviteIdArg),
+    navArgIds = listOf(CommonNavArgId.ShareId, InviteIdArg, InviteTypeArg),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun buildRoute(shareId: ShareId, inviteId: InviteId) = "$baseRoute/${shareId.id}/${inviteId.value}"
+    fun buildRoute(shareId: ShareId, inviteType: InviteTypeValue) =
+        "$baseRoute/${shareId.id}/${inviteType.value()}/${inviteType.type()}"
 }
 
 

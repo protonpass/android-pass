@@ -53,6 +53,7 @@ fun ManageVaultScreen(
     ManageVaultContent(
         modifier = modifier,
         state = state,
-        onNavigateEvent = onNavigateEvent
+        onNavigateEvent = onNavigateEvent,
+        onConfirmInviteClick = viewModel::onConfirmInvite
     )
 }

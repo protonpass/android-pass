@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -47,17 +48,15 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.common.toShortSummary
-import proton.pass.domain.InviteId
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.pass.domain.NewUserInviteId
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Stable
@@ -73,7 +72,8 @@ fun ManageVaultMemberRow(
     modifier: Modifier = Modifier,
     member: VaultMemberContent,
     canShowActions: Boolean,
-    onOptionsClick: (() -> Unit)? = null
+    onOptionsClick: (() -> Unit)? = null,
+    onConfirmInviteClick: ((NewUserInviteId) -> Unit)? = null
 ) {
     val (circleTextModifier, circleText) = when (member) {
         VaultMemberContent.Loading -> Modifier.placeholder() to ""
@@ -82,46 +82,58 @@ fun ManageVaultMemberRow(
 
     val showActions = when (member) {
         is VaultMemberContent.Member -> when (member.member) {
-            is VaultMember.Member ->
+            is VaultMember.Member -> {
                 canShowActions && !member.member.isCurrentUser && !member.member.isOwner
+            }
+
             is VaultMember.InvitePending -> canShowActions
             is VaultMember.NewUserInvitePending -> canShowActions
         }
+
         VaultMemberContent.Loading -> false
     }
 
-    Row(
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        CircleTextIcon(
-            modifier = circleTextModifier,
-            text = circleText,
-            backgroundColor = PassTheme.colors.interactionNormMinor1,
-            textColor = PassTheme.colors.interactionNormMajor2,
-            shape = PassTheme.shapes.squircleMediumShape
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            CircleTextIcon(
+                modifier = circleTextModifier,
+                text = circleText,
+                backgroundColor = PassTheme.colors.interactionNormMinor1,
+                textColor = PassTheme.colors.interactionNormMajor2,
+                shape = PassTheme.shapes.squircleMediumShape
+            )
 
-        UserInfo(
-            modifier = Modifier.weight(1f),
-            member = member
-        )
+            UserInfo(
+                modifier = Modifier.weight(1f),
+                member = member
+            )
 
-        if (showActions) {
-            IconButton(
-                onClick = { onOptionsClick?.invoke() },
-                modifier = Modifier.size(24.dp)
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(CompR.drawable.ic_three_dots_vertical_24),
-                    contentDescription = stringResource(id = CompR.string.action_content_description_menu),
-                    tint = PassTheme.colors.textHint
-                )
+            if (showActions) {
+                IconButton(
+                    onClick = { onOptionsClick?.invoke() },
+                    modifier = Modifier.size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(CompR.drawable.ic_three_dots_vertical_24),
+                        contentDescription = stringResource(id = CompR.string.action_content_description_menu),
+                        tint = PassTheme.colors.textHint
+                    )
+                }
             }
         }
+
+        ConfirmAccessButton(
+            member = member,
+            onClick = { onConfirmInviteClick?.invoke(it) }
+        )
     }
 }
 
@@ -131,16 +143,22 @@ private fun UserInfo(
     member: VaultMemberContent
 ) {
     val (titleTextModifier, titleText) = when (member) {
-        VaultMemberContent.Loading -> Modifier.fillMaxWidth().placeholder() to AnnotatedString("")
+        VaultMemberContent.Loading ->
+            Modifier
+                .fillMaxWidth()
+                .placeholder() to AnnotatedString("")
+
         is VaultMemberContent.Member -> Modifier to when (member.member) {
             is VaultMember.InvitePending -> AnnotatedString(
                 text = member.member.email,
                 spanStyle = SpanStyle(fontStyle = FontStyle.Italic)
             )
+
             is VaultMember.NewUserInvitePending -> AnnotatedString(
                 text = member.member.email,
                 spanStyle = SpanStyle(fontStyle = FontStyle.Italic)
             )
+
             is VaultMember.Member -> AnnotatedString(member.member.email)
         }
     }
@@ -155,63 +173,110 @@ private fun UserInfo(
             style = PassTheme.typography.body3Norm()
         )
 
-        when (member) {
-            VaultMemberContent.Loading -> {
+        UserInfoSubtitle(member = member)
+    }
+}
+
+@Composable
+private fun UserInfoSubtitle(
+    modifier: Modifier = Modifier,
+    member: VaultMemberContent
+) {
+    when (member) {
+        VaultMemberContent.Loading -> {
+            Text(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .placeholder(),
+                text = ""
+            )
+        }
+
+        is VaultMemberContent.Member -> when (val memberContent = member.member) {
+            is VaultMember.Member -> {
+                memberContent.role?.let { role ->
+                    Row(
+                        modifier = modifier,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (memberContent.isCurrentUser) {
+                            Text(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(24.dp))
+                                    .background(
+                                        color = PassTheme.colors.interactionNorm,
+                                        shape = RoundedCornerShape(24.dp)
+                                    )
+                                    .padding(horizontal = 8.dp, vertical = 2.dp),
+                                text = stringResource(R.string.share_manage_vault_current_user_indicator),
+                                color = PassTheme.colors.textNorm,
+                                style = ProtonTheme.typography.captionNorm
+                            )
+                        }
+
+                        val subtitle = if (memberContent.isOwner) {
+                            stringResource(R.string.share_role_owner)
+                        } else {
+                            role.toShortSummary()
+                        }
+                        Text(
+                            text = subtitle,
+                            style = PassTheme.typography.body3Weak()
+                        )
+                    }
+                }
+            }
+
+            is VaultMember.InvitePending -> {
                 Text(
-                    modifier = Modifier.fillMaxWidth().placeholder(),
-                    text = ""
+                    modifier = modifier,
+                    text = stringResource(R.string.share_manage_vault_invite_pending),
+                    style = PassTheme.typography.body3Weak()
                 )
             }
 
-            is VaultMemberContent.Member -> when (val memberContent = member.member) {
-                is VaultMember.Member -> {
-                    memberContent.role?.let { role ->
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            if (memberContent.isCurrentUser) {
-                                Text(
-                                    modifier = Modifier.clip(RoundedCornerShape(24.dp))
-                                        .background(
-                                            color = PassTheme.colors.interactionNorm,
-                                            shape = RoundedCornerShape(24.dp)
-                                        )
-                                        .padding(horizontal = 8.dp, vertical = 2.dp),
-                                    text = stringResource(R.string.share_manage_vault_current_user_indicator),
-                                    color = PassTheme.colors.textNorm,
-                                    style = ProtonTheme.typography.captionNorm
-                                )
-                            }
-
-                            val subtitle = if (memberContent.isOwner) {
-                                stringResource(R.string.share_role_owner)
-                            } else {
-                                role.toShortSummary()
-                            }
-                            Text(
-                                text = subtitle,
-                                style = PassTheme.typography.body3Weak()
-                            )
-                        }
+            is VaultMember.NewUserInvitePending -> {
+                val text = when (memberContent.inviteState) {
+                    VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation -> {
+                        stringResource(R.string.share_manage_vault_invite_pending_user_creation)
                     }
 
+                    VaultMember.NewUserInvitePending.InviteState.PendingAcceptance -> {
+                        memberContent.role.toShortSummary()
+                    }
                 }
-
-                is VaultMember.InvitePending -> {
-                    Text(
-                        text = stringResource(R.string.share_manage_vault_invite_pending),
-                        style = PassTheme.typography.body3Weak()
-                    )
-                }
-
-                is VaultMember.NewUserInvitePending -> {
-                    Text(
-                        text = stringResource(R.string.share_manage_vault_invite_pending),
-                        style = PassTheme.typography.body3Weak()
-                    )
-                }
+                Text(
+                    modifier = modifier,
+                    text = text,
+                    style = PassTheme.typography.body3Weak()
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun ConfirmAccessButton(
+    modifier: Modifier = Modifier,
+    member: VaultMemberContent,
+    onClick: (NewUserInviteId) -> Unit
+) {
+    if (member is VaultMemberContent.Member &&
+        member.member is VaultMember.NewUserInvitePending &&
+        member.member.inviteState == VaultMember.NewUserInvitePending.InviteState.PendingAcceptance
+    ) {
+        CircleButton(
+            modifier = modifier.fillMaxWidth(),
+            color = PassTheme.colors.interactionNormMinor1,
+            elevation = ButtonDefaults.elevation(0.dp),
+            onClick = { onClick(member.member.newUserInviteId) }
+        ) {
+            Text(
+                modifier = Modifier.padding(vertical = 10.dp),
+                text = stringResource(R.string.share_manage_vault_invite_confirm_access),
+                color = PassTheme.colors.interactionNormMajor2
+            )
         }
     }
 }
@@ -219,24 +284,12 @@ private fun UserInfo(
 @Preview
 @Composable
 fun ManageVaultMemberRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemedMVMPreviewProvider::class) input: Pair<Boolean, VaultMemberRowInput>
 ) {
-    val member = if (input.second) {
-        VaultMember.Member(
-            email = "some@email.test",
-            shareId = ShareId("123"),
-            username = "some username",
-            role = ShareRole.Admin,
-            isCurrentUser = true,
-            isOwner = input.second
-        )
-    } else {
-        VaultMember.InvitePending(email = "invited@email.test", inviteId = InviteId("123"))
-    }
     PassTheme(isDark = input.first) {
         Surface {
             ManageVaultMemberRow(
-                member = VaultMemberContent.Member(member),
+                member = input.second.member,
                 canShowActions = true,
                 onOptionsClick = {}
             )

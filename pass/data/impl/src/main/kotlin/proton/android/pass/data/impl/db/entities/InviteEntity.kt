@@ -62,11 +62,14 @@ data class InviteEntity(
     // Reencrypted with local key
     @ColumnInfo(name = Columns.ENCRYPTED_CONTENT)
     val encryptedContent: EncryptedByteArray,
+    @ColumnInfo(name = Columns.INVITED_EMAIL, defaultValue = "")
+    val invitedEmail: String
 ) {
     object Columns {
         const val TOKEN = "token"
         const val USER_ID = "user_id"
         const val INVITER_EMAIL = "inviter_email"
+        const val INVITED_EMAIL = "invited_email"
         const val MEMBER_COUNT = "member_count"
         const val ITEM_COUNT = "item_count"
         const val REMINDER_COUNT = "reminder_count"

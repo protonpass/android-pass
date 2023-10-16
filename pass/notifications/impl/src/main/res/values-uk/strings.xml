@@ -2,8 +2,8 @@
 <resources>
   <string name="updates_notification_channel_name">Оновлення</string>
   <string name="autofill_notification_channel_name">Автозаповнення</string>
-  <string name="autofill_notification_copy_to_clipboard_title">TOTP code</string>
-  <string name="autofill_notification_copy_to_clipboard_body">TOTP has been copied to clipboard</string>
+  <string name="autofill_notification_copy_to_clipboard_title">Код TOTP</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP було скопійовано до буфера обміну</string>
   <string name="updates_new_invite_received_title">Ви отримали запрошення</string>
   <string name="updates_new_invite_received_message">Вас було запрошено у сховище. Відкрийте додаток, щоб побачити запрошення та прийняти його.</string>
 </resources>

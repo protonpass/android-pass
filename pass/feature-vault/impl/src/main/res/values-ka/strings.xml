@@ -37,5 +37,6 @@
   <string name="bottomsheet_manage_access">წვდომის მართვა</string>
   <string name="bottomsheet_select_vault_read_only">შეგიძლიათ, მხოლოდ, წაიკითხოთ</string>
   <string name="bottomsheet_select_vault_not_primary_vault">ჩანაწერების შექმნა, მხოლოდ, ძირითად საცავში შეგიძლიათ</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">ჩანაწერების შექმნა, მხოლოდ, თქვენს ძველს საცავში შეგიძლიათ</string>
   <string name="vault_title">საცავი</string>
 </resources>

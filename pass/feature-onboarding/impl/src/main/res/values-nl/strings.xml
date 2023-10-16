@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Stel Proton Pass in om te ontgrendelen met uw vingerafdruk, zodat alleen u toegang hebt.</string>
   <string name="on_boarding_fingerprint_title">Bescherm uw meest gevoelige gegevens</string>
   <string name="on_boarding_fingerprint_button">Vingerafdrukontgrendeling inschakelen</string>
-  <string name="on_boarding_last_page_content">Stop met het delen van je echte e-mailadres. Verberg het in plaats daarvan met e-mailaliassen, exclusief voor Proton Pass.</string>
+  <string name="on_boarding_last_page_content">Stop met het delen van uw echte e-mailadres. Verberg het in plaats daarvan met e-mailaliassen, exclusief voor Proton Pass.</string>
   <string name="on_boarding_last_page_title">Bepaal wat er in uw inbox terechtkomt</string>
   <string name="on_boarding_last_page_button">Begin Proton Pass te gebruiken</string>
   <string name="on_boarding_skip">Niet nu</string>

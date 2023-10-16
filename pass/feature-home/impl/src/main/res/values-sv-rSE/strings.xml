@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Få viktiga uppdateringar</string>
   <string name="home_notification_permission_banner_text">Aktivera push-notiser för att informeras när andra delar ett valv med dig.</string>
   <string name="home_notification_permission_banner_settings">Aktivera behörighet ›</string>
-  <string name="home_invite_banner_title">Inbjudan till delat valv</string>
-  <string name="home_invite_banner_subtitle">Du har blivit inbjuden till ett valv. Tryck här för att se inbjudan.</string>
+  <string name="home_invite_banner_title">Valv delade med dig</string>
+  <string name="home_invite_banner_subtitle">Du är inbjuden till ett delat valv. Tryck för mer detaljer.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiera lösenord</string>
   <string name="bottomsheet_copy_username">Kopiera användarnamn</string>

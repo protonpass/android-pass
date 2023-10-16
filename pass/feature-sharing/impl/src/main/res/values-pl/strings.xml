@@ -20,7 +20,7 @@
   <string name="share_continue">Kontynuuj</string>
   <string name="sharing_can_view">Odczyt</string>
   <string name="sharing_can_edit">Edycja</string>
-  <string name="sharing_can_manage">Zarządzanie</string>
+  <string name="sharing_can_manage">Administrator</string>
   <string name="sharing_can_view_description">Widzi elementy w sejfie.</string>
   <string name="sharing_can_edit_description">Może edytować i eksportować elementy w sejfie.</string>
   <string name="sharing_can_manage_description">Zarządza dostępem do sejfu.</string>
@@ -37,12 +37,10 @@
     <item quantity="other">%d użytkowników</item>
   </plurals>
   <string name="share_with_title">Udostępnij</string>
-  <string name="share_with_subtitle">Użytkownik otrzyma zaproszenie do sejfu \'%s\'.</string>
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
   <string name="share_permissions_title">Ustaw uprawnienia</string>
-  <string name="share_permissions_subtitle">Wybierz uprawnienia użytkownika dla sejfu \'%s\'.</string>
-  <string name="sharing_invitation_from">Zaproszenie od %s</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s udostępnia Ci sejf</string>
   <string name="sharing_join_shared_vault">Dołącz i synchronizuj</string>
   <string name="sharing_reject_invitation">Odrzuć zaproszenie</string>
   <string name="sharing_snackbar_get_invite_error">Nie można pobrać zaproszenia</string>
@@ -58,19 +56,16 @@
   <string name="sharing_snackbar_change_permission_error">Nie można zmienić uprawnień</string>
   <string name="sharing_snackbar_remove_member_success">Użytkownik został usunięty z sejfu</string>
   <string name="sharing_snackbar_remove_member_error">Nie można usunąć z sejfu</string>
-  <string name="share_summary_title">Podsumowanie</string>
+  <string name="share_summary_title">Przejrzyj i udostępnij</string>
   <string name="share_summary_subtitle">Zapraszasz %1$s do %2$s. Użytkownik otrzyma dostęp do %3$s i będzie mógł %4$s w sejfie.</string>
   <string name="share_summary_vault">sejfu %s</string>
-  <string name="share_summary_view_items">wyświetlać elementy</string>
-  <string name="share_summary_create_items">tworzyć elementy</string>
-  <string name="share_summary_manage_vault">zarządzać elementami</string>
   <string name="share_summary_share_vault">Udostępnij sejf</string>
-  <string name="share_summary_email_title">Użytkownik</string>
+  <string name="share_summary_email_title">Udostępnij</string>
   <string name="share_summary_vault_title">Sejf</string>
   <string name="share_summary_permissions_title">Uprawnienia</string>
   <string name="share_manage_vault_share_with_more_people">Udostępnij innym</string>
   <string name="share_manage_vault_item_count">%d elementów</string>
-  <string name="share_manage_vault_invite_pending">Oczekujące zaproszenie</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Zaproszenie zostało wysłane</string>
   <string name="share_manage_vault_current_user_indicator">Ty</string>
   <string name="share_role_can_view">Odczyt</string>
   <string name="share_role_can_edit">Edycja</string>
@@ -78,11 +73,11 @@
   <string name="share_role_owner">Właściciel</string>
   <string name="sharing_bottomsheet_transfer_ownership">Zmień właściciela</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nie możesz zmienić właściciela swojego jedynego sejfu.</string>
-  <string name="sharing_bottomsheet_remove_access">Usuń dostęp</string>
+  <string name="sharing_bottomsheet_remove_access">Unieważnij dostęp</string>
   <string name="sharing_bottomsheet_resend_invite">Wyślij ponownie zaproszenie</string>
   <string name="sharing_bottomsheet_cancel_invite">Anuluj zaproszenie</string>
   <string name="sharing_transfer_ownership_confirm_title">Zmień właściciela</string>
-  <string name="sharing_transfer_ownership_confirm_message">Czy na pewno chcesz zmienić właściciela na %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Zmienić właściciela sejfu na %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Zaproszenie zostało anulowane</string>
   <string name="sharing_snackbar_cancel_invite_error">Wystąpił błąd podczas anulowania zaproszenia</string>
   <string name="sharing_snackbar_resend_invite_success">Zaproszenie zostało wysłane</string>

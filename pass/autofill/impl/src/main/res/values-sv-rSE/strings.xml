@@ -10,6 +10,7 @@
   <string name="topbar_search_query_uninitialized">Sök…</string>
   <string name="inline_suggestions_open_app">Öppna Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Ditt paket tillåter endast att använda objekt i ditt primära valv för autofyllsändamål.</string>
+  <string name="autofill_only_searching_in_oldest_vaults">Ditt paket tillåter endast att använda objekt i dina äldsta valv för autofyllsändamål.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Förslag för %s</string>
   <string name="autofill_associate_web_app_name_dialog_title">Använd inloggningsuppgifter från “%s“ på denna app eller webbplats.</string>

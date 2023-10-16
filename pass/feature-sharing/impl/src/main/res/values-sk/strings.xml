@@ -18,9 +18,9 @@
   -->
 <resources>
   <string name="share_continue">Pokračovať</string>
-  <string name="sharing_can_view">Môže zobraziť</string>
-  <string name="sharing_can_edit">Môže upravovať</string>
-  <string name="sharing_can_manage">Môže spravovať</string>
+  <string name="sharing_can_view">Zobraziť</string>
+  <string name="sharing_can_edit">Upraviť</string>
+  <string name="sharing_can_manage">Spravovať</string>
   <string name="sharing_can_view_description">Môže zobraziť položky v tomto trezore</string>
   <string name="sharing_can_edit_description">Môžete vytvárať, upravovať, mazať a exportovať položky v tomto trezore.</string>
   <string name="sharing_can_manage_description">Môže udeliť alebo zrušiť prístup k tomuto trezoru.</string>
@@ -37,12 +37,10 @@
     <item quantity="other">%d členov</item>
   </plurals>
   <string name="share_with_title">Zdieľať s</string>
-  <string name="share_with_subtitle">Tento používateľ dostane pozvánku do vášho trezora \"%s\".</string>
   <string name="share_with_email_hint">Emailová adresa</string>
   <string name="share_with_email_error">Neplatná emailová adresa</string>
-  <string name="share_permissions_title">Nastaviť oprávnenia</string>
-  <string name="share_permissions_subtitle">Vyberte úroveň prístupu, ktorú tento používateľ získa, keď sa pripojí k vášmu trezoru \'%s\'.</string>
-  <string name="sharing_invitation_from">Pozvánka od %s</string>
+  <string name="share_permissions_title">Nastavte úroveň prístupu</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vás pozýva na prístup k položkám v</string>
   <string name="sharing_join_shared_vault">Pripojiť a synchronizovať</string>
   <string name="sharing_reject_invitation">Odmietnuť pozvánku</string>
   <string name="sharing_snackbar_get_invite_error">Nepodarilo sa získať pozvánku</string>
@@ -58,19 +56,16 @@
   <string name="sharing_snackbar_change_permission_error">Oprávnenia sa nepodarilo zmeniť</string>
   <string name="sharing_snackbar_remove_member_success">Člen odstránený z trezoru</string>
   <string name="sharing_snackbar_remove_member_error">Nepodarilo sa odstrániť z trezoru</string>
-  <string name="share_summary_title">Zhrnutie</string>
+  <string name="share_summary_title">Skontrolovať a zdieľať</string>
   <string name="share_summary_subtitle">Chystáte sa pozvať %1$s do svojho %2$s. Získajú prístup k %3$s a budú môcť %4$s v tomto trezore.</string>
   <string name="share_summary_vault">%s trezor</string>
-  <string name="share_summary_view_items">iba zobrazenie položiek</string>
-  <string name="share_summary_create_items">vytvoriť položky</string>
-  <string name="share_summary_manage_vault">spravovať</string>
   <string name="share_summary_share_vault">Zdielať trezor</string>
-  <string name="share_summary_email_title">Používateľ</string>
+  <string name="share_summary_email_title">Zdieľať s</string>
   <string name="share_summary_vault_title">Trezor</string>
-  <string name="share_summary_permissions_title">Oprávnenia</string>
+  <string name="share_summary_permissions_title">Úroveň prístupu</string>
   <string name="share_manage_vault_share_with_more_people">Zdieľať s viacerými ľudmi</string>
   <string name="share_manage_vault_item_count">%d položky</string>
-  <string name="share_manage_vault_invite_pending">Čakajúca pozvánka</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Pozvánka bol odoslaná</string>
   <string name="share_manage_vault_current_user_indicator">Vy</string>
   <string name="share_role_can_view">Môže prezerať</string>
   <string name="share_role_can_edit">Môže upravovať</string>
@@ -78,12 +73,12 @@
   <string name="share_role_owner">Vlastník</string>
   <string name="sharing_bottomsheet_transfer_ownership">Prevod vlastníctva</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nemôžete preniesť svoj naposledy vlastnený trezor.</string>
-  <string name="sharing_bottomsheet_remove_access">Odstrániť prístup</string>
-  <string name="sharing_bottomsheet_resend_invite">Znova odoslať pozvánku</string>
-  <string name="sharing_bottomsheet_cancel_invite">Zrušiť pozvánku</string>
+  <string name="sharing_bottomsheet_remove_access">Zrušiť prístup</string>
+  <string name="sharing_bottomsheet_resend_invite">Znovu poslať pozvánku</string>
+  <string name="sharing_bottomsheet_cancel_invite">Zrušiť pozvanie</string>
   <string name="sharing_transfer_ownership_confirm_title">Previesť vlastníctvo</string>
-  <string name="sharing_transfer_ownership_confirm_message">Naozaj chcete previesť vlastníctvo na %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Pozvánka zrušená</string>
+  <string name="sharing_transfer_ownership_confirm_message">Preniesť vlastníctvo tohto trezora na %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Pozvanie zrušené</string>
   <string name="sharing_snackbar_cancel_invite_error">Chyba pri rušení pozvánky</string>
   <string name="sharing_snackbar_resend_invite_success">Pozvánka bola odoslaná znova</string>
   <string name="sharing_snackbar_resend_invite_error">Chyba pri opätovnom poslaní pozvánky</string>

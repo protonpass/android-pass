@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.crypto
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.repository.PublicAddressRepository
-import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.crypto.api.Base64
@@ -46,12 +45,14 @@ class ReencryptInviteContentsImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ReencryptInviteContents {
     override suspend fun invoke(userId: UserId, invite: PendingInviteResponse): EncryptedByteArray {
-        val key = invite.keys.firstOrNull { it.keyRotation == invite.vaultData.contentKeyRotation }
-            ?: throw IllegalStateException("No key found for invite")
+        val key = invite.keys.firstOrNull {
+            it.keyRotation == invite.vaultData.contentKeyRotation
+        } ?: throw IllegalStateException("No key found for invite")
 
         val user = userRepository.getUser(userId)
-        val address = userAddressRepository.getAddresses(userId).primary()
-            ?: throw IllegalStateException("No primary address found for user")
+        val address = userAddressRepository.getAddresses(userId).firstOrNull { address ->
+            address.email == invite.invitedEmail
+        } ?: throw IllegalStateException("Could not find invited address for user")
         val addressPrivateKeys = address.keys.map { it.privateKey }
 
         val inviterKeys = publicAddressRepository.getPublicAddress(userId, invite.inviterEmail)

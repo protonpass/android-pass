@@ -33,6 +33,7 @@ import proton.android.pass.data.api.usecases.CheckPin
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
+import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
@@ -116,6 +117,7 @@ import proton.android.pass.data.impl.usecases.CheckPinImpl
 import proton.android.pass.data.impl.usecases.ClearPinImpl
 import proton.android.pass.data.impl.usecases.ClearTrashImpl
 import proton.android.pass.data.impl.usecases.ClearUserDataImpl
+import proton.android.pass.data.impl.usecases.ConfirmNewUserInviteImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemAndAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemImpl
@@ -441,4 +443,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetInviteUserMode(impl: GetInviteUserModeImpl): GetInviteUserMode
+
+    @Binds
+    abstract fun bindConfirmNewUserInvite(impl: ConfirmNewUserInviteImpl): ConfirmNewUserInvite
 }

@@ -41,8 +41,16 @@ sealed class VaultMember(open val email: String) {
 
     data class NewUserInvitePending(
         override val email: String,
-        val newUserInviteId: NewUserInviteId
-    ) : VaultMember(email)
+        val newUserInviteId: NewUserInviteId,
+        val role: ShareRole,
+        val inviteState: InviteState
+    ) : VaultMember(email) {
+
+        enum class InviteState {
+            PendingAccountCreation,
+            PendingAcceptance
+        }
+    }
 }
 
 interface GetVaultMembers {

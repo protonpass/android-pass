@@ -43,11 +43,13 @@ sealed interface InviteOptionsEvent {
 @Stable
 data class InviteOptionsUiState(
     val loadingOption: LoadingOption?,
+    val showResendInvite: Boolean,
     val event: InviteOptionsEvent
 ) {
     companion object {
-        val Initial = InviteOptionsUiState(
+        fun Initial(showResendInvite: Boolean) = InviteOptionsUiState(
             loadingOption = null,
+            showResendInvite = showResendInvite,
             event = InviteOptionsEvent.Unknown
         )
     }

@@ -42,22 +42,25 @@ fun InviteOptionsContent(
     onEvent: (InviteOptionsUiEvent) -> Unit
 ) {
     val enabled = state.loadingOption == null
+    val itemsList = mutableListOf<BottomSheetItem>()
+    if (state.showResendInvite) {
+        itemsList += resendInvite(
+            enabled = enabled,
+            loading = state.loadingOption == LoadingOption.ResendInvite,
+        ) {
+            onEvent(InviteOptionsUiEvent.ResendInvite)
+        }
+    }
+    itemsList += cancelInvite(
+        enabled = enabled,
+        loading = state.loadingOption == LoadingOption.CancelInvite
+    ) {
+        onEvent(InviteOptionsUiEvent.CancelInvite)
+    }
+
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = listOf(
-            resendInvite(
-                enabled = enabled,
-                loading = state.loadingOption == LoadingOption.ResendInvite,
-            ) {
-                onEvent(InviteOptionsUiEvent.ResendInvite)
-            },
-            cancelInvite(
-                enabled = enabled,
-                loading = state.loadingOption == LoadingOption.CancelInvite
-            ) {
-                onEvent(InviteOptionsUiEvent.CancelInvite)
-            }
-        ).withDividers().toPersistentList()
+        items = itemsList.withDividers().toPersistentList()
     )
 }
 

@@ -37,5 +37,6 @@
   <string name="bottomsheet_manage_access">Beheer toegang</string>
   <string name="bottomsheet_select_vault_read_only">U kunt alleen lezen</string>
   <string name="bottomsheet_select_vault_not_primary_vault">U kan alleen items maken voor uw primaire kluis</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">You can only create items in your oldest vaults</string>
   <string name="vault_title">Kluis</string>
 </resources>

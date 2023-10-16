@@ -9,7 +9,7 @@
   <string name="word_count">%s слів</string>
   <string name="word_separator">Розділювач слів</string>
   <string name="bottomsheet_option_capital_letters">Великі літери (А-Я)</string>
-  <string name="bottomsheet_option_capitalise">Capitalize</string>
+  <string name="bottomsheet_option_capitalise">Великими літерами</string>
   <string name="bottomsheet_option_include_numbers">Додати цифри (0-9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Дефіси ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Пробіли</string>

@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Nastavte Proton Pass na odemykání otiskem prstu, abyste měli přístup jen vy.</string>
   <string name="on_boarding_fingerprint_title">Chraňte svá nejcitlivější data</string>
   <string name="on_boarding_fingerprint_button">Povolte odemykání otiskem prstu</string>
-  <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead, hide it with email aliases—a Proton Pass exclusive.</string>
+  <string name="on_boarding_last_page_content">Přestaňte sdílet svou skutečnou e-mailovou adresu. Místo toho ji skryjte pomocí e-mailových aliasů—exkluzivní služba Proton Pass.</string>
   <string name="on_boarding_last_page_title">Mějte kontrolu nad tím, co skončí ve vaší doručené poště</string>
   <string name="on_boarding_last_page_button">Začněte používat Proton Pass</string>
   <string name="on_boarding_skip">Nyní ne</string>

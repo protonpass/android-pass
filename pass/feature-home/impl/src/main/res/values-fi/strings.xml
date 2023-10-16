@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Vastaanota tärkeitä ilmoituksia</string>
   <string name="home_notification_permission_banner_text">Ota push-ilmoitukset käyttöön saadaksesi ilmoituksen muiden käyttäjien jakaessa holvejaan sinulle.</string>
   <string name="home_notification_permission_banner_settings">Myönnä käyttöoikeus ›</string>
-  <string name="home_invite_banner_title">Kutsu jaettuun holviin</string>
-  <string name="home_invite_banner_subtitle">Sinut on kutsuttu holviin. Näytä kutsu napauttamalla tästä.</string>
+  <string name="home_invite_banner_title">Sinulle on jaettu holvi</string>
+  <string name="home_invite_banner_subtitle">Sinut on kutsuttu jaettuun holviin. Näytä tiedot napauttamalla.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopioi salasana</string>
   <string name="bottomsheet_copy_username">Kopioi käyttäjätunnus</string>

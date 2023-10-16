@@ -10,6 +10,7 @@
   <string name="topbar_search_query_uninitialized">Пошук…</string>
   <string name="inline_suggestions_open_app">Адкрыць Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Ваш тарыфны план прадугледжвае толькі элементы ў асноўным сховішчы для аўтазапаўнення.</string>
+  <string name="autofill_only_searching_in_oldest_vaults">Ваш тарыфны план дазваляе выкарыстоўваць элементы ў самых старых сховішчах для аўтазапаўнення.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Прапановы для %s</string>
   <string name="autofill_associate_web_app_name_dialog_title">Выкарыстоўвайце даныя ўваходу ад \"%s\" у гэтай праграме або на гэтым вэб-сайце.</string>

@@ -18,9 +18,9 @@
   -->
 <resources>
   <string name="share_continue">Συνέχεια</string>
-  <string name="sharing_can_view">Δυνατότητα προβολής</string>
-  <string name="sharing_can_edit">Δυνατότητα επεξεργασίας</string>
-  <string name="sharing_can_manage">Δυνατότητα διαχείρισης</string>
+  <string name="sharing_can_view">Θεατής</string>
+  <string name="sharing_can_edit">Επεξεργαστής</string>
+  <string name="sharing_can_manage">Διαχειριστής</string>
   <string name="sharing_can_view_description">Μπορεί να προβάλει στοιχεία σε αυτή την κρύπτη.</string>
   <string name="sharing_can_edit_description">Μπορεί να δημιουργήσει, επεξεργαστεί, διαγράψει και εξάγει στοιχεία σε αυτήν την κρύπτη.</string>
   <string name="sharing_can_manage_description">Μπορεί να παραχωρήσει και να ανακαλέσει την πρόσβαση σε αυτή την κρύπτη.</string>
@@ -33,12 +33,10 @@
     <item quantity="other">%d μέλη</item>
   </plurals>
   <string name="share_with_title">Κοινοποίηση με</string>
-  <string name="share_with_subtitle">Αυτός ο χρήστης θα λάβει μια πρόσκληση για συμμετοχή στη \"%s\" κρύπτη σας.</string>
   <string name="share_with_email_hint">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
   <string name="share_with_email_error">Μη έγκυρη διεύθυνση email</string>
-  <string name="share_permissions_title">Ορισμός δικαιωμάτων</string>
-  <string name="share_permissions_subtitle">Επιλέξτε το επίπεδο πρόσβασης που θα αποκτήσει αυτός ο χρήστης όταν συνδεθεί στη \"%s\" κρύπτη σας.</string>
-  <string name="sharing_invitation_from">Πρόσκληση από %s</string>
+  <string name="share_permissions_title">Ορισμός επιπέδου πρόσβασης</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s σας προσκαλεί να αποκτήσετε πρόσβαση σε στοιχεία στη</string>
   <string name="sharing_join_shared_vault">Συμμετάσχετε και συγχρονίστε</string>
   <string name="sharing_reject_invitation">Απόρριψη πρόσκλησης</string>
   <string name="sharing_snackbar_get_invite_error">Δεν ήταν δυνατή η λήψη πρόσκλησης</string>
@@ -54,19 +52,16 @@
   <string name="sharing_snackbar_change_permission_error">Δεν ήταν δυνατή η αλλαγή των δικαιωμάτων</string>
   <string name="sharing_snackbar_remove_member_success">Το μέλος αφαιρέθηκε από την κρύπτη</string>
   <string name="sharing_snackbar_remove_member_error">Δεν ήταν δυνατή η κατάργηση από την κρύπτη</string>
-  <string name="share_summary_title">Περίληψη</string>
+  <string name="share_summary_title">Επανεξέταση και κοινή χρήση</string>
   <string name="share_summary_subtitle">Πρόκειται να προσκαλέσετε %1$s στο %2$s σας. Θα αποκτήσουν πρόσβαση σε %3$s και θα μπορούν να %4$s σε αυτή την κρύπτη.</string>
   <string name="share_summary_vault">%s κρύπτη</string>
-  <string name="share_summary_view_items">μόνο προβολή στοιχείων</string>
-  <string name="share_summary_create_items">δημιουργία στοιχείων</string>
-  <string name="share_summary_manage_vault">διαχείριση</string>
   <string name="share_summary_share_vault">Κοινή χρήση κρύπτης</string>
-  <string name="share_summary_email_title">Χρήστης</string>
+  <string name="share_summary_email_title">Κοινοποίηση με</string>
   <string name="share_summary_vault_title">Κρύπτη</string>
-  <string name="share_summary_permissions_title">Δικαιώματα</string>
+  <string name="share_summary_permissions_title">Επίπεδο πρόσβασης</string>
   <string name="share_manage_vault_share_with_more_people">Κοινοποίηση με περισσότερα άτομα</string>
   <string name="share_manage_vault_item_count">%d στοιχεία</string>
-  <string name="share_manage_vault_invite_pending">Εκκρεμής πρόσκληση</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Η πρόσκληση στάλθηκε</string>
   <string name="share_manage_vault_current_user_indicator">Εσείς</string>
   <string name="share_role_can_view">Δυνατότητα προβολής</string>
   <string name="share_role_can_edit">Δυνατότητα επεξεργασίας</string>
@@ -74,11 +69,11 @@
   <string name="share_role_owner">Ιδιοκτήτης</string>
   <string name="sharing_bottomsheet_transfer_ownership">Μεταβίβαση κυριότητας</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Δεν μπορείτε να μεταφέρετε την τελευταία κρύπτη που κατέχετε.</string>
-  <string name="sharing_bottomsheet_remove_access">Αφαίρεση πρόσβασης</string>
+  <string name="sharing_bottomsheet_remove_access">Ανάκληση πρόσβασης</string>
   <string name="sharing_bottomsheet_resend_invite">Επανάληψη αποστολής πρόσκλησης</string>
   <string name="sharing_bottomsheet_cancel_invite">Ακύρωση πρόσκλησης</string>
   <string name="sharing_transfer_ownership_confirm_title">Μεταβίβαση κυριότητας</string>
-  <string name="sharing_transfer_ownership_confirm_message">Είστε βέβαιοι ότι θέλετε να μεταβιβάσετε την ιδιοκτησία σας στο %s;</string>
+  <string name="sharing_transfer_ownership_confirm_message">Μεταφέρετε την ιδιοκτησία αυτής της κρύπτης στο %s;</string>
   <string name="sharing_snackbar_cancel_invite_success">Η πρόσκληση ακυρώθηκε</string>
   <string name="sharing_snackbar_cancel_invite_error">Σφάλμα ακύρωσης πρόσκλησης</string>
   <string name="sharing_snackbar_resend_invite_success">Η πρόσκληση στάλθηκε ξανά</string>

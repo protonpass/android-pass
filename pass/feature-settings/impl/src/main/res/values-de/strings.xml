@@ -6,7 +6,7 @@
   <string name="settings_autofill_preference_description">Um dich schnell und einfach anzumelden, überlasse Proton Pass das Ausfüllen deiner Benutzernamen und Passwörter.</string>
   <string name="settings_authentication_section_title">Authentifizierung</string>
   <string name="settings_authentication_preference_title">Entsperren mit Fingerabdruck</string>
-  <string name="settings_authentication_preference_description_enabled">Quickly and securely open the app with your fingerprint.</string>
+  <string name="settings_authentication_preference_description_enabled">Öffne die App schnell und sicher mit deinem Fingerabdruck.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Du kannst deinen Fingerabdruck nicht für die Interaktion mit der App einstellen, da auf diesem Gerät keine Fingerabdrücke registriert sind.</string>
   <string name="settings_appearance_preference_title">Farbschema</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Systemeinstellung verwenden</string>

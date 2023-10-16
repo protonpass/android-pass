@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">続く</string>
-  <string name="sharing_can_view">閲覧可能</string>
-  <string name="sharing_can_edit">編集することができます</string>
-  <string name="sharing_can_manage">管理できる</string>
+  <string name="sharing_can_view">ビューアー</string>
+  <string name="sharing_can_edit">エディター</string>
+  <string name="sharing_can_manage">管理者</string>
   <string name="sharing_can_view_description">この 保管庫 内のアイテムを表示できます。</string>
-  <string name="sharing_can_edit_description">この 保管庫 内のアイテムを作成、編集、削除、エクスポートできます。</string>
+  <string name="sharing_can_edit_description">このフォルダー内のアイテムを作成、編集、削除、エクスポートすることができます。</string>
   <string name="sharing_can_manage_description">このボールトへのアクセスを許可および取り消しできます。</string>
   <plurals name="sharing_item_count">
     <item quantity="other">%d 個</item>
@@ -31,12 +31,10 @@
     <item quantity="other">%d メンバー</item>
   </plurals>
   <string name="share_with_title">と共有する</string>
-  <string name="share_with_subtitle">このユーザーは、\'%s\' ボ保管庫に参加するための招待状を受け取ります。</string>
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレス</string>
-  <string name="share_permissions_title">権限を設定する</string>
-  <string name="share_permissions_subtitle">このユーザーが \'%s\' 保管庫に参加するときに得られるアクセス レベルを選択します。</string>
-  <string name="sharing_invitation_from">%s からの招待</string>
+  <string name="share_permissions_title">アクセスレベルの設定</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%sがあなたにアイテムへのアクセスを招待しています。</string>
   <string name="sharing_join_shared_vault">参加と同期</string>
   <string name="sharing_reject_invitation">招待を拒否する</string>
   <string name="sharing_snackbar_get_invite_error">招待状が届かない</string>
@@ -52,19 +50,16 @@
   <string name="sharing_snackbar_change_permission_error">権限を変更できませんでした</string>
   <string name="sharing_snackbar_remove_member_success">メンバーが保管庫から削除されました</string>
   <string name="sharing_snackbar_remove_member_error">保管庫から削除できませんでした</string>
-  <string name="share_summary_title">概要</string>
+  <string name="share_summary_title">レビューして共有</string>
   <string name="share_summary_subtitle">%1$s を %2$s に招待しようとしています。 彼らは %3$s にアクセスできるようになり、この 保管庫 で %4$s できるようになります。</string>
   <string name="share_summary_vault">%s 保管庫</string>
-  <string name="share_summary_view_items">アイテムのみを表示する</string>
-  <string name="share_summary_create_items">アイテムを作成する</string>
-  <string name="share_summary_manage_vault">管理</string>
   <string name="share_summary_share_vault">保管庫を共有する</string>
-  <string name="share_summary_email_title">ユーザー</string>
+  <string name="share_summary_email_title">と共有</string>
   <string name="share_summary_vault_title">保管庫</string>
-  <string name="share_summary_permissions_title">権限</string>
+  <string name="share_summary_permissions_title">アクセスレベル</string>
   <string name="share_manage_vault_share_with_more_people">より多くの人たちと共有する</string>
   <string name="share_manage_vault_item_count">%d 個のアイテム</string>
-  <string name="share_manage_vault_invite_pending">保留中の招待</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">招待の送信</string>
   <string name="share_manage_vault_current_user_indicator">あなた</string>
   <string name="share_role_can_view">閲覧可能</string>
   <string name="share_role_can_edit">編集可能</string>
@@ -72,11 +67,11 @@
   <string name="share_role_owner">所有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">所有権の移転</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">最後に所有していたボールトを譲渡することはできません。</string>
-  <string name="sharing_bottomsheet_remove_access">アクセス権の削除</string>
-  <string name="sharing_bottomsheet_resend_invite">招待を再送信する</string>
-  <string name="sharing_bottomsheet_cancel_invite">招待をキャンセルする</string>
+  <string name="sharing_bottomsheet_remove_access">アクセスの失効</string>
+  <string name="sharing_bottomsheet_resend_invite">招待の再送</string>
+  <string name="sharing_bottomsheet_cancel_invite">招待のキャンセル</string>
   <string name="sharing_transfer_ownership_confirm_title">所有権の移転</string>
-  <string name="sharing_transfer_ownership_confirm_message">所有権を %s に譲渡してもよろしいですか?</string>
+  <string name="sharing_transfer_ownership_confirm_message">このフォルダーの所有権を%sに移転しますか？</string>
   <string name="sharing_snackbar_cancel_invite_success">招待がキャンセルされました</string>
   <string name="sharing_snackbar_cancel_invite_error">招待のキャンセル中にエラーが発生しました</string>
   <string name="sharing_snackbar_resend_invite_success">招待状再送</string>

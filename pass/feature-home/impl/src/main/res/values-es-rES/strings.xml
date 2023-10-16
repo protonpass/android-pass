@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Obtén actualizaciones importantes</string>
   <string name="home_notification_permission_banner_text">Habilita las notificaciones push para estar informado de cuando otros compartan una bóveda contigo.</string>
   <string name="home_notification_permission_banner_settings">Habilitar permiso ›</string>
-  <string name="home_invite_banner_title">Invitación de bóveda compartida</string>
-  <string name="home_invite_banner_subtitle">Has sido invitado a una bóveda. Toca aquí para ver la invitación.</string>
+  <string name="home_invite_banner_title">Bóveda compartida contigo</string>
+  <string name="home_invite_banner_subtitle">Has sido invitado a una bóveda compartida. Pulsa para ver los datos.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar contraseña</string>
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>

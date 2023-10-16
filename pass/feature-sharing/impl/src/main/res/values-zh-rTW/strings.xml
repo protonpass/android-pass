@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">繼續</string>
-  <string name="sharing_can_view">可以查看</string>
-  <string name="sharing_can_edit">可以編輯</string>
-  <string name="sharing_can_manage">可管理</string>
+  <string name="sharing_can_view">Viewer</string>
+  <string name="sharing_can_edit">Editor</string>
+  <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">可查看保管庫的項目。</string>
-  <string name="sharing_can_edit_description">可於此保管庫新增、編輯、刪除及匯出項目。</string>
+  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
   <string name="sharing_can_manage_description">可取得及撤銷此保管庫的權限。</string>
   <plurals name="sharing_item_count">
     <item quantity="other">%d項目</item>
@@ -31,12 +31,10 @@
     <item quantity="other">%d 位成員</item>
   </plurals>
   <string name="share_with_title">與分享</string>
-  <string name="share_with_subtitle">此用戶將會收到加入%s保管庫的邀請函。</string>
   <string name="share_with_email_hint">電子郵件地址</string>
   <string name="share_with_email_error">無效的電子郵件地址</string>
-  <string name="share_permissions_title">設定權限</string>
-  <string name="share_permissions_subtitle">為此將加入%s保管庫的用戶選取全限等級。</string>
-  <string name="sharing_invitation_from">來自%s的邀請</string>
+  <string name="share_permissions_title">Set access level</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
   <string name="sharing_join_shared_vault">加入並同步</string>
   <string name="sharing_reject_invitation">拒絕邀請</string>
   <string name="sharing_snackbar_get_invite_error">無法取得邀請</string>
@@ -52,19 +50,16 @@
   <string name="sharing_snackbar_change_permission_error">無法更新存取權限設定</string>
   <string name="sharing_snackbar_remove_member_success">從保管庫移除成員</string>
   <string name="sharing_snackbar_remove_member_error">無法從保管庫移除</string>
-  <string name="share_summary_title">摘要</string>
+  <string name="share_summary_title">Review and share</string>
   <string name="share_summary_subtitle">您將邀請%1$s至您的%2$s。他們將取得%3$s權限及將可於保管庫中%4$s。</string>
   <string name="share_summary_vault">%s保管庫</string>
-  <string name="share_summary_view_items">指瀏覽項目</string>
-  <string name="share_summary_create_items">新增項目</string>
-  <string name="share_summary_manage_vault">管理</string>
   <string name="share_summary_share_vault">分享保險庫</string>
-  <string name="share_summary_email_title">使用者</string>
+  <string name="share_summary_email_title">Share with</string>
   <string name="share_summary_vault_title">保管庫</string>
-  <string name="share_summary_permissions_title">權限</string>
+  <string name="share_summary_permissions_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">分享給更多人</string>
   <string name="share_manage_vault_item_count">%d項目</string>
-  <string name="share_manage_vault_invite_pending">等待邀請</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
   <string name="share_manage_vault_current_user_indicator">您</string>
   <string name="share_role_can_view">可以查看</string>
   <string name="share_role_can_edit">可以編輯</string>
@@ -72,12 +67,12 @@
   <string name="share_role_owner">擁有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">轉移所有權</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
-  <string name="sharing_bottomsheet_remove_access">移除存取權限</string>
-  <string name="sharing_bottomsheet_resend_invite">重新發送邀請</string>
-  <string name="sharing_bottomsheet_cancel_invite">取消邀請</string>
+  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
+  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">轉移所有權</string>
-  <string name="sharing_transfer_ownership_confirm_message">您確定要將您的所有權轉移給 %s 嗎？</string>
-  <string name="sharing_snackbar_cancel_invite_success">邀請已取消</string>
+  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
   <string name="sharing_snackbar_cancel_invite_error">取消邀請時發生錯誤</string>
   <string name="sharing_snackbar_resend_invite_success">邀請已成功傳送</string>
   <string name="sharing_snackbar_resend_invite_error">重新發送邀請時發生錯誤</string>

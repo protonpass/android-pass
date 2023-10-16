@@ -4,15 +4,15 @@
   <string name="home_empty_vault_title">Váš trezor je prázdný</string>
   <string name="home_empty_vault_subtitle">Začněte vytvořením první položky.</string>
   <string name="home_empty_vault_create_login">Vytvořit přihlášení</string>
-  <string name="home_empty_vault_create_alias">Create a Hide-my-email alias</string>
+  <string name="home_empty_vault_create_alias">Vytvořit alias hide-my-email</string>
   <string name="home_empty_vault_create_note">Vytvořit poznámku</string>
-  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Error loading items</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Chyba při načítání položek</string>
   <string name="error_refreshing">Chyba při obnově</string>
   <string name="home_snackbar_login_moved_to_trash">Přihlášení přesunuto do koše</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias přesunut do koše</string>
   <string name="home_snackbar_note_moved_to_trash">Poznámka přesunuta do koše</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Platební karta přesunuta do koše</string>
-  <string name="home_snackbar_move_to_trash_error">Item could not be moved to trash</string>
+  <string name="home_snackbar_move_to_trash_error">Položku nelze přesunout do koše</string>
   <string name="home_autofill_banner_title">Využijte přínosu automatického vyplňování</string>
   <string name="home_autofill_banner_text">Jedno klepnutí a vaše uživatelské jméno a heslo jsou okamžitě vyplněny.</string>
   <string name="home_autofill_banner_settings">Zapnout automatické vyplňování ›</string>
@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Získejte důležité aktualizace</string>
   <string name="home_notification_permission_banner_text">Povolte vyskakovací oznámení, abyste byli informováni, když s vámi ostatní sdílejí trezor.</string>
   <string name="home_notification_permission_banner_settings">Povolte oprávnění ›</string>
-  <string name="home_invite_banner_title">Pozvánka ke sdílenému trezoru</string>
-  <string name="home_invite_banner_subtitle">Byli jste pozváni k trezoru. Klepnutím sem zobrazíte pozvánku.</string>
+  <string name="home_invite_banner_title">Vault shared with you</string>
+  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopírovat heslo</string>
   <string name="bottomsheet_copy_username">Kopírovat uživatelské jméno</string>
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">Uživatelské jméno bylo zkopírováno</string>
   <string name="password_copied_to_clipboard">Heslo bylo zkopírováno</string>
   <string name="credit_card_number_copied_to_clipboard">Číslo platební karty zkopírováno</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Credit card CVV copied</string>
+  <string name="credit_card_cvv_copied_to_clipboard">CVV platební karty zkopírováno</string>
   <string name="item_too_long_copied_to_clipboard">Obsah byl příliš dlouhý, byl částečně zkopírován do schránky</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Trezory</string>

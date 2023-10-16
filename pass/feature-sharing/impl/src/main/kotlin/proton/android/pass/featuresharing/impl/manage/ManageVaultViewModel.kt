@@ -18,9 +18,12 @@
 
 package proton.android.pass.featuresharing.impl.manage
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -47,6 +50,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermissionFlag
 import proton.pass.domain.VaultWithItemCount
@@ -105,10 +109,14 @@ class ManageVaultViewModel @Inject constructor(
         val content = when (vaultMembers) {
             is LoadingResult.Error -> ManageVaultUiContent.Loading
             LoadingResult.Loading -> ManageVaultUiContent.Loading
-            is LoadingResult.Success -> ManageVaultUiContent.Content(
-                vaultMembers = vaultMembers.data,
-                canEdit = canEdit
-            )
+            is LoadingResult.Success -> {
+                val partitioned = partitionMembers(vaultMembers.data)
+                ManageVaultUiContent.Content(
+                    vaultMembers = partitioned.members,
+                    invites = partitioned.invites,
+                    canEdit = canEdit
+                )
+            }
         }
 
         ManageVaultUiState(
@@ -130,5 +138,57 @@ class ManageVaultViewModel @Inject constructor(
     fun clearEvent() {
         eventFlow.update { ManageVaultEvent.Unknown }
     }
+
+    fun onConfirmInvite(inviteId: NewUserInviteId) = viewModelScope.launch {
+
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    fun partitionMembers(members: List<VaultMember>): PartitionedMembers {
+        val invites = mutableListOf<VaultMember>()
+        val membersList = mutableListOf<VaultMember.Member>()
+        members.forEach {
+            when (it) {
+                is VaultMember.Member -> membersList.add(it)
+                else -> invites.add(it)
+            }
+        }
+
+        return PartitionedMembers(
+            members = membersList.toPersistentList(),
+            invites = sortInvites(invites).toPersistentList()
+        )
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    fun sortInvites(invites: List<VaultMember>): List<VaultMember> {
+        val newUserInvitesWaitingActivation = mutableListOf<VaultMember.NewUserInvitePending>()
+        val newUserInvitesWaitingAccountCreation = mutableListOf<VaultMember.NewUserInvitePending>()
+        val regularInvites = mutableListOf<VaultMember.InvitePending>()
+
+        invites.forEach {
+            when (it) {
+                is VaultMember.NewUserInvitePending -> when (it.inviteState) {
+                    VaultMember.NewUserInvitePending.InviteState.PendingAcceptance -> {
+                        newUserInvitesWaitingActivation.add(it)
+                    }
+                    VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation -> {
+                        newUserInvitesWaitingAccountCreation.add(it)
+                    }
+                }
+                is VaultMember.InvitePending -> regularInvites.add(it)
+                else -> {}
+            }
+        }
+
+        return newUserInvitesWaitingActivation
+            .plus(newUserInvitesWaitingAccountCreation)
+            .plus(regularInvites)
+    }
+
+    data class PartitionedMembers(
+        val members: ImmutableList<VaultMember.Member>,
+        val invites: ImmutableList<VaultMember>
+    )
 
 }

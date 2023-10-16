@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.CancelInvite
 import proton.pass.domain.InviteId
+import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,8 +29,10 @@ import javax.inject.Singleton
 class TestCancelInvite @Inject constructor() : CancelInvite {
     private var result: Result<Unit> = Result.success(Unit)
     private val memory = mutableListOf<Payload>()
+    private val newUserMemory = mutableListOf<NewUserInvitePayload>()
 
     fun getMemory(): List<Payload> = memory
+    fun getNewUserMemory(): List<NewUserInvitePayload> = newUserMemory
 
     fun setResult(value: Result<Unit>) {
         result = value
@@ -40,8 +43,18 @@ class TestCancelInvite @Inject constructor() : CancelInvite {
         result.getOrThrow()
     }
 
+    override suspend fun invoke(shareId: ShareId, inviteId: NewUserInviteId) {
+        newUserMemory.add(NewUserInvitePayload(shareId, inviteId))
+        result.getOrThrow()
+    }
+
     data class Payload(
         val shareId: ShareId,
         val inviteId: InviteId
+    )
+
+    data class NewUserInvitePayload(
+        val shareId: ShareId,
+        val inviteId: NewUserInviteId
     )
 }

@@ -24,6 +24,9 @@ value class InviteToken(val value: String)
 @JvmInline
 value class InviteId(val value: String)
 
+@JvmInline
+value class NewUserInviteId(val value: String)
+
 data class PendingInvite(
     val inviteToken: InviteToken,
     val inviterEmail: String,

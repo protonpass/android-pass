@@ -19,6 +19,7 @@
 package proton.android.pass.featuresharing.impl.manage
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.pass.domain.VaultWithItemCount
 
@@ -55,7 +56,8 @@ sealed interface ManageVaultUiContent {
 
     @Stable
     data class Content(
-        val vaultMembers: List<VaultMember>,
+        val vaultMembers: ImmutableList<VaultMember.Member>,
+        val invites: ImmutableList<VaultMember>,
         val canEdit: Boolean,
     ) : ManageVaultUiContent
 }

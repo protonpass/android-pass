@@ -20,14 +20,22 @@ package proton.android.pass.featuresharing.impl.manage
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.data.api.usecases.VaultMember
+import proton.android.pass.featuresharing.impl.R
+import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.VaultWithItemCount
 
 @Composable
@@ -35,7 +43,8 @@ fun ManageVaultMembersList(
     modifier: Modifier = Modifier,
     content: ManageVaultUiContent,
     vault: VaultWithItemCount?,
-    onMemberOptionsClick: (VaultMember) -> Unit
+    onMemberOptionsClick: (VaultMember) -> Unit,
+    onConfirmInviteClick: (NewUserInviteId) -> Unit
 ) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
@@ -43,9 +52,9 @@ fun ManageVaultMembersList(
     ) {
         ManageVaultHeader(vault = vault)
 
-        Column(modifier = Modifier.roundedContainerNorm()) {
-            when (content) {
-                ManageVaultUiContent.Loading -> {
+        when (content) {
+            ManageVaultUiContent.Loading -> {
+                Column(modifier = Modifier.roundedContainerNorm()) {
                     repeat(2) {
                         ManageVaultMemberRow(
                             member = VaultMemberContent.Loading,
@@ -54,17 +63,63 @@ fun ManageVaultMembersList(
                         PassDivider()
                     }
                 }
+            }
 
-                is ManageVaultUiContent.Content -> {
-                    content.vaultMembers.forEach { member ->
-                        ManageVaultMemberRow(
-                            member = VaultMemberContent.Member(member),
-                            canShowActions = content.canEdit,
-                            onOptionsClick = { onMemberOptionsClick(member) }
-                        )
-                        PassDivider()
-                    }
+            is ManageVaultUiContent.Content -> {
+                ManageVaultMembersList(
+                    content = content,
+                    onMemberOptionsClick = onMemberOptionsClick,
+                    onConfirmInviteClick = onConfirmInviteClick
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ManageVaultMembersList(
+    modifier: Modifier = Modifier,
+    content: ManageVaultUiContent.Content,
+    onMemberOptionsClick: (VaultMember) -> Unit,
+    onConfirmInviteClick: (NewUserInviteId) -> Unit
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        if (content.invites.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.share_manage_vault_invitations_title),
+                color = PassTheme.colors.textWeak
+            )
+
+            Column(modifier = Modifier.roundedContainerNorm()) {
+                content.invites.forEach { invite ->
+                    ManageVaultMemberRow(
+                        member = VaultMemberContent.Member(invite),
+                        canShowActions = content.canEdit,
+                        onOptionsClick = { onMemberOptionsClick(invite) },
+                        onConfirmInviteClick = onConfirmInviteClick
+                    )
+                    PassDivider()
                 }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        Text(
+            text = stringResource(R.string.share_manage_vault_members_title),
+            color = PassTheme.colors.textWeak
+        )
+        Column(modifier = Modifier.roundedContainerNorm()) {
+            content.vaultMembers.forEach { member ->
+                ManageVaultMemberRow(
+                    member = VaultMemberContent.Member(member),
+                    canShowActions = content.canEdit,
+                    onOptionsClick = { onMemberOptionsClick(member) }
+                )
+                PassDivider()
             }
         }
     }

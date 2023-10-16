@@ -86,7 +86,7 @@ class SharingPermissionsViewModelTest {
             assertThat(navigationEvent.shareId).isEqualTo(ShareId("my share id"))
             assertThat(navigationEvent.email).isEqualTo("test@example.com")
             assertThat(navigationEvent.permission).isEqualTo(SharingType.Read.ordinal)
-            assertThat(navigationEvent.mode).isEqualTo(SharingWithUserModeType.NewUser)
+            assertThat(navigationEvent.mode).isEqualTo(SharingWithUserModeType.ExistingUser)
         }
     }
 

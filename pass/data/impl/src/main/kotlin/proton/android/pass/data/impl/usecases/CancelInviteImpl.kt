@@ -25,6 +25,7 @@ import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.api.usecases.CancelInvite
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.pass.domain.InviteId
+import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -42,5 +43,9 @@ class CancelInviteImpl @Inject constructor(
                 )
             }
             .valueOrThrow
+    }
+
+    override suspend fun invoke(shareId: ShareId, inviteId: NewUserInviteId) {
+
     }
 }

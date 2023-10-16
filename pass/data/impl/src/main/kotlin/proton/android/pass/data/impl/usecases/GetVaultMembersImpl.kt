@@ -34,6 +34,7 @@ import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.data.impl.responses.ShareNewUserPendingInvite
 import proton.android.pass.data.impl.responses.SharePendingInvite
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.InviteId
 import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
@@ -100,11 +101,30 @@ class GetVaultMembersImpl @Inject constructor(
 
     private fun ShareNewUserPendingInvite.toDomain() = VaultMember.NewUserInvitePending(
         email = invitedEmail,
-        newUserInviteId = NewUserInviteId(newUserInviteId)
+        newUserInviteId = NewUserInviteId(newUserInviteId),
+        role = shareRoleId.let { ShareRole.fromValue(it) },
+        inviteState = when (state) {
+            INVITE_STATE_PENDING_ACCOUNT_CREATION -> {
+                VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation
+            }
+            INVITE_STATE_PENDING_ACCEPTANCE -> {
+                VaultMember.NewUserInvitePending.InviteState.PendingAcceptance
+            }
+            else -> {
+                PassLogger.w(TAG, "Unknown NewUserInvite state: $state")
+                VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation
+            }
+        }
     )
 
     private fun SharePendingInvite.toDomain() = VaultMember.InvitePending(
         email = invitedEmail,
         inviteId = InviteId(inviteId)
     )
+
+    companion object {
+        private const val TAG = "GetVaultMembersImpl"
+        private const val INVITE_STATE_PENDING_ACCOUNT_CREATION = 1
+        private const val INVITE_STATE_PENDING_ACCEPTANCE = 2
+    }
 }

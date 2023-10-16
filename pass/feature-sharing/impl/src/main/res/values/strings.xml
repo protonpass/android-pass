@@ -117,6 +117,8 @@
     <string name="sharing_snackbar_cancel_invite_error">Error cancelling invite</string>
     <string name="sharing_snackbar_resend_invite_success">Invite resent</string>
     <string name="sharing_snackbar_resend_invite_error">Error resending invite</string>
+    <string name="sharing_snackbar_confirm_invite_success">Invite confirmed</string>
+    <string name="sharing_snackbar_confirm_invite_error">Error confirming invite</string>
     <string name="sharing_snackbar_too_many_invites_sent">Address has been invited too many times</string>
     <string name="sharing_snackbar_transfer_ownership_success">Ownership transferred</string>
     <string name="sharing_snackbar_transfer_ownership_error">Error transferring ownership</string>

@@ -95,8 +95,15 @@ private fun ManageVaultMembersList(
 
             Column(modifier = Modifier.roundedContainerNorm()) {
                 content.invites.forEach { invite ->
+
+                    val isLoading = if (invite is VaultMember.NewUserInvitePending) {
+                        content.loadingInvites.contains(invite.newUserInviteId)
+                    } else {
+                        false
+                    }
+
                     ManageVaultMemberRow(
-                        member = VaultMemberContent.Member(invite),
+                        member = VaultMemberContent.Member(member = invite, isLoading = isLoading),
                         canShowActions = content.canEdit,
                         onOptionsClick = { onMemberOptionsClick(invite) },
                         onConfirmInviteClick = onConfirmInviteClick

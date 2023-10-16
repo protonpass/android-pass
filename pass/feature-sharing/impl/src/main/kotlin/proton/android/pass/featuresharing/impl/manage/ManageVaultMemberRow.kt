@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -63,8 +64,10 @@ import proton.android.pass.composecomponents.impl.R as CompR
 sealed interface VaultMemberContent {
     object Loading : VaultMemberContent
 
-    @JvmInline
-    value class Member(val member: VaultMember) : VaultMemberContent
+    data class Member(
+        val member: VaultMember,
+        val isLoading: Boolean = false
+    ) : VaultMemberContent
 }
 
 @Composable
@@ -272,11 +275,15 @@ private fun ConfirmAccessButton(
             elevation = ButtonDefaults.elevation(0.dp),
             onClick = { onClick(member.member.newUserInviteId) }
         ) {
-            Text(
-                modifier = Modifier.padding(vertical = 10.dp),
-                text = stringResource(R.string.share_manage_vault_invite_confirm_access),
-                color = PassTheme.colors.interactionNormMajor2
-            )
+            if (member.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.size(24.dp))
+            } else {
+                Text(
+                    modifier = Modifier.padding(vertical = 10.dp),
+                    text = stringResource(R.string.share_manage_vault_invite_confirm_access),
+                    color = PassTheme.colors.interactionNormMajor2
+                )
+            }
         }
     }
 }

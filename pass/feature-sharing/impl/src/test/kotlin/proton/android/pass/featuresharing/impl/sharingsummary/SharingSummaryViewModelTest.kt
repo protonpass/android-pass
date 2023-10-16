@@ -33,6 +33,8 @@ import proton.android.pass.featuresharing.impl.PermissionNavArgId
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentError
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentSuccess
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.VaultNotFound
+import proton.android.pass.featuresharing.impl.SharingWithUserModeArgId
+import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -65,6 +67,7 @@ class SharingSummaryViewModelTest {
             get()[CommonNavArgId.ShareId.key] = "my share id"
             get()[EmailNavArgId.key] = email
             get()[PermissionNavArgId.key] = 1
+            get()[SharingWithUserModeArgId.key] = SharingWithUserModeType.ExistingUser.name
         }
         viewModel = SharingSummaryViewModel(
             getVaultWithItemCountById = getVaultWithItemCountById,

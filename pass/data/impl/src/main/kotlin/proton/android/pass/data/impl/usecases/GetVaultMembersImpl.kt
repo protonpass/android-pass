@@ -32,8 +32,10 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.responses.ShareMemberResponse
+import proton.android.pass.data.impl.responses.ShareNewUserPendingInvite
 import proton.android.pass.data.impl.responses.SharePendingInvite
 import proton.pass.domain.InviteId
+import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermissionFlag
 import proton.pass.domain.ShareRole
@@ -78,11 +80,13 @@ class GetVaultMembersImpl @Inject constructor(
     private suspend fun fetchPendingInvites(
         shareId: ShareId,
         userId: UserId
-    ): List<VaultMember.InvitePending> {
+    ): List<VaultMember> {
         val invites = apiProvider.get<PasswordManagerApi>(userId)
             .invoke { getPendingInvitesForShare(shareId.id) }
             .valueOrThrow
-        return invites.invites.map { it.toDomain() }
+        val inviteList = invites.invites.map { it.toDomain() }
+        val newUserInviteList = invites.newUserInvites.map { it.toDomain() }
+        return inviteList + newUserInviteList
     }
 
     private fun ShareMemberResponse.toDomain(currentUserEmail: String?) = VaultMember.Member(
@@ -92,6 +96,11 @@ class GetVaultMembersImpl @Inject constructor(
         role = shareRoleId?.let { ShareRole.fromValue(it) },
         isCurrentUser = userEmail == currentUserEmail,
         isOwner = owner == true
+    )
+
+    private fun ShareNewUserPendingInvite.toDomain() = VaultMember.NewUserInvitePending(
+        email = invitedEmail,
+        newUserInviteId = NewUserInviteId(newUserInviteId)
     )
 
     private fun SharePendingInvite.toDomain() = VaultMember.InvitePending(

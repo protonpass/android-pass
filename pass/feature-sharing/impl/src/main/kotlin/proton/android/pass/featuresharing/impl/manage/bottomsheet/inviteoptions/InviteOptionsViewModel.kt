@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,10 +36,15 @@ import proton.android.pass.data.api.usecases.CancelInvite
 import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteIdArg
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeArg
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeValue
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeValue.Companion.INVITE_TYPE_EXISTING_USER
+import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeValue.Companion.INVITE_TYPE_NEW_USER
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.InviteId
+import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -51,7 +57,14 @@ class InviteOptionsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val shareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
-    private val inviteId = InviteId(savedState.get().require(InviteIdArg.key))
+    private val inviteType: InviteTypeValue = run {
+        val inviteId: String = savedState.get().require(InviteIdArg.key)
+        when (val type: String = savedState.get().require(InviteTypeArg.key)) {
+            INVITE_TYPE_EXISTING_USER -> InviteTypeValue.ExistingUserInvite(InviteId(inviteId))
+            INVITE_TYPE_NEW_USER -> InviteTypeValue.NewUserInvite(NewUserInviteId(inviteId))
+            else -> throw IllegalArgumentException("Unknown invite type: $type")
+        }
+    }
 
     private val loadingOptionFlow: MutableStateFlow<LoadingOption?> = MutableStateFlow(null)
     private val eventFlow: MutableStateFlow<InviteOptionsEvent> =
@@ -59,18 +72,27 @@ class InviteOptionsViewModel @Inject constructor(
 
     val state: StateFlow<InviteOptionsUiState> = combine(
         loadingOptionFlow,
+        flowOf(showResendInvite()),
         eventFlow,
         ::InviteOptionsUiState
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = InviteOptionsUiState.Initial
+        initialValue = InviteOptionsUiState.Initial(showResendInvite())
     )
 
     fun cancelInvite() = viewModelScope.launch {
         loadingOptionFlow.update { LoadingOption.CancelInvite }
         runCatching {
-            cancelInvite.invoke(shareId, inviteId)
+            when (inviteType) {
+                is InviteTypeValue.ExistingUserInvite -> {
+                    cancelInvite.invoke(shareId, inviteType.inviteId)
+                }
+                is InviteTypeValue.NewUserInvite -> {
+                    cancelInvite.invoke(shareId, inviteType.inviteId)
+                }
+            }
+
         }.onSuccess {
             PassLogger.i(TAG, "Invite canceled")
             eventFlow.update { InviteOptionsEvent.Close(refresh = true) }
@@ -79,10 +101,17 @@ class InviteOptionsViewModel @Inject constructor(
             PassLogger.w(TAG, it, "Error canceling invite")
             snackbarDispatcher(SharingSnackbarMessage.CancelInviteError)
         }
+
         loadingOptionFlow.update { null }
     }
 
     fun resendInvite() = viewModelScope.launch {
+        val inviteId = when (inviteType) {
+            is InviteTypeValue.ExistingUserInvite -> inviteType.inviteId
+            is InviteTypeValue.NewUserInvite -> return@launch
+        }
+
+        PassLogger.i(TAG, "Resending invite: $inviteId")
         loadingOptionFlow.update { LoadingOption.ResendInvite }
         runCatching {
             resendInvite.invoke(shareId, inviteId)
@@ -105,6 +134,8 @@ class InviteOptionsViewModel @Inject constructor(
     fun clearEvent() = viewModelScope.launch {
         eventFlow.update { InviteOptionsEvent.Unknown }
     }
+
+    private fun showResendInvite(): Boolean = inviteType is InviteTypeValue.ExistingUserInvite
 
     companion object {
         private const val TAG = "InviteOptionsViewModel"

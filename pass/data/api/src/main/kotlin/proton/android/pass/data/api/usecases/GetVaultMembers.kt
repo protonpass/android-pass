@@ -20,6 +20,7 @@ package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
 import proton.pass.domain.InviteId
+import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
 
@@ -36,6 +37,11 @@ sealed class VaultMember(open val email: String) {
     data class InvitePending(
         override val email: String,
         val inviteId: InviteId
+    ) : VaultMember(email)
+
+    data class NewUserInvitePending(
+        override val email: String,
+        val newUserInviteId: NewUserInviteId
     ) : VaultMember(email)
 }
 

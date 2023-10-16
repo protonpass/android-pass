@@ -84,7 +84,8 @@ fun ManageVaultMemberRow(
         is VaultMemberContent.Member -> when (member.member) {
             is VaultMember.Member ->
                 canShowActions && !member.member.isCurrentUser && !member.member.isOwner
-            is VaultMember.InvitePending -> true
+            is VaultMember.InvitePending -> canShowActions
+            is VaultMember.NewUserInvitePending -> canShowActions
         }
         VaultMemberContent.Loading -> false
     }
@@ -133,6 +134,10 @@ private fun UserInfo(
         VaultMemberContent.Loading -> Modifier.fillMaxWidth().placeholder() to AnnotatedString("")
         is VaultMemberContent.Member -> Modifier to when (member.member) {
             is VaultMember.InvitePending -> AnnotatedString(
+                text = member.member.email,
+                spanStyle = SpanStyle(fontStyle = FontStyle.Italic)
+            )
+            is VaultMember.NewUserInvitePending -> AnnotatedString(
                 text = member.member.email,
                 spanStyle = SpanStyle(fontStyle = FontStyle.Italic)
             )
@@ -194,6 +199,13 @@ private fun UserInfo(
                 }
 
                 is VaultMember.InvitePending -> {
+                    Text(
+                        text = stringResource(R.string.share_manage_vault_invite_pending),
+                        style = PassTheme.typography.body3Weak()
+                    )
+                }
+
+                is VaultMember.NewUserInvitePending -> {
                     Text(
                         text = stringResource(R.string.share_manage_vault_invite_pending),
                         style = PassTheme.typography.body3Weak()

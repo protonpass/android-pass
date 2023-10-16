@@ -37,6 +37,7 @@ import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.pass.domain.InviteId
+import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
 
@@ -123,9 +124,14 @@ sealed interface SharingNavigation {
         val destEmail: String
     ) : SharingNavigation
 
-    data class InviteOptions(
+    data class ExistingUserInviteOptions(
         val shareId: ShareId,
         val inviteId: InviteId
+    ) : SharingNavigation
+
+    data class NewUserInviteOptions(
+        val shareId: ShareId,
+        val inviteId: NewUserInviteId
     ) : SharingNavigation
 
     data class TransferOwnershipConfirm(

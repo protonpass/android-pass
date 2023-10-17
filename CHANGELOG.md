@@ -6,6 +6,16 @@
 
 ### Other
 
+## 1.9.4 (2023-10-17)
+
+### Fixes :bug:
+
+- Used the right address when the user has more than one address.
+
+### Other
+
+- Updated translations.
+
 ## 1.9.3 (2023-10-13)
 
 ### Other

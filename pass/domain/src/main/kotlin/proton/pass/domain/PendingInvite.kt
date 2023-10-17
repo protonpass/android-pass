@@ -30,6 +30,7 @@ value class NewUserInviteId(val value: String)
 data class PendingInvite(
     val inviteToken: InviteToken,
     val inviterEmail: String,
+    val invitedAddressId: String,
     val memberCount: Int,
     val itemCount: Int,
     val name: String,

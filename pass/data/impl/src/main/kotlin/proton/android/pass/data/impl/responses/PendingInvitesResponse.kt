@@ -43,6 +43,8 @@ data class PendingInviteResponse(
     val inviterEmail: String,
     @SerialName("InvitedEmail")
     val invitedEmail: String,
+    @SerialName("InvitedAddressID")
+    val invitedAddressId: String,
     @SerialName("Keys")
     val keys: List<PendingInviteKey>,
     @SerialName("VaultData")

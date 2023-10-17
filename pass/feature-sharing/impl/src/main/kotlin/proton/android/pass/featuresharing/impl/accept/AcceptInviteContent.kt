@@ -132,6 +132,7 @@ fun AcceptInviteContentPreview(
                     invite = PendingInvite(
                         inviteToken = InviteToken(""),
                         inviterEmail = "some@inviter.test",
+                        invitedAddressId = "invitedAddressId",
                         memberCount = 2,
                         itemCount = 3,
                         name = "Some vault",

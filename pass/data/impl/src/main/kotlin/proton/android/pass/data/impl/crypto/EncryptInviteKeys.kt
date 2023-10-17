@@ -20,6 +20,8 @@ package proton.android.pass.data.impl.crypto
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.repository.PublicAddressRepository
+import me.proton.core.user.domain.entity.AddressId
+import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.crypto.api.usecases.AcceptInvite
@@ -27,6 +29,7 @@ import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
 import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import proton.android.pass.data.impl.local.InviteAndKeysEntity
 import proton.android.pass.data.impl.requests.InviteKeyRotation
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 interface EncryptInviteKeys {
@@ -49,9 +52,9 @@ class EncryptInviteKeysImpl @Inject constructor(
         invitedUserMode: InvitedUserMode
     ): List<InviteKeyRotation> {
         val user = userRepository.getUser(userId)
-        val address = addressRepository.getAddresses(userId).firstOrNull { address ->
-            address.email == invite.inviteEntity.invitedEmail
-        } ?: throw IllegalStateException("Could not find invited address for user")
+
+        val address = getAddress(userId, AddressId(invite.inviteEntity.invitedAddressId))
+            ?: throw IllegalStateException("Could not get invited address")
 
         val privateAddressKeys = address.keys.map { it.privateKey }
         val inviterAddressKeys = publicAddressRepository
@@ -79,5 +82,19 @@ class EncryptInviteKeysImpl @Inject constructor(
                 key = it.key
             )
         }
+    }
+
+    private suspend fun getAddress(userId: UserId, addressId: AddressId): UserAddress? {
+        val address = addressRepository.getAddress(userId, addressId)
+        return if (address == null) {
+            PassLogger.i(TAG, "Could not find address. Refreshing")
+            addressRepository.getAddress(userId, addressId, refresh = true)
+        } else {
+            address
+        }
+    }
+
+    companion object {
+        private const val TAG = "EncryptInviteKeysImpl"
     }
 }

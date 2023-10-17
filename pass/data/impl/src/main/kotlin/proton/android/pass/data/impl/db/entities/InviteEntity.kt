@@ -63,13 +63,16 @@ data class InviteEntity(
     @ColumnInfo(name = Columns.ENCRYPTED_CONTENT)
     val encryptedContent: EncryptedByteArray,
     @ColumnInfo(name = Columns.INVITED_EMAIL, defaultValue = "")
-    val invitedEmail: String
+    val invitedEmail: String,
+    @ColumnInfo(name = Columns.INVITED_ADDRESS_ID, defaultValue = "")
+    val invitedAddressId: String
 ) {
     object Columns {
         const val TOKEN = "token"
         const val USER_ID = "user_id"
         const val INVITER_EMAIL = "inviter_email"
         const val INVITED_EMAIL = "invited_email"
+        const val INVITED_ADDRESS_ID = "invited_address_id"
         const val MEMBER_COUNT = "member_count"
         const val ITEM_COUNT = "item_count"
         const val REMINDER_COUNT = "reminder_count"

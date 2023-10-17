@@ -34,3 +34,9 @@ data class InviteKeyRotation(
     @SerialName("KeyRotation")
     val keyRotation: Long
 )
+
+@Serializable
+data class ConfirmInviteRequest(
+    @SerialName("Keys")
+    val keys: List<InviteKeyRotation>
+)

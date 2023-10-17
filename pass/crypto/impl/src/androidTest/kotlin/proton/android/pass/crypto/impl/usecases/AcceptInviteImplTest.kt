@@ -34,7 +34,6 @@ import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKey
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
-import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils
@@ -68,8 +67,7 @@ class AcceptInviteImplTest {
             invitedUser = invited,
             invitedUserAddressKeys = listOf(invitedUserAddressKey.privateKey),
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
-            keys = input,
-            invitedUserMode = InvitedUserMode.EXISTING_USER
+            keys = input
         )
         assertEquals(shareKeys.size, res.keys.size)
 
@@ -105,8 +103,7 @@ class AcceptInviteImplTest {
         val res = instance.invoke(
             inviterAddressKey = inviterAddressKey.privateKey,
             targetAddressKey = invitedUserAddressKey.privateKey.publicKey(cryptoContext),
-            shareKeys = shareKeys,
-            invitedUserMode = InvitedUserMode.EXISTING_USER
+            shareKeys = shareKeys
         )
         return res.keys
     }

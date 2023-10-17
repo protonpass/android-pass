@@ -19,10 +19,14 @@
 package proton.android.pass.data.impl.crypto
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.SignatureContext
+import me.proton.core.crypto.common.pgp.VerificationContext
+import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.getUnarmored
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
+import me.proton.core.key.domain.verifyData
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.crypto.api.Base64
@@ -32,21 +36,28 @@ import proton.pass.domain.key.ShareKey
 import javax.inject.Inject
 import javax.inject.Singleton
 
-interface CreateNewUserInviteSignature {
-    operator fun invoke(
+interface NewUserInviteSignatureManager {
+    fun create(
         inviterUserAddress: UserAddress,
         email: String,
         vaultKey: ShareKey
     ): Result<String>
+
+    fun validate(
+        inviterUserAddress: UserAddress,
+        signature: String,
+        email: String,
+        vaultKey: ShareKey
+    ): Result<Unit>
 }
 
 @Singleton
-class CreateNewUserInviteSignatureImpl @Inject constructor(
+class NewUserInviteSignatureManagerImpl @Inject constructor(
     private val newUserInviteSignatureBodyCreator: NewUserInviteSignatureBodyCreator,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val context: CryptoContext
-) : CreateNewUserInviteSignature {
-    override fun invoke(
+) : NewUserInviteSignatureManager {
+    override fun create(
         inviterUserAddress: UserAddress,
         email: String,
         vaultKey: ShareKey
@@ -72,5 +83,42 @@ class CreateNewUserInviteSignatureImpl @Inject constructor(
 
         val asBase64 = Base64.encodeBase64String(signedRawData)
         return Result.success(asBase64)
+    }
+
+    override fun validate(
+        inviterUserAddress: UserAddress,
+        signature: String,
+        email: String,
+        vaultKey: ShareKey
+    ): Result<Unit> {
+        val signatureBody = encryptionContextProvider.withEncryptionContext {
+            val vaultKeyContents = decrypt(vaultKey.key)
+            newUserInviteSignatureBodyCreator.create(
+                email = email,
+                vaultKey = vaultKeyContents
+            )
+        }
+
+        val decodedSignature = Base64.decodeBase64(signature)
+        val verified = inviterUserAddress.useKeys(context) {
+            val armored = getArmored(
+                data = decodedSignature,
+                header = PGPHeader.Signature
+            )
+            verifyData(
+                data = signatureBody,
+                signature = armored,
+                verificationContext = VerificationContext(
+                    value = Constants.SIGNATURE_CONTEXT_NEW_USER,
+                    required = VerificationContext.ContextRequirement.Required.Always
+                )
+            )
+        }
+
+        return if (verified) {
+            Result.success(Unit)
+        } else {
+            Result.failure(IllegalStateException("Signature is invalid"))
+        }
     }
 }

@@ -103,6 +103,7 @@ class GetVaultMembersImpl @Inject constructor(
         email = invitedEmail,
         newUserInviteId = NewUserInviteId(newUserInviteId),
         role = shareRoleId.let { ShareRole.fromValue(it) },
+        signature = signature,
         inviteState = when (state) {
             INVITE_STATE_PENDING_ACCOUNT_CREATION -> {
                 VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation

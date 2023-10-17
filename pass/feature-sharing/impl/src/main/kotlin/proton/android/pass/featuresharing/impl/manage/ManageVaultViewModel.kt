@@ -150,7 +150,8 @@ class ManageVaultViewModel @Inject constructor(
         eventFlow.update { ManageVaultEvent.Unknown }
     }
 
-    fun onConfirmInvite(inviteId: NewUserInviteId) = viewModelScope.launch {
+    fun onConfirmInvite(invite: VaultMember.NewUserInvitePending) = viewModelScope.launch {
+        val inviteId = invite.newUserInviteId
         val isAlreadyRunning = invitesBeingConfirmedMutableFlow.value.contains(inviteId)
         if (isAlreadyRunning) return@launch
 
@@ -158,7 +159,7 @@ class ManageVaultViewModel @Inject constructor(
 
         PassLogger.i(TAG, "Confirming invite ${inviteId.value}")
         runCatching {
-            confirmNewUserInvite(navShareId, inviteId)
+            confirmNewUserInvite(navShareId, invite)
         }.onSuccess {
             PassLogger.i(TAG, "Confirmed invite ${inviteId.value}")
             snackbarDispatcher(SharingSnackbarMessage.ConfirmInviteSuccess)

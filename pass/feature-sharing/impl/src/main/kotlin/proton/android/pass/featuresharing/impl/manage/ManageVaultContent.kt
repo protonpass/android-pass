@@ -34,14 +34,13 @@ import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.SharingNavigation
-import proton.pass.domain.NewUserInviteId
 
 @Composable
 fun ManageVaultContent(
     modifier: Modifier = Modifier,
     state: ManageVaultUiState,
     onNavigateEvent: (SharingNavigation) -> Unit,
-    onConfirmInviteClick: (NewUserInviteId) -> Unit
+    onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit
 ) {
     Scaffold(
         modifier = modifier,

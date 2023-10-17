@@ -37,7 +37,6 @@ interface AcceptInvite {
         invitedUser: User,
         invitedUserAddressKeys: List<PrivateKey>,
         inviterAddressKeys: List<PublicKey>,
-        keys: List<EncryptedInviteKey>,
-        invitedUserMode: InvitedUserMode
+        keys: List<EncryptedInviteKey>
     ): EncryptedInviteAcceptKeyList
 }

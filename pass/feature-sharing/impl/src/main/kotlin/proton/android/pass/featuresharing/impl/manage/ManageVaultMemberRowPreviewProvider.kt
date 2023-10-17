@@ -85,6 +85,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                         VaultMemberContent.Member(
                             member = VaultMember.NewUserInvitePending(
                                 email = "invited@user.test",
+                                signature = "",
                                 newUserInviteId = NewUserInviteId("someInviteId"),
                                 role = ShareRole.Write,
                                 inviteState = status

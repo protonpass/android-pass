@@ -43,6 +43,7 @@ sealed class VaultMember(open val email: String) {
         override val email: String,
         val newUserInviteId: NewUserInviteId,
         val role: ShareRole,
+        val signature: String,
         val inviteState: InviteState
     ) : VaultMember(email) {
 

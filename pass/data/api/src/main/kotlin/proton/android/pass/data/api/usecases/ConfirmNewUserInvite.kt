@@ -18,9 +18,11 @@
 
 package proton.android.pass.data.api.usecases
 
-import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 
 interface ConfirmNewUserInvite {
-    suspend operator fun invoke(shareId: ShareId, inviteId: NewUserInviteId)
+    suspend operator fun invoke(
+        shareId: ShareId,
+        invite: VaultMember.NewUserInvitePending
+    ): Result<Unit>
 }

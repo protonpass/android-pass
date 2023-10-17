@@ -33,7 +33,6 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
-import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import proton.pass.domain.key.ShareKey
 import javax.inject.Inject
 
@@ -46,7 +45,6 @@ class EncryptInviteKeysImpl @Inject constructor(
         inviterAddressKey: PrivateKey,
         shareKeys: List<ShareKey>,
         targetAddressKey: PublicKey,
-        invitedUserMode: InvitedUserMode
     ): EncryptedInviteShareKeyList {
         // Set up targetAddressKey
         val targetAddressPublicKeyRing = PublicKeyRing(listOf(targetAddressKey))
@@ -77,10 +75,7 @@ class EncryptInviteKeysImpl @Inject constructor(
                     data = decryptedKey.key,
                     encryptKeyRing = targetAddressPublicKeyRing,
                     signatureContext = SignatureContext(
-                        value = when (invitedUserMode) {
-                            InvitedUserMode.EXISTING_USER -> Constants.SIGNATURE_CONTEXT_EXISTING_USER
-                            InvitedUserMode.NEW_USER -> Constants.SIGNATURE_CONTEXT_NEW_USER
-                        },
+                        value = Constants.SIGNATURE_CONTEXT_EXISTING_USER,
                         isCritical = true
                     )
                 )

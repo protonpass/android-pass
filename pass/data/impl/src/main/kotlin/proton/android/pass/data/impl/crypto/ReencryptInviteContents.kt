@@ -31,7 +31,6 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.AcceptInvite
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
-import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -71,8 +70,7 @@ class ReencryptInviteContentsImpl @Inject constructor(
                     keyRotation = key.keyRotation,
                     key = key.key
                 )
-            ),
-            invitedUserMode = InvitedUserMode.EXISTING_USER
+            )
         )
         val encryptedOpenKey = openKeys.keys.firstOrNull()
             ?: throw IllegalStateException("No open key found")

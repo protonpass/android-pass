@@ -40,7 +40,6 @@ import proton.android.pass.crypto.api.usecases.AcceptInvite
 import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKey
 import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKeyList
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
-import proton.android.pass.crypto.api.usecases.InvitedUserMode
 import javax.inject.Inject
 
 class AcceptInviteImpl @Inject constructor(
@@ -51,8 +50,7 @@ class AcceptInviteImpl @Inject constructor(
         invitedUser: User,
         invitedUserAddressKeys: List<PrivateKey>,
         inviterAddressKeys: List<PublicKey>,
-        keys: List<EncryptedInviteKey>,
-        invitedUserMode: InvitedUserMode
+        keys: List<EncryptedInviteKey>
     ): EncryptedInviteAcceptKeyList {
 
         // KeyHolder that contains the invited user address keys
@@ -80,10 +78,7 @@ class AcceptInviteImpl @Inject constructor(
                     message = cryptoContext.pgpCrypto.getArmored(decodedEncryptedKey),
                     verifyKeyRing = inviterUserPublicKeyRing,
                     verificationContext = VerificationContext(
-                        value = when (invitedUserMode) {
-                            InvitedUserMode.EXISTING_USER -> Constants.SIGNATURE_CONTEXT_EXISTING_USER
-                            InvitedUserMode.NEW_USER -> Constants.SIGNATURE_CONTEXT_NEW_USER
-                        },
+                        value = Constants.SIGNATURE_CONTEXT_EXISTING_USER,
                         required = VerificationContext.ContextRequirement.Required.Always
                     )
                 )

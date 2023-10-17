@@ -96,12 +96,14 @@ class ManageVaultViewModelTest {
             email = "invited3",
             newUserInviteId = NewUserInviteId("789"),
             role = ShareRole.Write,
+            signature = "",
             inviteState = VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation
         )
         val newUserInvite2 = VaultMember.NewUserInvitePending(
             email = "invited4",
             newUserInviteId = NewUserInviteId("abcde"),
             role = ShareRole.Write,
+            signature = "",
             inviteState = VaultMember.NewUserInvitePending.InviteState.PendingAcceptance
         )
         val allInvites = listOf(member1, member2, invite1, invite2, newUserInvite1, newUserInvite2)

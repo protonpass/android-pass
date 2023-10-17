@@ -35,7 +35,6 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.featuresharing.impl.R
-import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.VaultWithItemCount
 
 @Composable
@@ -44,7 +43,7 @@ fun ManageVaultMembersList(
     content: ManageVaultUiContent,
     vault: VaultWithItemCount?,
     onMemberOptionsClick: (VaultMember) -> Unit,
-    onConfirmInviteClick: (NewUserInviteId) -> Unit
+    onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit
 ) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
@@ -81,7 +80,7 @@ private fun ManageVaultMembersList(
     modifier: Modifier = Modifier,
     content: ManageVaultUiContent.Content,
     onMemberOptionsClick: (VaultMember) -> Unit,
-    onConfirmInviteClick: (NewUserInviteId) -> Unit
+    onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),

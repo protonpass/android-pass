@@ -57,7 +57,6 @@ import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.common.toShortSummary
-import proton.pass.domain.NewUserInviteId
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Stable
@@ -76,7 +75,7 @@ fun ManageVaultMemberRow(
     member: VaultMemberContent,
     canShowActions: Boolean,
     onOptionsClick: (() -> Unit)? = null,
-    onConfirmInviteClick: ((NewUserInviteId) -> Unit)? = null
+    onConfirmInviteClick: ((VaultMember.NewUserInvitePending) -> Unit)? = null
 ) {
     val (circleTextModifier, circleText) = when (member) {
         VaultMemberContent.Loading -> Modifier.placeholder() to ""
@@ -263,7 +262,7 @@ private fun UserInfoSubtitle(
 private fun ConfirmAccessButton(
     modifier: Modifier = Modifier,
     member: VaultMemberContent,
-    onClick: (NewUserInviteId) -> Unit
+    onClick: (VaultMember.NewUserInvitePending) -> Unit
 ) {
     if (member is VaultMemberContent.Member &&
         member.member is VaultMember.NewUserInvitePending &&
@@ -273,7 +272,7 @@ private fun ConfirmAccessButton(
             modifier = modifier.fillMaxWidth(),
             color = PassTheme.colors.interactionNormMinor1,
             elevation = ButtonDefaults.elevation(0.dp),
-            onClick = { onClick(member.member.newUserInviteId) }
+            onClick = { onClick(member.member) }
         ) {
             if (member.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.size(24.dp))

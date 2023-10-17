@@ -30,6 +30,7 @@ object TestPendingInvite {
     ) = PendingInvite(
         inviteToken = InviteToken(token),
         inviterEmail = "inviter@email",
+        invitedAddressId = "invitedAddressId",
         memberCount = 1,
         itemCount = 1,
         name = name,

@@ -80,6 +80,7 @@ class InviteRepositoryImpl @Inject constructor(
                 userId = userId.id,
                 inviterEmail = invite.inviterEmail,
                 invitedEmail = invite.invitedEmail,
+                invitedAddressId = invite.invitedAddressId,
                 memberCount = vaultData.memberCount,
                 itemCount = vaultData.itemCount,
                 reminderCount = invite.remindersSent,
@@ -135,6 +136,7 @@ class InviteRepositoryImpl @Inject constructor(
         return PendingInvite(
             inviteToken = InviteToken(token),
             inviterEmail = inviterEmail,
+            invitedAddressId = invitedAddressId,
             memberCount = memberCount,
             itemCount = itemCount,
             name = decoded.name,

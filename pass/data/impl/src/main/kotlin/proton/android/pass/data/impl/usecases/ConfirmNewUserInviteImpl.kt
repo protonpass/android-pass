@@ -18,14 +18,142 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.user.domain.repository.UserAddressRepository
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
-import proton.pass.domain.NewUserInviteId
+import proton.android.pass.data.api.usecases.VaultMember
+import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
+import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
+import proton.android.pass.data.impl.local.LocalShareDataSource
+import proton.android.pass.data.impl.repositories.ShareKeyRepository
+import proton.android.pass.data.impl.requests.ConfirmInviteRequest
+import proton.android.pass.data.impl.requests.InviteKeyRotation
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ConfirmNewUserInviteImpl @Inject constructor() : ConfirmNewUserInvite {
-    override suspend fun invoke(shareId: ShareId, inviteId: NewUserInviteId) {
+class ConfirmNewUserInviteImpl @Inject constructor(
+    private val apiProvider: ApiProvider,
+    private val accountManager: AccountManager,
+    private val shareKeyRepository: ShareKeyRepository,
+    private val encryptShareKeysForUser: EncryptShareKeysForUser,
+    private val signatureManager: NewUserInviteSignatureManager,
+    private val userAddressRepository: UserAddressRepository,
+    private val localShareDataSource: LocalShareDataSource,
+    private val dispatchers: AppDispatchers
+) : ConfirmNewUserInvite {
+    override suspend fun invoke(
+        shareId: ShareId,
+        invite: VaultMember.NewUserInvitePending
+    ): Result<Unit> = withContext(dispatchers.io) {
+        performConfirmation(shareId, invite)
+    }
+
+    private suspend fun performConfirmation(
+        shareId: ShareId,
+        invite: VaultMember.NewUserInvitePending
+    ): Result<Unit> {
+        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        if (userId == null) {
+            PassLogger.w(TAG, "No primary user")
+            return Result.failure(IllegalStateException("No primary user"))
+        }
+
+        val body = createRequest(userId, shareId, invite).getOrElse {
+            PassLogger.w(TAG, it, "Error creating confirmation request")
+            return Result.failure(it)
+        }
+
+        val error = apiProvider.get<PasswordManagerApi>(userId).invoke {
+            confirmInvite(
+                shareId = shareId.id,
+                inviteId = invite.newUserInviteId.value,
+                request = body
+            )
+        }.exceptionOrNull
+
+        return if (error != null) {
+            PassLogger.w(TAG, error, "Error confirming invite")
+            Result.failure(error)
+        } else {
+            Result.success(Unit)
+        }
+    }
+
+    @Suppress("ReturnCount")
+    private suspend fun createRequest(
+        userId: UserId,
+        shareId: ShareId,
+        invite: VaultMember.NewUserInvitePending
+    ): Result<ConfirmInviteRequest> {
+        val share = localShareDataSource.getById(userId, shareId)
+            ?: return Result.failure(IllegalStateException("No share with id $shareId"))
+
+        val inviterUserAddress = runCatching { userAddressRepository.getAddresses(userId) }
+            .fold(
+                onSuccess = { addresses ->
+                    val address = addresses.firstOrNull { it.addressId.id == share.addressId }
+                        ?: return Result.failure(IllegalStateException("No primary address for inviter user"))
+                    address
+                },
+                onFailure = {
+                    PassLogger.w(TAG, it, "Failed to get user addresses")
+                    return Result.failure(it)
+                }
+            )
+
+        val shareKeys = shareKeyRepository.getShareKeys(
+            userId = inviterUserAddress.userId,
+            addressId = inviterUserAddress.addressId,
+            shareId = shareId,
+            forceRefresh = true
+        ).first()
+
+        val vaultKey = shareKeys.maxByOrNull { it.rotation }
+            ?: return Result.failure(IllegalStateException("ShareKey list is empty"))
+
+        signatureManager.validate(
+            inviterUserAddress = inviterUserAddress,
+            signature = invite.signature,
+            email = invite.email,
+            vaultKey = vaultKey
+        ).getOrElse {
+            PassLogger.w(TAG, it, "Error validating invite signature")
+            return Result.failure(it)
+        }
+
+        val encryptedKeys = encryptShareKeysForUser(
+            userAddress = inviterUserAddress,
+            shareId = shareId,
+            targetEmail = invite.email,
+            shareKeys = shareKeys
+        ).getOrElse {
+            PassLogger.w(TAG, it, "Error encrypting share keys")
+            return Result.failure(it)
+        }
+
+        val body = ConfirmInviteRequest(
+            keys = encryptedKeys.keys.map {
+                InviteKeyRotation(
+                    key = it.key,
+                    keyRotation = it.keyRotation
+                )
+            }
+        )
+
+        return Result.success(body)
+    }
+
+    companion object {
+        private const val TAG = "ConfirmNewUserInviteImpl"
     }
 }

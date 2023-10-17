@@ -19,23 +19,42 @@
 package proton.android.pass.data.impl.fakes
 
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.data.impl.crypto.CreateNewUserInviteSignature
+import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.pass.domain.key.ShareKey
 
-class TestCreateNewUserInviteSignature : CreateNewUserInviteSignature {
+class TestCreateNewUserInviteSignature : NewUserInviteSignatureManager {
 
-    var result: Result<String> = Result.success("")
+    private var createResult: Result<String> = Result.success("")
+    private var verifyResult: Result<Unit> = Result.success(Unit)
+    var hasCreateBeenInvoked: Boolean = false
+        private set
+    var hasVerifyBeenInvoked: Boolean = false
         private set
 
-    var hasBeenInvoked: Boolean = false
-        private set
+    fun setCreateResult(value: Result<String>) {
+        createResult = value
+    }
 
-    override fun invoke(
+    fun setVerifyResult(value: Result<Unit>) {
+        verifyResult = value
+    }
+
+    override fun create(
         inviterUserAddress: UserAddress,
         email: String,
         vaultKey: ShareKey
     ): Result<String> {
-        hasBeenInvoked = true
-        return result
+        hasCreateBeenInvoked = true
+        return createResult
+    }
+
+    override fun validate(
+        inviterUserAddress: UserAddress,
+        signature: String,
+        email: String,
+        vaultKey: ShareKey
+    ): Result<Unit> {
+        hasVerifyBeenInvoked = true
+        return verifyResult
     }
 }

@@ -19,7 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
-import proton.pass.domain.NewUserInviteId
+import proton.android.pass.data.api.usecases.VaultMember
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,13 +36,16 @@ class TestConfirmNewUserInvite @Inject constructor() : ConfirmNewUserInvite {
         result = value
     }
 
-    override suspend fun invoke(shareId: ShareId, inviteId: NewUserInviteId) {
-        memory.add(Payload(shareId, inviteId))
-        result.getOrThrow()
+    override suspend fun invoke(
+        shareId: ShareId,
+        invite: VaultMember.NewUserInvitePending
+    ): Result<Unit> {
+        memory.add(Payload(shareId, invite))
+        return result
     }
 
     data class Payload(
         val shareId: ShareId,
-        val inviteId: NewUserInviteId
+        val inviteId: VaultMember.NewUserInvitePending
     )
 }

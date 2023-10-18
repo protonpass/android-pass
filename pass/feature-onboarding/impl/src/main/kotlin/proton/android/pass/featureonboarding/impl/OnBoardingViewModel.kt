@@ -26,6 +26,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,8 +39,10 @@ import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.InvitePending
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.BiometryFailedToStartError
@@ -48,6 +51,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -59,7 +64,9 @@ class OnBoardingViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val biometryManager: BiometryManager,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val ffRepo: FeatureFlagsPreferencesRepository,
+    private val observeUserAccessData: ObserveUserAccessData
 ) : ViewModel() {
 
     private val _onBoardingUiState = MutableStateFlow(OnBoardingUiState.Initial)
@@ -67,9 +74,13 @@ class OnBoardingViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            val showInvitePendingAcceptance = async { shouldShowInvitePendingAcceptance() }
             val autofillStatus = async { autofillManager.getAutofillStatus().firstOrNull() }
             val biometryStatus = async { biometryManager.getBiometryStatus() }
             val supportedPages = mutableSetOf<OnBoardingPageName>()
+            if (showInvitePendingAcceptance.await()) {
+                supportedPages.add(InvitePending)
+            }
             if (shouldShowAutofill(autofillStatus.await())) {
                 supportedPages.add(Autofill)
             }
@@ -79,6 +90,16 @@ class OnBoardingViewModel @Inject constructor(
             supportedPages.add(Last)
             _onBoardingUiState.update { it.copy(enabledPages = supportedPages) }
         }
+    }
+
+    private suspend fun shouldShowInvitePendingAcceptance(): Boolean {
+        val isNewUserInviteEnabled = ffRepo.get<Boolean>(FeatureFlag.SHARING_NEW_USERS).first()
+        if (!isNewUserInviteEnabled) {
+            return false
+        }
+
+        val value = observeUserAccessData().firstOrNull() ?: return false
+        return value.pendingInvites > 0
     }
 
     private fun shouldShowAutofill(autofillStatus: AutofillSupportedStatus?): Boolean =
@@ -100,6 +121,7 @@ class OnBoardingViewModel @Inject constructor(
             Autofill -> onEnableAutofill()
             Fingerprint -> onEnableFingerprint(contextHolder)
             Last -> onFinishOnBoarding()
+            InvitePending -> {}
         }
     }
 
@@ -114,6 +136,7 @@ class OnBoardingViewModel @Inject constructor(
             Autofill -> onSkipAutofill()
             Fingerprint -> onSkipFingerprint()
             Last -> {}
+            InvitePending -> {}
         }
     }
 

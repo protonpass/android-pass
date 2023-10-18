@@ -30,12 +30,14 @@ class RefreshPlanImpl @Inject constructor(
     private val planRepository: PlanRepository,
 ) : RefreshPlan {
     override suspend fun invoke() {
-        val userId = requireNotNull(accountManager.getPrimaryUserId().firstOrNull())
-        planRepository
-            .sendUserAccessAndObservePlan(
-                userId = userId,
-                forceRefresh = true
-            )
-            .first()
+        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        if (userId != null) {
+            planRepository
+                .sendUserAccessAndObservePlan(
+                    userId = userId,
+                    forceRefresh = true
+                )
+                .first()
+        }
     }
 }

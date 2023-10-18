@@ -32,7 +32,11 @@ data class UserAccessResponse(
 @Serializable
 data class AccessResponse(
     @SerialName("Plan")
-    val planResponse: PlanResponse
+    val planResponse: PlanResponse,
+    @SerialName("PendingInvites")
+    val pendingInvites: Int,
+    @SerialName("WaitingNewUserInvites")
+    val waitingNewUserInvites: Int
 )
 
 @Serializable

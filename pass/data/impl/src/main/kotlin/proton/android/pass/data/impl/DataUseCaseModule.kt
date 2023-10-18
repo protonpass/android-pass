@@ -71,6 +71,7 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -155,6 +156,7 @@ import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
 import proton.android.pass.data.impl.usecases.ObservePrimaryUserEmailImpl
 import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
+import proton.android.pass.data.impl.usecases.ObserveUserAccessDataImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultCountImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
@@ -446,4 +448,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindConfirmNewUserInvite(impl: ConfirmNewUserInviteImpl): ConfirmNewUserInvite
+
+    @Binds
+    abstract fun bindObserveUserAccessData(impl: ObserveUserAccessDataImpl): ObserveUserAccessData
 }

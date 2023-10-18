@@ -31,6 +31,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
+import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.EventRepositoryImpl
@@ -50,6 +51,7 @@ import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
+import proton.android.pass.data.impl.repositories.UserAccessDataRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -98,4 +100,9 @@ abstract class DataRepositoryModule {
     abstract fun bindFetchShareItemStatusRepository(
         impl: FetchShareItemsStatusRepositoryImpl
     ): FetchShareItemsStatusRepository
+
+    @Binds
+    abstract fun bindUserAccessDataRepository(
+        impl: UserAccessDataRepositoryImpl
+    ): UserAccessDataRepository
 }

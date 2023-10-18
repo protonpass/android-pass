@@ -18,26 +18,21 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.data.api.usecases.RefreshPlan
-import proton.android.pass.data.impl.repositories.PlanRepository
+import proton.android.pass.data.api.repositories.UserAccessDataRepository
+import proton.android.pass.data.api.usecases.ObserveUserAccessData
+import proton.pass.domain.UserAccessData
 import javax.inject.Inject
 
-class RefreshPlanImpl @Inject constructor(
+class ObserveUserAccessDataImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val planRepository: PlanRepository,
-) : RefreshPlan {
-    override suspend fun invoke() {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
-        if (userId != null) {
-            planRepository
-                .sendUserAccessAndObservePlan(
-                    userId = userId,
-                    forceRefresh = true
-                )
-                .first()
-        }
-    }
+    private val userAccessDataRepository: UserAccessDataRepository
+) : ObserveUserAccessData {
+    override fun invoke(): Flow<UserAccessData> = accountManager
+        .getPrimaryUserId()
+        .filterNotNull()
+        .flatMapLatest { userAccessDataRepository.observe(it) }
 }

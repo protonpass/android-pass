@@ -30,6 +30,7 @@ import proton.android.pass.data.impl.db.dao.SearchEntryDao
 import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.TelemetryDao
+import proton.android.pass.data.impl.db.dao.UserAccessDataDao
 
 interface PassDatabase : Database {
 
@@ -44,4 +45,5 @@ interface PassDatabase : Database {
     fun featureFlagsDao(): FeatureFlagsDao
     fun inviteDao(): InviteDao
     fun inviteKeyDao(): InviteKeyDao
+    fun userAccessDataDao(): UserAccessDataDao
 }

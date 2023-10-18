@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.InvitePending
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 
 @Stable
@@ -37,7 +38,7 @@ data class OnBoardingUiState(
 
 @Stable
 enum class OnBoardingPageName {
-    Autofill, Fingerprint, Last
+    Autofill, Fingerprint, Last, InvitePending
 }
 
 open class OnBoardingUiStatePreviewProvider : PreviewParameterProvider<OnBoardingUiState> {
@@ -45,6 +46,7 @@ open class OnBoardingUiStatePreviewProvider : PreviewParameterProvider<OnBoardin
         OnBoardingUiState(0, setOf(Autofill), false),
         OnBoardingUiState(0, setOf(Fingerprint), false),
         OnBoardingUiState(0, setOf(Last), false),
-        OnBoardingUiState(0, setOf(Autofill, Fingerprint), false)
+        OnBoardingUiState(0, setOf(Autofill, Fingerprint), false),
+        OnBoardingUiState(0, setOf(InvitePending), false)
     )
 }

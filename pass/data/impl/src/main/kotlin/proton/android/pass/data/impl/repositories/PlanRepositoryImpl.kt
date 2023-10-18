@@ -27,7 +27,9 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.PlanEntity
+import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
 import proton.android.pass.data.impl.local.LocalPlanDataSource
+import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.RemotePlanDataSource
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Plan
@@ -39,6 +41,7 @@ import javax.inject.Inject
 class PlanRepositoryImpl @Inject constructor(
     private val remotePlanDataSource: RemotePlanDataSource,
     private val localPlanDataSource: LocalPlanDataSource,
+    private val localUserAccessDataDataSource: LocalUserAccessDataDataSource,
     private val clock: Clock
 ) : PlanRepository {
 
@@ -76,13 +79,18 @@ class PlanRepositoryImpl @Inject constructor(
                 userId = userId,
                 planResponse = response.accessResponse.planResponse
             )
+            localUserAccessDataDataSource.store(
+                UserAccessDataEntity(
+                    userId = userId.id,
+                    pendingInvites = response.accessResponse.pendingInvites,
+                    waitingNewUserInvites = response.accessResponse.waitingNewUserInvites
+                )
+            )
+        }.onSuccess {
+            PassLogger.i(TAG, "Plan refreshed")
+        }.onFailure {
+            PassLogger.w(TAG, it, "Plan failed to refresh")
         }
-            .onSuccess {
-                PassLogger.i(TAG, "Plan refreshed")
-            }
-            .onFailure {
-                PassLogger.w(TAG, it, "Plan failed to refresh")
-            }
     }
 
     private fun getTrialStatus(trialEnd: Long?): TrialStatus {

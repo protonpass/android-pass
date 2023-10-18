@@ -44,6 +44,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -51,6 +52,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
@@ -111,9 +113,15 @@ class LauncherViewModel @Inject constructor(
 ) : ViewModel() {
 
     init {
-        val version = runCatching { commonLibraryVersionChecker.getVersion() }
-            .getOrElse { "Unknown" }
-        PassLogger.i(TAG, "Common library version: $version")
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val version = runCatching { commonLibraryVersionChecker.getVersion() }
+                    .getOrElse { "Unknown" }
+                PassLogger.i(TAG, "Common library version: $version")
+            }
+        }
+
+        viewModelScope.launch { refreshPlan() }
     }
 
     val state: StateFlow<State> = accountManager.getAccounts()

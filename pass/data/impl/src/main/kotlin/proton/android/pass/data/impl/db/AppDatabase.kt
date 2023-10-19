@@ -150,7 +150,8 @@ import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
         AutoMigration(from = 28, to = 29),
         AutoMigration(from = 29, to = 30),
         AutoMigration(from = 30, to = 31),
-        AutoMigration(from = 31, to = 32)
+        AutoMigration(from = 31, to = 32),
+        AutoMigration(from = 32, to = 33)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -190,7 +191,7 @@ abstract class AppDatabase :
     TelemetryDatabase {
 
     companion object {
-        const val VERSION = 32
+        const val VERSION = 33
 
         const val DB_NAME = "db-passkey"
 

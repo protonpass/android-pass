@@ -158,9 +158,10 @@ class ManageVaultViewModel @Inject constructor(
         invitesBeingConfirmedMutableFlow.update { it + inviteId }
 
         PassLogger.i(TAG, "Confirming invite ${inviteId.value}")
-        runCatching {
-            confirmNewUserInvite(navShareId, invite)
-        }.onSuccess {
+        confirmNewUserInvite(
+            shareId = navShareId,
+            invite = invite
+        ).onSuccess {
             PassLogger.i(TAG, "Confirmed invite ${inviteId.value}")
             snackbarDispatcher(SharingSnackbarMessage.ConfirmInviteSuccess)
             refreshFlow.update { true }
@@ -205,10 +206,12 @@ class ManageVaultViewModel @Inject constructor(
                     VaultMember.NewUserInvitePending.InviteState.PendingAcceptance -> {
                         newUserInvitesWaitingActivation.add(it)
                     }
+
                     VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation -> {
                         newUserInvitesWaitingAccountCreation.add(it)
                     }
                 }
+
                 is VaultMember.InvitePending -> regularInvites.add(it)
                 else -> {}
             }

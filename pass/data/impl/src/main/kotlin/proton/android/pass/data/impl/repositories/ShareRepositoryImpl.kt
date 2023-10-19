@@ -180,6 +180,8 @@ class ShareRepositoryImpl @Inject constructor(
                         permission = remoteShare.permission,
                         targetMaxMembers = remoteShare.targetMaxMembers,
                         expirationTime = remoteShare.expirationTime,
+                        newUserInvitesReady = remoteShare.newUserInvitesReady,
+                        pendingInvites = remoteShare.pendingInvites
                     )
                 }
 
@@ -238,7 +240,7 @@ class ShareRepositoryImpl @Inject constructor(
                 share = storedShares.first()
             }
 
-            return@withContext this@ShareRepositoryImpl.shareEntityToShare(share)
+            return@withContext shareEntityToShare(share)
         }
 
     override suspend fun updateVault(
@@ -433,7 +435,9 @@ class ShareRepositoryImpl @Inject constructor(
             owner = shareResponse.owner,
             targetMembers = shareResponse.targetMembers,
             shared = shareResponse.shared,
-            targetMaxMembers = shareResponse.targetMaxMembers
+            targetMaxMembers = shareResponse.targetMaxMembers,
+            newUserInvitesReady = shareResponse.newUserInvitesReady,
+            pendingInvites = shareResponse.pendingInvites
         )
     }
 
@@ -470,7 +474,10 @@ class ShareRepositoryImpl @Inject constructor(
             shareRole = ShareRole.fromValue(entity.shareRoleId),
             isOwner = entity.owner,
             memberCount = entity.targetMembers,
-            shared = entity.shared
+            shared = entity.shared,
+            pendingInvites = entity.pendingInvites,
+            newUserInvitesReady = entity.newUserInvitesReady,
+            maxMembers = entity.targetMaxMembers
         )
     }
 
@@ -512,6 +519,8 @@ class ShareRepositoryImpl @Inject constructor(
         localShare.shared != remoteShare.shared -> true
         localShare.targetMaxMembers != remoteShare.targetMaxMembers -> true
         localShare.expirationTime != remoteShare.expirationTime -> true
+        localShare.pendingInvites != remoteShare.pendingInvites -> true
+        localShare.newUserInvitesReady != remoteShare.newUserInvitesReady -> true
 
         else -> false
     }

@@ -51,6 +51,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.InvitePending
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -87,21 +88,22 @@ fun OnBoardingContent(
             state = pagerState,
             pageCount = uiState.enabledPages.size
         ) { page ->
-            val pageUiState = if (uiState.enabledPages.contains(Autofill) && page == 0) {
-                autofillPageUiState()
-            } else if (
-                isFingerprintSecondPage(uiState, page) || isFingerprintFirstPage(uiState, page)
-            ) {
-                fingerPrintPageUiState()
-            } else {
-                lastPageUiState()
+            val pageState = when (uiState.enabledPages.getOrNull(page)) {
+                null -> null
+                Autofill -> autofillPageUiState()
+                Fingerprint -> fingerPrintPageUiState()
+                Last -> lastPageUiState()
+                InvitePending -> pendingAccessPageUiState()
             }
-            OnBoardingPage(
-                modifier = Modifier.testTag(pageUiState.page.name),
-                onBoardingPageData = pageUiState,
-                onMainButtonClick = onMainButtonClick,
-                onSkipButtonClick = onSkipButtonClick
-            )
+
+            if (pageState != null) {
+                OnBoardingPage(
+                    modifier = Modifier.testTag(pageState.page.name),
+                    onBoardingPageData = pageState,
+                    onMainButtonClick = onMainButtonClick,
+                    onSkipButtonClick = onSkipButtonClick
+                )
+            }
         }
         Spacer(modifier = Modifier.padding(4.dp))
         HorizontalPagerIndicator(
@@ -115,18 +117,24 @@ fun OnBoardingContent(
 }
 
 @Composable
-private fun isFingerprintSecondPage(
-    uiState: OnBoardingUiState,
-    page: Int
-) = uiState.enabledPages.containsAll(listOf(Fingerprint, Autofill)) && page == 1
-
-@Composable
-private fun isFingerprintFirstPage(
-    uiState: OnBoardingUiState,
-    page: Int
-) = uiState.enabledPages.contains(Fingerprint) &&
-    !uiState.enabledPages.contains(Autofill) &&
-    page == 0
+fun pendingAccessPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
+    page = InvitePending,
+    title = stringResource(R.string.on_boarding_pending_invite_title),
+    subtitle = stringResource(R.string.on_boarding_pending_invite_content),
+    image = @Composable {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(onBoardingBrush())
+                .padding(38.dp, 0.dp),
+            painter = painterResource(id = R.drawable.account_setup),
+            contentDescription = ""
+        )
+    },
+    mainButton = stringResource(R.string.on_boarding_pending_invite_button),
+    showSkipButton = false
+)
 
 @Composable
 fun autofillPageUiState(): OnBoardingPageUiState =

@@ -20,10 +20,10 @@ package proton.android.pass.data.impl.crypto
 
 import kotlinx.coroutines.flow.first
 import me.proton.core.key.domain.extension.primary
-import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
+import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ShareId
@@ -49,7 +49,7 @@ interface EncryptShareKeysForUser {
 @Singleton
 class EncryptShareKeysForUserImpl @Inject constructor(
     private val shareKeyRepository: ShareKeyRepository,
-    private val publicAddressRepository: PublicAddressRepository,
+    private val getAllKeysByAddress: GetAllKeysByAddress,
     private val encryptInviteKeys: EncryptInviteKeys,
 ) : EncryptShareKeysForUser {
 
@@ -81,23 +81,20 @@ class EncryptShareKeysForUserImpl @Inject constructor(
         shareKeys: List<ShareKey>
     ): Result<EncryptedInviteShareKeyList> {
         val inviterAddressKey = userAddress.keys.primary()?.privateKey
-            ?: return Result.failure(IllegalStateException("No primary address key for invited user"))
+            ?: return Result.failure(IllegalStateException("No primary address key for inviter user"))
 
-        val targetUserAddress = runCatching {
-            publicAddressRepository.getPublicAddress(userAddress.userId, targetEmail)
-        }.fold(
-            onSuccess = { it },
-            onFailure = {
-                PassLogger.w(TAG, it, "Failed to get public addresses")
-                return Result.failure(it)
-            }
-        )
+        val targetUserKeys = getAllKeysByAddress(targetEmail).getOrElse {
+            return Result.failure(it)
+        }
+
+        val targetAddressKey = targetUserKeys.firstOrNull()?.publicKey
+            ?: return Result.failure(IllegalStateException("No primary address key for target user"))
 
         return runCatching {
             encryptInviteKeys(
                 inviterAddressKey = inviterAddressKey,
                 shareKeys = shareKeys,
-                targetAddressKey = targetUserAddress.primaryKey.publicKey
+                targetAddressKey = targetAddressKey
             )
         }.fold(
             onSuccess = { Result.success(it) },

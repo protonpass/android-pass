@@ -28,8 +28,12 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.fakes.TestLocalPlanDataSource
+import proton.android.pass.data.impl.fakes.TestLocalUserAccessDataDataSource
 import proton.android.pass.data.impl.fakes.TestRemotePlanDataSource
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
+import proton.android.pass.data.impl.responses.AccessResponse
+import proton.android.pass.data.impl.responses.PlanResponse
+import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.test.FixedClock
 import proton.pass.domain.PlanType
 import kotlin.time.Duration.Companion.days
@@ -40,16 +44,19 @@ class PlanRepositoryImplTest {
     private lateinit var local: TestLocalPlanDataSource
     private lateinit var remote: TestRemotePlanDataSource
     private lateinit var clock: FixedClock
+    private lateinit var localUserAccessDataDataSource: TestLocalUserAccessDataDataSource
 
     @Before
     fun setup() {
         local = TestLocalPlanDataSource()
         remote = TestRemotePlanDataSource()
         clock = FixedClock(Clock.System.now())
+        localUserAccessDataDataSource = TestLocalUserAccessDataDataSource()
         instance = PlanRepositoryImpl(
             remotePlanDataSource = remote,
             localPlanDataSource = local,
-            clock = clock
+            clock = clock,
+            localUserAccessDataDataSource = localUserAccessDataDataSource
         )
     }
 
@@ -160,6 +167,41 @@ class PlanRepositoryImplTest {
 
         val plan = instance.observePlan(USER_ID).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Unknown::class.java)
+    }
+
+    @Test
+    fun `refresh updates localUserAccessDataSource`() = runTest {
+        local.emitPlan(planEntity(type = PlanType.PLAN_NAME_PLUS, trialEnd = null))
+
+
+        val pendingInvites = 2
+        val waitingNewUserInvites = 3
+        val userAccessResponse = UserAccessResponse(
+            code = 1000,
+            accessResponse = AccessResponse(
+                planResponse = PlanResponse(
+                    type = "",
+                    internalName = "",
+                    displayName = "",
+                    vaultLimit = null,
+                    aliasLimit = null,
+                    totpLimit = null,
+                    hideUpgrade = false,
+                    trialEnd = null
+                ),
+                pendingInvites = pendingInvites,
+                waitingNewUserInvites = waitingNewUserInvites
+            )
+        )
+        remote.setResult(Result.success(userAccessResponse))
+
+        val plan = instance.sendUserAccessAndObservePlan(USER_ID, forceRefresh = true).first()
+        assertThat(plan.planType).isInstanceOf(PlanType.Paid::class.java)
+
+        val userAccessData = localUserAccessDataDataSource.observe(USER_ID).first()
+        assertThat(userAccessData).isNotNull()
+        assertThat(userAccessData!!.pendingInvites).isEqualTo(pendingInvites)
+        assertThat(userAccessData.waitingNewUserInvites).isEqualTo(waitingNewUserInvites)
     }
 
     private fun planEntity(

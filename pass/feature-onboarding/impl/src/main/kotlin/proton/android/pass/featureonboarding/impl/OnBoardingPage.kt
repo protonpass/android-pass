@@ -75,11 +75,7 @@ fun OnBoardingPage(
                 style = ProtonTheme.typography.defaultWeak,
                 textAlign = TextAlign.Center
             )
-            Spacer(
-                modifier = Modifier
-                    .height(24.dp)
-                    .weight(1f)
-            )
+            Spacer(modifier = Modifier.height(24.dp))
             CircleButton(
                 modifier = Modifier
                     .testTag(OnBoardingPageTestTag.mainButton)

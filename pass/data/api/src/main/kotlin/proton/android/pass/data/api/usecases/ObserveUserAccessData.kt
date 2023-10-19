@@ -22,5 +22,5 @@ import kotlinx.coroutines.flow.Flow
 import proton.pass.domain.UserAccessData
 
 interface ObserveUserAccessData {
-    operator fun invoke(): Flow<UserAccessData>
+    operator fun invoke(): Flow<UserAccessData?>
 }

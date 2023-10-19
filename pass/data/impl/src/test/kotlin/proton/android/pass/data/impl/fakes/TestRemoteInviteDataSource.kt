@@ -115,7 +115,9 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
             shared = false,
             expirationTime = null,
             createTime = 12_345_678,
-            targetMaxMembers = 2
+            targetMaxMembers = 2,
+            newUserInvitesReady = 0,
+            pendingInvites = 0
         )
     }
 }

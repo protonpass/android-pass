@@ -47,5 +47,9 @@ data class Share(
     val isOwner: Boolean,
     val memberCount: Int = 1,
     val shared: Boolean = false,
-    val maxMembers: Int = 10
-)
+    val maxMembers: Int = 10,
+    val pendingInvites: Int = 0,
+    val newUserInvitesReady: Int = 0
+) {
+    fun totalMemberCount(): Int = memberCount + pendingInvites + newUserInvitesReady
+}

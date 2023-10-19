@@ -57,6 +57,10 @@ data class ShareResponse(
     val targetMaxMembers: Int,
     @SerialName("TargetMembers")
     val targetMembers: Int,
+    @SerialName("PendingInvites")
+    val pendingInvites: Int,
+    @SerialName("NewUserInvitesReady")
+    val newUserInvitesReady: Int,
     @SerialName("Owner")
     val owner: Boolean,
     @SerialName("Shared")

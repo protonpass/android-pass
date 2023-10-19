@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.log.api.PassLogger
@@ -33,6 +34,7 @@ import javax.inject.Inject
 class CanShareVaultImpl @Inject constructor(
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val getVaultById: GetVaultById,
+    private val getShareById: GetShareById
 ) : CanShareVault {
 
     override suspend fun invoke(shareId: ShareId): Boolean {
@@ -48,8 +50,13 @@ class CanShareVaultImpl @Inject constructor(
         val isSharingEnabled = getSharingEnabledFlag()
         if (!isSharingEnabled) return false
 
+        val share = runCatching { getShareById(shareId = vault.shareId) }.getOrElse {
+            PassLogger.w(TAG, it, "canShare share not found")
+            return false
+        }
+
         return when {
-            vault.members >= vault.maxMembers -> false
+            share.totalMemberCount() >= share.maxMembers -> false
             vault.isPrimary -> false
             vault.isOwned -> true
             vault.role == ShareRole.Admin -> true

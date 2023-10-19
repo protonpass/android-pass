@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 interface LocalUserAccessDataDataSource {
     suspend fun store(entity: UserAccessDataEntity)
-    fun observe(userId: UserId): Flow<UserAccessDataEntity>
+    fun observe(userId: UserId): Flow<UserAccessDataEntity?>
 }
 
 class LocalUserAccessDataDataSourceImpl @Inject constructor(
@@ -36,7 +36,7 @@ class LocalUserAccessDataDataSourceImpl @Inject constructor(
         passDatabase.userAccessDataDao().insertOrUpdate(entity)
     }
 
-    override fun observe(userId: UserId): Flow<UserAccessDataEntity> =
+    override fun observe(userId: UserId): Flow<UserAccessDataEntity?> =
         passDatabase.userAccessDataDao().observeByUserId(userId.id)
 
 }

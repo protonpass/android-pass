@@ -23,5 +23,5 @@ import me.proton.core.domain.entity.UserId
 import proton.pass.domain.UserAccessData
 
 interface UserAccessDataRepository {
-    fun observe(userId: UserId): Flow<UserAccessData>
+    fun observe(userId: UserId): Flow<UserAccessData?>
 }

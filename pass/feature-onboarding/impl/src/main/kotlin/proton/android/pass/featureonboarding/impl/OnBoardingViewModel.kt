@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -77,7 +78,7 @@ class OnBoardingViewModel @Inject constructor(
             val showInvitePendingAcceptance = async { shouldShowInvitePendingAcceptance() }
             val autofillStatus = async { autofillManager.getAutofillStatus().firstOrNull() }
             val biometryStatus = async { biometryManager.getBiometryStatus() }
-            val supportedPages = mutableSetOf<OnBoardingPageName>()
+            val supportedPages = mutableListOf<OnBoardingPageName>()
             if (showInvitePendingAcceptance.await()) {
                 supportedPages.add(InvitePending)
             }
@@ -88,7 +89,7 @@ class OnBoardingViewModel @Inject constructor(
                 supportedPages.add(Fingerprint)
             }
             supportedPages.add(Last)
-            _onBoardingUiState.update { it.copy(enabledPages = supportedPages) }
+            _onBoardingUiState.update { it.copy(enabledPages = supportedPages.toPersistentList()) }
         }
     }
 
@@ -99,7 +100,7 @@ class OnBoardingViewModel @Inject constructor(
         }
 
         val value = observeUserAccessData().firstOrNull() ?: return false
-        return value.pendingInvites > 0
+        return value.waitingNewUserInvites > 0
     }
 
     private fun shouldShowAutofill(autofillStatus: AutofillSupportedStatus?): Boolean =
@@ -121,7 +122,7 @@ class OnBoardingViewModel @Inject constructor(
             Autofill -> onEnableAutofill()
             Fingerprint -> onEnableFingerprint(contextHolder)
             Last -> onFinishOnBoarding()
-            InvitePending -> {}
+            InvitePending -> goToNextPage()
         }
     }
 
@@ -133,8 +134,8 @@ class OnBoardingViewModel @Inject constructor(
 
     fun onSkipButtonClick(page: OnBoardingPageName) {
         when (page) {
-            Autofill -> onSkipAutofill()
-            Fingerprint -> onSkipFingerprint()
+            Autofill -> goToNextPage()
+            Fingerprint -> goToNextPage()
             Last -> {}
             InvitePending -> {}
         }
@@ -194,13 +195,7 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    private fun onSkipAutofill() {
-        viewModelScope.launch {
-            _onBoardingUiState.update { it.copy(selectedPage = it.selectedPage + 1) }
-        }
-    }
-
-    private fun onSkipFingerprint() {
+    private fun goToNextPage() {
         viewModelScope.launch {
             _onBoardingUiState.update { it.copy(selectedPage = it.selectedPage + 1) }
         }

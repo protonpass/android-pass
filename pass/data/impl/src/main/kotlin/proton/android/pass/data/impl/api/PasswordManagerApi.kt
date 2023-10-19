@@ -45,6 +45,7 @@ import proton.android.pass.data.impl.responses.CreateVaultResponse
 import proton.android.pass.data.impl.responses.DeleteVaultResponse
 import proton.android.pass.data.impl.responses.FeatureFlagsResponse
 import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
+import proton.android.pass.data.impl.responses.GetAllKeysByAddressResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
 import proton.android.pass.data.impl.responses.GetItemLatestKeyResponse
 import proton.android.pass.data.impl.responses.GetItemsResponse
@@ -303,4 +304,11 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Body request: TransferVaultOwnershipRequest
     ): CodeOnlyResponse
+
+    // Core
+    @GET("core/v4/keys/all")
+    suspend fun getAllKeysByAddress(
+        @Query("Email") email: String,
+        @Query("InternalOnly") internalOnly: Int = 1
+    ): GetAllKeysByAddressResponse
 }

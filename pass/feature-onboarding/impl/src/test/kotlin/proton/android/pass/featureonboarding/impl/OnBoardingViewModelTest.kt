@@ -20,6 +20,7 @@ package proton.android.pass.featureonboarding.impl
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -29,18 +30,23 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.common.api.None
+import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.InvitePending
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
+import proton.pass.domain.UserAccessData
 
 class OnBoardingViewModelTest {
 
@@ -52,6 +58,8 @@ class OnBoardingViewModelTest {
     private lateinit var preferenceRepository: TestPreferenceRepository
     private lateinit var biometryManager: TestBiometryManager
     private lateinit var autofillManager: TestAutofillManager
+    private lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
+    private lateinit var observeUserAccessData: TestObserveUserAccessData
 
     @Before
     fun setUp() {
@@ -59,6 +67,8 @@ class OnBoardingViewModelTest {
         preferenceRepository = TestPreferenceRepository()
         biometryManager = TestBiometryManager()
         autofillManager = TestAutofillManager()
+        ffRepo = TestFeatureFlagsPreferenceRepository()
+        observeUserAccessData = TestObserveUserAccessData()
     }
 
     @Test
@@ -70,9 +80,7 @@ class OnBoardingViewModelTest {
             preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(
-                    enabledPages = setOf(
-                        Last
-                    )
+                    enabledPages = persistentListOf(Last)
                 )
             )
         }
@@ -84,7 +92,7 @@ class OnBoardingViewModelTest {
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             assertThat(awaitItem()).isEqualTo(
-                OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint, Last))
+                OnBoardingUiState.Initial.copy(enabledPages = persistentListOf(Fingerprint, Last))
             )
         }
     }
@@ -95,7 +103,7 @@ class OnBoardingViewModelTest {
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             assertThat(awaitItem()).isEqualTo(
-                OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint, Last))
+                OnBoardingUiState.Initial.copy(enabledPages = persistentListOf(Fingerprint, Last))
             )
         }
     }
@@ -111,7 +119,7 @@ class OnBoardingViewModelTest {
                 viewModel.onMainButtonClick(Autofill, ClassHolder(None))
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
-                        enabledPages = setOf(Autofill, Fingerprint, Last),
+                        enabledPages = persistentListOf(Autofill, Fingerprint, Last),
                         selectedPage = 1
                     )
                 )
@@ -130,7 +138,7 @@ class OnBoardingViewModelTest {
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
                         selectedPage = 1,
-                        enabledPages = setOf(Autofill, Last)
+                        enabledPages = persistentListOf(Autofill, Last)
                     )
                 )
             }
@@ -147,7 +155,7 @@ class OnBoardingViewModelTest {
                 viewModel.onSkipButtonClick(Autofill)
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
-                        enabledPages = setOf(Autofill, Fingerprint, Last),
+                        enabledPages = persistentListOf(Autofill, Fingerprint, Last),
                         selectedPage = 1
                     )
                 )
@@ -166,7 +174,7 @@ class OnBoardingViewModelTest {
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
                         selectedPage = 1,
-                        enabledPages = setOf(Autofill, Last)
+                        enabledPages = persistentListOf(Autofill, Last)
                     )
                 )
             }
@@ -179,7 +187,7 @@ class OnBoardingViewModelTest {
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             assertThat(awaitItem()).isEqualTo(
-                OnBoardingUiState.Initial.copy(enabledPages = setOf(Autofill, Last))
+                OnBoardingUiState.Initial.copy(enabledPages = persistentListOf(Autofill, Last))
             )
         }
     }
@@ -197,7 +205,7 @@ class OnBoardingViewModelTest {
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(
                     selectedPage = 1,
-                    enabledPages = setOf(Fingerprint, Last)
+                    enabledPages = persistentListOf(Fingerprint, Last)
                 )
             )
         }
@@ -214,7 +222,7 @@ class OnBoardingViewModelTest {
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(
                     selectedPage = 1,
-                    enabledPages = setOf(Fingerprint, Last)
+                    enabledPages = persistentListOf(Fingerprint, Last)
                 )
             )
         }
@@ -231,18 +239,61 @@ class OnBoardingViewModelTest {
             viewModel.onMainButtonClick(Last, ClassHolder(None))
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(
-                    enabledPages = setOf(Last),
+                    enabledPages = persistentListOf(Last),
                     isCompleted = true
                 )
             )
         }
     }
 
+    @Test
+    fun `show InvitePending screen when needed`() = runTest {
+        testInvitePending(ffEnabled = true, waitingNewUserInvites = 1, expectedToContainPage = true)
+    }
+
+    @Test
+    fun `do not show InvitePending screen when FF is disabled needed`() = runTest {
+        testInvitePending(
+            ffEnabled = false,
+            waitingNewUserInvites = 1,
+            expectedToContainPage = false
+        )
+    }
+
+    @Test
+    fun `do not show InvitePending screen when FF is enabled but no invites pending`() = runTest {
+        testInvitePending(
+            ffEnabled = true,
+            waitingNewUserInvites = 0,
+            expectedToContainPage = false
+        )
+    }
+
+    private suspend fun testInvitePending(
+        ffEnabled: Boolean,
+        waitingNewUserInvites: Int,
+        expectedToContainPage: Boolean
+    ) {
+        ffRepo.set(FeatureFlag.SHARING_NEW_USERS, ffEnabled)
+        val userAccessData = UserAccessData(
+            pendingInvites = 0,
+            waitingNewUserInvites = waitingNewUserInvites
+        )
+        observeUserAccessData.sendValue(userAccessData)
+        viewModel = createViewModel()
+        viewModel.onBoardingUiState.test {
+            val item = awaitItem()
+            assertThat(item.enabledPages.contains(InvitePending)).isEqualTo(expectedToContainPage)
+        }
+    }
+
     private fun createViewModel() =
         OnBoardingViewModel(
-            autofillManager,
-            biometryManager,
-            preferenceRepository,
-            snackbarMessageRepository
+            autofillManager = autofillManager,
+            biometryManager = biometryManager,
+            userPreferencesRepository = preferenceRepository,
+            snackbarDispatcher = snackbarMessageRepository,
+            ffRepo = ffRepo,
+            observeUserAccessData = observeUserAccessData
         )
 }

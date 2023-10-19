@@ -52,6 +52,7 @@ import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -138,6 +139,7 @@ import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetItemByAliasEmail
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
+import proton.android.pass.data.fakes.usecases.TestGetAllKeysByAddress
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
@@ -520,4 +522,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveUserAccessData(impl: TestObserveUserAccessData): ObserveUserAccessData
+
+    @Binds
+    abstract fun bindGetAllKeysByAddress(impl: TestGetAllKeysByAddress): GetAllKeysByAddress
 }

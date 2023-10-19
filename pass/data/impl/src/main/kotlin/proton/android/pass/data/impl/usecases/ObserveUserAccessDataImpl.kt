@@ -31,7 +31,7 @@ class ObserveUserAccessDataImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val userAccessDataRepository: UserAccessDataRepository
 ) : ObserveUserAccessData {
-    override fun invoke(): Flow<UserAccessData> = accountManager
+    override fun invoke(): Flow<UserAccessData?> = accountManager
         .getPrimaryUserId()
         .filterNotNull()
         .flatMapLatest { userAccessDataRepository.observe(it) }

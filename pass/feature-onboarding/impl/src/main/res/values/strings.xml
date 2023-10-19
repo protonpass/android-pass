@@ -11,6 +11,9 @@
     <string name="on_boarding_last_page_title">Control what lands in your inbox</string>
     <string name="on_boarding_last_page_button">Start using Proton Pass</string>
     <string name="on_boarding_skip">Not now</string>
+    <string name="on_boarding_pending_invite_content">For security reasons, your access needs to be confirmed.</string>
+    <string name="on_boarding_pending_invite_title">Pending access to the shared data</string>
+    <string name="on_boarding_pending_invite_button">Learn more about Proton Pass</string>
 
     <string name="error_biometry_failed_to_start">Could not start the biometric authentication</string>
     <string name="error_biometry_failed_to_authenticate">Failed to authenticate</string>

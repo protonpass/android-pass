@@ -33,6 +33,6 @@ abstract class UserAccessDataDao : BaseDao<UserAccessDataEntity>() {
         LIMIT 1
         """
     )
-    abstract fun observeByUserId(userId: String): Flow<UserAccessDataEntity>
+    abstract fun observeByUserId(userId: String): Flow<UserAccessDataEntity?>
 }
 

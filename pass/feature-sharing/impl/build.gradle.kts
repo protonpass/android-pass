@@ -61,6 +61,7 @@ dependencies {
     kspDebug(libs.showkaseProcessor)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.composeComponents.impl)
@@ -72,6 +73,7 @@ dependencies {
     implementation(projects.pass.preferences.api)
 
     testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.commonRust.fakes)
     testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
@@ -85,6 +87,7 @@ dependencies {
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(projects.pass.commonRust.fakes)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)

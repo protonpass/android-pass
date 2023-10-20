@@ -18,26 +18,18 @@
 
 package proton.android.pass.commonrust.fakes
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.EmailValidator
-import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FakesCommonRustModule {
+@Singleton
+class TestEmailValidator @Inject constructor() : EmailValidator {
 
-    @Binds
-    abstract fun bindAliasPrefixValidator(impl: TestAliasPrefixValidator): AliasPrefixValidator
+    private var result: Boolean = true
 
-    @Binds
-    abstract fun bindEmailValidator(impl: TestEmailValidator): EmailValidator
+    fun setResult(value: Boolean) {
+        result = value
+    }
 
-    @Binds
-    abstract fun bindNewUserInviteSignatureBodyCreator(
-        impl: TestNewUserInviteSignatureBodyCreator
-    ): NewUserInviteSignatureBodyCreator
+    override fun isValid(email: String): Boolean = result
 }

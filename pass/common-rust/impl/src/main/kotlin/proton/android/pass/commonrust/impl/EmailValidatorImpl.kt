@@ -16,28 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonrust.fakes
+package proton.android.pass.commonrust.impl
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.EmailValidator
-import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
+import proton.android.pass.commonrust.EmailValidator as RustEmailValidator
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FakesCommonRustModule {
-
-    @Binds
-    abstract fun bindAliasPrefixValidator(impl: TestAliasPrefixValidator): AliasPrefixValidator
-
-    @Binds
-    abstract fun bindEmailValidator(impl: TestEmailValidator): EmailValidator
-
-    @Binds
-    abstract fun bindNewUserInviteSignatureBodyCreator(
-        impl: TestNewUserInviteSignatureBodyCreator
-    ): NewUserInviteSignatureBodyCreator
+class EmailValidatorImpl @Inject constructor() : EmailValidator {
+    override fun isValid(email: String): Boolean =
+        RustEmailValidator().isEmailValid(email)
 }

@@ -26,6 +26,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
@@ -42,6 +43,7 @@ class SharingWithViewModelTest {
     private lateinit var viewModel: SharingWithViewModel
     private lateinit var getVaultById: TestGetVaultById
     private lateinit var accountManager: TestAccountManager
+    private lateinit var emailValidator: TestEmailValidator
     private lateinit var getInviteUserMode: TestGetInviteUserMode
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
 
@@ -54,6 +56,7 @@ class SharingWithViewModelTest {
         getVaultById = TestGetVaultById()
         accountManager = TestAccountManager()
         getInviteUserMode = TestGetInviteUserMode()
+        emailValidator = TestEmailValidator()
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID
         }
@@ -62,6 +65,7 @@ class SharingWithViewModelTest {
             accountManager = accountManager,
             savedStateHandleProvider = savedStateHandleProvider,
             getInviteUserMode = getInviteUserMode,
+            emailValidator = emailValidator
         )
     }
 
@@ -88,6 +92,7 @@ class SharingWithViewModelTest {
         runTest {
             accountManager.sendPrimaryUserId(UserId("primary-user-id"))
             viewModel.onEmailChange("invalid-email")
+            emailValidator.setResult(false)
             viewModel.state.test {
                 skipItems(1)
                 viewModel.onEmailSubmit()

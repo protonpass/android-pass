@@ -46,6 +46,14 @@ class CancelInviteImpl @Inject constructor(
     }
 
     override suspend fun invoke(shareId: ShareId, inviteId: NewUserInviteId) {
-
+        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+        apiProvider.get<PasswordManagerApi>(userId)
+            .invoke {
+                deleteNewUserInvite(
+                    shareId = shareId.id,
+                    inviteId = inviteId.value
+                )
+            }
+            .valueOrThrow
     }
 }

@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 
 @Module
@@ -32,6 +33,9 @@ abstract class CommonRustModule {
 
     @Binds
     abstract fun bindAliasPrefixValidator(impl: AliasPrefixValidatorImpl): AliasPrefixValidator
+
+    @Binds
+    abstract fun bindEmailValidator(impl: EmailValidatorImpl): EmailValidator
 
     @Binds
     abstract fun bindCommonLibraryVersionChecker(impl: CommonLibraryVersionCheckerImpl): CommonLibraryVersionChecker

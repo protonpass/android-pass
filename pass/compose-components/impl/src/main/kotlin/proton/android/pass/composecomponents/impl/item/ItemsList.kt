@@ -87,6 +87,7 @@ fun ItemsList(
     isProcessingSearch: IsProcessingSearchState = IsProcessingSearchState.NotLoading,
     showMenuIcon: Boolean = true,
     enableSwipeRefresh: Boolean = true,
+    forceShowHeader: Boolean = false,
     header: LazyListScope.() -> Unit = {},
     forceContent: Boolean = false,
     footer: LazyListScope.() -> Unit = {},
@@ -150,7 +151,12 @@ fun ItemsList(
                 footer()
             }
         } else {
-            emptyContent()
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                if (forceShowHeader) {
+                    header()
+                }
+                item { emptyContent() }
+            }
         }
         PullRefreshIndicator(
             refreshing = isRefreshing.value(),

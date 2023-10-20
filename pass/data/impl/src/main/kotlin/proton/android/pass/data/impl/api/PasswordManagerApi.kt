@@ -293,6 +293,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("inviteId") inviteId: String
     ): CodeOnlyResponse
 
+    @DELETE("$PREFIX/share/{shareId}/invite/new_user/{inviteId}")
+    suspend fun deleteNewUserInvite(
+        @Path("shareId") shareId: String,
+        @Path("inviteId") inviteId: String
+    ): CodeOnlyResponse
+
     @POST("$PREFIX/share/{shareId}/invite/{inviteId}/reminder")
     suspend fun sendInviteReminder(
         @Path("shareId") shareId: String,

@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.log.api.PassLogger
@@ -34,21 +35,23 @@ import javax.inject.Singleton
 @Singleton
 class GetInviteUserModeImpl @Inject constructor(
     private val ffRepo: FeatureFlagsPreferencesRepository,
-    private val publicAddressRepository: PublicAddressRepository
+    private val publicAddressRepository: PublicAddressRepository,
+    private val getAllKeysByAddress: GetAllKeysByAddress
 ) : GetInviteUserMode {
     override suspend fun invoke(userId: UserId, email: String): Result<InviteUserMode> {
         val isInviteNewUserEnabled = ffRepo.get<Boolean>(FeatureFlag.SHARING_NEW_USERS)
             .firstOrNull()
             ?: false
+
         return runCatching {
             publicAddressRepository.getPublicAddress(userId, email)
         }.fold(
             onSuccess = { publicAddress ->
                 when {
                     publicAddress.keys.isEmpty() -> {
-                        PassLogger.i(TAG, "New user invite")
                         if (isInviteNewUserEnabled) {
-                            Result.success(InviteUserMode.NewUser)
+                            PassLogger.d(TAG, "Key list is empty. Checking with all keys")
+                            getInviteModeWithAllKeys(email = email)
                         } else {
                             PassLogger.i(TAG, "New user invites are not enabled yet")
                             Result.failure(IllegalStateException("User key list is empty"))
@@ -70,6 +73,25 @@ class GetInviteUserModeImpl @Inject constructor(
             }
         )
     }
+
+    private suspend fun getInviteModeWithAllKeys(email: String): Result<InviteUserMode> =
+        getAllKeysByAddress(email = email)
+            .fold(
+                onSuccess = {
+                    if (it.isEmpty()) {
+                        Result.failure(IllegalStateException("User key list is empty"))
+                    } else {
+                        Result.success(InviteUserMode.ExistingUser)
+                    }
+                },
+                onFailure = {
+                    if (it.isAddressNotExistsError()) {
+                        Result.success(InviteUserMode.NewUser)
+                    } else {
+                        Result.failure(it)
+                    }
+                }
+            )
 
     private fun Throwable.isAddressNotExistsError(): Boolean {
         if (this is ApiException) {

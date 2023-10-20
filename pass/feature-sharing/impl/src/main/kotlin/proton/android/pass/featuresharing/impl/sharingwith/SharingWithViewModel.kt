@@ -30,10 +30,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.common.api.CommonRegex.EMAIL_VALIDATION_REGEX
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -50,6 +50,7 @@ import javax.inject.Inject
 class SharingWithViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val getInviteUserMode: GetInviteUserMode,
+    private val emailValidator: EmailValidator,
     getVaultById: GetVaultById,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -104,9 +105,10 @@ class SharingWithViewModel @Inject constructor(
             return@launch
         }
 
-        if (email.isBlank() || !EMAIL_VALIDATION_REGEX.matches(email)) {
+        if (email.isBlank() || !emailValidator.isValid(email)) {
             PassLogger.i(TAG, "Email not valid")
             isEmailNotValidState.update { EmailNotValidReason.NotValid }
+            isLoadingState.update { IsLoadingState.NotLoading }
             return@launch
         }
 

@@ -19,13 +19,13 @@
 package proton.android.pass.data.impl.crypto
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.crypto.api.usecases.AcceptInvite
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
+import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.local.InviteAndKeysEntity
 import proton.android.pass.data.impl.requests.InviteKeyRotation
 import proton.android.pass.log.api.PassLogger
@@ -42,7 +42,7 @@ class EncryptInviteKeysImpl @Inject constructor(
     private val acceptInvite: AcceptInvite,
     private val userRepository: UserRepository,
     private val addressRepository: UserAddressRepository,
-    private val publicAddressRepository: PublicAddressRepository
+    private val getAllKeysByAddress: GetAllKeysByAddress
 ) : EncryptInviteKeys {
     override suspend fun invoke(
         userId: UserId,
@@ -54,9 +54,11 @@ class EncryptInviteKeysImpl @Inject constructor(
             ?: throw IllegalStateException("Could not get invited address")
 
         val privateAddressKeys = address.keys.map { it.privateKey }
-        val inviterAddressKeys = publicAddressRepository
-            .getPublicAddress(userId, invite.inviteEntity.inviterEmail)
-            .keys
+        val inviterAddressKeys = getAllKeysByAddress(invite.inviteEntity.inviterEmail)
+            .getOrElse {
+                PassLogger.e(TAG, it, "Could not get inviter address keys")
+                throw it
+            }
             .map { it.publicKey }
 
         val inviteKeys = invite.inviteKeys.map {

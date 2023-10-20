@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.crypto
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
@@ -31,6 +30,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.AcceptInvite
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
+import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -43,7 +43,7 @@ class ReencryptInviteContentsImpl @Inject constructor(
     private val acceptInvite: AcceptInvite,
     private val userRepository: UserRepository,
     private val userAddressRepository: UserAddressRepository,
-    private val publicAddressRepository: PublicAddressRepository,
+    private val getAllKeysByAddress: GetAllKeysByAddress,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ReencryptInviteContents {
     override suspend fun invoke(userId: UserId, invite: PendingInviteResponse): EncryptedByteArray {
@@ -57,8 +57,11 @@ class ReencryptInviteContentsImpl @Inject constructor(
 
         val addressPrivateKeys = address.keys.map { it.privateKey }
 
-        val inviterKeys = publicAddressRepository.getPublicAddress(userId, invite.inviterEmail)
-            .keys
+        val inviterKeys = getAllKeysByAddress(invite.inviterEmail)
+            .getOrElse {
+                PassLogger.e(TAG, it, "Could not get inviter address keys")
+                throw it
+            }
             .map { it.publicKey }
 
         val openKeys = acceptInvite(

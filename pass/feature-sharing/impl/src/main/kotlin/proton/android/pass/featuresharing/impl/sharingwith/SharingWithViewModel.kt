@@ -112,6 +112,7 @@ class SharingWithViewModel @Inject constructor(
 
         getInviteUserMode(userId, email)
             .onSuccess { userMode ->
+                PassLogger.d(TAG, "Invite user mode: $userMode")
                 eventState.update {
                     SharingWithEvents.NavigateToPermissions(
                         shareId = shareId,

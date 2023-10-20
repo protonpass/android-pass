@@ -238,6 +238,8 @@ internal fun HomeContent(
                         )
                     }
                 },
+
+                forceShowHeader = true,
                 header = {
                     item {
                         OnBoardingTips(

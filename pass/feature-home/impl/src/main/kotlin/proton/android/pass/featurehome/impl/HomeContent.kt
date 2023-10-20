@@ -197,6 +197,10 @@ internal fun HomeContent(
                 )
             }
 
+            val forceShowHeader = remember(uiState.searchUiState) {
+                !uiState.searchUiState.inSearchMode
+            }
+
             ItemsList(
                 items = uiState.homeListUiState.items,
                 shares = uiState.homeListUiState.shares,
@@ -239,7 +243,7 @@ internal fun HomeContent(
                     }
                 },
 
-                forceShowHeader = true,
+                forceShowHeader = forceShowHeader,
                 header = {
                     item {
                         OnBoardingTips(

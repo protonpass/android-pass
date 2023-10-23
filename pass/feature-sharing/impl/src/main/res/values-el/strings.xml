@@ -35,6 +35,7 @@
   <string name="share_with_title">Κοινοποίηση με</string>
   <string name="share_with_email_hint">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
   <string name="share_with_email_error">Μη έγκυρη διεύθυνση email</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Δεν είναι δυνατή η ανάκτηση των πληροφοριών χρήστη που έχει προσκληθεί</string>
   <string name="share_permissions_title">Ορισμός επιπέδου πρόσβασης</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s σας προσκαλεί να αποκτήσετε πρόσβαση σε στοιχεία στη</string>
   <string name="sharing_join_shared_vault">Συμμετάσχετε και συγχρονίστε</string>
@@ -62,6 +63,10 @@
   <string name="share_manage_vault_share_with_more_people">Κοινοποίηση με περισσότερα άτομα</string>
   <string name="share_manage_vault_item_count">%d στοιχεία</string>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Η πρόσκληση στάλθηκε</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Δημιουργία λογαριασμού σε εκκρεμότητα</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Επιβεβαιώστε την πρόσβαση</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Προσκλήσεις</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Μέλη</string>
   <string name="share_manage_vault_current_user_indicator">Εσείς</string>
   <string name="share_role_can_view">Δυνατότητα προβολής</string>
   <string name="share_role_can_edit">Δυνατότητα επεξεργασίας</string>
@@ -78,6 +83,8 @@
   <string name="sharing_snackbar_cancel_invite_error">Σφάλμα ακύρωσης πρόσκλησης</string>
   <string name="sharing_snackbar_resend_invite_success">Η πρόσκληση στάλθηκε ξανά</string>
   <string name="sharing_snackbar_resend_invite_error">Σφάλμα επανάληψης αποστολής πρόσκλησης</string>
+  <string name="sharing_snackbar_confirm_invite_success">Η πρόσκληση επιβεβαιώθηκε</string>
+  <string name="sharing_snackbar_confirm_invite_error">Σφάλμα κατά την επιβεβαίωση της πρόσκλησης</string>
   <string name="sharing_snackbar_too_many_invites_sent">Η διεύθυνση έχει προσκληθεί πάρα πολλές φορές</string>
   <string name="sharing_snackbar_transfer_ownership_success">Μεταβίβαση κυριότητας</string>
   <string name="sharing_snackbar_transfer_ownership_error">Σφάλμα κατά τη μεταβίβαση ιδιοκτησίας</string>

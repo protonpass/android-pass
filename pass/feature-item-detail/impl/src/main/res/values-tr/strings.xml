@@ -3,7 +3,7 @@
   <string name="action_open">Aç</string>
   <string name="action_copy">Kopyala</string>
   <!-- Detail -->
-  <string name="detail_init_error">Bileşen hazırlanamadı</string>
+  <string name="detail_init_error">Problem retrieving item details</string>
   <string name="top_bar_edit_button_text">Düzenle</string>
   <!-- Alias details -->
   <string name="field_alias_title">Takma ad adresi</string>

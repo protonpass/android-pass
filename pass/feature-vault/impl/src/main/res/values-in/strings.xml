@@ -19,7 +19,7 @@
   <string name="vault_delete_dialog_cancel_action">Batal</string>
   <string name="vault_delete_dialog_delete_action">Hapus</string>
   <string name="vault_leave_dialog_title">Tinggalkan brankas</string>
-  <string name="vault_leave_dialog_body">Tindakan ini akan menutup akses Anda ke brankas __VAULT_NAME__ beserta segala isinya. Apakah Anda yakin untuk meninggalkan brankas ini?</string>
+  <string name="vault_leave_dialog_body">Tindakan ini akan menutup akses Anda ke brankas __VAULT_NAME__ beserta seluruh isinya. Apakah Anda yakin untuk meninggalkan brankas ini?</string>
   <string name="vault_leave_dialog_cancel_action">Batalkan</string>
   <string name="vault_leave_dialog_leave_action">Keluar</string>
   <string name="bottomsheet_close_icon_content_description">Tutup jendela pembuatan brankas</string>

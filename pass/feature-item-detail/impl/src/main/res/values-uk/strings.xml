@@ -3,7 +3,7 @@
   <string name="action_open">Відкрити</string>
   <string name="action_copy">Копіювати</string>
   <!-- Detail -->
-  <string name="detail_init_error">Не вдалося ініціалізувати елемент</string>
+  <string name="detail_init_error">Problem retrieving item details</string>
   <string name="top_bar_edit_button_text">Редагувати</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адреса псевдоніма</string>

@@ -23,7 +23,7 @@
     <item quantity="other">PIN salah. %d upaya tersisa.</item>
   </plurals>
   <string name="auth_unlock_app_title">Buka kunci Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Masukkan kata kunci induk untuk %s</string>
+  <string name="auth_unlock_app_subtitle">Masukkan kata sandi induk untuk %s</string>
   <string name="auth_master_password_label">Kata sandi induk</string>
   <string name="auth_action_reveal_password">Tampilkan kata sandi induk</string>
   <string name="auth_action_conceal_password">Samarkan kata sandi induk</string>

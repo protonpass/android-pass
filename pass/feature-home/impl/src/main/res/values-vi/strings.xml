@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Nhận thông báo quan trọng</string>
   <string name="home_notification_permission_banner_text">Bật thông báo đẩy để biết được khi nào người khác chia sẽ kho lưu trữ với bạn.</string>
   <string name="home_notification_permission_banner_settings">Mở màn hình cấp quyền ›</string>
-  <string name="home_invite_banner_title">Vault shared with you</string>
-  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
+  <string name="home_invite_banner_title">Kho lưu trữ được chia sẽ với bạn</string>
+  <string name="home_invite_banner_subtitle">Bạn được mời vào một kho lưu trữ. Chạm vào để biết thêm thông tin.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Sao chép mật khẩu</string>
   <string name="bottomsheet_copy_username">Sao chép tên đăng nhập</string>

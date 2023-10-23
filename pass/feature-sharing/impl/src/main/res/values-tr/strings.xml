@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">İlerle</string>
-  <string name="sharing_can_view">Viewer</string>
-  <string name="sharing_can_edit">Editor</string>
-  <string name="sharing_can_manage">Admin</string>
+  <string name="sharing_can_view">Görüntüleyici</string>
+  <string name="sharing_can_edit">Düzenleyici</string>
+  <string name="sharing_can_manage">Yönetici</string>
   <string name="sharing_can_view_description">Bu kasadaki ögeleri görüntüleyebilir.</string>
-  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
+  <string name="sharing_can_edit_description">Bu kasadaki ögeleri oluşturabilir, düzenleyebilir, silebilir ve dışa aktarabilir.</string>
   <string name="sharing_can_manage_description">Bu kasaya erişme iznini verebilir ya da kaldırabilir.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d öge</item>
@@ -35,8 +35,9 @@
   <string name="share_with_title">Şununla paylaş</string>
   <string name="share_with_email_hint">E-posta adresi</string>
   <string name="share_with_email_error">E-posta adresi geçersiz</string>
-  <string name="share_permissions_title">Set access level</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Davet edilmiş kullanıcı bilgileri alınamadı</string>
+  <string name="share_permissions_title">Erişim düzeyini ayarla</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s sizi şu kasadaki ögelere erişmeye davet ediyor:</string>
   <string name="sharing_join_shared_vault">Katıl ve eşitle</string>
   <string name="sharing_reject_invitation">Daveti reddet</string>
   <string name="sharing_snackbar_get_invite_error">Davet alınamadı</string>
@@ -52,16 +53,20 @@
   <string name="sharing_snackbar_change_permission_error">İzinler değiştirilemedi</string>
   <string name="sharing_snackbar_remove_member_success">Üye kasadan kaldırıldı</string>
   <string name="sharing_snackbar_remove_member_error">Kasadan kaldırılamadı</string>
-  <string name="share_summary_title">Review and share</string>
+  <string name="share_summary_title">Gözden geçirip paylaş</string>
   <string name="share_summary_subtitle">%1$s kullanıcısını %2$s kasanızı paylaşmaya davet ediyorsunuz. Kullanıcının bu kasada %3$s izni olacak ve %4$s işlemlerini yapabilecek.</string>
   <string name="share_summary_vault">%s kasa</string>
   <string name="share_summary_share_vault">Kasayı paylaş</string>
-  <string name="share_summary_email_title">Share with</string>
+  <string name="share_summary_email_title">Şu kişiyle paylaş</string>
   <string name="share_summary_vault_title">Kasa</string>
-  <string name="share_summary_permissions_title">Access level</string>
+  <string name="share_summary_permissions_title">Erişim düzeyi</string>
   <string name="share_manage_vault_share_with_more_people">Başkalarıyla paylaş</string>
   <string name="share_manage_vault_item_count">%d öge</string>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Davet gönderildi</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Hesabın oluşturulması bekleniyor</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Erişimi onayla</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Davetler</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Üyeler</string>
   <string name="share_manage_vault_current_user_indicator">Siz</string>
   <string name="share_role_can_view">Görüntüleyebilir</string>
   <string name="share_role_can_edit">Düzenleyebilir</string>
@@ -69,15 +74,17 @@
   <string name="share_role_owner">Sahibi</string>
   <string name="sharing_bottomsheet_transfer_ownership">Sahipliği aktar</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Sahip olduğunuz son kasanın sahipliğini aktaramazsınız.</string>
-  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
-  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
-  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
+  <string name="sharing_bottomsheet_remove_access">Erişimi iptal et</string>
+  <string name="sharing_bottomsheet_resend_invite">Daveti yeniden gönder</string>
+  <string name="sharing_bottomsheet_cancel_invite">Daveti iptal et</string>
   <string name="sharing_transfer_ownership_confirm_title">Sahipliği aktar</string>
-  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
+  <string name="sharing_transfer_ownership_confirm_message">Bu kasanın sahipliğini %s kişisine aktarmak istediğinize emin misiniz?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Davet iptal edildi</string>
   <string name="sharing_snackbar_cancel_invite_error">Davet iptal edilirken sorun çıktı</string>
   <string name="sharing_snackbar_resend_invite_success">Davet yeniden gönderildi</string>
   <string name="sharing_snackbar_resend_invite_error">Davet yeniden gönderilirken sorun çıktı</string>
+  <string name="sharing_snackbar_confirm_invite_success">Davet kabul edildi</string>
+  <string name="sharing_snackbar_confirm_invite_error">Davet kabul edilirken sorun çıktı</string>
   <string name="sharing_snackbar_too_many_invites_sent">Adrese çok fazla sayıda davet gönderilmiş</string>
   <string name="sharing_snackbar_transfer_ownership_success">Sahiplik aktarıldı</string>
   <string name="sharing_snackbar_transfer_ownership_error">Sahiplik aktarılırken sorun çıktı</string>

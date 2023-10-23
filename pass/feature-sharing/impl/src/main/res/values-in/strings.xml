@@ -33,8 +33,9 @@
   <string name="share_with_title">Bagikan dengan</string>
   <string name="share_with_email_hint">Alamat surel</string>
   <string name="share_with_email_error">Alamat surel tidak valid</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Gagal memperoleh informasi pengguna yang diundang</string>
   <string name="share_permissions_title">Tentukan tingkatan akses</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mengundan Anda untuk mengakses item pada</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mengundang Anda untuk mengakses item pada</string>
   <string name="sharing_join_shared_vault">Gabung dan sinkronkan</string>
   <string name="sharing_reject_invitation">Tolak undangan</string>
   <string name="sharing_snackbar_get_invite_error">Undangan tidak dapat diperoleh</string>
@@ -60,6 +61,10 @@
   <string name="share_manage_vault_share_with_more_people">Bagikan dengan lebih banyak orang</string>
   <string name="share_manage_vault_item_count">%d item</string>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Undangan dikirim</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Pembuatan akun tertunda</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Konfirmasi akses</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Undangan</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Anggota</string>
   <string name="share_manage_vault_current_user_indicator">Anda</string>
   <string name="share_role_can_view">Dapat melihat</string>
   <string name="share_role_can_edit">Dapat menyunting</string>
@@ -76,6 +81,8 @@
   <string name="sharing_snackbar_cancel_invite_error">Terdapat kesalahan dalam membatalkan undangan</string>
   <string name="sharing_snackbar_resend_invite_success">Undangan dikirim ulang</string>
   <string name="sharing_snackbar_resend_invite_error">Terjadi kesalahan mengirimkan ulang undangan</string>
+  <string name="sharing_snackbar_confirm_invite_success">Undangan diterima</string>
+  <string name="sharing_snackbar_confirm_invite_error">Konfirmasi undangan gagal</string>
   <string name="sharing_snackbar_too_many_invites_sent">Alamat telah diundang beberapa kali</string>
   <string name="sharing_snackbar_transfer_ownership_success">Kepemilikan ditransfer</string>
   <string name="sharing_snackbar_transfer_ownership_error">Terjadi kesalahan mentransfer kepemilikan</string>

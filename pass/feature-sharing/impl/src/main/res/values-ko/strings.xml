@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">계속하기</string>
-  <string name="sharing_can_view">Viewer</string>
-  <string name="sharing_can_edit">Editor</string>
-  <string name="sharing_can_manage">Admin</string>
+  <string name="sharing_can_view">보기</string>
+  <string name="sharing_can_edit">편집자</string>
+  <string name="sharing_can_manage">관리자</string>
   <string name="sharing_can_view_description">이 금고에서 항목을 확인 가능합니다.</string>
-  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
+  <string name="sharing_can_edit_description">이 금고에서 항목을 생성, 편집, 삭제 및 불러올 수 있습니다.</string>
   <string name="sharing_can_manage_description">이 금고의 접근을 허용 및 취소할 수 있습니다.</string>
   <plurals name="sharing_item_count">
     <item quantity="other">%d개 항목</item>
@@ -33,8 +33,9 @@
   <string name="share_with_title">공유 대상:</string>
   <string name="share_with_email_hint">이메일 주소</string>
   <string name="share_with_email_error">유효하지 않은 이메일 주소입니다.</string>
-  <string name="share_permissions_title">Set access level</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">초대한 사용자 정보를 가져올 수 없습니다</string>
+  <string name="share_permissions_title">접근 수준 설정</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s님이 항목 공유를 초대합니다:</string>
   <string name="sharing_join_shared_vault">참가 및 동기화</string>
   <string name="sharing_reject_invitation">초대 거절</string>
   <string name="sharing_snackbar_get_invite_error">초대할 수 없습니다</string>
@@ -50,16 +51,20 @@
   <string name="sharing_snackbar_change_permission_error">권한을 변경할 수 없습니다.</string>
   <string name="sharing_snackbar_remove_member_success">구성원이 금고로 부터 삭제되었습니다</string>
   <string name="sharing_snackbar_remove_member_error">금고로 부터 삭제할 수 없습니다</string>
-  <string name="share_summary_title">Review and share</string>
+  <string name="share_summary_title">검토 및 공유</string>
   <string name="share_summary_subtitle">%1$s을(를) %2$s에 초대하려고 합니다. %3$s에 접근할 수 있으며, 이 금고에서 %4$s 할 수 있습니다.</string>
   <string name="share_summary_vault">%s개 금고</string>
   <string name="share_summary_share_vault">금고 공유</string>
-  <string name="share_summary_email_title">Share with</string>
+  <string name="share_summary_email_title">공유 대상:</string>
   <string name="share_summary_vault_title">금고</string>
-  <string name="share_summary_permissions_title">Access level</string>
+  <string name="share_summary_permissions_title">접근 권한</string>
   <string name="share_manage_vault_share_with_more_people">더 많은 사람과 공유</string>
   <string name="share_manage_vault_item_count">%d개 항목</string>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">초대장을 보냈습니다</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">계정 생성 전송 중</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">접근 확인</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">초대</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">멤버</string>
   <string name="share_manage_vault_current_user_indicator">나</string>
   <string name="share_role_can_view">보기 가능</string>
   <string name="share_role_can_edit">편집 가능</string>
@@ -67,15 +72,17 @@
   <string name="share_role_owner">소유자</string>
   <string name="sharing_bottomsheet_transfer_ownership">소유권 이전</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">마지막에 소유했던 금고를 이전할 수 없습니다.</string>
-  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
-  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
-  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
+  <string name="sharing_bottomsheet_remove_access">접근 권한 회수</string>
+  <string name="sharing_bottomsheet_resend_invite">초대장 재전송</string>
+  <string name="sharing_bottomsheet_cancel_invite">초대 취소</string>
   <string name="sharing_transfer_ownership_confirm_title">소유권 이전</string>
-  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
+  <string name="sharing_transfer_ownership_confirm_message">금고의 소유권을 %s으로 이동하시겠어요?</string>
+  <string name="sharing_snackbar_cancel_invite_success">초대가 취소됨</string>
   <string name="sharing_snackbar_cancel_invite_error">초대 취소 실패</string>
   <string name="sharing_snackbar_resend_invite_success">초대 다시 보내기</string>
   <string name="sharing_snackbar_resend_invite_error">초대 재전송 실패</string>
+  <string name="sharing_snackbar_confirm_invite_success">초대 수락됨</string>
+  <string name="sharing_snackbar_confirm_invite_error">초대 확인 실패</string>
   <string name="sharing_snackbar_too_many_invites_sent">이 주소로 너무 많이 초대했습니다.</string>
   <string name="sharing_snackbar_transfer_ownership_success">소유권이 이전되었습니다.</string>
   <string name="sharing_snackbar_transfer_ownership_error">소유권 이전 실패</string>

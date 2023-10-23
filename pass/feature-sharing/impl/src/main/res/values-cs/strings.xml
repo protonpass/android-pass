@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Pokračovat</string>
-  <string name="sharing_can_view">Viewer</string>
+  <string name="sharing_can_view">Přihlížející</string>
   <string name="sharing_can_edit">Editor</string>
-  <string name="sharing_can_manage">Admin</string>
+  <string name="sharing_can_manage">Správce</string>
   <string name="sharing_can_view_description">Může zobrazovat položky v tomto trezoru.</string>
-  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
+  <string name="sharing_can_edit_description">Může vytvářet, upravovat, mazat a exportovat položky v tomto trezoru.</string>
   <string name="sharing_can_manage_description">Může udělovat a odebírat přístup k tomuto trezoru.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d položka</item>
@@ -39,8 +39,9 @@
   <string name="share_with_title">Sdílet s</string>
   <string name="share_with_email_hint">E-mailová adresa</string>
   <string name="share_with_email_error">Neplatná e-mailová adresa</string>
-  <string name="share_permissions_title">Set access level</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Nelze načíst informace o pozvaném uživateli</string>
+  <string name="share_permissions_title">Nastavit úroveň přístupu</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vás zve k přístupu k položkám v</string>
   <string name="sharing_join_shared_vault">Připojit a synchronizovat</string>
   <string name="sharing_reject_invitation">Odmítnout pozvánku</string>
   <string name="sharing_snackbar_get_invite_error">Nepodařilo se získat pozvánku</string>
@@ -56,16 +57,20 @@
   <string name="sharing_snackbar_change_permission_error">Nepodařilo se změnit oprávnění</string>
   <string name="sharing_snackbar_remove_member_success">Člen odebrán z trezoru</string>
   <string name="sharing_snackbar_remove_member_error">Nelze odebrat z trezoru</string>
-  <string name="share_summary_title">Review and share</string>
+  <string name="share_summary_title">Prohlédnout a sdílet</string>
   <string name="share_summary_subtitle">Chystáte se pozvat %1$s do svého %2$s. Získají přístup do %3$s a budou moci v tomto trezoru %4$s.</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Sdílet trezor</string>
-  <string name="share_summary_email_title">Share with</string>
+  <string name="share_summary_email_title">Sdílet s</string>
   <string name="share_summary_vault_title">Trezor</string>
-  <string name="share_summary_permissions_title">Access level</string>
+  <string name="share_summary_permissions_title">Úroveň přístupu</string>
   <string name="share_manage_vault_share_with_more_people">Sdílet s více lidmi</string>
   <string name="share_manage_vault_item_count">%d položek</string>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Pozvánka odeslána</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Čekání na vytvoření účtu</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Potvrdit přístup</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Pozvánky</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Členové</string>
   <string name="share_manage_vault_current_user_indicator">Vy</string>
   <string name="share_role_can_view">Může zobrazit</string>
   <string name="share_role_can_edit">Může upravovat</string>
@@ -73,15 +78,17 @@
   <string name="share_role_owner">Vlastník</string>
   <string name="sharing_bottomsheet_transfer_ownership">Převést vlastnictví</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Poslední vlastněný trezor nelze převést.</string>
-  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
-  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
-  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
+  <string name="sharing_bottomsheet_remove_access">Zrušit přístup</string>
+  <string name="sharing_bottomsheet_resend_invite">Znovu poslat pozvánku</string>
+  <string name="sharing_bottomsheet_cancel_invite">Zrušit pozvánku</string>
   <string name="sharing_transfer_ownership_confirm_title">Převést vlastnictví</string>
-  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
+  <string name="sharing_transfer_ownership_confirm_message">Převést vlastnictví tohoto trezoru na %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Pozvánka zrušena</string>
   <string name="sharing_snackbar_cancel_invite_error">Chyba při rušení pozvánky</string>
   <string name="sharing_snackbar_resend_invite_success">Pozvánka znovu odeslána</string>
   <string name="sharing_snackbar_resend_invite_error">Chyba při opětovném zaslání pozvánky</string>
+  <string name="sharing_snackbar_confirm_invite_success">Pozvánka potvrzena</string>
+  <string name="sharing_snackbar_confirm_invite_error">Chyba při potvrzování pozvánky</string>
   <string name="sharing_snackbar_too_many_invites_sent">Adresa byla příjemcem příliš mnoha pozvánek</string>
   <string name="sharing_snackbar_transfer_ownership_success">Vlastnictví převedeno</string>
   <string name="sharing_snackbar_transfer_ownership_error">Chyba při převodu vlastnictví</string>

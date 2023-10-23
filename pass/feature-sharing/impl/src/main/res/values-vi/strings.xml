@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Tiếp tục</string>
-  <string name="sharing_can_view">Viewer</string>
-  <string name="sharing_can_edit">Editor</string>
-  <string name="sharing_can_manage">Admin</string>
+  <string name="sharing_can_view">Người xem</string>
+  <string name="sharing_can_edit">Chỉnh sửa</string>
+  <string name="sharing_can_manage">Quản trị viên</string>
   <string name="sharing_can_view_description">Cho phép xem nội dung trong kho lưu trữ này.</string>
-  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
+  <string name="sharing_can_edit_description">Cho phép tạo, chỉnh sửa, xóa và xuất nội dung trong kho lưu trữ này.</string>
   <string name="sharing_can_manage_description">Cho phép cấp và thu hồi quyền truy cập vào kho lưu trữ này.</string>
   <plurals name="sharing_item_count">
     <item quantity="other">%d nội dung</item>
@@ -33,8 +33,9 @@
   <string name="share_with_title">Chia sẻ với</string>
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
-  <string name="share_permissions_title">Set access level</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Không thể lấy thông tin người dùng được mời</string>
+  <string name="share_permissions_title">Thiết lập cấp độ truy cập</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mời bạn truy cập nội dung trong</string>
   <string name="sharing_join_shared_vault">Tham gia và đồng bộ</string>
   <string name="sharing_reject_invitation">Từ chối lời mời</string>
   <string name="sharing_snackbar_get_invite_error">Không thể lấy lời mời</string>
@@ -50,16 +51,20 @@
   <string name="sharing_snackbar_change_permission_error">Không thể thay đổi quyền</string>
   <string name="sharing_snackbar_remove_member_success">Đã xóa thành viên khỏi kho lưu trữ</string>
   <string name="sharing_snackbar_remove_member_error">Không thể xóa khỏi kho lưu trữ</string>
-  <string name="share_summary_title">Review and share</string>
+  <string name="share_summary_title">Xem lại và chia sẻ</string>
   <string name="share_summary_subtitle">Bạn đang chuẩn bị mời %1$s vào %2$s của bạn. Họ sẽ có quyền truy cập vào %3$s và họ có thể %4$s trong kho lưu trữ này.</string>
   <string name="share_summary_vault">kho lưu trữ %s</string>
   <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
-  <string name="share_summary_email_title">Share with</string>
+  <string name="share_summary_email_title">Chia sẻ với</string>
   <string name="share_summary_vault_title">Kho lưu trữ</string>
-  <string name="share_summary_permissions_title">Access level</string>
+  <string name="share_summary_permissions_title">Cấp độ truy cập</string>
   <string name="share_manage_vault_share_with_more_people">Chia sẽ với nhiều người hơn</string>
   <string name="share_manage_vault_item_count">%d nội dung</string>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Đã gửi lời mời</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Đang chờ tài khoản đươc tạo</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Xác nhận truy cập</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Lời mời</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Thành viên</string>
   <string name="share_manage_vault_current_user_indicator">Bạn</string>
   <string name="share_role_can_view">Có thể xem</string>
   <string name="share_role_can_edit">Cho phép chỉnh sửa</string>
@@ -67,15 +72,17 @@
   <string name="share_role_owner">Chủ sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership">Chuyển quyền sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Bạn không thể chuyển quyền sở hữu kho lưu trữ cuối cùng của mình.</string>
-  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
-  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
-  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
+  <string name="sharing_bottomsheet_remove_access">Thu hồi quyền truy cập</string>
+  <string name="sharing_bottomsheet_resend_invite">Gửi lại lời mời</string>
+  <string name="sharing_bottomsheet_cancel_invite">Hủy lời mời</string>
   <string name="sharing_transfer_ownership_confirm_title">Chuyển quyền sở hữu</string>
-  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
+  <string name="sharing_transfer_ownership_confirm_message">Chuyển quyền sở hữu của kho lưu trữ này cho %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Đã hủy lời mời</string>
   <string name="sharing_snackbar_cancel_invite_error">Lỗi khi hủy lời mời</string>
   <string name="sharing_snackbar_resend_invite_success">Đã gửi lại lời mời</string>
   <string name="sharing_snackbar_resend_invite_error">Lỗi khi gửi lại lời mời</string>
+  <string name="sharing_snackbar_confirm_invite_success">Đã xác nhận lời mời</string>
+  <string name="sharing_snackbar_confirm_invite_error">Lỗi khi xác nhận lời mời</string>
   <string name="sharing_snackbar_too_many_invites_sent">Địa chỉ đã được mời quá nhiều lần</string>
   <string name="sharing_snackbar_transfer_ownership_success">Đã chuyển quyền sở hữu</string>
   <string name="sharing_snackbar_transfer_ownership_error">Lỗi khi chuyển quyền sở hữu</string>

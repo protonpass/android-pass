@@ -7,7 +7,7 @@
   <string name="action_login">Identifiant</string>
   <string name="action_alias">Alias</string>
   <string name="action_note">Note</string>
-  <string name="action_credit_card">Carte de crédit</string>
+  <string name="action_credit_card">Carte de paiement</string>
   <string name="action_password">Mot de passe</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Ajouter des informations d\'identifiant pour une application ou un site</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Créez un alias d\'adresse e-mail que vous utiliserez dans les nouvelles applications.</string>
@@ -29,7 +29,7 @@
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Utiliser %s</string>
   <string name="create_login_item_creation_error">Impossible de créer l\'identifiant</string>
   <string name="create_login_item_update_error">Impossible de mettre à jour l\'identifiant</string>
-  <string name="create_login_init_error">L\'identifiant n\'a pas pu être initialisé.</string>
+  <string name="create_login_init_error">Problème de récupération des informations de l\'identifiant</string>
   <string name="create_login_invalid_totp">Les données A2F ne sont pas valides.</string>
   <string name="login_created">L\'identifiant a été créé.</string>
   <string name="bottomsheet_modify_alias_title">Modifier l\'alias</string>
@@ -52,7 +52,7 @@
   <string name="title_create_note">Créer une note</string>
   <string name="create_note_item_creation_error">Impossible de créer une note</string>
   <string name="create_note_item_update_error">Impossible de mettre à jour la note</string>
-  <string name="create_note_init_error">La note n\'a pas pu être initialisée.</string>
+  <string name="create_note_init_error">Problème de récupération des informations de la note</string>
   <string name="note_created">La note a été créée.</string>
   <!-- Create Alias -->
   <string name="title_create_alias">Créer un alias</string>
@@ -70,14 +70,14 @@
   <string name="create_alias_email_not_validated_error">Vous ne pouvez pas créer d\'alias avant d\'avoir validé votre adresse e-mail.</string>
   <string name="alias_rate_limited">Trop d\'alias ont été créés récemment.</string>
   <string name="create_alias_item_update_error">Impossible de mettre à jour l\'alias</string>
-  <string name="create_alias_init_error">L\'alias n\'a pas pu être initialisé.</string>
+  <string name="create_alias_init_error">Problème de récupération des informations de l\'alias</string>
   <string name="alias_created">L\'alias a été créé.</string>
   <string name="cannot_retrieve_alias_options">Impossible de récupérer les options d\'alias</string>
   <string name="alias_mailbox_dialog_title">Transférer vers</string>
   <!-- Create note -->
   <string name="note_hint">Note</string>
   <!-- Create Credit Card -->
-  <string name="title_create_credit_card">Créer une carte de crédit</string>
+  <string name="title_create_credit_card">Créer une carte de paiement</string>
   <string name="field_cardholder_name_title">Nom du titulaire de la carte</string>
   <string name="field_cardholder_name_hint">Nom complet</string>
   <string name="field_card_number_title">Numéro de la carte</string>
@@ -89,10 +89,10 @@
   <string name="field_card_expiration_date_title">Expire le</string>
   <string name="field_card_expiration_date_hint">MM / AAAA</string>
   <string name="field_card_expiration_date_error">La date d\'expiration n\'est pas valide.</string>
-  <string name="create_credit_card_item_creation_error">Impossible de créer la carte de crédit</string>
-  <string name="create_credit_card_item_creation_success">La carte de crédit a été créée.</string>
-  <string name="credit_card_init_error">La carte de paiement n\'a pas pu être initialisée.</string>
-  <string name="credit_card_item_update_error">Impossible de mettre à jour la carte de crédit</string>
+  <string name="create_credit_card_item_creation_error">Impossible de créer la carte de paiement</string>
+  <string name="create_credit_card_item_creation_success">La carte de paiement a été créée.</string>
+  <string name="credit_card_init_error">Problème de récupération des informations de la carte de paiement</string>
+  <string name="credit_card_item_update_error">Impossible de mettre à jour la carte de paiement</string>
   <!--  Common create items  -->
   <string name="changes_saved">Les modifications ont été enregistrées.</string>
   <!--  Totp  -->

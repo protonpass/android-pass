@@ -8,7 +8,7 @@
   <string name="snackbar_delete_vault_success">Cassaforte eliminata</string>
   <string name="snackbar_delete_vault_error">Cassaforte non eliminata</string>
   <string name="snackbar_leave_vault_success">Cassaforte abbandonata</string>
-  <string name="snackbar_leave_vault_error">Non puoi abbandonare la cassaforte</string>
+  <string name="snackbar_leave_vault_error">Impossibile abbandonare la cassaforte</string>
   <string name="snackbar_retrieve_vault_error">Cassaforte non trovata</string>
   <string name="snackbar_find_vault_error">Impossibile trovare la cassaforte selezionata</string>
   <string name="snackbar_get_vault_list_error">Impossibile caricare la lista delle casseforti</string>

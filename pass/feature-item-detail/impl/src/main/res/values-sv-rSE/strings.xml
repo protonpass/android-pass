@@ -3,7 +3,7 @@
   <string name="action_open">Öppna</string>
   <string name="action_copy">Kopiera</string>
   <!-- Detail -->
-  <string name="detail_init_error">Kunde inte initiera elementet</string>
+  <string name="detail_init_error">Problem att hämta objektdetaljer</string>
   <string name="top_bar_edit_button_text">Redigera</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias-adress</string>

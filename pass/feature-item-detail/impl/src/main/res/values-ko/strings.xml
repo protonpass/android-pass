@@ -3,7 +3,7 @@
   <string name="action_open">열기</string>
   <string name="action_copy">복사</string>
   <!-- Detail -->
-  <string name="detail_init_error">요소를 구성할 수 없습니다</string>
+  <string name="detail_init_error">Problem retrieving item details</string>
   <string name="top_bar_edit_button_text">편집</string>
   <!-- Alias details -->
   <string name="field_alias_title">별명 주소</string>
@@ -12,8 +12,8 @@
   <string name="alias_create_login_from_alias">로그인 생성</string>
   <!-- Note details -->
   <string name="field_detail_note_title">알림</string>
-  <string name="note_detail_copy_note_to_clipboard">노트 복사</string>
-  <string name="note_copied_to_clipboard">노트가 클립보드로 복사되었습니다.</string>
+  <string name="note_detail_copy_note_to_clipboard">메모 복사</string>
+  <string name="note_copied_to_clipboard">메모가 클립보드로 복사되었습니다</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">사용자 이름 복사됨</string>
   <string name="password_copied_to_clipboard">비밀번호 복사됨</string>

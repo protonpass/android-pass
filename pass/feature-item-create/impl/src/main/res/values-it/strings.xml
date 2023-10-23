@@ -2,7 +2,7 @@
 <resources>
   <!-- Actions -->
   <string name="action_save">Salva</string>
-  <string name="action_remove">Elimina</string>
+  <string name="action_remove">Rimuovi</string>
   <!-- Create item bottomsheet -->
   <string name="action_login">Login</string>
   <string name="action_alias">Alias</string>
@@ -29,7 +29,7 @@
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Usa %s</string>
   <string name="create_login_item_creation_error">Impossibile creare il login</string>
   <string name="create_login_item_update_error">Impossibile aggiornare il login</string>
-  <string name="create_login_init_error">Impossibile inizializzare il login</string>
+  <string name="create_login_init_error">Problema nel recupero dei dettagli del login</string>
   <string name="create_login_invalid_totp">Il contenuto 2FA non è valido</string>
   <string name="login_created">Login creato</string>
   <string name="bottomsheet_modify_alias_title">Modifica alias</string>
@@ -52,7 +52,7 @@
   <string name="title_create_note">Crea nota</string>
   <string name="create_note_item_creation_error">Impossibile creare la nota</string>
   <string name="create_note_item_update_error">Impossibile aggiornare la nota</string>
-  <string name="create_note_init_error">Impossibile inizializzare la nota</string>
+  <string name="create_note_init_error">Problema nel recupero dei dettagli della nota</string>
   <string name="note_created">Nota creata</string>
   <!-- Create Alias -->
   <string name="title_create_alias">Crea alias</string>
@@ -70,7 +70,7 @@
   <string name="create_alias_email_not_validated_error">Non puoi creare alias senza aver prima verificato il tuo indirizzo email</string>
   <string name="alias_rate_limited">Troppi alias testati recentemente</string>
   <string name="create_alias_item_update_error">Impossibile aggiornare l\'Alias</string>
-  <string name="create_alias_init_error">Impossibile inizializzare l\'alias</string>
+  <string name="create_alias_init_error">Problema nel recupero dei dettagli dell\'alias</string>
   <string name="alias_created">Alias creato</string>
   <string name="cannot_retrieve_alias_options">Impossibile recuperare le opzioni degli alias</string>
   <string name="alias_mailbox_dialog_title">Inoltra a</string>
@@ -91,7 +91,7 @@
   <string name="field_card_expiration_date_error">La data di scadenza non è valida</string>
   <string name="create_credit_card_item_creation_error">Impossibile creare la carta di credito</string>
   <string name="create_credit_card_item_creation_success">Carta di credito creata</string>
-  <string name="credit_card_init_error">Impossibile inizializzare la carta di credito</string>
+  <string name="credit_card_init_error">Problema nel recupero dei dettagli della carta di credito</string>
   <string name="credit_card_item_update_error">Impossibile aggiornare la carta di credito</string>
   <!--  Common create items  -->
   <string name="changes_saved">Modifiche salvate</string>

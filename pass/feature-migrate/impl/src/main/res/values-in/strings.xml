@@ -6,6 +6,6 @@
   <string name="migrate_item_success_snackbar">Item dipindahkan</string>
   <string name="migrate_item_error_snackbar">Terdapat kesalahan dalam memindahkan item</string>
   <string name="migrate_all_items_success_snackbar">Seluruh item dipindahkan</string>
-  <string name="migrate_all_items_error_snackbar">Terjadi kesalahan memindahkan semua item brankas</string>
+  <string name="migrate_all_items_error_snackbar">Terdapat kesalahan dalam memindahkan seluruh item brankas</string>
   <string name="migrate_init_error_snackbar">Layar migrasi tidak dapat dipersiapkan</string>
 </resources>

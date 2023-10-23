@@ -23,7 +23,7 @@
   <string name="home_notification_permission_banner_text">Ative as notificações push para ser informado quando outros compartilharem um cofre com você</string>
   <string name="home_notification_permission_banner_settings">Ativar permissão ›</string>
   <string name="home_invite_banner_title">Cofre compartilhado com você</string>
-  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
+  <string name="home_invite_banner_subtitle">Você recebeu convite para um cofre compartilhado. Toque para obter detalhes.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar senha</string>
   <string name="bottomsheet_copy_username">Copiar nome de usuário</string>

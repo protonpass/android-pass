@@ -3,7 +3,7 @@
   <string name="action_open">Mở</string>
   <string name="action_copy">Sao chép</string>
   <!-- Detail -->
-  <string name="detail_init_error">Không thể thiết lập thành phần</string>
+  <string name="detail_init_error">Problem retrieving item details</string>
   <string name="top_bar_edit_button_text">Sửa</string>
   <!-- Alias details -->
   <string name="field_alias_title">Địa chỉ bí danh</string>

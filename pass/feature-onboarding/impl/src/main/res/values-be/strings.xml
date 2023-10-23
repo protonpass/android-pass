@@ -10,6 +10,9 @@
   <string name="on_boarding_last_page_title">Кантралюйце, што трапляе ў вашу паштовую скрыню</string>
   <string name="on_boarding_last_page_button">Пачаць выкарыстоўваць Proton Pass</string>
   <string name="on_boarding_skip">Не зараз</string>
+  <string name="on_boarding_pending_invite_content">У мэтах бяспекі, вам неабходна пацвердзіць свой доступ.</string>
+  <string name="on_boarding_pending_invite_title">Чаканне доступу да абагуленых даных</string>
+  <string name="on_boarding_pending_invite_button">Даведацца больш пра Proton Pass</string>
   <string name="error_biometry_failed_to_start">Немагчыма запусціць біяметрычную аўтэнтыфікацыю</string>
   <string name="error_biometry_failed_to_authenticate">Не ўдалося аўтэнтыфікаваць</string>
   <string name="settings_fingerprint_lock_enabled">Разблакіроўка адбіткам пальца ўключана</string>

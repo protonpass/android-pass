@@ -3,7 +3,7 @@
   <string name="action_open">Otwórz</string>
   <string name="action_copy">Kopiuj</string>
   <!-- Detail -->
-  <string name="detail_init_error">Nie można zainicjować tworzenia elementu</string>
+  <string name="detail_init_error">Wystąpił problem podczas pobierania szczegółów elementu</string>
   <string name="top_bar_edit_button_text">Edytuj</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias</string>

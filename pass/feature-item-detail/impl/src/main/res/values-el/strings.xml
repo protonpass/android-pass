@@ -3,7 +3,7 @@
   <string name="action_open">Άνοιγμα</string>
   <string name="action_copy">Αντιγραφή</string>
   <!-- Detail -->
-  <string name="detail_init_error">Δεν ήταν δυνατή η προετοιμασία του στοιχείου</string>
+  <string name="detail_init_error">Πρόβλημα ανάκτησης λεπτομερειών στοιχείου</string>
   <string name="top_bar_edit_button_text">Επεξεργασία</string>
   <!-- Alias details -->
   <string name="field_alias_title">Ψευδώνυμη διεύθυνση</string>

@@ -3,7 +3,7 @@
   <string name="action_open">Deschidere</string>
   <string name="action_copy">Copiere</string>
   <!-- Detail -->
-  <string name="detail_init_error">Elementul nu s-a putut inițializa.</string>
+  <string name="detail_init_error">Problem retrieving item details</string>
   <string name="top_bar_edit_button_text">Editare</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adresă alias</string>

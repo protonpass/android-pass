@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Атрымлівайце важныя абнаўленні</string>
   <string name="home_notification_permission_banner_text">Уключыце push-апавяшчэнні, каб быць у курсе, калі іншыя абагуляюць сховішча з вамі.</string>
   <string name="home_notification_permission_banner_settings">Уключыць дазволы ›</string>
-  <string name="home_invite_banner_title">Vault shared with you</string>
-  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
+  <string name="home_invite_banner_title">Сховішча абагуленае з вамі</string>
+  <string name="home_invite_banner_subtitle">Вас запрасілі ў абагуленае сховішча. Націсніце для падрабязнасцяў.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Скапіяваць пароль</string>
   <string name="bottomsheet_copy_username">Скапіяваць імя карыстальніка</string>

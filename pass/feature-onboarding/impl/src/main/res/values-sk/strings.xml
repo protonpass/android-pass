@@ -10,6 +10,9 @@
   <string name="on_boarding_last_page_title">Získajte kontrolu nad tým, čo sa dostane do vašej doručenej pošty</string>
   <string name="on_boarding_last_page_button">Začať používať Proton Pass</string>
   <string name="on_boarding_skip">Teraz nie</string>
+  <string name="on_boarding_pending_invite_content">Z bezpečnostných dôvodov musí byť váš prístup potvrdený.</string>
+  <string name="on_boarding_pending_invite_title">Čaká sa na prístup k zdieľaným údajom</string>
+  <string name="on_boarding_pending_invite_button">Ďalšie informácie o službe Proton Pass</string>
   <string name="error_biometry_failed_to_start">Nepodarilo sa spustiť biometrickú autentifikáciu</string>
   <string name="error_biometry_failed_to_authenticate">Autentifikácia zlyhala</string>
   <string name="settings_fingerprint_lock_enabled">Odomknutie odtlačkom povolené</string>

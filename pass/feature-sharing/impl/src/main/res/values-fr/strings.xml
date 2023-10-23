@@ -35,6 +35,7 @@
   <string name="share_with_title">Partager avec</string>
   <string name="share_with_email_hint">Adresse e-mail</string>
   <string name="share_with_email_error">L\'adresse e-mail n\'est pas valide.</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Les informations concernant l\'utilisateur invité ne peuvent pas être récupérées.</string>
   <string name="share_permissions_title">Définir le niveau d\'accès</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vous invite à accéder à des éléments dans</string>
   <string name="sharing_join_shared_vault">Rejoindre et synchroniser</string>
@@ -62,6 +63,10 @@
   <string name="share_manage_vault_share_with_more_people">Partager avec d\'autres personnes</string>
   <string name="share_manage_vault_item_count">%d éléments</string>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">L\'invitation a été envoyée.</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">En attente de la création d\'un compte</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirmer l\'accès</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitations</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membres</string>
   <string name="share_manage_vault_current_user_indicator">Vous</string>
   <string name="share_role_can_view">Consulter</string>
   <string name="share_role_can_edit">Modifier</string>
@@ -78,6 +83,8 @@
   <string name="sharing_snackbar_cancel_invite_error">Une erreur s\'est produite lors de l\'annulation de l\'invitation.</string>
   <string name="sharing_snackbar_resend_invite_success">L\'invitation a été renvoyée.</string>
   <string name="sharing_snackbar_resend_invite_error">Une erreur s\'est produite lors du renvoi de l\'invitation.</string>
+  <string name="sharing_snackbar_confirm_invite_success">Invitation confirmée</string>
+  <string name="sharing_snackbar_confirm_invite_error">Une erreur s\'est produite lors de la confirmation de l\'invitation.</string>
   <string name="sharing_snackbar_too_many_invites_sent">Trop d\'invitations ont été envoyées à cette adresse.</string>
   <string name="sharing_snackbar_transfer_ownership_success">La propriété a été transférée.</string>
   <string name="sharing_snackbar_transfer_ownership_error">Une erreur s\'est produite lors du transfert de propriété.</string>

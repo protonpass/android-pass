@@ -23,7 +23,7 @@
   <string name="home_notification_permission_banner_text">Habiliteu les notificacions push per rebre una notificació quan altres persones comparteixin una caixa forta amb vosaltres.</string>
   <string name="home_notification_permission_banner_settings">Habilitar permisos ›</string>
   <string name="home_invite_banner_title">Caixa forta compartida amb vosaltres</string>
-  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
+  <string name="home_invite_banner_subtitle">Esteu convidat a una caixa forta compartida. Toqueu per obtenir més informació.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia la contrasenya</string>
   <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>

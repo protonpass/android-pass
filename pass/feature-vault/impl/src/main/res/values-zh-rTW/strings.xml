@@ -37,6 +37,6 @@
   <string name="bottomsheet_manage_access">管理存取權限</string>
   <string name="bottomsheet_select_vault_read_only">您只能讀取</string>
   <string name="bottomsheet_select_vault_not_primary_vault">您僅能在主保管庫建立項目</string>
-  <string name="bottomsheet_select_vault_only_oldest_vaults">You can only create items in your oldest vaults</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">您僅能在最舊的保管庫建立項目</string>
   <string name="vault_title">保管庫</string>
 </resources>

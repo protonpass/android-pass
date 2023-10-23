@@ -3,7 +3,7 @@
   <string name="action_open">Obre</string>
   <string name="action_copy">Copia</string>
   <!-- Detail -->
-  <string name="detail_init_error">No s\'ha pogut inicialitzar l\'element.</string>
+  <string name="detail_init_error">Problem retrieving item details</string>
   <string name="top_bar_edit_button_text">Edita</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adreça d\'àlies</string>

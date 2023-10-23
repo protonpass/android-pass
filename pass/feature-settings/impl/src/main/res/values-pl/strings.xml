@@ -29,7 +29,7 @@
   <string name="settings_privacy_section_title">Prywatność</string>
   <string name="settings_use_favicons_preference_title">Pokaż ikony stron internetowych</string>
   <string name="settings_use_favicons_preference_subtitle">Zdecyduj, czy chcesz wyświetlać ikony stron internetowych.</string>
-  <string name="settings_allow_screenshots_preference_title">Zezwalaj za zrzuty ekranu</string>
+  <string name="settings_allow_screenshots_preference_title">Zezwalaj na zrzuty ekranu</string>
   <string name="settings_allow_screenshots_preference_subtitle">Wykonywanie w aplikacji zrzutów ekranu będzie możliwe.</string>
   <string name="settings_clear_icon_cache_success">Pamięć podręczna ikon została wyczyszczona</string>
   <string name="settings_clear_icon_cache_error">Nie można wyczyścić pamięci podręcznej ikon</string>

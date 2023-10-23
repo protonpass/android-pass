@@ -3,7 +3,7 @@
   <string name="action_open">Buka</string>
   <string name="action_copy">Salin</string>
   <!-- Detail -->
-  <string name="detail_init_error">Elemen tidak dapat diinisialisasi</string>
+  <string name="detail_init_error">Terdapat masalah dalam memperoleh rincian item</string>
   <string name="top_bar_edit_button_text">Sunting</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alamat alias</string>
@@ -37,8 +37,8 @@
   <string name="action_reveal_number">Perlihatkan angka</string>
   <string name="action_conceal_number">Sembunyikan angka</string>
   <string name="more_info_created">Dibuat:</string>
-  <string name="more_info_modified">Dimodifikasi</string>
-  <string name="more_info_autofilled">Diisi secara otomatis</string>
+  <string name="more_info_modified">Diubah:</string>
+  <string name="more_info_autofilled">Diisi otomatis:</string>
   <string name="more_info_title">Info lebih lanjut</string>
   <string name="more_info_icon">Ikon info lebih lanjut</string>
   <plurals name="more_info_modified_times">
@@ -57,7 +57,7 @@
   <string name="credit_card_cvv_field_name">Nomor verifikasi</string>
   <string name="credit_card_pin_field_name">Kode PIN</string>
   <string name="credit_card_expiration_date_field_name">Kedaluwarsa pada</string>
-  <string name="credit_card_cardholder_copied_to_clipboard">Nama pemegang kartu disalin ke papan klip</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Nama pemilik kartu disalin ke papan klip</string>
   <string name="credit_card_number_copied_to_clipboard">Nomor kartu disalin ke papan klip</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Nomor verifikasi disalin ke papan klip</string>
   <!-- Bottomsheet -->

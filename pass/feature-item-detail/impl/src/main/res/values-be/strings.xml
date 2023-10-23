@@ -3,7 +3,7 @@
   <string name="action_open">Адкрыць</string>
   <string name="action_copy">Скапіяваць</string>
   <!-- Detail -->
-  <string name="detail_init_error">Немагчыма ініцыялізаваць элемент</string>
+  <string name="detail_init_error">Праблема пры атрыманні падрабязнасцяў элемента</string>
   <string name="top_bar_edit_button_text">Рэдагаваць</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адрас псеўданіма</string>

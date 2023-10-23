@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Continuare</string>
-  <string name="sharing_can_view">Viewer</string>
+  <string name="sharing_can_view">Cititor</string>
   <string name="sharing_can_edit">Editor</string>
-  <string name="sharing_can_manage">Admin</string>
+  <string name="sharing_can_manage">Administrator</string>
   <string name="sharing_can_view_description">Poate vizualiza articolele din acest seif.</string>
-  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
+  <string name="sharing_can_edit_description">Poate crea, edita, șterge și exporta articole din acest seif.</string>
   <string name="sharing_can_manage_description">Poate acorda și anul accesul la acest seif.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d articol</item>
@@ -37,8 +37,9 @@
   <string name="share_with_title">Partajare cu</string>
   <string name="share_with_email_hint">Adresa de e-mail</string>
   <string name="share_with_email_error">Adresă de e-mail nevalidă.</string>
-  <string name="share_permissions_title">Set access level</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Nu se pot prelua informațiile utilizatorului invitat.</string>
+  <string name="share_permissions_title">Setare nivel de acces</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vă invită să accesați articolele din</string>
   <string name="sharing_join_shared_vault">Alăturare și sincronizare</string>
   <string name="sharing_reject_invitation">Refuzare invitație</string>
   <string name="sharing_snackbar_get_invite_error">Nu s-a putut primi invitația.</string>
@@ -54,16 +55,20 @@
   <string name="sharing_snackbar_change_permission_error">Nu s-au putut modifica permisiunile.</string>
   <string name="sharing_snackbar_remove_member_success">Membrul a fost eliminat de la seif.</string>
   <string name="sharing_snackbar_remove_member_error">Nu a putut fi eliminat de la seif.</string>
-  <string name="share_summary_title">Review and share</string>
+  <string name="share_summary_title">Revizuire și partajare</string>
   <string name="share_summary_subtitle">Sunteți pe cale să-i invitați pe %1$s în %2$s. Ei vor obține acces la %3$s și vor putea să %4$s în acest seif.</string>
   <string name="share_summary_vault">seiful %s</string>
   <string name="share_summary_share_vault">Partajare seif</string>
-  <string name="share_summary_email_title">Share with</string>
+  <string name="share_summary_email_title">Partajare cu</string>
   <string name="share_summary_vault_title">Seif</string>
-  <string name="share_summary_permissions_title">Access level</string>
+  <string name="share_summary_permissions_title">Nivel de acces</string>
   <string name="share_manage_vault_share_with_more_people">Partajați cu mai mulți</string>
   <string name="share_manage_vault_item_count">%d articole</string>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitați trimisă</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Creare cont în așteptare</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirmare acces</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitații</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membri</string>
   <string name="share_manage_vault_current_user_indicator">Dvs.</string>
   <string name="share_role_can_view">Poate vedea</string>
   <string name="share_role_can_edit">Poate edita</string>
@@ -71,15 +76,17 @@
   <string name="share_role_owner">Proprietar</string>
   <string name="sharing_bottomsheet_transfer_ownership">Schimbare proprietar</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nu puteți transfera ultimul seif deținut.</string>
-  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
-  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
-  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
+  <string name="sharing_bottomsheet_remove_access">Revocare acces</string>
+  <string name="sharing_bottomsheet_resend_invite">Retrimitere invitație</string>
+  <string name="sharing_bottomsheet_cancel_invite">Anulare invitație</string>
   <string name="sharing_transfer_ownership_confirm_title">Schimbare proprietar</string>
-  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
+  <string name="sharing_transfer_ownership_confirm_message">Transferați proprietatea acestui seif către %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitație anulată</string>
   <string name="sharing_snackbar_cancel_invite_error">Eroare anulare invitație</string>
   <string name="sharing_snackbar_resend_invite_success">Invitație retrimisă</string>
   <string name="sharing_snackbar_resend_invite_error">Eroare la retrimiterea invitației.</string>
+  <string name="sharing_snackbar_confirm_invite_success">Invitație confirmată</string>
+  <string name="sharing_snackbar_confirm_invite_error">Eroare confirmare invitație.</string>
   <string name="sharing_snackbar_too_many_invites_sent">Adresa a fost invitată de prea multe ori.</string>
   <string name="sharing_snackbar_transfer_ownership_success">Proprietar transferat</string>
   <string name="sharing_snackbar_transfer_ownership_error">Eroare la schimbarea proprietarului.</string>

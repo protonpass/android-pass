@@ -32,14 +32,15 @@
     <item quantity="one">%d jäsen</item>
     <item quantity="other">%d jäsentä</item>
   </plurals>
-  <string name="share_with_title">Jaa käyttäjille</string>
+  <string name="share_with_title">Jaa käyttäjälle</string>
   <string name="share_with_email_hint">Sähköpostiosoite</string>
   <string name="share_with_email_error">Virheellinen sähköpostiosoite</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Kutsutun käyttäjän tietoja ei voitu noutaa</string>
   <string name="share_permissions_title">Aseta käyttöoikeustaso</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s kutsui sinut käyttämään kohteita holvista</string>
   <string name="sharing_join_shared_vault">Liity ja synkronoi</string>
   <string name="sharing_reject_invitation">Hylkää kutsu</string>
-  <string name="sharing_snackbar_get_invite_error">Kutsua ei voitu vastaanottaa</string>
+  <string name="sharing_snackbar_get_invite_error">Kutsua ei saatu</string>
   <string name="sharing_snackbar_invite_accepted">Kutsu hyväksytty</string>
   <string name="sharing_snackbar_invite_accept_error">Virhe hyväksyttäessä kutsua</string>
   <string name="sharing_snackbar_invite_rejected">Kutsu hylätty</string>
@@ -62,6 +63,10 @@
   <string name="share_manage_vault_share_with_more_people">Jaa useammalle henkilölle</string>
   <string name="share_manage_vault_item_count">%d kohteen</string>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Kutsu lähetettiin</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Tilin luomista odotetaan</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Vahvista pääsy</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Kutsut</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Jäsenet</string>
   <string name="share_manage_vault_current_user_indicator">Sinä</string>
   <string name="share_role_can_view">Voi tarkastella</string>
   <string name="share_role_can_edit">Voi muokata</string>
@@ -78,6 +83,8 @@
   <string name="sharing_snackbar_cancel_invite_error">Virhe peruttaessa kutsua</string>
   <string name="sharing_snackbar_resend_invite_success">Kutsu lähetettiin uudelleen</string>
   <string name="sharing_snackbar_resend_invite_error">Virhe lähettäessä kutsua uudelleen</string>
+  <string name="sharing_snackbar_confirm_invite_success">Kutsu vahvistettu</string>
+  <string name="sharing_snackbar_confirm_invite_error">Virhe kutsun vahvistamisessa</string>
   <string name="sharing_snackbar_too_many_invites_sent">Osoite on kutsuttu liian monta kertaa</string>
   <string name="sharing_snackbar_transfer_ownership_success">Omistajuus siirrettiin</string>
   <string name="sharing_snackbar_transfer_ownership_error">Virhe siirrettäessä omistajuutta</string>

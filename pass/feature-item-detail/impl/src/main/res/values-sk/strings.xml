@@ -3,12 +3,12 @@
   <string name="action_open">Otvoriť</string>
   <string name="action_copy">Kopírovať</string>
   <!-- Detail -->
-  <string name="detail_init_error">Nepodarilo sa inicializovať prvok</string>
+  <string name="detail_init_error">Problém s načítaním podrobností položky</string>
   <string name="top_bar_edit_button_text">Upraviť</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adresa aliasu</string>
   <string name="alias_copied_to_clipboard">Alias skopírovaný</string>
-  <string name="alias_detail_field_mailboxes_title">Preposlať na</string>
+  <string name="alias_detail_field_mailboxes_title">Preposiela na</string>
   <string name="alias_create_login_from_alias">Vytvoriť prihlásenie</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Poznámka</string>
@@ -42,24 +42,24 @@
   <string name="more_info_title">Viac informácií</string>
   <string name="more_info_icon">Ikona zistiť viac</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">%d -krát</item>
-    <item quantity="few">%d -krát</item>
-    <item quantity="many">%d -krát</item>
-    <item quantity="other">%d -krát</item>
+    <item quantity="one">Raz</item>
+    <item quantity="few">%d-krát</item>
+    <item quantity="many">%d-krát</item>
+    <item quantity="other">%d-krát</item>
   </plurals>
   <string name="more_info_last_time_modified">Naposledy, %s</string>
-  <string name="open_menu_icon_content_description">Tlačidlo otvoriť menu</string>
+  <string name="open_menu_icon_content_description">Tlačidlo otvorenia ponuky</string>
   <string name="mfa_limit_reached">2FA limit dosiahnutý</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>
-  <string name="custom_field_text_icon_description">Textové vlastné pole</string>
-  <string name="custom_field_hidden_icon_description">Skryté vlastné pole</string>
-  <string name="custom_field_totp_icon_description">2FA vlastné pole</string>
+  <string name="custom_field_text_icon_description">Vlastné textové pole</string>
+  <string name="custom_field_hidden_icon_description">Vlastné skryté pole</string>
+  <string name="custom_field_totp_icon_description">Vlastné 2FA pole</string>
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Meno držiteľa karty</string>
   <string name="credit_card_number_field_name">Číslo karty</string>
   <string name="credit_card_cvv_field_name">Overovacie číslo</string>
   <string name="credit_card_pin_field_name">PIN kód</string>
-  <string name="credit_card_expiration_date_field_name">Expiruje</string>
+  <string name="credit_card_expiration_date_field_name">Exspiruje</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Držiteľ karty skopírovaný do schránky</string>
   <string name="credit_card_number_copied_to_clipboard">Číslo karty skopírované do schránky</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Overovacie číslo skopírované do schránky</string>

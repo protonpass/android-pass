@@ -3,7 +3,7 @@
   <string name="action_open">გახსნა</string>
   <string name="action_copy">კოპირება</string>
   <!-- Detail -->
-  <string name="detail_init_error">ელემენტის ინიციალიზაცია შეუძლებელია</string>
+  <string name="detail_init_error">Problem retrieving item details</string>
   <string name="top_bar_edit_button_text">ჩასწორება</string>
   <!-- Alias details -->
   <string name="field_alias_title">ფსევდონიმის მისამართი</string>

@@ -10,6 +10,9 @@
   <string name="on_boarding_last_page_title">Kontroluj, co trafia do Twojej skrzynki odbiorczej</string>
   <string name="on_boarding_last_page_button">Zacznij korzystać z Proton Pass</string>
   <string name="on_boarding_skip">Nie teraz</string>
+  <string name="on_boarding_pending_invite_content">Ze względów bezpieczeństwa dostęp musi zostać potwierdzony.</string>
+  <string name="on_boarding_pending_invite_title">Oczekujący dostęp do udostępnionych danych</string>
+  <string name="on_boarding_pending_invite_button">Dowiedz się więcej o Proton Pass</string>
   <string name="error_biometry_failed_to_start">Nie można rozpocząć uwierzytelniania biometrycznego</string>
   <string name="error_biometry_failed_to_authenticate">Nie udało się uwierzytelnić</string>
   <string name="settings_fingerprint_lock_enabled">Odblokowywanie odciskiem palca zostało włączone</string>

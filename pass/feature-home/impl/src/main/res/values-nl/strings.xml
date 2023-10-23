@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Krijg belangrijke updates</string>
   <string name="home_notification_permission_banner_text">Schakel push notificaties in om geïnformeerd te worden wanneer iemand een kluis met u deelt.</string>
   <string name="home_notification_permission_banner_settings">Toestemming geven ›</string>
-  <string name="home_invite_banner_title">Vault shared with you</string>
-  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
+  <string name="home_invite_banner_title">Kluis gedeeld met u</string>
+  <string name="home_invite_banner_subtitle">U wordt uitgenodigd tot een gedeelte kluis. Klik voor meer details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Wachtwoord kopiëren</string>
   <string name="bottomsheet_copy_username">Gebruikersnaam kopiëren</string>

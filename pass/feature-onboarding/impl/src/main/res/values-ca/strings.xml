@@ -10,6 +10,9 @@
   <string name="on_boarding_last_page_title">Controleu què aterra a la safata d\'entrada</string>
   <string name="on_boarding_last_page_button">Comenceu a utilitzar Proton Pass</string>
   <string name="on_boarding_skip">Ara no</string>
+  <string name="on_boarding_pending_invite_content">For security reasons, your access needs to be confirmed.</string>
+  <string name="on_boarding_pending_invite_title">Pending access to the shared data</string>
+  <string name="on_boarding_pending_invite_button">Learn more about Proton Pass</string>
   <string name="error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
   <string name="error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
   <string name="settings_fingerprint_lock_enabled">S\'ha habilitat el desbloqueig per empremta digital</string>

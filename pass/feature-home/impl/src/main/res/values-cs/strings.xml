@@ -22,8 +22,8 @@
   <string name="home_notification_permission_banner_title">Získejte důležité aktualizace</string>
   <string name="home_notification_permission_banner_text">Povolte vyskakovací oznámení, abyste byli informováni, když s vámi ostatní sdílejí trezor.</string>
   <string name="home_notification_permission_banner_settings">Povolte oprávnění ›</string>
-  <string name="home_invite_banner_title">Vault shared with you</string>
-  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
+  <string name="home_invite_banner_title">Trezor sdílený s vámi</string>
+  <string name="home_invite_banner_subtitle">Jste pozváni do sdíleného trezoru. Klepnutím zobrazíte podrobnosti.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopírovat heslo</string>
   <string name="bottomsheet_copy_username">Kopírovat uživatelské jméno</string>

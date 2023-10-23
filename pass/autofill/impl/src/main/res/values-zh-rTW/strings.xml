@@ -10,7 +10,7 @@
   <string name="topbar_search_query_uninitialized">搜尋…</string>
   <string name="inline_suggestions_open_app">開啟 Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">您的方案僅允許將您主要保管庫中的項目用於自動填入用途。</string>
-  <string name="autofill_only_searching_in_oldest_vaults">Your plan only allows to use items in your oldest vaults for autofill purposes.</string>
+  <string name="autofill_only_searching_in_oldest_vaults">您的方案僅允許將您最舊保管庫中的項目用於自動填入用途。</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">給%s的建議</string>
   <string name="autofill_associate_web_app_name_dialog_title">請使用 \"%s\" 相同的詳細資訊以登入此應用程式或是網頁。</string>

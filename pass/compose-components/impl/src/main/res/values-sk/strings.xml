@@ -19,8 +19,8 @@
   <string name="bottomsheet_cancel_button">Zrušiť</string>
   <string name="bottomsheet_move_to_trash">Presunúť do koša</string>
   <!-- Actions -->
-  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ponuka akcií otvorenia položky</string>
-  <string name="action_upgrade_now">Upgradovať teraz</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otvoriť ponuku akcií položky</string>
+  <string name="action_upgrade_now">Navýšiť teraz</string>
   <!-- Empty list -->
   <string name="empty_list_title">Pridajte prvú položku</string>
   <string name="empty_search_results_title">Žiadne nájdené výsledky</string>
@@ -37,7 +37,7 @@
   <!-- Indicator that indicates lack of internet connectivity -->
   <string name="indicator_no_network">Offline</string>
   <!-- Icon content description -->
-  <string name="missing_app_icon_content_description">Ikona chýbajúcej aplikácie</string>
+  <string name="missing_app_icon_content_description">Chýbajúca ikona aplikácie</string>
   <string name="add_item_icon_content_description">Ikona pridania položky</string>
   <string name="navigate_back_icon_content_description">Ikona návratu späť</string>
   <!-- Vault selector -->
@@ -50,7 +50,7 @@
   <string name="most_recent_today">Dnes</string>
   <string name="most_recent_yesterday">Včera</string>
   <string name="most_recent_this_week">Tento týždeň</string>
-  <string name="most_recent_last_two_weeks">Posledné 2 týždne</string>
+  <string name="most_recent_last_two_weeks">Posledné dva týždne</string>
   <string name="most_recent_last_30_days">Posledných 30 dní</string>
   <string name="most_recent_last_60_days">Posledných 60 dní</string>
   <string name="most_recent_last_90_days">Posledných 90 dní</string>
@@ -74,6 +74,6 @@
   <!-- Upgrade -->
   <string name="upgrade">Upgradovať</string>
   <!-- Advanced options -->
-  <string name="show_advanced_options">Rozšírené možnosti</string>
-  <string name="hide_advanced_options">Skryť rozšírené možnosti</string>
+  <string name="show_advanced_options">Rozšírené nastavenia</string>
+  <string name="hide_advanced_options">Skryť rozšírené nastavenia</string>
 </resources>

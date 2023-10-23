@@ -3,7 +3,7 @@
   <string name="action_open">Öffnen</string>
   <string name="action_copy">Kopieren</string>
   <!-- Detail -->
-  <string name="detail_init_error">Fehler beim Initialisieren des Elements</string>
+  <string name="detail_init_error">Probleme Element Details zu erhalten</string>
   <string name="top_bar_edit_button_text">Bearbeiten</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias-Adresse</string>

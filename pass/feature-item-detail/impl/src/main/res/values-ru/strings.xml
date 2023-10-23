@@ -3,7 +3,7 @@
   <string name="action_open">Открыть</string>
   <string name="action_copy">Копировать</string>
   <!-- Detail -->
-  <string name="detail_init_error">Could not initialize the element</string>
+  <string name="detail_init_error">Problem retrieving item details</string>
   <string name="top_bar_edit_button_text">Изменить</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адрес псевдонима</string>

@@ -76,7 +76,8 @@ class OnBoardingScreenTest {
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             OnBoardingScreen(
-                onBoardingShown = { checker.call() }
+                onBoardingShown = { checker.call() },
+                onInvitationConfirmed = {}
             )
         }
 
@@ -95,7 +96,8 @@ class OnBoardingScreenTest {
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             OnBoardingScreen(
-                onBoardingShown = { checker.call() }
+                onBoardingShown = { checker.call() },
+                onInvitationConfirmed = {}
             )
         }
 
@@ -126,7 +128,8 @@ class OnBoardingScreenTest {
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             OnBoardingScreen(
-                onBoardingShown = { checker.call() }
+                onBoardingShown = { checker.call() },
+                onInvitationConfirmed = {}
             )
         }
 
@@ -157,7 +160,8 @@ class OnBoardingScreenTest {
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             OnBoardingScreen(
-                onBoardingShown = { checker.call() }
+                onBoardingShown = { checker.call() },
+                onInvitationConfirmed = {}
             )
         }
 

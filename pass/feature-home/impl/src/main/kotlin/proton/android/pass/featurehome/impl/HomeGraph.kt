@@ -64,4 +64,5 @@ sealed interface HomeNavigation {
     object Finish : HomeNavigation
     object OnBoarding : HomeNavigation
     object SyncDialog : HomeNavigation
+    object ConfirmedInvite : HomeNavigation
 }

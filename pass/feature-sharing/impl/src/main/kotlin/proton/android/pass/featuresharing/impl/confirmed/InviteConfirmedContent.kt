@@ -16,13 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.accept
+package proton.android.pass.featuresharing.impl.confirmed
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -30,28 +29,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.featuresharing.impl.R
-import proton.pass.domain.InviteToken
-import proton.pass.domain.PendingInvite
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
+import proton.android.pass.featuresharing.impl.accept.AcceptInviteButtons
+import proton.android.pass.featuresharing.impl.accept.AcceptInviteItemSyncStatus
 
 @Composable
-fun AcceptInviteContent(
+fun InviteConfirmedContent(
     modifier: Modifier = Modifier,
-    state: AcceptInviteUiContent.Content,
+    state: InviteConfirmedUiContent.Content,
     onConfirm: () -> Unit,
     onReject: () -> Unit
 ) {
@@ -62,9 +56,10 @@ fun AcceptInviteContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.sharing_invitation_from, invite.inviterEmail),
-            style = PassTheme.typography.body3Norm(),
-            color = PassTheme.colors.textNorm
+            text = stringResource(R.string.sharing_invitation_access_confirmed_title),
+            style = ProtonTheme.typography.headlineNorm,
+            color = PassTheme.colors.textNorm,
+            textAlign = TextAlign.Center
         )
 
         VaultIcon(
@@ -105,52 +100,19 @@ fun AcceptInviteContent(
             isRejectLoading = state.buttonsState.rejectLoading,
             areButtonsEnabled = state.buttonsState.enabled,
             showReject = !state.buttonsState.hideReject,
+            confirmText = stringResource(R.string.sharing_invitation_access_confirmed_accept),
+            rejectText = stringResource(R.string.sharing_invitation_access_confirmed_close),
             onConfirm = onConfirm,
             onReject = onReject
         )
 
-        AnimatedVisibility(visible = state.progressState is AcceptInviteProgressState.Show) {
-            if (state.progressState is AcceptInviteProgressState.Show) {
+        AnimatedVisibility(visible = state.progressState is InviteConfirmedProgressState.Show) {
+            if (state.progressState is InviteConfirmedProgressState.Show) {
                 AcceptInviteItemSyncStatus(
                     downloaded = state.progressState.downloaded,
                     total = state.progressState.total
                 )
             }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun AcceptInviteContentPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    PassTheme(isDark = input.first) {
-        Surface {
-            AcceptInviteContent(
-                state = AcceptInviteUiContent.Content(
-                    invite = PendingInvite(
-                        inviteToken = InviteToken(""),
-                        inviterEmail = "some@inviter.test",
-                        invitedAddressId = "invitedAddressId",
-                        memberCount = 2,
-                        itemCount = 3,
-                        name = "Some vault",
-                        icon = ShareIcon.Icon1,
-                        color = ShareColor.Color1,
-                        fromNewUser = false
-                    ),
-                    buttonsState = AcceptInviteButtonsState(
-                        confirmLoading = input.second,
-                        rejectLoading = false,
-                        enabled = !input.second,
-                        hideReject = false
-                    ),
-                    progressState = AcceptInviteProgressState.Hide
-                ),
-                onConfirm = {},
-                onReject = {}
-            )
         }
     }
 }

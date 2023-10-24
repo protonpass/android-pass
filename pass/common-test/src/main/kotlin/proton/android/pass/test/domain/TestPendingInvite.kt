@@ -36,5 +36,6 @@ object TestPendingInvite {
         name = name,
         icon = ShareIcon.Icon1,
         color = ShareColor.Color1,
+        fromNewUser = false
     )
 }

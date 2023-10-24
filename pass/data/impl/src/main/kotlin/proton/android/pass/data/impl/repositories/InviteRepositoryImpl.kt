@@ -25,6 +25,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.InviteRepository
+import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.impl.crypto.EncryptInviteKeys
 import proton.android.pass.data.impl.crypto.ReencryptInviteContents
 import proton.android.pass.data.impl.db.entities.InviteEntity
@@ -45,7 +46,8 @@ class InviteRepositoryImpl @Inject constructor(
     private val localDatasource: LocalInviteDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val reencryptInviteContents: ReencryptInviteContents,
-    private val encryptInviteKeys: EncryptInviteKeys
+    private val encryptInviteKeys: EncryptInviteKeys,
+    private val observeHasConfirmedInvite: ObserveHasConfirmedInvite
 ) : InviteRepository {
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = localDatasource
         .observeAllInvites(userId)
@@ -71,6 +73,11 @@ class InviteRepositoryImpl @Inject constructor(
         }
         val hasNewInvites = newInvites.isNotEmpty()
 
+        // Detect if we have a new confirmed invite
+        if (newInvites.any { it.fromNewUser }) {
+            observeHasConfirmedInvite.send(true)
+        }
+
         val invitesWithKeys: List<InviteAndKeysEntity> = newInvites.map { invite ->
             val vaultData = invite.vaultData
             val reencryptedInviteContent = reencryptInviteContents(userId, invite)
@@ -88,6 +95,7 @@ class InviteRepositoryImpl @Inject constructor(
                 shareContentFormatVersion = vaultData.contentFormatVersion,
                 createTime = invite.createTime,
                 encryptedContent = reencryptedInviteContent,
+                fromNewUser = invite.fromNewUser
             )
 
             val inviteKeys = invite.keys.map { key ->
@@ -139,7 +147,8 @@ class InviteRepositoryImpl @Inject constructor(
             itemCount = itemCount,
             name = decoded.name,
             icon = decoded.display.icon.toDomain(),
-            color = decoded.display.color.toDomain()
+            color = decoded.display.color.toDomain(),
+            fromNewUser = fromNewUser
         )
     }
 }

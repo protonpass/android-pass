@@ -65,7 +65,9 @@ data class InviteEntity(
     @ColumnInfo(name = Columns.INVITED_EMAIL, defaultValue = "")
     val invitedEmail: String,
     @ColumnInfo(name = Columns.INVITED_ADDRESS_ID, defaultValue = "")
-    val invitedAddressId: String
+    val invitedAddressId: String,
+    @ColumnInfo(name = Columns.FROM_NEW_USER, defaultValue = "0")
+    val fromNewUser: Boolean
 ) {
     object Columns {
         const val TOKEN = "token"
@@ -81,6 +83,7 @@ data class InviteEntity(
         const val SHARE_CONTENT_FORMAT_VERSION = "share_content_format_version"
         const val CREATE_TIME = "create_time"
         const val ENCRYPTED_CONTENT = "encrypted_content"
+        const val FROM_NEW_USER = "from_new_user"
     }
 
     companion object {

@@ -27,6 +27,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
@@ -99,8 +100,13 @@ class OnBoardingViewModel @Inject constructor(
             return false
         }
 
-        val value = observeUserAccessData().firstOrNull() ?: return false
-        return value.waitingNewUserInvites > 0
+        val userAccessData = runCatching {
+            observeUserAccessData().filterNotNull().first()
+        }.getOrElse {
+            PassLogger.w(TAG, it, "Error getting user access data")
+            return false
+        }
+        return userAccessData.waitingNewUserInvites > 0
     }
 
     private fun shouldShowAutofill(autofillStatus: AutofillSupportedStatus?): Boolean =

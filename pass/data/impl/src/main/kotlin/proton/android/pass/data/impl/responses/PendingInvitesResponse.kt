@@ -49,6 +49,8 @@ data class PendingInviteResponse(
     val keys: List<PendingInviteKey>,
     @SerialName("VaultData")
     val vaultData: InviteVaultData,
+    @SerialName("FromNewUser")
+    val fromNewUser: Boolean,
     @SerialName("CreateTime")
     val createTime: Long
 )

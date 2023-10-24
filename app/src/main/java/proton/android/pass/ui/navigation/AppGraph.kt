@@ -111,6 +111,7 @@ import proton.android.pass.featuresettings.impl.SettingsNavigation
 import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featuresharing.impl.AcceptInvite
+import proton.android.pass.featuresharing.impl.InviteConfirmed
 import proton.android.pass.featuresharing.impl.ManageVault
 import proton.android.pass.featuresharing.impl.REFRESH_MEMBER_LIST_FLAG
 import proton.android.pass.featuresharing.impl.SharingNavigation
@@ -236,6 +237,9 @@ fun NavGraphBuilder.appGraph(
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
                 HomeNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
                 HomeNavigation.OnBoarding -> appNavigator.navigate(OnBoarding)
+                HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
+                    destination = InviteConfirmed
+                )
             }
         }
     )
@@ -815,6 +819,7 @@ fun NavGraphBuilder.appGraph(
     )
     onBoardingGraph(
         onOnBoardingFinished = { appNavigator.navigate(Home) },
+        onInvitationConfirmed = { appNavigator.navigate(destination = InviteConfirmed) },
         onNavigateBack = { onNavigate(AppNavigation.Finish) }
     )
     featureFlagsGraph()

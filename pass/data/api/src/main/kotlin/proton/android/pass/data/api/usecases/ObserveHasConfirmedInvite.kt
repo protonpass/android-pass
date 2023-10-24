@@ -16,25 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.data.api.usecases
 
-@JvmInline
-value class InviteToken(val value: String)
+import kotlinx.coroutines.flow.Flow
 
-@JvmInline
-value class InviteId(val value: String)
-
-@JvmInline
-value class NewUserInviteId(val value: String)
-
-data class PendingInvite(
-    val inviteToken: InviteToken,
-    val inviterEmail: String,
-    val invitedAddressId: String,
-    val memberCount: Int,
-    val itemCount: Int,
-    val name: String,
-    val icon: ShareIcon,
-    val color: ShareColor,
-    val fromNewUser: Boolean
-)
+interface ObserveHasConfirmedInvite {
+    operator fun invoke(): Flow<Boolean>
+    suspend fun send(value: Boolean)
+    suspend fun clear()
+    fun tryClear()
+}

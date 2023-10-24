@@ -27,14 +27,24 @@ import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.InvitePending
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 
+sealed interface OnboardingEvent {
+    object Unknown : OnboardingEvent
+    object OnboardingCompleted : OnboardingEvent
+    object ConfirmedInvite : OnboardingEvent
+}
+
 @Stable
 data class OnBoardingUiState(
     val selectedPage: Int,
     val enabledPages: ImmutableList<OnBoardingPageName>,
-    val isCompleted: Boolean
+    val event: OnboardingEvent
 ) {
     companion object {
-        val Initial = OnBoardingUiState(0, persistentListOf(), false)
+        val Initial = OnBoardingUiState(
+            selectedPage = 0,
+            enabledPages = persistentListOf(),
+            event = OnboardingEvent.Unknown
+        )
     }
 }
 
@@ -45,10 +55,30 @@ enum class OnBoardingPageName {
 
 open class OnBoardingUiStatePreviewProvider : PreviewParameterProvider<OnBoardingUiState> {
     override val values: Sequence<OnBoardingUiState> = sequenceOf(
-        OnBoardingUiState(0, persistentListOf(Autofill), false),
-        OnBoardingUiState(0, persistentListOf(Fingerprint), false),
-        OnBoardingUiState(0, persistentListOf(Last), false),
-        OnBoardingUiState(0, persistentListOf(Autofill, Fingerprint), false),
-        OnBoardingUiState(0, persistentListOf(InvitePending), false)
+        OnBoardingUiState(
+            selectedPage = 0,
+            enabledPages = persistentListOf(Autofill),
+            event = OnboardingEvent.Unknown
+        ),
+        OnBoardingUiState(
+            selectedPage = 0,
+            enabledPages = persistentListOf(Fingerprint),
+            event = OnboardingEvent.Unknown
+        ),
+        OnBoardingUiState(
+            selectedPage = 0,
+            enabledPages = persistentListOf(Last),
+            event = OnboardingEvent.Unknown
+        ),
+        OnBoardingUiState(
+            selectedPage = 0,
+            enabledPages = persistentListOf(Autofill, Fingerprint),
+            event = OnboardingEvent.Unknown
+        ),
+        OnBoardingUiState(
+            selectedPage = 0,
+            enabledPages = persistentListOf(InvitePending),
+            event = OnboardingEvent.Unknown
+        )
     )
 }

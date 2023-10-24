@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.accept
+package proton.android.pass.featuresharing.impl.confirmed
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -47,55 +47,55 @@ import proton.pass.domain.PendingInvite
 import javax.inject.Inject
 
 @HiltViewModel
-class AcceptInviteViewModel @Inject constructor(
+class InviteConfirmedViewModel @Inject constructor(
     private val acceptInvite: AcceptInvite,
     private val rejectInvite: RejectInvite,
     private val snackbarDispatcher: SnackbarDispatcher,
     observeInvites: ObserveInvites,
 ) : ViewModel() {
 
-    private val buttonsFlow: MutableStateFlow<AcceptInviteButtonsState> =
-        MutableStateFlow(AcceptInviteButtonsState.Initial)
+    private val buttonsFlow: MutableStateFlow<InviteConfirmedButtonsState> =
+        MutableStateFlow(InviteConfirmedButtonsState.Initial)
 
-    private val progressFlow: MutableStateFlow<AcceptInviteProgressState> =
-        MutableStateFlow(AcceptInviteProgressState.Hide)
+    private val progressFlow: MutableStateFlow<InviteConfirmedProgressState> =
+        MutableStateFlow(InviteConfirmedProgressState.Hide)
 
-    private val eventFlow: MutableStateFlow<AcceptInviteEvent> =
-        MutableStateFlow(AcceptInviteEvent.Unknown)
+    private val eventFlow: MutableStateFlow<InviteConfirmedEvent> =
+        MutableStateFlow(InviteConfirmedEvent.Unknown)
 
     private val inviteFlow: Flow<LoadingResult<PendingInvite?>> = observeInvites()
-        .map { invites -> invites.firstOrNull() }
+        .map { invites -> invites.firstOrNull { invite -> invite.fromNewUser } }
         .take(1) // So when we accept the invite it doesn't re-emit
         .asLoadingResult()
         .onEach {
             if (it is LoadingResult.Error) {
                 PassLogger.w(TAG, it.exception, "Error loading invite")
-                eventFlow.update { AcceptInviteEvent.Close }
+                eventFlow.update { InviteConfirmedEvent.Close }
             }
         }
         .distinctUntilChanged()
 
-    val state: StateFlow<AcceptInviteUiState> = combine(
+    val state: StateFlow<InviteConfirmedUiState> = combine(
         buttonsFlow,
         inviteFlow,
         progressFlow,
         eventFlow
     ) { buttons, invite, progress, event ->
         val content = when (invite) {
-            LoadingResult.Loading -> AcceptInviteUiContent.Loading
+            LoadingResult.Loading -> InviteConfirmedUiContent.Loading
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, invite.exception, "Error loading invite")
                 snackbarDispatcher(SharingSnackbarMessage.GetInviteError)
-                AcceptInviteUiContent.Loading
+                InviteConfirmedUiContent.Loading
             }
 
-            is LoadingResult.Success -> AcceptInviteUiContent.Content(
+            is LoadingResult.Success -> InviteConfirmedUiContent.Content(
                 invite = invite.data,
                 buttonsState = buttons,
                 progressState = progress
             )
         }
-        AcceptInviteUiState(
+        InviteConfirmedUiState(
             event = event,
             content = content
         )
@@ -103,7 +103,7 @@ class AcceptInviteViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = AcceptInviteUiState.Initial
+        initialValue = InviteConfirmedUiState.Initial
     )
 
     @Suppress("LongMethod")
@@ -114,7 +114,7 @@ class AcceptInviteViewModel @Inject constructor(
                 PassLogger.w(TAG, it, "Error accepting invite")
                 snackbarDispatcher(SharingSnackbarMessage.InviteAcceptError)
                 buttonsFlow.update {
-                    AcceptInviteButtonsState(
+                    InviteConfirmedButtonsState(
                         confirmLoading = false,
                         rejectLoading = false,
                         hideReject = false,
@@ -126,7 +126,7 @@ class AcceptInviteViewModel @Inject constructor(
                 when (status) {
                     AcceptInviteStatus.AcceptingInvite -> {
                         buttonsFlow.update {
-                            AcceptInviteButtonsState(
+                            InviteConfirmedButtonsState(
                                 confirmLoading = true,
                                 rejectLoading = false,
                                 hideReject = true,
@@ -139,7 +139,7 @@ class AcceptInviteViewModel @Inject constructor(
                         PassLogger.d(TAG, "Downloading items")
 
                         buttonsFlow.update {
-                            AcceptInviteButtonsState(
+                            InviteConfirmedButtonsState(
                                 confirmLoading = true,
                                 rejectLoading = false,
                                 hideReject = true,
@@ -147,7 +147,7 @@ class AcceptInviteViewModel @Inject constructor(
                             )
                         }
                         progressFlow.update {
-                            AcceptInviteProgressState.Show(
+                            InviteConfirmedProgressState.Show(
                                 downloaded = status.downloaded,
                                 total = status.total
                             )
@@ -158,7 +158,7 @@ class AcceptInviteViewModel @Inject constructor(
                         PassLogger.d(TAG, "Items downloaded")
 
                         buttonsFlow.update {
-                            AcceptInviteButtonsState(
+                            InviteConfirmedButtonsState(
                                 confirmLoading = true,
                                 rejectLoading = false,
                                 hideReject = true,
@@ -166,12 +166,12 @@ class AcceptInviteViewModel @Inject constructor(
                             )
                         }
                         progressFlow.update {
-                            AcceptInviteProgressState.Show(
+                            InviteConfirmedProgressState.Show(
                                 downloaded = status.items,
                                 total = status.items
                             )
                         }
-                        eventFlow.update { AcceptInviteEvent.Close }
+                        eventFlow.update { InviteConfirmedEvent.Close }
                         snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
                     }
                 }
@@ -182,7 +182,7 @@ class AcceptInviteViewModel @Inject constructor(
         if (invite == null) return@launch
 
         buttonsFlow.update {
-            AcceptInviteButtonsState(
+            InviteConfirmedButtonsState(
                 confirmLoading = false,
                 rejectLoading = true,
                 enabled = false,
@@ -193,17 +193,17 @@ class AcceptInviteViewModel @Inject constructor(
         runCatching { rejectInvite(invite.inviteToken) }
             .onSuccess {
                 PassLogger.i(TAG, "Invite rejected")
-                eventFlow.update { AcceptInviteEvent.Close }
+                eventFlow.update { InviteConfirmedEvent.Close }
                 snackbarDispatcher(SharingSnackbarMessage.InviteRejected)
             }
             .onFailure {
                 PassLogger.w(TAG, it, "Error rejected invite")
-                eventFlow.update { AcceptInviteEvent.Close }
+                eventFlow.update { InviteConfirmedEvent.Close }
                 snackbarDispatcher(SharingSnackbarMessage.InviteRejectError)
             }
 
         buttonsFlow.update {
-            AcceptInviteButtonsState(
+            InviteConfirmedButtonsState(
                 confirmLoading = false,
                 rejectLoading = false,
                 enabled = false,
@@ -213,10 +213,11 @@ class AcceptInviteViewModel @Inject constructor(
     }
 
     fun clearEvent() {
-        eventFlow.update { AcceptInviteEvent.Unknown }
+        eventFlow.update { InviteConfirmedEvent.Unknown }
     }
 
     companion object {
-        private const val TAG = "AcceptInviteViewModel"
+        private const val TAG = "InviteConfirmedViewModel"
     }
+
 }

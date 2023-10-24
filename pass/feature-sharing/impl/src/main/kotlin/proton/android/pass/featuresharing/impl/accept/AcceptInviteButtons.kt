@@ -44,6 +44,8 @@ fun AcceptInviteButtons(
     isRejectLoading: Boolean,
     areButtonsEnabled: Boolean,
     showReject: Boolean,
+    confirmText: String = stringResource(R.string.sharing_join_shared_vault),
+    rejectText: String = stringResource(R.string.sharing_reject_invitation),
     onConfirm: () -> Unit,
     onReject: () -> Unit
 ) {
@@ -58,7 +60,7 @@ fun AcceptInviteButtons(
             buttonEnabled = areButtonsEnabled,
             text = {
                 Text(
-                    text = stringResource(R.string.sharing_join_shared_vault),
+                    text = confirmText,
                     style = ProtonTheme.typography.defaultSmallNorm,
                     color = PassTheme.colors.interactionNormContrast
                 )
@@ -74,7 +76,7 @@ fun AcceptInviteButtons(
                 buttonEnabled = areButtonsEnabled,
                 text = {
                     Text(
-                        text = stringResource(R.string.sharing_reject_invitation),
+                        text = rejectText,
                         style = ProtonTheme.typography.defaultSmallNorm,
                         color = PassTheme.colors.interactionNormMajor1
                     )

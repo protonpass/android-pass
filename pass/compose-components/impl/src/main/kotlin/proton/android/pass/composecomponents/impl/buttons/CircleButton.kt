@@ -40,12 +40,14 @@ fun CircleButton(
     color: Color,
     contentPadding: PaddingValues = PaddingValues(),
     elevation: ButtonElevation = ButtonDefaults.elevation(),
+    enabled: Boolean = true,
     onClick: () -> Unit,
     content: @Composable RowScope.() -> Unit
 ) {
     Button(
         modifier = modifier,
         contentPadding = contentPadding,
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(backgroundColor = color),
         shape = CircleShape,
         elevation = elevation,

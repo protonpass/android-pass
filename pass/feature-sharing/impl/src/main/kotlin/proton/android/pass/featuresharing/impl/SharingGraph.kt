@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
+import proton.android.pass.featuresharing.impl.confirmed.InviteConfirmedBottomSheet
 import proton.android.pass.featuresharing.impl.manage.ManageVaultScreen
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberOptionsBottomSheetGraph
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
@@ -92,6 +93,8 @@ object ManageVault : NavItem(
 ) {
     fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
 }
+
+object InviteConfirmed : NavItem(baseRoute = "sharing/confirmed/bottomsheet", navItemType = NavItemType.Bottomsheet)
 
 sealed interface SharingNavigation {
     object Back : SharingNavigation
@@ -171,6 +174,11 @@ fun NavGraphBuilder.sharingGraph(
             onNavigateEvent = onNavigateEvent,
             clearRefreshFlag = { it.savedStateHandle.remove<String>(REFRESH_MEMBER_LIST_FLAG) }
         )
+    }
+
+    bottomSheet(InviteConfirmed) {
+        BackHandler { onNavigateEvent(SharingNavigation.Back) }
+        InviteConfirmedBottomSheet(onNavigateEvent = onNavigateEvent)
     }
 
     memberOptionsBottomSheetGraph(onNavigateEvent)

@@ -33,6 +33,8 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
+import proton.android.pass.data.fakes.usecases.TestObserveHasConfirmedInvite
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
@@ -60,6 +62,7 @@ class OnBoardingViewModelTest {
     private lateinit var autofillManager: TestAutofillManager
     private lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
     private lateinit var observeUserAccessData: TestObserveUserAccessData
+    private lateinit var observeHasConfirmedInvite: ObserveHasConfirmedInvite
 
     @Before
     fun setUp() {
@@ -69,6 +72,7 @@ class OnBoardingViewModelTest {
         autofillManager = TestAutofillManager()
         ffRepo = TestFeatureFlagsPreferenceRepository()
         observeUserAccessData = TestObserveUserAccessData()
+        observeHasConfirmedInvite = TestObserveHasConfirmedInvite()
     }
 
     @Test
@@ -240,7 +244,7 @@ class OnBoardingViewModelTest {
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(
                     enabledPages = persistentListOf(Last),
-                    isCompleted = true
+                    event = OnboardingEvent.OnboardingCompleted
                 )
             )
         }
@@ -269,6 +273,16 @@ class OnBoardingViewModelTest {
         )
     }
 
+    @Test
+    fun `observeHasConfirmedInvite sends event of confirmed invite`() = runTest {
+        observeHasConfirmedInvite.send(true)
+        viewModel = createViewModel()
+        viewModel.onBoardingUiState.test {
+            val item = awaitItem()
+            assertThat(item.event).isEqualTo(OnboardingEvent.ConfirmedInvite)
+        }
+    }
+
     private suspend fun testInvitePending(
         ffEnabled: Boolean,
         waitingNewUserInvites: Int,
@@ -294,6 +308,7 @@ class OnBoardingViewModelTest {
             userPreferencesRepository = preferenceRepository,
             snackbarDispatcher = snackbarMessageRepository,
             ffRepo = ffRepo,
-            observeUserAccessData = observeUserAccessData
+            observeUserAccessData = observeUserAccessData,
+            observeHasConfirmedInvite = observeHasConfirmedInvite
         )
 }

@@ -114,6 +114,7 @@ fun HomeScreen(
         when (routerEvent) {
             RouterEvent.OnBoarding -> onNavigateEvent(HomeNavigation.OnBoarding)
             RouterEvent.SyncDialog -> onNavigateEvent(HomeNavigation.SyncDialog)
+            RouterEvent.ConfirmedInvite -> onNavigateEvent(HomeNavigation.ConfirmedInvite)
             RouterEvent.None -> {}
         }
     }

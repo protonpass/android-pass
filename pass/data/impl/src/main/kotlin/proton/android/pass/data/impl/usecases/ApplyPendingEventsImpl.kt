@@ -38,7 +38,6 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
-import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toPendingEvent
@@ -61,8 +60,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val createVault: CreateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val workManager: WorkManager,
-    private val itemSyncStatusRepository: ItemSyncStatusRepository,
-    private val markVaultAsPrimary: MarkVaultAsPrimary
+    private val itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ApplyPendingEvents {
 
     override suspend fun invoke() {
@@ -102,14 +100,13 @@ class ApplyPendingEventsImpl @Inject constructor(
                 color = ShareColor.Color1
             )
         }
-        runCatching { createVault(userId, vault) }
-            .onFailure { PassLogger.d(TAG, it, "Error creating default vault") }
-            .mapCatching {
-                PassLogger.d(TAG, "Created default vault, marking it as primary")
-                markVaultAsPrimary(userId, it.id)
-            }
-            .onSuccess { PassLogger.d(TAG, "Marked default vault as primary") }
-            .onFailure { PassLogger.d(TAG, it, "Error marking default vault as primary") }
+        runCatching {
+            createVault(userId, vault)
+        }.onSuccess {
+            PassLogger.d(TAG, "Default vault created")
+        }.onFailure {
+            PassLogger.d(TAG, it, "Error creating default vault")
+        }
     }
 
     private suspend fun applyPendingEvents(

@@ -86,6 +86,13 @@
     <string name="share_summary_permissions_title">Access level</string>
 
     <string name="share_manage_vault_share_with_more_people">Share with more people</string>
+    <plurals
+        name="share_manage_vault_invites_remaining"
+        comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault"
+    >
+        <item quantity="one">%d invite left</item>
+        <item quantity="other">%d invites left</item>
+    </plurals>
     <string name="share_manage_vault_item_count">%d items</string>
     <string
         name="share_manage_vault_invite_pending"
@@ -135,5 +142,13 @@
     <string name="sharing_snackbar_too_many_invites_sent">Address has been invited too many times</string>
     <string name="sharing_snackbar_transfer_ownership_success">Ownership transferred</string>
     <string name="sharing_snackbar_transfer_ownership_error">Error transferring ownership</string>
+
+    <string name="sharing_invites_info_dialog_title">Member limit</string>
+    <string
+        name="sharing_invites_info_dialog_message"
+        comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left"
+    >This vault can have up to %1$d members. You still have %2$d invites left.</string>
+    <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
+    <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
 
 </resources>

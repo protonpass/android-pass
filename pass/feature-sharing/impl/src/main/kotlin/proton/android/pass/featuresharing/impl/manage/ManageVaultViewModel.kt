@@ -48,6 +48,7 @@ import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -93,7 +94,7 @@ class ManageVaultViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val showShareButtonFlow: Flow<Boolean> = vaultFlow
+    private val showShareButtonFlow: Flow<CanShareVaultStatus> = vaultFlow
         .map { canShareVault(it.vault) }
         .distinctUntilChanged()
 
@@ -130,11 +131,35 @@ class ManageVaultViewModel @Inject constructor(
             }
         }
 
+        val sharingOptions = when (showShareButton) {
+            is CanShareVaultStatus.CanShare -> {
+                ShareOptions.Show(
+                    enableButton = true,
+                    subtitle = ShareOptions.ShareOptionsSubtitle.RemainingInvites(
+                        remainingInvites = showShareButton.invitesRemaining
+                    )
+                )
+            }
+            is CanShareVaultStatus.CannotShare -> {
+                when (showShareButton.reason) {
+                    CanShareVaultStatus.CannotShareReason.NotEnoughInvites -> {
+                        ShareOptions.Show(
+                            enableButton = false,
+                            subtitle = ShareOptions.ShareOptionsSubtitle.LimitReached
+                        )
+                    }
+                    CanShareVaultStatus.CannotShareReason.NotEnoughPermissions -> ShareOptions.Hide
+                    CanShareVaultStatus.CannotShareReason.SharingDisabled -> ShareOptions.Hide
+                    CanShareVaultStatus.CannotShareReason.Unknown -> ShareOptions.Hide
+                }
+            }
+        }
+
         ManageVaultUiState(
             vault = vault,
             content = content,
             event = event,
-            showShareButton = showShareButton
+            shareOptions = sharingOptions
         )
     }.stateIn(
         scope = viewModelScope,
@@ -175,6 +200,10 @@ class ManageVaultViewModel @Inject constructor(
             asMutable.remove(inviteId)
             asMutable
         }
+    }
+
+    fun onPendingInvitesClick() = viewModelScope.launch {
+        eventFlow.update { ManageVaultEvent.ShowInvitesInfo(navShareId) }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)

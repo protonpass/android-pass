@@ -40,9 +40,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -148,21 +145,9 @@ private fun UserInfo(
         VaultMemberContent.Loading ->
             Modifier
                 .fillMaxWidth()
-                .placeholder() to AnnotatedString("")
+                .placeholder() to ""
 
-        is VaultMemberContent.Member -> Modifier to when (member.member) {
-            is VaultMember.InvitePending -> AnnotatedString(
-                text = member.member.email,
-                spanStyle = SpanStyle(fontStyle = FontStyle.Italic)
-            )
-
-            is VaultMember.NewUserInvitePending -> AnnotatedString(
-                text = member.member.email,
-                spanStyle = SpanStyle(fontStyle = FontStyle.Italic)
-            )
-
-            is VaultMember.Member -> AnnotatedString(member.member.email)
-        }
+        is VaultMemberContent.Member -> Modifier to member.member.email
     }
 
     Column(

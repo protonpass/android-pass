@@ -35,5 +35,6 @@ data class PendingInvite(
     val itemCount: Int,
     val name: String,
     val icon: ShareIcon,
-    val color: ShareColor
+    val color: ShareColor,
+    val fromNewUser: Boolean
 )

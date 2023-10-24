@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.impl.repositories.PlanRepository
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RefreshPlanImpl @Inject constructor(
@@ -32,12 +33,20 @@ class RefreshPlanImpl @Inject constructor(
     override suspend fun invoke() {
         val userId = accountManager.getPrimaryUserId().firstOrNull()
         if (userId != null) {
-            planRepository
-                .sendUserAccessAndObservePlan(
-                    userId = userId,
-                    forceRefresh = true
-                )
-                .first()
+            runCatching {
+                planRepository
+                    .sendUserAccessAndObservePlan(
+                        userId = userId,
+                        forceRefresh = true
+                    )
+                    .first()
+            }.onFailure {
+                PassLogger.w(TAG, it, "Error refreshing plan")
+            }
         }
+    }
+
+    companion object {
+        private const val TAG = "RefreshPlanImpl"
     }
 }

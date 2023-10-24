@@ -21,7 +21,26 @@ package proton.android.pass.data.api.usecases.capabilities
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 
+sealed interface CanShareVaultStatus {
+
+    fun value(): Boolean
+
+    data class CanShare(val invitesRemaining: Int) : CanShareVaultStatus {
+        override fun value() = true
+    }
+    data class CannotShare(val reason: CannotShareReason) : CanShareVaultStatus {
+        override fun value() = false
+    }
+
+    sealed interface CannotShareReason {
+        object NotEnoughPermissions : CannotShareReason
+        object NotEnoughInvites : CannotShareReason
+        object SharingDisabled : CannotShareReason
+        object Unknown : CannotShareReason
+    }
+}
+
 interface CanShareVault {
-    suspend operator fun invoke(shareId: ShareId): Boolean
-    suspend operator fun invoke(vault: Vault): Boolean
+    suspend operator fun invoke(shareId: ShareId): CanShareVaultStatus
+    suspend operator fun invoke(vault: Vault): CanShareVaultStatus
 }

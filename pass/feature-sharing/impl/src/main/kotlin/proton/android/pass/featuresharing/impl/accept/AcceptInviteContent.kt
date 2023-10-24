@@ -137,7 +137,8 @@ fun AcceptInviteContentPreview(
                         itemCount = 3,
                         name = "Some vault",
                         icon = ShareIcon.Icon1,
-                        color = ShareColor.Color1
+                        color = ShareColor.Color1,
+                        fromNewUser = false
                     ),
                     buttonsState = AcceptInviteButtonsState(
                         confirmLoading = input.second,

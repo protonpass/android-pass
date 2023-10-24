@@ -25,12 +25,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -38,8 +41,19 @@ import javax.inject.Inject
 @HiltViewModel
 class RouterViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
-    itemSyncStatusRepository: ItemSyncStatusRepository
+    itemSyncStatusRepository: ItemSyncStatusRepository,
+    observeHasConfirmedInvite: ObserveHasConfirmedInvite
 ) : ViewModel() {
+
+    private val confirmedInviteFlow: Flow<Boolean> = observeHasConfirmedInvite()
+        .map { hasConfirmedInvite ->
+            if (hasConfirmedInvite) {
+                observeHasConfirmedInvite.clear()
+            }
+            hasConfirmedInvite
+        }
+        .distinctUntilChanged()
+
 
     private val showSyncDialogFlow: Flow<SyncState> = combine(
         itemSyncStatusRepository.observeSyncStatus(),
@@ -50,6 +64,7 @@ class RouterViewModel @Inject constructor(
     val eventStateFlow: StateFlow<RouterEvent> = combine(
         userPreferencesRepository.getHasCompletedOnBoarding(),
         showSyncDialogFlow,
+        confirmedInviteFlow,
         ::routerEvent
     ).stateIn(
         scope = viewModelScope,
@@ -58,14 +73,17 @@ class RouterViewModel @Inject constructor(
             val hasCompletedOnBoarding =
                 userPreferencesRepository.getHasCompletedOnBoarding().first()
             val syncStatus = showSyncDialogFlow.first()
-            routerEvent(hasCompletedOnBoarding, syncStatus)
+            val confirmedInvite = confirmedInviteFlow.first()
+            routerEvent(hasCompletedOnBoarding, syncStatus, confirmedInvite)
         }
     )
 
     private fun routerEvent(
         hasCompletedOnBoarding: HasCompletedOnBoarding,
-        syncState: SyncState
+        syncState: SyncState,
+        hasConfirmedInvite: Boolean
     ) = when {
+        hasConfirmedInvite -> RouterEvent.ConfirmedInvite
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
         syncState.syncStatus.isSyncing() && syncState.syncMode == SyncMode.ShownToUser -> RouterEvent.SyncDialog
         else -> RouterEvent.None
@@ -83,5 +101,6 @@ class RouterViewModel @Inject constructor(
 enum class RouterEvent {
     OnBoarding,
     SyncDialog,
+    ConfirmedInvite,
     None
 }

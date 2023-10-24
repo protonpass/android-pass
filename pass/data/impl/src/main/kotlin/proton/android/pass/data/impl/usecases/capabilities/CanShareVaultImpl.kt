@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -37,30 +38,42 @@ class CanShareVaultImpl @Inject constructor(
     private val getShareById: GetShareById
 ) : CanShareVault {
 
-    override suspend fun invoke(shareId: ShareId): Boolean {
+    override suspend fun invoke(shareId: ShareId): CanShareVaultStatus {
         val vault = runCatching { getVaultById(shareId = shareId).first() }.getOrElse {
             PassLogger.w(TAG, it, "canShare vault not found")
-            return false
+            return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown)
         }
 
         return invoke(vault)
     }
 
-    override suspend fun invoke(vault: Vault): Boolean {
+    override suspend fun invoke(vault: Vault): CanShareVaultStatus {
         val isSharingEnabled = getSharingEnabledFlag()
-        if (!isSharingEnabled) return false
+        if (!isSharingEnabled) {
+            return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.SharingDisabled)
+        }
 
         val share = runCatching { getShareById(shareId = vault.shareId) }.getOrElse {
             PassLogger.w(TAG, it, "canShare share not found")
-            return false
+            return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown)
         }
 
         return when {
-            share.totalMemberCount() >= share.maxMembers -> false
-            vault.isPrimary -> false
-            vault.isOwned -> true
-            vault.role == ShareRole.Admin -> true
-            else -> false
+            share.totalMemberCount() >= share.maxMembers -> {
+                CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughInvites)
+            }
+            vault.isPrimary -> {
+                CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown)
+            }
+            vault.isOwned -> {
+                CanShareVaultStatus.CanShare(invitesRemaining = share.maxMembers - share.totalMemberCount())
+            }
+            vault.role == ShareRole.Admin -> {
+                CanShareVaultStatus.CanShare(invitesRemaining = share.maxMembers - share.totalMemberCount())
+            }
+            else -> {
+                CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughPermissions)
+            }
         }
     }
 

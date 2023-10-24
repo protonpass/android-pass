@@ -44,16 +44,23 @@ fun ManageVaultScreen(
     }
 
     LaunchedEffect(state.event) {
-        if (state.event == ManageVaultEvent.Close) {
-            onNavigateEvent(SharingNavigation.Back)
-            viewModel.clearEvent()
+        when (val event = state.event) {
+            ManageVaultEvent.Close -> {
+                onNavigateEvent(SharingNavigation.Back)
+            }
+            is ManageVaultEvent.ShowInvitesInfo -> {
+                onNavigateEvent(SharingNavigation.ShowInvitesInfo(event.shareId))
+            }
+            ManageVaultEvent.Unknown -> {}
         }
+        viewModel.clearEvent()
     }
 
     ManageVaultContent(
         modifier = modifier,
         state = state,
         onNavigateEvent = onNavigateEvent,
-        onConfirmInviteClick = viewModel::onConfirmInvite
+        onConfirmInviteClick = viewModel::onConfirmInvite,
+        onPendingInvitesClick = viewModel::onPendingInvitesClick
     )
 }

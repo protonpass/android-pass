@@ -26,6 +26,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
 import proton.android.pass.featuresharing.impl.confirmed.InviteConfirmedBottomSheet
+import proton.android.pass.featuresharing.impl.invitesinfo.InvitesInfoDialog
 import proton.android.pass.featuresharing.impl.manage.ManageVaultScreen
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberOptionsBottomSheetGraph
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
@@ -37,6 +38,7 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.dialog
 import proton.pass.domain.InviteId
 import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
@@ -94,10 +96,25 @@ object ManageVault : NavItem(
     fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
 }
 
-object InviteConfirmed : NavItem(baseRoute = "sharing/confirmed/bottomsheet", navItemType = NavItemType.Bottomsheet)
+object InviteConfirmed : NavItem(
+    baseRoute = "sharing/confirmed/bottomsheet",
+    navItemType = NavItemType.Bottomsheet
+)
+
+object InvitesInfoDialog : NavItem(
+    baseRoute = "sharing/manage/invites/dialog",
+    navArgIds = listOf(CommonNavArgId.ShareId),
+    navItemType = NavItemType.Dialog
+) {
+    fun buildRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+}
 
 sealed interface SharingNavigation {
     object Back : SharingNavigation
+    object Upgrade : SharingNavigation
+
+    @JvmInline
+    value class ShowInvitesInfo(val shareId: ShareId) : SharingNavigation
 
     @JvmInline
     value class CloseBottomSheet(val refresh: Boolean) : SharingNavigation
@@ -179,6 +196,11 @@ fun NavGraphBuilder.sharingGraph(
     bottomSheet(InviteConfirmed) {
         BackHandler { onNavigateEvent(SharingNavigation.Back) }
         InviteConfirmedBottomSheet(onNavigateEvent = onNavigateEvent)
+    }
+
+    dialog(InvitesInfoDialog) {
+        BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(false)) }
+        InvitesInfoDialog(onNavigateEvent = onNavigateEvent)
     }
 
     memberOptionsBottomSheetGraph(onNavigateEvent)

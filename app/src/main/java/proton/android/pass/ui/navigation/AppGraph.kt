@@ -112,6 +112,7 @@ import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featuresharing.impl.AcceptInvite
 import proton.android.pass.featuresharing.impl.InviteConfirmed
+import proton.android.pass.featuresharing.impl.InvitesInfoDialog
 import proton.android.pass.featuresharing.impl.ManageVault
 import proton.android.pass.featuresharing.impl.REFRESH_MEMBER_LIST_FLAG
 import proton.android.pass.featuresharing.impl.SharingNavigation
@@ -834,6 +835,16 @@ fun NavGraphBuilder.appGraph(
             SharingNavigation.Back -> dismissBottomSheet {
                 appNavigator.popUpTo(Home)
             }
+
+            SharingNavigation.Upgrade -> dismissBottomSheet {
+                onNavigate(AppNavigation.Upgrade)
+            }
+
+            is SharingNavigation.ShowInvitesInfo -> appNavigator.navigate(
+                destination = InvitesInfoDialog,
+                route = InvitesInfoDialog.buildRoute(it.shareId),
+                backDestination = ManageVault
+            )
 
             is SharingNavigation.CloseBottomSheet -> dismissBottomSheet {
                 if (it.refresh) {

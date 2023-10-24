@@ -20,16 +20,18 @@ package proton.android.pass.featuresharing.impl.manage
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.buttons.CircleButton
+import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.featuresharing.impl.R
@@ -40,7 +42,8 @@ fun ManageVaultContent(
     modifier: Modifier = Modifier,
     state: ManageVaultUiState,
     onNavigateEvent: (SharingNavigation) -> Unit,
-    onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit
+    onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit,
+    onPendingInvitesClick: () -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -96,21 +99,41 @@ fun ManageVaultContent(
                 },
                 onConfirmInviteClick = onConfirmInviteClick
             )
-            if (state.showShareButton) {
-                CircleButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    color = PassTheme.colors.interactionNormMajor1,
+
+            if (state.shareOptions is ShareOptions.Show) {
+                ShareWithMorePeopleButton(
+                    isEnabled = state.shareOptions.enableButton,
                     onClick = {
                         state.vault?.let { vault ->
                             onNavigateEvent(SharingNavigation.ShareVault(vault.vault.shareId))
                         }
                     }
-                ) {
-                    Text(
-                        modifier = Modifier.padding(vertical = 10.dp),
-                        text = stringResource(R.string.share_manage_vault_share_with_more_people),
-                        color = PassTheme.colors.interactionNormContrast
-                    )
+                )
+
+                when (state.shareOptions.subtitle) {
+                    ShareOptions.ShareOptionsSubtitle.LimitReached -> {
+                        val limitReachedText = buildAnnotatedString {
+                            withStyle(SpanStyle(color = PassTheme.colors.textNorm)) {
+                                append(stringResource(id = R.string.sharing_limit_reached))
+                            }
+                            append(" ")
+                            withStyle(SpanStyle(color = PassTheme.colors.interactionNormMajor2)) {
+                                append(stringResource(id = R.string.sharing_invites_info_upgrade_text))
+                            }
+                        }
+                        InfoBanner(
+                            backgroundColor = PassTheme.colors.interactionNormMinor1,
+                            text = limitReachedText,
+                            onClick = { onNavigateEvent(SharingNavigation.Upgrade) }
+                        )
+                    }
+                    is ShareOptions.ShareOptionsSubtitle.RemainingInvites -> {
+                        RemainingInvitesText(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            remainingInvites = state.shareOptions.subtitle.remainingInvites,
+                            onClick = onPendingInvitesClick
+                        )
+                    }
                 }
             }
         }

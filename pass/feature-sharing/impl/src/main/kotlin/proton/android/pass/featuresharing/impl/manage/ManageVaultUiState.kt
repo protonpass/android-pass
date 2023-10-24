@@ -23,6 +23,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.pass.domain.NewUserInviteId
+import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
 
 @Stable
@@ -32,20 +33,44 @@ sealed interface ManageVaultEvent {
 
     @Stable
     object Close : ManageVaultEvent
+
+    @Stable
+    @JvmInline
+    value class ShowInvitesInfo(val shareId: ShareId) : ManageVaultEvent
+}
+
+@Stable
+sealed interface ShareOptions {
+    @Stable
+    object Hide : ShareOptions
+
+    @Stable
+    data class Show(
+        val enableButton: Boolean,
+        val subtitle: ShareOptionsSubtitle
+    ) : ShareOptions
+
+    sealed interface ShareOptionsSubtitle {
+
+        @JvmInline
+        value class RemainingInvites(val remainingInvites: Int) : ShareOptionsSubtitle
+
+        object LimitReached : ShareOptionsSubtitle
+    }
 }
 
 @Stable
 data class ManageVaultUiState(
     val vault: VaultWithItemCount?,
     val content: ManageVaultUiContent,
-    val showShareButton: Boolean,
+    val shareOptions: ShareOptions,
     val event: ManageVaultEvent
 ) {
     companion object {
         val Initial = ManageVaultUiState(
             vault = null,
             content = ManageVaultUiContent.Loading,
-            showShareButton = false,
+            shareOptions = ShareOptions.Hide,
             event = ManageVaultEvent.Unknown
         )
     }

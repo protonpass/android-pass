@@ -6,6 +6,21 @@
 
 ### Other
 
+## 1.9.5 (2023-10-24)
+
+### Features :tada:
+
+- Get sharing ready.
+
+### Fixes :bug:
+
+- Refresh plan details on app startup.
+- Improve email validation.
+
+### Other
+
+- Updated translations.
+
 ## 1.9.4 (2023-10-17)
 
 ### Fixes :bug:

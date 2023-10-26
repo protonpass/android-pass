@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
+import proton.android.pass.autofill.MFAAutofillCopied
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
@@ -103,6 +104,7 @@ class AutofillAppViewModel @Inject constructor(
                 getTotpCodeFromUri(totpUri)
                     .onSuccess {
                         clipboardManager.copyToClipboard(it)
+                        telemetryManager.sendEvent(MFAAutofillCopied)
                         toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
                     }
                     .onFailure {

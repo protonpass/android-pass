@@ -57,6 +57,7 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.datamodels.api.toContent
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
+import proton.android.pass.featureitemcreate.impl.MFAUpdated
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage
@@ -275,11 +276,33 @@ class UpdateLoginViewModel @Inject constructor(
                     )
                 }
             }
+
             telemetryManager.sendEvent(ItemUpdate(EventItemType.Login))
+            send2FAUpdatedTelemetryEvent(currentItem, item)
             snackbarDispatcher(LoginSnackbarMessages.LoginUpdated)
         }.onFailure {
             PassLogger.e(TAG, it, "Update item error")
             snackbarDispatcher(ItemUpdateError)
+        }
+    }
+
+    private fun send2FAUpdatedTelemetryEvent(currentItem: Item, updatedItem: Item) {
+        if (currentItem.itemType is ItemType.Login && updatedItem.itemType is ItemType.Login) {
+            encryptionContextProvider.withEncryptionContext {
+                val currentItemType = currentItem.itemType as ItemType.Login
+                val updatedItemType = updatedItem.itemType as ItemType.Login
+                val decryptedCurrent = currentItemType.customFields
+                    .filterIsInstance<CustomField.Totp>()
+                    .map { decrypt(it.value) }
+                val decryptedUpdated = updatedItemType.customFields
+                    .filterIsInstance<CustomField.Totp>()
+                    .map { decrypt(it.value) }
+                if (decrypt(currentItemType.primaryTotp) != decrypt(updatedItemType.primaryTotp) ||
+                    decryptedCurrent != decryptedUpdated
+                ) {
+                    telemetryManager.sendEvent(MFAUpdated)
+                }
+            }
         }
     }
 

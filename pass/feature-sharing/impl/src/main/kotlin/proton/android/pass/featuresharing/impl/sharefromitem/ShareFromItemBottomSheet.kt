@@ -40,7 +40,12 @@ fun ShareFromItemBottomSheet(
             state.vault.value()?.let { vault ->
                 when (event) {
                     ShareFromItemEvent.CreateNewVault -> {
-
+                        onNavigateEvent(
+                            SharingNavigation.CreateVaultAndMoveItem(
+                                shareId = vault.vault.shareId,
+                                itemId = state.itemId
+                            )
+                        )
                     }
 
                     ShareFromItemEvent.MoveToSharedVault -> {

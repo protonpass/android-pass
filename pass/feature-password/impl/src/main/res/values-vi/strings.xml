@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Tạo mật khẩu</string>
   <string name="password_type">Dạng</string>
   <string name="special_characters">Ký tự đặc biệt (!&amp;*)</string>
-  <string name="character_count">%s ký tự</string>
-  <string name="word_count">%s từ</string>
   <string name="word_separator">Dấu tách từ</string>
   <string name="bottomsheet_option_capital_letters">Chữ cái in hoa (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Viết hoa</string>

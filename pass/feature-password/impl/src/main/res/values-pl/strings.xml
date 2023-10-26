@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Generuj hasło</string>
   <string name="password_type">Typ</string>
   <string name="special_characters">Znaki specjalne (!&amp;*)</string>
-  <string name="character_count">Znaki: %s</string>
-  <string name="word_count">Słowa: %s</string>
   <string name="word_separator">Separator słów</string>
   <string name="bottomsheet_option_capital_letters">Wielkie litery (A-Z)</string>
   <string name="bottomsheet_option_capitalise">Wielkie litery</string>

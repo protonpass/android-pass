@@ -42,7 +42,6 @@
   <string name="item_too_long_copied_to_clipboard">Вміст був задовгим, частково скопійовано в буфер обміну</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Сховища</string>
-  <string name="vault_drawer_vaults_item_count">%d елементів</string>
   <string name="vault_drawer_create_vault">Створити сховище</string>
   <string name="vault_drawer_item_trash">Смітник</string>
   <string name="vault_drawer_all_vaults">Всі сховища</string>

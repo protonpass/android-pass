@@ -6,8 +6,14 @@
     <string name="bottomsheet_generate_password_title">Generate password</string>
     <string name="password_type">Type</string>
     <string name="special_characters">Special characters (!&amp;*)</string>
-    <string name="character_count">%s characters</string>
-    <string name="word_count">%s words</string>
+    <plurals name="character_count">
+        <item quantity="one">%s character</item>
+        <item quantity="other">%s characters</item>
+    </plurals>
+    <plurals name="word_count">
+        <item quantity="one">%s word</item>
+        <item quantity="other">%s words</item>
+    </plurals>
     <string name="word_separator">Word separator</string>
     <string name="bottomsheet_option_capital_letters">Capital letters (A–Z)</string>
     <string name="bottomsheet_option_capitalise">Capitalize</string>

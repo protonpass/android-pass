@@ -34,6 +34,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestDeleteItem
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
@@ -96,7 +97,8 @@ class NoteDetailViewModelTest {
             deleteItem = deleteItem,
             restoreItem = restoreItem,
             canPerformPaidAction = canPerformPaidAction,
-            clipboardManager = clipboardManager
+            clipboardManager = clipboardManager,
+            canShareVault = TestCanShareVault()
         )
     }
 

@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -47,7 +48,8 @@ sealed interface LoginDetailUiState {
         val isRestoredFromTrash: Boolean,
         val canMigrate: Boolean,
         val canPerformItemActions: Boolean,
-        val customFields: ImmutableList<CustomFieldUiContent>
+        val customFields: ImmutableList<CustomFieldUiContent>,
+        val shareClickAction: ShareClickAction
     ) : LoginDetailUiState
 }
 

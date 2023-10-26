@@ -24,9 +24,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -49,6 +52,7 @@ import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.AliasCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -57,6 +61,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNot
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotRestored
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRestored
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -77,6 +82,7 @@ class AliasDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
+    private val canShareVault: CanShareVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
@@ -95,6 +101,20 @@ class AliasDetailViewModel @Inject constructor(
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
 
+    private val canPerformPaidActionFlow: Flow<LoadingResult<Boolean>> =
+        canPerformPaidAction().asLoadingResult()
+
+    private val shareActionFlow: Flow<ShareClickAction> = canPerformPaidActionFlow
+        .map { isPaidResult ->
+            val isPaid = isPaidResult.getOrNull() ?: false
+            val canShareVault = canShareVault(shareId).value()
+            when {
+                isPaid && canShareVault -> ShareClickAction.Share
+                else -> ShareClickAction.Upgrade
+            }
+        }
+        .distinctUntilChanged()
+
     val uiState: StateFlow<AliasDetailUiState> = combineN(
         getItemByIdWithVault(shareId, itemId).asLoadingResult(),
         getAliasDetails(shareId, itemId).asLoadingResult(),
@@ -102,14 +122,16 @@ class AliasDetailViewModel @Inject constructor(
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
-        canPerformPaidAction().asLoadingResult()
+        canPerformPaidActionFlow,
+        shareActionFlow
     ) { itemLoadingResult,
         aliasDetailsResult,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
-        canPerformPaidActionResult ->
+        canPerformPaidActionResult,
+        shareAction ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -142,7 +164,8 @@ class AliasDetailViewModel @Inject constructor(
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canMigrate = canMigrate,
-                    canPerformActions = canPerformItemActions
+                    canPerformActions = canPerformItemActions,
+                    shareClickAction = shareAction
                 )
             }
         }

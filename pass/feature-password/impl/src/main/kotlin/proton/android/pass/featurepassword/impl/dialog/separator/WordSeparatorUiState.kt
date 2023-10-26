@@ -23,7 +23,7 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.password.api.PasswordGenerator
+import proton.android.pass.commonrust.api.WordSeparator
 
 sealed interface WordSeparatorUiEvent {
     object Unknown : WordSeparatorUiEvent
@@ -32,13 +32,13 @@ sealed interface WordSeparatorUiEvent {
 
 @Immutable
 data class WordSeparatorUiState(
-    val options: PersistentList<PasswordGenerator.WordSeparator>,
-    val selected: Option<PasswordGenerator.WordSeparator>,
+    val options: PersistentList<WordSeparator>,
+    val selected: Option<WordSeparator>,
     val event: WordSeparatorUiEvent
 ) {
     companion object {
         val Initial = WordSeparatorUiState(
-            options = PasswordGenerator.WordSeparator.values().toList().toPersistentList(),
+            options = WordSeparator.values().toList().toPersistentList(),
             selected = None,
             event = WordSeparatorUiEvent.Unknown
         )

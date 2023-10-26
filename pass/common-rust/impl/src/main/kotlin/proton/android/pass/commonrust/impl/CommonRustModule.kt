@@ -26,6 +26,7 @@ import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
+import proton.android.pass.commonrust.api.PasswordGenerator
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,4 +45,7 @@ abstract class CommonRustModule {
     abstract fun bindNewUserInviteSignatureBodyCreator(
         impl: NewUserInviteSignatureBodyCreatorImpl
     ): NewUserInviteSignatureBodyCreator
+
+    @Binds
+    abstract fun bindPasswordGenerator(impl: PasswordGeneratorImpl): PasswordGenerator
 }

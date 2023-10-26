@@ -16,10 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.password.api
+package proton.android.pass.commonrust.fakes
 
-import java.security.SecureRandom
+import proton.android.pass.commonrust.api.PassphraseConfig
+import proton.android.pass.commonrust.api.PasswordGenerator
+import proton.android.pass.commonrust.api.PasswordGeneratorConfig
+import javax.inject.Inject
+import javax.inject.Singleton
 
-fun <T> List<T>.random(random: SecureRandom): T = this[random.nextInt(this.size)]
-fun String.random(random: SecureRandom): Char = this[random.nextInt(this.length)]
-fun SecureRandom.nextIntInRange(from: Int, until: Int): Int = this.nextInt(until - from) + from
+@Singleton
+class TestPasswordGenerator @Inject constructor() : PasswordGenerator {
+
+    override fun generatePassword(config: PasswordGeneratorConfig): String = "test-password"
+
+    override fun generatePassphrase(config: PassphraseConfig): String = "test-password"
+}

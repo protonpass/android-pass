@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Không tìm thấy trường nhập phù hợp</string>
-  <string name="autofill_authenticate_prompt">Lấy từ Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Lấy từ Proton Pass</string>
   <string name="error_credentials_not_found">Không tìm thấy thông tin đăng nhập phù hợp</string>
-  <string name="error_credentials_not_saved">Không thể lưu thông tin đăng nhập</string>
   <string name="error_loading_items">Không thể tải nội dung</string>
   <string name="topbar_search_query">Tìm trong tất cả kho lưu trữ…</string>
   <string name="topbar_search_query_primary_vault">Tìm trong kho lưu trữ chính…</string>

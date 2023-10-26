@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Tidak ada kolom terlihat yang ditemukan</string>
-  <string name="autofill_authenticate_prompt">Dapatkan dari Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Dapatkan dari Proton Pass</string>
   <string name="error_credentials_not_found">Tidak ditemukan kredensial yang cocok</string>
-  <string name="error_credentials_not_saved">Tidak dapat menyimpan kredensial</string>
   <string name="error_loading_items">Tidak dapat memuat item</string>
   <string name="topbar_search_query">Cari di seluruh brankas…</string>
   <string name="topbar_search_query_primary_vault">Cari dalam brankas utama…</string>

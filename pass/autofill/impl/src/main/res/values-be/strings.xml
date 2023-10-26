@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Адпаведныя палі для адлюстравання не знойдзены</string>
-  <string name="autofill_authenticate_prompt">Атрымаць з Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Атрымаць з Proton Pass</string>
   <string name="error_credentials_not_found">Адпаведныя ўліковыя даныя не знойдзены</string>
-  <string name="error_credentials_not_saved">Немагчыма захаваць уліковыя даныя</string>
   <string name="error_loading_items">Немагчыма загрузіць элементы</string>
   <string name="topbar_search_query">Пошук ва ўсіх сховішчах…</string>
   <string name="topbar_search_query_primary_vault">Пошук у асноўных сховішчах…</string>

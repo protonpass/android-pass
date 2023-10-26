@@ -18,11 +18,16 @@
 
 package proton.android.pass.featuresharing.impl.sharingwith
 
+import androidx.compose.runtime.Stable
+import proton.pass.domain.Vault
+
+@Stable
 data class SharingWithUIState(
     val email: String = "",
-    val vaultName: String? = null,
+    val vault: Vault? = null,
     val emailNotValidReason: EmailNotValidReason? = null,
     val isVaultNotFound: Boolean = false,
     val event: SharingWithEvents = SharingWithEvents.Unknown,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val showEditVault: Boolean = false
 )

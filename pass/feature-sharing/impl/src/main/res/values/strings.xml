@@ -93,7 +93,10 @@
         <item quantity="one">%d invite left</item>
         <item quantity="other">%d invites left</item>
     </plurals>
-    <string name="share_manage_vault_item_count">%d items</string>
+    <plurals name="share_manage_vault_item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
     <string
         name="share_manage_vault_invite_pending"
         comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet"

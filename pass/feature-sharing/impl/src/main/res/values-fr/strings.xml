@@ -61,8 +61,7 @@
   <string name="share_summary_vault_title">Coffre-fort</string>
   <string name="share_summary_permissions_title">Niveau d\'accès</string>
   <string name="share_manage_vault_share_with_more_people">Partager avec d\'autres personnes</string>
-  <string name="share_manage_vault_item_count">%d éléments</string>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">L\'invitation a été envoyée.</string>
+    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">L\'invitation a été envoyée.</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">En attente de la création d\'un compte</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirmer l\'accès</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitations</string>

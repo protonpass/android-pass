@@ -35,7 +35,6 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
@@ -48,11 +47,12 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
+import proton.pass.domain.canCreate
+import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel
 class MigrateSelectVaultViewModel @Inject constructor(
-    canPerformPaidAction: CanPerformPaidAction,
     observeVaults: ObserveVaultsWithItemCount,
     snackbarDispatcher: SnackbarDispatcher,
     private val savedStateHandle: SavedStateHandleProvider
@@ -63,24 +63,9 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<Option<SelectVaultEvent>> = MutableStateFlow(None)
 
     val state: StateFlow<MigrateSelectVaultUiState> = combine(
-        canPerformPaidAction().asLoadingResult(),
         observeVaults().asLoadingResult(),
         eventFlow
-    ) { canPerformPaidActionResult, vaultResult, event ->
-        val canPerformPaidActionValue = when (canPerformPaidActionResult) {
-            is LoadingResult.Error -> {
-                snackbarDispatcher(CouldNotInit)
-                PassLogger.w(
-                    TAG,
-                    canPerformPaidActionResult.exception,
-                    "Error observing CanPerformPaidAction"
-                )
-                return@combine MigrateSelectVaultUiState.Error
-            }
-
-            LoadingResult.Loading -> return@combine MigrateSelectVaultUiState.Loading
-            is LoadingResult.Success -> canPerformPaidActionResult.data
-        }
+    ) { vaultResult, event ->
         when (vaultResult) {
             LoadingResult.Loading -> MigrateSelectVaultUiState.Loading
             is LoadingResult.Error -> {
@@ -99,17 +84,13 @@ class MigrateSelectVaultViewModel @Inject constructor(
                         }
                     }
                     .map {
-                        if (canPerformPaidActionValue) {
-                            VaultEnabledPair(
-                                vault = it,
-                                isEnabled = it.vault.shareId != mode.shareId
-                            )
-                        } else {
-                            VaultEnabledPair(
-                                vault = it,
-                                isEnabled = it.vault.isPrimary
-                            )
-                        }
+                        val canCreate = it.vault.role.toPermissions().canCreate()
+                        val isNotCurrentOne = it.vault.shareId != mode.shareId
+
+                        VaultEnabledPair(
+                            vault = it,
+                            isEnabled = canCreate && isNotCurrentOne
+                        )
                     }
                     .toImmutableList(),
                 event = event,

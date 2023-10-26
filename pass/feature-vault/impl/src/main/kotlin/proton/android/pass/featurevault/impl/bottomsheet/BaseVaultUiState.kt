@@ -23,11 +23,15 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
+import proton.pass.domain.ShareId
 
 @Stable
 sealed interface IsVaultCreatedEvent {
     object Unknown : IsVaultCreatedEvent
     object Created : IsVaultCreatedEvent
+
+    @JvmInline
+    value class CreatedAndMoveToShare(val shareId: ShareId) : IsVaultCreatedEvent
 }
 
 @Stable

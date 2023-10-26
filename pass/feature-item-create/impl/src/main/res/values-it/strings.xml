@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Impossibile aggiornare la carta di credito</string>
   <!--  Common create items  -->
   <string name="changes_saved">Modifiche salvate</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Segreto 2FA (TOTP)</string>
   <string name="totp_create_login_field_invalid">Segreto 2FA errato</string>
   <string name="totp_create_login_field_placeholder">Aggiungi 2FA segreto</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Questo campo non può rimanere vuoto</string>
   <string name="camera_permission_explanation">Autorizzazione alla fotocamera richiesta per rendere disponibile questa funzionalità.</string>
   <string name="camera_permission_open_settings">Apri impostazioni</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Limite 2FA raggiunto</string>
   <string name="upgrade">Effettua l\'upgrade</string>
   <string name="mfa_icon_content_description">Icona 2FA</string>

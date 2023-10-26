@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Maksukorttia ei voitu päivittää</string>
   <!--  Common create items  -->
   <string name="changes_saved">Muutokset tallennettiin</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA-salaisuus (TOTP)</string>
   <string name="totp_create_login_field_invalid">Virheellinen 2FA-salaisuus</string>
   <string name="totp_create_login_field_placeholder">Lisää 2FA-salaisuus</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Kenttä ei voi olla tyhjä</string>
   <string name="camera_permission_explanation">Ominaisuus tarvitsee kameran käyttöoikeuden.</string>
   <string name="camera_permission_open_settings">Avaa asetukset</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">2FA-rajoitus on saavutettu</string>
   <string name="upgrade">Päivitä</string>
   <string name="mfa_icon_content_description">2FA-kuvake</string>

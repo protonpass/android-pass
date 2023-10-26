@@ -15,7 +15,7 @@
   <string name="autofill_dialog_associate_and_autofill">常時使用</string>
   <string name="autofill_dialog_just_autofill">1 度のみ使用</string>
   <string name="autofill_dialog_cancel">キャンセル</string>
-  <string name="autofill_notification_copy_to_clipboard">Totpがクリップボードにコピーされました。</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTPがクリップボードにコピーされました。</string>
   <string name="autofill_dialog_associate_title">ログインを使用しますか？</string>
   <string name="snackbar_item_move_to_trash_success">項目をごみ箱に移動されました</string>
   <string name="snackbar_item_move_to_trash_error">ごみ箱に移動できませんでした</string>

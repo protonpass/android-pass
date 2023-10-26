@@ -47,7 +47,7 @@
   <string name="more_info_last_time_modified">마지막 동기화 시점: %s</string>
   <string name="open_menu_icon_content_description">매뉴 버튼 열기</string>
   <string name="mfa_limit_reached">2FA 제한 도달</string>
-  <string name="mfa_icon_content_description">2fa 아이콘</string>
+  <string name="mfa_icon_content_description">2FA 아이콘</string>
   <string name="custom_field_text_icon_description">커스텀 입력란 입력</string>
   <string name="custom_field_hidden_icon_description">커스텀 입력란 숨기기</string>
   <string name="custom_field_totp_icon_description">2FA 커스텀 입력란</string>

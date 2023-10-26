@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">No s\'ha pogut actualitzar la targeta de crèdit</string>
   <!--  Common create items  -->
   <string name="changes_saved">S\'han desat els canvis.</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Clau secreta 2FA (TOTP)</string>
   <string name="totp_create_login_field_invalid">La clau secreta 2FA no és vàlida.</string>
   <string name="totp_create_login_field_placeholder">Afegiu una clau secreta 2FA</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Aquest camp no pot estar buit</string>
   <string name="camera_permission_explanation">El permís de càmera és necessari perquè aquesta característica estigui disponible.</string>
   <string name="camera_permission_open_settings">Obre les preferències</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">S\'ha assolit el límit de 2FA</string>
   <string name="upgrade">Millora</string>
   <string name="mfa_icon_content_description">Icona de 2FA</string>

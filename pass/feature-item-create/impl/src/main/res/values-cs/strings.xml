@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Nelze aktualizovat platební kartu</string>
   <!--  Common create items  -->
   <string name="changes_saved">Změny uloženy</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA secret (TOTP)</string>
   <string name="totp_create_login_field_invalid">Neplatný secret 2FA</string>
   <string name="totp_create_login_field_placeholder">Přidat 2FA secret</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Toto pole nesmí být prázdné</string>
   <string name="camera_permission_explanation">Pro tuto funkci je nutné povolit přístup k fotoaparátu.</string>
   <string name="camera_permission_open_settings">Otevřít nastavení</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Dosažen limit 2FA</string>
   <string name="upgrade">Rozšířit</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>

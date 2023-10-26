@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Không thể cập nhật thẻ</string>
   <!--  Common create items  -->
   <string name="changes_saved">Đã lưu thay đổi</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Mã bảo mật 2FA (TOTP)</string>
   <string name="totp_create_login_field_invalid">Mã bảo mật 2FA không hợp lệ</string>
   <string name="totp_create_login_field_placeholder">Thêm mã bảo mật 2FA</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Trường này không đươc để trống</string>
   <string name="camera_permission_explanation">Quyền truy cập máy ảnh là cần thiết để tính năng này hoạt động.</string>
   <string name="camera_permission_open_settings">Mở cài đặt</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
   <string name="upgrade">Nâng cấp</string>
   <string name="mfa_icon_content_description">biểu tượng 2FA</string>

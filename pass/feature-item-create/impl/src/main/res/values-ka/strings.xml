@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">საკრედიტო ბარათის განახლების შეცდომა</string>
   <!--  Common create items  -->
   <string name="changes_saved">ცვლილებები შენახულია</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA საიდუმლო (TOTP)</string>
   <string name="totp_create_login_field_invalid">არასწორი 2FA საიდუმლო</string>
   <string name="totp_create_login_field_placeholder">2FA საიდუმლო გასაღების დამატება</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">ეს ველი ცარიელი ვერ იქნება</string>
   <string name="camera_permission_explanation">ამ ფუნქციას კამერასთან წვდომა სჭირდება.</string>
   <string name="camera_permission_open_settings">მორგების ფანჯრის გახსნა</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">მიღწეულია 2FA-ის ლიმიტი</string>
   <string name="upgrade">გაუმჯობესება</string>
   <string name="mfa_icon_content_description">2FA-ის ხატულა</string>

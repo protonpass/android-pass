@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">신용 카드를 업데이트할 수 없습니다.</string>
   <!--  Common create items  -->
   <string name="changes_saved">변경 사항 저장됨</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA 시크릿 (TOTP)</string>
   <string name="totp_create_login_field_invalid">잘못된 2FA 시크릿</string>
   <string name="totp_create_login_field_placeholder">2FA 시크릿 생성</string>
@@ -105,10 +105,10 @@
   <string name="field_cannot_be_empty">이 칸은 비워둘 수 없습니다</string>
   <string name="camera_permission_explanation">이 기능을 사용하기 위해 카메라 권한이 필요합니다.</string>
   <string name="camera_permission_open_settings">설정 열기</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">2FA 제한 도달</string>
   <string name="upgrade">업그레이드</string>
-  <string name="mfa_icon_content_description">2fa 아이콘</string>
+  <string name="mfa_icon_content_description">2FA 아이콘</string>
   <string name="select_suffix_upgrade_for_custom_domains">사용자 지정 도메인을 위해 업그레이드</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">더 많은 받은 편지함을 위해 업그레이드</string>
   <string name="create_alias_content_limit_banner">사용자가 생성할 수 있는 최대 별명 수에 도달했습니다. 구독을 업그레이드하여 무제한 별명을 생성하세요.</string>

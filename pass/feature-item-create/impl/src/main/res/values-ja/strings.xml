@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">クレジットカードを更新できませんでした</string>
   <!--  Common create items  -->
   <string name="changes_saved">変更の保存</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">2要素認証シークレット(TOTP)</string>
   <string name="totp_create_login_field_invalid">無効な2要素認証シークレット</string>
   <string name="totp_create_login_field_placeholder">2要素認証シークレットを追加する</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">このフィールドを空にすることはできません</string>
   <string name="camera_permission_explanation">この機能を利用するにはカメラの許可が必要。</string>
   <string name="camera_permission_open_settings">設定を開く</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">2要素認証 制限に達しました</string>
   <string name="upgrade">アップグレード</string>
   <string name="mfa_icon_content_description">2要素認証 アイコン</string>

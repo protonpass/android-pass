@@ -45,6 +45,7 @@ import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
+import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
@@ -134,6 +135,22 @@ fun CreditCardDetail(
                             onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(itemUiModel)) },
                             onOptionsClick = {
                                 scope.launch { bottomSheetState.show() }
+                            },
+                            onShareClick = {
+                                when (state.shareClickAction) {
+                                    ShareClickAction.Share -> {
+                                        onNavigate(
+                                            ItemDetailNavigation.OnShareVault(
+                                                shareId = state.itemContent.model.shareId,
+                                                itemId = state.itemContent.model.id
+                                            )
+                                        )
+                                    }
+
+                                    ShareClickAction.Upgrade -> {
+                                        onNavigate(ItemDetailNavigation.Upgrade)
+                                    }
+                                }
                             }
                         )
                     }

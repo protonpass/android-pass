@@ -169,6 +169,11 @@ sealed interface SharingNavigation {
         val destShareId: ShareId,
         val destEmail: String
     ) : SharingNavigation
+
+    data class MoveItemToSharedVault(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : SharingNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)

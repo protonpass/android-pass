@@ -85,6 +85,7 @@ import proton.android.pass.featureitemdetail.impl.itemDetailGraph
 import proton.android.pass.featuremigrate.impl.MigrateConfirmVault
 import proton.android.pass.featuremigrate.impl.MigrateNavigation
 import proton.android.pass.featuremigrate.impl.MigrateSelectVault
+import proton.android.pass.featuremigrate.impl.MigrateVaultFilter
 import proton.android.pass.featuremigrate.impl.migrateGraph
 import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
@@ -719,7 +720,8 @@ fun NavGraphBuilder.appGraph(
                         destination = MigrateSelectVault,
                         route = MigrateSelectVault.createNavRouteForMigrateItem(
                             shareId = it.shareId,
-                            itemId = it.itemId
+                            itemId = it.itemId,
+                            filter = MigrateVaultFilter.All
                         )
                     )
                 }
@@ -936,6 +938,17 @@ fun NavGraphBuilder.appGraph(
                         memberEmail = it.destEmail
                     ),
                     backDestination = ManageVault
+                )
+            }
+
+            is SharingNavigation.MoveItemToSharedVault -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = MigrateSelectVault,
+                    route = MigrateSelectVault.createNavRouteForMigrateItem(
+                        shareId = it.shareId,
+                        itemId = it.itemId,
+                        filter = MigrateVaultFilter.Shared
+                    )
                 )
             }
         }

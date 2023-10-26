@@ -58,7 +58,8 @@ internal fun ItemDetailTopBar(
     actionColor: Color,
     onUpClick: () -> Unit,
     onEditClick: () -> Unit,
-    onOptionsClick: () -> Unit
+    onOptionsClick: () -> Unit,
+    onShareClick: () -> Unit
 ) {
     ProtonTopAppBar(
         modifier = modifier,
@@ -81,7 +82,8 @@ internal fun ItemDetailTopBar(
                     iconColor = iconColor,
                     iconBackgroundColor = iconBackgroundColor,
                     onEditClick = onEditClick,
-                    onOptionsClick = onOptionsClick
+                    onOptionsClick = onOptionsClick,
+                    onShareClick = onShareClick
                 )
             }
         }
@@ -97,7 +99,8 @@ private fun ItemTopBarActions(
     iconColor: Color,
     iconBackgroundColor: Color,
     onEditClick: () -> Unit,
-    onOptionsClick: () -> Unit
+    onOptionsClick: () -> Unit,
+    onShareClick: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -126,6 +129,18 @@ private fun ItemTopBarActions(
                 },
                 onClick = { onEditClick() }
             )
+
+            Circle(
+                backgroundColor = iconBackgroundColor,
+                onClick = onShareClick
+            ) {
+                Icon(
+                    painter = painterResource(CoreR.drawable.ic_proton_users_plus),
+                    contentDescription = stringResource(R.string.share_button_content_description),
+                    tint = iconColor
+                )
+
+            }
         }
         AnimatedVisibility(visible = !isLoading) {
             Circle(
@@ -155,14 +170,15 @@ fun ItemDetailTopBarPreview(
         Surface {
             ItemDetailTopBar(
                 isLoading = input.second.isLoading,
-                isInTrash = true,
+                isInTrash = false,
                 actionColor = input.second.color,
                 iconBackgroundColor = input.second.closeBackgroundColor,
                 iconColor = input.second.color,
                 showActions = input.second.showActions,
                 onUpClick = {},
                 onEditClick = {},
-                onOptionsClick = {}
+                onOptionsClick = {},
+                onShareClick = {}
             )
         }
     }

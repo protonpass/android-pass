@@ -24,15 +24,17 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
+import proton.android.pass.featuremigrate.impl.MigrateVaultFilter
+import proton.android.pass.featuremigrate.impl.MigrateVaultFilterArg
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
@@ -47,27 +49,25 @@ class MigrateSelectVaultForMigrateItemViewModelTest {
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var savedState: TestSavedStateHandleProvider
 
     @Before
     fun setup() {
         observeVaults = TestObserveVaultsWithItemCount()
         canPerformPaidAction = TestCanPerformPaidAction()
         snackbarDispatcher = TestSnackbarDispatcher()
-        instance = MigrateSelectVaultViewModel(
-            observeVaults = observeVaults,
-            canPerformPaidAction = canPerformPaidAction,
-            snackbarDispatcher = snackbarDispatcher,
-            savedStateHandle = TestSavedStateHandle.create().apply {
-                set(CommonNavArgId.ShareId.key, SHARE_ID.id)
-                set(MigrateModeArg.key, MODE.name)
-                set(CommonOptionalNavArgId.ItemId.key, ITEM_ID.id)
-            }
-        )
+        savedState = TestSavedStateHandleProvider().apply {
+            get()[CommonNavArgId.ShareId.key] = SHARE_ID.id
+            get()[MigrateModeArg.key] = MODE.name
+            get()[CommonOptionalNavArgId.ItemId.key] = ITEM_ID.id
+            get()[MigrateVaultFilterArg.key] = MigrateVaultFilter.All.name
+        }
+        createViewModel()
     }
 
     @Test
     fun `emits success when vault selected`() = runTest {
-        val (currentVault, otherVault) = initialVaults()
+        val (currentVault, otherVault) = initialVaults(firstVaultShared = false)
         observeVaults.sendResult(Result.success(listOf(currentVault, otherVault)))
 
         instance.onVaultSelected(otherVault.vault.shareId)
@@ -86,13 +86,63 @@ class MigrateSelectVaultForMigrateItemViewModelTest {
         }
     }
 
-    private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> =
+    @Test
+    fun `filters shared vaults when filter mode is set to Shared`() = runTest {
+        val sharedVault = VaultWithItemCount(
+            vault = Vault(
+                shareId = ShareId("shared-vault"),
+                name = "vault1",
+                isPrimary = false,
+                shared = true
+            ),
+            activeItemCount = 1,
+            trashedItemCount = 0
+        )
+
+        val nonSharedVault = VaultWithItemCount(
+            vault = Vault(
+                shareId = ShareId("non-shared-vault"),
+                name = "vault2",
+                isPrimary = false,
+                shared = false
+            ),
+            activeItemCount = 1,
+            trashedItemCount = 0
+        )
+
+        observeVaults.sendResult(Result.success(listOf(sharedVault, nonSharedVault)))
+        savedState.apply {
+            get()[MigrateVaultFilterArg.key] = MigrateVaultFilter.Shared.name
+        }
+        createViewModel()
+
+        instance.state.test {
+            val item = awaitItem()
+            require(item is MigrateSelectVaultUiState.Success)
+
+            val expected = VaultEnabledPair(vault = sharedVault, isEnabled = true)
+            assertThat(item.vaultList).isEqualTo(listOf(expected))
+
+        }
+    }
+
+    private fun createViewModel() {
+        instance = MigrateSelectVaultViewModel(
+            observeVaults = observeVaults,
+            canPerformPaidAction = canPerformPaidAction,
+            snackbarDispatcher = snackbarDispatcher,
+            savedStateHandle = savedState
+        )
+    }
+
+    private fun initialVaults(firstVaultShared: Boolean): Pair<VaultWithItemCount, VaultWithItemCount> =
         Pair(
             VaultWithItemCount(
                 vault = Vault(
                     shareId = SHARE_ID,
                     name = "vault1",
-                    isPrimary = false
+                    isPrimary = false,
+                    shared = firstVaultShared
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 0

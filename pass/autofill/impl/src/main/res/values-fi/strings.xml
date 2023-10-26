@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Vastaavia näkyvissä olevia kenttiä ei havaittu</string>
-  <string name="autofill_authenticate_prompt">Nouda Proton Passista</string>
+    <string name="autofill_authenticate_prompt">Nouda Proton Passista</string>
   <string name="error_credentials_not_found">Vastaavia kirjautumistietoja ei löytynyt</string>
-  <string name="error_credentials_not_saved">Kirjautumistietoja ei voitu tallentaa</string>
   <string name="error_loading_items">Kohteita ei voitu ladata</string>
   <string name="topbar_search_query">Etsi kaikista holveista…</string>
   <string name="topbar_search_query_primary_vault">Etsi ensisijaisesta holvista…</string>

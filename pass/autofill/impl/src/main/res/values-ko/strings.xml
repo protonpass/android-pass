@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">일치하는 표시된 란을 찾을 수 없습니다.</string>
-  <string name="autofill_authenticate_prompt">Proton Pass에서 가져오기</string>
+    <string name="autofill_authenticate_prompt">Proton Pass에서 가져오기</string>
   <string name="error_credentials_not_found">일치하는 자격 증명을 찾을 수 없습니다</string>
-  <string name="error_credentials_not_saved">자격 증명을 저장할 수 없습니다</string>
   <string name="error_loading_items">항목을 불러올 수 없습니다</string>
   <string name="topbar_search_query">모든 금고를 검색...</string>
   <string name="topbar_search_query_primary_vault">기본 금고를 검색...</string>

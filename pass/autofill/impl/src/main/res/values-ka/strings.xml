@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">შესაბამისი ნაჩვენები ველები ვერ ვიპოვე</string>
-  <string name="autofill_authenticate_prompt">მიიღეთ Proton Pass-დან</string>
+    <string name="autofill_authenticate_prompt">მიიღეთ Proton Pass-დან</string>
   <string name="error_credentials_not_found">შესაბამისი ავტორიზაციის დეტალები აღმოჩენილი არაა</string>
-  <string name="error_credentials_not_saved">ავტორიზაციის დეტალები ვერ შევინახე</string>
   <string name="error_loading_items">ელემენტების ჩატვირთვა შეუძლებელია</string>
   <string name="topbar_search_query">ყველა საცავში ძებნა…</string>
   <string name="topbar_search_query_primary_vault">ძირითად საცავში ძებნა…</string>

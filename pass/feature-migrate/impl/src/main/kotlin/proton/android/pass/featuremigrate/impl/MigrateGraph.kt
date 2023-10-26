@@ -28,6 +28,7 @@ import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.toPath
 import proton.pass.domain.ItemId
@@ -61,19 +62,36 @@ enum class MigrateModeValue {
     AllVaultItems;
 }
 
+enum class MigrateVaultFilter {
+    All,
+    Shared;
+}
+
+object MigrateVaultFilterArg : OptionalNavArgId {
+    override val key = "migrateVaultFilter"
+    override val navType = NavType.StringType
+}
+
 object MigrateSelectVault : NavItem(
     baseRoute = "migrate/select",
     navArgIds = listOf(CommonNavArgId.ShareId, MigrateModeArg),
-    optionalArgIds = listOf(CommonOptionalNavArgId.ItemId),
+    optionalArgIds = listOf(CommonOptionalNavArgId.ItemId, MigrateVaultFilterArg),
     navItemType = NavItemType.Bottomsheet
 ) {
     fun createNavRouteForMigrateAll(shareId: ShareId) =
         "$baseRoute/${shareId.id}/${MigrateModeValue.AllVaultItems.name}"
 
-    fun createNavRouteForMigrateItem(shareId: ShareId, itemId: ItemId): String = buildString {
+    fun createNavRouteForMigrateItem(
+        shareId: ShareId,
+        itemId: ItemId,
+        filter: MigrateVaultFilter
+    ): String = buildString {
         append("$baseRoute/${shareId.id}/${MigrateModeValue.SingleItem.name}")
 
-        val map = mapOf(CommonOptionalNavArgId.ItemId.key to itemId.id)
+        val map = mapOf(
+            CommonOptionalNavArgId.ItemId.key to itemId.id,
+            MigrateVaultFilterArg.key to filter.name
+        )
         append(map.toPath())
     }
 

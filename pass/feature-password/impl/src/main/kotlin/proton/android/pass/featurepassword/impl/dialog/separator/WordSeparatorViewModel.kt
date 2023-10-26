@@ -34,9 +34,9 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.commonrust.api.WordSeparator
 import proton.android.pass.featurepassword.impl.extensions.toDomain
 import proton.android.pass.featurepassword.impl.extensions.toPassword
-import proton.android.pass.password.api.PasswordGenerator
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
@@ -46,7 +46,7 @@ class WordSeparatorViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val selectedSeparatorFlow =
-        MutableStateFlow<Option<PasswordGenerator.WordSeparator>>(None)
+        MutableStateFlow<Option<WordSeparator>>(None)
     private val eventFlow = MutableStateFlow<WordSeparatorUiEvent>(WordSeparatorUiEvent.Unknown)
 
     private val preferenceFlow = userPreferencesRepository.getPasswordGenerationPreference()
@@ -78,7 +78,7 @@ class WordSeparatorViewModel @Inject constructor(
             initialValue = WordSeparatorUiState.Initial
         )
 
-    fun onChange(value: PasswordGenerator.WordSeparator) {
+    fun onChange(value: WordSeparator) {
         selectedSeparatorFlow.update { value.some() }
     }
 

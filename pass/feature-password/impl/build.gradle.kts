@@ -74,6 +74,7 @@ dependencies {
 
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.crypto.api)
@@ -81,7 +82,5 @@ dependencies {
     implementation(projects.pass.log.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.navigation.api)
-    implementation(projects.pass.password.api)
     implementation(projects.pass.preferences.api)
-
 }

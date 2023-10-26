@@ -42,7 +42,6 @@
   <string name="item_too_long_copied_to_clipboard">聯絡人太長，部分貼上至剪貼簿</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">保管庫</string>
-  <string name="vault_drawer_vaults_item_count">%d 個項目</string>
   <string name="vault_drawer_create_vault">新增加密保管庫</string>
   <string name="vault_drawer_item_trash">垃圾桶</string>
   <string name="vault_drawer_all_vaults">全部的保管庫</string>

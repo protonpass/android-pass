@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Generovat heslo</string>
   <string name="password_type">Typ</string>
   <string name="special_characters">Speciální znaky (!&amp;*)</string>
-  <string name="character_count">%s znaků</string>
-  <string name="word_count">%s slov</string>
   <string name="word_separator">Oddělovač slov</string>
   <string name="bottomsheet_option_capital_letters">Velká písmena (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Velkými písmeny</string>

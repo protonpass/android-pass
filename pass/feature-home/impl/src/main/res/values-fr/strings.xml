@@ -42,7 +42,6 @@
   <string name="item_too_long_copied_to_clipboard">Le contenu était trop long, il a été partiellement copié dans le presse-papiers.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Coffres-forts</string>
-  <string name="vault_drawer_vaults_item_count">%d éléments</string>
   <string name="vault_drawer_create_vault">Créer un coffre-fort</string>
   <string name="vault_drawer_item_trash">Corbeille</string>
   <string name="vault_drawer_all_vaults">Tous les coffres-forts</string>

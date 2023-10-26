@@ -129,7 +129,6 @@ class MigrateSelectVaultForMigrateItemViewModelTest {
     private fun createViewModel() {
         instance = MigrateSelectVaultViewModel(
             observeVaults = observeVaults,
-            canPerformPaidAction = canPerformPaidAction,
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandle = savedState
         )

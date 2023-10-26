@@ -61,7 +61,6 @@
   <string name="share_summary_vault_title">Cofre</string>
   <string name="share_summary_permissions_title">Nível de acesso</string>
   <string name="share_manage_vault_share_with_more_people">Compartilhar com mais pessoas</string>
-  <string name="share_manage_vault_item_count">%d itens</string>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Convite enviado</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Criação de conta pendente</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirmar acesso</string>

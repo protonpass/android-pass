@@ -48,6 +48,8 @@ sealed interface ItemDetailNavigation {
 
     @JvmInline
     value class ManageVault(val shareId: ShareId) : ItemDetailNavigation
+
+    data class OnShareVault(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 }
 
 object ViewItem : NavItem(

@@ -26,7 +26,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -70,7 +70,11 @@ fun ManageVaultHeader(
         )
 
         Text(
-            text = stringResource(R.string.share_manage_vault_item_count, vault.activeItemCount),
+            text = pluralStringResource(
+                R.plurals.share_manage_vault_item_count,
+                vault.activeItemCount.toInt(),
+                vault.activeItemCount
+            ),
             color = PassTheme.colors.textWeak
         )
     }

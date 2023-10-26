@@ -59,8 +59,7 @@
   <string name="share_summary_vault_title">금고</string>
   <string name="share_summary_permissions_title">접근 권한</string>
   <string name="share_manage_vault_share_with_more_people">더 많은 사람과 공유</string>
-  <string name="share_manage_vault_item_count">%d개 항목</string>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">초대장을 보냈습니다</string>
+    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">초대장을 보냈습니다</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">계정 생성 전송 중</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">접근 확인</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">초대</string>

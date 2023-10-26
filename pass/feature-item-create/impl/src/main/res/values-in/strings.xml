@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Tidak dapat memperbarui kartu kredit</string>
   <!--  Common create items  -->
   <string name="changes_saved">Perubahan disimpan</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Secret 2FA (TOTP)</string>
   <string name="totp_create_login_field_invalid">Secret 2FA tidak valid</string>
   <string name="totp_create_login_field_placeholder">Tambahkan secret 2FA</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Kolom ini harus diisi</string>
   <string name="camera_permission_explanation">Izin kamera diperlukan agar fitur ini tersedia.</string>
   <string name="camera_permission_open_settings">Buka pengaturan</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Batas 2FA tercapai</string>
   <string name="upgrade">Tingkatkan</string>
   <string name="mfa_icon_content_description">Ikon 2FA</string>

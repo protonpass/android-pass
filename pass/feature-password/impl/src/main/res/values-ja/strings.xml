@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">パスワードを生成する</string>
   <string name="password_type">種別</string>
   <string name="special_characters">特殊文字 (!&amp;*)</string>
-  <string name="character_count">%s 文字</string>
-  <string name="word_count">%s 語</string>
   <string name="word_separator">区切り文字</string>
   <string name="bottomsheet_option_capital_letters">英文字の大文字 (A～Z)</string>
   <string name="bottomsheet_option_capitalise">大文字にする</string>

@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Generera lösenord</string>
   <string name="password_type">Typ</string>
   <string name="special_characters">Specialtecken (!&amp;*)</string>
-  <string name="character_count">%s tecken</string>
-  <string name="word_count">%s ord</string>
   <string name="word_separator">Ordavgränsare</string>
   <string name="bottomsheet_option_capital_letters">Versaler (A–Ö)</string>
   <string name="bottomsheet_option_capitalise">Kapitalisera</string>

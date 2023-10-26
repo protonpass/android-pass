@@ -56,7 +56,10 @@
 
     <!-- Vault drawer -->
     <string name="vault_drawer_vaults_title">Vaults</string>
-    <string name="vault_drawer_vaults_item_count">%d items</string>
+    <plurals name="vault_drawer_vaults_item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
     <string name="vault_drawer_create_vault">Create vault</string>
     <string name="vault_drawer_item_trash">Trash</string>
     <string name="vault_drawer_all_vaults">All vaults</string>

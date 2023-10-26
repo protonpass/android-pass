@@ -42,7 +42,6 @@
   <string name="item_too_long_copied_to_clipboard">Nội dung quá dài, đã sao chép một phần vào bộ nhớ tạm</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Kho lưu trữ</string>
-  <string name="vault_drawer_vaults_item_count">%d nội dung</string>
   <string name="vault_drawer_create_vault">Tạo kho lưu trữ</string>
   <string name="vault_drawer_item_trash">Thùng rác</string>
   <string name="vault_drawer_all_vaults">Tất cả kho lưu trữ</string>

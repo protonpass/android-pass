@@ -42,7 +42,6 @@
   <string name="item_too_long_copied_to_clipboard">Konten terlalu panjang, sebagian disalin ke papan klip</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Brankas</string>
-  <string name="vault_drawer_vaults_item_count">%d item</string>
   <string name="vault_drawer_create_vault">Buat brankas</string>
   <string name="vault_drawer_item_trash">Sampah</string>
   <string name="vault_drawer_all_vaults">Semua brankas</string>

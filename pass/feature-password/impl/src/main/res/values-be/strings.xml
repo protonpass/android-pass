@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Згенерыраваць пароль</string>
   <string name="password_type">Тып</string>
   <string name="special_characters">Спецыяльныя сімвалы (!&amp;*)</string>
-  <string name="character_count">%s сімвалаў</string>
-  <string name="word_count">%s слоў</string>
   <string name="word_separator">Раздзяляльнік слоў</string>
   <string name="bottomsheet_option_capital_letters">Вялікія літары (А-Я)</string>
   <string name="bottomsheet_option_capitalise">Вялікімі літарамі</string>

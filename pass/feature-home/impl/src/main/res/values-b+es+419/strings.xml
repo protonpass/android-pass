@@ -42,7 +42,6 @@
   <string name="item_too_long_copied_to_clipboard">El contenido es muy largo. Fue copiado parcialmente al portapapeles.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Bóvedas</string>
-  <string name="vault_drawer_vaults_item_count">%d elementos</string>
   <string name="vault_drawer_create_vault">Crear bóveda</string>
   <string name="vault_drawer_item_trash">Papelera</string>
   <string name="vault_drawer_all_vaults">Todas las bóvedas</string>

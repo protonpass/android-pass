@@ -110,6 +110,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             title: String = "login-item",
             username: String = "username",
             password: String = "",
+            primaryTotp: String = "",
             note: String = "note"
         ): Item = createItem(
             shareId = shareId,
@@ -121,7 +122,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
-                primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
+                primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(primaryTotp), primaryTotp),
                 customFields = emptyList()
             )
         )

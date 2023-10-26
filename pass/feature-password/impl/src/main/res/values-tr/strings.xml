@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Parola oluştur</string>
   <string name="password_type">Tür</string>
   <string name="special_characters">Özel karakterler (!&amp;*)</string>
-  <string name="character_count">%s karakter</string>
-  <string name="word_count">%s sözcük</string>
   <string name="word_separator">Sözcük ayracı</string>
   <string name="bottomsheet_option_capital_letters">Büyük harfler (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Harfleri büyüt</string>

@@ -46,6 +46,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.MFACreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
@@ -144,7 +145,7 @@ internal class CreateLoginViewModelTest {
 
     @Test
     fun `given valid data when a create item event should return a success event`() = runTest {
-        val item = TestObserveItems.createLogin()
+        val item = TestObserveItems.createLogin(primaryTotp = "secret")
         val vault = sendInitialVault(item.shareId)
         val baseState = CreateLoginUiState.Initial
 
@@ -206,8 +207,9 @@ internal class CreateLoginViewModelTest {
         }
 
         val memory = telemetryManager.getMemory()
-        assertThat(memory.size).isEqualTo(1)
+        assertThat(memory.size).isEqualTo(2)
         assertThat(memory[0]).isEqualTo(ItemCreate(EventItemType.Login))
+        assertThat(memory[1]).isEqualTo(MFACreated)
     }
 
     @Test

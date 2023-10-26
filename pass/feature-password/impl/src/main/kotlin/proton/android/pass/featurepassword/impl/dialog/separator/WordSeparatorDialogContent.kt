@@ -25,16 +25,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonDialogTitle
+import proton.android.pass.commonrust.api.WordSeparator
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.featurepassword.R
-import proton.android.pass.password.api.PasswordGenerator
 
 @Composable
 fun WordSeparatorDialogContent(
     modifier: Modifier = Modifier,
     state: WordSeparatorUiState,
-    onOptionSelected: (PasswordGenerator.WordSeparator) -> Unit,
+    onOptionSelected: (WordSeparator) -> Unit,
     onConfirm: () -> Unit,
     onCancel: () -> Unit,
 ) {

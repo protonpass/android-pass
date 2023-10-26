@@ -19,7 +19,6 @@
 package proton.android.pass.featurepassword.impl.bottomsheet
 
 import androidx.compose.runtime.Immutable
-import proton.android.pass.password.api.PasswordGenerator
 
 @Immutable
 enum class GeneratePasswordMode {
@@ -46,7 +45,7 @@ sealed interface GeneratePasswordContent {
     @Immutable
     data class WordsPassword(
         val count: Int,
-        val wordSeparator: PasswordGenerator.WordSeparator,
+        val wordSeparator: proton.android.pass.commonrust.api.WordSeparator,
         val capitalise: Boolean,
         val includeNumbers: Boolean
     ) : GeneratePasswordContent

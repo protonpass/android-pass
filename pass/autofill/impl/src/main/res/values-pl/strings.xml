@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Nie znaleziono pasujących pól</string>
-  <string name="autofill_authenticate_prompt">Uzyskaj z Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Uzyskaj z Proton Pass</string>
   <string name="error_credentials_not_found">Nie znaleziono pasujących danych logowania</string>
-  <string name="error_credentials_not_saved">Nie można zapisać danych logowania</string>
   <string name="error_loading_items">Nie można załadować elementów</string>
   <string name="topbar_search_query">Przeszukaj wszystkie sejfy…</string>
   <string name="topbar_search_query_primary_vault">Przeszukaj sejf główny…</string>

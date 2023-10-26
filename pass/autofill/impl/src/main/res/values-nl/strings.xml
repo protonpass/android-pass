@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Geen overeenkomende weergegeven velden gevonden</string>
-  <string name="autofill_authenticate_prompt">Verkrijg van Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Verkrijg van Proton Pass</string>
   <string name="error_credentials_not_found">Geen overeenkomende inloggegevens gevonden</string>
-  <string name="error_credentials_not_saved">Kan de inloggegevens niet opslaan</string>
   <string name="error_loading_items">Kan de items niet laden</string>
   <string name="topbar_search_query">Zoeken in alle kluizen…</string>
   <string name="topbar_search_query_primary_vault">Zoeken in primaire kluis…</string>

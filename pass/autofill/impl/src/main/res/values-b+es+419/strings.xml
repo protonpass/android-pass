@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">No se encontraron campos visibles qe coinciden.</string>
-  <string name="autofill_authenticate_prompt">Obtener de Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Obtener de Proton Pass</string>
   <string name="error_credentials_not_found">No se encontraron credenciales coincidentes</string>
-  <string name="error_credentials_not_saved">No se pudieron guardar las credenciales</string>
   <string name="error_loading_items">No se pudieron cargar los elementos</string>
   <string name="topbar_search_query">Buscar en todas las bóvedas…</string>
   <string name="topbar_search_query_primary_vault">Buscar en la bóveda principal…</string>

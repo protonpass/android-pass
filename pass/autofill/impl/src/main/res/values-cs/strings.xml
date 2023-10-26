@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Nebyla nalezena žádná odpovídající zobrazená pole</string>
-  <string name="autofill_authenticate_prompt">Získat z Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Získat z Proton Pass</string>
   <string name="error_credentials_not_found">Nebyly nalezeny žádné odpovídající přihlašovací údaje</string>
-  <string name="error_credentials_not_saved">Přihlašovací údaje nelze uložit.</string>
   <string name="error_loading_items">Nelze načíst položky.</string>
   <string name="topbar_search_query">Hledat ve všech trezorech...</string>
   <string name="topbar_search_query_primary_vault">Hledat v primárních trezorech...</string>

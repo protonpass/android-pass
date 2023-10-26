@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Не знайдено відповідних зображених полів</string>
-  <string name="autofill_authenticate_prompt">Отримати з Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Отримати з Proton Pass</string>
   <string name="error_credentials_not_found">Не знайдено відповідних облікових даних</string>
-  <string name="error_credentials_not_saved">Не вдалося зберегти облікові дані</string>
   <string name="error_loading_items">Не вдалося завантажити елементи</string>
   <string name="topbar_search_query">Пошук у всіх сховищах…</string>
   <string name="topbar_search_query_primary_vault">Пошук в основному сховищі…</string>

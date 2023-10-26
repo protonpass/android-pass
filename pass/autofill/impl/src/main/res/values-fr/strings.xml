@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Aucun champ correspondant n\'a été trouvé.</string>
   <string name="autofill_authenticate_prompt">Obtenir depuis Proton Pass</string>
   <string name="error_credentials_not_found">Aucun identifiant correspondant n\'a été trouvé.</string>
-  <string name="error_credentials_not_saved">Impossible d\'enregistrer les informations d\'identification</string>
   <string name="error_loading_items">Impossible de charger les éléments</string>
   <string name="topbar_search_query">Rechercher dans tous les coffres-forts…</string>
   <string name="topbar_search_query_primary_vault">Rechercher dans le coffre-fort principal…</string>

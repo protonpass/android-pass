@@ -25,7 +25,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
@@ -47,17 +46,14 @@ class MigrateSelectVaultViewModelTest {
 
     private lateinit var instance: MigrateSelectVaultViewModel
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
-    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setup() {
         observeVaults = TestObserveVaultsWithItemCount()
-        canPerformPaidAction = TestCanPerformPaidAction()
         snackbarDispatcher = TestSnackbarDispatcher()
         instance = MigrateSelectVaultViewModel(
             observeVaults = observeVaults,
-            canPerformPaidAction = canPerformPaidAction,
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandle = TestSavedStateHandleProvider().apply {
                 get()[CommonNavArgId.ShareId.key] = SHARE_ID.id

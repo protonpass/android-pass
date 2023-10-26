@@ -22,9 +22,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -46,6 +49,7 @@ import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
@@ -55,6 +59,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemPer
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRestored
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.NoteCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -76,6 +81,7 @@ class NoteDetailViewModel @Inject constructor(
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
     private val clipboardManager: ClipboardManager,
+    private val canShareVault: CanShareVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle
@@ -93,19 +99,35 @@ class NoteDetailViewModel @Inject constructor(
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
 
+    private val canPerformPaidActionFlow: Flow<LoadingResult<Boolean>> =
+        canPerformPaidAction().asLoadingResult()
+
+    private val shareActionFlow: Flow<ShareClickAction> = canPerformPaidActionFlow
+        .map { isPaidResult ->
+            val isPaid = isPaidResult.getOrNull() ?: false
+            val canShareVault = canShareVault(shareId).value()
+            when {
+                isPaid && canShareVault -> ShareClickAction.Share
+                else -> ShareClickAction.Upgrade
+            }
+        }
+        .distinctUntilChanged()
+
     val state: StateFlow<NoteDetailUiState> = combineN(
         getItemByIdWithVault(shareId, itemId).asLoadingResult(),
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
-        canPerformPaidAction().asLoadingResult()
+        canPerformPaidActionFlow,
+        shareActionFlow
     ) { itemLoadingResult,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
-        canPerformPaidActionResult ->
+        canPerformPaidActionResult,
+        shareAction ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -135,7 +157,8 @@ class NoteDetailViewModel @Inject constructor(
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canMigrate = canMigrate,
-                    canPerformActions = canPerformItemActions
+                    canPerformActions = canPerformItemActions,
+                    shareClickAction = shareAction
                 )
             }
         }

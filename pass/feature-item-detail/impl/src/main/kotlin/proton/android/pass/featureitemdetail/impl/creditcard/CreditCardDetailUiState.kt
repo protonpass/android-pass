@@ -20,6 +20,7 @@ package proton.android.pass.featureitemdetail.impl.creditcard
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.pass.domain.Vault
 
 sealed interface CreditCardDetailUiState {
@@ -39,7 +40,8 @@ sealed interface CreditCardDetailUiState {
         val isRestoredFromTrash: Boolean,
         val canMigrate: Boolean,
         val isDowngradedMode: Boolean,
-        val canPerformActions: Boolean
+        val canPerformActions: Boolean,
+        val shareClickAction: ShareClickAction
     ) : CreditCardDetailUiState
 
     @Stable

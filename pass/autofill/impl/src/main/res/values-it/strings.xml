@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Nessun campo visualizzato corrispondente trovato</string>
-  <string name="autofill_authenticate_prompt">Ottieni da Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Ottieni da Proton Pass</string>
   <string name="error_credentials_not_found">Nessuna credenziale corrispondente trovata</string>
-  <string name="error_credentials_not_saved">Impossibile salvare le credenziali</string>
   <string name="error_loading_items">Impossibile caricare gli elementi</string>
   <string name="topbar_search_query">Ricerca in tutte le casseforti…</string>
   <string name="topbar_search_query_primary_vault">Ricerca nella cassaforte principale…</string>

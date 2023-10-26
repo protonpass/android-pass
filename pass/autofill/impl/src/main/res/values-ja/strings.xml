@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">適した表示中のフィールドはありませんでした</string>
-  <string name="autofill_authenticate_prompt">Proton Pass から取得</string>
+    <string name="autofill_authenticate_prompt">Proton Pass から取得</string>
   <string name="error_credentials_not_found">適した認証情報が見つかりませんでした</string>
-  <string name="error_credentials_not_saved">認証情報を保存できませんでした</string>
   <string name="error_loading_items">アイテムを読み込むことができませんでした</string>
   <string name="topbar_search_query">すべての保管庫で検索...</string>
   <string name="topbar_search_query_primary_vault">プライマリー保管庫で検索...</string>

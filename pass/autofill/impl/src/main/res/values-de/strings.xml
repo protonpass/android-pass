@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Keine passenden angezeigten Felder gefunden</string>
-  <string name="autofill_authenticate_prompt">Von Proton Pass holen</string>
+    <string name="autofill_authenticate_prompt">Von Proton Pass holen</string>
   <string name="error_credentials_not_found">Keine passenden Zugangsdaten gefunden</string>
-  <string name="error_credentials_not_saved">Zugangsdaten konnten nicht gespeichert werden.</string>
   <string name="error_loading_items">Einträge konnten nicht geladen werden. </string>
   <string name="topbar_search_query">In allen Tresoren suchen…</string>
   <string name="topbar_search_query_primary_vault">Im primären Tresor suchen…</string>

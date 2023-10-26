@@ -42,7 +42,6 @@
   <string name="item_too_long_copied_to_clipboard">Obsah bol príliš dlhý, čiastočne skopírovaný do schránky</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Trezory</string>
-  <string name="vault_drawer_vaults_item_count">%d položiek</string>
   <string name="vault_drawer_create_vault">Vytvoriť trezor</string>
   <string name="vault_drawer_item_trash">Kôš</string>
   <string name="vault_drawer_all_vaults">Všetky trezory</string>

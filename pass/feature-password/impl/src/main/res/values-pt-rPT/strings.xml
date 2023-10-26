@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Gerar uma palavra-passe</string>
   <string name="password_type">Tipo</string>
   <string name="special_characters">Carateres especiais (!&amp;*)</string>
-  <string name="character_count">%s carateres</string>
-  <string name="word_count">%s palavras</string>
   <string name="word_separator">Separador de palavras</string>
   <string name="bottomsheet_option_capital_letters">Letras maiúsculas (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Capitalize</string>

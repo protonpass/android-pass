@@ -61,11 +61,17 @@ object SharingWithUserModeArgId : NavArgId {
     override val navType: NavType<*> = NavType.StringType
 }
 
+object ShowEditVaultArgId : NavArgId {
+    override val key: String = "show_edit_vault"
+    override val navType: NavType<*> = NavType.BoolType
+}
+
 object SharingWith : NavItem(
     baseRoute = "sharing/with/screen",
-    navArgIds = listOf(CommonNavArgId.ShareId)
+    navArgIds = listOf(CommonNavArgId.ShareId, ShowEditVaultArgId)
 ) {
-    fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+    fun createRoute(shareId: ShareId, showEditVault: Boolean) =
+        "$baseRoute/${shareId.id}/$showEditVault"
 }
 
 enum class SharingWithUserModeType {
@@ -174,6 +180,14 @@ sealed interface SharingNavigation {
         val shareId: ShareId,
         val itemId: ItemId
     ) : SharingNavigation
+
+    data class CreateVaultAndMoveItem(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : SharingNavigation
+
+    @JvmInline
+    value class EditVault(val shareId: ShareId) : SharingNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)

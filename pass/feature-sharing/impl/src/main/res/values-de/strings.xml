@@ -61,8 +61,7 @@
   <string name="share_summary_vault_title">Tresor</string>
   <string name="share_summary_permissions_title">Zugriffsstufe</string>
   <string name="share_manage_vault_share_with_more_people">Mit weiteren Personen teilen</string>
-  <string name="share_manage_vault_item_count">%d Einträge</string>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Einladung gesendet</string>
+    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Einladung gesendet</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">﻿Ausstehende Kontoerstellung</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Zugriff bestätigen</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Einladungen</string>

@@ -59,8 +59,7 @@
   <string name="share_summary_vault_title">Kho lưu trữ</string>
   <string name="share_summary_permissions_title">Cấp độ truy cập</string>
   <string name="share_manage_vault_share_with_more_people">Chia sẽ với nhiều người hơn</string>
-  <string name="share_manage_vault_item_count">%d nội dung</string>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Đã gửi lời mời</string>
+    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Đã gửi lời mời</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Đang chờ tài khoản đươc tạo</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Xác nhận truy cập</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Lời mời</string>

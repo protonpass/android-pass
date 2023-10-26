@@ -81,19 +81,23 @@ fun ShareFromItemContent(
             )
         }
 
-        ShareFromItemActionRow(
-            modifier = Modifier.fillMaxWidth(),
-            icon = CoreR.drawable.ic_proton_folder_arrow_in,
-            title = R.string.sharing_from_item_move_to_shared_vault_action,
-            onClick = { onEvent(ShareFromItemEvent.MoveToSharedVault) }
-        )
+        if (state.showMoveToSharedVault) {
+            ShareFromItemActionRow(
+                modifier = Modifier.fillMaxWidth(),
+                icon = CoreR.drawable.ic_proton_folder_arrow_in,
+                title = R.string.sharing_from_item_move_to_shared_vault_action,
+                onClick = { onEvent(ShareFromItemEvent.MoveToSharedVault) }
+            )
+        }
 
-        ShareFromItemActionRow(
-            modifier = Modifier.fillMaxWidth(),
-            icon = CoreR.drawable.ic_proton_plus,
-            title = R.string.sharing_from_item_create_vault_to_share_action,
-            onClick = { onEvent(ShareFromItemEvent.CreateNewVault) }
-        )
+        if (state.showCreateVault) {
+            ShareFromItemActionRow(
+                modifier = Modifier.fillMaxWidth(),
+                icon = CoreR.drawable.ic_proton_plus,
+                title = R.string.sharing_from_item_create_vault_to_share_action,
+                onClick = { onEvent(ShareFromItemEvent.CreateNewVault) }
+            )
+        }
     }
 }
 
@@ -116,7 +120,9 @@ fun ShareFromItemContentPreview(
                         activeItemCount = 1,
                         trashedItemCount = 1,
                     ).some(),
-                    itemId = ItemId("123")
+                    itemId = ItemId("123"),
+                    showCreateVault = true,
+                    showMoveToSharedVault = true
                 ),
                 onEvent = {}
             )

@@ -66,6 +66,7 @@ import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.FieldCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -80,6 +81,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.TotpCop
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.UsernameCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.WebsiteCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -111,6 +113,7 @@ class LoginDetailViewModel @Inject constructor(
     private val getItemByAliasEmail: GetItemByAliasEmail,
     private val telemetryManager: TelemetryManager,
     private val canDisplayTotp: CanDisplayTotp,
+    private val canShareVault: CanShareVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider
@@ -152,7 +155,7 @@ class LoginDetailViewModel @Inject constructor(
         getItemByIdWithVault(shareId, itemId).take(1).asLoadingResult(),
         canPerformPaidActionFlow
     ) { detailsResult, paidActionResult ->
-        paidActionResult.flatMap { canShowCustomFields ->
+        paidActionResult.flatMap { isPaid ->
             detailsResult.map { details ->
                 val itemType = details.item.itemType as ItemType.Login
                 val alias = getAliasForItem(itemType)
@@ -192,13 +195,20 @@ class LoginDetailViewModel @Inject constructor(
                         )
                     )
                 }
-                startObservingTotpCustomFields(canShowCustomFields, itemUiModel)
+                startObservingTotpCustomFields(isPaid, itemUiModel)
+
+                val canShareVault = canShareVault(details.vault).value()
+                val shareClickAction = when {
+                    isPaid && canShareVault -> ShareClickAction.Share
+                    else -> ShareClickAction.Upgrade
+                }
 
                 LoginItemInfo(
                     itemUiModel = itemUiModel,
                     vault = details.vault,
                     hasMoreThanOneVault = details.hasMoreThanOneVault,
-                    linkedAlias = alias
+                    linkedAlias = alias,
+                    shareClickAction = shareClickAction
                 )
             }
         }
@@ -264,7 +274,8 @@ class LoginDetailViewModel @Inject constructor(
         val itemUiModel: ItemUiModel,
         val vault: Vault,
         val hasMoreThanOneVault: Boolean,
-        val linkedAlias: Option<LinkedAliasItem>
+        val linkedAlias: Option<LinkedAliasItem>,
+        val shareClickAction: ShareClickAction
     )
 
     val uiState: StateFlow<LoginDetailUiState> = combineN(
@@ -322,7 +333,8 @@ class LoginDetailViewModel @Inject constructor(
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canMigrate = canMigrate,
                     canPerformItemActions = canPerformItemActions,
-                    customFields = customFieldsList.toPersistentList()
+                    customFields = customFieldsList.toPersistentList(),
+                    shareClickAction = details.shareClickAction
                 )
             }
         }

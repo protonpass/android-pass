@@ -1,8 +1,8 @@
 <resources>
-    <string name="error_cant_find_matching_fields">No matching displayed fields found</string>
+    <string translatable="false" name="error_cant_find_matching_fields">No matching displayed fields found</string>
+    <string translatable="false" name="error_credentials_not_saved">Could not save the credentials</string>
     <string name="autofill_authenticate_prompt">Get from Proton Pass</string>
     <string name="error_credentials_not_found">No matching credentials found</string>
-    <string name="error_credentials_not_saved">Could not save the credentials</string>
     <string name="error_loading_items">Could not load the items</string>
     <string name="topbar_search_query">Search in all vaults…</string>
     <string name="topbar_search_query_primary_vault">Search in primary vault…</string>

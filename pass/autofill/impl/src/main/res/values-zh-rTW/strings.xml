@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">找不到相符的顯示欄位</string>
-  <string name="autofill_authenticate_prompt">從Proton Pass取得</string>
+    <string name="autofill_authenticate_prompt">從Proton Pass取得</string>
   <string name="error_credentials_not_found">找不到相對應的憑證</string>
-  <string name="error_credentials_not_saved">無法儲存驗證</string>
   <string name="error_loading_items">載入項目失敗</string>
   <string name="topbar_search_query">於保管庫中搜尋…</string>
   <string name="topbar_search_query_primary_vault">於主要保管庫中搜尋…</string>

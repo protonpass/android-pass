@@ -108,9 +108,11 @@ fun SharingWithContent(
                     EmailNotValidReason.CannotGetEmailInfo -> stringResource(
                         id = R.string.share_with_email_cannot_get_email_info
                     )
+
                     EmailNotValidReason.UserIdNotFound -> stringResource(
                         id = R.string.share_with_email_error
                     )
+
                     null -> ""
                 },
                 textStyle = ProtonTheme.typography.subheadlineNorm,
@@ -123,6 +125,15 @@ fun SharingWithContent(
                 onDoneClick = onEmailSubmit
             )
             RequestFocusLaunchedEffect(focusRequester)
+
+            if (state.showEditVault && state.vault != null) {
+                CustomizeVault(
+                    vault = state.vault,
+                    onClick = {
+                        onNavigateEvent(SharingNavigation.EditVault(shareId = state.vault.shareId))
+                    }
+                )
+            }
         }
     }
 }

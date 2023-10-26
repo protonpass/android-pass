@@ -20,15 +20,58 @@ package proton.android.pass.featurevault.impl.bottomsheet
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.toPath
+import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
+
+sealed interface CreateVaultNextAction {
+
+    fun value(): String
+
+    object Done : CreateVaultNextAction {
+        override fun value() = NEXT_ACTION_DONE
+    }
+    data class ShareVault(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : CreateVaultNextAction {
+        override fun value() = NEXT_ACTION_SHARE
+    }
+
+    companion object {
+        const val NEXT_ACTION_DONE = "done"
+        const val NEXT_ACTION_SHARE = "share"
+    }
+}
+
+object CreateVaultNextActionNavArgId : NavArgId {
+    override val key = "create_vault_next_action"
+    override val navType = NavType.StringType
+}
 
 object CreateVaultScreen : NavItem(
     baseRoute = "vault/create/screen",
-)
+    navArgIds = listOf(CreateVaultNextActionNavArgId),
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CommonOptionalNavArgId.ItemId)
+) {
+    fun buildRoute(nextAction: CreateVaultNextAction) = buildString {
+        append("$baseRoute/${nextAction.value()}")
+        if (nextAction is CreateVaultNextAction.ShareVault) {
+            val extras = mapOf(
+                CommonOptionalNavArgId.ShareId.key to nextAction.shareId.id,
+                CommonOptionalNavArgId.ItemId.key to nextAction.itemId.id
+            )
+            append(extras.toPath())
+        }
+    }
+}
 
 object EditVaultScreen : NavItem(
     baseRoute = "vault/edit/screen",

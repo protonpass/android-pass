@@ -41,6 +41,7 @@ import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.featuresharing.impl.SharingWithUserModeType
+import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.pass.domain.ShareId
@@ -55,8 +56,11 @@ class SharingWithViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val shareId: ShareId =
-        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
+    private val shareId: ShareId = ShareId(
+        id = savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key)
+    )
+    private val showEditVault: Boolean = savedStateHandleProvider.get()
+        .require(ShowEditVaultArgId.key)
 
     private val isEmailNotValidState: MutableStateFlow<EmailNotValidReason?> =
         MutableStateFlow(null)
@@ -76,11 +80,12 @@ class SharingWithViewModel @Inject constructor(
     ) { email, isEmailNotValid, vault, isLoading, event ->
         SharingWithUIState(
             email = email,
-            vaultName = vault.getOrNull()?.name,
+            vault = vault.getOrNull(),
             emailNotValidReason = isEmailNotValid,
             isVaultNotFound = vault is LoadingResult.Error,
             isLoading = isLoading.value() || vault is LoadingResult.Loading,
-            event = event
+            event = event,
+            showEditVault = showEditVault
         )
     }.stateIn(
         scope = viewModelScope,

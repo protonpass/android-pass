@@ -61,6 +61,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.MFACreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
@@ -82,6 +83,8 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
+import proton.pass.domain.CustomField
+import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
 import proton.pass.domain.entity.NewAlias
@@ -300,8 +303,10 @@ class CreateLoginViewModel @Inject constructor(
                     )
                 }
             }
+
             telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
             telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+            send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
             draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
             snackbarDispatcher(LoginCreated)
         }.onFailure {
@@ -336,10 +341,23 @@ class CreateLoginViewModel @Inject constructor(
                 }
             }
             telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+            send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
             snackbarDispatcher(LoginCreated)
         }.onFailure {
             PassLogger.e(TAG, it, "Could not create item")
             snackbarDispatcher(ItemCreationError)
+        }
+    }
+
+    private fun send2FACreatedTelemetryEvent(login: ItemType.Login) {
+        if (login.customFields.any { it is CustomField.Totp }) {
+            telemetryManager.sendEvent(MFACreated)
+        } else {
+            encryptionContextProvider.withEncryptionContext {
+                if (decrypt(login.primaryTotp).isNotBlank()) {
+                    telemetryManager.sendEvent(MFACreated)
+                }
+            }
         }
     }
 

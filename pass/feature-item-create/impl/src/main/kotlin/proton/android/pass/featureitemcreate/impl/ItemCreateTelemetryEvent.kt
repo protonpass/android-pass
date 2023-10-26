@@ -28,3 +28,6 @@ data class ItemCreate(val itemType: EventItemType) : TelemetryEvent("item.creati
 data class ItemUpdate(val itemType: EventItemType) : TelemetryEvent("item.update") {
     override fun dimensions(): Map<String, String> = mapOf("type" to itemType.itemTypeName)
 }
+
+object MFACreated : TelemetryEvent("2fa.creation")
+object MFAUpdated : TelemetryEvent("2fa.update")

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Ingen matchende viste felter fundet</string>
-  <string name="autofill_authenticate_prompt">Hent fra Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Hent fra Proton Pass</string>
   <string name="error_credentials_not_found">Ingen matchende legitimationsoplysninger fundet</string>
-  <string name="error_credentials_not_saved">Kunne ikke gemme legitimationsoplysningerne</string>
   <string name="error_loading_items">Kunne ikke indlæse elementerne</string>
   <string name="topbar_search_query">Søg i alle bokse…</string>
   <string name="topbar_search_query_primary_vault">Søg i primær boks…</string>

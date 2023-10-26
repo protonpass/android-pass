@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Δε βρέθηκαν πεδία που να ταιριάζουν</string>
-  <string name="autofill_authenticate_prompt">Λήψη από το Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Λήψη από το Proton Pass</string>
   <string name="error_credentials_not_found">Δε βρέθηκαν διαπιστευτήρια που να ταιριάζουν</string>
-  <string name="error_credentials_not_saved">Δεν ήταν δυνατή η αποθήκευση των διαπιστευτηρίων</string>
   <string name="error_loading_items">Αδυναμία φόρτωσης των στοιχείων</string>
   <string name="topbar_search_query">Αναζήτηση σε όλες τις κρύπτες...</string>
   <string name="topbar_search_query_primary_vault">Αναζήτηση στην κύρια κρύπτη…</string>

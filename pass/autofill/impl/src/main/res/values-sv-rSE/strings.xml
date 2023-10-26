@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Inga matchande visade fält hittades</string>
-  <string name="autofill_authenticate_prompt">Hämta från Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Hämta från Proton Pass</string>
   <string name="error_credentials_not_found">Inga matchande inloggningsuppgifter hittades</string>
-  <string name="error_credentials_not_saved">Kunde inte spara inloggningsuppgifterna</string>
   <string name="error_loading_items">Kunde inte ladda objekten</string>
   <string name="topbar_search_query">Sök i alla valv…</string>
   <string name="topbar_search_query_primary_vault">Sök i primärt valv…</string>

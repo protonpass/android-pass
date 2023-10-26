@@ -27,12 +27,16 @@ import proton.pass.domain.VaultWithItemCount
 @Stable
 data class ShareFromItemUiState(
     val vault: Option<VaultWithItemCount>,
-    val itemId: ItemId
+    val itemId: ItemId,
+    val showMoveToSharedVault: Boolean,
+    val showCreateVault: Boolean
 ) {
     companion object {
         fun Initial(itemId: ItemId) = ShareFromItemUiState(
             vault = None,
-            itemId = itemId
+            itemId = itemId,
+            showMoveToSharedVault = false,
+            showCreateVault = false
         )
     }
 }

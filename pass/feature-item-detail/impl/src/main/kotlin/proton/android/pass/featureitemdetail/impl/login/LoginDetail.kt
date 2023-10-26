@@ -48,6 +48,7 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
+import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.WebsiteOptions
@@ -173,6 +174,22 @@ fun LoginDetail(
                             onOptionsClick = {
                                 currentBottomSheet = TopBarOptions
                                 scope.launch { bottomSheetState.show() }
+                            },
+                            onShareClick = {
+                                when (state.shareClickAction) {
+                                    ShareClickAction.Share -> {
+                                        onNavigate(
+                                            ItemDetailNavigation.OnShareVault(
+                                                shareId = state.itemUiModel.shareId,
+                                                itemId = state.itemUiModel.id
+                                            )
+                                        )
+                                    }
+
+                                    ShareClickAction.Upgrade -> {
+                                        onNavigate(ItemDetailNavigation.Upgrade)
+                                    }
+                                }
                             }
                         )
                     }

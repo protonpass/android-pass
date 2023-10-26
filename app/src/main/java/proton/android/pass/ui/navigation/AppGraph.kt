@@ -115,6 +115,7 @@ import proton.android.pass.featuresharing.impl.InviteConfirmed
 import proton.android.pass.featuresharing.impl.InvitesInfoDialog
 import proton.android.pass.featuresharing.impl.ManageVault
 import proton.android.pass.featuresharing.impl.REFRESH_MEMBER_LIST_FLAG
+import proton.android.pass.featuresharing.impl.ShareFromItem
 import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.SharingPermissions
 import proton.android.pass.featuresharing.impl.SharingSummary
@@ -738,6 +739,16 @@ fun NavGraphBuilder.appGraph(
                         route = ManageVault.createRoute(it.shareId)
                     )
                 }
+
+                is ItemDetailNavigation.OnShareVault -> {
+                    appNavigator.navigate(
+                        destination = ShareFromItem,
+                        route = ShareFromItem.buildRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId
+                        )
+                    )
+                }
             }
         }
     )
@@ -877,10 +888,12 @@ fun NavGraphBuilder.appGraph(
                 )
             )
 
-            is SharingNavigation.ShareVault -> appNavigator.navigate(
-                destination = SharingWith,
-                route = SharingWith.createRoute(it.shareId)
-            )
+            is SharingNavigation.ShareVault -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = SharingWith,
+                    route = SharingWith.createRoute(it.shareId)
+                )
+            }
 
             is SharingNavigation.ManageVault -> appNavigator.navigate(
                 destination = ManageVault,

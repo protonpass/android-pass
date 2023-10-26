@@ -156,7 +156,7 @@ class SharingWithViewModelTest {
             skipItems(1)
             val currentState = awaitItem()
             assertThat(currentState.email).isEqualTo(invitedEmail)
-            assertThat(currentState.vaultName).isEqualTo(testVault.name)
+            assertThat(currentState.vault).isEqualTo(testVault)
             assertThat(currentState.emailNotValidReason).isNull()
             assertThat(currentState.isVaultNotFound).isFalse()
             assertThat(currentState.event).isEqualTo(

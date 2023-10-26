@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Δεν ήταν δυνατή η ενημέρωση της πιστωτικής κάρτας</string>
   <!--  Common create items  -->
   <string name="changes_saved">Έχει αποθηκευτεί η αλλαγή</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Μυστικό 2FA (TOTP)</string>
   <string name="totp_create_login_field_invalid">Μην έγκυρο μυστικό 2FA</string>
   <string name="totp_create_login_field_placeholder">Προσθέστε μυστικό 2FA</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Αυτό το πεδίο δεν μπορεί να είναι κενό</string>
   <string name="camera_permission_explanation">Απαιτείται άδεια κάμερας για να είναι διαθέσιμη αυτή η λειτουργία.</string>
   <string name="camera_permission_open_settings">Άνοιγμα ρυθμίσεων</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Επιτεύχθηκε το όριο 2FA</string>
   <string name="upgrade">Αναβάθμιση</string>
   <string name="mfa_icon_content_description">Εικονίδιο 2FA</string>

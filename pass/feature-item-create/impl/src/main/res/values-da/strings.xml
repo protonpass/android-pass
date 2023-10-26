@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Kunne ikke opdatere betalingskort</string>
   <!--  Common create items  -->
   <string name="changes_saved">Ændringer gemt</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA-hemmelighed (TOTP)</string>
   <string name="totp_create_login_field_invalid">Ugyldig 2FA-hemmelighed</string>
   <string name="totp_create_login_field_placeholder">Tilføj 2FA-hemmelighed</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Dette felt må ikke være tomt</string>
   <string name="camera_permission_explanation">Kameratilladelse påkrævet for at gøre denne funktion tilgængelig.</string>
   <string name="camera_permission_open_settings">Åbn Indstillinger</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">2FA-grænse nået</string>
   <string name="upgrade">Opgradér</string>
   <string name="mfa_icon_content_description">2FA-ikon</string>

@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Не вдалося оновити кредитну картку</string>
   <!--  Common create items  -->
   <string name="changes_saved">Зміни збережено</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Секретний ключ 2FA (TOTP)</string>
   <string name="totp_create_login_field_invalid">Неправильний секретний ключ 2FA</string>
   <string name="totp_create_login_field_placeholder">Додати секретний ключ 2FA</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Необхідно заповнити це поле</string>
   <string name="camera_permission_explanation">Для роботи цієї функції потрібен дозвіл на доступ до камери.</string>
   <string name="camera_permission_open_settings">Відкрити налаштування</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Досягнуто обмеження 2FA</string>
   <string name="upgrade">Покращити</string>
   <string name="mfa_icon_content_description">Піктограма 2FA</string>

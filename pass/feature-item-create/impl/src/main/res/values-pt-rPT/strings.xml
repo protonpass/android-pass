@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Não foi possível atualizar o cartão de crédito.</string>
   <!--  Common create items  -->
   <string name="changes_saved">Alterações guardadas</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Chave secreta 2FA (TOTP)</string>
   <string name="totp_create_login_field_invalid">Chave secreta A2F inválida</string>
   <string name="totp_create_login_field_placeholder">Adicionar chave secreta 2FA</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Este campo não pode estar vazio.</string>
   <string name="camera_permission_explanation">É necessária a autorização da câmara para que esta função esteja disponível.</string>
   <string name="camera_permission_open_settings">Abrir as definições</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Limite A2F atingido</string>
   <string name="upgrade">Actualizar</string>
   <string name="mfa_icon_content_description">Ícone 2FA</string>

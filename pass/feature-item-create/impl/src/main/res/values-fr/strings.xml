@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Impossible de mettre à jour la carte de paiement</string>
   <!--  Common create items  -->
   <string name="changes_saved">Les modifications ont été enregistrées.</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Clé secrète A2F (TOTP)</string>
   <string name="totp_create_login_field_invalid">La clé secrète A2F n\'est pas valide.</string>
   <string name="totp_create_login_field_placeholder">Ajouter une clé secrète A2F</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Ce champ ne doit pas être vide.</string>
   <string name="camera_permission_explanation">L\'autorisation de l\'appareil photo est nécessaire pour que cette fonction soit disponible.</string>
   <string name="camera_permission_open_settings">Ouvrir les paramètres</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">La limite de l\'A2F est atteinte.</string>
   <string name="upgrade">Changer d\'abonnement</string>
   <string name="mfa_icon_content_description">Icône A2F</string>

@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Немагчыма абнавіць крэдытную картку</string>
   <!--  Common create items  -->
   <string name="changes_saved">Змены захаваны</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Сакрэтны ключ 2ФА (TOTP)</string>
   <string name="totp_create_login_field_invalid">Памылковы сакрэтны ключ 2ФА</string>
   <string name="totp_create_login_field_placeholder">Дадаць сакрэтны ключ 2ФА</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Поле не можа быць пустым</string>
   <string name="camera_permission_explanation">Для працы гэтай функцыі неабходны доступ да камеры.</string>
   <string name="camera_permission_open_settings">Адкрыць налады</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Дасягнута абмежаванне 2ФА</string>
   <string name="upgrade">Палепшыць</string>
   <string name="mfa_icon_content_description">Значок 2ФА</string>

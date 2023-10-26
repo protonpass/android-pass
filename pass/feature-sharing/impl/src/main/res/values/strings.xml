@@ -154,4 +154,25 @@
     <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
     <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
 
+    <string
+        name="sharing_from_item_title"
+        comment="Title for the Share from item bottomsheet"
+    >Share</string>
+    <string
+        name="sharing_from_item_description"
+        comment="Description for the Share from item bottomsheet"
+    >Use vaults to share items with others</string>
+    <string
+        name="sharing_from_item_share_this_vault_action"
+        comment="Button for sharing this vault"
+    >Share this vault</string>
+    <string
+        name="sharing_from_item_move_to_shared_vault_action"
+        comment="Button for moving an item to a shared vault"
+    >Move to a shared vault</string>
+    <string
+        name="sharing_from_item_create_vault_to_share_action"
+        comment="Button for creating a new vault and sharing it"
+    >Create a new vault to share</string>
+
 </resources>

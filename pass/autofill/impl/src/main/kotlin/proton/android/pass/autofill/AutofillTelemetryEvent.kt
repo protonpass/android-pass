@@ -34,3 +34,5 @@ data class AutofillDisplayed(val source: AutofillTriggerSource) : TelemetryEvent
 data class AutofillDone(val source: AutofillTriggerSource) : TelemetryEvent("autofill.triggered") {
     override fun dimensions(): Map<String, String> = mapOf("location" to source.source)
 }
+
+object MFAAutofillCopied : TelemetryEvent("2fa.autofill")

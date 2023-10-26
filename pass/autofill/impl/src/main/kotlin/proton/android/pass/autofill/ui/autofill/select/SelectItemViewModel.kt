@@ -47,6 +47,7 @@ import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDisplayed
 import proton.android.pass.autofill.AutofillTriggerSource
+import proton.android.pass.autofill.MFAAutofillCopied
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.service.R
@@ -120,9 +121,9 @@ class SelectItemViewModel @Inject constructor(
     private val getTotpCodeFromUri: GetTotpCodeFromUri,
     private val toastManager: ToastManager,
     private val preferenceRepository: UserPreferencesRepository,
+    private val telemetryManager: TelemetryManager,
     observeActiveItems: ObserveActiveItems,
     getSuggestedLoginItems: GetSuggestedLoginItems,
-    telemetryManager: TelemetryManager,
     observeVaults: ObserveVaults,
     autofillSearchOptionsRepository: AutofillSearchOptionsRepository,
     getUserPlan: GetUserPlan,
@@ -479,6 +480,7 @@ class SelectItemViewModel @Inject constructor(
                 getTotpCodeFromUri(totpUri)
                     .onSuccess {
                         clipboardManager.copyToClipboard(it)
+                        telemetryManager.sendEvent(MFAAutofillCopied)
                         toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
                     }
                     .onFailure {

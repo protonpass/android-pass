@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
+import proton.android.pass.autofill.MFAAutofillCopied
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
@@ -77,9 +78,9 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     private val getTotpCodeFromUri: GetTotpCodeFromUri,
     private val toastManager: ToastManager,
     private val updateAutofillItem: UpdateAutofillItem,
+    private val telemetryManager: TelemetryManager,
     preferenceRepository: UserPreferencesRepository,
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
-    telemetryManager: TelemetryManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -210,6 +211,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
                 getTotpCodeFromUri(totpUri)
                     .onSuccess {
                         clipboardManager.copyToClipboard(it)
+                        telemetryManager.sendEvent(MFAAutofillCopied)
                         toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
                     }
                     .onFailure {

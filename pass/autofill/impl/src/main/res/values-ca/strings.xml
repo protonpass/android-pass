@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">No s\'ha trobat cap camp visible coincident.</string>
-  <string name="autofill_authenticate_prompt">Aconsegueix des de Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Aconsegueix des de Proton Pass</string>
   <string name="error_credentials_not_found">No s\'han trobat les credencials coincidents.</string>
-  <string name="error_credentials_not_saved">No s\'han pogut desar les credencials.</string>
   <string name="error_loading_items">No s\'ha pogut carregar els elements.</string>
   <string name="topbar_search_query">Cerca en totes les caixes fortes…</string>
   <string name="topbar_search_query_primary_vault">Cerca a la caixa forta principal…</string>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Câmpurile afișate nu se pot completa</string>
-  <string name="autofill_authenticate_prompt">Luare din Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Luare din Proton Pass</string>
   <string name="error_credentials_not_found">Nu există autentificări corespunzătoare</string>
-  <string name="error_credentials_not_saved">Nu s-au putut salva autentificările</string>
   <string name="error_loading_items">Nu s-au putut încărca articolele</string>
   <string name="topbar_search_query">Căutare în toate seifurile…</string>
   <string name="topbar_search_query_primary_vault">Căutare în seiful principal…</string>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Nenašli sa žiadne zodpovedajúce zobrazené polia</string>
-  <string name="autofill_authenticate_prompt">Získať z Proton Pass</string>
+    <string name="autofill_authenticate_prompt">Získať z Proton Pass</string>
   <string name="error_credentials_not_found">Nenašli sa žiadne zodpovedajúce prihlasovacie údaje</string>
-  <string name="error_credentials_not_saved">Prihlasovacie údaje sa nepodarilo sa uložiť</string>
   <string name="error_loading_items">Položky sa nepodarilo načítať</string>
   <string name="topbar_search_query">Vyhľadávať vo všetkých trezoroch…</string>
   <string name="topbar_search_query_primary_vault">Vyhľadávať v primárnom trezore…</string>

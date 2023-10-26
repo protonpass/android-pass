@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="error_cant_find_matching_fields">Görüntülenen alanlardan doldurulabilecek olan anlaşılamadı</string>
-  <string name="autofill_authenticate_prompt">Proton Pass üzerinden alın</string>
+    <string name="autofill_authenticate_prompt">Proton Pass üzerinden alın</string>
   <string name="error_credentials_not_found">Eşleşen bir kimlik doğrulama bilgisi bulunamadı</string>
-  <string name="error_credentials_not_saved">Kimlik doğrulama bilgileri kaydedilemedi</string>
   <string name="error_loading_items">Ögeler yüklenemedi</string>
   <string name="topbar_search_query">Tüm kasalarda ara…</string>
   <string name="topbar_search_query_primary_vault">Birincil kasada ara…</string>

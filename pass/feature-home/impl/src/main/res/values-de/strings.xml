@@ -42,7 +42,6 @@
   <string name="item_too_long_copied_to_clipboard">Inhalt war zu lang und wurde nur teilweise in die Zwischenablage kopiert.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Tresore</string>
-  <string name="vault_drawer_vaults_item_count">%d Einträge</string>
   <string name="vault_drawer_create_vault">Tresor erstellen</string>
   <string name="vault_drawer_item_trash">Papierkorb</string>
   <string name="vault_drawer_all_vaults">Alle Tresore</string>

@@ -42,7 +42,6 @@
   <string name="item_too_long_copied_to_clipboard">Indholdet var for langt, delvist kopieret til udklipsholderen</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Bokse</string>
-  <string name="vault_drawer_vaults_item_count">%d elementer</string>
   <string name="vault_drawer_create_vault">Opret boks</string>
   <string name="vault_drawer_item_trash">Papirkurv</string>
   <string name="vault_drawer_all_vaults">Alle bokse</string>

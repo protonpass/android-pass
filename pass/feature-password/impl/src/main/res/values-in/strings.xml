@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Hasilkan kata sandi</string>
   <string name="password_type">Jenis</string>
   <string name="special_characters">Karakter khusus (!&amp;*)</string>
-  <string name="character_count">%s karakter</string>
-  <string name="word_count">%s kata</string>
   <string name="word_separator">Pemisah kata</string>
   <string name="bottomsheet_option_capital_letters">Huruf kapital (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Kapitalkan</string>

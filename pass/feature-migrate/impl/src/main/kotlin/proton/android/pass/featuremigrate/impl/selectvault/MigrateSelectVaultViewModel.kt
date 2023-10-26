@@ -18,7 +18,6 @@
 
 package proton.android.pass.featuremigrate.impl.selectvault
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,12 +33,15 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.featuremigrate.impl.MigrateSnackbarMessage.CouldNotInit
+import proton.android.pass.featuremigrate.impl.MigrateVaultFilter
+import proton.android.pass.featuremigrate.impl.MigrateVaultFilterArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -53,7 +55,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     observeVaults: ObserveVaultsWithItemCount,
     snackbarDispatcher: SnackbarDispatcher,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val mode: Mode = getMode()
@@ -89,6 +91,13 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
             is LoadingResult.Success -> MigrateSelectVaultUiState.Success(
                 vaultList = vaultResult.data
+                    .filter {
+                        if (mode is Mode.MigrateItem && mode.filter == MigrateVaultFilter.Shared) {
+                            it.vault.shared
+                        } else {
+                            true
+                        }
+                    }
                     .map {
                         if (canPerformPaidActionValue) {
                             VaultEnabledPair(
@@ -135,11 +144,13 @@ class MigrateSelectVaultViewModel @Inject constructor(
     }
 
     private fun getMode(): Mode {
-        val sourceShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
-        return when (MigrateModeValue.valueOf(savedStateHandle.require(MigrateModeArg.key))) {
+        val savedState = savedStateHandle.get()
+        val sourceShareId = ShareId(savedState.require(CommonNavArgId.ShareId.key))
+        return when (MigrateModeValue.valueOf(savedState.require(MigrateModeArg.key))) {
             MigrateModeValue.SingleItem -> Mode.MigrateItem(
                 shareId = sourceShareId,
-                itemId = ItemId(savedStateHandle.require(CommonOptionalNavArgId.ItemId.key))
+                itemId = ItemId(savedState.require(CommonOptionalNavArgId.ItemId.key)),
+                filter = MigrateVaultFilter.valueOf(savedState.require(MigrateVaultFilterArg.key))
             )
 
             MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(sourceShareId)
@@ -152,7 +163,8 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
         data class MigrateItem(
             override val shareId: ShareId,
-            val itemId: ItemId
+            val itemId: ItemId,
+            val filter: MigrateVaultFilter
         ) : Mode
 
         data class MigrateAllItems(override val shareId: ShareId) : Mode

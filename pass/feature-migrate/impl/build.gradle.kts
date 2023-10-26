@@ -70,6 +70,7 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.datetime)
+    testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)

@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
@@ -31,7 +32,6 @@ import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
@@ -55,9 +55,9 @@ class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
             observeVaults = observeVaults,
             canPerformPaidAction = canPerformPaidAction,
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandle = TestSavedStateHandle.create().apply {
-                set(CommonNavArgId.ShareId.key, SHARE_ID.id)
-                set(MigrateModeArg.key, MODE.name)
+            savedStateHandle = TestSavedStateHandleProvider().apply {
+                get()[CommonNavArgId.ShareId.key] = SHARE_ID.id
+                get()[MigrateModeArg.key] = MODE.name
             }
         )
     }

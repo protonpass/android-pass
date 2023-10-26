@@ -15,7 +15,7 @@
   <string name="autofill_dialog_associate_and_autofill">Завжди використовувати</string>
   <string name="autofill_dialog_just_autofill">Використати один раз</string>
   <string name="autofill_dialog_cancel">Скасувати</string>
-  <string name="autofill_notification_copy_to_clipboard">Totp було скопійовано до буфера обміну</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTP було скопійовано до буфера обміну</string>
   <string name="autofill_dialog_associate_title">Використовувати дані для входу?</string>
   <string name="snackbar_item_move_to_trash_success">Елемент переміщено до смітника</string>
   <string name="snackbar_item_move_to_trash_error">Не вдалося перемістити до смітника</string>

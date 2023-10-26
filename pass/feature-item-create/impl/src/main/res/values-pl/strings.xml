@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Nie można zaktualizować karty płatniczej</string>
   <!--  Common create items  -->
   <string name="changes_saved">Zmiany zostały zapisane</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Sekret TOTP</string>
   <string name="totp_create_login_field_invalid">Sekret TOTP jest nieprawidłowy</string>
   <string name="totp_create_login_field_placeholder">Dodaj sekret TOTP</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Pole nie może być puste</string>
   <string name="camera_permission_explanation">Ta funkcja potrzebuje uprawnienia do aparatu.</string>
   <string name="camera_permission_open_settings">Otwórz ustawienia</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Limit uwierzytelniania dwustopniowego został osiągnięty</string>
   <string name="upgrade">Ulepsz</string>
   <string name="mfa_icon_content_description">Ikona uwierzytelniania dwustopniowego</string>

@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Generare parolă</string>
   <string name="password_type">Tip</string>
   <string name="special_characters">Caractere speciale (&amp;*)</string>
-  <string name="character_count">%s caractere</string>
-  <string name="word_count">%s cuvinte</string>
   <string name="word_separator">Separator cuvinte</string>
   <string name="bottomsheet_option_capital_letters">Majuscule (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Litere mari</string>

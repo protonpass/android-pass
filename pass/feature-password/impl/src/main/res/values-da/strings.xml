@@ -5,8 +5,6 @@
   <string name="bottomsheet_generate_password_title">Generér adgangskode</string>
   <string name="password_type">Type</string>
   <string name="special_characters">Specielle tegn (!&amp;*)</string>
-  <string name="character_count">%s tegn</string>
-  <string name="word_count">%s ord</string>
   <string name="word_separator">Ordseparator</string>
   <string name="bottomsheet_option_capital_letters">Store bogstaver (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Ændr til versaler</string>

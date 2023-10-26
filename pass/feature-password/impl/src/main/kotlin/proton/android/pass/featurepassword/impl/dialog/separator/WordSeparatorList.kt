@@ -24,16 +24,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.common.api.Option
+import proton.android.pass.commonrust.api.WordSeparator
 import proton.android.pass.featurepassword.impl.dialog.DialogOptionRow
 import proton.android.pass.featurepassword.impl.extensions.toResourceString
-import proton.android.pass.password.api.PasswordGenerator
 
 @Composable
 fun WordSeparatorList(
     modifier: Modifier = Modifier,
-    options: PersistentList<PasswordGenerator.WordSeparator>,
-    selected: Option<PasswordGenerator.WordSeparator>,
-    onSelected: (PasswordGenerator.WordSeparator) -> Unit
+    options: PersistentList<WordSeparator>,
+    selected: Option<WordSeparator>,
+    onSelected: (WordSeparator) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         items(items = options, key = { it.name }) { option ->

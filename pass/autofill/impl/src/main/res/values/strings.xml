@@ -19,7 +19,7 @@
     <string name="autofill_dialog_just_autofill">Use once</string>
     <string name="autofill_dialog_cancel">Cancel</string>
 
-    <string name="autofill_notification_copy_to_clipboard">Totp has been copied to clipboard</string>
+    <string name="autofill_notification_copy_to_clipboard">TOTP has been copied to clipboard</string>
     <string name="autofill_dialog_associate_title">Use login?</string>
 
     <string name="snackbar_item_move_to_trash_success">Item moved to trash</string>

@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Kredi kartı güncellenemedi</string>
   <!--  Common create items  -->
   <string name="changes_saved">Değişiklikler kaydedildi</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">İki adımlı doğrulama parolası (tek kullanımlık)</string>
   <string name="totp_create_login_field_invalid">İki adımlı doğrulama parolası geçersiz</string>
   <string name="totp_create_login_field_placeholder">İki adımlı doğrulama parolası ekle</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Bu alan boş olamaz</string>
   <string name="camera_permission_explanation">Bu özelliği kullanabilmek için kameraya erişme izni verilmelidir.</string>
   <string name="camera_permission_open_settings">Ayarları aç</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
   <string name="upgrade">Yükselt</string>
   <string name="mfa_icon_content_description">İki adımlı doğrulama simgesi</string>

@@ -135,7 +135,7 @@
     <!--  Common create items  -->
     <string name="changes_saved">Changes saved</string>
 
-    <!--  Totp  -->
+    <!--  TOTP  -->
     <string name="totp_create_login_field_title">2FA secret (TOTP)</string>
     <string name="totp_create_login_field_invalid">Invalid 2FA secret</string>
     <string name="totp_create_login_field_placeholder">Add 2FA secret</string>
@@ -148,10 +148,10 @@
     <string name="camera_permission_explanation">Camera permission required for this feature to be available.</string>
     <string name="camera_permission_open_settings">Open settings</string>
 
-    <!--  Totp limit  -->
+    <!--  TOTP limit  -->
     <string name="mfa_limit_reached">2FA limit reached</string>
     <string name="upgrade">Upgrade</string>
-    <string name="mfa_icon_content_description">2fa icon</string>
+    <string name="mfa_icon_content_description">2FA icon</string>
     <string name="select_suffix_upgrade_for_custom_domains">Upgrade for custom domains</string>
     <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade for more inboxes</string>
     <string name="create_alias_content_limit_banner">You have reached the limit of aliases you can create. Create unlimited number of aliases when you upgrade your subscription.</string>

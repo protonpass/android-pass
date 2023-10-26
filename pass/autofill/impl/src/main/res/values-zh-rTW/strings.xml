@@ -15,7 +15,7 @@
   <string name="autofill_dialog_associate_and_autofill">一律使用</string>
   <string name="autofill_dialog_just_autofill">使用一次</string>
   <string name="autofill_dialog_cancel">取消</string>
-  <string name="autofill_notification_copy_to_clipboard">已將 Totp 複製到剪貼簿</string>
+  <string name="autofill_notification_copy_to_clipboard">已將 TOTP 複製到剪貼簿</string>
   <string name="autofill_dialog_associate_title">使用登入?</string>
   <string name="snackbar_item_move_to_trash_success">項目已移至垃圾桶</string>
   <string name="snackbar_item_move_to_trash_error">無法移至垃圾桶</string>

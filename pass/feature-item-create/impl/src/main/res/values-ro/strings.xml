@@ -95,7 +95,7 @@
   <string name="credit_card_item_update_error">Nu s-a putut actualiza cardul de credit.</string>
   <!--  Common create items  -->
   <string name="changes_saved">Modificările s-au salvat.</string>
-  <!--  Totp  -->
+  <!--  TOTP  -->
   <string name="totp_create_login_field_title">Secret A2F (TOTP)</string>
   <string name="totp_create_login_field_invalid">Secret A2F nevalid.</string>
   <string name="totp_create_login_field_placeholder">Adăugare secret A2F</string>
@@ -105,7 +105,7 @@
   <string name="field_cannot_be_empty">Acest câmp nu poate fi gol.</string>
   <string name="camera_permission_explanation">Este necesar accesul la cameră pentru ca funcția să fie disponibilă.</string>
   <string name="camera_permission_open_settings">Deschidere setări</string>
-  <!--  Totp limit  -->
+  <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Limită A2F atinsă.</string>
   <string name="upgrade">Modificare</string>
   <string name="mfa_icon_content_description">pictogramă A2F</string>

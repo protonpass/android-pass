@@ -29,6 +29,7 @@ import proton.android.pass.featuresharing.impl.confirmed.InviteConfirmedBottomSh
 import proton.android.pass.featuresharing.impl.invitesinfo.InvitesInfoDialog
 import proton.android.pass.featuresharing.impl.manage.ManageVaultScreen
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberOptionsBottomSheetGraph
+import proton.android.pass.featuresharing.impl.sharefromitem.ShareFromItemBottomSheet
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
 import proton.android.pass.featuresharing.impl.sharingsummary.SharingSummaryScreen
 import proton.android.pass.featuresharing.impl.sharingwith.SharingWithScreen
@@ -40,6 +41,7 @@ import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
 import proton.pass.domain.InviteId
+import proton.pass.domain.ItemId
 import proton.pass.domain.NewUserInviteId
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareRole
@@ -107,6 +109,14 @@ object InvitesInfoDialog : NavItem(
     navItemType = NavItemType.Dialog
 ) {
     fun buildRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+}
+
+object ShareFromItem : NavItem(
+    baseRoute = "sharing/fromitem/bottomsheet",
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
+    navItemType = NavItemType.Bottomsheet
+) {
+    fun buildRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
 sealed interface SharingNavigation {
@@ -201,6 +211,11 @@ fun NavGraphBuilder.sharingGraph(
     dialog(InvitesInfoDialog) {
         BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(false)) }
         InvitesInfoDialog(onNavigateEvent = onNavigateEvent)
+    }
+
+    bottomSheet(ShareFromItem) {
+        BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(false)) }
+        ShareFromItemBottomSheet(onNavigateEvent = onNavigateEvent)
     }
 
     memberOptionsBottomSheetGraph(onNavigateEvent)

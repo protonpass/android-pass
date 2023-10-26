@@ -28,14 +28,22 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.CreateVault
+import proton.android.pass.data.api.usecases.DeleteVault
+import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.pass.domain.ItemId
+import proton.pass.domain.Share
+import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewVault
 import javax.inject.Inject
 
@@ -43,9 +51,14 @@ import javax.inject.Inject
 class CreateVaultViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val createVault: CreateVault,
+    private val deleteVault: DeleteVault,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val savedStateHandleProvider: SavedStateHandleProvider,
+    private val migrateItem: MigrateItem,
     observeUpgradeInfo: ObserveUpgradeInfo,
 ) : BaseVaultViewModel() {
+
+    private val nextAction = getNextAction()
 
     val createState: StateFlow<CreateVaultUiState> = combine(
         state,
@@ -88,9 +101,7 @@ class CreateVaultViewModel @Inject constructor(
         PassLogger.d(TAG, "Sending Create Vault request")
         runCatching { createVault(vault = body) }
             .onSuccess {
-                PassLogger.d(TAG, "Vault created successfully")
-                snackbarDispatcher(VaultSnackbarMessage.CreateVaultSuccess)
-                isVaultCreated.update { IsVaultCreatedEvent.Created }
+                onVaultCreated(it)
             }
             .onFailure {
                 val message = if (it is CannotCreateMoreVaultsError) {
@@ -105,6 +116,57 @@ class CreateVaultViewModel @Inject constructor(
         isLoadingFlow.update { IsLoadingState.NotLoading }
     }
 
+    private suspend fun onVaultCreated(newVault: Share) {
+        PassLogger.d(TAG, "Vault created successfully")
+
+        when (val action = nextAction) {
+            CreateVaultNextAction.Done -> {
+                snackbarDispatcher(VaultSnackbarMessage.CreateVaultSuccess)
+                eventFlow.update { IsVaultCreatedEvent.Created }
+            }
+
+            is CreateVaultNextAction.ShareVault -> {
+                PassLogger.d(TAG, "Migrating item")
+                runCatching {
+                    migrateItem(
+                        sourceShare = action.shareId,
+                        itemId = action.itemId,
+                        destinationShare = newVault.id
+                    )
+                }.onSuccess {
+                    PassLogger.d(TAG, "Item migrated successfully")
+                    snackbarDispatcher(VaultSnackbarMessage.CreateVaultSuccess)
+                    eventFlow.update { IsVaultCreatedEvent.CreatedAndMoveToShare(newVault.id) }
+                }.onFailure { migrateItemError ->
+                    PassLogger.w(TAG, migrateItemError, "Migrate item failed. Deleting vault")
+                    runCatching {
+                        deleteVault(newVault.id)
+                    }.onSuccess {
+                        PassLogger.d(TAG, "Vault deleted successfully")
+                        snackbarDispatcher(VaultSnackbarMessage.CreateVaultError)
+                    }.onFailure { deleteVaultError ->
+                        PassLogger.w(TAG, deleteVaultError, "Could not delete vault")
+                        snackbarDispatcher(VaultSnackbarMessage.CreateVaultError)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getNextAction(): CreateVaultNextAction {
+        val savedState = savedStateHandleProvider.get()
+        val nextAction = savedState.require<String>(CreateVaultNextActionNavArgId.key)
+        return when (nextAction) {
+            CreateVaultNextAction.NEXT_ACTION_DONE -> CreateVaultNextAction.Done
+            CreateVaultNextAction.NEXT_ACTION_SHARE -> {
+                val shareId = ShareId(savedState.require(CommonOptionalNavArgId.ShareId.key))
+                val itemId = ItemId(savedState.require(CommonOptionalNavArgId.ItemId.key))
+                CreateVaultNextAction.ShareVault(shareId, itemId)
+            }
+
+            else -> throw IllegalArgumentException("Unknown next action $nextAction")
+        }
+    }
 
     companion object {
         private const val TAG = "CreateVaultViewModel"

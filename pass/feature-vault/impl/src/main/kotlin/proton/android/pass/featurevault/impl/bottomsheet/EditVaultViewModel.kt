@@ -103,7 +103,7 @@ class EditVaultViewModel @Inject constructor(
             PassLogger.d(TAG, "Vault edited successfully")
             snackbarDispatcher(VaultSnackbarMessage.EditVaultSuccess)
             isLoadingFlow.update { IsLoadingState.NotLoading }
-            isVaultCreated.update { IsVaultCreatedEvent.Created }
+            eventFlow.update { IsVaultCreatedEvent.Created }
         }.onFailure {
             PassLogger.e(TAG, it, "Edit Vault Failed")
             snackbarDispatcher(VaultSnackbarMessage.EditVaultError)

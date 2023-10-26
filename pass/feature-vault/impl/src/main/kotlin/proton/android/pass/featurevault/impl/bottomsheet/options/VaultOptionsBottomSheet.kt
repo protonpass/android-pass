@@ -44,18 +44,28 @@ fun VaultOptionsBottomSheet(
                     VaultOptionsUserEvent.OnEdit -> {
                         onNavigate(VaultNavigation.VaultEdit(state.shareId))
                     }
+
                     VaultOptionsUserEvent.OnLeave -> {
                         onNavigate(VaultNavigation.VaultLeave(state.shareId))
                     }
+
                     VaultOptionsUserEvent.OnMigrate -> {
                         onNavigate(VaultNavigation.VaultMigrate(state.shareId))
                     }
+
                     VaultOptionsUserEvent.OnRemove -> {
                         onNavigate(VaultNavigation.VaultRemove(state.shareId))
                     }
+
                     VaultOptionsUserEvent.OnShare -> {
-                        onNavigate(VaultNavigation.VaultShare(state.shareId))
+                        onNavigate(
+                            VaultNavigation.VaultShare(
+                                shareId = state.shareId,
+                                showEditVault = false
+                            )
+                        )
                     }
+
                     VaultOptionsUserEvent.OnVaultAccess -> {
                         onNavigate(VaultNavigation.VaultAccess(state.shareId))
                     }

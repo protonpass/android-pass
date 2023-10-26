@@ -133,6 +133,7 @@ import proton.android.pass.featuretrial.impl.TrialNavigation
 import proton.android.pass.featuretrial.impl.TrialScreen
 import proton.android.pass.featuretrial.impl.trialGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
+import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultNextAction
 import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultScreen
 import proton.android.pass.featurevault.impl.bottomsheet.EditVaultScreen
 import proton.android.pass.featurevault.impl.bottomsheet.options.VaultOptionsBottomSheet
@@ -176,7 +177,10 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 HomeNavigation.CreateVault -> {
-                    appNavigator.navigate(CreateVaultScreen)
+                    appNavigator.navigate(
+                        destination = CreateVaultScreen,
+                        route = CreateVaultScreen.buildRoute(CreateVaultNextAction.Done)
+                    )
                 }
 
                 is HomeNavigation.EditAlias -> {
@@ -339,7 +343,13 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is VaultNavigation.VaultShare -> dismissBottomSheet {
-                    appNavigator.navigate(SharingWith, SharingWith.createRoute(it.shareId))
+                    appNavigator.navigate(
+                        destination = SharingWith,
+                        route = SharingWith.createRoute(
+                            shareId = it.shareId,
+                            showEditVault = it.showEditVault
+                        )
+                    )
                 }
 
                 is VaultNavigation.VaultLeave -> dismissBottomSheet {
@@ -893,7 +903,10 @@ fun NavGraphBuilder.appGraph(
             is SharingNavigation.ShareVault -> dismissBottomSheet {
                 appNavigator.navigate(
                     destination = SharingWith,
-                    route = SharingWith.createRoute(it.shareId)
+                    route = SharingWith.createRoute(
+                        shareId = it.shareId,
+                        showEditVault = false
+                    )
                 )
             }
 
@@ -951,6 +964,24 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
             }
+
+            is SharingNavigation.CreateVaultAndMoveItem -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = CreateVaultScreen,
+                    route = CreateVaultScreen.buildRoute(
+                        nextAction = CreateVaultNextAction.ShareVault(
+                            shareId = it.shareId,
+                            itemId = it.itemId
+                        )
+                    )
+                )
+            }
+
+            is SharingNavigation.EditVault -> appNavigator.navigate(
+                destination = EditVaultScreen,
+                route = EditVaultScreen.createNavRoute(it.shareId),
+                backDestination = SharingWith
+            )
         }
     }
     syncGraph {

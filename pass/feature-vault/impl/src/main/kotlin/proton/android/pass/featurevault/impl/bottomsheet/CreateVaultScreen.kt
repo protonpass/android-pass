@@ -46,9 +46,23 @@ fun CreateVaultScreen(
         triggerCondition = createState.base.isVaultCreatedEvent is IsVaultCreatedEvent.Created,
     )
     LaunchedEffect(createState.base.isVaultCreatedEvent) {
-        if (createState.base.isVaultCreatedEvent == IsVaultCreatedEvent.Created) {
-            onNavigate(VaultNavigation.Close)
+        when (val event = createState.base.isVaultCreatedEvent) {
+            IsVaultCreatedEvent.Created -> {
+                onNavigate(VaultNavigation.Close)
+            }
+
+            is IsVaultCreatedEvent.CreatedAndMoveToShare -> {
+                onNavigate(
+                    VaultNavigation.VaultShare(
+                        shareId = event.shareId,
+                        showEditVault = true
+                    )
+                )
+            }
+
+            IsVaultCreatedEvent.Unknown -> {}
         }
+        viewModel.clearEvent()
     }
     VaultContent(
         modifier = modifier,

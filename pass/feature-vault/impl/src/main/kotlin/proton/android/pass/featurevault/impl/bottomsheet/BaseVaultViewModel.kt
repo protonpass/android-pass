@@ -38,14 +38,14 @@ abstract class BaseVaultViewModel : ViewModel() {
     protected val hasEditedTitleFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val isLoadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
-    protected val isVaultCreated: MutableStateFlow<IsVaultCreatedEvent> =
+    protected val eventFlow: MutableStateFlow<IsVaultCreatedEvent> =
         MutableStateFlow(IsVaultCreatedEvent.Unknown)
 
     val state: StateFlow<BaseVaultUiState> = combine(
         formFlow,
         hasEditedTitleFlow,
         isLoadingFlow,
-        isVaultCreated
+        eventFlow
     ) { form, hasEdited, isLoading, vaultCreated ->
         val isTitleRequiredError = hasEdited && form.name.isBlank()
         BaseVaultUiState(
@@ -74,6 +74,10 @@ abstract class BaseVaultViewModel : ViewModel() {
 
     fun onColorChange(value: ShareColor) {
         formFlow.update { it.copy(color = value) }
+    }
+
+    fun clearEvent() {
+        eventFlow.update { IsVaultCreatedEvent.Unknown }
     }
 
     data class CreateVaultFormValues(

@@ -20,6 +20,8 @@ package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.ApiResult
+import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
@@ -75,15 +77,28 @@ class RemoteInviteDataSourceImpl @Inject constructor(
         userId: UserId,
         inviteToken: InviteToken,
         body: AcceptInviteRequest
-    ): ShareResponse = apiProvider.get<PasswordManagerApi>(userId)
-        .invoke {
-            acceptInvite(
-                inviteId = inviteToken.value,
-                request = body
-            )
+    ): ShareResponse {
+        val res = apiProvider.get<PasswordManagerApi>(userId)
+            .invoke {
+                acceptInvite(
+                    inviteId = inviteToken.value,
+                    request = body
+                )
+            }
+
+        when (res) {
+            is ApiResult.Success -> return res.value.share
+            is ApiResult.Error -> {
+                if (res is ApiResult.Error.Http) {
+                    if (res.proton?.code == CODE_CANNOT_CREATE_MORE_VAULTS) {
+                        throw CannotCreateMoreVaultsError()
+                    }
+                }
+                throw res.cause ?: Exception("Create vault failed")
+            }
         }
-        .valueOrThrow
-        .share
+
+    }
 
 
     override suspend fun rejectInvite(userId: UserId, token: InviteToken) {
@@ -92,5 +107,10 @@ class RemoteInviteDataSourceImpl @Inject constructor(
                 rejectInvite(inviteId = token.value)
             }
             .valueOrThrow
+    }
+
+    @Suppress("UnderscoresInNumericLiterals")
+    companion object {
+        private const val CODE_CANNOT_CREATE_MORE_VAULTS = 300007
     }
 }

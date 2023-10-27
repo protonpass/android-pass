@@ -31,8 +31,6 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     private var upsertResponse: Result<Unit> =
         Result.failure(IllegalStateException("upsertResponse not set"))
-    private var disablePrimaryShareResponse: Result<Unit> =
-        Result.failure(IllegalStateException("disablePrimaryShareResponse ot set"))
     private var getByIdResponse: Result<ShareEntity?> =
         Result.failure(IllegalStateException("getById not set"))
     private var deleteSharesResponse: Result<Boolean> =
@@ -55,10 +53,6 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     fun setUpsertResponse(value: Result<Unit>) {
         upsertResponse = value
-    }
-
-    fun setDisablePrimaryShareResponse(value: Result<Unit>) {
-        disablePrimaryShareResponse = value
     }
 
     fun setGetByIdResponse(value: Result<ShareEntity?>) {
@@ -108,10 +102,6 @@ class TestLocalShareDataSource : LocalShareDataSource {
     }
 
     override suspend fun hasShares(userId: UserId): Boolean = hasSharesResponse.getOrThrow()
-
-    override suspend fun disablePrimaryShare(userId: UserId) {
-        disablePrimaryShareResponse.getOrThrow()
-    }
 
     override suspend fun deleteSharesForUser(userId: UserId) {
         deleteSharesForUserResult.getOrThrow()

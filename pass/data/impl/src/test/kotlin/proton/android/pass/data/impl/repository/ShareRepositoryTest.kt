@@ -78,9 +78,9 @@ class ShareRepositoryTest {
     fun `refresh shares updates shares`() = runTest {
         // GIVEN
         val userId = UserId(USER_ID)
-        // initial state: [share1, share2, share3, share4]
-        // desired state: [share1, share2, share3, share5]
-        val share1 = TestShare.create(ShareId("123"))
+        // initial state: [share1(not-owner), share2, share3, share4]
+        // desired state: [share1(yes-owner), share2, share3, share5]
+        val share1 = TestShare.create(ShareId("123"), isOwner = false)
         val share2 = TestShare.create(ShareId("456"))
         val share3 = TestShare.create(ShareId("789"))
         val share4 = TestShare.create(ShareId("654"))
@@ -93,7 +93,7 @@ class ShareRepositoryTest {
             share4.toEntity()
         )
         val asResponses = listOf(
-            share1.toResponse(),
+            share1.toResponse().copy(owner = true),
             share2.toResponse(),
             share3.toResponse(),
             share5.toResponse()
@@ -114,9 +114,8 @@ class ShareRepositoryTest {
         assertThat(upsertMemory.size).isEqualTo(2)
 
         val firstUpsertMemory = upsertMemory[0]
-        assertThat(firstUpsertMemory.size).isEqualTo(2)
+        assertThat(firstUpsertMemory.size).isEqualTo(1)
         assertThat(firstUpsertMemory[0].id).isEqualTo(share1.id.id)
-        assertThat(firstUpsertMemory[1].id).isEqualTo(share2.id.id)
 
         val secondUpsertMemory = upsertMemory[1]
         assertThat(secondUpsertMemory).isEqualTo(listOf(share5.toEntity()))

@@ -48,9 +48,6 @@ class TestShareRepository : ShareRepository {
     private var updateVaultResult: Result<Share> =
         Result.failure(IllegalStateException("UpdateVaultResult not set"))
 
-    private var markAsPrimaryResult: Result<Share> =
-        Result.failure(IllegalStateException("MarkAsPrimaryResult not set"))
-
     private var deleteSharesResult: Result<Unit> = Result.success(Unit)
 
     private val observeShareByIdFlow = testFlow<Result<Option<Share>>>()
@@ -86,10 +83,6 @@ class TestShareRepository : ShareRepository {
         updateVaultResult = value
     }
 
-    fun setMarkAsPrimaryResult(value: Result<Share>) {
-        markAsPrimaryResult = value
-    }
-
     fun setDeleteSharesResult(value: Result<Unit>) {
         deleteSharesResult = value
     }
@@ -116,9 +109,6 @@ class TestShareRepository : ShareRepository {
 
     override suspend fun updateVault(userId: UserId, shareId: ShareId, vault: NewVault): Share =
         updateVaultResult.getOrThrow()
-
-    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share =
-        markAsPrimaryResult.getOrThrow()
 
     override suspend fun deleteSharesForUser(userId: UserId) = deleteSharesResult.getOrThrow()
 

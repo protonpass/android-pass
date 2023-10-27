@@ -92,7 +92,6 @@ fun ManageVaultHeaderPreview(
                     vault = Vault(
                         shareId = ShareId("123"),
                         name = "Vault name",
-                        isPrimary = false,
                     ),
                     activeItemCount = 3,
                     trashedItemCount = 0

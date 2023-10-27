@@ -31,27 +31,17 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
-import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.combineN
-import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,9 +51,7 @@ class SettingsViewModel @Inject constructor(
     private val refreshContent: RefreshContent,
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
-    syncStatusRepository: ItemSyncStatusRepository,
-    observeVaults: ObserveVaults,
-    ffRepo: FeatureFlagsPreferencesRepository
+    syncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
     private val themeState: Flow<ThemePreference> = preferencesRepository
@@ -100,55 +88,16 @@ class SettingsViewModel @Inject constructor(
         useFaviconsState
     ) { theme, totp, favicons -> PreferencesState(theme, totp, favicons) }
 
-    private val primaryVaultFlow: Flow<PrimaryVaultWrapper> = combine(
-        observeVaults().asLoadingResult(),
-        ffRepo.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
-    ) { res, removePrimaryVault ->
-        if (removePrimaryVault) {
-            return@combine PrimaryVaultWrapper(primaryVault = None, showSelector = false)
-        }
-        when (res) {
-            LoadingResult.Loading -> PrimaryVaultWrapper(
-                primaryVault = None,
-                showSelector = false
-            )
-
-            is LoadingResult.Error -> {
-                PassLogger.e(TAG, res.exception, "Error observing vaults")
-                PrimaryVaultWrapper(primaryVault = None, showSelector = false)
-            }
-
-            is LoadingResult.Success -> {
-                val primary = res.data.firstOrNull { it.isPrimary }
-                    ?: res.data.firstOrNull()
-
-                PrimaryVaultWrapper(
-                    primaryVault = primary.toOption(),
-                    showSelector = res.data.size > 1
-                )
-
-            }
-        }
-    }
-
-    private data class PrimaryVaultWrapper(
-        val primaryVault: Option<Vault>,
-        val showSelector: Boolean
-    )
-
-    val state: StateFlow<SettingsUiState> = combineN(
+    val state: StateFlow<SettingsUiState> = combine(
         preferencesState,
-        primaryVaultFlow,
         deviceSettingsRepository.observeDeviceSettings(),
         allowScreenshotsState,
         syncStatusRepository.observeSyncStatus(),
         eventState
-    ) { preferences, primaryVault, deviceSettings, allowScreenshots, sync, event ->
+    ) { preferences, deviceSettings, allowScreenshots, sync, event ->
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
-            primaryVault = primaryVault.primaryVault,
-            showPrimaryVaultSelector = primaryVault.showSelector,
             isForceRefreshing = sync is ItemSyncStatus.Started || sync is ItemSyncStatus.Syncing,
             useFavicons = preferences.useFavicons,
             allowScreenshots = allowScreenshots,

@@ -33,7 +33,6 @@ import java.util.Date
 object TestShare {
     fun create(
         shareId: ShareId = ShareId("123"),
-        isPrimary: Boolean = false,
         shareRole: ShareRole = ShareRole.Admin,
         isOwner: Boolean = true
     ): Share = Share(
@@ -47,7 +46,6 @@ object TestShare {
         createTime = Date(),
         color = ShareColor.Color1,
         icon = ShareIcon.Icon1,
-        isPrimary = isPrimary,
         shareRole = shareRole,
         isOwner = isOwner
     )

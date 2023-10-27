@@ -42,7 +42,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.container.InfoBanner
-import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.R
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
@@ -125,7 +125,6 @@ fun SelectVaultBottomsheetContentPreview(
         vault = Vault(
             shareId = ShareId("123"),
             name = "vault 1",
-            isPrimary = false
         ),
         activeItemCount = 12,
         trashedItemCount = 0,
@@ -146,7 +145,6 @@ fun SelectVaultBottomsheetContentPreview(
                                     name = "vault 2",
                                     color = ShareColor.Color2,
                                     icon = ShareIcon.Icon2,
-                                    isPrimary = false
                                 ),
                                 activeItemCount = 1,
                                 trashedItemCount = 0,
@@ -160,7 +158,6 @@ fun SelectVaultBottomsheetContentPreview(
                                     name = "vault 3",
                                     color = ShareColor.Color3,
                                     icon = ShareIcon.Icon3,
-                                    isPrimary = false
                                 ),
                                 activeItemCount = 1,
                                 trashedItemCount = 0,

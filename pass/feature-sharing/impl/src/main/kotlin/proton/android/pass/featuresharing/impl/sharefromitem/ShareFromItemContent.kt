@@ -22,28 +22,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.airbnb.android.showkase.annotation.ShowkaseComposable
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultHighlightNorm
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featuresharing.impl.R
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.VaultWithItemCount
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -96,35 +86,6 @@ fun ShareFromItemContent(
                 icon = CoreR.drawable.ic_proton_plus,
                 title = R.string.sharing_from_item_create_vault_to_share_action,
                 onClick = { onEvent(ShareFromItemEvent.CreateNewVault) }
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-@ShowkaseComposable(skip = true)
-fun ShareFromItemContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            ShareFromItemContent(
-                state = ShareFromItemUiState(
-                    vault = VaultWithItemCount(
-                        vault = Vault(
-                            shareId = ShareId("123"),
-                            name = "test vault",
-                            isPrimary = false
-                        ),
-                        activeItemCount = 1,
-                        trashedItemCount = 1,
-                    ).some(),
-                    itemId = ItemId("123"),
-                    showCreateVault = true,
-                    showMoveToSharedVault = true
-                ),
-                onEvent = {}
             )
         }
     }

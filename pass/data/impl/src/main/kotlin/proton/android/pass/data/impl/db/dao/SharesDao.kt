@@ -46,7 +46,7 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         LIMIT 1
         """
     )
-    abstract suspend fun getById(userId: String, shareId: String): ShareEntity?
+    abstract fun observeById(userId: String, shareId: String): Flow<ShareEntity?>
 
     @Query(
         """

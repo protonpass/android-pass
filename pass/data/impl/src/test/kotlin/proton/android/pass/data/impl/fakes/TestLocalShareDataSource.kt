@@ -45,6 +45,7 @@ class TestLocalShareDataSource : LocalShareDataSource {
     private val getAllSharesForUserFlow = testFlow<List<ShareEntity>>()
     private val getAllSharesForAddressFlow = testFlow<List<ShareEntity>>()
     private val getShareCountFlow = testFlow<Result<Int>>()
+    private val observeByIdFlow = testFlow<Result<ShareEntity?>>()
 
     private var deleteMemory: MutableList<Set<ShareId>> = mutableListOf()
     private var upsertMemory: MutableList<List<ShareEntity>> = mutableListOf()
@@ -122,4 +123,7 @@ class TestLocalShareDataSource : LocalShareDataSource {
     override suspend fun updateOwnershipStatus(userId: UserId, shareId: ShareId, isOwner: Boolean) {
         updateOwnershipStatusResult.getOrThrow()
     }
+
+    override fun observeById(userId: UserId, shareId: ShareId): Flow<ShareEntity?> =
+        observeByIdFlow.map { it.getOrThrow() }
 }

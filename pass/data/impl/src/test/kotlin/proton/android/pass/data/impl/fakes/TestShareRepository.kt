@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
+import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
@@ -51,6 +52,8 @@ class TestShareRepository : ShareRepository {
         Result.failure(IllegalStateException("MarkAsPrimaryResult not set"))
 
     private var deleteSharesResult: Result<Unit> = Result.success(Unit)
+
+    private val observeShareByIdFlow = testFlow<Result<Option<Share>>>()
 
     private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
@@ -122,6 +125,9 @@ class TestShareRepository : ShareRepository {
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
 
     }
+
+    override fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>> =
+        observeShareByIdFlow.map { it.getOrThrow() }
 
     override suspend fun applyUpdateShareEvent(
         userId: UserId,

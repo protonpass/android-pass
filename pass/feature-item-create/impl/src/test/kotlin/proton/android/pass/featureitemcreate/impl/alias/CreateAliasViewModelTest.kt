@@ -280,7 +280,7 @@ class CreateAliasViewModelTest {
             Result.success(
                 listOf(
                     VaultWithItemCount(
-                        vault = Vault(ShareId("ShareId"), "name", isPrimary = false),
+                        vault = Vault(ShareId("ShareId"), "name"),
                         activeItemCount = 1,
                         trashedItemCount = 0
                     )

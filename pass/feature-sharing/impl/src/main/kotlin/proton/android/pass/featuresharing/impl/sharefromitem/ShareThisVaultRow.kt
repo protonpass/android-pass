@@ -128,7 +128,6 @@ fun ShareThisVaultRowPreview(
                     vault = Vault(
                         shareId = ShareId("Share"),
                         name = "Test vault with a very very long name",
-                        isPrimary = false
                     ),
                     activeItemCount = 1,
                     trashedItemCount = 1

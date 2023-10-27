@@ -36,7 +36,7 @@ import proton.android.pass.data.fakes.usecases.TestCanCreateItemInVault
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
-import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectedVaultArg

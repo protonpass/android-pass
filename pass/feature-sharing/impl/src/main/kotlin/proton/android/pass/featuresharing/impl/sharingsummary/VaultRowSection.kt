@@ -77,7 +77,6 @@ fun VaultRowSectionPreview(
                         name = "Vault name",
                         color = ShareColor.Color1,
                         icon = ShareIcon.Icon1,
-                        isPrimary = false
                     ),
                     activeItemCount = 1,
                     trashedItemCount = 2

@@ -88,7 +88,6 @@ class OpenItemImplTest {
             createTime = Date(1664195804),
             color = ShareColor.Color1,
             icon = ShareIcon.Icon1,
-            isPrimary = false,
             shareRole = ShareRole.Admin,
             isOwner = true
         )

@@ -66,6 +66,7 @@ import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.FieldCopiedToClipboard
@@ -114,6 +115,7 @@ class LoginDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val canDisplayTotp: CanDisplayTotp,
     private val canShareVault: CanShareVault,
+    private val canMigrate: CanMigrateVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider
@@ -310,12 +312,8 @@ class LoginDetailViewModel @Inject constructor(
                     null
                 }
 
+                val canMigrate = canMigrate(details.vault.shareId)
                 val isPaid = canPerformPaidActionResult.getOrNull() == true
-                val canMigrate = when {
-                    isPaid -> true
-                    vault?.isPrimary == true -> false
-                    else -> true
-                }
 
                 val customFieldsList = if (!isPaid) emptyList() else customFields
 

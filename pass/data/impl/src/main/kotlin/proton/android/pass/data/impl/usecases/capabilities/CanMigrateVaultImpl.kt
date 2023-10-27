@@ -25,6 +25,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermissionFlag
+import proton.pass.domain.canCreate
 import proton.pass.domain.hasFlag
 import proton.pass.domain.toPermissions
 import javax.inject.Inject
@@ -40,7 +41,7 @@ class CanMigrateVaultImpl @Inject constructor(
      * - They have delete permission on the vault (as migrate performs a create on target and delete on source)
      * - Paid account status:
      *   - If paid, they can migrate any vault
-     *   - If not paid, they can migrate any vault except the primary one
+     *   - If not paid, they can migrate any vault they have write access to
      */
     @Suppress("ReturnCount")
     override suspend fun invoke(shareId: ShareId): Boolean {
@@ -52,6 +53,9 @@ class CanMigrateVaultImpl @Inject constructor(
         if (vaults.size < 2) return false
 
         val vault = vaults.firstOrNull { it.shareId == shareId } ?: return false
+        val hasAnyOtherVaultWriteAccess = vaults.any {
+            it.shareId != shareId && it.role.toPermissions().canCreate()
+        }
 
         val hasDeletePermission = vault.role.toPermissions().hasFlag(SharePermissionFlag.Delete)
         if (!hasDeletePermission) return false
@@ -60,7 +64,7 @@ class CanMigrateVaultImpl @Inject constructor(
         return if (canDoPaidAction) {
             true
         } else {
-            !vault.isPrimary
+            hasAnyOtherVaultWriteAccess
         }
     }
 

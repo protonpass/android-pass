@@ -34,7 +34,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.fakes.usecases.TestCreateVault
 import proton.android.pass.data.fakes.usecases.TestMigrateItem
-import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.test.CallChecker

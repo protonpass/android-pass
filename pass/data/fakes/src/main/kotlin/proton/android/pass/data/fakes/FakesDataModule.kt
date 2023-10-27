@@ -61,7 +61,6 @@ import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.LeaveVault
-import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveActiveItems
@@ -151,7 +150,6 @@ import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
 import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestLeaveVault
-import proton.android.pass.data.fakes.usecases.TestMarkVaultAsPrimary
 import proton.android.pass.data.fakes.usecases.TestMigrateItem
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
@@ -326,11 +324,6 @@ abstract class FakesDataModule {
     abstract fun bindRestoreItem(
         impl: TestRestoreItem
     ): RestoreItem
-
-    @Binds
-    abstract fun bindMarkVaultAsPrimary(
-        impl: TestMarkVaultAsPrimary
-    ): MarkVaultAsPrimary
 
     @Binds
     abstract fun bindRefreshContent(

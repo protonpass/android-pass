@@ -108,7 +108,6 @@ fun CustomizeVaultPreview(
                 vault = Vault(
                     shareId = ShareId("1234"),
                     name = "Vault name",
-                    isPrimary = false
                 ),
                 onClick = {}
             )

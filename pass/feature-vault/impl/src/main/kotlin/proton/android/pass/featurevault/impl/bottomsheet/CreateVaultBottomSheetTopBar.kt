@@ -39,7 +39,7 @@ import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.container.Circle
-import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

@@ -30,16 +30,21 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.fakes.usecases.TestCreateVault
+import proton.android.pass.data.fakes.usecases.TestMigrateItem
 import proton.android.pass.feature.vault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @HiltAndroidTest
@@ -54,12 +59,21 @@ class CreateVaultBottomSheetTest {
     @Inject
     lateinit var createVault: TestCreateVault
 
+    @Inject
+    lateinit var migrateItem: TestMigrateItem
+
+    @Inject
+    lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
+
     private val submitButtonMatcher: SemanticsMatcher
         get() = hasText(composeTestRule.activity.getString(R.string.bottomsheet_create_vault_button))
 
     @Before
     fun setup() {
         hiltRule.inject()
+        savedStateHandleProvider.get().apply {
+            set(CreateVaultNextActionNavArgId.key, CreateVaultNextAction.NEXT_ACTION_DONE)
+        }
     }
 
     @Test
@@ -87,6 +101,8 @@ class CreateVaultBottomSheetTest {
             onNodeWithText(placeholder).performTextInput(vaultName)
 
             onNode(submitButtonMatcher).performClick()
+
+            waitUntil { checker.isCalled }
         }
 
         val memory = createVault.memory()
@@ -95,7 +111,50 @@ class CreateVaultBottomSheetTest {
         val payload = memory.first().vault
         val payloadVaultName = TestEncryptionContext.decrypt(payload.name)
         assertEquals("Some vault with trailing space", payloadVaultName)
+    }
 
+    @Test
+    fun canCreateVaultWhenModeIsSetToCreateAndShare() {
+        val newVault = TestShare.create()
+        createVault.setResult(Result.success(newVault))
+        migrateItem.setResult(Result.success(TestItem.create()))
+        savedStateHandleProvider.get().apply {
+            set(CreateVaultNextActionNavArgId.key, CreateVaultNextAction.NEXT_ACTION_SHARE)
+            set(CommonOptionalNavArgId.ShareId.key, TestShare.create().id.id)
+            set(CommonOptionalNavArgId.ItemId.key, TestItem.create().id.id)
+        }
+
+        val checker = CallChecker<VaultNavigation.VaultShare>()
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    CreateVaultScreen(
+                        onNavigate = {
+                            if (it is VaultNavigation.VaultShare) {
+                                checker.call(it)
+                            }
+                        }
+                    )
+                }
+            }
+
+            val placeholder = activity.getString(CompR.string.field_title_title)
+
+            waitUntilExists(hasText(placeholder))
+            onNodeWithText(placeholder).performTextInput("Some vault")
+
+            onNode(submitButtonMatcher).performClick()
+
+            waitUntil { checker.isCalled }
+        }
+
+        val memory = createVault.memory()
+        assertEquals(1, memory.size)
+
+        val navEvent = checker.memory
+        assertNotNull(navEvent)
+        assertEquals(newVault.id, navEvent.shareId)
+        assertEquals(true, navEvent.showEditVault)
     }
 
     @Test

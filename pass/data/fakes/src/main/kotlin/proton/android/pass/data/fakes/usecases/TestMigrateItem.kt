@@ -28,6 +28,10 @@ class TestMigrateItem @Inject constructor() : MigrateItem {
 
     private var result: Result<Item> = Result.failure(IllegalStateException("Result not set"))
 
+    private val memory = mutableListOf<Payload>()
+
+    fun memory(): List<Payload> = memory
+
     fun setResult(value: Result<Item>) {
         result = value
     }
@@ -36,8 +40,17 @@ class TestMigrateItem @Inject constructor() : MigrateItem {
         sourceShare: ShareId,
         itemId: ItemId,
         destinationShare: ShareId
-    ): Item = result.fold(
-        onSuccess = { it },
-        onFailure = { throw it }
+    ): Item {
+        memory.add(Payload(sourceShare, itemId, destinationShare))
+        return result.fold(
+            onSuccess = { it },
+            onFailure = { throw it }
+        )
+    }
+
+    data class Payload(
+        val sourceShare: ShareId,
+        val itemId: ItemId,
+        val destinationShare: ShareId
     )
 }

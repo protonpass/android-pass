@@ -149,7 +149,6 @@ class SharingWithViewModelTest {
         val testVault = Vault(
             shareId = ShareId(id = SHARE_ID),
             name = "vault name",
-            isPrimary = false
         )
         observeVaultById.emitValue(testVault.some())
         viewModel.onEmailChange(invitedEmail)

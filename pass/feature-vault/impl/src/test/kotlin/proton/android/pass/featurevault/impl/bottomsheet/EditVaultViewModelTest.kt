@@ -82,7 +82,6 @@ class EditVaultViewModelTest {
             name = "some name",
             color = ShareColor.Color4,
             icon = ShareIcon.Icon7,
-            isPrimary = false
         )
 
         getVaultById.emitValue(vault)
@@ -105,7 +104,6 @@ class EditVaultViewModelTest {
             name = "some name",
             color = ShareColor.Color4,
             icon = ShareIcon.Icon7,
-            isPrimary = false
         )
         getVaultById.emitValue(vault)
         updateVault.setResult(Result.success(TestShare.create().copy(id = vault.shareId)))
@@ -142,7 +140,6 @@ class EditVaultViewModelTest {
             name = "some name",
             color = ShareColor.Color4,
             icon = ShareIcon.Icon7,
-            isPrimary = false
         )
         getVaultById.emitValue(vault)
         updateVault.setResult(Result.failure(IllegalStateException("test")))

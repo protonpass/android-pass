@@ -102,7 +102,6 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
             shareId = "TestRemoteInviteDataSource-ShareId",
             vaultId = "TestRemoteInviteDataSource-VaultId",
             addressId = "TestRemoteInviteDataSource-AddressId",
-            primary = true,
             targetType = 1,
             targetId = "TestRemoteInviteDataSource-VaultId",
             permission = 0,

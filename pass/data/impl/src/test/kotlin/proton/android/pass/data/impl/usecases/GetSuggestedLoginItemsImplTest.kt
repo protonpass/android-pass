@@ -38,8 +38,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.TestItem
@@ -48,6 +46,7 @@ import proton.pass.domain.Plan
 import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareRole
 import proton.pass.domain.ShareSelection
 import proton.pass.domain.Vault
 import kotlin.test.assertEquals
@@ -98,10 +97,7 @@ class GetSuggestedLoginItemsImplTest {
             observeVaults = observeVaults,
             observeActiveItems = observeActiveItems,
             suggestionItemFilter = filter,
-            suggestionSorter = FakeSuggestionSorter(),
-            ffRepo = TestFeatureFlagsPreferenceRepository().apply {
-                set(FeatureFlag.REMOVE_PRIMARY_VAULT, false)
-            }
+            suggestionSorter = FakeSuggestionSorter()
         )
     }
 
@@ -153,19 +149,25 @@ class GetSuggestedLoginItemsImplTest {
     }
 
     @Test
-    fun `only suggestions from the primary vault if plan is free`() = runTest {
+    fun `only suggestions from the writeable vaults if plan is free`() = runTest {
         // GIVEN
-        val primaryShareId = ShareId("123")
+        val firstShareId = ShareId("123")
+        val secondShareId = ShareId("456")
         val vaults = listOf(
             Vault(
-                shareId = primaryShareId,
+                shareId = firstShareId,
                 name = "default",
-                isPrimary = true
+                role = ShareRole.Admin
             ),
             Vault(
-                shareId = ShareId("456"),
+                shareId = secondShareId,
                 name = "other",
-                isPrimary = false
+                role = ShareRole.Admin
+            ),
+            Vault(
+                shareId = ShareId("789"),
+                name = "another",
+                role = ShareRole.Read
             )
         )
         observeVaults.sendResult(Result.success(vaults))
@@ -185,7 +187,7 @@ class GetSuggestedLoginItemsImplTest {
         val memory = observeActiveItems.getMemory()
         val expected = TestObserveActiveItems.Payload(
             filter = ItemTypeFilter.Logins,
-            shareSelection = ShareSelection.Share(primaryShareId)
+            shareSelection = ShareSelection.Shares(listOf(firstShareId, secondShareId))
         )
         assertThat(memory).isEqualTo(listOf(expected))
     }
@@ -194,7 +196,6 @@ class GetSuggestedLoginItemsImplTest {
         val defaultVault = Vault(
             shareId = ShareId("123"),
             name = "default",
-            isPrimary = true
         )
         observeVaults.sendResult(Result.success(listOf(defaultVault)))
         getUserPlan.setResult(Result.success(createPlan(PlanType.Paid("", ""))))

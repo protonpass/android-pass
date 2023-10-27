@@ -16,17 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.sharingwith
+package proton.android.pass.data.api.usecases
 
-import androidx.compose.runtime.Stable
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.Option
+import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 
-@Stable
-data class SharingWithUIState(
-    val email: String = "",
-    val vault: Vault? = null,
-    val emailNotValidReason: EmailNotValidReason? = null,
-    val event: SharingWithEvents = SharingWithEvents.Unknown,
-    val isLoading: Boolean = false,
-    val showEditVault: Boolean = false
-)
+interface ObserveVaultById {
+    operator fun invoke(userId: UserId? = null, shareId: ShareId): Flow<Option<Vault>>
+}

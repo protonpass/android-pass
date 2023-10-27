@@ -33,6 +33,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
+import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestDeleteItem
@@ -98,7 +99,8 @@ class NoteDetailViewModelTest {
             restoreItem = restoreItem,
             canPerformPaidAction = canPerformPaidAction,
             clipboardManager = clipboardManager,
-            canShareVault = TestCanShareVault()
+            canShareVault = TestCanShareVault(),
+            canMigrate = TestCanMigrateVault()
         )
     }
 
@@ -329,7 +331,6 @@ class NoteDetailViewModelTest {
             name = VAULT_NAME,
             color = ShareColor.Color1,
             icon = ShareIcon.Icon1,
-            isPrimary = false
         )
     }
 

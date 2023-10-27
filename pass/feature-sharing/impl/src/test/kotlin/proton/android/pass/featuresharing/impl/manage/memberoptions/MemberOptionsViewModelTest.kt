@@ -285,7 +285,6 @@ class MemberOptionsViewModelTest {
         val vault = Vault(
             name = "test",
             shareId = ShareId(USER_SHARE_ID),
-            isPrimary = false,
             isOwned = owned
         )
         observeVaults.sendResult(Result.success(listOf(vault)))
@@ -294,7 +293,6 @@ class MemberOptionsViewModelTest {
     private fun vaultWith(shareId: String, owned: Boolean) = Vault(
         name = "Some vault $shareId",
         shareId = ShareId(shareId),
-        isPrimary = false,
         isOwned = owned
     )
 

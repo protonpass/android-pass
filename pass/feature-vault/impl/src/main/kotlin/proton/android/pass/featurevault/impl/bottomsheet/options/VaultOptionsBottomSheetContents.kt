@@ -36,7 +36,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @ExperimentalMaterialApi

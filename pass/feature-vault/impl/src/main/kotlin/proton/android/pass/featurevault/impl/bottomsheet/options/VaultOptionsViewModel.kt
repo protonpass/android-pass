@@ -42,8 +42,6 @@ import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotGetVault
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import javax.inject.Inject
@@ -56,7 +54,6 @@ class VaultOptionsViewModel @Inject constructor(
     canMigrateVault: CanMigrateVault,
     canManageVaultAccess: CanManageVaultAccess,
     savedStateHandle: SavedStateHandleProvider,
-    featureFlagRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val navShareId: ShareId =
@@ -68,9 +65,8 @@ class VaultOptionsViewModel @Inject constructor(
 
     val state: StateFlow<VaultOptionsUiState> = combine(
         observeVaults().asLoadingResult(),
-        featureFlagRepository.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT),
         canShare
-    ) { vaultResult, removePrimaryVaultEnabled, canShare ->
+    ) { vaultResult, canShare ->
         val (allVaults, selectedVault) = when (vaultResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(CannotGetVaultListError)
@@ -90,7 +86,7 @@ class VaultOptionsViewModel @Inject constructor(
             }
         }
 
-        val canDelete = canDeleteVault(allVaults, selectedVault, removePrimaryVaultEnabled)
+        val canDelete = canDeleteVault(allVaults, selectedVault)
 
         val canEdit = selectedVault.isOwned
         val canMigrate = canMigrateVault(navShareId)
@@ -122,13 +118,10 @@ class VaultOptionsViewModel @Inject constructor(
 
     private fun canDeleteVault(
         allVaults: List<Vault>,
-        selectedVault: Vault,
-        removePrimaryVaultEnabled: Boolean
-    ): Boolean = if (!removePrimaryVaultEnabled) {
-        !selectedVault.isPrimary && selectedVault.isOwned
-    } else {
+        selectedVault: Vault
+    ): Boolean {
         val ownedVaultsCount = allVaults.count { it.isOwned }
-        when {
+        return when {
             !selectedVault.isOwned -> false // Cannot remove vault if is not owned
             ownedVaultsCount == 1 -> false // Cannot remove vault if is the last owned one
             else -> true

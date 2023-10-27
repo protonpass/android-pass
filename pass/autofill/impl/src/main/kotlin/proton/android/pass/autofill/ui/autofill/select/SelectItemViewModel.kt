@@ -181,11 +181,10 @@ class SelectItemViewModel @Inject constructor(
 
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         planTypeFlow,
-        vaultsFlow,
-        removePrimaryVaultFlow
-    ) { plan, vaults, removePrimaryVaultFlag -> Triple(plan, vaults, removePrimaryVaultFlag) }
+        vaultsFlow
+    ) { plan, vaults -> plan to vaults }
         .flatMapLatest { data ->
-            val (planType, vaultsRes, removePrimaryVaultFlag) = data
+            val (planType, vaultsRes) = data
 
             val vaults = when (vaultsRes) {
                 is LoadingResult.Success -> vaultsRes.data
@@ -197,8 +196,7 @@ class SelectItemViewModel @Inject constructor(
                 LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
             }
 
-            val selection = getShareSelection(planType, vaults, removePrimaryVaultFlag)
-                ?: return@flatMapLatest flowOf(LoadingResult.Error(IllegalStateException("No vaults found")))
+            val selection = getShareSelection(planType, vaults)
 
             observeActiveItems(
                 filter = ItemTypeFilter.Logins,
@@ -492,21 +490,15 @@ class SelectItemViewModel @Inject constructor(
 
     private fun getShareSelection(
         planType: PlanType,
-        vaults: List<Vault>,
-        removePrimaryVaultFeatureFlag: Boolean
-    ): ShareSelection? {
+        vaults: List<Vault>
+    ): ShareSelection {
         return when (planType) {
             is PlanType.Paid, is PlanType.Trial -> ShareSelection.AllShares
-            else -> if (removePrimaryVaultFeatureFlag) {
+            else -> {
                 val writeableVaults = vaults
                     .filter { it.role.toPermissions().canCreate() }
                     .map { it.shareId }
                 ShareSelection.Shares(writeableVaults)
-            } else {
-                val primaryVault = vaults.firstOrNull { it.isPrimary }
-                    ?: vaults.firstOrNull()
-                    ?: return null
-                ShareSelection.Share(primaryVault.shareId)
             }
         }
     }

@@ -134,7 +134,6 @@ class MigrateConfirmVaultForMigrateItemViewModelTest {
         vault = Vault(
             shareId = SHARE_ID,
             name = "source",
-            isPrimary = false
         ),
         activeItemCount = 1,
         trashedItemCount = 0

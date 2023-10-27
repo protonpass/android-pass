@@ -92,7 +92,6 @@ class MigrateSelectVaultForMigrateItemViewModelTest {
             vault = Vault(
                 shareId = ShareId("shared-vault"),
                 name = "vault1",
-                isPrimary = false,
                 shared = true
             ),
             activeItemCount = 1,
@@ -103,7 +102,6 @@ class MigrateSelectVaultForMigrateItemViewModelTest {
             vault = Vault(
                 shareId = ShareId("non-shared-vault"),
                 name = "vault2",
-                isPrimary = false,
                 shared = false
             ),
             activeItemCount = 1,
@@ -140,7 +138,6 @@ class MigrateSelectVaultForMigrateItemViewModelTest {
                 vault = Vault(
                     shareId = SHARE_ID,
                     name = "vault1",
-                    isPrimary = false,
                     shared = firstVaultShared
                 ),
                 activeItemCount = 1,
@@ -150,7 +147,6 @@ class MigrateSelectVaultForMigrateItemViewModelTest {
                 vault = Vault(
                     shareId = ShareId("OTHER_SHARE_ID"),
                     name = "vault2",
-                    isPrimary = false
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 0

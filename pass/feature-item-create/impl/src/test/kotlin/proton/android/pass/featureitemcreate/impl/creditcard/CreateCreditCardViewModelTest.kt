@@ -94,7 +94,7 @@ class CreateCreditCardViewModelTest {
     @Test
     fun `create item without title should return a BlankTitle validation error`() = runTest {
         val vault = VaultWithItemCount(
-            vault = Vault(ShareId("shareId"), "Share", isPrimary = false),
+            vault = Vault(ShareId("shareId"), "Share"),
             activeItemCount = 1,
             trashedItemCount = 0
         )
@@ -216,7 +216,7 @@ class CreateCreditCardViewModelTest {
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
         val vault = VaultWithItemCount(
-            vault = Vault(shareId, "Share", isPrimary = false),
+            vault = Vault(shareId, "Share"),
             activeItemCount = 1,
             trashedItemCount = 0
         )

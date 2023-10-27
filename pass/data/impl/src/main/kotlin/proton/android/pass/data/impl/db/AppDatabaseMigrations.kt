@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.db
 
+import androidx.room.DeleteColumn
 import androidx.room.DeleteTable
 import androidx.room.RenameTable
 import androidx.room.migration.AutoMigrationSpec
@@ -172,4 +173,14 @@ object AppDatabaseMigrations {
             UserSettingsDatabase.MIGRATION_3.migrate(database)
         }
     }
+
+    @DeleteColumn.Entries(
+        value = [
+            DeleteColumn(
+                tableName = ShareEntity.TABLE,
+                columnName = ShareEntity.Columns.IS_PRIMARY
+            )
+        ]
+    )
+    class MIGRATION_34_35 : AutoMigrationSpec
 }

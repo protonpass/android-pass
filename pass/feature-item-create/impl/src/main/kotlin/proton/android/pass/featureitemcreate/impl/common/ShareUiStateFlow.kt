@@ -54,23 +54,12 @@ fun getShareUiStateFlow(
         LoadingResult.Loading -> return@combine ShareUiState.Loading
         is LoadingResult.Success -> allSharesResult.data
     }
-
-    if (removePrimaryVault) {
-        shareUiStateWithRemovePrimaryVault(
-            tag = tag,
-            allShares = allShares,
-            navShareId = navShareId,
-            selectedShareId = selectedShareId
-        )
-    } else {
-        shareUiStateWithoutRemovePrimaryVault(
-            tag = tag,
-            allShares = allShares,
-            navShareId = navShareId,
-            selectedShareId = selectedShareId,
-            canDoPaidAction = canDoPaidAction,
-        )
-    }
+    shareUiStateWithRemovePrimaryVault(
+        tag = tag,
+        allShares = allShares,
+        navShareId = navShareId,
+        selectedShareId = selectedShareId
+    )
 }.stateIn(
     scope = viewModelScope,
     started = SharingStarted.WhileSubscribed(5_000),
@@ -103,60 +92,6 @@ private fun shareUiStateWithRemovePrimaryVault(
             ?: writeableVaults.first()
     }
 
-    return ShareUiState.Success(
-        vaultList = allShares,
-        currentVault = selectedVault
-    )
-}
-
-@Suppress("ReturnCount")
-private fun shareUiStateWithoutRemovePrimaryVault(
-    tag: String,
-    allShares: List<VaultWithItemCount>,
-    selectedShareId: Option<ShareId>,
-    navShareId: Option<ShareId>,
-    canDoPaidAction: LoadingResult<Boolean>
-): ShareUiState {
-    val canSwitchVaults = when (canDoPaidAction) {
-        is LoadingResult.Error -> return ShareUiState.Error(ShareError.UpgradeInfoNotAvailable)
-        LoadingResult.Loading -> return ShareUiState.Loading
-        is LoadingResult.Success -> canDoPaidAction.data
-    }
-
-    if (allShares.isEmpty()) {
-        return ShareUiState.Error(ShareError.EmptyShareList)
-    }
-    val selectedVault = if (!canSwitchVaults) {
-        val primaryVault = allShares.firstOrNull { it.vault.isPrimary }
-        if (primaryVault == null) {
-            PassLogger.w(tag, "No primary vault found")
-            return ShareUiState.Error(ShareError.NoPrimaryVault)
-        }
-        primaryVault
-    } else {
-        val selectedOrNavVault = allShares
-            .firstOrNull { it.vault.shareId == selectedShareId.value() }
-            ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
-
-        val primaryVault = allShares.firstOrNull { it.vault.isPrimary }
-            ?: allShares.firstOrNull()
-            ?: return ShareUiState.Error(ShareError.EmptyShareList)
-
-        if (selectedOrNavVault != null) {
-            val selectedVaultPermissions = selectedOrNavVault.vault.role.toPermissions()
-            if (selectedVaultPermissions.canCreate()) {
-                selectedOrNavVault
-            } else {
-                PassLogger.i(
-                    tag,
-                    "Changing selected vault to primary as user cannot create items in selected vault"
-                )
-                primaryVault
-            }
-        } else {
-            primaryVault
-        }
-    }
     return ShareUiState.Success(
         vaultList = allShares,
         currentVault = selectedVault

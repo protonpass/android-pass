@@ -32,8 +32,6 @@ import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
 import proton.pass.domain.ShareId
@@ -51,7 +49,6 @@ class VaultOptionsViewModelTest {
     private lateinit var canShareVault: TestCanShareVault
     private lateinit var canManageVaultAccess: TestCanManageVaultAccess
     private lateinit var observeVaults: TestObserveVaults
-    private lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
 
     @Before
     fun setup() {
@@ -60,7 +57,6 @@ class VaultOptionsViewModelTest {
         canMigrateVault = TestCanMigrateVault()
         canManageVaultAccess = TestCanManageVaultAccess()
         observeVaults = TestObserveVaults()
-        ffRepo = TestFeatureFlagsPreferenceRepository()
         setNavShareId(ShareId(SHARE_ID))
     }
 
@@ -254,7 +250,7 @@ class VaultOptionsViewModelTest {
 
     @Test
     fun `cannot delete primary vault`() = runTest {
-        emitDefaultVault(primary = true)
+        emitDefaultVault()
         instance.state.test {
             val item = awaitItem()
             assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
@@ -279,12 +275,11 @@ class VaultOptionsViewModelTest {
     // RemovePrimaryVault tests
     @Test
     fun `if RemovePrimaryVault enabled cannot remove last owned vault if primary`() = runTest {
-        ffRepo.set(FeatureFlag.REMOVE_PRIMARY_VAULT, true)
-        val ownedVault = vaultWith(isPrimary = false, owned = true)
+        val ownedVault = vaultWith(owned = true)
         val vaults = listOf(
-            vaultWith(isPrimary = false, owned = false),
+            vaultWith(owned = false),
             ownedVault,
-            vaultWith(isPrimary = false, owned = false),
+            vaultWith(owned = false),
         )
         setNavShareId(ownedVault.shareId)
         observeVaults.sendResult(Result.success(vaults))
@@ -300,12 +295,11 @@ class VaultOptionsViewModelTest {
 
     @Test
     fun `if RemovePrimaryVault enabled cannot remove last owned vault if not primary`() = runTest {
-        ffRepo.set(FeatureFlag.REMOVE_PRIMARY_VAULT, true)
-        val ownedVault = vaultWith(isPrimary = true, owned = true)
+        val ownedVault = vaultWith(owned = true)
         val vaults = listOf(
-            vaultWith(isPrimary = false, owned = false),
+            vaultWith(owned = false),
             ownedVault,
-            vaultWith(isPrimary = false, owned = false),
+            vaultWith(owned = false),
         )
         setNavShareId(ownedVault.shareId)
         observeVaults.sendResult(Result.success(vaults))
@@ -320,14 +314,12 @@ class VaultOptionsViewModelTest {
     }
 
     private fun emitDefaultVault(
-        primary: Boolean = true,
         owned: Boolean = true,
         shared: Boolean = true
     ): Vault {
         val defaultVault = Vault(
             shareId = ShareId(SHARE_ID),
             name = "Test vault",
-            isPrimary = primary,
             isOwned = owned,
             members = if (shared) 2 else 1,
             shared = shared
@@ -337,10 +329,9 @@ class VaultOptionsViewModelTest {
         return defaultVault
     }
 
-    private fun vaultWith(isPrimary: Boolean, owned: Boolean): Vault = Vault(
+    private fun vaultWith(owned: Boolean): Vault = Vault(
         shareId = ShareId("ShareId-${TestUtils.randomString()}"),
         name = "Some vault",
-        isPrimary = isPrimary,
         isOwned = owned,
         members = 1,
         shared = false
@@ -355,8 +346,7 @@ class VaultOptionsViewModelTest {
             canMigrateVault = canMigrateVault,
             observeVaults = observeVaults,
             canShareVault = canShareVault,
-            canManageVaultAccess = canManageVaultAccess,
-            featureFlagRepository = ffRepo
+            canManageVaultAccess = canManageVaultAccess
         )
     }
 

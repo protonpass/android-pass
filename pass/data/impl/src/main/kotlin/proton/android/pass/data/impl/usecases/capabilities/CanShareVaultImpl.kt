@@ -53,8 +53,6 @@ class CanShareVaultImpl @Inject constructor(
             return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.SharingDisabled)
         }
 
-        val isRemovePrimaryVaultEnabled = getRemovePrimaryVaultEnabledFlag()
-
         val share = runCatching { getShareById(shareId = vault.shareId) }.getOrElse {
             PassLogger.w(TAG, it, "canShare share not found")
             return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown)
@@ -63,9 +61,6 @@ class CanShareVaultImpl @Inject constructor(
         return when {
             share.totalMemberCount() >= share.maxMembers -> {
                 CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughInvites)
-            }
-            !isRemovePrimaryVaultEnabled && vault.isPrimary -> {
-                CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown)
             }
             vault.isOwned -> {
                 CanShareVaultStatus.CanShare(invitesRemaining = share.maxMembers - share.totalMemberCount())
@@ -81,11 +76,6 @@ class CanShareVaultImpl @Inject constructor(
 
     private suspend fun getSharingEnabledFlag() = featureFlagsPreferencesRepository
         .get<Boolean>(FeatureFlag.SHARING_V1)
-        .firstOrNull()
-        ?: false
-
-    private suspend fun getRemovePrimaryVaultEnabledFlag() = featureFlagsPreferencesRepository
-        .get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
         .firstOrNull()
         ?: false
 

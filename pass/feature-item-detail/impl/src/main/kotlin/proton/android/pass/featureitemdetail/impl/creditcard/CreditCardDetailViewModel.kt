@@ -54,6 +54,7 @@ import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
@@ -82,6 +83,7 @@ class CreditCardDetailViewModel @Inject constructor(
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
     private val canShareVault: CanShareVault,
+    private val canMigrate: CanMigrateVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider
@@ -197,11 +199,7 @@ class CreditCardDetailViewModel @Inject constructor(
                 }
 
                 val isPaid = canPerformPaidActionResult.getOrNull() == true
-                val canMigrate = when {
-                    isPaid -> true
-                    vault?.isPrimary == true -> false
-                    else -> true
-                }
+                val canMigrate = canMigrate(details.vault.shareId)
 
                 val permissions = details.vault.role.toPermissions()
                 val canPerformItemActions = permissions.canUpdate()

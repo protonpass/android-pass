@@ -26,7 +26,6 @@ data class Vault(
     val name: String,
     val color: ShareColor = ShareColor.Color1,
     val icon: ShareIcon = ShareIcon.Icon1,
-    val isPrimary: Boolean,
     val isOwned: Boolean = true,
     val role: ShareRole = ShareRole.Admin,
     val members: Int = 1,

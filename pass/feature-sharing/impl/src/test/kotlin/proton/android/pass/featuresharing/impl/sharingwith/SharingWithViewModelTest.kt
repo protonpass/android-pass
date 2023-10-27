@@ -26,11 +26,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
-import proton.android.pass.data.fakes.usecases.TestGetVaultById
+import proton.android.pass.data.fakes.usecases.TestObserveVaultById
 import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.featuresharing.impl.sharingwith.EmailNotValidReason.NotValid
@@ -42,7 +43,7 @@ import proton.pass.domain.Vault
 class SharingWithViewModelTest {
 
     private lateinit var viewModel: SharingWithViewModel
-    private lateinit var getVaultById: TestGetVaultById
+    private lateinit var observeVaultById: TestObserveVaultById
     private lateinit var accountManager: TestAccountManager
     private lateinit var emailValidator: TestEmailValidator
     private lateinit var getInviteUserMode: TestGetInviteUserMode
@@ -54,7 +55,7 @@ class SharingWithViewModelTest {
 
     @Before
     fun setUp() {
-        getVaultById = TestGetVaultById()
+        observeVaultById = TestObserveVaultById()
         accountManager = TestAccountManager()
         getInviteUserMode = TestGetInviteUserMode()
         emailValidator = TestEmailValidator()
@@ -63,7 +64,7 @@ class SharingWithViewModelTest {
             get()[ShowEditVaultArgId.key] = false
         }
         viewModel = SharingWithViewModel(
-            getVaultById = getVaultById,
+            observeVaultById = observeVaultById,
             accountManager = accountManager,
             savedStateHandleProvider = savedStateHandleProvider,
             getInviteUserMode = getInviteUserMode,
@@ -150,7 +151,7 @@ class SharingWithViewModelTest {
             name = "vault name",
             isPrimary = false
         )
-        getVaultById.emitValue(testVault)
+        observeVaultById.emitValue(testVault.some())
         viewModel.onEmailChange(invitedEmail)
 
         viewModel.onEmailSubmit()
@@ -160,7 +161,6 @@ class SharingWithViewModelTest {
             assertThat(currentState.email).isEqualTo(invitedEmail)
             assertThat(currentState.vault).isEqualTo(testVault)
             assertThat(currentState.emailNotValidReason).isNull()
-            assertThat(currentState.isVaultNotFound).isFalse()
             assertThat(currentState.event).isEqualTo(
                 SharingWithEvents.NavigateToPermissions(
                     shareId = ShareId(SHARE_ID),

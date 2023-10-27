@@ -30,16 +30,13 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetInviteUserMode
-import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.InviteUserMode
+import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.log.api.PassLogger
@@ -52,7 +49,7 @@ class SharingWithViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val getInviteUserMode: GetInviteUserMode,
     private val emailValidator: EmailValidator,
-    getVaultById: GetVaultById,
+    observeVaultById: ObserveVaultById,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -74,16 +71,16 @@ class SharingWithViewModel @Inject constructor(
     val state: StateFlow<SharingWithUIState> = combine(
         emailState,
         isEmailNotValidState,
-        getVaultById(shareId = shareId).asLoadingResult(),
+        observeVaultById(shareId = shareId),
         isLoadingState,
         eventState
     ) { email, isEmailNotValid, vault, isLoading, event ->
+        val vaultValue = vault.value()
         SharingWithUIState(
             email = email,
-            vault = vault.getOrNull(),
+            vault = vaultValue,
             emailNotValidReason = isEmailNotValid,
-            isVaultNotFound = vault is LoadingResult.Error,
-            isLoading = isLoading.value() || vault is LoadingResult.Loading,
+            isLoading = isLoading.value() || vaultValue == null,
             event = event,
             showEditVault = showEditVault
         )

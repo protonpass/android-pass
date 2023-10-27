@@ -75,6 +75,7 @@ import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
+import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.PerformSync
@@ -165,6 +166,7 @@ import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
+import proton.android.pass.data.fakes.usecases.TestObserveVaultById
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestPerformSync
@@ -530,4 +532,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveHasConfirmedInvite(impl: TestObserveHasConfirmedInvite): ObserveHasConfirmedInvite
+
+    @Binds
+    abstract fun bindObserveVaultById(impl: TestObserveVaultById): ObserveVaultById
 }

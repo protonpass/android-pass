@@ -66,7 +66,6 @@ fun SettingsScreen(
                 SettingsContentEvent.Privacy -> { openWebsite(context, "https://proton.me/legal/privacy") }
                 SettingsContentEvent.Terms -> { openWebsite(context, "https://proton.me/legal/terms") }
                 SettingsContentEvent.Up -> onNavigate(SettingsNavigation.Close)
-                SettingsContentEvent.PrimaryVault -> onNavigate(SettingsNavigation.PrimaryVault)
             }
         }
     )

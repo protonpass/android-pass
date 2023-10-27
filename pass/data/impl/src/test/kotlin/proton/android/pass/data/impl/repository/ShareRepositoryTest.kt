@@ -78,9 +78,9 @@ class ShareRepositoryTest {
     fun `refresh shares updates shares`() = runTest {
         // GIVEN
         val userId = UserId(USER_ID)
-        // initial state: [share1(primary), share2, share3, share4]
-        // desired state: [share1, share2(primary), share3, share5]
-        val share1 = TestShare.create(ShareId("123"), isPrimary = true)
+        // initial state: [share1, share2, share3, share4]
+        // desired state: [share1, share2, share3, share5]
+        val share1 = TestShare.create(ShareId("123"))
         val share2 = TestShare.create(ShareId("456"))
         val share3 = TestShare.create(ShareId("789"))
         val share4 = TestShare.create(ShareId("654"))
@@ -93,8 +93,8 @@ class ShareRepositoryTest {
             share4.toEntity()
         )
         val asResponses = listOf(
-            share1.copy(isPrimary = false).toResponse(),
-            share2.copy(isPrimary = true).toResponse(),
+            share1.toResponse(),
+            share2.toResponse(),
             share3.toResponse(),
             share5.toResponse()
         )
@@ -116,9 +116,7 @@ class ShareRepositoryTest {
         val firstUpsertMemory = upsertMemory[0]
         assertThat(firstUpsertMemory.size).isEqualTo(2)
         assertThat(firstUpsertMemory[0].id).isEqualTo(share1.id.id)
-        assertThat(firstUpsertMemory[0].isPrimary).isEqualTo(false)
         assertThat(firstUpsertMemory[1].id).isEqualTo(share2.id.id)
-        assertThat(firstUpsertMemory[1].isPrimary).isEqualTo(true)
 
         val secondUpsertMemory = upsertMemory[1]
         assertThat(secondUpsertMemory).isEqualTo(listOf(share5.toEntity()))
@@ -133,7 +131,6 @@ class ShareRepositoryTest {
         shareId = id.id,
         vaultId = vaultId.id,
         addressId = "addressid-123",
-        primary = isPrimary,
         targetType = 1,
         targetId = vaultId.id,
         permission = 1,
@@ -159,7 +156,6 @@ class ShareRepositoryTest {
         targetType = 1,
         targetId = vaultId.id,
         permission = 1,
-        isPrimary = isPrimary,
         content = null,
         contentKeyRotation = null,
         contentFormatVersion = null,

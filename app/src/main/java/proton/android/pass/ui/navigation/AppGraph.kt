@@ -106,7 +106,6 @@ import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.featuresettings.impl.ClearClipboardOptions
 import proton.android.pass.featuresettings.impl.ClipboardSettings
 import proton.android.pass.featuresettings.impl.LogView
-import proton.android.pass.featuresettings.impl.SelectPrimaryVault
 import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featuresettings.impl.SettingsNavigation
 import proton.android.pass.featuresettings.impl.ThemeSelector
@@ -450,7 +449,6 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(ClearClipboardOptions)
                 }
 
-                SettingsNavigation.PrimaryVault -> appNavigator.navigate(SelectPrimaryVault)
                 SettingsNavigation.Restart -> onNavigate(AppNavigation.Restart)
                 SettingsNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
             }

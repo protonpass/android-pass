@@ -40,7 +40,6 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
                         name = "A vault",
                         color = ShareColor.Color1,
                         icon = ShareIcon.Icon1,
-                        isPrimary = false
                     )
                 )
             )

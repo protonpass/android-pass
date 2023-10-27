@@ -103,15 +103,6 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
 
     @Query(
         """
-        UPDATE ${ShareEntity.TABLE}
-        SET ${ShareEntity.Columns.IS_PRIMARY} = 0
-        WHERE ${ShareEntity.Columns.USER_ID} = :userId
-        """
-    )
-    abstract suspend fun disablePrimaryShares(userId: String)
-
-    @Query(
-        """
         DELETE FROM ${ShareEntity.TABLE} 
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
         """

@@ -83,7 +83,7 @@ class NoteDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val clipboardManager: ClipboardManager,
     private val canShareVault: CanShareVault,
-    private val canMigrateVault: CanMigrateVault,
+    private val canMigrate: CanMigrateVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle
@@ -138,7 +138,7 @@ class NoteDetailViewModel @Inject constructor(
             is LoadingResult.Success -> {
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
-                val canMigrate = canMigrateVault(details.vault.shareId)
+                val canMigrate = canMigrate(details.vault.shareId)
 
                 val permissions = details.vault.role.toPermissions()
                 val canPerformItemActions = permissions.canUpdate()

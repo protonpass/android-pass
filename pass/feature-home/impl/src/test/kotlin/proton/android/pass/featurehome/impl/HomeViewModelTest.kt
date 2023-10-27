@@ -211,7 +211,6 @@ class HomeViewModelTest {
                     name = "Vault ${shareId.id}",
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
-                    isPrimary = false
                 )
             }
 

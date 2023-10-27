@@ -165,7 +165,6 @@ private fun createVaultWithItemCount() = VaultWithItemCount(
         name = "Evangeline Potter",
         color = ShareColor.Color1,
         icon = ShareIcon.Icon1,
-        isPrimary = false
     ),
     activeItemCount = 5521, trashedItemCount = 6902
 )

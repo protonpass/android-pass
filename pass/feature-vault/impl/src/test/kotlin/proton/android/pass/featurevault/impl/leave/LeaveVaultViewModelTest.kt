@@ -133,7 +133,6 @@ class LeaveVaultViewModelTest {
         name = VAULT_NAME,
         color = ShareColor.Color2,
         icon = ShareIcon.Icon1,
-        isPrimary = false
     )
 
     companion object {

@@ -25,9 +25,16 @@ import javax.inject.Inject
 class TestDeleteVault @Inject constructor() : DeleteVault {
     private var result: Result<Unit> = Result.failure(IllegalStateException("Result not set"))
 
+    private val memory = mutableListOf<ShareId>()
+
+    fun memory(): List<ShareId> = memory
+
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
-    override suspend fun invoke(shareId: ShareId) = result.getOrThrow()
+    override suspend fun invoke(shareId: ShareId) {
+        memory.add(shareId)
+        result.getOrThrow()
+    }
 }

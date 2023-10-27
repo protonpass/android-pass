@@ -6,6 +6,22 @@
 
 ### Other
 
+## 1.9.6 (2023-10-27)
+
+### Features :tada:
+
+- Allow to share from item detail.
+- New password generation implementation.
+
+### Fixes :bug:
+
+- Vault sharing not available in some cases.
+- Improve error messages when an invite cannot be accepted.
+
+### Other
+
+- Updated translations.
+
 ## 1.9.5 (2023-10-24)
 
 ### Features :tada:

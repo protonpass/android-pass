@@ -45,7 +45,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.value
-import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.R
 
 private const val TAG_VAULT_NAME = "__VAULT_NAME__"
 

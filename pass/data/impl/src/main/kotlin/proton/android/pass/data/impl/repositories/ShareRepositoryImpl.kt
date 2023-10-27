@@ -175,7 +175,6 @@ class ShareRepositoryImpl @Inject constructor(
                     localShare.copy(
                         owner = remoteShare.owner,
                         shareRoleId = remoteShare.shareRoleId,
-                        isPrimary = remoteShare.primary,
                         targetMembers = remoteShare.targetMembers,
                         shared = remoteShare.shared,
                         permission = remoteShare.permission,
@@ -285,23 +284,6 @@ class ShareRepositoryImpl @Inject constructor(
 
         return@withContext shareEntityToShare(responseAsEntity)
     }
-
-    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share =
-        withContext(Dispatchers.IO) {
-            remoteShareDataSource.markAsPrimary(userId, shareId)
-
-            val updated = database.inTransaction {
-                val share = localShareDataSource.getById(userId, shareId)
-                    ?: throw IllegalStateException("Could not find share with id $shareId")
-                localShareDataSource.disablePrimaryShare(userId)
-
-                val updatedShare = share.copy(isPrimary = true)
-                localShareDataSource.upsertShares(listOf(updatedShare))
-                updatedShare
-            }
-
-            return@withContext shareEntityToShare(updated)
-        }
 
     override suspend fun deleteSharesForUser(userId: UserId) = withContext(Dispatchers.IO) {
         localShareDataSource.deleteSharesForUser(userId)
@@ -439,7 +421,6 @@ class ShareRepositoryImpl @Inject constructor(
             expirationTime = shareResponse.expirationTime,
             createTime = shareResponse.createTime,
             encryptedContent = encryptedContent,
-            isPrimary = shareResponse.primary,
             isActive = isActive,
             shareRoleId = shareResponse.shareRoleId,
             owner = shareResponse.owner,
@@ -480,7 +461,6 @@ class ShareRepositoryImpl @Inject constructor(
             createTime = Date(entity.createTime),
             color = color,
             icon = icon,
-            isPrimary = entity.isPrimary,
             shareRole = ShareRole.fromValue(entity.shareRoleId),
             isOwner = entity.owner,
             memberCount = entity.targetMembers,
@@ -521,7 +501,6 @@ class ShareRepositoryImpl @Inject constructor(
         localShare: ShareEntity,
         remoteShare: ShareResponse
     ): Boolean = when {
-        localShare.isPrimary != remoteShare.primary -> true
         localShare.owner != remoteShare.owner -> true
         localShare.shareRoleId != remoteShare.shareRoleId -> true
         localShare.permission != remoteShare.permission -> true

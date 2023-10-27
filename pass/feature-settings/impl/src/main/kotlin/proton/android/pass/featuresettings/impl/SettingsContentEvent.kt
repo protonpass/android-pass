@@ -29,6 +29,5 @@ sealed interface SettingsContentEvent {
     object ForceSync : SettingsContentEvent
     object Privacy : SettingsContentEvent
     object Terms : SettingsContentEvent
-    object PrimaryVault : SettingsContentEvent
     object Up : SettingsContentEvent
 }

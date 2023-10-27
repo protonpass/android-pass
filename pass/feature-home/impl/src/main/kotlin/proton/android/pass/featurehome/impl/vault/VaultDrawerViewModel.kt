@@ -77,7 +77,6 @@ class VaultDrawerViewModel @Inject constructor(
                             trashedItemCount = it.trashedItemCount,
                             color = it.vault.color,
                             icon = it.vault.icon,
-                            isPrimary = it.vault.isPrimary,
                             isShared = it.vault.shared
                         )
                     }

@@ -34,7 +34,6 @@ interface LocalShareDataSource {
     fun observeActiveVaultCount(userId: UserId): Flow<Int>
     suspend fun deleteShares(shareIds: Set<ShareId>): Boolean
     suspend fun hasShares(userId: UserId): Boolean
-    suspend fun disablePrimaryShare(userId: UserId)
     suspend fun deleteSharesForUser(userId: UserId)
     suspend fun updateOwnershipStatus(userId: UserId, shareId: ShareId, isOwner: Boolean)
 }

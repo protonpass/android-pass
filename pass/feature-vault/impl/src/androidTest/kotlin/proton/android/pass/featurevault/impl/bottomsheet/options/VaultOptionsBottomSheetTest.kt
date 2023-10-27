@@ -34,7 +34,7 @@ import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
-import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker

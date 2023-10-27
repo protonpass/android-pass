@@ -126,7 +126,6 @@ fun VaultNameSubtitlePreview(
                     name = "Vault Name",
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
-                    isPrimary = false,
                     members = members,
                     shared = input.second
                 ),

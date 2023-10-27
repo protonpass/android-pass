@@ -36,6 +36,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -242,6 +243,15 @@ class ShareRepositoryImpl @Inject constructor(
 
             return@withContext shareEntityToShare(share)
         }
+
+    override fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>> {
+        return localShareDataSource.observeById(userId, shareId)
+            .map { entity ->
+                entity.toOption().map {
+                    shareEntityToShare(it)
+                }
+            }
+    }
 
     override suspend fun updateVault(
         userId: UserId,

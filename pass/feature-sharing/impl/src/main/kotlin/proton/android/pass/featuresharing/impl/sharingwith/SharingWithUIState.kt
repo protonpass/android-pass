@@ -26,7 +26,6 @@ data class SharingWithUIState(
     val email: String = "",
     val vault: Vault? = null,
     val emailNotValidReason: EmailNotValidReason? = null,
-    val isVaultNotFound: Boolean = false,
     val event: SharingWithEvents = SharingWithEvents.Unknown,
     val isLoading: Boolean = false,
     val showEditVault: Boolean = false

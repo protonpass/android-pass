@@ -25,21 +25,28 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.fakes.usecases.TestCreateVault
+import proton.android.pass.data.fakes.usecases.TestDeleteVault
+import proton.android.pass.data.fakes.usecases.TestMigrateItem
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
+import proton.pass.domain.ItemId
 import proton.pass.domain.Plan
 import proton.pass.domain.PlanLimit
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
+import proton.pass.domain.ShareId
 
 class CreateVaultViewModelTest {
 
@@ -49,21 +56,24 @@ class CreateVaultViewModelTest {
     private lateinit var instance: CreateVaultViewModel
     private lateinit var snackbar: TestSnackbarDispatcher
     private lateinit var createVault: TestCreateVault
+    private lateinit var deleteVault: TestDeleteVault
+    private lateinit var migrateItem: TestMigrateItem
     private lateinit var getUpgradeInfo: TestObserveUpgradeInfo
+    private lateinit var savedState: TestSavedStateHandleProvider
 
     @Before
     fun setup() {
         snackbar = TestSnackbarDispatcher()
         createVault = TestCreateVault()
+        deleteVault = TestDeleteVault()
+        migrateItem = TestMigrateItem()
         getUpgradeInfo = TestObserveUpgradeInfo().apply {
             setResult(TestObserveUpgradeInfo.DEFAULT)
         }
-        instance = CreateVaultViewModel(
-            snackbar,
-            createVault,
-            TestEncryptionContextProvider(),
-            getUpgradeInfo
-        )
+        savedState = TestSavedStateHandleProvider().apply {
+            get()[CreateVaultNextActionNavArgId.key] = CreateVaultNextAction.NEXT_ACTION_DONE
+        }
+        createViewModel()
     }
 
     @Test
@@ -226,5 +236,153 @@ class CreateVaultViewModelTest {
             val item = awaitItem()
             assertThat(item.displayNeedUpgrade).isTrue()
         }
+    }
+
+    @Test
+    fun `on next ShareVault check vault is created and item is migrated`() = runTest {
+        setNextShareVault()
+        createViewModel()
+
+        createVault.setResult(Result.success(TestShare.create(shareId = ShareId(NEW_SHARE_ID))))
+        migrateItem.setResult(Result.success(TestItem.create()))
+
+        instance.onNameChange("name")
+        instance.onCreateClick()
+
+        val createVaultMemory = createVault.memory()
+        assertThat(createVaultMemory.size).isEqualTo(1)
+
+        val migrateItemMemory = migrateItem.memory()
+        val expectedMigrateItem = TestMigrateItem.Payload(
+            sourceShare = ShareId(SHARE_ID),
+            itemId = ItemId(ITEM_ID),
+            destinationShare = ShareId(NEW_SHARE_ID)
+        )
+        assertThat(migrateItemMemory).isEqualTo(listOf(expectedMigrateItem))
+
+        val deleteVaultMemory = deleteVault.memory()
+        assertThat(deleteVaultMemory).isEmpty()
+
+        instance.createState.test {
+            val item = awaitItem()
+            val event = item.base.isVaultCreatedEvent
+            assertThat(event).isInstanceOf(IsVaultCreatedEvent.CreatedAndMoveToShare::class.java)
+
+            val castedEvent = event as IsVaultCreatedEvent.CreatedAndMoveToShare
+            assertThat(castedEvent.shareId).isEqualTo(ShareId(NEW_SHARE_ID))
+        }
+    }
+
+    @Test
+    fun `on next ShareVault if vault is not created item is not migrated`() = runTest {
+        setNextShareVault()
+        createViewModel()
+
+        createVault.setResult(Result.failure(IllegalStateException("test")))
+
+        instance.onNameChange("name")
+        instance.onCreateClick()
+
+        val createVaultMemory = createVault.memory()
+        assertThat(createVaultMemory.size).isEqualTo(1)
+
+        val migrateItemMemory = migrateItem.memory()
+        assertThat(migrateItemMemory).isEmpty()
+
+        val deleteVaultMemory = deleteVault.memory()
+        assertThat(deleteVaultMemory).isEmpty()
+
+        assertThat(
+            snackbar.snackbarMessage.first().value()!!
+        ).isEqualTo(VaultSnackbarMessage.CreateVaultError)
+    }
+
+    @Test
+    fun `on next ShareVault if item migration fails new vault is deleted`() = runTest {
+        setNextShareVault()
+        createViewModel()
+
+        createVault.setResult(Result.success(TestShare.create(shareId = ShareId(NEW_SHARE_ID))))
+        migrateItem.setResult(Result.failure(IllegalStateException("test")))
+        deleteVault.setResult(Result.success(Unit))
+
+        instance.onNameChange("name")
+        instance.onCreateClick()
+
+        val createVaultMemory = createVault.memory()
+        assertThat(createVaultMemory.size).isEqualTo(1)
+
+        val migrateItemMemory = migrateItem.memory()
+        val expectedMigrateItem = TestMigrateItem.Payload(
+            sourceShare = ShareId(SHARE_ID),
+            itemId = ItemId(ITEM_ID),
+            destinationShare = ShareId(NEW_SHARE_ID)
+        )
+        assertThat(migrateItemMemory).isEqualTo(listOf(expectedMigrateItem))
+
+        val deleteVaultMemory = deleteVault.memory()
+        assertThat(deleteVaultMemory).isEqualTo(listOf(ShareId(NEW_SHARE_ID)))
+
+        assertThat(
+            snackbar.snackbarMessage.first().value()!!
+        ).isEqualTo(VaultSnackbarMessage.CreateVaultError)
+    }
+
+    @Test
+    fun `on next ShareVault if item migration fails and deletevault fails it does not crash`() =
+        runTest {
+            setNextShareVault()
+            createViewModel()
+
+            createVault.setResult(Result.success(TestShare.create(shareId = ShareId(NEW_SHARE_ID))))
+            migrateItem.setResult(Result.failure(IllegalStateException("test")))
+            deleteVault.setResult(Result.failure(IllegalStateException("test")))
+
+            instance.onNameChange("name")
+            instance.onCreateClick()
+
+            val createVaultMemory = createVault.memory()
+            assertThat(createVaultMemory.size).isEqualTo(1)
+
+            val migrateItemMemory = migrateItem.memory()
+            val expectedMigrateItem = TestMigrateItem.Payload(
+                sourceShare = ShareId(SHARE_ID),
+                itemId = ItemId(ITEM_ID),
+                destinationShare = ShareId(NEW_SHARE_ID)
+            )
+            assertThat(migrateItemMemory).isEqualTo(listOf(expectedMigrateItem))
+
+            val deleteVaultMemory = deleteVault.memory()
+            assertThat(deleteVaultMemory).isEqualTo(listOf(ShareId(NEW_SHARE_ID)))
+
+            assertThat(
+                snackbar.snackbarMessage.first().value()!!
+            ).isEqualTo(VaultSnackbarMessage.CreateVaultError)
+        }
+
+    private fun setNextShareVault() {
+        savedState.get().apply {
+            set(CreateVaultNextActionNavArgId.key, CreateVaultNextAction.NEXT_ACTION_SHARE)
+            set(CommonOptionalNavArgId.ShareId.key, SHARE_ID)
+            set(CommonOptionalNavArgId.ItemId.key, ITEM_ID)
+        }
+    }
+
+    private fun createViewModel() {
+        instance = CreateVaultViewModel(
+            snackbarDispatcher = snackbar,
+            createVault = createVault,
+            deleteVault = deleteVault,
+            encryptionContextProvider = TestEncryptionContextProvider(),
+            savedStateHandleProvider = savedState,
+            migrateItem = migrateItem,
+            observeUpgradeInfo = getUpgradeInfo,
+        )
+    }
+
+    companion object {
+        const val NEW_SHARE_ID = "CreateVaultViewModelTest-NewShareID"
+        const val SHARE_ID = "CreateVaultViewModelTest-ShareID"
+        const val ITEM_ID = "CreateVaultViewModelTest-ItemID"
     }
 }

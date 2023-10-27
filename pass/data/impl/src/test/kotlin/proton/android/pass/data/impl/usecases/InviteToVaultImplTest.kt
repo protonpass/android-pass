@@ -69,7 +69,6 @@ class InviteToVaultImplTest {
                 targetType = 1,
                 targetId = "vaultid-123",
                 permission = 1,
-                isPrimary = false,
                 content = null,
                 contentKeyRotation = null,
                 contentFormatVersion = null,

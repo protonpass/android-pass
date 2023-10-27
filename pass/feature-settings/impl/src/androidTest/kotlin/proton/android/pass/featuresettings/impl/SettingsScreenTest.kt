@@ -22,7 +22,6 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performScrollTo
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
@@ -71,12 +70,10 @@ class SettingsScreenTest {
                     Vault(
                         shareId = ShareId("1"),
                         name = "Vault 1",
-                        isPrimary = true
                     ),
                     Vault(
                         shareId = ShareId("2"),
                         name = "Vault 2",
-                        isPrimary = false
                     )
                 )
             )
@@ -121,30 +118,6 @@ class SettingsScreenTest {
             .onNodeWithText(composeTestRule.activity.getString(R.string.settings_option_clipboard))
             .performClick()
         composeTestRule.waitUntil { checker.isCalled }
-    }
-
-    @Test
-    fun onPrimaryVaultClick() {
-        val checker = CallChecker<Unit>()
-        composeTestRule.apply {
-            setContent {
-                PassTheme {
-                    SettingsScreen(
-                        onNavigate = {
-                            if (it is SettingsNavigation.PrimaryVault) {
-                                checker.call()
-                            }
-                        }
-                    )
-                }
-            }
-
-            val text = activity.getString(R.string.settings_primary_vault_vault_selector_title)
-            onNodeWithText(text).performScrollTo()
-            onNodeWithText(text).performClick()
-
-            waitUntil { checker.isCalled }
-        }
     }
 
     @Test

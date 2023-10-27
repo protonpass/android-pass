@@ -59,8 +59,6 @@ data class ShareEntity(
     val targetId: String,
     @ColumnInfo(name = Columns.PERMISSION)
     val permission: Int,
-    @ColumnInfo(name = Columns.IS_PRIMARY, defaultValue = "false")
-    val isPrimary: Boolean,
     @ColumnInfo(name = Columns.CONTENT)
     val content: String?,
     @ColumnInfo(name = Columns.CONTENT_KEY_ROTATION)

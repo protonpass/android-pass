@@ -49,6 +49,7 @@ import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -82,6 +83,7 @@ class NoteDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val clipboardManager: ClipboardManager,
     private val canShareVault: CanShareVault,
+    private val canMigrateVault: CanMigrateVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle
@@ -119,14 +121,12 @@ class NoteDetailViewModel @Inject constructor(
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
-        canPerformPaidActionFlow,
         shareActionFlow
     ) { itemLoadingResult,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
-        canPerformPaidActionResult,
         shareAction ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
@@ -138,11 +138,7 @@ class NoteDetailViewModel @Inject constructor(
             is LoadingResult.Success -> {
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
-                val canMigrate = when {
-                    canPerformPaidActionResult.getOrNull() == true -> true
-                    vault?.isPrimary == true -> false
-                    else -> true
-                }
+                val canMigrate = canMigrateVault(details.vault.shareId)
 
                 val permissions = details.vault.role.toPermissions()
                 val canPerformItemActions = permissions.canUpdate()

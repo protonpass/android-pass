@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.featurevault.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
-import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 
 @Composable

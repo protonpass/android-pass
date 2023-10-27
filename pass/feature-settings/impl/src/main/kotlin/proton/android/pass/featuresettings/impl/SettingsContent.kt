@@ -18,7 +18,6 @@
 
 package proton.android.pass.featuresettings.impl
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -68,12 +67,6 @@ fun SettingsContent(
                 allowScreenshots = state.allowScreenshots.value(),
                 onEvent = onEvent
             )
-            AnimatedVisibility(visible = state.showPrimaryVaultSelector) {
-                PrimaryVaultSection(
-                    primaryVault = state.primaryVault,
-                    onEvent = onEvent
-                )
-            }
             AboutSection(
                 onEvent = onEvent
             )

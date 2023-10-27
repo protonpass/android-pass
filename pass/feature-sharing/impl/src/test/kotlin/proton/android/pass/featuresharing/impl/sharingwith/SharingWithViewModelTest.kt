@@ -32,6 +32,7 @@ import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.featuresharing.impl.SharingWithUserModeType
+import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.featuresharing.impl.sharingwith.EmailNotValidReason.NotValid
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
@@ -59,6 +60,7 @@ class SharingWithViewModelTest {
         emailValidator = TestEmailValidator()
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID
+            get()[ShowEditVaultArgId.key] = false
         }
         viewModel = SharingWithViewModel(
             getVaultById = getVaultById,

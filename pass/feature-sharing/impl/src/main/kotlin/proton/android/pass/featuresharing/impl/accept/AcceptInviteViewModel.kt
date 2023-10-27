@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.api.usecases.ObserveInvites
@@ -112,7 +113,14 @@ class AcceptInviteViewModel @Inject constructor(
         acceptInvite(invite.inviteToken)
             .catch {
                 PassLogger.w(TAG, it, "Error accepting invite")
-                snackbarDispatcher(SharingSnackbarMessage.InviteAcceptError)
+
+                val message = if (it is CannotCreateMoreVaultsError) {
+                    SharingSnackbarMessage.InviteAcceptErrorCannotCreateMoreVaults
+                } else {
+                    SharingSnackbarMessage.InviteAcceptError
+                }
+                snackbarDispatcher(message)
+
                 buttonsFlow.update {
                     AcceptInviteButtonsState(
                         confirmLoading = false,

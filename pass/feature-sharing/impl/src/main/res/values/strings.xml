@@ -66,6 +66,7 @@
     <string name="sharing_snackbar_get_invite_error">Could not get invite</string>
     <string name="sharing_snackbar_invite_accepted">Invite accepted</string>
     <string name="sharing_snackbar_invite_accept_error">Error accepting the invite</string>
+    <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
     <string name="sharing_snackbar_invite_rejected">Invite rejected</string>
     <string name="sharing_snackbar_invite_reject_error">Error rejecting the invite</string>
     <string name="sharing_snackbar_vault_not_found">Vault could not be found</string>

@@ -152,7 +152,6 @@ class HomeScreenTest {
                 name = "Vault canNavigateToCreateVault",
                 color = ShareColor.Color1,
                 icon = ShareIcon.Icon1,
-                isPrimary = false
             ),
             activeItemCount = 0,
             trashedItemCount = 0
@@ -309,7 +308,6 @@ class HomeScreenTest {
                     name = "Vault ${shareId.id}",
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
-                    isPrimary = false
                 )
             }
 

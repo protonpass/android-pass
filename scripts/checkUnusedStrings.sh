@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -u
+
 # Make sure dependencies are in place
 if ! command -v rg --help &> /dev/null; then
   echo "Could not find rg"
@@ -28,7 +30,7 @@ for file in $string_files; do
     # Check if each string is used in the project
     for string_name in $string_names; do
         # Search for usages of R.string.<string_name> in the project using rg
-        usage_count=$(rg -l "R\.string\.$string_name" | wc -l)
+        usage_count=$(rg -l "R\.string\.$string_name" . | wc -l)
 
         # If the string is used, continue to the next string
         if [ $usage_count -gt 0 ]; then
@@ -36,14 +38,14 @@ for file in $string_files; do
         fi
 
         # Search for usages of R.plurals.<string_name> in the project using rg
-        usage_count=$(rg -l "R\.plurals\.$string_name" | wc -l)
+        usage_count=$(rg -l "R\.plurals\.$string_name" . | wc -l)
         # If the string is used, continue to the next string
         if [ $usage_count -gt 0 ]; then
           continue 1
         fi
 
         # Search for usages of @string/<string_name> in the project using rg
-        usage_count=$(rg -l "@string/$string_name" | wc -l)
+        usage_count=$(rg -l "@string/$string_name" . | wc -l)
 
         # If after all the checks the resource is not used, add it to the unused_strings array
         if [ $usage_count -eq 0 ]; then
@@ -55,6 +57,7 @@ done
 
 # Print the unused strings and their file paths
 if [ ${#unused_strings[@]} -gt 0 ]; then
+    echo "Found unused strings"
     exit 1
 else
     echo "No unused strings found."

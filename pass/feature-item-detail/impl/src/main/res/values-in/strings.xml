@@ -45,6 +45,7 @@
     <item quantity="other">%d kali</item>
   </plurals>
   <string name="more_info_last_time_modified">Terakhir kali, %s</string>
+  <string name="share_button_content_description">Buka tombol berbagi</string>
   <string name="open_menu_icon_content_description">Buka tombol menu</string>
   <string name="mfa_limit_reached">Batas 2FA tercapai</string>
   <string name="mfa_icon_content_description">Ikon 2FA</string>

@@ -46,6 +46,7 @@
     <item quantity="other">%d fois</item>
   </plurals>
   <string name="more_info_last_time_modified">La dernière fois, %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">Bouton d\'ouverture du menu</string>
   <string name="mfa_limit_reached">La limite de l\'A2F est atteinte.</string>
   <string name="mfa_icon_content_description">Icône A2F</string>

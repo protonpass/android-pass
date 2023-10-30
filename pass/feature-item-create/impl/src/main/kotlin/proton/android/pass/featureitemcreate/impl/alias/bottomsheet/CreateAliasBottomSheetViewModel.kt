@@ -29,7 +29,6 @@ import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -40,7 +39,6 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.alias.IsEditAliasNavArg
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -52,14 +50,12 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider,
     telemetryManager: TelemetryManager,
     draftRepository: DraftRepository,
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     encryptionContextProvider: EncryptionContextProvider,
     aliasPrefixValidator: AliasPrefixValidator,
-    ffRepo: FeatureFlagsPreferencesRepository
 ) : CreateAliasViewModel(
     accountManager = accountManager,
     createAlias = createAlias,
@@ -71,10 +67,8 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeVaults = observeVaults,
     savedStateHandleProvider = savedStateHandleProvider,
     inAppReviewTriggerMetrics = inAppReviewTriggerMetrics,
-    canPerformPaidAction = canPerformPaidAction,
     encryptionContextProvider = encryptionContextProvider,
     aliasPrefixValidator = aliasPrefixValidator,
-    ffRepo = ffRepo
 ) {
 
     private val isEditMode: Boolean = savedStateHandleProvider.get()

@@ -88,7 +88,6 @@ fun SelectItemList(
                 canLoadExternalImages = listUiState.canLoadExternalImages,
                 showUpgradeMessage = listUiState.displayOnlyPrimaryVaultMessage,
                 canUpgrade = listUiState.canUpgrade,
-                isRemovePrimaryVaultEnabled = uiState.isRemovePrimaryVaultEnabled,
                 onItemOptionsClicked = onItemOptionsClicked,
                 onItemClicked = onItemClicked,
                 onUpgradeClick = { onNavigate(SelectItemNavigation.Upgrade) }

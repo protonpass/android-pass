@@ -19,7 +19,6 @@
 package proton.android.pass.featurevault.impl
 
 import androidx.annotation.StringRes
-import proton.android.pass.featurevault.impl.R
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
 

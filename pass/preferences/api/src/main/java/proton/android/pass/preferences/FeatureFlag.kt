@@ -33,11 +33,6 @@ enum class FeatureFlag(
         description = "Enable sharing (v1)",
         key = "PassSharingV1"
     ),
-    REMOVE_PRIMARY_VAULT(
-        title = "Remove primary vault",
-        description = "Remove primary vault",
-        key = "PassRemovePrimaryVault"
-    ),
     SHARING_NEW_USERS(
         title = "Sharing with new users",
         description = "Enable sharing with new users",

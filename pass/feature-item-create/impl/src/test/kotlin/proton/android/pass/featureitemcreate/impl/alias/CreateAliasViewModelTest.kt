@@ -44,8 +44,6 @@ import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -249,14 +247,10 @@ class CreateAliasViewModelTest {
             },
             telemetryManager = telemetryManager,
             observeUpgradeInfo = observeUpgradeInfo,
-            canPerformPaidAction = canPerformPaidAction,
             draftRepository = draftRepository,
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
             encryptionContextProvider = TestEncryptionContextProvider(),
-            aliasPrefixValidator = TestAliasPrefixValidator(),
-            ffRepo = TestFeatureFlagsPreferenceRepository().apply {
-                set(FeatureFlag.REMOVE_PRIMARY_VAULT, false)
-            }
+            aliasPrefixValidator = TestAliasPrefixValidator()
         ).apply {
             setDraftStatus(isDraft)
         }

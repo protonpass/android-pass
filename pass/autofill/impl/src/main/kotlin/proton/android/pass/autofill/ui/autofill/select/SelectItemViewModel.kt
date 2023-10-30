@@ -95,8 +95,6 @@ import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -128,8 +126,7 @@ class SelectItemViewModel @Inject constructor(
     autofillSearchOptionsRepository: AutofillSearchOptionsRepository,
     getUserPlan: GetUserPlan,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    clock: Clock,
-    ffRepo: FeatureFlagsPreferencesRepository
+    clock: Clock
 ) : ViewModel() {
 
     init {
@@ -173,10 +170,6 @@ class SelectItemViewModel @Inject constructor(
             vaults.associate { it.shareId to ShareUiModel.fromVault(it) }
                 .toPersistentMap()
         }
-        .distinctUntilChanged()
-
-    private val removePrimaryVaultFlow: Flow<Boolean> = ffRepo
-        .get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
         .distinctUntilChanged()
 
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
@@ -320,8 +313,7 @@ class SelectItemViewModel @Inject constructor(
         shouldScrollToTopFlow,
         preferenceRepository.getUseFaviconsPreference(),
         planTypeFlow,
-        observeUpgradeInfo().asLoadingResult(),
-        removePrimaryVaultFlow
+        observeUpgradeInfo().asLoadingResult()
     ) { itemsResult,
         shares,
         isRefreshing,
@@ -331,8 +323,7 @@ class SelectItemViewModel @Inject constructor(
         shouldScrollToTop,
         useFavicons,
         plan,
-        upgradeInfo,
-        removePrimaryVault ->
+        upgradeInfo ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
@@ -373,8 +364,7 @@ class SelectItemViewModel @Inject constructor(
                 inSearchMode = search.isInSearchMode,
                 isProcessingSearch = search.isProcessingSearch,
                 searchInMode = searchIn
-            ),
-            isRemovePrimaryVaultEnabled = removePrimaryVault
+            )
         )
     }
         .stateIn(

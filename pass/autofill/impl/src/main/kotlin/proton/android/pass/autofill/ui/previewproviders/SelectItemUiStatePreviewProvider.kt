@@ -65,7 +65,6 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     canUpgrade = false
                 ),
                 SearchUiState.Initial,
-                isRemovePrimaryVaultEnabled = false
             ),
             SelectItemUiState(
                 SelectItemListUiState(
@@ -93,7 +92,6 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     canUpgrade = false
                 ),
                 SearchUiState.Initial,
-                isRemovePrimaryVaultEnabled = false
             ),
             SelectItemUiState(
                 SelectItemListUiState(
@@ -114,7 +112,6 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isProcessingSearch = IsProcessingSearchState.NotLoading,
                     searchInMode = SearchInMode.AllVaults
                 ),
-                isRemovePrimaryVaultEnabled = false
             )
         )
 

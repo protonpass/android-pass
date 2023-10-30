@@ -38,8 +38,6 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
 import javax.inject.Inject
@@ -51,7 +49,6 @@ class SelectVaultViewModel @Inject constructor(
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandle: SavedStateHandleProvider,
-    ffRepo: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val selected: ShareId = ShareId(savedStateHandle.get().require(SelectedVaultArg.key))
@@ -59,14 +56,12 @@ class SelectVaultViewModel @Inject constructor(
     val state: StateFlow<SelectVaultUiState> = combine(
         observeVaultsWithItemCount().asLoadingResult(),
         observeUpgradeInfo().asLoadingResult(),
-        ffRepo.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
-    ) { vaultsResult, upgradeResult, removePrimaryVault ->
+    ) { vaultsResult, upgradeResult ->
         when (vaultsResult) {
             LoadingResult.Loading -> SelectVaultUiState.Loading
             is LoadingResult.Success -> successState(
                 vaults = vaultsResult.data,
                 upgradeResult = upgradeResult,
-                removePrimaryVault = removePrimaryVault
             )
 
             is LoadingResult.Error -> {
@@ -84,7 +79,6 @@ class SelectVaultViewModel @Inject constructor(
     private suspend fun successState(
         vaults: List<VaultWithItemCount>,
         upgradeResult: LoadingResult<UpgradeInfo>,
-        removePrimaryVault: Boolean
     ): SelectVaultUiState {
         val showUpgradeMessage = upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
 
@@ -112,7 +106,6 @@ class SelectVaultViewModel @Inject constructor(
                 vaults = vaultsList.toImmutableList(),
                 selected = selectedVault,
                 showUpgradeMessage = showUpgradeMessage,
-                removePrimaryVaultEnabled = removePrimaryVault
             )
         } else {
             PassLogger.w(TAG, "Error finding current vault")

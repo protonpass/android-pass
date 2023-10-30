@@ -39,12 +39,10 @@ class FeatureFlagsViewModel @Inject constructor(
     val state = combine(
         ffRepository.get<Boolean>(FeatureFlag.AUTOFILL_DEBUG_MODE),
         ffRepository.get<Boolean>(FeatureFlag.SHARING_V1),
-        ffRepository.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
-    ) { autofillDebug, sharing, removePrimaryVault ->
+    ) { autofillDebug, sharing ->
         mapOf(
             FeatureFlag.AUTOFILL_DEBUG_MODE to autofillDebug,
             FeatureFlag.SHARING_V1 to sharing,
-            FeatureFlag.REMOVE_PRIMARY_VAULT to removePrimaryVault
         )
     }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())

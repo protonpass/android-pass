@@ -314,7 +314,6 @@ class SelectItemScreenTest {
             Vault(
                 shareId = shareId,
                 name = "testVault-$it",
-                isPrimary = it == 0
             )
         }
         observeVaults.sendResult(Result.success(vaultList))

@@ -82,7 +82,7 @@ class VaultOptionsBottomSheetTest {
 
     @Test
     fun canClickMigrate() {
-        setVault(owned = true, shared = false, primary = true)
+        setVault(owned = true, shared = false)
         migrateVault.setResult(true)
         runTest(R.string.bottomsheet_migrate) { event, checker ->
             if (event is VaultNavigation.VaultMigrate) {
@@ -103,7 +103,21 @@ class VaultOptionsBottomSheetTest {
 
     @Test
     fun canClickDelete() {
-        setVault(owned = true, shared = false, primary = false)
+        val vaultToDelete = Vault(
+            shareId = ShareId(SHARE_ID),
+            name = "Test vault",
+            isOwned = true,
+            members = 1,
+            shared = false
+        )
+        val anotherVault = Vault(
+            shareId = ShareId("OtherShare"),
+            name = "another vault",
+            isOwned = true,
+            members = 1,
+            shared = false
+        )
+        observeVaults.sendResult(Result.success(listOf(vaultToDelete, anotherVault)))
         runTest(R.string.bottomsheet_delete_vault) { event, checker ->
             if (event is VaultNavigation.VaultRemove) {
                 checker.call(event.shareId)
@@ -113,7 +127,7 @@ class VaultOptionsBottomSheetTest {
 
     @Test
     fun canClickViewMembers() {
-        setVault(owned = false, shared = true, primary = false)
+        setVault(owned = false, shared = true)
         setVaultAccess(canManage = false, canViewMembers = true)
         runTest(R.string.bottomsheet_view_members) { event, checker ->
             if (event is VaultNavigation.VaultAccess) {
@@ -124,7 +138,7 @@ class VaultOptionsBottomSheetTest {
 
     @Test
     fun canClickManageAccess() {
-        setVault(owned = true, shared = true, primary = false)
+        setVault(owned = true, shared = true)
         setVaultAccess(canManage = true, canViewMembers = false)
         runTest(R.string.bottomsheet_manage_access) { event, checker ->
             if (event is VaultNavigation.VaultAccess) {
@@ -156,15 +170,10 @@ class VaultOptionsBottomSheetTest {
         assertThat(checker.memory).isEqualTo(ShareId(SHARE_ID))
     }
 
-    private fun setVault(
-        primary: Boolean = true,
-        owned: Boolean = true,
-        shared: Boolean = false
-    ) {
+    private fun setVault(owned: Boolean = true, shared: Boolean = false) {
         val vault = Vault(
             shareId = ShareId(SHARE_ID),
             name = "Test vault",
-            isPrimary = primary,
             isOwned = owned,
             members = if (shared) 2 else 1,
             shared = shared

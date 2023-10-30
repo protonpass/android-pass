@@ -39,9 +39,12 @@
   <string name="password_copied_to_clipboard">Đã sao chép mật khẩu</string>
   <string name="credit_card_number_copied_to_clipboard">Đã sao chép số thẻ</string>
   <string name="credit_card_cvv_copied_to_clipboard">Đã sao chép số CVV</string>
-  <string name="item_too_long_copied_to_clipboard">Nội dung quá dài, đã sao chép một phần vào bộ nhớ tạm</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Nội dung quá dài, đã sao chép một phần vào bộ nhớ tạm</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Kho lưu trữ</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="other">%d items</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Tạo kho lưu trữ</string>
   <string name="vault_drawer_item_trash">Thùng rác</string>
   <string name="vault_drawer_all_vaults">Tất cả kho lưu trữ</string>

@@ -40,9 +40,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vous invite à accéder à des éléments dans</string>
   <string name="sharing_join_shared_vault">Rejoindre et synchroniser</string>
   <string name="sharing_reject_invitation">Refuser l\'invitation</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Votre accès a été confirmé.</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Voir le coffre-fort partagé</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Fermer</string>
   <string name="sharing_snackbar_get_invite_error">Impossible d\'obtenir l\'invitation</string>
   <string name="sharing_snackbar_invite_accepted">Invitation acceptée</string>
   <string name="sharing_snackbar_invite_accept_error">Une erreur s\'est produite lors de l\'acceptation de l\'invitation.</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
   <string name="sharing_snackbar_invite_rejected">Invitation refusée</string>
   <string name="sharing_snackbar_invite_reject_error">Une erreur s\'est produite lors du refus de l\'invitation.</string>
   <string name="sharing_snackbar_vault_not_found">Ce coffre-fort est introuvable.</string>
@@ -61,7 +65,15 @@
   <string name="share_summary_vault_title">Coffre-fort</string>
   <string name="share_summary_permissions_title">Niveau d\'accès</string>
   <string name="share_manage_vault_share_with_more_people">Partager avec d\'autres personnes</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">L\'invitation a été envoyée.</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">Il reste %d invitation.</item>
+    <item quantity="other">Il reste %d invitations.</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d élément</item>
+    <item quantity="other">%d éléments</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">L\'invitation a été envoyée.</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">En attente de la création d\'un compte</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirmer l\'accès</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitations</string>
@@ -87,4 +99,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">Trop d\'invitations ont été envoyées à cette adresse.</string>
   <string name="sharing_snackbar_transfer_ownership_success">La propriété a été transférée.</string>
   <string name="sharing_snackbar_transfer_ownership_error">Une erreur s\'est produite lors du transfert de propriété.</string>
+  <string name="sharing_invites_info_dialog_title">Limite du nombre de membres</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Ce coffre-fort peut compter jusqu\'à %1$d membres. Il vous reste %2$d invitations.</string>
+  <string name="sharing_limit_reached">Ce coffre-fort a atteint le nombre maximum de membres et d\'invitations.</string>
+  <string name="sharing_invites_info_upgrade_text">Changez d\'abonnement dès maintenant pour inviter d\'autres personnes.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Partage</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Utilisez les coffres-forts pour partager des éléments avec d\'autres personnes.</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Partager ce coffre-fort</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personnaliser</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Déplacer vers un coffre-fort partagé</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Créer un nouveau coffre-fort à partager</string>
 </resources>

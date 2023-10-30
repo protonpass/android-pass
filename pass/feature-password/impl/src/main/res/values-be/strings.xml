@@ -5,6 +5,18 @@
   <string name="bottomsheet_generate_password_title">Згенерыраваць пароль</string>
   <string name="password_type">Тып</string>
   <string name="special_characters">Спецыяльныя сімвалы (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s сімвал</item>
+    <item quantity="few">%s сімвалы</item>
+    <item quantity="many">%s сімвалаў</item>
+    <item quantity="other">%s сімвалаў</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s слова</item>
+    <item quantity="few">%s словы</item>
+    <item quantity="many">%s слоў</item>
+    <item quantity="other">%s слоў</item>
+  </plurals>
   <string name="word_separator">Раздзяляльнік слоў</string>
   <string name="bottomsheet_option_capital_letters">Вялікія літары (А-Я)</string>
   <string name="bottomsheet_option_capitalise">Вялікімі літарамі</string>

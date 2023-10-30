@@ -45,9 +45,10 @@
     <item quantity="other">%d lần</item>
   </plurals>
   <string name="more_info_last_time_modified">Lần cuối, %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">Nút mở menu</string>
   <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
-  <string name="mfa_icon_content_description">biểu tượng 2FA</string>
+  <string name="mfa_icon_content_description">2FA icon</string>
   <string name="custom_field_text_icon_description">Trường văn bản tùy chỉnh</string>
   <string name="custom_field_hidden_icon_description">Ẩn trường nội dung tùy chỉnh</string>
   <string name="custom_field_totp_icon_description">Trường 2FA tùy chỉnh</string>

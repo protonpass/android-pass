@@ -5,6 +5,14 @@
   <string name="bottomsheet_generate_password_title">Générer un mot de passe</string>
   <string name="password_type">Type</string>
   <string name="special_characters">Caractères spéciaux (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s caractère</item>
+    <item quantity="other">%s caractères</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s mot</item>
+    <item quantity="other">%s mots</item>
+  </plurals>
   <string name="word_separator">Séparateur de mots</string>
   <string name="bottomsheet_option_capital_letters">Lettres majuscules (A-Z)</string>
   <string name="bottomsheet_option_capitalise">Ajouter des majuscules</string>

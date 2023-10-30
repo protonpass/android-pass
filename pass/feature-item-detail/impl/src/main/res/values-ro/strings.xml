@@ -3,7 +3,7 @@
   <string name="action_open">Deschidere</string>
   <string name="action_copy">Copiere</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problem retrieving item details</string>
+  <string name="detail_init_error">Problemă preluare detalii articole.</string>
   <string name="top_bar_edit_button_text">Editare</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adresă alias</string>
@@ -47,9 +47,10 @@
     <item quantity="other">de %d de ori</item>
   </plurals>
   <string name="more_info_last_time_modified">Ultima oară, %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">Buton meniu deschidere</string>
   <string name="mfa_limit_reached">Limită A2F atinsă.</string>
-  <string name="mfa_icon_content_description">pictogramă A2F</string>
+  <string name="mfa_icon_content_description">Pictogramă A2F</string>
   <string name="custom_field_text_icon_description">Text câmp personal</string>
   <string name="custom_field_hidden_icon_description">Câmp personal ascuns</string>
   <string name="custom_field_totp_icon_description">Câmp personal A2F</string>

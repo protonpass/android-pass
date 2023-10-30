@@ -40,9 +40,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s inviterer dig til at tilgå elementer i</string>
   <string name="sharing_join_shared_vault">Tilmeld og synkronisér</string>
   <string name="sharing_reject_invitation">Afvis invitation</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Tillykke, din adgang er blevet bekræftet</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Se den delte boks</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Luk</string>
   <string name="sharing_snackbar_get_invite_error">Kunne ikke hente invitation</string>
   <string name="sharing_snackbar_invite_accepted">Invitation accepteret</string>
   <string name="sharing_snackbar_invite_accept_error">Fejl ved accept af invitationen</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kunne ikke acceptere invitationen, da du har nået boksens grænse</string>
   <string name="sharing_snackbar_invite_rejected">Invitation afvist</string>
   <string name="sharing_snackbar_invite_reject_error">Fejl ved afvisning af invitationen</string>
   <string name="sharing_snackbar_vault_not_found">Boks kunne ikke findes</string>
@@ -61,7 +65,15 @@
   <string name="share_summary_vault_title">Boks</string>
   <string name="share_summary_permissions_title">Adgangsniveau</string>
   <string name="share_manage_vault_share_with_more_people">Del med flere personer</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sendt</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">%d invitation tilbage</item>
+    <item quantity="other">%d invitationer tilbage</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d element</item>
+    <item quantity="other">%d elementer</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sendt</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Afventer kontooprettelse</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Bekræft adgang</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitationer</string>
@@ -87,4 +99,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">Adresse er blevet inviteret for mange gange</string>
   <string name="sharing_snackbar_transfer_ownership_success">Ejerskab overført</string>
   <string name="sharing_snackbar_transfer_ownership_error">Fejl ved overførsel af ejerskab</string>
+  <string name="sharing_invites_info_dialog_title">Medlemsgrænse</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Denne boks kan have op til %1$d medlemmer. Du har stadig %2$d invitationer tilbage.</string>
+  <string name="sharing_limit_reached">Denne boks har nået grænsen for medlemmer og invitationer.</string>
+  <string name="sharing_invites_info_upgrade_text">Opgradér nu for at invitere flere.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Del</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Brug bokse til at dele elementer med andre</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Del denne boks</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Tilpas</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Flyt til en delt boks</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Opret en ny boks til deling</string>
 </resources>

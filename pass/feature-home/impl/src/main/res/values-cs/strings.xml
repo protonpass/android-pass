@@ -39,9 +39,15 @@
   <string name="password_copied_to_clipboard">Heslo bylo zkopírováno</string>
   <string name="credit_card_number_copied_to_clipboard">Číslo platební karty zkopírováno</string>
   <string name="credit_card_cvv_copied_to_clipboard">CVV platební karty zkopírováno</string>
-  <string name="item_too_long_copied_to_clipboard">Obsah byl příliš dlouhý, byl částečně zkopírován do schránky</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Obsah byl příliš dlouhý, byl částečně zkopírován do schránky</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Trezory</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d položka</item>
+    <item quantity="few">%d položky</item>
+    <item quantity="many">%d položek</item>
+    <item quantity="other">%d položek</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Vytvořit trezor</string>
   <string name="vault_drawer_item_trash">Koš</string>
   <string name="vault_drawer_all_vaults">Všechny trezory</string>

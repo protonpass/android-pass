@@ -39,9 +39,15 @@
   <string name="password_copied_to_clipboard">Пароль скопійовано</string>
   <string name="credit_card_number_copied_to_clipboard">Номер кредитної картки скопійовано</string>
   <string name="credit_card_cvv_copied_to_clipboard">CVV банківської картки скопійовано</string>
-  <string name="item_too_long_copied_to_clipboard">Вміст був задовгим, частково скопійовано в буфер обміну</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Вміст був задовгим, частково скопійовано в буфер обміну</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Сховища</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d item</item>
+    <item quantity="few">%d items</item>
+    <item quantity="many">%d items</item>
+    <item quantity="other">%d items</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Створити сховище</string>
   <string name="vault_drawer_item_trash">Смітник</string>
   <string name="vault_drawer_all_vaults">Всі сховища</string>

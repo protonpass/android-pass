@@ -47,8 +47,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermission
 import proton.pass.domain.SharePermissionFlag
@@ -64,8 +62,7 @@ class MemberOptionsViewModel @Inject constructor(
     private val removeMemberFromVault: RemoveMemberFromVault,
     private val setVaultMemberPermission: SetVaultMemberPermission,
     savedState: SavedStateHandleProvider,
-    observeVaults: ObserveVaults,
-    ffRepo: FeatureFlagsPreferencesRepository
+    observeVaults: ObserveVaults
 ) : ViewModel() {
 
     private val vaultShareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
@@ -98,9 +95,8 @@ class MemberOptionsViewModel @Inject constructor(
         getVaultFlow,
         eventFlow,
         isLoadingFlow,
-        loadingOptionFlow,
-        ffRepo.get<Boolean>(FeatureFlag.REMOVE_PRIMARY_VAULT)
-    ) { vaultInfo, event, isLoading, loadingOption, removePrimaryVaultEnabled ->
+        loadingOptionFlow
+    ) { vaultInfo, event, isLoading, loadingOption ->
         val memberPermissions = shareRole.toPermissions()
 
         when (vaultInfo) {
@@ -117,8 +113,7 @@ class MemberOptionsViewModel @Inject constructor(
                 val showTransferOwnership = canShowTransferOwnership(
                     memberPermissions = memberPermissions,
                     vaults = vaultInfo.data.vaults,
-                    selectedVault = vaultInfo.data.selectedVault,
-                    removePrimaryVaultEnabled = removePrimaryVaultEnabled
+                    selectedVault = vaultInfo.data.selectedVault
                 )
                 MemberOptionsUiState(
                     memberRole = shareRole,
@@ -196,7 +191,6 @@ class MemberOptionsViewModel @Inject constructor(
         vaults: List<Vault>,
         selectedVault: Vault,
         memberPermissions: SharePermission,
-        removePrimaryVaultEnabled: Boolean
     ): TransferOwnershipState {
         // Mandatory: for transfering ownership, user must be owner and the target must be admin
         val minimumRequirementsMatch = selectedVault.isOwned && memberPermissions.hasFlag(SharePermissionFlag.Admin)
@@ -204,17 +198,11 @@ class MemberOptionsViewModel @Inject constructor(
             return TransferOwnershipState.Hide
         }
 
-        return if (!removePrimaryVaultEnabled) {
-            // Old behaviour: Only minimum requirement needed
+        val ownsMoreThanOneVault = vaults.count { it.isOwned } > 1
+        return if (ownsMoreThanOneVault) {
             TransferOwnershipState.Enabled
         } else {
-            // New behaviour: Minimum requirement needed + check if user owns more than one vault
-            val ownsMoreThanOneVault = vaults.count { it.isOwned } > 1
-            if (ownsMoreThanOneVault) {
-                TransferOwnershipState.Enabled
-            } else {
-                TransferOwnershipState.Disabled
-            }
+            TransferOwnershipState.Disabled
         }
     }
 

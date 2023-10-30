@@ -5,6 +5,14 @@
   <string name="bottomsheet_generate_password_title">Παραγωγή τυχαίου κωδικού πρόσβασης</string>
   <string name="password_type">Τύπος</string>
   <string name="special_characters">Ειδικοί χαρακτήρες (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s χαρακτήρας</item>
+    <item quantity="other">%s χαρακτήρες</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s λέξη</item>
+    <item quantity="other">%s λέξεις</item>
+  </plurals>
   <string name="word_separator">Διαχωριστής λέξεων</string>
   <string name="bottomsheet_option_capital_letters">Κεφαλαία γράμματα (Α–Ζ)</string>
   <string name="bottomsheet_option_capitalise">Κεφαλαιοποίηση</string>

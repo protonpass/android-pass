@@ -3,7 +3,7 @@
   <string name="action_open">Aç</string>
   <string name="action_copy">Kopyala</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problem retrieving item details</string>
+  <string name="detail_init_error">Öge bilgileri alınırken sorun çıktı</string>
   <string name="top_bar_edit_button_text">Düzenle</string>
   <!-- Alias details -->
   <string name="field_alias_title">Takma ad adresi</string>
@@ -46,6 +46,7 @@
     <item quantity="other">%d kez</item>
   </plurals>
   <string name="more_info_last_time_modified">Son kez, %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">Aç menü düğmesi</string>
   <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
   <string name="mfa_icon_content_description">İki adımlı doğrulama simgesi</string>

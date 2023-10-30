@@ -24,7 +24,7 @@
   <string name="field_website_address_invalid">URL non valido</string>
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Aggiungi</string>
-  <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Crea una nuova password</string>
+  <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Genera una nuova password</string>
   <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide-my-email</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Usa %s</string>
   <string name="create_login_item_creation_error">Impossibile creare il login</string>

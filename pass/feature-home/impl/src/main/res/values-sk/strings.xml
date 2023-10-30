@@ -12,7 +12,7 @@
   <string name="home_snackbar_alias_moved_to_trash">Alias presunutý do koša</string>
   <string name="home_snackbar_note_moved_to_trash">Poznámka presunutá do koša</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Platobná karta presunutá do koša</string>
-  <string name="home_snackbar_move_to_trash_error">Položka nemôže byť presunutá do koša</string>
+  <string name="home_snackbar_move_to_trash_error">Položku nebolo možné presunúť do koša</string>
   <string name="home_autofill_banner_title">Vychutnajte si čaro automatického vypĺňania</string>
   <string name="home_autofill_banner_text">Jedno ťuknutie a hotovo! Vaše používateľské meno a heslo sa okamžite vyplní.</string>
   <string name="home_autofill_banner_settings">Zapnúť automatické vypĺňanie ›</string>
@@ -39,9 +39,15 @@
   <string name="password_copied_to_clipboard">Heslo skopírované</string>
   <string name="credit_card_number_copied_to_clipboard">Číslo platobnej karty skopírované</string>
   <string name="credit_card_cvv_copied_to_clipboard">CVV platobnej karty skopírovaný</string>
-  <string name="item_too_long_copied_to_clipboard">Obsah bol príliš dlhý, čiastočne skopírovaný do schránky</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Obsah bol príliš dlhý, čiastočne skopírovaný do schránky</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Trezory</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d položka</item>
+    <item quantity="few">%d položky</item>
+    <item quantity="many">%d položiek</item>
+    <item quantity="other">%d položiek</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Vytvoriť trezor</string>
   <string name="vault_drawer_item_trash">Kôš</string>
   <string name="vault_drawer_all_vaults">Všetky trezory</string>

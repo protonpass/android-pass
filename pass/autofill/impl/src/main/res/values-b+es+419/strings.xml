@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="autofill_authenticate_prompt">Obtener de Proton Pass</string>
+  <string name="autofill_authenticate_prompt">Obtener de Proton Pass</string>
   <string name="error_credentials_not_found">No se encontraron credenciales coincidentes</string>
   <string name="error_loading_items">No se pudieron cargar los elementos</string>
   <string name="topbar_search_query">Buscar en todas las bóvedas…</string>
   <string name="topbar_search_query_primary_vault">Buscar en la bóveda principal…</string>
-  <string name="topbar_search_query_uninitialized">Buscar…</string>
+  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Buscar…</string>
   <string name="inline_suggestions_open_app">Abrir Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Su plan solo permite usar los elementos en su bóveda principal para propósitos de completado automático.</string>
   <string name="autofill_only_searching_in_oldest_vaults">Su plan solo permite usar los elementos en sus bóvedas antiguas para propósitos de completado automático.</string>
@@ -15,7 +15,7 @@
   <string name="autofill_dialog_associate_and_autofill">Siempre usar</string>
   <string name="autofill_dialog_just_autofill">Usar una vez</string>
   <string name="autofill_dialog_cancel">Cancelar</string>
-  <string name="autofill_notification_copy_to_clipboard">TOTP copiado al portapapeles</string>
+  <string name="autofill_notification_copy_to_clipboard">El TOTP fue copiado al portapapeles.</string>
   <string name="autofill_dialog_associate_title">¿Usar inicio de sesión?</string>
   <string name="snackbar_item_move_to_trash_success">Elemento movido a la papelera</string>
   <string name="snackbar_item_move_to_trash_error">No se pudo mover a la papelera</string>

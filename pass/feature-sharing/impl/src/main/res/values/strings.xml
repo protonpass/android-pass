@@ -79,7 +79,6 @@
     <string name="sharing_snackbar_remove_member_error">Could not remove from the vault</string>
 
     <string name="share_summary_title">Review and share</string>
-    <string name="share_summary_subtitle">You are about to invite %1$s into your %2$s. They will gain access to %3$s and they will be able to %4$s in this vault.</string>
     <string name="share_summary_vault">%s vault</string>
     <string name="share_summary_share_vault">Share vault</string>
     <string name="share_summary_email_title">Share with</string>

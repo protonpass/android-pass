@@ -257,7 +257,6 @@ class SelectVaultBottomSheetTest {
                 vault = Vault(
                     shareId = shareIdForIndex(0),
                     name = vaultNameForIndex(0),
-                    isPrimary = true
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 1
@@ -266,7 +265,6 @@ class SelectVaultBottomSheetTest {
                 vault = Vault(
                     shareId = shareIdForIndex(1),
                     name = vaultNameForIndex(1),
-                    isPrimary = false,
                     role = ShareRole.Read
                 ),
                 activeItemCount = 1,
@@ -300,7 +298,6 @@ class SelectVaultBottomSheetTest {
                 vault = Vault(
                     shareId = shareIdForIndex(it),
                     name = vaultNameForIndex(it),
-                    isPrimary = it == primaryIndex
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 1

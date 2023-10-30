@@ -3,7 +3,7 @@
   <string name="action_open">Öffnen</string>
   <string name="action_copy">Kopieren</string>
   <!-- Detail -->
-  <string name="detail_init_error">Probleme Element Details zu erhalten</string>
+  <string name="detail_init_error">Problem beim Abrufen der Eintragdetails</string>
   <string name="top_bar_edit_button_text">Bearbeiten</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias-Adresse</string>
@@ -46,9 +46,10 @@
     <item quantity="other">%d Mal</item>
   </plurals>
   <string name="more_info_last_time_modified">Letztes Mal, %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">Schaltfläche \"Menü öffnen\"</string>
   <string name="mfa_limit_reached">2FA-Limit erreicht</string>
-  <string name="mfa_icon_content_description">2FA-Symbol</string>
+  <string name="mfa_icon_content_description">2FA icon</string>
   <string name="custom_field_text_icon_description">Benutzerdefiniertes Textfeld</string>
   <string name="custom_field_hidden_icon_description">Verstecktes benutzerdefiniertes Feld</string>
   <string name="custom_field_totp_icon_description">Benutzerdefiniertes 2FA-Feld</string>

@@ -39,7 +39,7 @@
   <string name="add_item_icon_content_description">Añadir icono del elemento</string>
   <string name="navigate_back_icon_content_description">Icono de navegación atrás</string>
   <!-- Vault selector -->
-  <string name="vault_selector_title">Bóveda</string>
+  <string name="vault_selector_title">caja fuerte</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Elementos de la lista</string>
   <string name="bottom_bar_add_item_icon_content_description">Añadir un elemento</string>

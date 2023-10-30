@@ -48,6 +48,7 @@
     <item quantity="other">%d разоў</item>
   </plurals>
   <string name="more_info_last_time_modified">Апошні раз, %s</string>
+  <string name="share_button_content_description">Адкрыць кнопку абагулення</string>
   <string name="open_menu_icon_content_description">Кнопка адкрыцця меню</string>
   <string name="mfa_limit_reached">Дасягнута абмежаванне 2ФА</string>
   <string name="mfa_icon_content_description">Значок 2ФА</string>

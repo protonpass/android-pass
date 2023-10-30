@@ -40,9 +40,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s ti invita ad accedere agli elementi in</string>
   <string name="sharing_join_shared_vault">Unisciti e sincronizza</string>
   <string name="sharing_reject_invitation">Rifiuta l\'invito</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulazioni, il tuo accesso è stato confermato</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Visualizza la cassaforte condivisa</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Chiudi</string>
   <string name="sharing_snackbar_get_invite_error">Impossibile ottenere l\'invito</string>
   <string name="sharing_snackbar_invite_accepted">Invito accettato</string>
   <string name="sharing_snackbar_invite_accept_error">Errore durante l\'accettazione dell\'invito</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Impossibile accettare l\'invito poiché hai raggiunto il tuo limite di casseforti</string>
   <string name="sharing_snackbar_invite_rejected">Invito rifiutato</string>
   <string name="sharing_snackbar_invite_reject_error">Errore nel rifiuto dell\'invito</string>
   <string name="sharing_snackbar_vault_not_found">Impossibile trovare la cassaforte</string>
@@ -61,7 +65,15 @@
   <string name="share_summary_vault_title">Caveau</string>
   <string name="share_summary_permissions_title">Livello di accesso</string>
   <string name="share_manage_vault_share_with_more_people">Condividi con più persone</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invito spedito</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">%d invito rimasto</item>
+    <item quantity="other">%d inviti rimasti</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d elemento</item>
+    <item quantity="other">%d elementi</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invito spedito</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">In attesa della creazione dell\'account</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Conferma accesso</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Inviti</string>
@@ -87,4 +99,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">L\'indirizzo è stato invitato troppe volte</string>
   <string name="sharing_snackbar_transfer_ownership_success">Proprietà trasferita</string>
   <string name="sharing_snackbar_transfer_ownership_error">Errore nel trasferimento della proprietà</string>
+  <string name="sharing_invites_info_dialog_title">Limite di membri</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Questa cassaforte può avere fino a %1$d membri. Hai ancora %2$d inviti rimasti.</string>
+  <string name="sharing_limit_reached">Questa cassaforte ha raggiunto il limite di membri e inviti.</string>
+  <string name="sharing_invites_info_upgrade_text">Effettua l’upgrade ora per invitare più persone.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Condividi</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Usa le casseforti per poter condividere elementi con altri</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Condividi questa cassaforte</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personalizza</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Sposta in una cassaforte condivisa</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Crea una nuova cassaforte da condividere</string>
 </resources>

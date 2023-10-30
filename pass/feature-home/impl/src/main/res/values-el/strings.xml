@@ -39,9 +39,13 @@
   <string name="password_copied_to_clipboard">Ο κωδικός πρόσβασης αντιγράφηκε</string>
   <string name="credit_card_number_copied_to_clipboard">Ο αριθμός της πιστωτικής κάρτας αντιγράφηκε</string>
   <string name="credit_card_cvv_copied_to_clipboard">Το CVV της πιστωτικής κάρτας αντιγράφηκε</string>
-  <string name="item_too_long_copied_to_clipboard">Το περιεχόμενο ήταν πολύ μεγάλο, και έχει μερικώς αντιγραφεί στο πρόχειρο</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Το περιεχόμενο ήταν πολύ μεγάλο, και έχει μερικώς αντιγραφεί στο πρόχειρο</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Κρύπτες</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d στοιχείο</item>
+    <item quantity="other">%d στοιχεία</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Δημιουργία κρύπτης</string>
   <string name="vault_drawer_item_trash">Κάδος Απορριμμάτων</string>
   <string name="vault_drawer_all_vaults">Όλες οι κρύπτες</string>

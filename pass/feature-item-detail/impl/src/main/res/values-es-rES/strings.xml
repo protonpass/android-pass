@@ -46,6 +46,7 @@
     <item quantity="other">%d veces</item>
   </plurals>
   <string name="more_info_last_time_modified">Última vez, %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">Botón para abrir el menú</string>
   <string name="mfa_limit_reached">Límite de 2FA alcanzado</string>
   <string name="mfa_icon_content_description">Ícono de 2FA</string>
@@ -63,7 +64,7 @@
   <string name="credit_card_verifcation_number_copied_to_clipboard">Código de verificación copiado al portapapeles.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mover a la papelera</string>
-  <string name="migrate_item_detail_bottom_sheet">Mover a otra bóveda</string>
+  <string name="migrate_item_detail_bottom_sheet">Mover a otra caja fuerte</string>
   <!-- More info -->
   <string name="date_today">Hoy %s</string>
   <string name="date_yesterday">Ayer %s</string>

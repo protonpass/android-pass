@@ -3,7 +3,7 @@
   <string name="action_open">გახსნა</string>
   <string name="action_copy">კოპირება</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problem retrieving item details</string>
+  <string name="detail_init_error">შეცდომა ელემენტის დეტალების მიღებისას</string>
   <string name="top_bar_edit_button_text">ჩასწორება</string>
   <!-- Alias details -->
   <string name="field_alias_title">ფსევდონიმის მისამართი</string>
@@ -46,6 +46,7 @@
     <item quantity="other">%d-ჯერ</item>
   </plurals>
   <string name="more_info_last_time_modified">ბოლოს, %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">მენიუს გახსნის ღილაკი</string>
   <string name="mfa_limit_reached">მიღწეულია 2FA-ის ლიმიტი</string>
   <string name="mfa_icon_content_description">2FA-ის ხატულა</string>

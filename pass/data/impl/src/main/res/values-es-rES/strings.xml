@@ -19,5 +19,5 @@
 <resources>
   <string name="sync_channel">Sincronizar</string>
   <string name="sync_channel_description">Canal de notificaciones para la sincronización de elementos.</string>
-  <string name="syncing_vaults">Sincronizando bóvedas y elementos</string>
+  <string name="syncing_vaults">Sincronizando cajas fuertes y elementos</string>
 </resources>

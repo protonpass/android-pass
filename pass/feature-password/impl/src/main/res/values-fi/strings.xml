@@ -5,6 +5,14 @@
   <string name="bottomsheet_generate_password_title">Luo salasana</string>
   <string name="password_type">Tyyppi</string>
   <string name="special_characters">Erikoismerkit (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s merkki</item>
+    <item quantity="other">%s merkkiä</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s sana</item>
+    <item quantity="other">%s sanaa</item>
+  </plurals>
   <string name="word_separator">Sanojen erotin</string>
   <string name="bottomsheet_option_capital_letters">Isot kirjaimet (A-Z)</string>
   <string name="bottomsheet_option_capitalise">Isot kirjaimet</string>

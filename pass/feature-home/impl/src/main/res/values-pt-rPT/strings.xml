@@ -39,9 +39,13 @@
   <string name="password_copied_to_clipboard">A palavra-passe foi copiada.</string>
   <string name="credit_card_number_copied_to_clipboard">O número do cartão de crédito foi copiado.</string>
   <string name="credit_card_cvv_copied_to_clipboard">Credit card CVV copied</string>
-  <string name="item_too_long_copied_to_clipboard">O conteúdo é demasiado longo. Foi parcialmente copiado para a área de transferência.</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">O conteúdo é demasiado longo. Foi parcialmente copiado para a área de transferência.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Cofres</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d item</item>
+    <item quantity="other">%d items</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Criar um cofre</string>
   <string name="vault_drawer_item_trash">Lixo</string>
   <string name="vault_drawer_all_vaults">Todos os cofres</string>

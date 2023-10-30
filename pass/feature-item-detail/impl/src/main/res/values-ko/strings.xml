@@ -3,7 +3,7 @@
   <string name="action_open">열기</string>
   <string name="action_copy">복사</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problem retrieving item details</string>
+  <string name="detail_init_error">항목 정보를 검색하는 데 문제가 있습니다.</string>
   <string name="top_bar_edit_button_text">편집</string>
   <!-- Alias details -->
   <string name="field_alias_title">별명 주소</string>
@@ -45,6 +45,7 @@
     <item quantity="other">%d회</item>
   </plurals>
   <string name="more_info_last_time_modified">마지막 동기화 시점: %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">매뉴 버튼 열기</string>
   <string name="mfa_limit_reached">2FA 제한 도달</string>
   <string name="mfa_icon_content_description">2FA 아이콘</string>

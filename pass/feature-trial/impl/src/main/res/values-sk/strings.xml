@@ -4,7 +4,7 @@
   <string name="trial_subtitle">Správa hesiel posunutá na vyššiu úroveň:</string>
   <string name="trial_feature_1">20 trezorov</string>
   <string name="trial_feature_2">Neobmedzený počet emailových aliasov</string>
-  <string name="trial_feature_3">Integrovaný overovací modul 2FA</string>
+  <string name="trial_feature_3">Integrovaný 2FA autentifikátor</string>
   <string name="trial_feature_4">Vlastné polia</string>
   <string name="trial_button_text">Upgradovať pre zachovanie týchto funkcií</string>
   <plurals name="trial_days_left">

@@ -5,6 +5,14 @@
   <string name="bottomsheet_generate_password_title">Gerar senha</string>
   <string name="password_type">Tipo</string>
   <string name="special_characters">Caracteres especiais (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s carater</item>
+    <item quantity="other">%s caracteres</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s palavra</item>
+    <item quantity="other">%s palavras</item>
+  </plurals>
   <string name="word_separator">Separador de palavras</string>
   <string name="bottomsheet_option_capital_letters">Letras maiúsculas (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Capitalizar</string>

@@ -58,7 +58,6 @@ import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -74,8 +73,6 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
@@ -97,8 +94,6 @@ open class CreateAliasViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    canPerformPaidAction: CanPerformPaidAction,
-    ffRepo: FeatureFlagsPreferencesRepository
 ) : BaseAliasViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -132,8 +127,6 @@ open class CreateAliasViewModel @Inject constructor(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
-        canPerformPaidAction = canPerformPaidAction().asLoadingResult(),
-        removePrimaryVaultFlow = ffRepo.get(FeatureFlag.REMOVE_PRIMARY_VAULT),
         viewModelScope = viewModelScope,
         tag = TAG
     )

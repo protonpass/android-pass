@@ -53,6 +53,5 @@ sealed interface SelectVaultUiState {
         val vaults: ImmutableList<VaultWithStatus>,
         val selected: VaultWithItemCount,
         val showUpgradeMessage: Boolean,
-        val removePrimaryVaultEnabled: Boolean
     ) : SelectVaultUiState
 }

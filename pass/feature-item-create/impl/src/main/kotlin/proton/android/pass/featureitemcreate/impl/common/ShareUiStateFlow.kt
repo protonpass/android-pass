@@ -38,17 +38,13 @@ fun getShareUiStateFlow(
     navShareIdState: Flow<Option<ShareId>>,
     selectedShareIdState: Flow<Option<ShareId>>,
     observeAllVaultsFlow: Flow<LoadingResult<List<VaultWithItemCount>>>,
-    canPerformPaidAction: Flow<LoadingResult<Boolean>>,
-    removePrimaryVaultFlow: Flow<Boolean>,
     viewModelScope: CoroutineScope,
     tag: String
 ): StateFlow<ShareUiState> = combine(
     navShareIdState,
     selectedShareIdState,
     observeAllVaultsFlow,
-    canPerformPaidAction,
-    removePrimaryVaultFlow
-) { navShareId, selectedShareId, allSharesResult, canDoPaidAction, removePrimaryVault ->
+) { navShareId, selectedShareId, allSharesResult ->
     val allShares = when (allSharesResult) {
         is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
         LoadingResult.Loading -> return@combine ShareUiState.Loading

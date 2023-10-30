@@ -55,7 +55,6 @@ fun LazyListScope.SelectItemListHeader(
     canLoadExternalImages: Boolean,
     showUpgradeMessage: Boolean,
     canUpgrade: Boolean,
-    isRemovePrimaryVaultEnabled: Boolean,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
     onItemClicked: (ItemUiModel) -> Unit,
     onUpgradeClick: () -> Unit
@@ -64,11 +63,7 @@ fun LazyListScope.SelectItemListHeader(
     if (showUpgradeMessage) {
         item {
             val text = buildAnnotatedString {
-                if (isRemovePrimaryVaultEnabled) {
-                    append(stringResource(R.string.autofill_only_searching_in_oldest_vaults))
-                } else {
-                    append(stringResource(R.string.autofill_only_searching_in_primary_vault))
-                }
+                append(stringResource(R.string.autofill_only_searching_in_oldest_vaults))
                 append(' ')
                 if (canUpgrade) {
                     withStyle(
@@ -136,7 +131,6 @@ fun SelectItemListHeaderPreview(
                     suggestionsForTitle = "some.website",
                     suggestions = input.second.items,
                     canLoadExternalImages = false,
-                    isRemovePrimaryVaultEnabled = false,
                     showUpgradeMessage = input.second.showUpgradeMessage,
                     canUpgrade = input.second.canUpgrade,
                     onItemClicked = {},

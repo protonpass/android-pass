@@ -53,7 +53,6 @@ import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -78,8 +77,6 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -107,8 +104,6 @@ class CreateLoginViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
-    canPerformPaidAction: CanPerformPaidAction,
-    ffRepo: FeatureFlagsPreferencesRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -151,8 +146,6 @@ class CreateLoginViewModel @Inject constructor(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
-        canPerformPaidAction = canPerformPaidAction().asLoadingResult(),
-        removePrimaryVaultFlow = ffRepo.get(FeatureFlag.REMOVE_PRIMARY_VAULT),
         viewModelScope = viewModelScope,
         tag = TAG
     )

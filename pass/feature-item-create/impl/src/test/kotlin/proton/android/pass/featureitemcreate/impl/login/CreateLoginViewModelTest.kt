@@ -37,7 +37,6 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -55,8 +54,6 @@ import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiMo
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -109,11 +106,7 @@ internal class CreateLoginViewModelTest {
             telemetryManager = telemetryManager,
             draftRepository = TestDraftRepository(),
             observeUpgradeInfo = observeUpgradeInfo,
-            canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
-            ffRepo = TestFeatureFlagsPreferenceRepository().apply {
-                set(FeatureFlag.REMOVE_PRIMARY_VAULT, false)
-            }
         )
     }
 

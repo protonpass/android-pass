@@ -39,9 +39,12 @@
   <string name="password_copied_to_clipboard">비밀번호 복사됨</string>
   <string name="credit_card_number_copied_to_clipboard">신용 카드 번호 복사됨</string>
   <string name="credit_card_cvv_copied_to_clipboard">신용 카드 CVV 복사됨</string>
-  <string name="item_too_long_copied_to_clipboard">연락처가 너무 길어 클립보드에 부분적으로 복사되었습니다.</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">연락처가 너무 길어 클립보드에 부분적으로 복사되었습니다.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">금고</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="other">%d개 항목</item>
+  </plurals>
   <string name="vault_drawer_create_vault">금고 생성</string>
   <string name="vault_drawer_item_trash">휴지통</string>
   <string name="vault_drawer_all_vaults">모든 금고</string>

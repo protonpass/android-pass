@@ -5,6 +5,14 @@
   <string name="bottomsheet_generate_password_title">Genera la contrasenya</string>
   <string name="password_type">Tipus</string>
   <string name="special_characters">Caràcters especials (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s caràcter</item>
+    <item quantity="other">%s caràcters</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s paraula</item>
+    <item quantity="other">%s paraules</item>
+  </plurals>
   <string name="word_separator">Separador de paraules</string>
   <string name="bottomsheet_option_capital_letters">Lletres majúscules (A-Z)</string>
   <string name="bottomsheet_option_capitalise">Majúscules</string>

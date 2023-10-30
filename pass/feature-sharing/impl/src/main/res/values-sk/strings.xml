@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="share_continue">Pokračovať</string>
-  <string name="sharing_can_view">Zobraziť</string>
-  <string name="sharing_can_edit">Upraviť</string>
-  <string name="sharing_can_manage">Spravovať</string>
-  <string name="sharing_can_view_description">Môže zobraziť položky v tomto trezore</string>
-  <string name="sharing_can_edit_description">Môžete vytvárať, upravovať, mazať a exportovať položky v tomto trezore.</string>
+  <string name="sharing_can_view">Čitateľ</string>
+  <string name="sharing_can_edit">Editor</string>
+  <string name="sharing_can_manage">Správca</string>
+  <string name="sharing_can_view_description">Môže zobraziť položky v tomto trezore.</string>
+  <string name="sharing_can_edit_description">Môže vytvárať, upravovať, mazať a exportovať položky v tomto trezore.</string>
   <string name="sharing_can_manage_description">Môže udeliť alebo zrušiť prístup k tomuto trezoru.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d položka</item>
@@ -44,9 +44,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vás pozýva na prístup k položkám v</string>
   <string name="sharing_join_shared_vault">Pripojiť a synchronizovať</string>
   <string name="sharing_reject_invitation">Odmietnuť pozvánku</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Blahoželáme, váš prístup bol potvrdený</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Pozrite si zdieľaný trezor</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Zavrieť</string>
   <string name="sharing_snackbar_get_invite_error">Nepodarilo sa získať pozvánku</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka prijatá</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba pri prijatí pozvánky</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Pozvánku nebolo možné prijať, keďže ste dosiahli limit trezoru</string>
   <string name="sharing_snackbar_invite_rejected">Pozvánka odmietnutá</string>
   <string name="sharing_snackbar_invite_reject_error">Chyba pri odmietnutí pozvánky</string>
   <string name="sharing_snackbar_vault_not_found">Trezor sa nepodarilo nájsť</string>
@@ -65,7 +69,19 @@
   <string name="share_summary_vault_title">Trezor</string>
   <string name="share_summary_permissions_title">Úroveň prístupu</string>
   <string name="share_manage_vault_share_with_more_people">Zdieľať s viacerými ľudmi</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Pozvánka bol odoslaná</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">%d zostávajúca pozvánka</item>
+    <item quantity="few">%d zostávajúce pozvánky</item>
+    <item quantity="many">%d zostávajúcich pozvánok</item>
+    <item quantity="other">%d zostávajúcich pozvánok</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d položka</item>
+    <item quantity="few">%d položky</item>
+    <item quantity="many">%d položiek</item>
+    <item quantity="other">%d položiek</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Pozvánka bol odoslaná</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Čaká sa na vytvorenie účtu</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Potvrďte prístup</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Pozvánky</string>
@@ -75,7 +91,7 @@
   <string name="share_role_can_edit">Môže upravovať</string>
   <string name="share_role_admin">Admin</string>
   <string name="share_role_owner">Vlastník</string>
-  <string name="sharing_bottomsheet_transfer_ownership">Prevod vlastníctva</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Previesť vlastníctvo</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nemôžete preniesť svoj naposledy vlastnený trezor.</string>
   <string name="sharing_bottomsheet_remove_access">Zrušiť prístup</string>
   <string name="sharing_bottomsheet_resend_invite">Znovu poslať pozvánku</string>
@@ -91,4 +107,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">Adresa bola pozvaná príliš veľakrát</string>
   <string name="sharing_snackbar_transfer_ownership_success">Vlastníctvo prevedené</string>
   <string name="sharing_snackbar_transfer_ownership_error">Chyba pri prevode vlastníctva</string>
+  <string name="sharing_invites_info_dialog_title">Limit počtu členov</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Tento trezor môže mať až %1$d členov. Počet zostávajúcich pozvánok: %2$d.</string>
+  <string name="sharing_limit_reached">Tento trezor dosiahol limit počtu členov a pozvánok.</string>
+  <string name="sharing_invites_info_upgrade_text">Upgradujte teraz a získajte ďalšie pozvánky.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Zdieľať</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Pomocou trezorov môžete zdieľať položky s ostatnými</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Zdieľať tento trezor</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Prispôsobiť</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Presunúť do zdieľaného trezora</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Vytvoriť nový trezor na zdieľanie</string>
 </resources>

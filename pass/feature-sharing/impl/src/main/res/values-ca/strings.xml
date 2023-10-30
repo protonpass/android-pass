@@ -40,9 +40,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s us convida a accedir a elements a</string>
   <string name="sharing_join_shared_vault">Uniu-vos i sincronitzeu</string>
   <string name="sharing_reject_invitation">Rebutja la invitació</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulations, your access has been confirmed</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">See the shared vault</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Tanca</string>
   <string name="sharing_snackbar_get_invite_error">No s’ha pogut obtenir la invitació.</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
   <string name="sharing_snackbar_invite_accept_error">S\'ha produït un error en acceptar la invitació</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
   <string name="sharing_snackbar_invite_rejected">Invitació rebutjada</string>
   <string name="sharing_snackbar_invite_reject_error">S\'ha produït un error en rebutjar la invitació.</string>
   <string name="sharing_snackbar_vault_not_found">No s\'ha pogut trobar la caixa forta.</string>
@@ -61,7 +65,15 @@
   <string name="share_summary_vault_title">Caixa forta</string>
   <string name="share_summary_permissions_title">Nivell d\'accés</string>
   <string name="share_manage_vault_share_with_more_people">Comparteix amb més gent</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">S\'ha enviat la invitació.</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">%d invite left</item>
+    <item quantity="other">%d invites left</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d element</item>
+    <item quantity="other">%d elements</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">S\'ha enviat la invitació.</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Pending account creation</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirma l\'accés</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitacions</string>
@@ -83,8 +95,18 @@
   <string name="sharing_snackbar_resend_invite_success">S\'ha reenviat la invitació.</string>
   <string name="sharing_snackbar_resend_invite_error">S\'ha produït un error en reenviar la invitació.</string>
   <string name="sharing_snackbar_confirm_invite_success">S\'ha confirmat la invitació.</string>
-  <string name="sharing_snackbar_confirm_invite_error">Error confirming invite</string>
+  <string name="sharing_snackbar_confirm_invite_error">S\'ha produït un error en confirmar la invitació.</string>
   <string name="sharing_snackbar_too_many_invites_sent">S\'ha convidat a la direcció massa vegades.</string>
   <string name="sharing_snackbar_transfer_ownership_success">S\'ha transferit la propietat.</string>
   <string name="sharing_snackbar_transfer_ownership_error">Error transferint la propietat</string>
+  <string name="sharing_invites_info_dialog_title">Límit de nombre de membres</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. You still have %2$d invites left.</string>
+  <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
+  <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Comparteix</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personalitza</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
 </resources>

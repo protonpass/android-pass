@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="autofill_authenticate_prompt">Hent fra Proton Pass</string>
+  <string name="autofill_authenticate_prompt">Hent fra Proton Pass</string>
   <string name="error_credentials_not_found">Ingen matchende legitimationsoplysninger fundet</string>
   <string name="error_loading_items">Kunne ikke indlæse elementerne</string>
   <string name="topbar_search_query">Søg i alle bokse…</string>
   <string name="topbar_search_query_primary_vault">Søg i primær boks…</string>
-  <string name="topbar_search_query_uninitialized">Søg…</string>
+  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Søg…</string>
   <string name="inline_suggestions_open_app">Åbn Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Dit abonnement giver kun mulighed for at bruge elementer i din primære boks til autofyld.</string>
   <string name="autofill_only_searching_in_oldest_vaults">Dit abonnement giver kun mulighed for at bruge elementer i dine ældste bokse til autofyld.</string>

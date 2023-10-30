@@ -48,9 +48,10 @@
     <item quantity="other">%d разів</item>
   </plurals>
   <string name="more_info_last_time_modified">Востаннє, %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">Кнопка відкриття меню</string>
   <string name="mfa_limit_reached">Досягнуто обмеження 2FA</string>
-  <string name="mfa_icon_content_description">Піктограма 2FA</string>
+  <string name="mfa_icon_content_description">2FA icon</string>
   <string name="custom_field_text_icon_description">Власне текстове поле</string>
   <string name="custom_field_hidden_icon_description">Приховане власне поле</string>
   <string name="custom_field_totp_icon_description">Власне поле 2FA</string>

@@ -39,9 +39,13 @@
   <string name="password_copied_to_clipboard">S\'ha copiat la contrasenya</string>
   <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta de crèdit</string>
   <string name="credit_card_cvv_copied_to_clipboard">S\'ha copiat el CVV de la targeta de crèdit</string>
-  <string name="item_too_long_copied_to_clipboard">El contingut és molt llarg. Ha estat copiat parcialment al portapapels.</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">El contingut és molt llarg. Ha estat copiat parcialment al portapapels.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Caixes fortes</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d element</item>
+    <item quantity="other">%d elements</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Crea una caixa forta</string>
   <string name="vault_drawer_item_trash">Paperera</string>
   <string name="vault_drawer_all_vaults">Totes les caixes fortes</string>

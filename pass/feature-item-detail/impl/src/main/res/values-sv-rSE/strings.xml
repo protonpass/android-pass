@@ -46,9 +46,10 @@
     <item quantity="other">%d gånger</item>
   </plurals>
   <string name="more_info_last_time_modified">Sista gången, %s</string>
+  <string name="share_button_content_description">Öppna delningsknapp</string>
   <string name="open_menu_icon_content_description">Knapp för “Öppna meny“</string>
   <string name="mfa_limit_reached">2FA-gränsen uppnådd</string>
-  <string name="mfa_icon_content_description">Ikon för “2FA“</string>
+  <string name="mfa_icon_content_description">2FA-ikon</string>
   <string name="custom_field_text_icon_description">Anpassat textfält</string>
   <string name="custom_field_hidden_icon_description">Dolt anpassat fält</string>
   <string name="custom_field_totp_icon_description">Anpassat 2FA-fält</string>

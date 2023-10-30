@@ -46,6 +46,7 @@
     <item quantity="other">%d volte</item>
   </plurals>
   <string name="more_info_last_time_modified">Ultima volta, %s</string>
+  <string name="share_button_content_description">Apri pulsante di condivisione</string>
   <string name="open_menu_icon_content_description">Apri pulsante menu</string>
   <string name="mfa_limit_reached">Limite 2FA raggiunto</string>
   <string name="mfa_icon_content_description">Icona 2FA</string>

@@ -39,9 +39,13 @@
   <string name="password_copied_to_clipboard">Password copiata</string>
   <string name="credit_card_number_copied_to_clipboard">Numero carta di credito copiato</string>
   <string name="credit_card_cvv_copied_to_clipboard">CVC copiato</string>
-  <string name="item_too_long_copied_to_clipboard">Contenuto troppo lungo, è stato copiato solo parzialmente negli appunti</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Contenuto troppo lungo, è stato copiato solo parzialmente negli appunti</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Casseforti</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d elemento</item>
+    <item quantity="other">%d elementi</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Crea cassaforte</string>
   <string name="vault_drawer_item_trash">Cestino</string>
   <string name="vault_drawer_all_vaults">Tutte le casseforti</string>

@@ -9,7 +9,7 @@
   <string name="trial_button_text">Улучшите, чтобы сохранить эти функции</string>
   <plurals name="trial_days_left">
     <item quantity="one">Остался %d день в вашем пробном периоде</item>
-    <item quantity="few">%d days left in your trial period</item>
+    <item quantity="few">Осталось %d дня в вашем пробном периоде</item>
     <item quantity="many">Осталось %d дней в вашем пробном периоде</item>
     <item quantity="other">Осталось %d дня в вашем пробном периоде</item>
   </plurals>

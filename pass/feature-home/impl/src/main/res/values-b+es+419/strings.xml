@@ -20,8 +20,8 @@
   <string name="home_trial_banner_text">Eche un vistazo a todas las funciones exclusivas que están disponibles para usted por tiempo limitado.</string>
   <string name="home_trial_banner_settings">Más información ›</string>
   <string name="home_notification_permission_banner_title">Obtenga actualizaciones importantes</string>
-  <string name="home_notification_permission_banner_text">Habilite las notificaciones push para informarse cuando otros compartan una bóveda con usted.</string>
-  <string name="home_notification_permission_banner_settings">Habilitar permiso ›</string>
+  <string name="home_notification_permission_banner_text">Active las notificaciones push para informarse cuando otros compartan una bóveda con usted.</string>
+  <string name="home_notification_permission_banner_settings">Activar permiso ›</string>
   <string name="home_invite_banner_title">Bóveda compartida con usted</string>
   <string name="home_invite_banner_subtitle">Se le invitó a una bóveda compartida. Pulse para ver los datos.</string>
   <!-- Common bottomsheet -->
@@ -39,9 +39,13 @@
   <string name="password_copied_to_clipboard">Contraseña copiada</string>
   <string name="credit_card_number_copied_to_clipboard">Número de tarjeta de crédito copiado.</string>
   <string name="credit_card_cvv_copied_to_clipboard">Código CVV de la tarjeta de crédito copiado</string>
-  <string name="item_too_long_copied_to_clipboard">El contenido es muy largo. Fue copiado parcialmente al portapapeles.</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">El contenido es muy largo. Fue copiado parcialmente al portapapeles.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Bóvedas</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d elemento</item>
+    <item quantity="other">%d elementos</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Crear bóveda</string>
   <string name="vault_drawer_item_trash">Papelera</string>
   <string name="vault_drawer_all_vaults">Todas las bóvedas</string>
@@ -74,7 +78,7 @@
   <string name="alert_confirm_clear_trash_title">¿Vaciar la papelera?</string>
   <string name="alert_confirm_clear_trash_message">¿Está seguro de que quiere vaciar la papelera? Todos sus elementos se eliminarán permanentemente.</string>
   <string name="alert_confirm_restore_all_title">¿Restaurar todos los elementos?</string>
-  <string name="alert_confirm_restore_all_message">¿Esta seguro que desea restaurar todos los elementos eliminados?</string>
+  <string name="alert_confirm_restore_all_message">¿Esta seguro que quiere restaurar todos los elementos eliminados?</string>
   <!-- Recent search -->
   <string name="recent_search_header_count">Búsquedas recientes</string>
   <string name="recent_search_clear">Borrar</string>

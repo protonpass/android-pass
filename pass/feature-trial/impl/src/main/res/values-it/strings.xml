@@ -6,7 +6,7 @@
   <string name="trial_feature_2">Numero illimitato di alias</string>
   <string name="trial_feature_3">Autenticazione 2FA integrata</string>
   <string name="trial_feature_4">Campi personalizzati</string>
-  <string name="trial_button_text">Esegui l\'upgrade per mantenere queste funzionalità</string>
+  <string name="trial_button_text">Effettua l\'upgrade per mantenere queste funzionalità</string>
   <plurals name="trial_days_left">
     <item quantity="one">1 giorno rimasto nel periodo di prova gratuita</item>
     <item quantity="other">%d giorni rimanenti del periodo di prova gratuita</item>

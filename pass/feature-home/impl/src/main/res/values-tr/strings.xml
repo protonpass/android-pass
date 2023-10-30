@@ -39,9 +39,13 @@
   <string name="password_copied_to_clipboard">Parola kopyalandı</string>
   <string name="credit_card_number_copied_to_clipboard">Kredi kartı numarası kopyalandı</string>
   <string name="credit_card_cvv_copied_to_clipboard">Kredi kartı CVV kodu kopyalandı</string>
-  <string name="item_too_long_copied_to_clipboard">İçerik çok uzun. Panoya tam olarak kopyalanamadı</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">İçerik çok uzun. Panoya tam olarak kopyalanamadı</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Kasalar</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d öge</item>
+    <item quantity="other">%d öge</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Kasa oluştur</string>
   <string name="vault_drawer_item_trash">Çöp kutusu</string>
   <string name="vault_drawer_all_vaults">Tüm kasalar</string>

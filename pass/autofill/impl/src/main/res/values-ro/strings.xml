@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="autofill_authenticate_prompt">Luare din Proton Pass</string>
+  <string name="autofill_authenticate_prompt">Luare din Proton Pass</string>
   <string name="error_credentials_not_found">Nu există autentificări corespunzătoare</string>
   <string name="error_loading_items">Nu s-au putut încărca articolele</string>
   <string name="topbar_search_query">Căutare în toate seifurile…</string>
   <string name="topbar_search_query_primary_vault">Căutare în seiful principal…</string>
-  <string name="topbar_search_query_uninitialized">Căutare…</string>
+  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Căutare…</string>
   <string name="inline_suggestions_open_app">Deschidere Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Planul actual vă permite să folosiți autocompletări doar din seiful principal.</string>
   <string name="autofill_only_searching_in_oldest_vaults">Planul actual vă permite să folosiți articole din seifurile vechi doar pentru autocompletări.</string>

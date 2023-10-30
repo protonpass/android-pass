@@ -5,6 +5,18 @@
   <string name="bottomsheet_generate_password_title">Vygenerovať heslo</string>
   <string name="password_type">Typ</string>
   <string name="special_characters">Špeciálne znaky (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s znak</item>
+    <item quantity="few">%s znaky</item>
+    <item quantity="many">%s znakov</item>
+    <item quantity="other">%s znakov</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s slovo</item>
+    <item quantity="few">%s slová</item>
+    <item quantity="many">%s slov</item>
+    <item quantity="other">%s slov</item>
+  </plurals>
   <string name="word_separator">Oddeľovač slov</string>
   <string name="bottomsheet_option_capital_letters">Veľké písmená (A-Z)</string>
   <string name="bottomsheet_option_capitalise">Veľkými písmenami</string>

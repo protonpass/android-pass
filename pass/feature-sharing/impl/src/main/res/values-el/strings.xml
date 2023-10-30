@@ -40,9 +40,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s σας προσκαλεί να αποκτήσετε πρόσβαση σε στοιχεία στη</string>
   <string name="sharing_join_shared_vault">Συμμετάσχετε και συγχρονίστε</string>
   <string name="sharing_reject_invitation">Απόρριψη πρόσκλησης</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Συγχαρητήρια, η πρόσβασή σας επιβεβαιώθηκε</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Προβολή της κοινόχρηστης κρύπτης</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Κλείσιμο</string>
   <string name="sharing_snackbar_get_invite_error">Δεν ήταν δυνατή η λήψη πρόσκλησης</string>
   <string name="sharing_snackbar_invite_accepted">Η πρόσκληση έγινε αποδεκτή</string>
   <string name="sharing_snackbar_invite_accept_error">Σφάλμα κατά την αποδοχή της πρόσκλησης</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Δεν ήταν δυνατή η αποδοχή της πρόσκλησης καθώς έχετε συμπληρώσει το όριο κρυπτών</string>
   <string name="sharing_snackbar_invite_rejected">Η πρόσκληση απορρίφθηκε</string>
   <string name="sharing_snackbar_invite_reject_error">Σφάλμα κατά την απόρριψη της πρόσκλησης</string>
   <string name="sharing_snackbar_vault_not_found">Η κρύπτη δε βρέθηκε</string>
@@ -61,7 +65,15 @@
   <string name="share_summary_vault_title">Κρύπτη</string>
   <string name="share_summary_permissions_title">Επίπεδο πρόσβασης</string>
   <string name="share_manage_vault_share_with_more_people">Κοινοποίηση με περισσότερα άτομα</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Η πρόσκληση στάλθηκε</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">%d πρόσκληση απομένει</item>
+    <item quantity="other">%d προσκλήσεις απομένουν</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d στοιχείο</item>
+    <item quantity="other">%d στοιχεία</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Η πρόσκληση στάλθηκε</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Δημιουργία λογαριασμού σε εκκρεμότητα</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Επιβεβαιώστε την πρόσβαση</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Προσκλήσεις</string>
@@ -87,4 +99,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">Η διεύθυνση έχει προσκληθεί πάρα πολλές φορές</string>
   <string name="sharing_snackbar_transfer_ownership_success">Μεταβίβαση κυριότητας</string>
   <string name="sharing_snackbar_transfer_ownership_error">Σφάλμα κατά τη μεταβίβαση ιδιοκτησίας</string>
+  <string name="sharing_invites_info_dialog_title">Όριο μελών</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Αυτή η κρύπτη μπορεί να έχει έως και %1$d μέλη. Έχετε ακόμα %2$d προσκλήσεις διαθέσιμες.</string>
+  <string name="sharing_limit_reached">Αυτή η κρύπτη έχει φτάσει στο όριο μελών και προσκλήσεων.</string>
+  <string name="sharing_invites_info_upgrade_text">Αναβαθμίστε τώρα για να προσκαλέσετε περισσότερους.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Κοινοποίηση</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Χρησιμοποιήστε κρύπτες για να μοιραστείτε στοιχεία με άλλους</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Κοινή χρήση αυτής της κρύπτης</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Προσαρμογή</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Μετακίνηση σε κοινόχρηστη κρύπτη</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Δημιουργία νέας κρύπτης για κοινή χρήση</string>
 </resources>

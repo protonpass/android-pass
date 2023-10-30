@@ -12,8 +12,8 @@
   <string name="profile_option_autofill_subtitle">Rellena automáticamente tus nombres de usuario y contraseñas.</string>
   <string name="profile_error_biometry_failed_to_start">No se ha podido iniciar la autenticación biométrica.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Error al autenticar</string>
-  <string name="profile_fingerprint_lock_enabled">Desbloqueo de huella dactilar habilitado</string>
-  <string name="profile_fingerprint_lock_disabled">Desbloqueo de huella dactilar deshabilitado</string>
+  <string name="profile_fingerprint_lock_enabled">Desbloqueo de huella dactilar activado</string>
+  <string name="profile_fingerprint_lock_disabled">Desbloqueo de huella dactilar desactivado</string>
   <string name="profile_error_performing_operation">Error al ejecutar la operación</string>
   <string name="profile_app_version_copied_to_clipboard">Versión de la aplicación copiada</string>
   <string name="feedback_option_reddit">Echa un vistazo a Proton en Reddit</string>
@@ -40,8 +40,8 @@
   <string name="configure_pin_pin_does_not_match">El código PIN no coincide.</string>
   <string name="configure_pin_pin_too_short">El código PIN es demasiado corto.</string>
   <string name="configure_pin_pin_cannot_be_blank">El código PIN no puede estar vacío.</string>
-  <string name="configure_pin_pin_lock_enabled">Bloqueo con código PIN habilitado</string>
-  <string name="configure_pin_pin_lock_disabled">Bloqueo con código PIN deshabilitado</string>
+  <string name="configure_pin_pin_lock_enabled">Bloqueo con código PIN activado</string>
+  <string name="configure_pin_pin_lock_disabled">Bloqueo con código PIN desactivado</string>
   <string name="profile_option_lock_with">Bloquear con</string>
   <string name="profile_option_unlock_with">Desbloquear con</string>
   <string name="profile_option_change_pin_code">Cambiar el código PIN</string>

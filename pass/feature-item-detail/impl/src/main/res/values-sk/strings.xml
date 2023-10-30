@@ -6,9 +6,9 @@
   <string name="detail_init_error">Problém s načítaním podrobností položky</string>
   <string name="top_bar_edit_button_text">Upraviť</string>
   <!-- Alias details -->
-  <string name="field_alias_title">Adresa aliasu</string>
+  <string name="field_alias_title">Alias adresy</string>
   <string name="alias_copied_to_clipboard">Alias skopírovaný</string>
-  <string name="alias_detail_field_mailboxes_title">Preposiela na</string>
+  <string name="alias_detail_field_mailboxes_title">Preposielať na</string>
   <string name="alias_create_login_from_alias">Vytvoriť prihlásenie</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Poznámka</string>
@@ -48,6 +48,7 @@
     <item quantity="other">%d-krát</item>
   </plurals>
   <string name="more_info_last_time_modified">Naposledy, %s</string>
+  <string name="share_button_content_description">Otvoriť tlačidlo zdieľania</string>
   <string name="open_menu_icon_content_description">Tlačidlo otvorenia ponuky</string>
   <string name="mfa_limit_reached">2FA limit dosiahnutý</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>

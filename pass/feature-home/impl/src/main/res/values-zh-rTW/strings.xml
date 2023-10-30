@@ -39,9 +39,12 @@
   <string name="password_copied_to_clipboard">已複製密碼</string>
   <string name="credit_card_number_copied_to_clipboard">已複製信用卡卡號</string>
   <string name="credit_card_cvv_copied_to_clipboard">已複製卡片安全碼</string>
-  <string name="item_too_long_copied_to_clipboard">聯絡人太長，部分貼上至剪貼簿</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">聯絡人太長，部分貼上至剪貼簿</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">保管庫</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="other">%d items</item>
+  </plurals>
   <string name="vault_drawer_create_vault">新增加密保管庫</string>
   <string name="vault_drawer_item_trash">垃圾桶</string>
   <string name="vault_drawer_all_vaults">全部的保管庫</string>

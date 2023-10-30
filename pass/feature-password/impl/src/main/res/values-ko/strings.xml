@@ -5,6 +5,12 @@
   <string name="bottomsheet_generate_password_title">비밀번호 생성</string>
   <string name="password_type">유형</string>
   <string name="special_characters">특수 문자 (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="other">%s글자</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="other">%s단어</item>
+  </plurals>
   <string name="word_separator">Word Separator</string>
   <string name="bottomsheet_option_capital_letters">대문자 알파벳 (A-Z)</string>
   <string name="bottomsheet_option_capitalise">대문자 포함</string>

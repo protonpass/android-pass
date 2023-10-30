@@ -5,6 +5,18 @@
   <string name="bottomsheet_generate_password_title">Generuj hasło</string>
   <string name="password_type">Typ</string>
   <string name="special_characters">Znaki specjalne (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s znak</item>
+    <item quantity="few">%s znaki</item>
+    <item quantity="many">%s znaków</item>
+    <item quantity="other">%s znaków</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s słowo</item>
+    <item quantity="few">%s słowa</item>
+    <item quantity="many">%s słów</item>
+    <item quantity="other">%s słowa</item>
+  </plurals>
   <string name="word_separator">Separator słów</string>
   <string name="bottomsheet_option_capital_letters">Wielkie litery (A-Z)</string>
   <string name="bottomsheet_option_capitalise">Wielkie litery</string>

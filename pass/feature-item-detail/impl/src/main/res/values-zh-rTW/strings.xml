@@ -45,9 +45,10 @@
     <item quantity="other">%d 次</item>
   </plurals>
   <string name="more_info_last_time_modified">上次使用時間，%s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">開啟清單</string>
   <string name="mfa_limit_reached">雙重驗證已達上限</string>
-  <string name="mfa_icon_content_description">雙重驗證圖像</string>
+  <string name="mfa_icon_content_description">2FA icon</string>
   <string name="custom_field_text_icon_description">輸入自訂欄位</string>
   <string name="custom_field_hidden_icon_description">隱藏自訂欄位</string>
   <string name="custom_field_totp_icon_description">雙重驗證自訂欄位</string>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="autofill_authenticate_prompt">Získat z Proton Pass</string>
+  <string name="autofill_authenticate_prompt">Získat z Proton Pass</string>
   <string name="error_credentials_not_found">Nebyly nalezeny žádné odpovídající přihlašovací údaje</string>
   <string name="error_loading_items">Nelze načíst položky.</string>
   <string name="topbar_search_query">Hledat ve všech trezorech...</string>
   <string name="topbar_search_query_primary_vault">Hledat v primárních trezorech...</string>
-  <string name="topbar_search_query_uninitialized">Hledat…</string>
+  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Hledat…</string>
   <string name="inline_suggestions_open_app">Otevřit Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">Váš tarif umožňuje používat položky v primárním trezoru pouze pro účely automatického vyplňování.</string>
   <string name="autofill_only_searching_in_oldest_vaults">Váš tarif umožňuje používat pro účely automatického vyplňování pouze položky v nejstarších trezorech.</string>

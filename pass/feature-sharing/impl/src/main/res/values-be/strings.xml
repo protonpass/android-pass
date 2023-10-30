@@ -44,9 +44,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрасіў(-ла) вас атрымаць доступ да элементаў у</string>
   <string name="sharing_join_shared_vault">Далучыцца і сінхранізаваць</string>
   <string name="sharing_reject_invitation">Адхіліць запрашэнне</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Віншуем! Ваш доступ пацверджаны</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Паглядзець абагуленае сховішча</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Закрыць</string>
   <string name="sharing_snackbar_get_invite_error">Немагчыма атрымаць запрашэнне</string>
   <string name="sharing_snackbar_invite_accepted">Запрашэнне прынята</string>
   <string name="sharing_snackbar_invite_accept_error">Памылка прымання запрашэння</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Немагчыма прыняць запрашэнне па той прычыне, што вы дасягнулі абмежавання ў сховішчы</string>
   <string name="sharing_snackbar_invite_rejected">Запрашэнне адхілена</string>
   <string name="sharing_snackbar_invite_reject_error">Памылка адхілення запрашэння</string>
   <string name="sharing_snackbar_vault_not_found">Не атрымалася знайсці сховішча</string>
@@ -65,7 +69,19 @@
   <string name="share_summary_vault_title">Сховішча</string>
   <string name="share_summary_permissions_title">Узровень доступу</string>
   <string name="share_manage_vault_share_with_more_people">Абагуліць з большай колькасцю людзей</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Запрашэнне адпраўлена</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">Засталося %d запрашэнне</item>
+    <item quantity="few">Засталося %d запрашэнні</item>
+    <item quantity="many">Засталося %d запрашэнняў</item>
+    <item quantity="other">Засталося %d запрашэнняў</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d элемент</item>
+    <item quantity="few">%d элементы</item>
+    <item quantity="many">%d элементаў</item>
+    <item quantity="other">%d элементаў</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Запрашэнне адпраўлена</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Чаканне стварэння ўліковага запісу</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Пацвердзіць доступ</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Запрашэнні</string>
@@ -91,4 +107,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">Адрас быў запрошаны занадта шмат разоў</string>
   <string name="sharing_snackbar_transfer_ownership_success">Правы ўласнасці перададзены</string>
   <string name="sharing_snackbar_transfer_ownership_error">Памылка перадачы правоў уласнасці</string>
+  <string name="sharing_invites_info_dialog_title">Абмежаванне ўдзельнікаў</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Гэта сховішча можа мець да %1$d удзельнікаў. У вас яшчэ засталося %2$d запрашэнняў.</string>
+  <string name="sharing_limit_reached">Для гэтага сховішча дасягнута абмежаванне па колькасці ўдзельнікаў і запрашэнняў.</string>
+  <string name="sharing_invites_info_upgrade_text">Палепшыце, каб запрасіць больш удзельнікаў.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Абагуліць</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Выкарыстанне сховішчаў для абагулення элементаў з іншымі</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Абагуліць гэта сховішча</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Наладзіць</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Перамясціць абагуленае сховішча</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Стварыць новае сховішча для абагулення</string>
 </resources>

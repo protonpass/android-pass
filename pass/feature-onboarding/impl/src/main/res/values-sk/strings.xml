@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="on_boarding_autofill_content">Nechajte Proton Pass vypĺňať prihlasovacie údaje za vás. Nevyžaduje sa písanie ani kopírovanie a vkladanie.</string>
-  <string name="on_boarding_autofill_title">Prihláste sa do aplikácií okamžite</string>
-  <string name="on_boarding_autofill_button">Automatické vypĺňanie Proton Passom</string>
-  <string name="on_boarding_fingerprint_content">Nastavte Proton Pass na odomknutie odtlačkom prsta, aby ste mali prístup iba vy.</string>
+  <string name="on_boarding_autofill_title">Okamžité prihlásenie do aplikácií</string>
+  <string name="on_boarding_autofill_button">Automatické vypĺňanie s Proton Pass</string>
+  <string name="on_boarding_fingerprint_content">Nastavte Proton Pass na odomknutie odtlačkom prsta, aby ste len vy mali k nemu prístup.</string>
   <string name="on_boarding_fingerprint_title">Chráňte svoje najcitlivejšie údaje</string>
   <string name="on_boarding_fingerprint_button">Zapnúť odomknutie odtlačkom</string>
   <string name="on_boarding_last_page_content">Prestaňte zdieľať svoju skutočnú emailovú adresu. Namiesto toho ju skryte pomocou emailových aliasov - exkluzívne v Proton Pass.</string>

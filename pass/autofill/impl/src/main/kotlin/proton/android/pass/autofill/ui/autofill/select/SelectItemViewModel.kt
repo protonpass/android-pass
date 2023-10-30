@@ -100,6 +100,8 @@ import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.GetTotpCodeFromUri
 import proton.pass.domain.ItemId
+import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
@@ -158,8 +160,7 @@ class SelectItemViewModel @Inject constructor(
         val isProcessingSearch: IsProcessingSearchState
     )
 
-    private val planTypeFlow: Flow<PlanType> = getUserPlan()
-        .map { it.planType }
+    private val planFlow: Flow<Plan> = getUserPlan()
         .distinctUntilChanged()
 
     private val vaultsFlow = observeVaults().asLoadingResult()
@@ -173,11 +174,11 @@ class SelectItemViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
-        planTypeFlow,
+        planFlow,
         vaultsFlow
     ) { plan, vaults -> plan to vaults }
         .flatMapLatest { data ->
-            val (planType, vaultsRes) = data
+            val (plan, vaultsRes) = data
 
             val vaults = when (vaultsRes) {
                 is LoadingResult.Success -> vaultsRes.data
@@ -189,7 +190,7 @@ class SelectItemViewModel @Inject constructor(
                 LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
             }
 
-            val selection = getShareSelection(planType, vaults)
+            val selection = getShareSelection(plan.planType, vaults)
 
             observeActiveItems(
                 filter = ItemTypeFilter.Logins,
@@ -312,7 +313,7 @@ class SelectItemViewModel @Inject constructor(
         sortingSelectionFlow,
         shouldScrollToTopFlow,
         preferenceRepository.getUseFaviconsPreference(),
-        planTypeFlow,
+        planFlow,
         observeUpgradeInfo().asLoadingResult()
     ) { itemsResult,
         shares,
@@ -339,8 +340,17 @@ class SelectItemViewModel @Inject constructor(
             }
         }
 
-        val (displayOnlyPrimaryVaultMessage, searchIn) = when (plan) {
-            is PlanType.Free -> (shares.size > 1) to SearchInMode.PrimaryVault
+        val (displayOnlyPrimaryVaultMessage, searchIn) = when (plan.planType) {
+            is PlanType.Free -> {
+                when (val limit = plan.vaultLimit) {
+                    PlanLimit.Unlimited -> false to SearchInMode.AllVaults
+                    is PlanLimit.Limited -> if (shares.size > limit.limit) {
+                        true to SearchInMode.OldestVaults
+                    } else {
+                        false to SearchInMode.AllVaults
+                    }
+                }
+            }
             else -> false to SearchInMode.AllVaults
         }
 

@@ -6,7 +6,7 @@
   <string name="profile_help_center">Centru de ajutor</string>
   <string name="profile_security">Securitate</string>
   <string name="profile_option_feedback">Feedback</string>
-  <string name="profile_option_import_export">Importare / Exportare</string>
+  <string name="profile_option_import_export">Importare/Exportare</string>
   <string name="profile_option_rating">Evaluare aplicație</string>
   <string name="profile_option_autofill">Autocompletare</string>
   <string name="profile_option_autofill_subtitle">Completați automat numele de utilizator și parolele.</string>

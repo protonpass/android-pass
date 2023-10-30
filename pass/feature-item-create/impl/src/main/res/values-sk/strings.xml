@@ -56,8 +56,8 @@
   <string name="note_created">Poznámka vytvorená</string>
   <!-- Create Alias -->
   <string name="title_create_alias">Vytvoriť alias</string>
-  <string name="field_alias_title">Adresa aliasu</string>
-  <string name="field_alias_hint">Používateľské meno aliasu</string>
+  <string name="field_alias_title">Alias adresy</string>
+  <string name="field_alias_hint">Alias používateľského mena</string>
   <string name="field_mailboxes_creation_title">Preposlať</string>
   <string name="field_mailboxes_edit_title">Preposielam</string>
   <string name="field_alias_you_are_about_to_create">Chystáte sa vytvoriť</string>

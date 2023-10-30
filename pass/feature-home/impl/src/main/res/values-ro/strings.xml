@@ -39,9 +39,14 @@
   <string name="password_copied_to_clipboard">Parola s-a copiat</string>
   <string name="credit_card_number_copied_to_clipboard">Cardul de credit s-a copiat.</string>
   <string name="credit_card_cvv_copied_to_clipboard">Codul CVV (CVC) a fost copiat.</string>
-  <string name="item_too_long_copied_to_clipboard">Conținutul a fost prea lung, s-a copiat parțial în memorie.</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Conținutul a fost prea lung, s-a copiat parțial în memorie.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Seifuri</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d articol</item>
+    <item quantity="few">%d articole</item>
+    <item quantity="other">%d de articole</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Creare seif</string>
   <string name="vault_drawer_item_trash">Gunoi</string>
   <string name="vault_drawer_all_vaults">Toate seifurile</string>

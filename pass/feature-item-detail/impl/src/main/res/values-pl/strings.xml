@@ -48,6 +48,7 @@
     <item quantity="other">%d razy</item>
   </plurals>
   <string name="more_info_last_time_modified">Ostatni raz: %s</string>
+  <string name="share_button_content_description">Przycisk udostępnij</string>
   <string name="open_menu_icon_content_description">Przycisk otwórz menu</string>
   <string name="mfa_limit_reached">Limit uwierzytelniania dwustopniowego został osiągnięty</string>
   <string name="mfa_icon_content_description">Ikona uwierzytelniania dwustopniowego</string>

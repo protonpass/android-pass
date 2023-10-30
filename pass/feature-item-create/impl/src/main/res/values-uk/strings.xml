@@ -108,7 +108,7 @@
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Досягнуто обмеження 2FA</string>
   <string name="upgrade">Покращити</string>
-  <string name="mfa_icon_content_description">Піктограма 2FA</string>
+  <string name="mfa_icon_content_description">2FA icon</string>
   <string name="select_suffix_upgrade_for_custom_domains">Для використання власних доменів передплатіть тарифний план</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Для більшої кількості поштових скриньок передплатіть тарифний план</string>
   <string name="create_alias_content_limit_banner">Ви досягли обмеження створених псевдонімів. Щоб створювати псевдоніми без обмежень, передплатіть тарифний план.</string>

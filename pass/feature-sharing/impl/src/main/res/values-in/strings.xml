@@ -38,9 +38,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mengundang Anda untuk mengakses item pada</string>
   <string name="sharing_join_shared_vault">Gabung dan sinkronkan</string>
   <string name="sharing_reject_invitation">Tolak undangan</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Selamat, akses Anda telah dikonfirmasi</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Lihat brankas yang dibagikan</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Tutup</string>
   <string name="sharing_snackbar_get_invite_error">Undangan tidak dapat diperoleh</string>
   <string name="sharing_snackbar_invite_accepted">Undangan diterima</string>
   <string name="sharing_snackbar_invite_accept_error">Terjadi kesalahan menerima undangan</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Undangan tidak dapat diterima karena Anda telah mencapai batas jumlah brankas</string>
   <string name="sharing_snackbar_invite_rejected">Undangan ditolak</string>
   <string name="sharing_snackbar_invite_reject_error">Terjadi kesalahan menolak undangan</string>
   <string name="sharing_snackbar_vault_not_found">Brankas tidak dapat ditemukan</string>
@@ -59,7 +63,13 @@
   <string name="share_summary_vault_title">Brankas</string>
   <string name="share_summary_permissions_title">Tingkat akses</string>
   <string name="share_manage_vault_share_with_more_people">Bagikan dengan lebih banyak orang</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Undangan dikirim</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="other">%d undangan tersisa</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="other">%d item</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Undangan dikirim</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Pembuatan akun tertunda</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Konfirmasi akses</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Undangan</string>
@@ -85,4 +95,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">Alamat telah diundang beberapa kali</string>
   <string name="sharing_snackbar_transfer_ownership_success">Kepemilikan ditransfer</string>
   <string name="sharing_snackbar_transfer_ownership_error">Terjadi kesalahan mentransfer kepemilikan</string>
+  <string name="sharing_invites_info_dialog_title">Batas anggota</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Brankas ini dapat menampung hingga %1$d anggota. Anda masih memiliki %2$d undangan tersisa.</string>
+  <string name="sharing_limit_reached">Brankas ini telah mencapai batas jumlah anggota dan undangannya.</string>
+  <string name="sharing_invites_info_upgrade_text">Tingkatkan akun Anda sekarang juga untuk mengundang lebih banyak anggota.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Bagikan</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Gunakan brankas untuk membagikan item dengan yang lainnya</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Bagikan brankas ini</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Sesuaikan</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Pindahkan ke brankas bersama</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Buat brankas baru untuk dibagikan</string>
 </resources>

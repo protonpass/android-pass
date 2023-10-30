@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="autofill_authenticate_prompt">從Proton Pass取得</string>
+  <string name="autofill_authenticate_prompt">從Proton Pass取得</string>
   <string name="error_credentials_not_found">找不到相對應的憑證</string>
   <string name="error_loading_items">載入項目失敗</string>
   <string name="topbar_search_query">於保管庫中搜尋…</string>
   <string name="topbar_search_query_primary_vault">於主要保管庫中搜尋…</string>
-  <string name="topbar_search_query_uninitialized">搜尋…</string>
+  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">搜尋…</string>
   <string name="inline_suggestions_open_app">開啟 Proton Pass</string>
   <string name="autofill_only_searching_in_primary_vault">您的方案僅允許將您主要保管庫中的項目用於自動填入用途。</string>
   <string name="autofill_only_searching_in_oldest_vaults">您的方案僅允許將您最舊保管庫中的項目用於自動填入用途。</string>
@@ -15,7 +15,7 @@
   <string name="autofill_dialog_associate_and_autofill">一律使用</string>
   <string name="autofill_dialog_just_autofill">使用一次</string>
   <string name="autofill_dialog_cancel">取消</string>
-  <string name="autofill_notification_copy_to_clipboard">已將 TOTP 複製到剪貼簿</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTP has been copied to clipboard</string>
   <string name="autofill_dialog_associate_title">使用登入?</string>
   <string name="snackbar_item_move_to_trash_success">項目已移至垃圾桶</string>
   <string name="snackbar_item_move_to_trash_error">無法移至垃圾桶</string>

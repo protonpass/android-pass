@@ -33,7 +33,7 @@ import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.pass.domain.ShareId
 
 sealed interface SearchInMode {
-    object PrimaryVault : SearchInMode
+    object OldestVaults : SearchInMode
     object AllVaults : SearchInMode
     object Uninitialized : SearchInMode
 }

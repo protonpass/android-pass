@@ -236,7 +236,7 @@ class SelectItemScreenTest {
                 }
             }
 
-            val text = activity.getString(R.string.autofill_only_searching_in_primary_vault)
+            val text = activity.getString(R.string.autofill_only_searching_in_oldest_vaults)
             waitUntilExists(hasText(text, substring = true))
             onNode(hasText(text, substring = true)).performClick()
             waitUntil { checker.isCalled }

@@ -101,7 +101,7 @@ internal fun SelectItemScreenContent(
         topBar = {
             val placeholder = when (uiState.searchUiState.searchInMode) {
                 SearchInMode.AllVaults -> stringResource(id = R.string.topbar_search_query)
-                SearchInMode.PrimaryVault -> stringResource(id = R.string.topbar_search_query_primary_vault)
+                SearchInMode.OldestVaults -> stringResource(id = R.string.topbar_search_query_oldest_vaults)
                 SearchInMode.Uninitialized -> stringResource(id = R.string.topbar_search_query_uninitialized)
             }
 

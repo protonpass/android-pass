@@ -35,14 +35,18 @@
   <string name="share_with_title">Teilen mit</string>
   <string name="share_with_email_hint">E‐Mail‐Adresse</string>
   <string name="share_with_email_error">Ungültige E-Mail-Adresse</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Eingeladene Benutzerinformationen konnten nicht abgerufen werden</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Die Informationen zum eingeladenen Benutzer können nicht abgerufen werden.</string>
   <string name="share_permissions_title">Zugriffsstufe festlegen</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s lädt Sie zum Zugriff auf Elemente in</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s lädt dich zum Zugriff auf Elemente ein im Tresor</string>
   <string name="sharing_join_shared_vault">Beitreten und synchronisieren</string>
   <string name="sharing_reject_invitation">Einladung ablehnen</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Gratulation, dein Zugriff wurde bestätigt</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Geteilten Tresor anzeigen</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Schließen</string>
   <string name="sharing_snackbar_get_invite_error">Fehler beim Abrufen der Einladung.</string>
   <string name="sharing_snackbar_invite_accepted">Einladung angenommen</string>
   <string name="sharing_snackbar_invite_accept_error">Fehler beim Annehmen der Einladung.</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
   <string name="sharing_snackbar_invite_rejected">Einladung abgelehnt</string>
   <string name="sharing_snackbar_invite_reject_error">Fehler beim Ablehnen der Einladung.</string>
   <string name="sharing_snackbar_vault_not_found">Tresor konnte nicht gefunden werden.</string>
@@ -61,7 +65,15 @@
   <string name="share_summary_vault_title">Tresor</string>
   <string name="share_summary_permissions_title">Zugriffsstufe</string>
   <string name="share_manage_vault_share_with_more_people">Mit weiteren Personen teilen</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Einladung gesendet</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">%d Einladung verbleibend</item>
+    <item quantity="other">%d Einladungen verbleibend</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d item</item>
+    <item quantity="other">%d items</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Einladung gesendet</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">﻿Ausstehende Kontoerstellung</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Zugriff bestätigen</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Einladungen</string>
@@ -75,10 +87,10 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kannst deinen letzten Tresor nicht übertragen.</string>
   <string name="sharing_bottomsheet_remove_access">Zugriff entfernen</string>
   <string name="sharing_bottomsheet_resend_invite">Einladung erneut senden</string>
-  <string name="sharing_bottomsheet_cancel_invite">Einladung abbrechen</string>
+  <string name="sharing_bottomsheet_cancel_invite">Einladung verwerfen</string>
   <string name="sharing_transfer_ownership_confirm_title">Inhaberschaft übertragen</string>
-  <string name="sharing_transfer_ownership_confirm_message">Übertragen Sie das Eigentumsrecht an diesem Tresor auf %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Einladung abgebrochen</string>
+  <string name="sharing_transfer_ownership_confirm_message">Inhaberschaft dieses Tresors auf %s übertragen?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Einladung verworfen</string>
   <string name="sharing_snackbar_cancel_invite_error">Fehler beim Abbrechen der Einladung.</string>
   <string name="sharing_snackbar_resend_invite_success">Einladung erneut gesendet</string>
   <string name="sharing_snackbar_resend_invite_error">Fehler beim erneuten Senden der Einladung.</string>
@@ -87,4 +99,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">Diese E-Mail-Adresse wurde zu oft eingeladen.</string>
   <string name="sharing_snackbar_transfer_ownership_success">Besitzer geändert</string>
   <string name="sharing_snackbar_transfer_ownership_error">Fehler beim Ändern des Besitzers.</string>
+  <string name="sharing_invites_info_dialog_title">Mitgliederlimit</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Dieser Tresor kann bis zu %1$d Mitglieder haben. Du hast noch %2$d Einladungen übrig.</string>
+  <string name="sharing_limit_reached">Dieser Tresor hat das Mitglieder- und Einladungslimit erreicht.</string>
+  <string name="sharing_invites_info_upgrade_text">Upgrade jetzt, um weitere einzuladen.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
 </resources>

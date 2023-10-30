@@ -44,9 +44,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s udostępnia Ci sejf</string>
   <string name="sharing_join_shared_vault">Dołącz i synchronizuj</string>
   <string name="sharing_reject_invitation">Odrzuć zaproszenie</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Gratulacje. Dostęp został potwierdzony</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Zobacz udostępniony sejf</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Zamknij</string>
   <string name="sharing_snackbar_get_invite_error">Nie można pobrać zaproszenia</string>
   <string name="sharing_snackbar_invite_accepted">Zaproszenie zostało zaakceptowane</string>
   <string name="sharing_snackbar_invite_accept_error">Wystąpił błąd podczas akceptowania zaproszenia</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Nie można zaakceptować zaproszenia z powodu osiągnięcia limitu maksymalnej liczby sejfów</string>
   <string name="sharing_snackbar_invite_rejected">Zaproszenie zostało odrzucone</string>
   <string name="sharing_snackbar_invite_reject_error">Wystąpił błąd podczas odrzucania zaproszenia</string>
   <string name="sharing_snackbar_vault_not_found">Sejf nie został znaleziony</string>
@@ -65,7 +69,19 @@
   <string name="share_summary_vault_title">Sejf</string>
   <string name="share_summary_permissions_title">Uprawnienia</string>
   <string name="share_manage_vault_share_with_more_people">Udostępnij innym</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Zaproszenie zostało wysłane</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">Pozostało %d zaproszenie</item>
+    <item quantity="few">Pozostały %d zaproszenia</item>
+    <item quantity="many">Pozostało %d zaproszeń</item>
+    <item quantity="other">Pozostało %d zaproszeń</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d element</item>
+    <item quantity="few">%d elementy</item>
+    <item quantity="many">%d elementów</item>
+    <item quantity="other">%d elementów</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Zaproszenie wysłane</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Oczekujące utworzenie konta</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Potwierdź dostęp</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Zaproszenia</string>
@@ -91,4 +107,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">Adres został zaproszony zbyt wiele razy</string>
   <string name="sharing_snackbar_transfer_ownership_success">Właściciel został zmieniony</string>
   <string name="sharing_snackbar_transfer_ownership_error">Wystąpił błąd podczas zmiany właściciela</string>
+  <string name="sharing_invites_info_dialog_title">Limit użytkowników</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Sejf nie może zawierać więcej niż %1$d użytkowników. Możesz zaprosić jeszcze %2$d użytkowników.</string>
+  <string name="sharing_limit_reached">Osiągnięto limit użytkowników i zaproszeń sejfu.</string>
+  <string name="sharing_invites_info_upgrade_text">Ulepsz konto, aby zaprosić więcej użytkowników.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Udostępnij</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Aby udostępnić elementy, udostępnij cały sejf</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Udostępnij sejf</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Dostosuj</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Przenieś do udostępnionego sejfu</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Utwórz nowy sejf do udostępnienia</string>
 </resources>

@@ -39,9 +39,13 @@
   <string name="password_copied_to_clipboard">Adgangskode kopieret</string>
   <string name="credit_card_number_copied_to_clipboard">Betalingskortnummer kopieret</string>
   <string name="credit_card_cvv_copied_to_clipboard">Betalingskort-CVV kopieret</string>
-  <string name="item_too_long_copied_to_clipboard">Indholdet var for langt, delvist kopieret til udklipsholderen</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Indholdet var for langt, delvist kopieret til udklipsholderen</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Bokse</string>
+  <plurals name="vault_drawer_vaults_item_count">
+    <item quantity="one">%d element</item>
+    <item quantity="other">%d elementer</item>
+  </plurals>
   <string name="vault_drawer_create_vault">Opret boks</string>
   <string name="vault_drawer_item_trash">Papirkurv</string>
   <string name="vault_drawer_all_vaults">Alle bokse</string>

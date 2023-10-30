@@ -38,9 +38,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s님이 항목 공유를 초대합니다:</string>
   <string name="sharing_join_shared_vault">참가 및 동기화</string>
   <string name="sharing_reject_invitation">초대 거절</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">축하합니다! 접근이 수락되었습니다.</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">공유된 금고 보기</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">닫기</string>
   <string name="sharing_snackbar_get_invite_error">초대할 수 없습니다</string>
   <string name="sharing_snackbar_invite_accepted">초대가 수락됨</string>
   <string name="sharing_snackbar_invite_accept_error">초대 수락 중 오류</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
   <string name="sharing_snackbar_invite_rejected">초대가 거부됨</string>
   <string name="sharing_snackbar_invite_reject_error">초대 거부 중 오류</string>
   <string name="sharing_snackbar_vault_not_found">금고를 찾을 수 없습니다</string>
@@ -59,7 +63,13 @@
   <string name="share_summary_vault_title">금고</string>
   <string name="share_summary_permissions_title">접근 권한</string>
   <string name="share_manage_vault_share_with_more_people">더 많은 사람과 공유</string>
-    <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">초대장을 보냈습니다</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="other">%d개 초대 남음</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="other">%d개 항목</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">초대장을 보냈습니다</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">계정 생성 전송 중</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">접근 확인</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">초대</string>
@@ -85,4 +95,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">이 주소로 너무 많이 초대했습니다.</string>
   <string name="sharing_snackbar_transfer_ownership_success">소유권이 이전되었습니다.</string>
   <string name="sharing_snackbar_transfer_ownership_error">소유권 이전 실패</string>
+  <string name="sharing_invites_info_dialog_title">구성원 제한</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">이 금고는 최대 %1$d명 회원을 지원합니다. %2$d명 초대가 남았습니다.</string>
+  <string name="sharing_limit_reached">이 금고는 회원 및 초대 제한에 도달했습니다.</string>
+  <string name="sharing_invites_info_upgrade_text">더 많은 사람을 초대하려면 지금 바로 업그레이드 하세요.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
 </resources>

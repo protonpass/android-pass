@@ -46,6 +46,7 @@
     <item quantity="other">%d kertaa</item>
   </plurals>
   <string name="more_info_last_time_modified">Viimeksi, %s</string>
+  <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">Avaa valikko -painike</string>
   <string name="mfa_limit_reached">2FA-rajoitus on saavutettu</string>
   <string name="mfa_icon_content_description">2FA-kuvake</string>

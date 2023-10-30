@@ -5,6 +5,14 @@
   <string name="bottomsheet_generate_password_title">პაროლის გენერირება</string>
   <string name="password_type">ტიპი</string>
   <string name="special_characters">სპეცსიმბოლოები (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s სიმბოლო</item>
+    <item quantity="other">%s სიმბოლო</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s სიტყვა</item>
+    <item quantity="other">%s სიტყვა</item>
+  </plurals>
   <string name="word_separator">სიტყვების განმაცალკევებელი</string>
   <string name="bottomsheet_option_capital_letters">მაღალი რეგისტრის სიმბოლოები (A-Z)</string>
   <string name="bottomsheet_option_capitalise">მაღალ რეგისტრში</string>

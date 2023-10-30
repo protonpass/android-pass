@@ -92,11 +92,7 @@ fun SelectVaultBottomsheetContent(
                             VaultStatus.Reason.ReadOnly ->
                                 stringResource(R.string.bottomsheet_select_vault_read_only) to false
                             VaultStatus.Reason.Downgraded -> {
-                                if (state.removePrimaryVaultEnabled) {
-                                    stringResource(R.string.bottomsheet_select_vault_only_oldest_vaults)
-                                } else {
-                                    stringResource(R.string.bottomsheet_select_vault_not_primary_vault)
-                                } to false
+                                stringResource(R.string.bottomsheet_select_vault_only_oldest_vaults) to false
                             }
                         }
 
@@ -167,7 +163,6 @@ fun SelectVaultBottomsheetContentPreview(
                     ),
                     selected = selectedVault,
                     showUpgradeMessage = input.second,
-                    removePrimaryVaultEnabled = false
                 ),
                 onVaultClick = {},
                 onUpgrade = {}

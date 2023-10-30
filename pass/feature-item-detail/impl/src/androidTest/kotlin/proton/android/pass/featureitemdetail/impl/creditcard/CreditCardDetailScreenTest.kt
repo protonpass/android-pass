@@ -370,8 +370,7 @@ class CreditCardDetailScreenTest {
             item = item,
             vault = Vault(
                 shareId = ShareId(SHARE_ID),
-                name = vaultName,
-                isPrimary = true
+                name = vaultName
             ),
             hasMoreThanOneVault = hasManyVaults
         )

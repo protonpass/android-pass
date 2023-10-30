@@ -91,7 +91,6 @@ class CreateCreditCardScreenTest {
             vault = Vault(
                 shareId = ShareId(SHARE_ID),
                 name = "Test vault",
-                isPrimary = true
             ),
             activeItemCount = 0,
             trashedItemCount = 0

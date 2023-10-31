@@ -31,14 +31,12 @@ object OnBoarding : NavItem(baseRoute = "onboarding", isTopLevel = true)
 )
 fun NavGraphBuilder.onBoardingGraph(
     onOnBoardingFinished: () -> Unit,
-    onInvitationConfirmed: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
     composable(OnBoarding) {
         BackHandler { onNavigateBack() }
         OnBoardingScreen(
             onBoardingShown = onOnBoardingFinished,
-            onInvitationConfirmed = onInvitationConfirmed
         )
     }
 }

@@ -20,10 +20,14 @@ package proton.android.pass.featuresharing.impl.confirmed
 
 import androidx.compose.runtime.Stable
 import proton.pass.domain.PendingInvite
+import proton.pass.domain.ShareId
 
 sealed interface InviteConfirmedEvent {
     object Unknown : InviteConfirmedEvent
     object Close : InviteConfirmedEvent
+
+    @JvmInline
+    value class Confirmed(val shareId: ShareId) : InviteConfirmedEvent
 }
 
 @Stable

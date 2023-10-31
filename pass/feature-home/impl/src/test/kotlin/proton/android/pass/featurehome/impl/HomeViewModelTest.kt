@@ -21,6 +21,7 @@ package proton.android.pass.featurehome.impl
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
@@ -34,6 +35,7 @@ import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
@@ -52,6 +54,7 @@ import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuresearchoptions.fakes.TestHomeSearchOptionsRepository
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
@@ -91,6 +94,7 @@ class HomeViewModelTest {
     private lateinit var observeItems: TestObserveItems
     private lateinit var preferencesRepository: TestPreferenceRepository
     private lateinit var getUserPlan: TestGetUserPlan
+    private lateinit var savedState: TestSavedStateHandleProvider
 
 
     @Before
@@ -115,30 +119,8 @@ class HomeViewModelTest {
         observeItems = TestObserveItems()
         preferencesRepository = TestPreferenceRepository()
         getUserPlan = TestGetUserPlan()
-
-        instance = HomeViewModel(
-            trashItem = trashItem,
-            snackbarDispatcher = snackbarDispatcher,
-            clipboardManager = clipboardManager,
-            performSync = performSync,
-            encryptionContextProvider = encryptionContextProvider,
-            restoreItem = restoreItem,
-            restoreItems = restoreItems,
-            deleteItem = deleteItem,
-            clearTrash = clearTrash,
-            addSearchEntry = addSearchEntry,
-            deleteSearchEntry = deleteSearchEntry,
-            deleteAllSearchEntry = deleteAllSearchEntry,
-            observeSearchEntry = observeSearchEntry,
-            telemetryManager = telemetryManager,
-            homeSearchOptionsRepository = searchOptionsRepository,
-            observeVaults = observeVaults,
-            clock = clock,
-            observeItems = observeItems,
-            preferencesRepository = preferencesRepository,
-            getUserPlan = getUserPlan,
-            appDispatchers = TestAppDispatchers()
-        )
+        savedState = TestSavedStateHandleProvider()
+        createViewModel()
     }
 
     @Test
@@ -188,6 +170,16 @@ class HomeViewModelTest {
         }
     }
 
+    @Test
+    fun `if savedState contains initial share id it gets passed to repository`() = runTest {
+        val shareId = "SHARE_ID"
+        savedState.get()[CommonOptionalNavArgId.ShareId.key] = shareId
+
+        createViewModel()
+        val vaultSelection = searchOptionsRepository.observeVaultSelectionOption().first()
+        assertThat(vaultSelection).isEqualTo(VaultSelectionOption.Vault(ShareId(shareId)))
+    }
+
     private fun setupItems(): List<Item> {
         val items = TestObserveItems.defaultValues
             .asList()
@@ -228,6 +220,33 @@ class HomeViewModelTest {
         observeSearchEntry.emit(searchEntries)
 
         return items
+    }
+
+    private fun createViewModel() {
+        instance = HomeViewModel(
+            trashItem = trashItem,
+            snackbarDispatcher = snackbarDispatcher,
+            clipboardManager = clipboardManager,
+            performSync = performSync,
+            encryptionContextProvider = encryptionContextProvider,
+            restoreItem = restoreItem,
+            restoreItems = restoreItems,
+            deleteItem = deleteItem,
+            clearTrash = clearTrash,
+            addSearchEntry = addSearchEntry,
+            deleteSearchEntry = deleteSearchEntry,
+            deleteAllSearchEntry = deleteAllSearchEntry,
+            observeSearchEntry = observeSearchEntry,
+            telemetryManager = telemetryManager,
+            homeSearchOptionsRepository = searchOptionsRepository,
+            observeVaults = observeVaults,
+            clock = clock,
+            observeItems = observeItems,
+            preferencesRepository = preferencesRepository,
+            getUserPlan = getUserPlan,
+            appDispatchers = TestAppDispatchers(),
+            savedState = savedState
+        )
     }
 
 }

@@ -37,6 +37,7 @@ import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
+import proton.android.pass.featurehome.impl.HOME_GO_TO_VAULT_KEY
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeNavigation
 import proton.android.pass.featurehome.impl.homeGraph
@@ -841,7 +842,6 @@ fun NavGraphBuilder.appGraph(
     )
     onBoardingGraph(
         onOnBoardingFinished = { appNavigator.navigate(Home) },
-        onInvitationConfirmed = { appNavigator.navigate(destination = InviteConfirmed) },
         onNavigateBack = { onNavigate(AppNavigation.Finish) }
     )
     featureFlagsGraph()
@@ -980,6 +980,25 @@ fun NavGraphBuilder.appGraph(
                 route = EditVaultScreen.createNavRoute(it.shareId),
                 backDestination = SharingWith
             )
+
+            is SharingNavigation.ViewVault -> dismissBottomSheet {
+                when {
+                    appNavigator.hasDestinationInStack(Home) -> {
+                        appNavigator.navigateBackWithResult(
+                            key = HOME_GO_TO_VAULT_KEY,
+                            value = it.shareId.id,
+                            comesFromBottomsheet = true
+                        )
+                    }
+                    else -> {
+                        appNavigator.navigate(
+                            destination = Home,
+                            route = Home.buildRoute(it.shareId)
+                        )
+                    }
+                }
+
+            }
         }
     }
     syncGraph {

@@ -24,11 +24,13 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
@@ -46,32 +48,31 @@ class AutofillManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : AutofillManager {
 
-    override fun getAutofillStatus(): Flow<AutofillSupportedStatus> = callbackFlow {
-        val autofillManager = context.getSystemService(AndroidAutofillManager::class.java)
-        when {
-            autofillManager == null -> trySend(Unsupported)
-            !autofillManager.isAutofillSupported -> trySend(Unsupported)
-            else -> while (currentCoroutineContext().isActive) {
-                runCatching {
-                    if (autofillManager.hasEnabledAutofillServices()) {
-                        trySend(Supported(AutofillStatus.EnabledByOurService))
-                    } else if (autofillManager.isEnabled) {
-                        trySend(Supported(AutofillStatus.EnabledByOtherService))
-                    } else {
-                        trySend(Supported(AutofillStatus.Disabled))
+    override fun getAutofillStatus(): Flow<AutofillSupportedStatus> =
+        callbackFlow {
+            val autofillManager = context.getSystemService(AndroidAutofillManager::class.java)
+            when {
+                autofillManager == null -> trySend(Unsupported)
+                !autofillManager.isAutofillSupported -> trySend(Unsupported)
+                else -> while (currentCoroutineContext().isActive) {
+                    runCatching {
+                        if (autofillManager.hasEnabledAutofillServices()) {
+                            trySend(Supported(AutofillStatus.EnabledByOurService))
+                        } else if (autofillManager.isEnabled) {
+                            trySend(Supported(AutofillStatus.EnabledByOtherService))
+                        } else {
+                            trySend(Supported(AutofillStatus.Disabled))
+                        }
+                    }.onFailure {
+                        PassLogger.w(TAG, it, "Exception while retrieving hasEnabledAutofillServices")
+                        trySend(Unsupported)
                     }
-                }.onFailure {
-                    PassLogger.w(
-                        TAG,
-                        it,
-                        "Exception while retrieving hasEnabledAutofillServices"
-                    )
-                    trySend(Unsupported)
+                    delay(UPDATE_TIME.inWholeMilliseconds)
                 }
-                delay(UPDATE_TIME.inWholeMilliseconds)
             }
         }
-    }.distinctUntilChanged()
+            .distinctUntilChanged()
+            .flowOn(Dispatchers.Default)
 
     override fun openAutofillSelector() {
         try {

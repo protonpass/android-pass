@@ -33,6 +33,7 @@ import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestPendingInvite
+import proton.pass.domain.ShareId
 
 class AcceptInviteViewModelTest {
 
@@ -86,7 +87,8 @@ class AcceptInviteViewModelTest {
     @Test
     fun `accept success sends close event and snackbar message`() = runTest {
         val items = 10
-        acceptInvite.emitValue(Result.success(AcceptInviteStatus.Done(items)))
+        val res = AcceptInviteStatus.Done(items = items, shareId = ShareId("SHARE_ID"))
+        acceptInvite.emitValue(Result.success(res))
 
         instance.onConfirm(TEST_INVITE)
         instance.state.test {

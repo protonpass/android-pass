@@ -65,7 +65,10 @@ class AcceptInviteImpl @Inject constructor(
                     )
                     is FetchShareItemsStatus.Done -> {
                         fetchShareItemsStatusRepository.clear(shareId)
-                        AcceptInviteStatus.Done(it.items)
+                        AcceptInviteStatus.Done(
+                            items = it.items,
+                            shareId = shareId
+                        )
                     }
                 }
             }

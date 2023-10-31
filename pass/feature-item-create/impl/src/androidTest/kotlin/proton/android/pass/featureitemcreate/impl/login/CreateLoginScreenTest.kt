@@ -160,6 +160,7 @@ class CreateLoginScreenTest {
             note = note,
         )
         totpManager.setSanitisedEditResult(Result.success(totp))
+        totpManager.addSanitisedSaveResult(Result.success(totp))
         createItem.sendItem(Result.success(item))
 
         val checker = CallChecker<Unit>()

@@ -16,19 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.totp.api
+package proton.android.pass.totp.impl
 
-import kotlinx.coroutines.flow.Flow
+import proton.android.pass.totp.api.TotpSpec
 
-interface TotpManager {
-    fun observeCode(spec: TotpSpec): Flow<TotpWrapper>
-    fun parse(uri: String): Result<TotpSpec>
-    fun sanitiseToEdit(uri: String): Result<String>
-    fun sanitiseToSave(originalUri: String, editedUri: String): Result<String>
-
-    data class TotpWrapper(
-        val code: String,
-        val remainingSeconds: Int,
-        val totalSeconds: Int
-    )
+interface TotpTokenGenerator {
+    fun generate(spec: TotpSpec, currentTime: ULong): Result<String>
 }

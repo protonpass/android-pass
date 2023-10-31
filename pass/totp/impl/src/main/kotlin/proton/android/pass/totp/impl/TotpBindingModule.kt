@@ -34,4 +34,13 @@ abstract class TotpBindingModule {
 
     @Binds
     abstract fun bindObserveTotpFromUri(impl: ObserveTotpFromUriImpl): ObserveTotpFromUri
+
+    @Binds
+    abstract fun bindTotpUriParser(impl: TotpUriParserImpl): TotpUriParser
+
+    @Binds
+    abstract fun bindTotpUriSanitiser(impl: TotpUriSanitiserImpl): TotpUriSanitiser
+
+    @Binds
+    abstract fun bindTotpTokenGenerator(impl: TotpTokenGeneratorImpl): TotpTokenGenerator
 }

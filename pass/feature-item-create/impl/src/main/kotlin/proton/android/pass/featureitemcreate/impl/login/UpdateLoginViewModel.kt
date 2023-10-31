@@ -116,6 +116,7 @@ class UpdateLoginViewModel @Inject constructor(
     }
 
     private var itemOption: Option<Item> = None
+    private var originalTotpCustomFields: List<UICustomFieldContent.Totp> = emptyList()
 
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -167,7 +168,7 @@ class UpdateLoginViewModel @Inject constructor(
 
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val currentItem = itemOption.value() ?: return@launch
-        val shouldUpdate = validateItem()
+        val shouldUpdate = validateItem(currentItem.some(), originalTotpCustomFields)
         if (!shouldUpdate) return@launch
 
         isLoadingState.update { IsLoadingState.Loading }
@@ -211,6 +212,32 @@ class UpdateLoginViewModel @Inject constructor(
                 } else {
                     UIHiddenState.Concealed(itemContents.password)
                 }
+                val uiCustomFieldList = itemContents.customFields.mapNotNull {
+                    convertCustomField(it, this@withEncryptionContext)
+                }.toImmutableList()
+                originalTotpCustomFields =
+                    uiCustomFieldList.filterIsInstance<UICustomFieldContent.Totp>()
+                val sanitisedToEditCustomField = uiCustomFieldList.map {
+                    if (it is UICustomFieldContent.Totp) {
+                        val uri = when (val value = it.value) {
+                            is UIHiddenState.Concealed -> decrypt(value.encrypted)
+                            is UIHiddenState.Empty -> ""
+                            is UIHiddenState.Revealed -> value.clearText
+                        }
+                        val sanitisedUri = getDisplayTotp(uri)
+                        UICustomFieldContent.Totp(
+                            label = it.label,
+                            value = UIHiddenState.Revealed(
+                                encrypted = encrypt(sanitisedUri),
+                                clearText = sanitisedUri
+                            ),
+                            id = it.id
+                        )
+                    } else {
+                        it
+                    }
+                }
+
 
                 loginItemFormMutableState = loginItemFormState.copy(
                     title = decrypt(item.title),
@@ -220,9 +247,7 @@ class UpdateLoginViewModel @Inject constructor(
                     note = decrypt(item.note),
                     packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),
                     primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
-                    customFields = itemContents.customFields.mapNotNull {
-                        convertCustomField(it, this@withEncryptionContext)
-                    }.toImmutableList()
+                    customFields = sanitisedToEditCustomField
                 )
             }
         }
@@ -323,14 +348,13 @@ class UpdateLoginViewModel @Inject constructor(
                 is UIHiddenState.Empty -> ""
                 is UIHiddenState.Revealed -> value.clearText
             }
-
-            val totp = getDisplayTotp(uri)
             UICustomFieldContent.Totp(
                 label = customFieldContent.label,
                 value = UIHiddenState.Revealed(
-                    encrypted = encryptionContext.encrypt(totp),
-                    clearText = totp
-                )
+                    encrypted = encryptionContext.encrypt(uri),
+                    clearText = uri
+                ),
+                id = uiCustomFieldContent.id
             )
         } else {
             uiCustomFieldContent
@@ -351,17 +375,7 @@ class UpdateLoginViewModel @Inject constructor(
     private fun getDisplayTotp(totp: String): String {
         if (totp.isBlank()) return totp
 
-        return totpManager.parse(totp)
-            .fold(
-                onSuccess = { spec ->
-                    if (spec.isUsingDefaultParameters()) {
-                        spec.secret
-                    } else {
-                        totp
-                    }
-                },
-                onFailure = { totp }
-            )
+        return totpManager.sanitiseToEdit(totp).getOrNull() ?: totp
     }
 
     companion object {

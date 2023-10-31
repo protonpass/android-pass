@@ -188,6 +188,9 @@ sealed interface SharingNavigation {
 
     @JvmInline
     value class EditVault(val shareId: ShareId) : SharingNavigation
+
+    @JvmInline
+    value class ViewVault(val shareId: ShareId) : SharingNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)

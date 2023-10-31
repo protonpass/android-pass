@@ -34,11 +34,12 @@ dependencies {
     implementation(libs.commons.codec)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.onetimepassword)
+    implementation(libs.pass.common)
 
     implementation(libs.core.utilKotlin)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.log.api)
 
     implementation(libs.dagger.hilt.android)

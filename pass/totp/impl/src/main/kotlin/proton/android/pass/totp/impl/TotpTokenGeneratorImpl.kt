@@ -18,19 +18,19 @@
 
 package proton.android.pass.totp.impl
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.totp.api.ObserveTotpFromUri
-import proton.android.pass.totp.api.TotpManager
+import proton.android.pass.commonrust.TotpException
+import proton.android.pass.totp.api.TotpSpec
 import javax.inject.Inject
+import proton.android.pass.commonrust.TotpTokenGenerator as RustTotpTokenGenerator
 
-class ObserveTotpFromUriImpl @Inject constructor(
-    private val totpManager: TotpManager
-) : ObserveTotpFromUri {
+class TotpTokenGeneratorImpl @Inject constructor() : TotpTokenGenerator {
 
-    override fun invoke(uri: String): Flow<TotpManager.TotpWrapper> = totpManager.parse(uri)
-        .fold(
-            onSuccess = { totpManager.observeCode(it) },
-            onFailure = { throw it }
-        )
+    private val totpTokenGenerator by lazy { RustTotpTokenGenerator() }
+
+    override fun generate(spec: TotpSpec, currentTime: ULong): Result<String> =
+        runCatching { totpTokenGenerator.generateCurrentToken(spec.toRustTotpSpec(), currentTime) }
+            .fold(
+                onSuccess = { Result.success(it) },
+                onFailure = { Result.failure((it as TotpException).toTotpUriException()) }
+            )
 }
-

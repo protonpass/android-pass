@@ -22,6 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.api.TotpSpec
+import java.util.LinkedList
+import java.util.Queue
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,7 +32,7 @@ class TestTotpManager @Inject constructor() : TotpManager {
 
     private var parseResult: Result<TotpSpec> = Result.failure(NotImplementedError())
     private var sanitisedEditResult = Result.success("")
-    private var sanitisedSaveResult = Result.success("")
+    private val sanitisedSaveResultsQueue: Queue<Result<String>> = LinkedList()
     private var totpWrapper = TotpManager.TotpWrapper("", 0, 0)
 
     fun setParseResult(result: Result<TotpSpec>) {
@@ -41,8 +43,8 @@ class TestTotpManager @Inject constructor() : TotpManager {
         sanitisedEditResult = result
     }
 
-    fun setSanitisedSaveResult(result: Result<String>) {
-        sanitisedSaveResult = result
+    fun addSanitisedSaveResult(result: Result<String>) {
+        sanitisedSaveResultsQueue.add(result)
     }
 
     override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> = flowOf(totpWrapper)
@@ -52,5 +54,5 @@ class TestTotpManager @Inject constructor() : TotpManager {
     override fun sanitiseToEdit(uri: String): Result<String> = sanitisedEditResult
 
     override fun sanitiseToSave(originalUri: String, editedUri: String): Result<String> =
-        sanitisedSaveResult
+        sanitisedSaveResultsQueue.poll() ?: Result.success("")
 }

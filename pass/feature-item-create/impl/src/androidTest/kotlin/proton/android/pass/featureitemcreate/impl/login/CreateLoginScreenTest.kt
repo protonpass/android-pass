@@ -35,6 +35,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
@@ -133,7 +134,7 @@ class CreateLoginScreenTest {
         )
         val totpSpec = TotpSpec(
             secret = "SECRET",
-            label = "LABEL",
+            label = "LABEL".some(),
         )
         totpManager.setParseResult(Result.success(totpSpec))
         observeVaults.sendResult(Result.success(listOf(vault)))
@@ -158,7 +159,7 @@ class CreateLoginScreenTest {
             username = username,
             note = note,
         )
-        totpManager.setSanitisedEditResult(totp)
+        totpManager.setSanitisedEditResult(Result.success(totp))
         createItem.sendItem(Result.success(item))
 
         val checker = CallChecker<Unit>()
@@ -260,7 +261,8 @@ class CreateLoginScreenTest {
         val totpCustomFieldValue = "TOTPSECRET"
 
         createItem.sendItem(Result.success(TestObserveItems.createLogin()))
-        totpManager.setSanitisedEditResult(totpCustomFieldValue)
+        totpManager.addSanitisedSaveResult(Result.success(""))
+        totpManager.addSanitisedSaveResult(Result.success(totpCustomFieldValue))
 
         val textCustomField = CustomFieldContent.Text(
             label = textCustomFieldLabel,

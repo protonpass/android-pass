@@ -72,7 +72,7 @@ coroutines = "1.6.4"
 datetime = "0.4.0"
 serializationJson = "1.4.1"
 #Pass
-passCommon = "0.3.0"
+passCommon = "0.3.1"
 # Sentry
 sentry = "6.18.1"
 # Showkase
@@ -86,8 +86,6 @@ junit = "4.13.2"
 testParameterInjector = "1.10"
 truth = "1.1.5"
 fusion = "0.9.52"
-# Turingcomplete
-onetimepassword = "2.4.0"
 # Zxing
 zxing = "3.5.1"
 
@@ -311,9 +309,6 @@ kotlinTest = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotli
 testParameterInjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 fusion = { module = "me.proton.test:fusion", version.ref = "fusion"}
-
-# Turingcomplete
-onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword", version.ref = "onetimepassword" }
 
 # Zxing
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }

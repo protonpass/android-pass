@@ -281,8 +281,11 @@ internal class CreateLoginViewModelTest {
         val shareId = ShareId("shareId")
         setInitialContents()
         sendInitialVault(shareId)
+        val uri = "invalid://uri"
+        totpManager.setSanitisedEditResult(Result.success(uri))
+        totpManager.setSanitisedSaveResult(Result.failure(RuntimeException()))
 
-        instance.onTotpChange("invalid://uri")
+        instance.onTotpChange(uri)
         instance.createItem()
         instance.createLoginUiState.test {
             val item = awaitItem()
@@ -290,9 +293,7 @@ internal class CreateLoginViewModelTest {
 
             assertThat(item.baseLoginUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(item.baseLoginUiState.validationErrors).isEqualTo(
-                setOf(
-                    LoginItemValidationErrors.InvalidTotp
-                )
+                setOf(LoginItemValidationErrors.InvalidTotp)
             )
 
             val message = snackbarDispatcher.snackbarMessage.first().value()!!

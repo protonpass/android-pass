@@ -23,6 +23,7 @@ import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.pass.domain.CustomFieldContent
+import java.util.UUID
 
 @Immutable
 @Parcelize
@@ -39,7 +40,8 @@ sealed interface UICustomFieldContent : Parcelable {
 
     @Immutable
     @Parcelize
-    data class Totp(override val label: String, val value: UIHiddenState) : UICustomFieldContent
+    data class Totp(override val label: String, val value: UIHiddenState, val id: String) :
+        UICustomFieldContent
 
     fun toCustomFieldContent() = when (this) {
         is Text -> CustomFieldContent.Text(label, value)
@@ -53,10 +55,12 @@ sealed interface UICustomFieldContent : Parcelable {
                 is Text -> value == other.value
                 else -> false
             }
+
             is Hidden -> when (other) {
                 is Hidden -> value.compare(other.value, encryptionContext)
                 else -> false
             }
+
             is Totp -> when (other) {
                 is Totp -> value.compare(other.value, encryptionContext)
                 else -> false
@@ -67,7 +71,9 @@ sealed interface UICustomFieldContent : Parcelable {
         fun from(state: CustomFieldContent) = when (state) {
             is CustomFieldContent.Text -> Text(state.label, state.value)
             is CustomFieldContent.Hidden -> Hidden(state.label, UIHiddenState.from(state.value))
-            is CustomFieldContent.Totp -> Totp(state.label, UIHiddenState.from(state.value))
+            is CustomFieldContent.Totp -> Totp(state.label, UIHiddenState.from(state.value), generateUniqueID())
         }
+
+        private fun generateUniqueID(): String = UUID.randomUUID().toString()
     }
 }

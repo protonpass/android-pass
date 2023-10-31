@@ -26,6 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
@@ -102,7 +103,8 @@ class UpdateLoginViewModelTest {
                 customFields = emptyList()
             )
         )
-        totpManager.setParseResult(Result.success(TotpSpec(secret = secret, label = "label")))
+        totpManager.setSanitisedEditResult(Result.success(secret))
+        totpManager.setParseResult(Result.success(TotpSpec(secret = secret, label = "label".some())))
         getItemById.emitValue(Result.success(item))
 
         assertThat(instance.loginItemFormState.primaryTotp)
@@ -126,6 +128,7 @@ class UpdateLoginViewModelTest {
                 customFields = emptyList()
             )
         )
+        totpManager.setSanitisedEditResult(Result.success(uri))
         getItemById.emitValue(Result.success(item))
 
         assertThat(instance.loginItemFormState.primaryTotp).isEqualTo(UIHiddenState.from(primaryTotp))

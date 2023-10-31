@@ -410,6 +410,7 @@ abstract class BaseLoginViewModel(
         return fields to hasCustomFieldErrors
     }
 
+    @Suppress("ReturnCount", "LongMethod")
     private fun validateTotpField(
         field: UICustomFieldContent.Totp,
         index: Int,
@@ -444,6 +445,20 @@ abstract class BaseLoginViewModel(
                 addValidationError(CustomFieldValidationError.InvalidTotp(index))
                 return field to true
             }
+        if (sanitisedUri.isNotBlank()) {
+            val uriSpec = totpManager.parse(sanitisedUri).getOrElse {
+                addValidationError(CustomFieldValidationError.InvalidTotp(index))
+                return field to true
+            }
+
+            val code = kotlin.runCatching {
+                runBlocking { totpManager.observeCode(uriSpec).firstOrNull() }
+            }
+            if (code.isFailure) {
+                addValidationError(CustomFieldValidationError.InvalidTotp(index))
+                return field to true
+            }
+        }
         val encryptedSanitized = encryptionContextProvider.withEncryptionContext {
             encrypt(sanitisedUri)
         }

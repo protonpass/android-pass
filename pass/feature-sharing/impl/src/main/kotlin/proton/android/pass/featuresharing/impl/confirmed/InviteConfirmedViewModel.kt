@@ -171,7 +171,7 @@ class InviteConfirmedViewModel @Inject constructor(
                                 total = status.items
                             )
                         }
-                        eventFlow.update { InviteConfirmedEvent.Close }
+                        eventFlow.update { InviteConfirmedEvent.Confirmed(status.shareId) }
                         snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
                     }
                 }

@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.pass.domain.InviteToken
+import proton.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,7 +33,16 @@ import javax.inject.Singleton
 class TestAcceptInvite @Inject constructor() : AcceptInvite {
 
     private var result: MutableStateFlow<Result<AcceptInviteStatus>> =
-        MutableStateFlow(Result.success(AcceptInviteStatus.Done(0)))
+        MutableStateFlow(
+            Result.success(
+                AcceptInviteStatus.Done(
+                    items = 0,
+                    shareId = ShareId(
+                        DEFAULT_SHARE_ID
+                    )
+                )
+            )
+        )
     private val memory: MutableList<InviteToken> = mutableListOf()
 
     fun getMemory(): List<InviteToken> = memory
@@ -46,4 +56,7 @@ class TestAcceptInvite @Inject constructor() : AcceptInvite {
         return result.map { it.getOrThrow() }
     }
 
+    companion object {
+        const val DEFAULT_SHARE_ID = "TestAcceptInvite-ShareID"
+    }
 }

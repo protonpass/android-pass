@@ -82,6 +82,7 @@ import proton.pass.domain.ShareId
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateEvent: (HomeNavigation) -> Unit,
+    goToVault: ShareId? = null,
     homeViewModel: HomeViewModel = hiltViewModel(),
     routerViewModel: RouterViewModel = hiltViewModel(),
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel()
@@ -100,6 +101,12 @@ fun HomeScreen(
     var shouldShowRestoreAllDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     var aliasToBeTrashed by rememberSaveable(stateSaver = ItemUiModelSaver) { mutableStateOf(null) }
+
+    LaunchedEffect(goToVault) {
+        if (goToVault != null) {
+            homeViewModel.setVaultSelection(VaultSelectionOption.Vault(goToVault))
+        }
+    }
 
     val actionState = homeUiState.homeListUiState.actionState
     LaunchedEffect(actionState) {

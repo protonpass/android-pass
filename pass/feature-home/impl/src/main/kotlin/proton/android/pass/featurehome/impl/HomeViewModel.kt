@@ -65,6 +65,7 @@ import proton.android.pass.commonui.api.ItemSorter.sortByMostRecent
 import proton.android.pass.commonui.api.ItemSorter.sortByTitleAsc
 import proton.android.pass.commonui.api.ItemSorter.sortByTitleDesc
 import proton.android.pass.commonui.api.ItemUiFilter.filterByQuery
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
@@ -101,6 +102,7 @@ import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -139,11 +141,20 @@ class HomeViewModel @Inject constructor(
     observeItems: ObserveItems,
     preferencesRepository: UserPreferencesRepository,
     getUserPlan: GetUserPlan,
-    appDispatchers: AppDispatchers
+    appDispatchers: AppDispatchers,
+    savedState: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
+    }
+
+    init {
+        val initialShareId: String? = savedState.get()[CommonOptionalNavArgId.ShareId.key]
+        if (initialShareId != null) {
+            val vaultSelection = VaultSelectionOption.Vault(ShareId(initialShareId))
+            homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
+        }
     }
 
     // Variable to keep track of whether the user has entered the search in this session, so we

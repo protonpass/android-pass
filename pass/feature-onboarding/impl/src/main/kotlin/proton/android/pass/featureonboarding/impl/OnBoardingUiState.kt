@@ -30,7 +30,6 @@ import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 sealed interface OnboardingEvent {
     object Unknown : OnboardingEvent
     object OnboardingCompleted : OnboardingEvent
-    object ConfirmedInvite : OnboardingEvent
 }
 
 @Stable

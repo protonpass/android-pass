@@ -77,7 +77,6 @@ class OnBoardingScreenTest {
         composeTestRule.setContent {
             OnBoardingScreen(
                 onBoardingShown = { checker.call() },
-                onInvitationConfirmed = {}
             )
         }
 
@@ -97,7 +96,6 @@ class OnBoardingScreenTest {
         composeTestRule.setContent {
             OnBoardingScreen(
                 onBoardingShown = { checker.call() },
-                onInvitationConfirmed = {}
             )
         }
 
@@ -129,7 +127,6 @@ class OnBoardingScreenTest {
         composeTestRule.setContent {
             OnBoardingScreen(
                 onBoardingShown = { checker.call() },
-                onInvitationConfirmed = {}
             )
         }
 
@@ -161,7 +158,6 @@ class OnBoardingScreenTest {
         composeTestRule.setContent {
             OnBoardingScreen(
                 onBoardingShown = { checker.call() },
-                onInvitationConfirmed = {}
             )
         }
 

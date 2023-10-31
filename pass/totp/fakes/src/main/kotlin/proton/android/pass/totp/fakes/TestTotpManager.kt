@@ -19,7 +19,7 @@
 package proton.android.pass.totp.fakes
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.api.TotpSpec
 import javax.inject.Inject
@@ -29,21 +29,28 @@ import javax.inject.Singleton
 class TestTotpManager @Inject constructor() : TotpManager {
 
     private var parseResult: Result<TotpSpec> = Result.failure(NotImplementedError())
-    private var generatedUri = ""
+    private var sanitisedEditResult = Result.success("")
+    private var sanitisedSaveResult = Result.success("")
+    private var totpWrapper = TotpManager.TotpWrapper("", 0, 0)
 
     fun setParseResult(result: Result<TotpSpec>) {
         parseResult = result
     }
 
-    fun setGeneratedUri(uri: String) {
-        generatedUri = uri
+    fun setSanitisedEditResult(result: Result<String>) {
+        sanitisedEditResult = result
     }
 
-    override fun generateUri(spec: TotpSpec): String = generatedUri
+    fun setSanitisedSaveResult(result: Result<String>) {
+        sanitisedSaveResult = result
+    }
 
-    override fun generateUriWithDefaults(secret: String): Result<String> = Result.success("")
-
-    override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> = emptyFlow()
+    override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> = flowOf(totpWrapper)
 
     override fun parse(uri: String): Result<TotpSpec> = parseResult
+
+    override fun sanitiseToEdit(uri: String): Result<String> = sanitisedEditResult
+
+    override fun sanitiseToSave(originalUri: String, editedUri: String): Result<String> =
+        sanitisedSaveResult
 }

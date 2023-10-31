@@ -232,7 +232,7 @@ class CreateLoginViewModel @Inject constructor(
     }
 
     fun createItem() = viewModelScope.launch(coroutineExceptionHandler) {
-        val shouldCreate = validateItem()
+        val shouldCreate = validateItem(None, emptyList())
         if (!shouldCreate) return@launch
 
         isLoadingState.update { IsLoadingState.Loading }

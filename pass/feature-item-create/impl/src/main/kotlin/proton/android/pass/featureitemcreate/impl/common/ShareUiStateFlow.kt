@@ -50,7 +50,7 @@ fun getShareUiStateFlow(
         LoadingResult.Loading -> return@combine ShareUiState.Loading
         is LoadingResult.Success -> allSharesResult.data
     }
-    shareUiStateWithRemovePrimaryVault(
+    shareUiState(
         tag = tag,
         allShares = allShares,
         navShareId = navShareId,
@@ -62,7 +62,7 @@ fun getShareUiStateFlow(
     initialValue = ShareUiState.NotInitialised
 )
 
-private fun shareUiStateWithRemovePrimaryVault(
+private fun shareUiState(
     tag: String,
     allShares: List<VaultWithItemCount>,
     selectedShareId: Option<ShareId>,

@@ -283,7 +283,7 @@ internal class CreateLoginViewModelTest {
         sendInitialVault(shareId)
         val uri = "invalid://uri"
         totpManager.setSanitisedEditResult(Result.success(uri))
-        totpManager.setSanitisedSaveResult(Result.failure(RuntimeException()))
+        totpManager.addSanitisedSaveResult(Result.failure(RuntimeException()))
 
         instance.onTotpChange(uri)
         instance.createItem()

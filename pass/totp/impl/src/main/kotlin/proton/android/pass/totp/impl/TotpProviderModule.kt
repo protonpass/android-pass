@@ -32,5 +32,10 @@ object TotpProviderModule {
 
     @Provides
     @Singleton
-    fun provideTotpManager(): TotpManager = TotpManagerImpl(Clock.System)
+    fun provideTotpManager(
+        totpUriParser: TotpUriParser,
+        totpUriSanitiser: TotpUriSanitiser,
+        totpTokenGenerator: TotpTokenGenerator,
+    ): TotpManager =
+        TotpManagerImpl(Clock.System, totpUriParser, totpUriSanitiser, totpTokenGenerator)
 }

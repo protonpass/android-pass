@@ -158,7 +158,7 @@ class CreateLoginScreenTest {
             username = username,
             note = note,
         )
-        totpManager.setGeneratedUri(totp)
+        totpManager.setSanitisedEditResult(totp)
         createItem.sendItem(Result.success(item))
 
         val checker = CallChecker<Unit>()
@@ -260,7 +260,7 @@ class CreateLoginScreenTest {
         val totpCustomFieldValue = "TOTPSECRET"
 
         createItem.sendItem(Result.success(TestObserveItems.createLogin()))
-        totpManager.setGeneratedUri(totpCustomFieldValue)
+        totpManager.setSanitisedEditResult(totpCustomFieldValue)
 
         val textCustomField = CustomFieldContent.Text(
             label = textCustomFieldLabel,

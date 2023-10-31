@@ -119,7 +119,8 @@ fun TotpCustomFieldEntryPreview(
             TotpCustomFieldEntry(
                 content = UICustomFieldContent.Totp(
                     label = "label",
-                    value = UIHiddenState.Revealed("", input.second.text)
+                    value = UIHiddenState.Revealed("", input.second.text),
+                    id = "id"
                 ),
                 validationError = input.second.error,
                 canEdit = input.second.isEnabled,

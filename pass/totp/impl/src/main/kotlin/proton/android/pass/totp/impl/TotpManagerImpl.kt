@@ -18,10 +18,6 @@
 
 package proton.android.pass.totp.impl
 
-import dev.turingcomplete.kotlinonetimepassword.HmacAlgorithm
-import dev.turingcomplete.kotlinonetimepassword.OtpAuthUriBuilder
-import dev.turingcomplete.kotlinonetimepassword.TimeBasedOneTimePasswordConfig
-import dev.turingcomplete.kotlinonetimepassword.TimeBasedOneTimePasswordGenerator
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -29,105 +25,45 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
-import org.apache.commons.codec.binary.Base32
-import proton.android.pass.totp.api.TotpAlgorithm
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.api.TotpSpec
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.floor
 
 @Singleton
 class TotpManagerImpl @Inject constructor(
-    private val clock: Clock
+    private val clock: Clock,
+    private val totpUriParser: TotpUriParser,
+    private val totpUriSanitiser: TotpUriSanitiser,
+    private val totpTokenGenerator: TotpTokenGenerator
 ) : TotpManager {
 
-    override fun generateUri(spec: TotpSpec): String {
-        val secret = sanitizeSecret(spec.secret).encodeToByteArray()
-        val builder = OtpAuthUriBuilder.forTotp(secret)
-
-        val labelWithoutTrailingSlashes = spec.label.replace(TRAILING_SLASH_REGEX, "")
-
-        builder.label(labelWithoutTrailingSlashes, issuer = null)
-        spec.issuer.value()?.let { builder.issuer(it) }
-        builder.digits(spec.digits.digits)
-        val algorithm = when (spec.algorithm) {
-            TotpAlgorithm.Sha1 -> HmacAlgorithm.SHA1
-            TotpAlgorithm.Sha256 -> HmacAlgorithm.SHA256
-            TotpAlgorithm.Sha512 -> HmacAlgorithm.SHA512
-        }
-        builder.algorithm(algorithm)
-        builder.period(spec.validPeriodSeconds.toLong(), TimeUnit.SECONDS)
-        return builder.buildToString()
-    }
-
-    @Suppress("MagicNumber")
-    override fun generateUriWithDefaults(secret: String): Result<String> {
-        val sanitized = sanitizeSecret(secret)
-        return if (sanitized.matches(Regex("^[a-zA-Z0-9]+"))) {
-            val uri = OtpAuthUriBuilder.forTotp(sanitized.encodeToByteArray())
-                .digits(6)
-                .algorithm(HmacAlgorithm.SHA1)
-                .period(30, TimeUnit.SECONDS)
-                .label(OtpUriParser.DEFAULT_LABEL, null)
-                .buildToString()
-            Result.success(uri)
-        } else {
-            val redacted = redactSecret(sanitized)
-            Result.failure(IllegalArgumentException("Secret must be base32 encoded ($redacted)"))
+    override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> = flow {
+        while (currentCoroutineContext().isActive) {
+            val timestamp = clock.now().toJavaInstant()
+            val code = totpTokenGenerator.generate(spec, timestamp.epochSecond.toULong())
+                .getOrThrow()
+            val remainingSeconds =
+                spec.validPeriodSeconds - floor(timestamp.epochSecond.toDouble()) % spec.validPeriodSeconds
+            val wrapper = TotpManager.TotpWrapper(
+                code = code,
+                remainingSeconds = remainingSeconds.toInt(),
+                totalSeconds = spec.validPeriodSeconds
+            )
+            emit(wrapper)
+            delay(ONE_SECOND_MILLISECONDS)
         }
     }
 
-    override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> {
-        val config = TimeBasedOneTimePasswordConfig(
-            timeStep = spec.validPeriodSeconds.toLong(),
-            timeStepUnit = TimeUnit.SECONDS,
-            codeDigits = spec.digits.digits,
-            hmacAlgorithm = when (spec.algorithm) {
-                TotpAlgorithm.Sha1 -> HmacAlgorithm.SHA1
-                TotpAlgorithm.Sha256 -> HmacAlgorithm.SHA256
-                TotpAlgorithm.Sha512 -> HmacAlgorithm.SHA512
-            }
-        )
-        val sanitizedSecret = sanitizeSecret(spec.secret)
+    override fun parse(uri: String): Result<TotpSpec> = totpUriParser.parse(uri)
 
-        val generator = TimeBasedOneTimePasswordGenerator(Base32().decode(sanitizedSecret), config)
-        return flow {
-            while (currentCoroutineContext().isActive) {
-                val startTimestamp = clock.now().toJavaInstant().toEpochMilli()
-                val code = generator.generate(startTimestamp)
-                val counter = generator.counter(startTimestamp)
-                val endEpochMillis = generator.timeslotStart(counter + 1) - 1
-                var now = clock.now().toJavaInstant().toEpochMilli()
-                while (generator.isValid(code, now)) {
-                    val millisValid = endEpochMillis - now
-                    val wrapper = TotpManager.TotpWrapper(
-                        code = code,
-                        remainingSeconds = (millisValid / ONE_SECOND_MILLISECONDS).toInt(),
-                        totalSeconds = spec.validPeriodSeconds
-                    )
-                    emit(wrapper)
-                    delay(ONE_SECOND_MILLISECONDS)
-                    now = clock.now().toJavaInstant().toEpochMilli()
-                }
-            }
-        }
-    }
+    override fun sanitiseToEdit(uri: String): Result<String> = totpUriSanitiser.sanitiseToEdit(uri)
 
-    override fun parse(uri: String): Result<TotpSpec> = OtpUriParser.parse(uri)
-
-    private fun sanitizeSecret(secret: String) = secret
-        .replace(" ", "")
-        .replace("-", "")
-
-    @Suppress("MagicNumber")
-    private fun redactSecret(secret: String) = when {
-        secret.length <= 15 -> secret
-        else -> "${secret.take(10)}...${secret.takeLast(5)}"
-    }
+    override fun sanitiseToSave(originalUri: String, editedUri: String): Result<String> =
+        totpUriSanitiser.sanitiseToSave(originalUri, editedUri)
 
     companion object {
         private const val ONE_SECOND_MILLISECONDS = 1000L
-        private val TRAILING_SLASH_REGEX = Regex("/+$")
     }
 }

@@ -16,19 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.totp.api
+package proton.android.pass.totp.impl
 
-import kotlinx.coroutines.flow.Flow
+import proton.android.pass.commonrust.TotpException
+import proton.android.pass.totp.api.TotpSpec
+import javax.inject.Inject
+import proton.android.pass.commonrust.TotpUriParser as RustTotpUriParser
 
-interface TotpManager {
-    fun observeCode(spec: TotpSpec): Flow<TotpWrapper>
-    fun parse(uri: String): Result<TotpSpec>
-    fun sanitiseToEdit(uri: String): Result<String>
-    fun sanitiseToSave(originalUri: String, editedUri: String): Result<String>
+class TotpUriParserImpl @Inject constructor() : TotpUriParser {
 
-    data class TotpWrapper(
-        val code: String,
-        val remainingSeconds: Int,
-        val totalSeconds: Int
-    )
+    private val totpUriParser by lazy { RustTotpUriParser() }
+
+    override fun parse(input: String): Result<TotpSpec> =
+        runCatching { totpUriParser.parse(input) }
+            .fold(
+                onSuccess = { Result.success(it.toTotpSpec()) },
+                onFailure = { Result.failure((it as TotpException).toTotpUriException()) }
+            )
 }

@@ -43,10 +43,15 @@ fun InviteConfirmedBottomSheet(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
-        if (state.event == InviteConfirmedEvent.Close) {
-            onNavigateEvent(SharingNavigation.Back)
-            viewModel.clearEvent()
+        when (val event = state.event) {
+            InviteConfirmedEvent.Close -> onNavigateEvent(SharingNavigation.Back)
+            is InviteConfirmedEvent.Confirmed -> onNavigateEvent(
+                SharingNavigation.ViewVault(event.shareId)
+            )
+
+            InviteConfirmedEvent.Unknown -> {}
         }
+        viewModel.clearEvent()
     }
 
     when (val content = state.content) {
@@ -57,9 +62,14 @@ fun InviteConfirmedBottomSheet(
                     .height(120.dp)
                     .bottomSheet()
             ) {
-                CircularProgressIndicator(modifier = Modifier.size(48.dp).align(Alignment.Center))
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .align(Alignment.Center)
+                )
             }
         }
+
         is InviteConfirmedUiContent.Content -> {
             InviteConfirmedContent(
                 modifier = modifier

@@ -41,7 +41,6 @@ import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
 import proton.android.pass.commonui.api.ClassHolder
-import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
@@ -69,8 +68,7 @@ class OnBoardingViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val ffRepo: FeatureFlagsPreferencesRepository,
-    private val observeUserAccessData: ObserveUserAccessData,
-    private val observeHasConfirmedInvite: ObserveHasConfirmedInvite
+    private val observeUserAccessData: ObserveUserAccessData
 ) : ViewModel() {
 
     private val _onBoardingUiState = MutableStateFlow(OnBoardingUiState.Initial)
@@ -94,19 +92,6 @@ class OnBoardingViewModel @Inject constructor(
             supportedPages.add(Last)
             _onBoardingUiState.update { it.copy(enabledPages = supportedPages.toPersistentList()) }
         }
-
-        viewModelScope.launch {
-            observeHasConfirmedInvite()
-                .collect { hasConfirmedInvite ->
-                    if (hasConfirmedInvite) {
-                        _onBoardingUiState.update {
-                            it.copy(event = OnboardingEvent.ConfirmedInvite)
-                        }
-                        observeHasConfirmedInvite.clear()
-                    }
-                }
-        }
-
     }
 
     private suspend fun shouldShowInvitePendingAcceptance(): Boolean {

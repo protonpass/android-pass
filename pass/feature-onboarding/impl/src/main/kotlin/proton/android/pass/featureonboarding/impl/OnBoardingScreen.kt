@@ -34,14 +34,12 @@ import proton.android.pass.commonui.api.toClassHolder
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     viewModel: OnBoardingViewModel = hiltViewModel(),
-    onBoardingShown: () -> Unit,
-    onInvitationConfirmed: () -> Unit
+    onBoardingShown: () -> Unit
 ) {
     val onBoardingUiState by viewModel.onBoardingUiState.collectAsStateWithLifecycle()
     LaunchedEffect(onBoardingUiState.event) {
         when (onBoardingUiState.event) {
             OnboardingEvent.OnboardingCompleted -> onBoardingShown()
-            OnboardingEvent.ConfirmedInvite -> onInvitationConfirmed()
             else -> Unit
         }
         viewModel.clearEvent()

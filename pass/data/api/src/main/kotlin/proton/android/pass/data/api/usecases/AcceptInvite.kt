@@ -20,13 +20,16 @@ package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
 import proton.pass.domain.InviteToken
+import proton.pass.domain.ShareId
 
 sealed interface AcceptInviteStatus {
     object AcceptingInvite : AcceptInviteStatus
     data class DownloadingItems(val downloaded: Int, val total: Int) : AcceptInviteStatus
 
-    @JvmInline
-    value class Done(val items: Int) : AcceptInviteStatus
+    data class Done(
+        val items: Int,
+        val shareId: ShareId
+    ) : AcceptInviteStatus
 }
 
 interface AcceptInvite {

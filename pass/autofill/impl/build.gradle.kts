@@ -54,6 +54,12 @@ android {
     }
 }
 
+configurations {
+    // Remove duplicate classes (keep "org.jetbrains").
+    implementation.get().exclude(mapOf("group" to "com.intellij", "module" to "annotations"))
+    implementation.get().exclude(mapOf("group" to "org.intellij", "module" to "annotations"))
+}
+
 dependencies {
     api(projects.pass.autofill.api)
 

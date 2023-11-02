@@ -218,6 +218,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -255,7 +256,14 @@ android {
     }
 }
 
+configurations {
+    // Remove duplicate classes (keep "org.jetbrains").
+    implementation.get().exclude(mapOf("group" to "com.intellij", "module" to "annotations"))
+    implementation.get().exclude(mapOf("group" to "org.intellij", "module" to "annotations"))
+}
+
 dependencies {
+    coreLibraryDesugaring(libs.android.desugar)
     implementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
     implementation(libs.accompanist.navigation.material)
     implementation(libs.accompanist.systemUiController)

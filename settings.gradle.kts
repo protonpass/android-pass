@@ -70,7 +70,7 @@ pluginManagement {
 }
 
 plugins {
-    id("me.proton.core.gradle-plugins.include-core-build") version "1.1.1"
+    id("me.proton.core.gradle-plugins.include-core-build") version "1.3.0"
 }
 
 includeCoreBuild {

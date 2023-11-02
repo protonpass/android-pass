@@ -62,7 +62,7 @@ fun OnBoardingContent(
     onMainButtonClick: (OnBoardingPageName) -> Unit,
     onSkipButtonClick: (OnBoardingPageName) -> Unit,
     onSelectedPageChanged: (Int) -> Unit,
-    pagerState: PagerState = rememberPagerState(initialPage = 0)
+    pagerState: PagerState = rememberPagerState(initialPage = 0, pageCount = { uiState.enabledPages.size })
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -85,8 +85,7 @@ fun OnBoardingContent(
         }
         HorizontalPager(
             modifier = Modifier.weight(1f),
-            state = pagerState,
-            pageCount = uiState.enabledPages.size
+            state = pagerState
         ) { page ->
             val pageState = when (uiState.enabledPages.getOrNull(page)) {
                 null -> null

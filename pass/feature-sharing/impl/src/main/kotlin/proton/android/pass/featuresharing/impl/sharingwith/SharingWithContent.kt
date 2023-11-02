@@ -148,7 +148,7 @@ fun SharingWithContent(
             ) {
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalArrangement = Arrangement.Center
                 ) {
                     state.enteredEmails.forEachIndexed { idx, email ->
                         SharingWithChip(

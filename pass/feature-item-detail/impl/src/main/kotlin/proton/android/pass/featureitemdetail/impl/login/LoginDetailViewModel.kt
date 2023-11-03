@@ -39,6 +39,7 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -62,11 +63,12 @@ import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItem
+import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
-import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.FieldCopiedToClipboard
@@ -115,10 +117,10 @@ class LoginDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val canDisplayTotp: CanDisplayTotp,
     private val canShareVault: CanShareVault,
-    private val canMigrate: CanMigrateVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
-    savedStateHandle: SavedStateHandleProvider
+    savedStateHandle: SavedStateHandleProvider,
+    getItemActions: GetItemActions
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -288,7 +290,8 @@ class LoginDetailViewModel @Inject constructor(
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
         canPerformPaidActionFlow,
-        customFieldsState
+        customFieldsState,
+        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult()
     ) { itemDetails,
         totpUiState,
         isLoading,
@@ -296,7 +299,8 @@ class LoginDetailViewModel @Inject constructor(
         isPermanentlyDeleted,
         isRestoredFromTrash,
         canPerformPaidActionResult,
-        customFields ->
+        customFields,
+        itemActions ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -312,7 +316,7 @@ class LoginDetailViewModel @Inject constructor(
                     null
                 }
 
-                val canMigrate = canMigrate(details.vault.shareId)
+                val actions = itemActions.getOrNull() ?: ItemActions.Disabled
                 val isPaid = canPerformPaidActionResult.getOrNull() == true
 
                 val customFieldsList = if (!isPaid) emptyList() else customFields
@@ -329,10 +333,10 @@ class LoginDetailViewModel @Inject constructor(
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
-                    canMigrate = canMigrate,
                     canPerformItemActions = canPerformItemActions,
                     customFields = customFieldsList.toPersistentList(),
-                    shareClickAction = details.shareClickAction
+                    shareClickAction = details.shareClickAction,
+                    itemActions = actions
                 )
             }
         }

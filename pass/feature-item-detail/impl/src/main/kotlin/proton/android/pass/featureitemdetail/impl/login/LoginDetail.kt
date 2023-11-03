@@ -48,8 +48,9 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
-import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
+import proton.android.pass.featureitemdetail.impl.common.onEditClick
+import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.WebsiteOptions
 import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptionsBottomSheetContents
@@ -78,6 +79,7 @@ fun LoginDetail(
         LoginDetailUiState.NotInitialised -> {}
         LoginDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is LoginDetailUiState.Success -> {
+
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
                 LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
@@ -108,7 +110,7 @@ fun LoginDetail(
 
                         TopBarOptions -> when (state.itemUiModel.state) {
                             ItemState.Active.value -> TopBarOptionsBottomSheetContents(
-                                canMigrate = state.canMigrate,
+                                canMigrate = state.itemActions.canMoveToOtherVault.value(),
                                 onMigrate = {
                                     scope.launch {
                                         bottomSheetState.hide()
@@ -119,7 +121,6 @@ fun LoginDetail(
                                             )
                                         )
                                     }
-
                                 },
                                 onMoveToTrash = {
                                     viewModel.onMoveToTrash(
@@ -164,32 +165,20 @@ fun LoginDetail(
                     topBar = {
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
-                            isInTrash = state.itemUiModel.state == ItemState.Trashed.value,
+                            actions = state.itemActions,
                             actionColor = PassTheme.colors.loginInteractionNormMajor1,
                             iconColor = PassTheme.colors.loginInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
-                            showActions = state.canPerformItemActions,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
-                            onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(state.itemUiModel)) },
+                            onEditClick = {
+                                onEditClick(state.itemActions, onNavigate, state.itemUiModel)
+                            },
                             onOptionsClick = {
                                 currentBottomSheet = TopBarOptions
                                 scope.launch { bottomSheetState.show() }
                             },
                             onShareClick = {
-                                when (state.shareClickAction) {
-                                    ShareClickAction.Share -> {
-                                        onNavigate(
-                                            ItemDetailNavigation.OnShareVault(
-                                                shareId = state.itemUiModel.shareId,
-                                                itemId = state.itemUiModel.id
-                                            )
-                                        )
-                                    }
-
-                                    ShareClickAction.Upgrade -> {
-                                        onNavigate(ItemDetailNavigation.Upgrade)
-                                    }
-                                }
+                                onShareClick(state.itemActions, onNavigate, state.itemUiModel)
                             }
                         )
                     }
@@ -232,7 +221,7 @@ fun LoginDetail(
                                         }
 
                                         CustomFieldEvent.Upgrade -> {
-                                            onNavigate(ItemDetailNavigation.Upgrade)
+                                            onNavigate(ItemDetailNavigation.Upgrade())
                                         }
                                     }
                                 }
@@ -253,7 +242,7 @@ fun LoginDetail(
                                 }
 
                                 LoginDetailEvent.OnUpgradeClick -> {
-                                    onNavigate(ItemDetailNavigation.Upgrade)
+                                    onNavigate(ItemDetailNavigation.Upgrade())
                                 }
 
                                 LoginDetailEvent.OnUsernameClick -> {

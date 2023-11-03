@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
@@ -51,10 +52,11 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItem
+import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
-import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
@@ -83,10 +85,10 @@ class CreditCardDetailViewModel @Inject constructor(
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
     private val canShareVault: CanShareVault,
-    private val canMigrate: CanMigrateVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
-    savedStateHandle: SavedStateHandleProvider
+    savedStateHandle: SavedStateHandleProvider,
+    getItemActions: GetItemActions
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -180,9 +182,10 @@ class CreditCardDetailViewModel @Inject constructor(
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
         canPerformPaidActionFlow,
-        shareActionFlow
+        shareActionFlow,
+        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult()
     ) { itemDetails, isLoading, isItemSentToTrash, isPermanentlyDeleted,
-        isRestoredFromTrash, canPerformPaidActionResult, shareAction ->
+        isRestoredFromTrash, canPerformPaidActionResult, shareAction, itemActions ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(DetailSnackbarMessages.InitError)
@@ -199,10 +202,10 @@ class CreditCardDetailViewModel @Inject constructor(
                 }
 
                 val isPaid = canPerformPaidActionResult.getOrNull() == true
-                val canMigrate = canMigrate(details.vault.shareId)
 
                 val permissions = details.vault.role.toPermissions()
                 val canPerformItemActions = permissions.canUpdate()
+                val actions = itemActions.getOrNull() ?: ItemActions.Disabled
 
                 CreditCardDetailUiState.Success(
                     itemContent = CreditCardDetailUiState.ItemContent(
@@ -214,10 +217,10 @@ class CreditCardDetailViewModel @Inject constructor(
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
-                    canMigrate = canMigrate,
                     isDowngradedMode = !isPaid,
                     canPerformActions = canPerformItemActions,
-                    shareClickAction = shareAction
+                    shareClickAction = shareAction,
+                    itemActions = actions
                 )
             }
         }

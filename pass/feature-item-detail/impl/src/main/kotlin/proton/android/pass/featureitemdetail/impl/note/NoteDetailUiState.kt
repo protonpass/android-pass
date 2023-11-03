@@ -20,6 +20,7 @@ package proton.android.pass.featureitemdetail.impl.note
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.pass.domain.Vault
 
@@ -39,8 +40,8 @@ sealed interface NoteDetailUiState {
         val isItemSentToTrash: Boolean,
         val isPermanentlyDeleted: Boolean,
         val isRestoredFromTrash: Boolean,
-        val canMigrate: Boolean,
         val canPerformActions: Boolean,
-        val shareClickAction: ShareClickAction
+        val shareClickAction: ShareClickAction,
+        val itemActions: ItemActions
     ) : NoteDetailUiState
 }

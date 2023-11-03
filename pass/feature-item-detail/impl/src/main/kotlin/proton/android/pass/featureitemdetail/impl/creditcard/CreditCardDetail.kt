@@ -45,8 +45,9 @@ import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
-import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
+import proton.android.pass.featureitemdetail.impl.common.onEditClick
+import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemState
@@ -85,7 +86,7 @@ fun CreditCardDetail(
                 sheetContent = {
                     when (itemUiModel.state) {
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
-                            canMigrate = state.canMigrate,
+                            canMigrate = state.itemActions.canMoveToOtherVault.value(),
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
@@ -126,31 +127,19 @@ fun CreditCardDetail(
                     topBar = {
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
-                            isInTrash = itemUiModel.state == ItemState.Trashed.value,
+                            actions = state.itemActions,
                             actionColor = PassTheme.colors.cardInteractionNormMajor1,
                             iconColor = PassTheme.colors.cardInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
-                            showActions = state.canPerformActions,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
-                            onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(itemUiModel)) },
+                            onEditClick = {
+                                onEditClick(state.itemActions, onNavigate, state.itemContent.model)
+                            },
                             onOptionsClick = {
                                 scope.launch { bottomSheetState.show() }
                             },
                             onShareClick = {
-                                when (state.shareClickAction) {
-                                    ShareClickAction.Share -> {
-                                        onNavigate(
-                                            ItemDetailNavigation.OnShareVault(
-                                                shareId = state.itemContent.model.shareId,
-                                                itemId = state.itemContent.model.id
-                                            )
-                                        )
-                                    }
-
-                                    ShareClickAction.Upgrade -> {
-                                        onNavigate(ItemDetailNavigation.Upgrade)
-                                    }
-                                }
+                                onShareClick(state.itemActions, onNavigate, state.itemContent.model)
                             }
                         )
                     }
@@ -186,7 +175,7 @@ fun CreditCardDetail(
                                     viewModel.togglePin()
                                 }
                                 CreditCardDetailEvent.OnUpgradeClick -> {
-                                    onNavigate(ItemDetailNavigation.Upgrade)
+                                    onNavigate(ItemDetailNavigation.Upgrade())
                                 }
                                 CreditCardDetailEvent.OnVaultClick -> {
                                     state.vault?.shareId?.let { shareId ->

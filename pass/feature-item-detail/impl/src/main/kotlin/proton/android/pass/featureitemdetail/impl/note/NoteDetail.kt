@@ -45,8 +45,9 @@ import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
-import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
+import proton.android.pass.featureitemdetail.impl.common.onEditClick
+import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemContents
@@ -82,7 +83,7 @@ fun NoteDetail(
                 sheetContent = {
                     when (state.itemUiModel.state) {
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
-                            canMigrate = state.canMigrate,
+                            canMigrate = state.itemActions.canMoveToOtherVault.value(),
                             showCopyNote = true,
                             onMigrate = {
                                 scope.launch {
@@ -130,31 +131,19 @@ fun NoteDetail(
                     topBar = {
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
-                            isInTrash = state.itemUiModel.state == ItemState.Trashed.value,
+                            actions = state.itemActions,
                             actionColor = PassTheme.colors.noteInteractionNormMajor1,
                             iconColor = PassTheme.colors.noteInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
-                            showActions = state.canPerformActions,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
-                            onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(state.itemUiModel)) },
+                            onEditClick = {
+                                onEditClick(state.itemActions, onNavigate, state.itemUiModel)
+                            },
                             onOptionsClick = {
                                 scope.launch { bottomSheetState.show() }
                             },
                             onShareClick = {
-                                when (state.shareClickAction) {
-                                    ShareClickAction.Share -> {
-                                        onNavigate(
-                                            ItemDetailNavigation.OnShareVault(
-                                                shareId = state.itemUiModel.shareId,
-                                                itemId = state.itemUiModel.id
-                                            )
-                                        )
-                                    }
-
-                                    ShareClickAction.Upgrade -> {
-                                        onNavigate(ItemDetailNavigation.Upgrade)
-                                    }
-                                }
+                                onShareClick(state.itemActions, onNavigate, state.itemUiModel)
                             }
                         )
                     }

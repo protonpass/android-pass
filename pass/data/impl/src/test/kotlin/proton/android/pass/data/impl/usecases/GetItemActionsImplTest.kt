@@ -187,7 +187,7 @@ class GetItemActionsImplTest {
     }
 
     @Test
-    fun `cannot move to another vault if vault is read only`() = runTest {
+    fun `can move to another vault if vault is read only but owned (downgraded)`() = runTest {
         val vaults = listOf(
             generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Read),
             generateVault(owned = true, role = ShareRole.Admin)
@@ -195,10 +195,7 @@ class GetItemActionsImplTest {
         observeVaults.sendResult(Result.success(vaults))
 
         val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
-        val expected = ItemActions.CanMoveToOtherVaultState.Disabled(
-            ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NotEnoughPermission
-        )
-        assertThat(res.canMoveToOtherVault).isEqualTo(expected)
+        assertThat(res.canMoveToOtherVault).isEqualTo(ItemActions.CanMoveToOtherVaultState.Enabled)
     }
 
     @Test

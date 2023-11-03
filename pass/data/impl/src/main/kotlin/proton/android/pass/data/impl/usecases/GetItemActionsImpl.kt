@@ -127,6 +127,7 @@ class GetItemActionsImpl @Inject constructor(
         }
     }
 
+    @Suppress("ReturnCount")
     private fun getCanMoveToOtherVault(
         item: Item,
         vault: Vault,
@@ -146,6 +147,10 @@ class GetItemActionsImpl @Inject constructor(
             return ItemActions.CanMoveToOtherVaultState.Disabled(
                 ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NoVaultToMoveToAvailable
             )
+        }
+
+        if (vault.isOwned) {
+            return ItemActions.CanMoveToOtherVaultState.Enabled
         }
 
         val permissions = vault.role.toPermissions()

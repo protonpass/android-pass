@@ -22,11 +22,19 @@ import androidx.compose.animation.AnimatedContentScope.SlideDirection.Companion.
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.runtime.remember
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
+import me.proton.core.compose.navigation.requireArguments
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.featureitemdetail.impl.common.CannotPerformActionDialog
+import proton.android.pass.featureitemdetail.impl.common.CannotPerformActionDialogType
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.dialog
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -44,17 +52,51 @@ sealed interface ItemDetailNavigation {
     data class OnCreateLoginFromAlias(val alias: String) : ItemDetailNavigation
     data class OnViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
     object Back : ItemDetailNavigation
-    object Upgrade : ItemDetailNavigation
+
+    @JvmInline
+    value class Upgrade(val popBefore: Boolean = false) : ItemDetailNavigation
 
     @JvmInline
     value class ManageVault(val shareId: ShareId) : ItemDetailNavigation
 
     data class OnShareVault(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
+
+    @JvmInline
+    value class CannotPerformAction(
+        val type: ItemDetailCannotPerformActionType
+    ) : ItemDetailNavigation
+}
+
+enum class ItemDetailCannotPerformActionType {
+    CannotEditBecauseNoPermissions,
+    CannotEditBecauseNeedsUpgrade,
+    CannotEditBecauseItemInTrash,
+    CannotShareBecauseNoPermissions;
+
+    fun toType(): CannotPerformActionDialogType = when (this) {
+        CannotEditBecauseNoPermissions -> CannotPerformActionDialogType.CannotEditBecauseNoPermissions
+        CannotEditBecauseNeedsUpgrade -> CannotPerformActionDialogType.CannotEditBecauseNeedsUpgrade
+        CannotEditBecauseItemInTrash -> CannotPerformActionDialogType.CannotEditBecauseItemInTrash
+        CannotShareBecauseNoPermissions -> CannotPerformActionDialogType.CannotShareBecauseNoPermissions
+    }
+}
+
+object ItemDetailCannotPerformActionTypeNavArgId : NavArgId {
+    override val key = "cannotPerformActionType"
+    override val navType = NavType.StringType
+}
+
+object ItemDetailCannotPerformAction : NavItem(
+    baseRoute = "item/detail/cannotperformaction/dialog",
+    navArgIds = listOf(ItemDetailCannotPerformActionTypeNavArgId)
+) {
+    fun buildRoute(type: ItemDetailCannotPerformActionType) = "$baseRoute/${type.name}"
 }
 
 object ViewItem : NavItem(
-    baseRoute = "item",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
+    baseRoute = "item/detail/view",
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
+    navItemType = NavItemType.Dialog
 ) {
     fun createNavRoute(shareId: ShareId, itemId: ItemId) =
         "$baseRoute/${shareId.id}/${itemId.id}"
@@ -76,6 +118,24 @@ fun NavGraphBuilder.itemDetailGraph(
     ) {
         ItemDetailScreen(
             onNavigate = onNavigate
+        )
+    }
+
+    dialog(ItemDetailCannotPerformAction) { backStackEntry ->
+        val type = remember {
+            val typeArg: String = requireNotNull(
+                backStackEntry
+                    .requireArguments()
+                    .getString(ItemDetailCannotPerformActionTypeNavArgId.key)
+            )
+            val asType = ItemDetailCannotPerformActionType.values().find { it.name == typeArg }
+                ?: throw IllegalStateException("Cannot find type $typeArg")
+            asType.toType()
+        }
+        CannotPerformActionDialog(
+            type = type,
+            onClose = { onNavigate(ItemDetailNavigation.Back) },
+            onUpgrade = { onNavigate(ItemDetailNavigation.Upgrade(true)) }
         )
     }
 }

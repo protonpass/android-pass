@@ -29,10 +29,10 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
-import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestDeleteItem
+import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
@@ -86,7 +86,7 @@ class CreditCardDetailViewModelTest {
                 }
             },
             canShareVault = TestCanShareVault(),
-            canMigrate = TestCanMigrateVault()
+            getItemActions = TestGetItemActions()
         )
     }
 
@@ -129,7 +129,7 @@ class CreditCardDetailViewModelTest {
             val itemSuccess = item as CreditCardDetailUiState.Success
             assertThat(itemSuccess.isLoading).isFalse()
             assertThat(itemSuccess.vault).isEqualTo(TEST_VAULT)
-            assertThat(itemSuccess.canMigrate).isTrue()
+            assertThat(itemSuccess.itemActions).isEqualTo(TestGetItemActions.DEFAULT)
             assertThat(itemSuccess.isItemSentToTrash).isFalse()
             assertThat(itemSuccess.isPermanentlyDeleted).isFalse()
             assertThat(itemSuccess.isRestoredFromTrash).isFalse()

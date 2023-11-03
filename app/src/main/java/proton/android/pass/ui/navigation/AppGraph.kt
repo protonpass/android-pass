@@ -80,6 +80,7 @@ import proton.android.pass.featureitemcreate.impl.note.createNoteGraph
 import proton.android.pass.featureitemcreate.impl.note.updateNoteGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
+import proton.android.pass.featureitemdetail.impl.ItemDetailCannotPerformAction
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
@@ -742,7 +743,12 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                ItemDetailNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                is ItemDetailNavigation.Upgrade -> {
+                    if (it.popBefore) {
+                        appNavigator.navigateBack()
+                    }
+                    onNavigate(AppNavigation.Upgrade)
+                }
 
                 is ItemDetailNavigation.ManageVault -> {
                     appNavigator.navigate(
@@ -758,6 +764,13 @@ fun NavGraphBuilder.appGraph(
                             shareId = it.shareId,
                             itemId = it.itemId
                         )
+                    )
+                }
+
+                is ItemDetailNavigation.CannotPerformAction -> {
+                    appNavigator.navigate(
+                        destination = ItemDetailCannotPerformAction,
+                        route = ItemDetailCannotPerformAction.buildRoute(it.type)
                     )
                 }
             }

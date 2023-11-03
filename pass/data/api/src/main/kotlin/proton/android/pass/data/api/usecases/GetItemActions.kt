@@ -31,10 +31,17 @@ data class ItemActions(
     val canDelete: Boolean
 ) {
     sealed interface CanEditActionState {
-        object Enabled : CanEditActionState
+
+        fun value(): Boolean
+
+        object Enabled : CanEditActionState {
+            override fun value() = true
+        }
 
         @JvmInline
-        value class Disabled(val reason: CanEditDisabledReason) : CanEditActionState
+        value class Disabled(val reason: CanEditDisabledReason) : CanEditActionState {
+            override fun value() = false
+        }
 
         sealed interface CanEditDisabledReason {
             object NotEnoughPermission : CanEditDisabledReason
@@ -44,16 +51,38 @@ data class ItemActions(
     }
 
     sealed interface CanMoveToOtherVaultState {
-        object Enabled : CanMoveToOtherVaultState
+
+        fun value(): Boolean
+
+        object Enabled : CanMoveToOtherVaultState {
+            override fun value() = true
+        }
 
         @JvmInline
-        value class Disabled(val reason: CanMoveToOtherVaultDisabledReason) : CanMoveToOtherVaultState
+        value class Disabled(
+            val reason: CanMoveToOtherVaultDisabledReason
+        ) : CanMoveToOtherVaultState {
+            override fun value() = false
+        }
 
         sealed interface CanMoveToOtherVaultDisabledReason {
             object NotEnoughPermission : CanMoveToOtherVaultDisabledReason
             object NoVaultToMoveToAvailable : CanMoveToOtherVaultDisabledReason
             object ItemInTrash : CanMoveToOtherVaultDisabledReason
         }
+    }
+
+    companion object {
+        val Disabled = ItemActions(
+            canShare = CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown),
+            canEdit = CanEditActionState.Disabled(CanEditActionState.CanEditDisabledReason.NotEnoughPermission),
+            canMoveToOtherVault = CanMoveToOtherVaultState.Disabled(
+                CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NotEnoughPermission
+            ),
+            canMoveToTrash = false,
+            canRestoreFromTrash = false,
+            canDelete = false
+        )
     }
 }
 

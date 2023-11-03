@@ -287,7 +287,7 @@ class CreditCardDetailScreenTest {
                 PassTheme(isDark = true) {
                     ItemDetailScreen(
                         onNavigate = {
-                            if (it == ItemDetailNavigation.Upgrade) {
+                            if (it is ItemDetailNavigation.Upgrade) {
                                 checker.call(Unit)
                             }
                         }

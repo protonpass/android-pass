@@ -21,6 +21,8 @@ package proton.android.pass.featureitemdetail.impl
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.PassPalette
+import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 
 class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBarPreview> {
     override val values: Sequence<ItemDetailTopBarPreview>
@@ -38,7 +40,14 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
                             isLoading = isLoading,
                             color = color,
                             closeBackgroundColor = color.copy(alpha = 0.8f),
-                            showActions = true
+                            actions = ItemActions(
+                                canShare = CanShareVaultStatus.CanShare(1),
+                                canEdit = ItemActions.CanEditActionState.Enabled,
+                                canMoveToOtherVault = ItemActions.CanMoveToOtherVaultState.Enabled,
+                                canMoveToTrash = true,
+                                canRestoreFromTrash = false,
+                                canDelete = false
+                            )
                         )
                     )
                 }
@@ -48,7 +57,7 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
                     isLoading = false,
                     color = PassPalette.Lavender100,
                     closeBackgroundColor = PassPalette.Lavender100.copy(alpha = 0.8f),
-                    showActions = false
+                    actions = ItemActions.Disabled
                 )
             )
         }
@@ -58,5 +67,5 @@ data class ItemDetailTopBarPreview(
     val isLoading: Boolean,
     val color: Color,
     val closeBackgroundColor: Color,
-    val showActions: Boolean
+    val actions: ItemActions
 )

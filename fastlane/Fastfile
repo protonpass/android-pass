@@ -67,6 +67,11 @@ platform :android do
     gradle(task: ":app:assemblePlayProdRelease -PapkBuild=true")
   end
 
+  desc "Assemble the DevRelease E2E apk"
+  lane :assembleE2EDevRelease do
+    gradle(task: ":pass:autofill:e2e-app:assembleDevRelease")
+  end
+
   desc "Assemble the androidTest apks"
   lane :assembleDebugAndroidTest do
     gradle(task: "assembleDebugAndroidTest")

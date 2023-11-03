@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
@@ -46,10 +47,11 @@ import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItem
+import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
-import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -83,10 +85,10 @@ class NoteDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val clipboardManager: ClipboardManager,
     private val canShareVault: CanShareVault,
-    private val canMigrate: CanMigrateVault,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    getItemActions: GetItemActions
 ) : ViewModel() {
 
     private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
@@ -121,13 +123,15 @@ class NoteDetailViewModel @Inject constructor(
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
-        shareActionFlow
+        shareActionFlow,
+        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult()
     ) { itemLoadingResult,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
-        shareAction ->
+        shareAction,
+        itemActions ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -138,10 +142,10 @@ class NoteDetailViewModel @Inject constructor(
             is LoadingResult.Success -> {
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
-                val canMigrate = canMigrate(details.vault.shareId)
 
                 val permissions = details.vault.role.toPermissions()
                 val canPerformItemActions = permissions.canUpdate()
+                val actions = itemActions.getOrNull() ?: ItemActions.Disabled
 
                 NoteDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {
@@ -152,9 +156,9 @@ class NoteDetailViewModel @Inject constructor(
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
-                    canMigrate = canMigrate,
                     canPerformActions = canPerformItemActions,
-                    shareClickAction = shareAction
+                    shareClickAction = shareAction,
+                    itemActions = actions
                 )
             }
         }

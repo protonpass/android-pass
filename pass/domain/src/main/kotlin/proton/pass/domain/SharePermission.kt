@@ -36,3 +36,9 @@ fun SharePermission.canUpdate(): Boolean =
 
 fun SharePermission.canCreate(): Boolean =
     hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Create)
+
+fun SharePermission.canDelete(): Boolean =
+    hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Delete)
+
+fun SharePermission.canTrash(): Boolean =
+    hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Trash)

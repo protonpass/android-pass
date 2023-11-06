@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">關於</string>
   <string name="settings_option_privacy_policy">隱私權政策</string>
   <string name="settings_option_terms_of_service">服務條款</string>
-  <string name="settings_primary_vault_section_title">保管庫</string>
-  <string name="settings_primary_vault_vault_selector_title">主要的保管庫</string>
-  <string name="settings_primary_vault_section_subtitle">您無法刪除主要保管庫</string>
-  <string name="settings_primary_vault_change_success">主要的保管庫已變更</string>
-  <string name="settings_primary_vault_change_error">無法變更主要保管庫</string>
   <string name="settings_privacy_section_title">隱私</string>
   <string name="settings_use_favicons_preference_title">使用網頁圖示</string>
   <string name="settings_use_favicons_preference_subtitle">決定是否在您的項目上顯示網站圖示。</string>

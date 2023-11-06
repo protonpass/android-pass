@@ -46,7 +46,7 @@
   <string name="sharing_snackbar_get_invite_error">Não foi possível receber o convite</string>
   <string name="sharing_snackbar_invite_accepted">Convite aceito</string>
   <string name="sharing_snackbar_invite_accept_error">Erro ao aceitar o convite.</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Não foi possível aceitar o convite porque você atingiu o limite do cofre</string>
   <string name="sharing_snackbar_invite_rejected">Convite rejeitado</string>
   <string name="sharing_snackbar_invite_reject_error">Erro ao rejeitar o convite.</string>
   <string name="sharing_snackbar_vault_not_found">Não foi possível encontrar o cofre.</string>
@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">O membro foi removido do cofre.</string>
   <string name="sharing_snackbar_remove_member_error">Não foi possível remover do cofre.</string>
   <string name="share_summary_title">Revisar e compartilhar</string>
-  <string name="share_summary_subtitle">Você está prestes a convidar %1$s para o seu %2$s. Eles terão acesso a %3$s e poderão %4$s nesse cofre.</string>
   <string name="share_summary_vault">o cofre %s</string>
   <string name="share_summary_share_vault">Compartilhar cofre</string>
   <string name="share_summary_email_title">Compartilhar com</string>
@@ -104,7 +103,7 @@
   <string name="sharing_limit_reached">Este cofre atingiu o limite de membros e convites.</string>
   <string name="sharing_invites_info_upgrade_text">Faça upgrade agora para convidar mais pessoas.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Compartilhar</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use cofres para compartilhar itens com outras pessoas</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Compartilhar esse cofre</string>
   <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personalizar</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mover para cofre compartilhado</string>

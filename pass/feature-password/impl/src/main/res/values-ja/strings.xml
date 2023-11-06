@@ -6,10 +6,10 @@
   <string name="password_type">種別</string>
   <string name="special_characters">特殊文字 (!&amp;*)</string>
   <plurals name="character_count">
-    <item quantity="other">%s characters</item>
+    <item quantity="other">%s 文字</item>
   </plurals>
   <plurals name="word_count">
-    <item quantity="other">%s words</item>
+    <item quantity="other">%s ワード</item>
   </plurals>
   <string name="word_separator">区切り文字</string>
   <string name="bottomsheet_option_capital_letters">英文字の大文字 (A～Z)</string>

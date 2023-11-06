@@ -95,9 +95,6 @@
     -->
     <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
 
-    <!--CannotEditBecauseNoPermissions
-CannotEditBecauseNeedsUpgrade
-CannotShareBecauseNoPermissions-->
     <string name="item_detail_cannot_perform_action_edit_title">Cannot edit</string>
     <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
     <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>

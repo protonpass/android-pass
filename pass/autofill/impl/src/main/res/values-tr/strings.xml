@@ -4,10 +4,9 @@
   <string name="error_credentials_not_found">Eşleşen bir kimlik doğrulama bilgisi bulunamadı</string>
   <string name="error_loading_items">Ögeler yüklenemedi</string>
   <string name="topbar_search_query">Tüm kasalarda ara…</string>
-  <string name="topbar_search_query_primary_vault">Birincil kasada ara…</string>
+  <string name="topbar_search_query_oldest_vaults">En eski kasalarınızda arayın…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Ara…</string>
   <string name="inline_suggestions_open_app">Proton Pass uygulamasını aç</string>
-  <string name="autofill_only_searching_in_primary_vault">Tarifeniz otomatik doldurma için yalnızca birincil kasanızdaki ögelerin kullanılmasına izin veriyor.</string>
   <string name="autofill_only_searching_in_oldest_vaults">Tarifeniz otomatik doldurma için yalnızca en eski kasanızdaki ögelerin kullanılmasına izin veriyor.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">%s için öneriler</string>

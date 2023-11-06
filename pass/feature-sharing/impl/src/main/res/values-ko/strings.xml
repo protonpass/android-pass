@@ -44,7 +44,7 @@
   <string name="sharing_snackbar_get_invite_error">초대할 수 없습니다</string>
   <string name="sharing_snackbar_invite_accepted">초대가 수락됨</string>
   <string name="sharing_snackbar_invite_accept_error">초대 수락 중 오류</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">금고 제한에 도달하여 초대를 수락할 수 없습니다.</string>
   <string name="sharing_snackbar_invite_rejected">초대가 거부됨</string>
   <string name="sharing_snackbar_invite_reject_error">초대 거부 중 오류</string>
   <string name="sharing_snackbar_vault_not_found">금고를 찾을 수 없습니다</string>
@@ -56,7 +56,6 @@
   <string name="sharing_snackbar_remove_member_success">구성원이 금고로 부터 삭제되었습니다</string>
   <string name="sharing_snackbar_remove_member_error">금고로 부터 삭제할 수 없습니다</string>
   <string name="share_summary_title">검토 및 공유</string>
-  <string name="share_summary_subtitle">%1$s을(를) %2$s에 초대하려고 합니다. %3$s에 접근할 수 있으며, 이 금고에서 %4$s 할 수 있습니다.</string>
   <string name="share_summary_vault">%s개 금고</string>
   <string name="share_summary_share_vault">금고 공유</string>
   <string name="share_summary_email_title">공유 대상:</string>
@@ -99,10 +98,10 @@
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">이 금고는 최대 %1$d명 회원을 지원합니다. %2$d명 초대가 남았습니다.</string>
   <string name="sharing_limit_reached">이 금고는 회원 및 초대 제한에 도달했습니다.</string>
   <string name="sharing_invites_info_upgrade_text">더 많은 사람을 초대하려면 지금 바로 업그레이드 하세요.</string>
-  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">공유</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">다른 사람과 이 항목을 공유하려면 금고를 사용하세요</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">이 금고 공유</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">사용자 지정</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">공유된 금고로 이동</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">공유할 새 금고 생성</string>
 </resources>

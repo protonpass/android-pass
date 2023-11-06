@@ -62,7 +62,6 @@
   <string name="sharing_snackbar_remove_member_success">Удзельнік выдалены са сховішча</string>
   <string name="sharing_snackbar_remove_member_error">Немагчыма выдаліць са сховішча</string>
   <string name="share_summary_title">Прагляд і абагульненне</string>
-  <string name="share_summary_subtitle">Вы збіраецеся запрасіць %1$s у свой %2$s. Яны атрымаюць доступ да %3$s і змогуць %4$s у гэтым сховішчы.</string>
   <string name="share_summary_vault">%s сховішча</string>
   <string name="share_summary_share_vault">Абагуліць сховішча</string>
   <string name="share_summary_email_title">Абагуліць з дапамогай</string>

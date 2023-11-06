@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Hakkında</string>
   <string name="settings_option_privacy_policy">Gizlilik ilkesi</string>
   <string name="settings_option_terms_of_service">Hizmet koşulları</string>
-  <string name="settings_primary_vault_section_title">Kasalar</string>
-  <string name="settings_primary_vault_vault_selector_title">Birincil kasa</string>
-  <string name="settings_primary_vault_section_subtitle">Birincil kasayı silemezsiniz.</string>
-  <string name="settings_primary_vault_change_success">Birincil kasa değiştirildi</string>
-  <string name="settings_primary_vault_change_error">Birincil kasa değiştirilemedi</string>
   <string name="settings_privacy_section_title">Gizlilik</string>
   <string name="settings_use_favicons_preference_title">Site simgeleri kullanılsın</string>
   <string name="settings_use_favicons_preference_subtitle">Ögelerinizde site simgelerini görmek isteyip istemediğinizi seçin.</string>

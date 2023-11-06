@@ -21,7 +21,7 @@
   <string name="field_password_title">Пароль</string>
   <string name="field_password_hint">Додайте пароль</string>
   <string name="field_website_address_title">Вебсайт</string>
-  <string name="field_website_address_invalid">Неправильна URL-адреса</string>
+  <string name="field_website_address_invalid">Недійсна URL-адреса</string>
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Додати</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Згенерувати новий пароль</string>

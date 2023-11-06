@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Over</string>
   <string name="settings_option_privacy_policy">Privacybeleid</string>
   <string name="settings_option_terms_of_service">Servicevoorwaarden</string>
-  <string name="settings_primary_vault_section_title">Kluizen</string>
-  <string name="settings_primary_vault_vault_selector_title">Hoofdkluis</string>
-  <string name="settings_primary_vault_section_subtitle">U kunt de primaire kluis niet verwijderen.</string>
-  <string name="settings_primary_vault_change_success">De primaire kluis is gewijzigd</string>
-  <string name="settings_primary_vault_change_error">Kan de primaire kluis niet wijzigen</string>
   <string name="settings_privacy_section_title">Privacy</string>
   <string name="settings_use_favicons_preference_title">Gebruik webiconen</string>
   <string name="settings_use_favicons_preference_subtitle">Bepaal of u de websitepictogrammen op uw items wilt zien.</string>

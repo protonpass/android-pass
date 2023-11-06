@@ -108,7 +108,7 @@
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Limite A2F atingido</string>
   <string name="upgrade">Actualizar</string>
-  <string name="mfa_icon_content_description">2FA icon</string>
+  <string name="mfa_icon_content_description">Ícone 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Atualize para obter domínios personalizados.</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Atualize para obter mais caixas de entrada.</string>
   <string name="create_alias_content_limit_banner">Atingiu o limite de aliases que pode criar. Crie um número ilimitado de aliases quando atualizar a sua subscrição.</string>

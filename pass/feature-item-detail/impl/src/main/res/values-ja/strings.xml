@@ -45,10 +45,10 @@
     <item quantity="other">%d 回</item>
   </plurals>
   <string name="more_info_last_time_modified">%s に最後の使用</string>
-  <string name="share_button_content_description">Open share button</string>
+  <string name="share_button_content_description">共有ボタンを開く</string>
   <string name="open_menu_icon_content_description">メニューを開くボタン</string>
   <string name="mfa_limit_reached">2要素認証 制限に達しました</string>
-  <string name="mfa_icon_content_description">2FA icon</string>
+  <string name="mfa_icon_content_description">2要素認証アイコン</string>
   <string name="custom_field_text_icon_description">テキストのカスタムフィールド</string>
   <string name="custom_field_hidden_icon_description">カスタムフィールドを非表示</string>
   <string name="custom_field_totp_icon_description">2 要素認証のカスタムフィールド</string>

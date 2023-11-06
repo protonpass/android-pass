@@ -20,10 +20,10 @@
   <string name="home_trial_banner_text">Ознайомтеся з усіма ексклюзивними функціями протягом обмеженого часу.</string>
   <string name="home_trial_banner_settings">Докладніше ›</string>
   <string name="home_notification_permission_banner_title">Отримувати важливі оновлення</string>
-  <string name="home_notification_permission_banner_text">Увімкнути push-сповіщення для інформування коли інші діляться сховищем з вами.</string>
-  <string name="home_notification_permission_banner_settings">Активувати дозволи</string>
-  <string name="home_invite_banner_title">Сховище, яким з вами поділились</string>
-  <string name="home_invite_banner_subtitle">Вас запрошено до спільного сховища. Натисніть для подробиць.</string>
+  <string name="home_notification_permission_banner_text">Увімкніть push-сповіщення, щоб знати коли інші надають вам спільний доступ до сховища.</string>
+  <string name="home_notification_permission_banner_settings">Надати дозвіл ›</string>
+  <string name="home_invite_banner_title">Вам надано спільний доступ до сховища</string>
+  <string name="home_invite_banner_subtitle">Вас запрошено до спільного сховища. Торкніться для перегляду подробиць.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Копіювати пароль</string>
   <string name="bottomsheet_copy_username">Копіювати ім\'я користувача</string>

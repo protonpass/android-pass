@@ -48,7 +48,7 @@
   <string name="sharing_snackbar_get_invite_error">Nu s-a putut primi invitația.</string>
   <string name="sharing_snackbar_invite_accepted">Invitație acceptată</string>
   <string name="sharing_snackbar_invite_accept_error">Eroare la acceptarea invitației.</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Nu s-a putut deschide invitația deoarece v-ați atins limita seifului.</string>
   <string name="sharing_snackbar_invite_rejected">Invitație refuzată</string>
   <string name="sharing_snackbar_invite_reject_error">Eroare la refuzarea invitației.</string>
   <string name="sharing_snackbar_vault_not_found">Nu s-a putut găsi seiful.</string>
@@ -60,7 +60,6 @@
   <string name="sharing_snackbar_remove_member_success">Membrul a fost eliminat de la seif.</string>
   <string name="sharing_snackbar_remove_member_error">Nu a putut fi eliminat de la seif.</string>
   <string name="share_summary_title">Revizuire și partajare</string>
-  <string name="share_summary_subtitle">Sunteți pe cale să-i invitați pe %1$s în %2$s. Ei vor obține acces la %3$s și vor putea să %4$s în acest seif.</string>
   <string name="share_summary_vault">seiful %s</string>
   <string name="share_summary_share_vault">Partajare seif</string>
   <string name="share_summary_email_title">Partajare cu</string>
@@ -107,10 +106,10 @@
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Acest seif poate avea până la %1$d membri. Mai aveți încă %2$d invitații.</string>
   <string name="sharing_limit_reached">Acest seif a atins limita de membri și invitații.</string>
   <string name="sharing_invites_info_upgrade_text">Modificați planul acum pentru a invita mai mulți.</string>
-  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Partajare</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Folosiți seifurile pentru a partaja articole cu alții.</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Partajare acest seif</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personalizare</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mutare într-un seif partajat</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Creare seif pentru partajare</string>
 </resources>

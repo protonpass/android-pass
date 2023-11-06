@@ -25,7 +25,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Pridať</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Vygenerovať nové heslo</string>
-  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide my email</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Skryť môj email</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Použiť %s</string>
   <string name="create_login_item_creation_error">Nepodarilo sa vytvoriť prihlásenie</string>
   <string name="create_login_item_update_error">Nepodarilo sa aktualizovať prihlásenie</string>

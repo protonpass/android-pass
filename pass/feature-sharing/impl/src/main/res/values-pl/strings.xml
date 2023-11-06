@@ -62,7 +62,6 @@
   <string name="sharing_snackbar_remove_member_success">Użytkownik został usunięty z sejfu</string>
   <string name="sharing_snackbar_remove_member_error">Nie można usunąć z sejfu</string>
   <string name="share_summary_title">Przejrzyj i udostępnij</string>
-  <string name="share_summary_subtitle">Zapraszasz %1$s do %2$s. Użytkownik otrzyma dostęp do %3$s i będzie mógł %4$s w sejfie.</string>
   <string name="share_summary_vault">sejfu %s</string>
   <string name="share_summary_share_vault">Udostępnij sejf</string>
   <string name="share_summary_email_title">Udostępnij</string>

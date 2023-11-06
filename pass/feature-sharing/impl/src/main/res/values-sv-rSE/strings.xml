@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">Medlem borttagen från valvet</string>
   <string name="sharing_snackbar_remove_member_error">Kunde inte ta bort från valvet</string>
   <string name="share_summary_title">Granska och dela</string>
-  <string name="share_summary_subtitle">Du är på väg att bjuda in %1$s till ditt %2$s. De kommer att få åtkomst till %3$s och de kommer att kunna %4$s i detta valv.</string>
   <string name="share_summary_vault">%s valv</string>
   <string name="share_summary_share_vault">Dela valv</string>
   <string name="share_summary_email_title">Dela med</string>
@@ -74,7 +73,7 @@
     <item quantity="other">%d objekt</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Inbjudan skickad</string>
-  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Pending account creation</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Väntar på skapa konto</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Bekräfta åtkomst</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Inbjudningar</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Medlemmar</string>

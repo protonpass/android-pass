@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Sobre</string>
   <string name="settings_option_privacy_policy">Política de privacidade</string>
   <string name="settings_option_terms_of_service">Termos de serviço</string>
-  <string name="settings_primary_vault_section_title">Cofres</string>
-  <string name="settings_primary_vault_vault_selector_title">Cofre principal</string>
-  <string name="settings_primary_vault_section_subtitle">Você não pode excluir o cofre principal.</string>
-  <string name="settings_primary_vault_change_success">O cofre principal foi alterado</string>
-  <string name="settings_primary_vault_change_error">Não foi possível alterar o cofre principal</string>
   <string name="settings_privacy_section_title">Privacidade</string>
   <string name="settings_use_favicons_preference_title">Usar ícones da web</string>
   <string name="settings_use_favicons_preference_subtitle">Decida se você quer visualizar os ícones do site nos seus itens.</string>

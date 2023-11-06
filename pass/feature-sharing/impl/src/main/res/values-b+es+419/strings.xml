@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">El miembro fue eliminado de la bóveda.</string>
   <string name="sharing_snackbar_remove_member_error">Error al eliminar de la bóveda</string>
   <string name="share_summary_title">Revisar y compartir</string>
-  <string name="share_summary_subtitle">Está por invitar a %1$s a su %2$s. Obtendrá acceso a %3$s y podrá %4$s en esta bóveda.</string>
   <string name="share_summary_vault">la bóveda %s</string>
   <string name="share_summary_share_vault">Compartir bóveda</string>
   <string name="share_summary_email_title">Compartir con</string>

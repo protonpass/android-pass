@@ -46,8 +46,8 @@
     <item quantity="other">%d kez</item>
   </plurals>
   <string name="more_info_last_time_modified">Son kez, %s</string>
-  <string name="share_button_content_description">Open share button</string>
-  <string name="open_menu_icon_content_description">Aç menü düğmesi</string>
+  <string name="share_button_content_description">Paylaşmayı açma düğmesi</string>
+  <string name="open_menu_icon_content_description">Menüyü açma düğmesi</string>
   <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
   <string name="mfa_icon_content_description">İki adımlı doğrulama simgesi</string>
   <string name="custom_field_text_icon_description">Metin özel alanı</string>

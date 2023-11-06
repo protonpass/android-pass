@@ -12,7 +12,6 @@
   <string name="snackbar_retrieve_vault_error">Cofre não encontrado</string>
   <string name="snackbar_find_vault_error">Não é possível encontrar o cofre selecionado</string>
   <string name="snackbar_get_vault_list_error">Não foi possível carregar a lista de cofres.</string>
-  <string name="snackbar_get_upgrade_info_error">Não foi possível preparar a lista de cofres</string>
   <string name="vault_delete_dialog_title">Excluir cofre</string>
   <string name="vault_delete_dialog_body">Isso irá excluir permanentemente o cofre __VAULT_NAME__ e todo o seu conteúdo. Insira o nome do cofre para confirmar a exclusão.</string>
   <string name="vault_delete_dialog_placeholder">Nome do cofre</string>
@@ -36,7 +35,6 @@
   <string name="bottomsheet_view_members">Ver membros</string>
   <string name="bottomsheet_manage_access">Gerenciar acesso</string>
   <string name="bottomsheet_select_vault_read_only">Você só pode ler</string>
-  <string name="bottomsheet_select_vault_not_primary_vault">Você só pode criar itens em seu cofre principal</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Você só pode criar itens nos seus cofres mais antigos.</string>
   <string name="vault_title">Cofre</string>
 </resources>

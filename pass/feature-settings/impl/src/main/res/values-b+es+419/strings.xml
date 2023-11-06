@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Acerca de</string>
   <string name="settings_option_privacy_policy">Política de privacidad</string>
   <string name="settings_option_terms_of_service">Términos de uso</string>
-  <string name="settings_primary_vault_section_title">Bóvedas</string>
-  <string name="settings_primary_vault_vault_selector_title">Bóveda principal</string>
-  <string name="settings_primary_vault_section_subtitle">No puede eliminar la bóveda principal.</string>
-  <string name="settings_primary_vault_change_success">La bóveda principal ha sido cambiada</string>
-  <string name="settings_primary_vault_change_error">No se pudo cambiar la bóveda principal</string>
   <string name="settings_privacy_section_title">Privacidad</string>
   <string name="settings_use_favicons_preference_title">Usar íconos web</string>
   <string name="settings_use_favicons_preference_subtitle">Decida si quiere ver los íconos de sitio web en sus elementos.</string>

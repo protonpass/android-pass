@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Giới thiệu</string>
   <string name="settings_option_privacy_policy">Chính sách riêng tư</string>
   <string name="settings_option_terms_of_service">Điều khoản dịch vụ</string>
-  <string name="settings_primary_vault_section_title">Kho lưu trữ</string>
-  <string name="settings_primary_vault_vault_selector_title">Kho lưu trữ chính</string>
-  <string name="settings_primary_vault_section_subtitle">Bạn không thể xóa kho lưu trữ chính</string>
-  <string name="settings_primary_vault_change_success">Kho lưu trữ chính đã thay đổi</string>
-  <string name="settings_primary_vault_change_error">Không thể thay đổi kho lưu trữ chính</string>
   <string name="settings_privacy_section_title">Riêng tư</string>
   <string name="settings_use_favicons_preference_title">Sử dụng biểu tượng trang web</string>
   <string name="settings_use_favicons_preference_subtitle">Quyết định xem bạn có muốn xem các biểu tượng trang web trên các nội dung của mình không.</string>

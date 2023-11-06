@@ -12,14 +12,13 @@
   <string name="snackbar_retrieve_vault_error">Сховище не знайдено</string>
   <string name="snackbar_find_vault_error">Не вдалося знайти вибране сховище</string>
   <string name="snackbar_get_vault_list_error">Не вдалося завантажити список сховищ</string>
-  <string name="snackbar_get_upgrade_info_error">Не вдалося підготувати список сховищ</string>
   <string name="vault_delete_dialog_title">Видалити сховище</string>
   <string name="vault_delete_dialog_body">Ця дія остаточно видалить сховище __VAULT_NAME__ і весь його вміст. Введіть назву сховища для підтвердження видалення.</string>
   <string name="vault_delete_dialog_placeholder">Назва сховища</string>
   <string name="vault_delete_dialog_cancel_action">Скасувати</string>
   <string name="vault_delete_dialog_delete_action">Видалити</string>
   <string name="vault_leave_dialog_title">Покинути сховище</string>
-  <string name="vault_leave_dialog_body">Це видалить ваш доступ до сховища __VAULT_NAME__ і всього його вмісту. Ви впевнені, що хочете покинути сховище?</string>
+  <string name="vault_leave_dialog_body">Це призведе до вилучення вашого доступу до сховища __VAULT_NAME__ та його вмісту. Ви впевнені, що хочете покинути сховище?</string>
   <string name="vault_leave_dialog_cancel_action">Скасувати</string>
   <string name="vault_leave_dialog_leave_action">Покинути</string>
   <string name="bottomsheet_close_icon_content_description">Закриття засобу створення сховища</string>
@@ -36,7 +35,6 @@
   <string name="bottomsheet_view_members">Переглянути учасників</string>
   <string name="bottomsheet_manage_access">Керувати доступом</string>
   <string name="bottomsheet_select_vault_read_only">Ви можете лише читати</string>
-  <string name="bottomsheet_select_vault_not_primary_vault">Ви можете створювати елементи лише у своєму основному сховищі</string>
-  <string name="bottomsheet_select_vault_only_oldest_vaults">Ви можете створювати елементи лише у найстаріших сховищах</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Ви можете створювати елементи лише у своїх найстаріших сховищах</string>
   <string name="vault_title">Сховище</string>
 </resources>

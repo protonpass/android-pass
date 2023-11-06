@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Despre</string>
   <string name="settings_option_privacy_policy">Politica de confidențialitate</string>
   <string name="settings_option_terms_of_service">Termenii serviciului</string>
-  <string name="settings_primary_vault_section_title">Seifuri</string>
-  <string name="settings_primary_vault_vault_selector_title">Seif principal</string>
-  <string name="settings_primary_vault_section_subtitle">Nu puteți șterge seiful principal.</string>
-  <string name="settings_primary_vault_change_success">Seiful principal a fost modificat.</string>
-  <string name="settings_primary_vault_change_error">Nu s-a putut modifica seiful primar.</string>
   <string name="settings_privacy_section_title">Confidențialitate</string>
   <string name="settings_use_favicons_preference_title">Folosire pictograme web</string>
   <string name="settings_use_favicons_preference_subtitle">Stabiliți dacă pictogramele paginii web sunt afișate în articole.</string>

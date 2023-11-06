@@ -69,7 +69,7 @@ sealed interface CannotPerformActionDialogType {
     object CannotEditBecauseItemInTrash : CannotPerformActionDialogType {
         @StringRes
         override fun title(): Int = R.string.item_detail_cannot_perform_action_edit_title
-        override fun message(): Int = R.string.item_detail_cannot_perform_action_edit_needs_upgrade_message
+        override fun message(): Int = R.string.item_detail_cannot_perform_action_edit_item_in_trash_message
         override fun showUpgrade() = false
     }
 

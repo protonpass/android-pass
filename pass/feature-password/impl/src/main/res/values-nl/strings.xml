@@ -6,12 +6,12 @@
   <string name="password_type">Soort</string>
   <string name="special_characters">Speciale tekens (!&amp;*)</string>
   <plurals name="character_count">
-    <item quantity="one">%s character</item>
-    <item quantity="other">%s characters</item>
+    <item quantity="one">%s teken</item>
+    <item quantity="other">%s tekens</item>
   </plurals>
   <plurals name="word_count">
-    <item quantity="one">%s word</item>
-    <item quantity="other">%s words</item>
+    <item quantity="one">%s woord</item>
+    <item quantity="other">%s woorden</item>
   </plurals>
   <string name="word_separator">Woordscheidingsteken</string>
   <string name="bottomsheet_option_capital_letters">Hoofdletters (A–Z)</string>

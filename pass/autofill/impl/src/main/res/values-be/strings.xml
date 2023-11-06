@@ -4,10 +4,9 @@
   <string name="error_credentials_not_found">Адпаведныя ўліковыя даныя не знойдзены</string>
   <string name="error_loading_items">Немагчыма загрузіць элементы</string>
   <string name="topbar_search_query">Пошук ва ўсіх сховішчах…</string>
-  <string name="topbar_search_query_primary_vault">Пошук у асноўных сховішчах…</string>
+  <string name="topbar_search_query_oldest_vaults">Пошук у самых старых сховішчах...</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Пошук…</string>
   <string name="inline_suggestions_open_app">Адкрыць Proton Pass</string>
-  <string name="autofill_only_searching_in_primary_vault">Ваш тарыфны план прадугледжвае толькі элементы ў асноўным сховішчы для аўтазапаўнення.</string>
   <string name="autofill_only_searching_in_oldest_vaults">Ваш тарыфны план дазваляе выкарыстоўваць элементы ў самых старых сховішчах для аўтазапаўнення.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Прапановы для %s</string>

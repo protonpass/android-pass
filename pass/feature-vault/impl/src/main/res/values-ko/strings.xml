@@ -12,7 +12,6 @@
   <string name="snackbar_retrieve_vault_error">금고를 찾을 수 없습니다</string>
   <string name="snackbar_find_vault_error">선택된 금고를 찾을 수 없습니다</string>
   <string name="snackbar_get_vault_list_error">금고 목록을 불러올 수 없습니다</string>
-  <string name="snackbar_get_upgrade_info_error">금고 목록을 비교할 수 없습니다</string>
   <string name="vault_delete_dialog_title">금고 삭제</string>
   <string name="vault_delete_dialog_body">이는 금고 __VAULT_NAME__ 와(과) 이 금고의 내용물을 모두 지우게 됩니다. 이 삭제를 계속하려면 금고 이름을 입력하십시오.</string>
   <string name="vault_delete_dialog_placeholder">금고 이름</string>
@@ -36,7 +35,6 @@
   <string name="bottomsheet_view_members">회원 보기</string>
   <string name="bottomsheet_manage_access">접근 관리</string>
   <string name="bottomsheet_select_vault_read_only">읽기 전용입니다</string>
-  <string name="bottomsheet_select_vault_not_primary_vault">사용자의 기본 금고에만 항목을 생성할 수 있습니다.</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">사용자의 소유한 가장 오래된 금고에만 항목을 생성할 수 있습니다.</string>
   <string name="vault_title">금고</string>
 </resources>

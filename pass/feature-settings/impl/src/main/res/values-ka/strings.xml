@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">შესახებ</string>
   <string name="settings_option_privacy_policy">კონფიდენციალობის პოლიტიკა</string>
   <string name="settings_option_terms_of_service">მომსახურების პირობები</string>
-  <string name="settings_primary_vault_section_title">საცავები</string>
-  <string name="settings_primary_vault_vault_selector_title">ძირითადი საცავი</string>
-  <string name="settings_primary_vault_section_subtitle">ძირითად საცავს ვერ წაშლით</string>
-  <string name="settings_primary_vault_change_success">ძირითადი საცავი შეიცვალა</string>
-  <string name="settings_primary_vault_change_error">ძირითადი საცავის შეცვლა შეუძლებელია</string>
   <string name="settings_privacy_section_title">კონფიდენციალობა</string>
   <string name="settings_use_favicons_preference_title">ვების ხატულების გამოყენება</string>
   <string name="settings_use_favicons_preference_subtitle">გადაწყვიტეთ, გნებავთ, დაინახოთ თქვენს ელემენტებზე ვებგვერდის ხატულები, თუ არა.</string>

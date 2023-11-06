@@ -40,13 +40,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s nodigt je uit met toegang tot items in</string>
   <string name="sharing_join_shared_vault">Samenvoegen en synchroniseren.</string>
   <string name="sharing_reject_invitation">Uitnodiging afwijzen</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulations, your access has been confirmed</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">See the shared vault</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Close</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Gefeliciteerd, uw toegang werd bevestigd</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Gedeelde kluis bekijken</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Sluiten</string>
   <string name="sharing_snackbar_get_invite_error">Kan geen uitnodiging krijgen</string>
   <string name="sharing_snackbar_invite_accepted">Uitnodiging geaccepteerd</string>
   <string name="sharing_snackbar_invite_accept_error">Fout bij het accepteren van de uitnodiging</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kan de uitnodiging niet accepteren omdat u uw kluislimiet heeft bereikt</string>
   <string name="sharing_snackbar_invite_rejected">Uitnodiging afgewezen</string>
   <string name="sharing_snackbar_invite_reject_error">Fout bij het weigeren van de uitnodiging</string>
   <string name="sharing_snackbar_vault_not_found">Kluis kon niet worden gevonden</string>
@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">Lid verwijderd van de kluis</string>
   <string name="sharing_snackbar_remove_member_error">Kon niet verwijderen van de kluis</string>
   <string name="share_summary_title">Beoordelen en delen</string>
-  <string name="share_summary_subtitle">U staat op het punt %1$s uit te nodigen voor uw%2$s. Ze krijgen toegang tot %3$s en kunnen %4$s in deze kluis.</string>
   <string name="share_summary_vault">%s kluis</string>
   <string name="share_summary_share_vault">Kluis delen</string>
   <string name="share_summary_email_title">Deel met</string>
@@ -66,8 +65,8 @@
   <string name="share_summary_permissions_title">Toegangsniveau</string>
   <string name="share_manage_vault_share_with_more_people">Deel met meer mensen</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
-    <item quantity="one">%d invite left</item>
-    <item quantity="other">%d invites left</item>
+    <item quantity="one">%d uitnodiging over</item>
+    <item quantity="other">%d uitnodigingen over</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d item</item>
@@ -99,14 +98,14 @@
   <string name="sharing_snackbar_too_many_invites_sent">Adres werd te vaak uitgenodigd</string>
   <string name="sharing_snackbar_transfer_ownership_success">Eigendom overgedragen</string>
   <string name="sharing_snackbar_transfer_ownership_error">Error bij het overdragen van eigendom</string>
-  <string name="sharing_invites_info_dialog_title">Member limit</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. You still have %2$d invites left.</string>
-  <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
-  <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
-  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
+  <string name="sharing_invites_info_dialog_title">Limiet aantal leden</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Deze kluis kan tot %1$d leden hebben. U hebt nog %2$d uitnodigingen over.</string>
+  <string name="sharing_limit_reached">Deze kluis heeft de limiet van aantal leden en uitnodigingen bereikt.</string>
+  <string name="sharing_invites_info_upgrade_text">Nu upgraden om meer uit te nodigen.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Delen</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Gebruik kluizen om items met anderen te delen</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Deel deze kluis</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personaliseer</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Verplaatsen naar een gedeelde kluis</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Maak een nieuwe kluis aan om te delen</string>
 </resources>

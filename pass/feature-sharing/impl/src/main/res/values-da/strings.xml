@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">Medlem fjernet fra boksen</string>
   <string name="sharing_snackbar_remove_member_error">Kunne ikke fjerne fra boksen</string>
   <string name="share_summary_title">Gennemgå og del</string>
-  <string name="share_summary_subtitle">Du er ved at invitere %1$s til din %2$s. De vil få adgang til %3$s, og de vil være i stand til %4$s i denne boks.</string>
   <string name="share_summary_vault">%s boks</string>
   <string name="share_summary_share_vault">Del boks</string>
   <string name="share_summary_email_title">Del med</string>

@@ -12,7 +12,6 @@
   <string name="snackbar_retrieve_vault_error">Trezor nenalezen</string>
   <string name="snackbar_find_vault_error">Nelze najít vybraný trezor</string>
   <string name="snackbar_get_vault_list_error">Seznam trezorů nelze načíst</string>
-  <string name="snackbar_get_upgrade_info_error">Nelze připravit seznam trezorů</string>
   <string name="vault_delete_dialog_title">Smazat trezor</string>
   <string name="vault_delete_dialog_body">Toto trvale smaže trezor __VAULT_NAME__ a veškerý jeho obsah. Zadejte název trezoru pro potvrzení smazání.</string>
   <string name="vault_delete_dialog_placeholder">Název trezoru</string>
@@ -36,7 +35,6 @@
   <string name="bottomsheet_view_members">Zobrazit členy</string>
   <string name="bottomsheet_manage_access">Spravovat přístup</string>
   <string name="bottomsheet_select_vault_read_only">Můžete pouze číst</string>
-  <string name="bottomsheet_select_vault_not_primary_vault">Položky můžete vytvářet pouze ve svém primárním trezoru</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Položky můžete vytvářet pouze v nejstarších trezorech</string>
   <string name="vault_title">Trezor</string>
 </resources>

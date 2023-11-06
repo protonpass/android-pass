@@ -23,5 +23,6 @@ sealed interface ShareFromItemEvent {
     object ShareVault : ShareFromItemEvent
     object MoveToSharedVault : ShareFromItemEvent
     object CreateNewVault : ShareFromItemEvent
+    object Upgrade : ShareFromItemEvent
 
 }

@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">アプリについて</string>
   <string name="settings_option_privacy_policy">プライバシーポリシー</string>
   <string name="settings_option_terms_of_service">利用規約</string>
-  <string name="settings_primary_vault_section_title">保管庫</string>
-  <string name="settings_primary_vault_vault_selector_title">プライマリ保管庫</string>
-  <string name="settings_primary_vault_section_subtitle">プライマリのフォルダーは削除できません。</string>
-  <string name="settings_primary_vault_change_success">プライマリー保管庫が変更されました</string>
-  <string name="settings_primary_vault_change_error">プライマリ保管庫を変更できませんでした</string>
   <string name="settings_privacy_section_title">プライバシー</string>
   <string name="settings_use_favicons_preference_title">ウェブアイコンを使う</string>
   <string name="settings_use_favicons_preference_subtitle">アイテムにウェブサイトのアイコンを表示するかどうかを決める。</string>

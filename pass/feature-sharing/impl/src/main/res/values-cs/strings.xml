@@ -50,7 +50,7 @@
   <string name="sharing_snackbar_get_invite_error">Nepodařilo se získat pozvánku</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka přijata</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba při přijetí pozvánky</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Pozvánku nelze přijmout, protože jste dosáhli limitu pozvánek trezoru</string>
   <string name="sharing_snackbar_invite_rejected">Pozvánka odmítnuta</string>
   <string name="sharing_snackbar_invite_reject_error">Chyba při odmítnutí pozvánky</string>
   <string name="sharing_snackbar_vault_not_found">Trezor se nepodařilo najít</string>
@@ -62,7 +62,6 @@
   <string name="sharing_snackbar_remove_member_success">Člen odebrán z trezoru</string>
   <string name="sharing_snackbar_remove_member_error">Nelze odebrat z trezoru</string>
   <string name="share_summary_title">Prohlédnout a sdílet</string>
-  <string name="share_summary_subtitle">Chystáte se pozvat %1$s do svého %2$s. Získají přístup do %3$s a budou moci v tomto trezoru %4$s.</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Sdílet trezor</string>
   <string name="share_summary_email_title">Sdílet s</string>
@@ -92,7 +91,7 @@
   <string name="share_role_admin">Správce</string>
   <string name="share_role_owner">Vlastník</string>
   <string name="sharing_bottomsheet_transfer_ownership">Převést vlastnictví</string>
-  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Poslední vlastněný trezor nelze převést.</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nemůžete převést váš poslední trezor, který vlastníte.</string>
   <string name="sharing_bottomsheet_remove_access">Zrušit přístup</string>
   <string name="sharing_bottomsheet_resend_invite">Znovu poslat pozvánku</string>
   <string name="sharing_bottomsheet_cancel_invite">Zrušit pozvánku</string>
@@ -110,11 +109,11 @@
   <string name="sharing_invites_info_dialog_title">Limit počtu členů</string>
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Tento trezor může mít až %1$d členů. Zbývá vám ještě %2$d pozvánek.</string>
   <string name="sharing_limit_reached">Tento trezor dosáhl limitu počtu členů a pozvánek.</string>
-  <string name="sharing_invites_info_upgrade_text">Navyšte nyní a pozvěte další.</string>
-  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
+  <string name="sharing_invites_info_upgrade_text">Navyšte nyní pro pozvání dalších.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Sdílet</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Pomocí trezorů můžete položky sdílet s ostatními</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Sdílet tento trezor</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Přizpůsobit</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Přesunout do sdíleného trezoru</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Vytvořit nový trezor ke sdílení</string>
 </resources>

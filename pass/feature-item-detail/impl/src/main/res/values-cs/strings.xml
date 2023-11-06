@@ -48,7 +48,7 @@
     <item quantity="other">%dkrát</item>
   </plurals>
   <string name="more_info_last_time_modified">Naposledy, %s</string>
-  <string name="share_button_content_description">Open share button</string>
+  <string name="share_button_content_description">Otevřít tlačítko sdílení</string>
   <string name="open_menu_icon_content_description">Tlačítko otevření nabídky</string>
   <string name="mfa_limit_reached">Dosažen limit 2FA</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>

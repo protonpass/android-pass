@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Über</string>
   <string name="settings_option_privacy_policy">Datenschutzerklärung</string>
   <string name="settings_option_terms_of_service">Nutzungsbedingungen</string>
-  <string name="settings_primary_vault_section_title">Tresore</string>
-  <string name="settings_primary_vault_vault_selector_title">Primärer Tresor</string>
-  <string name="settings_primary_vault_section_subtitle">Der primäre Tresor kann nicht gelöscht werden.</string>
-  <string name="settings_primary_vault_change_success">Der primäre Tresor wurde geändert.</string>
-  <string name="settings_primary_vault_change_error">Primärer Tresor konnte nicht geändert werden.</string>
   <string name="settings_privacy_section_title">Datenschutz</string>
   <string name="settings_use_favicons_preference_title">Website-Symbole verwenden</string>
   <string name="settings_use_favicons_preference_subtitle">Entscheide, ob du die Website-Symbole auf deinen Einträgen anzeigen lassen möchtest.</string>

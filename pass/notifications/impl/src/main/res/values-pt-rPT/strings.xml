@@ -2,7 +2,7 @@
 <resources>
   <string name="updates_notification_channel_name">Atualizações</string>
   <string name="autofill_notification_channel_name">Preenchimento automático</string>
-  <string name="autofill_notification_copy_to_clipboard_title">TOTP code</string>
+  <string name="autofill_notification_copy_to_clipboard_title">Código TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">TOTP has been copied to clipboard</string>
   <string name="updates_new_invite_received_title">Recebeu um convite</string>
   <string name="updates_new_invite_received_message">Foi convidado/a para um cofre. Abra o aplicativo para ver o convite e aceitá-lo.</string>

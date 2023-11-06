@@ -64,7 +64,7 @@
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Batalkan perubahan?</string>
   <string name="confirm_close_dialog_message">Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin untuk membatalkan perubahan ini?</string>
-  <string name="confirm_close_dialog_close_button">Buang</string>
+  <string name="confirm_close_dialog_close_button">Batalkan</string>
   <!-- Upgrade -->
   <string name="upgrade">Tingkatkan</string>
   <!-- Advanced options -->

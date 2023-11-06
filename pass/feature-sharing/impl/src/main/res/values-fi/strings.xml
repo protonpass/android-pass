@@ -46,7 +46,7 @@
   <string name="sharing_snackbar_get_invite_error">Kutsua ei saatu</string>
   <string name="sharing_snackbar_invite_accepted">Kutsu hyväksytty</string>
   <string name="sharing_snackbar_invite_accept_error">Virhe hyväksyttäessä kutsua</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kutsua ei voitu hyväksyä, koska olet saavuttanut holvien enimmäismäärän</string>
   <string name="sharing_snackbar_invite_rejected">Kutsu hylätty</string>
   <string name="sharing_snackbar_invite_reject_error">Virhe kutsun hylkäyksessä</string>
   <string name="sharing_snackbar_vault_not_found">Holvia ei löytynyt</string>
@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">Jäsen poistettiin holvista</string>
   <string name="sharing_snackbar_remove_member_error">Ei voitu poistaa holvista</string>
   <string name="share_summary_title">Tarkista ja jaa</string>
-  <string name="share_summary_subtitle">Olet kutsumassa käyttäjän %1$s holviin %2$s. Hän saa %3$s käyttöoikeuden ja voi %4$s.</string>
   <string name="share_summary_vault">Holvi \"%s\"</string>
   <string name="share_summary_share_vault">Jaa holvi</string>
   <string name="share_summary_email_title">Jaa käyttäjälle</string>
@@ -103,10 +102,10 @@
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Tässä holvissa voi olla enintään %1$d jäsentä. Sinulla on vielä %2$d kutsua jäljellä.</string>
   <string name="sharing_limit_reached">Tämä holvi on saavuttanut jäsen- ja kutsurajan.</string>
   <string name="sharing_invites_info_upgrade_text">Päivitä nyt kutsuaksesi lisää.</string>
-  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Jaa</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Käytä holveja kohteiden jakamiseen muiden kanssa</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Jaa tämä holvi</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Mukauta</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Siirrä jaettuun holviin</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Luo uusi jaettava holvi</string>
 </resources>

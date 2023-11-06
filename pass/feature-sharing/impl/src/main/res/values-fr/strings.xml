@@ -46,7 +46,7 @@
   <string name="sharing_snackbar_get_invite_error">Impossible d\'obtenir l\'invitation</string>
   <string name="sharing_snackbar_invite_accepted">Invitation acceptée</string>
   <string name="sharing_snackbar_invite_accept_error">Une erreur s\'est produite lors de l\'acceptation de l\'invitation.</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">L\'invitation n\'a pu être acceptée car vous avez atteint la limite du coffre-fort.</string>
   <string name="sharing_snackbar_invite_rejected">Invitation refusée</string>
   <string name="sharing_snackbar_invite_reject_error">Une erreur s\'est produite lors du refus de l\'invitation.</string>
   <string name="sharing_snackbar_vault_not_found">Ce coffre-fort est introuvable.</string>
@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">Le membre a été supprimé du coffre-fort.</string>
   <string name="sharing_snackbar_remove_member_error">Impossible de supprimer du coffre-fort</string>
   <string name="share_summary_title">Vérifier et partager</string>
-  <string name="share_summary_subtitle">Vous êtes sur le point d\'inviter %1$s dans votre %2$s. Ils auront accès à %3$s et pourront %4$s dans ce coffre-fort.</string>
   <string name="share_summary_vault">coffre-fort %s</string>
   <string name="share_summary_share_vault">Partager le coffre-fort</string>
   <string name="share_summary_email_title">Partager avec</string>

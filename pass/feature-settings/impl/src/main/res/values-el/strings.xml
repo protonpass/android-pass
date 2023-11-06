@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Σχετικά</string>
   <string name="settings_option_privacy_policy">Πολιτική απορρήτου</string>
   <string name="settings_option_terms_of_service">Όροι χρήσης</string>
-  <string name="settings_primary_vault_section_title">Κρύπτες</string>
-  <string name="settings_primary_vault_vault_selector_title">Κύρια κρύπτη</string>
-  <string name="settings_primary_vault_section_subtitle">Δεν μπορείτε να διαγράψετε την κύρια κρύπτη.</string>
-  <string name="settings_primary_vault_change_success">Η κύρια κρύπτη έχει αλλάξει</string>
-  <string name="settings_primary_vault_change_error">Δεν ήταν δυνατή η αλλαγή της κύριας κρύπτης</string>
   <string name="settings_privacy_section_title">Απόρρητο</string>
   <string name="settings_use_favicons_preference_title">Χρήση εικονιδίων διαδικτύου</string>
   <string name="settings_use_favicons_preference_subtitle">Αποφασίστε εάν θέλετε να προβάλετε τα εικονίδια ιστότοπου στα στοιχεία σας.</string>

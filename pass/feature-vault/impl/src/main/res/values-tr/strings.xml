@@ -12,7 +12,6 @@
   <string name="snackbar_retrieve_vault_error">Kasa bulunamadı</string>
   <string name="snackbar_find_vault_error">Seçilmiş kasa bulunamadı</string>
   <string name="snackbar_get_vault_list_error">Kasa listesi yüklenemedi</string>
-  <string name="snackbar_get_upgrade_info_error">Kasa listesi hazırlanamadı</string>
   <string name="vault_delete_dialog_title">Kasayı sil</string>
   <string name="vault_delete_dialog_body">Bu işlem __VAULT_NAME__ kasasını ve içindekileri kalıcı olarak silecek. Silme işlemini onaylamak için kasa adını yazın.</string>
   <string name="vault_delete_dialog_placeholder">Kasa adı</string>
@@ -36,7 +35,6 @@
   <string name="bottomsheet_view_members">Üyeleri görüntüle</string>
   <string name="bottomsheet_manage_access">Erişim yönetimi</string>
   <string name="bottomsheet_select_vault_read_only">Yalnızca okuyabilirsiniz</string>
-  <string name="bottomsheet_select_vault_not_primary_vault">Yalnızca birincil kasanızda ögeler oluşturabilirsiniz</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Yalnızca en eski kasanızda ögeler oluşturabilirsiniz</string>
   <string name="vault_title">Kasa</string>
 </resources>

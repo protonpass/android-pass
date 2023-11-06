@@ -46,7 +46,7 @@
   <string name="sharing_snackbar_get_invite_error">მოსაწვევის მიღება შეუძლებელია</string>
   <string name="sharing_snackbar_invite_accepted">მოწვევა მიღებულია</string>
   <string name="sharing_snackbar_invite_accept_error">მოსაწვევის დათანხმების შეცდომა</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">მოსაწვევს ვერ დავეთნახმე, რადგან საცავების ზღვარს მიაღწიეთ</string>
   <string name="sharing_snackbar_invite_rejected">მოწვევა უარყოფილია</string>
   <string name="sharing_snackbar_invite_reject_error">მოსაწვევის უარყოფის შეცდომა</string>
   <string name="sharing_snackbar_vault_not_found">საცავი ვერ ვიპოვე</string>
@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">წევრი წაიშალა საცავიდან</string>
   <string name="sharing_snackbar_remove_member_error">საცავიდან წაშლის შეცდომა</string>
   <string name="share_summary_title">მიმოხილვა და გაზიარება</string>
-  <string name="share_summary_subtitle">აპირებთ, %1$s თქვენს %2$s-ში მოიწვიოთ. ისინი მიიღებენ წვდომას %3$s-სთან და ექნებათ საშუალება, %4$s ამ საცავში.</string>
   <string name="share_summary_vault">%s საცავი</string>
   <string name="share_summary_share_vault">საცავის გაზიარება</string>
   <string name="share_summary_email_title">გაზიარება</string>
@@ -103,10 +102,10 @@
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">თქვენს საცავს, %1$d-მდე წევრი, შეიძლება, ჰყავდეს. კიდევ დაგრჩათ %2$d მოსაწვევი.</string>
   <string name="sharing_limit_reached">ამ საცავმა წევრებისა და მოსაწვევებს ზღვარს მიაღწია.</string>
   <string name="sharing_invites_info_upgrade_text">ასწიეთ ტრაფიკი ახლა, მეტის მოსაწვევად.</string>
-  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">გაზიარება</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">ელემენტის სხვებთან გასაზიარებლად, საცავები გამოიყენეთ</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">ამ საცავის გაზიარება</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">მორგება</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">გადატანა გაზიარებულ საცავში</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">შექმენით ახალი საცავი გასაზიარებლად</string>
 </resources>

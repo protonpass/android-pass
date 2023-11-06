@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">O aplikácii</string>
   <string name="settings_option_privacy_policy">Zásady ochrany osobných údajov</string>
   <string name="settings_option_terms_of_service">Podmienky používania</string>
-  <string name="settings_primary_vault_section_title">Trezory</string>
-  <string name="settings_primary_vault_vault_selector_title">Primárny trezor</string>
-  <string name="settings_primary_vault_section_subtitle">Nemôžete odstrániť primárny trezor.</string>
-  <string name="settings_primary_vault_change_success">Primárny trezor bol zmenený</string>
-  <string name="settings_primary_vault_change_error">Primárny trezor nie je možné zmeniť</string>
   <string name="settings_privacy_section_title">Súkromie</string>
   <string name="settings_use_favicons_preference_title">Používať webové ikony</string>
   <string name="settings_use_favicons_preference_subtitle">Rozhodnite sa, či chcete pre položky zobraziť ikony webových stránok.</string>

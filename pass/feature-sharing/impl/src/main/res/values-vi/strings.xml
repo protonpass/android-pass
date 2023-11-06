@@ -56,7 +56,6 @@
   <string name="sharing_snackbar_remove_member_success">Đã xóa thành viên khỏi kho lưu trữ</string>
   <string name="sharing_snackbar_remove_member_error">Không thể xóa khỏi kho lưu trữ</string>
   <string name="share_summary_title">Xem lại và chia sẻ</string>
-  <string name="share_summary_subtitle">Bạn đang chuẩn bị mời %1$s vào %2$s của bạn. Họ sẽ có quyền truy cập vào %3$s và họ có thể %4$s trong kho lưu trữ này.</string>
   <string name="share_summary_vault">kho lưu trữ %s</string>
   <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
   <string name="share_summary_email_title">Chia sẻ với</string>

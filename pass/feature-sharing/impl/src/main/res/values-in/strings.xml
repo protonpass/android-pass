@@ -56,7 +56,6 @@
   <string name="sharing_snackbar_remove_member_success">Anggota dikeluarkan dari brankas</string>
   <string name="sharing_snackbar_remove_member_error">Tidak dapat menghapus dari brankas</string>
   <string name="share_summary_title">Kaji dan bagikan</string>
-  <string name="share_summary_subtitle">Anda akan mengundang %1$s ke %2$s Anda. Mereka akan mendapatkan akses ke %3$s dan mereka akan dapat %4$s dalam brankas ini.</string>
   <string name="share_summary_vault">%s brankas</string>
   <string name="share_summary_share_vault">Bagikan brankas</string>
   <string name="share_summary_email_title">Bagikan dengan</string>

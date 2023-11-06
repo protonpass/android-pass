@@ -46,7 +46,7 @@
   <string name="sharing_snackbar_get_invite_error">Impossibile ottenere l\'invito</string>
   <string name="sharing_snackbar_invite_accepted">Invito accettato</string>
   <string name="sharing_snackbar_invite_accept_error">Errore durante l\'accettazione dell\'invito</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Impossibile accettare l\'invito poiché hai raggiunto il tuo limite di casseforti</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Impossibile accettare l\'invito poiché hai raggiunto il limite di casseforti</string>
   <string name="sharing_snackbar_invite_rejected">Invito rifiutato</string>
   <string name="sharing_snackbar_invite_reject_error">Errore nel rifiuto dell\'invito</string>
   <string name="sharing_snackbar_vault_not_found">Impossibile trovare la cassaforte</string>
@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">Membro rimosso dalla cassaforte</string>
   <string name="sharing_snackbar_remove_member_error">Impossibile rimuovere dalla cassaforte</string>
   <string name="share_summary_title">Controlla e condividi</string>
-  <string name="share_summary_subtitle">Stai per invitare %1$s nel tuo %2$s. Avranno accesso a %3$s e potranno accedere a %4$s in questo caveau.</string>
   <string name="share_summary_vault">la cassaforte %s</string>
   <string name="share_summary_share_vault">Condividi caveau</string>
   <string name="share_summary_email_title">Condividi con</string>

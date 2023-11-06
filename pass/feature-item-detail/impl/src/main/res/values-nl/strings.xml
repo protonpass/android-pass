@@ -46,10 +46,10 @@
     <item quantity="other">%d keren</item>
   </plurals>
   <string name="more_info_last_time_modified">Laatste keer, %s</string>
-  <string name="share_button_content_description">Open share button</string>
+  <string name="share_button_content_description">Deelknop openen</string>
   <string name="open_menu_icon_content_description">Menuknop openen</string>
   <string name="mfa_limit_reached">2FA-limiet bereikt</string>
-  <string name="mfa_icon_content_description">2FA icon</string>
+  <string name="mfa_icon_content_description">2FA-pictogram</string>
   <string name="custom_field_text_icon_description">Tekst aangepast veld</string>
   <string name="custom_field_hidden_icon_description">Verborgen aangepast veld</string>
   <string name="custom_field_totp_icon_description">2FA aangepast veld</string>

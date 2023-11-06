@@ -108,7 +108,7 @@
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">2FA-limiet bereikt</string>
   <string name="upgrade">Upgraden</string>
-  <string name="mfa_icon_content_description">2FA icon</string>
+  <string name="mfa_icon_content_description">2FA-pictogram</string>
   <string name="select_suffix_upgrade_for_custom_domains">Upgrade voor aangepaste domeinen</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade voor meer inboxen</string>
   <string name="create_alias_content_limit_banner">U heeft de limiet bereikt van aliassen die u kunt maken. Maak een onbeperkt aantal aliassen aan wanneer u uw abonnement upgradet.</string>

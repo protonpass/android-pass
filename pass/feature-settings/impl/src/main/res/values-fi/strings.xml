@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Tietoja</string>
   <string name="settings_option_privacy_policy">Tietosuojakäytäntö</string>
   <string name="settings_option_terms_of_service">Käyttöehdot</string>
-  <string name="settings_primary_vault_section_title">Holvit</string>
-  <string name="settings_primary_vault_vault_selector_title">Ensisijainen holvi</string>
-  <string name="settings_primary_vault_section_subtitle">Et voi poistaa ensisijaista holvia.</string>
-  <string name="settings_primary_vault_change_success">Ensisijainen holvi vaihdettiin</string>
-  <string name="settings_primary_vault_change_error">Ensisijaista holvia ei voitu vaihtaa</string>
   <string name="settings_privacy_section_title">Yksityisyys</string>
   <string name="settings_use_favicons_preference_title">Käytä sivustokuvakkeita</string>
   <string name="settings_use_favicons_preference_subtitle">Valitse näytetäänkö kohteissasi niiden verkkosivustojen kuvakkeet.</string>

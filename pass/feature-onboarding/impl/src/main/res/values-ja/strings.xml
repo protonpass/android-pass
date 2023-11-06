@@ -10,8 +10,8 @@
   <string name="on_boarding_last_page_title">受信箱の中身を管理する</string>
   <string name="on_boarding_last_page_button">Proton Passの使用開始</string>
   <string name="on_boarding_skip">今はしない</string>
-  <string name="on_boarding_pending_invite_content">For security reasons, your access needs to be confirmed.</string>
-  <string name="on_boarding_pending_invite_title">Pending access to the shared data</string>
+  <string name="on_boarding_pending_invite_content">セキュリティ上の理由から、アクセスを確認する必要があります。</string>
+  <string name="on_boarding_pending_invite_title">共有データへのアクセス待ち</string>
   <string name="on_boarding_pending_invite_button">Proton Pass の詳細</string>
   <string name="error_biometry_failed_to_start">生体認証を開始できませんでした</string>
   <string name="error_biometry_failed_to_authenticate">認証に失敗しました</string>

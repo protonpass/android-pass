@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Om</string>
   <string name="settings_option_privacy_policy">Privatlivspolitik</string>
   <string name="settings_option_terms_of_service">Servicevilkår</string>
-  <string name="settings_primary_vault_section_title">Bokse</string>
-  <string name="settings_primary_vault_vault_selector_title">Primær boks</string>
-  <string name="settings_primary_vault_section_subtitle">Du kan ikke slette den primære boks.</string>
-  <string name="settings_primary_vault_change_success">Den primære boks er blevet ændret</string>
-  <string name="settings_primary_vault_change_error">Kunne ikke ændre den primære boks</string>
   <string name="settings_privacy_section_title">Privatliv</string>
   <string name="settings_use_favicons_preference_title">Brug web-ikoner</string>
   <string name="settings_use_favicons_preference_subtitle">Beslut dig for, om du vil se webstedets ikoner på dine elementer.</string>

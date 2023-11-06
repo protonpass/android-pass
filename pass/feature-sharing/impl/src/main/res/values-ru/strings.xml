@@ -62,7 +62,6 @@
   <string name="sharing_snackbar_remove_member_success">Member removed from the vault</string>
   <string name="sharing_snackbar_remove_member_error">Could not remove from the vault</string>
   <string name="share_summary_title">Review and share</string>
-  <string name="share_summary_subtitle">Вы собираетесь пригласить %1$s в своё %2$s. Они получат доступ к %3$s, и смогут %4$s в этом хранилище.</string>
   <string name="share_summary_vault">%s хранилище</string>
   <string name="share_summary_share_vault">Поделиться хранилищем</string>
   <string name="share_summary_email_title">Share with</string>

@@ -25,7 +25,7 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d з %2$d елементів</string>
   <string name="sync_dialog_title">Синхронізація елементів…</string>
-  <string name="sync_dialog_subtitle">Ми завантажуємо та розшифровуємо ваші елементи. Це може зайняти кілька хвилин.</string>
+  <string name="sync_dialog_subtitle">Ми завантажуємо та розшифровуємо ваші елементи. Це може тривати кілька хвилин.</string>
   <string name="sync_dialog_confirm_button">Продовжити</string>
   <string name="sync_item_not_started">Не розпочато</string>
 </resources>

@@ -4,10 +4,9 @@
   <string name="error_credentials_not_found">Tidak ditemukan kredensial yang cocok</string>
   <string name="error_loading_items">Tidak dapat memuat item</string>
   <string name="topbar_search_query">Cari di seluruh brankas…</string>
-  <string name="topbar_search_query_primary_vault">Cari dalam brankas utama…</string>
+  <string name="topbar_search_query_oldest_vaults">Cari dalam brankas terlawas Anda…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Cari...</string>
   <string name="inline_suggestions_open_app">Buka Proton Pass</string>
-  <string name="autofill_only_searching_in_primary_vault">Paket Anda hanya mengizinkan penggunaan item dalam brankas utama Anda untuk kebutuhan pengisian otomatis.</string>
   <string name="autofill_only_searching_in_oldest_vaults">Paket Anda hanya mengizinkan penggunaan item dalam brankas terlawas Anda untuk kebutuhan pengisian otomatis.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Saran untuk %s</string>

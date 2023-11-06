@@ -12,7 +12,6 @@
   <string name="snackbar_retrieve_vault_error">Holvia ei löytynyt</string>
   <string name="snackbar_find_vault_error">Valittua holvia ei löytynyt</string>
   <string name="snackbar_get_vault_list_error">Holvilistaa ei voitu ladata</string>
-  <string name="snackbar_get_upgrade_info_error">Holvilistaa ei voitu valmistella</string>
   <string name="vault_delete_dialog_title">Poista holvi</string>
   <string name="vault_delete_dialog_body">Tämä poistaa holvin __VAULT_NAME__ ja kaiken sen sisällön pysyvästi. Vahvista poisto syöttämällä holvin nimi.</string>
   <string name="vault_delete_dialog_placeholder">Holvin nimi</string>
@@ -36,7 +35,6 @@
   <string name="bottomsheet_view_members">Näytä jäsenet</string>
   <string name="bottomsheet_manage_access">Hallitse käyttöoikeuksia</string>
   <string name="bottomsheet_select_vault_read_only">Voit vain tarkastella</string>
-  <string name="bottomsheet_select_vault_not_primary_vault">Voit luoda kohteita vain ensisijaiseen holviisi</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Voit luoda kohteita vain vanhimpiin holveihisi</string>
   <string name="vault_title">Holvi</string>
 </resources>

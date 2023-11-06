@@ -20,9 +20,9 @@
   <string name="enter_your_pin_code">Введіть PIN-код</string>
   <string name="unlock">Розблокувати</string>
   <plurals name="enter_your_pin_code_error">
-    <item quantity="one">Неправильний PIN-код. Залишилася %d спроба.</item>
+    <item quantity="one">Неправильний PIN-код. Залишилась %d спроба.</item>
     <item quantity="few">Неправильний PIN-код. Залишилося %d спроби.</item>
-    <item quantity="many">Неправильний PIN-код. Залишилося %d спроби.</item>
+    <item quantity="many">Неправильний PIN-код. Залишилося %d спроб.</item>
     <item quantity="other">Неправильний PIN-код. Залишилося %d спроб.</item>
   </plurals>
   <string name="auth_unlock_app_title">Розблокувати Proton Pass</string>
@@ -34,10 +34,10 @@
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Скористайтесь відбитком пальця натомість</string>
   <string name="auth_unlock_button">Розблокувати</string>
   <string name="auth_error_verifying_password">Помилка під час перевірки пароля</string>
-  <string name="auth_error_empty_password">Пароль не може бути порожнім</string>
-  <string name="auth_error_pin_cannot_be_empty">PIN-код не може бути порожнім</string>
+  <string name="auth_error_empty_password">Потрібно ввести пароль</string>
+  <string name="auth_error_pin_cannot_be_empty">Потрібно ввести PIN-код</string>
   <plurals name="auth_error_wrong_password">
-    <item quantity="one">Неправильний пароль. Залишилася %d спроба</item>
+    <item quantity="one">Неправильний пароль. Залишилась %d спроба</item>
     <item quantity="few">Неправильний пароль. Залишилося %d спроби</item>
     <item quantity="many">Неправильний пароль. Залишилося %d спроб</item>
     <item quantity="other">Неправильний пароль. Залишилося %d спроб</item>

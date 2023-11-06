@@ -12,7 +12,6 @@
   <string name="snackbar_retrieve_vault_error">Kluis niet gevonden</string>
   <string name="snackbar_find_vault_error">Kan geselecteerde kluis niet vinden</string>
   <string name="snackbar_get_vault_list_error">Kluislijst kan niet worden geladen</string>
-  <string name="snackbar_get_upgrade_info_error">Kon de kluislijst niet voorbereiden</string>
   <string name="vault_delete_dialog_title">Kluis verwijderen</string>
   <string name="vault_delete_dialog_body">Hiermee wordt de kluis __VAULT_NAME__ en de volledige inhoud permanent verwijderd. Voer de kluisnaam in om de verwijdering te bevestigen.</string>
   <string name="vault_delete_dialog_placeholder">Kluisnaam</string>
@@ -36,7 +35,6 @@
   <string name="bottomsheet_view_members">Bekijk leden</string>
   <string name="bottomsheet_manage_access">Beheer toegang</string>
   <string name="bottomsheet_select_vault_read_only">U kunt alleen lezen</string>
-  <string name="bottomsheet_select_vault_not_primary_vault">U kan alleen items maken voor uw primaire kluis</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">U kan alleen items maken voor uw oudste kluizen</string>
   <string name="vault_title">Kluis</string>
 </resources>

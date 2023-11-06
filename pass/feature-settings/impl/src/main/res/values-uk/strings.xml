@@ -6,7 +6,7 @@
   <string name="settings_autofill_preference_description">Щоб швидко та легко виконувати вхід, дозвольте Proton Pass заповнювати ваше ім\'я користувача і паролі.</string>
   <string name="settings_authentication_section_title">Автентифікація</string>
   <string name="settings_authentication_preference_title">Розблокування відбитком пальця</string>
-  <string name="settings_authentication_preference_description_enabled">Швидко та безпечно відкривайте програму за допомогою відбитка пальця.</string>
+  <string name="settings_authentication_preference_description_enabled">Швидко та безпечно розблоковуйте програму за допомогою відбитка пальця.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Ви не можете вимагати відбиток пальця для взаємодії з програмою, оскільки на цьому пристрої немає зареєстрованих відбитків.</string>
   <string name="settings_appearance_preference_title">Тема</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Відповідно до системи</string>
@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Про програму</string>
   <string name="settings_option_privacy_policy">Політика приватності</string>
   <string name="settings_option_terms_of_service">Умови надання послуг</string>
-  <string name="settings_primary_vault_section_title">Сховища</string>
-  <string name="settings_primary_vault_vault_selector_title">Основне сховище</string>
-  <string name="settings_primary_vault_section_subtitle">Ви не можете видалити основне сховище.</string>
-  <string name="settings_primary_vault_change_success">Основне сховище було змінено</string>
-  <string name="settings_primary_vault_change_error">Не вдалося змінити основне сховище</string>
   <string name="settings_privacy_section_title">Приватність</string>
   <string name="settings_use_favicons_preference_title">Використовувати вебпіктограми</string>
   <string name="settings_use_favicons_preference_subtitle">Вирішіть, чи хочете ви переглянути піктограми вебсайту на ваших елементах.</string>

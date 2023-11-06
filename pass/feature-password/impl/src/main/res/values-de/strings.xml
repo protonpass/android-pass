@@ -6,12 +6,12 @@
   <string name="password_type">Typ</string>
   <string name="special_characters">Sonderzeichen (!&amp;*)</string>
   <plurals name="character_count">
-    <item quantity="one">%s character</item>
-    <item quantity="other">%s characters</item>
+    <item quantity="one">%s Zeichen</item>
+    <item quantity="other">%s Zeichen</item>
   </plurals>
   <plurals name="word_count">
-    <item quantity="one">%s word</item>
-    <item quantity="other">%s words</item>
+    <item quantity="one">%s Wort</item>
+    <item quantity="other">%s Wörter</item>
   </plurals>
   <string name="word_separator">Trennzeichen</string>
   <string name="bottomsheet_option_capital_letters">Großbuchstaben (A–Z)</string>

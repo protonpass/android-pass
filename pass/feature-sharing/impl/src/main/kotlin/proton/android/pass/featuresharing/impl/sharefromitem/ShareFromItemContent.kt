@@ -22,27 +22,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultHighlightNorm
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featuresharing.impl.R
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.VaultWithItemCount
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -89,47 +80,36 @@ fun ShareFromItemContent(
             )
         }
 
-        if (state.showCreateVault) {
-            ShareFromItemActionRow(
-                modifier = Modifier.fillMaxWidth(),
-                icon = CoreR.drawable.ic_proton_plus,
-                title = R.string.sharing_from_item_create_vault_to_share_action,
-                onClick = { onEvent(ShareFromItemEvent.CreateNewVault) }
-            )
+        when (state.showCreateVault) {
+            CreateNewVaultState.Hide -> {}
+            CreateNewVaultState.Allow -> {
+                ShareFromItemActionRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    icon = CoreR.drawable.ic_proton_plus,
+                    title = R.string.sharing_from_item_create_vault_to_share_action,
+                    onClick = { onEvent(ShareFromItemEvent.CreateNewVault) }
+                )
 
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.sharing_from_item_create_vault_to_share_subtitle),
-                style = ProtonTheme.typography.defaultWeak,
-                textAlign = TextAlign.Center
-            )
-        }
-    }
-}
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.sharing_from_item_create_vault_to_share_subtitle),
+                    style = ProtonTheme.typography.defaultWeak,
+                    textAlign = TextAlign.Center
+                )
+            }
 
-@Preview
-@Composable
-fun ShareFromItemContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            ShareFromItemContent(
-                state = ShareFromItemUiState(
-                    vault = VaultWithItemCount(
-                        vault = Vault(
-                            shareId = ShareId("123"),
-                            name = "Vault name"
-                        ),
-                        activeItemCount = 1,
-                        trashedItemCount = 0
-                    ).some(),
-                    itemId = ItemId("123"),
-                    showMoveToSharedVault = true,
-                    showCreateVault = true
-                ),
-                onEvent = {}
-            )
+            CreateNewVaultState.Upgrade -> {
+                ShareFromItemUpgradeRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { onEvent(ShareFromItemEvent.Upgrade) }
+                )
+            }
+
+            CreateNewVaultState.VaultLimitReached -> {
+                ShareFromItemVaultLimitReached(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }

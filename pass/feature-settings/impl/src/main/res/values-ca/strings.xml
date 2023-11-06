@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Quant a</string>
   <string name="settings_option_privacy_policy">Política de privacitat</string>
   <string name="settings_option_terms_of_service">Condicions del servei</string>
-  <string name="settings_primary_vault_section_title">Caixes fortes</string>
-  <string name="settings_primary_vault_vault_selector_title">Caixa forta principal</string>
-  <string name="settings_primary_vault_section_subtitle">No podeu eliminar la caixa forta principal.</string>
-  <string name="settings_primary_vault_change_success">S\'ha canviat la caixa forta principal</string>
-  <string name="settings_primary_vault_change_error">No s\'ha pogut canviar la caixa forta principal</string>
   <string name="settings_privacy_section_title">Privacitat</string>
   <string name="settings_use_favicons_preference_title">Utilitza icones web</string>
   <string name="settings_use_favicons_preference_subtitle">Decidiu si voleu veure les icones dels llocs web als vostres elements.</string>

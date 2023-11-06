@@ -66,7 +66,7 @@
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Annullare le modifiche?</string>
   <string name="confirm_close_dialog_message">Sono presenti modifiche non salvate. Vuoi davvero scartarle?</string>
-  <string name="confirm_close_dialog_close_button">Annulla</string>
+  <string name="confirm_close_dialog_close_button">Scarta</string>
   <!-- Upgrade -->
   <string name="upgrade">Effettua l\'upgrade</string>
   <!-- Advanced options -->

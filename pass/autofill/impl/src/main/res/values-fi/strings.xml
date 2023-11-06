@@ -4,10 +4,9 @@
   <string name="error_credentials_not_found">Vastaavia kirjautumistietoja ei löytynyt</string>
   <string name="error_loading_items">Kohteita ei voitu ladata</string>
   <string name="topbar_search_query">Etsi kaikista holveista…</string>
-  <string name="topbar_search_query_primary_vault">Etsi ensisijaisesta holvista…</string>
+  <string name="topbar_search_query_oldest_vaults">Hae vanhimmista holveistasi…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Hae…</string>
   <string name="inline_suggestions_open_app">Avaa Proton Pass</string>
-  <string name="autofill_only_searching_in_primary_vault">Tilauksesi sallii vain ensisijaisen holvisi kohteiden automaattitäytön.</string>
   <string name="autofill_only_searching_in_oldest_vaults">Tilauksesi sallii vain vanhimpien holviesi kohteiden käyttämisen automaattiseen täyttöön.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Ehdotukset kohteelle %s</string>

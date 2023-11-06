@@ -49,7 +49,7 @@
   <string name="share_button_content_description">Open share button</string>
   <string name="open_menu_icon_content_description">Botão de abertura do menu</string>
   <string name="mfa_limit_reached">Limite A2F atingido</string>
-  <string name="mfa_icon_content_description">2FA icon</string>
+  <string name="mfa_icon_content_description">Ícone 2FA</string>
   <string name="custom_field_text_icon_description">Campo personalizado de texto</string>
   <string name="custom_field_hidden_icon_description">Campo personalizado oculto</string>
   <string name="custom_field_totp_icon_description">Campo personalizado A2F</string>
@@ -57,7 +57,7 @@
   <string name="credit_card_cardholder_field_name">Nome do titular do cartão</string>
   <string name="credit_card_number_field_name">Número do cartão</string>
   <string name="credit_card_cvv_field_name">Número de verificação</string>
-  <string name="credit_card_pin_field_name">PIN code</string>
+  <string name="credit_card_pin_field_name">Código PIN</string>
   <string name="credit_card_expiration_date_field_name">Expira em</string>
   <string name="credit_card_cardholder_copied_to_clipboard">O nome do titular do cartão foi copiado para a área de transferência.</string>
   <string name="credit_card_number_copied_to_clipboard">O número do cartão foi copiado para a área de transferência.</string>

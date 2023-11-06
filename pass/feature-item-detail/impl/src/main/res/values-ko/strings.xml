@@ -45,7 +45,7 @@
     <item quantity="other">%d회</item>
   </plurals>
   <string name="more_info_last_time_modified">마지막 동기화 시점: %s</string>
-  <string name="share_button_content_description">Open share button</string>
+  <string name="share_button_content_description">공유 버튼 열기</string>
   <string name="open_menu_icon_content_description">매뉴 버튼 열기</string>
   <string name="mfa_limit_reached">2FA 제한 도달</string>
   <string name="mfa_icon_content_description">2FA 아이콘</string>

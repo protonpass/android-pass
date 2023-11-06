@@ -33,18 +33,18 @@
   <string name="share_with_title">と共有する</string>
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレス</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Cannot retrieve the invited user information</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">招待されたユーザー情報を取得できません</string>
   <string name="share_permissions_title">アクセスレベルの設定</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%sがあなたにアイテムへのアクセスを招待しています。</string>
   <string name="sharing_join_shared_vault">参加と同期</string>
   <string name="sharing_reject_invitation">招待を拒否する</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulations, your access has been confirmed</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">See the shared vault</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Close</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">おめでとうございます。アクセスが確認されました。</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">共有保管庫を参照してください</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">閉じる</string>
   <string name="sharing_snackbar_get_invite_error">招待状が届かない</string>
   <string name="sharing_snackbar_invite_accepted">招待を受ける</string>
   <string name="sharing_snackbar_invite_accept_error">招待の受け入れエラー</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">保管庫の制限に達したため、招待を受け入れることができませんでした</string>
   <string name="sharing_snackbar_invite_rejected">招待を拒否</string>
   <string name="sharing_snackbar_invite_reject_error">招待の拒否エラー</string>
   <string name="sharing_snackbar_vault_not_found">保管庫が見つかりません</string>
@@ -56,7 +56,6 @@
   <string name="sharing_snackbar_remove_member_success">メンバーが保管庫から削除されました</string>
   <string name="sharing_snackbar_remove_member_error">保管庫から削除できませんでした</string>
   <string name="share_summary_title">レビューして共有</string>
-  <string name="share_summary_subtitle">%1$s を %2$s に招待しようとしています。 彼らは %3$s にアクセスできるようになり、この 保管庫 で %4$s できるようになります。</string>
   <string name="share_summary_vault">%s 保管庫</string>
   <string name="share_summary_share_vault">保管庫を共有する</string>
   <string name="share_summary_email_title">と共有</string>
@@ -64,16 +63,16 @@
   <string name="share_summary_permissions_title">アクセスレベル</string>
   <string name="share_manage_vault_share_with_more_people">より多くの人たちと共有する</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
-    <item quantity="other">%d invites left</item>
+    <item quantity="other">%d 件の招待が残っています</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
-    <item quantity="other">%d items</item>
+    <item quantity="other">%d アイテム</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">招待の送信</string>
-  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Pending account creation</string>
-  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirm access</string>
-  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitations</string>
-  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Members</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">アカウント作成が保留中</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">アクセスを確認する</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">招待</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">メンバー</string>
   <string name="share_manage_vault_current_user_indicator">あなた</string>
   <string name="share_role_can_view">閲覧可能</string>
   <string name="share_role_can_edit">編集可能</string>
@@ -90,19 +89,19 @@
   <string name="sharing_snackbar_cancel_invite_error">招待のキャンセル中にエラーが発生しました</string>
   <string name="sharing_snackbar_resend_invite_success">招待状再送</string>
   <string name="sharing_snackbar_resend_invite_error">招待状の再送エラー</string>
-  <string name="sharing_snackbar_confirm_invite_success">Invite confirmed</string>
-  <string name="sharing_snackbar_confirm_invite_error">Error confirming invite</string>
+  <string name="sharing_snackbar_confirm_invite_success">招待を確認しました</string>
+  <string name="sharing_snackbar_confirm_invite_error">招待の確認中にエラーが発生しました</string>
   <string name="sharing_snackbar_too_many_invites_sent">アドレスは何度も招待されている</string>
   <string name="sharing_snackbar_transfer_ownership_success">所有権移転</string>
   <string name="sharing_snackbar_transfer_ownership_error">所有権移転エラー</string>
-  <string name="sharing_invites_info_dialog_title">Member limit</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. You still have %2$d invites left.</string>
-  <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
-  <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
-  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
+  <string name="sharing_invites_info_dialog_title">メンバー数制限</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">この保管庫には %1$d 人までのメンバーを招待できます。まだ %2$d 招待が残っています。</string>
+  <string name="sharing_limit_reached">この保管庫は、メンバーおよび招待の制限に達しました。</string>
+  <string name="sharing_invites_info_upgrade_text">今すぐアップグレードして、さらに招待しよう。</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">共有</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">保管庫を使って他の人とアイテムを共有する</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">この金庫を共有する</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">カスタマイズ</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">共有保管庫への移動</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">新しい保管庫を作成して共有する</string>
 </resources>

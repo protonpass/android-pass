@@ -62,7 +62,6 @@
   <string name="sharing_snackbar_remove_member_success">Člen odstránený z trezoru</string>
   <string name="sharing_snackbar_remove_member_error">Nepodarilo sa odstrániť z trezoru</string>
   <string name="share_summary_title">Skontrolovať a zdieľať</string>
-  <string name="share_summary_subtitle">Chystáte sa pozvať %1$s do svojho %2$s. Získajú prístup k %3$s a budú môcť %4$s v tomto trezore.</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Zdielať trezor</string>
   <string name="share_summary_email_title">Zdieľať s</string>
@@ -81,7 +80,7 @@
     <item quantity="many">%d položiek</item>
     <item quantity="other">%d položiek</item>
   </plurals>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Pozvánka bol odoslaná</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Pozvánka odoslaná</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Čaká sa na vytvorenie účtu</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Potvrďte prístup</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Pozvánky</string>

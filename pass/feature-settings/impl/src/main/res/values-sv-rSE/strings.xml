@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Om</string>
   <string name="settings_option_privacy_policy">Integritetspolicy</string>
   <string name="settings_option_terms_of_service">Användarvillkor</string>
-  <string name="settings_primary_vault_section_title">Valv</string>
-  <string name="settings_primary_vault_vault_selector_title">Primärt valv</string>
-  <string name="settings_primary_vault_section_subtitle">Du kan inte ta bort det primära valvet.</string>
-  <string name="settings_primary_vault_change_success">Det primära valvet har ändrats</string>
-  <string name="settings_primary_vault_change_error">Kunde inte ändra det primära valvet</string>
   <string name="settings_privacy_section_title">Integritet</string>
   <string name="settings_use_favicons_preference_title">Använd webbikoner</string>
   <string name="settings_use_favicons_preference_subtitle">Bestäm om du vill se webbplatsikonerna på dina objekt.</string>

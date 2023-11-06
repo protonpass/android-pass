@@ -12,7 +12,6 @@
   <string name="snackbar_retrieve_vault_error">查詢不到保管庫</string>
   <string name="snackbar_find_vault_error">無法找到選取的保管庫</string>
   <string name="snackbar_get_vault_list_error">無法載入保管清單單</string>
-  <string name="snackbar_get_upgrade_info_error">無法載入保管庫清單</string>
   <string name="vault_delete_dialog_title">刪除保管庫</string>
   <string name="vault_delete_dialog_body">此將永久刪除__VAULT_NAME__保管庫及其內容。輸入保管庫名稱已繼續。</string>
   <string name="vault_delete_dialog_placeholder">保管庫名稱</string>
@@ -36,7 +35,6 @@
   <string name="bottomsheet_view_members">檢視成員</string>
   <string name="bottomsheet_manage_access">管理存取權限</string>
   <string name="bottomsheet_select_vault_read_only">您只能讀取</string>
-  <string name="bottomsheet_select_vault_not_primary_vault">您僅能在主保管庫建立項目</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">您僅能在最舊的保管庫建立項目</string>
   <string name="vault_title">保管庫</string>
 </resources>

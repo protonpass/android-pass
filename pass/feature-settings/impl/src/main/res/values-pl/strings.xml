@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">O aplikacji</string>
   <string name="settings_option_privacy_policy">Polityka prywatności</string>
   <string name="settings_option_terms_of_service">Regulamin</string>
-  <string name="settings_primary_vault_section_title">Sejfy</string>
-  <string name="settings_primary_vault_vault_selector_title">Sejf główny</string>
-  <string name="settings_primary_vault_section_subtitle">Nie możesz usunąć sejfu głównego.</string>
-  <string name="settings_primary_vault_change_success">Sejf główny został zmieniony</string>
-  <string name="settings_primary_vault_change_error">Nie można zmienić sejfu głównego</string>
   <string name="settings_privacy_section_title">Prywatność</string>
   <string name="settings_use_favicons_preference_title">Pokaż ikony stron internetowych</string>
   <string name="settings_use_favicons_preference_subtitle">Zdecyduj, czy chcesz wyświetlać ikony stron internetowych.</string>

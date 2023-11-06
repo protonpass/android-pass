@@ -47,7 +47,7 @@
     <item quantity="other">de %d de ori</item>
   </plurals>
   <string name="more_info_last_time_modified">Ultima oară, %s</string>
-  <string name="share_button_content_description">Open share button</string>
+  <string name="share_button_content_description">Deschidere buton partajare.</string>
   <string name="open_menu_icon_content_description">Buton meniu deschidere</string>
   <string name="mfa_limit_reached">Limită A2F atinsă.</string>
   <string name="mfa_icon_content_description">Pictogramă A2F</string>

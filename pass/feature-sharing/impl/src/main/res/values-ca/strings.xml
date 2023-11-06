@@ -58,7 +58,6 @@
   <string name="sharing_snackbar_remove_member_success">S\'ha eliminat el membre de la caixa forta.</string>
   <string name="sharing_snackbar_remove_member_error">No s\'ha pogut eliminar de la caixa forta.</string>
   <string name="share_summary_title">Reviseu i comparteu</string>
-  <string name="share_summary_subtitle">Esteu a punt de convidar %1$s al vostre %2$s. Tindran accés a %3$s i podran %4$s en aquesta caixa forta.</string>
   <string name="share_summary_vault">a caixa forta %s</string>
   <string name="share_summary_share_vault">Comparteix la caixa forta</string>
   <string name="share_summary_email_title">Comparteix amb</string>

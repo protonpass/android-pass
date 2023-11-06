@@ -21,11 +21,6 @@
   <string name="settings_about_section_title">Аб праграме</string>
   <string name="settings_option_privacy_policy">Палітыка прыватнасці</string>
   <string name="settings_option_terms_of_service">Умовы абслугоўвання</string>
-  <string name="settings_primary_vault_section_title">Сховішчы</string>
-  <string name="settings_primary_vault_vault_selector_title">Асноўнае сховішча</string>
-  <string name="settings_primary_vault_section_subtitle">Вы не можаце выдаліць асноўнае сховішча.</string>
-  <string name="settings_primary_vault_change_success">Асноўнае сховішча было зменена</string>
-  <string name="settings_primary_vault_change_error">Немагчыма змяніць асноўнае сховішча</string>
   <string name="settings_privacy_section_title">Прыватнасць</string>
   <string name="settings_use_favicons_preference_title">Выкарыстоўваць значок вэб-сайта</string>
   <string name="settings_use_favicons_preference_subtitle">Вырашыце, ці хочаце вы прагледзець значкі вэб-сайтаў на вашых элементах.</string>

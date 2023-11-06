@@ -33,11 +33,13 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.pass.domain.ItemId
+import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
 import proton.pass.domain.canCreate
 import proton.pass.domain.toPermissions
@@ -48,7 +50,8 @@ class ShareFromItemViewModel @Inject constructor(
     savedState: SavedStateHandleProvider,
     observeVaults: ObserveVaults,
     getVaultWithItemCount: GetVaultWithItemCountById,
-    canCreateVault: CanCreateVault
+    canCreateVault: CanCreateVault,
+    getUserPlan: GetUserPlan
 ) : ViewModel() {
 
     private val shareId: ShareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
@@ -62,11 +65,28 @@ class ShareFromItemViewModel @Inject constructor(
         }
         .asLoadingResult()
 
+    private val showCreateVaultFlow: Flow<LoadingResult<CreateNewVaultState>> = combine(
+        canCreateVault(),
+        getUserPlan()
+    ) { canCreateVault, userPlan ->
+        if (canCreateVault) {
+            CreateNewVaultState.Allow
+        } else {
+            when (userPlan.planType) {
+                is PlanType.Free -> CreateNewVaultState.Upgrade
+                is PlanType.Paid, is PlanType.Trial -> CreateNewVaultState.VaultLimitReached
+                is PlanType.Unknown -> CreateNewVaultState.Hide
+            }
+        }
+    }.asLoadingResult()
+
     val state: StateFlow<ShareFromItemUiState> = combine(
         getVaultWithItemCount(shareId = shareId),
         canMoveToSharedVaultFlow,
-        canCreateVault()
-    ) { vault, canMoveToSharedVault, showCreateVault ->
+        showCreateVaultFlow
+    ) { vault, canMoveToSharedVault, createVault ->
+        val showCreateVault = createVault.getOrNull() ?: CreateNewVaultState.Hide
+
         ShareFromItemUiState(
             vault = vault.some(),
             itemId = itemId,
@@ -78,5 +98,4 @@ class ShareFromItemViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = ShareFromItemUiState.Initial(itemId)
     )
-
 }

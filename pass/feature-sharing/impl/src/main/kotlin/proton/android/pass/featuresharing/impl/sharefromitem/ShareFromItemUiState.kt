@@ -25,18 +25,33 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.VaultWithItemCount
 
 @Stable
+sealed interface CreateNewVaultState {
+    @Stable
+    object Allow : CreateNewVaultState
+
+    @Stable
+    object Upgrade : CreateNewVaultState
+
+    @Stable
+    object VaultLimitReached : CreateNewVaultState
+
+    @Stable
+    object Hide : CreateNewVaultState
+}
+
+@Stable
 data class ShareFromItemUiState(
     val vault: Option<VaultWithItemCount>,
     val itemId: ItemId,
     val showMoveToSharedVault: Boolean,
-    val showCreateVault: Boolean
+    val showCreateVault: CreateNewVaultState
 ) {
     companion object {
         fun Initial(itemId: ItemId) = ShareFromItemUiState(
             vault = None,
             itemId = itemId,
             showMoveToSharedVault = false,
-            showCreateVault = false
+            showCreateVault = CreateNewVaultState.Hide
         )
     }
 }

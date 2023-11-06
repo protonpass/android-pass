@@ -60,6 +60,10 @@ fun ShareFromItemBottomSheet(
                     ShareFromItemEvent.ShareVault -> {
                         onNavigateEvent(SharingNavigation.ShareVault(vault.vault.shareId))
                     }
+
+                    ShareFromItemEvent.Upgrade -> {
+                        onNavigateEvent(SharingNavigation.Upgrade)
+                    }
                 }
             }
         }

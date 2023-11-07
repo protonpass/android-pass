@@ -45,7 +45,7 @@ object ItemFieldMapper {
         androidAutofillFieldIds: List<AutofillFieldId?>,
         autofillTypes: List<FieldType>,
         fieldIsFocusedList: List<Boolean>,
-        parentIdList: List<List<AutofillFieldId?>>
+        parentIdList: List<List<AutofillFieldId>>
     ): AutofillMappings {
         val fields = mapToFields(
             androidAutofillFieldIds = androidAutofillFieldIds,
@@ -336,7 +336,7 @@ object ItemFieldMapper {
         androidAutofillFieldIds: List<AutofillFieldId?>,
         autofillTypes: List<FieldType>,
         fieldIsFocusedList: List<Boolean>,
-        parentIdList: List<List<AutofillFieldId?>>
+        parentIdList: List<List<AutofillFieldId>>
     ): List<AutofillFieldMapping> = autofillTypes.mapIndexed { index, fieldType ->
         val autofillFieldId = androidAutofillFieldIds.getOrNull(index)
         val isFocused = fieldIsFocusedList.getOrNull(index) ?: false

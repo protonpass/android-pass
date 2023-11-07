@@ -52,7 +52,7 @@ class ItemFieldMapperTest {
             androidAutofillFieldIds = listOf(itemAutofillId),
             autofillTypes = listOf(FieldType.Username),
             fieldIsFocusedList = listOf(true),
-            parentIdList = listOf(listOf(null))
+            parentIdList = listOf(listOf(TestAutofillId(1)))
         )
 
         val expected = DatasetMapping(
@@ -73,7 +73,7 @@ class ItemFieldMapperTest {
             androidAutofillFieldIds = listOf(itemAutofillId),
             autofillTypes = listOf(FieldType.Username),
             fieldIsFocusedList = listOf(false),
-            parentIdList = listOf(listOf(null))
+            parentIdList = listOf(listOf(TestAutofillId(1)))
         )
 
         val expected = DatasetMapping(
@@ -94,7 +94,7 @@ class ItemFieldMapperTest {
             androidAutofillFieldIds = listOf(itemAutofillId),
             autofillTypes = listOf(FieldType.Email),
             fieldIsFocusedList = listOf(false),
-            parentIdList = listOf(listOf(null))
+            parentIdList = listOf(listOf(TestAutofillId(1)))
         )
 
         val expected = DatasetMapping(
@@ -117,7 +117,7 @@ class ItemFieldMapperTest {
             androidAutofillFieldIds = listOf(itemAutofillId),
             autofillTypes = listOf(FieldType.Password),
             fieldIsFocusedList = listOf(true),
-            parentIdList = listOf(listOf(null))
+            parentIdList = listOf(listOf(TestAutofillId(1)))
         )
 
         val expected = DatasetMapping(
@@ -140,7 +140,7 @@ class ItemFieldMapperTest {
             androidAutofillFieldIds = listOf(itemAutofillId),
             autofillTypes = listOf(FieldType.Password),
             fieldIsFocusedList = listOf(false),
-            parentIdList = listOf(listOf(null))
+            parentIdList = listOf(listOf(TestAutofillId(1)))
         )
 
         val expected = DatasetMapping(
@@ -168,7 +168,7 @@ class ItemFieldMapperTest {
             androidAutofillFieldIds = listOf(usernameAutofillId, passwordAutofillId),
             autofillTypes = listOf(FieldType.Username, FieldType.Password),
             fieldIsFocusedList = listOf(false, false),
-            parentIdList = listOf(listOf(null), listOf(null))
+            parentIdList = listOf(listOf(TestAutofillId(1)), listOf(TestAutofillId(2)))
         )
 
         val expectedUsername = DatasetMapping(

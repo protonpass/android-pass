@@ -33,7 +33,6 @@ import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
 
 class AssistNodeTraversal {
@@ -61,17 +60,19 @@ class AssistNodeTraversal {
     fun traverse(node: AutofillNode): AssistInfo {
         visitedNodes = 0
         autoFillNodes = mutableListOf()
-        traverseInternal(node, node.id)
+        traverseInternal(node, emptyList())
         return AssistInfo(
-            autoFillNodes,
-            detectedUrl
+            fields = autoFillNodes,
+            url = detectedUrl
         )
     }
 
-    private fun traverseInternal(node: AutofillNode, parentId: AutofillFieldId?) {
+    private fun traverseInternal(node: AutofillNode, parentPath: List<AutofillFieldId>) {
         if (detectedUrl is None) {
             detectedUrl = node.url
         }
+
+        val pathToCurrentNode = parentPath.toMutableList().apply { add(node.id!!) }.toList()
         if (nodeSupportsAutoFill(node)) {
             val assistField = AssistField(
                 id = node.id!!,
@@ -79,11 +80,14 @@ class AssistNodeTraversal {
                 value = node.autofillValue,
                 text = node.text.toString(),
                 isFocused = node.isFocused,
-                parentId = parentId.toOption(),
+                nodePath = pathToCurrentNode,
             )
             autoFillNodes.add(assistField)
         }
-        node.children.forEach { traverseInternal(it, node.id) }
+
+        node.children.forEach {
+            traverseInternal(it, pathToCurrentNode)
+        }
 
         visitedNodes += 1
     }

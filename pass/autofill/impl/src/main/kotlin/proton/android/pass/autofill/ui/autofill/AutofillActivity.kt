@@ -167,12 +167,15 @@ class AutofillActivity : FragmentActivity() {
                     putExtra(ARG_WEB_DOMAIN, data.assistInfo.url.value)
                 }
                 val fields = data.assistInfo.fields
+                val parentIdLists: List<AutofillIdList> = fields.map { field ->
+                    AutofillIdList(field.nodePath.map { it.asAndroid().autofillId })
+                }
                 putExtras(
                     bundleOf(
                         ARG_AUTOFILL_IDS to fields.map { it.id.asAndroid().autofillId },
                         ARG_AUTOFILL_TYPES to fields.map { it.type?.toString() },
                         ARG_AUTOFILL_IS_FOCUSED to fields.map { it.isFocused },
-                        ARG_AUTOFILL_PARENT_ID to fields.map { it.parentId.value()?.asAndroid()?.autofillId },
+                        ARG_AUTOFILL_PARENT_ID to parentIdLists,
                         ARG_PACKAGE_NAME to data.packageInfo.map { it.packageName.value }.value(),
                         ARG_APP_NAME to data.packageInfo.map { it.appName.value }.value(),
                         ARG_TITLE to Utils.getTitle(

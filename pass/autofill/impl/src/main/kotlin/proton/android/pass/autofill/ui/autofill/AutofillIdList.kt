@@ -25,4 +25,4 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class AutofillIdList(
     val autofillIds: List<AutofillId>
-): Parcelable
+) : Parcelable

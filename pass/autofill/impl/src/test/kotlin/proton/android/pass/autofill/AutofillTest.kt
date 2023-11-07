@@ -27,4 +27,19 @@ class AutofillTest {
         runAutofillTest("firefox_news.ycombinator.com_firstusername.json")
     }
 
+    @Test
+    fun `can autofill news ycombinator com firefox (focus on first password)`() {
+        runAutofillTest("firefox_news.ycombinator.com_firstpassword.json")
+    }
+
+    @Test
+    fun `can autofill news ycombinator com firefox (focus on second username)`() {
+        runAutofillTest("firefox_news.ycombinator.com_secondusername.json")
+    }
+
+    @Test
+    fun `can autofill news ycombinator com firefox (focus on second password)`() {
+        runAutofillTest("firefox_news.ycombinator.com_secondpassword.json")
+    }
+
 }

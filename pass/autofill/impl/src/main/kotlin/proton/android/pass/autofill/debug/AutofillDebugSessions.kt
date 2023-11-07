@@ -69,7 +69,7 @@ fun AutofillDebugSessions(
             Text(text = "No debug sessions")
         } else {
             LazyColumn(modifier = Modifier.padding(padding)) {
-                items(items = sessions, key = { it.timestamp }) { session ->
+                items(items = sessions, key = { it.filename }) { session ->
                     Row(
                         modifier = modifier
                             .fillMaxWidth()

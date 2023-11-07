@@ -45,6 +45,7 @@ object AutofillDebugSaver {
 
     @Serializable
     data class DebugAutofillNode(
+        val id: Int,
         val className: String?,
         val isImportantForAutofill: Boolean,
         val text: String?,
@@ -54,7 +55,8 @@ object AutofillDebugSaver {
         val htmlAttributes: List<HtmlAttribute>,
         val children: List<DebugAutofillNode>,
         val url: String?,
-        val hintKeywordList: List<String>
+        val hintKeywordList: List<String>,
+        val expectedAutofill: String? = null
     )
 
     @Serializable
@@ -111,6 +113,7 @@ object AutofillDebugSaver {
     }
 
     private fun AutofillNode.toDebugNode(): DebugAutofillNode = DebugAutofillNode(
+        id = this.id?.hashCode() ?: 0,
         className = className,
         isImportantForAutofill = isImportantForAutofill,
         text = text,

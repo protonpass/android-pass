@@ -16,15 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.entities
+package proton.android.pass.autofill.ui.autofill
 
-import android.view.autofill.AutofillValue
+import android.os.Parcelable
+import android.view.autofill.AutofillId
+import kotlinx.parcelize.Parcelize
 
-data class AssistField(
-    val id: AutofillFieldId,
-    val type: FieldType?,
-    val value: AutofillValue?,
-    val text: String?,
-    val isFocused: Boolean,
-    val nodePath: List<AutofillFieldId>
-)
+@Parcelize
+data class AutofillIdList(
+    val autofillIds: List<AutofillId>
+): Parcelable

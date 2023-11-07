@@ -109,10 +109,14 @@ class AutofillActivityViewModel @Inject constructor(
     private val fieldIsFocusedList: Option<List<Boolean>> =
         savedStateHandle.get<List<Boolean>>(ARG_AUTOFILL_IS_FOCUSED)
             .toOption()
-    private val parentIdList: Option<List<AndroidAutofillFieldId?>> =
-        savedStateHandle.get<List<AutofillId?>>(ARG_AUTOFILL_PARENT_ID)
+    private val parentIdList: Option<List<List<AndroidAutofillFieldId>>> =
+        savedStateHandle.get<List<AutofillIdList>>(ARG_AUTOFILL_PARENT_ID)
             .toOption()
-            .map { list -> list.map { item -> item?.let { AndroidAutofillFieldId(it) } } }
+            .map { list ->
+                list.map { item ->
+                    item.autofillIds.map { autofillId -> AndroidAutofillFieldId(autofillId) }
+                }
+            }
 
     private val autofillAppState: MutableStateFlow<AutofillAppState> =
         MutableStateFlow(

@@ -18,6 +18,7 @@
 
 package proton.android.pass.autofill.ui.autofill
 
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
@@ -34,80 +35,37 @@ object ItemFieldMapper {
         val autofillFieldId: AutofillFieldId?,
         val autofillType: FieldType,
         val isFocused: Boolean,
-        val parentId: AutofillFieldId?
+        val nodePath: List<AutofillFieldId?>
     )
 
-    @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
+    @Suppress("LongParameterList")
     fun mapFields(
         encryptionContext: EncryptionContext,
         autofillItem: AutofillItem,
         androidAutofillFieldIds: List<AutofillFieldId?>,
         autofillTypes: List<FieldType>,
         fieldIsFocusedList: List<Boolean>,
-        parentIdList: List<AutofillFieldId?>
+        parentIdList: List<List<AutofillFieldId?>>
     ): AutofillMappings {
-        val mappingList = mutableListOf<DatasetMapping>()
         val fields = mapToFields(
-            androidAutofillFieldIds,
-            autofillTypes,
-            fieldIsFocusedList,
-            parentIdList
+            androidAutofillFieldIds = androidAutofillFieldIds,
+            autofillTypes = autofillTypes,
+            fieldIsFocusedList = fieldIsFocusedList,
+            parentIdList = parentIdList
         )
-        val usernameFields =
-            fields.filter { it.autofillType == FieldType.Username || it.autofillType == FieldType.Email }
+        val usernameFields = fields.filter {
+            it.autofillType == FieldType.Username || it.autofillType == FieldType.Email
+        }
         val passwordFields = fields.filter { it.autofillType == FieldType.Password }
-        val isFocusedField = fields.firstOrNull { it.isFocused }
+        val focusedField = fields.firstOrNull { it.isFocused }
 
-        when {
-            isFocusedField?.autofillFieldId != null && usernameFields.contains(isFocusedField) ->
-                mappingList.add(
-                    DatasetMapping(
-                        autofillFieldId = isFocusedField.autofillFieldId,
-                        contents = autofillItem.username,
-                        displayValue = autofillItem.username
-                    )
-                )
-
-            isFocusedField?.autofillFieldId != null &&
-                passwordFields.contains(isFocusedField) &&
-                autofillItem.password != null ->
-                mappingList.add(
-                    DatasetMapping(
-                        autofillFieldId = isFocusedField.autofillFieldId,
-                        contents = encryptionContext.decrypt(autofillItem.password),
-                        displayValue = ""
-                    )
-                )
-        }
-
-        if (usernameFields.isNotEmpty() && !usernameFields.contains(isFocusedField)) {
-            val usernameField = usernameFields
-                .firstOrNull { it.parentId == isFocusedField?.parentId }
-                ?: usernameFields.first()
-            usernameField.autofillFieldId?.let {
-                mappingList.add(
-                    DatasetMapping(
-                        autofillFieldId = usernameField.autofillFieldId,
-                        contents = autofillItem.username,
-                        displayValue = autofillItem.username
-                    )
-                )
-            }
-        }
-        if (passwordFields.isNotEmpty() && !passwordFields.contains(isFocusedField) && autofillItem.password != null) {
-            val passwordField = passwordFields
-                .firstOrNull { it.parentId == isFocusedField?.parentId }
-                ?: passwordFields.first()
-            passwordField.autofillFieldId?.let {
-                mappingList.add(
-                    DatasetMapping(
-                        autofillFieldId = passwordField.autofillFieldId,
-                        contents = encryptionContext.decrypt(autofillItem.password),
-                        displayValue = ""
-                    )
-                )
-            }
-        }
+        val mappingList = performMappings(
+            encryptionContext = encryptionContext,
+            autofillItem = autofillItem,
+            usernameFields = usernameFields,
+            passwordFields = passwordFields,
+            focusedField = focusedField,
+        )
 
         if (mappingList.isEmpty()) {
             val message = "No mappings found for autofill. Detected field types: $autofillTypes"
@@ -117,15 +75,270 @@ object ItemFieldMapper {
         return AutofillMappings(mappingList)
     }
 
+    private fun performMappings(
+        encryptionContext: EncryptionContext,
+        autofillItem: AutofillItem,
+        usernameFields: List<AutofillFieldMapping>,
+        passwordFields: List<AutofillFieldMapping>,
+        focusedField: AutofillFieldMapping?
+    ): List<DatasetMapping> = if (focusedField?.autofillFieldId != null) {
+        mapWithFocusedField(
+            encryptionContext = encryptionContext,
+            autofillItem = autofillItem,
+            usernameFields = usernameFields,
+            passwordFields = passwordFields,
+            focusedField = focusedField,
+            focusedFieldId = focusedField.autofillFieldId
+        )
+    } else {
+        mapFirstFields(
+            encryptionContext = encryptionContext,
+            autofillItem = autofillItem,
+            usernameFields = usernameFields,
+            passwordFields = passwordFields
+        )
+    }
+
+    @Suppress("LongParameterList")
+    private fun mapWithFocusedField(
+        encryptionContext: EncryptionContext,
+        autofillItem: AutofillItem,
+        usernameFields: List<AutofillFieldMapping>,
+        passwordFields: List<AutofillFieldMapping>,
+        focusedField: AutofillFieldMapping,
+        focusedFieldId: AutofillFieldId
+    ): List<DatasetMapping> {
+        val mappingList = mutableListOf<DatasetMapping>()
+
+        val focusedFieldResult = mapFocusedField(
+            encryptionContext = encryptionContext,
+            autofillItem = autofillItem,
+            usernameFields = usernameFields,
+            passwordFields = passwordFields,
+            focusedField = focusedField,
+            focusedFieldId = focusedFieldId,
+            mappings = mappingList
+        )
+
+        when (focusedFieldResult) {
+            MapFocusedFieldResult.MappedUsername -> {
+                // We have mapped the username, try to map the password
+                mapPassword(
+                    encryptionContext = encryptionContext,
+                    autofillItem = autofillItem,
+                    passwordFields = passwordFields,
+                    usernameField = focusedField,
+                    mappings = mappingList
+                )
+            }
+
+            MapFocusedFieldResult.MappedPassword -> {
+                // We have mapped the password, try to map the username
+                mapUsername(
+                    autofillItem = autofillItem,
+                    usernameFields = usernameFields,
+                    passwordField = focusedField,
+                    mappings = mappingList
+                )
+            }
+
+            MapFocusedFieldResult.None -> {
+                // We have not been able to map any, map the first fields
+                return mapFirstFields(
+                    encryptionContext = encryptionContext,
+                    autofillItem = autofillItem,
+                    usernameFields = usernameFields,
+                    passwordFields = passwordFields
+                )
+            }
+        }
+
+        return mappingList
+    }
+
+    private fun mapPassword(
+        encryptionContext: EncryptionContext,
+        autofillItem: AutofillItem,
+        passwordFields: List<AutofillFieldMapping>,
+        usernameField: AutofillFieldMapping,
+        mappings: MutableList<DatasetMapping>
+    ) {
+        // If there are no password fields or the autofillItem doesn't have a password, nothing to do
+        if (passwordFields.isEmpty() || autofillItem.password == null) return
+
+        // If there is only one password field, map that one
+        if (passwordFields.size == 1) {
+            val passwordField = passwordFields.first()
+            passwordField.autofillFieldId?.let { id ->
+                mappings.add(mappingForPassword(encryptionContext, autofillItem.password, id))
+            }
+            return
+        }
+
+        // There is more than one password field. Try to find which one
+        val passwordField = findNearestNodeByParentId(usernameField, passwordFields)
+        passwordField.autofillFieldId?.let { id ->
+            mappings.add(mappingForPassword(encryptionContext, autofillItem.password, id))
+        }
+    }
+
+    private fun mapUsername(
+        autofillItem: AutofillItem,
+        usernameFields: List<AutofillFieldMapping>,
+        passwordField: AutofillFieldMapping,
+        mappings: MutableList<DatasetMapping>
+    ) {
+        // If there are no username fields or the autofillItem doesn't have a username, nothing to do
+        if (usernameFields.isEmpty() || autofillItem.username.isBlank()) return
+
+        // If there is only one password field, map that one
+        if (usernameFields.size == 1) {
+            val usernameField = usernameFields.first()
+            usernameField.autofillFieldId?.let { id ->
+                mappings.add(mappingForUsername(autofillItem.username, id))
+            }
+            return
+        }
+
+        // There is more than one username field. Try to find which one
+        val usernameField = findNearestNodeByParentId(passwordField, usernameFields)
+        usernameField.autofillFieldId?.let { id ->
+            mappings.add(mappingForUsername(autofillItem.username, id))
+        }
+    }
+
+    private fun findNearestNodeByParentId(
+        currentField: AutofillFieldMapping,
+        fields: List<AutofillFieldMapping>
+    ): AutofillFieldMapping {
+        // Initialize variables to keep track of the nearest node and the minimum number of jumps.
+        var nearest: AutofillFieldMapping = fields.first()
+        var minJumps = Int.MAX_VALUE
+
+        // Iterate over each node in the list.
+        for (node in fields) {
+            // Find the common path between the target node's parentList and the current node's parentList.
+            val commonPath = currentField.nodePath.intersect(node.nodePath.toSet()).toList()
+
+            // Calculate the number of jumps needed to reach the common path node.
+            val jumps = currentField.nodePath.size - commonPath.size + node.nodePath.size - commonPath.size
+
+            // If the current node requires fewer jumps, update the nearest node.
+            if (jumps < minJumps) {
+                nearest = node
+                minJumps = jumps
+            }
+        }
+
+        return nearest
+    }
+
+    private sealed interface MapFocusedFieldResult {
+        object MappedUsername : MapFocusedFieldResult
+        object MappedPassword : MapFocusedFieldResult
+        object None : MapFocusedFieldResult
+    }
+
+    @Suppress("LongParameterList")
+    private fun mapFocusedField(
+        encryptionContext: EncryptionContext,
+        autofillItem: AutofillItem,
+        usernameFields: List<AutofillFieldMapping>,
+        passwordFields: List<AutofillFieldMapping>,
+        focusedField: AutofillFieldMapping,
+        focusedFieldId: AutofillFieldId,
+        mappings: MutableList<DatasetMapping>
+    ): MapFocusedFieldResult {
+        when {
+            usernameFields.contains(focusedField) -> {
+                mappings.add(
+                    DatasetMapping(
+                        autofillFieldId = focusedFieldId,
+                        contents = autofillItem.username,
+                        displayValue = autofillItem.username
+                    )
+                )
+                return MapFocusedFieldResult.MappedUsername
+            }
+
+            passwordFields.contains(focusedField) -> {
+                if (autofillItem.password != null) {
+                    mappings.add(DatasetMapping(
+                        autofillFieldId = focusedFieldId,
+                        contents = encryptionContext.decrypt(autofillItem.password),
+                        displayValue = ""
+                    ))
+                    return MapFocusedFieldResult.MappedPassword
+                }
+            }
+        }
+
+        return MapFocusedFieldResult.None
+    }
+
+
+    private fun mapFirstFields(
+        encryptionContext: EncryptionContext,
+        autofillItem: AutofillItem,
+        usernameFields: List<AutofillFieldMapping>,
+        passwordFields: List<AutofillFieldMapping>,
+    ): List<DatasetMapping> {
+        val mappingList = mutableListOf<DatasetMapping>()
+
+        if (usernameFields.isNotEmpty()) {
+            val usernameField = usernameFields.first()
+            usernameField.autofillFieldId?.let { id ->
+                mappingList.add(
+                    DatasetMapping(
+                        autofillFieldId = id,
+                        contents = autofillItem.username,
+                        displayValue = autofillItem.username
+                    )
+                )
+            }
+        }
+
+        if (passwordFields.isNotEmpty() && autofillItem.password != null) {
+            val passwordField = passwordFields.first()
+            passwordField.autofillFieldId?.let { id ->
+                mappingList.add(
+                    DatasetMapping(
+                        autofillFieldId = id,
+                        contents = encryptionContext.decrypt(autofillItem.password),
+                        displayValue = ""
+                    )
+                )
+            }
+        }
+
+        return mappingList
+    }
+
+    private fun mappingForPassword(
+        encryptionContext: EncryptionContext,
+        password: EncryptedString,
+        id: AutofillFieldId
+    ) = DatasetMapping(
+        autofillFieldId = id,
+        contents = encryptionContext.decrypt(password),
+        displayValue = ""
+    )
+
+    private fun mappingForUsername(username: String, id: AutofillFieldId) = DatasetMapping(
+        autofillFieldId = id,
+        contents = username,
+        displayValue = username
+    )
+
     private fun mapToFields(
         androidAutofillFieldIds: List<AutofillFieldId?>,
         autofillTypes: List<FieldType>,
         fieldIsFocusedList: List<Boolean>,
-        parentIdList: List<AutofillFieldId?>
+        parentIdList: List<List<AutofillFieldId?>>
     ): List<AutofillFieldMapping> = autofillTypes.mapIndexed { index, fieldType ->
         val autofillFieldId = androidAutofillFieldIds.getOrNull(index)
         val isFocused = fieldIsFocusedList.getOrNull(index) ?: false
-        val parentId = parentIdList.getOrNull(index)
-        AutofillFieldMapping(autofillFieldId, fieldType, isFocused, parentId)
+        val nodePath = parentIdList.getOrNull(index) ?: emptyList()
+        AutofillFieldMapping(autofillFieldId, fieldType, isFocused, nodePath)
     }
 }

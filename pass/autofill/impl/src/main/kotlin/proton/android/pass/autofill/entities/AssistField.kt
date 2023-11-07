@@ -19,7 +19,6 @@
 package proton.android.pass.autofill.entities
 
 import android.view.autofill.AutofillValue
-import proton.android.pass.common.api.Option
 
 data class AssistField(
     val id: AutofillFieldId,
@@ -27,5 +26,5 @@ data class AssistField(
     val value: AutofillValue?,
     val text: String?,
     val isFocused: Boolean,
-    val parentId: Option<AutofillFieldId>
+    val nodePath: List<AutofillFieldId>
 )

@@ -208,14 +208,13 @@ class AssistNodeTraversalTest {
 
     private fun makeValidNode(children: List<AutofillNode> = emptyList()) =
         makeNode(
-            autofillId = newAutofillFieldId(),
             text = "a@b.com",
             inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
             children = children
         )
 
     private fun makeNode(
-        autofillId: AutofillFieldId? = null,
+        autofillId: AutofillFieldId? = newAutofillFieldId(),
         className: String? = null,
         isImportantForAutofill: Boolean = false,
         text: String? = null,

@@ -263,11 +263,13 @@ object ItemFieldMapper {
 
             passwordFields.contains(focusedField) -> {
                 if (autofillItem.password != null) {
-                    mappings.add(DatasetMapping(
-                        autofillFieldId = focusedFieldId,
-                        contents = encryptionContext.decrypt(autofillItem.password),
-                        displayValue = ""
-                    ))
+                    mappings.add(
+                        DatasetMapping(
+                            autofillFieldId = focusedFieldId,
+                            contents = encryptionContext.decrypt(autofillItem.password),
+                            displayValue = ""
+                        )
+                    )
                     return MapFocusedFieldResult.MappedPassword
                 }
             }

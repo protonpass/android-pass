@@ -55,7 +55,7 @@ fun runAutofillTest(file: String) {
         androidAutofillFieldIds = detectedNodes.fields.map { it.id },
         autofillTypes = detectedNodes.fields.map { it.type!! },
         fieldIsFocusedList = detectedNodes.fields.map { it.isFocused },
-        parentIdList = emptyList()
+        parentIdList = detectedNodes.fields.map { it.nodePath }
     )
 
     assertThat(res.mappings.size).isEqualTo(nodesWithExpectedContents.size)

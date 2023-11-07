@@ -45,17 +45,17 @@ object AutofillDebugSaver {
 
     @Serializable
     data class DebugAutofillNode(
-        val id: Int,
-        val className: String?,
-        val isImportantForAutofill: Boolean,
-        val text: String?,
-        val isFocused: Boolean,
-        val inputType: InputTypeValue,
-        val autofillHints: List<String>,
-        val htmlAttributes: List<HtmlAttribute>,
-        val children: List<DebugAutofillNode>,
-        val url: String?,
-        val hintKeywordList: List<String>,
+        val id: Int = 0,
+        val className: String? = null,
+        val isImportantForAutofill: Boolean = false,
+        val text: String? = null,
+        val isFocused: Boolean = false,
+        val inputType: InputTypeValue = InputTypeValue(0),
+        val autofillHints: List<String> = emptyList(),
+        val htmlAttributes: List<HtmlAttribute> = emptyList(),
+        val children: List<DebugAutofillNode> = emptyList(),
+        val url: String? = null,
+        val hintKeywordList: List<String> = emptyList(),
         val expectedAutofill: String? = null
     )
 

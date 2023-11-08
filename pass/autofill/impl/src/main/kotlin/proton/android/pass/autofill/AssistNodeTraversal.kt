@@ -154,12 +154,12 @@ class AssistNodeTraversal {
         }
     }
 
-    private fun getAutofillNodeFromContext(context: AutofillTraversalContext): Option<AssistField> {
+    private fun getAutofillNodeFromContext(autofillContext: AutofillTraversalContext): Option<AssistField> {
         // Invariant: node must be an EditText
-        if (!context.node.isEditText()) return None
+        if (!autofillContext.node.isEditText()) return None
 
         // Fetch the context nodes
-        val contextNodes = getContextNodes(context)
+        val contextNodes = getContextNodes(autofillContext)
 
         // Now that we have all the context nodes, aggregate the autofillHints and htmlAttributes lists
         val autofillHints = contextNodes.flatMap { it.autofillHints }
@@ -176,17 +176,17 @@ class AssistNodeTraversal {
 
         return if (hasValidHints || hasValidHtmlInfo || hasUsefulKeywords) {
             AssistField(
-                id = context.node.id!!,
+                id = autofillContext.node.id!!,
                 type = detectFieldType(
                     autofillHints = autofillHints,
                     htmlAttributes = htmlAttributes,
-                    inputType = context.node.inputType,
+                    inputType = autofillContext.node.inputType,
                     hintKeywordList = hintKeywordList
                 ),
-                value = context.node.autofillValue,
-                text = context.node.text,
-                isFocused = context.node.isFocused,
-                nodePath = context.parentPath
+                value = autofillContext.node.autofillValue,
+                text = autofillContext.node.text,
+                isFocused = autofillContext.node.isFocused,
+                nodePath = autofillContext.parentPath
             ).some()
         } else {
             None

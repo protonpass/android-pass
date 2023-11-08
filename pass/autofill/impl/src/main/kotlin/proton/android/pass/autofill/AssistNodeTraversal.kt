@@ -172,7 +172,8 @@ class AssistNodeTraversal {
         // Check if we can extract info from these
         val hasValidHints = nodeHasValidHints(autofillHints.toSet())
         val hasValidHtmlInfo = nodeHasValidHtmlInfo(htmlAttributes)
-        val hasUsefulKeywords = detectFieldTypeUsingHintKeywordList(hintKeywordList) != FieldType.Unknown
+        val hasUsefulKeywords =
+            detectFieldTypeUsingHintKeywordList(hintKeywordList) != FieldType.Unknown
 
         return if (hasValidHints || hasValidHtmlInfo || hasUsefulKeywords) {
             AssistField(
@@ -307,30 +308,18 @@ class AssistNodeTraversal {
         return FieldType.Unknown
     }
 
-    @Suppress("ReturnCount")
-    fun detectFieldTypeUsingAutofillHint(autofillHint: String): FieldType {
-        when (autofillHint) {
-            View.AUTOFILL_HINT_EMAIL_ADDRESS -> return FieldType.Email
-            View.AUTOFILL_HINT_USERNAME -> return FieldType.Username
-            View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> return FieldType.Password
-            // Support for these fields will be added in the future
-            // View.AUTOFILL_HINT_PHONE -> return FieldType.Phone
-            // View.AUTOFILL_HINT_NAME -> return FieldType.FullName
+    fun detectFieldTypeUsingAutofillHint(autofillHint: String): FieldType = when (autofillHint) {
+        View.AUTOFILL_HINT_EMAIL_ADDRESS -> FieldType.Email
+        View.AUTOFILL_HINT_USERNAME -> FieldType.Username
+        View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> FieldType.Password
+        else -> {
+            when {
+                autofillHint.lowercase().contains("username") -> FieldType.Username
+                autofillHint.lowercase().contains("email") -> FieldType.Email
+                autofillHint.lowercase().contains("password") -> FieldType.Password
+                else -> FieldType.Unknown
+            }
         }
-
-        if (autofillHint.lowercase().contains("username")) {
-            return FieldType.Username
-        }
-
-        if (autofillHint.lowercase().contains("email")) {
-            return FieldType.Email
-        }
-
-        if (autofillHint.lowercase().contains("password")) {
-            return FieldType.Password
-        }
-
-        return FieldType.Unknown
     }
 
     private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {
@@ -404,7 +393,9 @@ fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {
         inputType = InputTypeValue(inputType),
         hintKeywordList = hintKeywordList,
         autofillHints = autofillHints?.toList().orEmpty(),
-        htmlAttributes = htmlInfo?.attributes?.toList()?.map { it.first to it.second }.orEmpty(),
+        htmlAttributes = htmlInfo?.attributes?.toList()
+            ?.map { it.first.lowercase() to it.second.lowercase() }
+            .orEmpty(),
         children = (0 until childCount).map { getChildAt(it).toAutofillNode() },
         url = getUrl()
     )

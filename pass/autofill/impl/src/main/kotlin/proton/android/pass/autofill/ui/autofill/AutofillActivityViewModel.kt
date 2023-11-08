@@ -44,15 +44,15 @@ import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.isValid
 import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.service.R
-import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_APP_NAME
-import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_IDS
-import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_IS_FOCUSED
-import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_PARENT_ID
-import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_TYPES
-import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_INLINE_SUGGESTION_AUTOFILL_ITEM
-import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_PACKAGE_NAME
-import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_TITLE
-import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_WEB_DOMAIN
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_APP_NAME
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_IDS
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_IS_FOCUSED
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_PARENT_ID
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_TYPES
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_INLINE_SUGGESTION_AUTOFILL_ITEM
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_PACKAGE_NAME
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_TITLE
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_WEB_DOMAIN
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.StartAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
@@ -107,13 +107,15 @@ class AutofillActivityViewModel @Inject constructor(
             .toOption()
             .map { list -> list.map { item -> item?.let { AndroidAutofillFieldId(it) } } }
     private val fieldIsFocusedList: Option<List<Boolean>> =
-        savedStateHandle.get<List<Boolean>>(ARG_AUTOFILL_IS_FOCUSED)
+        savedStateHandle.get<BooleanArray>(ARG_AUTOFILL_IS_FOCUSED)
             .toOption()
+            .map { it.toList() }
     private val parentIdList: Option<List<List<AndroidAutofillFieldId>>> =
-        savedStateHandle.get<List<AutofillIdList>>(ARG_AUTOFILL_PARENT_ID)
+        savedStateHandle.get<ByteArray>(ARG_AUTOFILL_PARENT_ID)
+            ?.deserializeParcelable<AutofillIdListList>()
             .toOption()
             .map { list ->
-                list.map { item ->
+                list.content.map { item ->
                     item.autofillIds.map { autofillId -> AndroidAutofillFieldId(autofillId) }
                 }
             }

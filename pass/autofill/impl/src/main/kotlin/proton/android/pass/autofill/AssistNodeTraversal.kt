@@ -22,7 +22,7 @@ import android.app.assist.AssistStructure
 import android.os.Build
 import android.text.InputType
 import android.view.View
-import me.proton.core.util.kotlin.hasFlag
+import android.widget.EditText
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AssistInfo
@@ -33,6 +33,7 @@ import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 
 class AssistNodeTraversal {
@@ -60,45 +61,71 @@ class AssistNodeTraversal {
     fun traverse(node: AutofillNode): AssistInfo {
         visitedNodes = 0
         autoFillNodes = mutableListOf()
-        traverseInternal(node, emptyList())
+        traverseInternal(
+            AutofillTraversalContext(
+                node = node,
+                parent = None,
+                siblings = emptyList(),
+                parentPath = emptyList()
+            )
+        )
         return AssistInfo(
             fields = autoFillNodes,
             url = detectedUrl
         )
     }
 
-    private fun traverseInternal(node: AutofillNode, parentPath: List<AutofillFieldId>) {
+    private fun traverseInternal(context: AutofillTraversalContext) {
         if (detectedUrl is None) {
-            detectedUrl = node.url
+            detectedUrl = context.node.url
         }
 
-        val pathToCurrentNode = parentPath.toMutableList().apply { add(node.id!!) }.toList()
-        if (nodeSupportsAutoFill(node)) {
-            val assistField = AssistField(
-                id = node.id!!,
-                type = detectFieldType(node),
-                value = node.autofillValue,
-                text = node.text.toString(),
-                isFocused = node.isFocused,
-                nodePath = pathToCurrentNode,
+        val pathToCurrentNode = context.parentPath
+            .toMutableList()
+            .apply { add(context.node.id!!) }
+            .toList()
+
+        when (val assistField = getAssistField(context)) {
+            is Some -> autoFillNodes.add(assistField.value)
+            None -> {}
+        }
+
+        context.node.children.forEach {
+            val newContext = AutofillTraversalContext(
+                node = it,
+                parent = Some(context),
+                siblings = context.node.children,
+                parentPath = pathToCurrentNode
             )
-            autoFillNodes.add(assistField)
-        }
 
-        node.children.forEach {
-            traverseInternal(it, pathToCurrentNode)
+            traverseInternal(newContext)
         }
 
         visitedNodes += 1
     }
 
-    private fun nodeSupportsAutoFill(node: AutofillNode): Boolean {
-        val isImportant = node.isImportantForAutofill
-        val hasAutofillInfo = nodeHasValidHints(node.autofillHints.toSet()) ||
-            nodeHasValidHtmlInfo(node.htmlAttributes) ||
-            nodeHasValidInputType(node)
+    private fun getAssistField(context: AutofillTraversalContext): Option<AssistField> {
+        val node = context.node
+        return when (nodeSupportsAutoFill(node)) {
+            SupportsAutofillResult.No -> None
+            SupportsAutofillResult.Yes -> AssistField(
+                id = node.id!!,
+                type = detectFieldType(node),
+                value = node.autofillValue,
+                text = node.text.toString(),
+                isFocused = node.isFocused,
+                nodePath = context.parentPath,
+            ).some()
 
-        if (node.className == "android.widget.EditText") {
+            SupportsAutofillResult.MaybeWithContext -> getAutofillNodeFromContext(context)
+        }
+    }
+
+    private fun nodeSupportsAutoFill(node: AutofillNode): SupportsAutofillResult {
+        val isImportant = node.isImportantForAutofill
+        val hasAutofillInfo = nodeHasAutofillInfo(node)
+
+        if (node.isEditText()) {
             PassLogger.d(TAG, "------------------------------------")
             PassLogger.d(TAG, "nodeInputTypeFlags ${InputTypeFlags.fromValue(node.inputType)}")
             PassLogger.d(TAG, "nodeSupportsAutoFill $isImportant - $hasAutofillInfo")
@@ -108,8 +135,99 @@ class AssistNodeTraversal {
             PassLogger.d(TAG, "------------------------------------")
         }
 
-        return node.id != null && hasAutofillInfo && isImportant
+        // If the node doesn't have an id or is not important for autofill, nothing else to do
+        if (node.id == null || !isImportant) {
+            return SupportsAutofillResult.No
+        }
+
+        // If the node already has autofill info, we can use it
+        if (hasAutofillInfo && nodeHasValidInputType(node)) {
+            return SupportsAutofillResult.Yes
+        }
+
+        // If the node doesn't have autofill info but it's an edit text, maybe we can check the context
+        return if (node.isEditText()) {
+            SupportsAutofillResult.MaybeWithContext
+        } else {
+            // If the node is not an edit text, we know that we can't do anything
+            SupportsAutofillResult.No
+        }
     }
+
+    private fun getAutofillNodeFromContext(context: AutofillTraversalContext): Option<AssistField> {
+        // Invariant: node must be an EditText
+        if (!context.node.isEditText()) return None
+
+        // Fetch the context nodes
+        val contextNodes = getContextNodes(context)
+
+        // Now that we have all the context nodes, aggregate the autofillHints and htmlAttributes lists
+        val autofillHints = contextNodes.flatMap { it.autofillHints }
+            .filter { it.isNotBlank() }
+            .toSet()
+        val htmlAttributes = contextNodes.flatMap { it.htmlAttributes }
+            .filter { it.first.isNotBlank() && it.second.isNotBlank() }
+        val hintKeywordList = contextNodes.flatMap { it.hintKeywordList }.filter { it.isNotBlank() }
+
+        // Check if we can extract info from these
+        val hasValidHints = nodeHasValidHints(autofillHints.toSet())
+        val hasValidHtmlInfo = nodeHasValidHtmlInfo(htmlAttributes)
+        val hasUsefulKeywords = detectFieldTypeUsingHintKeywordList(hintKeywordList) != FieldType.Unknown
+
+        return if (hasValidHints || hasValidHtmlInfo || hasUsefulKeywords) {
+            AssistField(
+                id = context.node.id!!,
+                type = detectFieldType(
+                    autofillHints = autofillHints,
+                    htmlAttributes = htmlAttributes,
+                    inputType = context.node.inputType,
+                    hintKeywordList = hintKeywordList
+                ),
+                value = context.node.autofillValue,
+                text = context.node.text,
+                isFocused = context.node.isFocused,
+                nodePath = context.parentPath
+            ).some()
+        } else {
+            None
+        }
+    }
+
+    private fun getContextNodes(context: AutofillTraversalContext): List<AutofillNode> {
+        // List that will contain the context nodes
+        val contextNodes = mutableListOf<AutofillNode>()
+
+        // Start adding the current node siblings
+        contextNodes.addAll(context.siblings)
+
+        // Starting from the parent do as many jumps as possible until MAX_CONTEXT_JUMPS
+        var parent = context.parent
+        repeat(MAX_CONTEXT_JUMPS) {
+            when (val localParent = parent) {
+                // If we have reached the root, nothing else to do
+                None -> return contextNodes
+
+                // If we have a parent, add the parent and the siblings to the current node
+                is Some -> {
+                    val parentNode = localParent.value
+
+                    // Add the parent
+                    contextNodes.add(parentNode.node)
+
+                    // Add the parents siblings
+                    contextNodes.addAll(parentNode.siblings)
+
+                    parent = parentNode.parent
+                }
+            }
+        }
+        return contextNodes
+    }
+
+    private fun nodeHasAutofillInfo(node: AutofillNode): Boolean =
+        nodeHasValidHints(node.autofillHints.toSet()) ||
+            nodeHasValidHtmlInfo(node.htmlAttributes) ||
+            nodeHasValidInputType(node)
 
     private fun nodeHasValidHints(autofillHints: Set<String>): Boolean = autofillHints
         .firstOrNull()
@@ -124,43 +242,51 @@ class AssistNodeTraversal {
     private fun nodeHasValidHtmlInfo(htmlAttributes: List<Pair<String, String>>): Boolean =
         detectFieldTypeUsingHtmlInfo(htmlAttributes) != FieldType.Unknown
 
+    @Suppress("ReturnCount")
     private fun nodeHasValidInputType(node: AutofillNode): Boolean {
-        val hasMultilineFlag = node.inputType.value.hasFlag(InputType.TYPE_TEXT_FLAG_MULTI_LINE) ||
-            node.inputType.value.hasFlag(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE)
-        val hasAutoCorrectFlag = node.inputType.value.hasFlag(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT)
-        // InputType.TYPE_TEXT_FLAG_CAP_SENTENCES might also be considered in the future
-        return !hasMultilineFlag &&
-            !hasAutoCorrectFlag &&
-            (
-                detectFieldTypeUsingInputType(node.inputType) != FieldType.Unknown ||
-                    detectFieldTypeUsingHintKeywordList(node.hintKeywordList) != FieldType.Unknown
-                )
+        val flags = InputTypeFlags.fromValue(node.inputType)
+        val hasMultilineFlag = flags.contains(InputTypeFlags.TEXT_FLAG_MULTI_LINE) ||
+            flags.contains(InputTypeFlags.TEXT_FLAG_IME_MULTI_LINE)
+        val hasAutoCorrectFlag = flags.contains(InputTypeFlags.TEXT_FLAG_AUTO_CORRECT)
+        // InputTypeFlags.TYPE_TEXT_FLAG_CAP_SENTENCES might also be considered in the future
+
+        if (hasMultilineFlag || hasAutoCorrectFlag) return false
+
+        val fieldTypeByInputType = detectFieldTypeUsingInputType(node.inputType)
+        if (fieldTypeByInputType != FieldType.Unknown) return true
+
+        return false
     }
 
-    private fun detectFieldType(node: AutofillNode): FieldType {
-        val autofillHint = node.autofillHints.firstOrNull()
-        val htmlAttributes = node.htmlAttributes
-        var fieldType: FieldType = FieldType.Unknown
-        if (autofillHint != null) {
-            fieldType = detectFieldTypeUsingAutofillHint(autofillHint)
-        }
+    private fun detectFieldType(node: AutofillNode): FieldType = detectFieldType(
+        autofillHints = node.autofillHints.toSet(),
+        htmlAttributes = node.htmlAttributes,
+        inputType = node.inputType,
+        hintKeywordList = node.hintKeywordList
+    )
+
+    private fun detectFieldType(
+        autofillHints: Set<String>,
+        htmlAttributes: List<Pair<String, String>>,
+        hintKeywordList: List<CharSequence>,
+        inputType: InputTypeValue
+    ): FieldType {
+        var fieldType: FieldType = detectFieldTypeUsingAutofillHints(autofillHints)
         if (fieldType == FieldType.Unknown && htmlAttributes.isNotEmpty()) {
             fieldType = detectFieldTypeUsingHtmlInfo(htmlAttributes)
         }
         if (fieldType == FieldType.Unknown) {
-            fieldType = detectFieldTypeUsingInputType(node.inputType)
+            fieldType = detectFieldTypeUsingInputType(inputType)
         }
         if (fieldType == FieldType.Unknown) {
-            fieldType = detectFieldTypeUsingHintKeywordList(node.hintKeywordList)
+            fieldType = detectFieldTypeUsingHintKeywordList(hintKeywordList)
         }
 
         return fieldType
     }
 
-    private fun detectFieldTypeUsingHtmlInfo(
-        htmlAttributes: List<Pair<String, String>>
-    ): FieldType {
-        val typeAttribute = htmlAttributes.firstOrNull { it.first == "type" }
+    private fun detectFieldTypeUsingHtmlInfo(attributes: List<Pair<String, String>>): FieldType {
+        val typeAttribute = attributes.firstOrNull { it.first == "type" }
         return when (typeAttribute?.second) {
             "email" -> FieldType.Email
             "password" -> FieldType.Password
@@ -169,6 +295,16 @@ class AssistNodeTraversal {
             // "text" -> FieldType.Other
             else -> FieldType.Unknown
         }
+    }
+
+    private fun detectFieldTypeUsingAutofillHints(hints: Set<String>): FieldType {
+        hints.forEach {
+            val fieldType = detectFieldTypeUsingAutofillHint(it)
+            if (fieldType != FieldType.Unknown) {
+                return fieldType
+            }
+        }
+        return FieldType.Unknown
     }
 
     @Suppress("ReturnCount")
@@ -199,7 +335,13 @@ class AssistNodeTraversal {
 
     private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {
         val normalizedKeywords = hintKeywordList.map { it.toString().lowercase() }
-        if (usernameKeywords.any { normalizedKeywords.contains(it) }) return FieldType.Email
+
+        for (kw in normalizedKeywords) {
+            for (usernameKw in usernameKeywords) {
+                if (kw.contains(usernameKw)) return FieldType.Username
+            }
+        }
+
         return FieldType.Unknown
     }
 
@@ -225,9 +367,23 @@ class AssistNodeTraversal {
         else -> FieldType.Unknown
     }
 
+    sealed interface SupportsAutofillResult {
+        object No : SupportsAutofillResult
+        object Yes : SupportsAutofillResult
+        object MaybeWithContext : SupportsAutofillResult
+    }
+
+    data class AutofillTraversalContext(
+        val node: AutofillNode,
+        val parent: Option<AutofillTraversalContext>,
+        val siblings: List<AutofillNode>,
+        val parentPath: List<AutofillFieldId>
+    )
+
     companion object {
         const val HINT_CURRENT_PASSWORD = "current-password"
         const val TAG = "AssistNodeTraversal"
+        const val MAX_CONTEXT_JUMPS = 3
     }
 }
 
@@ -253,6 +409,8 @@ fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {
         url = getUrl()
     )
 }
+
+private fun AutofillNode.isEditText() = className == EditText::class.java.name
 
 private fun AssistStructure.ViewNode.getUrl(): Option<String> {
     val domain = webDomain ?: return None

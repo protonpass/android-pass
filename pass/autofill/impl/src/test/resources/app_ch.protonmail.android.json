@@ -1,0 +1,213 @@
+{
+  "rootContent": {
+    "id": 1718255138,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": 644543105,
+        "className": "android.widget.FrameLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": 644572896,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "toolbar"
+            ]
+          },
+          {
+            "id": 644602687,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 644632478,
+                "className": "android.widget.TextView",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "titleText"
+                ]
+              },
+              {
+                "id": 644662269,
+                "className": "android.widget.TextView",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "subtitleText"
+                ]
+              },
+              {
+                "id": 644692060,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 644721851,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "label"
+                    ]
+                  },
+                  {
+                    "id": 644751642,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 644483523,
+                        "expectedAutofill": "username",
+                        "className": "android.widget.EditText",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "isFocused": true,
+                        "inputType": 524321,
+                        "hintKeywordList": [
+                          "",
+                          "input"
+                        ]
+                      },
+                      {
+                        "id": 644781433,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true
+                      },
+                      {
+                        "id": 644811224,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "inputLayout"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "usernameInput"
+                ]
+              },
+              {
+                "id": 644841015,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 644870806,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "label"
+                    ]
+                  },
+                  {
+                    "id": 644900597,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 644513314,
+                        "className": "android.widget.EditText",
+                        "expectedAutofill": "password",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "inputType": 129,
+                        "hintKeywordList": [
+                          "",
+                          "input"
+                        ]
+                      },
+                      {
+                        "id": 644930388,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true
+                      },
+                      {
+                        "id": 644960179,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 644989970,
+                            "className": "android.widget.TextView",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "hintKeywordList": [
+                              "",
+                              "textinput_suffix_text"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "inputLayout"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "passwordInput"
+                ]
+              },
+              {
+                "id": 645019761,
+                "className": "android.widget.Button",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "helpButton"
+                ]
+              },
+              {
+                "id": 645049552,
+                "className": "android.widget.Button",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "blockingHelpButton"
+                ]
+              },
+              {
+                "id": 645079343,
+                "className": "android.widget.Button",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "signInButton"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "scrollContent"
+            ]
+          },
+          {
+            "id": 645109134,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "ch.protonmail.android"
+}

@@ -42,4 +42,18 @@ class AutofillTest {
         runAutofillTest("firefox_news.ycombinator.com_secondpassword.json")
     }
 
+    @Test
+    fun `can autofill account dyn com chrome`() {
+        runAutofillTest("chrome_account.dyn.com.json")
+    }
+
+    @Test
+    fun `can autofill protonmail app`() {
+        runAutofillTest("app_ch.protonmail.android.json")
+    }
+
+    @Test
+    fun `can autofill instagram app`() {
+        runAutofillTest("app_com.instagram.android.json")
+    }
 }

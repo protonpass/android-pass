@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.view.autofill.AutofillManager
 import android.widget.RemoteViews
 import androidx.activity.viewModels
-import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -34,14 +33,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import proton.android.pass.autofill.DatasetBuilderOptions
 import proton.android.pass.autofill.DatasetUtils
-import proton.android.pass.autofill.Utils
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillMappings
-import proton.android.pass.autofill.entities.asAndroid
-import proton.android.pass.autofill.extensions.marshalParcelable
-import proton.android.pass.autofill.extensions.toAutofillItem
-import proton.android.pass.autofill.ui.autofill.AutofillIdList
-import proton.android.pass.common.api.Some
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.pass.domain.Item
@@ -99,49 +93,16 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
         }
 
     companion object {
-        const val ARG_AUTOFILL_IDS = "arg_autofill_ids"
-        const val ARG_AUTOFILL_TYPES = "arg_autofill_types"
-        const val ARG_AUTOFILL_IS_FOCUSED = "arg_autofill_is_focused"
-        const val ARG_AUTOFILL_PARENT_ID = "arg_autofill_parent_id"
-        const val ARG_PACKAGE_NAME = "arg_package_name"
-        const val ARG_APP_NAME = "arg_app_name"
-        const val ARG_WEB_DOMAIN = "arg_web_domain"
-        const val ARG_TITLE = "arg_title"
-        const val ARG_INLINE_SUGGESTION_AUTOFILL_ITEM = "arg_inline_suggestion_autofill_item"
 
         fun newIntent(
             context: Context,
             data: AutofillData,
             item: Item
-        ): Intent = Intent(context, InlineSuggestionsNoUiActivity::class.java).apply {
-            if (data.assistInfo.url is Some) {
-                putExtra(ARG_WEB_DOMAIN, data.assistInfo.url.value)
-            }
-            val fields = data.assistInfo.fields
-            val parentIdLists: List<AutofillIdList> = fields.map { field ->
-                AutofillIdList(field.nodePath.map { it.asAndroid().autofillId })
-            }
-            putExtras(
-                bundleOf(
-                    ARG_AUTOFILL_IDS to fields.map { it.id.asAndroid().autofillId },
-                    ARG_AUTOFILL_TYPES to fields.map { it.type?.toString() },
-                    ARG_AUTOFILL_IS_FOCUSED to fields.map { it.isFocused },
-                    ARG_AUTOFILL_PARENT_ID to parentIdLists,
-                    ARG_PACKAGE_NAME to data.packageInfo.map { it.packageName.value }.value(),
-                    ARG_APP_NAME to data.packageInfo.map { it.appName.value }.value(),
-                    ARG_TITLE to Utils.getTitle(
-                        data.assistInfo.url,
-                        data.packageInfo.map { it.appName.value }
-                    )
-                )
-            )
-            val autofillItem = item.toAutofillItem()
-            if (autofillItem is Some) {
-                putExtra(
-                    ARG_INLINE_SUGGESTION_AUTOFILL_ITEM,
-                    marshalParcelable(autofillItem.value)
-                )
-            }
+        ): Intent {
+            val extras = AutofillIntentExtras.toExtras(data, item.some())
+            val intent = Intent(context, InlineSuggestionsNoUiActivity::class.java)
+            intent.putExtras(extras)
+            return intent
         }
     }
 }

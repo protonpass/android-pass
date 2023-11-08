@@ -100,6 +100,7 @@ class AssistNodeTraversal {
 
         if (node.className == "android.widget.EditText") {
             PassLogger.d(TAG, "------------------------------------")
+            PassLogger.d(TAG, "nodeInputTypeFlags ${InputTypeFlags.fromValue(node.inputType)}")
             PassLogger.d(TAG, "nodeSupportsAutoFill $isImportant - $hasAutofillInfo")
             PassLogger.d(TAG, "nodeHasValidHints ${nodeHasValidHints(node.autofillHints.toSet())}")
             PassLogger.d(TAG, "nodeHasValidHtmlInfo ${nodeHasValidHtmlInfo(node.htmlAttributes)}")
@@ -197,7 +198,8 @@ class AssistNodeTraversal {
     }
 
     private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {
-        if (usernameKeywords.any { hintKeywordList.contains(it) }) return FieldType.Email
+        val normalizedKeywords = hintKeywordList.map { it.toString().lowercase() }
+        if (usernameKeywords.any { normalizedKeywords.contains(it) }) return FieldType.Email
         return FieldType.Unknown
     }
 
@@ -276,3 +278,51 @@ private fun isImportantForAutofill(node: AssistStructure.ViewNode): Boolean =
     } else {
         true
     }
+
+
+enum class InputTypeFlags(val value: Int) {
+    MASK_CLASS(0x0000000f),
+    MASK_VARIATION(0x00000ff0),
+    MASK_FLAGS(0x00fff000),
+    NULL(0x00000000),
+    CLASS_TEXT(0x00000001),
+    TEXT_FLAG_CAP_CHARACTERS(0x00001000),
+    TEXT_FLAG_CAP_WORDS(0x00002000),
+    TEXT_FLAG_CAP_SENTENCES(0x00004000),
+    TEXT_FLAG_AUTO_CORRECT(0x00008000),
+    TEXT_FLAG_AUTO_COMPLETE(0x00010000),
+    TEXT_FLAG_MULTI_LINE(0x00020000),
+    TEXT_FLAG_IME_MULTI_LINE(0x00040000),
+    TEXT_FLAG_NO_SUGGESTIONS(0x00080000),
+    TEXT_FLAG_ENABLE_TEXT_CONVERSION_SUGGESTIONS(0x00100000),
+    TEXT_VARIATION_NORMAL(0x00000000),
+    TEXT_VARIATION_URI(0x00000010),
+    TEXT_VARIATION_EMAIL_ADDRESS(0x00000020),
+    TEXT_VARIATION_EMAIL_SUBJECT(0x00000030),
+    TEXT_VARIATION_SHORT_MESSAGE(0x00000040),
+    TEXT_VARIATION_LONG_MESSAGE(0x00000050),
+    TEXT_VARIATION_PERSON_NAME(0x00000060),
+    TEXT_VARIATION_POSTAL_ADDRESS(0x00000070),
+    TEXT_VARIATION_PASSWORD(0x00000080),
+    TEXT_VARIATION_VISIBLE_PASSWORD(0x00000090),
+    TEXT_VARIATION_WEB_EDIT_TEXT(0x000000a0),
+    TEXT_VARIATION_FILTER(0x000000b0),
+    TEXT_VARIATION_PHONETIC(0x000000c0),
+    TEXT_VARIATION_WEB_EMAIL_ADDRESS(0x000000d0),
+    TEXT_VARIATION_WEB_PASSWORD(0x000000e0),
+    CLASS_NUMBER(0x00000002),
+    NUMBER_FLAG_SIGNED(0x00001000),
+    NUMBER_FLAG_DECIMAL(0x00002000),
+    NUMBER_VARIATION_NORMAL(0x00000000),
+    NUMBER_VARIATION_PASSWORD(0x00000010),
+    CLASS_PHONE(0x00000003),
+    CLASS_DATETIME(0x00000004),
+    DATETIME_VARIATION_NORMAL(0x00000000),
+    DATETIME_VARIATION_DATE(0x00000010),
+    DATETIME_VARIATION_TIME(0x00000020);
+
+    companion object {
+        fun fromValue(input: InputTypeValue): List<InputTypeFlags> = values()
+            .filter { flag -> input.value.and(flag.value) == flag.value }
+    }
+}

@@ -43,6 +43,26 @@ class AutofillTest {
     }
 
     @Test
+    fun `can autofill news ycombinator com chrome (focus on first username)`() {
+        runAutofillTest("chrome_news.ycombinator.com_firstusername.json")
+    }
+
+    @Test
+    fun `can autofill news ycombinator com chrome (focus on first password)`() {
+        runAutofillTest("chrome_news.ycombinator.com_firstpassword.json")
+    }
+
+    @Test
+    fun `can autofill news ycombinator com chrome (focus on second username)`() {
+        runAutofillTest("chrome_news.ycombinator.com_secondusername.json")
+    }
+
+    @Test
+    fun `can autofill news ycombinator com chrome (focus on second password)`() {
+        runAutofillTest("chrome_news.ycombinator.com_secondpassword.json")
+    }
+
+    @Test
     fun `can autofill account dyn com chrome`() {
         runAutofillTest("chrome_account.dyn.com.json")
     }

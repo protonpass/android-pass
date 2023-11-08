@@ -183,4 +183,10 @@ object AppDatabaseMigrations {
         ]
     )
     class MIGRATION_34_35 : AutoMigrationSpec
+
+    val MIGRATION_35_36 = object : Migration(35, 36) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            EventMetadataDatabase.MIGRATION_2.migrate(database)
+        }
+    }
 }

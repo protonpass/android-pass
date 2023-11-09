@@ -22,39 +22,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class FeatureFlagsViewModel @Inject constructor(
-    private val ffRepository: FeatureFlagsPreferencesRepository,
-    private val notificationManager: NotificationManager
+    private val ffRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
-    val state = combine(
-        ffRepository.get<Boolean>(FeatureFlag.AUTOFILL_DEBUG_MODE),
-        ffRepository.get<Boolean>(FeatureFlag.SHARING_V1),
-    ) { autofillDebug, sharing ->
+    val state = ffRepository.get<Boolean>(FeatureFlag.SHARING_V1).map { sharing ->
         mapOf(
-            FeatureFlag.AUTOFILL_DEBUG_MODE to autofillDebug,
             FeatureFlag.SHARING_V1 to sharing,
         )
-    }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
     fun <T> override(featureFlag: FeatureFlag, value: T) = viewModelScope.launch {
-        if (featureFlag == FeatureFlag.AUTOFILL_DEBUG_MODE) {
-            if (value is Boolean && value) {
-                notificationManager.showDebugAutofillNotification()
-            } else {
-                notificationManager.hideDebugAutofillNotification()
-            }
-        }
         ffRepository.set(featureFlag = featureFlag, value = value)
     }
 }

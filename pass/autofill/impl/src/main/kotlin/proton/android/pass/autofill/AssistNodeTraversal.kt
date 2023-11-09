@@ -141,7 +141,7 @@ class AssistNodeTraversal {
         }
 
         // If the node already has autofill info, we can use it
-        if (hasAutofillInfo && nodeHasValidInputType(node)) {
+        if (hasAutofillInfo) {
             return SupportsAutofillResult.Yes
         }
 

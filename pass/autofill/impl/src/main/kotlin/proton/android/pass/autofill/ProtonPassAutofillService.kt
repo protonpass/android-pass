@@ -30,6 +30,7 @@ import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.debug.AutofillDebugSaver
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -53,11 +54,25 @@ class ProtonPassAutofillService : AutofillService() {
     @Inject
     lateinit var autofillManager: AutofillManager
 
+    override fun onConnected() {
+        super.onConnected()
+        PassLogger.i(TAG, "Autofill service connected")
+    }
+
+    override fun onDisconnected() {
+        PassLogger.i(TAG, "Autofill service disconnected")
+        super.onDisconnected()
+    }
+
     override fun onFillRequest(
         request: FillRequest,
         cancellationSignal: CancellationSignal,
         callback: FillCallback,
     ) {
+        val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
+        if (requestFlags.isNotEmpty()) {
+            PassLogger.i(TAG, "onFillRequest request flags: $requestFlags")
+        }
         runBlocking {
             val isDebugMode = ffRepo.get<Boolean>(FeatureFlag.AUTOFILL_DEBUG_MODE).first()
             if (isDebugMode) {
@@ -79,5 +94,9 @@ class ProtonPassAutofillService : AutofillService() {
 
     override fun onSaveRequest(request: SaveRequest, callback: SaveCallback) {
         AutoSaveHandler.handleOnSave(this, request, callback)
+    }
+
+    companion object {
+        private const val TAG = "ProtonPassAutofillService"
     }
 }

@@ -21,6 +21,7 @@ package proton.android.pass.autofill.e2e.ui.sessions
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.runtime.Stable
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -50,7 +51,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import proton.android.pass.autofill.debug.AutofillSession
 import proton.android.pass.autofill.debug.DebugUtils
 import proton.android.pass.autofill.e2e.BuildConfig
 import proton.android.pass.commonui.api.ClassHolder
@@ -152,3 +152,10 @@ private fun zeroPad(number: Int): String {
         number.toString()
     }
 }
+
+@Stable
+data class AutofillSession(
+    val packageName: String,
+    val timestamp: String,
+    val filename: String
+)

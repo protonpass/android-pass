@@ -19,6 +19,7 @@ val BROWSERS = setOf(
     "com.chrome.dev",
     "com.cookiegames.smartcookie",
     "com.cookiejarapps.android.smartcookieweb",
+    "com.duckduckgo.mobile.android",
     "com.ecosia.android",
     "com.google.android.apps.chrome",
     "com.google.android.apps.chrome_dev",

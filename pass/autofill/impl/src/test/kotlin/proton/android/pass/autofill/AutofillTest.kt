@@ -76,4 +76,14 @@ class AutofillTest {
     fun `can autofill instagram app`() {
         runAutofillTest("app_com.instagram.android.json")
     }
+
+    @Test
+    fun `can autofill proton me duckduckgo username`() {
+        runAutofillTest("duckduckgo.proton.me.username.json")
+    }
+
+    @Test
+    fun `can autofill proton me duckduckgo password`() {
+        runAutofillTest("duckduckgo.proton.me.password.json")
+    }
 }

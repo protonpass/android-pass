@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.autofill.debug.AutofillSession
 import proton.android.pass.commonui.api.toClassHolder
 
 const val SESSIONS_ROUTE = "e2eapp/sessions"

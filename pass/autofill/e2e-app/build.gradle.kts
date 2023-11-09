@@ -25,6 +25,10 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildFeatures {
+            buildConfig = true
+        }
     }
 
     compileOptions {
@@ -57,17 +61,27 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.navigation.material)
+    implementation(libs.accompanist.systemUiController)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundationLayout)
-    implementation(libs.androidx.compose.foundationLayout)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.startup.runtime)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.collections)
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
-    implementation(libs.kotlinx.datetime)
+
+    implementation(libs.core.presentation)
+    implementation(libs.core.presentation.compose)
     implementation(libs.core.userSettings.domain)
 
     implementation(projects.pass.account.fakes)
@@ -77,16 +91,20 @@ dependencies {
     implementation(projects.pass.common.fakes)
     implementation(projects.pass.commonRust.fakes)
     implementation(projects.pass.commonTest)
-    implementation(projects.pass.commonUi.fakes)
+    implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.commonUi.impl)
+    implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.crypto.fakes)
     implementation(projects.pass.data.api)
     implementation(projects.pass.data.fakes)
     implementation(projects.pass.domain)
     implementation(projects.pass.inAppReview.fakes)
+    implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.fakes)
-    implementation(projects.pass.preferences.fakes)
     implementation(projects.pass.telemetry.fakes)
     implementation(projects.pass.totp.fakes)
+    implementation(projects.pass.preferences.api)
+    implementation(projects.pass.preferences.impl)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

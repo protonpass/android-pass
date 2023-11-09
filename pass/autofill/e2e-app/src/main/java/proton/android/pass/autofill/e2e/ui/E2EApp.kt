@@ -16,22 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.e2e
+package proton.android.pass.autofill.e2e.ui
 
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.fragment.app.FragmentActivity
-import dagger.hilt.android.AndroidEntryPoint
-import proton.android.pass.autofill.e2e.ui.E2EApp
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import proton.android.pass.commonui.api.PassTheme
 
-@AndroidEntryPoint
-class E2EActivity : FragmentActivity() {
+@Composable
+fun E2EApp(modifier: Modifier = Modifier) {
+    val isDark = isSystemInDarkTheme()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContent {
-            E2EApp()
-        }
+    PassTheme(isDark = isDark) {
+        E2EAppContent(
+            modifier = modifier
+                .background(PassTheme.colors.backgroundStrong)
+                .systemBarsPadding()
+                .imePadding()
+        )
     }
 }

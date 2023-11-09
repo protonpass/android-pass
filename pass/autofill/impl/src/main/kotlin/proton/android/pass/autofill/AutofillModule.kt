@@ -20,12 +20,9 @@ package proton.android.pass.autofill
 
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.autofill.api.AutofillManager
-import proton.android.pass.autofill.debug.AutofillDebugActivity
-import proton.android.pass.notifications.api.AutofillDebugActivityAnnotation
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -33,13 +30,4 @@ abstract class AutofillModule {
 
     @Binds
     abstract fun bindAutofillManager(impl: AutofillManagerImpl): AutofillManager
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-object AutofillProviderModule {
-
-    @Provides
-    @AutofillDebugActivityAnnotation
-    fun provideDebugAutofillActivityClass(): Class<*> = AutofillDebugActivity::class.java
 }

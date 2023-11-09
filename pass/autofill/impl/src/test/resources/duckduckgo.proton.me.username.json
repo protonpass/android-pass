@@ -1,0 +1,552 @@
+{
+  "rootContent": {
+    "id": 1227523340,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": 153811307,
+        "className": "android.widget.LinearLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": 153841098,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          },
+          {
+            "id": 153870889,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 153900680,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 153930471,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "omnibarTextInputMockup"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "omniBarContainerMockup"
+                ]
+              },
+              {
+                "id": 153960262,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "fireIconMenuMockup"
+                ]
+              },
+              {
+                "id": 153990053,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 154019844,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "tabCount"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "tabsMenuMockup"
+                ]
+              },
+              {
+                "id": 154049635,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "browserMenuMockup"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "appBarLayoutMockup"
+            ]
+          },
+          {
+            "id": 154079426,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 154109217,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 154139008,
+                    "className": "android.widget.ScrollView",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 154168799,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 154198590,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 154228381,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "deviceShieldCtaLayout"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "fragmentDeviceShieldContainer"
+                            ]
+                          },
+                          {
+                            "id": 154258172,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "messageCta"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "newTabQuickAccessItemsLayout"
+                        ]
+                      },
+                      {
+                        "id": 154287963,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 154317754,
+                            "className": "android.widget.Button",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "hintKeywordList": [
+                              "",
+                              "primaryCta"
+                            ]
+                          },
+                          {
+                            "id": 154347545,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 154377336,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": 154407127,
+                                    "className": "android.widget.TextView",
+                                    "isImportantForAutofill": true,
+                                    "text": "",
+                                    "hintKeywordList": [
+                                      "",
+                                      "hiddenTextCta"
+                                    ]
+                                  },
+                                  {
+                                    "id": 154436918,
+                                    "className": "android.widget.TextView",
+                                    "isImportantForAutofill": true,
+                                    "text": "",
+                                    "hintKeywordList": [
+                                      "",
+                                      "dialogTextCta"
+                                    ]
+                                  }
+                                ],
+                                "hintKeywordList": [
+                                  "cardContainer"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "cardView"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "includeDaxDialogCta"
+                        ]
+                      },
+                      {
+                        "id": 154466709,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "ctaContainer"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "includeNewBrowserTab"
+                    ]
+                  },
+                  {
+                    "id": 154496500,
+                    "className": "android.widget.ScrollView",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "includeErrorView"
+                    ]
+                  },
+                  {
+                    "id": 154526291,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 155598767,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 155628558,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 155568976,
+                                "className": "android.webkit.WebView",
+                                "isImportantForAutofill": true,
+                                "htmlAttributes": [
+                                  {
+                                    "key": "name",
+                                    "value": "loginform"
+                                  }
+                                ],
+                                "children": [
+                                  {
+                                    "id": 281530129,
+                                    "isImportantForAutofill": true,
+                                    "text": "",
+                                    "expectedAutofill": "username",
+                                    "isFocused": true,
+                                    "autofillHints": [
+                                      "username"
+                                    ],
+                                    "htmlAttributes": [
+                                      {
+                                        "key": "name",
+                                        "value": "username"
+                                      },
+                                      {
+                                        "key": "type",
+                                        "value": "text"
+                                      },
+                                      {
+                                        "key": "label",
+                                        "value": "email or username"
+                                      },
+                                      {
+                                        "key": "id",
+                                        "value": "username"
+                                      },
+                                      {
+                                        "key": "maxlength",
+                                        "value": "2147483647"
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "",
+                                      ""
+                                    ]
+                                  },
+                                  {
+                                    "id": 281531090,
+                                    "isImportantForAutofill": true,
+                                    "text": "",
+                                    "expectedAutofill": "password",
+                                    "autofillHints": [
+                                      "current-password"
+                                    ],
+                                    "htmlAttributes": [
+                                      {
+                                        "key": "name",
+                                        "value": "password"
+                                      },
+                                      {
+                                        "key": "type",
+                                        "value": "password"
+                                      },
+                                      {
+                                        "key": "label",
+                                        "value": "password"
+                                      },
+                                      {
+                                        "key": "id",
+                                        "value": "password"
+                                      },
+                                      {
+                                        "key": "maxlength",
+                                        "value": "2147483647"
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "",
+                                      ""
+                                    ]
+                                  },
+                                  {
+                                    "id": 281532051,
+                                    "isImportantForAutofill": true,
+                                    "text": "",
+                                    "htmlAttributes": [
+                                      {
+                                        "key": "name",
+                                        "value": "staysignedin"
+                                      },
+                                      {
+                                        "key": "type",
+                                        "value": "checkbox"
+                                      },
+                                      {
+                                        "key": "label",
+                                        "value": "keep me signed inmore info: you'll stay signed in even after you close the browser."
+                                      },
+                                      {
+                                        "key": "id",
+                                        "value": "staysignedin"
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "",
+                                      ""
+                                    ]
+                                  }
+                                ],
+                                "url": "https://account.proton.me",
+                                "hintKeywordList": [
+                                  "browserWebView"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "webViewContainer"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "swipeRefreshContainer"
+                        ]
+                      },
+                      {
+                        "id": 155509394,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "isFocused": true,
+                        "hintKeywordList": [
+                          "focusDummy"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "browserLayout"
+                    ]
+                  },
+                  {
+                    "id": 154556082,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 154585873,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 154615664,
+                            "className": "android.view.ViewGroup",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 154645455,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": 154675246,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": 154705037,
+                                        "className": "android.widget.FrameLayout",
+                                        "isImportantForAutofill": true,
+                                        "hintKeywordList": [
+                                          "scene_root"
+                                        ]
+                                      },
+                                      {
+                                        "id": 154734828,
+                                        "className": "android.view.View",
+                                        "isImportantForAutofill": true,
+                                        "hintKeywordList": [
+                                          "placeholder"
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "omnibarIconContainer"
+                                    ]
+                                  },
+                                  {
+                                    "id": 154764619,
+                                    "className": "android.view.View",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "cookieDummyView"
+                                    ]
+                                  },
+                                  {
+                                    "id": 153751725,
+                                    "className": "android.widget.EditText",
+                                    "isImportantForAutofill": true,
+                                    "text": "",
+                                    "inputType": 524305,
+                                    "hintKeywordList": [
+                                      "",
+                                      "omnibarTextInput",
+                                      "Search or type URL"
+                                    ]
+                                  },
+                                  {
+                                    "id": 154794410,
+                                    "className": "android.view.View",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "spacer"
+                                    ]
+                                  }
+                                ],
+                                "hintKeywordList": [
+                                  "omniBarContainer"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "toolbar"
+                            ]
+                          },
+                          {
+                            "id": 154824201,
+                            "className": "android.widget.ProgressBar",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "pageLoadingIndicator"
+                            ]
+                          },
+                          {
+                            "id": 154853992,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "fireIconMenu"
+                            ]
+                          },
+                          {
+                            "id": 154883783,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 154913574,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "tabCount"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "tabsMenu"
+                            ]
+                          },
+                          {
+                            "id": 154943365,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "browserMenu"
+                            ]
+                          },
+                          {
+                            "id": 154973156,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "findInPage"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "toolbarContainer"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "appBarLayout"
+                    ]
+                  },
+                  {
+                    "id": 155002947,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "webViewFullScreenContainer"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "rootView"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "fragmentContainer"
+            ]
+          },
+          {
+            "id": 155032738,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "clearingInProgressView"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.duckduckgo.mobile.android"
+}

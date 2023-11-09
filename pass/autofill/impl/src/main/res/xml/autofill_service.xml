@@ -23,6 +23,7 @@
     <compatibility-package android:name="com.chrome.dev" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.cookiegames.smartcookie" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.cookiejarapps.android.smartcookieweb" android:maxLongVersionCode="10000000000" />
+    <compatibility-package android:name="com.duckduckgo.mobile.android" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.ecosia.android" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.google.android.apps.chrome" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.google.android.apps.chrome_dev" android:maxLongVersionCode="10000000000" />

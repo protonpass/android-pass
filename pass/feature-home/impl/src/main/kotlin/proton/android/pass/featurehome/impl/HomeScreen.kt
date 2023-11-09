@@ -405,7 +405,7 @@ fun HomeScreen(
                 onEnterSearch = remember { { homeViewModel.onEnterSearch() } },
                 onStopSearch = remember { { homeViewModel.onStopSearching() } },
                 onDrawerIconClick = remember { { scope.launch { drawerState.open() } } },
-                onSortingOptionsClick = remember {
+                onSortingOptionsClick = remember(homeUiState.homeListUiState.sortingType) {
                     {
                         onNavigateEvent(SortingBottomsheet(homeUiState.homeListUiState.sortingType))
                     }
@@ -415,7 +415,7 @@ fun HomeScreen(
                         onNavigateEvent(HomeNavigation.AddItem(shareId, itemTypeUiState))
                     }
                 },
-                onItemMenuClick = remember {
+                onItemMenuClick = remember(isTrashMode) {
                     { item ->
                         selectedItem = item
                         currentBottomSheet =
@@ -481,7 +481,7 @@ fun HomeScreen(
             ConfirmDeleteItemDialog(
                 isLoading = actionState == ActionState.Loading,
                 show = shouldShowDeleteItemDialog,
-                onConfirm = remember {
+                onConfirm = remember(selectedItem) {
                     {
                         selectedItem?.let {
                             homeViewModel.deleteItem(it)
@@ -493,7 +493,7 @@ fun HomeScreen(
 
             ConfirmTrashAliasDialog(
                 show = aliasToBeTrashed != null,
-                onConfirm = remember {
+                onConfirm = remember(aliasToBeTrashed) {
                     {
                         homeViewModel.sendItemToTrash(aliasToBeTrashed)
                         aliasToBeTrashed = null

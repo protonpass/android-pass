@@ -573,6 +573,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun setVaultSelection(vaultSelection: VaultSelectionOption) {
+        PassLogger.d(TAG, "Setting vault selection: $vaultSelection")
         homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
     }
 

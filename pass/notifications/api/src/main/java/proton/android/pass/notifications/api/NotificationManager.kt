@@ -20,8 +20,6 @@ package proton.android.pass.notifications.api
 
 interface NotificationManager {
     fun sendNotification()
-    fun showDebugAutofillNotification()
-    fun hideDebugAutofillNotification()
     fun sendReceivedInviteNotification()
 
     fun hasNotificationPermission(): Boolean

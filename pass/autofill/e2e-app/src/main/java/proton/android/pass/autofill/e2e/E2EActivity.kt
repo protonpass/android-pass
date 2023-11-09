@@ -20,9 +20,9 @@ package proton.android.pass.autofill.e2e
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.material.Text
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
+import proton.android.pass.autofill.e2e.ui.E2EApp
 
 @AndroidEntryPoint
 class E2EActivity : FragmentActivity() {
@@ -31,7 +31,7 @@ class E2EActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Text(text = "E2E activity")
+            E2EApp()
         }
     }
 }

@@ -33,7 +33,7 @@ import java.io.File
 const val USERNAME = "username"
 const val PASSWORD = "password"
 
-fun runAutofillTest(file: String) {
+fun runAutofillTest(file: String, requestFlags: List<RequestFlags> = emptyList()) {
     val path = "src/test/resources/$file"
     val asFile = File(path)
     val content = asFile.readText()
@@ -41,7 +41,7 @@ fun runAutofillTest(file: String) {
     val nodesWithExpectedContents = getExpectedContents(parsed)
 
     val asAutofillNodes = parsed.rootContent.toAutofillNode()
-    val detectedNodes = AssistNodeTraversal().traverse(asAutofillNodes)
+    val detectedNodes = AssistNodeTraversal(requestFlags).traverse(asAutofillNodes)
 
     val res = ItemFieldMapper.mapFields(
         encryptionContext = TestEncryptionContext,

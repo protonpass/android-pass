@@ -86,4 +86,14 @@ class AutofillTest {
     fun `can autofill proton me duckduckgo password`() {
         runAutofillTest("duckduckgo.proton.me.password.json")
     }
+
+    @Test
+    fun `can autofill app com booking password`() {
+        runAutofillTest("app_com.booking.android_password.json", listOf(RequestFlags.FLAG_MANUAL_REQUEST))
+    }
+
+    @Test
+    fun `can autofill app com booking repeat password`() {
+        runAutofillTest("app_com.booking.android_repeatpassword.json", listOf(RequestFlags.FLAG_MANUAL_REQUEST))
+    }
 }

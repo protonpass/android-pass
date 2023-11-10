@@ -116,4 +116,7 @@
   <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Наладзіць</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Перамясціць абагуленае сховішча</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Стварыць новае сховішча для абагулення</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Гэты элемент будзе перамешчаны ў новае сховішча.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Палепшыць, каб стварыць больш сховішчаў</string>
+  <string name="sharing_from_item_vault_limit_reached">Вы дасягнулі максімальнай колькасці сховішчаў</string>
 </resources>

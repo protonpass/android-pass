@@ -28,10 +28,14 @@ import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.log.api.PassLogger
 import java.io.File
 
 const val USERNAME = "username"
 const val PASSWORD = "password"
+
+private const val TAG = "RunAutofillTest"
+
 
 fun runAutofillTest(file: String, requestFlags: List<RequestFlags> = emptyList()) {
     val path = "src/test/resources/$file"
@@ -57,6 +61,10 @@ fun runAutofillTest(file: String, requestFlags: List<RequestFlags> = emptyList()
         fieldIsFocusedList = detectedNodes.fields.map { it.isFocused },
         parentIdList = detectedNodes.fields.map { it.nodePath }
     )
+
+    PassLogger.i(TAG, "Expected nodes: ${nodesWithExpectedContents.size}")
+    PassLogger.i(TAG, "Detected nodes: ${detectedNodes.fields.size}")
+    PassLogger.i(TAG, "Mapped nodes: ${res.mappings.size}")
 
     assertThat(res.mappings.size).isEqualTo(nodesWithExpectedContents.size)
     for (nodeWithExpectedContents in nodesWithExpectedContents) {
@@ -110,4 +118,4 @@ fun AutofillDebugSaver.DebugAutofillNode.toAutofillNode(): AutofillNode = Autofi
     id = TestAutofillId(id)
 )
 
-class TestAutofillId(val id: Int) : AutofillFieldId
+data class TestAutofillId(val id: Int) : AutofillFieldId

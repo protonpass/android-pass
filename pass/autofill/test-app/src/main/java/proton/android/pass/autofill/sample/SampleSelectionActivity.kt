@@ -22,6 +22,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import proton.android.pass.autofill.sample.autofillmanageractivity.AutofillManagerLoginActivity
 import proton.android.pass.autofill.sample.databinding.ActivitySampleSelectionBinding
 import proton.android.pass.autofill.sample.simpleactivity.SimpleLoginActivity
 import proton.android.pass.autofill.sample.simplecompose.SimpleComposeLoginActivity
@@ -37,6 +38,10 @@ class SampleSelectionActivity : AppCompatActivity() {
 
         binding.simpleActivityLoginButton.setOnClickListener {
             openActivity(SimpleLoginActivity::class.java)
+        }
+
+        binding.simpleAutofillManagerLoginButton.setOnClickListener {
+            openActivity(AutofillManagerLoginActivity::class.java)
         }
 
         binding.simpleFragmentLoginButton.setOnClickListener {

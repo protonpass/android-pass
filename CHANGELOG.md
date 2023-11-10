@@ -6,6 +6,21 @@
 
 ### Other
 
+## 1.10.0 (2023-11-10)
+
+### Features :tada:
+
+- Allow item sharing from item detail
+
+### Fixes :bug:
+
+- Fix item actions in trash view
+
+### Other
+
+- Improve autofill
+- Add DuckDuckGo to browser list
+
 ## 1.9.6 (2023-10-27)
 
 ### Features :tada:

@@ -80,4 +80,10 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Modification impossible</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Vous n\'avez pas les autorisations nécessaires pour modifier cet élément.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Vous pouvez modifier uniquement les éléments de vos coffres-forts les plus anciens. Pour modifier cet élément, vous devez mettre à jour votre abonnement actuel.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Vous ne pouvez pas modifier cet élément parce qu\'il se trouve dans la corbeille. Retirez-le de la corbeille avant de le modifier.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Partage impossible</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Vous n\'avez pas les autorisations nécessaires pour partager ce coffre-fort.</string>
 </resources>

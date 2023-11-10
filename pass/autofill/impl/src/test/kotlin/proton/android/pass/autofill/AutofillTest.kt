@@ -83,6 +83,16 @@ class AutofillTest {
     }
 
     @Test
+    fun `can autofill citiretailservices citibank com chrome (focus on username)`() {
+        runAutofillTest("chrome_citiretailservices.citibank.com_username.json")
+    }
+
+    @Test
+    fun `can autofill citiretailservices citibank com chrome (focus on password)`() {
+        runAutofillTest("chrome_citiretailservices.citibank.com_password.json")
+    }
+
+    @Test
     fun `can autofill protonmail app`() {
         runAutofillTest("app_ch.protonmail.android.json")
     }

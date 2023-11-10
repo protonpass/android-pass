@@ -48,7 +48,8 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         "username",
         "user name",
         "identifier",
-        "account_name"
+        "account_name",
+        "user_id"
     )
 
     // For testing purposes

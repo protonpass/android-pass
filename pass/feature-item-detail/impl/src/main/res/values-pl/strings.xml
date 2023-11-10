@@ -82,4 +82,10 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Nie można edytować</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Nie możesz edytować elementu, ponieważ nie masz wystarczających uprawnień.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Możesz edytować tylko najstarsze sejfy. Ulepsz do płatnego planu, aby edytować ten element.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nie można edytować elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nie można udostępnić</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
 </resources>

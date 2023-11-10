@@ -82,4 +82,10 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Nemožno upravovať</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Túto položku nemôžete upraviť, pretože na to nemáte dostatočné oprávnenia.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Upravovať môžete len položky v najstarších trezoroch. Ak chcete upravovať túto položku, aktualizujte svoj aktuálny plán.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Túto položku nemôžete upravovať, pretože je v koši. Pred úpravou ju prosím premiestnite z koša.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nemožno zdieľať</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Na zdieľanie tohto trezora nemáte dostatočné oprávnenia.</string>
 </resources>

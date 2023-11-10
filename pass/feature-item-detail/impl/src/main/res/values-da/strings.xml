@@ -80,4 +80,10 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd. LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Kan ikke redigere</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Du kan ikke redigere dette element, fordi du ikke har tilstrækkelige tilladelser til at gøre det.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Du har kun tilladelse til at redigere elementer i dine ældste bokse. For at redigere dette element skal du opgradere dit nuværende abonnement.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan ikke redigere dette element, fordi det er i papirkurven. Flyt det ud af papirkurven, før du redigerer det.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan ikke dele</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har ikke tilstrækkelige tilladelser til at dele denne boks.</string>
 </resources>

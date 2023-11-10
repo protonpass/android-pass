@@ -80,4 +80,10 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd. LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Bearbeiten nicht möglich</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Du kannst dieses Element nicht bearbeiten, da du nicht über die erforderlichen Berechtigungen verfügst.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Du kannst nur Einträge in deinem ältesten Tresor bearbeiten. Um diesen Artikel zu bearbeiten, aktualisiere bitte auf dein aktuelles Abonnement.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kannst diesen Eintrag nicht bearbeiten, da er sich im Papierkorb befindet. Bitte entferne ihn aus dem Papierkorb, um ihn zu bearbeiten.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Teilen nicht möglich</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Deine Berechtigungen reichen nicht aus, um diesen Tresor freizugeben.</string>
 </resources>

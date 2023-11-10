@@ -80,7 +80,7 @@
   <string name="alert_confirm_clear_trash_title">Opróżnić Kosz?</string>
   <string name="alert_confirm_clear_trash_message">Czy na pewno chcesz opróżnić Kosz? Wszystkie usunięte elementy zostaną trwale usunięte</string>
   <string name="alert_confirm_restore_all_title">Przywrócić wszystkie elementy?</string>
-  <string name="alert_confirm_restore_all_message">Czy na pewno chcesz przywrócić wszystkie elementy?</string>
+  <string name="alert_confirm_restore_all_message">Czy na pewno chcesz przywrócić wszystkie usunięte elementy?</string>
   <!-- Recent search -->
   <string name="recent_search_header_count">Ostatnie wyszukiwania</string>
   <string name="recent_search_clear">Wyczyść</string>

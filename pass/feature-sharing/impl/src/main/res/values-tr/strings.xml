@@ -108,4 +108,7 @@
   <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Özelleştir</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Paylaşılan bir kasaya taşı</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Paylaşılacak yeni bir kasa oluştur</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Öge yeni kasaya taşınacak.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Daha fazla kasa oluşturabilmek için tarifenizi yükseltin</string>
+  <string name="sharing_from_item_vault_limit_reached">Kasa sayısı sınırına ulaştınız</string>
 </resources>

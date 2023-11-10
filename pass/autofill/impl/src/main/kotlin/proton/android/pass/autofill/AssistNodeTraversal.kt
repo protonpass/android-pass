@@ -122,33 +122,47 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         }
     }
 
+    @Suppress("ReturnCount")
     private fun nodeSupportsAutoFill(node: AutofillNode): SupportsAutofillResult {
         val isImportant =
             node.isImportantForAutofill || requestFlags.contains(RequestFlags.FLAG_MANUAL_REQUEST)
         val hasAutofillInfo = nodeHasAutofillInfo(node)
+        val isEditText = node.isEditText()
 
-        if (node.isEditText()) {
-            PassLogger.d(TAG, "------------------------------------")
-            PassLogger.d(TAG, "nodeInputTypeFlags ${InputTypeFlags.fromValue(node.inputType)}")
-            PassLogger.d(TAG, "nodeSupportsAutoFill $isImportant - $hasAutofillInfo")
-            PassLogger.d(TAG, "nodeHasValidHints ${nodeHasValidHints(node.autofillHints.toSet())}")
-            PassLogger.d(TAG, "nodeHasValidHtmlInfo ${nodeHasValidHtmlInfo(node.htmlAttributes)}")
-            PassLogger.d(TAG, "nodeHasValidInputType ${nodeHasValidInputType(node)}")
-            PassLogger.d(TAG, "------------------------------------")
+        if (isEditText) {
+            PassLogger.v(TAG, "------------------------------------")
+            PassLogger.v(TAG, "nodeInputTypeFlags ${InputTypeFlags.fromValue(node.inputType)}")
+            PassLogger.v(TAG, "nodeSupportsAutoFill $isImportant - $hasAutofillInfo")
+            PassLogger.v(TAG, "nodeHasValidHints ${nodeHasValidHints(node.autofillHints.toSet())}")
+            PassLogger.v(TAG, "nodeHasValidHtmlInfo ${nodeHasValidHtmlInfo(node.htmlAttributes)}")
+            PassLogger.v(TAG, "nodeHasValidInputType ${nodeHasValidInputType(node)}")
+            PassLogger.v(TAG, "------------------------------------")
         }
 
-        // If the node doesn't have an id or is not important for autofill, nothing else to do
-        if (node.id == null || !isImportant) {
+        if (node.id == null) {
+            if (isEditText) {
+                PassLogger.d(TAG, "Discarding node because id is null")
+            }
+
             return SupportsAutofillResult.No
         }
-
+        if (!isImportant) {
+            if (isEditText) {
+                PassLogger.d(TAG, "[node=${node.id}] Discarding node because is not important for autofill")
+            }
+            return SupportsAutofillResult.No
+        }
         // If the node already has autofill info, we can use it
         if (hasAutofillInfo) {
+            if (isEditText) {
+                PassLogger.d(TAG, "[node=${node.id}] Accepting node because it has autofill info")
+            }
             return SupportsAutofillResult.Yes
         }
 
         // If the node doesn't have autofill info but it's an edit text, maybe we can check the context
-        return if (node.isEditText()) {
+        return if (isEditText) {
+            PassLogger.d(TAG, "[node=${node.id}] Accepting maybe because is edit text")
             SupportsAutofillResult.MaybeWithContext
         } else {
             // If the node is not an edit text, we know that we can't do anything
@@ -176,6 +190,18 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         val hasValidHtmlInfo = nodeHasValidHtmlInfo(htmlAttributes)
         val hasUsefulKeywords =
             detectFieldTypeUsingHintKeywordList(hintKeywordList) != FieldType.Unknown
+
+        if (hasValidHints) {
+            PassLogger.d(TAG, "[node=${autofillContext.node.id}] Adding with context because it has valid hints")
+        }
+
+        if (hasValidHtmlInfo) {
+            PassLogger.d(TAG, "[node=${autofillContext.node.id}] Adding with context because it has valid html info")
+        }
+
+        if (hasUsefulKeywords) {
+            PassLogger.d(TAG, "[node=${autofillContext.node.id}] Adding with context because it has useful keywords")
+        }
 
         return if (hasValidHints || hasValidHtmlInfo || hasUsefulKeywords) {
             AssistField(

@@ -43,10 +43,10 @@
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Сховища</string>
   <plurals name="vault_drawer_vaults_item_count">
-    <item quantity="one">%d item</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="one">%d елемент</item>
+    <item quantity="few">%d елементів</item>
+    <item quantity="many">%d елементів</item>
+    <item quantity="other">%d елементів</item>
   </plurals>
   <string name="vault_drawer_create_vault">Створити сховище</string>
   <string name="vault_drawer_item_trash">Смітник</string>

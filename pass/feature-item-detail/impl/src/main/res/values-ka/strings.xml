@@ -80,4 +80,10 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">ჩასწორება შეუძლებელია</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">ამ ელემენტის ჩასწორება არ შეგიძლიათ საკმარისი წვდომების არქონის გამო.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">თქვენს უძველეს საცავებში ელემენტებს ვერ ჩაასწორებთ. ამ ელემენტების ჩასასწორებლად ასწიეთ მიმდინარე სატარიფო გეგმა.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">ამ ელემენტის ჩასწორება არ შეგიძლიათ, რადგან ის ნაგვის ყუთშია. გამოიტანეთ ის ნაგვის ყუთიდან, სანამ ჩაასწორებთ.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">გაზიარება შეუძლებელია</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">ამ საცავის გაზიარებისთვის საკმარისი წვდომები არ გაგაჩნიათ.</string>
 </resources>

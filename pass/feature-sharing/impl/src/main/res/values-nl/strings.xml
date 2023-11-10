@@ -108,4 +108,7 @@
   <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personaliseer</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Verplaatsen naar een gedeelde kluis</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Maak een nieuwe kluis aan om te delen</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
+  <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
 </resources>

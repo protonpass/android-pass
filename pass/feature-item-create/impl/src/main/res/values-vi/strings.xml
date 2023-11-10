@@ -108,7 +108,7 @@
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
   <string name="upgrade">Nâng cấp</string>
-  <string name="mfa_icon_content_description">2FA icon</string>
+  <string name="mfa_icon_content_description">biểu tượng 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Nâng cấp để dùng tên miền tùy chọn</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Nâng cấp để thêm nhiều hộp thư hơn</string>
   <string name="create_alias_content_limit_banner">Bạn đã đạt giới hạn bí danh bạn có thể tạo. Tạo không giới hạn bí danh khi bạn nâng cấp gói đăng ký của mình.</string>

@@ -21,7 +21,7 @@
   <string name="field_password_title">Contrasenya</string>
   <string name="field_password_hint">Afegeix una contrasenya</string>
   <string name="field_website_address_title">Lloc web</string>
-  <string name="field_website_address_invalid">URL no vàlida</string>
+  <string name="field_website_address_invalid">L\'URL no és vàlid.</string>
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Afegeix</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Genera una contrasenya nova</string>

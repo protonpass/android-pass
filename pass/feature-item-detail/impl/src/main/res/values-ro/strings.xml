@@ -81,4 +81,10 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">ZZ LLLL AAAA HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Nu se poate edita</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Nu puteți edita acest articol deoarece nu aveți suficiente permisiuni pentru a face acest lucru.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Aveți voie să editați doar articole din cele seifurile vechi. Pentru a edita acest articol, modificați-vă planul actual.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nu puteți edita acest articol deoarece este în coșul de gunoi. Scoateți-l din coșul de gunoi înainte de a-l edita.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nu se poate partaja</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nu aveți permisiuni suficiente pentru a participa acest seif.</string>
 </resources>

@@ -70,6 +70,7 @@ object AutoFillHandler {
 
         val handler = CoroutineExceptionHandler { _, exception ->
             PassLogger.e(TAG, exception)
+            callback.onSuccess(null)
         }
         val job = CoroutineScope(Dispatchers.IO)
             .launch(handler) {

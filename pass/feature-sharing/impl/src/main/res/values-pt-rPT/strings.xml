@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="share_continue">Continuar</string>
-  <string name="sharing_can_view">Viewer</string>
+  <string name="sharing_can_view">Visualizador</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrador</string>
   <string name="sharing_can_view_description">Pode ver os itens para esse cofre.</string>
@@ -62,7 +62,7 @@
   <string name="share_summary_share_vault">Partilhar o cofre</string>
   <string name="share_summary_email_title">Partilhar com</string>
   <string name="share_summary_vault_title">Cofre</string>
-  <string name="share_summary_permissions_title">Access level</string>
+  <string name="share_summary_permissions_title">Nível de acesso</string>
   <string name="share_manage_vault_share_with_more_people">Partilhar com mais pessoas</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invite left</item>
@@ -74,9 +74,9 @@
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Pending account creation</string>
-  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirm access</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirmar o acesso</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitations</string>
-  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Members</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membros</string>
   <string name="share_manage_vault_current_user_indicator">Você</string>
   <string name="share_role_can_view">Pode ver</string>
   <string name="share_role_can_edit">Pode editar</string>
@@ -84,7 +84,7 @@
   <string name="share_role_owner">Dono</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir a propriedade</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">You cannot transfer your last owned vault.</string>
-  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
+  <string name="sharing_bottomsheet_remove_access">Revogar o acesso</string>
   <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">Transferir a propriedade</string>
@@ -108,4 +108,7 @@
   <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personalizar</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
+  <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
 </resources>

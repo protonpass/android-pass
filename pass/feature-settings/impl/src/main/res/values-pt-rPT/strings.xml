@@ -37,6 +37,6 @@
   <string name="clipboard_option_copy_totp_code">Copiar os códigos de autenticação</string>
   <string name="clipboard_option_copy_totp_code_hint">Copie automaticamente os códigos de autenticação ao utilizar o preenchimento automático.</string>
   <string name="clipboard_option_clear_clipboard_never">Nunca</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">After 1 minute</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Após 1 minuto</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">After 3 minutes</string>
 </resources>

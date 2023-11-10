@@ -109,8 +109,8 @@ object AutoFillHandler {
             callback.onSuccess(null)
             return
         }
-
-        val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
+        val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
+        val assistInfo = AssistNodeTraversal(requestFlags).traverse(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) {
             callback.onSuccess(null)
             return

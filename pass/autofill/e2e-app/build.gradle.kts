@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
+    implementation(libs.timber)
 
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)

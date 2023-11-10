@@ -20,7 +20,10 @@ package proton.android.pass.featuresharing.impl.sharefromitem
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
@@ -51,8 +54,8 @@ import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-@Suppress("MagicNumber")
 fun ShareThisVaultRow(
     modifier: Modifier = Modifier,
     vault: VaultWithItemCount,
@@ -65,21 +68,21 @@ fun ShareThisVaultRow(
     Row(
         modifier = modifier
             .roundedContainerNorm()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+            .padding(16.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier.weight(0.7f),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        VaultIcon(
+            backgroundColor = vault.vault.color.toColor(isBackground = true),
+            icon = vault.vault.icon.toResource(),
+            iconColor = vault.vault.color.toColor()
+        )
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            VaultIcon(
-                backgroundColor = vault.vault.color.toColor(isBackground = true),
-                icon = vault.vault.icon.toResource(),
-                iconColor = vault.vault.color.toColor()
-            )
-
             Column {
                 Text(
                     text = vault.vault.name,
@@ -96,22 +99,21 @@ fun ShareThisVaultRow(
                     style = PassTheme.typography.body3Weak(),
                 )
             }
-        }
-
-        CircleButton(
-            modifier = Modifier.padding(horizontal = 8.dp),
-            color = PassTheme.colors.interactionNormMinor1,
-            elevation = ButtonDefaults.elevation(0.dp),
-            onClick = onShareClick
-        ) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(12.dp),
-                text = stringResource(R.string.sharing_from_item_share_this_vault_action),
-                color = PassTheme.colors.interactionNormMajor2,
-                textAlign = TextAlign.Center
-            )
+            CircleButton(
+                modifier = Modifier.padding(0.dp, 4.dp),
+                color = PassTheme.colors.interactionNormMinor1,
+                elevation = ButtonDefaults.elevation(0.dp),
+                onClick = onShareClick
+            ) {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(12.dp),
+                    text = stringResource(R.string.sharing_from_item_share_this_vault_action),
+                    color = PassTheme.colors.interactionNormMajor2,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

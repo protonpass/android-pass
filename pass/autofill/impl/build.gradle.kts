@@ -128,10 +128,11 @@ dependencies {
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
 
-    testImplementation(libs.turbine)
-    testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
+    testImplementation(libs.timber)
+    testImplementation(libs.truth)
+    testImplementation(libs.turbine)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.androidx.test.espresso.core)

@@ -18,9 +18,24 @@
 
 package proton.android.pass.autofill
 
+import android.util.Log
+import org.junit.Before
 import org.junit.Test
+import timber.log.Timber
 
 class AutofillTest {
+
+    private class TestTree(val priority: Int): Timber.Tree() {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+            if (priority < this.priority) return
+            println("$tag: $message")
+        }
+    }
+
+    @Before
+    fun setup() {
+        Timber.plant(TestTree(Log.DEBUG))
+    }
 
     @Test
     fun `can autofill news ycombinator com firefox (focus on first username)`() {

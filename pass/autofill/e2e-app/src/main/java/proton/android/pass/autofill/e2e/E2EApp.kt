@@ -25,6 +25,7 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.pass.domain.ItemId
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -40,6 +41,7 @@ class E2EApp : Application() {
         super.onCreate()
         setupItems()
         setupAccount()
+        setupLogger()
     }
 
     private fun setupItems() {
@@ -58,6 +60,10 @@ class E2EApp : Application() {
             )
         )
         loginItems.sendValue(Result.success(items))
+    }
+
+    private fun setupLogger() {
+        Timber.plant(Timber.DebugTree())
     }
 
     private fun setupAccount() {

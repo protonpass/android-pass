@@ -36,7 +36,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 
-class AssistNodeTraversal {
+class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyList()) {
 
     private var autoFillNodes = mutableListOf<AssistField>()
     private var detectedUrl: Option<String> = None
@@ -122,7 +122,8 @@ class AssistNodeTraversal {
     }
 
     private fun nodeSupportsAutoFill(node: AutofillNode): SupportsAutofillResult {
-        val isImportant = node.isImportantForAutofill
+        val isImportant =
+            node.isImportantForAutofill || requestFlags.contains(RequestFlags.FLAG_MANUAL_REQUEST)
         val hasAutofillInfo = nodeHasAutofillInfo(node)
 
         if (node.isEditText()) {

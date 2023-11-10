@@ -8,10 +8,10 @@
   <string name="trial_feature_4">Карыстальніцкія палі</string>
   <string name="trial_button_text">Палепшыць, каб пакінуць гэтыя функцыі</string>
   <plurals name="trial_days_left">
-    <item quantity="one">Да завяршэння выпрабавальнага перыяду застаўся %d дзень</item>
-    <item quantity="few">Да завяршэння выпрабавальнага перыяду засталося %d дні</item>
-    <item quantity="many">Да завяршэння выпрабавальнага перыяду засталося %d дзён</item>
-    <item quantity="other">Да завяршэння выпрабавальнага перыяду засталося %d дзён</item>
+    <item quantity="one">Да завяршэння пробнага перыяду застаўся %d дзень</item>
+    <item quantity="few">Да завяршэння пробнага перыяду засталося %d дні</item>
+    <item quantity="many">Да завяршэння пробнага перыяду засталося %d дзён</item>
+    <item quantity="other">Да завяршэння пробнага перыяду засталося %d дзён</item>
   </plurals>
   <string name="trial_learn_more">Даведацца больш</string>
 </resources>

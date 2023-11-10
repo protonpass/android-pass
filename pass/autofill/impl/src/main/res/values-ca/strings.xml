@@ -14,7 +14,7 @@
   <string name="autofill_dialog_associate_and_autofill">Utilitza sempre</string>
   <string name="autofill_dialog_just_autofill">Utilitza una vegada</string>
   <string name="autofill_dialog_cancel">Cancel·la</string>
-  <string name="autofill_notification_copy_to_clipboard">TOTP has been copied to clipboard</string>
+  <string name="autofill_notification_copy_to_clipboard">S\'ha copiat el codi TOTP al porta-retalls.</string>
   <string name="autofill_dialog_associate_title">Voleu utilitzar les dades d\'inici de sessió?</string>
   <string name="snackbar_item_move_to_trash_success">L\'element s\'ha mogut a la paperera.</string>
   <string name="snackbar_item_move_to_trash_error">No s\'ha pogut moure a la paperera.</string>

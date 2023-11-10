@@ -9,7 +9,7 @@
     <item quantity="other">%s characters</item>
   </plurals>
   <plurals name="word_count">
-    <item quantity="other">%s words</item>
+    <item quantity="other">%s từ</item>
   </plurals>
   <string name="word_separator">Dấu tách từ</string>
   <string name="bottomsheet_option_capital_letters">Chữ cái in hoa (A–Z)</string>

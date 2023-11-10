@@ -6,16 +6,16 @@
   <string name="password_type">Тип</string>
   <string name="special_characters">Спеціальні символи (!&amp;*)</string>
   <plurals name="character_count">
-    <item quantity="one">%s character</item>
-    <item quantity="few">%s characters</item>
-    <item quantity="many">%s characters</item>
-    <item quantity="other">%s characters</item>
+    <item quantity="one">%s символ</item>
+    <item quantity="few">%s символів</item>
+    <item quantity="many">%s символів</item>
+    <item quantity="other">%s символів</item>
   </plurals>
   <plurals name="word_count">
-    <item quantity="one">%s word</item>
-    <item quantity="few">%s words</item>
-    <item quantity="many">%s words</item>
-    <item quantity="other">%s words</item>
+    <item quantity="one">%s слово</item>
+    <item quantity="few">%s слів</item>
+    <item quantity="many">%s слів</item>
+    <item quantity="other">%s слів</item>
   </plurals>
   <string name="word_separator">Розділювач слів</string>
   <string name="bottomsheet_option_capital_letters">Великі літери (А-Я)</string>

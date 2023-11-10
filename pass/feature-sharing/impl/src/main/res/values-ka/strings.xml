@@ -86,7 +86,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">თქვენი უკანასკნელი საკუთარი საცავის გადატანა შეუძლებელია.</string>
   <string name="sharing_bottomsheet_remove_access">წვდომის გაუქმება</string>
   <string name="sharing_bottomsheet_resend_invite">მოსაწვევის თავიდან გაგზავნა</string>
-  <string name="sharing_bottomsheet_cancel_invite">მოსაწვევის გაუქმება</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">მფლობელობის გადაცემა</string>
   <string name="sharing_transfer_ownership_confirm_message">გადავცე ამ საცავს ფლობის უფლება %s-ს?</string>
   <string name="sharing_snackbar_cancel_invite_success">მოწვევა გაუქმებულია</string>
@@ -108,4 +108,7 @@
   <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">მორგება</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">გადატანა გაზიარებულ საცავში</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">შექმენით ახალი საცავი გასაზიარებლად</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">ეს ელემენტი ახალ საცავში გადავა.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">ასწიეთ სატარიფო გეგმა მეტი საცავის შესაქმნელად</string>
+  <string name="sharing_from_item_vault_limit_reached">მიაღწიეთ საცავების ზღვარს</string>
 </resources>

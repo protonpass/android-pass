@@ -25,7 +25,7 @@ import timber.log.Timber
 
 class AutofillTest {
 
-    private class TestTree(val priority: Int): Timber.Tree() {
+    private class TestTree(val priority: Int) : Timber.Tree() {
         override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
             if (priority < this.priority) return
             println("$tag: $message")

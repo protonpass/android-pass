@@ -377,3 +377,7 @@ dependencies {
 }
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"
+
+sentry {
+    autoInstallation.enabled.set(false)
+}

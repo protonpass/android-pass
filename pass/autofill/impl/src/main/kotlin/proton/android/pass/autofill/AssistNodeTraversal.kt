@@ -49,7 +49,7 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         "user name",
         "identifier",
         "account_name",
-        "user_id"
+        "userid"
     )
 
     // For testing purposes
@@ -168,12 +168,17 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
                 // If the node is not an edit text, we know that we can't do anything
                 NodeSupportsAutofillResult.No
             }
+
             HasAutofillInfoResult.Yes -> {
                 if (isEditText) {
-                    PassLogger.d(TAG, "[node=${node.id}] Accepting node because it has autofill info")
+                    PassLogger.d(
+                        TAG,
+                        "[node=${node.id}] Accepting node because it has autofill info"
+                    )
                 }
                 return NodeSupportsAutofillResult.Yes(None)
             }
+
             is HasAutofillInfoResult.YesWithFieldType -> {
                 if (isEditText) {
                     PassLogger.d(
@@ -300,6 +305,7 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
                     is CheckInputTypeResult.Found -> {
                         HasAutofillInfoResult.YesWithFieldType(hasValidInputType.fieldType)
                     }
+
                     CheckInputTypeResult.NoneFound -> if (hasHtmlInfo) {
                         HasAutofillInfoResult.Yes
                     } else {
@@ -394,18 +400,24 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         View.AUTOFILL_HINT_USERNAME -> FieldType.Username
         View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> FieldType.Password
         else -> {
+            val sanitizedHint = sanitizeHint(autofillHint)
             when {
-                autofillHint.lowercase().contains("username") -> FieldType.Username
-                autofillHint.lowercase().contains("email") -> FieldType.Email
-                autofillHint.lowercase().contains("password") -> FieldType.Password
+                sanitizedHint.contains("username") -> FieldType.Username
+                sanitizedHint.contains("email") -> FieldType.Email
+                sanitizedHint.contains("password") -> FieldType.Password
                 else -> FieldType.Unknown
             }
         }
     }
 
+    private fun sanitizeHint(hint: String): String = hint.lowercase()
+        .replace("-", "")
+        .replace("_", "")
+        .replace("/", " ")
+
     @Suppress("ReturnCount")
     private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {
-        val normalizedKeywords = hintKeywordList.map { it.toString().lowercase() }
+        val normalizedKeywords = hintKeywordList.map(CharSequence::toString).map(this::sanitizeHint)
 
         for (kw in normalizedKeywords) {
             for (usernameKw in usernameKeywords) {

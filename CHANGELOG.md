@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.10.3 (2023-11-13)
+
+### Fixes :bug:
+
+- View Alias from Login detail screen.
+
 ## 1.10.2 (2023-11-13)
 
 ### Fixes :bug:

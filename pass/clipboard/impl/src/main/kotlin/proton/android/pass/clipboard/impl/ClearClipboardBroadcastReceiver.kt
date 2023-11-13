@@ -26,6 +26,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
@@ -56,7 +58,6 @@ class ClearClipboardBroadcastReceiver : BroadcastReceiver() {
         // Check if it has primary clip
         if (shouldClearClipboard(context, clipboardManager, encryptedExpected)) {
             clearClipboard(clipboardManager)
-            PassLogger.i(TAG, "Successfully cleared clipboard")
         }
     }
 
@@ -106,10 +107,21 @@ class ClearClipboardBroadcastReceiver : BroadcastReceiver() {
     }
 
     private fun clearClipboard(clipboardManager: ClipboardManager) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            clipboardManager.clearPrimaryClip()
-        } else {
-            clipboardManager.setPrimaryClip(ClipData.newPlainText("", ""))
+        runBlocking(Dispatchers.IO) {
+            runCatching {
+                if (clipboardManager.primaryClip != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        clipboardManager.clearPrimaryClip()
+                    } else {
+                        clipboardManager.setPrimaryClip(ClipData.newPlainText("", ""))
+                    }
+                }
+            }.onSuccess {
+                PassLogger.i(TAG, "Successfully cleared clipboard")
+            }.onFailure {
+                PassLogger.w(TAG, it, "Could not clear clipboard")
+            }
+
         }
     }
 

@@ -36,6 +36,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import proton.android.pass.R
@@ -46,6 +47,7 @@ import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.inappupdates.api.InAppUpdateState
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
@@ -147,7 +149,11 @@ fun PassAppContent(
                                 onNavigate = onNavigate,
                                 dismissBottomSheet = { callback ->
                                     coroutineScope.launch {
-                                        bottomSheetState.hide()
+                                        try {
+                                            bottomSheetState.hide()
+                                        } catch (e: CancellationException) {
+                                            PassLogger.d(TAG, e, "Animation interrupted")
+                                        }
                                         callback()
                                     }
                                 }
@@ -159,6 +165,8 @@ fun PassAppContent(
         )
     }
 }
+
+private const val TAG = "PassAppContent"
 
 @Composable
 private fun SnackBarLaunchedEffect(

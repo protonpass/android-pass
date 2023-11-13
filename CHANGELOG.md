@@ -11,6 +11,7 @@
 ### Fixes :bug:
 
 - Crash on wrong TOTP code from autofill.
+- Change PIN button.
 
 ### Other
 

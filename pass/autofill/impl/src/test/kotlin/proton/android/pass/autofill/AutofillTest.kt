@@ -126,4 +126,9 @@ class AutofillTest {
     fun `can autofill account xiaomi com chrome username`() {
         runAutofillTest("chrome_account.xiaomi.com_username.json")
     }
+
+    @Test
+    fun `can autofill login klm com chrome username`() {
+        runAutofillTest("chrome_login.klm.com_username.json")
+    }
 }

@@ -88,15 +88,15 @@ object ItemDetailCannotPerformActionTypeNavArgId : NavArgId {
 
 object ItemDetailCannotPerformAction : NavItem(
     baseRoute = "item/detail/cannotperformaction/dialog",
-    navArgIds = listOf(ItemDetailCannotPerformActionTypeNavArgId)
+    navArgIds = listOf(ItemDetailCannotPerformActionTypeNavArgId),
+    navItemType = NavItemType.Dialog
 ) {
     fun buildRoute(type: ItemDetailCannotPerformActionType) = "$baseRoute/${type.name}"
 }
 
 object ViewItem : NavItem(
     baseRoute = "item/detail/view",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
-    navItemType = NavItemType.Dialog
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
     fun createNavRoute(shareId: ShareId, itemId: ItemId) =
         "$baseRoute/${shareId.id}/${itemId.id}"

@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.10.2 (2023-11-13)
+
+### Fixes :bug:
+
+- Crash on Regex used by autofill.
+
 ## 1.10.1 (2023-11-13)
 
 ### Fixes :bug:

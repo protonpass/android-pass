@@ -162,7 +162,7 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
 
         // If the node doesn't have autofill info but it's an edit text, maybe we can check the context
         return if (isEditText) {
-            PassLogger.d(TAG, "[node=${node.id}] Accepting maybe because is edit text")
+            PassLogger.d(TAG, "[node=${node.id}] Marking as Maybe because is edit text")
             SupportsAutofillResult.MaybeWithContext
         } else {
             // If the node is not an edit text, we know that we can't do anything
@@ -218,6 +218,7 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
                 nodePath = autofillContext.parentPath
             ).some()
         } else {
+            PassLogger.d(TAG, "[node=${autofillContext.node.id}] Discarding because could not find contextual info")
             None
         }
     }
@@ -350,6 +351,7 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         }
     }
 
+    @Suppress("ReturnCount")
     private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {
         val normalizedKeywords = hintKeywordList.map { it.toString().lowercase() }
 
@@ -357,6 +359,9 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
             for (usernameKw in usernameKeywords) {
                 if (kw.contains(usernameKw)) return FieldType.Username
             }
+
+            if (USERNAME_REGEX.containsMatchIn(kw)) return FieldType.Username
+            if (EMAIL_REGEX.containsMatchIn(kw)) return FieldType.Email
         }
 
         return FieldType.Unknown
@@ -401,6 +406,13 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         const val HINT_CURRENT_PASSWORD = "current-password"
         const val TAG = "AssistNodeTraversal"
         const val MAX_CONTEXT_JUMPS = 3
+
+
+        private val REGEX_OPTIONS = setOf(RegexOption.IGNORE_CASE, RegexOption.CANON_EQ)
+
+        @Suppress("MaxLineLength")
+        private val USERNAME_REGEX = Regex("(?:(?:n(?:ouvelleses|uevase|ewses)s|iniciarses|connex)io|anmeldedate|sign[io])n|in(?:iciarsessao|troduce)|a(?:uthenticate|nmeld(?:ung|en))|authentifier|s(?:econnect|identifi)er|novasessao|(?:introduci|conecta|entr[ae])r|prihlasit|connect|acceder|login", REGEX_OPTIONS)
+        private val EMAIL_REGEX = Regex("co(?:urriel|rrei?o)|email", REGEX_OPTIONS)
     }
 }
 

@@ -410,6 +410,8 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
 
         private val REGEX_OPTIONS = setOf(RegexOption.IGNORE_CASE, RegexOption.CANON_EQ)
 
+        // Regexes extracted from the internal autofill repo that web uses for field detection.
+        // Path: src/dictionary/generated/dictionary.ts
         @Suppress("MaxLineLength")
         private val USERNAME_REGEX = Regex("(?:(?:n(?:ouvelleses|uevase|ewses)s|iniciarses|connex)io|anmeldedate|sign[io])n|in(?:iciarsessao|troduce)|a(?:uthenticate|nmeld(?:ung|en))|authentifier|s(?:econnect|identifi)er|novasessao|(?:introduci|conecta|entr[ae])r|prihlasit|connect|acceder|login", REGEX_OPTIONS)
         private val EMAIL_REGEX = Regex("co(?:urriel|rrei?o)|email", REGEX_OPTIONS)

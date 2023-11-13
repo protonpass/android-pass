@@ -408,7 +408,7 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         const val MAX_CONTEXT_JUMPS = 3
 
 
-        private val REGEX_OPTIONS = setOf(RegexOption.IGNORE_CASE, RegexOption.CANON_EQ)
+        private val REGEX_OPTIONS = setOf(RegexOption.IGNORE_CASE)
 
         // Regexes extracted from the internal autofill repo that web uses for field detection.
         // Path: src/dictionary/generated/dictionary.ts

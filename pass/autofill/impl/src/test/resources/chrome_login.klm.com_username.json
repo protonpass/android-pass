@@ -1,0 +1,1389 @@
+{
+  "rootContent": {
+    "id": 44540222,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": -1029112229,
+        "className": "android.view.View",
+        "isImportantForAutofill": true
+      },
+      {
+        "id": -1029082438,
+        "className": "android.widget.LinearLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": -1029052647,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          },
+          {
+            "id": -1029022856,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -1028993065,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -1028963274,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -1028933483,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "custom_tabs_handle_view_stub"
+                        ]
+                      },
+                      {
+                        "id": -1028903692,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -1029231393,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -1028873901,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": -1028844110,
+                                    "className": "android.view.View",
+                                    "isImportantForAutofill": true
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 44689177,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "isFocused": true,
+                                "children": [
+                                  {
+                                    "id": 44689177,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": 79270762,
+                                        "className": "android.webkit.WebView",
+                                        "isImportantForAutofill": true,
+                                        "text": "KLM Royal Dutch Airlines",
+                                        "children": [
+                                          {
+                                            "id": 79285177,
+                                            "className": "android.view.View",
+                                            "isImportantForAutofill": true,
+                                            "text": "",
+                                            "children": [
+                                              {
+                                                "id": 79287099,
+                                                "className": "android.view.View",
+                                                "isImportantForAutofill": true,
+                                                "text": "",
+                                                "children": [
+                                                  {
+                                                    "id": 79289982,
+                                                    "className": "android.view.View",
+                                                    "isImportantForAutofill": true,
+                                                    "text": "",
+                                                    "children": [
+                                                      {
+                                                        "id": 79295748,
+                                                        "className": "android.view.View",
+                                                        "isImportantForAutofill": true,
+                                                        "text": "",
+                                                        "children": [
+                                                          {
+                                                            "id": 79296709,
+                                                            "className": "android.view.View",
+                                                            "isImportantForAutofill": true,
+                                                            "text": "",
+                                                            "children": [
+                                                              {
+                                                                "id": 79358213,
+                                                                "className": "android.view.View",
+                                                                "isImportantForAutofill": true,
+                                                                "text": "",
+                                                                "children": [
+                                                                  {
+                                                                    "id": 79405302,
+                                                                    "className": "android.view.View",
+                                                                    "isImportantForAutofill": true,
+                                                                    "text": "",
+                                                                    "children": [
+                                                                      {
+                                                                        "id": 79406263,
+                                                                        "className": "android.widget.TextView",
+                                                                        "isImportantForAutofill": true,
+                                                                        "text": "Log in with PIN code",
+                                                                        "hintKeywordList": [
+                                                                          "Log in with PIN code",
+                                                                          ""
+                                                                        ]
+                                                                      }
+                                                                    ],
+                                                                    "hintKeywordList": [
+                                                                      "",
+                                                                      ""
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "id": 79360135,
+                                                                    "className": "android.view.View",
+                                                                    "isImportantForAutofill": true,
+                                                                    "text": "",
+                                                                    "children": [
+                                                                      {
+                                                                        "id": 79362057,
+                                                                        "className": "android.widget.Button",
+                                                                        "isImportantForAutofill": true,
+                                                                        "text": "",
+                                                                        "hintKeywordList": [
+                                                                          "",
+                                                                          ""
+                                                                        ]
+                                                                      }
+                                                                    ],
+                                                                    "hintKeywordList": [
+                                                                      "",
+                                                                      ""
+                                                                    ]
+                                                                  }
+                                                                ],
+                                                                "hintKeywordList": [
+                                                                  "",
+                                                                  ""
+                                                                ]
+                                                              }
+                                                            ],
+                                                            "hintKeywordList": [
+                                                              "",
+                                                              ""
+                                                            ]
+                                                          }
+                                                        ],
+                                                        "hintKeywordList": [
+                                                          "",
+                                                          ""
+                                                        ]
+                                                      },
+                                                      {
+                                                        "id": 79334188,
+                                                        "className": "android.view.View",
+                                                        "isImportantForAutofill": true,
+                                                        "text": "",
+                                                        "children": [
+                                                          {
+                                                            "id": 79335149,
+                                                            "className": "android.widget.TextView",
+                                                            "isImportantForAutofill": true,
+                                                            "text": "",
+                                                            "hintKeywordList": [
+                                                              "",
+                                                              ""
+                                                            ]
+                                                          },
+                                                          {
+                                                            "id": 79344759,
+                                                            "className": "android.view.View",
+                                                            "isImportantForAutofill": true,
+                                                            "text": "",
+                                                            "children": [
+                                                              {
+                                                                "id": 79346681,
+                                                                "className": "android.view.View",
+                                                                "isImportantForAutofill": true,
+                                                                "text": "",
+                                                                "children": [
+                                                                  {
+                                                                    "id": 79367823,
+                                                                    "className": "android.view.View",
+                                                                    "isImportantForAutofill": true,
+                                                                    "text": "",
+                                                                    "children": [
+                                                                      {
+                                                                        "id": 79410107,
+                                                                        "className": "android.widget.TextView",
+                                                                        "isImportantForAutofill": true,
+                                                                        "text": "Enter your e-mail or Flying Blue number",
+                                                                        "hintKeywordList": [
+                                                                          "Enter your e-mail or Flying Blue number",
+                                                                          ""
+                                                                        ]
+                                                                      },
+                                                                      {
+                                                                        "id": 79378394,
+                                                                        "className": "android.view.View",
+                                                                        "isImportantForAutofill": true,
+                                                                        "text": "",
+                                                                        "children": [
+                                                                          {
+                                                                            "id": 79379355,
+                                                                            "className": "android.view.View",
+                                                                            "isImportantForAutofill": true,
+                                                                            "text": "",
+                                                                            "children": [
+                                                                              {
+                                                                                "id": 79411068,
+                                                                                "className": "android.widget.TextView",
+                                                                                "isImportantForAutofill": true,
+                                                                                "text": "Flying Blue number or e-mail address",
+                                                                                "hintKeywordList": [
+                                                                                  "Flying Blue number or e-mail address",
+                                                                                  ""
+                                                                                ]
+                                                                              },
+                                                                              {
+                                                                                "id": 79380316,
+                                                                                "className": "android.view.View",
+                                                                                "isImportantForAutofill": true,
+                                                                                "text": "",
+                                                                                "children": [
+                                                                                  {
+                                                                                    "id": 79381277,
+                                                                                    "className": "android.view.View",
+                                                                                    "isImportantForAutofill": true,
+                                                                                    "text": "",
+                                                                                    "children": [
+                                                                                      {
+                                                                                        "id": 79382238,
+                                                                                        "className": "android.view.View",
+                                                                                        "isImportantForAutofill": true,
+                                                                                        "text": "",
+                                                                                        "children": [
+                                                                                          {
+                                                                                            "id": 79383199,
+                                                                                            "className": "android.widget.TextView",
+                                                                                            "isImportantForAutofill": true,
+                                                                                            "text": "",
+                                                                                            "hintKeywordList": [
+                                                                                              "",
+                                                                                              ""
+                                                                                            ]
+                                                                                          },
+                                                                                          {
+                                                                                            "id": 79387043,
+                                                                                            "className": "android.widget.TextView",
+                                                                                            "isImportantForAutofill": true,
+                                                                                            "text": "",
+                                                                                            "hintKeywordList": [
+                                                                                              "",
+                                                                                              ""
+                                                                                            ]
+                                                                                          },
+                                                                                          {
+                                                                                            "id": 79390887,
+                                                                                            "className": "android.view.View",
+                                                                                            "isImportantForAutofill": true,
+                                                                                            "text": "",
+                                                                                            "children": [
+                                                                                              {
+                                                                                                "id": 79391848,
+                                                                                                "expectedAutofill": "username",
+                                                                                                "className": "android.widget.EditText",
+                                                                                                "isImportantForAutofill": true,
+                                                                                                "text": "",
+                                                                                                "isFocused": true,
+                                                                                                "inputType": 1,
+                                                                                                "hintKeywordList": [
+                                                                                                  "",
+                                                                                                  "mat-input-0",
+                                                                                                  "Flying Blue number or e-mail address"
+                                                                                                ]
+                                                                                              }
+                                                                                            ],
+                                                                                            "hintKeywordList": [
+                                                                                              "",
+                                                                                              ""
+                                                                                            ]
+                                                                                          }
+                                                                                        ],
+                                                                                        "hintKeywordList": [
+                                                                                          "",
+                                                                                          ""
+                                                                                        ]
+                                                                                      },
+                                                                                      {
+                                                                                        "id": 79394731,
+                                                                                        "className": "android.view.View",
+                                                                                        "isImportantForAutofill": true,
+                                                                                        "text": "",
+                                                                                        "children": [
+                                                                                          {
+                                                                                            "id": 79395692,
+                                                                                            "className": "android.widget.TextView",
+                                                                                            "isImportantForAutofill": true,
+                                                                                            "text": "",
+                                                                                            "hintKeywordList": [
+                                                                                              "",
+                                                                                              ""
+                                                                                            ]
+                                                                                          }
+                                                                                        ],
+                                                                                        "hintKeywordList": [
+                                                                                          "",
+                                                                                          ""
+                                                                                        ]
+                                                                                      }
+                                                                                    ],
+                                                                                    "hintKeywordList": [
+                                                                                      "",
+                                                                                      ""
+                                                                                    ]
+                                                                                  }
+                                                                                ],
+                                                                                "hintKeywordList": [
+                                                                                  "",
+                                                                                  ""
+                                                                                ]
+                                                                              }
+                                                                            ],
+                                                                            "hintKeywordList": [
+                                                                              "",
+                                                                              ""
+                                                                            ]
+                                                                          }
+                                                                        ],
+                                                                        "hintKeywordList": [
+                                                                          "",
+                                                                          ""
+                                                                        ]
+                                                                      }
+                                                                    ],
+                                                                    "hintKeywordList": [
+                                                                      "",
+                                                                      ""
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "id": 79354369,
+                                                                    "className": "android.widget.Button",
+                                                                    "isImportantForAutofill": true,
+                                                                    "text": "Log in",
+                                                                    "hintKeywordList": [
+                                                                      "Log in",
+                                                                      ""
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "id": 79355330,
+                                                                    "className": "android.view.View",
+                                                                    "isImportantForAutofill": true,
+                                                                    "text": "",
+                                                                    "children": [
+                                                                      {
+                                                                        "id": 79412990,
+                                                                        "className": "android.widget.TextView",
+                                                                        "isImportantForAutofill": true,
+                                                                        "text": "Don't have an account yet? ",
+                                                                        "hintKeywordList": [
+                                                                          "Don't have an account yet? ",
+                                                                          ""
+                                                                        ]
+                                                                      },
+                                                                      {
+                                                                        "id": 79356291,
+                                                                        "className": "android.view.View",
+                                                                        "isImportantForAutofill": true,
+                                                                        "children": [
+                                                                          {
+                                                                            "id": 79413951,
+                                                                            "className": "android.widget.TextView",
+                                                                            "isImportantForAutofill": true,
+                                                                            "text": "Sign up now",
+                                                                            "hintKeywordList": [
+                                                                              "Sign up now",
+                                                                              ""
+                                                                            ]
+                                                                          }
+                                                                        ],
+                                                                        "hintKeywordList": [
+                                                                          ""
+                                                                        ]
+                                                                      }
+                                                                    ],
+                                                                    "hintKeywordList": [
+                                                                      "",
+                                                                      ""
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "id": 79348603,
+                                                                    "className": "android.widget.TextView",
+                                                                    "isImportantForAutofill": true,
+                                                                    "text": "Need help?",
+                                                                    "hintKeywordList": [
+                                                                      "Need help?",
+                                                                      ""
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "id": 79350525,
+                                                                    "className": "android.view.View",
+                                                                    "isImportantForAutofill": true,
+                                                                    "children": [
+                                                                      {
+                                                                        "id": 79415873,
+                                                                        "className": "android.widget.TextView",
+                                                                        "isImportantForAutofill": true,
+                                                                        "text": "Log in with your password instead?",
+                                                                        "hintKeywordList": [
+                                                                          "Log in with your password instead?",
+                                                                          ""
+                                                                        ]
+                                                                      },
+                                                                      {
+                                                                        "id": 79401458,
+                                                                        "className": "android.widget.TextView",
+                                                                        "isImportantForAutofill": true,
+                                                                        "text": "",
+                                                                        "hintKeywordList": [
+                                                                          "",
+                                                                          ""
+                                                                        ]
+                                                                      }
+                                                                    ],
+                                                                    "hintKeywordList": [
+                                                                      ""
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "id": 79357252,
+                                                                    "className": "android.view.View",
+                                                                    "isImportantForAutofill": true,
+                                                                    "children": [
+                                                                      {
+                                                                        "id": 79416834,
+                                                                        "className": "android.widget.TextView",
+                                                                        "isImportantForAutofill": true,
+                                                                        "text": "Forgot Flying Blue number?",
+                                                                        "hintKeywordList": [
+                                                                          "Forgot Flying Blue number?",
+                                                                          ""
+                                                                        ]
+                                                                      },
+                                                                      {
+                                                                        "id": 79403380,
+                                                                        "className": "android.widget.TextView",
+                                                                        "isImportantForAutofill": true,
+                                                                        "text": "",
+                                                                        "hintKeywordList": [
+                                                                          "",
+                                                                          ""
+                                                                        ]
+                                                                      }
+                                                                    ],
+                                                                    "hintKeywordList": [
+                                                                      ""
+                                                                    ]
+                                                                  }
+                                                                ],
+                                                                "hintKeywordList": [
+                                                                  "",
+                                                                  ""
+                                                                ]
+                                                              }
+                                                            ],
+                                                            "hintKeywordList": [
+                                                              "",
+                                                              ""
+                                                            ]
+                                                          }
+                                                        ],
+                                                        "hintKeywordList": [
+                                                          "",
+                                                          ""
+                                                        ]
+                                                      },
+                                                      {
+                                                        "id": 79337071,
+                                                        "className": "android.view.View",
+                                                        "isImportantForAutofill": true,
+                                                        "text": "",
+                                                        "hintKeywordList": [
+                                                          "",
+                                                          ""
+                                                        ]
+                                                      }
+                                                    ],
+                                                    "hintKeywordList": [
+                                                      "",
+                                                      ""
+                                                    ]
+                                                  }
+                                                ],
+                                                "hintKeywordList": [
+                                                  "",
+                                                  ""
+                                                ]
+                                              }
+                                            ],
+                                            "hintKeywordList": [
+                                              "",
+                                              ""
+                                            ]
+                                          },
+                                          {
+                                            "id": 79427405,
+                                            "className": "android.view.View",
+                                            "isImportantForAutofill": true,
+                                            "text": "",
+                                            "children": [
+                                              {
+                                                "id": 79430288,
+                                                "className": "android.view.View",
+                                                "isImportantForAutofill": true,
+                                                "text": "",
+                                                "children": [
+                                                  {
+                                                    "id": 79431249,
+                                                    "className": "android.view.View",
+                                                    "isImportantForAutofill": true,
+                                                    "text": "",
+                                                    "hintKeywordList": [
+                                                      "",
+                                                      ""
+                                                    ]
+                                                  }
+                                                ],
+                                                "hintKeywordList": [
+                                                  "",
+                                                  ""
+                                                ]
+                                              }
+                                            ],
+                                            "hintKeywordList": [
+                                              "",
+                                              ""
+                                            ]
+                                          }
+                                        ],
+                                        "hintKeywordList": [
+                                          "KLM Royal Dutch Airlines",
+                                          ""
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": -1028814319,
+                                "className": "androidx.recyclerview.widget.RecyclerView"
+                              },
+                              {
+                                "id": -1027890798,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true
+                              },
+                              {
+                                "id": -1027861007,
+                                "className": "android.widget.ImageView"
+                              },
+                              {
+                                "id": -1027831216,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true
+                              },
+                              {
+                                "id": -1027801425,
+                                "className": "android.widget.ImageView"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "compositor_view_holder"
+                            ]
+                          },
+                          {
+                            "id": -1027771634,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "ar_view_holder"
+                            ]
+                          },
+                          {
+                            "id": -1027741843,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "capture_overlay"
+                            ]
+                          },
+                          {
+                            "id": -1027712052,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -1024911698,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": -1024881907,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true
+                                  }
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "bottom_container"
+                            ]
+                          },
+                          {
+                            "id": -1027622679,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "keyboard_accessory_stub"
+                            ]
+                          },
+                          {
+                            "id": -1027592888,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "keyboard_accessory_sheet_stub"
+                            ]
+                          },
+                          {
+                            "id": -1027563097,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "bottombar_stub"
+                            ]
+                          },
+                          {
+                            "id": -1027533306,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "tab_modal_dialog_container_stub"
+                            ]
+                          },
+                          {
+                            "id": -1027503515,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "tab_modal_dialog_container_sibling_view"
+                            ]
+                          },
+                          {
+                            "id": -1027473724,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "omnibox_results_container"
+                            ]
+                          },
+                          {
+                            "id": -1027443933,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "action_bar_black_background"
+                            ]
+                          },
+                          {
+                            "id": -1027414142,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -1027384351,
+                                "className": "android.widget.LinearLayout",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": -1027354560,
+                                    "className": "android.widget.ImageView"
+                                  },
+                                  {
+                                    "id": -1027324769,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": -1027294978,
+                                        "className": "android.widget.FrameLayout",
+                                        "isImportantForAutofill": true,
+                                        "children": [
+                                          {
+                                            "id": -1027265187,
+                                            "className": "android.widget.FrameLayout",
+                                            "isImportantForAutofill": true,
+                                            "children": [
+                                              {
+                                                "id": -1027235396,
+                                                "className": "android.widget.LinearLayout",
+                                                "isImportantForAutofill": true,
+                                                "children": [
+                                                  {
+                                                    "id": -1027205605,
+                                                    "className": "android.widget.ImageView",
+                                                    "hintKeywordList": [
+                                                      "toolbar_left_button"
+                                                    ]
+                                                  },
+                                                  {
+                                                    "id": -1027175814,
+                                                    "className": "android.widget.FrameLayout",
+                                                    "isImportantForAutofill": true,
+                                                    "children": [
+                                                      {
+                                                        "id": -1027146023,
+                                                        "className": "androidx.recyclerview.widget.RecyclerView"
+                                                      }
+                                                    ],
+                                                    "hintKeywordList": [
+                                                      "toolbar_container_view"
+                                                    ]
+                                                  },
+                                                  {
+                                                    "id": -1027116232,
+                                                    "className": "android.widget.ImageView",
+                                                    "hintKeywordList": [
+                                                      "toolbar_right_button"
+                                                    ]
+                                                  }
+                                                ],
+                                                "hintKeywordList": [
+                                                  "main_content"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1027086441,
+                                                "className": "android.widget.ImageView",
+                                                "hintKeywordList": [
+                                                  "tab_strip_fading_edge_start"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1027056650,
+                                                "className": "android.widget.ImageView",
+                                                "hintKeywordList": [
+                                                  "tab_strip_fading_edge_end"
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "bottom_container_slot"
+                                    ]
+                                  }
+                                ],
+                                "hintKeywordList": [
+                                  "bottom_controls_wrapper"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "bottom_controls"
+                            ]
+                          },
+                          {
+                            "id": -1027026859,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -1026997068,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": -1026967277,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": -1026937486,
+                                        "className": "android.widget.ImageButton",
+                                        "hintKeywordList": [
+                                          "home_button"
+                                        ]
+                                      },
+                                      {
+                                        "id": -1026907695,
+                                        "className": "android.widget.FrameLayout",
+                                        "isImportantForAutofill": true,
+                                        "children": [
+                                          {
+                                            "id": -1026877904,
+                                            "className": "android.view.View",
+                                            "isImportantForAutofill": true,
+                                            "hintKeywordList": [
+                                              "location_bar_status_view_left_space"
+                                            ]
+                                          },
+                                          {
+                                            "id": -1026848113,
+                                            "className": "android.widget.LinearLayout",
+                                            "isImportantForAutofill": true,
+                                            "children": [
+                                              {
+                                                "id": -1026818322,
+                                                "className": "android.widget.ImageView",
+                                                "hintKeywordList": [
+                                                  "location_bar_incognito_badge"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1026788531,
+                                                "className": "android.widget.LinearLayout",
+                                                "isImportantForAutofill": true,
+                                                "children": [
+                                                  {
+                                                    "id": -1026758740,
+                                                    "className": "android.widget.FrameLayout",
+                                                    "isImportantForAutofill": true,
+                                                    "children": [
+                                                      {
+                                                        "id": -1026728949,
+                                                        "className": "android.view.View",
+                                                        "isImportantForAutofill": true,
+                                                        "hintKeywordList": [
+                                                          "location_bar_status_icon_bg"
+                                                        ]
+                                                      },
+                                                      {
+                                                        "id": -1026699158,
+                                                        "className": "android.widget.ImageView",
+                                                        "hintKeywordList": [
+                                                          "location_bar_status_icon"
+                                                        ]
+                                                      }
+                                                    ],
+                                                    "hintKeywordList": [
+                                                      "location_bar_status_icon_frame"
+                                                    ]
+                                                  },
+                                                  {
+                                                    "id": -1026669367,
+                                                    "className": "android.view.View",
+                                                    "isImportantForAutofill": true,
+                                                    "hintKeywordList": [
+                                                      "location_bar_status_icon_holding_space"
+                                                    ]
+                                                  }
+                                                ],
+                                                "hintKeywordList": [
+                                                  "location_bar_status_icon_view"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1026639576,
+                                                "className": "android.widget.TextView",
+                                                "isImportantForAutofill": true,
+                                                "text": "",
+                                                "hintKeywordList": [
+                                                  "",
+                                                  "location_bar_verbose_status"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1026609785,
+                                                "className": "android.view.View",
+                                                "isImportantForAutofill": true,
+                                                "hintKeywordList": [
+                                                  "location_bar_verbose_status_separator"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1026579994,
+                                                "className": "android.view.View",
+                                                "isImportantForAutofill": true,
+                                                "hintKeywordList": [
+                                                  "location_bar_verbose_status_extra_space"
+                                                ]
+                                              }
+                                            ],
+                                            "hintKeywordList": [
+                                              "location_bar_status"
+                                            ]
+                                          },
+                                          {
+                                            "id": -1026550203,
+                                            "className": "android.view.View",
+                                            "isImportantForAutofill": true,
+                                            "hintKeywordList": [
+                                              "location_bar_status_view_right_space"
+                                            ]
+                                          },
+                                          {
+                                            "id": -1029142020,
+                                            "className": "android.widget.EditText",
+                                            "text": "",
+                                            "inputType": 524289,
+                                            "url": "https://login.klm.com",
+                                            "hintKeywordList": [
+                                              "",
+                                              "url_bar",
+                                              "Search or type URL"
+                                            ]
+                                          },
+                                          {
+                                            "id": -1026520412,
+                                            "className": "android.widget.LinearLayout",
+                                            "isImportantForAutofill": true,
+                                            "children": [
+                                              {
+                                                "id": -1026490621,
+                                                "className": "android.widget.ImageButton",
+                                                "hintKeywordList": [
+                                                  "delete_button"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1026460830,
+                                                "className": "android.widget.ImageButton",
+                                                "hintKeywordList": [
+                                                  "mic_button"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1026431039,
+                                                "className": "android.widget.ImageButton",
+                                                "hintKeywordList": [
+                                                  "lens_camera_button"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1026401248,
+                                                "className": "android.widget.ImageButton",
+                                                "hintKeywordList": [
+                                                  "bookmark_button"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1026371457,
+                                                "className": "android.widget.ImageButton",
+                                                "hintKeywordList": [
+                                                  "save_offline_button"
+                                                ]
+                                              }
+                                            ],
+                                            "hintKeywordList": [
+                                              "url_action_container"
+                                            ]
+                                          }
+                                        ],
+                                        "hintKeywordList": [
+                                          "location_bar"
+                                        ]
+                                      },
+                                      {
+                                        "id": -1026341666,
+                                        "className": "android.widget.LinearLayout",
+                                        "isImportantForAutofill": true,
+                                        "children": [
+                                          {
+                                            "id": -1026311875,
+                                            "className": "android.view.View",
+                                            "isImportantForAutofill": true,
+                                            "hintKeywordList": [
+                                              "optional_button_stub"
+                                            ]
+                                          },
+                                          {
+                                            "id": -1026282084,
+                                            "className": "android.widget.ImageButton",
+                                            "hintKeywordList": [
+                                              "tab_switcher_button"
+                                            ]
+                                          },
+                                          {
+                                            "id": -1026252293,
+                                            "className": "android.widget.FrameLayout",
+                                            "isImportantForAutofill": true,
+                                            "children": [
+                                              {
+                                                "id": -1026222502,
+                                                "className": "android.widget.ImageButton",
+                                                "hintKeywordList": [
+                                                  "menu_button"
+                                                ]
+                                              },
+                                              {
+                                                "id": -1026192711,
+                                                "className": "android.widget.ImageView",
+                                                "hintKeywordList": [
+                                                  "menu_badge"
+                                                ]
+                                              }
+                                            ],
+                                            "hintKeywordList": [
+                                              "menu_button_wrapper"
+                                            ]
+                                          }
+                                        ],
+                                        "hintKeywordList": [
+                                          "toolbar_buttons"
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "toolbar"
+                                    ]
+                                  },
+                                  {
+                                    "id": -1026162920,
+                                    "className": "android.widget.ImageView",
+                                    "hintKeywordList": [
+                                      "toolbar_hairline"
+                                    ]
+                                  },
+                                  {
+                                    "id": -1026133129,
+                                    "className": "android.view.View",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "find_toolbar_stub"
+                                    ]
+                                  },
+                                  {
+                                    "id": -1026103338,
+                                    "className": "android.view.View",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "find_toolbar_tablet_stub"
+                                    ]
+                                  }
+                                ],
+                                "hintKeywordList": [
+                                  "toolbar_container"
+                                ]
+                              },
+                              {
+                                "id": -1026073547,
+                                "className": "android.widget.ProgressBar"
+                              },
+                              {
+                                "id": -1026043756,
+                                "className": "android.widget.ImageView"
+                              },
+                              {
+                                "id": -1026013965,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "target_view_stub"
+                                ]
+                              },
+                              {
+                                "id": -1025984174,
+                                "className": "android.widget.RelativeLayout",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": -1025954383,
+                                    "className": "android.widget.HorizontalScrollView",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": -1025924592,
+                                        "className": "android.widget.LinearLayout",
+                                        "isImportantForAutofill": true,
+                                        "children": [
+                                          {
+                                            "id": -1025894801,
+                                            "className": "android.widget.LinearLayout",
+                                            "isImportantForAutofill": true,
+                                            "children": [
+                                              {
+                                                "id": -1025865010,
+                                                "className": "android.widget.ImageView"
+                                              },
+                                              {
+                                                "id": -1025835219,
+                                                "className": "android.widget.TextView",
+                                                "isImportantForAutofill": true,
+                                                "text": "",
+                                                "hintKeywordList": [
+                                                  ""
+                                                ]
+                                              },
+                                              {
+                                                "id": -1025805428,
+                                                "className": "android.widget.ImageView"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": -1025775637,
+                                            "className": "android.widget.LinearLayout",
+                                            "isImportantForAutofill": true,
+                                            "children": [
+                                              {
+                                                "id": -1025745846,
+                                                "className": "android.widget.ImageView"
+                                              },
+                                              {
+                                                "id": -1025716055,
+                                                "className": "android.widget.TextView",
+                                                "isImportantForAutofill": true,
+                                                "text": "",
+                                                "hintKeywordList": [
+                                                  ""
+                                                ]
+                                              },
+                                              {
+                                                "id": -1025686264,
+                                                "className": "android.widget.ImageView"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "incognito_toggle_tabs"
+                                    ]
+                                  },
+                                  {
+                                    "id": -1025656473,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "logo"
+                                    ]
+                                  },
+                                  {
+                                    "id": -1025626682,
+                                    "className": "android.widget.LinearLayout",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": -1025596891,
+                                        "className": "android.widget.ImageView"
+                                      },
+                                      {
+                                        "id": -1025567100,
+                                        "className": "android.widget.TextView",
+                                        "isImportantForAutofill": true,
+                                        "text": "New tab",
+                                        "hintKeywordList": [
+                                          "New tab"
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "new_tab_view"
+                                    ]
+                                  },
+                                  {
+                                    "id": -1025537309,
+                                    "className": "android.widget.ImageButton",
+                                    "hintKeywordList": [
+                                      "new_tab_button"
+                                    ]
+                                  },
+                                  {
+                                    "id": -1025507518,
+                                    "className": "android.widget.ImageButton",
+                                    "hintKeywordList": [
+                                      "identity_disc_button"
+                                    ]
+                                  },
+                                  {
+                                    "id": -1025477727,
+                                    "className": "android.widget.ImageButton",
+                                    "hintKeywordList": [
+                                      "start_tab_switcher_button"
+                                    ]
+                                  },
+                                  {
+                                    "id": -1025447936,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": -1025418145,
+                                        "className": "android.widget.FrameLayout",
+                                        "isImportantForAutofill": true,
+                                        "children": [
+                                          {
+                                            "id": -1025388354,
+                                            "className": "android.widget.ImageButton",
+                                            "hintKeywordList": [
+                                              "menu_button"
+                                            ]
+                                          },
+                                          {
+                                            "id": -1025358563,
+                                            "className": "android.widget.ImageView",
+                                            "hintKeywordList": [
+                                              "menu_badge"
+                                            ]
+                                          }
+                                        ],
+                                        "hintKeywordList": [
+                                          "menu_button_wrapper"
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "menu_anchor"
+                                    ]
+                                  }
+                                ],
+                                "hintKeywordList": [
+                                  "tab_switcher_toolbar"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "control_container"
+                            ]
+                          },
+                          {
+                            "id": -1025328772,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "tab_switcher_view_holder_stub"
+                            ]
+                          },
+                          {
+                            "id": -1025298981,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "tab_hover_card_holder_stub"
+                            ]
+                          },
+                          {
+                            "id": -1025269190,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "message_container"
+                            ]
+                          },
+                          {
+                            "id": -1025239399,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "status_indicator_stub"
+                            ]
+                          },
+                          {
+                            "id": -1025209608,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "readaloud_mini_player_stub"
+                            ]
+                          },
+                          {
+                            "id": -1025179817,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "page_insights_hub_container_stub"
+                            ]
+                          },
+                          {
+                            "id": -1025150026,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "sheet_container"
+                            ]
+                          },
+                          {
+                            "id": -1025120235,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "survey_container"
+                            ]
+                          },
+                          {
+                            "id": -1025090444,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "page_zoom_container"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "coordinator"
+                        ]
+                      },
+                      {
+                        "id": -1025060653,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "menu_anchor_stub"
+                        ]
+                      },
+                      {
+                        "id": -1025030862,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "content"
+                    ]
+                  },
+                  {
+                    "id": -1025001071,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "action_mode_bar_stub"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 44629595,
+        "className": "android.view.View",
+        "isImportantForAutofill": true,
+        "hintKeywordList": [
+          "navigationBarBackground"
+        ]
+      },
+      {
+        "id": 44659386,
+        "className": "android.view.View",
+        "isImportantForAutofill": true,
+        "hintKeywordList": [
+          "statusBarBackground"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.android.chrome"
+}

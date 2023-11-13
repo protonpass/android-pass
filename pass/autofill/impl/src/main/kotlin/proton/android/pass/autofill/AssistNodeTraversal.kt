@@ -46,9 +46,8 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         View.AUTOFILL_HINT_EMAIL_ADDRESS,
         "email",
         "username",
-        "user name",
         "identifier",
-        "account_name",
+        "accountname",
         "userid"
     )
 
@@ -413,7 +412,8 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
     private fun sanitizeHint(hint: String): String = hint.lowercase()
         .replace("-", "")
         .replace("_", "")
-        .replace("/", " ")
+        .replace("/", "")
+        .replace(" ", "")
 
     @Suppress("ReturnCount")
     private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {

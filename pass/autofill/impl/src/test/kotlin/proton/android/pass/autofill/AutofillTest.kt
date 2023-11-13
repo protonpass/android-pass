@@ -121,4 +121,9 @@ class AutofillTest {
     fun `can autofill app com booking repeat password`() {
         runAutofillTest("app_com.booking.android_repeatpassword.json", listOf(RequestFlags.FLAG_MANUAL_REQUEST))
     }
+
+    @Test
+    fun `can autofill account xiaomi com chrome username`() {
+        runAutofillTest("chrome_account.xiaomi.com_username.json")
+    }
 }

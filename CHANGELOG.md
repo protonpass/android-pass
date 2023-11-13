@@ -6,11 +6,21 @@
 
 ### Other
 
+## 1.10.1 (2023-11-13)
+
+### Fixes :bug:
+
+- Crash on wrong TOTP code from autofill.
+
+### Other
+
+- Improve autofill
+
 ## 1.10.0 (2023-11-10)
 
 ### Features :tada:
 
-- Allow item sharing from item detail
+- Improved share item from detail
 
 ### Fixes :bug:
 

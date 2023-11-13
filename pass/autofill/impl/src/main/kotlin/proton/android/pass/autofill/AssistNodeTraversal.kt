@@ -107,23 +107,26 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
 
     private fun getAssistField(context: AutofillTraversalContext): Option<AssistField> {
         val node = context.node
-        return when (nodeSupportsAutoFill(node)) {
-            SupportsAutofillResult.No -> None
-            SupportsAutofillResult.Yes -> AssistField(
-                id = node.id!!,
-                type = detectFieldType(node),
-                value = node.autofillValue,
-                text = node.text.toString(),
-                isFocused = node.isFocused,
-                nodePath = context.parentPath,
-            ).some()
+        return when (val res = nodeSupportsAutoFill(node)) {
+            NodeSupportsAutofillResult.No -> None
+            is NodeSupportsAutofillResult.Yes -> {
+                val fieldType = res.fieldType.value() ?: detectFieldType(node)
+                AssistField(
+                    id = node.id!!,
+                    type = fieldType,
+                    value = node.autofillValue,
+                    text = node.text.toString(),
+                    isFocused = node.isFocused,
+                    nodePath = context.parentPath,
+                ).some()
+            }
 
-            SupportsAutofillResult.MaybeWithContext -> getAutofillNodeFromContext(context)
+            NodeSupportsAutofillResult.MaybeWithContext -> getAutofillNodeFromContext(context)
         }
     }
 
     @Suppress("ReturnCount")
-    private fun nodeSupportsAutoFill(node: AutofillNode): SupportsAutofillResult {
+    private fun nodeSupportsAutoFill(node: AutofillNode): NodeSupportsAutofillResult {
         val isImportant =
             node.isImportantForAutofill || requestFlags.contains(RequestFlags.FLAG_MANUAL_REQUEST)
         val hasAutofillInfo = nodeHasAutofillInfo(node)
@@ -144,29 +147,43 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
                 PassLogger.d(TAG, "Discarding node because id is null")
             }
 
-            return SupportsAutofillResult.No
+            return NodeSupportsAutofillResult.No
         }
         if (!isImportant) {
             if (isEditText) {
-                PassLogger.d(TAG, "[node=${node.id}] Discarding node because is not important for autofill")
+                PassLogger.d(
+                    TAG,
+                    "[node=${node.id}] Discarding node because is not important for autofill"
+                )
             }
-            return SupportsAutofillResult.No
-        }
-        // If the node already has autofill info, we can use it
-        if (hasAutofillInfo) {
-            if (isEditText) {
-                PassLogger.d(TAG, "[node=${node.id}] Accepting node because it has autofill info")
-            }
-            return SupportsAutofillResult.Yes
+            return NodeSupportsAutofillResult.No
         }
 
-        // If the node doesn't have autofill info but it's an edit text, maybe we can check the context
-        return if (isEditText) {
-            PassLogger.d(TAG, "[node=${node.id}] Marking as Maybe because is edit text")
-            SupportsAutofillResult.MaybeWithContext
-        } else {
-            // If the node is not an edit text, we know that we can't do anything
-            SupportsAutofillResult.No
+        return when (hasAutofillInfo) {
+            // If the node doesn't have autofill info but it's an edit text, maybe we can check the context
+            HasAutofillInfoResult.No -> if (isEditText) {
+                PassLogger.d(TAG, "[node=${node.id}] Marking as Maybe because is edit text")
+                NodeSupportsAutofillResult.MaybeWithContext
+            } else {
+                // If the node is not an edit text, we know that we can't do anything
+                NodeSupportsAutofillResult.No
+            }
+            HasAutofillInfoResult.Yes -> {
+                if (isEditText) {
+                    PassLogger.d(TAG, "[node=${node.id}] Accepting node because it has autofill info")
+                }
+                return NodeSupportsAutofillResult.Yes(None)
+            }
+            is HasAutofillInfoResult.YesWithFieldType -> {
+                if (isEditText) {
+                    PassLogger.d(
+                        TAG,
+                        "[node=${node.id}] Accepting node because it has autofill " +
+                            "info and field type ${hasAutofillInfo.fieldType}"
+                    )
+                }
+                return NodeSupportsAutofillResult.Yes(hasAutofillInfo.fieldType.some())
+            }
         }
     }
 
@@ -191,34 +208,51 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         val hasUsefulKeywords =
             detectFieldTypeUsingHintKeywordList(hintKeywordList) != FieldType.Unknown
 
-        if (hasValidHints) {
-            PassLogger.d(TAG, "[node=${autofillContext.node.id}] Adding with context because it has valid hints")
+        if (hasValidHints is CheckHintsResult.Found) {
+            PassLogger.d(
+                TAG,
+                "[node=${autofillContext.node.id}] Adding with context because it has valid hints " +
+                    "[type=${hasValidHints.fieldType}]"
+            )
         }
 
         if (hasValidHtmlInfo) {
-            PassLogger.d(TAG, "[node=${autofillContext.node.id}] Adding with context because it has valid html info")
+            PassLogger.d(
+                TAG,
+                "[node=${autofillContext.node.id}] Adding with context because it has valid html info"
+            )
         }
 
         if (hasUsefulKeywords) {
-            PassLogger.d(TAG, "[node=${autofillContext.node.id}] Adding with context because it has useful keywords")
+            PassLogger.d(
+                TAG,
+                "[node=${autofillContext.node.id}] Adding with context because it has useful keywords"
+            )
         }
 
-        return if (hasValidHints || hasValidHtmlInfo || hasUsefulKeywords) {
-            AssistField(
-                id = autofillContext.node.id!!,
-                type = detectFieldType(
+        return if (hasValidHints is CheckHintsResult.Found || hasValidHtmlInfo || hasUsefulKeywords) {
+            val fieldType = when (hasValidHints) {
+                is CheckHintsResult.Found -> hasValidHints.fieldType
+                CheckHintsResult.NoneFound -> detectFieldType(
                     autofillHints = autofillHints,
                     htmlAttributes = htmlAttributes,
                     inputType = autofillContext.node.inputType,
                     hintKeywordList = hintKeywordList
-                ),
+                )
+            }
+            AssistField(
+                id = autofillContext.node.id!!,
+                type = fieldType,
                 value = autofillContext.node.autofillValue,
                 text = autofillContext.node.text,
                 isFocused = autofillContext.node.isFocused,
                 nodePath = autofillContext.parentPath
             ).some()
         } else {
-            PassLogger.d(TAG, "[node=${autofillContext.node.id}] Discarding because could not find contextual info")
+            PassLogger.d(
+                TAG,
+                "[node=${autofillContext.node.id}] Discarding because could not find contextual info"
+            )
             None
         }
     }
@@ -254,38 +288,56 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         return contextNodes
     }
 
-    private fun nodeHasAutofillInfo(node: AutofillNode): Boolean =
-        nodeHasValidHints(node.autofillHints.toSet()) ||
-            nodeHasValidHtmlInfo(node.htmlAttributes) ||
-            nodeHasValidInputType(node)
+    private fun nodeHasAutofillInfo(node: AutofillNode): HasAutofillInfoResult =
+        when (val hintsRes = nodeHasValidHints(node.autofillHints.toSet())) {
+            is CheckHintsResult.Found -> {
+                HasAutofillInfoResult.YesWithFieldType(hintsRes.fieldType)
+            }
 
-    private fun nodeHasValidHints(autofillHints: Set<String>): Boolean = autofillHints
-        .firstOrNull()
-        .let {
-            if (it != null) {
-                detectFieldTypeUsingAutofillHint(it) != FieldType.Unknown
-            } else {
-                false
+            CheckHintsResult.NoneFound -> {
+                val hasHtmlInfo = nodeHasValidHtmlInfo(node.htmlAttributes)
+                when (val hasValidInputType = nodeHasValidInputType(node)) {
+                    is CheckInputTypeResult.Found -> {
+                        HasAutofillInfoResult.YesWithFieldType(hasValidInputType.fieldType)
+                    }
+                    CheckInputTypeResult.NoneFound -> if (hasHtmlInfo) {
+                        HasAutofillInfoResult.Yes
+                    } else {
+                        HasAutofillInfoResult.No
+                    }
+                }
             }
         }
+
+
+    private fun nodeHasValidHints(autofillHints: Set<String>): CheckHintsResult {
+        for (hint in autofillHints) {
+            val fieldType = detectFieldTypeUsingAutofillHint(hint)
+            if (fieldType != FieldType.Unknown) {
+                return CheckHintsResult.Found(fieldType)
+            }
+        }
+
+        return CheckHintsResult.NoneFound
+    }
 
     private fun nodeHasValidHtmlInfo(htmlAttributes: List<Pair<String, String>>): Boolean =
         detectFieldTypeUsingHtmlInfo(htmlAttributes) != FieldType.Unknown
 
     @Suppress("ReturnCount")
-    private fun nodeHasValidInputType(node: AutofillNode): Boolean {
+    private fun nodeHasValidInputType(node: AutofillNode): CheckInputTypeResult {
         val flags = InputTypeFlags.fromValue(node.inputType)
         val hasMultilineFlag = flags.contains(InputTypeFlags.TEXT_FLAG_MULTI_LINE) ||
             flags.contains(InputTypeFlags.TEXT_FLAG_IME_MULTI_LINE)
         val hasAutoCorrectFlag = flags.contains(InputTypeFlags.TEXT_FLAG_AUTO_CORRECT)
         // InputTypeFlags.TYPE_TEXT_FLAG_CAP_SENTENCES might also be considered in the future
 
-        if (hasMultilineFlag || hasAutoCorrectFlag) return false
+        if (hasMultilineFlag || hasAutoCorrectFlag) return CheckInputTypeResult.NoneFound
 
-        val fieldTypeByInputType = detectFieldTypeUsingInputType(node.inputType)
-        if (fieldTypeByInputType != FieldType.Unknown) return true
-
-        return false
+        return when (val fieldTypeByInputType = detectFieldTypeUsingInputType(node.inputType)) {
+            FieldType.Unknown -> CheckInputTypeResult.NoneFound
+            else -> CheckInputTypeResult.Found(fieldTypeByInputType)
+        }
     }
 
     private fun detectFieldType(node: AutofillNode): FieldType = detectFieldType(
@@ -389,10 +441,34 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         else -> FieldType.Unknown
     }
 
-    sealed interface SupportsAutofillResult {
-        object No : SupportsAutofillResult
-        object Yes : SupportsAutofillResult
-        object MaybeWithContext : SupportsAutofillResult
+    sealed interface CheckHintsResult {
+        object NoneFound : CheckHintsResult
+
+        @JvmInline
+        value class Found(val fieldType: FieldType) : CheckHintsResult
+    }
+
+    sealed interface CheckInputTypeResult {
+        object NoneFound : CheckInputTypeResult
+
+        @JvmInline
+        value class Found(val fieldType: FieldType) : CheckInputTypeResult
+    }
+
+    sealed interface HasAutofillInfoResult {
+        object No : HasAutofillInfoResult
+        object Yes : HasAutofillInfoResult
+
+        @JvmInline
+        value class YesWithFieldType(val fieldType: FieldType) : HasAutofillInfoResult
+    }
+
+    sealed interface NodeSupportsAutofillResult {
+        object No : NodeSupportsAutofillResult
+
+        @JvmInline
+        value class Yes(val fieldType: Option<FieldType>) : NodeSupportsAutofillResult
+        object MaybeWithContext : NodeSupportsAutofillResult
     }
 
     data class AutofillTraversalContext(
@@ -413,7 +489,10 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         // Regexes extracted from the internal autofill repo that web uses for field detection.
         // Path: src/dictionary/generated/dictionary.ts
         @Suppress("MaxLineLength")
-        private val USERNAME_REGEX = Regex("(?:(?:n(?:ouvelleses|uevase|ewses)s|iniciarses|connex)io|anmeldedate|sign[io])n|in(?:iciarsessao|troduce)|a(?:uthenticate|nmeld(?:ung|en))|authentifier|s(?:econnect|identifi)er|novasessao|(?:introduci|conecta|entr[ae])r|prihlasit|connect|acceder|login", REGEX_OPTIONS)
+        private val USERNAME_REGEX = Regex(
+            "(?:(?:n(?:ouvelleses|uevase|ewses)s|iniciarses|connex)io|anmeldedate|sign[io])n|in(?:iciarsessao|troduce)|a(?:uthenticate|nmeld(?:ung|en))|authentifier|s(?:econnect|identifi)er|novasessao|(?:introduci|conecta|entr[ae])r|prihlasit|connect|acceder|login",
+            REGEX_OPTIONS
+        )
         private val EMAIL_REGEX = Regex("co(?:urriel|rrei?o)|email", REGEX_OPTIONS)
     }
 }

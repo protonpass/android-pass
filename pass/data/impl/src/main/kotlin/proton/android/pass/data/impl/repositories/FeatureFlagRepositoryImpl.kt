@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -49,7 +50,7 @@ class FeatureFlagRepositoryImpl @Inject constructor(
     override fun isFeatureEnabled(featureName: String, refresh: Boolean): Flow<Boolean> = flow {
         if (refresh) refresh()
 
-        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+        val userId = requireNotNull(accountManager.getPrimaryUserId().filterNotNull().first())
         emit(userId)
     }.flatMapLatest { userId ->
         local.observeFeatureFlag(userId, featureName).map { it.isNotEmpty() }
@@ -59,7 +60,7 @@ class FeatureFlagRepositoryImpl @Inject constructor(
         flow {
             if (refresh) refresh()
 
-            val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+            val userId = requireNotNull(accountManager.getPrimaryUserId().filterNotNull().first())
             emit(userId)
         }.flatMapLatest { userId ->
             local.observeFeatureFlag(userId, featureName)

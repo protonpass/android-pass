@@ -30,7 +30,6 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
-import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.service.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -49,8 +48,7 @@ class AutosaveActivityViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val accountManager: AccountManager,
-    private val toastManager: ToastManager,
-    private val autofillManager: AutofillManager
+    private val toastManager: ToastManager
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<Option<AutosaveEvent>> = MutableStateFlow(None)
@@ -80,8 +78,6 @@ class AutosaveActivityViewModel @Inject constructor(
             .onFailure {
                 PassLogger.w(TAG, it, "Error clearing preferences")
             }
-
-        autofillManager.disableAutofill()
 
         eventFlow.update { AutosaveEvent.Close.some() }
     }

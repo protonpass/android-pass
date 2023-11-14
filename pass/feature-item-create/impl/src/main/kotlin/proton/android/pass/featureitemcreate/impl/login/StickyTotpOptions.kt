@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
+import android.content.pm.PackageManager
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -29,8 +30,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -49,6 +52,11 @@ fun StickyTotpOptions(
     onPasteCode: () -> Unit,
     onScanCode: () -> Unit
 ) {
+    val context = LocalContext.current
+    val hasCamera = remember(context) {
+        context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
+    }
+
     StickyImeRow(modifier) {
         Row(
             modifier = Modifier
@@ -72,33 +80,35 @@ fun StickyTotpOptions(
                 maxLines = 1
             )
         }
-        Divider(
-            modifier = Modifier
-                .width(1.dp)
-                .fillMaxHeight()
-                .padding(0.dp, 9.dp)
-        )
-        Row(
-            modifier = Modifier
-                .weight(1f)
-                .clickable { onScanCode() }
-                .fillMaxHeight()
-                .padding(6.dp, 0.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
-        ) {
-            Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_camera),
-                contentDescription = null,
-                tint = PassTheme.colors.loginInteractionNormMajor2
+        if (hasCamera) {
+            Divider(
+                modifier = Modifier
+                    .width(1.dp)
+                    .fillMaxHeight()
+                    .padding(0.dp, 9.dp)
             )
-            Text(
-                text = stringResource(R.string.totp_scan_code_action),
-                color = PassTheme.colors.loginInteractionNormMajor2,
-                style = ProtonTheme.typography.defaultNorm,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1
-            )
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { onScanCode() }
+                    .fillMaxHeight()
+                    .padding(6.dp, 0.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+            ) {
+                Icon(
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_camera),
+                    contentDescription = null,
+                    tint = PassTheme.colors.loginInteractionNormMajor2
+                )
+                Text(
+                    text = stringResource(R.string.totp_scan_code_action),
+                    color = PassTheme.colors.loginInteractionNormMajor2,
+                    style = ProtonTheme.typography.defaultNorm,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
+                )
+            }
         }
     }
 }

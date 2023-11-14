@@ -33,7 +33,10 @@ object Utils {
         return packageComponents.first()
     }
 
-    fun getWindowNodes(fillContext: FillContext): List<AssistStructure.WindowNode> {
+    fun getWindowNodes(fillContexts: List<FillContext>): List<AssistStructure.WindowNode> {
+        val fillContext = fillContexts
+            .firstOrNull { !it.structure.activityComponent.className.contains("PopupWindow") }
+            ?: return emptyList()
         val structure: AssistStructure = fillContext.structure
         return if (structure.windowNodeCount > 0)
             (0 until structure.windowNodeCount).map { structure.getWindowNodeAt(it) } else
@@ -48,6 +51,7 @@ object Utils {
             None -> ""
             is Some -> appNameOption.value() ?: ""
         }
+
         is Some -> UrlSanitizer.getDomain(urlOption.value).getOrDefault("")
     }
 }

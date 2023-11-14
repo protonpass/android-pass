@@ -28,7 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.debug.AutofillDebugSaver
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
@@ -50,9 +49,6 @@ class ProtonPassAutofillService : AutofillService() {
 
     @Inject
     lateinit var ffRepo: FeatureFlagsPreferencesRepository
-
-    @Inject
-    lateinit var autofillManager: AutofillManager
 
     override fun onConnected() {
         super.onConnected()
@@ -87,8 +83,7 @@ class ProtonPassAutofillService : AutofillService() {
             cancellationSignal = cancellationSignal,
             autofillServiceManager = autofillServiceManager,
             telemetryManager = telemetryManager,
-            accountManager = accountManager,
-            autofillManager = autofillManager
+            accountManager = accountManager
         )
     }
 

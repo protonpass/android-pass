@@ -61,7 +61,7 @@ object AutoFillHandler {
         accountManager: AccountManager,
         autofillManager: AutofillManager
     ) {
-        val windowNode = getWindowNodes(request.fillContexts.last()).lastOrNull()
+        val windowNode = getWindowNodes(request.fillContexts).firstOrNull()
         if (windowNode?.rootViewNode == null) {
             PassLogger.i(TAG, "No window node found")
             callback.onSuccess(null)

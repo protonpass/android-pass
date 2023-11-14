@@ -34,12 +34,12 @@ fun SessionsScreen(
     onSessionClick: (AutofillSession) -> Unit,
     viewModel: SessionsScreenViewModel = hiltViewModel()
 ) {
-    val sessions by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     SessionsScreenContent(
         modifier = modifier,
-        sessions = sessions,
+        state = state,
         onClearSessions = {
             viewModel.onClearSessions(context.toClassHolder())
         },

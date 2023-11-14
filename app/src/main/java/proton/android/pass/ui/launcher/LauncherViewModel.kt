@@ -75,7 +75,6 @@ import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
-import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -108,7 +107,6 @@ class LauncherViewModel @Inject constructor(
     private val clearUserData: ClearUserData,
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
-    private val autofillManager: AutofillManager,
     commonLibraryVersionChecker: CommonLibraryVersionChecker
 ) : ViewModel() {
 
@@ -224,7 +222,6 @@ class LauncherViewModel @Inject constructor(
                 .onFailure {
                     PassLogger.w(TAG, it, "Error clearing preferences")
                 }
-            autofillManager.disableAutofill()
         }
     }
 
@@ -279,8 +276,6 @@ class LauncherViewModel @Inject constructor(
                 .onFailure {
                     PassLogger.w(TAG, it, "Error clearing preferences")
                 }
-
-            autofillManager.disableAutofill()
         }
     }
 

@@ -28,24 +28,19 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
@@ -53,7 +48,10 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import proton.android.pass.autofill.debug.DebugUtils
 import proton.android.pass.autofill.e2e.BuildConfig
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import java.io.File
 import javax.inject.Inject
 
@@ -62,24 +60,46 @@ class SessionsScreenViewModel @Inject constructor(
     @ApplicationContext context: Context
 ) : ViewModel() {
 
+    private val isLoadingFlow: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.Loading)
     private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val sessionsFlow = refreshFlow
         .filter { it }
-        .flatMapLatest { getSessions(context) }
-        .onEach { refreshFlow.update { false } }
+        .mapLatest { getSessions(context) }
+        .onEach {
+            refreshFlow.update { false }
+            isLoadingFlow.update { IsLoadingState.NotLoading }
+        }
+        .asLoadingResult()
         .distinctUntilChanged()
 
-    val state: StateFlow<ImmutableList<AutofillSession>> = sessionsFlow
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = persistentListOf()
-        )
+    val state: StateFlow<SessionsScreenUiState> = combine(
+        sessionsFlow,
+        isLoadingFlow
+    ) { sessions, isLoading ->
+        if (isLoading.value()) {
+            SessionsScreenUiState.Loading
+        } else {
+            when (sessions) {
+                is LoadingResult.Error -> SessionsScreenUiState.Error(
+                    sessions.exception.message ?: "Error"
+                )
+
+                LoadingResult.Loading -> SessionsScreenUiState.Loading
+                is LoadingResult.Success -> SessionsScreenUiState.Content(sessions.data)
+            }
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = SessionsScreenUiState.Loading
+    )
 
     fun onClearSessions(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
+            isLoadingFlow.update { IsLoadingState.Loading }
             contextHolder.get().map {
                 DebugUtils.autofillDumpDir(it).deleteRecursively()
             }
@@ -88,11 +108,11 @@ class SessionsScreenViewModel @Inject constructor(
         }
     }
 
-    private fun getSessions(context: Context): Flow<ImmutableList<AutofillSession>> = flow {
-        val dir = DebugUtils.autofillDumpDir(context)
-        dir.mkdirs()
+    private suspend fun getSessions(context: Context): ImmutableList<AutofillSession> =
+        withContext(Dispatchers.IO) {
+            val dir = DebugUtils.autofillDumpDir(context)
+            dir.mkdirs()
 
-        while (currentCoroutineContext().isActive) {
             val filenames = dir.listFiles()?.map { it.name } ?: emptyList()
             val asSessions = filenames.mapNotNull { filename ->
                 val withoutExtension = filename.removeSuffix(".json")
@@ -118,10 +138,9 @@ class SessionsScreenViewModel @Inject constructor(
                     filename = filename
                 )
             }.sortedByDescending { it.timestamp }
-
-            emit(asSessions.toImmutableList())
+            asSessions.toImmutableList()
         }
-    }.flowOn(Dispatchers.IO)
+
 
     fun startShareIntent(
         session: AutofillSession,
@@ -139,9 +158,24 @@ class SessionsScreenViewModel @Inject constructor(
             )
             intent.putExtra(Intent.EXTRA_STREAM, contentUri)
             intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-            ctx.startActivity(Intent.createChooser(intent, "Share log"))
+            ctx.startActivity(Intent.createChooser(intent, "Share session"))
         }
     }
+}
+
+@Stable
+sealed interface SessionsScreenUiState {
+    @Stable
+    object Loading : SessionsScreenUiState
+
+    @Stable
+    @JvmInline
+    value class Error(val message: String) : SessionsScreenUiState
+
+    @Stable
+    data class Content(
+        val sessions: ImmutableList<AutofillSession>
+    ) : SessionsScreenUiState
 }
 
 @Suppress("MagicNumber")

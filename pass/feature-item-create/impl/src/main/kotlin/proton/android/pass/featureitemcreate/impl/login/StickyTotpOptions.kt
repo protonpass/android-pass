@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
-import android.content.pm.PackageManager
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -30,10 +29,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -43,20 +40,16 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.featureitemcreate.impl.R
 
 @Composable
 fun StickyTotpOptions(
     modifier: Modifier = Modifier,
+    hasCamera: Boolean,
     onPasteCode: () -> Unit,
     onScanCode: () -> Unit
 ) {
-    val context = LocalContext.current
-    val hasCamera = remember(context) {
-        context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
-    }
-
     StickyImeRow(modifier) {
         Row(
             modifier = Modifier
@@ -116,11 +109,11 @@ fun StickyTotpOptions(
 @Preview
 @Composable
 fun StickyTotpOptionsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) input: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = input) {
+    PassTheme(isDark = input.first) {
         Surface {
-            StickyTotpOptions(onPasteCode = {}, onScanCode = {})
+            StickyTotpOptions(hasCamera = input.second, onPasteCode = {}, onScanCode = {})
         }
     }
 }

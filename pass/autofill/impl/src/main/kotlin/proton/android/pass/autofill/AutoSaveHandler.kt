@@ -36,7 +36,7 @@ import proton.android.pass.data.api.url.UrlSanitizer
 
 object AutoSaveHandler {
     fun handleOnSave(context: Context, request: SaveRequest, callback: SaveCallback) {
-        val windowNode = getWindowNodes(request.fillContexts.last()).lastOrNull()
+        val windowNode = getWindowNodes(request.fillContexts).lastOrNull()
         if (windowNode?.rootViewNode == null) {
             callback.onFailure(context.getString(R.string.error_cant_find_matching_fields))
             return

@@ -56,9 +56,6 @@ import javax.inject.Inject
 class MainActivity : FragmentActivity() {
 
     @Inject
-    lateinit var autofillManager: proton.android.pass.autofill.api.AutofillManager
-
-    @Inject
     lateinit var deeplinkManager: DeeplinkManager
 
     private val launcherViewModel: LauncherViewModel by viewModels()
@@ -98,7 +95,6 @@ class MainActivity : FragmentActivity() {
             }
             when (state) {
                 AccountNeeded -> {
-                    disableAutofill()
                     launcherViewModel.addAccount()
                 }
 
@@ -130,10 +126,6 @@ class MainActivity : FragmentActivity() {
         val intent = intent
         finish()
         startActivity(intent)
-    }
-
-    private fun disableAutofill() {
-        autofillManager.disableAutofill()
     }
 
     private fun setSecureMode() {

@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
+import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.foundation.layout.Arrangement
@@ -32,9 +33,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
@@ -173,17 +176,25 @@ internal fun LoginItemForm(
                     }
                 )
 
-                AddTotp -> StickyTotpOptions(
-                    onPasteCode = {
-                        onEvent(LoginContentEvent.PasteTotp)
-                        keyboardController?.hide()
-                    },
-                    onScanCode = {
-                        val index = (focusedField as? LoginCustomField)?.index
-                        onNavigate(BaseLoginNavigation.ScanTotp(index.toOption()))
-                        keyboardController?.hide()
+                AddTotp -> {
+                    val context = LocalContext.current
+                    val hasCamera = remember(LocalContext.current) {
+                        context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
                     }
-                )
+
+                    StickyTotpOptions(
+                        hasCamera = hasCamera,
+                        onPasteCode = {
+                            onEvent(LoginContentEvent.PasteTotp)
+                            keyboardController?.hide()
+                        },
+                        onScanCode = {
+                            val index = (focusedField as? LoginCustomField)?.index
+                            onNavigate(BaseLoginNavigation.ScanTotp(index.toOption()))
+                            keyboardController?.hide()
+                        }
+                    )
+                }
 
                 None -> {}
             }

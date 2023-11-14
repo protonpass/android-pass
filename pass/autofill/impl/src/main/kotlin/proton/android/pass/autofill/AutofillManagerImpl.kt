@@ -92,9 +92,15 @@ class AutofillManagerImpl @Inject constructor(
     private fun canOpenAutofillSelector(): Boolean {
         val autofillManager: AndroidAutofillManager? = context
             .getSystemService(AndroidAutofillManager::class.java)
-        val hasEnabledAutofillServices = autofillManager?.hasEnabledAutofillServices() ?: false
-        val isAutofillSupported = autofillManager?.isAutofillSupported ?: false
-        return !hasEnabledAutofillServices && isAutofillSupported
+        return runCatching {
+            val hasEnabledAutofillServices = autofillManager?.hasEnabledAutofillServices() ?: false
+            val isAutofillSupported = autofillManager?.isAutofillSupported ?: false
+            !hasEnabledAutofillServices && isAutofillSupported
+        }.getOrElse {
+            PassLogger.w(TAG, it, "Error while checking if autofill selector can be opened")
+            false
+        }
+
     }
 
     override fun disableAutofill() {

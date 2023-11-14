@@ -44,6 +44,7 @@ fun SessionsScreen(
             viewModel.onClearSessions(context.toClassHolder())
         },
         onSessionClick = onSessionClick,
+        onRefresh = viewModel::refresh,
         onShareSessionClick = {
             viewModel.startShareIntent(it, context.toClassHolder())
         }

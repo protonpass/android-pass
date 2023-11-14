@@ -79,23 +79,28 @@ class SessionsScreenViewModel @Inject constructor(
         sessionsFlow,
         isLoadingFlow
     ) { sessions, isLoading ->
-        if (isLoading.value()) {
-            SessionsScreenUiState.Loading
-        } else {
-            when (sessions) {
-                is LoadingResult.Error -> SessionsScreenUiState.Error(
-                    sessions.exception.message ?: "Error"
-                )
+        when (sessions) {
+            is LoadingResult.Error -> SessionsScreenUiState.Error(
+                sessions.exception.message ?: "Error"
+            )
 
-                LoadingResult.Loading -> SessionsScreenUiState.Loading
-                is LoadingResult.Success -> SessionsScreenUiState.Content(sessions.data)
-            }
+            LoadingResult.Loading -> SessionsScreenUiState.Loading
+            is LoadingResult.Success -> SessionsScreenUiState.Content(
+                sessions = sessions.data,
+                isLoading = isLoading
+            )
+
         }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SessionsScreenUiState.Loading
     )
+
+    fun refresh() = viewModelScope.launch {
+        refreshFlow.update { true }
+        isLoadingFlow.update { IsLoadingState.Loading }
+    }
 
     fun onClearSessions(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
@@ -165,17 +170,27 @@ class SessionsScreenViewModel @Inject constructor(
 
 @Stable
 sealed interface SessionsScreenUiState {
+
+    fun isLoading(): Boolean
+
     @Stable
-    object Loading : SessionsScreenUiState
+    object Loading : SessionsScreenUiState {
+        override fun isLoading() = true
+    }
 
     @Stable
     @JvmInline
-    value class Error(val message: String) : SessionsScreenUiState
+    value class Error(val message: String) : SessionsScreenUiState {
+        override fun isLoading() = false
+    }
 
     @Stable
     data class Content(
-        val sessions: ImmutableList<AutofillSession>
-    ) : SessionsScreenUiState
+        val sessions: ImmutableList<AutofillSession>,
+        val isLoading: IsLoadingState
+    ) : SessionsScreenUiState {
+        override fun isLoading() = isLoading.value()
+    }
 }
 
 @Suppress("MagicNumber")

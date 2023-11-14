@@ -29,7 +29,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountRemoved
-import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 
@@ -43,7 +42,6 @@ class AccountListenerInitializer : Initializer<Unit> {
 
         val lifecycleProvider = entryPoint.passAppLifecycleProvider()
         val accountManager = entryPoint.accountManager()
-        val autofillManager = entryPoint.autofillManager()
         val resetAppToDefaults = entryPoint.resetAppToDefaults()
 
         accountManager.observe(
@@ -53,7 +51,6 @@ class AccountListenerInitializer : Initializer<Unit> {
             accountManager.removeAccount(it.userId)
         }.onAccountRemoved {
             resetAppToDefaults()
-            autofillManager.disableAutofill()
         }
     }
 
@@ -65,7 +62,6 @@ class AccountListenerInitializer : Initializer<Unit> {
     interface AccountListenerInitializerEntryPoint {
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
-        fun autofillManager(): AutofillManager
         fun resetAppToDefaults(): ResetAppToDefaults
     }
 }

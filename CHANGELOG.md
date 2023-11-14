@@ -3,6 +3,7 @@
 ### Features :tada:
 
 ### Fixes :bug:
+- Make camera not mandatory to install the app.
 
 ### Other
 

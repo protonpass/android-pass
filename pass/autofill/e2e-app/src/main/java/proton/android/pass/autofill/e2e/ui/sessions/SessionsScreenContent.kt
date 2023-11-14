@@ -30,12 +30,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,13 +48,16 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SessionsScreenContent(
     modifier: Modifier = Modifier,
     state: SessionsScreenUiState,
+    onRefresh: () -> Unit,
     onClearSessions: () -> Unit,
     onSessionClick: (AutofillSession) -> Unit,
     onShareSessionClick: (AutofillSession) -> Unit,
@@ -71,75 +78,106 @@ fun SessionsScreenContent(
             }
         }
     ) { padding ->
-        when (state) {
-            is SessionsScreenUiState.Error -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "Error: ${state.message}")
-                }
-            }
+        val isRefreshing = state.isLoading()
+        val pullRefreshState = rememberPullRefreshState(
+            refreshing = isRefreshing,
+            onRefresh = onRefresh,
+            refreshThreshold = 40.dp,
+        )
 
-            SessionsScreenUiState.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(modifier = Modifier.size(48.dp))
-                }
-            }
-            is SessionsScreenUiState.Content -> {
-                val sessions = state.sessions
-                if (sessions.isEmpty()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .pullRefresh(state = pullRefreshState)
+                .padding(padding),
+        ) {
+            when (state) {
+                is SessionsScreenUiState.Error -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "No debug sessions")
+                        Text(text = "Error: ${state.message}")
                     }
-                } else {
-                    LazyColumn(modifier = Modifier.padding(padding)) {
-                        items(items = sessions, key = { it.filename }) { session ->
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable { onSessionClick(session) }
-                                    .padding(16.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text(
-                                        text = AnnotatedString(
-                                            text = session.packageName,
-                                            spanStyle = SpanStyle(fontWeight = FontWeight.Bold)
-                                        ),
-                                        fontSize = 14.sp
-                                    )
-                                    Text(
-                                        text = session.timestamp,
-                                        fontSize = 12.sp
-                                    )
+                }
 
-                                }
+                SessionsScreenUiState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(modifier = Modifier.size(48.dp))
+                    }
+                }
 
-                                CircleIconButton(
-                                    backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
-                                    onClick = { onShareSessionClick(session) }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Share,
-                                        contentDescription = "Share",
-                                        tint = PassTheme.colors.loginInteractionNormMajor2
-                                    )
-                                }
-                            }
-                        }
+                is SessionsScreenUiState.Content -> {
+                    SessionsScreenContent(
+                        sessions = state.sessions,
+                        onSessionClick = onSessionClick,
+                        onShareSessionClick = onShareSessionClick
+                    )
+                    PullRefreshIndicator(
+                        refreshing = isRefreshing,
+                        state = pullRefreshState,
+                        modifier = Modifier.align(Alignment.TopCenter)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SessionsScreenContent(
+    modifier: Modifier = Modifier,
+    sessions: ImmutableList<AutofillSession>,
+    onSessionClick: (AutofillSession) -> Unit,
+    onShareSessionClick: (AutofillSession) -> Unit,
+) {
+    if (sessions.isEmpty()) {
+        Box(
+            modifier = modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = "No debug sessions")
+        }
+    } else {
+        LazyColumn(modifier = modifier.fillMaxSize()) {
+            items(items = sessions, key = { it.filename }) { session ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onSessionClick(session) }
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = AnnotatedString(
+                                text = session.packageName,
+                                spanStyle = SpanStyle(fontWeight = FontWeight.Bold)
+                            ),
+                            fontSize = 14.sp
+                        )
+                        Text(
+                            text = session.timestamp,
+                            fontSize = 12.sp
+                        )
+
+                    }
+
+                    CircleIconButton(
+                        backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                        onClick = { onShareSessionClick(session) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Share,
+                            contentDescription = "Share",
+                            tint = PassTheme.colors.loginInteractionNormMajor2
+                        )
                     }
                 }
             }
         }
-
     }
 }
-

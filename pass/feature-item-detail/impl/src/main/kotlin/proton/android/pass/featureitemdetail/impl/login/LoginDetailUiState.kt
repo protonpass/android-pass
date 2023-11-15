@@ -21,6 +21,7 @@ package proton.android.pass.featureitemdetail.impl.login
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.common.api.Option
+import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -40,6 +41,7 @@ sealed interface LoginDetailUiState {
     @Stable
     data class Success(
         val itemUiModel: ItemUiModel,
+        val passwordScore: PasswordScore?,
         val vault: Vault?,
         val totpUiState: TotpUiState?,
         val linkedAlias: Option<LinkedAliasItem>,

@@ -56,9 +56,9 @@
   <string name="custom_field_hidden_icon_description">Hidden custom field</string>
   <string name="custom_field_totp_icon_description">2FA custom field</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Cardholder name</string>
+  <string name="credit_card_cardholder_field_name">Name on card</string>
   <string name="credit_card_number_field_name">Номер карты</string>
-  <string name="credit_card_cvv_field_name">Verification number</string>
+  <string name="credit_card_cvv_field_name">Security code</string>
   <string name="credit_card_pin_field_name">PIN-код</string>
   <string name="credit_card_expiration_date_field_name">Срок действия</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Владелец карты скопирован в буфер обмена</string>

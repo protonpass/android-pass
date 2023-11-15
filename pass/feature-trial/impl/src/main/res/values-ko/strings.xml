@@ -3,8 +3,7 @@
   <string name="trial_title">무료 체험을 즐기기</string>
   <string name="trial_subtitle">차세대 비밀번호 관리를 위해:</string>
   <string name="trial_feature_1">20개 금고</string>
-  <string name="trial_feature_2">무제한 나의 이메일 별명</string>
-  <string name="trial_feature_3">통합된 2FA 인증기</string>
+    <string name="trial_feature_3">통합된 2FA 인증기</string>
   <string name="trial_feature_4">사용자 지정 필드</string>
   <string name="trial_button_text">이 기능을 계속 누리려면 업그레이드</string>
   <plurals name="trial_days_left">

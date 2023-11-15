@@ -3,8 +3,7 @@
   <string name="trial_title">Aproveite o seu período de teste gratuito</string>
   <string name="trial_subtitle">Para uma gestão de palavras-passe de nível superior:</string>
   <string name="trial_feature_1">20 cofres</string>
-  <string name="trial_feature_2">Aliases de e-mail ilimitados</string>
-  <string name="trial_feature_3">Autenticador A2F integrado</string>
+    <string name="trial_feature_3">Autenticador A2F integrado</string>
   <string name="trial_feature_4">Campos personalizados</string>
   <string name="trial_button_text">Atualize para manter estas funcionalidades</string>
   <plurals name="trial_days_left">

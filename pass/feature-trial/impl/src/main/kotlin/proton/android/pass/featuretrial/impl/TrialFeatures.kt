@@ -35,7 +35,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun TrialFeatures(
@@ -55,19 +54,6 @@ fun TrialFeatures(
                     painter = painterResource(R.drawable.trial_multiple_vaults),
                     contentDescription = null,
                     tint = Color.Unspecified
-                )
-            }
-        )
-        PassDivider()
-        TrialFeatureRow(
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 0.dp),
-            feature = stringResource(R.string.trial_feature_2),
-            icon = {
-                Icon(
-                    modifier = Modifier.padding(start = 4.dp), // Needed to match alignment with 1
-                    painter = painterResource(CoreR.drawable.ic_proton_alias),
-                    contentDescription = null,
-                    tint = PassTheme.colors.aliasInteractionNormMajor2
                 )
             }
         )

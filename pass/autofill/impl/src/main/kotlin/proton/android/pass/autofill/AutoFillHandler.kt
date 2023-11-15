@@ -59,7 +59,7 @@ object AutoFillHandler {
         telemetryManager: TelemetryManager,
         accountManager: AccountManager
     ) {
-        val windowNode = getWindowNodes(request.fillContexts).firstOrNull()
+        val windowNode = getWindowNodes(request.fillContexts).lastOrNull()
         if (windowNode?.rootViewNode == null) {
             PassLogger.i(TAG, "No window node found")
             callback.onSuccess(null)

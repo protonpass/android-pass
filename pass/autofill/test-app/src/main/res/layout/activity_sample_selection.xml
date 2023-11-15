@@ -32,6 +32,13 @@
                 android:text="Autofill manager Login" />
 
             <Button
+                android:id="@+id/multiStepLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Multistep Login" />
+
+            <Button
                 android:id="@+id/simpleFragmentLoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

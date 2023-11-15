@@ -3,8 +3,7 @@
   <string name="trial_title">Disfrute de su prueba gratuita</string>
   <string name="trial_subtitle">Para una gestión de contraseñas de nivel superior:</string>
   <string name="trial_feature_1">20 bóvedas</string>
-  <string name="trial_feature_2">Alias de correo electrónico ilimitados</string>
-  <string name="trial_feature_3">Autenticador de 2FA integrado</string>
+    <string name="trial_feature_3">Autenticador de 2FA integrado</string>
   <string name="trial_feature_4">Campos perzonalizados</string>
   <string name="trial_button_text">Actualice para mantener estas funciones</string>
   <plurals name="trial_days_left">

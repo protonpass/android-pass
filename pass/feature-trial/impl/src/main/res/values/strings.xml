@@ -3,7 +3,6 @@
     <string name="trial_title">Enjoy your free trial</string>
     <string name="trial_subtitle">For next-level password management:</string>
     <string name="trial_feature_1">20 vaults</string>
-    <string name="trial_feature_2">Unlimited email aliases</string>
     <string name="trial_feature_3">Integrated 2FA authenticator</string>
     <string name="trial_feature_4">Custom fields</string>
     <string name="trial_button_text">Upgrade to keep these features</string>

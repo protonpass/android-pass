@@ -50,6 +50,7 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
@@ -103,7 +104,7 @@ import proton.pass.domain.canUpdate
 import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
-@Suppress("LargeClass")
+@Suppress("LargeClass", "LongParameterList")
 @HiltViewModel
 class LoginDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -117,6 +118,7 @@ class LoginDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val canDisplayTotp: CanDisplayTotp,
     private val canShareVault: CanShareVault,
+    private val passwordScorer: PasswordScorer,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
@@ -323,9 +325,15 @@ class LoginDetailViewModel @Inject constructor(
 
                 val permissions = details.vault.role.toPermissions()
                 val canPerformItemActions = permissions.canUpdate()
+                val contents = details.itemUiModel.contents as ItemContents.Login
+                val passwordScore = encryptionContextProvider.withEncryptionContext {
+                    decrypt(contents.password.encrypted)
+                }.takeIf { it.isNotBlank() }
+                    ?.let { passwordScorer.check(it) }
 
                 LoginDetailUiState.Success(
                     itemUiModel = details.itemUiModel,
+                    passwordScore = passwordScore,
                     vault = vault,
                     linkedAlias = details.linkedAlias,
                     totpUiState = totpUiState,

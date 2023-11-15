@@ -3,8 +3,7 @@
   <string name="trial_title">Наслаждайтесь своей бесплатной пробной версией</string>
   <string name="trial_subtitle">For next-level password management:</string>
   <string name="trial_feature_1">20 хранилищ</string>
-  <string name="trial_feature_2">Неограниченное количество псевдонимов эл. почты</string>
-  <string name="trial_feature_3">Встроенный двухфакторный аутентификатор</string>
+    <string name="trial_feature_3">Встроенный двухфакторный аутентификатор</string>
   <string name="trial_feature_4">Настраиваемые поля</string>
   <string name="trial_button_text">Улучшите, чтобы сохранить эти функции</string>
   <plurals name="trial_days_left">

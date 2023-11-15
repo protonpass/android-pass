@@ -3,8 +3,7 @@
   <string name="trial_title">Gaudiu de la prova gratuïta</string>
   <string name="trial_subtitle">Per a la gestió de contrasenyes de següent nivell:</string>
   <string name="trial_feature_1">20 caixes fortes</string>
-  <string name="trial_feature_2">Nombre il·limitat d\'àlies de correu electrònic</string>
-  <string name="trial_feature_3">Autenticació de doble factor (A2F) integrada</string>
+    <string name="trial_feature_3">Autenticació de doble factor (A2F) integrada</string>
   <string name="trial_feature_4">Camps personalitzats</string>
   <string name="trial_button_text">Milloreu per mantindre aquestes funcions</string>
   <plurals name="trial_days_left">

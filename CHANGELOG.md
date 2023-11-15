@@ -3,9 +3,19 @@
 ### Features :tada:
 
 ### Fixes :bug:
-- Make camera not mandatory to install the app.
 
 ### Other
+
+## 1.10.4 (2023-11-15)
+
+### Fixes :bug:
+ 
+- Make camera not mandatory to install the app.
+- Don't disable autofill on user logout.
+
+### Other
+
+- Improve autofill
 
 ## 1.10.3 (2023-11-13)
 

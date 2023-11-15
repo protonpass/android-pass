@@ -3,8 +3,7 @@
   <string name="trial_title">無料トライアルをお楽しみください</string>
   <string name="trial_subtitle">次のレベルのパスワード管理の場合:</string>
   <string name="trial_feature_1">保管庫 20 個</string>
-  <string name="trial_feature_2">無制限の電子メール エイリアス</string>
-  <string name="trial_feature_3">統合された 2FA 認証システム</string>
+    <string name="trial_feature_3">統合された 2FA 認証システム</string>
   <string name="trial_feature_4">カスタムフィールド</string>
   <string name="trial_button_text">これらの機能を維持するにはアップグレードしてください</string>
   <plurals name="trial_days_left">

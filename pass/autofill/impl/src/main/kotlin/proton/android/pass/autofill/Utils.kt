@@ -35,7 +35,7 @@ object Utils {
 
     fun getWindowNodes(fillContexts: List<FillContext>): List<AssistStructure.WindowNode> {
         val fillContext = fillContexts
-            .firstOrNull { !it.structure.activityComponent.className.contains("PopupWindow") }
+            .lastOrNull { !it.structure.activityComponent.className.contains("PopupWindow") }
             ?: return emptyList()
         val structure: AssistStructure = fillContext.structure
         return if (structure.windowNodeCount > 0)

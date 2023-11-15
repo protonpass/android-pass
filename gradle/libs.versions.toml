@@ -49,7 +49,7 @@ protobuf = "3.21.12"
 app-update = "2.1.0"
 app-review = "2.0.1"
 # Gradle
-gradlePlugin-android = "8.0.2"
+gradlePlugin-android = "8.1.3"
 gradlePlugin-dependency-analysis = "1.20.0"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-fulladle = "0.17.4"

@@ -21,6 +21,7 @@ package proton.android.pass.autofill
 import android.app.assist.AssistStructure
 import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.os.CancellationSignal
 import android.service.autofill.FillCallback
 import android.service.autofill.FillRequest
@@ -135,7 +136,14 @@ object AutoFillHandler {
         datasetList.forEach {
             responseBuilder.addDataset(it)
         }
-        responseBuilder.addSaveInfo(assistInfo)
+
+        val isBrowser = packageNameOption.map { BROWSERS.contains(it) }.value() ?: false
+        responseBuilder.addSaveInfo(
+            assistInfo = assistInfo,
+            currentClientState = request.clientState ?: Bundle(),
+            isBrowser = isBrowser,
+            autofillSessionId = request.id
+        )
         return if (!currentCoroutineContext().isActive) {
             PassLogger.i(TAG, "Job was cancelled")
             callback.onSuccess(null)

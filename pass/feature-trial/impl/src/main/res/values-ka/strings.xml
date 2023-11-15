@@ -3,8 +3,7 @@
   <string name="trial_title">ისიამოვნეთ თქვენი უფასო სატესტო ვერსიით</string>
   <string name="trial_subtitle">შემდეგი დონის პაროლების მართვისთვის:</string>
   <string name="trial_feature_1">20 საცავი</string>
-  <string name="trial_feature_2">განუსაზღვრელი რაოდენობის ელფოსტის ფსევდონიმი</string>
-  <string name="trial_feature_3">ჩაშენებული 2FA ავთენტიკატორი</string>
+    <string name="trial_feature_3">ჩაშენებული 2FA ავთენტიკატორი</string>
   <string name="trial_feature_4">კონფიგურირებადი ველები</string>
   <string name="trial_button_text">აწიეთ ტარიფი ამ თვისებების შესანარჩუნებლად</string>
   <plurals name="trial_days_left">

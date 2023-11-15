@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
+import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -42,6 +43,7 @@ import proton.pass.domain.Vault
 fun LoginContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
+    passwordScore: PasswordScore?,
     vault: Vault?,
     totpUiState: TotpUiState?,
     moreInfoUiState: MoreInfoUiState,
@@ -66,7 +68,8 @@ fun LoginContent(
         )
         MainLoginSection(
             username = contents.username,
-            passwordState = contents.password,
+            passwordHiddenState = contents.password,
+            passwordScore = passwordScore,
             totpUiState = totpUiState,
             showViewAlias = showViewAlias,
             onEvent = onEvent

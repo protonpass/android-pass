@@ -53,6 +53,7 @@ fun HiddenContentRow(
     toggleIconBackground: Color,
     toggleIconForeground: Color,
     icon: @Composable () -> Unit,
+    middleSection: @Composable () -> Unit = {},
     revealAction: String,
     concealAction: String,
     onToggleClick: () -> Unit,
@@ -83,7 +84,7 @@ fun HiddenContentRow(
             Spacer(modifier = Modifier.height(8.dp))
             SectionSubtitle(text = sectionContent)
         }
-
+        middleSection()
         Circle(
             backgroundColor = toggleIconBackground,
             onClick = onToggleClick

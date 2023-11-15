@@ -58,7 +58,12 @@ fun getProtosConfig(): ProtosConfig {
 pluginManagement {
     includeBuild("build-logic")
     repositories {
-        google()
+        google {
+            mavenContent {
+                includeGroupByRegex(".*google.*")
+                includeGroupByRegex(".*android.*")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
@@ -178,7 +183,12 @@ include(":pass:tracing:impl")
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
+        google {
+            mavenContent {
+                includeGroupByRegex(".*google.*")
+                includeGroupByRegex(".*android.*")
+            }
+        }
         mavenCentral()
     }
 }

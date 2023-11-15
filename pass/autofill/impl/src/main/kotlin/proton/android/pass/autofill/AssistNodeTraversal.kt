@@ -22,6 +22,7 @@ import android.app.assist.AssistStructure
 import android.os.Build
 import android.text.InputType
 import android.view.View
+import android.view.autofill.AutofillId
 import android.widget.EditText
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AssistField
@@ -618,4 +619,13 @@ enum class InputTypeFlags(val value: Int) {
         fun fromValue(input: InputTypeValue): List<InputTypeFlags> = values()
             .filter { flag -> input.value.and(flag.value) == flag.value }
     }
+}
+
+fun AssistStructure.ViewNode.findChildById(id: AutofillId): AssistStructure.ViewNode? {
+    if (autofillId == id) return this
+    for (i in 0 until childCount) {
+        val child = getChildAt(i).findChildById(id)
+        if (child != null) return child
+    }
+    return null
 }

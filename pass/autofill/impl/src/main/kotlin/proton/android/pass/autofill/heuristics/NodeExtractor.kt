@@ -27,7 +27,6 @@ import android.widget.EditText
 import proton.android.pass.autofill.RequestFlags
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AssistField
-import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.entities.FieldType
@@ -39,6 +38,11 @@ import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 
 class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) {
+
+    data class ExtractionResult(
+        val fields: List<AssistField>,
+        val url: Option<String>
+    )
 
     private var autoFillNodes = mutableListOf<AssistField>()
     private var detectedUrl: Option<String> = None
@@ -60,10 +64,10 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     var visitedNodes = 0
         private set
 
-    fun extract(node: AssistStructure.ViewNode): AssistInfo =
+    fun extract(node: AssistStructure.ViewNode): ExtractionResult =
         extract(node.toAutofillNode())
 
-    fun extract(node: AutofillNode): AssistInfo {
+    fun extract(node: AutofillNode): ExtractionResult {
         visitedNodes = 0
         autoFillNodes = mutableListOf()
         traverseInternal(
@@ -74,7 +78,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 parentPath = emptyList()
             )
         )
-        return AssistInfo(
+        return ExtractionResult(
             fields = autoFillNodes,
             url = detectedUrl
         )

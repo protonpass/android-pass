@@ -32,6 +32,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.runInterruptible
+import kotlinx.coroutines.withTimeout
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -48,22 +51,26 @@ class AutofillManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : AutofillManager {
 
+    private val autofillManager: AndroidAutofillManager? =
+        context.getSystemService(AndroidAutofillManager::class.java)
+
     override fun getAutofillStatus(): Flow<AutofillSupportedStatus> = flow {
-        val autofillManager = context.getSystemService(AndroidAutofillManager::class.java)
         when {
             autofillManager == null -> emit(Unsupported)
             !autofillManager.isAutofillSupported -> emit(Unsupported)
             else -> while (currentCoroutineContext().isActive) {
                 runCatching {
-                    if (autofillManager.hasEnabledAutofillServices()) {
-                        emit(Supported(AutofillStatus.EnabledByOurService))
-                    } else if (autofillManager.isEnabled) {
-                        emit(Supported(AutofillStatus.EnabledByOtherService))
-                    } else {
-                        emit(Supported(AutofillStatus.Disabled))
+                    withTimeout(UPDATE_TIME.inWholeMilliseconds) {
+                        if (getHasEnabledAutofillServices()) {
+                            emit(Supported(AutofillStatus.EnabledByOurService))
+                        } else if (autofillManager.isEnabled) {
+                            emit(Supported(AutofillStatus.EnabledByOtherService))
+                        } else {
+                            emit(Supported(AutofillStatus.Disabled))
+                        }
                     }
                 }.onFailure {
-                    PassLogger.w(TAG, it, "Exception while retrieving hasEnabledAutofillServices")
+                    PassLogger.d(TAG, it, "Exception while retrieving hasEnabledAutofillServices")
                     emit(Unsupported)
                 }
                 delay(UPDATE_TIME.inWholeMilliseconds)
@@ -72,6 +79,9 @@ class AutofillManagerImpl @Inject constructor(
     }
         .distinctUntilChanged()
         .flowOn(Dispatchers.Default)
+
+    private suspend fun getHasEnabledAutofillServices(): Boolean =
+        runInterruptible { autofillManager?.hasEnabledAutofillServices() ?: false }
 
     override fun openAutofillSelector() {
         try {
@@ -89,11 +99,13 @@ class AutofillManagerImpl @Inject constructor(
         }
     }
 
-    private fun canOpenAutofillSelector(): Boolean {
-        val autofillManager: AndroidAutofillManager? = context
-            .getSystemService(AndroidAutofillManager::class.java)
-        return runCatching {
-            val hasEnabledAutofillServices = autofillManager?.hasEnabledAutofillServices() ?: false
+    private fun canOpenAutofillSelector(): Boolean =
+        runCatching {
+            val hasEnabledAutofillServices = runBlocking {
+                withTimeout(UPDATE_TIME.inWholeMilliseconds) {
+                    getHasEnabledAutofillServices()
+                }
+            }
             val isAutofillSupported = autofillManager?.isAutofillSupported ?: false
             !hasEnabledAutofillServices && isAutofillSupported
         }.getOrElse {
@@ -101,11 +113,8 @@ class AutofillManagerImpl @Inject constructor(
             false
         }
 
-    }
-
     override fun disableAutofill() {
         runCatching {
-            val autofillManager = context.getSystemService(AndroidAutofillManager::class.java)
             autofillManager?.disableAutofillServices()
         }.onSuccess {
             PassLogger.i(TAG, "Disabled autofill services")

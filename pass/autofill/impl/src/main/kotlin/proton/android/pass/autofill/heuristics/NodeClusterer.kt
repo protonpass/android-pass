@@ -25,24 +25,35 @@ import proton.android.pass.autofill.entities.FieldType
 sealed interface NodeCluster {
 
     fun isFocused(): Boolean
+    fun fields(): List<AssistField>
+
+    object Empty : NodeCluster {
+        override fun isFocused() = true
+        override fun fields(): List<AssistField> = emptyList()
+    }
 
     sealed interface Login : NodeCluster {
 
+        override fun isFocused() = fields().any { it.isFocused }
+
         @JvmInline
         value class OnlyUsername(val username: AssistField) : Login {
-            override fun isFocused() = username.isFocused
+            override fun fields(): List<AssistField> = listOf(username)
+            override fun toString(): String = "OnlyUsername"
         }
 
         @JvmInline
         value class OnlyPassword(val password: AssistField) : Login {
-            override fun isFocused() = password.isFocused
+            override fun fields(): List<AssistField> = listOf(password)
+            override fun toString(): String = "OnlyPassword"
         }
 
         data class UsernameAndPassword(
             val username: AssistField,
             val password: AssistField
         ) : Login {
-            override fun isFocused() = username.isFocused || password.isFocused
+            override fun fields(): List<AssistField> = listOf(username, password)
+            override fun toString(): String = "UsernameAndPassword"
         }
     }
 
@@ -51,11 +62,13 @@ sealed interface NodeCluster {
         val password: AssistField,
         val repeatPassword: AssistField
     ) : NodeCluster {
-        override fun isFocused() = username.isFocused
-            || password.isFocused
-            || repeatPassword.isFocused
+        override fun isFocused() = fields().any { it.isFocused }
+        override fun fields(): List<AssistField> = listOf(username, password, repeatPassword)
+        override fun toString(): String = "SignUp"
     }
 }
+
+fun List<NodeCluster>.focused(): NodeCluster = firstOrNull { it.isFocused() } ?: NodeCluster.Empty
 
 interface IdentifiableNode {
     val nodeId: AutofillFieldId?
@@ -102,13 +115,23 @@ object NodeClusterer {
             )
 
             if (nearestPasswordField != null) {
-                clusters.add(
-                    NodeCluster.Login.UsernameAndPassword(
-                        usernameField,
-                        nearestPasswordField
-                    )
+                val remainingUsernames = usernameFields.filter { !addedNodes.contains(it) }
+                val nearestUsernameToPassword = HeuristicsUtils.findNearestNodeByParentId(
+                    currentField = nearestPasswordField,
+                    fields = remainingUsernames
                 )
-                addedNodes.add(nearestPasswordField)
+
+                if (nearestUsernameToPassword == usernameField) {
+                    clusters.add(
+                        NodeCluster.Login.UsernameAndPassword(
+                            username = usernameField,
+                            password = nearestPasswordField
+                        )
+                    )
+                    addedNodes.add(nearestPasswordField)
+                } else {
+                    clusters.add(NodeCluster.Login.OnlyUsername(usernameField))
+                }
             } else {
                 clusters.add(NodeCluster.Login.OnlyUsername(usernameField))
             }

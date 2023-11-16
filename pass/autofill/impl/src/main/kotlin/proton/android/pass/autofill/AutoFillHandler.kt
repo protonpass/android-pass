@@ -36,9 +36,12 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.Utils.getWindowNodes
+import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addSaveInfo
+import proton.android.pass.autofill.heuristics.NodeClusterer
 import proton.android.pass.autofill.heuristics.NodeExtractor
+import proton.android.pass.autofill.heuristics.focused
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.log.api.PassLogger
@@ -90,7 +93,7 @@ object AutoFillHandler {
         }
     }
 
-    @Suppress("LongParameterList")
+    @Suppress("LongMethod", "LongParameterList")
     private suspend fun searchAndFill(
         context: Context,
         windowNode: AssistStructure.WindowNode,
@@ -107,12 +110,22 @@ object AutoFillHandler {
             return
         }
         val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
-        val assistInfo = NodeExtractor(requestFlags).extract(windowNode.rootViewNode)
-        if (assistInfo.fields.isEmpty()) {
+        val extractionResult = NodeExtractor(requestFlags).extract(windowNode.rootViewNode)
+        if (extractionResult.fields.isEmpty()) {
             callback.onSuccess(null)
             return
         }
-        PassLogger.d(TAG, "Fields found: ${assistInfo.fields.map { it.type }.joinToString()}")
+        PassLogger.d(TAG, "Fields found: ${extractionResult.fields.map { it.type }.joinToString()}")
+
+        val clusteredNodes = NodeClusterer.cluster(extractionResult.fields)
+        PassLogger.d(TAG, "Clusters found: ${clusteredNodes.joinToString()}")
+
+        val focusedCluster = clusteredNodes.focused()
+        val assistInfo = AssistInfo(
+            cluster = focusedCluster,
+            url = extractionResult.url
+        )
+
         val packageNameOption = Utils.getApplicationPackageName(windowNode)
             .takeIf { !BROWSERS.contains(it) }
             .toOption()
@@ -140,7 +153,7 @@ object AutoFillHandler {
 
         val isBrowser = packageNameOption.map { BROWSERS.contains(it) }.value() ?: false
         responseBuilder.addSaveInfo(
-            assistInfo = assistInfo,
+            cluster = focusedCluster,
             currentClientState = request.clientState ?: Bundle(),
             isBrowser = isBrowser,
             autofillSessionId = request.id

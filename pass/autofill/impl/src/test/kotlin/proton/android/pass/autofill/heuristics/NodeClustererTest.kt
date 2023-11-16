@@ -89,6 +89,18 @@ class NodeClustererTest {
         assertThat(clusters).isEqualTo(listOf(cluster1, cluster2))
     }
 
+    @Test
+    fun `can handle single username and username+password`() {
+        val username1 = loginField(1, listOf(1, 10, 11))
+        val username2 = loginField(2, listOf(1, 20, 21))
+        val password = passwordField(3, listOf(1, 20, 22))
+        val clusters = NodeClusterer.cluster(listOf(username1, username2, password))
+
+        val cluster1 = NodeCluster.Login.OnlyUsername(username1)
+        val cluster2 = NodeCluster.Login.UsernameAndPassword(username2, password)
+        assertThat(clusters).isEqualTo(listOf(cluster1, cluster2))
+    }
+
     private fun loginField(
         id: Int,
         nodePath: List<Int>

@@ -138,7 +138,7 @@ class AutofillServiceManager @Inject constructor(
         )
         val openAppDataSet = DatasetUtils.buildDataset(
             options = openAppDatasetOptions,
-            assistFields = autofillData.assistInfo.fields
+            cluster = autofillData.assistInfo.cluster
         )
         val shouldAuthenticate = runBlocking { needsBiometricAuth().first() }
 
@@ -166,7 +166,7 @@ class AutofillServiceManager @Inject constructor(
                 )
                 DatasetUtils.buildDataset(
                     options = options,
-                    assistFields = autofillData.assistInfo.fields
+                    cluster = autofillData.assistInfo.cluster
                 )
             }
             .plus(openAppDataSet)
@@ -233,7 +233,7 @@ class AutofillServiceManager @Inject constructor(
         )
         return DatasetUtils.buildDataset(
             options = datasetBuilderOptions,
-            assistFields = autofillData.assistInfo.fields
+            cluster = autofillData.assistInfo.cluster
         )
     }
 
@@ -261,7 +261,7 @@ class AutofillServiceManager @Inject constructor(
         )
         return DatasetUtils.buildDataset(
             options = builderOptions,
-            assistFields = autofillData.assistInfo.fields
+            cluster = autofillData.assistInfo.cluster
         )
     }
 
@@ -288,7 +288,7 @@ class AutofillServiceManager @Inject constructor(
         )
         return DatasetUtils.buildDataset(
             options = builderOptions,
-            assistFields = autofillData.assistInfo.fields
+            cluster = autofillData.assistInfo.cluster
         )
     }
 

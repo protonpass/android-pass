@@ -25,9 +25,9 @@ import android.service.autofill.Presentations
 import android.view.autofill.AutofillValue
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
-import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.asAndroid
+import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -39,18 +39,18 @@ object DatasetUtils {
     internal fun buildDataset(
         options: DatasetBuilderOptions,
         autofillMappings: Option<AutofillMappings> = None,
-        assistFields: List<AssistField> = emptyList()
+        cluster: NodeCluster = NodeCluster.Empty
     ): Dataset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         buildDatasetGTE33(
             autofillMappings = autofillMappings,
             dsbOptions = options,
-            assistFields = assistFields
+            cluster = cluster
         )
     } else {
         buildDatasetLT33(
             autofillMappings = autofillMappings,
             dsbOptions = options,
-            assistFields = assistFields
+            cluster = cluster
         )
     }
 
@@ -58,7 +58,7 @@ object DatasetUtils {
     private fun buildDatasetGTE33(
         dsbOptions: DatasetBuilderOptions,
         autofillMappings: Option<AutofillMappings>,
-        assistFields: List<AssistField>
+        cluster: NodeCluster
     ): Dataset {
         val presentationsBuilder = Presentations.Builder()
         if (dsbOptions.remoteViewPresentation is Some) {
@@ -78,7 +78,7 @@ object DatasetUtils {
         if (autofillMappings is Some) {
             datasetBuilder.fillWithMappings(autofillMappings.value)
         } else {
-            datasetBuilder.createFieldDataHolders(assistFields)
+            datasetBuilder.createFieldDataHolders(cluster)
         }
         return datasetBuilder.build()
     }
@@ -99,8 +99,8 @@ object DatasetUtils {
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun Dataset.Builder.createFieldDataHolders(assistFields: List<AssistField>): Dataset.Builder {
-        for (field in assistFields) {
+    private fun Dataset.Builder.createFieldDataHolders(cluster: NodeCluster): Dataset.Builder {
+        for (field in cluster.fields()) {
             PassLogger.d(TAG, "field id: ${field.id}")
             setField(field.id.asAndroid().autofillId, Field.Builder().build())
         }
@@ -111,7 +111,7 @@ object DatasetUtils {
     private fun buildDatasetLT33(
         dsbOptions: DatasetBuilderOptions,
         autofillMappings: Option<AutofillMappings>,
-        assistFields: List<AssistField>
+        cluster: NodeCluster
     ): Dataset {
         val datasetBuilder = if (dsbOptions.remoteViewPresentation is Some) {
             Dataset.Builder(dsbOptions.remoteViewPresentation.value)
@@ -140,15 +140,15 @@ object DatasetUtils {
                 )
             }
         } else {
-            datasetBuilder.createValueDataHolders(assistFields)
+            datasetBuilder.createValueDataHolders(cluster)
         }
 
         return datasetBuilder.build()
     }
 
     @Suppress("DEPRECATION")
-    private fun Dataset.Builder.createValueDataHolders(assistFields: List<AssistField>): Dataset.Builder {
-        for (value in assistFields) {
+    private fun Dataset.Builder.createValueDataHolders(cluster: NodeCluster): Dataset.Builder {
+        for (value in cluster.fields()) {
             PassLogger.d(TAG, "field id: ${value.id}")
             setValue(value.id.asAndroid().autofillId, null)
         }

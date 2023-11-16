@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
@@ -31,9 +32,7 @@ fun CreditCardRow(
         if (content.number.isBlank()) {
             null
         } else {
-            val start = content.number.take(4)
-            val end = content.number.takeLast(4)
-            AnnotatedString("$start •••• •••• $end")
+            AnnotatedString(maskCreditCardNumber(content.number))
         }
     }
 

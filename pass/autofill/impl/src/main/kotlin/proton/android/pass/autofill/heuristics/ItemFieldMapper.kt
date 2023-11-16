@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.ui.autofill
+package proton.android.pass.autofill.heuristics
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.entities.AutofillFieldId
@@ -24,6 +24,7 @@ import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.DatasetMapping
 import proton.android.pass.autofill.entities.FieldType
+import proton.android.pass.autofill.heuristics.HeuristicsUtils.findNearestNodeByParentId
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.log.api.PassLogger
 
@@ -36,7 +37,10 @@ object ItemFieldMapper {
         val autofillType: FieldType,
         val isFocused: Boolean,
         val nodePath: List<AutofillFieldId?>
-    )
+    ) : IdentifiableNode {
+        override val nodeId = autofillFieldId
+        override val parentPath = nodePath
+    }
 
     @Suppress("LongParameterList")
     fun mapFields(
@@ -177,7 +181,7 @@ object ItemFieldMapper {
 
         // There is more than one password field. Try to find which one
         val passwordField = findNearestNodeByParentId(usernameField, passwordFields)
-        passwordField.autofillFieldId?.let { id ->
+        passwordField?.autofillFieldId?.let { id ->
             mappings.add(mappingForPassword(encryptionContext, autofillItem.password, id))
         }
     }
@@ -202,35 +206,9 @@ object ItemFieldMapper {
 
         // There is more than one username field. Try to find which one
         val usernameField = findNearestNodeByParentId(passwordField, usernameFields)
-        usernameField.autofillFieldId?.let { id ->
+        usernameField?.autofillFieldId?.let { id ->
             mappings.add(mappingForUsername(autofillItem.username, id))
         }
-    }
-
-    private fun findNearestNodeByParentId(
-        currentField: AutofillFieldMapping,
-        fields: List<AutofillFieldMapping>
-    ): AutofillFieldMapping {
-        // Initialize variables to keep track of the nearest node and the minimum number of jumps.
-        var nearest: AutofillFieldMapping = fields.first()
-        var minJumps = Int.MAX_VALUE
-
-        // Iterate over each node in the list.
-        for (node in fields) {
-            // Find the common path between the target node's parentList and the current node's parentList.
-            val commonPath = currentField.nodePath.intersect(node.nodePath.toSet()).toList()
-
-            // Calculate the number of jumps needed to reach the common path node.
-            val jumps = currentField.nodePath.size - commonPath.size + node.nodePath.size - commonPath.size
-
-            // If the current node requires fewer jumps, update the nearest node.
-            if (jumps < minJumps) {
-                nearest = node
-                minJumps = jumps
-            }
-        }
-
-        return nearest
     }
 
     private sealed interface MapFocusedFieldResult {

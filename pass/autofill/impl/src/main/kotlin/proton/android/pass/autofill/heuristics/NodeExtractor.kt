@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill
+package proton.android.pass.autofill.heuristics
 
 import android.app.assist.AssistStructure
 import android.os.Build
@@ -24,6 +24,7 @@ import android.text.InputType
 import android.view.View
 import android.view.autofill.AutofillId
 import android.widget.EditText
+import proton.android.pass.autofill.RequestFlags
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AssistInfo
@@ -37,7 +38,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 
-class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyList()) {
+class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) {
 
     private var autoFillNodes = mutableListOf<AssistField>()
     private var detectedUrl: Option<String> = None
@@ -59,10 +60,10 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
     var visitedNodes = 0
         private set
 
-    fun traverse(node: AssistStructure.ViewNode): AssistInfo =
-        traverse(node.toAutofillNode())
+    fun extract(node: AssistStructure.ViewNode): AssistInfo =
+        extract(node.toAutofillNode())
 
-    fun traverse(node: AutofillNode): AssistInfo {
+    fun extract(node: AutofillNode): AssistInfo {
         visitedNodes = 0
         autoFillNodes = mutableListOf()
         traverseInternal(

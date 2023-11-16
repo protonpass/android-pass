@@ -29,6 +29,8 @@ import proton.android.pass.autofill.entities.SaveItemType
 import proton.android.pass.autofill.extensions.MultiStepUtils
 import proton.android.pass.autofill.extensions.MultiStepUtils.getPasswordFromState
 import proton.android.pass.autofill.extensions.MultiStepUtils.getUsernameFromState
+import proton.android.pass.autofill.heuristics.NodeExtractor
+import proton.android.pass.autofill.heuristics.findChildById
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autosave.AutoSaveActivity
 import proton.android.pass.autofill.ui.autosave.LinkedAppInfo
@@ -111,7 +113,7 @@ object AutoSaveHandler {
         usernameField: AssistStructure.ViewNode?,
         passwordField: AssistStructure.ViewNode?
     ) {
-        val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
+        val assistInfo = NodeExtractor().extract(windowNode.rootViewNode)
 
         val packageName = getApplicationPackageName(windowNode)
         val itemTitle = getItemTitle(context, packageName, assistInfo.url)

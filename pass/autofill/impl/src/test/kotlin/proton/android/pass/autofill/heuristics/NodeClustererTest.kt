@@ -1,0 +1,115 @@
+/*
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and Proton Pass.
+ *
+ * Proton Pass is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Pass is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package proton.android.pass.autofill.heuristics
+
+import com.google.common.truth.Truth.assertThat
+import org.junit.Test
+import proton.android.pass.autofill.TestAutofillId
+import proton.android.pass.autofill.entities.AssistField
+import proton.android.pass.autofill.entities.FieldType
+
+class NodeClustererTest {
+
+    @Test
+    fun `can handle empty list`() {
+        val clusters = NodeClusterer.cluster(emptyList())
+        assert(clusters.isEmpty())
+    }
+
+    @Test
+    fun `can handle single username`() {
+        val field = loginField(1, emptyList())
+        val clusters = NodeClusterer.cluster(listOf(field))
+        assertThat(clusters).isEqualTo(listOf(NodeCluster.Login.OnlyUsername(field)))
+    }
+
+    @Test
+    fun `can handle single password`() {
+        val field = passwordField(1, emptyList())
+        val clusters = NodeClusterer.cluster(listOf(field))
+        assertThat(clusters).isEqualTo(listOf(NodeCluster.Login.OnlyPassword(field)))
+    }
+
+    @Test
+    fun `can handle username and password`() {
+        val username = loginField(1, emptyList())
+        val password = passwordField(2, emptyList())
+        val clusters = NodeClusterer.cluster(listOf(username, password))
+        assertThat(clusters).isEqualTo(listOf(NodeCluster.Login.UsernameAndPassword(username, password)))
+    }
+
+    @Test
+    fun `can handle 2 usernames and 2 passwords`() {
+        val username1 = loginField(1, listOf(1, 10, 11))
+        val username2 = loginField(2, listOf(1, 10, 12))
+        val password1 = passwordField(3, listOf(1, 20, 21))
+        val password2 = passwordField(4, listOf(1, 20, 22))
+        val clusters = NodeClusterer.cluster(listOf(username1, username2, password1, password2))
+
+        val cluster1 = NodeCluster.Login.UsernameAndPassword(username1, password1)
+        val cluster2 = NodeCluster.Login.UsernameAndPassword(username2, password2)
+        assertThat(clusters).isEqualTo(listOf(cluster1, cluster2))
+    }
+
+    @Test
+    fun `can handle 1 username and 2 passwords`() {
+        val username = loginField(1, listOf(1, 10, 11))
+        val password1 = passwordField(3, listOf(1, 20, 21))
+        val password2 = passwordField(4, listOf(1, 20, 22))
+        val clusters = NodeClusterer.cluster(listOf(username, password1, password2))
+
+        assertThat(clusters).isEqualTo(listOf(NodeCluster.SignUp(username, password1, password2)))
+    }
+
+    @Test
+    fun `can handle 2 usernames and 1 password`() {
+        val username1 = loginField(1, listOf(1, 10, 11))
+        val username2 = loginField(2, listOf(1, 10, 12))
+        val password = passwordField(3, listOf(1, 20, 21))
+        val clusters = NodeClusterer.cluster(listOf(username1, username2, password))
+
+        val cluster1 = NodeCluster.Login.UsernameAndPassword(username1, password)
+        val cluster2 = NodeCluster.Login.OnlyUsername(username2)
+        assertThat(clusters).isEqualTo(listOf(cluster1, cluster2))
+    }
+
+    private fun loginField(
+        id: Int,
+        nodePath: List<Int>
+    ): AssistField = AssistField(
+        id = TestAutofillId(id),
+        type = FieldType.Username,
+        value = null,
+        text = null,
+        isFocused = false,
+        nodePath = nodePath.map(::TestAutofillId)
+    )
+
+    private fun passwordField(
+        id: Int,
+        nodePath: List<Int>
+    ): AssistField = AssistField(
+        id = TestAutofillId(id),
+        type = FieldType.Password,
+        value = null,
+        text = null,
+        isFocused = false,
+        nodePath = nodePath.map(::TestAutofillId)
+    )
+}

@@ -51,7 +51,7 @@ import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_INLINE_
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_PACKAGE_NAME
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_TITLE
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_WEB_DOMAIN
-import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
+import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some

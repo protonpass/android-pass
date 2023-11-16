@@ -24,7 +24,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import proton.android.pass.autofill.AssistNodeTraversal
+import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.entities.FieldType
@@ -34,7 +34,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 
 @RunWith(JUnit4::class)
-class AssistNodeTraversalTest {
+class NodeExtractorTest {
 
     @Test
     fun allNodesAreVisited() {
@@ -48,8 +48,8 @@ class AssistNodeTraversalTest {
             )
         )
 
-        val traversal = AssistNodeTraversal()
-        traversal.traverse(rootNode)
+        val traversal = NodeExtractor()
+        traversal.extract(rootNode)
 
         Assert.assertEquals(5, traversal.visitedNodes)
     }
@@ -75,7 +75,7 @@ class AssistNodeTraversalTest {
             isImportantForAutofill = true
         )
 
-        val result = AssistNodeTraversal().traverse(rootNode)
+        val result = NodeExtractor().extract(rootNode)
 
         Assert.assertEquals(FieldType.Email, result.fields.firstOrNull()?.type)
     }
@@ -97,7 +97,7 @@ class AssistNodeTraversalTest {
 
     @Test
     fun autofillHintsParsingReturnsKnownFieldType() {
-        val traversal = AssistNodeTraversal()
+        val traversal = NodeExtractor()
 
         val usernameType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_USERNAME)
         val emailType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_EMAIL_ADDRESS)
@@ -122,7 +122,7 @@ class AssistNodeTraversalTest {
                 )
             )
         )
-        val result = AssistNodeTraversal().traverse(structure)
+        val result = NodeExtractor().extract(structure)
         Assert.assertEquals(Some(domain), result.url)
     }
 
@@ -136,7 +136,7 @@ class AssistNodeTraversalTest {
                 makeNode(webDomain = domain2)
             )
         )
-        val result = AssistNodeTraversal().traverse(structure)
+        val result = NodeExtractor().extract(structure)
         Assert.assertEquals(Some(domain1), result.url)
     }
 
@@ -152,7 +152,7 @@ class AssistNodeTraversalTest {
                 )
             )
         )
-        val result = AssistNodeTraversal().traverse(structure)
+        val result = NodeExtractor().extract(structure)
         Assert.assertEquals(Some(domain1), result.url)
 
 

@@ -19,6 +19,7 @@
 package proton.android.pass.autofill.entities
 
 import android.view.autofill.AutofillValue
+import proton.android.pass.autofill.heuristics.IdentifiableNode
 
 data class AssistField(
     val id: AutofillFieldId,
@@ -27,4 +28,7 @@ data class AssistField(
     val text: String?,
     val isFocused: Boolean,
     val nodePath: List<AutofillFieldId>
-)
+) : IdentifiableNode {
+    override val nodeId = id
+    override val parentPath = nodePath
+}

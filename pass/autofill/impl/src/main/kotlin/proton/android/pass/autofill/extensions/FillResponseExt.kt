@@ -23,12 +23,11 @@ import android.os.Bundle
 import android.service.autofill.FillResponse
 import android.service.autofill.SaveInfo
 import proton.android.pass.autofill.entities.AssistField
-import proton.android.pass.autofill.entities.AssistInfo
-import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.asAndroid
 import proton.android.pass.autofill.extensions.MultiStepUtils.addPasswordToState
 import proton.android.pass.autofill.extensions.MultiStepUtils.addUsernameToState
 import proton.android.pass.autofill.extensions.MultiStepUtils.getUsernameFromState
+import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
@@ -54,11 +53,11 @@ sealed interface SaveSessionType {
 
 internal fun FillResponse.Builder.addSaveInfo(
     autofillSessionId: Int,
-    assistInfo: AssistInfo,
+    cluster: NodeCluster,
     currentClientState: Bundle,
     isBrowser: Boolean
 ) {
-    val saveSessionType = getSaveSessionType(assistInfo, currentClientState, isBrowser)
+    val saveSessionType = getSaveSessionType(cluster, currentClientState, isBrowser)
     val saveInfo = when (saveSessionType) {
         SaveSessionType.NotAutoSaveable -> return
         is SaveSessionType.UsernameAndPassword -> {
@@ -127,44 +126,42 @@ internal fun FillResponse.Builder.addSaveInfo(
 }
 
 private fun getSaveSessionType(
-    assistInfo: AssistInfo,
+    cluster: NodeCluster,
     currentClientState: Bundle,
     isBrowser: Boolean
-): SaveSessionType {
-    val sessionUsernameField = assistInfo.fields.firstOrNull {
-        it.type == FieldType.Email || it.type == FieldType.Username
+): SaveSessionType = when (cluster) {
+    NodeCluster.Empty -> SaveSessionType.NotAutoSaveable
+    is NodeCluster.SignUp -> {
+        SaveSessionType.UsernameAndPassword(
+            usernameField = cluster.username,
+            passwordField = cluster.password
+        )
     }
-    val sessionPasswordField = assistInfo.fields.firstOrNull { it.type == FieldType.Password }
 
-    return when {
-        sessionUsernameField != null && sessionPasswordField != null -> {
-            SaveSessionType.UsernameAndPassword(
-                usernameField = sessionUsernameField,
-                passwordField = sessionPasswordField
-            )
-        }
-
-        sessionUsernameField != null && sessionPasswordField == null -> if (isBrowser) {
-            PassLogger.d(TAG, "Not adding saveInfo because is only username and is browser")
-            SaveSessionType.NotAutoSaveable
-        } else {
-            SaveSessionType.Username(sessionUsernameField)
-        }
-
-        sessionUsernameField == null && sessionPasswordField != null -> if (isBrowser) {
+    is NodeCluster.Login -> when (cluster) {
+        is NodeCluster.Login.OnlyPassword -> if (isBrowser) {
             PassLogger.d(TAG, "Not adding saveInfo because is only password and is browser")
             SaveSessionType.NotAutoSaveable
         } else {
             val usernameField = currentClientState.getUsernameFromState().toOption()
             SaveSessionType.Password(
                 storedUsername = usernameField,
-                passwordField = sessionPasswordField
+                passwordField = cluster.password
             )
         }
 
-        else -> {
-            PassLogger.i(TAG, "No username or password field found")
+        is NodeCluster.Login.OnlyUsername -> if (isBrowser) {
+            PassLogger.d(TAG, "Not adding saveInfo because is only username and is browser")
             SaveSessionType.NotAutoSaveable
+        } else {
+            SaveSessionType.Username(cluster.username)
+        }
+
+        is NodeCluster.Login.UsernameAndPassword -> {
+            SaveSessionType.UsernameAndPassword(
+                usernameField = cluster.username,
+                passwordField = cluster.password
+            )
         }
     }
 }

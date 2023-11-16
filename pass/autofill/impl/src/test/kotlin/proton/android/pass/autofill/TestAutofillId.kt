@@ -16,19 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.entities
+package proton.android.pass.autofill
 
-import android.view.autofill.AutofillValue
-import proton.android.pass.autofill.heuristics.IdentifiableNode
+import proton.android.pass.autofill.entities.AutofillFieldId
 
-data class AssistField(
-    val id: AutofillFieldId,
-    val type: FieldType?,
-    val value: AutofillValue?,
-    val text: String?,
-    val isFocused: Boolean,
-    val nodePath: List<AutofillFieldId>
-) : IdentifiableNode {
-    override val nodeId = id
-    override val parentPath = nodePath
-}
+data class TestAutofillId(val id: Int) : AutofillFieldId

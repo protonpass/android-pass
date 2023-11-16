@@ -51,7 +51,7 @@ import proton.android.pass.autofill.MFAAutofillCopied
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.service.R
-import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
+import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult

@@ -29,9 +29,10 @@ val OptionShareIdSaver: Saver<Option<ShareId>, Any> = run {
     val shareId = "share_id"
     mapSaver(
         save = {
-            when (it) {
-                None -> emptyMap()
-                is Some -> mapOf(shareId to it.value.id)
+            if (it is Some) {
+                mapOf(shareId to it.value.id)
+            } else {
+                emptyMap()
             }
         },
         restore = { values ->

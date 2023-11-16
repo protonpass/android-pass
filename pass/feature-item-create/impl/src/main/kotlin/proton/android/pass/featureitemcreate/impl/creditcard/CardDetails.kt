@@ -46,6 +46,13 @@ fun CardDetails(
         PassDivider()
         CardNumberInput(value = creditCardItemFormState.number, enabled = enabled, onChange = onNumberChanged)
         PassDivider()
+        CardExpirationDateInput(
+            value = creditCardItemFormState.expirationDate,
+            enabled = enabled,
+            hasError = validationErrors.contains(CreditCardValidationErrors.InvalidExpirationDate),
+            onChange = onExpirationDateChanged
+        )
+        PassDivider()
         CardCVVInput(
             value = creditCardItemFormState.cvv,
             enabled = enabled,
@@ -58,13 +65,6 @@ fun CardDetails(
             enabled = enabled,
             onChange = onPinChanged,
             onFocusChange = onPinFocusChange
-        )
-        PassDivider()
-        CardExpirationDateInput(
-            value = creditCardItemFormState.expirationDate,
-            enabled = enabled,
-            hasError = validationErrors.contains(CreditCardValidationErrors.InvalidExpirationDate),
-            onChange = onExpirationDateChanged
         )
     }
 }

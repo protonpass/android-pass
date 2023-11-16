@@ -110,6 +110,7 @@ object AutoFillHandler {
             callback.onSuccess(null)
             return
         }
+        PassLogger.d(TAG, "Fields found: ${assistInfo.fields.map { it.type }.joinToString()}")
         val packageNameOption = Utils.getApplicationPackageName(windowNode)
             .takeIf { !BROWSERS.contains(it) }
             .toOption()

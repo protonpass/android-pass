@@ -40,6 +40,7 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -146,14 +147,7 @@ class CreditCardDetailViewModel @Inject constructor(
                     val withSpaces = contents.number.chunked(4).joinToString(" ")
                     CardNumberState.Visible(withSpaces)
                 } else {
-                    val content = if (contents.number.isNotBlank()) {
-                        val start = contents.number.take(4)
-                        val end = contents.number.takeLast(4)
-                        "$start •••• •••• $end"
-                    } else {
-                        ""
-                    }
-                    CardNumberState.Masked(content)
+                    CardNumberState.Masked(maskCreditCardNumber(contents.number))
                 }
 
                 contents = contents.copy(

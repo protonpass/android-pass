@@ -51,6 +51,9 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         "userid"
     )
 
+    private val totpKeywords = listOf("otp", "totp", "mfa", "2fa", "tfa")
+    private val passwordKeywords = listOf("password")
+
     // For testing purposes
     var visitedNodes = 0
         private set
@@ -394,19 +397,30 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         return FieldType.Unknown
     }
 
-    fun detectFieldTypeUsingAutofillHint(autofillHint: String): FieldType = when (autofillHint) {
-        View.AUTOFILL_HINT_EMAIL_ADDRESS -> FieldType.Email
-        View.AUTOFILL_HINT_USERNAME -> FieldType.Username
-        View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> FieldType.Password
-        else -> {
-            val sanitizedHint = sanitizeHint(autofillHint)
-            when {
-                sanitizedHint.contains("username") -> FieldType.Username
-                sanitizedHint.contains("email") -> FieldType.Email
-                sanitizedHint.contains("password") -> FieldType.Password
-                else -> FieldType.Unknown
-            }
+    @Suppress("ReturnCount")
+    fun detectFieldTypeUsingAutofillHint(hint: String): FieldType {
+        when (hint) {
+            View.AUTOFILL_HINT_EMAIL_ADDRESS -> return FieldType.Email
+            View.AUTOFILL_HINT_USERNAME -> return FieldType.Username
+            View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> return FieldType.Password
+            else -> {}
         }
+
+        val sanitizedHint = sanitizeHint(hint)
+        for (usernameKw in usernameKeywords) {
+            if (sanitizedHint.contains(usernameKw)) return FieldType.Username
+        }
+        if (USERNAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Username
+        if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
+
+        for (passwordKw in passwordKeywords) {
+            if (sanitizedHint.contains(passwordKw)) return FieldType.Password
+        }
+        for (totpKw in totpKeywords) {
+            if (sanitizedHint.contains(totpKw)) return FieldType.Totp
+        }
+
+        return FieldType.Unknown
     }
 
     private fun sanitizeHint(hint: String): String = hint.lowercase()
@@ -415,17 +429,14 @@ class AssistNodeTraversal(private val requestFlags: List<RequestFlags> = emptyLi
         .replace("/", "")
         .replace(" ", "")
 
-    @Suppress("ReturnCount")
     private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {
         val normalizedKeywords = hintKeywordList.map(CharSequence::toString).map(this::sanitizeHint)
 
         for (kw in normalizedKeywords) {
-            for (usernameKw in usernameKeywords) {
-                if (kw.contains(usernameKw)) return FieldType.Username
+            when (val type = detectFieldTypeUsingAutofillHint(kw)) {
+                FieldType.Unknown -> {}
+                else -> return type
             }
-
-            if (USERNAME_REGEX.containsMatchIn(kw)) return FieldType.Username
-            if (EMAIL_REGEX.containsMatchIn(kw)) return FieldType.Email
         }
 
         return FieldType.Unknown

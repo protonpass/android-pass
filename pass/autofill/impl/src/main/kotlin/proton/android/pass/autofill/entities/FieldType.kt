@@ -27,6 +27,7 @@ enum class FieldType : Parcelable {
     Username,
     Email,
     Password,
+    Totp,
     Phone,
     Other,
     Unknown;

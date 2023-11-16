@@ -36,7 +36,7 @@ fun MainCreditCardSection(
     isDowngradedMode: Boolean,
     onEvent: (CreditCardDetailEvent) -> Unit
 ) {
-    if (!canShowSection(cardHolder, number, pin, cvv)) return
+    if (!canShowSection(cardHolder, number, pin, cvv, expirationDate)) return
 
     val sections = mutableListOf<@Composable () -> Unit>()
     if (cardHolder.isNotBlank()) {
@@ -59,6 +59,12 @@ fun MainCreditCardSection(
         }
     }
 
+    if (expirationDate.isNotBlank()) {
+        sections += {
+            CardExpirationDateRow(expirationDate = expirationDate)
+        }
+    }
+
     if (cvv !is HiddenState.Empty) {
         sections += {
             CardCvvRow(
@@ -78,12 +84,6 @@ fun MainCreditCardSection(
         }
     }
 
-    if (expirationDate.isNotBlank()) {
-        sections += {
-            CardExpirationDateRow(expirationDate = expirationDate)
-        }
-    }
-
     RoundedCornersColumn(modifier = modifier.fillMaxWidth()) {
         sections.forEachIndexed { idx, func ->
             func()
@@ -100,12 +100,14 @@ private fun canShowSection(
     cardHolder: String,
     number: CardNumberState,
     pin: HiddenState,
-    cvv: HiddenState
+    cvv: HiddenState,
+    expirationDate: String
 ): Boolean {
     if (cardHolder.isBlank() &&
         !number.hasContent() &&
         pin is HiddenState.Empty &&
-        cvv is HiddenState.Empty
+        cvv is HiddenState.Empty &&
+        expirationDate.isBlank()
     ) return false
 
     return true

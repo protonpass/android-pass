@@ -38,6 +38,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addSaveInfo
+import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.log.api.PassLogger
@@ -106,7 +107,7 @@ object AutoFillHandler {
             return
         }
         val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
-        val assistInfo = AssistNodeTraversal(requestFlags).traverse(windowNode.rootViewNode)
+        val assistInfo = NodeExtractor(requestFlags).extract(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) {
             callback.onSuccess(null)
             return

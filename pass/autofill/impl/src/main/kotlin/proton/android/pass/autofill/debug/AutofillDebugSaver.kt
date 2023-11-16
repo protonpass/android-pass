@@ -29,7 +29,7 @@ import proton.android.pass.autofill.Utils
 import proton.android.pass.autofill.debug.DebugUtils.autofillDumpDir
 import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.entities.InputTypeValue
-import proton.android.pass.autofill.toAutofillNode
+import proton.android.pass.autofill.heuristics.toAutofillNode
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 

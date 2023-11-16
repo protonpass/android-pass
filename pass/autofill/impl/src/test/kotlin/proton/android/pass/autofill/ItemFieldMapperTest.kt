@@ -20,11 +20,10 @@ package proton.android.pass.autofill
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.DatasetMapping
 import proton.android.pass.autofill.entities.FieldType
-import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
+import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 
 class ItemFieldMapperTest {
@@ -268,6 +267,4 @@ class ItemFieldMapperTest {
         password = password,
         totp = "",
     )
-
-    private data class TestAutofillId(val id: Int) : AutofillFieldId
 }

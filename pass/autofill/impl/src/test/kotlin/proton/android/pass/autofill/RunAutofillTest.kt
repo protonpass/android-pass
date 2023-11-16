@@ -22,10 +22,10 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import proton.android.pass.autofill.debug.AutofillDebugSaver
-import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillNode
-import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
+import proton.android.pass.autofill.heuristics.ItemFieldMapper
+import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.log.api.PassLogger
@@ -45,7 +45,7 @@ fun runAutofillTest(file: String, requestFlags: List<RequestFlags> = emptyList()
     val nodesWithExpectedContents = getExpectedContents(parsed)
 
     val asAutofillNodes = parsed.rootContent.toAutofillNode()
-    val detectedNodes = AssistNodeTraversal(requestFlags).traverse(asAutofillNodes)
+    val detectedNodes = NodeExtractor(requestFlags).extract(asAutofillNodes)
 
     val res = ItemFieldMapper.mapFields(
         encryptionContext = TestEncryptionContext,
@@ -117,5 +117,3 @@ fun AutofillDebugSaver.DebugAutofillNode.toAutofillNode(): AutofillNode = Autofi
     autofillValue = null,
     id = TestAutofillId(id)
 )
-
-data class TestAutofillId(val id: Int) : AutofillFieldId

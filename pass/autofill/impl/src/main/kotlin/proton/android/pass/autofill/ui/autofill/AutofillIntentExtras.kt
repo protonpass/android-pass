@@ -45,7 +45,7 @@ object AutofillIntentExtras {
         if (data.assistInfo.url is Some) {
             extras.putString(ARG_WEB_DOMAIN, data.assistInfo.url.value)
         }
-        val fields = data.assistInfo.fields
+        val fields = data.assistInfo.cluster.fields()
         val parentIdLists: List<AutofillIdList> = fields.map { field ->
             AutofillIdList(field.nodePath.map { it.asAndroid().autofillId })
         }

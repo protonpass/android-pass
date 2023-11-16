@@ -107,9 +107,17 @@ internal fun FillResponse.Builder.addSaveInfo(
             }
             currentClientState.addPasswordToState(autofillSessionId, passwordFieldId)
 
+            // Determine which flags to send to SaveInfo. These flags are used for the system
+            // message that prompts the user to save their credentials.
+            val saveInfoType = if (saveSessionType.storedUsername.isEmpty()) {
+                SaveInfo.SAVE_DATA_TYPE_PASSWORD
+            } else {
+                SaveInfo.SAVE_DATA_TYPE_USERNAME or SaveInfo.SAVE_DATA_TYPE_PASSWORD
+            }
+
             setClientState(currentClientState)
             SaveInfo.Builder(
-                SaveInfo.SAVE_DATA_TYPE_USERNAME or SaveInfo.SAVE_DATA_TYPE_PASSWORD,
+                saveInfoType,
                 ids.toTypedArray()
             ).setFlags(SaveInfo.FLAG_SAVE_ON_ALL_VIEWS_INVISIBLE)
         }

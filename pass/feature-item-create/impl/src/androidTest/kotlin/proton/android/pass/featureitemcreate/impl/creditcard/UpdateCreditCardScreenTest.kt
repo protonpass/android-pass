@@ -47,11 +47,11 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
-import proton.pass.domain.CreditCardType
-import proton.pass.domain.HiddenState
-import proton.pass.domain.Item
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

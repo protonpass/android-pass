@@ -19,12 +19,12 @@
 package proton.android.pass.datamodels.api
 
 import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.pass.domain.CreditCardType
-import proton.pass.domain.CustomField
-import proton.pass.domain.ItemType
-import proton.pass.domain.entity.AppName
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
 
 fun ItemType.Companion.fromParsed(

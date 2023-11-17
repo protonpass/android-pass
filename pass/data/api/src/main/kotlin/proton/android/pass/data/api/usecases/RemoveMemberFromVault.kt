@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases
 
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 interface RemoveMemberFromVault {
     suspend operator fun invoke(shareId: ShareId, memberShareId: ShareId)

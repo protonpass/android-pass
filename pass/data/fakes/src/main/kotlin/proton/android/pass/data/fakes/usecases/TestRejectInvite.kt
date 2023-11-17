@@ -19,7 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.RejectInvite
-import proton.pass.domain.InviteToken
+import proton.android.pass.domain.InviteToken
 import javax.inject.Inject
 import javax.inject.Singleton
 

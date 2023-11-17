@@ -50,7 +50,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.impl.R
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import java.util.concurrent.atomic.AtomicBoolean
 import me.proton.core.notification.R as CoreR
 

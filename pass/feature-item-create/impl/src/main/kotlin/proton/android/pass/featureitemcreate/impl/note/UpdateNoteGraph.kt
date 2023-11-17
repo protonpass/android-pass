@@ -23,8 +23,8 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 object EditNote : NavItem(
     baseRoute = "note/edit",

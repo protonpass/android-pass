@@ -16,13 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain
 
-enum class ShareType(val value: Int) {
-    Vault(1),
-    Item(2);
-
-    companion object {
-        val map = values().associateBy { it.value }
-    }
-}
+data class AliasDetails(
+    val email: String,
+    val mailboxes: List<AliasMailbox>,
+    val availableMailboxes: List<AliasMailbox>
+)

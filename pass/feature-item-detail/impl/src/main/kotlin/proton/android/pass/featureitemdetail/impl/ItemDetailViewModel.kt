@@ -33,6 +33,10 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -41,10 +45,6 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.pass.domain.Item
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel

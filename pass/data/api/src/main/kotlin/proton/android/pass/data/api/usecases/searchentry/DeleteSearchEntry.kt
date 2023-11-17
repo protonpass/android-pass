@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases.searchentry
 
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 interface DeleteSearchEntry {
     suspend operator fun invoke(shareId: ShareId, itemId: ItemId)

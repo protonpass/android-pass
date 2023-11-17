@@ -21,7 +21,7 @@ package proton.android.pass.composecomponents.impl.extension
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import proton.android.pass.commonui.api.PassTheme
-import proton.pass.domain.ShareColor
+import proton.android.pass.domain.ShareColor
 
 @Suppress("MagicNumber", "ComplexMethod")
 @Composable

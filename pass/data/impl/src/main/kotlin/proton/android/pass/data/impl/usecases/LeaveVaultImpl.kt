@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.LeaveVault
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class LeaveVaultImpl @Inject constructor(

@@ -25,7 +25,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.impl.repositories.PlanRepository
-import proton.pass.domain.Plan
+import proton.android.pass.domain.Plan
 import javax.inject.Inject
 
 class GetUserPlanImpl @Inject constructor(

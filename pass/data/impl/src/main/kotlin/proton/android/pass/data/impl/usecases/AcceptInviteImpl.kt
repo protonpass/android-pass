@@ -32,8 +32,8 @@ import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.data.impl.work.FetchShareItemsWorker
-import proton.pass.domain.InviteToken
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class AcceptInviteImpl @Inject constructor(

@@ -39,7 +39,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featuresharing.impl.R
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareRole
 import me.proton.core.presentation.R as CoreR
 
 @Composable

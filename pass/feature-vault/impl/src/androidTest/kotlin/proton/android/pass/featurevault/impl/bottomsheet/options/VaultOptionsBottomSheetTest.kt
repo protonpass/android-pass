@@ -39,8 +39,8 @@ import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltAndroidTest

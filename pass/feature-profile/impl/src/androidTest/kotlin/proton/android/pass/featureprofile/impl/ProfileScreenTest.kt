@@ -46,9 +46,9 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.waitUntilExists
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 

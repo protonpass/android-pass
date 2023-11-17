@@ -19,7 +19,7 @@
 package proton.android.pass.featuresharing.impl.sharingsummary
 
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.VaultWithItemCount
 
 sealed interface SharingSummaryEvent {
     object Unknown : SharingSummaryEvent

@@ -21,7 +21,7 @@ package proton.android.pass.composecomponents.impl.extension
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import proton.android.pass.composecomponents.impl.R
-import proton.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareIcon
 
 @Suppress("ComplexMethod")
 @Composable

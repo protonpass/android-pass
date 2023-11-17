@@ -16,6 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain
 
-data class WebsiteUrl(val url: String)
+sealed class ShareSelection {
+    object AllShares : ShareSelection()
+    data class Share(val shareId: ShareId) : ShareSelection()
+    data class Shares(val shareIds: List<ShareId>) : ShareSelection()
+}

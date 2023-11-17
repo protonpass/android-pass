@@ -48,8 +48,8 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.value
-import proton.pass.domain.Item
-import proton.pass.domain.ItemType
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemType
 import javax.inject.Inject
 import kotlin.math.min
 

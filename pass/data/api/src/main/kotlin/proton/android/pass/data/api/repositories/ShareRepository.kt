@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
-import proton.pass.domain.Share
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewVault
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewVault
 
 interface ShareRepository {
     suspend fun createVault(

@@ -23,7 +23,7 @@ import androidx.compose.runtime.Immutable
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.ItemCountSummary
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 sealed class ItemTypeSection {
     abstract val shareId: ShareId?

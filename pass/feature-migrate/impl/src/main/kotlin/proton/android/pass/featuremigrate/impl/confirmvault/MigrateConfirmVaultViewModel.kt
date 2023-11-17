@@ -41,6 +41,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.MigrateVault
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.featuremigrate.impl.MigrateSnackbarMessage
@@ -49,8 +51,6 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel

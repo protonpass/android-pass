@@ -23,10 +23,10 @@ import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
-import proton.pass.domain.SharePermissionFlag
-import proton.pass.domain.Vault
-import proton.pass.domain.hasFlag
-import proton.pass.domain.toPermissions
+import proton.android.pass.domain.SharePermissionFlag
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.hasFlag
+import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 
 class CanManageVaultAccessImpl @Inject constructor(

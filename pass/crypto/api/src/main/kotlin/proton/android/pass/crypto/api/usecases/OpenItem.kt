@@ -19,9 +19,9 @@
 package proton.android.pass.crypto.api.usecases
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import proton.pass.domain.Item
-import proton.pass.domain.Share
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.key.ShareKey
 
 data class EncryptedItemRevision(
     val itemId: String,

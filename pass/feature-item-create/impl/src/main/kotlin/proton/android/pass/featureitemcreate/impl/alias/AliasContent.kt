@@ -37,7 +37,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationError
 import proton.android.pass.featureitemcreate.impl.alias.mailboxes.SelectMailboxesDialog
 import proton.android.pass.featureitemcreate.impl.alias.suffixes.SelectSuffixDialog
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

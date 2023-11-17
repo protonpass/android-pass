@@ -43,9 +43,9 @@ import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeValu
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.InviteId
-import proton.pass.domain.NewUserInviteId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel

@@ -19,8 +19,8 @@
 package proton.android.pass.data.api
 
 import me.proton.core.domain.entity.UserId
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 data class SearchEntry(
     val itemId: ItemId,

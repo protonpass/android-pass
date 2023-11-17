@@ -71,6 +71,15 @@ import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.canUpdate
+import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.FieldCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -93,15 +102,6 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.android.pass.totp.api.TotpManager
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.canUpdate
-import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @Suppress("LargeClass", "LongParameterList")

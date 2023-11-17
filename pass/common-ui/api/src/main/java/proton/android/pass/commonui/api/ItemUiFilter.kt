@@ -20,7 +20,7 @@ package proton.android.pass.commonui.api
 
 import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 
 object ItemUiFilter {
 

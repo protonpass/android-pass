@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 
 @Composable
 fun TitleVaultSelectionSection(

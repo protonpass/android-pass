@@ -19,8 +19,8 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
 interface InviteToVault {
 

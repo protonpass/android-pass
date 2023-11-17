@@ -22,9 +22,9 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import proton.android.pass.data.impl.extensions.hasPackageName
 import proton.android.pass.data.impl.extensions.with
-import proton.pass.domain.entity.AppName
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
 
 internal class TestAddPackageToItem {

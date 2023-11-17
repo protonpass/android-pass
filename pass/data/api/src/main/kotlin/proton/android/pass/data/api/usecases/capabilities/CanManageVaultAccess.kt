@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases.capabilities
 
-import proton.pass.domain.Vault
+import proton.android.pass.domain.Vault
 
 data class VaultAccessData(
     val canManageAccess: Boolean,

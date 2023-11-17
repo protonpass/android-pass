@@ -27,8 +27,8 @@ import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.errors.ShareContentNotAvailableError
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveVaults
-import proton.pass.domain.Vault
-import proton.pass.domain.sorted
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.sorted
 import javax.inject.Inject
 
 class ObserveVaultsImpl @Inject constructor(

@@ -21,8 +21,8 @@ package proton.android.pass.data.api.repositories
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.SearchEntry
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 interface SearchEntryRepository {
     suspend fun store(userId: UserId, shareId: ShareId, itemId: ItemId)

@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import proton.pass.domain.Item
+import proton.android.pass.domain.Item
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -70,8 +70,8 @@ import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.ConfirmTrashAliasDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ShareId
 
 @OptIn(
     ExperimentalMaterialApi::class,

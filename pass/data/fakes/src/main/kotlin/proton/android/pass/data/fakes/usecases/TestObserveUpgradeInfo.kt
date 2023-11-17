@@ -24,8 +24,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.test.TestConstants
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
 import javax.inject.Inject
 import javax.inject.Singleton
 

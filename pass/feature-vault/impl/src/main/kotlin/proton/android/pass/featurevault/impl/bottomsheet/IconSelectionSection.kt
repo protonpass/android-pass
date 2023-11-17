@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.extension.toResource
-import proton.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareIcon
 
 private const val ITEMS_PER_COLUMN = 5
 

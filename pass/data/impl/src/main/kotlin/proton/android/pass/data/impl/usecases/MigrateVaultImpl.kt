@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.MigrateVault
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class MigrateVaultImpl @Inject constructor(

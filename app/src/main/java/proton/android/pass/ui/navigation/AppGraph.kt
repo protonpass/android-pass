@@ -144,7 +144,7 @@ import proton.android.pass.featurevault.impl.leave.LeaveVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.AppNavigation
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi

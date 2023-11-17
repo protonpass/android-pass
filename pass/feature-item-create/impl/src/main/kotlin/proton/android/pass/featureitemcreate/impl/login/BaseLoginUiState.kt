@@ -26,7 +26,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 @Immutable
 data class BaseLoginUiState(

@@ -35,8 +35,8 @@ import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
-import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 
 fun BottomSheetVaultRow(
     vault: VaultWithItemCount,

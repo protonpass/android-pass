@@ -33,7 +33,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class EncryptInviteKeysImpl @Inject constructor(

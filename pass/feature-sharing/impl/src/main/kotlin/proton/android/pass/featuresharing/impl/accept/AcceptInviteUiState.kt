@@ -19,7 +19,7 @@
 package proton.android.pass.featuresharing.impl.accept
 
 import androidx.compose.runtime.Stable
-import proton.pass.domain.PendingInvite
+import proton.android.pass.domain.PendingInvite
 
 sealed interface AcceptInviteEvent {
     object Unknown : AcceptInviteEvent

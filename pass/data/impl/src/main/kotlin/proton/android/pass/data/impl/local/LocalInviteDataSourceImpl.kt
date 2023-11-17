@@ -25,7 +25,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.InviteEntity
-import proton.pass.domain.InviteToken
+import proton.android.pass.domain.InviteToken
 import javax.inject.Inject
 
 class LocalInviteDataSourceImpl @Inject constructor(

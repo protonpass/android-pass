@@ -25,7 +25,7 @@ import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 @Composable
 fun MigrateSelectVaultContents(

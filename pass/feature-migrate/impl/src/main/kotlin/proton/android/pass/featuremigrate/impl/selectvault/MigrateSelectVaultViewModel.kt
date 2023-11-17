@@ -45,10 +45,10 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.canCreate
-import proton.pass.domain.toPermissions
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel

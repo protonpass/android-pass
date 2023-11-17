@@ -21,7 +21,7 @@ package proton.android.pass.data.impl.local
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 interface LocalEventDataSource {
     fun getLatestEventId(userId: UserId, addressId: AddressId, shareId: ShareId): Flow<String?>

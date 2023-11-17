@@ -51,7 +51,7 @@ import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.ConfirmTrashAliasDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
-import proton.pass.domain.ItemState
+import proton.android.pass.domain.ItemState
 
 @OptIn(
     ExperimentalComposeUiApi::class,

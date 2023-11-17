@@ -23,9 +23,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.pass.domain.AliasDetails
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.AliasDetails
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class GetAliasDetailsImpl @Inject constructor(

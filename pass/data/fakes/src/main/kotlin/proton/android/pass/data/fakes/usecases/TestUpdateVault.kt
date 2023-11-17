@@ -20,9 +20,9 @@ package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.SessionUserId
 import proton.android.pass.data.api.usecases.UpdateVault
-import proton.pass.domain.Share
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewVault
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewVault
 import javax.inject.Inject
 
 class TestUpdateVault @Inject constructor() : UpdateVault {

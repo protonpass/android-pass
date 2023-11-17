@@ -47,7 +47,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.preferences.AllowScreenshotsPreference
-import proton.pass.domain.Item
+import proton.android.pass.domain.Item
 
 @AndroidEntryPoint
 class AutofillActivity : FragmentActivity() {

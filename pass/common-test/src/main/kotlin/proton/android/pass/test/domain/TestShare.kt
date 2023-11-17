@@ -19,15 +19,15 @@
 package proton.android.pass.test.domain
 
 import proton.android.pass.common.api.None
-import proton.pass.domain.Share
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
-import proton.pass.domain.ShareId
-import proton.pass.domain.SharePermission
-import proton.pass.domain.SharePermissionFlag
-import proton.pass.domain.ShareRole
-import proton.pass.domain.ShareType
-import proton.pass.domain.VaultId
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.SharePermission
+import proton.android.pass.domain.SharePermissionFlag
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.VaultId
 import java.util.Date
 
 object TestShare {

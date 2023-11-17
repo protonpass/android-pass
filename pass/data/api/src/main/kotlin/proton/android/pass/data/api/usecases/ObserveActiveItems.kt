@@ -19,8 +19,8 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import proton.pass.domain.Item
-import proton.pass.domain.ShareSelection
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ShareSelection
 
 enum class ItemTypeFilter {
     All,

@@ -20,7 +20,7 @@ package proton.android.pass.featureitemcreate.impl.alias
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import proton.pass.domain.AliasSuffix
+import proton.android.pass.domain.AliasSuffix
 
 @Parcelize
 data class AliasSuffixUiModel(

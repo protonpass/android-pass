@@ -16,21 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain
 
-import androidx.compose.runtime.Stable
-
-@Stable
-data class Vault(
-    val shareId: ShareId,
-    val name: String,
-    val color: ShareColor = ShareColor.Color1,
-    val icon: ShareIcon = ShareIcon.Icon1,
-    val isOwned: Boolean = true,
-    val role: ShareRole = ShareRole.Admin,
-    val members: Int = 1,
-    val shared: Boolean = false,
-    val maxMembers: Int = 10
+data class AliasOptions(
+    val suffixes: List<AliasSuffix>,
+    val mailboxes: List<AliasMailbox>
 )
-
-fun List<Vault>.sorted(): List<Vault> = sortedBy { it.name.lowercase() }

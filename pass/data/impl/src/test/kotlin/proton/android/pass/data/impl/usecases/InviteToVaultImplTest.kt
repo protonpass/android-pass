@@ -39,8 +39,8 @@ import proton.android.pass.data.impl.fakes.TestLocalShareDataSource
 import proton.android.pass.data.impl.fakes.TestRemoteInviteDataSource
 import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.local.LocalShareDataSource
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
 class InviteToVaultImplTest {
 

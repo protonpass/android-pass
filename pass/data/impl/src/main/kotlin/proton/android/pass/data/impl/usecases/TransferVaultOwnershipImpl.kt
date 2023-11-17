@@ -25,7 +25,7 @@ import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class TransferVaultOwnershipImpl @Inject constructor(

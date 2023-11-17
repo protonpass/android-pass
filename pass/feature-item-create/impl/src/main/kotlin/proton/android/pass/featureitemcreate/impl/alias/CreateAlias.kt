@@ -46,8 +46,8 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareLi
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ShareId
 
 private enum class CAActionAfterHideKeyboard {
     SelectVault

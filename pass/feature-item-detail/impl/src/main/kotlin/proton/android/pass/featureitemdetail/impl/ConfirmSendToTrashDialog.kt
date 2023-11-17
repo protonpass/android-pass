@@ -25,7 +25,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import me.proton.core.presentation.R
-import proton.pass.domain.Item
+import proton.android.pass.domain.Item
 
 @Composable
 fun ConfirmSendToTrashDialog(

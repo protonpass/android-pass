@@ -19,9 +19,9 @@
 package proton.android.pass.data.impl.usecases.capabilities
 
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
-import proton.pass.domain.Vault
-import proton.pass.domain.canCreate
-import proton.pass.domain.toPermissions
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 import javax.inject.Singleton
 

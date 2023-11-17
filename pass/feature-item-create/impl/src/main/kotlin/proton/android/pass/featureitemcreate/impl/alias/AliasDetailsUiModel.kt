@@ -18,7 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.alias
 
-import proton.pass.domain.AliasDetails
+import proton.android.pass.domain.AliasDetails
 
 data class AliasDetailsUiModel(
     val email: String,

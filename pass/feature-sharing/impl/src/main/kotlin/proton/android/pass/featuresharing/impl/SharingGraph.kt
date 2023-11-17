@@ -40,11 +40,11 @@ import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
-import proton.pass.domain.InviteId
-import proton.pass.domain.ItemId
-import proton.pass.domain.NewUserInviteId
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
 object EmailNavArgId : NavArgId {
     override val key: String = "email"

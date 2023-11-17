@@ -38,7 +38,7 @@ import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
-import proton.pass.domain.Item
+import proton.android.pass.domain.Item
 
 @AndroidEntryPoint
 class InlineSuggestionsNoUiActivity : FragmentActivity() {

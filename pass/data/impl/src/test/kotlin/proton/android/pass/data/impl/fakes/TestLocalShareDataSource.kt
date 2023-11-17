@@ -25,7 +25,7 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.local.LocalShareDataSource
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 class TestLocalShareDataSource : LocalShareDataSource {
 

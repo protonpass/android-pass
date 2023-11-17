@@ -33,9 +33,9 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
 import javax.inject.Inject
 
 @HiltViewModel

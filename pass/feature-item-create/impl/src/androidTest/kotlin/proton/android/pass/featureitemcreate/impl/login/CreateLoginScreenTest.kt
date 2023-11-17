@@ -62,16 +62,16 @@ import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
-import proton.pass.domain.AliasSuffix
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
-import proton.pass.domain.PlanType
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.AliasSuffix
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 

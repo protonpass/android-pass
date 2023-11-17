@@ -21,7 +21,7 @@ package proton.android.pass.featureitemcreate.impl.note
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 
 @Parcelize
 @Immutable

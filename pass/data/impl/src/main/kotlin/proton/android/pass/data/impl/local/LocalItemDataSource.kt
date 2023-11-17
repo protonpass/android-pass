@@ -25,9 +25,9 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemState
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
 
 data class ItemWithTotp(
     val shareId: ShareId,

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trial_title">Атрымлівайце асалоду ад бясплатнай выпрабавальнай версіі</string>
-  <string name="trial_subtitle">Для кіравання паролямі на новым узроўні:</string>
+  <string name="trial_title">Ваш прывітальны падарунак</string>
+  <string name="trial_subtitle">Атрымлівайце асалоду ад кіравання паролямі на новым узроўні</string>
   <string name="trial_feature_1">20 сховішчаў</string>
-    <string name="trial_feature_3">Інтэграваная аўтэнтыфікацыя 2ФА</string>
+  <string name="trial_feature_3">Інтэграваная аўтэнтыфікацыя 2ФА</string>
   <string name="trial_feature_4">Карыстальніцкія палі</string>
-  <string name="trial_button_text">Палепшыць, каб пакінуць гэтыя функцыі</string>
+  <string name="trial_button_text">Палепшыць</string>
   <plurals name="trial_days_left">
-    <item quantity="one">Да завяршэння пробнага перыяду застаўся %d дзень</item>
-    <item quantity="few">Да завяршэння пробнага перыяду засталося %d дні</item>
-    <item quantity="many">Да завяршэння пробнага перыяду засталося %d дзён</item>
-    <item quantity="other">Да завяршэння пробнага перыяду засталося %d дзён</item>
+    <item quantity="one">У вас застаўся яшчэ 1 дзень паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="few">У вас засталося яшчэ %d дні паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="many">У вас засталося яшчэ %d дзён паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="other">У вас засталося яшчэ %d дзён паспрабаваць прэміяльныя функцыі</item>
   </plurals>
   <string name="trial_learn_more">Даведацца больш</string>
 </resources>

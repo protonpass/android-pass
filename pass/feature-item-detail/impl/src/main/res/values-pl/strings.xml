@@ -58,12 +58,12 @@
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Właściciel karty</string>
   <string name="credit_card_number_field_name">Numer karty</string>
-  <string name="credit_card_cvv_field_name">Kod CCV</string>
+  <string name="credit_card_cvv_field_name">Kod zabezpieczający</string>
   <string name="credit_card_pin_field_name">Kod PIN</string>
-  <string name="credit_card_expiration_date_field_name">Wygasa</string>
+  <string name="credit_card_expiration_date_field_name">Data wygaśnięcia</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Właściciel został skopiowany do schowka</string>
   <string name="credit_card_number_copied_to_clipboard">Numer karty został skopiowany do schowka</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Kod CCV został skopiowany do schowka</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Kod zabezpieczający został skopiowany do schowka</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Przenieś do Kosza</string>
   <string name="migrate_item_detail_bottom_sheet">Przenieś do innego sejfu</string>
@@ -88,4 +88,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nie można edytować elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nie można udostępnić</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
+  <string name="password_score_vulnerable">Zagrożone</string>
+  <string name="password_score_weak">Słabe</string>
+  <string name="password_score_strong">Silne</string>
 </resources>

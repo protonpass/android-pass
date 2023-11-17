@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Trường văn bản tùy chỉnh</string>
   <string name="bottomsheet_custom_field_type_hidden">Ẩn</string>
   <string name="bottomsheet_custom_field_type_totp">Mã bảo mật 2FA (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Sửa tiêu đề</string>
+  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
   <string name="bottomsheet_custom_field_option_remove">Xóa trường</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Xóa trường tùy chỉnh</string>
   <string name="create_login_add_custom_field_button">Thêm trường khác</string>
-  <string name="custom_field_hidden_placeholder">Nội dung ẩn của bạn</string>
+  <string name="custom_field_hidden_placeholder">Add hidden text</string>
   <string name="custom_field_hidden_icon_content_description">Biểu tượng trường nội dung tùy chỉnh ẩn</string>
-  <string name="custom_field_text_placeholder">Nội dung của bạn</string>
+  <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">Tên trường tùy chọn</string>
-  <string name="custom_field_dialog_body">Nhập tên cho trường tùy chỉnh của bạn</string>
-  <string name="custom_field_dialog_placeholder">Tên của trường tùy chỉnh</string>
+  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
   <string name="custom_field_options_content_description">Tùy chọn trường tùy chỉnh</string>
   <!-- Create Note -->
   <string name="title_create_note">Tạo ghi chú</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Ghi chú</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Tạo thẻ</string>
-  <string name="field_cardholder_name_title">Tên chủ thẻ</string>
+  <string name="field_cardholder_name_title">Name on card</string>
   <string name="field_cardholder_name_hint">Tên đầy đủ</string>
   <string name="field_card_number_title">Số thẻ</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Số CVV</string>
+  <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">Mã PIN</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Hết hạn vào</string>
+  <string name="field_card_expiration_date_title">Expiration date</string>
   <string name="field_card_expiration_date_hint">MM / YYYY</string>
-  <string name="field_card_expiration_date_error">Ngày hết hạn không hợp lệ</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Không thể tạo thẻ</string>
   <string name="create_credit_card_item_creation_success">Đã tạo thẻ</string>
   <string name="credit_card_init_error">Problem retrieving credit card details</string>

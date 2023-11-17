@@ -11,7 +11,7 @@
   <string name="snackbar_leave_vault_error">Немагчыма выйсці са сховішча</string>
   <string name="snackbar_retrieve_vault_error">Сховішча не знойдзена</string>
   <string name="snackbar_find_vault_error">Немагчыма знайсці выбранае сховішча</string>
-  <string name="snackbar_get_vault_list_error">Немагчыма загрузіць спіс сховішчаў</string>
+  <string name="snackbar_get_vault_list_error">Не атрымалася загрузіць спіс сховішчаў</string>
   <string name="vault_delete_dialog_title">Выдаліць сховішча</string>
   <string name="vault_delete_dialog_body">Дзеянне прывядзе да выдалення сховішча з назвай __VAULT_NAME__ і ўсяго яго змесціва. Увядзіце назву сховішча, каб пацвердзіць выдаленне.</string>
   <string name="vault_delete_dialog_placeholder">Назва сховішча</string>

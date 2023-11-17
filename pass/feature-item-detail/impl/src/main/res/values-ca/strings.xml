@@ -3,7 +3,7 @@
   <string name="action_open">Obre</string>
   <string name="action_copy">Copia</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problem retrieving item details</string>
+  <string name="detail_init_error">Problema en recuperar els detalls de l\'element</string>
   <string name="top_bar_edit_button_text">Edita</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adreça d\'àlies</string>
@@ -54,14 +54,14 @@
   <string name="custom_field_hidden_icon_description">Camp personalitzat ocult</string>
   <string name="custom_field_totp_icon_description">Camp personalitzat de 2FA</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Nom del titular de la targeta</string>
+  <string name="credit_card_cardholder_field_name">Name on card</string>
   <string name="credit_card_number_field_name">Número de la targeta</string>
-  <string name="credit_card_cvv_field_name">Número de verificació</string>
+  <string name="credit_card_cvv_field_name">Security code</string>
   <string name="credit_card_pin_field_name">Codi PIN</string>
-  <string name="credit_card_expiration_date_field_name">Caduca el</string>
+  <string name="credit_card_expiration_date_field_name">Expiration date</string>
   <string name="credit_card_cardholder_copied_to_clipboard">S\'ha copiat el titular de la targeta al porta-retalls</string>
   <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta al porta-retalls</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">S\'ha copiat el número de verificació al porta-retalls</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mou a la paperera</string>
   <string name="migrate_item_detail_bottom_sheet">Mou a una altra caixa forta</string>
@@ -86,4 +86,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No es pot compartir.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
+  <string name="password_score_vulnerable">Vulnerable</string>
+  <string name="password_score_weak">Weak</string>
+  <string name="password_score_strong">Strong</string>
 </resources>

@@ -37,22 +37,22 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Camp de text personalitzat</string>
   <string name="bottomsheet_custom_field_type_hidden">Ocult</string>
   <string name="bottomsheet_custom_field_type_totp">Clau secreta 2FA (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Edita el títol</string>
+  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
   <string name="bottomsheet_custom_field_option_remove">Suprimeix el camp</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Suprimeix el camp personalitzat</string>
   <string name="create_login_add_custom_field_button">Afegeix un altre camp</string>
-  <string name="custom_field_hidden_placeholder">El vostre contingut amagat</string>
+  <string name="custom_field_hidden_placeholder">Add hidden text</string>
   <string name="custom_field_hidden_icon_content_description">Icona de camp personalitzat amagat</string>
-  <string name="custom_field_text_placeholder">El vostre contingut</string>
+  <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">Nom del camp personalitzat</string>
-  <string name="custom_field_dialog_body">Introduïu un nom per al camp personalitzat</string>
-  <string name="custom_field_dialog_placeholder">Nom del camp personalitzat</string>
+  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
   <string name="custom_field_options_content_description">Opcions del camp personalitzat</string>
   <!-- Create Note -->
   <string name="title_create_note">Crea una nota</string>
   <string name="create_note_item_creation_error">No s\'ha pogut crear la nota</string>
   <string name="create_note_item_update_error">No s\'ha pogut actualitzar la nota</string>
-  <string name="create_note_init_error">Problem retrieving note details</string>
+  <string name="create_note_init_error">Problema en recuperar els detalls de la nota</string>
   <string name="note_created">S\'ha creat la nota</string>
   <!-- Create Alias -->
   <string name="title_create_alias">Crea un àlies</string>
@@ -70,7 +70,7 @@
   <string name="create_alias_email_not_validated_error">No podeu crear àlies sense validar primer el vostre correu electrònic</string>
   <string name="alias_rate_limited">Massa àlies creats recentment</string>
   <string name="create_alias_item_update_error">No s\'ha pogut actualitzar l\'àlies</string>
-  <string name="create_alias_init_error">Problem retrieving alias details</string>
+  <string name="create_alias_init_error">Problema en recuperar els detalls de l\'àlies</string>
   <string name="alias_created">S\'ha creat l\'àlies</string>
   <string name="cannot_retrieve_alias_options">No es poden recuperar les opcions d\'àlies</string>
   <string name="alias_mailbox_dialog_title">Envia a</string>
@@ -78,20 +78,20 @@
   <string name="note_hint">Nota</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Crea una targeta de crèdit</string>
-  <string name="field_cardholder_name_title">Nom del titular de la targeta</string>
+  <string name="field_cardholder_name_title">Name on card</string>
   <string name="field_cardholder_name_hint">Nom complet</string>
   <string name="field_card_number_title">Número de targeta</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Número de verificació</string>
+  <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">Codi PIN</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Data de caducitat:</string>
+  <string name="field_card_expiration_date_title">Expiration date</string>
   <string name="field_card_expiration_date_hint">MM/AAAA</string>
-  <string name="field_card_expiration_date_error">La data de caducitat no és vàlida.</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">No s\'ha pogut crear la targeta de crèdit</string>
   <string name="create_credit_card_item_creation_success">S\'ha creat la targeta de crèdit</string>
-  <string name="credit_card_init_error">Problem retrieving credit card details</string>
+  <string name="credit_card_init_error">Problema en recuperar els detalls de la targeta de crèdit</string>
   <string name="credit_card_item_update_error">No s\'ha pogut actualitzar la targeta de crèdit</string>
   <!--  Common create items  -->
   <string name="changes_saved">S\'han desat els canvis.</string>

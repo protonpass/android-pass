@@ -54,14 +54,14 @@
   <string name="custom_field_hidden_icon_description">Verborgen aangepast veld</string>
   <string name="custom_field_totp_icon_description">2FA aangepast veld</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Naam van de kaarthouder</string>
+  <string name="credit_card_cardholder_field_name">Name on card</string>
   <string name="credit_card_number_field_name">Kaartnummer</string>
-  <string name="credit_card_cvv_field_name">Verificatienummer</string>
+  <string name="credit_card_cvv_field_name">Security code</string>
   <string name="credit_card_pin_field_name">PIN-code</string>
-  <string name="credit_card_expiration_date_field_name">Vervalt op</string>
+  <string name="credit_card_expiration_date_field_name">Expiration date</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Kaarthouder gekopieerd naar klembord</string>
   <string name="credit_card_number_copied_to_clipboard">Kaartnummer gekopieerd naar klembord</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Verificatienummer gekopieerd naar klembord</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Verplaats naar prullenbak</string>
   <string name="migrate_item_detail_bottom_sheet">Verplaatsen naar andere kluis</string>
@@ -80,10 +80,13 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
-  <string name="item_detail_cannot_perform_action_edit_title">Cannot edit</string>
-  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Cannot share</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Kan niet bewerken</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">U kunt dit item niet bewerken omdat u hiervoor onvoldoende machtigingen hebt.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">U kunt enkel items wijzigen in uw oudste kluizen. Upgrade uw huidige abonnement om dit item te wijzigen.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">U kan dit item niet wijzigen omdat het in de prullenbak zit. Verplaats het uit de prullenbak voordat u het wijzigt.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan niet delen</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">U heeft onvoldoende machtigingen om deze kluis te delen.</string>
+  <string name="password_score_vulnerable">Vulnerable</string>
+  <string name="password_score_weak">Weak</string>
+  <string name="password_score_strong">Strong</string>
 </resources>

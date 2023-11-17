@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Tekstowe pole niestandardowe</string>
   <string name="bottomsheet_custom_field_type_hidden">Ukryty tekst</string>
   <string name="bottomsheet_custom_field_type_totp">Sekretny TOTP</string>
-  <string name="bottomsheet_custom_field_option_edit">Edytuj tytuł</string>
+  <string name="bottomsheet_custom_field_option_edit">Edytuj nazwę</string>
   <string name="bottomsheet_custom_field_option_remove">Usuń pole</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Usuń pole niestandardowe</string>
   <string name="create_login_add_custom_field_button">Dodaj inne pole</string>
-  <string name="custom_field_hidden_placeholder">Twoja ukryta zawartość</string>
+  <string name="custom_field_hidden_placeholder">Dodaj ukryty tekst</string>
   <string name="custom_field_hidden_icon_content_description">Ikona ukrytego pola niestandardowego</string>
-  <string name="custom_field_text_placeholder">Twoja zawartość</string>
+  <string name="custom_field_text_placeholder">Dodaj tekst</string>
   <string name="custom_field_dialog_title">Nazwa pola niestandardowego</string>
   <string name="custom_field_dialog_body">Wpisz nazwę pola niestandardowego</string>
-  <string name="custom_field_dialog_placeholder">Nazwa pola niestandardowego</string>
+  <string name="custom_field_dialog_placeholder">Np. identyfikator użytkownika, kod PIN</string>
   <string name="custom_field_options_content_description">Opcje pola niestandardowego</string>
   <!-- Create Note -->
   <string name="title_create_note">Utwórz notatkę</string>
@@ -82,13 +82,13 @@
   <string name="field_cardholder_name_hint">Imię i nazwisko</string>
   <string name="field_card_number_title">Numer karty</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Kod CCV</string>
+  <string name="field_card_cvv_title">Kod zabezpieczający</string>
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">Kod PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Wygasa</string>
+  <string name="field_card_expiration_date_title">Data wygaśnięcia</string>
   <string name="field_card_expiration_date_hint">MM / RRRR</string>
-  <string name="field_card_expiration_date_error">Data wygaśnięcia nie jest prawidłowa</string>
+  <string name="field_card_expiration_date_error">Wpisz datę w formacie MM/RRRR</string>
   <string name="create_credit_card_item_creation_error">Nie można utworzyć karty płatniczej</string>
   <string name="create_credit_card_item_creation_success">Karta płatnicza została utworzona</string>
   <string name="credit_card_init_error">Wystąpił problem podczas pobierania szczegółów karty płatniczej</string>
@@ -96,9 +96,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Zmiany zostały zapisane</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">Sekretny TOTP</string>
-  <string name="totp_create_login_field_invalid">Sekretny TOTP jest nieprawidłowy</string>
-  <string name="totp_create_login_field_placeholder">Dodaj sekretny TOTP</string>
+  <string name="totp_create_login_field_title">Sekret TOTP</string>
+  <string name="totp_create_login_field_invalid">Sekret TOTP jest nieprawidłowy</string>
+  <string name="totp_create_login_field_placeholder">Dodaj sekret TOTP</string>
   <string name="close_scree_icon_content_description">Ikona zamknij okno</string>
   <string name="totp_paste_code_action">Wklej kod</string>
   <string name="totp_scan_code_action">Skanuj kod</string>

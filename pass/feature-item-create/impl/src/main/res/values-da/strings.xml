@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Brugerdefineret tekstfelt</string>
   <string name="bottomsheet_custom_field_type_hidden">Skjult</string>
   <string name="bottomsheet_custom_field_type_totp">2FA-hemmelighed (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Rediger titel</string>
+  <string name="bottomsheet_custom_field_option_edit">Rediger navn</string>
   <string name="bottomsheet_custom_field_option_remove">Fjern felt</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Fjern brugerdefineret felt</string>
   <string name="create_login_add_custom_field_button">Tilføj endnu et felt</string>
-  <string name="custom_field_hidden_placeholder">Dit skjulte indhold</string>
+  <string name="custom_field_hidden_placeholder">Tilføj skjult tekst</string>
   <string name="custom_field_hidden_icon_content_description">Ikon for skjult brugerdefineret felt</string>
-  <string name="custom_field_text_placeholder">Dit indhold</string>
+  <string name="custom_field_text_placeholder">Tilføj tekst</string>
   <string name="custom_field_dialog_title">Navn på brugerdefineret felt</string>
-  <string name="custom_field_dialog_body">Indtast et navn for dit brugerdefinerede felt</string>
-  <string name="custom_field_dialog_placeholder">Navn på det brugerdefinerede felt</string>
+  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_placeholder">F.eks. bruger-ID, pinkode</string>
   <string name="custom_field_options_content_description">Indstillinger for brugerdefineret felt</string>
   <!-- Create Note -->
   <string name="title_create_note">Opret note</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Note</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Opret betalingskort</string>
-  <string name="field_cardholder_name_title">Kortholders navn</string>
+  <string name="field_cardholder_name_title">Navn på kort</string>
   <string name="field_cardholder_name_hint">Fulde navn</string>
   <string name="field_card_number_title">Kortnummer</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Verifikationsnummer</string>
+  <string name="field_card_cvv_title">Sikkerhedskode</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN-nummer</string>
+  <string name="field_card_pin_title">Pinkode</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Udløber</string>
+  <string name="field_card_expiration_date_title">Udløbsdato</string>
   <string name="field_card_expiration_date_hint">MM / ÅÅÅÅ</string>
-  <string name="field_card_expiration_date_error">Udløbsdatoen er ikke gyldig</string>
+  <string name="field_card_expiration_date_error">Indtast en gyldig dato i MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Kunne ikke oprette betalingskort</string>
   <string name="create_credit_card_item_creation_success">Betalingskort oprettet</string>
   <string name="credit_card_init_error">Problem med at hente betalingskortoplysninger</string>

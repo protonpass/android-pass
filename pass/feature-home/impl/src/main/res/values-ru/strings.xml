@@ -16,8 +16,8 @@
   <string name="home_autofill_banner_title">Насладитесь волшебством автозаполнения</string>
   <string name="home_autofill_banner_text">Одно касание и - престо! - ваше имя пользователя и пароль заполняются мгновенно.</string>
   <string name="home_autofill_banner_settings">Включить автозаполнение ›</string>
-  <string name="home_trial_banner_title">Наслаждайтесь своей бесплатной пробной версией</string>
-  <string name="home_trial_banner_text">Познакомьтесь со всеми эксклюзивными функциями, которые доступны вам ограниченное время.</string>
+  <string name="home_trial_banner_title">Our welcome gift to you</string>
+  <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
   <string name="home_trial_banner_settings">Подробнее ›</string>
   <string name="home_notification_permission_banner_title">Get important updates</string>
   <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
@@ -29,7 +29,7 @@
   <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>
   <string name="bottomsheet_copy_alias">Скопировать адрес электронной почты</string>
   <string name="bottomsheet_copy_number">Скопировать номер</string>
-  <string name="bottomsheet_copy_cvv">Скопировать CVV</string>
+  <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">Скопировать заметку</string>
   <string name="bottomsheet_edit">Редактировать</string>
   <!-- Clipboard -->
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
   <string name="credit_card_number_copied_to_clipboard">Номер кредитной карты скопирован</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Код CVV карты скопирован</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Security code copied</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Содержимое было слишком длинным, в буфер обмена скопирована только часть</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Хранилища</string>

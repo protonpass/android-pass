@@ -54,14 +54,14 @@
   <string name="custom_field_hidden_icon_description">Dolt anpassat fält</string>
   <string name="custom_field_totp_icon_description">Anpassat 2FA-fält</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Kortinnehavarens namn</string>
+  <string name="credit_card_cardholder_field_name">Namn på kort</string>
   <string name="credit_card_number_field_name">Kortnummer</string>
-  <string name="credit_card_cvv_field_name">Verifieringsnummer</string>
+  <string name="credit_card_cvv_field_name">Säkerhetskod</string>
   <string name="credit_card_pin_field_name">PIN-kod</string>
-  <string name="credit_card_expiration_date_field_name">Förfaller den</string>
+  <string name="credit_card_expiration_date_field_name">Utgångsdatum</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Kortinnehavare kopierad till urklipp</string>
   <string name="credit_card_number_copied_to_clipboard">Kortnummer kopierat till urklipp</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Verifieringsnummer kopierat till urklipp</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Säkerhetskod kopierat till urklipp</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Flytta till papperskorg</string>
   <string name="migrate_item_detail_bottom_sheet">Flytta till annat valv</string>
@@ -86,4 +86,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan inte redigera detta objekt eftersom det är i papperskorgen. Flytta det från papperskorgen innan du redigerar det.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan inte dela</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har inte tillräckligt med behörigheter för att dela detta valv.</string>
+  <string name="password_score_vulnerable">Sårbar</string>
+  <string name="password_score_weak">Svagt</string>
+  <string name="password_score_strong">Starkt</string>
 </resources>

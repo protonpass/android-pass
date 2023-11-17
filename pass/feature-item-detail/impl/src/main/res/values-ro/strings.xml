@@ -55,14 +55,14 @@
   <string name="custom_field_hidden_icon_description">Câmp personal ascuns</string>
   <string name="custom_field_totp_icon_description">Câmp personal A2F</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Nume titular card</string>
+  <string name="credit_card_cardholder_field_name">Titular card</string>
   <string name="credit_card_number_field_name">Număr card</string>
-  <string name="credit_card_cvv_field_name">Număr de verificare</string>
+  <string name="credit_card_cvv_field_name">Cod de securitate</string>
   <string name="credit_card_pin_field_name">Cod PIN</string>
-  <string name="credit_card_expiration_date_field_name">Expiră la</string>
+  <string name="credit_card_expiration_date_field_name">Data de expirare</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Titularul cardului a fost copiat în memorie.</string>
   <string name="credit_card_number_copied_to_clipboard">Numărul cardului a fost copiat în memorie.</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Numărul de verificare a fost copiat în memorie.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Codul de securitate a fost copiat în memorie.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mutare în gunoi</string>
   <string name="migrate_item_detail_bottom_sheet">Mutare în alt seif</string>
@@ -87,4 +87,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nu puteți edita acest articol deoarece este în coșul de gunoi. Scoateți-l din coșul de gunoi înainte de a-l edita.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nu se poate partaja</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nu aveți permisiuni suficiente pentru a participa acest seif.</string>
+  <string name="password_score_vulnerable">Vulnerabilă</string>
+  <string name="password_score_weak">Slabă</string>
+  <string name="password_score_strong">Puternică</string>
 </resources>

@@ -16,8 +16,8 @@
   <string name="home_autofill_banner_title">Disfrute de la magia del completado automático</string>
   <string name="home_autofill_banner_text">¡Una pulsación y listo! Su nombre de usuario y contraseña se completan al instante.</string>
   <string name="home_autofill_banner_settings">Activar el completado automático ›</string>
-  <string name="home_trial_banner_title">Disfrute de su prueba gratuita</string>
-  <string name="home_trial_banner_text">Eche un vistazo a todas las funciones exclusivas que están disponibles para usted por tiempo limitado.</string>
+  <string name="home_trial_banner_title">Nuestro regalo de bienvenida para usted</string>
+  <string name="home_trial_banner_text">Pruebe gratis las funciones premium durante 7 días, solo durante su primera semana de Proton Pass.</string>
   <string name="home_trial_banner_settings">Más información ›</string>
   <string name="home_notification_permission_banner_title">Obtenga actualizaciones importantes</string>
   <string name="home_notification_permission_banner_text">Active las notificaciones push para informarse cuando otros compartan una bóveda con usted.</string>
@@ -29,7 +29,7 @@
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>
   <string name="bottomsheet_copy_alias">Copiar dirección de correo</string>
   <string name="bottomsheet_copy_number">Copiar número</string>
-  <string name="bottomsheet_copy_cvv">Copiar CVV</string>
+  <string name="bottomsheet_copy_cvv">Copiar el código de seguridad</string>
   <string name="bottomsheet_copy_note">Copiar nota</string>
   <string name="bottomsheet_edit">Editar</string>
   <!-- Clipboard -->
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">Nombre de usuario copiado</string>
   <string name="password_copied_to_clipboard">Contraseña copiada</string>
   <string name="credit_card_number_copied_to_clipboard">Número de tarjeta de crédito copiado.</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Código CVV de la tarjeta de crédito copiado</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Código de seguridad copiado</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">El contenido es muy largo. Fue copiado parcialmente al portapapeles.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Bóvedas</string>

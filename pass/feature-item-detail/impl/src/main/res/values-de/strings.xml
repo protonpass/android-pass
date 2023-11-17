@@ -56,12 +56,12 @@
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Name des Karteninhabers</string>
   <string name="credit_card_number_field_name">Kartennummer</string>
-  <string name="credit_card_cvv_field_name">Kartenprüfnummer</string>
+  <string name="credit_card_cvv_field_name">Sicherheitscode</string>
   <string name="credit_card_pin_field_name">PIN-Code</string>
-  <string name="credit_card_expiration_date_field_name">Läuft ab am</string>
+  <string name="credit_card_expiration_date_field_name">Ablaufdatum</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Name des Karteninhabers in die Zwischenablage kopiert</string>
   <string name="credit_card_number_copied_to_clipboard">Kartennummer in die Zwischenablage kopiert</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Kartenprüfnummer in die Zwischenablage kopiert</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Sicherheitscode in die Zwischenablage kopiert.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">In Papierkorb verschieben</string>
   <string name="migrate_item_detail_bottom_sheet">In einen anderen Tresor verschieben</string>
@@ -86,4 +86,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kannst diesen Eintrag nicht bearbeiten, da er sich im Papierkorb befindet. Bitte entferne ihn aus dem Papierkorb, um ihn zu bearbeiten.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Teilen nicht möglich</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Deine Berechtigungen reichen nicht aus, um diesen Tresor freizugeben.</string>
+  <string name="password_score_vulnerable">Verwundbar</string>
+  <string name="password_score_weak">Schwach</string>
+  <string name="password_score_strong">Stark</string>
 </resources>

@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Text câmp personal</string>
   <string name="bottomsheet_custom_field_type_hidden">Ascuns</string>
   <string name="bottomsheet_custom_field_type_totp">Secret A2F (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Editare titlu</string>
+  <string name="bottomsheet_custom_field_option_edit">Editare nume</string>
   <string name="bottomsheet_custom_field_option_remove">Eliminare câmp</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Eliminare câmp personal</string>
   <string name="create_login_add_custom_field_button">Adăugare alt câmp</string>
-  <string name="custom_field_hidden_placeholder">Conținut ascuns</string>
+  <string name="custom_field_hidden_placeholder">Adăugare text ascuns</string>
   <string name="custom_field_hidden_icon_content_description">Pictogramă câmp personal ascuns</string>
-  <string name="custom_field_text_placeholder">Conținut</string>
+  <string name="custom_field_text_placeholder">Adăugare text</string>
   <string name="custom_field_dialog_title">Nume câmp personal</string>
-  <string name="custom_field_dialog_body">Introduceți un nume pentru câmpul personal.</string>
-  <string name="custom_field_dialog_placeholder">Nume câmp personal</string>
+  <string name="custom_field_dialog_body">Dați un nume câmpului</string>
+  <string name="custom_field_dialog_placeholder">Ex. ID utilizator, PIN</string>
   <string name="custom_field_options_content_description">Opțiuni câmp personal</string>
   <!-- Create Note -->
   <string name="title_create_note">Creare notă</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Notă</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Creare card de credit</string>
-  <string name="field_cardholder_name_title">Nume titular card</string>
+  <string name="field_cardholder_name_title">Titular card</string>
   <string name="field_cardholder_name_hint">Numele complet</string>
   <string name="field_card_number_title">Număr card</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Număr de verificare</string>
+  <string name="field_card_cvv_title">Cod de securitate</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">Cod PIN</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expiră la</string>
+  <string name="field_card_expiration_date_title">Data de expirare</string>
   <string name="field_card_expiration_date_hint">LL/AAAA</string>
-  <string name="field_card_expiration_date_error">Data expirării nu este validă.</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Nu s-a putut crea cardul de credit.</string>
   <string name="create_credit_card_item_creation_success">S-a creat cardul de credit.</string>
   <string name="credit_card_init_error">Problemă preluare detalii card de credit.</string>

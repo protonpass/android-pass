@@ -54,14 +54,14 @@
   <string name="custom_field_hidden_icon_description">Campo personalizzato nascosto</string>
   <string name="custom_field_totp_icon_description">Campo personalizzato 2FA</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Nome del titolare della carta</string>
+  <string name="credit_card_cardholder_field_name">Name on card</string>
   <string name="credit_card_number_field_name">Numero della carta</string>
-  <string name="credit_card_cvv_field_name">Codice di verifica</string>
+  <string name="credit_card_cvv_field_name">Security code</string>
   <string name="credit_card_pin_field_name">Codice PIN</string>
-  <string name="credit_card_expiration_date_field_name">Scade il</string>
+  <string name="credit_card_expiration_date_field_name">Expiration date</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Titolare della carta copiato negli appunti</string>
   <string name="credit_card_number_copied_to_clipboard">Numero carta copiato negli appunti</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Numero di verifica copiato negli appunti</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Sposta nel cestino</string>
   <string name="migrate_item_detail_bottom_sheet">Sposta in un\'altra cassaforte</string>
@@ -86,4 +86,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Non puoi modificare questo elemento perché si trova nel cestino. Spostalo fuori dal cestino per poterlo modificare.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Impossibile condividere</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Non disponi delle autorizzazioni necessarie per condividere questa cassaforte.</string>
+  <string name="password_score_vulnerable">Vulnerabile</string>
+  <string name="password_score_weak">Debole</string>
+  <string name="password_score_strong">Sicura</string>
 </resources>

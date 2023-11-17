@@ -16,8 +16,8 @@
   <string name="home_autofill_banner_title">享受自動填入的神奇魔力</string>
   <string name="home_autofill_banner_text">輕輕一按，大功告成！您的使用者名稱和密碼就馬上填好。</string>
   <string name="home_autofill_banner_settings">啟用自動填滿＞</string>
-  <string name="home_trial_banner_title">享受您的免費試用</string>
-  <string name="home_trial_banner_text">查看限時提供給您的獨家功能</string>
+  <string name="home_trial_banner_title">Our welcome gift to you</string>
+  <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
   <string name="home_trial_banner_settings">了解更多＞</string>
   <string name="home_notification_permission_banner_title">取得重要更新</string>
   <string name="home_notification_permission_banner_text">啟用推送通知，以便在其他人與您分享保管庫時收到通知。</string>
@@ -29,7 +29,7 @@
   <string name="bottomsheet_copy_username">複製使用者名稱</string>
   <string name="bottomsheet_copy_alias">複製電子郵件地址</string>
   <string name="bottomsheet_copy_number">複製號碼</string>
-  <string name="bottomsheet_copy_cvv">複製信用卡安全碼</string>
+  <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">複製備註</string>
   <string name="bottomsheet_edit">編輯</string>
   <!-- Clipboard -->
@@ -38,12 +38,12 @@
   <string name="username_copied_to_clipboard">已複製使用者名稱</string>
   <string name="password_copied_to_clipboard">已複製密碼</string>
   <string name="credit_card_number_copied_to_clipboard">已複製信用卡卡號</string>
-  <string name="credit_card_cvv_copied_to_clipboard">已複製卡片安全碼</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Security code copied</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">聯絡人太長，部分貼上至剪貼簿</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">保管庫</string>
   <plurals name="vault_drawer_vaults_item_count">
-    <item quantity="other">%d items</item>
+    <item quantity="other">%d 項目</item>
   </plurals>
   <string name="vault_drawer_create_vault">新增加密保管庫</string>
   <string name="vault_drawer_item_trash">垃圾桶</string>

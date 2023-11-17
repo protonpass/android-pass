@@ -49,9 +49,10 @@ import proton.android.pass.autofill.AutofillDisplayed
 import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.MFAAutofillCopied
 import proton.android.pass.autofill.entities.AutofillAppState
+import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.toAutoFillItem
-import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
+import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
@@ -351,6 +352,7 @@ class SelectItemViewModel @Inject constructor(
                     }
                 }
             }
+
             else -> false to SearchInMode.AllVaults
         }
 
@@ -390,30 +392,12 @@ class SelectItemViewModel @Inject constructor(
     ) {
         item.toAutoFillItem()
             .map { autofillItem ->
-                encryptionContextProvider.withEncryptionContext {
-                    handleTotpUri(this@withEncryptionContext, autofillItem.totp)
-                    updateAutofillItem(
-                        UpdateAutofillItemData(
-                            shareId = ShareId(autofillItem.shareId),
-                            itemId = ItemId(autofillItem.itemId),
-                            packageInfo = autofillAppState.packageInfoUi.toOption()
-                                .map(PackageInfoUi::toPackageInfo),
-                            url = autofillAppState.webDomain,
-                            shouldAssociate = shouldAssociate
-                        )
-                    )
-
-                    val mappings = ItemFieldMapper.mapFields(
-                        encryptionContext = this@withEncryptionContext,
+                when (autofillItem) {
+                    is AutofillItem.Login -> onLoginItemClicked(
                         autofillItem = autofillItem,
-                        androidAutofillFieldIds = autofillAppState.androidAutofillIds,
-                        autofillTypes = autofillAppState.fieldTypes,
-                        fieldIsFocusedList = autofillAppState.fieldIsFocusedList,
-                        parentIdList = autofillAppState.parentIdList
+                        autofillAppState = autofillAppState,
+                        shouldAssociate = shouldAssociate,
                     )
-                    itemClickedFlow.update {
-                        AutofillItemClickedEvent.Clicked(mappings)
-                    }
                 }
             }
     }
@@ -441,6 +425,36 @@ class SelectItemViewModel @Inject constructor(
 
     fun onScrolledToTop() {
         shouldScrollToTopFlow.update { false }
+    }
+
+    private fun onLoginItemClicked(
+        autofillItem: AutofillItem.Login,
+        autofillAppState: AutofillAppState,
+        shouldAssociate: Boolean
+    ) = encryptionContextProvider.withEncryptionContext {
+        handleTotpUri(this@withEncryptionContext, autofillItem.totp)
+        updateAutofillItem(
+            UpdateAutofillItemData(
+                shareId = ShareId(autofillItem.shareId),
+                itemId = ItemId(autofillItem.itemId),
+                packageInfo = autofillAppState.packageInfoUi.toOption()
+                    .map(PackageInfoUi::toPackageInfo),
+                url = autofillAppState.webDomain,
+                shouldAssociate = shouldAssociate
+            )
+        )
+
+        val mappings = ItemFieldMapper.mapFields(
+            encryptionContext = this@withEncryptionContext,
+            autofillItem = autofillItem,
+            androidAutofillFieldIds = autofillAppState.androidAutofillIds,
+            autofillTypes = autofillAppState.fieldTypes,
+            fieldIsFocusedList = autofillAppState.fieldIsFocusedList,
+            parentIdList = autofillAppState.parentIdList
+        )
+        itemClickedFlow.update {
+            AutofillItemClickedEvent.Clicked(mappings)
+        }
     }
 
     private fun getSuggestionsTitle(autofillAppState: AutofillAppState): String =

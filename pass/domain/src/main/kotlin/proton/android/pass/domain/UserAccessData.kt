@@ -16,20 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain.entity
+package proton.android.pass.domain
 
-import kotlinx.serialization.Serializable
-
-@Serializable
-@JvmInline
-value class PackageName(val value: String)
-
-@Serializable
-@JvmInline
-value class AppName(val value: String)
-
-@Serializable
-data class PackageInfo(
-    val packageName: PackageName,
-    val appName: AppName
+data class UserAccessData(
+    val pendingInvites: Int,
+    val waitingNewUserInvites: Int
 )

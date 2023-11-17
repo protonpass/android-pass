@@ -18,7 +18,7 @@
 
 package proton.android.pass.test
 
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.PlanType
 
 object TestConstants {
     const val BULLET = "•"

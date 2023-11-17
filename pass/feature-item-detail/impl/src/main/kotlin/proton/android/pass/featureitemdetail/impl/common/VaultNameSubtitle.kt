@@ -49,10 +49,10 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 @Composable
 fun VaultNameSubtitle(

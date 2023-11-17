@@ -21,8 +21,8 @@ package proton.android.pass.featureitemcreate.impl.login
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 sealed interface CreateLoginNavigation {
     data class LoginCreated(val itemUiModel: ItemUiModel) : CreateLoginNavigation

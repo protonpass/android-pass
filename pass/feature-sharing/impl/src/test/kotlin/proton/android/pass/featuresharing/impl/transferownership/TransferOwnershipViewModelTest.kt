@@ -33,7 +33,7 @@ import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberShareIdA
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 class TransferOwnershipViewModelTest {
 

@@ -18,7 +18,7 @@
 
 package proton.android.pass.crypto.api.usecases
 
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 import proton_pass_vault_v1.VaultV1
 
 data class EncryptedUpdateVaultRequest(

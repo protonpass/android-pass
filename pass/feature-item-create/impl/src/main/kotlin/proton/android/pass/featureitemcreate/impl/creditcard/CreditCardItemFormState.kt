@@ -25,8 +25,8 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState.Companion.from
-import proton.pass.domain.CreditCardType
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.ItemContents
 
 @Parcelize
 @Immutable

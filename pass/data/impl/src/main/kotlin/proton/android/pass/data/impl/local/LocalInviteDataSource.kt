@@ -23,7 +23,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.impl.db.entities.InviteEntity
 import proton.android.pass.data.impl.db.entities.InviteKeyEntity
-import proton.pass.domain.InviteToken
+import proton.android.pass.domain.InviteToken
 
 data class InviteAndKeysEntity(
     val inviteEntity: InviteEntity,

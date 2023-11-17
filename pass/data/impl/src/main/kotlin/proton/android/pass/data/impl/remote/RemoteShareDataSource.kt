@@ -22,7 +22,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 interface RemoteShareDataSource {
     suspend fun createVault(userId: UserId, body: CreateVaultRequest): ShareResponse

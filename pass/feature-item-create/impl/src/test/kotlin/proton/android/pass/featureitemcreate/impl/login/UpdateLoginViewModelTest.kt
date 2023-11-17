@@ -46,8 +46,8 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
-import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
 
 class UpdateLoginViewModelTest {
 

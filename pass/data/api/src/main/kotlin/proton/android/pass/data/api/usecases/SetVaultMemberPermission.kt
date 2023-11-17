@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases
 
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
 interface SetVaultMemberPermission {
     suspend operator fun invoke(shareId: ShareId, memberShareId: ShareId, role: ShareRole)

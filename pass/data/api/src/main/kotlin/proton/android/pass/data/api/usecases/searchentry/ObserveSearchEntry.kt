@@ -20,7 +20,7 @@ package proton.android.pass.data.api.usecases.searchentry
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.data.api.SearchEntry
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 interface ObserveSearchEntry {
     operator fun invoke(searchEntrySelection: SearchEntrySelection): Flow<List<SearchEntry>>

@@ -35,13 +35,13 @@ import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.data.impl.responses.ShareNewUserPendingInvite
 import proton.android.pass.data.impl.responses.SharePendingInvite
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.InviteId
-import proton.pass.domain.NewUserInviteId
-import proton.pass.domain.ShareId
-import proton.pass.domain.SharePermissionFlag
-import proton.pass.domain.ShareRole
-import proton.pass.domain.hasFlag
-import proton.pass.domain.toPermissions
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.SharePermissionFlag
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.hasFlag
+import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 
 class GetVaultMembersImpl @Inject constructor(

@@ -41,7 +41,7 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 
 @Composable
 internal fun SelectItemScreenContent(

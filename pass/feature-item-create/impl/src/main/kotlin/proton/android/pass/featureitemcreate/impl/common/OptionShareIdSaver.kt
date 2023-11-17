@@ -23,7 +23,7 @@ import androidx.compose.runtime.saveable.mapSaver
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 val OptionShareIdSaver: Saver<Option<ShareId>, Any> = run {
     val shareId = "share_id"

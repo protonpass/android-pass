@@ -19,9 +19,9 @@
 package proton.android.pass.datamodels.api
 
 import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.pass.domain.CreditCardType
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
 import proton_pass_item_v1.extraField
 import proton_pass_item_v1.extraHiddenField

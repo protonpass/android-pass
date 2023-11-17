@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain
 
 data class VaultWithItemCount(
     val vault: Vault,

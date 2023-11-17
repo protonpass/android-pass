@@ -27,7 +27,7 @@ import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.pass.domain.Item
+import proton.android.pass.domain.Item
 
 object AutofillIntentExtras {
     const val ARG_AUTOFILL_IDS = "arg_autofill_ids"

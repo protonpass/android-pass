@@ -18,7 +18,7 @@
 
 package proton.android.pass.crypto.api.usecases
 
-import proton.pass.domain.key.ItemKey
+import proton.android.pass.domain.key.ItemKey
 import proton_pass_item_v1.ItemV1
 
 data class EncryptedUpdateItemRequest(

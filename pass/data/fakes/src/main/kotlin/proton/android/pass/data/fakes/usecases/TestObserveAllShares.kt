@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.ObserveAllShares
-import proton.pass.domain.Share
+import proton.android.pass.domain.Share
 import javax.inject.Inject
 
 class TestObserveAllShares @Inject constructor() : ObserveAllShares {

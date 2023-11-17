@@ -33,7 +33,7 @@ import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestPendingInvite
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 class AcceptInviteViewModelTest {
 

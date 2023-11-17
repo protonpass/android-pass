@@ -19,7 +19,7 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import proton.pass.domain.PendingInvite
+import proton.android.pass.domain.PendingInvite
 
 interface ObserveInvites {
     operator fun invoke(): Flow<List<PendingInvite>>

@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanType
 
 @Stable
 enum class AccountType {

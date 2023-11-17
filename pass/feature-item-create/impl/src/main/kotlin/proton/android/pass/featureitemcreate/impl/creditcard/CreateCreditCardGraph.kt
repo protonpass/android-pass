@@ -14,7 +14,7 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 object CreateCreditCard : NavItem(
     baseRoute = "creditcard/create/screen",

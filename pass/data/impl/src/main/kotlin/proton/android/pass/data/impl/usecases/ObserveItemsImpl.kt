@@ -25,9 +25,9 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
-import proton.pass.domain.Item
-import proton.pass.domain.ItemState
-import proton.pass.domain.ShareSelection
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
 class ObserveItemsImpl @Inject constructor(

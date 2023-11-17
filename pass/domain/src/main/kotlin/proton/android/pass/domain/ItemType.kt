@@ -16,11 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain
 
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageInfo
 
 const val ITEM_TYPE_UNKNOWN = -1
 const val ITEM_TYPE_LOGIN = 0

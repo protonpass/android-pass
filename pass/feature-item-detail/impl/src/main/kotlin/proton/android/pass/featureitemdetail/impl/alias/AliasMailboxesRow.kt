@@ -37,7 +37,7 @@ import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
-import proton.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasMailbox
 
 @Composable
 fun AliasMailboxesRow(

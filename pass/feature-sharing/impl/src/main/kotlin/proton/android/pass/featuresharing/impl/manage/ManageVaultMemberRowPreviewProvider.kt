@@ -21,10 +21,10 @@ package proton.android.pass.featuresharing.impl.manage
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.data.api.usecases.VaultMember
-import proton.pass.domain.InviteId
-import proton.pass.domain.NewUserInviteId
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
 class ThemedMVMPreviewProvider : ThemePairPreviewProvider<VaultMemberRowInput>(
     ManageVaultMemberRowPreviewProvider()

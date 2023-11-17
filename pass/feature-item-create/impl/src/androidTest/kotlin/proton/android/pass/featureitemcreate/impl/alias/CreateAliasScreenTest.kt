@@ -49,16 +49,16 @@ import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
-import proton.pass.domain.AliasMailbox
-import proton.pass.domain.AliasOptions
-import proton.pass.domain.AliasSuffix
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
-import proton.pass.domain.PlanType
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.VaultWithItemCount
-import proton.pass.domain.entity.NewAlias
+import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasOptions
+import proton.android.pass.domain.AliasSuffix
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -116,7 +116,7 @@ class CreateAliasScreenTest {
         observeVaults.sendResult(Result.success(listOf(vault)))
 
         observeAliasOptions.sendAliasOptions(
-            AliasOptions(
+            proton.android.pass.domain.AliasOptions(
                 suffixes = listOf(DEFAULT_SUFFIX),
                 mailboxes = listOf(DEFAULT_MAILBOX)
             )
@@ -265,7 +265,8 @@ class CreateAliasScreenTest {
         private val USER_ID = UserId("user-id-123")
         private const val USER_EMAIL = "a@b.c"
 
-        private val DEFAULT_SUFFIX = AliasSuffix(".test@test.test", "Test", false, "test")
+        private val DEFAULT_SUFFIX =
+            proton.android.pass.domain.AliasSuffix(".test@test.test", "Test", false, "test")
         private val DEFAULT_MAILBOX = AliasMailbox(1, "test@test.test")
     }
 

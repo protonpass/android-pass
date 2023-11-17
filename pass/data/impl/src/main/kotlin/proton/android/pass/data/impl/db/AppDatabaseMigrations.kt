@@ -40,7 +40,7 @@ import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
-import proton.pass.domain.ITEM_TYPE_LOGIN
+import proton.android.pass.domain.ITEM_TYPE_LOGIN
 
 @Suppress("ClassNaming")
 object AppDatabaseMigrations {

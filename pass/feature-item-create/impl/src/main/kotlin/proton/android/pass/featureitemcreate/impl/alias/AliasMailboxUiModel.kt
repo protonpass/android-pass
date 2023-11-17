@@ -20,7 +20,7 @@ package proton.android.pass.featureitemcreate.impl.alias
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import proton.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasMailbox
 
 @Parcelize
 data class AliasMailboxUiModel(
@@ -33,5 +33,6 @@ data class AliasMailboxUiModel(
         email = aliasMailbox.email
     )
 
-    fun toDomain(): AliasMailbox = AliasMailbox(id = id, email = email)
+    fun toDomain(): AliasMailbox =
+        proton.android.pass.domain.AliasMailbox(id = id, email = email)
 }

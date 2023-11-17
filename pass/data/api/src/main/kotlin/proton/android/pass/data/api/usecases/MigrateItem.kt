@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.api.usecases
 
-import proton.pass.domain.Item
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 interface MigrateItem {
     suspend operator fun invoke(

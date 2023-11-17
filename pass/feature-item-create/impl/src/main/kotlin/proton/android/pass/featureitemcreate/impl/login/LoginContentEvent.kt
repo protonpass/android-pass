@@ -20,7 +20,7 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 sealed interface LoginContentEvent {
     object Up : LoginContentEvent

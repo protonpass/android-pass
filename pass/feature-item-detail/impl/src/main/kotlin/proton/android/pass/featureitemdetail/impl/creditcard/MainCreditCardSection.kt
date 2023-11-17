@@ -23,7 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.pass.domain.HiddenState
+import proton.android.pass.domain.HiddenState
 
 @Composable
 fun MainCreditCardSection(

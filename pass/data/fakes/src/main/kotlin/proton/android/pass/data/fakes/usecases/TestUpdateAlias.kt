@@ -21,7 +21,7 @@ package proton.android.pass.data.fakes.usecases
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
-import proton.pass.domain.Item
+import proton.android.pass.domain.Item
 import javax.inject.Inject
 
 class TestUpdateAlias @Inject constructor() : UpdateAlias {

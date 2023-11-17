@@ -22,9 +22,9 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import proton.android.pass.data.api.usecases.VaultMember
-import proton.pass.domain.NewUserInviteId
-import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 
 @Stable
 sealed interface ManageVaultEvent {

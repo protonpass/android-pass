@@ -21,7 +21,7 @@ package proton.android.pass.data.impl.local
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 interface LocalShareKeyDataSource {
     fun getAllShareKeysForShare(userId: UserId, shareId: ShareId): Flow<List<ShareKeyEntity>>

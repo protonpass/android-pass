@@ -27,10 +27,10 @@ import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
 import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestItemType
-import proton.pass.domain.Item
-import proton.pass.domain.entity.AppName
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 
 class SuggestionItemFiltererImplTest {
 

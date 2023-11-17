@@ -21,9 +21,9 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
 import proton.android.pass.commonuimodels.fakes.TestItemUiModel
-import proton.pass.domain.CreditCardType
-import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
 
 class ItemUiFilterTest {
 

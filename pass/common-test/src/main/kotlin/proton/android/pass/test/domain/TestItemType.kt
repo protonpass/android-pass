@@ -19,8 +19,8 @@
 package proton.android.pass.test.domain
 
 import proton.android.pass.test.TestUtils
-import proton.pass.domain.ItemType
-import proton.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.entity.PackageInfo
 
 object TestItemType {
     fun login(

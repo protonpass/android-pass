@@ -20,8 +20,8 @@ package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
-import proton.pass.domain.AliasMailbox
-import proton.pass.domain.Item
+import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.Item
 
 data class UpdateAliasItemContent(
     val title: String,

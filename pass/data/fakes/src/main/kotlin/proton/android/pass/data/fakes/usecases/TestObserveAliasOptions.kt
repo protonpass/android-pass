@@ -22,8 +22,8 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
-import proton.pass.domain.AliasOptions
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.AliasOptions
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -28,10 +28,10 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
-import proton.pass.domain.canCreate
-import proton.pass.domain.toPermissions
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.toPermissions
 
 @Suppress("ComplexMethod", "CyclomaticComplexMethod", "LongParameterList", "MagicNumber")
 fun getShareUiStateFlow(

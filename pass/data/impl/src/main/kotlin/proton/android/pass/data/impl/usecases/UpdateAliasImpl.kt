@@ -29,9 +29,9 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.AliasMailbox
-import proton.pass.domain.Item
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
 import javax.inject.Inject
 
 class UpdateAliasImpl @Inject constructor(

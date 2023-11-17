@@ -21,9 +21,9 @@ package proton.android.pass.data.impl.extensions
 import proton.android.pass.data.impl.responses.AliasMailboxResponse
 import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import proton.android.pass.data.impl.responses.AliasSuffixResponse
-import proton.pass.domain.AliasMailbox
-import proton.pass.domain.AliasOptions
-import proton.pass.domain.AliasSuffix
+import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasOptions
+import proton.android.pass.domain.AliasSuffix
 
 fun AliasOptionsResponse.toDomain(): AliasOptions =
     AliasOptions(

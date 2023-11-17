@@ -26,7 +26,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils
 import proton.android.pass.datamodels.api.serializeToProto
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
 import kotlin.random.Random
 import kotlin.test.assertEquals

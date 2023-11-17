@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases.capabilities
 
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 interface CanMigrateVault {
     suspend operator fun invoke(shareId: ShareId): Boolean

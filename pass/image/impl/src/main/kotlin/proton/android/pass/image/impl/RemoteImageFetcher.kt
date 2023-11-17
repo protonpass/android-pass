@@ -38,7 +38,7 @@ import proton.android.pass.data.api.usecases.ImageResponseResult
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.image.impl.CacheUtils.cacheDir
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.WebsiteUrl
+import proton.android.pass.domain.WebsiteUrl
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -21,9 +21,9 @@ package proton.android.pass.commonuimodels.api
 import android.os.Parcelable
 import androidx.compose.runtime.Stable
 import kotlinx.parcelize.Parcelize
-import proton.pass.domain.entity.AppName
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 
 @Stable
 @Parcelize

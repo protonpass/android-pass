@@ -25,10 +25,10 @@ import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
-import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 sealed interface LoginDetailUiState {
 

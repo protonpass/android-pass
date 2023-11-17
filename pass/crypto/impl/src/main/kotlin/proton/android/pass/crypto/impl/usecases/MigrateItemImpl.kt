@@ -25,7 +25,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedMigrateItemBody
 import proton.android.pass.crypto.api.usecases.MigrateItem
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class MigrateItemImpl @Inject constructor(

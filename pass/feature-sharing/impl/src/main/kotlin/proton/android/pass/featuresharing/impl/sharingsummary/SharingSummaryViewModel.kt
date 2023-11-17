@@ -47,8 +47,8 @@ import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import javax.inject.Inject
 
 @HiltViewModel

@@ -35,7 +35,7 @@ import proton.android.pass.data.impl.responses.AccessResponse
 import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.test.FixedClock
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.PlanType
 import kotlin.time.Duration.Companion.days
 
 class PlanRepositoryImplTest {

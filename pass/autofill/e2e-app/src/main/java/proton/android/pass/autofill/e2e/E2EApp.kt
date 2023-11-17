@@ -24,7 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
-import proton.pass.domain.ItemId
+import proton.android.pass.domain.ItemId
 import timber.log.Timber
 import javax.inject.Inject
 

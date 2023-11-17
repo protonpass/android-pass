@@ -26,8 +26,8 @@ import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.CannotSendMoreInvitesError
 import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.impl.api.PasswordManagerApi
-import proton.pass.domain.InviteId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class ResendInviteImpl @Inject constructor(

@@ -19,8 +19,8 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
 
 interface ObserveUpgradeInfo {
     operator fun invoke(forceRefresh: Boolean = false): Flow<UpgradeInfo>

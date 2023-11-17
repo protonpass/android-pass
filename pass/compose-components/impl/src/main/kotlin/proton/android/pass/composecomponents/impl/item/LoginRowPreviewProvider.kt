@@ -21,10 +21,10 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
     override val values: Sequence<LoginRowParameter>

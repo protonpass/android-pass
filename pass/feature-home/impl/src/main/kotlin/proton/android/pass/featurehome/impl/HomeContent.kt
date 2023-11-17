@@ -64,7 +64,7 @@ import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 @Suppress("LongParameterList", "ComplexMethod")
 @ExperimentalComposeUiApi

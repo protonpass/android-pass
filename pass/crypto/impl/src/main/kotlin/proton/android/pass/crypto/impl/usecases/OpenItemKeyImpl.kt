@@ -25,8 +25,8 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedItemKey
 import proton.android.pass.crypto.api.usecases.OpenItemKey
-import proton.pass.domain.key.ItemKey
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ItemKey
+import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class OpenItemKeyImpl @Inject constructor(

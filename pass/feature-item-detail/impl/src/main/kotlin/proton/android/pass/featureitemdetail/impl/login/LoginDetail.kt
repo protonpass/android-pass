@@ -45,6 +45,8 @@ import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -57,8 +59,6 @@ import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptio
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldEvent
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemState
 
 @OptIn(
     ExperimentalMaterialApi::class,

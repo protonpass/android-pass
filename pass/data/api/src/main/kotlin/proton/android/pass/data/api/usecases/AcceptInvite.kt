@@ -19,8 +19,8 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import proton.pass.domain.InviteToken
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.ShareId
 
 sealed interface AcceptInviteStatus {
     object AcceptingInvite : AcceptInviteStatus

@@ -77,10 +77,10 @@ import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.totp.api.TotpManager
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.Item
-import proton.pass.domain.ItemType
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.PlanType
 
 @Suppress("TooManyFunctions", "LargeClass")
 abstract class BaseLoginViewModel(

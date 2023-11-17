@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.featureitemdetail.impl.R
-import proton.pass.domain.HiddenState
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable

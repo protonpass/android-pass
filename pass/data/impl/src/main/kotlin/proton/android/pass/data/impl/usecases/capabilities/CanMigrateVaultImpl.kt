@@ -23,11 +23,11 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ShareId
-import proton.pass.domain.SharePermissionFlag
-import proton.pass.domain.canCreate
-import proton.pass.domain.hasFlag
-import proton.pass.domain.toPermissions
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.SharePermissionFlag
+import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.hasFlag
+import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 
 class CanMigrateVaultImpl @Inject constructor(

@@ -19,7 +19,7 @@
 package proton.android.pass.featuresharing.impl.sharingpermissions
 
 import proton.android.pass.featuresharing.impl.SharingWithUserModeType
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 sealed interface SharingPermissionsEvents {
     data class NavigateToSummary(

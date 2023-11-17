@@ -19,8 +19,8 @@
 package proton.android.pass.crypto.api.usecases
 
 import proton.android.pass.crypto.api.EncryptionKey
-import proton.pass.domain.ItemContents
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.key.ShareKey
 
 data class EncryptedCreateItem(
     val keyRotation: Long,

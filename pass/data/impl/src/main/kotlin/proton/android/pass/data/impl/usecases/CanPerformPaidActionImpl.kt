@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 import javax.inject.Singleton
 

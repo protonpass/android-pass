@@ -37,12 +37,12 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.toPermissions
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.pass.domain.ItemId
-import proton.pass.domain.PlanType
-import proton.pass.domain.ShareId
-import proton.pass.domain.canCreate
-import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel

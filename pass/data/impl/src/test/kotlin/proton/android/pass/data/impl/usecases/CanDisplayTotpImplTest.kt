@@ -30,11 +30,11 @@ import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
 import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.android.pass.test.TestConstants
-import proton.pass.domain.ItemId
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
-import proton.pass.domain.PlanType
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
 import kotlin.time.Duration.Companion.days
 
 class CanDisplayTotpImplTest {

@@ -90,6 +90,14 @@ import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry.SearchEntrySelection
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.canUpdate
+import proton.android.pass.domain.toPermissions
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ClearTrashError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemError
@@ -108,14 +116,6 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemState
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareSelection
-import proton.pass.domain.Vault
-import proton.pass.domain.canUpdate
-import proton.pass.domain.toPermissions
 import javax.inject.Inject
 
 @Suppress("LongParameterList", "LargeClass")

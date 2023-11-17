@@ -22,8 +22,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
-import proton.pass.domain.Item
-import proton.pass.domain.ItemType
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemType
 import javax.inject.Inject
 
 interface SuggestionItemFilterer {

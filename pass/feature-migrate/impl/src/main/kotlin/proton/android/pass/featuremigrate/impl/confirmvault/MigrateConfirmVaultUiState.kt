@@ -22,9 +22,9 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 
 sealed interface ConfirmMigrateEvent {
     object Close : ConfirmMigrateEvent

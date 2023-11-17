@@ -34,8 +34,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.uievents.value
 import proton.android.pass.featurevault.impl.R
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 
 @Composable
 fun VaultContent(

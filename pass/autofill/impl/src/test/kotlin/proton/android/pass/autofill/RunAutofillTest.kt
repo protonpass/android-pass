@@ -31,25 +31,32 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 
-const val USERNAME = "username"
-const val PASSWORD = "password"
+enum class ExpectedAutofill(val value: String) {
+    USERNAME("username"),
+    PASSWORD("password"),
+    CC_NUMBER("card_number"),
+    CC_CARDHOLDER_NAME("card_name"),
+    CC_CARDHOLDER_FIRST_NAME("card_first_name"),
+    CC_CARDHOLDER_LAST_NAME("card_last_name"),
+    CC_EXPIRATION_MM_AA("card_expiration_mm_aa"),
+    CC_EXPIRATION_MONTH_TEXT("card_expiration_month_text"),
+    CC_EXPIRATION_MONTH_MM("card_expiration_month_mm"),
+    CC_EXPIRATION_YEAR_YY("card_expiration_year_yy"),
+    CC_EXPIRATION_YEAR_YYYY("card_expiration_year_yyyy"),
+    CC_CVV("card_cvv");
 
-const val CC_NUMBER = "card_number"
-const val CC_CARDHOLDER_NAME = "card_name"
-const val CC_CARDHOLDER_FIRST_NAME = "card_first_name"
-const val CC_CARDHOLDER_LAST_NAME = "card_last_name"
-const val CC_EXPIRATION_MM_AA = "card_expiration_mm_aa"
-const val CC_EXPIRATION_MONTH_TEXT = "card_expiration_month_text"
-const val CC_EXPIRATION_MONTH_MM = "card_expiration_month_mm"
-const val CC_EXPIRATION_YEAR_YY = "card_expiration_year_yy"
-const val CC_EXPIRATION_YEAR_YYYY = "card_expiration_year_yyyy"
-const val CC_CVV = "card_cvv"
-
+    companion object {
+        fun all(): List<String> = values().map { it.value }
+    }
+}
 
 private const val TAG = "RunAutofillTest"
 
-
-fun runAutofillTest(file: String, requestFlags: List<RequestFlags> = emptyList()) {
+fun runAutofillTest(
+    file: String,
+    item: AutofillItem,
+    requestFlags: List<RequestFlags> = emptyList()
+) {
     val path = "src/test/resources/$file"
     val asFile = File(path)
     val content = asFile.readText()
@@ -61,13 +68,7 @@ fun runAutofillTest(file: String, requestFlags: List<RequestFlags> = emptyList()
 
     val res = ItemFieldMapper.mapFields(
         encryptionContext = TestEncryptionContext,
-        autofillItem = AutofillItem(
-            itemId = "123",
-            shareId = "123",
-            username = USERNAME,
-            password = TestEncryptionContext.encrypt(PASSWORD),
-            totp = null
-        ),
+        autofillItem = item,
         androidAutofillFieldIds = detectedNodes.fields.map { it.id },
         autofillTypes = detectedNodes.fields.map { it.type!! },
         fieldIsFocusedList = detectedNodes.fields.map { it.isFocused },
@@ -103,13 +104,14 @@ private fun getExpectedContents(
     node: AutofillDebugSaver.DebugAutofillNode,
     withExpectedContents: MutableList<AutofillDebugSaver.DebugAutofillNode>
 ) {
-    val hasExpectedContents = node.expectedAutofill != null
-    if (hasExpectedContents) {
-        if (node.expectedAutofill != USERNAME && node.expectedAutofill != PASSWORD) {
+    val expectedContents = node.expectedAutofill
+    if (expectedContents != null) {
+        if (expectedContents !in ExpectedAutofill.all()) {
             throw IllegalStateException(
-                "Unknown expectedAutofill: ${node.expectedAutofill}. Must be one of [$USERNAME, $PASSWORD]"
+                "Unknown expectedAutofill: $expectedContents. Must be one of ${ExpectedAutofill.all()}"
             )
         }
+
         withExpectedContents.add(node)
     }
     node.children.forEach { getExpectedContents(it, withExpectedContents) }

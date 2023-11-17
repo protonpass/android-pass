@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Текстовое настраиваемое поле</string>
   <string name="bottomsheet_custom_field_type_hidden">Скрыто</string>
   <string name="bottomsheet_custom_field_type_totp">Секрет 2ФА (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Редактировать заголовок</string>
+  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
   <string name="bottomsheet_custom_field_option_remove">Удалить поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Удалить пользовательское поле</string>
   <string name="create_login_add_custom_field_button">Добавить другое поле</string>
-  <string name="custom_field_hidden_placeholder">Ваш скрытый контент</string>
+  <string name="custom_field_hidden_placeholder">Add hidden text</string>
   <string name="custom_field_hidden_icon_content_description">Иконка скрытого настраиваемого поля</string>
-  <string name="custom_field_text_placeholder">Ваш контент</string>
+  <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">Название настраиваемого поля</string>
-  <string name="custom_field_dialog_body">Введите имя вашего настраиваемого поля</string>
-  <string name="custom_field_dialog_placeholder">Имя настраиваемого поля</string>
+  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
   <string name="custom_field_options_content_description">Варианты для настраиваемого поля</string>
   <!-- Create Note -->
   <string name="title_create_note">Создать заметку</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Заметка</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Создать кредитную карту</string>
-  <string name="field_cardholder_name_title">Имя владельца карты</string>
+  <string name="field_cardholder_name_title">Name on card</string>
   <string name="field_cardholder_name_hint">Полное имя</string>
   <string name="field_card_number_title">Номер карты</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Проверочный номер</string>
+  <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">ПИН-код</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Срок действия</string>
+  <string name="field_card_expiration_date_title">Expiration date</string>
   <string name="field_card_expiration_date_hint">ММ / ГГГГ</string>
-  <string name="field_card_expiration_date_error">Срок действия недействителен</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Не могу создать кредитную карту</string>
   <string name="create_credit_card_item_creation_success">Кредитная карта создана</string>
   <string name="credit_card_init_error">Problem retrieving credit card details</string>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trial_title">Наслаждайтесь своей бесплатной пробной версией</string>
-  <string name="trial_subtitle">For next-level password management:</string>
+  <string name="trial_title">Your welcome gift</string>
+  <string name="trial_subtitle">Enjoy next-level password management</string>
   <string name="trial_feature_1">20 хранилищ</string>
-    <string name="trial_feature_3">Встроенный двухфакторный аутентификатор</string>
+  <string name="trial_feature_3">Встроенный двухфакторный аутентификатор</string>
   <string name="trial_feature_4">Настраиваемые поля</string>
-  <string name="trial_button_text">Улучшите, чтобы сохранить эти функции</string>
+  <string name="trial_button_text">Upgrade now</string>
   <plurals name="trial_days_left">
-    <item quantity="one">Остался %d день в вашем пробном периоде</item>
-    <item quantity="few">Осталось %d дня в вашем пробном периоде</item>
-    <item quantity="many">Осталось %d дней в вашем пробном периоде</item>
-    <item quantity="other">Осталось %d дня в вашем пробном периоде</item>
+    <item quantity="one">1 day left to try premium features</item>
+    <item quantity="few">%d days left to try premium features</item>
+    <item quantity="many">%d days left to try premium features</item>
+    <item quantity="other">%d days left to try premium features</item>
   </plurals>
   <string name="trial_learn_more">Подробнее</string>
 </resources>

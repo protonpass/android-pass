@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Власне текстове поле</string>
   <string name="bottomsheet_custom_field_type_hidden">Приховано</string>
   <string name="bottomsheet_custom_field_type_totp">Секретний ключ 2FA (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Редагувати назву</string>
+  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
   <string name="bottomsheet_custom_field_option_remove">Вилучити поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Вилучити власне поле</string>
   <string name="create_login_add_custom_field_button">Додати інше поле</string>
-  <string name="custom_field_hidden_placeholder">Ваш прихований вміст</string>
+  <string name="custom_field_hidden_placeholder">Add hidden text</string>
   <string name="custom_field_hidden_icon_content_description">Піктограма прихованого власного поля</string>
-  <string name="custom_field_text_placeholder">Ваш вміст</string>
+  <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">Назва власного поля</string>
-  <string name="custom_field_dialog_body">Введіть назву власного поля</string>
-  <string name="custom_field_dialog_placeholder">Назва власного поля</string>
+  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
   <string name="custom_field_options_content_description">Параметри власного поля</string>
   <!-- Create Note -->
   <string name="title_create_note">Створити нотатку</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Нотатка</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Створити кредитну картку</string>
-  <string name="field_cardholder_name_title">Ім\'я власника картки</string>
+  <string name="field_cardholder_name_title">Name on card</string>
   <string name="field_cardholder_name_hint">Повне ім\'я</string>
   <string name="field_card_number_title">Номер картки</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Номер підтвердження</string>
+  <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN-код</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Термін дії до:</string>
+  <string name="field_card_expiration_date_title">Expiration date</string>
   <string name="field_card_expiration_date_hint">ММ / РРРР</string>
-  <string name="field_card_expiration_date_error">Термін дії недійсний</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Не вдалося створити кредитну картку</string>
   <string name="create_credit_card_item_creation_success">Кредитну картку створено</string>
   <string name="credit_card_init_error">Problem retrieving credit card details</string>
@@ -108,7 +108,7 @@
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Досягнуто обмеження 2FA</string>
   <string name="upgrade">Покращити</string>
-  <string name="mfa_icon_content_description">2FA icon</string>
+  <string name="mfa_icon_content_description">Піктограма 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Для використання власних доменів передплатіть тарифний план</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Для більшої кількості поштових скриньок передплатіть тарифний план</string>
   <string name="create_alias_content_limit_banner">Ви досягли обмеження створених псевдонімів. Щоб створювати псевдоніми без обмежень, передплатіть тарифний план.</string>

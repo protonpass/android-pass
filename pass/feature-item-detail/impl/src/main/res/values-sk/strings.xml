@@ -56,14 +56,14 @@
   <string name="custom_field_hidden_icon_description">Vlastné skryté pole</string>
   <string name="custom_field_totp_icon_description">Vlastné 2FA pole</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Meno držiteľa karty</string>
+  <string name="credit_card_cardholder_field_name">Meno na karte</string>
   <string name="credit_card_number_field_name">Číslo karty</string>
-  <string name="credit_card_cvv_field_name">Overovacie číslo</string>
+  <string name="credit_card_cvv_field_name">Bezpečnostný kód</string>
   <string name="credit_card_pin_field_name">PIN kód</string>
-  <string name="credit_card_expiration_date_field_name">Exspiruje</string>
+  <string name="credit_card_expiration_date_field_name">Dátum exspirácie</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Držiteľ karty skopírovaný do schránky</string>
   <string name="credit_card_number_copied_to_clipboard">Číslo karty skopírované do schránky</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Overovacie číslo skopírované do schránky</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Bezpečnostný kód skopírovaný do schránky</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Presunúť do koša</string>
   <string name="migrate_item_detail_bottom_sheet">Presunúť do iného trezoru</string>
@@ -84,8 +84,11 @@
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Nemožno upravovať</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Túto položku nemôžete upraviť, pretože na to nemáte dostatočné oprávnenia.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Upravovať môžete len položky v najstarších trezoroch. Ak chcete upravovať túto položku, aktualizujte svoj aktuálny plán.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Túto položku nemôžete upravovať, pretože je v koši. Pred úpravou ju prosím premiestnite z koša.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Upravovať môžete len položky vo svojich najstarších trezoroch. Na úpravu tejto položky upgradujte svoj aktuálny plán, prosím.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Túto položku nemôžete upravovať, pretože je v koši. Pred úpravou ju premiestnite z koša, prosím.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nemožno zdieľať</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Na zdieľanie tohto trezora nemáte dostatočné oprávnenia.</string>
+  <string name="password_score_vulnerable">Zraniteľné</string>
+  <string name="password_score_weak">Slabé</string>
+  <string name="password_score_strong">Silné</string>
 </resources>

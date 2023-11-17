@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Tekst aangepast veld</string>
   <string name="bottomsheet_custom_field_type_hidden">Verborgen</string>
   <string name="bottomsheet_custom_field_type_totp">2FA-geheim (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Titel bewerken</string>
+  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
   <string name="bottomsheet_custom_field_option_remove">Verwijder veld</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Aangepast veld verwijderen</string>
   <string name="create_login_add_custom_field_button">Nog een veld toevoegen</string>
-  <string name="custom_field_hidden_placeholder">Uw verborgen inhoud</string>
+  <string name="custom_field_hidden_placeholder">Add hidden text</string>
   <string name="custom_field_hidden_icon_content_description">Verborgen aangepast veldpictogram</string>
-  <string name="custom_field_text_placeholder">Uw inhoud</string>
+  <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">Aangepaste veldnaam</string>
-  <string name="custom_field_dialog_body">Voer een naam in voor uw aangepaste veld</string>
-  <string name="custom_field_dialog_placeholder">Name of the custom field</string>
+  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
   <string name="custom_field_options_content_description">Aangepaste veldopties</string>
   <!-- Create Note -->
   <string name="title_create_note">Notitie aanmaken</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Notitie</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Kredietkaart aanmaken</string>
-  <string name="field_cardholder_name_title">Naam van de kaarthouder</string>
+  <string name="field_cardholder_name_title">Name on card</string>
   <string name="field_cardholder_name_hint">Volledige naam</string>
   <string name="field_card_number_title">Kaartnummer</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Verificatienummer</string>
+  <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">Pincode</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Vervalt op</string>
+  <string name="field_card_expiration_date_title">Expiration date</string>
   <string name="field_card_expiration_date_hint">MM / YYYY</string>
-  <string name="field_card_expiration_date_error">De vervaldatum is ongeldig.</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Kon kredietkaart niet aanmaken</string>
   <string name="create_credit_card_item_creation_success">Kredietkaart aangemaakt</string>
   <string name="credit_card_init_error">Probleem bij het verkrijgen kredietkaart gegevens</string>

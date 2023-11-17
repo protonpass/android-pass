@@ -27,10 +27,10 @@ import proton.android.pass.crypto.api.error.KeyNotFound
 import proton.android.pass.crypto.api.usecases.OpenItemKey
 import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.key.ItemKey
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.ItemKey
+import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class ItemKeyRepositoryImpl @Inject constructor(

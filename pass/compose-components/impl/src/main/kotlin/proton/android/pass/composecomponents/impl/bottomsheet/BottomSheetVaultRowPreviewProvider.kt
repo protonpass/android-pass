@@ -19,11 +19,11 @@
 package proton.android.pass.composecomponents.impl.bottomsheet
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 
 class BottomSheetVaultRowPreviewProvider : PreviewParameterProvider<VaultRowInput> {
     override val values: Sequence<VaultRowInput>

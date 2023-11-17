@@ -30,7 +30,7 @@ import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavig
 import proton.android.pass.featureitemcreate.impl.creditcard.CCCActionAfterHideKeyboard.SelectVault
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 private enum class CCCActionAfterHideKeyboard {
     SelectVault

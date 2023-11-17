@@ -49,7 +49,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 
 @HiltViewModel

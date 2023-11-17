@@ -21,8 +21,8 @@ package proton.android.pass.featuresharing.impl.sharefromitem
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.pass.domain.ItemId
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.VaultWithItemCount
 
 @Stable
 sealed interface CreateNewVaultState {

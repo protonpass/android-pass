@@ -23,7 +23,7 @@ import org.junit.Test
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
 import kotlin.test.assertEquals
 

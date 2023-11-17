@@ -30,7 +30,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.impl.repositories.PlanRepository
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 
 class ObserveUpgradeInfoImpl @Inject constructor(

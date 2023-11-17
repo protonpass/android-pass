@@ -30,7 +30,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemdetail.impl.login.totp.TotpRow
-import proton.pass.domain.HiddenState
+import proton.android.pass.domain.HiddenState
 
 @Composable
 fun MainLoginSection(

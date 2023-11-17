@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
-import proton.pass.domain.Item
-import proton.pass.domain.ShareSelection
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 import javax.inject.Singleton
 

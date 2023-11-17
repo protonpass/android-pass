@@ -46,8 +46,8 @@ import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.loading.Loading
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable

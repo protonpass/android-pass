@@ -69,8 +69,8 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.GetTotpCodeFromUri
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel

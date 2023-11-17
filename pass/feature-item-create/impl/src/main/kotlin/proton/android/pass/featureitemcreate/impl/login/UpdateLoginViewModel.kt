@@ -71,13 +71,13 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
-import proton.pass.domain.CustomField
-import proton.pass.domain.Item
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewAlias
+import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 @HiltViewModel
@@ -109,7 +109,9 @@ class UpdateLoginViewModel @Inject constructor(
     private val navShareId: ShareId =
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
-        ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
+        proton.android.pass.domain.ItemId(
+            savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key)
+        )
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)

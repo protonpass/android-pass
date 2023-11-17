@@ -33,7 +33,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.toPasswordAnnotatedString
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.HiddenContentRow
-import proton.pass.domain.HiddenState
+import proton.android.pass.domain.HiddenState
 import me.proton.core.presentation.R as CoreR
 
 @Composable

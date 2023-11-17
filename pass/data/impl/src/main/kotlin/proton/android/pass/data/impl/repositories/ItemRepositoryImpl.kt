@@ -77,18 +77,18 @@ import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.datamodels.api.serializeToProto
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.entity.NewAlias
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.Item
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemState
-import proton.pass.domain.ItemType
-import proton.pass.domain.Share
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareSelection
-import proton.pass.domain.entity.NewAlias
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.key.ShareKey
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
@@ -675,7 +675,7 @@ class ItemRepositoryImpl @Inject constructor(
                         localItemDataSource.setItemState(
                             shareId,
                             ItemId(item.id),
-                            ItemState.Active
+                            proton.android.pass.domain.ItemState.Active
                         )
                     }
                 }

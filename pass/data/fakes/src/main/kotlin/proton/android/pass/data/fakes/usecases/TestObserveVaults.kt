@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.usecases.ObserveVaults
-import proton.pass.domain.Vault
+import proton.android.pass.domain.Vault
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -25,12 +25,13 @@ import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.common.api.None
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.test.TestUtils.randomString
-import proton.pass.domain.Item
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.PackageInfo
+import java.util.UUID
 import kotlin.random.Random
 
 object TestItem {
@@ -84,7 +85,7 @@ object TestItem {
         val now = Clock.System.now()
         return Item(
             id = ItemId(randomString()),
-            itemUuid = java.util.UUID.randomUUID().toString(),
+            itemUuid = UUID.randomUUID().toString(),
             revision = Random.nextLong(),
             shareId = ShareId(randomString()),
             itemType = itemTypeParam,

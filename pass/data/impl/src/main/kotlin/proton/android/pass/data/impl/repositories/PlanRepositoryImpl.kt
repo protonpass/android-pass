@@ -32,9 +32,9 @@ import proton.android.pass.data.impl.local.LocalPlanDataSource
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.RemotePlanDataSource
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
 import java.lang.Math.ceil
 import javax.inject.Inject
 

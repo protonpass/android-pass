@@ -33,7 +33,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 
 private const val MAX_LINES_NOTE_DETAIL = 1
 private const val MAX_NOTE_CHARS_PREVIEW = 128

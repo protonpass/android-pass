@@ -19,7 +19,7 @@
 package proton.android.pass.featuresharing.impl.sharingwith
 
 import androidx.compose.runtime.Stable
-import proton.pass.domain.Vault
+import proton.android.pass.domain.Vault
 
 @Stable
 data class SharingWithUIState(

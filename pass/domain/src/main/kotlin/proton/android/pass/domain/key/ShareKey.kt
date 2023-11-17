@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain.key
+package proton.android.pass.domain.key
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 

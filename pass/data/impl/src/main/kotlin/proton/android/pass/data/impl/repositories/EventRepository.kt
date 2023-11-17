@@ -21,7 +21,7 @@ package proton.android.pass.data.impl.repositories
 import proton.android.pass.data.impl.responses.EventList
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 interface EventRepository {
     suspend fun getEvents(userId: UserId, addressId: AddressId, shareId: ShareId): EventList

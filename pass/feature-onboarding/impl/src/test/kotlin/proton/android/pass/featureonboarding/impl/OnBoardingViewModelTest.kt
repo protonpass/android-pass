@@ -46,7 +46,7 @@ import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.pass.domain.UserAccessData
+import proton.android.pass.domain.UserAccessData
 
 class OnBoardingViewModelTest {
 

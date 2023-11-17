@@ -24,7 +24,7 @@ import androidx.room.ForeignKey
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.UserEntity
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareRole
 
 @Entity(
     tableName = ShareEntity.TABLE,

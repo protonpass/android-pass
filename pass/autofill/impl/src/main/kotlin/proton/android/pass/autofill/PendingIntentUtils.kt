@@ -26,7 +26,7 @@ import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.ui.autofill.AutofillActivity
 import proton.android.pass.autofill.ui.autofill.inlinesuggestions.InlineSuggestionsNoUiActivity
 import proton.android.pass.common.api.toOption
-import proton.pass.domain.Item
+import proton.android.pass.domain.Item
 
 object PendingIntentUtils {
     private val autofillPendingIntentFlags: Int =

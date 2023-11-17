@@ -19,9 +19,9 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import proton.pass.domain.AliasDetails
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.AliasDetails
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 interface GetAliasDetails {
     operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails>

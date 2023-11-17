@@ -24,9 +24,9 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.api.usecases.CancelInvite
 import proton.android.pass.data.impl.api.PasswordManagerApi
-import proton.pass.domain.InviteId
-import proton.pass.domain.NewUserInviteId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class CancelInviteImpl @Inject constructor(

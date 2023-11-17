@@ -33,7 +33,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchSta
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 sealed interface ActionState {
     object Unknown : ActionState

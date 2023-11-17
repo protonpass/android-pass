@@ -25,10 +25,10 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.datamodels.api.toContent
-import proton.pass.domain.HiddenState
-import proton.pass.domain.Item
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemType
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemType
 
 fun Item.toUiModel(context: EncryptionContext): ItemUiModel =
     ItemUiModel(

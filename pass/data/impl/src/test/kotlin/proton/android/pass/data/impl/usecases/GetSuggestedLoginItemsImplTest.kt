@@ -41,18 +41,18 @@ import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.TestItem
-import proton.pass.domain.Item
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
-import proton.pass.domain.PlanType
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
-import proton.pass.domain.ShareSelection
-import proton.pass.domain.Vault
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.Vault
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-private typealias Filter = (Item) -> Boolean
+private typealias Filter = (proton.android.pass.domain.Item) -> Boolean
 
 class FakeSuggestionItemFilterer : SuggestionItemFilterer {
     private var filter: Filter = {

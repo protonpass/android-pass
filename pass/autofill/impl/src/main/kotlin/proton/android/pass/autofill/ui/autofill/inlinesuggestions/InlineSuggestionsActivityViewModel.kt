@@ -40,6 +40,7 @@ import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.extensions.deserializeParcelable
+import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIdListList
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_APP_NAME
@@ -51,7 +52,6 @@ import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_INLINE_
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_PACKAGE_NAME
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_TITLE
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_WEB_DOMAIN
-import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -177,34 +177,45 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         autofillItem: AutofillItem,
         copyTotpToClipboard: CopyTotpToClipboard,
         autofillAppState: AutofillAppState
-    ): AutofillMappings =
-        encryptionContextProvider.withEncryptionContext {
-            handleTotpUri(
-                encryptionContext = this@withEncryptionContext,
-                copyTotpToClipboard = copyTotpToClipboard,
-                totp = autofillItem.totp
-            )
+    ): AutofillMappings = when (autofillItem) {
+        is AutofillItem.Login -> getLoginMappings(
+            autofillItem = autofillItem,
+            copyTotpToClipboard = copyTotpToClipboard,
+            autofillAppState = autofillAppState
+        )
+    }
 
-            updateAutofillItem(
-                UpdateAutofillItemData(
-                    shareId = ShareId(autofillItem.shareId),
-                    itemId = ItemId(autofillItem.itemId),
-                    packageInfo = autofillAppState.packageInfoUi.toOption()
-                        .map(PackageInfoUi::toPackageInfo),
-                    url = autofillAppState.webDomain,
-                    shouldAssociate = false
-                )
-            )
+    private fun getLoginMappings(
+        autofillItem: AutofillItem.Login,
+        copyTotpToClipboard: CopyTotpToClipboard,
+        autofillAppState: AutofillAppState
+    ): AutofillMappings = encryptionContextProvider.withEncryptionContext {
+        handleTotpUri(
+            encryptionContext = this@withEncryptionContext,
+            copyTotpToClipboard = copyTotpToClipboard,
+            totp = autofillItem.totp
+        )
 
-            ItemFieldMapper.mapFields(
-                encryptionContext = this@withEncryptionContext,
-                autofillItem = autofillItem,
-                androidAutofillFieldIds = autofillAppState.androidAutofillIds,
-                autofillTypes = autofillAppState.fieldTypes,
-                fieldIsFocusedList = autofillAppState.fieldIsFocusedList,
-                parentIdList = autofillAppState.parentIdList
+        updateAutofillItem(
+            UpdateAutofillItemData(
+                shareId = ShareId(autofillItem.shareId),
+                itemId = ItemId(autofillItem.itemId),
+                packageInfo = autofillAppState.packageInfoUi.toOption()
+                    .map(PackageInfoUi::toPackageInfo),
+                url = autofillAppState.webDomain,
+                shouldAssociate = false
             )
-        }
+        )
+
+        ItemFieldMapper.mapFields(
+            encryptionContext = this@withEncryptionContext,
+            autofillItem = autofillItem,
+            androidAutofillFieldIds = autofillAppState.androidAutofillIds,
+            autofillTypes = autofillAppState.fieldTypes,
+            fieldIsFocusedList = autofillAppState.fieldIsFocusedList,
+            parentIdList = autofillAppState.parentIdList
+        )
+    }
 
     private fun handleTotpUri(
         encryptionContext: EncryptionContext,

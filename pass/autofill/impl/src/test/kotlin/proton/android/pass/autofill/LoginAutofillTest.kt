@@ -19,106 +19,131 @@
 package proton.android.pass.autofill
 
 import org.junit.Test
+import proton.android.pass.autofill.entities.AutofillItem
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 
 class LoginAutofillTest : BaseAutofillTest() {
 
     @Test
     fun `can autofill news ycombinator com firefox (focus on first username)`() {
-        runAutofillTest("login/firefox_news.ycombinator.com_firstusername.json")
+        runLoginAutofillTest("login/firefox_news.ycombinator.com_firstusername.json")
     }
 
     @Test
     fun `can autofill news ycombinator com firefox (focus on first password)`() {
-        runAutofillTest("login/firefox_news.ycombinator.com_firstpassword.json")
+        runLoginAutofillTest("login/firefox_news.ycombinator.com_firstpassword.json")
     }
 
     @Test
     fun `can autofill news ycombinator com firefox (focus on second username)`() {
-        runAutofillTest("login/firefox_news.ycombinator.com_secondusername.json")
+        runLoginAutofillTest("login/firefox_news.ycombinator.com_secondusername.json")
     }
 
     @Test
     fun `can autofill news ycombinator com firefox (focus on second password)`() {
-        runAutofillTest("login/firefox_news.ycombinator.com_secondpassword.json")
+        runLoginAutofillTest("login/firefox_news.ycombinator.com_secondpassword.json")
     }
 
     @Test
     fun `can autofill news ycombinator com chrome (focus on first username)`() {
-        runAutofillTest("login/chrome_news.ycombinator.com_firstusername.json")
+        runLoginAutofillTest("login/chrome_news.ycombinator.com_firstusername.json")
     }
 
     @Test
     fun `can autofill news ycombinator com chrome (focus on first password)`() {
-        runAutofillTest("login/chrome_news.ycombinator.com_firstpassword.json")
+        runLoginAutofillTest("login/chrome_news.ycombinator.com_firstpassword.json")
     }
 
     @Test
     fun `can autofill news ycombinator com chrome (focus on second username)`() {
-        runAutofillTest("login/chrome_news.ycombinator.com_secondusername.json")
+        runLoginAutofillTest("login/chrome_news.ycombinator.com_secondusername.json")
     }
 
     @Test
     fun `can autofill news ycombinator com chrome (focus on second password)`() {
-        runAutofillTest("login/chrome_news.ycombinator.com_secondpassword.json")
+        runLoginAutofillTest("login/chrome_news.ycombinator.com_secondpassword.json")
     }
 
     @Test
     fun `can autofill account dyn com chrome`() {
-        runAutofillTest("login/chrome_account.dyn.com.json")
+        runLoginAutofillTest("login/chrome_account.dyn.com.json")
     }
 
     @Test
     fun `can autofill citiretailservices citibank com chrome (focus on username)`() {
-        runAutofillTest("login/chrome_citiretailservices.citibank.com_username.json")
+        runLoginAutofillTest("login/chrome_citiretailservices.citibank.com_username.json")
     }
 
     @Test
     fun `can autofill citiretailservices citibank com chrome (focus on password)`() {
-        runAutofillTest("login/chrome_citiretailservices.citibank.com_password.json")
+        runLoginAutofillTest("login/chrome_citiretailservices.citibank.com_password.json")
     }
 
     @Test
     fun `can autofill protonmail app`() {
-        runAutofillTest("login/app_ch.protonmail.android.json")
+        runLoginAutofillTest("login/app_ch.protonmail.android.json")
     }
 
     @Test
     fun `can autofill instagram app`() {
-        runAutofillTest("login/app_com.instagram.android.json")
+        runLoginAutofillTest("login/app_com.instagram.android.json")
     }
 
     @Test
     fun `can autofill proton me duckduckgo username`() {
-        runAutofillTest("login/duckduckgo.proton.me.username.json")
+        runLoginAutofillTest("login/duckduckgo.proton.me.username.json")
     }
 
     @Test
     fun `can autofill proton me duckduckgo password`() {
-        runAutofillTest("login/duckduckgo.proton.me.password.json")
+        runLoginAutofillTest("login/duckduckgo.proton.me.password.json")
     }
 
     @Test
     fun `can autofill app com booking password`() {
-        runAutofillTest("login/app_com.booking.android_password.json", listOf(RequestFlags.FLAG_MANUAL_REQUEST))
+        runLoginAutofillTest(
+            "login/app_com.booking.android_password.json",
+            listOf(RequestFlags.FLAG_MANUAL_REQUEST)
+        )
     }
 
     @Test
     fun `can autofill app com booking repeat password`() {
-        runAutofillTest("login/app_com.booking.android_repeatpassword.json", listOf(RequestFlags.FLAG_MANUAL_REQUEST))
+        runLoginAutofillTest(
+            "login/app_com.booking.android_repeatpassword.json",
+            listOf(RequestFlags.FLAG_MANUAL_REQUEST)
+        )
     }
 
     @Test
     fun `can autofill account xiaomi com chrome username`() {
-        runAutofillTest("login/chrome_account.xiaomi.com_username.json")
+        runLoginAutofillTest("login/chrome_account.xiaomi.com_username.json")
     }
 
     @Test
     fun `can autofill login klm com chrome username`() {
-        runAutofillTest("login/chrome_login.klm.com_username.json")
+        runLoginAutofillTest("login/chrome_login.klm.com_username.json")
     }
 
     @Test
     fun `can autofill store steampowered com chrome username`() {
-        runAutofillTest("login/chrome_store.steampowered.com_username.json")
+        runLoginAutofillTest("login/chrome_store.steampowered.com_username.json")
+    }
+
+    private fun runLoginAutofillTest(
+        file: String,
+        flags: List<RequestFlags> = emptyList()
+    ) {
+        runAutofillTest(
+            file = file,
+            item = AutofillItem.Login(
+                itemId = "123",
+                shareId = "123",
+                username = ExpectedAutofill.USERNAME.value,
+                password = TestEncryptionContext.encrypt(ExpectedAutofill.PASSWORD.value),
+                totp = null
+            ),
+            requestFlags = flags
+        )
     }
 }

@@ -44,8 +44,8 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 
 @HiltViewModel

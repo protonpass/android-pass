@@ -30,7 +30,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel

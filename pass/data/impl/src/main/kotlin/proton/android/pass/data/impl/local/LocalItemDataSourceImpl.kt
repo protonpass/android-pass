@@ -27,13 +27,13 @@ import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton.pass.domain.ITEM_TYPE_ALIAS
-import proton.pass.domain.ITEM_TYPE_CREDIT_CARD
-import proton.pass.domain.ITEM_TYPE_LOGIN
-import proton.pass.domain.ITEM_TYPE_NOTE
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemState
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ITEM_TYPE_ALIAS
+import proton.android.pass.domain.ITEM_TYPE_CREDIT_CARD
+import proton.android.pass.domain.ITEM_TYPE_LOGIN
+import proton.android.pass.domain.ITEM_TYPE_NOTE
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class LocalItemDataSourceImpl @Inject constructor(

@@ -20,9 +20,9 @@ package proton.android.pass.datamodels.api
 
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
-import proton.pass.domain.CustomField
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
+import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.HiddenState
 
 fun CustomField.toContent(
     encryptionContext: EncryptionContext,

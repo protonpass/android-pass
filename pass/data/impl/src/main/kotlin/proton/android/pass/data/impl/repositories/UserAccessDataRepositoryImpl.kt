@@ -24,7 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
-import proton.pass.domain.UserAccessData
+import proton.android.pass.domain.UserAccessData
 import javax.inject.Inject
 
 class UserAccessDataRepositoryImpl @Inject constructor(

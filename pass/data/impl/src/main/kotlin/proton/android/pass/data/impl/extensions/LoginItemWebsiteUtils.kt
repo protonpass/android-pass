@@ -22,7 +22,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
-import proton.pass.domain.ItemType
+import proton.android.pass.domain.ItemType
 import java.net.URL
 
 fun ItemType.Login.hasWebsite(website: String): Boolean {

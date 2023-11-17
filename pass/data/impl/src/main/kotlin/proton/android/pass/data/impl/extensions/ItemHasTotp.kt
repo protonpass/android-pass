@@ -19,8 +19,8 @@
 package proton.android.pass.data.impl.extensions
 
 import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.pass.domain.Item
-import proton.pass.domain.ItemType
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemType
 
 fun Item.hasTotp(encryptionContext: EncryptionContext): Boolean =
     when (val type = itemType) {

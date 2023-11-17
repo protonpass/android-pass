@@ -21,7 +21,7 @@ package proton.android.pass.data.impl.remote
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.data.impl.responses.EventList
 import me.proton.core.domain.entity.UserId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 interface RemoteEventDataSource {
     fun getLatestEventId(userId: UserId, shareId: ShareId): Flow<String>

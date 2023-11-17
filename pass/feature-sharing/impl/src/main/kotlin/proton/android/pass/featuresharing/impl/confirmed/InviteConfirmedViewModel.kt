@@ -43,7 +43,7 @@ import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.PendingInvite
+import proton.android.pass.domain.PendingInvite
 import javax.inject.Inject
 
 @HiltViewModel

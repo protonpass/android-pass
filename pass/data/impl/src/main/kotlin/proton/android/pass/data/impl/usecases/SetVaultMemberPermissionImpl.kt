@@ -25,8 +25,8 @@ import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import javax.inject.Inject
 
 class SetVaultMemberPermissionImpl @Inject constructor(

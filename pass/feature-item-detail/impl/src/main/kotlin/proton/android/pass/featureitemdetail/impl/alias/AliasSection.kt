@@ -30,7 +30,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
-import proton.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasMailbox
 
 @Composable
 fun AliasSection(

@@ -23,7 +23,7 @@ import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.preferences.SelectedVaultPreference
 import proton.android.pass.preferences.SortingOptionPreference
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 internal fun SortingOptionPreference.toDomain(): SearchSortingType = when (this) {
     SortingOptionPreference.MostRecent -> SearchSortingType.MostRecent

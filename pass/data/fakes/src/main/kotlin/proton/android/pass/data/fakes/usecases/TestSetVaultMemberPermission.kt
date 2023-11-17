@@ -19,8 +19,8 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import javax.inject.Inject
 import javax.inject.Singleton
 

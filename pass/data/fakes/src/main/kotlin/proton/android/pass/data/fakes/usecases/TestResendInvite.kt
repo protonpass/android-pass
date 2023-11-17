@@ -19,8 +19,8 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.ResendInvite
-import proton.pass.domain.InviteId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 

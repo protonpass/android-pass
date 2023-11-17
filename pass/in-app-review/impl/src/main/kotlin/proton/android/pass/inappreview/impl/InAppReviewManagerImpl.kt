@@ -32,7 +32,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 
 class InAppReviewManagerImpl @Inject constructor(

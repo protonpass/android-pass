@@ -21,8 +21,8 @@ package proton.android.pass.crypto.fakes.usecases
 import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
-import proton.pass.domain.Share
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.key.ShareKey
 
 class TestOpenItem : OpenItem {
 

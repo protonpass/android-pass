@@ -28,7 +28,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.note.NoteItemValidationErrors.BlankTitle
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 @ExperimentalComposeUiApi
 @Composable

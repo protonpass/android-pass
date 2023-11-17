@@ -19,7 +19,7 @@
 package proton.android.pass.crypto.api.usecases
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 
 data class EncryptedMigrateItemBody(
     val keyRotation: Long,

@@ -25,7 +25,7 @@ import proton.android.pass.data.impl.db.entities.PassEventEntity
 import proton.android.pass.data.impl.util.TimeUtil
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class LocalEventDataSourceImpl @Inject constructor(

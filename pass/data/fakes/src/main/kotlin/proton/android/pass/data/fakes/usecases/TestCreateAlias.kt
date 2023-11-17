@@ -20,9 +20,9 @@ package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.CreateAlias
-import proton.pass.domain.Item
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewAlias
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 import javax.inject.Singleton
 

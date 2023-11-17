@@ -23,9 +23,9 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.MigrateItem
-import proton.pass.domain.Item
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class MigrateItemImpl @Inject constructor(

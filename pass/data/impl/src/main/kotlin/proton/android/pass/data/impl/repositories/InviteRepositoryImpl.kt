@@ -35,9 +35,9 @@ import proton.android.pass.data.impl.local.InviteAndKeysEntity
 import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
-import proton.pass.domain.InviteToken
-import proton.pass.domain.PendingInvite
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.ShareId
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 

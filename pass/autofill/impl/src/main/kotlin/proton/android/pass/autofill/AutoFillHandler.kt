@@ -47,9 +47,9 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.pass.domain.entity.AppName
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 
 object AutoFillHandler {
 

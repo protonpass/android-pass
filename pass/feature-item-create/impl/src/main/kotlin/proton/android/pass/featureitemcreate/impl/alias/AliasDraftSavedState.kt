@@ -19,7 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.alias
 
 import androidx.compose.runtime.Stable
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 @Stable
 sealed interface AliasDraftSavedState {

@@ -21,9 +21,9 @@ package proton.android.pass.commonuimodels.fakes
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 object TestItemUiModel {
 

@@ -20,7 +20,7 @@ package proton.android.pass.crypto.api.usecases
 
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 
 @JvmInline
 value class EncryptedInviteShareKeyList(val keys: List<EncryptedInviteKey>)

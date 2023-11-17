@@ -37,7 +37,7 @@ import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 

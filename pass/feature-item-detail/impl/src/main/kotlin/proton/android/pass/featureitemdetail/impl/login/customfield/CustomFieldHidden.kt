@@ -32,7 +32,7 @@ import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.HiddenContentRow
 import proton.android.pass.featureitemdetail.impl.login.CustomFieldUiContent
 import proton.android.pass.featureitemdetail.impl.login.HIDDEN_FIELD_CHAR_AMOUNT
-import proton.pass.domain.HiddenState
+import proton.android.pass.domain.HiddenState
 import me.proton.core.presentation.R as CoreR
 
 @Composable

@@ -32,12 +32,12 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldDetails
-import proton.pass.domain.ItemContents
-import proton.pass.domain.Vault
 
 @Composable
 fun LoginContent(

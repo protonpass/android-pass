@@ -80,11 +80,11 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
-import proton.pass.domain.CustomField
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
-import proton.pass.domain.entity.NewAlias
+import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 @Suppress("LongParameterList")

@@ -21,7 +21,7 @@ package proton.android.pass.crypto.fakes.usecases
 import me.proton.core.util.kotlin.random
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateVaultRequest
 import proton.android.pass.crypto.api.usecases.UpdateVault
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 import proton_pass_vault_v1.VaultV1
 
 class TestUpdateVault : UpdateVault {

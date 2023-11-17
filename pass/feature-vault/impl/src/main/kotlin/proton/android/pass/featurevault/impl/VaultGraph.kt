@@ -25,7 +25,7 @@ import proton.android.pass.featurevault.impl.bottomsheet.options.bottomSheetVaul
 import proton.android.pass.featurevault.impl.bottomsheet.select.selectVaultBottomsheetGraph
 import proton.android.pass.featurevault.impl.delete.deleteVaultDialogGraph
 import proton.android.pass.featurevault.impl.leave.leaveVaultDialogGraph
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 sealed interface VaultNavigation {
     object Upgrade : VaultNavigation

@@ -26,8 +26,8 @@ import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.SearchEntryRepository
 import proton.android.pass.data.impl.db.entities.SearchEntryEntity
 import proton.android.pass.data.impl.local.LocalSearchEntryDataSource
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class SearchEntryRepositoryImpl @Inject constructor(

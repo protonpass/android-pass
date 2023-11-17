@@ -21,7 +21,7 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.data.api.usecases.ObserveInvites
-import proton.pass.domain.PendingInvite
+import proton.android.pass.domain.PendingInvite
 import javax.inject.Inject
 import javax.inject.Singleton
 

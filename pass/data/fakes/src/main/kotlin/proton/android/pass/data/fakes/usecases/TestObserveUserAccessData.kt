@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import proton.android.pass.common.api.FlowUtils
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
-import proton.pass.domain.UserAccessData
+import proton.android.pass.domain.UserAccessData
 import javax.inject.Inject
 import javax.inject.Singleton
 

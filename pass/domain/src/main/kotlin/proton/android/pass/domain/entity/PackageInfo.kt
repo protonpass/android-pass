@@ -16,10 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain.entity
 
-sealed class ShareSelection {
-    object AllShares : ShareSelection()
-    data class Share(val shareId: ShareId) : ShareSelection()
-    data class Shares(val shareIds: List<ShareId>) : ShareSelection()
-}
+import kotlinx.serialization.Serializable
+
+@Serializable
+@JvmInline
+value class PackageName(val value: String)
+
+@Serializable
+@JvmInline
+value class AppName(val value: String)
+
+@Serializable
+data class PackageInfo(
+    val packageName: PackageName,
+    val appName: AppName
+)

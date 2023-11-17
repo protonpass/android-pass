@@ -37,8 +37,8 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.test.TestUtils
-import proton.pass.domain.key.ItemKey
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ItemKey
+import proton.android.pass.domain.key.ShareKey
 
 @Suppress("MagicNumber", "UnderscoresInNumericLiterals")
 object TestUtils {

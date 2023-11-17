@@ -38,7 +38,7 @@ import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.featurehome.impl.R
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 @Composable
 fun VaultDrawerSection(

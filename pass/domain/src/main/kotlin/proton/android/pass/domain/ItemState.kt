@@ -16,15 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain.entity
+package proton.android.pass.domain
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
+object ItemStateValues {
+    const val ACTIVE = 1
+    const val TRASHED = 2
+}
 
-data class NewVault(
-    val name: EncryptedString,
-    val description: EncryptedString,
-    val icon: ShareIcon,
-    val color: ShareColor
-)
+enum class ItemState(val value: Int) {
+    Active(proton.android.pass.domain.ItemStateValues.ACTIVE),
+    Trashed(proton.android.pass.domain.ItemStateValues.TRASHED);
+
+    companion object {
+        val map = values().associateBy { it.value }
+    }
+}

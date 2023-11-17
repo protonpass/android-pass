@@ -18,7 +18,7 @@
 
 package proton.android.pass.test.domain
 
-import proton.pass.domain.AliasSuffix
+import proton.android.pass.domain.AliasSuffix
 
 object TestAliasSuffix {
 

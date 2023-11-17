@@ -18,7 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.common
 
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.VaultWithItemCount
 
 sealed class ShareUiState {
     object NotInitialised : ShareUiState()

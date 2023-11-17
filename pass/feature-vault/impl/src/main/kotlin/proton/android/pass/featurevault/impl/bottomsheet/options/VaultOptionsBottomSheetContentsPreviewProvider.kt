@@ -19,7 +19,7 @@
 package proton.android.pass.featurevault.impl.bottomsheet.options
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 class VaultOptionsBottomSheetContentsPreviewProvider :
     PreviewParameterProvider<VaultOptionsUiState.Success> {

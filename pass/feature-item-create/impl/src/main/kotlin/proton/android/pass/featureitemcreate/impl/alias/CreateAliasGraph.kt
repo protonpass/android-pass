@@ -38,8 +38,8 @@ import proton.android.pass.navigation.api.ShowUpgradeNavArgId
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 object IsEditAliasNavArg : OptionalNavArgId {
     override val key = "isEdit"

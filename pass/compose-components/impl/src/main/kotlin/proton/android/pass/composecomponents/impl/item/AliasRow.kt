@@ -33,7 +33,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 
 private const val MAX_PREVIEW_LENGTH = 128
 

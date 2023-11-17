@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 import javax.inject.Singleton
 

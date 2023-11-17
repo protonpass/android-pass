@@ -18,7 +18,7 @@
 
 package proton.android.pass.featurevault.impl.bottomsheet.options
 
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 sealed class VaultOptionsUiState {
     object Uninitialised : VaultOptionsUiState()

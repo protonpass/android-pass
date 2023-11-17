@@ -28,11 +28,11 @@ import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.responses.AliasMailboxResponse
 import me.proton.core.domain.entity.UserId
-import proton.pass.domain.AliasDetails
-import proton.pass.domain.AliasMailbox
-import proton.pass.domain.AliasOptions
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.AliasDetails
+import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasOptions
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class AliasRepositoryImpl @Inject constructor(
@@ -51,7 +51,7 @@ class AliasRepositoryImpl @Inject constructor(
     ): Flow<AliasDetails> =
         remoteDataSource.getAliasDetails(userId, shareId, itemId)
             .map { details ->
-                AliasDetails(
+                proton.android.pass.domain.AliasDetails(
                     email = details.email,
                     mailboxes = mapMailboxes(details.mailboxes),
                     availableMailboxes = mapMailboxes(details.availableMailboxes)
@@ -74,5 +74,5 @@ class AliasRepositoryImpl @Inject constructor(
     }
 
     private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =
-        input.map { AliasMailbox(id = it.id, email = it.email) }
+        input.map { proton.android.pass.domain.AliasMailbox(id = it.id, email = it.email) }
 }

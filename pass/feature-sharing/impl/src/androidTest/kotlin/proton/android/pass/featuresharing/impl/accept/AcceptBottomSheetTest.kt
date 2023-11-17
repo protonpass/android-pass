@@ -36,7 +36,7 @@ import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.TestPendingInvite
-import proton.pass.domain.InviteToken
+import proton.android.pass.domain.InviteToken
 import javax.inject.Inject
 
 @HiltAndroidTest

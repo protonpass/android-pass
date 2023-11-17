@@ -28,8 +28,8 @@ import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.errors.ShareContentNotAvailableError
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetVaultById
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import javax.inject.Inject
 
 class GetVaultByIdImpl @Inject constructor(

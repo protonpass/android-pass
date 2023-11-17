@@ -16,11 +16,6 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain
 
-data class AliasSuffix(
-    val suffix: String,
-    val signedSuffix: String,
-    val isCustom: Boolean,
-    val domain: String
-)
+data class WebsiteUrl(val url: String)

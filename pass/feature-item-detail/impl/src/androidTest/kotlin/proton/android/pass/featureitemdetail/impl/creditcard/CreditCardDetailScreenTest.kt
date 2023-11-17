@@ -54,9 +54,9 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import proton.android.pass.composecomponents.impl.R as CompR

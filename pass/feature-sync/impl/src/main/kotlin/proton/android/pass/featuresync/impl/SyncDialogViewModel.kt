@@ -35,8 +35,8 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ObserveVaults
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltViewModel

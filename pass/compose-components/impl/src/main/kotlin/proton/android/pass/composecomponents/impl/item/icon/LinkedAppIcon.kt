@@ -39,7 +39,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import proton.android.pass.commonui.api.PassTheme
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.domain.entity.PackageName
 
 @Composable
 fun LinkedAppIcon(

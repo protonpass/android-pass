@@ -54,7 +54,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateLogin
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateNote
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreatePassword
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 enum class CreateItemBottomSheetMode {
     Full,

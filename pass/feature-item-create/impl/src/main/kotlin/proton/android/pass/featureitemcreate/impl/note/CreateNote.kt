@@ -50,9 +50,9 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareLi
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.note.CNActionAfterHideKeyboard.SelectVault
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
 
 private enum class CNActionAfterHideKeyboard {
     SelectVault

@@ -25,7 +25,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
-import proton.pass.domain.ItemState
+import proton.android.pass.domain.ItemState
 import javax.inject.Inject
 
 class ObserveItemCountImpl @Inject constructor(

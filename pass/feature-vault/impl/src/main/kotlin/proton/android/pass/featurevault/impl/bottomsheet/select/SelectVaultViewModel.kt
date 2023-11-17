@@ -38,8 +38,8 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 
 @HiltViewModel

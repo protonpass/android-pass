@@ -24,8 +24,8 @@ import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
-import proton.pass.domain.InviteToken
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.ShareId
 
 interface RemoteInviteDataSource {
     suspend fun sendInvite(

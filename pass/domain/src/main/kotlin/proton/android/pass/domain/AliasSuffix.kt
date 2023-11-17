@@ -16,9 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain
 
-data class AliasOptions(
-    val suffixes: List<AliasSuffix>,
-    val mailboxes: List<AliasMailbox>
+data class AliasSuffix(
+    val suffix: String,
+    val signedSuffix: String,
+    val isCustom: Boolean,
+    val domain: String
 )

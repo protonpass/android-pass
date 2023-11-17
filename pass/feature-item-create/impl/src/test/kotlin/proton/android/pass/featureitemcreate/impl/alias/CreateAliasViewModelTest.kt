@@ -49,10 +49,10 @@ import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
-import proton.pass.domain.AliasOptions
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.AliasOptions
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 
 class CreateAliasViewModelTest {
 
@@ -286,7 +286,7 @@ class CreateAliasViewModelTest {
     private fun setupAliasOptions() {
         setupVaults()
         observeAliasOptions.sendAliasOptions(
-            AliasOptions(
+            proton.android.pass.domain.AliasOptions(
                 suffixes = listOf(suffix.toDomain()),
                 mailboxes = listOf(mailbox.toDomain())
             )

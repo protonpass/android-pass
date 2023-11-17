@@ -21,8 +21,8 @@ package proton.android.pass.featurevault.impl.bottomsheet
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 
 class CreateVaultProvider : PreviewParameterProvider<BaseVaultUiState> {
     override val values: Sequence<BaseVaultUiState>

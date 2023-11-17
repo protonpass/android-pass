@@ -40,8 +40,8 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.Custo
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
-import proton.pass.domain.CustomFieldContent
-import proton.pass.domain.HiddenState
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.HiddenState
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -77,7 +77,7 @@ class CustomFieldNameDialogTest {
     fun testAddTotpField() {
         performTest(
             CustomFieldType.Totp,
-            CustomFieldContent.Totp(
+            proton.android.pass.domain.CustomFieldContent.Totp(
                 label = LABEL,
                 value = HiddenState.Empty(TestEncryptionContext.encrypt(""))
             )
@@ -88,7 +88,7 @@ class CustomFieldNameDialogTest {
     fun testAddHiddenField() {
         performTest(
             CustomFieldType.Hidden,
-            CustomFieldContent.Hidden(
+            proton.android.pass.domain.CustomFieldContent.Hidden(
                 label = LABEL,
                 value = HiddenState.Empty(TestEncryptionContext.encrypt(""))
             )

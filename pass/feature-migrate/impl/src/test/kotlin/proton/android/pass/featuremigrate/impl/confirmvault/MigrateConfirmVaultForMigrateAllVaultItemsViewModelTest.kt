@@ -38,9 +38,9 @@ import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 
 class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
 

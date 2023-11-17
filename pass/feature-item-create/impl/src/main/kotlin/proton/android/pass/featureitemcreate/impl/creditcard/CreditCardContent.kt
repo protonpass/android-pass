@@ -11,7 +11,7 @@ import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Submit
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Up
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Upgrade
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

@@ -20,7 +20,7 @@ package proton.android.pass.data.impl.fakes
 
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 
 class TestCreateNewUserInviteSignature : NewUserInviteSignatureManager {
 

@@ -23,7 +23,7 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 class TestRemoteShareDataSource : RemoteShareDataSource {
 

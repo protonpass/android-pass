@@ -30,9 +30,9 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.android.pass.data.impl.local.LocalItemDataSource
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemState
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
 
 class TestLocalItemDataSource : LocalItemDataSource {
 

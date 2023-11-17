@@ -63,11 +63,11 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.pass.domain.AliasDetails
-import proton.pass.domain.Item
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.AliasDetails
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -90,7 +90,9 @@ class UpdateAliasViewModel @Inject constructor(
     private val navShareId: ShareId =
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
-        ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
+        proton.android.pass.domain.ItemId(
+            savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key)
+        )
 
     private var itemOption: Option<Item> = None
 

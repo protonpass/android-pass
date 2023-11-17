@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases.capabilities
 
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 sealed interface CanShareVaultStatus {
 

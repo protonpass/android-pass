@@ -34,10 +34,10 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 class DeleteVaultViewModelTest {
 

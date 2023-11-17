@@ -23,7 +23,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton.pass.domain.ItemStateValues
+import proton.android.pass.domain.ItemStateValues
 
 data class SummaryRow(
     val itemKind: Int,

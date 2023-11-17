@@ -36,7 +36,7 @@ import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.ConfirmInviteRequest
 import proton.android.pass.data.impl.requests.InviteKeyRotation
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 

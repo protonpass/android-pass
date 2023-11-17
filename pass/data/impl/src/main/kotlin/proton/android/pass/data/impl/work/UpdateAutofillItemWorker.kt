@@ -31,11 +31,11 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.AppName
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 
 @HiltWorker
 class UpdateAutofillItemWorker @AssistedInject constructor(

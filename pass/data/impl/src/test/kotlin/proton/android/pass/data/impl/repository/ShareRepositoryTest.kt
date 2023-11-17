@@ -36,8 +36,8 @@ import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.test.domain.TestShare
-import proton.pass.domain.Share
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
 
 class ShareRepositoryTest {
 

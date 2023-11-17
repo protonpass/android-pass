@@ -35,7 +35,7 @@ import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
 import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
-import proton.pass.domain.Vault
+import proton.android.pass.domain.Vault
 
 @Composable
 fun CreditCardTitle(

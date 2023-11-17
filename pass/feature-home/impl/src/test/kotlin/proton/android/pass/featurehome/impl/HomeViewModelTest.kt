@@ -61,11 +61,11 @@ import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
-import proton.pass.domain.Item
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 class HomeViewModelTest {
 

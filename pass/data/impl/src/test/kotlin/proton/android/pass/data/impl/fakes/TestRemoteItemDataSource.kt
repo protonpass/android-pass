@@ -34,10 +34,10 @@ import proton.android.pass.data.impl.responses.CreateItemAliasBundle
 import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
-import proton.pass.domain.Item
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemStateValues
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemStateValues
+import proton.android.pass.domain.ShareId
 
 class TestRemoteItemDataSource : RemoteItemDataSource {
 

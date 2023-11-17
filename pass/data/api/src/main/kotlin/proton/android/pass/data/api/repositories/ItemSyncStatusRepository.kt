@@ -19,7 +19,7 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 sealed interface ItemSyncStatus {
     object NotStarted : ItemSyncStatus

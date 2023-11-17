@@ -60,13 +60,13 @@ import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
-import proton.pass.domain.Item
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.featuretrash.R as TrashR

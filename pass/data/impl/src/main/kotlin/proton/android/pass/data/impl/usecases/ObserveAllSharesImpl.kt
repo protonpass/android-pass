@@ -24,7 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.pass.domain.Share
+import proton.android.pass.domain.Share
 import javax.inject.Inject
 
 class ObserveAllSharesImpl @Inject constructor(

@@ -43,8 +43,8 @@ import proton.android.pass.account.fakes.TestUserAddressRepository
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestShareKey
-import proton.pass.domain.ItemContents
-import proton.pass.domain.Share
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Share
 import kotlin.test.assertEquals
 
 class ItemRepositoryImplTest {

@@ -23,13 +23,13 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.datamodels.api.fromParsed
-import proton.pass.domain.Item
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.AppName
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
 
 fun ItemEntity.itemType(context: EncryptionContext): ItemType {
@@ -50,7 +50,7 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
     val decrypted = context.decrypt(encryptedContent)
     val parsed = ItemV1.Item.parseFrom(decrypted)
 
-    return Item(
+    return proton.android.pass.domain.Item(
         id = ItemId(id),
         itemUuid = parsed.metadata.itemUuid,
         revision = revision,

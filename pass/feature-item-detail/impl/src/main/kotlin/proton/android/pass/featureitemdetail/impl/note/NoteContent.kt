@@ -39,7 +39,7 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
 import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
-import proton.pass.domain.Vault
+import proton.android.pass.domain.Vault
 
 @Composable
 fun NoteContent(

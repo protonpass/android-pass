@@ -16,7 +16,7 @@ import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 
 private const val MAX_PREVIEW_LENGTH = 128
 

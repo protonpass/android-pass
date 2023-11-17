@@ -45,10 +45,10 @@ import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewVault
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewVault
 import javax.inject.Inject
 
 class ApplyPendingEventsImpl @Inject constructor(

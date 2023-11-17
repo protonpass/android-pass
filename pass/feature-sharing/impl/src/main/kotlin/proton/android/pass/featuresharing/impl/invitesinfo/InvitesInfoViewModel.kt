@@ -33,7 +33,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel

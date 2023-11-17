@@ -19,10 +19,10 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import proton.pass.domain.InviteId
-import proton.pass.domain.NewUserInviteId
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
 sealed class VaultMember(open val email: String) {
     data class Member(

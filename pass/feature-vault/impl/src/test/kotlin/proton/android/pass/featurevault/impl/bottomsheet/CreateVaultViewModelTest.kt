@@ -41,12 +41,12 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
-import proton.pass.domain.ItemId
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
 
 class CreateVaultViewModelTest {
 

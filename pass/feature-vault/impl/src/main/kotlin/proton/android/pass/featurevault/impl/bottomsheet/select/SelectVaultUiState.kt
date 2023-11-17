@@ -21,7 +21,7 @@ package proton.android.pass.featurevault.impl.bottomsheet.select
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.VaultWithItemCount
 
 @Stable
 sealed interface VaultStatus {

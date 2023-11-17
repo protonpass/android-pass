@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.usecases.RejectInvite
-import proton.pass.domain.InviteToken
+import proton.android.pass.domain.InviteToken
 import javax.inject.Inject
 
 class RejectInviteImpl @Inject constructor(

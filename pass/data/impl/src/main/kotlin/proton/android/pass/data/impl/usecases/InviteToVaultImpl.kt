@@ -33,8 +33,8 @@ import proton.android.pass.data.impl.requests.CreateInviteKey
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import javax.inject.Inject
 
 class InviteToVaultImpl @Inject constructor(

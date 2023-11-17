@@ -23,10 +23,10 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.key.ItemKey
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.ItemKey
+import proton.android.pass.domain.key.ShareKey
 
 class TestItemKeyRepository : ItemKeyRepository {
 

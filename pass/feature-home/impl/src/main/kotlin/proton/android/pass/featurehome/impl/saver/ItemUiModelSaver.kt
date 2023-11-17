@@ -25,8 +25,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val itemId = "item_id"

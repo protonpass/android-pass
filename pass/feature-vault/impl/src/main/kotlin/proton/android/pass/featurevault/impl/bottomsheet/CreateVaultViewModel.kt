@@ -37,14 +37,14 @@ import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.ItemId
-import proton.pass.domain.Share
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewVault
 import javax.inject.Inject
 
 @HiltViewModel

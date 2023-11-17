@@ -22,7 +22,7 @@ import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class TestEncryptInviteKeys @Inject constructor() : EncryptInviteKeys {

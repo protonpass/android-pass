@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
-import proton.pass.domain.UserAccessData
+import proton.android.pass.domain.UserAccessData
 import javax.inject.Inject
 
 class ObserveUserAccessDataImpl @Inject constructor(

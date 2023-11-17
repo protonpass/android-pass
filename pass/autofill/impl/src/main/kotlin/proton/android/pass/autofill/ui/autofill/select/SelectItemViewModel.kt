@@ -99,15 +99,15 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.GetTotpCodeFromUri
-import proton.pass.domain.ItemId
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
-import proton.pass.domain.PlanType
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareSelection
-import proton.pass.domain.Vault
-import proton.pass.domain.canCreate
-import proton.pass.domain.toPermissions
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.toPermissions
 import java.net.URI
 import javax.inject.Inject
 

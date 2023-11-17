@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.usecases.ObserveInvites
-import proton.pass.domain.PendingInvite
+import proton.android.pass.domain.PendingInvite
 import javax.inject.Inject
 
 class ObserveInvitesImpl @Inject constructor(

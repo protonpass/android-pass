@@ -19,7 +19,7 @@
 package proton.android.pass.test.domain
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import proton.pass.domain.key.ItemKey
+import proton.android.pass.domain.key.ItemKey
 
 object TestItemKey {
     fun createPrivate(): ItemKey {

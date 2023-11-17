@@ -55,7 +55,7 @@ import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 
 @HiltViewModel

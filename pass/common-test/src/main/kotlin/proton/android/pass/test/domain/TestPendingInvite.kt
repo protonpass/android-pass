@@ -18,10 +18,10 @@
 
 package proton.android.pass.test.domain
 
-import proton.pass.domain.InviteToken
-import proton.pass.domain.PendingInvite
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
+import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 
 object TestPendingInvite {
     fun create(

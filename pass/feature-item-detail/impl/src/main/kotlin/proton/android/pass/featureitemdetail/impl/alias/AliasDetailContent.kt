@@ -30,9 +30,9 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
-import proton.pass.domain.AliasMailbox
-import proton.pass.domain.ItemContents
-import proton.pass.domain.Vault
+import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Vault
 
 @Composable
 fun AliasDetailContent(

@@ -35,7 +35,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.featuresharing.impl.R
-import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.VaultWithItemCount
 
 @Composable
 fun ManageVaultMembersList(

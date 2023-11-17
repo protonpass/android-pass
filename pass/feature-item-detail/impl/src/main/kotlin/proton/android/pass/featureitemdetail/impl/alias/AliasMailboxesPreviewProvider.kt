@@ -19,7 +19,7 @@
 package proton.android.pass.featureitemdetail.impl.alias
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasMailbox
 
 class AliasMailboxesPreviewProvider : PreviewParameterProvider<List<AliasMailbox>> {
     override val values: Sequence<List<AliasMailbox>>

@@ -47,13 +47,13 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.ShareId
-import proton.pass.domain.SharePermission
-import proton.pass.domain.SharePermissionFlag
-import proton.pass.domain.ShareRole
-import proton.pass.domain.Vault
-import proton.pass.domain.hasFlag
-import proton.pass.domain.toPermissions
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.SharePermission
+import proton.android.pass.domain.SharePermissionFlag
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.hasFlag
+import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel

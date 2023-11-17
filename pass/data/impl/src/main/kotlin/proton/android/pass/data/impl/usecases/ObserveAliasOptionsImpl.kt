@@ -25,8 +25,8 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
-import proton.pass.domain.AliasOptions
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.AliasOptions
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class ObserveAliasOptionsImpl @Inject constructor(

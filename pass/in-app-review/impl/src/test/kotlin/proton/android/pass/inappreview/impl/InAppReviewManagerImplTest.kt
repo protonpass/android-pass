@@ -33,9 +33,9 @@ import proton.android.pass.inappreview.impl.InAppReviewManagerImpl.Companion.PAI
 import proton.android.pass.inappreview.impl.InAppReviewManagerImpl.Companion.TIMES_USED
 import proton.android.pass.preferences.AppUsageConfig
 import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.pass.domain.Plan
-import proton.pass.domain.PlanLimit
-import proton.pass.domain.PlanType
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
 
 class InAppReviewManagerImplTest {
 

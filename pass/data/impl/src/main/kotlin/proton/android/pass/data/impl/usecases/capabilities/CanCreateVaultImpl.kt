@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.combine
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
-import proton.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanLimit
 import javax.inject.Inject
 import javax.inject.Singleton
 

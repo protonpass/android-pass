@@ -19,7 +19,7 @@
 package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.pass.domain.HiddenState
+import proton.android.pass.domain.HiddenState
 
 @Suppress("MagicNumber")
 class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLoginSectionParams> {

@@ -16,12 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageInfo
 
 @Serializable
 sealed interface CustomFieldContent {

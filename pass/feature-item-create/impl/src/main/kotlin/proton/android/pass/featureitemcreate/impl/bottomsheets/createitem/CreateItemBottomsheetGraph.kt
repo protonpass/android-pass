@@ -27,7 +27,7 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.toPath
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 object CreateItemBottomsheet : NavItem(
     baseRoute = "item/create/bottomsheet",

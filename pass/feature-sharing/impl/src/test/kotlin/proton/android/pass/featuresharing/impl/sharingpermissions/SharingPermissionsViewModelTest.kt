@@ -31,7 +31,7 @@ import proton.android.pass.featuresharing.impl.SharingWithUserModeArgId
 import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 class SharingPermissionsViewModelTest {
 

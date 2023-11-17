@@ -21,7 +21,7 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 
 @Composable
 internal fun ItemRowContents(

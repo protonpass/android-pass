@@ -19,8 +19,8 @@
 package proton.android.pass.data.api.usecases
 
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 data class ItemActions(
     val canShare: CanShareVaultStatus,

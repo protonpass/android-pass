@@ -47,7 +47,7 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAva
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 private enum class CLActionAfterHideKeyboard {
     SelectVault

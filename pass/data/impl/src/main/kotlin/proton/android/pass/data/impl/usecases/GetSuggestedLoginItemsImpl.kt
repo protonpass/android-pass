@@ -29,11 +29,11 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
-import proton.pass.domain.Item
-import proton.pass.domain.PlanType
-import proton.pass.domain.ShareSelection
-import proton.pass.domain.canCreate
-import proton.pass.domain.toPermissions
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 
 class GetSuggestedLoginItemsImpl @Inject constructor(

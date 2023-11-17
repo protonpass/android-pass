@@ -16,9 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain.key
 
-data class AliasMailbox(
-    val id: Int,
-    val email: String
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+
+data class ItemKey(
+    val rotation: Long,
+    val key: EncryptedByteArray,
+    val responseKey: String
 )

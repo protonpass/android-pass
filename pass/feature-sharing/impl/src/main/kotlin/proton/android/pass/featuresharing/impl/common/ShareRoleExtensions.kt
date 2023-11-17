@@ -21,7 +21,7 @@ package proton.android.pass.featuresharing.impl.common
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.featuresharing.impl.R
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareRole
 
 @Composable
 fun ShareRole.toShortSummary(): String = when (this) {

@@ -20,8 +20,8 @@ package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GetShareById
-import proton.pass.domain.Share
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class TestGetShareById @Inject constructor() : GetShareById {

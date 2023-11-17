@@ -28,7 +28,7 @@ import androidx.compose.ui.text.AnnotatedString
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.HiddenContentRow
-import proton.pass.domain.HiddenState
+import proton.android.pass.domain.HiddenState
 
 private const val CHAR_AMOUNT = 4
 

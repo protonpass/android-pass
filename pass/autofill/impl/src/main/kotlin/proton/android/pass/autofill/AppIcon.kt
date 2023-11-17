@@ -16,26 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.e2e
+package proton.android.pass.autofill
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import kotlinx.datetime.Clock
-import proton.android.pass.autofill.AppIcon
-import javax.inject.Singleton
+import javax.inject.Qualifier
 
-@Module
-@InstallIn(SingletonComponent::class)
-object ApplicationModule {
-
-
-    @Provides
-    @Singleton
-    fun provideClock(): Clock = Clock.System
-
-    @Provides
-    @AppIcon
-    fun provideAppIcon(): Int = R.mipmap.ic_launcher
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AppIcon

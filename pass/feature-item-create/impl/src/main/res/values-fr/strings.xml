@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Champ de texte personnalisé</string>
   <string name="bottomsheet_custom_field_type_hidden">Masqué</string>
   <string name="bottomsheet_custom_field_type_totp">Clé secrète A2F (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Modifier le titre</string>
+  <string name="bottomsheet_custom_field_option_edit">Modifier le nom</string>
   <string name="bottomsheet_custom_field_option_remove">Supprimer le champ</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Supprimer le champ personnalisé</string>
   <string name="create_login_add_custom_field_button">Ajouter un autre champ</string>
-  <string name="custom_field_hidden_placeholder">Votre contenu masqué</string>
+  <string name="custom_field_hidden_placeholder">Ajoutez du texte caché.</string>
   <string name="custom_field_hidden_icon_content_description">Icône champ personnalisé masqué</string>
-  <string name="custom_field_text_placeholder">Votre contenu</string>
+  <string name="custom_field_text_placeholder">Ajoutez du texte.</string>
   <string name="custom_field_dialog_title">Nom du champ personnalisé</string>
-  <string name="custom_field_dialog_body">Saisissez un nom pour votre champ personnalisé.</string>
-  <string name="custom_field_dialog_placeholder">Nom du champ personnalisé</string>
+  <string name="custom_field_dialog_body">Donnez un nom à votre champ personnalisé.</string>
+  <string name="custom_field_dialog_placeholder">ID utilisateur ou code PIN par exemple</string>
   <string name="custom_field_options_content_description">Options du champ personnalisé</string>
   <!-- Create Note -->
   <string name="title_create_note">Créer une note</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Note</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Créer une carte de paiement</string>
-  <string name="field_cardholder_name_title">Nom du titulaire de la carte</string>
+  <string name="field_cardholder_name_title">Nom sur la carte</string>
   <string name="field_cardholder_name_hint">Nom complet</string>
   <string name="field_card_number_title">Numéro de la carte</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Numéro de vérification</string>
+  <string name="field_card_cvv_title">Code de sécurité</string>
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">Code PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expire le</string>
+  <string name="field_card_expiration_date_title">Date d\'expiration</string>
   <string name="field_card_expiration_date_hint">MM / AAAA</string>
-  <string name="field_card_expiration_date_error">La date d\'expiration n\'est pas valide.</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Impossible de créer la carte de paiement</string>
   <string name="create_credit_card_item_creation_success">La carte de paiement a été créée.</string>
   <string name="credit_card_init_error">Problème de récupération des informations de la carte de paiement</string>
@@ -98,7 +98,7 @@
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Clé secrète A2F (TOTP)</string>
   <string name="totp_create_login_field_invalid">La clé secrète A2F n\'est pas valide.</string>
-  <string name="totp_create_login_field_placeholder">Ajouter une clé secrète A2F</string>
+  <string name="totp_create_login_field_placeholder">Ajoutez une clé secrète A2F.</string>
   <string name="close_scree_icon_content_description">Bouton de fermeture de l\'écran</string>
   <string name="totp_paste_code_action">Coller le code</string>
   <string name="totp_scan_code_action">Scanner le code</string>

@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">輸入自訂欄位</string>
   <string name="bottomsheet_custom_field_type_hidden">隱藏</string>
   <string name="bottomsheet_custom_field_type_totp">雙重驗證祕文(TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">編輯標題</string>
+  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
   <string name="bottomsheet_custom_field_option_remove">移除欄位</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">移除自訂欄位</string>
   <string name="create_login_add_custom_field_button">新增其他欄位</string>
-  <string name="custom_field_hidden_placeholder">您隱藏的內容？</string>
+  <string name="custom_field_hidden_placeholder">Add hidden text</string>
   <string name="custom_field_hidden_icon_content_description">隱藏自訂的欄位圖示</string>
-  <string name="custom_field_text_placeholder">您的內容</string>
+  <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">自訂欄位的名稱</string>
-  <string name="custom_field_dialog_body">為自訂欄位輸入名稱</string>
-  <string name="custom_field_dialog_placeholder">為自訂欄位命名</string>
+  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
   <string name="custom_field_options_content_description">自訂的選項</string>
   <!-- Create Note -->
   <string name="title_create_note">創建備註</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">備註</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">創建信用卡</string>
-  <string name="field_cardholder_name_title">持卡人姓名</string>
+  <string name="field_cardholder_name_title">Name on card</string>
   <string name="field_cardholder_name_hint">全名</string>
   <string name="field_card_number_title">卡號</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">驗證碼</string>
+  <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN 碼</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">到期日</string>
+  <string name="field_card_expiration_date_title">Expiration date</string>
   <string name="field_card_expiration_date_hint">月月 / 年年年年</string>
-  <string name="field_card_expiration_date_error">這個到期日無效</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">無法創建信用卡</string>
   <string name="create_credit_card_item_creation_success">信用卡已創建</string>
   <string name="credit_card_init_error">Problem retrieving credit card details</string>
@@ -108,7 +108,7 @@
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">雙重驗證已達上限</string>
   <string name="upgrade">升級</string>
-  <string name="mfa_icon_content_description">2FA icon</string>
+  <string name="mfa_icon_content_description">雙重驗證圖像</string>
   <string name="select_suffix_upgrade_for_custom_domains">為自訂網域升級</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">為信箱升級</string>
   <string name="create_alias_content_limit_banner">你以達到新增別名。升級訂閱以新增無限別名</string>

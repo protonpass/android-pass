@@ -54,14 +54,14 @@
   <string name="custom_field_hidden_icon_description">Campo personalizado oculto</string>
   <string name="custom_field_totp_icon_description">Campo personalizado de 2FA</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Nombre del titular de la tarjeta</string>
+  <string name="credit_card_cardholder_field_name">Titular de la tarjeta</string>
   <string name="credit_card_number_field_name">Número de tarjeta</string>
-  <string name="credit_card_cvv_field_name">Número de verificación</string>
+  <string name="credit_card_cvv_field_name">Código de seguridad</string>
   <string name="credit_card_pin_field_name">Código PIN</string>
-  <string name="credit_card_expiration_date_field_name">Expira el</string>
+  <string name="credit_card_expiration_date_field_name">Fecha de expiración</string>
   <string name="credit_card_cardholder_copied_to_clipboard">El nombre del titular de la tarjeta fue copiado al portapapeles.</string>
   <string name="credit_card_number_copied_to_clipboard">El número de tarjeta fue copiado al portapapeles.</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">El código de verificación fue copiado al portapapeles.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Código de seguridad copiado al portapapeles</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mover a la papelera</string>
   <string name="migrate_item_detail_bottom_sheet">Mover a otra bóveda</string>
@@ -86,4 +86,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">No puede editar este elemento porque está en la papelera. Muévalo de la papelera antes de editarlo.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No puede compartir</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">No tiene los permisos suficientes para compartir esta bóveda.</string>
+  <string name="password_score_vulnerable">Vulnerable</string>
+  <string name="password_score_weak">Débil</string>
+  <string name="password_score_strong">Segura</string>
 </resources>

@@ -64,6 +64,13 @@ class AutofillAppViewModel @Inject constructor(
     fun getMappings(
         autofillItem: AutofillItem,
         autofillAppState: AutofillAppState
+    ): AutofillMappings = when (autofillItem) {
+        is AutofillItem.Login -> getLoginMappings(autofillItem, autofillAppState)
+    }
+
+    private fun getLoginMappings(
+        autofillItem: AutofillItem.Login,
+        autofillAppState: AutofillAppState
     ): AutofillMappings {
         handleTotpUri(autofillItem.totp)
         updateAutofillItem(

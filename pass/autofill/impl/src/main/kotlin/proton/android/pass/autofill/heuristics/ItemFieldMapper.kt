@@ -50,6 +50,27 @@ object ItemFieldMapper {
         autofillTypes: List<FieldType>,
         fieldIsFocusedList: List<Boolean>,
         parentIdList: List<List<AutofillFieldId>>
+    ): AutofillMappings = when (autofillItem) {
+        is AutofillItem.Login -> {
+            mapLoginFields(
+                encryptionContext = encryptionContext,
+                autofillItem = autofillItem,
+                androidAutofillFieldIds = androidAutofillFieldIds,
+                autofillTypes = autofillTypes,
+                fieldIsFocusedList = fieldIsFocusedList,
+                parentIdList = parentIdList,
+            )
+        }
+    }
+
+    @Suppress("LongParameterList")
+    private fun mapLoginFields(
+        encryptionContext: EncryptionContext,
+        autofillItem: AutofillItem.Login,
+        androidAutofillFieldIds: List<AutofillFieldId?>,
+        autofillTypes: List<FieldType>,
+        fieldIsFocusedList: List<Boolean>,
+        parentIdList: List<List<AutofillFieldId>>
     ): AutofillMappings {
         val fields = mapToFields(
             androidAutofillFieldIds = androidAutofillFieldIds,
@@ -81,7 +102,7 @@ object ItemFieldMapper {
 
     private fun performMappings(
         encryptionContext: EncryptionContext,
-        autofillItem: AutofillItem,
+        autofillItem: AutofillItem.Login,
         usernameFields: List<AutofillFieldMapping>,
         passwordFields: List<AutofillFieldMapping>,
         focusedField: AutofillFieldMapping?
@@ -106,7 +127,7 @@ object ItemFieldMapper {
     @Suppress("LongParameterList")
     private fun mapWithFocusedField(
         encryptionContext: EncryptionContext,
-        autofillItem: AutofillItem,
+        autofillItem: AutofillItem.Login,
         usernameFields: List<AutofillFieldMapping>,
         passwordFields: List<AutofillFieldMapping>,
         focusedField: AutofillFieldMapping,
@@ -162,7 +183,7 @@ object ItemFieldMapper {
 
     private fun mapPassword(
         encryptionContext: EncryptionContext,
-        autofillItem: AutofillItem,
+        autofillItem: AutofillItem.Login,
         passwordFields: List<AutofillFieldMapping>,
         usernameField: AutofillFieldMapping,
         mappings: MutableList<DatasetMapping>
@@ -187,7 +208,7 @@ object ItemFieldMapper {
     }
 
     private fun mapUsername(
-        autofillItem: AutofillItem,
+        autofillItem: AutofillItem.Login,
         usernameFields: List<AutofillFieldMapping>,
         passwordField: AutofillFieldMapping,
         mappings: MutableList<DatasetMapping>
@@ -220,7 +241,7 @@ object ItemFieldMapper {
     @Suppress("LongParameterList")
     private fun mapFocusedField(
         encryptionContext: EncryptionContext,
-        autofillItem: AutofillItem,
+        autofillItem: AutofillItem.Login,
         usernameFields: List<AutofillFieldMapping>,
         passwordFields: List<AutofillFieldMapping>,
         focusedField: AutofillFieldMapping,
@@ -259,7 +280,7 @@ object ItemFieldMapper {
 
     private fun mapFirstFields(
         encryptionContext: EncryptionContext,
-        autofillItem: AutofillItem,
+        autofillItem: AutofillItem.Login,
         usernameFields: List<AutofillFieldMapping>,
         passwordFields: List<AutofillFieldMapping>,
     ): List<DatasetMapping> {

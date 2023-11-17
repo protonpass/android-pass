@@ -21,7 +21,7 @@ package proton.android.pass.autofill.extensions
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
+import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -29,33 +29,31 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 
-fun ItemUiModel.toAutoFillItem(): Option<AutofillItem> =
-    if (contents is ItemContents.Login) {
-        val asLogin = contents as ItemContents.Login
-        AutofillItem(
+fun ItemUiModel.toAutoFillItem(): Option<AutofillItem> = when (val content = contents) {
+    is ItemContents.Login -> {
+        AutofillItem.Login(
             shareId = shareId.id,
             itemId = id.id,
-            username = asLogin.username,
-            password = asLogin.password.encrypted,
-            totp = asLogin.primaryTotp.encrypted
-        ).toOption()
-    } else {
-        None
+            username = content.username,
+            password = content.password.encrypted,
+            totp = content.primaryTotp.encrypted
+        ).some()
     }
 
-fun Item.toAutofillItem(): Option<AutofillItem> =
-    if (itemType is ItemType.Login) {
-        val asLogin = itemType as ItemType.Login
-        AutofillItem(
-            shareId = shareId.id,
-            itemId = id.id,
-            username = asLogin.username,
-            password = asLogin.password,
-            totp = asLogin.primaryTotp
-        ).toOption()
-    } else {
-        None
-    }
+    else -> None
+}
+
+fun Item.toAutofillItem(): Option<AutofillItem> = when (val type = itemType) {
+    is ItemType.Login -> AutofillItem.Login(
+        shareId = shareId.id,
+        itemId = id.id,
+        username = type.username,
+        password = type.password,
+        totp = type.primaryTotp
+    ).some()
+
+    else -> None
+}
 
 data class CreatedAlias(
     val shareId: ShareId,
@@ -63,11 +61,10 @@ data class CreatedAlias(
     val alias: String
 )
 
-fun CreatedAlias.toAutofillItem(): AutofillItem =
-    AutofillItem(
-        shareId = shareId.id,
-        itemId = itemId.id,
-        username = alias,
-        password = null,
-        totp = null
-    )
+fun CreatedAlias.toAutofillItem(): AutofillItem.Login = AutofillItem.Login(
+    shareId = shareId.id,
+    itemId = itemId.id,
+    username = alias,
+    password = null,
+    totp = null
+)

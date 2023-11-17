@@ -22,9 +22,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
-import proton.android.featuresearchoptions.impl.SortingBottomsheet
-import proton.android.featuresearchoptions.impl.SortingLocation
-import proton.android.featuresearchoptions.impl.sortingGraph
+import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.pass.featuresearchoptions.impl.SortingLocation
+import proton.android.pass.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.CreatedAlias

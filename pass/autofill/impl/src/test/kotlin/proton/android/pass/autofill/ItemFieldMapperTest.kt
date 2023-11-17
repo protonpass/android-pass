@@ -260,7 +260,7 @@ class ItemFieldMapperTest {
         shareId: String = "ShareId-123",
         username: String = "username",
         password: String = TestEncryptionContext.encrypt("password"),
-    ) = AutofillItem(
+    ) = AutofillItem.Login(
         itemId = itemId,
         shareId = shareId,
         username = username,

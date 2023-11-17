@@ -16,8 +16,8 @@
   <string name="home_autofill_banner_title">자동 완성의 마법을 경험해 보세요</string>
   <string name="home_autofill_banner_text">하나의 탭으로 사용자 이름과 비밀번호가 바로 입력되기 때문에 손 아프게 계속 까딱일 필요 없죠.</string>
   <string name="home_autofill_banner_settings">자동 완성을 켜세요 ›</string>
-  <string name="home_trial_banner_title">무료 체험을 즐겨보세요</string>
-  <string name="home_trial_banner_text">한정 기간 동안 사용할 수 있는 특전 기능들을 살펴보세요.</string>
+  <string name="home_trial_banner_title">Our welcome gift to you</string>
+  <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
   <string name="home_trial_banner_settings">더 알아보기 ›</string>
   <string name="home_notification_permission_banner_title">중요한 소식 얻기</string>
   <string name="home_notification_permission_banner_text">다른 사람과 금고를 공유할 때 정보를 받을 수 있도록 푸시 알림을 허용하세요.</string>
@@ -29,7 +29,7 @@
   <string name="bottomsheet_copy_username">사용자 이름 복사</string>
   <string name="bottomsheet_copy_alias">이메일 주소 복사</string>
   <string name="bottomsheet_copy_number">전화번호 복사</string>
-  <string name="bottomsheet_copy_cvv">CVV 복사</string>
+  <string name="bottomsheet_copy_cvv">보안 코드 복사</string>
   <string name="bottomsheet_copy_note">메모 복사</string>
   <string name="bottomsheet_edit">편집</string>
   <!-- Clipboard -->
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">사용자 이름 복사됨</string>
   <string name="password_copied_to_clipboard">비밀번호 복사됨</string>
   <string name="credit_card_number_copied_to_clipboard">신용 카드 번호 복사됨</string>
-  <string name="credit_card_cvv_copied_to_clipboard">신용 카드 CVV 복사됨</string>
+  <string name="credit_card_cvv_copied_to_clipboard">보안 코드를 복사했습니다.</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">연락처가 너무 길어 클립보드에 부분적으로 복사되었습니다.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">금고</string>

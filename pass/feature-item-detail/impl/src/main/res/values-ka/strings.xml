@@ -54,14 +54,14 @@
   <string name="custom_field_hidden_icon_description">დამალული ხელით მითითებული ველი</string>
   <string name="custom_field_totp_icon_description">2FA-ის ხელით მითითებული ველი</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">ბარათის მფლობლის სახელი</string>
+  <string name="credit_card_cardholder_field_name">სახელი ბარათზე</string>
   <string name="credit_card_number_field_name">ბარათის ნომერი</string>
-  <string name="credit_card_cvv_field_name">გადამოწმების ნომერი</string>
+  <string name="credit_card_cvv_field_name">უსაფრთხოების კოდი</string>
   <string name="credit_card_pin_field_name">PIN კოდი</string>
-  <string name="credit_card_expiration_date_field_name">ვადა იწურება</string>
+  <string name="credit_card_expiration_date_field_name">ვადის ამოწურვის თარიღი</string>
   <string name="credit_card_cardholder_copied_to_clipboard">ბარათის მფლობელი ბაფერში დაკოპირდა</string>
   <string name="credit_card_number_copied_to_clipboard">ბარათის ნომერი დაკოპირებულია გაცვლის ბუფერში</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">გადამოწმების ნომერი დაკოპირებულია მიმოცვლის ბუფერში</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">უსაფრთხოების კოდი დაკოპირებულია მიმოცვლის ბაფერში</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">ნაგვის ყუთში გადატანა</string>
   <string name="migrate_item_detail_bottom_sheet">სხვა საცავში გადატანა</string>
@@ -86,4 +86,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">ამ ელემენტის ჩასწორება არ შეგიძლიათ, რადგან ის ნაგვის ყუთშია. გამოიტანეთ ის ნაგვის ყუთიდან, სანამ ჩაასწორებთ.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">გაზიარება შეუძლებელია</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">ამ საცავის გაზიარებისთვის საკმარისი წვდომები არ გაგაჩნიათ.</string>
+  <string name="password_score_vulnerable">მოწყვლადი</string>
+  <string name="password_score_weak">სუსტი</string>
+  <string name="password_score_strong">ძლიერი</string>
 </resources>

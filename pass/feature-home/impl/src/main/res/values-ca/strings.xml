@@ -16,8 +16,8 @@
   <string name="home_autofill_banner_title">Gaudiu de la màgia de l\'emplenament automàtic</string>
   <string name="home_autofill_banner_text">Un toc i -presto!- el vostre nom d\'usuari i contrasenya s\'omplen a l\'instant.</string>
   <string name="home_autofill_banner_settings">Activa l\'emplenament automàtic</string>
-  <string name="home_trial_banner_title">Gaudeix d\'una prova gratuïta</string>
-  <string name="home_trial_banner_text">Consulteu totes les característiques exclusives disponibles per un temps limitat.</string>
+  <string name="home_trial_banner_title">Our welcome gift to you</string>
+  <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
   <string name="home_trial_banner_settings">Saber-ne més ›</string>
   <string name="home_notification_permission_banner_title">Obteniu actualitzacions importants</string>
   <string name="home_notification_permission_banner_text">Habiliteu les notificacions push per rebre una notificació quan altres persones comparteixin una caixa forta amb vosaltres.</string>
@@ -29,7 +29,7 @@
   <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>
   <string name="bottomsheet_copy_alias">Copia l\'adreça del correu electrònic</string>
   <string name="bottomsheet_copy_number">Copia el número</string>
-  <string name="bottomsheet_copy_cvv">Copia el CVV</string>
+  <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">Copiar la nota</string>
   <string name="bottomsheet_edit">Edita</string>
   <!-- Clipboard -->
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">S\'ha copiat el nom d\'usuari</string>
   <string name="password_copied_to_clipboard">S\'ha copiat la contrasenya</string>
   <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta de crèdit</string>
-  <string name="credit_card_cvv_copied_to_clipboard">S\'ha copiat el CVV de la targeta de crèdit</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Security code copied</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">El contingut és molt llarg. Ha estat copiat parcialment al portapapels.</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Caixes fortes</string>

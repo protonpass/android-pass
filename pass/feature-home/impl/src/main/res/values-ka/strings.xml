@@ -16,8 +16,8 @@
   <string name="home_autofill_banner_title">ისიამოვნეთ ავტომატური შევსების ჯადოქრობით</string>
   <string name="home_autofill_banner_text">ერთი დატყაპუნება და-ეგაა!-თქვენი მომხმარებლის სახელი და პაროლი ავტომატურად შეივსება.</string>
   <string name="home_autofill_banner_settings">ავტომატური შევსების ჩართვა ›</string>
-  <string name="home_trial_banner_title">ისიამოვნეთ თქვენი უფასო სატესტო ვერსიით</string>
-  <string name="home_trial_banner_text">შეამოწმეთ ყველა ექსკლუზიური შემოთავაზება, რომელიც მხოლოდ შეზღუდული დროითაა თქვენთვის შემოთავაზებული.</string>
+  <string name="home_trial_banner_title">ჩვენი მისალმების საჩუქარი</string>
+  <string name="home_trial_banner_text">7 დღე ფასიანი ფუნქციების უფასოდ მისაღებად. მხოლოდ, Proton Pass-ის ანგარიშის მიღების პირველი კვირის განმავლობაში.</string>
   <string name="home_trial_banner_settings">გაიგეთ მეტი ›</string>
   <string name="home_notification_permission_banner_title">მიიღეთ მნიშვნელოვანი განახლებები</string>
   <string name="home_notification_permission_banner_text">ჩართეთ პუშ-გაფრთხილებები, რათა გაიგოთ, როცა სხვები საცავს გაგიზიარებენ.</string>
@@ -29,7 +29,7 @@
   <string name="bottomsheet_copy_username">მომხმარებლის სახელის კოპირება</string>
   <string name="bottomsheet_copy_alias">ელფოსტის მისამართის კოპირება</string>
   <string name="bottomsheet_copy_number">ნომრის კოპირება</string>
-  <string name="bottomsheet_copy_cvv">CVV-ის კოპირება</string>
+  <string name="bottomsheet_copy_cvv">უსაფრთხოების კოდის კოპირება</string>
   <string name="bottomsheet_copy_note">შენიშვნის კოპირება</string>
   <string name="bottomsheet_edit">ჩასწორება</string>
   <!-- Clipboard -->
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">მომხმარებლის სახელი დაკოპირდა</string>
   <string name="password_copied_to_clipboard">პაროლი დაკოპირდა</string>
   <string name="credit_card_number_copied_to_clipboard">საკრედიტო ბარათის ნომერი დაკოპირდა</string>
-  <string name="credit_card_cvv_copied_to_clipboard">საკრედიტო ბარათის CVV კოდი დაკოპირდა</string>
+  <string name="credit_card_cvv_copied_to_clipboard">უსაფრთხოების კოდი დაკოპირდა</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">შემცველობა მეტისმეტად გრძელია, ბუფერში, მხოლოდ, ნაწილობრივ დაკოპირდა</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">საცავები</string>

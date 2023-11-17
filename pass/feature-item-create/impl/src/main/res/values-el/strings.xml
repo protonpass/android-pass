@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Προσαρμοσμένο πεδίο κειμένου</string>
   <string name="bottomsheet_custom_field_type_hidden">Κρυφό πεδίο</string>
   <string name="bottomsheet_custom_field_type_totp">Μυστικό 2FA (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Επεξεργασία τίτλου</string>
+  <string name="bottomsheet_custom_field_option_edit">Επεξεργασία ονόματος</string>
   <string name="bottomsheet_custom_field_option_remove">Αφαίρεση πεδίου</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Κατάργηση προσαρμοσμένου πεδίου</string>
   <string name="create_login_add_custom_field_button">Προσθήκη άλλου πεδίου</string>
-  <string name="custom_field_hidden_placeholder">Το κρυφό περιεχόμενό σας</string>
+  <string name="custom_field_hidden_placeholder">Προσθήκη κρυφού κειμένου</string>
   <string name="custom_field_hidden_icon_content_description">Εικονίδιο κρυφού προσαρμοσμένου πεδίου</string>
-  <string name="custom_field_text_placeholder">Το περιεχόμενό σας</string>
+  <string name="custom_field_text_placeholder">Προσθήκη κειμένου</string>
   <string name="custom_field_dialog_title">Προσαρμοσμένο πεδίο</string>
-  <string name="custom_field_dialog_body">Εισαγάγετε ένα όνομα για το προσαρμοσμένο πεδίο σας</string>
-  <string name="custom_field_dialog_placeholder">Όνομα του προσαρμοσμένου πεδίου</string>
+  <string name="custom_field_dialog_body">Δώστε ένα όνομα στο προσαρμοσμένο πεδίο σας</string>
+  <string name="custom_field_dialog_placeholder">Πχ., User ID, PIN</string>
   <string name="custom_field_options_content_description">Επιλογές προσαρμοσμένου πεδίου</string>
   <!-- Create Note -->
   <string name="title_create_note">Δημιουργία σημείωσης</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Σημείωση</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Δημιουργία πιστωτικής κάρτας</string>
-  <string name="field_cardholder_name_title">Όνομα κατόχου κάρτας</string>
+  <string name="field_cardholder_name_title">Όνομα στην κάρτα</string>
   <string name="field_cardholder_name_hint">Ονοματεπώνυμο</string>
   <string name="field_card_number_title">Αριθμός κάρτας</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Αριθμός επαλήθευσης</string>
+  <string name="field_card_cvv_title">Κωδικός ασφαλείας</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">Αριθμός PIN</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Λήγει στις</string>
+  <string name="field_card_expiration_date_title">Ημερομηνία λήξης</string>
   <string name="field_card_expiration_date_hint">MM / ΕΕΕΕ</string>
-  <string name="field_card_expiration_date_error">Η ημερομηνία λήξης δεν είναι έγκυρη</string>
+  <string name="field_card_expiration_date_error">Εισαγάγετε μια έγκυρη ημερομηνία σε μορφή ΜΜ/ΧΧΧΧ</string>
   <string name="create_credit_card_item_creation_error">Δεν ήταν δυνατή η δημιουργία πιστωτικής κάρτας</string>
   <string name="create_credit_card_item_creation_success">Η πιστωτική κάρτα δημιουργήθηκε</string>
   <string name="credit_card_init_error">Πρόβλημα ανάκτησης λεπτομερειών πιστωτικής κάρτας</string>

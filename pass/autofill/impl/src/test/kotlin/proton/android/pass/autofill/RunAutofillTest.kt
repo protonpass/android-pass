@@ -34,6 +34,18 @@ import java.io.File
 const val USERNAME = "username"
 const val PASSWORD = "password"
 
+const val CC_NUMBER = "card_number"
+const val CC_CARDHOLDER_NAME = "card_name"
+const val CC_CARDHOLDER_FIRST_NAME = "card_first_name"
+const val CC_CARDHOLDER_LAST_NAME = "card_last_name"
+const val CC_EXPIRATION_MM_AA = "card_expiration_mm_aa"
+const val CC_EXPIRATION_MONTH_TEXT = "card_expiration_month_text"
+const val CC_EXPIRATION_MONTH_MM = "card_expiration_month_mm"
+const val CC_EXPIRATION_YEAR_YY = "card_expiration_year_yy"
+const val CC_EXPIRATION_YEAR_YYYY = "card_expiration_year_yyyy"
+const val CC_CVV = "card_cvv"
+
+
 private const val TAG = "RunAutofillTest"
 
 

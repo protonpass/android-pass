@@ -68,7 +68,10 @@ sealed interface NodeCluster {
     }
 }
 
-fun List<NodeCluster>.focused(): NodeCluster = firstOrNull { it.isFocused() } ?: NodeCluster.Empty
+fun List<NodeCluster>.focused(): NodeCluster {
+    if (isEmpty()) return NodeCluster.Empty
+    return firstOrNull { it.isFocused() } ?: first()
+}
 
 interface IdentifiableNode {
     val nodeId: AutofillFieldId?

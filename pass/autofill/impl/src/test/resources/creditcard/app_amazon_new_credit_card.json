@@ -1,0 +1,1107 @@
+{
+  "rootContent": {
+    "id": 67974720,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": -1005558567,
+        "className": "android.view.ViewGroup",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": -1005528776,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -1005498985,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -1005469194,
+                    "className": "android.widget.RelativeLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -1005737313,
+                        "className": "android.webkit.WebView",
+                        "isImportantForAutofill": true
+                      },
+                      {
+                        "id": -1005439403,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "snapshot"
+                        ]
+                      },
+                      {
+                        "id": -1005409612,
+                        "className": "android.widget.Button",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "contextual_actions_back_to_top_button"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "mash_web_fragment"
+                    ]
+                  },
+                  {
+                    "id": -1005379821,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "bottom_tool_bar"
+                    ]
+                  },
+                  {
+                    "id": -1005350030,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -1005320239,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -1005290448,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -1005260657,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "glow_subnav_label"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "glow_subnav_ingress"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "container_glow_subnav"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "glow_sub_nav_bar_view"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "mshop_webView_container"
+                ]
+              },
+              {
+                "id": -1005230866,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -1005201075,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "canary_fragment_container"
+                    ]
+                  },
+                  {
+                    "id": -1005171284,
+                    "className": "android.widget.ViewSwitcher",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -1005141493,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1005111702,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1005081911,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1005052120,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1005022329,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004992538,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004962747,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004932956,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004903165,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004873374,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004843583,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004813792,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004784001,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004754210,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004724419,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004694628,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004664837,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004635046,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004605255,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004575464,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": -1004545673,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "layoutSwitcher"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "ssnap_parent_layout"
+                ]
+              },
+              {
+                "id": -1004515882,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -1004486091,
+                    "className": "android.widget.RelativeLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -1005618149,
+                        "className": "android.webkit.WebView",
+                        "isImportantForAutofill": true
+                      },
+                      {
+                        "id": -1004456300,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "snapshot"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "mash_web_fragment"
+                    ]
+                  },
+                  {
+                    "id": -1004426509,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "bottom_tool_bar"
+                    ]
+                  },
+                  {
+                    "id": -1004396718,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "glow_sub_nav_bar_view"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "mshop_webView_container"
+                ]
+              },
+              {
+                "id": -1002847586,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -1002817795,
+                    "className": "android.widget.RelativeLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -1002877377,
+                        "className": "android.webkit.WebView",
+                        "isImportantForAutofill": true,
+                        "isFocused": true,
+                        "htmlAttributes": [
+                          {
+                            "key": "name",
+                            "value": "pp-vkjyjw-16"
+                          }
+                        ],
+                        "children": [
+                          {
+                            "id": -876916224,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "ppw-getnameonaccount"
+                              },
+                              {
+                                "key": "type",
+                                "value": "checkbox"
+                              },
+                              {
+                                "key": "label",
+                                "value": "tocar para añadirtocar para añadir no está disponible por el momento. actualiza la aplicación desde play store.o"
+                              },
+                              {
+                                "key": "id",
+                                "value": "pp-vkjyjw-27"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "unknown_type"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              ""
+                            ]
+                          },
+                          {
+                            "id": -876915263,
+                            "expectedAutofill": "card_name",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "isFocused": true,
+                            "autofillHints": [
+                              "off"
+                            ],
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "ppw-accountholdername"
+                              },
+                              {
+                                "key": "type",
+                                "value": "text"
+                              },
+                              {
+                                "key": "label",
+                                "value": "nombre en la tarjeta"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "credit_card_name_full"
+                              },
+                              {
+                                "key": "id",
+                                "value": "pp-vkjyjw-28"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "credit_card_name_full"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "50"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              "Nombre en la tarjeta"
+                            ]
+                          },
+                          {
+                            "id": -876914302,
+                            "expectedAutofill": "card_number",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "autofillHints": [
+                              "off"
+                            ],
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "addcreditcardnumber"
+                              },
+                              {
+                                "key": "type",
+                                "value": "tel"
+                              },
+                              {
+                                "key": "label",
+                                "value": "número de tarjeta"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "credit_card_number"
+                              },
+                              {
+                                "key": "id",
+                                "value": "pp-vkjyjw-29"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "credit_card_number"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "2147483647"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              "Número de tarjeta"
+                            ]
+                          },
+                          {
+                            "id": -876913341,
+                            "expectedAutofill": "card_expiration_month_mm",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "autofillHints": [
+                              "off"
+                            ],
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "ppw-expirationdate_month"
+                              },
+                              {
+                                "key": "type",
+                                "value": "select-one"
+                              },
+                              {
+                                "key": "label",
+                                "value": "fecha de vencimiento"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "credit_card_exp_month"
+                              },
+                              {
+                                "key": "id",
+                                "value": "pp-vkjyjw-31"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "credit_card_exp_month"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              "",
+                              "01",
+                              "02",
+                              "03",
+                              "04",
+                              "05",
+                              "06",
+                              "07",
+                              "08",
+                              "09",
+                              "10",
+                              "11",
+                              "12"
+                            ]
+                          },
+                          {
+                            "id": -876912380,
+                            "expectedAutofill": "card_expiration_year_yyyy",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "autofillHints": [
+                              "off"
+                            ],
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "ppw-expirationdate_year"
+                              },
+                              {
+                                "key": "type",
+                                "value": "select-one"
+                              },
+                              {
+                                "key": "label",
+                                "value": "fecha de vencimiento"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "credit_card_exp_4_digit_year"
+                              },
+                              {
+                                "key": "id",
+                                "value": "pp-vkjyjw-32"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "credit_card_exp_4_digit_year"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              "",
+                              "2023",
+                              "2024",
+                              "2025",
+                              "2026",
+                              "2027",
+                              "2028",
+                              "2029",
+                              "2030",
+                              "2031",
+                              "2032",
+                              "2033",
+                              "2034",
+                              "2035",
+                              "2036",
+                              "2037",
+                              "2038",
+                              "2039",
+                              "2040",
+                              "2041",
+                              "2042",
+                              "2043"
+                            ]
+                          }
+                        ],
+                        "url": "https://apx-security.amazon.es"
+                      },
+                      {
+                        "id": -1002788004,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "snapshot"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "mash_web_fragment"
+                    ]
+                  },
+                  {
+                    "id": -1002758213,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "bottom_tool_bar"
+                    ]
+                  },
+                  {
+                    "id": -1002728422,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "glow_sub_nav_bar_view"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "mshop_webView_container"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "fragment_switch_view_container"
+            ]
+          },
+          {
+            "id": -1004217972,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "dim_background"
+            ]
+          },
+          {
+            "id": -1004188181,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "non_blocking_bottom_sheet_container"
+            ]
+          },
+          {
+            "id": -1004158390,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "bottom_fixed_secondary_container"
+            ]
+          },
+          {
+            "id": -1004128599,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -1004098808,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "canary_fragment_container"
+                ]
+              },
+              {
+                "id": -1004069017,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "guideline_left"
+                ]
+              },
+              {
+                "id": -1004039226,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "guideline_right"
+                ]
+              },
+              {
+                "id": -1004009435,
+                "className": "android.widget.HorizontalScrollView",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -1003979644,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      ""
+                    ]
+                  },
+                  {
+                    "id": -1003949853,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      ""
+                    ]
+                  },
+                  {
+                    "id": -1003920062,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      ""
+                    ]
+                  },
+                  {
+                    "id": -1003890271,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "cart_count"
+                    ]
+                  },
+                  {
+                    "id": -1003860480,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "+",
+                    "hintKeywordList": [
+                      "+",
+                      "plus_sign"
+                    ]
+                  },
+                  {
+                    "id": -1003830689,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      ""
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "bottom_tab_nav_bar"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "bottom_fixed_bar_container"
+            ]
+          },
+          {
+            "id": -1003800898,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -1003771107,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "speaking_view"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "bottom_overlay_bar_container"
+            ]
+          },
+          {
+            "id": -1003741316,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_bar_container"
+            ]
+          },
+          {
+            "id": -1003711525,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -1003681734,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "bottom_sheet_layout"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "bottom_sheet"
+            ]
+          },
+          {
+            "id": -1003651943,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "subnav_container"
+            ]
+          },
+          {
+            "id": -1003622152,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -1003592361,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -1003562570,
+                    "className": "android.widget.RelativeLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "chrome_action_bar_cancel_button"
+                    ]
+                  },
+                  {
+                    "id": -1003532779,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "chrome_action_bar_back_icon"
+                    ]
+                  },
+                  {
+                    "id": -1003502988,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "chrome_action_bar_logo_cxi"
+                    ]
+                  },
+                  {
+                    "id": -1003473197,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "chrome_action_bar_camera"
+                    ]
+                  },
+                  {
+                    "id": -1003443406,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "chrome_voice_btn"
+                    ]
+                  },
+                  {
+                    "id": -1003413615,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -1003383824,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -1003354033,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "chrome_action_bar_search_disabled"
+                            ]
+                          },
+                          {
+                            "id": -1003324242,
+                            "className": "android.widget.TextView",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "hintKeywordList": [
+                              "",
+                              "chrome_search_hint_view",
+                              "Buscar en Amazon.es"
+                            ]
+                          },
+                          {
+                            "id": -1005767104,
+                            "className": "android.widget.EditText",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "inputType": 1,
+                            "hintKeywordList": [
+                              "",
+                              "chrome_search_src_text"
+                            ]
+                          },
+                          {
+                            "id": -1003294451,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "chrome_camera_icon_cxi_inside"
+                            ]
+                          },
+                          {
+                            "id": -1003264660,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "chrome_voice_listening_icon_cxi_inside"
+                            ]
+                          },
+                          {
+                            "id": -1003234869,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "chrome_voice_icon_cxi_inside"
+                            ]
+                          },
+                          {
+                            "id": -1003205078,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "chrome_stop_voice_icon_cxi_inside"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "chrome_search_edit_frame"
+                        ]
+                      },
+                      {
+                        "id": -1003175287,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "chrome_voice_icon_cxi_outside"
+                        ]
+                      },
+                      {
+                        "id": -1003145496,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "chrome_camera_icon_cxi_outside"
+                        ]
+                      },
+                      {
+                        "id": -1003115705,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "chrome_scan_icon_cxi_outside"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "chrome_search_box"
+                    ]
+                  },
+                  {
+                    "id": -1003085914,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -1003056123,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "chrome_action_bar_gear"
+                        ]
+                      },
+                      {
+                        "id": -1003026332,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "chrome_action_bar_notification"
+                        ]
+                      },
+                      {
+                        "id": -1002996541,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "chrome_action_bar_search_enabled"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "chrome_action_bar_actions"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "configurable_action_bar_view"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "top_container"
+            ]
+          },
+          {
+            "id": -1002966750,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "overlay_container"
+            ]
+          },
+          {
+            "id": -1002936959,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "appcx_bottom_sheet_container"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "root_container"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.amazon.mShop.android.shopping"
+}

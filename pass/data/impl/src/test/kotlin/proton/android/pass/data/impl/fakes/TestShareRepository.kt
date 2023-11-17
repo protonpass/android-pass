@@ -27,9 +27,9 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
-import proton.pass.domain.Share
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewVault
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewVault
 
 class TestShareRepository : ShareRepository {
 

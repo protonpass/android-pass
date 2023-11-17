@@ -20,11 +20,11 @@ package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import proton.pass.domain.AliasDetails
-import proton.pass.domain.AliasMailbox
-import proton.pass.domain.AliasOptions
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.AliasDetails
+import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasOptions
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 interface AliasRepository {
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions>

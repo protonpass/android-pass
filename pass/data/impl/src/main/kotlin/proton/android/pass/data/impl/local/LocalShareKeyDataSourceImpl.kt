@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class LocalShareKeyDataSourceImpl @Inject constructor(

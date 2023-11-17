@@ -19,7 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.DeleteVault
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class TestDeleteVault @Inject constructor() : DeleteVault {

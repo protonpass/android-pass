@@ -29,15 +29,15 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
-import proton.pass.domain.CreditCardType
-import proton.pass.domain.HiddenState
-import proton.pass.domain.Item
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemState
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareSelection
+import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -91,7 +91,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     itemUuid = "",
                     revision = 1,
                     shareId = shareId,
-                    itemType = ItemType.Companion.fromParsed(this, asProto, aliasEmail),
+                    itemType = ItemType.fromParsed(this, asProto, aliasEmail),
                     title = encrypt(itemContents.title),
                     note = encrypt(itemContents.note),
                     content = encrypt(asProto.toByteArray()),

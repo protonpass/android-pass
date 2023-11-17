@@ -36,8 +36,8 @@ import proton.android.pass.data.impl.exception.UserKeyNotActive
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ShareId
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class ShareKeyRepositoryImpl @Inject constructor(

@@ -23,8 +23,8 @@ import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.responses.AliasDetails
 import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import me.proton.core.domain.entity.UserId
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 interface RemoteAliasDataSource {
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptionsResponse>

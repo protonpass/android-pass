@@ -21,8 +21,8 @@ package proton.android.pass.data.fakes.usecases
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 

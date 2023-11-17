@@ -41,9 +41,9 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.featurehome.impl.R
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 @ExperimentalMaterialApi
 @Composable

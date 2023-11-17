@@ -32,7 +32,7 @@ import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -30,7 +30,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ShareId
 
 sealed interface SearchInMode {
     object OldestVaults : SearchInMode

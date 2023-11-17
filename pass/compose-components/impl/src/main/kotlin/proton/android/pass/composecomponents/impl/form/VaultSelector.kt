@@ -41,8 +41,8 @@ import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 
 @Suppress("MagicNumber")
 @Composable

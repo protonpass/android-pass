@@ -19,8 +19,8 @@
 package proton.android.pass.featuresharing.impl.confirmed
 
 import androidx.compose.runtime.Stable
-import proton.pass.domain.PendingInvite
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.ShareId
 
 sealed interface InviteConfirmedEvent {
     object Unknown : InviteConfirmedEvent

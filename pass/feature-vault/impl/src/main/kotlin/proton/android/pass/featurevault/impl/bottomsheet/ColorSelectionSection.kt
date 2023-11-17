@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.extension.toColor
-import proton.pass.domain.ShareColor
+import proton.android.pass.domain.ShareColor
 
 private const val ITEMS_PER_COLUMN = 5
 

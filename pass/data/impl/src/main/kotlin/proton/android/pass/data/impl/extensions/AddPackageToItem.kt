@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.extensions
 
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
 
 fun ItemV1.Item.hasPackageName(packageName: PackageName): Boolean =

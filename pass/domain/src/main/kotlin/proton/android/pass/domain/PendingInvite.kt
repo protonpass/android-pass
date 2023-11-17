@@ -16,9 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.pass.domain
+package proton.android.pass.domain
 
-data class UserAccessData(
-    val pendingInvites: Int,
-    val waitingNewUserInvites: Int
+@JvmInline
+value class InviteToken(val value: String)
+
+@JvmInline
+value class InviteId(val value: String)
+
+@JvmInline
+value class NewUserInviteId(val value: String)
+
+data class PendingInvite(
+    val inviteToken: InviteToken,
+    val inviterEmail: String,
+    val invitedAddressId: String,
+    val memberCount: Int,
+    val itemCount: Int,
+    val name: String,
+    val icon: ShareIcon,
+    val color: ShareColor,
+    val fromNewUser: Boolean
 )

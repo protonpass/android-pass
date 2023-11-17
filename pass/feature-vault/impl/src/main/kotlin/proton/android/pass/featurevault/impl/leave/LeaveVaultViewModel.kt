@@ -41,8 +41,8 @@ import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltViewModel

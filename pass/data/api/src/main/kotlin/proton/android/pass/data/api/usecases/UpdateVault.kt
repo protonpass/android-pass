@@ -19,9 +19,9 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.SessionUserId
-import proton.pass.domain.Share
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewVault
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewVault
 
 interface UpdateVault {
     suspend operator fun invoke(

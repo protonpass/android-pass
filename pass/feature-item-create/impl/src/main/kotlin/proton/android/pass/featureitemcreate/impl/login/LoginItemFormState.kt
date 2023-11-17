@@ -27,7 +27,7 @@ import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
-import proton.pass.domain.ItemContents
+import proton.android.pass.domain.ItemContents
 
 @Parcelize
 @Immutable

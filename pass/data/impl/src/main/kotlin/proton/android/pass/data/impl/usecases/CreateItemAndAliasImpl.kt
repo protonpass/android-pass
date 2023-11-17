@@ -23,10 +23,10 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
-import proton.pass.domain.Item
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewAlias
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 class CreateItemAndAliasImpl @Inject constructor(

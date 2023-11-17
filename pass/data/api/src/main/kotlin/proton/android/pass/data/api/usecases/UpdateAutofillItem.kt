@@ -19,9 +19,9 @@
 package proton.android.pass.data.api.usecases
 
 import proton.android.pass.common.api.Option
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
-import proton.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.PackageInfo
 
 data class UpdateAutofillItemData(
     val shareId: ShareId,

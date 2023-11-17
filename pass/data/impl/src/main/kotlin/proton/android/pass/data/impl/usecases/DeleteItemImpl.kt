@@ -23,8 +23,8 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class DeleteItemImpl @Inject constructor(

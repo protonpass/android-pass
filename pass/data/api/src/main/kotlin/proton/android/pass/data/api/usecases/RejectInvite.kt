@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases
 
-import proton.pass.domain.InviteToken
+import proton.android.pass.domain.InviteToken
 
 interface RejectInvite {
     suspend operator fun invoke(invite: InviteToken)

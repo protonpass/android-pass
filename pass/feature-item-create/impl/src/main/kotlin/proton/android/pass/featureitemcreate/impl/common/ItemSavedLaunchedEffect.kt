@@ -22,8 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 @Composable
 fun ItemSavedLaunchedEffect(

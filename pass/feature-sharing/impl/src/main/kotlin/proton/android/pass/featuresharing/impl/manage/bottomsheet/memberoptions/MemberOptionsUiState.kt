@@ -20,8 +20,8 @@ package proton.android.pass.featuresharing.impl.manage.bottomsheet.memberoptions
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.pass.domain.ShareId
-import proton.pass.domain.ShareRole
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
 enum class MemberPermissionLevel {
     Admin,

@@ -24,8 +24,8 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
-import proton.pass.domain.ShareId
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.ShareKey
 
 class TestShareKeyRepository : ShareKeyRepository {
 

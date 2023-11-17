@@ -47,7 +47,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
-import proton.pass.domain.WebsiteUrl
+import proton.android.pass.domain.WebsiteUrl
 import me.proton.core.presentation.R as CoreR
 
 @Composable

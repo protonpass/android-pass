@@ -27,8 +27,8 @@ import proton.android.pass.autofill.ui.autofill.select.SelectItemScreen
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 object SelectItem : NavItem(baseRoute = "item/select", isTopLevel = true)
 

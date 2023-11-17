@@ -24,8 +24,8 @@ import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.pass.domain.ItemContents
-import proton.pass.domain.key.ShareKey
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.key.ShareKey
 
 class TestCreateItem : CreateItem {
 

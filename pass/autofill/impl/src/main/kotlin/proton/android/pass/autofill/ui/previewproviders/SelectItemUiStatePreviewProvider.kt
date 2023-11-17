@@ -35,9 +35,9 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
-import proton.pass.domain.ItemContents
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiState> {
     override val values: Sequence<SelectItemUiState>

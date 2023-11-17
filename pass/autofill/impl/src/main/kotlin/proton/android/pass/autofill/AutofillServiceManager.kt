@@ -52,13 +52,13 @@ import proton.pass.domain.Item
 import proton.pass.domain.ItemType
 import javax.inject.Inject
 import kotlin.math.min
-import proton.android.pass.composecomponents.impl.R as PassR
 
 class AutofillServiceManager @Inject constructor(
     @ApplicationContext private val context: Context,
     private val getSuggestedLoginItems: GetSuggestedLoginItems,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val needsBiometricAuth: NeedsBiometricAuth
+    private val needsBiometricAuth: NeedsBiometricAuth,
+    @AppIcon private val appIcon: Int
 ) {
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -130,6 +130,7 @@ class AutofillServiceManager @Inject constructor(
         val openAppRemoteView = RemoteViews(context.packageName, R.layout.autofill_item).apply {
             setTextViewText(R.id.title, context.getText(R.string.autofill_authenticate_prompt))
             setViewVisibility(R.id.subtitle, View.GONE)
+            setImageViewResource(R.id.icon, appIcon)
         }
         val openAppDatasetOptions = DatasetBuilderOptions(
             id = "RemoteView-OpenApp".some(),
@@ -304,7 +305,7 @@ class AutofillServiceManager @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun getIcon(): Icon {
-        val icon = Icon.createWithResource(context, PassR.drawable.ic_pass_logo)
+        val icon = Icon.createWithResource(context, appIcon)
         icon.setTintBlendMode(BlendMode.DST)
         return icon
     }

@@ -35,6 +35,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.featuresearchoptions.impl.SearchOptionsModule
+import proton.android.pass.autofill.AppIcon
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
@@ -62,6 +63,7 @@ import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import javax.inject.Inject
+import me.proton.core.presentation.R as CoreR
 
 @HiltAndroidTest
 @UninstallModules(SearchOptionsModule::class)
@@ -401,6 +403,10 @@ class SelectItemScreenTest {
     object TestModule {
         @Provides
         fun provideClock(): Clock = Clock.System
+
+        @Provides
+        @AppIcon
+        fun provideIcon(): Int = CoreR.drawable.ic_proton_shield_half_filled
     }
 
     companion object {

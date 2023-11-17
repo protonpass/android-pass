@@ -16,8 +16,8 @@
   <string name="home_autofill_banner_title">Využijte přínosu automatického vyplňování</string>
   <string name="home_autofill_banner_text">Jedno klepnutí a vaše uživatelské jméno a heslo jsou okamžitě vyplněny.</string>
   <string name="home_autofill_banner_settings">Zapnout automatické vyplňování ›</string>
-  <string name="home_trial_banner_title">Užijte si bezplatnou zkušební verzi</string>
-  <string name="home_trial_banner_text">Podívejte se na všechny exkluzivní funkce, které jsou vám po omezenou dobu k dispozici.</string>
+  <string name="home_trial_banner_title">Náš dárek na přivítanou pro vás</string>
+  <string name="home_trial_banner_text">7 dnů na vyzkoušení prémiových funkcí zdarma. Pouze během prvního týdne používání Proton Pass.</string>
   <string name="home_trial_banner_settings">Více informací ›</string>
   <string name="home_notification_permission_banner_title">Získejte důležité aktualizace</string>
   <string name="home_notification_permission_banner_text">Povolte vyskakovací oznámení, abyste byli informováni, když s vámi ostatní sdílejí trezor.</string>
@@ -29,7 +29,7 @@
   <string name="bottomsheet_copy_username">Kopírovat uživatelské jméno</string>
   <string name="bottomsheet_copy_alias">Kopírovat e-mailovou adresu</string>
   <string name="bottomsheet_copy_number">Kopírovat číslo</string>
-  <string name="bottomsheet_copy_cvv">Kopírovat CVV</string>
+  <string name="bottomsheet_copy_cvv">Kopírovat bezpečnostní kód</string>
   <string name="bottomsheet_copy_note">Kopírovat poznámku</string>
   <string name="bottomsheet_edit">Upravit</string>
   <!-- Clipboard -->
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">Uživatelské jméno bylo zkopírováno</string>
   <string name="password_copied_to_clipboard">Heslo bylo zkopírováno</string>
   <string name="credit_card_number_copied_to_clipboard">Číslo platební karty zkopírováno</string>
-  <string name="credit_card_cvv_copied_to_clipboard">CVV platební karty zkopírováno</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Bezpečnostní kód zkopírován</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Obsah byl příliš dlouhý, byl částečně zkopírován do schránky</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Trezory</string>

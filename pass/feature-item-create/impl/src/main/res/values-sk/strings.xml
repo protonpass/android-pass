@@ -41,12 +41,12 @@
   <string name="bottomsheet_custom_field_option_remove">Odstrániť pole</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Odstrániť vlastné pole</string>
   <string name="create_login_add_custom_field_button">Pridať ďalšie pole</string>
-  <string name="custom_field_hidden_placeholder">Váš skrytý obsah</string>
+  <string name="custom_field_hidden_placeholder">Pridať skrytý text</string>
   <string name="custom_field_hidden_icon_content_description">Ikona skrytého vlastného poľa</string>
-  <string name="custom_field_text_placeholder">Váš obsah</string>
+  <string name="custom_field_text_placeholder">Pridať text</string>
   <string name="custom_field_dialog_title">Názov vlastného poľa</string>
-  <string name="custom_field_dialog_body">Zadajte názov vlastného poľa</string>
-  <string name="custom_field_dialog_placeholder">Názov vlastného poľa</string>
+  <string name="custom_field_dialog_body">Pomenujte svoje vlastné pole</string>
+  <string name="custom_field_dialog_placeholder">Napr. ID používateľa, PIN</string>
   <string name="custom_field_options_content_description">Možnosti vlastného poľa</string>
   <!-- Create Note -->
   <string name="title_create_note">Vytvoriť poznámku</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Poznámka</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Vytvoriť platobnú kartu</string>
-  <string name="field_cardholder_name_title">Meno držiteľa karty</string>
+  <string name="field_cardholder_name_title">Meno na karte</string>
   <string name="field_cardholder_name_hint">Meno a priezvisko</string>
   <string name="field_card_number_title">Číslo karty</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Overovacie číslo</string>
+  <string name="field_card_cvv_title">Bezpečnostný kód</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN kód</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expiruje</string>
+  <string name="field_card_expiration_date_title">Dátum exspirácie</string>
   <string name="field_card_expiration_date_hint">MM / RRRR</string>
-  <string name="field_card_expiration_date_error">Neplatný dátum expirácie</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Nepodarilo sa vytvoriť platobnú kartu</string>
   <string name="create_credit_card_item_creation_success">Platobná karta vytvorená</string>
   <string name="credit_card_init_error">Problém s načítaním podrobností o platobnej karte</string>

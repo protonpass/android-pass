@@ -41,12 +41,12 @@
   <string name="bottomsheet_custom_field_option_remove">Odebrat pole</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Odebrat vlastní pole</string>
   <string name="create_login_add_custom_field_button">Přidat další pole</string>
-  <string name="custom_field_hidden_placeholder">Váš skrytý obsah</string>
+  <string name="custom_field_hidden_placeholder">Přidat skrytý text</string>
   <string name="custom_field_hidden_icon_content_description">Ikona vlastního skrytého pole</string>
-  <string name="custom_field_text_placeholder">Váš obsah</string>
+  <string name="custom_field_text_placeholder">Přidat text</string>
   <string name="custom_field_dialog_title">Název vlastního pole</string>
-  <string name="custom_field_dialog_body">Zadejte název vlastního pole</string>
-  <string name="custom_field_dialog_placeholder">Název vlastního pole</string>
+  <string name="custom_field_dialog_body">Pojmenujte vlastní pole</string>
+  <string name="custom_field_dialog_placeholder">Např. ID uživatele, PIN</string>
   <string name="custom_field_options_content_description">Možnosti vlastního pole</string>
   <!-- Create Note -->
   <string name="title_create_note">Vytvořit poznámku</string>
@@ -82,13 +82,13 @@
   <string name="field_cardholder_name_hint">Jméno a příjmení</string>
   <string name="field_card_number_title">Číslo karty</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Číslo pro ověření</string>
+  <string name="field_card_cvv_title">Bezpečnostní kód</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">Číslo PIN</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Vyprší dne</string>
+  <string name="field_card_expiration_date_title">Datum vypršení platnosti</string>
   <string name="field_card_expiration_date_hint">MM / RRRR</string>
-  <string name="field_card_expiration_date_error">Neplatné datum vypršení</string>
+  <string name="field_card_expiration_date_error">Zadejte platné datum ve formátu MM/YYYY</string>
   <string name="create_credit_card_item_creation_error">Nelze vytvořit platební kartu</string>
   <string name="create_credit_card_item_creation_success">Platební karta vytvořena</string>
   <string name="credit_card_init_error">Problém s načítáním detailů platební karty</string>

@@ -26,7 +26,7 @@
   <string name="app_lock_ten_minutes">Após 10 minutos</string>
   <string name="app_lock_one_hour">Após 1 hora</string>
   <string name="app_lock_four_hours">Após 4 horas</string>
-  <string name="profile_account_plan_name_trial">Teste grátis</string>
+  <string name="profile_account_plan_name_trial">Pass Plus trial</string>
   <string name="app_lock_config_none">Nenhum</string>
   <string name="app_lock_config_biometric">Biométrico</string>
   <string name="app_lock_config_pin_code">Código PIN</string>

@@ -26,7 +26,7 @@
   <string name="app_lock_ten_minutes">Dopo 10 minuti</string>
   <string name="app_lock_one_hour">Dopo 1 ora</string>
   <string name="app_lock_four_hours">Dopo 4 ore</string>
-  <string name="profile_account_plan_name_trial">Prova gratuita</string>
+  <string name="profile_account_plan_name_trial">Pass Plus trial</string>
   <string name="app_lock_config_none">Nessuno</string>
   <string name="app_lock_config_biometric">Biometria</string>
   <string name="app_lock_config_pin_code">Codice PIN</string>
@@ -35,7 +35,7 @@
   <string name="configure_pin_set_pin_code">Imposta il codice PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Sblocca l\'app con questo codice</string>
   <string name="configure_pin_enter_pin_code">Inserire il codice PIN</string>
-  <string name="configure_pin_repeat_pin_code">Ripeti il codice PIN</string>
+  <string name="configure_pin_repeat_pin_code">Conferma il codice PIN</string>
   <string name="configure_pin_continue">Continua</string>
   <string name="configure_pin_pin_does_not_match">Il PIN non corrisponde</string>
   <string name="configure_pin_pin_too_short">Il PIN è troppo corto</string>

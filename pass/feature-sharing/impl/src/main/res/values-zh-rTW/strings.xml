@@ -98,12 +98,12 @@
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. You still have %2$d invites left.</string>
   <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
   <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
-  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">共享</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">共享此保管庫</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">自訂</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">移至共享保管庫</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">新增一個共享保管庫</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
   <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>

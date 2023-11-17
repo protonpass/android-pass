@@ -16,8 +16,8 @@
   <string name="home_autofill_banner_title">Ciesz się magią autouzupełniania</string>
   <string name="home_autofill_banner_text">Jedno kliknięcie i gotowe! Nazwa użytkownika i hasło są uzupełnione.</string>
   <string name="home_autofill_banner_settings">Włącz autouzupełnianie ›</string>
-  <string name="home_trial_banner_title">Ciesz się darmową wersją próbną</string>
-  <string name="home_trial_banner_text">Sprawdź wszystkie dodatkowe funkcje, które możesz przetestować przez ograniczony czas.</string>
+  <string name="home_trial_banner_title">Nasz prezent powitalny</string>
+  <string name="home_trial_banner_text">Masz 7 dni na wypróbowanie funkcji premium za darmo. Tylko podczas pierwszego tygodnia z usługą Proton Pass.</string>
   <string name="home_trial_banner_settings">Dowiedz się więcej ›</string>
   <string name="home_notification_permission_banner_title">Otrzymuj ważne aktualizacje</string>
   <string name="home_notification_permission_banner_text">Włącz powiadomienia, aby otrzymywać informacje, gdy inne osoby udostępnią Ci sejf.</string>
@@ -29,7 +29,7 @@
   <string name="bottomsheet_copy_username">Kopiuj nazwę użytkownika</string>
   <string name="bottomsheet_copy_alias">Kopiuj adres e-mail</string>
   <string name="bottomsheet_copy_number">Kopiuj numer</string>
-  <string name="bottomsheet_copy_cvv">Kopiuj kod CCV</string>
+  <string name="bottomsheet_copy_cvv">Kopiuj kod zabezpieczający</string>
   <string name="bottomsheet_copy_note">Kopiuj notatkę</string>
   <string name="bottomsheet_edit">Edytuj</string>
   <!-- Clipboard -->
@@ -38,7 +38,7 @@
   <string name="username_copied_to_clipboard">Nazwa użytkownika została skopiowana</string>
   <string name="password_copied_to_clipboard">Hasło zostało skopiowane</string>
   <string name="credit_card_number_copied_to_clipboard">Numer karty płatniczej został skopiowany</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Kod CVV karty płatniczej został skopiowany</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Kod zabezpieczający został skopiowany</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Zawartość jest zbyt długa, więc została częściowo skopiowana do schowka</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Sejfy</string>

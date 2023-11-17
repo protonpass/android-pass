@@ -54,7 +54,7 @@
   <string name="custom_field_hidden_icon_description">Gizli özel alan</string>
   <string name="custom_field_totp_icon_description">İki adımlı doğrulama özel alanı</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Kart sahibinin adı</string>
+  <string name="credit_card_cardholder_field_name">Kart üzerindeki isim</string>
   <string name="credit_card_number_field_name">Kart numarası</string>
   <string name="credit_card_cvv_field_name">Güvenlik kodu</string>
   <string name="credit_card_pin_field_name">PIN kodu</string>
@@ -86,4 +86,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Bu öge çöp kutusunda olduğundan düzenleyemezsiniz. Lütfen düzenlemeden önce çöp kutusundan çıkarın.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Paylaşılamaz</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bu kasayı paylaşmak için yeterli izniniz yok.</string>
+  <string name="password_score_vulnerable">Çok zayıf</string>
+  <string name="password_score_weak">Zayıf</string>
+  <string name="password_score_strong">Güçlü</string>
 </resources>

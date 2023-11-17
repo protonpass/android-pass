@@ -6,6 +6,22 @@
 
 ### Other
 
+## 1.11.0 (2023-11-17)
+
+### Features :tada:
+
+- Password scorer in item detail.
+
+### Fixes :bug:
+
+- Stability fixes.
+
+### Other
+
+- Improve autofill and autosave.
+- Update translations.
+
+
 ## 1.10.4 (2023-11-15)
 
 ### Fixes :bug:

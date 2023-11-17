@@ -16,14 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.featuresearchoptions.impl
+package proton.android.pass.featuresearchoptions.impl
 
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.preferences.SelectedVaultPreference
 import proton.android.pass.preferences.SortingOptionPreference
-import proton.android.pass.domain.ShareId
 
 internal fun SortingOptionPreference.toDomain(): SearchSortingType = when (this) {
     SortingOptionPreference.MostRecent -> SearchSortingType.MostRecent

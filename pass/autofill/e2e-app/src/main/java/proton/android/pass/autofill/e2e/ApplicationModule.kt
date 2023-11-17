@@ -23,6 +23,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
+import proton.android.pass.autofill.AppIcon
 import javax.inject.Singleton
 
 @Module
@@ -33,4 +34,8 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideClock(): Clock = Clock.System
+
+    @Provides
+    @AppIcon
+    fun provideAppIcon(): Int = R.mipmap.ic_launcher
 }

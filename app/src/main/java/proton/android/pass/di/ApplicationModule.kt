@@ -30,7 +30,9 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import proton.android.pass.PassAppConfig
+import proton.android.pass.R
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.autofill.AppIcon
 import proton.android.pass.notifications.api.MainActivityAnnotation
 import proton.android.pass.ui.MainActivity
 import javax.inject.Singleton
@@ -70,4 +72,8 @@ object ApplicationModule {
     @Provides
     @MainActivityAnnotation
     fun provideMainActivityClass(): Class<*> = MainActivity::class.java
+
+    @Provides
+    @AppIcon
+    fun provideAppIcon(): Int = R.mipmap.ic_launcher
 }

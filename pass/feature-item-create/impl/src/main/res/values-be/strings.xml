@@ -41,12 +41,12 @@
   <string name="bottomsheet_custom_field_option_remove">Выдаліць поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Выдаліць карыстальніцкае поле</string>
   <string name="create_login_add_custom_field_button">Дадаць яшчэ адно поле</string>
-  <string name="custom_field_hidden_placeholder">Ваша схаванае змесціва</string>
+  <string name="custom_field_hidden_placeholder">Дадаць схаваны тэкст</string>
   <string name="custom_field_hidden_icon_content_description">Значок схаванага карыстальніцкага поля</string>
-  <string name="custom_field_text_placeholder">Ваша змесціва</string>
+  <string name="custom_field_text_placeholder">Дадаць тэкст</string>
   <string name="custom_field_dialog_title">Карыстальніцкая назва поля</string>
-  <string name="custom_field_dialog_body">Увядзіце назву для вашага карыстальніцкага поля</string>
-  <string name="custom_field_dialog_placeholder">Назва карыстальніцкага поля</string>
+  <string name="custom_field_dialog_body">Дайце назву карыстальніцкаму полю</string>
+  <string name="custom_field_dialog_placeholder">Напрыклад, ID карыстальніка або PIN</string>
   <string name="custom_field_options_content_description">Параметры карыстальніцкага поля</string>
   <!-- Create Note -->
   <string name="title_create_note">Стварыць нататку</string>
@@ -59,7 +59,7 @@
   <string name="field_alias_title">Адрас псеўданіма</string>
   <string name="field_alias_hint">Імя карыстальніка псеўданіма</string>
   <string name="field_mailboxes_creation_title">Пераслаць на</string>
-  <string name="field_mailboxes_edit_title">Перасыланне на</string>
+  <string name="field_mailboxes_edit_title">Перасылаецца на</string>
   <string name="field_alias_you_are_about_to_create">Вы збіраецеся стварыць</string>
   <string name="field_alias_prefix">Прэфікс</string>
   <string name="field_alias_suffix">Суфікс</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Нататка</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Стварыць крэдытную картку</string>
-  <string name="field_cardholder_name_title">Імя трымальніка карткі</string>
+  <string name="field_cardholder_name_title">Імя на картцы</string>
   <string name="field_cardholder_name_hint">Поўнае імя</string>
   <string name="field_card_number_title">Нумар карткі</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Праверачны нумар</string>
+  <string name="field_card_cvv_title">Код бяспекі</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN-код</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Дзейнічае да</string>
+  <string name="field_card_expiration_date_title">Тэрмін дзеяння</string>
   <string name="field_card_expiration_date_hint">ММ / ГГГГ</string>
-  <string name="field_card_expiration_date_error">Памылковая дата завяршэння тэрміну дзеяння</string>
+  <string name="field_card_expiration_date_error">Увядзіце сапраўдную дату ў фармаце ММ/ГГГГ</string>
   <string name="create_credit_card_item_creation_error">Немагчыма стварыць крэдытную картку</string>
   <string name="create_credit_card_item_creation_success">Крэдытная картка створана</string>
   <string name="credit_card_init_error">Праблема пры атрыманні падрабязнасцяў крэдытнай карткі</string>

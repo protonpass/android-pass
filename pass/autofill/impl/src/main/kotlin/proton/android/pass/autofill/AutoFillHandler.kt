@@ -39,6 +39,7 @@ import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addSaveInfo
+import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.heuristics.NodeClusterer
 import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.heuristics.focused
@@ -93,7 +94,7 @@ object AutoFillHandler {
         }
     }
 
-    @Suppress("LongMethod", "LongParameterList")
+    @Suppress("LongMethod", "LongParameterList", "ReturnCount")
     private suspend fun searchAndFill(
         context: Context,
         windowNode: AssistStructure.WindowNode,
@@ -121,6 +122,13 @@ object AutoFillHandler {
         PassLogger.d(TAG, "Clusters found: ${clusteredNodes.joinToString()}")
 
         val focusedCluster = clusteredNodes.focused()
+
+        if (focusedCluster == NodeCluster.Empty) {
+            PassLogger.d(TAG, "No focused cluster found")
+            callback.onSuccess(null)
+            return
+        }
+
         val assistInfo = AssistInfo(
             cluster = focusedCluster,
             url = extractionResult.url

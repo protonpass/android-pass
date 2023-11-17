@@ -34,7 +34,7 @@ import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.featuresearchoptions.impl.SearchOptionsModule
+import proton.android.pass.featuresearchoptions.impl.SearchOptionsModule
 import proton.android.pass.autofill.AppIcon
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.service.R

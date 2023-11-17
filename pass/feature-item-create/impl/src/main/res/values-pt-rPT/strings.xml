@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Campo de texto personalizado</string>
   <string name="bottomsheet_custom_field_type_hidden">Oculto</string>
   <string name="bottomsheet_custom_field_type_totp">Chave secreta 2FA (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Editar o título</string>
+  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
   <string name="bottomsheet_custom_field_option_remove">Remover o campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Remover o campo personalizado</string>
   <string name="create_login_add_custom_field_button">Add another field</string>
-  <string name="custom_field_hidden_placeholder">O seu conteúdo oculto</string>
+  <string name="custom_field_hidden_placeholder">Add hidden text</string>
   <string name="custom_field_hidden_icon_content_description">Ícone de campo personalizado oculto</string>
-  <string name="custom_field_text_placeholder">O seu conteúdo</string>
+  <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">Nome do campo personalizado</string>
-  <string name="custom_field_dialog_body">Introduza um nome para o seu campo personalizado.</string>
-  <string name="custom_field_dialog_placeholder">Nome do campo personalizado</string>
+  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
   <string name="custom_field_options_content_description">Opções de campo personalizado</string>
   <!-- Create Note -->
   <string name="title_create_note">Criar uma nota</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Nota</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Criar um cartão de crédito</string>
-  <string name="field_cardholder_name_title">Nome do titular do cartão</string>
+  <string name="field_cardholder_name_title">Name on card</string>
   <string name="field_cardholder_name_hint">Nome completo</string>
   <string name="field_card_number_title">Número do cartão</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Número de verificação</string>
+  <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">Código PIN</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expira em</string>
+  <string name="field_card_expiration_date_title">Expiration date</string>
   <string name="field_card_expiration_date_hint">MM / AAAA</string>
-  <string name="field_card_expiration_date_error">A data de expiração não é válida.</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Não foi possível criar o cartão de crédito.</string>
   <string name="create_credit_card_item_creation_success">O cartão de crédito foi criado.</string>
   <string name="credit_card_init_error">Problem retrieving credit card details</string>

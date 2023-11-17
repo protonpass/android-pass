@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">ტექსტური ხელით მითითებული ველი</string>
   <string name="bottomsheet_custom_field_type_hidden">დამალული</string>
   <string name="bottomsheet_custom_field_type_totp">2FA საიდუმლო (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">სათაურის ჩასწორება</string>
+  <string name="bottomsheet_custom_field_option_edit">სახელის ჩასწორება</string>
   <string name="bottomsheet_custom_field_option_remove">ველის წაშლა</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">ხელით მითითებული ველის წაშლა</string>
   <string name="create_login_add_custom_field_button">კიდევ ერთი ველის დამატება</string>
-  <string name="custom_field_hidden_placeholder">თქვენი დამალული შემცველობა</string>
+  <string name="custom_field_hidden_placeholder">ფარული ტექსტის დამატება</string>
   <string name="custom_field_hidden_icon_content_description">დამალული ხელით მითითებული ველის ხატულა</string>
-  <string name="custom_field_text_placeholder">თქვენი შემცველობა</string>
+  <string name="custom_field_text_placeholder">ტექსტის დამატება</string>
   <string name="custom_field_dialog_title">არასტანდარტული ველის სახელი</string>
-  <string name="custom_field_dialog_body">შეიყვანეთ თქვენი ხელით მითითებული ველის სახელი</string>
-  <string name="custom_field_dialog_placeholder">არცერთი ხელით მითითებული ველი</string>
+  <string name="custom_field_dialog_body">დაარქვით თქვენს მიერ შექმნილ ველს სახელი</string>
+  <string name="custom_field_dialog_placeholder">მაგ: მომხმარებლის ID, PIN-კოდი</string>
   <string name="custom_field_options_content_description">ხელით მითითებული ველის მორგება</string>
   <!-- Create Note -->
   <string name="title_create_note">შენიშვნის შექმნა</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">შენიშვნა</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">საკრედიტო ბარათის შექმნა</string>
-  <string name="field_cardholder_name_title">ბარათის მფლობლის სახელი</string>
+  <string name="field_cardholder_name_title">სახელი ბარათზე</string>
   <string name="field_cardholder_name_hint">სრული სახელი</string>
   <string name="field_card_number_title">ბარათის ნომერი</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">გადამოწმების ნომერი</string>
+  <string name="field_card_cvv_title">უსაფრთხოების კოდი</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN კოდი</string>
+  <string name="field_card_pin_title">PIN-კოდი</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">ვადა იწურება</string>
+  <string name="field_card_expiration_date_title">ვადის ამოწურვის თარიღი</string>
   <string name="field_card_expiration_date_hint">თთ / წწწწ</string>
-  <string name="field_card_expiration_date_error">ვადის ამოწურვის თარიღი არასწორია</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">საკრედიტო ბარათის შექმნის შეცდომა</string>
   <string name="create_credit_card_item_creation_success">საკრედიტო ბარათი შეიქმნა</string>
   <string name="credit_card_init_error">შეცდომა საკრედიტო ბარათის დეტალების მიღებისას</string>

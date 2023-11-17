@@ -65,8 +65,8 @@
   <string name="share_summary_permissions_title">Nivell d\'accés</string>
   <string name="share_manage_vault_share_with_more_people">Comparteix amb més gent</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
-    <item quantity="one">%d invite left</item>
-    <item quantity="other">%d invites left</item>
+    <item quantity="one">Queda %d invitació</item>
+    <item quantity="other">Queden %d Invitacions</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d element</item>

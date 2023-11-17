@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Metin özel alanı</string>
   <string name="bottomsheet_custom_field_type_hidden">Gizli</string>
   <string name="bottomsheet_custom_field_type_totp">İki adımlı doğrulama parolası (tek kullanımlık)</string>
-  <string name="bottomsheet_custom_field_option_edit">Başlığı düzenle</string>
+  <string name="bottomsheet_custom_field_option_edit">Adı düzenle</string>
   <string name="bottomsheet_custom_field_option_remove">Alanı kaldır</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Özel alanı kaldır</string>
   <string name="create_login_add_custom_field_button">Başka bir alan ekle</string>
-  <string name="custom_field_hidden_placeholder">Gizli içeriğiniz</string>
+  <string name="custom_field_hidden_placeholder">Gizli metin ekle</string>
   <string name="custom_field_hidden_icon_content_description">Gizli özel alan simgesi</string>
-  <string name="custom_field_text_placeholder">İçeriğiniz</string>
+  <string name="custom_field_text_placeholder">Metin ekle</string>
   <string name="custom_field_dialog_title">Özel alan adı</string>
-  <string name="custom_field_dialog_body">Özel alanınınız için bir ad yazın</string>
-  <string name="custom_field_dialog_placeholder">Özel alanın adı</string>
+  <string name="custom_field_dialog_body">Özel alanınıza bir ad verin</string>
+  <string name="custom_field_dialog_placeholder">Kullanıcı kimliği, PIN kodu gibi</string>
   <string name="custom_field_options_content_description">Özel alan seçenekleri</string>
   <!-- Create Note -->
   <string name="title_create_note">Not oluştur</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Not</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Kredi kartı oluştur</string>
-  <string name="field_cardholder_name_title">Kart sahibinin adı</string>
+  <string name="field_cardholder_name_title">Kart üzerindeki isim</string>
   <string name="field_cardholder_name_hint">Tam ad</string>
   <string name="field_card_number_title">Kart numarası</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
   <string name="field_card_cvv_title">Güvenlik kodu</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN kodu</string>
+  <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Son kullanma tarihi</string>
   <string name="field_card_expiration_date_hint">AA / YYYY</string>
-  <string name="field_card_expiration_date_error">Son kullanma tarihi geçerli değil</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Kredi kartı oluşturulamadı</string>
   <string name="create_credit_card_item_creation_success">Kredi kartı oluşturuldu</string>
   <string name="credit_card_init_error">Kredi kartı bilgileri alınırken sorun çıktı</string>

@@ -58,12 +58,12 @@
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Jméno držitele karty</string>
   <string name="credit_card_number_field_name">Číslo karty</string>
-  <string name="credit_card_cvv_field_name">Číslo pro ověření</string>
+  <string name="credit_card_cvv_field_name">Bezpečnostní kód</string>
   <string name="credit_card_pin_field_name">PIN kód</string>
-  <string name="credit_card_expiration_date_field_name">Vyprší dne</string>
+  <string name="credit_card_expiration_date_field_name">Datum vypršení platnosti</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Držitel karty zkopírován do schránky</string>
   <string name="credit_card_number_copied_to_clipboard">Číslo karty zkopírováno do schránky</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Číslo pro ověření zkopírováno do schránky</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Bezpečnostní kód zkopírován do schránky</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Přesunout do koše</string>
   <string name="migrate_item_detail_bottom_sheet">Přesunout do jiného trezoru</string>
@@ -88,4 +88,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Tuto položku nemůžete upravit, protože je v koši. Před úpravou ji prosím přesuňte z koše.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nelze sdílet</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nemáte dostatečná oprávnění pro sdílení tohoto trezoru.</string>
+  <string name="password_score_vulnerable">Zranitelný</string>
+  <string name="password_score_weak">Slabý</string>
+  <string name="password_score_strong">Silný</string>
 </resources>

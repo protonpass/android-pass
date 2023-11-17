@@ -54,14 +54,14 @@
   <string name="custom_field_hidden_icon_description">Champ personnalisé masqué</string>
   <string name="custom_field_totp_icon_description">Champ personnalisé A2F</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Nom du titulaire de la carte</string>
+  <string name="credit_card_cardholder_field_name">Nom sur la carte</string>
   <string name="credit_card_number_field_name">Numéro de la carte</string>
-  <string name="credit_card_cvv_field_name">Numéro de vérification</string>
+  <string name="credit_card_cvv_field_name">Code de sécurité</string>
   <string name="credit_card_pin_field_name">Code PIN</string>
-  <string name="credit_card_expiration_date_field_name">Expire le</string>
+  <string name="credit_card_expiration_date_field_name">Date d\'expiration</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Le titulaire de la carte a été copié dans le presse-papiers.</string>
   <string name="credit_card_number_copied_to_clipboard">Le numéro de la carte a été copié dans le presse-papiers.</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Le numéro de vérification a été copié dans le presse-papiers.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Le code de sécurité a été copié dans le presse-papiers.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Déplacer dans la corbeille</string>
   <string name="migrate_item_detail_bottom_sheet">Déplacer vers un autre coffre-fort</string>
@@ -86,4 +86,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Vous ne pouvez pas modifier cet élément parce qu\'il se trouve dans la corbeille. Retirez-le de la corbeille avant de le modifier.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Partage impossible</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Vous n\'avez pas les autorisations nécessaires pour partager ce coffre-fort.</string>
+  <string name="password_score_vulnerable">Vulnérable</string>
+  <string name="password_score_weak">Faible</string>
+  <string name="password_score_strong">Fort</string>
 </resources>

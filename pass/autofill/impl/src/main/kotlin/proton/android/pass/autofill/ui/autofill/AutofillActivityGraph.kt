@@ -22,9 +22,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
-import proton.android.pass.featuresearchoptions.impl.SortingLocation
-import proton.android.pass.featuresearchoptions.impl.sortingGraph
+import proton.android.pass.autofill.Utils
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.CreatedAlias
@@ -38,6 +36,7 @@ import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptio
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.autofillItemOptionsGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
@@ -69,6 +68,9 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
+import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.pass.featuresearchoptions.impl.SortingLocation
+import proton.android.pass.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.featurevault.impl.vaultGraph
@@ -134,10 +136,14 @@ fun NavGraphBuilder.autofillActivityGraph(
 
     createUpdateLoginGraph(
         initialCreateLoginUiState = InitialCreateLoginUiState(
-            title = autofillAppState.title,
-            url = autofillAppState.webDomain.value(),
+            title = run {
+                val url = autofillAppState.autofillData.assistInfo.url
+                val appName = autofillAppState.autofillData.packageInfo.map { it.appName.value }
+                Utils.getTitle(url, appName)
+            },
+            url = autofillAppState.autofillData.assistInfo.url.value(),
             aliasItemFormState = null,
-            packageInfoUi = autofillAppState.packageInfoUi.takeIf { autofillAppState.webDomain.isEmpty() },
+            packageInfoUi = autofillAppState.autofillData.packageInfo.map(::PackageInfoUi).value(),
         ),
         onNavigate = {
             when (it) {

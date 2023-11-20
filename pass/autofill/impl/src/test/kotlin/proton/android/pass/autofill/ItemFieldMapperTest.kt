@@ -20,10 +20,13 @@ package proton.android.pass.autofill
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import proton.android.pass.autofill.entities.AssistField
+import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.DatasetMapping
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
+import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 
 class ItemFieldMapperTest {
@@ -33,46 +36,19 @@ class ItemFieldMapperTest {
         val res = ItemFieldMapper.mapFields(
             encryptionContext = TestEncryptionContext,
             autofillItem = autofillItem(),
-            androidAutofillFieldIds = emptyList(),
-            autofillTypes = emptyList(),
-            fieldIsFocusedList = emptyList(),
-            parentIdList = emptyList()
+            cluster = NodeCluster.Empty
         )
         assertThat(res.mappings).isEmpty()
     }
 
     @Test
-    fun `can map username when focused`() {
+    fun `can map username`() {
         val itemAutofillId = TestAutofillId(123)
         val item = autofillItem()
         val res = ItemFieldMapper.mapFields(
             encryptionContext = TestEncryptionContext,
             autofillItem = item,
-            androidAutofillFieldIds = listOf(itemAutofillId),
-            autofillTypes = listOf(FieldType.Username),
-            fieldIsFocusedList = listOf(true),
-            parentIdList = listOf(listOf(TestAutofillId(1)))
-        )
-
-        val expected = DatasetMapping(
-            autofillFieldId = itemAutofillId,
-            contents = item.username,
-            displayValue = item.username
-        )
-        assertThat(res.mappings).isEqualTo(listOf(expected))
-    }
-
-    @Test
-    fun `can map username when not focused`() {
-        val itemAutofillId = TestAutofillId(123)
-        val item = autofillItem()
-        val res = ItemFieldMapper.mapFields(
-            encryptionContext = TestEncryptionContext,
-            autofillItem = item,
-            androidAutofillFieldIds = listOf(itemAutofillId),
-            autofillTypes = listOf(FieldType.Username),
-            fieldIsFocusedList = listOf(false),
-            parentIdList = listOf(listOf(TestAutofillId(1)))
+            cluster = NodeCluster.Login.OnlyUsername(field(itemAutofillId, FieldType.Username))
         )
 
         val expected = DatasetMapping(
@@ -90,10 +66,7 @@ class ItemFieldMapperTest {
         val res = ItemFieldMapper.mapFields(
             encryptionContext = TestEncryptionContext,
             autofillItem = item,
-            androidAutofillFieldIds = listOf(itemAutofillId),
-            autofillTypes = listOf(FieldType.Email),
-            fieldIsFocusedList = listOf(false),
-            parentIdList = listOf(listOf(TestAutofillId(1)))
+            cluster = NodeCluster.Login.OnlyUsername(field(itemAutofillId, FieldType.Email))
         )
 
         val expected = DatasetMapping(
@@ -105,7 +78,7 @@ class ItemFieldMapperTest {
     }
 
     @Test
-    fun `can map password when focused`() {
+    fun `can map password`() {
         val itemAutofillId = TestAutofillId(123)
 
         val password = "somepassword"
@@ -113,33 +86,7 @@ class ItemFieldMapperTest {
         val res = ItemFieldMapper.mapFields(
             encryptionContext = TestEncryptionContext,
             autofillItem = item,
-            androidAutofillFieldIds = listOf(itemAutofillId),
-            autofillTypes = listOf(FieldType.Password),
-            fieldIsFocusedList = listOf(true),
-            parentIdList = listOf(listOf(TestAutofillId(1)))
-        )
-
-        val expected = DatasetMapping(
-            autofillFieldId = itemAutofillId,
-            contents = password,
-            displayValue = "" // Password has no display value
-        )
-        assertThat(res.mappings).isEqualTo(listOf(expected))
-    }
-
-    @Test
-    fun `can map password when not focused`() {
-        val itemAutofillId = TestAutofillId(123)
-
-        val password = "somepassword"
-        val item = autofillItem(password = TestEncryptionContext.encrypt(password))
-        val res = ItemFieldMapper.mapFields(
-            encryptionContext = TestEncryptionContext,
-            autofillItem = item,
-            androidAutofillFieldIds = listOf(itemAutofillId),
-            autofillTypes = listOf(FieldType.Password),
-            fieldIsFocusedList = listOf(false),
-            parentIdList = listOf(listOf(TestAutofillId(1)))
+            cluster = NodeCluster.Login.OnlyPassword(field(itemAutofillId, FieldType.Password))
         )
 
         val expected = DatasetMapping(
@@ -164,10 +111,10 @@ class ItemFieldMapperTest {
         val res = ItemFieldMapper.mapFields(
             encryptionContext = TestEncryptionContext,
             autofillItem = item,
-            androidAutofillFieldIds = listOf(usernameAutofillId, passwordAutofillId),
-            autofillTypes = listOf(FieldType.Username, FieldType.Password),
-            fieldIsFocusedList = listOf(false, false),
-            parentIdList = listOf(listOf(TestAutofillId(1)), listOf(TestAutofillId(2)))
+            cluster = NodeCluster.Login.UsernameAndPassword(
+                username = field(usernameAutofillId, FieldType.Username),
+                password = field(passwordAutofillId, FieldType.Password)
+            )
         )
 
         val expectedUsername = DatasetMapping(
@@ -183,77 +130,17 @@ class ItemFieldMapperTest {
         assertThat(res.mappings).isEqualTo(listOf(expectedUsername, expectedPassword))
     }
 
-    @Test
-    fun `can autofill focused group of username+password when there are 2 groups`() {
-        val parentAutofillId1 = TestAutofillId(10)
-        val usernameAutofillId1 = TestAutofillId(11)
-        val passwordAutofillId1 = TestAutofillId(12)
-
-        val parentAutofillId2 = TestAutofillId(20)
-        val usernameAutofillId2 = TestAutofillId(21)
-        val passwordAutofillId2 = TestAutofillId(22)
-
-        val username = "username"
-        val password = "somepassword"
-        val item = autofillItem(
-            username = username,
-            password = TestEncryptionContext.encrypt(password)
-        )
-
-        val cases = listOf(
-            listOf(true, false, false, false) to 1,
-            listOf(false, true, false, false) to 1,
-            listOf(false, false, true, false) to 2,
-            listOf(false, false, false, true) to 2,
-        )
-
-        cases.forEach {
-            val (fieldIsFocusedList, expectedGroup) = it
-
-            val res = ItemFieldMapper.mapFields(
-                encryptionContext = TestEncryptionContext,
-                autofillItem = item,
-                androidAutofillFieldIds = listOf(
-                    usernameAutofillId1, passwordAutofillId1,
-                    usernameAutofillId2, passwordAutofillId2
-                ),
-                autofillTypes = listOf(
-                    FieldType.Username, FieldType.Password,
-                    FieldType.Username, FieldType.Password
-                ),
-                fieldIsFocusedList = fieldIsFocusedList,
-                parentIdList = listOf(
-                    listOf(parentAutofillId1), listOf(parentAutofillId1),
-                    listOf(parentAutofillId2), listOf(parentAutofillId2)
-                )
-            )
-
-            val (usernameAutofillId, passwordAutofillId) = when (expectedGroup) {
-                1 -> usernameAutofillId1 to passwordAutofillId1
-                2 -> usernameAutofillId2 to passwordAutofillId2
-
-                else -> throw IllegalStateException("CANNOT HAPPEN")
-            }
-
-            val expectedUsername = DatasetMapping(
-                autofillFieldId = usernameAutofillId,
-                contents = username,
-                displayValue = username
-            )
-            val expectedPassword = DatasetMapping(
-                autofillFieldId = passwordAutofillId,
-                contents = password,
-                displayValue = ""
-            )
-
-            assertThat(res.mappings).containsExactlyElementsIn(
-                listOf(
-                    expectedUsername,
-                    expectedPassword
-                )
-            )
-        }
-    }
+    private fun field(
+        id: AutofillFieldId,
+        type: FieldType,
+    ) = AssistField(
+        id = id,
+        type = type,
+        value = null,
+        text = null,
+        isFocused = false,
+        nodePath = emptyList()
+    )
 
     private fun autofillItem(
         itemId: String = "ItemID-123",

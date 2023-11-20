@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill.ui.autofill
 
-import android.view.autofill.AutofillId
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -28,6 +27,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
@@ -36,31 +36,21 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
-import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.isValid
 import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.service.R
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_APP_NAME
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_IDS
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_IS_FOCUSED
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_PARENT_ID
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_TYPES
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_DATA
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_INLINE_SUGGESTION_AUTOFILL_ITEM
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_PACKAGE_NAME
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_TITLE
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_WEB_DOMAIN
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.StartAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonui.api.require
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.HasAuthenticated
@@ -81,55 +71,13 @@ class AutofillActivityViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val packageInfo: Option<PackageInfoUi> = savedStateHandle.get<String>(ARG_PACKAGE_NAME)
-        .toOption()
-        .map { packageName ->
-            PackageInfoUi(
-                packageName = packageName,
-                appName = savedStateHandle.get<String>(ARG_APP_NAME) ?: packageName
-            )
-        }
-
     private val closeScreenFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private val webDomain: Option<String> = savedStateHandle.get<String>(ARG_WEB_DOMAIN)
-        .toOption()
-    private val title: Option<String> = savedStateHandle.get<String>(ARG_TITLE)
-        .toOption()
-    private val types: Option<List<FieldType>> =
-        savedStateHandle.get<List<String>>(ARG_AUTOFILL_TYPES)
-            .toOption()
-            .map { list -> list.map(FieldType.Companion::from) }
-    private val ids: Option<List<AndroidAutofillFieldId?>> =
-        savedStateHandle.get<List<AutofillId?>>(ARG_AUTOFILL_IDS)
-            .toOption()
-            .map { list -> list.map { item -> item?.let { AndroidAutofillFieldId(it) } } }
-    private val fieldIsFocusedList: Option<List<Boolean>> =
-        savedStateHandle.get<BooleanArray>(ARG_AUTOFILL_IS_FOCUSED)
-            .toOption()
-            .map { it.toList() }
-    private val parentIdList: Option<List<List<AndroidAutofillFieldId>>> =
-        savedStateHandle.get<ByteArray>(ARG_AUTOFILL_PARENT_ID)
-            ?.deserializeParcelable<AutofillIdListList>()
-            .toOption()
-            .map { list ->
-                list.content.map { item ->
-                    item.autofillIds.map { autofillId -> AndroidAutofillFieldId(autofillId) }
-                }
-            }
-
-    private val autofillAppState: MutableStateFlow<AutofillAppState> =
-        MutableStateFlow(
-            AutofillAppState(
-                packageInfoUi = packageInfo.value(),
-                androidAutofillIds = ids.value() ?: emptyList(),
-                fieldTypes = types.value() ?: emptyList(),
-                fieldIsFocusedList = fieldIsFocusedList.value() ?: emptyList(),
-                parentIdList = parentIdList.value() ?: emptyList(),
-                webDomain = webDomain,
-                title = title.value() ?: ""
-            )
+    private val appState: AutofillAppState = AutofillAppState(
+        AutofillIntentExtras.fromExtras(
+            savedStateHandle.require(ARG_AUTOFILL_DATA)
         )
+    )
 
     private val selectedAutofillItemState: MutableStateFlow<Option<AutofillItem>> =
         MutableStateFlow(
@@ -146,21 +94,20 @@ class AutofillActivityViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
-    val state: StateFlow<AutofillUiState> = combineN(
+    val state: StateFlow<AutofillUiState> = combine(
         themePreferenceState,
         needsBiometricAuth(),
-        autofillAppState,
         selectedAutofillItemState,
         copyTotpToClipboardPreferenceState,
         closeScreenFlow
-    ) { themePreference, needsAuth, autofillAppState, selectedAutofillItem, copyTotpToClipboard, closeScreen ->
+    ) { themePreference, needsAuth, selectedAutofillItem, copyTotpToClipboard, closeScreen ->
         when {
             closeScreen -> AutofillUiState.CloseScreen
-            autofillAppState.isValid() -> NotValidAutofillUiState
+            appState.isValid() -> NotValidAutofillUiState
             else -> StartAutofillUiState(
                 themePreference = themePreference.value(),
                 needsAuth = needsAuth,
-                autofillAppState = autofillAppState,
+                autofillAppState = appState,
                 copyTotpToClipboardPreference = copyTotpToClipboard.value(),
                 selectedAutofillItem = selectedAutofillItem
             )

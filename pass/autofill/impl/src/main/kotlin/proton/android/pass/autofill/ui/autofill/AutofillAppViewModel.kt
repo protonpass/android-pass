@@ -36,8 +36,6 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -62,19 +60,16 @@ class AutofillAppViewModel @Inject constructor(
     fun getMappings(
         autofillItem: AutofillItem,
         autofillAppState: AutofillAppState
-    ): AutofillMappings = when (autofillItem) {
-        is AutofillItem.Login -> getLoginMappings(autofillItem, autofillAppState)
-    }
-
-    private fun getLoginMappings(
-        autofillItem: AutofillItem.Login,
-        autofillAppState: AutofillAppState
     ): AutofillMappings {
-        handleTotpUri(autofillItem.totp)
+
+        if (autofillItem is AutofillItem.Login) {
+            handleTotpUri(autofillItem.totp)
+        }
+
         updateAutofillItem(
             UpdateAutofillItemData(
-                shareId = ShareId(autofillItem.shareId),
-                itemId = ItemId(autofillItem.itemId),
+                shareId = autofillItem.shareId(),
+                itemId = autofillItem.itemId(),
                 packageInfo = autofillAppState.autofillData.packageInfo,
                 url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = false
@@ -89,7 +84,6 @@ class AutofillAppViewModel @Inject constructor(
             )
         }
     }
-
 
     fun onAutofillItemSelected(source: AutofillTriggerSource) = viewModelScope.launch {
         telemetryManager.sendEvent(AutofillDone(source))

@@ -18,11 +18,13 @@
 
 package proton.android.pass.autofill.ui.autofill
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.None
@@ -66,10 +68,48 @@ fun AutofillExtras.toData() = AutofillData(
 
 object AutofillIntentExtras {
 
-    const val ARG_INLINE_SUGGESTION_AUTOFILL_ITEM = "arg_inline_suggestion_autofill_item"
-    const val ARG_AUTOFILL_DATA = "arg_autofill_data"
+    private const val ARG_INLINE_SUGGESTION_AUTOFILL_ITEM = "arg_inline_suggestion_autofill_item"
+    private const val ARG_AUTOFILL_DATA = "arg_autofill_data"
+
+    const val ARG_EXTRAS_BUNDLE = "arg_extras_bundle"
 
     fun toExtras(data: AutofillData, itemOption: Option<Item> = None): Bundle {
+        val extras = Bundle()
+        val contentBundle = getContentBundle(data, itemOption)
+
+        extras.putBundle(ARG_EXTRAS_BUNDLE, contentBundle)
+
+        return extras
+    }
+
+    @Suppress("Deprecation")
+    fun fromExtras(bundle: Bundle): Pair<AutofillData, Option<AutofillItem>> =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            bundle.classLoader = AutofillExtras::class.java.classLoader
+            val autofillExtras = bundle
+                .getParcelable(ARG_AUTOFILL_DATA, AutofillExtras::class.java)
+                ?: throw IllegalStateException("Bundle must contain Parcelable $ARG_AUTOFILL_DATA")
+            val asAutofillData = autofillExtras.toData()
+
+            bundle.classLoader = AutofillItem::class.java.classLoader
+            val itemOption = bundle
+                .getParcelable(ARG_INLINE_SUGGESTION_AUTOFILL_ITEM, AutofillItem::class.java)
+                .toOption()
+
+            asAutofillData to itemOption
+        } else {
+            bundle.classLoader = AutofillExtras::class.java.classLoader
+            val autofillExtras: AutofillExtras = bundle.getParcelable(ARG_AUTOFILL_DATA)
+                ?: throw IllegalStateException("Bundle must contain Parcelable $ARG_AUTOFILL_DATA")
+            val asAutofillData = autofillExtras.toData()
+
+            bundle.classLoader = AutofillItem::class.java.classLoader
+            val autofillItem: AutofillItem? = bundle.getParcelable(ARG_INLINE_SUGGESTION_AUTOFILL_ITEM)
+
+            asAutofillData to autofillItem.toOption()
+        }
+
+    private fun getContentBundle(data: AutofillData, itemOption: Option<Item>): Bundle {
         val extras = Bundle()
         val asExtras = data.toExtras()
         extras.putParcelable(ARG_AUTOFILL_DATA, asExtras)

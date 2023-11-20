@@ -36,6 +36,9 @@
             android:name="proton.android.pass.autofill.sample.multistep.MultiStepSecondLoginActivity"
             android:exported="true" />
         <activity
+            android:name="proton.android.pass.autofill.sample.creditcardactivity.CreditCardActivity"
+            android:exported="true" />
+        <activity
             android:name="proton.android.pass.autofill.sample.SampleSelectionActivity"
             android:exported="true" >
             <intent-filter>

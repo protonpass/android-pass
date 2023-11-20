@@ -46,8 +46,9 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.setSecureMode
-import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.domain.Item
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.AllowScreenshotsPreference
 
 @AndroidEntryPoint
 class AutofillActivity : FragmentActivity() {
@@ -73,8 +74,14 @@ class AutofillActivity : FragmentActivity() {
 
     private fun onStateReceived(autofillUiState: AutofillUiState) {
         when (autofillUiState) {
-            AutofillUiState.CloseScreen -> onAutofillCancel()
-            AutofillUiState.NotValidAutofillUiState -> onAutofillCancel()
+            AutofillUiState.CloseScreen -> {
+                PassLogger.i(TAG, "Received AutofillUiState.CloseScreen")
+                onAutofillCancel()
+            }
+            AutofillUiState.NotValidAutofillUiState -> {
+                PassLogger.i(TAG, "Received AutofillUiState.NotValidAutofillUiState")
+                onAutofillCancel()
+            }
             is AutofillUiState.StartAutofillUiState -> {
                 WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -141,6 +148,8 @@ class AutofillActivity : FragmentActivity() {
     }
 
     companion object {
+
+        private const val TAG = "AutofillActivity"
 
         fun newIntent(
             context: Context,

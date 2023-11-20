@@ -571,7 +571,7 @@
                                                                               },
                                                                               {
                                                                                 "id": 689317864,
-                                                                                "expectedAutofill": "card_expiration_mm_aa",
+                                                                                "expectedAutofill": "card_expiration_mm_yy",
                                                                                 "className": "android.widget.EditText",
                                                                                 "isImportantForAutofill": true,
                                                                                 "text": "",

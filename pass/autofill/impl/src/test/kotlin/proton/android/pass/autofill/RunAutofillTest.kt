@@ -33,18 +33,22 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 
-enum class ExpectedAutofill(val value: String) {
+const val CC_EXPIRATION_YEAR = "2025"
+const val CC_EXPIRATION_MONTH = "12"
+const val CC_EXPIRATION = "$CC_EXPIRATION_YEAR-$CC_EXPIRATION_MONTH"
+
+enum class ExpectedAutofill(val value: String, val assertedValue: String = value) {
     USERNAME("username"),
     PASSWORD("password"),
     CC_NUMBER("card_number"),
     CC_CARDHOLDER_NAME("card_name"),
     CC_CARDHOLDER_FIRST_NAME("card_first_name"),
     CC_CARDHOLDER_LAST_NAME("card_last_name"),
-    CC_EXPIRATION_MM_AA("card_expiration_mm_aa"),
+    CC_EXPIRATION_MM_YY("card_expiration_mm_yy", "$CC_EXPIRATION_MONTH/${CC_EXPIRATION_YEAR.takeLast(2)}"),
     CC_EXPIRATION_MONTH_TEXT("card_expiration_month_text"),
-    CC_EXPIRATION_MONTH_MM("card_expiration_month_mm"),
-    CC_EXPIRATION_YEAR_YY("card_expiration_year_yy"),
-    CC_EXPIRATION_YEAR_YYYY("card_expiration_year_yyyy"),
+    CC_EXPIRATION_MONTH_MM("card_expiration_month_mm", CC_EXPIRATION_MONTH),
+    CC_EXPIRATION_YEAR_YY("card_expiration_year_yy", CC_EXPIRATION_YEAR.takeLast(2)),
+    CC_EXPIRATION_YEAR_YYYY("card_expiration_year_yyyy", CC_EXPIRATION_YEAR),
     CC_CVV("card_cvv");
 
     companion object {
@@ -84,18 +88,20 @@ fun runAutofillTest(
 
     assertThat(res.mappings.size).isEqualTo(nodesWithExpectedContents.size)
     for (nodeWithExpectedContents in nodesWithExpectedContents) {
+        val (node, expectedAutofill) = nodeWithExpectedContents
         val field = res.mappings.find {
-            (it.autofillFieldId as TestAutofillId).id == nodeWithExpectedContents.id
+            (it.autofillFieldId as TestAutofillId).id == node.id
         }
         assertThat(field).isNotNull()
-        assertThat(field!!.contents).isEqualTo(nodeWithExpectedContents.expectedAutofill)
+
+        assertThat(field!!.contents).isEqualTo(expectedAutofill.assertedValue)
     }
 }
 
 private fun getExpectedContents(
     entry: AutofillDebugSaver.DebugAutofillEntry
-): List<AutofillDebugSaver.DebugAutofillNode> {
-    val withContents = mutableListOf<AutofillDebugSaver.DebugAutofillNode>()
+): List<Pair<AutofillDebugSaver.DebugAutofillNode, ExpectedAutofill>> {
+    val withContents = mutableListOf<Pair<AutofillDebugSaver.DebugAutofillNode, ExpectedAutofill>>()
     getExpectedContents(entry.rootContent, withContents)
     if (withContents.isEmpty()) {
         throw IllegalStateException("There are no fields with 'expectedAutofill'")
@@ -105,17 +111,18 @@ private fun getExpectedContents(
 
 private fun getExpectedContents(
     node: AutofillDebugSaver.DebugAutofillNode,
-    withExpectedContents: MutableList<AutofillDebugSaver.DebugAutofillNode>
+    withExpectedContents: MutableList<Pair<AutofillDebugSaver.DebugAutofillNode, ExpectedAutofill>>
 ) {
     val expectedContents = node.expectedAutofill
     if (expectedContents != null) {
-        if (expectedContents !in ExpectedAutofill.all()) {
-            throw IllegalStateException(
+
+        val expectedAutofill = ExpectedAutofill.values()
+            .firstOrNull { it.value == expectedContents }
+            ?: throw IllegalStateException(
                 "Unknown expectedAutofill: $expectedContents. Must be one of ${ExpectedAutofill.all()}"
             )
-        }
 
-        withExpectedContents.add(node)
+        withExpectedContents.add(node to expectedAutofill)
     }
     node.children.forEach { getExpectedContents(it, withExpectedContents) }
 }

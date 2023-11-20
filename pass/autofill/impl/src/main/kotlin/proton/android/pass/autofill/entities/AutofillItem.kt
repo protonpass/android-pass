@@ -21,9 +21,14 @@ package proton.android.pass.autofill.entities
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 @Parcelize
 sealed interface AutofillItem : Parcelable {
+
+    fun shareId(): ShareId
+    fun itemId(): ItemId
 
     @Parcelize
     data class Login(
@@ -32,7 +37,23 @@ sealed interface AutofillItem : Parcelable {
         val username: String,
         val password: EncryptedString?,
         val totp: EncryptedString?
-    ) : AutofillItem
+    ) : AutofillItem {
+        override fun shareId() = ShareId(shareId)
+        override fun itemId() = ItemId(shareId)
+    }
+
+    @Parcelize
+    data class CreditCard(
+        val itemId: String,
+        val shareId: String,
+        val number: String,
+        val cardHolder: String,
+        val expiration: String,
+        val cvv: EncryptedString?
+    ) : AutofillItem {
+        override fun shareId() = ShareId(shareId)
+        override fun itemId() = ItemId(shareId)
+    }
 
 }
 

@@ -25,7 +25,9 @@ import proton.android.pass.autofill.debug.AutofillDebugSaver
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
+import proton.android.pass.autofill.heuristics.NodeClusterer
 import proton.android.pass.autofill.heuristics.NodeExtractor
+import proton.android.pass.autofill.heuristics.focused
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.log.api.PassLogger
@@ -65,19 +67,20 @@ fun runAutofillTest(
 
     val asAutofillNodes = parsed.rootContent.toAutofillNode()
     val detectedNodes = NodeExtractor(requestFlags).extract(asAutofillNodes)
+    val clusters = NodeClusterer.cluster(detectedNodes.fields)
+    val focusedCluster = clusters.focused()
 
     val res = ItemFieldMapper.mapFields(
         encryptionContext = TestEncryptionContext,
         autofillItem = item,
-        androidAutofillFieldIds = detectedNodes.fields.map { it.id },
-        autofillTypes = detectedNodes.fields.map { it.type!! },
-        fieldIsFocusedList = detectedNodes.fields.map { it.isFocused },
-        parentIdList = detectedNodes.fields.map { it.nodePath }
+        cluster = focusedCluster
     )
 
     PassLogger.i(TAG, "Expected nodes: ${nodesWithExpectedContents.size}")
     PassLogger.i(TAG, "Detected nodes: ${detectedNodes.fields.size}")
     PassLogger.i(TAG, "Mapped nodes: ${res.mappings.size}")
+    PassLogger.i(TAG, "Clusters: ${clusters.size} | Focused: $focusedCluster")
+
 
     assertThat(res.mappings.size).isEqualTo(nodesWithExpectedContents.size)
     for (nodeWithExpectedContents in nodesWithExpectedContents) {

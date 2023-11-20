@@ -19,60 +19,63 @@
 package proton.android.pass.autofill.ui.autofill
 
 import android.os.Bundle
-import proton.android.pass.autofill.Utils
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
-import proton.android.pass.autofill.entities.asAndroid
+import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.extensions.marshalParcelable
 import proton.android.pass.autofill.extensions.toAutofillItem
+import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
+
+@Parcelize
+data class AutofillExtras(
+    val cluster: NodeCluster,
+    val url: String?,
+    val packageName: String?,
+    val appName: String?,
+) : Parcelable
+
+fun AutofillData.toExtras() = AutofillExtras(
+    cluster = assistInfo.cluster,
+    url = assistInfo.url.map { it }.value(),
+    packageName = packageInfo.map { it.packageName.value }.value(),
+    appName = packageInfo.map { it.appName.value }.value(),
+)
+
+fun AutofillExtras.toData() = AutofillData(
+    assistInfo = AssistInfo(
+        cluster = cluster,
+        url = url.toOption(),
+    ),
+    packageInfo = packageName?.let { pName ->
+        appName?.let { aName ->
+            PackageInfo(
+                packageName = PackageName(pName),
+                appName = AppName(aName),
+            )
+        }
+    }.toOption()
+)
 
 object AutofillIntentExtras {
-    const val ARG_AUTOFILL_IDS = "arg_autofill_ids"
-    const val ARG_AUTOFILL_TYPES = "arg_autofill_types"
-    const val ARG_AUTOFILL_IS_FOCUSED = "arg_autofill_is_focused"
-    const val ARG_AUTOFILL_PARENT_ID = "arg_autofill_parent_id"
-    const val ARG_PACKAGE_NAME = "arg_package_name"
-    const val ARG_APP_NAME = "arg_app_name"
-    const val ARG_WEB_DOMAIN = "arg_web_domain"
-    const val ARG_TITLE = "arg_title"
+
     const val ARG_INLINE_SUGGESTION_AUTOFILL_ITEM = "arg_inline_suggestion_autofill_item"
+    const val ARG_AUTOFILL_DATA = "arg_autofill_data"
 
     fun toExtras(data: AutofillData, itemOption: Option<Item> = None): Bundle {
         val extras = Bundle()
-        if (data.assistInfo.url is Some) {
-            extras.putString(ARG_WEB_DOMAIN, data.assistInfo.url.value)
-        }
-        val fields = data.assistInfo.cluster.fields()
-        val parentIdLists: List<AutofillIdList> = fields.map { field ->
-            AutofillIdList(field.nodePath.map { it.asAndroid().autofillId })
-        }
+        val asExtras = data.toExtras()
+        extras.putByteArray(ARG_AUTOFILL_DATA, marshalParcelable(asExtras))
 
-        val autofillIds = fields.map { it.id.asAndroid().autofillId }
-        extras.putParcelableArrayList(ARG_AUTOFILL_IDS, autofillIds.toCollection(ArrayList()))
-
-        extras.putStringArrayList(
-            ARG_AUTOFILL_TYPES,
-            fields.map { it.type?.toString() }.toCollection(ArrayList())
-        )
-        extras.putBooleanArray(
-            ARG_AUTOFILL_IS_FOCUSED,
-            fields.map { it.isFocused }.toBooleanArray()
-        )
-
-        val parentIds = AutofillIdListList(parentIdLists)
-        extras.putByteArray(ARG_AUTOFILL_PARENT_ID, marshalParcelable(parentIds))
-        extras.putString(
-            ARG_PACKAGE_NAME,
-            data.packageInfo.map { it.packageName.value }.value()
-        )
-        extras.putString(ARG_APP_NAME, data.packageInfo.map { it.appName.value }.value())
-        extras.putString(
-            ARG_TITLE,
-            Utils.getTitle(data.assistInfo.url, data.packageInfo.map { it.appName.value })
-        )
         if (itemOption is Some) {
             val autofillItem = itemOption.value.toAutofillItem()
             if (autofillItem is Some) {
@@ -84,6 +87,11 @@ object AutofillIntentExtras {
         }
 
         return extras
+    }
+
+    fun fromExtras(contents: ByteArray): AutofillData {
+        val deserialized: AutofillExtras = contents.deserializeParcelable()
+        return deserialized.toData()
     }
 
 }

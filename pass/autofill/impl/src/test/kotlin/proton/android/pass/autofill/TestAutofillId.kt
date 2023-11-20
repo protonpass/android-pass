@@ -18,6 +18,19 @@
 
 package proton.android.pass.autofill
 
+import android.os.Parcel
+import android.os.Parcelable
 import proton.android.pass.autofill.entities.AutofillFieldId
+import kotlin.random.Random
 
-data class TestAutofillId(val id: Int) : AutofillFieldId
+data class TestAutofillId(val id: Int) : AutofillFieldId, Parcelable {
+    override fun describeContents(): Int {
+        throw IllegalStateException("Not implemented")
+    }
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        throw IllegalStateException("Not implemented")
+    }
+}
+
+fun newAutofillFieldId() = TestAutofillId(Random.nextInt())

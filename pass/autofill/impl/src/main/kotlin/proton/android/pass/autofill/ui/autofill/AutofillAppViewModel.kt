@@ -33,11 +33,11 @@ import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.toOption
-import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -45,8 +45,6 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.GetTotpCodeFromUri
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,9 +75,8 @@ class AutofillAppViewModel @Inject constructor(
             UpdateAutofillItemData(
                 shareId = ShareId(autofillItem.shareId),
                 itemId = ItemId(autofillItem.itemId),
-                packageInfo = autofillAppState.packageInfoUi.toOption()
-                    .map(PackageInfoUi::toPackageInfo),
-                url = autofillAppState.webDomain,
+                packageInfo = autofillAppState.autofillData.packageInfo,
+                url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = false
             )
         )
@@ -88,10 +85,7 @@ class AutofillAppViewModel @Inject constructor(
             ItemFieldMapper.mapFields(
                 encryptionContext = this@withEncryptionContext,
                 autofillItem = autofillItem,
-                androidAutofillFieldIds = autofillAppState.androidAutofillIds,
-                autofillTypes = autofillAppState.fieldTypes,
-                fieldIsFocusedList = autofillAppState.fieldIsFocusedList,
-                parentIdList = autofillAppState.parentIdList
+                cluster = autofillAppState.autofillData.assistInfo.cluster
             )
         }
     }

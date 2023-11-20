@@ -60,6 +60,13 @@
                 android:text="Credit card" />
 
             <Button
+                android:id="@+id/personalInfoButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Personal info" />
+
+            <Button
                 android:id="@+id/webviewLoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1558,7 +1558,7 @@
                                                                                 "children": [
                                                                                   {
                                                                                     "id": 967793105,
-                                                                                    "expectedAutofill": "card_expiration_mm_aa",
+                                                                                    "expectedAutofill": "card_expiration_mm_yy",
                                                                                     "className": "android.widget.EditText",
                                                                                     "isImportantForAutofill": true,
                                                                                     "text": "",

@@ -40,15 +40,13 @@ import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.isValid
 import proton.android.pass.autofill.service.R
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_DATA
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_INLINE_SUGGESTION_AUTOFILL_ITEM
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_EXTRAS_BUNDLE
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.StartAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.flatMap
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.require
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -72,13 +70,11 @@ class AutofillActivityViewModel @Inject constructor(
 
     private val closeScreenFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private val appState: AutofillAppState = AutofillAppState(
-        savedStateHandle.require<AutofillExtras>(ARG_AUTOFILL_DATA).toData()
+    private val extras = AutofillIntentExtras.fromExtras(
+        savedStateHandle.require(ARG_EXTRAS_BUNDLE)
     )
-
-    private val selectedAutofillItem: Option<AutofillItem> = savedStateHandle
-        .get<AutofillItem>(ARG_INLINE_SUGGESTION_AUTOFILL_ITEM)
-        .toOption()
+    private val appState = AutofillAppState(extras.first)
+    private val selectedAutofillItem: Option<AutofillItem> = extras.second
 
     private val copyTotpToClipboardPreferenceState = preferenceRepository
         .getCopyTotpToClipboardEnabled()

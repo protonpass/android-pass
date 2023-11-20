@@ -26,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 
 @Composable
 fun SelectItemScreen(
@@ -44,8 +45,8 @@ fun SelectItemScreen(
     SelectItemScreenContent(
         modifier = modifier,
         uiState = uiState,
-        packageInfo = autofillAppState.packageInfoUi,
-        webDomain = autofillAppState.webDomain.value(),
+        packageInfo = autofillAppState.autofillData.packageInfo.map(::PackageInfoUi).value(),
+        webDomain = autofillAppState.autofillData.assistInfo.url.value(),
         onItemClicked = { item, shouldAssociate ->
             viewModel.onItemClicked(item, autofillAppState, shouldAssociate)
         },

@@ -18,36 +18,44 @@
 
 package proton.android.pass.autofill.heuristics
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.FieldType
 
-sealed interface NodeCluster {
+@Parcelize
+sealed interface NodeCluster : Parcelable {
 
     fun isFocused(): Boolean
     fun fields(): List<AssistField>
 
+    @Parcelize
     object Empty : NodeCluster {
         override fun isFocused() = true
         override fun fields(): List<AssistField> = emptyList()
     }
 
+    @Parcelize
     sealed interface Login : NodeCluster {
 
         override fun isFocused() = fields().any { it.isFocused }
 
+        @Parcelize
         @JvmInline
         value class OnlyUsername(val username: AssistField) : Login {
             override fun fields(): List<AssistField> = listOf(username)
             override fun toString(): String = "OnlyUsername"
         }
 
+        @Parcelize
         @JvmInline
         value class OnlyPassword(val password: AssistField) : Login {
             override fun fields(): List<AssistField> = listOf(password)
             override fun toString(): String = "OnlyPassword"
         }
 
+        @Parcelize
         data class UsernameAndPassword(
             val username: AssistField,
             val password: AssistField
@@ -57,6 +65,7 @@ sealed interface NodeCluster {
         }
     }
 
+    @Parcelize
     data class SignUp(
         val username: AssistField,
         val password: AssistField,

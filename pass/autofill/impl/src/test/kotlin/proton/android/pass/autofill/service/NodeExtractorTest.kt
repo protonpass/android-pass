@@ -24,12 +24,12 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.InputTypeValue
-import proton.android.pass.autofill.service.utils.newAutofillFieldId
+import proton.android.pass.autofill.heuristics.NodeExtractor
+import proton.android.pass.autofill.newAutofillFieldId
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 

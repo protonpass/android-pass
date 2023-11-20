@@ -75,7 +75,6 @@ import proton.android.pass.commonui.api.ItemSorter.sortSuggestionsByMostRecent
 import proton.android.pass.commonui.api.ItemUiFilter
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
@@ -91,15 +90,6 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
-import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
-import proton.android.pass.featuresearchoptions.api.SearchSortingType
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.preferences.value
-import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.totp.api.GetTotpCodeFromUri
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
@@ -109,6 +99,15 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions
+import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
+import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.totp.api.GetTotpCodeFromUri
 import java.net.URI
 import javax.inject.Inject
 
@@ -246,9 +245,10 @@ class SelectItemViewModel @Inject constructor(
         autofillAppState
             .flatMapLatest { state ->
                 if (state is Some) {
+                    val autofillData = state.value.autofillData
                     getSuggestedLoginItems(
-                        packageName = state.value.packageInfoUi?.packageName.toOption(),
-                        url = state.value.webDomain
+                        packageName = autofillData.packageInfo.map { it.packageName.value },
+                        url = autofillData.assistInfo.url
                     ).asResultWithoutLoading()
                 } else {
                     flowOf(LoadingResult.Loading)
@@ -437,9 +437,8 @@ class SelectItemViewModel @Inject constructor(
             UpdateAutofillItemData(
                 shareId = ShareId(autofillItem.shareId),
                 itemId = ItemId(autofillItem.itemId),
-                packageInfo = autofillAppState.packageInfoUi.toOption()
-                    .map(PackageInfoUi::toPackageInfo),
-                url = autofillAppState.webDomain,
+                packageInfo = autofillAppState.autofillData.packageInfo,
+                url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = shouldAssociate
             )
         )
@@ -447,10 +446,7 @@ class SelectItemViewModel @Inject constructor(
         val mappings = ItemFieldMapper.mapFields(
             encryptionContext = this@withEncryptionContext,
             autofillItem = autofillItem,
-            androidAutofillFieldIds = autofillAppState.androidAutofillIds,
-            autofillTypes = autofillAppState.fieldTypes,
-            fieldIsFocusedList = autofillAppState.fieldIsFocusedList,
-            parentIdList = autofillAppState.parentIdList
+            cluster = autofillAppState.autofillData.assistInfo.cluster
         )
         itemClickedFlow.update {
             AutofillItemClickedEvent.Clicked(mappings)
@@ -458,10 +454,10 @@ class SelectItemViewModel @Inject constructor(
     }
 
     private fun getSuggestionsTitle(autofillAppState: AutofillAppState): String =
-        if (autofillAppState.webDomain is Some) {
-            getSuggestionsTitleForDomain(autofillAppState.webDomain.value)
-        } else if (autofillAppState.packageInfoUi != null) {
-            autofillAppState.packageInfoUi.appName
+        if (autofillAppState.autofillData.assistInfo.url is Some) {
+            getSuggestionsTitleForDomain(autofillAppState.autofillData.assistInfo.url.value)
+        } else if (autofillAppState.autofillData.packageInfo is Some) {
+            autofillAppState.autofillData.packageInfo.value.appName.value
         } else {
             ""
         }

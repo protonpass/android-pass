@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill.ui.autofill.inlinesuggestions
 
-import android.view.autofill.AutofillId
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,33 +33,25 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.MFAAutofillCopied
-import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
-import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
-import proton.android.pass.autofill.ui.autofill.AutofillIdListList
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_APP_NAME
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_IDS
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_IS_FOCUSED
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_PARENT_ID
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_TYPES
+import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_INLINE_SUGGESTION_AUTOFILL_ITEM
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_PACKAGE_NAME
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_TITLE
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_WEB_DOMAIN
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonui.api.require
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -69,8 +60,6 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.GetTotpCodeFromUri
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -86,52 +75,11 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val packageInfo = savedStateHandle.get<String>(ARG_PACKAGE_NAME)
-        .toOption()
-        .map { packageName ->
-            PackageInfoUi(
-                packageName = packageName,
-                appName = savedStateHandle.get<String>(ARG_APP_NAME) ?: packageName
-            )
-        }
-    private val webDomain: Option<String> = savedStateHandle.get<String>(ARG_WEB_DOMAIN)
-        .toOption()
-    private val title: Option<String> = savedStateHandle.get<String>(ARG_TITLE)
-        .toOption()
-    private val types: Option<List<FieldType>> =
-        savedStateHandle.get<List<String>>(ARG_AUTOFILL_TYPES)
-            .toOption()
-            .map { list -> list.map(FieldType.Companion::from) }
-    private val ids: Option<List<AndroidAutofillFieldId?>> =
-        savedStateHandle.get<List<AutofillId?>>(ARG_AUTOFILL_IDS)
-            .toOption()
-            .map { list -> list.map { item -> item?.let { AndroidAutofillFieldId(it) } } }
-    private val fieldIsFocusedList: Option<List<Boolean>> =
-        savedStateHandle.get<BooleanArray>(ARG_AUTOFILL_IS_FOCUSED)
-            .toOption()
-            .map { it.toList() }
-    private val parentIdList: Option<List<List<AndroidAutofillFieldId>>> =
-        savedStateHandle.get<ByteArray>(ARG_AUTOFILL_PARENT_ID)
-            ?.deserializeParcelable<AutofillIdListList>()
-            .toOption()
-            .map { list ->
-                list.content.map { item ->
-                    item.autofillIds.map { autofillId -> AndroidAutofillFieldId(autofillId) }
-                }
-            }
-
-    private val autofillAppState: MutableStateFlow<AutofillAppState> =
-        MutableStateFlow(
-            AutofillAppState(
-                androidAutofillIds = ids.value() ?: emptyList(),
-                fieldTypes = types.value() ?: emptyList(),
-                packageInfoUi = packageInfo.value(),
-                webDomain = webDomain,
-                title = title.value() ?: "",
-                fieldIsFocusedList = fieldIsFocusedList.value() ?: emptyList(),
-                parentIdList = parentIdList.value() ?: emptyList(),
-            )
+    private val appState: AutofillAppState = AutofillAppState(
+        AutofillIntentExtras.fromExtras(
+            savedStateHandle.require(AutofillIntentExtras.ARG_AUTOFILL_DATA)
         )
+    )
 
     private val autofillItemState: MutableStateFlow<Option<AutofillItem>> =
         MutableStateFlow(
@@ -145,13 +93,12 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         .distinctUntilChanged()
 
     val state: StateFlow<InlineSuggestionAutofillNoUiState> = combine(
-        autofillAppState,
         autofillItemState,
         copyTotpToClipboardState
-    ) { autofillAppState, autofillItemOption, copyTotpToClipboard ->
+    ) { autofillItemOption, copyTotpToClipboard ->
         val mappingsOption = autofillItemOption
             .map { autofillItem ->
-                getMappings(autofillItem, copyTotpToClipboard, autofillAppState)
+                getMappings(autofillItem, copyTotpToClipboard, appState)
             }
         if (mappingsOption is Some) {
             if (mappingsOption.value.mappings.isNotEmpty()) {
@@ -200,9 +147,8 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
             UpdateAutofillItemData(
                 shareId = ShareId(autofillItem.shareId),
                 itemId = ItemId(autofillItem.itemId),
-                packageInfo = autofillAppState.packageInfoUi.toOption()
-                    .map(PackageInfoUi::toPackageInfo),
-                url = autofillAppState.webDomain,
+                packageInfo = autofillAppState.autofillData.packageInfo,
+                url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = false
             )
         )
@@ -210,10 +156,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         ItemFieldMapper.mapFields(
             encryptionContext = this@withEncryptionContext,
             autofillItem = autofillItem,
-            androidAutofillFieldIds = autofillAppState.androidAutofillIds,
-            autofillTypes = autofillAppState.fieldTypes,
-            fieldIsFocusedList = autofillAppState.fieldIsFocusedList,
-            parentIdList = autofillAppState.parentIdList
+            cluster = autofillAppState.autofillData.assistInfo.cluster
         )
     }
 

@@ -34,9 +34,11 @@ import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.featuresearchoptions.impl.SearchOptionsModule
 import proton.android.pass.autofill.AppIcon
+import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillAppState
+import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.common.api.None
@@ -49,10 +51,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
-import proton.android.pass.test.CallChecker
-import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.TestConstants
-import proton.android.pass.test.waitUntilExists
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -62,6 +60,11 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.featuresearchoptions.impl.SearchOptionsModule
+import proton.android.pass.test.CallChecker
+import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.TestConstants
+import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 import me.proton.core.presentation.R as CoreR
 
@@ -383,13 +386,13 @@ class SelectItemScreenTest {
     }
 
     private fun fakeAutofillState() = AutofillAppState(
-        androidAutofillIds = emptyList(),
-        fieldTypes = emptyList(),
-        packageInfoUi = null,
-        webDomain = None,
-        title = "",
-        fieldIsFocusedList = emptyList(),
-        parentIdList = emptyList()
+        autofillData = AutofillData(
+            assistInfo = AssistInfo(
+                cluster = NodeCluster.Empty,
+                url = None
+            ),
+            packageInfo = None
+        )
     )
 
     data class SetupData(

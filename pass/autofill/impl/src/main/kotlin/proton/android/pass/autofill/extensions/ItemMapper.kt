@@ -40,6 +40,15 @@ fun ItemUiModel.toAutoFillItem(): Option<AutofillItem> = when (val content = con
         ).some()
     }
 
+    is ItemContents.CreditCard -> AutofillItem.CreditCard(
+        itemId = id.id,
+        shareId = shareId.id,
+        number = content.number,
+        cardHolder = content.cardHolder,
+        expiration = content.expirationDate,
+        cvv = content.cvv.encrypted
+    ).some()
+
     else -> None
 }
 
@@ -51,6 +60,16 @@ fun Item.toAutofillItem(): Option<AutofillItem> = when (val type = itemType) {
         password = type.password,
         totp = type.primaryTotp
     ).some()
+
+    is ItemType.CreditCard ->
+        AutofillItem.CreditCard(
+            itemId = id.id,
+            shareId = shareId.id,
+            number = type.number,
+            cardHolder = type.cardHolder,
+            expiration = type.expirationDate,
+            cvv = type.cvv
+        ).some()
 
     else -> None
 }

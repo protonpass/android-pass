@@ -131,6 +131,7 @@ private fun getSaveSessionType(
     isBrowser: Boolean
 ): SaveSessionType = when (cluster) {
     NodeCluster.Empty -> SaveSessionType.NotAutoSaveable
+    is NodeCluster.CreditCard -> SaveSessionType.NotAutoSaveable
     is NodeCluster.SignUp -> {
         SaveSessionType.UsernameAndPassword(
             usernameField = cluster.username,

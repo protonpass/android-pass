@@ -23,8 +23,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
-import proton.android.pass.autofill.extensions.deserializeParcelable
-import proton.android.pass.autofill.extensions.marshalParcelable
 import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.None
@@ -74,24 +72,18 @@ object AutofillIntentExtras {
     fun toExtras(data: AutofillData, itemOption: Option<Item> = None): Bundle {
         val extras = Bundle()
         val asExtras = data.toExtras()
-        extras.putByteArray(ARG_AUTOFILL_DATA, marshalParcelable(asExtras))
+        extras.putParcelable(ARG_AUTOFILL_DATA, asExtras)
 
         if (itemOption is Some) {
             val autofillItem = itemOption.value.toAutofillItem()
             if (autofillItem is Some) {
-                extras.putByteArray(
+                extras.putParcelable(
                     ARG_INLINE_SUGGESTION_AUTOFILL_ITEM,
-                    marshalParcelable(autofillItem.value)
+                    autofillItem.value
                 )
             }
         }
 
         return extras
     }
-
-    fun fromExtras(contents: ByteArray): AutofillData {
-        val deserialized: AutofillExtras = contents.deserializeParcelable()
-        return deserialized.toData()
-    }
-
 }

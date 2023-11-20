@@ -18,12 +18,15 @@
 
 package proton.android.pass.autofill.entities
 
+import android.os.Parcelable
 import android.view.autofill.AutofillId
+import kotlinx.parcelize.Parcelize
 
 /** Used for testing purposes */
-interface AutofillFieldId
+interface AutofillFieldId : Parcelable
 
 /** Wrapper class holding an actual `AutofillId` */
+@Parcelize
 data class AndroidAutofillFieldId(val autofillId: AutofillId) : AutofillFieldId
 
 /**

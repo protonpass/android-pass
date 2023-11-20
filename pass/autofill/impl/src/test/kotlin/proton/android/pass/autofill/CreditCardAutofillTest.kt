@@ -16,12 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.service.utils
+package proton.android.pass.autofill
 
-import proton.android.pass.autofill.entities.AutofillFieldId
-import kotlin.random.Random
+class CreditCardAutofillTest : BaseAutofillTest() {
 
-fun newAutofillFieldId() = FakeAutofillFieldId()
+//    @Test
+//    fun `can autofill aliexpress com chrome`() {
+//        runCCAutofillTest("creditcard/chrome_aliexpress_credit_card.json")
+//    }
+//
+//    private fun runCCAutofillTest(file: String) {
+//
+//    }
 
-/** Used for testing purposes */
-class FakeAutofillFieldId(val id: Int = Random.nextInt()) : AutofillFieldId
+}

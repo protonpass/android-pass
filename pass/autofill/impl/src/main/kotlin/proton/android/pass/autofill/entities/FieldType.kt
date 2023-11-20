@@ -30,7 +30,18 @@ enum class FieldType : Parcelable {
     Totp,
     Phone,
     Other,
-    Unknown;
+    Unknown,
+
+    // Credit Card
+    CardNumber,
+    CardholderName,
+    CardholderLastName,
+    CardExpirationMMYY,
+    CardExpirationMM,
+    CardExpirationYY,
+    CardExpirationYYYY,
+    CardCvv
+    ;
 
     companion object {
         fun from(value: String): FieldType = try {

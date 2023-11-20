@@ -398,6 +398,10 @@ class SelectItemViewModel @Inject constructor(
                         autofillAppState = autofillAppState,
                         shouldAssociate = shouldAssociate,
                     )
+                    is AutofillItem.CreditCard -> onCreditCardClicked(
+                        autofillItem = autofillItem,
+                        autofillAppState = autofillAppState,
+                    )
                 }
             }
     }
@@ -440,6 +444,30 @@ class SelectItemViewModel @Inject constructor(
                 packageInfo = autofillAppState.autofillData.packageInfo,
                 url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = shouldAssociate
+            )
+        )
+
+        val mappings = ItemFieldMapper.mapFields(
+            encryptionContext = this@withEncryptionContext,
+            autofillItem = autofillItem,
+            cluster = autofillAppState.autofillData.assistInfo.cluster
+        )
+        itemClickedFlow.update {
+            AutofillItemClickedEvent.Clicked(mappings)
+        }
+    }
+
+    private fun onCreditCardClicked(
+        autofillItem: AutofillItem.CreditCard,
+        autofillAppState: AutofillAppState
+    ) = encryptionContextProvider.withEncryptionContext {
+        updateAutofillItem(
+            UpdateAutofillItemData(
+                shareId = ShareId(autofillItem.shareId),
+                itemId = ItemId(autofillItem.itemId),
+                packageInfo = autofillAppState.autofillData.packageInfo,
+                url = autofillAppState.autofillData.assistInfo.url,
+                shouldAssociate = false
             )
         )
 

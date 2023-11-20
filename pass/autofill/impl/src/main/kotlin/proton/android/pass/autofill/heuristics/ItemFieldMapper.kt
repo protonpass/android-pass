@@ -18,11 +18,11 @@
 
 package proton.android.pass.autofill.heuristics
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
-import proton.android.pass.autofill.entities.DatasetMapping
+import proton.android.pass.autofill.heuristics.mappers.CreditCardMapper.mapCreditCardFields
+import proton.android.pass.autofill.heuristics.mappers.LoginMapper.mapLoginFields
+import proton.android.pass.autofill.heuristics.mappers.LoginMapper.mapSignUpFields
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.log.api.PassLogger
 
@@ -30,99 +30,32 @@ object ItemFieldMapper {
 
     private const val TAG = "ItemFieldMapper"
 
+    @Suppress("ReturnCount")
     fun mapFields(
         encryptionContext: EncryptionContext,
         autofillItem: AutofillItem,
         cluster: NodeCluster
-    ): AutofillMappings = when (autofillItem) {
-        is AutofillItem.Login -> {
-            mapLoginFields(
-                encryptionContext = encryptionContext,
-                autofillItem = autofillItem,
-                cluster = cluster
-            )
-        }
-    }
-
-    @Suppress("LongParameterList")
-    private fun mapLoginFields(
-        encryptionContext: EncryptionContext,
-        autofillItem: AutofillItem.Login,
-        cluster: NodeCluster
     ): AutofillMappings {
-        val mappings = mutableListOf<DatasetMapping>()
         when (cluster) {
             NodeCluster.Empty -> {
                 PassLogger.e(TAG, "Expected NodeCluster to be non-empty")
             }
 
-            is NodeCluster.SignUp -> {
-                mappings.add(mappingForUsername(autofillItem.username, cluster.username.id))
-                mappings.add(
-                    mappingForPassword(
-                        encryptionContext,
-                        autofillItem.password,
-                        cluster.password.id
-                    )
-                )
-                mappings.add(
-                    mappingForPassword(
-                        encryptionContext,
-                        autofillItem.password,
-                        cluster.repeatPassword.id
-                    )
-                )
+            is NodeCluster.CreditCard -> if (autofillItem is AutofillItem.CreditCard) {
+                return mapCreditCardFields(encryptionContext, autofillItem, cluster)
             }
 
-            is NodeCluster.Login -> when (cluster) {
-                is NodeCluster.Login.OnlyPassword -> {
-                    mappings.add(
-                        mappingForPassword(
-                            encryptionContext,
-                            autofillItem.password,
-                            cluster.password.id
-                        )
-                    )
-                }
+            is NodeCluster.Login -> if (autofillItem is AutofillItem.Login) {
+                return mapLoginFields(encryptionContext, autofillItem, cluster)
+            }
 
-                is NodeCluster.Login.OnlyUsername -> {
-                    mappings.add(mappingForUsername(autofillItem.username, cluster.username.id))
-                }
-
-                is NodeCluster.Login.UsernameAndPassword -> {
-                    mappings.add(mappingForUsername(autofillItem.username, cluster.username.id))
-                    mappings.add(
-                        mappingForPassword(
-                            encryptionContext,
-                            autofillItem.password,
-                            cluster.password.id
-                        )
-                    )
-                }
+            is NodeCluster.SignUp -> if (autofillItem is AutofillItem.Login) {
+                return mapSignUpFields(encryptionContext, autofillItem, cluster)
             }
         }
 
-        if (mappings.isEmpty()) {
-            val message = "No mappings found for autofill"
-            PassLogger.e(TAG, IllegalStateException(message), message)
-        }
-
-        return AutofillMappings(mappings)
+        PassLogger.e(TAG, "Could not find any combination of mappings for item: $autofillItem and cluster $cluster")
+        return AutofillMappings(emptyList())
     }
 
-    private fun mappingForPassword(
-        encryptionContext: EncryptionContext,
-        password: EncryptedString?,
-        id: AutofillFieldId
-    ) = DatasetMapping(
-        autofillFieldId = id,
-        contents = password?.let { encryptionContext.decrypt(it) } ?: "",
-        displayValue = ""
-    )
-
-    private fun mappingForUsername(username: String, id: AutofillFieldId) = DatasetMapping(
-        autofillFieldId = id,
-        contents = username,
-        displayValue = username
-    )
 }

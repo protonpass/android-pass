@@ -18,9 +18,13 @@
 
 package proton.android.pass.autofill.entities
 
+import android.os.Parcelable
 import android.view.autofill.AutofillValue
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import proton.android.pass.autofill.heuristics.IdentifiableNode
 
+@Parcelize
 data class AssistField(
     val id: AutofillFieldId,
     val type: FieldType?,
@@ -28,7 +32,10 @@ data class AssistField(
     val text: String?,
     val isFocused: Boolean,
     val nodePath: List<AutofillFieldId>
-) : IdentifiableNode {
+) : IdentifiableNode, Parcelable {
+    @IgnoredOnParcel
     override val nodeId = id
+
+    @IgnoredOnParcel
     override val parentPath = nodePath
 }

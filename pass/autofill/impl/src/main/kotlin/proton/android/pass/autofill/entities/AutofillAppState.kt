@@ -19,18 +19,11 @@
 package proton.android.pass.autofill.entities
 
 import androidx.compose.runtime.Immutable
-import proton.android.pass.common.api.Option
-import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.autofill.heuristics.NodeCluster
 
 @Immutable
 data class AutofillAppState(
-    val androidAutofillIds: List<AndroidAutofillFieldId?>,
-    val fieldTypes: List<FieldType>,
-    val packageInfoUi: PackageInfoUi?,
-    val webDomain: Option<String>,
-    val title: String,
-    val fieldIsFocusedList: List<Boolean>,
-    val parentIdList: List<List<AndroidAutofillFieldId>>
+    val autofillData: AutofillData
 )
 
-fun AutofillAppState.isValid(): Boolean = androidAutofillIds.isEmpty() || fieldTypes.isEmpty()
+fun AutofillAppState.isValid(): Boolean = autofillData.assistInfo.cluster != NodeCluster.Empty

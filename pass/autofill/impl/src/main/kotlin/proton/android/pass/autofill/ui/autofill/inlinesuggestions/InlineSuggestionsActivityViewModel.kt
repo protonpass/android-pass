@@ -46,8 +46,6 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -111,29 +109,19 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         autofillItem: AutofillItem,
         copyTotpToClipboard: CopyTotpToClipboard,
         autofillAppState: AutofillAppState
-    ): AutofillMappings = when (autofillItem) {
-        is AutofillItem.Login -> getLoginMappings(
-            autofillItem = autofillItem,
-            copyTotpToClipboard = copyTotpToClipboard,
-            autofillAppState = autofillAppState
-        )
-    }
-
-    private fun getLoginMappings(
-        autofillItem: AutofillItem.Login,
-        copyTotpToClipboard: CopyTotpToClipboard,
-        autofillAppState: AutofillAppState
     ): AutofillMappings = encryptionContextProvider.withEncryptionContext {
-        handleTotpUri(
-            encryptionContext = this@withEncryptionContext,
-            copyTotpToClipboard = copyTotpToClipboard,
-            totp = autofillItem.totp
-        )
+        if (autofillItem is AutofillItem.Login) {
+            handleTotpUri(
+                encryptionContext = this@withEncryptionContext,
+                copyTotpToClipboard = copyTotpToClipboard,
+                totp = autofillItem.totp
+            )
+        }
 
         updateAutofillItem(
             UpdateAutofillItemData(
-                shareId = ShareId(autofillItem.shareId),
-                itemId = ItemId(autofillItem.itemId),
+                shareId = autofillItem.shareId(),
+                itemId = autofillItem.itemId(),
                 packageInfo = autofillAppState.autofillData.packageInfo,
                 url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = false
@@ -146,6 +134,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
             cluster = autofillAppState.autofillData.assistInfo.cluster
         )
     }
+
 
     private fun handleTotpUri(
         encryptionContext: EncryptionContext,

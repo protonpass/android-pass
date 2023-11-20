@@ -18,15 +18,29 @@
 
 package proton.android.pass.autofill
 
+import org.junit.Test
+import proton.android.pass.autofill.entities.AutofillItem
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+
 class CreditCardAutofillTest : BaseAutofillTest() {
 
-//    @Test
-//    fun `can autofill aliexpress com chrome`() {
-//        runCCAutofillTest("creditcard/chrome_aliexpress_credit_card.json")
-//    }
-//
-//    private fun runCCAutofillTest(file: String) {
-//
-//    }
+    @Test
+    fun `can autofill aliexpress com chrome`() {
+        runCCAutofillTest("creditcard/chrome_aliexpress_credit_card.json")
+    }
+
+    private fun runCCAutofillTest(file: String) {
+        runAutofillTest(
+            file = file,
+            item = AutofillItem.CreditCard(
+                number = ExpectedAutofill.CC_NUMBER.value,
+                cardHolder = ExpectedAutofill.CC_CARDHOLDER_NAME.value,
+                expiration = CC_EXPIRATION,
+                cvv = TestEncryptionContext.encrypt(ExpectedAutofill.CC_CVV.value),
+                itemId = "itemID",
+                shareId = "shareID"
+            )
+        )
+    }
 
 }

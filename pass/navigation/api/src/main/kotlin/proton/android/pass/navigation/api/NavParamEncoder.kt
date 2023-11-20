@@ -18,14 +18,11 @@
 
 package proton.android.pass.navigation.api
 
-import java.net.URLDecoder
-import java.net.URLEncoder
+import proton.android.pass.crypto.api.Base64
 
 object NavParamEncoder {
 
-    private const val ENCODING = "UTF-8"
+    fun encode(value: String): String = Base64.encodeBase64String(value.encodeToByteArray())
 
-    fun encode(value: String): String = URLEncoder.encode(value, ENCODING)
-
-    fun decode(value: String): String = URLDecoder.decode(value, ENCODING)
+    fun decode(value: String): String = String(Base64.decodeBase64(value.encodeToByteArray()))
 }

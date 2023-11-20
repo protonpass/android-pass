@@ -47,18 +47,23 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     private var autoFillNodes = mutableListOf<AssistField>()
     private var detectedUrl: Option<String> = None
 
-    private val usernameKeywords = listOf(
-        View.AUTOFILL_HINT_USERNAME,
-        View.AUTOFILL_HINT_EMAIL_ADDRESS,
-        "email",
-        "username",
-        "identifier",
-        "accountname",
-        "userid"
+    private val fieldKeywordsMap = mapOf(
+        FieldType.Username to listOf(
+            View.AUTOFILL_HINT_USERNAME,
+            View.AUTOFILL_HINT_EMAIL_ADDRESS,
+            "email",
+            "username",
+            "identifier",
+            "accountname",
+            "userid"
+        ),
+        FieldType.Password to listOf("password"),
+        FieldType.Totp to listOf("otp", "totp", "mfa", "2fa", "tfa"),
+        FieldType.CardNumber to listOf("cardnumber", "cardnum"),
+        FieldType.CardholderName to listOf("cardholder"),
+        FieldType.CardExpirationMMYY to listOf("mmyy", "mmaa"),
+        FieldType.CardCvv to listOf("cvc", "cvv")
     )
-
-    private val totpKeywords = listOf("otp", "totp", "mfa", "2fa", "tfa")
-    private val passwordKeywords = listOf("password")
 
     // For testing purposes
     var visitedNodes = 0
@@ -421,27 +426,29 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         return FieldType.Unknown
     }
 
-    @Suppress("ReturnCount")
+    @Suppress("ComplexMethod", "CyclomaticComplexMethod", "ReturnCount")
     fun detectFieldTypeUsingAutofillHint(hint: String): FieldType {
         when (hint) {
             View.AUTOFILL_HINT_EMAIL_ADDRESS -> return FieldType.Email
             View.AUTOFILL_HINT_USERNAME -> return FieldType.Username
             View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> return FieldType.Password
+            View.AUTOFILL_HINT_NAME -> return FieldType.CardholderName
+            View.AUTOFILL_HINT_CREDIT_CARD_NUMBER -> return FieldType.CardNumber
+            View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_MONTH -> return FieldType.CardExpirationMM
+            View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_YEAR -> return FieldType.CardExpirationYY
+            View.AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE -> return FieldType.CardCvv
             else -> {}
         }
 
         val sanitizedHint = sanitizeHint(hint)
-        for (usernameKw in usernameKeywords) {
-            if (sanitizedHint.contains(usernameKw)) return FieldType.Username
-        }
+
         if (USERNAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Username
         if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
 
-        for (passwordKw in passwordKeywords) {
-            if (sanitizedHint.contains(passwordKw)) return FieldType.Password
-        }
-        for (totpKw in totpKeywords) {
-            if (sanitizedHint.contains(totpKw)) return FieldType.Totp
+        for ((fieldType, keywords) in fieldKeywordsMap.entries) {
+            for (kw in keywords) {
+                if (sanitizedHint.contains(kw)) return fieldType
+            }
         }
 
         return FieldType.Unknown

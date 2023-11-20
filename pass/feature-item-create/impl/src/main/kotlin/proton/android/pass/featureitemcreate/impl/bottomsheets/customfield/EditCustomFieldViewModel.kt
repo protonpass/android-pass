@@ -33,7 +33,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EditCustomFieldViewModel @Inject constructor(
     private val draftRepository: DraftRepository,
-    private val savedStateHandle: SavedStateHandleProvider
+    savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val index = savedStateHandle.get().require<Int>(CustomFieldIndexNavArgId.key)

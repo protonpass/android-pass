@@ -48,6 +48,7 @@ dependencies {
 
     api(libs.androidx.compose.runtime)
 
+    implementation(projects.pass.crypto.api)
     implementation(projects.pass.log.api)
 
     testImplementation(libs.core.test.kotlin)

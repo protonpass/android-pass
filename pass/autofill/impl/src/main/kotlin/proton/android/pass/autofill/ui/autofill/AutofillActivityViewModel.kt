@@ -39,7 +39,6 @@ import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.isValid
-import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_AUTOFILL_DATA
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_INLINE_SUGGESTION_AUTOFILL_ITEM
@@ -74,17 +73,12 @@ class AutofillActivityViewModel @Inject constructor(
     private val closeScreenFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val appState: AutofillAppState = AutofillAppState(
-        AutofillIntentExtras.fromExtras(
-            savedStateHandle.require(ARG_AUTOFILL_DATA)
-        )
+        savedStateHandle.require<AutofillExtras>(ARG_AUTOFILL_DATA).toData()
     )
 
-    private val selectedAutofillItemState: MutableStateFlow<Option<AutofillItem>> =
-        MutableStateFlow(
-            savedStateHandle.get<ByteArray>(ARG_INLINE_SUGGESTION_AUTOFILL_ITEM)
-                ?.deserializeParcelable<AutofillItem>()
-                .toOption()
-        )
+    private val selectedAutofillItem: Option<AutofillItem> = savedStateHandle
+        .get<AutofillItem>(ARG_INLINE_SUGGESTION_AUTOFILL_ITEM)
+        .toOption()
 
     private val copyTotpToClipboardPreferenceState = preferenceRepository
         .getCopyTotpToClipboardEnabled()
@@ -97,13 +91,12 @@ class AutofillActivityViewModel @Inject constructor(
     val state: StateFlow<AutofillUiState> = combine(
         themePreferenceState,
         needsBiometricAuth(),
-        selectedAutofillItemState,
         copyTotpToClipboardPreferenceState,
         closeScreenFlow
-    ) { themePreference, needsAuth, selectedAutofillItem, copyTotpToClipboard, closeScreen ->
+    ) { themePreference, needsAuth, copyTotpToClipboard, closeScreen ->
         when {
             closeScreen -> AutofillUiState.CloseScreen
-            appState.isValid() -> NotValidAutofillUiState
+            !appState.isValid() -> NotValidAutofillUiState
             else -> StartAutofillUiState(
                 themePreference = themePreference.value(),
                 needsAuth = needsAuth,

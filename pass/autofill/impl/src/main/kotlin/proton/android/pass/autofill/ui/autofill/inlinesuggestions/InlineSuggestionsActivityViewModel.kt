@@ -37,14 +37,10 @@ import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
-import proton.android.pass.autofill.ui.autofill.AutofillExtras
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
-import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_INLINE_SUGGESTION_AUTOFILL_ITEM
-import proton.android.pass.autofill.ui.autofill.toData
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.require
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -75,13 +71,11 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val appState: AutofillAppState = AutofillAppState(
-        savedStateHandle.require<AutofillExtras>(AutofillIntentExtras.ARG_AUTOFILL_DATA).toData()
+    private val extras = AutofillIntentExtras.fromExtras(
+        savedStateHandle.require(AutofillIntentExtras.ARG_EXTRAS_BUNDLE)
     )
-
-    private val selectedAutofillItem: Option<AutofillItem> = savedStateHandle
-        .get<AutofillItem>(ARG_INLINE_SUGGESTION_AUTOFILL_ITEM)
-        .toOption()
+    private val appState = AutofillAppState(extras.first)
+    private val selectedAutofillItem: Option<AutofillItem> = extras.second
 
     private val copyTotpToClipboardState = preferenceRepository
         .getCopyTotpToClipboardEnabled()

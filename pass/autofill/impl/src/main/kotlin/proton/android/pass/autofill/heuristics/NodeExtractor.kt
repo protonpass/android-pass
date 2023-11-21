@@ -59,7 +59,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         ),
         FieldType.Password to listOf("password"),
         FieldType.Totp to listOf("otp", "totp", "mfa", "2fa", "tfa"),
-        FieldType.CardNumber to listOf("cardnumber", "cardnum", "ccnumber"),
+        FieldType.CardNumber to listOf("cardnumber", "cardnum", "ccnumber", "inputcard"),
         FieldType.CardCvv to listOf("cvc", "cvv", "securitycode"),
 
         // Keywords for cardholder name are order-sensitve. First we want to test if we find
@@ -76,14 +76,17 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             "cardmonth",
             "expmonth",
             "expirationmonth",
-            "expirationdatemonth"
+            "expirationdatemonth",
+            "mesmm"
         ),
         FieldType.CardExpirationYYYY to listOf("4digityear", "yyyy"),
         FieldType.CardExpirationYY to listOf(
             "cardyear",
             "expyear",
             "expirationyear",
-            "expirationdateyear"
+            "expirationdateyear",
+            "yy",
+            "añoaa"
         )
     )
 

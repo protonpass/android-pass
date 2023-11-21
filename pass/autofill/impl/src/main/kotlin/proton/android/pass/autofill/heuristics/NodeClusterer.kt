@@ -29,11 +29,13 @@ sealed interface NodeCluster : Parcelable {
 
     fun isFocused(): Boolean
     fun fields(): List<AssistField>
+    fun type(): String
 
     @Parcelize
     object Empty : NodeCluster {
         override fun isFocused() = true
         override fun fields(): List<AssistField> = emptyList()
+        override fun type() = "NodeCluster.Empty"
     }
 
     @Parcelize
@@ -45,14 +47,14 @@ sealed interface NodeCluster : Parcelable {
         @JvmInline
         value class OnlyUsername(val username: AssistField) : Login {
             override fun fields(): List<AssistField> = listOf(username)
-            override fun toString(): String = "OnlyUsername"
+            override fun type() = "OnlyUsername"
         }
 
         @Parcelize
         @JvmInline
         value class OnlyPassword(val password: AssistField) : Login {
             override fun fields(): List<AssistField> = listOf(password)
-            override fun toString(): String = "OnlyPassword"
+            override fun type() = "OnlyPassword"
         }
 
         @Parcelize
@@ -61,7 +63,7 @@ sealed interface NodeCluster : Parcelable {
             val password: AssistField
         ) : Login {
             override fun fields(): List<AssistField> = listOf(username, password)
-            override fun toString(): String = "UsernameAndPassword"
+            override fun type() = "UsernameAndPassword"
         }
     }
 
@@ -73,7 +75,7 @@ sealed interface NodeCluster : Parcelable {
     ) : NodeCluster {
         override fun isFocused() = fields().any { it.isFocused }
         override fun fields(): List<AssistField> = listOf(username, password, repeatPassword)
-        override fun toString(): String = "SignUp"
+        override fun type() = "SignUp"
     }
 
     @Parcelize
@@ -121,7 +123,7 @@ sealed interface NodeCluster : Parcelable {
             return fields
         }
 
-        override fun toString(): String = "CreditCard"
+        override fun type() = "CreditCard"
     }
 }
 

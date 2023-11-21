@@ -34,6 +34,7 @@ import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.removeAccents
 import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 
@@ -59,7 +60,13 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         ),
         FieldType.Password to listOf("password"),
         FieldType.Totp to listOf("otp", "totp", "mfa", "2fa", "tfa"),
-        FieldType.CardNumber to listOf("cardnumber", "cardnum", "ccnumber", "inputcard"),
+        FieldType.CardNumber to listOf(
+            "cardnumber",
+            "cardnum",
+            "ccnumber",
+            "inputcard",
+            "numerodetarjeta"
+        ),
         FieldType.CardCvv to listOf("cvc", "cvv", "securitycode"),
 
         // Keywords for cardholder name are order-sensitve. First we want to test if we find
@@ -86,7 +93,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             "expirationyear",
             "expirationdateyear",
             "yy",
-            "añoaa"
+            "anoaa"
         )
     )
 
@@ -525,6 +532,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         .replace("_", "")
         .replace("/", "")
         .replace(" ", "")
+        .removeAccents()
 
     private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {
         val normalizedKeywords = hintKeywordList.map(CharSequence::toString).map(this::sanitizeHint)

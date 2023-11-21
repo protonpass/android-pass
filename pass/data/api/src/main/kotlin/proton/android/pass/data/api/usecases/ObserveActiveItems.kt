@@ -26,7 +26,8 @@ enum class ItemTypeFilter {
     All,
     Logins,
     Aliases,
-    Notes;
+    Notes,
+    CreditCards;
 }
 
 interface ObserveActiveItems {

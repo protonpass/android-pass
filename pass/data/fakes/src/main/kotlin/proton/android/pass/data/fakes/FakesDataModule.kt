@@ -50,10 +50,12 @@ import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetInviteUserMode
+import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
@@ -69,7 +71,6 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemCount
-import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
@@ -139,10 +140,12 @@ import proton.android.pass.data.fakes.usecases.TestDeleteVault
 import proton.android.pass.data.fakes.usecases.TestGetAliasDetails
 import proton.android.pass.data.fakes.usecases.TestGetAllKeysByAddress
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
+import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetItemByAliasEmail
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetShareById
+import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
@@ -159,7 +162,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveHasConfirmedInvite
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
-import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveMFACount
 import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
@@ -196,6 +198,11 @@ abstract class FakesDataModule {
     abstract fun bindGetSuggestedLoginItems(
         impl: TestGetSuggestedLoginItems
     ): GetSuggestedLoginItems
+
+    @Binds
+    abstract fun bindGetSuggestedCreditCardItems(
+        impl: TestGetSuggestedCreditCardItems
+    ): GetSuggestedCreditCardItems
 
     @Binds
     abstract fun bindItemRepository(

@@ -35,6 +35,7 @@ enum class FieldType : Parcelable {
     // Credit Card
     CardNumber,
     CardholderName,
+    CardholderFirstName,
     CardholderLastName,
     CardExpirationMMYY,
     CardExpirationMM,

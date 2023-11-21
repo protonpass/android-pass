@@ -725,7 +725,7 @@
                                                                       },
                                                                       {
                                                                         "id": 636359845,
-                                                                        "expectedAutofill": "card_cvc",
+                                                                        "expectedAutofill": "card_cvv",
                                                                         "className": "android.widget.EditText",
                                                                         "isImportantForAutofill": true,
                                                                         "text": "",

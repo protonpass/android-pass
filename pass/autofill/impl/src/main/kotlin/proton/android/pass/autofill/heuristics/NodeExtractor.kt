@@ -61,11 +61,15 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         FieldType.Totp to listOf("otp", "totp", "mfa", "2fa", "tfa"),
         FieldType.CardNumber to listOf("cardnumber", "cardnum"),
         FieldType.CardholderName to listOf("cardholder", "cardname", "holdername"),
+        FieldType.CardCvv to listOf("cvc", "cvv"),
+
+        // Keywords for expiration are order-sensitive. First we want to test for MMYY.
+        // If we don't find it, we test for MM, and for the year, YYYY is more specific than YY,
+        // so it needs to be evaluated first.
         FieldType.CardExpirationMMYY to listOf("mmyy", "mmaa"),
         FieldType.CardExpirationMM to listOf("cardmonth", "expmonth", "expirationmonth", "expirationdatemonth"),
         FieldType.CardExpirationYYYY to listOf("4digityear", "yyyy"),
-        FieldType.CardExpirationYY to listOf("cardyear", "expyear", "expirationyear", "expirationdateyear"),
-        FieldType.CardCvv to listOf("cvc", "cvv")
+        FieldType.CardExpirationYY to listOf("cardyear", "expyear", "expirationyear", "expirationdateyear")
     )
 
     // For testing purposes

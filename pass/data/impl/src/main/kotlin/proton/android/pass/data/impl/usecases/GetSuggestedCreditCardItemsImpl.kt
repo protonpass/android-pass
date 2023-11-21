@@ -16,23 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ShareSelection
+import javax.inject.Inject
 
-enum class ItemTypeFilter {
-    All,
-    Logins,
-    Aliases,
-    Notes,
-    CreditCards;
-}
+class GetSuggestedCreditCardItemsImpl @Inject constructor(
+    private val observeActiveItems: ObserveActiveItems
+) : GetSuggestedCreditCardItems {
 
-interface ObserveActiveItems {
-    operator fun invoke(
-        filter: ItemTypeFilter = ItemTypeFilter.All,
-        shareSelection: ShareSelection = ShareSelection.AllShares
-    ): Flow<List<Item>>
+    override fun invoke(): Flow<List<Item>> =
+        observeActiveItems(filter = ItemTypeFilter.CreditCards)
+            .map { list -> list.sortedBy { it.createTime } }
 }

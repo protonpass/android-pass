@@ -45,11 +45,11 @@ import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.heuristics.focused
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.telemetry.api.TelemetryManager
 
 object AutoFillHandler {
 
@@ -148,10 +148,12 @@ object AutoFillHandler {
         val autofillData = AutofillData(assistInfo, packageInfoOption)
         val responseBuilder = FillResponse.Builder()
         val datasetList = if (hasSupportForInlineSuggestions(request)) {
-            autofillServiceManager.createSuggestedItemsDatasetList(
-                autofillData = autofillData,
-                requestOption = request.inlineSuggestionsRequest.toOption()
-            )
+            request.inlineSuggestionsRequest?.let {
+                autofillServiceManager.createSuggestedItemsDatasetList(
+                    autofillData = autofillData,
+                    inlineSuggestionsRequest = it
+                )
+            } ?: emptyList()
         } else {
             autofillServiceManager.createMenuPresentationDataset(autofillData)
         }

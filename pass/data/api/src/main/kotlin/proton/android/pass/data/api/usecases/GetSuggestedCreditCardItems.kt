@@ -20,19 +20,7 @@ package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ShareSelection
 
-enum class ItemTypeFilter {
-    All,
-    Logins,
-    Aliases,
-    Notes,
-    CreditCards;
-}
-
-interface ObserveActiveItems {
-    operator fun invoke(
-        filter: ItemTypeFilter = ItemTypeFilter.All,
-        shareSelection: ShareSelection = ShareSelection.AllShares
-    ): Flow<List<Item>>
+interface GetSuggestedCreditCardItems {
+    operator fun invoke(): Flow<List<Item>>
 }

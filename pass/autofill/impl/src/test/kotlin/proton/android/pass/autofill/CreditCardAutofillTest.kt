@@ -29,6 +29,16 @@ class CreditCardAutofillTest : BaseAutofillTest() {
         runCCAutofillTest("creditcard/chrome_aliexpress_credit_card.json")
     }
 
+    @Test
+    fun `can autofill instant gaming chrome`() {
+        runCCAutofillTest("creditcard/chrome_instant_gaming_creditcard.json")
+    }
+
+    @Test
+    fun `can autofill amazon app`() {
+        runCCAutofillTest("creditcard/app_amazon_new_credit_card.json")
+    }
+
     private fun runCCAutofillTest(file: String) {
         runAutofillTest(
             file = file,

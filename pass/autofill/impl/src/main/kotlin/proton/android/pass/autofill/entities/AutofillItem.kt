@@ -29,6 +29,7 @@ sealed interface AutofillItem : Parcelable {
 
     fun shareId(): ShareId
     fun itemId(): ItemId
+    fun type(): String
 
     @Parcelize
     data class Login(
@@ -40,6 +41,7 @@ sealed interface AutofillItem : Parcelable {
     ) : AutofillItem {
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(shareId)
+        override fun type() = "AutofillItem.Login"
     }
 
     @Parcelize
@@ -53,6 +55,7 @@ sealed interface AutofillItem : Parcelable {
     ) : AutofillItem {
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(shareId)
+        override fun type() = "AutofillItem.CreditCard"
     }
 
 }

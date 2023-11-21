@@ -59,6 +59,11 @@ class CreditCardAutofillTest : BaseAutofillTest() {
         runCCAutofillTest("creditcard/chrome_proton_new_credit_card.json")
     }
 
+    @Test
+    fun `can autofill redsys chrome`() {
+        runCCAutofillTest("creditcard/chrome_redsys_credit_card.json")
+    }
+
     private fun runCCAutofillTest(file: String) {
         runAutofillTest(
             file = file,

@@ -81,10 +81,28 @@ sealed interface NodeCluster : Parcelable {
     @Parcelize
     data class CreditCard(
         val cardNumber: AssistField,
-        val cardHolder: AssistField?,
+        val cardHolder: CardHolder?,
         val cvv: AssistField?,
         val expiration: Expiration?
     ) : NodeCluster {
+
+        sealed interface CardHolder : Parcelable {
+            fun fields(): List<AssistField>
+
+            @JvmInline
+            @Parcelize
+            value class SingleField(val field: AssistField) : CardHolder {
+                override fun fields() = listOf(field)
+            }
+
+            @Parcelize
+            data class FirstNameLastName(
+                val firstName: AssistField,
+                val lastName: AssistField
+            ) : CardHolder {
+                override fun fields() = listOf(firstName, lastName)
+            }
+        }
 
         @Parcelize
         sealed interface Expiration : Parcelable {
@@ -117,7 +135,7 @@ sealed interface NodeCluster : Parcelable {
         override fun isFocused() = fields().any { it.isFocused }
         override fun fields(): List<AssistField> {
             val fields = mutableListOf(cardNumber)
-            cardHolder?.let { fields.add(it) }
+            cardHolder?.let { holder -> holder.fields().forEach { field -> fields.add(field) } }
             cvv?.let { fields.add(it) }
             expiration?.let { fields.addAll(it.fields()) }
             return fields
@@ -225,9 +243,67 @@ object NodeClusterer {
         addedNodes: MutableSet<AssistField>
     ) {
         val cardNumberNode = nodes.firstOrNull { it.type == FieldType.CardNumber } ?: return
-        val cardHolderNode = nodes.firstOrNull { it.type == FieldType.CardholderName }
         val cardCvvNode = nodes.firstOrNull { it.type == FieldType.CardCvv }
+        val cardHolder = getCardHolder(nodes, addedNodes)
+        val expiration = getExpiration(nodes, addedNodes)
 
+        val cluster = NodeCluster.CreditCard(
+            cardNumber = cardNumberNode.also { addedNodes.add(it) },
+            cardHolder = cardHolder,
+            cvv = cardCvvNode?.also { addedNodes.add(it) },
+            expiration = expiration
+        )
+
+        clusters.add(cluster)
+    }
+
+    @Suppress("ComplexMethod", "CyclomaticComplexMethod")
+    private fun getCardHolder(
+        nodes: List<AssistField>,
+        addedNodes: MutableSet<AssistField>
+    ): NodeCluster.CreditCard.CardHolder? {
+        val cardHolderNode = nodes.firstOrNull { it.type == FieldType.CardholderName }
+        val cardHolderFirstNameNode = nodes.firstOrNull { it.type == FieldType.CardholderFirstName }
+        val cardHolderLastNameNode = nodes.firstOrNull { it.type == FieldType.CardholderLastName }
+
+        return when {
+            cardHolderLastNameNode != null -> when {
+                cardHolderFirstNameNode != null -> NodeCluster.CreditCard.CardHolder.FirstNameLastName(
+                    firstName = cardHolderFirstNameNode.also { addedNodes.add(it) },
+                    lastName = cardHolderLastNameNode.also { addedNodes.add(it) }
+                )
+                cardHolderNode != null -> NodeCluster.CreditCard.CardHolder.FirstNameLastName(
+                    firstName = cardHolderNode.also { addedNodes.add(it) },
+                    lastName = cardHolderLastNameNode.also { addedNodes.add(it) }
+                )
+                else -> NodeCluster.CreditCard.CardHolder.SingleField(
+                    field = cardHolderLastNameNode.also { addedNodes.add(it) }
+                )
+            }
+
+            cardHolderFirstNameNode != null -> when {
+                cardHolderNode != null -> NodeCluster.CreditCard.CardHolder.FirstNameLastName(
+                    firstName = cardHolderFirstNameNode.also { addedNodes.add(it) },
+                    lastName = cardHolderNode.also { addedNodes.add(it) }
+                )
+                else -> NodeCluster.CreditCard.CardHolder.SingleField(
+                    field = cardHolderFirstNameNode.also { addedNodes.add(it) }
+                )
+            }
+
+            // At this point we know cardHolderFirstName and cardHolderLastName are null
+            cardHolderNode != null -> NodeCluster.CreditCard.CardHolder.SingleField(
+                field = cardHolderNode.also { addedNodes.add(it) }
+            )
+
+            else -> null
+        }
+    }
+
+    private fun getExpiration(
+        nodes: List<AssistField>,
+        addedNodes: MutableSet<AssistField>
+    ): NodeCluster.CreditCard.Expiration? {
         val expirationMMNode = nodes.firstOrNull { it.type == FieldType.CardExpirationMM }
         val expirationMMYYNode = nodes
             .firstOrNull { it.type == FieldType.CardExpirationMMYY }
@@ -236,7 +312,7 @@ object NodeClusterer {
         val expirationYYYYNode = nodes
             .firstOrNull { it.type == FieldType.CardExpirationYYYY }
 
-        val expiration = when {
+        return when {
             expirationMMYYNode != null -> {
                 addedNodes.add(expirationMMYYNode)
                 NodeCluster.CreditCard.Expiration.MmYySameField(expirationMMYYNode)
@@ -262,14 +338,5 @@ object NodeClusterer {
 
             else -> null
         }
-
-        val cluster = NodeCluster.CreditCard(
-            cardNumber = cardNumberNode.also { addedNodes.add(it) },
-            cardHolder = cardHolderNode?.also { addedNodes.add(it) },
-            cvv = cardCvvNode?.also { addedNodes.add(it) },
-            expiration = expiration
-        )
-
-        clusters.add(cluster)
     }
 }

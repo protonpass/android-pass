@@ -31,6 +31,8 @@ data class TestAutofillId(val id: Int) : AutofillFieldId, Parcelable {
     override fun writeToParcel(dest: Parcel, flags: Int) {
         throw IllegalStateException("Not implemented")
     }
+
+    override fun value() = id
 }
 
 fun newAutofillFieldId() = TestAutofillId(Random.nextInt())

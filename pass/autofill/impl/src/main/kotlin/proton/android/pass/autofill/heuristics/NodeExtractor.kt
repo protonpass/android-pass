@@ -165,11 +165,11 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
         if (isEditText) {
             PassLogger.v(TAG, "------------------------------------")
-            PassLogger.v(TAG, "nodeInputTypeFlags ${InputTypeFlags.fromValue(node.inputType)}")
-            PassLogger.v(TAG, "nodeSupportsAutoFill $isImportant - $hasAutofillInfo")
-            PassLogger.v(TAG, "nodeHasValidHints ${nodeHasValidHints(node.autofillHints.toSet())}")
-            PassLogger.v(TAG, "nodeHasValidHtmlInfo ${nodeHasValidHtmlInfo(node.htmlAttributes)}")
-            PassLogger.v(TAG, "nodeHasValidInputType ${nodeHasValidInputType(node)}")
+            PassLogger.v(TAG, "[${node.id}] nodeInputTypeFlags ${InputTypeFlags.fromValue(node.inputType)}")
+            PassLogger.v(TAG, "[${node.id}] nodeSupportsAutoFill $isImportant - $hasAutofillInfo")
+            PassLogger.v(TAG, "[${node.id}] nodeHasValidHints ${nodeHasValidHints(node.autofillHints.toSet())}")
+            PassLogger.v(TAG, "[${node.id}] nodeHasValidHtmlInfo ${nodeHasValidHtmlInfo(node.htmlAttributes)}")
+            PassLogger.v(TAG, "[${node.id}] nodeHasValidInputType ${nodeHasValidInputType(node)}")
             PassLogger.v(TAG, "------------------------------------")
         }
 

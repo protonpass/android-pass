@@ -47,7 +47,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     private var autoFillNodes = mutableListOf<AssistField>()
     private var detectedUrl: Option<String> = None
 
-    private val fieldKeywordsMap = mapOf(
+    private val fieldKeywordsMap = listOf(
         FieldType.Username to listOf(
             View.AUTOFILL_HINT_USERNAME,
             View.AUTOFILL_HINT_EMAIL_ADDRESS,
@@ -60,8 +60,11 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         FieldType.Password to listOf("password"),
         FieldType.Totp to listOf("otp", "totp", "mfa", "2fa", "tfa"),
         FieldType.CardNumber to listOf("cardnumber", "cardnum"),
-        FieldType.CardholderName to listOf("cardholder"),
+        FieldType.CardholderName to listOf("cardholder", "cardname", "holdername"),
         FieldType.CardExpirationMMYY to listOf("mmyy", "mmaa"),
+        FieldType.CardExpirationMM to listOf("cardmonth", "expmonth", "expirationmonth", "expirationdatemonth"),
+        FieldType.CardExpirationYYYY to listOf("4digityear", "yyyy"),
+        FieldType.CardExpirationYY to listOf("cardyear", "expyear", "expirationyear", "expirationdateyear"),
         FieldType.CardCvv to listOf("cvc", "cvv")
     )
 
@@ -147,7 +150,6 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             PassLogger.v(TAG, "Discarding node because CheckInputTypeResult.DoNotAutofill")
             return NodeSupportsAutofillResult.No
         }
-
 
         val hasAutofillInfo = nodeHasAutofillInfo(node)
         val isEditText = node.isEditText()
@@ -404,16 +406,33 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         return fieldType
     }
 
+    @Suppress("ReturnCount")
     private fun detectFieldTypeUsingHtmlInfo(attributes: List<Pair<String, String>>): FieldType {
         val typeAttribute = attributes.firstOrNull { it.first == "type" }
-        return when (typeAttribute?.second) {
-            "email" -> FieldType.Email
-            "password" -> FieldType.Password
+        when (typeAttribute?.second) {
+            "email" -> return FieldType.Email
+            "password" -> return FieldType.Password
+            "submit" -> return FieldType.Unknown
             // Support for these fields will be added in the future
             // "tel" -> FieldType.Phone
             // "text" -> FieldType.Other
-            else -> FieldType.Unknown
+            else -> {}
         }
+
+        val htmlValues = attributes.map { it.second }.map(::sanitizeHint)
+
+        for ((fieldType, keywords) in fieldKeywordsMap) {
+            for (value in htmlValues) {
+                for (keyword in keywords) {
+                    if (value.contains(keyword)) {
+                        PassLogger.v(TAG, "Found field type $fieldType using html attr $value")
+                        return fieldType
+                    }
+                }
+            }
+        }
+
+        return FieldType.Unknown
     }
 
     private fun detectFieldTypeUsingAutofillHints(hints: Set<String>): FieldType {
@@ -445,9 +464,12 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         if (USERNAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Username
         if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
 
-        for ((fieldType, keywords) in fieldKeywordsMap.entries) {
+        for ((fieldType, keywords) in fieldKeywordsMap) {
             for (kw in keywords) {
-                if (sanitizedHint.contains(kw)) return fieldType
+                if (sanitizedHint.contains(kw)) {
+                    PassLogger.v(TAG, "Found field type $fieldType using hint $hint")
+                    return fieldType
+                }
             }
         }
 

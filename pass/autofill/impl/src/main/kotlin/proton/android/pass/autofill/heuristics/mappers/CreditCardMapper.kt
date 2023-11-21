@@ -37,9 +37,37 @@ object CreditCardMapper {
         val decryptedNumber = encryptionContext.decrypt(autofillItem.number)
         mappings.add(mappingForCardNumber(decryptedNumber, cluster.cardNumber.id))
 
-        cluster.cardHolder?.let {
-            mappings.add(mappingForCardHolder(autofillItem.cardHolder, it.id))
+        if (autofillItem.cardHolder.isNotBlank()) {
+            val cardHolderSplits = autofillItem.cardHolder.split(" ")
+            cluster.cardHolder?.let {
+                when (it) {
+                    is NodeCluster.CreditCard.CardHolder.FirstNameLastName -> {
+                        if (cardHolderSplits.size == 2) {
+                            val firstNameValue = cardHolderSplits[0]
+                            val lastNameValue = cardHolderSplits[1]
+
+                            mappings.add(mappingForCardHolder(firstNameValue, it.firstName.id))
+                            mappings.add(mappingForCardHolder(lastNameValue, it.lastName.id))
+                        } else if (cardHolderSplits.size > 2) {
+                            val firstNameValue = cardHolderSplits[0]
+                            val lastNameValue = cardHolderSplits.drop(0).joinToString()
+
+                            mappings.add(mappingForCardHolder(firstNameValue, it.firstName.id))
+                            mappings.add(mappingForCardHolder(lastNameValue, it.lastName.id))
+                        } else {
+                            val cardHolderName = autofillItem.cardHolder
+                            mappings.add(mappingForCardHolder(cardHolderName, it.firstName.id))
+                            mappings.add(mappingForCardHolder("", it.lastName.id))
+                        }
+                    }
+
+                    is NodeCluster.CreditCard.CardHolder.SingleField -> {
+                        mappings.add(mappingForCardHolder(autofillItem.cardHolder, it.field.id))
+                    }
+                }
+            }
         }
+
         cluster.cvv?.let {
             mappings.add(mappingForCvv(encryptionContext, autofillItem.cvv, it.id))
         }

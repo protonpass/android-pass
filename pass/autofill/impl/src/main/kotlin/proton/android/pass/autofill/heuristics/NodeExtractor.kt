@@ -542,9 +542,10 @@ fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {
         autofillValue = autofillValue,
         inputType = InputTypeValue(inputType),
         hintKeywordList = hintKeywordList,
-        autofillHints = autofillHints?.toList().orEmpty(),
+        autofillHints = autofillHints?.toList()?.filter { it != null && it.isNotBlank() }.orEmpty(),
         htmlAttributes = (htmlInfo?.attributes?.toList() ?: emptyList())
             .filter { it.first != null && it.second != null }
+            .filter { it.first.isNotBlank() && it.second.isNotBlank() }
             .map { it.first.lowercase() to it.second.lowercase() },
         children = (0 until childCount).map { getChildAt(it).toAutofillNode() },
         url = getUrl()

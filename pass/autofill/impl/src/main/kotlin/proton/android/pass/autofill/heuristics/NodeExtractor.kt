@@ -60,8 +60,13 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         FieldType.Password to listOf("password"),
         FieldType.Totp to listOf("otp", "totp", "mfa", "2fa", "tfa"),
         FieldType.CardNumber to listOf("cardnumber", "cardnum"),
+        FieldType.CardCvv to listOf("cvc", "cvv", "securitycode"),
+
+        // Keywords for cardholder name are order-sensitve. First we want to test if we find
+        // different fields for first name and last name, and if we can't, fallback to CardholderName
+        FieldType.CardholderFirstName to listOf("firstname"),
+        FieldType.CardholderLastName to listOf("lastname"),
         FieldType.CardholderName to listOf("cardholder", "cardname", "holdername"),
-        FieldType.CardCvv to listOf("cvc", "cvv"),
 
         // Keywords for expiration are order-sensitive. First we want to test for MMYY.
         // If we don't find it, we test for MM, and for the year, YYYY is more specific than YY,
@@ -145,7 +150,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
     }
 
-    @Suppress("LongMethod", "ReturnCount")
+    @Suppress("ComplexMethod", "CyclomaticComplexMethod", "LongMethod", "ReturnCount")
     private fun nodeSupportsAutoFill(node: AutofillNode): NodeSupportsAutofillResult {
         val isImportant =
             node.isImportantForAutofill || requestFlags.contains(RequestFlags.FLAG_MANUAL_REQUEST)
@@ -188,8 +193,15 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         return when (hasAutofillInfo) {
             // If the node doesn't have autofill info but it's an edit text, maybe we can check the context
             HasAutofillInfoResult.No -> if (isEditText) {
-                PassLogger.d(TAG, "[node=${node.id}] Marking as Maybe because is edit text")
-                NodeSupportsAutofillResult.MaybeWithContext
+                val fieldType = detectFieldTypeUsingHintKeywordList(node.hintKeywordList)
+                if (fieldType != FieldType.Unknown) {
+                    PassLogger.d(TAG, "[node=${node.id}] Marking as Yes because hintKeyword")
+                    NodeSupportsAutofillResult.Yes(fieldType.some())
+                } else {
+                    PassLogger.d(TAG, "[node=${node.id}] Marking as Maybe because is edit text")
+                    NodeSupportsAutofillResult.MaybeWithContext
+                }
+
             } else {
                 // If the node is not an edit text, we know that we can't do anything
                 NodeSupportsAutofillResult.No

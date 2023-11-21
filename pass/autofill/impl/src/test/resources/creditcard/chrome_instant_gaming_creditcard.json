@@ -146,7 +146,6 @@
                                                             "children": [
                                                               {
                                                                 "id": 732953839,
-                                                                "expectedAutofill": "card_name",
                                                                 "className": "android.widget.EditText",
                                                                 "isImportantForAutofill": true,
                                                                 "text": "",

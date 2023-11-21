@@ -47,7 +47,7 @@ object PendingIntentUtils {
         autofillPendingIntentFlags
     )
 
-    internal fun getInlineSuggestionPendingIntent(
+    internal fun getSuggestionPendingIntent(
         context: Context,
         autofillData: AutofillData,
         item: Item,
@@ -56,11 +56,11 @@ object PendingIntentUtils {
     ): PendingIntent = PendingIntent.getActivity(
         context,
         intentRequestCode,
-        getInlineSuggestionPendingIntent(context, autofillData, item, shouldAuthenticate),
+        getSuggestionPendingIntent(context, autofillData, item, shouldAuthenticate),
         autofillPendingIntentFlags
     )
 
-    private fun getInlineSuggestionPendingIntent(
+    private fun getSuggestionPendingIntent(
         context: Context,
         autofillData: AutofillData,
         item: Item,

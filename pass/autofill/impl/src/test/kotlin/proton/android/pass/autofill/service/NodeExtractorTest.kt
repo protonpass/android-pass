@@ -104,12 +104,13 @@ class NodeExtractorTest {
         val passwordType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_PASSWORD)
         val creditCardType =
             traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_CREDIT_CARD_NUMBER)
+        val phoneType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_PHONE)
 
         Assert.assertEquals(FieldType.Username, usernameType)
         Assert.assertEquals(FieldType.Email, emailType)
         Assert.assertEquals(FieldType.Password, passwordType)
-        // Still not supported
-        Assert.assertEquals(FieldType.Unknown, creditCardType)
+        Assert.assertEquals(FieldType.CardNumber, creditCardType)
+        Assert.assertEquals(FieldType.Unknown, phoneType)
     }
 
     @Test

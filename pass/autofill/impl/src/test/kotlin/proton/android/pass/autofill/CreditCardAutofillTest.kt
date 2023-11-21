@@ -39,12 +39,27 @@ class CreditCardAutofillTest : BaseAutofillTest() {
         runCCAutofillTest("creditcard/app_amazon_new_credit_card.json")
     }
 
+    @Test
+    fun `can autofill kiwoko chrome`() {
+        runCCAutofillTest("creditcard/chrome_kiwoko_credit_card.json")
+    }
+
+    @Test
+    fun `can autofill paddle chrome`() {
+        runCCAutofillTest("creditcard/chrome_paddle_credit_card.json")
+    }
+
+    @Test
+    fun `can autofill pingponx com chrome`() {
+        runCCAutofillTest("creditcard/chrome_pingpongx_com_creditcard.json")
+    }
+
     private fun runCCAutofillTest(file: String) {
         runAutofillTest(
             file = file,
             item = AutofillItem.CreditCard(
                 number = TestEncryptionContext.encrypt(ExpectedAutofill.CC_NUMBER.value),
-                cardHolder = ExpectedAutofill.CC_CARDHOLDER_NAME.value,
+                cardHolder = ExpectedAutofill.CC_CARDHOLDER_NAME.assertedValue,
                 expiration = CC_EXPIRATION,
                 cvv = TestEncryptionContext.encrypt(ExpectedAutofill.CC_CVV.value),
                 itemId = "itemID",

@@ -751,7 +751,6 @@
                                                                           {
                                                                             "id": 1466896720,
                                                                             "className": "android.widget.EditText",
-                                                                            "expectedAutofill": "username",
                                                                             "isImportantForAutofill": true,
                                                                             "text": "",
                                                                             "inputType": 1,

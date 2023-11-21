@@ -22,7 +22,7 @@ import android.util.Log
 import org.junit.Before
 import timber.log.Timber
 
-open class BaseAutofillTest {
+open class BaseAutofillTest(val priority: Int = Log.DEBUG) {
     private class TestTree(val priority: Int) : Timber.Tree() {
         override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
             if (priority < this.priority) return
@@ -32,6 +32,6 @@ open class BaseAutofillTest {
 
     @Before
     fun setup() {
-        Timber.plant(TestTree(Log.DEBUG))
+        Timber.plant(TestTree(priority))
     }
 }

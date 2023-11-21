@@ -23,11 +23,19 @@ import android.view.autofill.AutofillId
 import kotlinx.parcelize.Parcelize
 
 /** Used for testing purposes */
-interface AutofillFieldId : Parcelable
+interface AutofillFieldId : Parcelable {
+    fun value(): Int
+}
 
 /** Wrapper class holding an actual `AutofillId` */
 @Parcelize
-data class AndroidAutofillFieldId(val autofillId: AutofillId) : AutofillFieldId
+data class AndroidAutofillFieldId(val autofillId: AutofillId) : AutofillFieldId {
+    override fun value(): Int {
+        val method = autofillId.javaClass.methods.firstOrNull { it.name == "getViewId" }
+        method?.isAccessible = true
+        return method?.invoke(autofillId) as? Int ?: 0
+    }
+}
 
 /**
  * Helper to do common casting to AndroidAutofillFieldId.

@@ -254,17 +254,17 @@ object NodeClusterer {
             expirationMMNode != null && expirationYYYYNode != null -> {
                 addedNodes.add(expirationMMNode)
                 addedNodes.add(expirationYYYYNode)
-                NodeCluster.CreditCard.Expiration.MmYyDifferentfields(
+                NodeCluster.CreditCard.Expiration.MmYyyyDifferentfields(
                     month = expirationMMNode,
                     year = expirationYYYYNode
                 )
             }
 
-            else -> return
+            else -> null
         }
 
         val cluster = NodeCluster.CreditCard(
-            cardNumber = cardNumberNode,
+            cardNumber = cardNumberNode.also { addedNodes.add(it) },
             cardHolder = cardHolderNode?.also { addedNodes.add(it) },
             cvv = cardCvvNode?.also { addedNodes.add(it) },
             expiration = expiration

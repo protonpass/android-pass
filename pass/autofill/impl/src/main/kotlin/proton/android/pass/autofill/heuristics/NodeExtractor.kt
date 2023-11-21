@@ -59,14 +59,14 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         ),
         FieldType.Password to listOf("password"),
         FieldType.Totp to listOf("otp", "totp", "mfa", "2fa", "tfa"),
-        FieldType.CardNumber to listOf("cardnumber", "cardnum"),
+        FieldType.CardNumber to listOf("cardnumber", "cardnum", "ccnumber"),
         FieldType.CardCvv to listOf("cvc", "cvv", "securitycode"),
 
         // Keywords for cardholder name are order-sensitve. First we want to test if we find
         // different fields for first name and last name, and if we can't, fallback to CardholderName
         FieldType.CardholderFirstName to listOf("firstname"),
         FieldType.CardholderLastName to listOf("lastname"),
-        FieldType.CardholderName to listOf("cardholder", "cardname", "holdername"),
+        FieldType.CardholderName to listOf("cardholder", "cardname", "holdername", "ccname"),
 
         // Keywords for expiration are order-sensitive. First we want to test for MMYY.
         // If we don't find it, we test for MM, and for the year, YYYY is more specific than YY,

@@ -274,8 +274,14 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         // List that will contain the context nodes
         val contextNodes = mutableListOf<AutofillNode>()
 
+        val isNodeAlreadyAdded = { node: AutofillNode ->
+            autoFillNodes.any { it.id == node.id }
+        }
+
+        val unprocessedSiblings = context.siblings.filter { !isNodeAlreadyAdded(it) }
+
         // Start adding the current node siblings
-        contextNodes.addAll(context.siblings)
+        contextNodes.addAll(unprocessedSiblings)
 
         // Starting from the parent do as many jumps as possible until MAX_CONTEXT_JUMPS
         var parent = context.parent
@@ -289,10 +295,13 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                     val parentNode = localParent.value
 
                     // Add the parent
-                    contextNodes.add(parentNode.node)
+                    if (!isNodeAlreadyAdded(parentNode.node)) {
+                        contextNodes.add(parentNode.node)
+                    }
 
                     // Add the parents siblings
-                    contextNodes.addAll(parentNode.siblings)
+                    val nonAddedSiblings = parentNode.siblings.filter { !isNodeAlreadyAdded(it) }
+                    contextNodes.addAll(nonAddedSiblings)
 
                     parent = parentNode.parent
                 }

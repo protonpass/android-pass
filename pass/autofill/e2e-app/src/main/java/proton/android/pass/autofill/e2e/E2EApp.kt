@@ -22,6 +22,7 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.domain.ItemId
@@ -37,6 +38,9 @@ class E2EApp : Application() {
     @Inject
     lateinit var loginItems: TestGetSuggestedLoginItems
 
+    @Inject
+    lateinit var creditCardItems: TestGetSuggestedCreditCardItems
+
     override fun onCreate() {
         super.onCreate()
         setupItems()
@@ -45,7 +49,7 @@ class E2EApp : Application() {
     }
 
     private fun setupItems() {
-        val items = listOf(
+        val logins = listOf(
             TestObserveItems.createLogin(
                 itemId = ItemId("item1"),
                 title = "Item1",
@@ -59,7 +63,27 @@ class E2EApp : Application() {
                 password = "pass2"
             )
         )
-        loginItems.sendValue(Result.success(items))
+        loginItems.sendValue(Result.success(logins))
+
+        val creditCards = listOf(
+            TestObserveItems.createCreditCard(
+                itemId = ItemId("ccItem1"),
+                holder = "FirstName LastName",
+                number = "4766000011112222",
+                verificationNumber = "123",
+                expirationDate = "2025-12",
+                title = "First CreditCard"
+            ),
+            TestObserveItems.createCreditCard(
+                itemId = ItemId("ccItem2"),
+                holder = "SecondName SecondLast",
+                number = "1234123412341234",
+                verificationNumber = "987",
+                expirationDate = "2028-03",
+                title = "Second card"
+            )
+        )
+        creditCardItems.sendValue(Result.success(creditCards))
     }
 
     private fun setupLogger() {

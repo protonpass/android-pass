@@ -30,11 +30,11 @@ interface AutofillFieldId : Parcelable {
 /** Wrapper class holding an actual `AutofillId` */
 @Parcelize
 data class AndroidAutofillFieldId(val autofillId: AutofillId) : AutofillFieldId {
-    override fun value(): Int {
+    override fun value(): Int = runCatching {
         val method = autofillId.javaClass.methods.firstOrNull { it.name == "getViewId" }
         method?.isAccessible = true
-        return method?.invoke(autofillId) as? Int ?: 0
-    }
+        method?.invoke(autofillId) as? Int ?: 0
+    }.getOrElse { 0 }
 }
 
 /**

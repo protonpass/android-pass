@@ -72,9 +72,19 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         // If we don't find it, we test for MM, and for the year, YYYY is more specific than YY,
         // so it needs to be evaluated first.
         FieldType.CardExpirationMMYY to listOf("mmyy", "mmaa"),
-        FieldType.CardExpirationMM to listOf("cardmonth", "expmonth", "expirationmonth", "expirationdatemonth"),
+        FieldType.CardExpirationMM to listOf(
+            "cardmonth",
+            "expmonth",
+            "expirationmonth",
+            "expirationdatemonth"
+        ),
         FieldType.CardExpirationYYYY to listOf("4digityear", "yyyy"),
-        FieldType.CardExpirationYY to listOf("cardyear", "expyear", "expirationyear", "expirationdateyear")
+        FieldType.CardExpirationYY to listOf(
+            "cardyear",
+            "expyear",
+            "expirationyear",
+            "expirationdateyear"
+        )
     )
 
     // For testing purposes
@@ -150,7 +160,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
     }
 
-    @Suppress("ComplexMethod", "CyclomaticComplexMethod", "LongMethod", "ReturnCount")
+    @Suppress("ComplexMethod", "CyclomaticComplexMethod", "ReturnCount")
     private fun nodeSupportsAutoFill(node: AutofillNode): NodeSupportsAutofillResult {
         val isImportant =
             node.isImportantForAutofill || requestFlags.contains(RequestFlags.FLAG_MANUAL_REQUEST)
@@ -161,18 +171,9 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
 
         val hasAutofillInfo = nodeHasAutofillInfo(node)
+        debugNode(node, isImportant, hasAutofillInfo)
+
         val isEditText = node.isEditText()
-
-        if (isEditText) {
-            PassLogger.v(TAG, "------------------------------------")
-            PassLogger.v(TAG, "[${node.id}] nodeInputTypeFlags ${InputTypeFlags.fromValue(node.inputType)}")
-            PassLogger.v(TAG, "[${node.id}] nodeSupportsAutoFill $isImportant - $hasAutofillInfo")
-            PassLogger.v(TAG, "[${node.id}] nodeHasValidHints ${nodeHasValidHints(node.autofillHints.toSet())}")
-            PassLogger.v(TAG, "[${node.id}] nodeHasValidHtmlInfo ${nodeHasValidHtmlInfo(node.htmlAttributes)}")
-            PassLogger.v(TAG, "[${node.id}] nodeHasValidInputType ${nodeHasValidInputType(node)}")
-            PassLogger.v(TAG, "------------------------------------")
-        }
-
         if (node.id == null) {
             if (isEditText) {
                 PassLogger.d(TAG, "Discarding node because id is null")
@@ -180,6 +181,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
             return NodeSupportsAutofillResult.No
         }
+
         if (!isImportant) {
             if (isEditText) {
                 PassLogger.d(
@@ -214,7 +216,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                         "[node=${node.id}] Accepting node because it has autofill info"
                     )
                 }
-                return NodeSupportsAutofillResult.Yes(None)
+                NodeSupportsAutofillResult.Yes(None)
             }
 
             is HasAutofillInfoResult.YesWithFieldType -> {
@@ -225,8 +227,31 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                             "info and field type ${hasAutofillInfo.fieldType}"
                     )
                 }
-                return NodeSupportsAutofillResult.Yes(hasAutofillInfo.fieldType.some())
+                NodeSupportsAutofillResult.Yes(hasAutofillInfo.fieldType.some())
             }
+        }
+    }
+
+    private fun debugNode(
+        node: AutofillNode,
+        isImportant: Boolean,
+        hasAutofillInfo: HasAutofillInfoResult,
+    ) {
+        if (node.id == null) return
+        val nodeId = node.id.value()
+        if (node.isEditText()) {
+            val inputTypeFlags = InputTypeFlags.fromValue(node.inputType)
+            val hasValidHints = nodeHasValidHints(node.autofillHints.toSet())
+            val hasValidHtmlInfo = nodeHasValidHtmlInfo(node.htmlAttributes)
+            val hasValidInputType = nodeHasValidInputType(node)
+            PassLogger.v(TAG, "------------------------------------")
+            PassLogger.v(TAG, "[$nodeId] nodeInputTypeFlags $inputTypeFlags")
+            PassLogger.v(TAG, "[$nodeId] isImportant $isImportant")
+            PassLogger.v(TAG, "[$nodeId] hasAutofillInfo $hasAutofillInfo")
+            PassLogger.v(TAG, "[$nodeId] nodeHasValidHints $hasValidHints")
+            PassLogger.v(TAG, "[$nodeId] nodeHasValidHtmlInfo $hasValidHtmlInfo")
+            PassLogger.v(TAG, "[$nodeId] nodeHasValidInputType $hasValidInputType")
+            PassLogger.v(TAG, "------------------------------------")
         }
     }
 

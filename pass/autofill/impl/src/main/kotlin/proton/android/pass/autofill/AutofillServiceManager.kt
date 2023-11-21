@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import me.proton.core.util.kotlin.takeIfNotEmpty
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.service.R
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.None
@@ -42,20 +43,21 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.itemName
-import proton.android.pass.commonui.api.loginUsername
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.value
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.value
 import javax.inject.Inject
 import kotlin.math.min
 
 class AutofillServiceManager @Inject constructor(
     @ApplicationContext private val context: Context,
     private val getSuggestedLoginItems: GetSuggestedLoginItems,
+    private val getSuggestedCreditCardItems: GetSuggestedCreditCardItems,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val needsBiometricAuth: NeedsBiometricAuth,
     @AppIcon private val appIcon: Int
@@ -64,56 +66,69 @@ class AutofillServiceManager @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.R)
     suspend fun createSuggestedItemsDatasetList(
         autofillData: AutofillData,
-        requestOption: Option<InlineSuggestionsRequest>
+        inlineSuggestionsRequest: InlineSuggestionsRequest
     ): List<Dataset> {
-        val maxSuggestion = requestOption.value()?.maxSuggestionCount.toOption()
-        return if (maxSuggestion is Some && maxSuggestion.value > 0 && requestOption is Some) {
-            val suggestedItemsResult = getSuggestedLoginItems(
-                packageName = autofillData.packageInfo.map { it.packageName.value },
-                url = autofillData.assistInfo.url
-            )
+        if (inlineSuggestionsRequest.maxSuggestionCount == 0) return emptyList()
+        return when (autofillData.assistInfo.cluster) {
+            NodeCluster.Empty -> emptyList()
+            is NodeCluster.Login,
+            is NodeCluster.SignUp ->
+                handleSuggestions(inlineSuggestionsRequest, autofillData, SuggestionType.Login)
+
+            is NodeCluster.CreditCard ->
+                handleSuggestions(inlineSuggestionsRequest, autofillData, SuggestionType.CreditCard)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private suspend fun handleSuggestions(
+        request: InlineSuggestionsRequest,
+        autofillData: AutofillData,
+        suggestionType: SuggestionType
+    ): List<Dataset> {
+        val suggestedItemsResult = when (suggestionType) {
+            SuggestionType.CreditCard -> getSuggestedCreditCardItems()
                 .firstOrNull()
                 .toOption()
 
-            val specs = requestOption.value.inlinePresentationSpecs
+            SuggestionType.Login -> getSuggestedLoginItems(
+                packageName = autofillData.packageInfo.map { it.packageName.value },
+                url = autofillData.assistInfo.url
+            ).firstOrNull()
+                .toOption()
+        }
 
-            val pinnedIcon = { spec: InlinePresentationSpec ->
-                createPinnedIcon(
-                    autofillData = autofillData,
-                    inlinePresentationSpec = spec
-                )
-            }
-            val openApp = { spec: InlinePresentationSpec ->
-                createOpenAppDataset(
-                    autofillData = autofillData,
-                    inlinePresentationSpec = spec
-                )
-            }
+        val specs = request.inlinePresentationSpecs
 
-            when (specs.size) {
-                0 -> emptyList()
-                1 -> listOf(pinnedIcon(specs.first()))
-                2 -> listOf(openApp(specs.first()), pinnedIcon(specs.last()))
-                else -> {
-                    val openAppDataSet = openApp(specs[specs.size - INLINE_SUGGESTIONS_OFFSET])
-                    val pinnedOpenApp = pinnedIcon(specs.last())
+        val pinnedIcon = { spec: InlinePresentationSpec ->
+            createPinnedIcon(
+                autofillData = autofillData,
+                inlinePresentationSpec = spec
+            )
+        }
+        val openApp = { spec: InlinePresentationSpec ->
+            createOpenAppDataset(
+                autofillData = autofillData,
+                inlinePresentationSpec = spec
+            )
+        }
 
-                    if (suggestedItemsResult is Some && suggestedItemsResult.value.isNotEmpty()) {
-                        createSuggestedItemsDatasetList(
-                            suggestedItems = suggestedItemsResult.value,
-                            maxSuggestion = maxSuggestion.value,
-                            requestOption = requestOption.value,
-                            autofillData = autofillData,
-                            openAppDataSet = openAppDataSet,
-                            pinnedOpenApp = pinnedOpenApp
-                        )
-                    } else {
-                        listOf(openAppDataSet, pinnedOpenApp)
-                    }
+        return when (specs.size) {
+            0 -> emptyList()
+            1 -> listOf(pinnedIcon(specs.first()))
+            2 -> listOf(openApp(specs.first()), pinnedIcon(specs.last()))
+            else -> {
+                val openAppDataSet = openApp(specs[specs.size - INLINE_SUGGESTIONS_OFFSET])
+                if (suggestedItemsResult is Some && suggestedItemsResult.value.isNotEmpty()) {
+                    createItemsDatasetList(
+                        suggestedItems = suggestedItemsResult.value,
+                        inlineSuggestionsRequest = request,
+                        autofillData = autofillData
+                    ).plus(listOf(openAppDataSet, pinnedIcon(specs.last())))
+                } else {
+                    listOf(openAppDataSet, pinnedIcon(specs.last()))
                 }
             }
-        } else {
-            emptyList()
         }
     }
 
@@ -174,26 +189,22 @@ class AutofillServiceManager @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    @Suppress("LongParameterList")
-    private fun createSuggestedItemsDatasetList(
+    private fun createItemsDatasetList(
         suggestedItems: List<Item>,
-        maxSuggestion: Int,
-        requestOption: InlineSuggestionsRequest,
-        autofillData: AutofillData,
-        openAppDataSet: Dataset,
-        pinnedOpenApp: Dataset
-    ) = encryptionContextProvider.withEncryptionContext {
+        inlineSuggestionsRequest: InlineSuggestionsRequest,
+        autofillData: AutofillData
+    ): List<Dataset> = encryptionContextProvider.withEncryptionContext {
         PassLogger.i(TAG, "Suggested item count: ${suggestedItems.size}")
 
         val availableInlineSpots: Int = getAvailableSuggestionSpots(
-            maxSuggestion = maxSuggestion,
+            maxSuggestion = inlineSuggestionsRequest.maxSuggestionCount,
             itemsSize = suggestedItems.size
         )
         if (availableInlineSpots > 0) {
             val shouldAuthenticate = runBlocking {
                 needsBiometricAuth().first()
             }
-            requestOption.inlinePresentationSpecs
+            inlineSuggestionsRequest.inlinePresentationSpecs
                 .take(availableInlineSpots - INLINE_SUGGESTIONS_OFFSET)
                 .zip(suggestedItems)
                 .mapIndexed { index, pair ->
@@ -204,7 +215,6 @@ class AutofillServiceManager @Inject constructor(
             emptyList()
         }
     }
-        .plus(listOf(openAppDataSet, pinnedOpenApp))
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun EncryptionContext.createItemDataset(
@@ -220,13 +230,26 @@ class AutofillServiceManager @Inject constructor(
             intentRequestCode = index,
             shouldAuthenticate = shouldAuthenticate
         )
-        val inlinePresentation = InlinePresentationUtils.create(
-            title = pair.second.itemName(this),
-            subtitle = pair.second.loginUsername(),
-            inlinePresentationSpec = pair.first,
-            pendingIntent = PendingIntentUtils
-                .getLongPressInlinePendingIntent(context)
-        )
+        val inlinePresentation = when (val itemType = pair.second.itemType) {
+            is ItemType.CreditCard -> InlinePresentationUtils.create(
+                title = pair.second.itemName(this),
+                subtitle = createCCSubtitle(itemType, this),
+                inlinePresentationSpec = pair.first,
+                pendingIntent = PendingIntentUtils
+                    .getLongPressInlinePendingIntent(context)
+            )
+
+            is ItemType.Login -> InlinePresentationUtils.create(
+                title = pair.second.itemName(this),
+                subtitle = itemType.username.toOption(),
+                inlinePresentationSpec = pair.first,
+                pendingIntent = PendingIntentUtils
+                    .getLongPressInlinePendingIntent(context)
+            )
+
+            else -> throw IllegalStateException("Unhandled item type")
+        }
+
         val datasetBuilderOptions = DatasetBuilderOptions(
             id = "InlineSuggestion-$index".some(),
             inlinePresentation = inlinePresentation.toOption(),
@@ -236,6 +259,27 @@ class AutofillServiceManager @Inject constructor(
             options = datasetBuilderOptions,
             cluster = autofillData.assistInfo.cluster
         )
+    }
+
+    private fun createCCSubtitle(
+        itemType: ItemType.CreditCard,
+        encryptionContext: EncryptionContext
+    ): Option<String> {
+        val decryptedNumber = encryptionContext.decrypt(itemType.number)
+        val cleanNumber = decryptedNumber.replace(" ", "")
+        val formattedNumber = when {
+            decryptedNumber.length <= 4 -> cleanNumber
+            decryptedNumber.length > 4 -> "** ${cleanNumber.takeLast(4)}"
+            else -> null
+        }
+
+        val date = itemType.expirationDate.split('-')
+        val formattedDate = if (date.size == 2) {
+            "${date.last()}/${date.first().takeLast(2)}"
+        } else {
+            null
+        }
+        return listOfNotNull(formattedNumber, formattedDate).joinToString(" • ").some()
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -318,4 +362,9 @@ class AutofillServiceManager @Inject constructor(
 
         private const val TAG = "AutofillServiceManager"
     }
+}
+
+sealed interface SuggestionType {
+    object Login : SuggestionType
+    object CreditCard : SuggestionType
 }

@@ -133,10 +133,17 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
     }
 
-    @Suppress("ReturnCount")
+    @Suppress("LongMethod", "ReturnCount")
     private fun nodeSupportsAutoFill(node: AutofillNode): NodeSupportsAutofillResult {
         val isImportant =
             node.isImportantForAutofill || requestFlags.contains(RequestFlags.FLAG_MANUAL_REQUEST)
+
+        if (nodeHasValidInputType(node) == CheckInputTypeResult.DoNotAutofill) {
+            PassLogger.v(TAG, "Discarding node because CheckInputTypeResult.DoNotAutofill")
+            return NodeSupportsAutofillResult.No
+        }
+
+
         val hasAutofillInfo = nodeHasAutofillInfo(node)
         val isEditText = node.isEditText()
 
@@ -323,6 +330,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                         HasAutofillInfoResult.YesWithFieldType(hasValidInputType.fieldType)
                     }
 
+                    CheckInputTypeResult.DoNotAutofill -> HasAutofillInfoResult.No
+
                     CheckInputTypeResult.NoneFound -> if (hasHtmlInfo) {
                         HasAutofillInfoResult.Yes
                     } else {
@@ -488,6 +497,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
     sealed interface CheckInputTypeResult {
         object NoneFound : CheckInputTypeResult
+        object DoNotAutofill : CheckInputTypeResult
 
         @JvmInline
         value class Found(val fieldType: FieldType) : CheckInputTypeResult

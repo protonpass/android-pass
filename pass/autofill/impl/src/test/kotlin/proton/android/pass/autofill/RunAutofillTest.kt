@@ -41,10 +41,13 @@ enum class ExpectedAutofill(val value: String, val assertedValue: String = value
     USERNAME("username"),
     PASSWORD("password"),
     CC_NUMBER("card_number"),
-    CC_CARDHOLDER_NAME("card_name"),
+    CC_CARDHOLDER_NAME("card_name", "card_first_name card_last_name"),
     CC_CARDHOLDER_FIRST_NAME("card_first_name"),
     CC_CARDHOLDER_LAST_NAME("card_last_name"),
-    CC_EXPIRATION_MM_YY("card_expiration_mm_yy", "$CC_EXPIRATION_MONTH/${CC_EXPIRATION_YEAR.takeLast(2)}"),
+    CC_EXPIRATION_MM_YY(
+        "card_expiration_mm_yy",
+        "$CC_EXPIRATION_MONTH/${CC_EXPIRATION_YEAR.takeLast(2)}"
+    ),
     CC_EXPIRATION_MONTH_TEXT("card_expiration_month_text"),
     CC_EXPIRATION_MONTH_MM("card_expiration_month_mm", CC_EXPIRATION_MONTH),
     CC_EXPIRATION_YEAR_YY("card_expiration_year_yy", CC_EXPIRATION_YEAR.takeLast(2)),
@@ -80,11 +83,13 @@ fun runAutofillTest(
         cluster = focusedCluster
     )
 
-    PassLogger.i(TAG, "Expected nodes: ${nodesWithExpectedContents.size}")
-    PassLogger.i(TAG, "Detected nodes: ${detectedNodes.fields.size}")
+    PassLogger.i(
+        TAG,
+        "Expected nodes: ${nodesWithExpectedContents.size} (${nodesWithExpectedContents.map { it.second.name }})"
+    )
+    PassLogger.i(TAG, "Detected nodes: ${detectedNodes.fields.size} (${detectedNodes.fields.map { it.type?.name }})")
     PassLogger.i(TAG, "Mapped nodes: ${res.mappings.size}")
     PassLogger.i(TAG, "Clusters: ${clusters.size} | Focused: $focusedCluster")
-
 
     assertThat(res.mappings.size).isEqualTo(nodesWithExpectedContents.size)
     for (nodeWithExpectedContents in nodesWithExpectedContents) {

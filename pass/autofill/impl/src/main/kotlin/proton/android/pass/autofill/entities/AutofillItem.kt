@@ -48,7 +48,7 @@ sealed interface AutofillItem : Parcelable {
     data class CreditCard(
         val itemId: String,
         val shareId: String,
-        val number: String,
+        val number: EncryptedString,
         val cardHolder: String,
         val expiration: String,
         val cvv: EncryptedString?
@@ -57,6 +57,4 @@ sealed interface AutofillItem : Parcelable {
         override fun itemId() = ItemId(shareId)
         override fun type() = "AutofillItem.CreditCard"
     }
-
 }
-

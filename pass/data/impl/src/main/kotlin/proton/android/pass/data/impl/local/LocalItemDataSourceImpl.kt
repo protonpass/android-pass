@@ -162,6 +162,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         ItemTypeFilter.Logins -> ITEM_TYPE_LOGIN
         ItemTypeFilter.Aliases -> ITEM_TYPE_ALIAS
         ItemTypeFilter.Notes -> ITEM_TYPE_NOTE
+        ItemTypeFilter.CreditCards -> ITEM_TYPE_CREDIT_CARD
         ItemTypeFilter.All -> throw IllegalStateException("Cannot call value to ItemTypeFilter.All")
     }
 

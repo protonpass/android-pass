@@ -16,23 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ShareSelection
+import javax.inject.Inject
+import javax.inject.Singleton
 
-enum class ItemTypeFilter {
-    All,
-    Logins,
-    Aliases,
-    Notes,
-    CreditCards;
-}
+@Singleton
+class TestGetSuggestedCreditCardItems @Inject constructor() : GetSuggestedCreditCardItems {
 
-interface ObserveActiveItems {
-    operator fun invoke(
-        filter: ItemTypeFilter = ItemTypeFilter.All,
-        shareSelection: ShareSelection = ShareSelection.AllShares
-    ): Flow<List<Item>>
+    private val resultFlow = MutableStateFlow<Result<List<Item>>>(Result.success(emptyList()))
+
+    fun sendValue(value: Result<List<Item>>) = resultFlow.tryEmit(value)
+
+    override fun invoke(): Flow<List<Item>> = resultFlow.map { it.getOrThrow() }
 }

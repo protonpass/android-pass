@@ -32,23 +32,18 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
-import me.proton.core.util.kotlin.takeIfNotEmpty
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.service.R
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonui.api.itemName
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.value
 import javax.inject.Inject
@@ -86,17 +81,7 @@ class AutofillServiceManager @Inject constructor(
         autofillData: AutofillData,
         suggestionType: SuggestionType
     ): List<Dataset> {
-        val suggestedItemsResult = when (suggestionType) {
-            SuggestionType.CreditCard -> getSuggestedCreditCardItems()
-                .firstOrNull()
-                .toOption()
-
-            SuggestionType.Login -> getSuggestedLoginItems(
-                packageName = autofillData.packageInfo.map { it.packageName.value },
-                url = autofillData.assistInfo.url
-            ).firstOrNull()
-                .toOption()
-        }
+        val suggestedItemsResult = getSuggestedItems(suggestionType, autofillData)
 
         val specs = request.inlinePresentationSpecs
 
@@ -119,9 +104,9 @@ class AutofillServiceManager @Inject constructor(
             2 -> listOf(openApp(specs.first()), pinnedIcon(specs.last()))
             else -> {
                 val openAppDataSet = openApp(specs[specs.size - INLINE_SUGGESTIONS_OFFSET])
-                if (suggestedItemsResult is Some && suggestedItemsResult.value.isNotEmpty()) {
+                if (suggestedItemsResult.isNotEmpty()) {
                     createItemsDatasetList(
-                        suggestedItems = suggestedItemsResult.value,
+                        suggestedItems = suggestedItemsResult,
                         inlineSuggestionsRequest = request,
                         autofillData = autofillData
                     ).plus(listOf(openAppDataSet, pinnedIcon(specs.last())))
@@ -132,11 +117,28 @@ class AutofillServiceManager @Inject constructor(
         }
     }
 
-    suspend fun createMenuPresentationDataset(autofillData: AutofillData): List<Dataset> {
-        val suggestedItemsResult = getSuggestedLoginItems(
+    private suspend fun getSuggestedItems(
+        suggestionType: SuggestionType,
+        autofillData: AutofillData
+    ): List<Item> = when (suggestionType) {
+        SuggestionType.CreditCard -> getSuggestedCreditCardItems()
+            .firstOrNull()
+            ?: emptyList()
+
+        SuggestionType.Login -> getSuggestedLoginItems(
             packageName = autofillData.packageInfo.map { it.packageName.value },
             url = autofillData.assistInfo.url
-        ).firstOrNull().toOption()
+        ).firstOrNull() ?: emptyList()
+    }
+
+    suspend fun createMenuPresentationDataset(autofillData: AutofillData): List<Dataset> {
+        val suggestedItemsResult = when (autofillData.assistInfo.cluster) {
+            NodeCluster.Empty -> emptyList()
+            is NodeCluster.Login,
+            is NodeCluster.SignUp -> getSuggestedItems(SuggestionType.Login, autofillData)
+
+            is NodeCluster.CreditCard -> getSuggestedItems(SuggestionType.CreditCard, autofillData)
+        }
         val openAppPendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
             context = context,
             autofillData = autofillData,
@@ -145,7 +147,6 @@ class AutofillServiceManager @Inject constructor(
         val openAppRemoteView = RemoteViews(context.packageName, R.layout.autofill_item).apply {
             setTextViewText(R.id.title, context.getText(R.string.autofill_authenticate_prompt))
             setViewVisibility(R.id.subtitle, View.GONE)
-            setImageViewResource(R.id.icon, appIcon)
         }
         val openAppDatasetOptions = DatasetBuilderOptions(
             id = "RemoteView-OpenApp".some(),
@@ -158,24 +159,29 @@ class AutofillServiceManager @Inject constructor(
         )
         val shouldAuthenticate = runBlocking { needsBiometricAuth().first() }
 
-        return (suggestedItemsResult.value() ?: emptyList())
-            .take(2)
-            .mapIndexed { index, value ->
-                val decryptedTitle = encryptionContextProvider.withEncryptionContext {
-                    decrypt(value.title)
+        return suggestedItemsResult.take(2)
+            .mapIndexed { index, item ->
+                val view = encryptionContextProvider.withEncryptionContext {
+                    RemoteViews(context.packageName, R.layout.autofill_item)
+                        .apply {
+                            setTextViewText(
+                                R.id.title,
+                                ItemDisplayBuilder.createTitle(item, this@withEncryptionContext)
+                            )
+                            setTextViewText(
+                                R.id.subtitle,
+                                ItemDisplayBuilder.createSubtitle(item, this@withEncryptionContext)
+                            )
+                        }
                 }
-                val decryptedUsername = (value.itemType as ItemType.Login).username
-                val pendingIntent = PendingIntentUtils.getInlineSuggestionPendingIntent(
+
+                val pendingIntent = PendingIntentUtils.getSuggestionPendingIntent(
                     context = context,
                     autofillData = autofillData,
-                    item = value,
+                    item = item,
                     intentRequestCode = index,
                     shouldAuthenticate = shouldAuthenticate
                 )
-                val view = RemoteViews(context.packageName, R.layout.autofill_item).apply {
-                    setTextViewText(R.id.title, decryptedTitle)
-                    setTextViewText(R.id.subtitle, decryptedUsername.takeIfNotEmpty() ?: "---")
-                }
                 val options = DatasetBuilderOptions(
                     remoteViewPresentation = view.some(),
                     pendingIntent = pendingIntent.some()
@@ -223,32 +229,20 @@ class AutofillServiceManager @Inject constructor(
         index: Int,
         shouldAuthenticate: Boolean
     ): Dataset {
-        val pendingIntent = PendingIntentUtils.getInlineSuggestionPendingIntent(
+        val pendingIntent = PendingIntentUtils.getSuggestionPendingIntent(
             context = context,
             autofillData = autofillData,
             item = pair.second,
             intentRequestCode = index,
             shouldAuthenticate = shouldAuthenticate
         )
-        val inlinePresentation = when (val itemType = pair.second.itemType) {
-            is ItemType.CreditCard -> InlinePresentationUtils.create(
-                title = pair.second.itemName(this),
-                subtitle = createCCSubtitle(itemType, this),
-                inlinePresentationSpec = pair.first,
-                pendingIntent = PendingIntentUtils
-                    .getLongPressInlinePendingIntent(context)
-            )
-
-            is ItemType.Login -> InlinePresentationUtils.create(
-                title = pair.second.itemName(this),
-                subtitle = itemType.username.toOption(),
-                inlinePresentationSpec = pair.first,
-                pendingIntent = PendingIntentUtils
-                    .getLongPressInlinePendingIntent(context)
-            )
-
-            else -> throw IllegalStateException("Unhandled item type")
-        }
+        val inlinePresentation = InlinePresentationUtils.create(
+            title = ItemDisplayBuilder.createTitle(pair.second, this),
+            subtitle = ItemDisplayBuilder.createSubtitle(pair.second, this).some(),
+            inlinePresentationSpec = pair.first,
+            pendingIntent = PendingIntentUtils
+                .getLongPressInlinePendingIntent(context)
+        )
 
         val datasetBuilderOptions = DatasetBuilderOptions(
             id = "InlineSuggestion-$index".some(),
@@ -259,27 +253,6 @@ class AutofillServiceManager @Inject constructor(
             options = datasetBuilderOptions,
             cluster = autofillData.assistInfo.cluster
         )
-    }
-
-    private fun createCCSubtitle(
-        itemType: ItemType.CreditCard,
-        encryptionContext: EncryptionContext
-    ): Option<String> {
-        val decryptedNumber = encryptionContext.decrypt(itemType.number)
-        val cleanNumber = decryptedNumber.replace(" ", "")
-        val formattedNumber = when {
-            decryptedNumber.length <= 4 -> cleanNumber
-            decryptedNumber.length > 4 -> "** ${cleanNumber.takeLast(4)}"
-            else -> null
-        }
-
-        val date = itemType.expirationDate.split('-')
-        val formattedDate = if (date.size == 2) {
-            "${date.last()}/${date.first().takeLast(2)}"
-        } else {
-            null
-        }
-        return listOfNotNull(formattedNumber, formattedDate).joinToString(" • ").some()
     }
 
     @RequiresApi(Build.VERSION_CODES.R)

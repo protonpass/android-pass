@@ -28,7 +28,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toImmutableList
-import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -77,21 +76,14 @@ private fun getHighlightedFields(
     var annotatedAliasEmail = AnnotatedString(aliasEmail)
     var annotatedNote: AnnotatedString? = null
     if (highlight.isNotBlank()) {
-        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
-        val cleanTitle = title.removeAccents()
-        val titleMatches = regex.findAll(cleanTitle)
-        if (titleMatches.any()) {
-            annotatedTitle = title.highlight(titleMatches, highlightColor)
+        title.highlight(highlight, highlightColor)?.let {
+            annotatedTitle = it
         }
-        val cleanAliasEmail = aliasEmail.removeAccents()
-        val aliasEmailMatches = regex.findAll(cleanAliasEmail)
-        if (aliasEmailMatches.any()) {
-            annotatedAliasEmail = aliasEmail.highlight(aliasEmailMatches, highlightColor)
+        aliasEmail.highlight(highlight, highlightColor)?.let {
+            annotatedAliasEmail = it
         }
-        val cleanNote = note.replace("\n", " ").removeAccents()
-        val noteMatches = regex.findAll(cleanNote)
-        if (noteMatches.any()) {
-            annotatedNote = cleanNote.highlight(noteMatches, highlightColor)
+        note.replace("\n", " ").highlight(highlight, highlightColor)?.let {
+            annotatedNote = it
         }
     }
 

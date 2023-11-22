@@ -24,19 +24,21 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import proton.android.pass.common.api.MatchSpan
+import proton.android.pass.common.api.StringMatcher
 
 private const val CHARACTER_OFFSET = 10
 private const val MAX_RESULTS = 1
 
 fun String.highlight(
-    matches: Sequence<MatchResult>,
+    query: String,
     highlightColor: Color = Color.Unspecified
-): AnnotatedString {
-    val indexes = matches.map { it.range }.toList().take(MAX_RESULTS)
-    if (indexes.isEmpty()) return AnnotatedString(this)
+): AnnotatedString? {
+    val matches = StringMatcher.match(this, query).take(MAX_RESULTS)
+    if (matches.isEmpty()) return null
 
-    val annotated = buildHighlightedString(this, indexes, highlightColor)
-    val offset = indexes.first().first - CHARACTER_OFFSET
+    val annotated = buildHighlightedString(this, matches, highlightColor)
+    val offset = matches.first().start - CHARACTER_OFFSET
     return if (shouldAddVisualOffset(offset)) {
         AnnotatedString(Typography.ellipsis.toString()) + annotated
     } else {
@@ -46,14 +48,14 @@ fun String.highlight(
 
 private fun buildHighlightedString(
     input: String,
-    matchIndexes: List<IntRange>,
+    matchIndexes: List<MatchSpan>,
     highlightColor: Color
 ) = buildAnnotatedString {
     matchIndexes.forEachIndexed { index, span ->
         // Get CHARACTER_OFFSET characters before the span start
         val startSubstring = input.substring(
-            startIndex = (span.first - CHARACTER_OFFSET).coerceAtLeast(0),
-            endIndex = span.first
+            startIndex = (span.start - CHARACTER_OFFSET).coerceAtLeast(0),
+            endIndex = span.end
         )
         append(startSubstring)
 
@@ -64,13 +66,13 @@ private fun buildHighlightedString(
                 color = highlightColor
             )
         ) {
-            append(input.substring(span.first, span.last + 1))
+            append(input.substring(span.start, span.end + 1))
         }
 
         // Get CHARACTER_OFFSET characters after the span end
-        val endIndex = (span.last + CHARACTER_OFFSET).coerceAtMost(input.length)
+        val endIndex = (span.end + CHARACTER_OFFSET).coerceAtMost(input.length)
         val endSubstring = input.substring(
-            startIndex = span.last + 1,
+            startIndex = span.end + 1,
             endIndex = endIndex
         )
         append(endSubstring)

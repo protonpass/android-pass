@@ -28,6 +28,7 @@ import proton.android.pass.domain.ShareId
 object TestItemUiModel {
 
     fun create(
+        id: String = "item-id",
         title: String = "item-title",
         note: String = "item-note",
         itemContents: ItemContents = ItemContents.Note(title, note),
@@ -36,7 +37,7 @@ object TestItemUiModel {
         lastAutofillTime: Instant? = null
     ): ItemUiModel {
         return ItemUiModel(
-            id = ItemId(id = "item-id"),
+            id = ItemId(id = id),
             shareId = ShareId(id = "share-id"),
             contents = itemContents,
             createTime = createTime,

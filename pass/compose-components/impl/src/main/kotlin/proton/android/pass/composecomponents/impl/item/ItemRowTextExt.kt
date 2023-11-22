@@ -91,7 +91,7 @@ private fun endSection(
     )
 
     // Check if there is any match that contained in the end substring
-    val endSubstringMatches = spans.filter {
+    val endSubstringMatches = spans.take(CHARACTER_OFFSET).filter {
         it.start >= endSubstringStart && it.end <= endIndex
     }.map {
         // Adapt it to the end substring index
@@ -102,7 +102,7 @@ private fun endSection(
     }
 
     endSubstring.forEachIndexed { index, c ->
-        val hasSpan = endSubstringMatches.any { index >= it.start && index <= it.end }
+        val hasSpan = endSubstringMatches.any { index >= it.start && index < it.end }
         if (hasSpan) {
             withStyle(
                 style = SpanStyle(

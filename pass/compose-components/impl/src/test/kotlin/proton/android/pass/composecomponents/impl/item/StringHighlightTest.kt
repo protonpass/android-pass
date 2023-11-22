@@ -18,20 +18,18 @@
 
 package proton.android.pass.composecomponents.impl.item
 
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-import kotlin.test.assertEquals
 
 class StringHighlightTest {
 
     @Test
     fun `can highlight an empty string`() {
-        assertThat("".highlight(emptySequence())).isEqualTo(AnnotatedString(""))
+        assertThat("".highlight("")).isNull()
     }
 
     @Test
@@ -56,7 +54,7 @@ class StringHighlightTest {
                 withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                     append("one")
                 }
-                append(" two thre…")
+                append(" two three…")
             }
         )
     }
@@ -75,13 +73,29 @@ class StringHighlightTest {
     }
 
     @Test
-    fun `can highlight a word that is not in the string`() {
+    fun `returns null if highlight is not in the string`() {
         val res = process("one two three four", "five")
-        assertThat(res).isEqualTo(
-            buildAnnotatedString {
-                append("one two three four")
+        assertThat(res).isNull()
+    }
+
+    @Test
+    fun `if the second match is in the last part it should be highlighted`() {
+        val res = process("one two three four", "e")
+        val expected = buildAnnotatedString {
+            append("on")
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("e")
             }
-        )
+            append(" two thr")
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("e")
+            }
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("e")
+            }
+            append("…")
+        }
+        assertThat(res).isEqualTo(expected)
     }
 
     @Suppress("MaxLineLength")
@@ -94,9 +108,9 @@ class StringHighlightTest {
             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                 append("fringilla")
             }
-            append(" mauris s…")
+            append(" mauris si…")
         }
-        assertEquals(expected, res)
+        assertThat(res).isEqualTo(expected)
     }
 
     @Suppress("MaxLineLength")
@@ -110,14 +124,11 @@ class StringHighlightTest {
             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                 append("rocín")
             }
-            append(" flaco y …")
+            append(" flaco y g…")
         }
-        assertEquals(expected, res)
+        assertThat(res).isEqualTo(expected)
     }
 
-    private fun process(input: String, highlight: String): AnnotatedString {
-        val matches = highlight.toRegex().findAll(input)
-        return input.highlight(matches)
-    }
+    private fun process(input: String, highlight: String) = input.highlight(highlight)
 
 }

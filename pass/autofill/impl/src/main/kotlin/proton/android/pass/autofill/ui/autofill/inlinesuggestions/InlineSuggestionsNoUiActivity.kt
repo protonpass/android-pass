@@ -34,11 +34,11 @@ import kotlinx.coroutines.launch
 import proton.android.pass.autofill.DatasetBuilderOptions
 import proton.android.pass.autofill.DatasetUtils
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
-import proton.android.pass.domain.Item
 
 @AndroidEntryPoint
 class InlineSuggestionsNoUiActivity : FragmentActivity() {
@@ -97,9 +97,9 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
         fun newIntent(
             context: Context,
             data: AutofillData,
-            item: Item
+            autofillItem: AutofillItem
         ): Intent {
-            val extras = AutofillIntentExtras.toExtras(data, item.some())
+            val extras = AutofillIntentExtras.toExtras(data, autofillItem.some())
             val intent = Intent(context, InlineSuggestionsNoUiActivity::class.java)
             intent.putExtras(extras)
             return intent

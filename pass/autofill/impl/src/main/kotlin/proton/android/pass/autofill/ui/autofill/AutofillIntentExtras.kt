@@ -21,7 +21,6 @@ package proton.android.pass.autofill.ui.autofill
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.core.os.BundleCompat
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
@@ -85,18 +84,18 @@ object AutofillIntentExtras {
 
     @Suppress("Deprecation")
     fun fromExtras(bundle: Bundle): Pair<AutofillData, Option<AutofillItem>> =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        // Take into account that 33 is buggy regarding the new getParcelable method.
+        // Use the deprecated one for 33.
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
             bundle.classLoader = AutofillExtras::class.java.classLoader
-            val autofillExtras = BundleCompat.getParcelable(
-                bundle,
+            val autofillExtras = bundle.getParcelable(
                 ARG_AUTOFILL_DATA,
                 AutofillExtras::class.java
             ) ?: throw IllegalStateException("Bundle must contain Parcelable $ARG_AUTOFILL_DATA")
             val asAutofillData = autofillExtras.toData()
 
             bundle.classLoader = AutofillItem::class.java.classLoader
-            val itemOption = BundleCompat.getParcelable(
-                bundle,
+            val itemOption = bundle.getParcelable(
                 ARG_INLINE_SUGGESTION_AUTOFILL_ITEM,
                 AutofillItem::class.java
             ).toOption()

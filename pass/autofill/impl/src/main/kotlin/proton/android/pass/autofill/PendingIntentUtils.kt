@@ -23,10 +23,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.ui.autofill.AutofillActivity
 import proton.android.pass.autofill.ui.autofill.inlinesuggestions.InlineSuggestionsNoUiActivity
-import proton.android.pass.common.api.toOption
-import proton.android.pass.domain.Item
+import proton.android.pass.common.api.some
 
 object PendingIntentUtils {
     private val autofillPendingIntentFlags: Int =
@@ -50,25 +50,25 @@ object PendingIntentUtils {
     internal fun getSuggestionPendingIntent(
         context: Context,
         autofillData: AutofillData,
-        item: Item,
+        autofillItem: AutofillItem,
         shouldAuthenticate: Boolean,
         intentRequestCode: Int,
     ): PendingIntent = PendingIntent.getActivity(
         context,
         intentRequestCode,
-        getSuggestionPendingIntent(context, autofillData, item, shouldAuthenticate),
+        getSuggestionPendingIntent(context, autofillData, autofillItem, shouldAuthenticate),
         autofillPendingIntentFlags
     )
 
     private fun getSuggestionPendingIntent(
         context: Context,
         autofillData: AutofillData,
-        item: Item,
+        autofillItem: AutofillItem,
         shouldAuthenticate: Boolean
     ) = if (shouldAuthenticate) {
-        AutofillActivity.newIntent(context, autofillData, item.toOption())
+        AutofillActivity.newIntent(context, autofillData, autofillItem.some())
     } else {
-        InlineSuggestionsNoUiActivity.newIntent(context, autofillData, item)
+        InlineSuggestionsNoUiActivity.newIntent(context, autofillData, autofillItem)
     }
 
     internal fun getLongPressInlinePendingIntent(context: Context) =

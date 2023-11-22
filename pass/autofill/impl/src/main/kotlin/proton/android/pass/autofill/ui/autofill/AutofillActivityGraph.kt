@@ -34,8 +34,6 @@ import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsBottomSheet
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsNavigation
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.autofillItemOptionsGraph
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
@@ -169,10 +167,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
                     is CreateLoginNavigation.LoginCreated -> {
-                        when (val autofillItem = event.itemUiModel.toAutoFillItem()) {
-                            None -> {}
-                            is Some -> onAutofillItemReceived(autofillItem.value)
-                        }
+                        onAutofillItemReceived(event.itemUiModel.toAutoFillItem())
                     }
 
                     is CreateLoginNavigation.SelectVault -> {
@@ -247,6 +242,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     route = PhotoPickerTotp.createNavRoute(it.index),
                     backDestination = CreateLogin
                 )
+
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseLoginNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)

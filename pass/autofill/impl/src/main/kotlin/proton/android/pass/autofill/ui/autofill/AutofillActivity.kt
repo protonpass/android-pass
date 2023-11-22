@@ -40,13 +40,13 @@ import proton.android.pass.autofill.DatasetBuilderOptions
 import proton.android.pass.autofill.DatasetUtils
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.setSecureMode
-import proton.android.pass.domain.Item
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
 
@@ -154,9 +154,9 @@ class AutofillActivity : FragmentActivity() {
         fun newIntent(
             context: Context,
             data: AutofillData,
-            itemOption: Option<Item> = None
+            autofillItem: Option<AutofillItem> = None
         ): Intent {
-            val extras = AutofillIntentExtras.toExtras(data, itemOption)
+            val extras = AutofillIntentExtras.toExtras(data, autofillItem)
             val intent = Intent(context, AutofillActivity::class.java)
             intent.putExtras(extras)
             return intent

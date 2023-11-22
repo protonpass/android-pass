@@ -10,7 +10,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -67,13 +66,15 @@ private fun getHighlightedFields(
     var annotatedNote: AnnotatedString? = null
     var annotatedCardHolder: AnnotatedString? = null
     if (highlight.isNotBlank()) {
-        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
-        val titleMatches = regex.findAll(title)
-        if (titleMatches.any()) {
-            annotatedTitle = title.highlight(titleMatches, highlightColor)
+        title.highlight(highlight, highlightColor)?.let {
+            annotatedTitle = it
         }
-        annotatedNote = highlightIfNeeded(regex, note, highlightColor)
-        annotatedCardHolder = highlightIfNeeded(regex, cardHolder, highlightColor)
+        note.replace("\n", " ").highlight(highlight, highlightColor)?.let {
+            annotatedNote = it
+        }
+        cardHolder.highlight(highlight, highlightColor)?.let {
+            annotatedCardHolder = it
+        }
     }
 
     return CreditCardHighlightFields(
@@ -89,16 +90,6 @@ private data class CreditCardHighlightFields(
     val note: AnnotatedString?,
     val cardHolder: AnnotatedString?
 )
-
-private fun highlightIfNeeded(
-    regex: Regex,
-    field: String,
-    highlightColor: Color
-): AnnotatedString? {
-    val cleanField = field.replace("\n", " ").removeAccents()
-    val matches = regex.findAll(cleanField)
-    return if (matches.any()) cleanField.highlight(matches, highlightColor) else null
-}
 
 class ThemedCreditCardPreviewProvider : ThemePairPreviewProvider<CreditCardRowParameter>(
     CreditCardRowPreviewProvider()

@@ -78,7 +78,7 @@ class CreditCardAutofillTest : BaseAutofillTest() {
         runAutofillTest(
             file = file,
             item = AutofillItem.CreditCard(
-                number = TestEncryptionContext.encrypt(ExpectedAutofill.CC_NUMBER.value),
+                number = ExpectedAutofill.CC_NUMBER.value,
                 cardHolder = ExpectedAutofill.CC_CARDHOLDER_NAME.assertedValue,
                 expiration = CC_EXPIRATION,
                 cvv = TestEncryptionContext.encrypt(ExpectedAutofill.CC_CVV.value),

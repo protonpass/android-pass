@@ -28,63 +28,111 @@ import proton.android.pass.common.api.MatchSpan
 import proton.android.pass.common.api.StringMatcher
 
 private const val CHARACTER_OFFSET = 10
-private const val MAX_RESULTS = 1
 
 fun String.highlight(
     query: String,
     highlightColor: Color = Color.Unspecified
 ): AnnotatedString? {
-    val matches = StringMatcher.match(this, query).take(MAX_RESULTS)
-    if (matches.isEmpty()) return null
-
-    val annotated = buildHighlightedString(this, matches, highlightColor)
-    val offset = matches.first().start - CHARACTER_OFFSET
-    return if (shouldAddVisualOffset(offset)) {
-        AnnotatedString(Typography.ellipsis.toString()) + annotated
+    val matches = StringMatcher.match(this, query)
+    return if (matches.isEmpty()) {
+        null
     } else {
-        annotated
+        buildHighlightedString(this, matches, highlightColor)
     }
 }
 
 private fun buildHighlightedString(
     input: String,
-    matchIndexes: List<MatchSpan>,
+    matchSpans: List<MatchSpan>,
     highlightColor: Color
 ) = buildAnnotatedString {
-    matchIndexes.forEachIndexed { index, span ->
-        // Get CHARACTER_OFFSET characters before the span start
-        val startSubstring = input.substring(
-            startIndex = (span.start - CHARACTER_OFFSET).coerceAtLeast(0),
-            endIndex = span.end
+    val firstSpan = matchSpans.first()
+
+    val firstSection = firstSection(input, firstSpan)
+    val mainSection = mainSection(input, firstSpan, highlightColor)
+    val endSection = endSection(input, matchSpans, highlightColor)
+
+    append(firstSection)
+    append(mainSection)
+    append(endSection)
+}
+
+private fun mainSection(
+    input: String,
+    span: MatchSpan,
+    highlightColor: Color
+) = buildAnnotatedString {
+    withStyle(
+        style = SpanStyle(
+            fontWeight = FontWeight.Bold,
+            color = highlightColor
         )
-        append(startSubstring)
+    ) {
+        append(input.substring(span.start, span.end))
+    }
+}
 
-        // Append the highlighted word
-        withStyle(
-            style = SpanStyle(
-                fontWeight = FontWeight.Bold,
-                color = highlightColor
-            )
-        ) {
-            append(input.substring(span.start, span.end + 1))
-        }
+private fun endSection(
+    input: String,
+    spans: List<MatchSpan>,
+    highlightColor: Color
+) = buildAnnotatedString {
+    val firstSpan = spans.first()
 
-        // Get CHARACTER_OFFSET characters after the span end
-        val endIndex = (span.end + CHARACTER_OFFSET).coerceAtMost(input.length)
-        val endSubstring = input.substring(
-            startIndex = span.end + 1,
-            endIndex = endIndex
+    // Check if we need to add text after the string
+    if (firstSpan.end >= input.length) return@buildAnnotatedString
+
+    val endSubstringStart = firstSpan.end
+    val endIndex = (firstSpan.end + CHARACTER_OFFSET).coerceAtMost(input.length)
+
+    val endSubstring = input.substring(
+        startIndex = endSubstringStart,
+        endIndex = endIndex
+    )
+
+    // Check if there is any match that contained in the end substring
+    val endSubstringMatches = spans.filter {
+        it.start >= endSubstringStart && it.end <= endIndex
+    }.map {
+        // Adapt it to the end substring index
+        MatchSpan(
+            start = (it.start - endSubstringStart).coerceAtLeast(0),
+            end = (it.end - endSubstringStart).coerceAtLeast(0)
         )
-        append(endSubstring)
-        if (endIndex < input.length) {
-            append(Typography.ellipsis)
-        }
+    }
 
-        if (index == 0 && matchIndexes.size > 1) {
-            append("\n")
+    endSubstring.forEachIndexed { index, c ->
+        val hasSpan = endSubstringMatches.any { index >= it.start && index <= it.end }
+        if (hasSpan) {
+            withStyle(
+                style = SpanStyle(
+                    fontWeight = FontWeight.Bold,
+                    color = highlightColor
+                )
+            ) {
+                append(c)
+            }
+        } else {
+            append(c)
         }
     }
 
-}
+    if (endIndex < input.length) {
+        append(Typography.ellipsis)
+    }
 
-private fun shouldAddVisualOffset(offset: Int) = offset > 0
+}
+private fun firstSection(input: String, span: MatchSpan) = buildAnnotatedString {
+    // Check if we need to add text before the string
+    // If the first span start is greater than CHARACTER_OFFSET, we need to add text before
+    if (span.start == 0) {
+        // Nothing needs to be added
+    } else if (span.start < CHARACTER_OFFSET) {
+        // Add the first part of the string until the span
+        append(input.substring(0, span.start))
+    } else {
+        // Add the first part of the string until the span
+        append(Typography.ellipsis)
+        append(input.substring(span.start - CHARACTER_OFFSET, span.start))
+    }
+}

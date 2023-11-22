@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.11. (2023-11-22)
+
+### Fixes :bug:
+
+- Autofill crash on some devices.
+
 ## 1.11.1 (2023-11-22)
 
 ### Fixes :bug:

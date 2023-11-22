@@ -75,8 +75,10 @@ object ItemUiFilter {
         return false
     }
 
-    private fun ItemUiModel.matchesQuery(query: String): Boolean =
-        isItemMatch(this, query)
+    private fun ItemUiModel.matchesQuery(query: String): Boolean {
+        val queryParts = query.split(" ").filter { it.isNotBlank() }
+        return queryParts.all { isItemMatch(this, it) }
+    }
 
     private fun String.preprocess(): String =
         this.lowercase().removeAccents()

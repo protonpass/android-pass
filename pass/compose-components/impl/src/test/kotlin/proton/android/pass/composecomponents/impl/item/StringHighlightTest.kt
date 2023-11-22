@@ -80,6 +80,28 @@ class StringHighlightTest {
 
     @Test
     fun `if the second match is in the last part it should be highlighted`() {
+        val res = process("DowngradedItemRO", "down ded")
+        val expected = buildAnnotatedString {
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("Down")
+            }
+            append("gra")
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("d")
+            }
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("e")
+            }
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("d")
+            }
+            append("Item…")
+        }
+        assertThat(res).isEqualTo(expected)
+    }
+
+    @Test
+    fun `if the second match is in the last part and at the end it should be highlighted`() {
         val res = process("one two three four", "e")
         val expected = buildAnnotatedString {
             append("on")

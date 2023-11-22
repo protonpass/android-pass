@@ -40,7 +40,7 @@ sealed interface AutofillItem : Parcelable {
         val totp: EncryptedString?
     ) : AutofillItem {
         override fun shareId() = ShareId(shareId)
-        override fun itemId() = ItemId(shareId)
+        override fun itemId() = ItemId(itemId)
         override fun type() = "AutofillItem.Login"
     }
 
@@ -54,7 +54,7 @@ sealed interface AutofillItem : Parcelable {
         val cvv: EncryptedString?
     ) : AutofillItem {
         override fun shareId() = ShareId(shareId)
-        override fun itemId() = ItemId(shareId)
+        override fun itemId() = ItemId(itemId)
         override fun type() = "AutofillItem.CreditCard"
     }
 }

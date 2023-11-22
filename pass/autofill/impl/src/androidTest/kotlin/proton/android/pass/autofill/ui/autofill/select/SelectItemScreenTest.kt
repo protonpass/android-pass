@@ -35,6 +35,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.autofill.AppIcon
+import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillData
@@ -388,7 +389,24 @@ class SelectItemScreenTest {
     private fun fakeAutofillState() = AutofillAppState(
         autofillData = AutofillData(
             assistInfo = AssistInfo(
-                cluster = NodeCluster.Empty,
+                cluster = NodeCluster.Login.UsernameAndPassword(
+                    username = AssistField(
+                        id = newAutofillFieldId(),
+                        type = null,
+                        value = null,
+                        text = null,
+                        isFocused = false,
+                        nodePath = listOf()
+                    ),
+                    password = AssistField(
+                        id = newAutofillFieldId(),
+                        type = null,
+                        value = null,
+                        text = null,
+                        isFocused = false,
+                        nodePath = listOf()
+                    )
+                ),
                 url = None
             ),
             packageInfo = None

@@ -50,7 +50,7 @@ sealed interface PasswordError {
 
 data class AuthContent(
     val password: String,
-    val address: String,
+    val address: Option<String>,
     val isLoadingState: IsLoadingState,
     val isPasswordVisible: Boolean,
     val error: Option<AuthError>,
@@ -58,7 +58,7 @@ data class AuthContent(
     val authMethod: Option<AuthMethod>
 ) {
     companion object {
-        fun default(address: String) = AuthContent(
+        fun default(address: Option<String>) = AuthContent(
             password = "",
             address = address,
             isLoadingState = IsLoadingState.NotLoading,
@@ -78,7 +78,7 @@ data class AuthState(
     companion object {
         val Initial = AuthState(
             event = AuthEvent.Unknown,
-            content = AuthContent.default("")
+            content = AuthContent.default(None)
         )
     }
 }

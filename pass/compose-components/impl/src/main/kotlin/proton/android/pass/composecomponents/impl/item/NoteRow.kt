@@ -28,7 +28,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -69,20 +68,12 @@ private fun getHighlightedFields(
 ): NoteHighlightFields {
     var annotatedTitle = AnnotatedString(title.take(MAX_NOTE_CHARS_PREVIEW))
     val annotatedNote = if (highlight.isNotBlank()) {
-        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
-        val cleanTitle = title.removeAccents()
-        val titleMatches = regex.findAll(cleanTitle)
-        if (titleMatches.any()) {
-            annotatedTitle = title.highlight(titleMatches, highlightColor)
+        title.highlight(highlight, highlightColor)?.let {
+            annotatedTitle = it
         }
         val noteWithoutNewLines = note.replace("\n", " ")
-        val cleanNote = noteWithoutNewLines.removeAccents()
-        val noteMatches = regex.findAll(cleanNote)
-        if (noteMatches.any()) {
-            noteWithoutNewLines.highlight(noteMatches, highlightColor)
-        } else {
-            AnnotatedString(noteWithoutNewLines.take(MAX_NOTE_CHARS_PREVIEW))
-        }
+        noteWithoutNewLines.highlight(highlight, highlightColor)
+            ?: AnnotatedString(noteWithoutNewLines.take(MAX_NOTE_CHARS_PREVIEW))
     } else {
         val firstLines = note.lines().take(MAX_LINES_NOTE_DETAIL).joinToString(" ")
         AnnotatedString(firstLines.take(MAX_NOTE_CHARS_PREVIEW))

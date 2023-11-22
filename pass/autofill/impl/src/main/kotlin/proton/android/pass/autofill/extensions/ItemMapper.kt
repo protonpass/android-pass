@@ -19,26 +19,19 @@
 package proton.android.pass.autofill.extensions
 
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 
-fun ItemUiModel.toAutoFillItem(): Option<AutofillItem> = when (val content = contents) {
-    is ItemContents.Login -> {
-        AutofillItem.Login(
-            shareId = shareId.id,
-            itemId = id.id,
-            username = content.username,
-            password = content.password.encrypted,
-            totp = content.primaryTotp.encrypted
-        ).some()
-    }
+fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
+    is ItemContents.Login -> AutofillItem.Login(
+        shareId = shareId.id,
+        itemId = id.id,
+        username = content.username,
+        password = content.password.encrypted,
+        totp = content.primaryTotp.encrypted
+    )
 
     is ItemContents.CreditCard -> AutofillItem.CreditCard(
         itemId = id.id,
@@ -47,31 +40,9 @@ fun ItemUiModel.toAutoFillItem(): Option<AutofillItem> = when (val content = con
         cardHolder = content.cardHolder,
         expiration = content.expirationDate,
         cvv = content.cvv.encrypted
-    ).some()
+    )
 
-    else -> None
-}
-
-fun Item.toAutofillItem(): Option<AutofillItem> = when (val type = itemType) {
-    is ItemType.Login -> AutofillItem.Login(
-        shareId = shareId.id,
-        itemId = id.id,
-        username = type.username,
-        password = type.password,
-        totp = type.primaryTotp
-    ).some()
-
-    is ItemType.CreditCard ->
-        AutofillItem.CreditCard(
-            itemId = id.id,
-            shareId = shareId.id,
-            number = type.number,
-            cardHolder = type.cardHolder,
-            expiration = type.expirationDate,
-            cvv = type.cvv
-        ).some()
-
-    else -> None
+    else -> throw IllegalStateException("Unsupported item type")
 }
 
 data class CreatedAlias(

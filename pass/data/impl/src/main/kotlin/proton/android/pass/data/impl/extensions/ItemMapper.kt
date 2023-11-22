@@ -50,7 +50,7 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
     val decrypted = context.decrypt(encryptedContent)
     val parsed = ItemV1.Item.parseFrom(decrypted)
 
-    return proton.android.pass.domain.Item(
+    return Item(
         id = ItemId(id),
         itemUuid = parsed.metadata.itemUuid,
         revision = revision,

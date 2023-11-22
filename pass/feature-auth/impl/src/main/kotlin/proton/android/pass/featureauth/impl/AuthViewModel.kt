@@ -43,8 +43,10 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -84,9 +86,18 @@ class AuthViewModel @Inject constructor(
     val state: StateFlow<AuthState> = combine(
         eventFlow,
         formContentFlow,
-        observePrimaryUserEmail(),
+        observePrimaryUserEmail().asLoadingResult(),
         authMethodFlow
     ) { event, formContent, userEmail, authMethod ->
+
+        val address = when (userEmail) {
+            LoadingResult.Loading -> None
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, userEmail.exception, "Error loading userEmail")
+                None
+            }
+            is LoadingResult.Success -> userEmail.data.some()
+        }
         AuthState(
             event = event,
             content = AuthContent(
@@ -95,7 +106,7 @@ class AuthViewModel @Inject constructor(
                 isPasswordVisible = formContent.isPasswordVisible,
                 error = formContent.error,
                 passwordError = formContent.passwordError,
-                address = userEmail,
+                address = address,
                 authMethod = authMethod
             )
         )

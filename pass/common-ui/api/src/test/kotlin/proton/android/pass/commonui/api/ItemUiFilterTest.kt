@@ -17,6 +17,7 @@ package proton.android.pass.commonui.api
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import com.google.common.truth.Truth.assertThat
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
@@ -24,6 +25,7 @@ import proton.android.pass.commonuimodels.fakes.TestItemUiModel
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
 
 class ItemUiFilterTest {
 
@@ -122,6 +124,62 @@ class ItemUiFilterTest {
         val filteredList = ItemUiFilter.filterByQuery(itemList, "pertinacia")
 
         assertEquals(1, filteredList.size)
+    }
+
+    @Test
+    fun `filterByQuery should restrict matches when containing spaces`() {
+        val selectedId = "selectedId"
+        val items = listOf(
+            TestItemUiModel.create(
+                id = selectedId,
+                title = "Tablet",
+                note = "Tablet note",
+                itemContents = ItemContents.Login(
+                    title = "tablet",
+                    note = "Tablet note",
+                    username = "username",
+                    password = HiddenState.Concealed(""),
+                    urls = listOf("exampleurl.test", "otherurl.test"),
+                    packageInfoSet = setOf(),
+                    primaryTotp = HiddenState.Concealed(""),
+                    customFields = emptyList()
+                )
+            ),
+            TestItemUiModel.create(
+                id = "other",
+                title = "Tablet",
+                note = "Tablet second note",
+                itemContents = ItemContents.Login(
+                    title = "tablet",
+                    note = "Tablet note",
+                    username = "username",
+                    password = HiddenState.Concealed(""),
+                    urls = listOf("randomurl.test", "testurl.test"),
+                    packageInfoSet = setOf(),
+                    primaryTotp = HiddenState.Concealed(""),
+                    customFields = emptyList()
+                )
+            ),
+            TestItemUiModel.create(
+                id = "phone",
+                title = "Phone",
+                note = "Phone note",
+                itemContents = ItemContents.Login(
+                    title = "phone",
+                    note = "Phone note",
+                    username = "username",
+                    password = HiddenState.Concealed(""),
+                    urls = listOf("exampleurl.test", "testurl.test"),
+                    packageInfoSet = setOf(),
+                    primaryTotp = HiddenState.Concealed(""),
+                    customFields = emptyList()
+                )
+            ),
+        )
+
+        val filteredList = ItemUiFilter.filterByQuery(items, "tablet    example ")
+        assertThat(filteredList.size).isEqualTo(1)
+        assertThat(filteredList.first().id).isEqualTo(ItemId(selectedId))
     }
 
     private fun createAliasList() = listOf(

@@ -48,7 +48,7 @@ sealed interface AutofillItem : Parcelable {
     data class CreditCard(
         val itemId: String,
         val shareId: String,
-        val number: EncryptedString,
+        val number: String,
         val cardHolder: String,
         val expiration: String,
         val cvv: EncryptedString?

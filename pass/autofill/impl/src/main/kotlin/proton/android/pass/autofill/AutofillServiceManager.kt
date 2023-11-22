@@ -33,12 +33,14 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.service.R
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
@@ -161,7 +163,7 @@ class AutofillServiceManager @Inject constructor(
 
         return suggestedItemsResult.take(2)
             .mapIndexed { index, item ->
-                val view = encryptionContextProvider.withEncryptionContext {
+                val (view, autofillItem) = encryptionContextProvider.withEncryptionContext {
                     RemoteViews(context.packageName, R.layout.autofill_item)
                         .apply {
                             setTextViewText(
@@ -172,13 +174,12 @@ class AutofillServiceManager @Inject constructor(
                                 R.id.subtitle,
                                 ItemDisplayBuilder.createSubtitle(item, this@withEncryptionContext)
                             )
-                        }
+                        } to item.toUiModel(this).toAutoFillItem()
                 }
-
                 val pendingIntent = PendingIntentUtils.getSuggestionPendingIntent(
                     context = context,
                     autofillData = autofillData,
-                    item = item,
+                    autofillItem = autofillItem,
                     intentRequestCode = index,
                     shouldAuthenticate = shouldAuthenticate
                 )
@@ -214,7 +215,13 @@ class AutofillServiceManager @Inject constructor(
                 .take(availableInlineSpots - INLINE_SUGGESTIONS_OFFSET)
                 .zip(suggestedItems)
                 .mapIndexed { index, pair ->
-                    createItemDataset(autofillData, pair, index, shouldAuthenticate)
+                    createItemDataset(
+                        autofillData = autofillData,
+                        spec = pair.first,
+                        item = pair.second,
+                        index = index,
+                        shouldAuthenticate = shouldAuthenticate
+                    )
                 }
                 .toList()
         } else {
@@ -225,21 +232,22 @@ class AutofillServiceManager @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.R)
     private fun EncryptionContext.createItemDataset(
         autofillData: AutofillData,
-        pair: Pair<InlinePresentationSpec, Item>,
+        spec: InlinePresentationSpec,
+        item: Item,
         index: Int,
         shouldAuthenticate: Boolean
     ): Dataset {
         val pendingIntent = PendingIntentUtils.getSuggestionPendingIntent(
             context = context,
             autofillData = autofillData,
-            item = pair.second,
+            autofillItem = item.toUiModel(this).toAutoFillItem(),
             intentRequestCode = index,
             shouldAuthenticate = shouldAuthenticate
         )
         val inlinePresentation = InlinePresentationUtils.create(
-            title = ItemDisplayBuilder.createTitle(pair.second, this),
-            subtitle = ItemDisplayBuilder.createSubtitle(pair.second, this).some(),
-            inlinePresentationSpec = pair.first,
+            title = ItemDisplayBuilder.createTitle(item, this),
+            subtitle = ItemDisplayBuilder.createSubtitle(item, this).some(),
+            inlinePresentationSpec = spec,
             pendingIntent = PendingIntentUtils
                 .getLongPressInlinePendingIntent(context)
         )

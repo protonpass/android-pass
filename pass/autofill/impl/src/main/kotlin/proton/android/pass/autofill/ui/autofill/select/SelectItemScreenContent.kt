@@ -135,13 +135,25 @@ internal fun SelectItemScreenContent(
             onScrolledToTop = onScrolledToTop,
             onItemOptionsClicked = onItemOptionsClicked,
             onItemClicked = {
-                val item = it.contents as? ItemContents.Login ?: return@SelectItemList
-                if (shouldAskForAssociation(item, packageInfo?.packageName, webDomain)) {
-                    itemClicked = it.toOption()
-                    showAssociateDialog = true
-                } else {
-                    onItemClicked(it, false)
+                when (val contents = it.contents) {
+                    is ItemContents.Login -> {
+                        val askForAssociation = shouldAskForAssociation(
+                            contents,
+                            packageInfo?.packageName,
+                            webDomain
+                        )
+                        if (askForAssociation) {
+                            itemClicked = it.toOption()
+                            showAssociateDialog = true
+                        } else {
+                            onItemClicked(it, false)
+                        }
+                    }
+
+                    is ItemContents.CreditCard -> onItemClicked(it, false)
+                    else -> throw IllegalStateException("Unhandled item type")
                 }
+
             },
             onNavigate = onNavigate
         )

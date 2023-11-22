@@ -25,13 +25,11 @@ import kotlinx.parcelize.Parcelize
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
-import proton.android.pass.domain.Item
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
@@ -73,9 +71,9 @@ object AutofillIntentExtras {
 
     const val ARG_EXTRAS_BUNDLE = "arg_extras_bundle"
 
-    fun toExtras(data: AutofillData, itemOption: Option<Item> = None): Bundle {
+    fun toExtras(data: AutofillData, autofillItem: Option<AutofillItem> = None): Bundle {
         val extras = Bundle()
-        val contentBundle = getContentBundle(data, itemOption)
+        val contentBundle = getContentBundle(data, autofillItem)
 
         extras.putBundle(ARG_EXTRAS_BUNDLE, contentBundle)
 
@@ -113,19 +111,16 @@ object AutofillIntentExtras {
             asAutofillData to autofillItem.toOption()
         }
 
-    private fun getContentBundle(data: AutofillData, itemOption: Option<Item>): Bundle {
+    private fun getContentBundle(data: AutofillData, autofillItem: Option<AutofillItem>): Bundle {
         val extras = Bundle()
         val asExtras = data.toExtras()
         extras.putParcelable(ARG_AUTOFILL_DATA, asExtras)
 
-        if (itemOption is Some) {
-            val autofillItem = itemOption.value.toAutofillItem()
-            if (autofillItem is Some) {
-                extras.putParcelable(
-                    ARG_INLINE_SUGGESTION_AUTOFILL_ITEM,
-                    autofillItem.value
-                )
-            }
+        if (autofillItem is Some) {
+            extras.putParcelable(
+                ARG_INLINE_SUGGESTION_AUTOFILL_ITEM,
+                autofillItem.value
+            )
         }
 
         return extras

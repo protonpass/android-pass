@@ -34,7 +34,12 @@ object StringMatcher {
         val normalizedNeedle = normalize(needle, removeDiacritics)
         val normalizedHaystack = normalize(haystack, removeDiacritics)
 
-        val searchWords = escapeRegex(normalizedNeedle)
+        val sortedNeedle = normalizedNeedle
+            .split(" ")
+            .sortedByDescending { it.length }
+            .joinToString(" ")
+
+        val searchWords = escapeRegex(sortedNeedle)
             .trim()
             .replace("\\s+".toRegex(), "|")
 

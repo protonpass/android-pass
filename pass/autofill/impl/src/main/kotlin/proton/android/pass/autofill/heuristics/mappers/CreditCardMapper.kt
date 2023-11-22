@@ -34,8 +34,7 @@ object CreditCardMapper {
         cluster: NodeCluster.CreditCard
     ): AutofillMappings {
         val mappings = mutableListOf<DatasetMapping>()
-        val decryptedNumber = encryptionContext.decrypt(autofillItem.number)
-        mappings.add(mappingForCardNumber(decryptedNumber, cluster.cardNumber.id))
+        mappings.add(mappingForCardNumber(autofillItem.number, cluster.cardNumber.id))
 
         if (autofillItem.cardHolder.isNotBlank()) {
             val cardHolderSplits = autofillItem.cardHolder.split(" ")

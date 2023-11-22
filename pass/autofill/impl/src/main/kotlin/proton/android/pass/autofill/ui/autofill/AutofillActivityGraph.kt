@@ -28,6 +28,7 @@ import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.CreatedAlias
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.extensions.toAutofillItem
+import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
@@ -42,13 +43,19 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
-import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode.AutofillCreditCard
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode.AutofillLogin
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
+import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation
+import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCard
+import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCardNavigation
+import proton.android.pass.featureitemcreate.impl.creditcard.UpdateCreditCardNavigation
+import proton.android.pass.featureitemcreate.impl.creditcard.createCreditCardGraph
 import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
@@ -296,8 +303,30 @@ fun NavGraphBuilder.autofillActivityGraph(
             }
         }
     )
+    createCreditCardGraph {
+        when (it) {
+            BaseCreditCardNavigation.Close -> appNavigator.navigateBack()
+            is CreateCreditCardNavigation -> when (it) {
+                is CreateCreditCardNavigation.ItemCreated -> appNavigator.navigateBack()
+                is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
+                    destination = SelectVaultBottomsheet,
+                    route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                )
+            }
+
+            BaseCreditCardNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
+            is UpdateCreditCardNavigation -> {}
+        }
+    }
+    val mode = when (autofillAppState.autofillData.assistInfo.cluster) {
+        is NodeCluster.CreditCard -> AutofillCreditCard
+        is NodeCluster.Login,
+        is NodeCluster.SignUp -> AutofillLogin
+
+        NodeCluster.Empty -> AutofillLogin
+    }
     bottomsheetCreateItemGraph(
-        mode = CreateItemBottomSheetMode.Autofill,
+        mode = mode,
         onNavigate = {
             when (it) {
                 is CreateItemBottomsheetNavigation.CreateAlias -> dismissBottomSheet {
@@ -314,7 +343,18 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
                 }
 
-                else -> {}
+                is CreateItemBottomsheetNavigation.CreateCreditCard -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = CreateCreditCard,
+                        route = CreateCreditCard.createNavRoute(it.shareId)
+                    )
+                }
+
+                is CreateItemBottomsheetNavigation.CreateNote ->
+                    throw IllegalStateException("Cannot create note from autofill bottomsheet")
+
+                CreateItemBottomsheetNavigation.CreatePassword ->
+                    throw IllegalStateException("Cannot create password from autofill bottomsheet")
             }
         }
     )

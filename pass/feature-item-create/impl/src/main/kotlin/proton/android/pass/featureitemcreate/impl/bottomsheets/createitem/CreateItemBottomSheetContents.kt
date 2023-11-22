@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
@@ -38,7 +39,6 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -49,16 +49,18 @@ import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateAlias
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateCreditCard
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateLogin
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateNote
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreatePassword
-import proton.android.pass.domain.ShareId
 
 enum class CreateItemBottomSheetMode {
     Full,
-    Autofill;
+    AutofillLogin,
+    AutofillCreditCard;
 }
 
 @ExperimentalMaterialApi
@@ -78,15 +80,19 @@ fun CreateItemBottomSheetContents(
                 createItemAliasUIState = state.createItemAliasUIState
             ) { onNavigate(CreateAlias(it)) },
             createCreditCard(state.shareId) {
-                onNavigate(CreateItemBottomsheetNavigation.CreateCreditCard(it))
+                onNavigate(CreateCreditCard(it))
             },
             createNote(state.shareId) { onNavigate(CreateNote(it)) },
             createPassword { onNavigate(CreatePassword) }
         )
 
-        CreateItemBottomSheetMode.Autofill -> listOf(
+        CreateItemBottomSheetMode.AutofillLogin -> listOf(
             createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
             createAlias(state.shareId, state.createItemAliasUIState) { onNavigate(CreateAlias(it)) }
+        )
+
+        CreateItemBottomSheetMode.AutofillCreditCard -> listOf(
+            createCreditCard(state.shareId) { onNavigate(CreateCreditCard(it)) },
         )
     }
 
@@ -259,19 +265,25 @@ fun CreateItemBottomSheetLimitPreview(
     }
 }
 
+class CreateItemBottomSheetModePreviewProvider :
+    PreviewParameterProvider<CreateItemBottomSheetMode> {
+    override val values: Sequence<CreateItemBottomSheetMode>
+        get() = CreateItemBottomSheetMode.values().asSequence()
+}
+
+class ThemedCreateItemModePreviewProvider :
+    ThemePairPreviewProvider<CreateItemBottomSheetMode>(CreateItemBottomSheetModePreviewProvider())
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun CreateItemBottomSheetContentsPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemedCreateItemModePreviewProvider::class) input: Pair<Boolean, CreateItemBottomSheetMode>
 ) {
-    val mode =
-        if (input.second) CreateItemBottomSheetMode.Full else CreateItemBottomSheetMode.Autofill
     PassTheme(isDark = input.first) {
         Surface {
             CreateItemBottomSheetContents(
-                mode = mode,
+                mode = input.second,
                 onNavigate = {},
                 state = CreateItemBottomSheetUIState.DEFAULT
             )

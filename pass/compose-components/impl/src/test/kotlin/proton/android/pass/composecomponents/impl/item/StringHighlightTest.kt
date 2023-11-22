@@ -122,7 +122,7 @@ class StringHighlightTest {
 
     @Test
     fun `if the second match contains part of the first it should also be highlighted`() {
-        val res = process("accéf do fd onother", "cce cc")
+        val res = process("accéf do fd onother", "cc cce")
         val expected = buildAnnotatedString {
             append("a")
             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {

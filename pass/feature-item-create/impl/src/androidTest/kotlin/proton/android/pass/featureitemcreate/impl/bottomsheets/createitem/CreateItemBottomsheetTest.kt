@@ -53,9 +53,9 @@ class CreateItemBottomsheetTest {
     }
 
     @Test
-    fun testCreateLoginAutofillMode() {
+    fun testCreateLoginAutofillLoginMode() {
         performTest(
-            mode = CreateItemBottomSheetMode.Autofill,
+            mode = CreateItemBottomSheetMode.AutofillLogin,
             text = R.string.item_type_login_description,
         ) { navigation, checker ->
             if (navigation is CreateItemBottomsheetNavigation.CreateLogin) {
@@ -77,9 +77,9 @@ class CreateItemBottomsheetTest {
     }
 
     @Test
-    fun testCreateAliasAutofillMode() {
+    fun testCreateAliasAutofillLoginMode() {
         performTest(
-            mode = CreateItemBottomSheetMode.Autofill,
+            mode = CreateItemBottomSheetMode.AutofillLogin,
             text = R.string.item_type_alias_description,
         ) { navigation, checker ->
             if (navigation is CreateItemBottomsheetNavigation.CreateAlias) {
@@ -111,6 +111,19 @@ class CreateItemBottomsheetTest {
             }
         }
     }
+
+    @Test
+    fun testCreateCreditCardAutofillCreditCardMode() {
+        performTest(
+            mode = CreateItemBottomSheetMode.AutofillCreditCard,
+            text = R.string.item_type_credit_card_description,
+        ) { navigation, checker ->
+            if (navigation is CreateItemBottomsheetNavigation.CreateCreditCard) {
+                checker.call(Unit)
+            }
+        }
+    }
+
 
     private fun performTest(
         mode: CreateItemBottomSheetMode,

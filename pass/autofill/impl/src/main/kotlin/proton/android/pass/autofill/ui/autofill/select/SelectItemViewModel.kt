@@ -52,6 +52,7 @@ import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
+import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -175,29 +176,36 @@ class SelectItemViewModel @Inject constructor(
 
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         planFlow,
-        vaultsFlow
-    ) { plan, vaults -> plan to vaults }
-        .flatMapLatest { data ->
-            val (plan, vaultsRes) = data
+        vaultsFlow,
+        autofillAppState,
+        ::Triple
+    ).flatMapLatest { (plan, vaultsRes, appState) ->
 
-            val vaults = when (vaultsRes) {
-                is LoadingResult.Success -> vaultsRes.data
-                is LoadingResult.Error -> {
-                    PassLogger.w(TAG, vaultsRes.exception, "Error observing vaults")
-                    return@flatMapLatest flowOf(LoadingResult.Error(vaultsRes.exception))
-                }
-
-                LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
+        val vaults = when (vaultsRes) {
+            is LoadingResult.Success -> vaultsRes.data
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, vaultsRes.exception, "Error observing vaults")
+                return@flatMapLatest flowOf(LoadingResult.Error(vaultsRes.exception))
             }
 
-            val selection = getShareSelection(plan.planType, vaults)
-
-            observeActiveItems(
-                filter = ItemTypeFilter.Logins,
-                shareSelection = selection
-            ).asResultWithoutLoading()
-
+            LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
         }
+
+        val selection = getShareSelection(plan.planType, vaults)
+
+        val state = appState.value() ?: return@flatMapLatest flowOf(LoadingResult.Loading)
+        val filter = when (state.autofillData.assistInfo.cluster) {
+            is NodeCluster.CreditCard -> ItemTypeFilter.CreditCards
+            is NodeCluster.Login,
+            is NodeCluster.SignUp -> ItemTypeFilter.Logins
+
+            else -> return@flatMapLatest flowOf(LoadingResult.Error(IllegalStateException("Unknown cluster type")))
+        }
+        observeActiveItems(
+            filter = filter,
+            shareSelection = selection
+        ).asResultWithoutLoading()
+    }
         .map { itemResult ->
             itemResult.map { list ->
                 encryptionContextProvider.withEncryptionContext {
@@ -246,10 +254,16 @@ class SelectItemViewModel @Inject constructor(
             .flatMapLatest { state ->
                 if (state is Some) {
                     val autofillData = state.value.autofillData
-                    getSuggestedLoginItems(
-                        packageName = autofillData.packageInfo.map { it.packageName.value },
-                        url = autofillData.assistInfo.url
-                    ).asResultWithoutLoading()
+                    when (autofillData.assistInfo.cluster) {
+                        is NodeCluster.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
+                        is NodeCluster.Login,
+                        is NodeCluster.SignUp -> getSuggestedLoginItems(
+                            packageName = autofillData.packageInfo.map { it.packageName.value },
+                            url = autofillData.assistInfo.url
+                        ).asResultWithoutLoading()
+
+                        else -> flowOf(LoadingResult.Success(emptyList()))
+                    }
                 } else {
                     flowOf(LoadingResult.Loading)
                 }
@@ -390,20 +404,18 @@ class SelectItemViewModel @Inject constructor(
         autofillAppState: AutofillAppState,
         shouldAssociate: Boolean
     ) {
-        item.toAutoFillItem()
-            .map { autofillItem ->
-                when (autofillItem) {
-                    is AutofillItem.Login -> onLoginItemClicked(
-                        autofillItem = autofillItem,
-                        autofillAppState = autofillAppState,
-                        shouldAssociate = shouldAssociate,
-                    )
-                    is AutofillItem.CreditCard -> onCreditCardClicked(
-                        autofillItem = autofillItem,
-                        autofillAppState = autofillAppState,
-                    )
-                }
-            }
+        when (val autofillItem = item.toAutoFillItem()) {
+            is AutofillItem.Login -> onLoginItemClicked(
+                autofillItem = autofillItem,
+                autofillAppState = autofillAppState,
+                shouldAssociate = shouldAssociate,
+            )
+
+            is AutofillItem.CreditCard -> onCreditCardClicked(
+                autofillItem = autofillItem,
+                autofillAppState = autofillAppState,
+            )
+        }
     }
 
     fun onSearchQueryChange(query: String) {

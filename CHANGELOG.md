@@ -6,6 +6,16 @@
 
 ### Other
 
+## 1.11.1 (2023-11-22)
+
+### Fixes :bug:
+
+- Stability fixes regarding custom fields.
+
+### Other
+
+- Autofill improvements.
+
 ## 1.11.0 (2023-11-17)
 
 ### Features :tada:

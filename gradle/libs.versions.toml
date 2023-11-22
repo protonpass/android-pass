@@ -18,7 +18,6 @@ androidx-compose-compiler = "1.4.3"
 androidx-compose-foundation = "1.4.3"
 androidx-compose-material = "1.4.3"
 androidx-core-splashscreen = "1.0.1"
-androidx-core = "1.10.0"
 androidx-datastore = "1.0.0"
 androidx-espresso-core = "3.5.1"
 androidx-hilt = "1.0.0"
@@ -142,7 +141,6 @@ androidx-compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", versio
 androidx-compose-uiToolingPreview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-compose" }
 androidx-compose-uiTestManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-compose" }
 ## Core
-androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
 ## Datastore
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "androidx-datastore" }

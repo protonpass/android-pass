@@ -50,6 +50,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
@@ -100,12 +101,14 @@ fun AuthScreenMasterPasswordForm(
             style = PassTheme.typography.heroNorm()
         )
         Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.auth_unlock_app_subtitle, state.address),
-            textAlign = TextAlign.Center,
-            style = PassTheme.typography.body3Weak()
-        )
+        if (state.address is Some) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.auth_unlock_app_subtitle, state.address.value),
+                textAlign = TextAlign.Center,
+                style = PassTheme.typography.body3Weak()
+            )
+        }
         Spacer(modifier = Modifier.height(40.dp))
 
         ProtonTextField(
@@ -210,7 +213,7 @@ fun AuthScreenMasterPasswordFormPreview(
             AuthScreenMasterPasswordForm(
                 state = AuthContent(
                     password = input.second.password,
-                    address = "some@address.test",
+                    address = "some@address.test".some(),
                     isLoadingState = IsLoadingState.NotLoading,
                     error = input.second.error,
                     isPasswordVisible = input.second.isPasswordVisible,

@@ -307,7 +307,9 @@ fun NavGraphBuilder.autofillActivityGraph(
         when (it) {
             BaseCreditCardNavigation.Close -> appNavigator.navigateBack()
             is CreateCreditCardNavigation -> when (it) {
-                is CreateCreditCardNavigation.ItemCreated -> appNavigator.navigateBack()
+                is CreateCreditCardNavigation.ItemCreated ->
+                    onAutofillItemReceived(it.itemUiModel.toAutoFillItem())
+
                 is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)

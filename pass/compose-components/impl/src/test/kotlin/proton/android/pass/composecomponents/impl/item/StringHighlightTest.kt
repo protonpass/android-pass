@@ -120,6 +120,19 @@ class StringHighlightTest {
         assertThat(res).isEqualTo(expected)
     }
 
+    @Test
+    fun `if the second match contains part of the first it should also be highlighted`() {
+        val res = process("accéf do fd onother", "cce cc")
+        val expected = buildAnnotatedString {
+            append("a")
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("ccé")
+            }
+            append("f do fd on…")
+        }
+        assertThat(res).isEqualTo(expected)
+    }
+
     @Suppress("MaxLineLength")
     @Test
     fun `can highlight a word in the middle of a long sentence string`() {

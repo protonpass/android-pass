@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill.ui.autofill
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
@@ -82,7 +81,6 @@ import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
-@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 fun NavGraphBuilder.autofillActivityGraph(

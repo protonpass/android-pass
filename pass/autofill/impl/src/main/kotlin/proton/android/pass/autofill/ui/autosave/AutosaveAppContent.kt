@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill.ui.autosave
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -27,7 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.navigation.animation.AnimatedNavHost
+import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
@@ -37,7 +36,6 @@ import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
 @OptIn(
-    ExperimentalAnimationApi::class,
     ExperimentalMaterialNavigationApi::class,
     ExperimentalMaterialApi::class
 )
@@ -57,7 +55,7 @@ fun AutosaveAppContent(
     )
     val coroutineScope = rememberCoroutineScope()
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
-        AnimatedNavHost(
+        NavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
             navController = appNavigator.navController,
             startDestination = if (needsAuth) AUTH_GRAPH else CREATE_LOGIN_GRAPH,

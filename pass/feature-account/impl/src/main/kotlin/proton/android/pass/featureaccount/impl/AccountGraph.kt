@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureaccount.impl
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavGraphBuilder
@@ -36,7 +35,6 @@ object SignOutDialog : NavItem(
     navItemType = NavItemType.Dialog
 )
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.accountGraph(
     onNavigate: (AccountNavigation) -> Unit
 ) {

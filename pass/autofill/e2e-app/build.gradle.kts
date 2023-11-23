@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId = "proton.android.pass.autofill.e2e"
         minSdk = libs.versions.minSdk.get().toInt()
-        
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = appVersionCode
         versionName = appVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

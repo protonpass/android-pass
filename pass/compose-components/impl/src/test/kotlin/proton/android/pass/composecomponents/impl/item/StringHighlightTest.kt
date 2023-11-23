@@ -133,6 +133,73 @@ class StringHighlightTest {
         assertThat(res).isEqualTo(expected)
     }
 
+    @Test
+    fun `can highlight test with a space at the beginning`() {
+        val res = process(" some txt with a space at the beginning", "space")
+        val expected = buildAnnotatedString {
+            append("…xt with a ")
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("space")
+            }
+            append(" at the be…")
+        }
+        assertThat(res).isEqualTo(expected)
+    }
+
+    @Test
+    fun `can highlight with multiple spaces at the beginning`() {
+        val res = process("     some txt with spaces at the beginning", "  space ")
+        val expected = buildAnnotatedString {
+            append("… txt with ")
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("space")
+            }
+            append("s at the b…")
+        }
+        assertThat(res).isEqualTo(expected)
+    }
+
+    @Test
+    fun `can highlight with multiple spaces at the end`() {
+        val res = process("txt with spaces at the end        ", "  space ")
+        val expected = buildAnnotatedString {
+            append("txt with ")
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("space")
+            }
+            append("s at the e…")
+        }
+        assertThat(res).isEqualTo(expected)
+    }
+
+    @Test
+    fun `can highlight with multiple spaces at the end when match is at the end`() {
+        val res = process("txt with spaces at the end                       ", "end")
+        val expected = buildAnnotatedString {
+            append("…es at the ")
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("end")
+            }
+        }
+        assertThat(res).isEqualTo(expected)
+    }
+
+    @Test
+    fun `can highlight text with newlines`() {
+        val input = """- sign-in address: https://somewebsites.randomsites.com
+- secret key: A1-345-SDV
+        """.trimIndent()
+        val res = process(input, "com")
+        val expected = buildAnnotatedString {
+            append("…ndomsites.")
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("com")
+            }
+            append(" - secret …")
+        }
+        assertThat(res).isEqualTo(expected)
+    }
+
     @Suppress("MaxLineLength")
     @Test
     fun `can highlight a word in the middle of a long sentence string`() {

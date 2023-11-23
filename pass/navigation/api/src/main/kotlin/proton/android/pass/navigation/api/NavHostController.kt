@@ -20,7 +20,6 @@ package proton.android.pass.navigation.api
 
 import android.content.Context
 import android.os.Bundle
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,13 +27,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigator
+import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
-import com.google.accompanist.navigation.animation.AnimatedComposeNavigator
 import me.proton.core.crypto.android.keystore.AndroidKeyStoreCrypto
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 
 @Composable
-fun rememberAnimatedNavController(
+fun rememberNavController(
     vararg navigators: Navigator<out NavDestination>
 ): NavHostController {
     val context = LocalContext.current
@@ -49,10 +48,9 @@ fun rememberAnimatedNavController(
         }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun createNavController(context: Context) =
     NavHostController(context).apply {
-        navigatorProvider.addNavigator(AnimatedComposeNavigator())
+        navigatorProvider.addNavigator(ComposeNavigator())
         navigatorProvider.addNavigator(DialogNavigator())
     }
 

@@ -1,6 +1,5 @@
 package proton.android.pass.featureitemcreate.impl.creditcard
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
@@ -9,12 +8,12 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
-import proton.android.pass.domain.ShareId
 
 object CreateCreditCard : NavItem(
     baseRoute = "creditcard/create/screen",
@@ -39,7 +38,6 @@ sealed interface CreateCreditCardNavigation : BaseCreditCardNavigation {
     value class SelectVault(val shareId: ShareId) : CreateCreditCardNavigation
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.createCreditCardGraph(
     onNavigate: (BaseCreditCardNavigation) -> Unit,
 ) {

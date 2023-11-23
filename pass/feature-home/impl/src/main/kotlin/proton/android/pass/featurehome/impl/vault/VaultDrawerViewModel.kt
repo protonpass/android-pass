@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
@@ -47,14 +48,14 @@ class VaultDrawerViewModel @Inject constructor(
     val drawerUiState: StateFlow<VaultDrawerUiState> = combine(
         observeVaultsWithItemCount().asLoadingResult(),
         homeSearchOptionsRepository.observeVaultSelectionOption(),
-        canCreateVault()
+        canCreateVault().asLoadingResult()
     ) { shares, selectedVault, canCreateVault ->
         when (shares) {
             LoadingResult.Loading -> VaultDrawerUiState(
                 vaultSelection = selectedVault,
                 shares = persistentListOf(),
                 totalTrashedItems = 0,
-                canCreateVault = canCreateVault
+                canCreateVault = canCreateVault.getOrNull() ?: false
             )
 
             is LoadingResult.Error -> {
@@ -63,7 +64,7 @@ class VaultDrawerViewModel @Inject constructor(
                     vaultSelection = selectedVault,
                     shares = persistentListOf(),
                     totalTrashedItems = 0,
-                    canCreateVault = canCreateVault
+                    canCreateVault = canCreateVault.getOrNull() ?: false
                 )
             }
 
@@ -86,7 +87,7 @@ class VaultDrawerViewModel @Inject constructor(
                     vaultSelection = selectedVault,
                     shares = sharesWithCount,
                     totalTrashedItems = totalTrashed,
-                    canCreateVault = canCreateVault
+                    canCreateVault = canCreateVault.getOrNull() ?: false
                 )
             }
         }

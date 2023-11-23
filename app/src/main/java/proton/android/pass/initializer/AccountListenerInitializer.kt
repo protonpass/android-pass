@@ -31,6 +31,7 @@ import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountRemoved
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
+import proton.android.pass.log.api.PassLogger
 
 class AccountListenerInitializer : Initializer<Unit> {
     override fun create(context: Context) {
@@ -48,8 +49,10 @@ class AccountListenerInitializer : Initializer<Unit> {
             lifecycle = lifecycleProvider.lifecycle,
             minActiveState = Lifecycle.State.CREATED
         ).onAccountDisabled {
+            PassLogger.i(TAG, "Account disabled")
             accountManager.removeAccount(it.userId)
         }.onAccountRemoved {
+            PassLogger.i(TAG, "Account removed")
             resetAppToDefaults()
         }
     }
@@ -63,5 +66,9 @@ class AccountListenerInitializer : Initializer<Unit> {
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
         fun resetAppToDefaults(): ResetAppToDefaults
+    }
+
+    companion object {
+        private const val TAG = "AccountListenerInitializer"
     }
 }

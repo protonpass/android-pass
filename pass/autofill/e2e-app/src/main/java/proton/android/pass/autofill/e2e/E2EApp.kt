@@ -26,6 +26,8 @@ import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.domain.ItemId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -41,11 +43,15 @@ class E2EApp : Application() {
     @Inject
     lateinit var creditCardItems: TestGetSuggestedCreditCardItems
 
+    @Inject
+    lateinit var ffRepo: FeatureFlagsPreferencesRepository
+
     override fun onCreate() {
         super.onCreate()
         setupItems()
         setupAccount()
         setupLogger()
+        setupCCAutofill()
     }
 
     private fun setupItems() {
@@ -92,5 +98,9 @@ class E2EApp : Application() {
 
     private fun setupAccount() {
         accountManager.sendPrimaryUserId(UserId("user1"))
+    }
+
+    private fun setupCCAutofill() {
+        ffRepo.set(FeatureFlag.CREDIT_CARD_AUTOFILL, true)
     }
 }

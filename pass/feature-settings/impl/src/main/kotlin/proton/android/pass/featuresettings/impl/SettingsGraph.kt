@@ -19,7 +19,6 @@
 package proton.android.pass.featuresettings.impl
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.navigation.api.NavItem
@@ -57,8 +56,6 @@ sealed interface SettingsNavigation {
     object SyncDialog : SettingsNavigation
 }
 
-@Suppress("LongParameterList")
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settingsGraph(
     onNavigate: (SettingsNavigation) -> Unit
 ) {

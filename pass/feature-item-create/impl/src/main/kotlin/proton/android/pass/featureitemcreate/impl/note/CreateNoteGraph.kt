@@ -18,19 +18,18 @@
 
 package proton.android.pass.featureitemcreate.impl.note
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
-import proton.android.pass.domain.ShareId
 
 object CreateNote : NavItem(
     baseRoute = "note/create",
@@ -47,7 +46,6 @@ object CreateNote : NavItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.createNoteGraph(
     onNavigate: (CreateNoteNavigation) -> Unit
 ) {

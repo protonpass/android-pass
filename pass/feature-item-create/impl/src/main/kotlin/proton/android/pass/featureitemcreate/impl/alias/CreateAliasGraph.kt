@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.alias
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
@@ -27,6 +26,8 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.alias.bottomsheet.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
@@ -38,8 +39,6 @@ import proton.android.pass.navigation.api.ShowUpgradeNavArgId
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 
 object IsEditAliasNavArg : OptionalNavArgId {
     override val key = "isEdit"
@@ -108,7 +107,6 @@ sealed interface CreateAliasNavigation {
     data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.createAliasGraph(
     onNavigate: (CreateAliasNavigation) -> Unit,
 ) {

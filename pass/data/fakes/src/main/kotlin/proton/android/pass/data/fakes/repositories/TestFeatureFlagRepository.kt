@@ -25,7 +25,9 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestFeatureFlagRepository @Inject constructor() : FeatureFlagRepository {
 
     private val enabledFeatures = mutableMapOf<String, Boolean>()

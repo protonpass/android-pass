@@ -94,7 +94,7 @@ object AutoFillHandler {
         }
     }
 
-    @Suppress("LongMethod", "LongParameterList", "ReturnCount")
+    @Suppress("LongParameterList")
     private suspend fun searchAndFill(
         context: Context,
         windowNode: AssistStructure.WindowNode,
@@ -104,35 +104,23 @@ object AutoFillHandler {
         telemetryManager: TelemetryManager,
         accountManager: AccountManager
     ) {
-        val currentUser = accountManager.getPrimaryUserId().first()
-        if (currentUser == null) {
-            PassLogger.i(TAG, "No user found")
-            callback.onSuccess(null)
-            return
-        }
-        val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
-        val extractionResult = NodeExtractor(requestFlags).extract(windowNode.rootViewNode)
-        if (extractionResult.fields.isEmpty()) {
-            callback.onSuccess(null)
-            return
-        }
-        PassLogger.d(TAG, "Fields found: ${extractionResult.fields.map { it.type }.joinToString()}")
-
-        val clusteredNodes = NodeClusterer.cluster(extractionResult.fields)
-        PassLogger.d(TAG, "Clusters found: ${clusteredNodes.joinToString()}")
-
-        val focusedCluster = clusteredNodes.focused()
-
-        if (focusedCluster == NodeCluster.Empty) {
-            PassLogger.d(TAG, "No focused cluster found")
-            callback.onSuccess(null)
-            return
-        }
-
-        val assistInfo = AssistInfo(
-            cluster = focusedCluster,
-            url = extractionResult.url
+        val shouldAutofill = shouldAutofill(
+            accountManager = accountManager,
+            request = request,
+            windowNode = windowNode,
+            autofillServiceManager = autofillServiceManager
         )
+        val assistInfo = when (shouldAutofill) {
+            is ShouldAutofillResult.No -> {
+                PassLogger.i(TAG, "Should not autofill")
+                callback.onSuccess(null)
+                return
+            }
+            is ShouldAutofillResult.Yes -> {
+                PassLogger.i(TAG, "Should autofill")
+                shouldAutofill.assistInfo
+            }
+        }
 
         val packageNameOption = Utils.getApplicationPackageName(windowNode)
             .takeIf { !BROWSERS.contains(it) }
@@ -163,7 +151,7 @@ object AutoFillHandler {
 
         val isBrowser = packageNameOption.map { BROWSERS.contains(it) }.value() ?: false
         responseBuilder.addSaveInfo(
-            cluster = focusedCluster,
+            cluster = assistInfo.cluster,
             currentClientState = request.clientState ?: Bundle(),
             isBrowser = isBrowser,
             autofillSessionId = request.id
@@ -177,6 +165,51 @@ object AutoFillHandler {
         }
     }
 
+    @Suppress("ReturnCount")
+    private suspend fun shouldAutofill(
+        accountManager: AccountManager,
+        request: FillRequest,
+        windowNode: AssistStructure.WindowNode,
+        autofillServiceManager: AutofillServiceManager
+    ): ShouldAutofillResult {
+        val currentUser = accountManager.getPrimaryUserId().first()
+        if (currentUser == null) {
+            PassLogger.d(TAG, "No user found")
+            return ShouldAutofillResult.No
+        }
+        val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
+        val extractionResult = NodeExtractor(requestFlags).extract(windowNode.rootViewNode)
+        if (extractionResult.fields.isEmpty()) {
+            PassLogger.d(TAG, "No fields found")
+            return ShouldAutofillResult.No
+        }
+        PassLogger.d(TAG, "Fields found: ${extractionResult.fields.map { it.type }.joinToString()}")
+
+        val clusteredNodes = NodeClusterer.cluster(extractionResult.fields)
+        PassLogger.d(TAG, "Clusters found: ${clusteredNodes.joinToString()}")
+
+        val focusedCluster = clusteredNodes.focused()
+
+        if (focusedCluster == NodeCluster.Empty) {
+            PassLogger.d(TAG, "No focused cluster found")
+            return ShouldAutofillResult.No
+        }
+
+        if (focusedCluster is NodeCluster.CreditCard) {
+            if (!autofillServiceManager.isCreditCardAutofillEnabled()) {
+                PassLogger.d(TAG, "Credit card autofill disabled")
+                return ShouldAutofillResult.No
+            }
+        }
+
+        val assistInfo = AssistInfo(
+            cluster = focusedCluster,
+            url = extractionResult.url
+        )
+
+        return ShouldAutofillResult.Yes(assistInfo)
+    }
+
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.R)
     private fun hasSupportForInlineSuggestions(request: FillRequest): Boolean =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -188,4 +221,9 @@ object AutoFillHandler {
         } else {
             false
         }
+
+    sealed interface ShouldAutofillResult {
+        object No : ShouldAutofillResult
+        data class Yes(val assistInfo: AssistInfo) : ShouldAutofillResult
+    }
 }

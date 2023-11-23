@@ -49,55 +49,6 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     private var detectedUrl: Option<String> = None
     private var inCreditCardContext = false
 
-    private val fieldKeywordsList = listOf(
-        FieldType.Username to listOf(
-            View.AUTOFILL_HINT_USERNAME,
-            View.AUTOFILL_HINT_EMAIL_ADDRESS,
-            "email",
-            "username",
-            "identifier",
-            "accountname",
-            "userid"
-        ),
-        FieldType.Password to listOf("password"),
-        FieldType.Totp to listOf("otp", "totp", "mfa", "2fa", "tfa"),
-        FieldType.CardNumber to listOf(
-            "cardnumber",
-            "cardnum",
-            "ccnumber",
-            "inputcard",
-            "numerodetarjeta"
-        ),
-        FieldType.CardCvv to listOf("cvc", "cvv", "securitycode"),
-
-        // Keywords for cardholder name are order-sensitve. First we want to test if we find
-        // different fields for first name and last name, and if we can't, fallback to CardholderName
-        FieldType.CardholderFirstName to listOf("firstname"),
-        FieldType.CardholderLastName to listOf("lastname"),
-        FieldType.CardholderName to listOf("cardholder", "cardname", "holdername", "ccname"),
-
-        // Keywords for expiration are order-sensitive. First we want to test for MMYY.
-        // If we don't find it, we test for MM, and for the year, YYYY is more specific than YY,
-        // so it needs to be evaluated first.
-        FieldType.CardExpirationMMYY to listOf("mmyy", "mmaa"),
-        FieldType.CardExpirationMM to listOf(
-            "cardmonth",
-            "expmonth",
-            "expirationmonth",
-            "expirationdatemonth",
-            "mesmm"
-        ),
-        FieldType.CardExpirationYYYY to listOf("4digityear", "yyyy"),
-        FieldType.CardExpirationYY to listOf(
-            "cardyear",
-            "expyear",
-            "expirationyear",
-            "expirationdateyear",
-            "yy",
-            "anoaa"
-        )
-    )
-
     // For testing purposes
     var visitedNodes = 0
         private set
@@ -491,18 +442,11 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
         val htmlValues = attributes.map { it.second }.map(::sanitizeHint)
 
-        for ((fieldType, keywords) in fieldKeywordsList) {
-            for (value in htmlValues) {
-                for (keyword in keywords) {
-                    if (value.contains(keyword)) {
-                        PassLogger.v(TAG, "Found field type $fieldType using html attr $value")
-                        return fieldType
-                    }
-                }
-            }
+        val (fieldType, match) = fieldKeywordsList.match(htmlValues)
+        if (fieldType != FieldType.Unknown) {
+            PassLogger.v(TAG, "Found field type $fieldType using html attr $match")
         }
-
-        return FieldType.Unknown
+        return fieldType
     }
 
     private fun detectFieldTypeUsingAutofillHints(hints: Set<String>): FieldType {
@@ -534,16 +478,11 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         if (USERNAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Username
         if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
 
-        for ((fieldType, keywords) in fieldKeywordsList) {
-            for (kw in keywords) {
-                if (sanitizedHint.contains(kw)) {
-                    PassLogger.v(TAG, "Found field type $fieldType using hint $hint")
-                    return fieldType
-                }
+        return fieldKeywordsList.match(sanitizedHint).also {
+            if (it != FieldType.Unknown) {
+                PassLogger.v(TAG, "Found field type $it using hint $hint")
             }
         }
-
-        return FieldType.Unknown
     }
 
     private fun sanitizeHint(hint: String): String = hint.lowercase()

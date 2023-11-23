@@ -18,12 +18,11 @@
 
 package proton.android.pass.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import com.google.accompanist.navigation.animation.AnimatedNavHost
+import androidx.navigation.compose.NavHost
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
@@ -31,19 +30,17 @@ import proton.android.pass.ui.navigation.appGraph
 import proton.android.pass.ui.navigation.unAuthGraph
 
 @OptIn(
-    ExperimentalAnimationApi::class,
     ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class
 )
 @Composable
-@Suppress("LongParameterList")
 fun PassNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
-    AnimatedNavHost(
+    NavHost(
         modifier = modifier,
         navController = appNavigator.navController,
         startDestination = Home.route
@@ -56,7 +53,6 @@ fun PassNavHost(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 @Suppress("LongParameterList")
 fun PassUnAuthNavHost(
@@ -64,7 +60,7 @@ fun PassUnAuthNavHost(
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit
 ) {
-    AnimatedNavHost(
+    NavHost(
         modifier = modifier,
         navController = appNavigator.navController,
         startDestination = UN_AUTH_GRAPH

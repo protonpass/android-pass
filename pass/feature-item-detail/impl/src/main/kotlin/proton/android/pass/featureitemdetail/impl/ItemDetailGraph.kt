@@ -18,15 +18,13 @@
 
 package proton.android.pass.featureitemdetail.impl
 
-import androidx.compose.animation.AnimatedContentScope.SlideDirection.Companion.Left
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.remember
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import me.proton.core.compose.navigation.requireArguments
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemdetail.impl.common.CannotPerformActionDialog
 import proton.android.pass.featureitemdetail.impl.common.CannotPerformActionDialogType
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -35,11 +33,6 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-
-private const val TRANSITION_TIME_MILLIS = 500
-private const val FADE_DELAY_TIME_MILLIS = 100
 
 sealed interface ItemDetailNavigation {
     data class OnEdit(val itemUiModel: ItemUiModel) : ItemDetailNavigation
@@ -102,19 +95,11 @@ object ViewItem : NavItem(
         "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.itemDetailGraph(
     onNavigate: (ItemDetailNavigation) -> Unit,
 ) {
     composable(
-        navItem = ViewItem,
-        enterTransition = {
-            fadeIn(tween(TRANSITION_TIME_MILLIS, delayMillis = FADE_DELAY_TIME_MILLIS)) +
-                slideIntoContainer(Left, tween(TRANSITION_TIME_MILLIS))
-        },
-        exitTransition = null,
-        popEnterTransition = null,
-        popExitTransition = null
+        navItem = ViewItem
     ) {
         ItemDetailScreen(
             onNavigate = onNavigate

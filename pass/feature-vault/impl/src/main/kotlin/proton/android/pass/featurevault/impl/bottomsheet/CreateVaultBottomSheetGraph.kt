@@ -18,9 +18,10 @@
 
 package proton.android.pass.featurevault.impl.bottomsheet
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -28,8 +29,6 @@ import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 
 sealed interface CreateVaultNextAction {
 
@@ -82,7 +81,6 @@ object EditVaultScreen : NavItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 internal fun NavGraphBuilder.createVaultGraph(
     onNavigate: (VaultNavigation) -> Unit
 ) {
@@ -93,7 +91,6 @@ internal fun NavGraphBuilder.createVaultGraph(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 internal fun NavGraphBuilder.editVaultGraph(
     onNavigate: (VaultNavigation) -> Unit
 ) {

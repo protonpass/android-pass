@@ -39,7 +39,7 @@ fun StringBuilder.appendAndroidLibraryPlugin(namespace: String): StringBuilder =
             
             defaultConfig {
                 minSdk = libs.versions.minSdk.get().toInt()
-                targetSdk = libs.versions.targetSdk.get().toInt()
+                
             }
             
             compileOptions {

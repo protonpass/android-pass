@@ -18,15 +18,14 @@
 
 package proton.android.pass.featureitemcreate.impl.alias
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 
 object EditAlias : NavItem(
     baseRoute = "alias/edit",
@@ -39,7 +38,7 @@ object EditAlias : NavItem(
 }
 
 @OptIn(
-    ExperimentalAnimationApi::class, ExperimentalMaterialApi::class,
+    ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class
 )
 fun NavGraphBuilder.updateAliasGraph(

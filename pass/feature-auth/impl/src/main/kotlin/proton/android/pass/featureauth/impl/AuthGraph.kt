@@ -19,7 +19,6 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.navigation.api.NavItem
@@ -46,7 +45,6 @@ sealed interface AuthNavigation {
     object Back : AuthNavigation
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.authGraph(
     canLogout: Boolean,
     navigation: (AuthNavigation) -> Unit

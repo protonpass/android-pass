@@ -18,7 +18,6 @@
 
 package proton.android.pass.featurehome.impl
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -28,13 +27,13 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 
 const val HOME_GO_TO_VAULT_KEY = "home_go_to_vault"
 
@@ -53,7 +52,6 @@ object Home : NavItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.homeGraph(
     onNavigateEvent: (HomeNavigation) -> Unit,
 ) {

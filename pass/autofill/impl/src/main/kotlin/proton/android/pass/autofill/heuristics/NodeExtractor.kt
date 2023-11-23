@@ -49,7 +49,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     private var detectedUrl: Option<String> = None
     private var inCreditCardContext = false
 
-    private val fieldKeywordsMap = listOf(
+    private val fieldKeywordsList = listOf(
         FieldType.Username to listOf(
             View.AUTOFILL_HINT_USERNAME,
             View.AUTOFILL_HINT_EMAIL_ADDRESS,
@@ -132,20 +132,22 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             .apply { add(context.node.id!!) }
             .toList()
 
-        when (val assistField = getAssistField(context)) {
-            is Some -> addNode(assistField.value)
-            None -> {}
-        }
+        if (context.node.children.isEmpty()) {
+            when (val assistField = getAssistField(context)) {
+                is Some -> addNode(assistField.value)
+                None -> {}
+            }
+        } else {
+            context.node.children.forEach {
+                val newContext = AutofillTraversalContext(
+                    node = it,
+                    parent = Some(context),
+                    siblings = context.node.children,
+                    parentPath = pathToCurrentNode
+                )
 
-        context.node.children.forEach {
-            val newContext = AutofillTraversalContext(
-                node = it,
-                parent = Some(context),
-                siblings = context.node.children,
-                parentPath = pathToCurrentNode
-            )
-
-            traverseInternal(newContext)
+                traverseInternal(newContext)
+            }
         }
 
         visitedNodes += 1
@@ -489,7 +491,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
         val htmlValues = attributes.map { it.second }.map(::sanitizeHint)
 
-        for ((fieldType, keywords) in fieldKeywordsMap) {
+        for ((fieldType, keywords) in fieldKeywordsList) {
             for (value in htmlValues) {
                 for (keyword in keywords) {
                     if (value.contains(keyword)) {
@@ -532,7 +534,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         if (USERNAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Username
         if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
 
-        for ((fieldType, keywords) in fieldKeywordsMap) {
+        for ((fieldType, keywords) in fieldKeywordsList) {
             for (kw in keywords) {
                 if (sanitizedHint.contains(kw)) {
                     PassLogger.v(TAG, "Found field type $fieldType using hint $hint")

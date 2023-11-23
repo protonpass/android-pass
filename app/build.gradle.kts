@@ -121,7 +121,8 @@ android {
     buildTypes {
         debug {
             isDebuggable = true
-            isTestCoverageEnabled = false
+            enableUnitTestCoverage = false
+            enableAndroidTestCoverage = false
             postprocessing {
                 isObfuscate = false
                 isOptimizeCode = false
@@ -131,7 +132,8 @@ android {
         }
         release {
             isDebuggable = false
-            isTestCoverageEnabled = false
+            enableUnitTestCoverage = false
+            enableAndroidTestCoverage = false
             postprocessing {
                 isObfuscate = false
                 isOptimizeCode = true

@@ -18,13 +18,14 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameNavigation
 import proton.android.pass.featureitemcreate.impl.dialogs.customFieldNameDialogGraph
@@ -35,8 +36,6 @@ import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 
 private const val EDIT_LOGIN_GRAPH = "edit_login_graph"
 
@@ -49,7 +48,6 @@ object EditLogin : NavItem(
 }
 
 @Suppress("LongParameterList")
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.updateLoginGraph(
     onNavigate: (BaseLoginNavigation) -> Unit
 ) {

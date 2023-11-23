@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureprofile.impl
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -73,7 +72,6 @@ sealed interface ProfileNavigation {
     object EnterPin : ProfileNavigation
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.profileGraph(
     onNavigateEvent: (ProfileNavigation) -> Unit
 ) {

@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.totp
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.common.api.None
@@ -66,9 +65,6 @@ enum class TotpOptionalNavArgId : OptionalNavArgId {
     },
 }
 
-@OptIn(
-    ExperimentalAnimationApi::class
-)
 fun NavGraphBuilder.createTotpGraph(
     onSuccess: (String, Int?) -> Unit,
     onCloseTotp: () -> Unit,

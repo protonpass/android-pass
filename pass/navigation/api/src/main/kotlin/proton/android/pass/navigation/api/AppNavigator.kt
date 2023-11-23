@@ -31,7 +31,7 @@ import proton.android.pass.log.api.PassLogger
 @Composable
 fun rememberAppNavigator(
     bottomSheetNavigator: PassBottomSheetNavigator,
-    navController: NavHostController = rememberAnimatedNavController(bottomSheetNavigator),
+    navController: NavHostController = rememberNavController(bottomSheetNavigator),
 ): AppNavigator = remember(navController) { AppNavigator(navController, bottomSheetNavigator) }
 
 @OptIn(ExperimentalMaterialNavigationApi::class)

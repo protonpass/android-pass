@@ -18,7 +18,6 @@
 
 package proton.android.pass.ui.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.featureaccount.impl.AccountNavigation
@@ -38,7 +37,6 @@ import proton.android.pass.ui.AppNavigation
 
 internal const val UN_AUTH_GRAPH = "un_auth_graph"
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.unAuthGraph(
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit

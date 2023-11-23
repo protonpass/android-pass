@@ -29,7 +29,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.insets.ProvideWindowInsets
 import proton.android.pass.autofill.ui.SnackBarLaunchedEffect
 import proton.android.pass.autofill.ui.SnackBarViewModel
 import proton.android.pass.commonui.api.PassTheme
@@ -62,25 +61,23 @@ fun AutofillApp(
     SystemUIEffect(isDark = isDark)
 
     PassTheme(isDark = isDark) {
-        ProvideWindowInsets {
-            Scaffold(
-                modifier = modifier
-                    .background(PassTheme.colors.backgroundStrong)
-                    .systemBarsPadding()
-                    .imePadding(),
-                snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
-            ) { padding ->
-                AutofillAppContent(
-                    modifier = Modifier.padding(padding),
-                    autofillAppState = autofillUiState.autofillAppState,
-                    selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
-                    needsAuth = autofillUiState.needsAuth,
-                    onNavigate = {
-                        snackBarViewModel.onSnackbarMessageDelivered()
-                        onNavigate(it)
-                    }
-                )
-            }
+        Scaffold(
+            modifier = modifier
+                .background(PassTheme.colors.backgroundStrong)
+                .systemBarsPadding()
+                .imePadding(),
+            snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+        ) { padding ->
+            AutofillAppContent(
+                modifier = Modifier.padding(padding),
+                autofillAppState = autofillUiState.autofillAppState,
+                selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
+                needsAuth = autofillUiState.needsAuth,
+                onNavigate = {
+                    snackBarViewModel.onSnackbarMessageDelivered()
+                    onNavigate(it)
+                }
+            )
         }
     }
 }

@@ -31,8 +31,8 @@ object StringMatcher {
     ): List<MatchSpan> {
         if (needle.isBlank()) return emptyList()
 
-        val normalizedNeedle = normalize(needle, removeDiacritics)
-        val normalizedHaystack = normalize(haystack, removeDiacritics)
+        val normalizedNeedle = normalize(needle, TrimStrategy.StartEnd, removeDiacritics)
+        val normalizedHaystack = normalize(haystack, TrimStrategy.End, removeDiacritics)
 
         val sortedNeedle = normalizedNeedle
             .split(" ")
@@ -47,8 +47,15 @@ object StringMatcher {
         return getMatches(regex, normalizedHaystack)
     }
 
-    private fun normalize(value: String, removeDiacritics: Boolean = false): String {
-        var normalized = value.lowercase().trim()
+    private fun normalize(
+        value: String,
+        trimStrategy: TrimStrategy,
+        removeDiacritics: Boolean = false
+    ): String {
+        var normalized = when (trimStrategy) {
+            TrimStrategy.End -> value.trimEnd()
+            TrimStrategy.StartEnd -> value.trim()
+        }
         if (removeDiacritics) {
             normalized = Normalizer.normalize(normalized, Normalizer.Form.NFD)
                 .replace(Regex("[\\u0300-\\u036f]"), "")
@@ -66,5 +73,8 @@ object StringMatcher {
         }
         .toList()
 
-
+    enum class TrimStrategy {
+        End,
+        StartEnd
+    }
 }

@@ -47,10 +47,11 @@ private fun buildHighlightedString(
     highlightColor: Color
 ) = buildAnnotatedString {
     val firstSpan = matchSpans.first()
+    val sanitizedInput = input.replace("\n", " ").trimEnd()
 
-    val firstSection = firstSection(input, firstSpan)
-    val mainSection = mainSection(input, firstSpan, highlightColor)
-    val endSection = endSection(input, matchSpans, highlightColor)
+    val firstSection = firstSection(sanitizedInput, firstSpan)
+    val mainSection = mainSection(sanitizedInput, firstSpan, highlightColor)
+    val endSection = endSection(sanitizedInput, matchSpans, highlightColor)
 
     append(firstSection)
     append(mainSection)

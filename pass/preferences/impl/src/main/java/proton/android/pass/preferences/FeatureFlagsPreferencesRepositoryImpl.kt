@@ -30,6 +30,7 @@ import me.proton.android.pass.preferences.BooleanPrefProto
 import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
+import proton.android.pass.preferences.FeatureFlag.CREDIT_CARD_AUTOFILL
 import proton.android.pass.preferences.FeatureFlag.SHARING_NEW_USERS
 import proton.android.pass.preferences.FeatureFlag.SHARING_V1
 import java.io.IOException
@@ -48,6 +49,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             AUTOFILL_DEBUG_MODE -> getFeatureFlag(featureFlag.key) { autofillDebugModeEnabled.value }
             SHARING_V1 -> getFeatureFlag(featureFlag.key) { sharingV1Enabled.value }
             SHARING_NEW_USERS -> getFeatureFlag(featureFlag.key) { sharingNewUsersEnabled.value }
+            CREDIT_CARD_AUTOFILL -> getFeatureFlag(featureFlag.key) { creditCardAutofillEnabled.value }
         }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =
@@ -60,6 +62,9 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             }
             SHARING_V1 -> setFeatureFlag {
                 sharingV1Enabled = boolFlagPrefProto(value)
+            }
+            CREDIT_CARD_AUTOFILL -> setFeatureFlag {
+                creditCardAutofillEnabled = boolFlagPrefProto(value)
             }
         }
 

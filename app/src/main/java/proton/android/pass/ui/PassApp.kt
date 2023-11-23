@@ -26,7 +26,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.insets.ProvideWindowInsets
 import proton.android.pass.commonui.api.LifecycleEffect
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
@@ -47,22 +46,20 @@ fun PassApp(
         onResume = { appViewModel.onResume() }
     )
     PassTheme(isDark = isDark) {
-        ProvideWindowInsets {
-            PassAppContent(
-                modifier = modifier
-                    .background(PassTheme.colors.backgroundStrong)
-                    .systemBarsPadding()
-                    .imePadding(),
-                appUiState = appUiState,
-                onNavigate = {
-                    if (it is AppNavigation.Finish) {
-                        appViewModel.onStop()
-                    }
-                    onNavigate(it)
-                },
-                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
-                onCompleteUpdate = { appViewModel.onCompleteUpdate() }
-            )
-        }
+        PassAppContent(
+            modifier = modifier
+                .background(PassTheme.colors.backgroundStrong)
+                .systemBarsPadding()
+                .imePadding(),
+            appUiState = appUiState,
+            onNavigate = {
+                if (it is AppNavigation.Finish) {
+                    appViewModel.onStop()
+                }
+                onNavigate(it)
+            },
+            onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
+            onCompleteUpdate = { appViewModel.onCompleteUpdate() }
+        )
     }
 }

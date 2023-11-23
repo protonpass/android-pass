@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        
         missingDimensionStrategy("version", "play")
         missingDimensionStrategy("env", "prod")
 

@@ -47,6 +47,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
     private var autoFillNodes = mutableListOf<AssistField>()
     private var detectedUrl: Option<String> = None
+    private var inCreditCardContext = false
 
     private val fieldKeywordsMap = listOf(
         FieldType.Username to listOf(
@@ -132,7 +133,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             .toList()
 
         when (val assistField = getAssistField(context)) {
-            is Some -> autoFillNodes.add(assistField.value)
+            is Some -> addNode(assistField.value)
             None -> {}
         }
 
@@ -148,6 +149,22 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
 
         visitedNodes += 1
+    }
+
+    private fun addNode(assistField: AssistField) {
+        when (assistField.type) {
+            FieldType.CardNumber -> inCreditCardContext = true
+            FieldType.CardExpirationMM,
+            FieldType.CardExpirationMMYY,
+            FieldType.CardExpirationYY,
+            FieldType.CardExpirationYYYY -> if (!inCreditCardContext) {
+                PassLogger.d(TAG, "Discarding expiration field because not inCreditCardContext")
+                return
+            }
+            else -> {}
+        }
+
+        autoFillNodes.add(assistField)
     }
 
     private fun getAssistField(context: AutofillTraversalContext): Option<AssistField> {

@@ -83,7 +83,7 @@ android {
     defaultConfig {
         applicationId = "proton.android.pass"
         minSdk = libs.versions.minSdk.get().toInt()
-        
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = appVersionCode
         versionName = appVersionName
         testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"

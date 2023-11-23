@@ -37,5 +37,10 @@ enum class FeatureFlag(
         title = "Sharing with new users",
         description = "Enable sharing with new users",
         key = "PassSharingNewUsers"
+    ),
+    CREDIT_CARD_AUTOFILL(
+        title = "Credit card autofill",
+        description = "Enable credit card autofill",
+        key = "PassCreditCardAutofill"
     )
 }

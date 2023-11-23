@@ -82,8 +82,7 @@ class AutofillServiceManager @Inject constructor(
 
     suspend fun isCreditCardAutofillEnabled(): Boolean = ffRepo
         .get<Boolean>(FeatureFlag.CREDIT_CARD_AUTOFILL)
-        .firstOrNull()
-        ?: false
+        .first()
 
     @RequiresApi(Build.VERSION_CODES.R)
     private suspend fun handleSuggestions(

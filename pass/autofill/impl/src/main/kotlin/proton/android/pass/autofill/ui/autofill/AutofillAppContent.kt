@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill.ui.autofill
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -30,7 +29,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.navigation.animation.AnimatedNavHost
+import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.launch
 import proton.android.pass.autofill.AutofillTriggerSource
@@ -43,7 +42,6 @@ import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
 @OptIn(
-    ExperimentalAnimationApi::class,
     ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class,
     ExperimentalMaterialNavigationApi::class
@@ -74,7 +72,7 @@ fun AutofillAppContent(
     )
     val coroutineScope = rememberCoroutineScope()
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
-        AnimatedNavHost(
+        NavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
             navController = appNavigator.navController,
             startDestination = startDestination

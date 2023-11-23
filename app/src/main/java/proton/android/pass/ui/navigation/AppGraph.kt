@@ -18,16 +18,12 @@
 
 package proton.android.pass.ui.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
-import proton.android.pass.featuresearchoptions.impl.SortingLocation
-import proton.android.pass.featuresearchoptions.impl.SortingNavigation
-import proton.android.pass.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
 import proton.android.pass.featureaccount.impl.SignOutDialog
@@ -105,6 +101,10 @@ import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.pass.featuresearchoptions.impl.SortingLocation
+import proton.android.pass.featuresearchoptions.impl.SortingNavigation
+import proton.android.pass.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.featuresettings.impl.ClearClipboardOptions
 import proton.android.pass.featuresettings.impl.ClipboardSettings
 import proton.android.pass.featuresettings.impl.LogView
@@ -144,12 +144,10 @@ import proton.android.pass.featurevault.impl.leave.LeaveVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.AppNavigation
-import proton.android.pass.domain.ItemContents
 
-@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
-@Suppress("LongParameterList", "LongMethod", "ComplexMethod")
+@Suppress("LongMethod", "ComplexMethod")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit,
@@ -1003,6 +1001,7 @@ fun NavGraphBuilder.appGraph(
                             comesFromBottomsheet = true
                         )
                     }
+
                     else -> {
                         appNavigator.navigate(
                             destination = Home,

@@ -19,11 +19,15 @@
 package proton.android.pass.featuresharing.impl
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
 import proton.android.pass.featuresharing.impl.confirmed.InviteConfirmedBottomSheet
 import proton.android.pass.featuresharing.impl.invitesinfo.InvitesInfoDialog
@@ -40,11 +44,6 @@ import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
-import proton.android.pass.domain.InviteId
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.NewUserInviteId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
 
 object EmailNavArgId : NavArgId {
     override val key: String = "email"
@@ -193,7 +192,6 @@ sealed interface SharingNavigation {
     value class ViewVault(val shareId: ShareId) : SharingNavigation
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.sharingGraph(
     onNavigateEvent: (SharingNavigation) -> Unit
 ) {

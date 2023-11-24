@@ -29,7 +29,7 @@ platform :android do
 
   desc "Assemble the DevBlackRelease apk"
   lane :assembleDevBlackRelease do
-    gradle(task: ":app:assembleDevBlackRelease")
+    gradle(task: ":app:assembleDevBlackRelease -PapkBuild=true")
   end
 
   desc "Assemble the AlphaProdDebug apk"
@@ -39,7 +39,7 @@ platform :android do
 
   desc "Assemble the AlphaProdRelease apk"
   lane :assembleAlphaProdRelease do
-    gradle(task: ":app:assembleAlphaProdRelease")
+    gradle(task: ":app:assembleAlphaProdRelease -PapkBuild=true")
   end
 
   desc "Assemble the PlayProdDebug apk"
@@ -49,12 +49,12 @@ platform :android do
 
   desc "Assemble the PlayBlackRelease apk"
   lane :assemblePlayBlackRelease do
-    gradle(task: ":app:assemblePlayBlackRelease")
+    gradle(task: ":app:assemblePlayBlackRelease -PapkBuild=true")
   end
 
-  desc "Creates the PlayProdRelease APK"
+  desc "Creates the PlayProdRelease apk"
   lane :assemblePlayProdRelease do
-    gradle(task: ":app:assemblePlayProdRelease")
+    gradle(task: ":app:assemblePlayProdRelease -PapkBuild=true")
   end
 
   desc "Creates the PlayProdRelease bundle"

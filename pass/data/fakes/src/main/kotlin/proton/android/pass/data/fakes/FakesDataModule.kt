@@ -49,6 +49,7 @@ import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
+import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
@@ -139,6 +140,7 @@ import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
 import proton.android.pass.data.fakes.usecases.TestGetAliasDetails
 import proton.android.pass.data.fakes.usecases.TestGetAllKeysByAddress
+import proton.android.pass.data.fakes.usecases.TestGetDefaultBrowser
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetItemByAliasEmail
@@ -540,4 +542,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetItemActions(impl: TestGetItemActions): GetItemActions
+
+    @Binds
+    abstract fun bindGetDefaultBrowser(impl: TestGetDefaultBrowser): GetDefaultBrowser
 }

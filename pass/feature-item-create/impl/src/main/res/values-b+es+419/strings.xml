@@ -2,7 +2,7 @@
 <resources>
   <!-- Actions -->
   <string name="action_save">Guardar</string>
-  <string name="action_remove">Quitar</string>
+  <string name="action_remove">Borrar</string>
   <!-- Create item bottomsheet -->
   <string name="action_login">Inicio de sesión</string>
   <string name="action_alias">Alias</string>
@@ -38,8 +38,8 @@
   <string name="bottomsheet_custom_field_type_hidden">Oculto</string>
   <string name="bottomsheet_custom_field_type_totp">Clave secreta 2FA (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Editar nombre</string>
-  <string name="bottomsheet_custom_field_option_remove">Eliminar campo</string>
-  <string name="bottomsheet_custom_field_option_remove_content_description">Eliminar campo personalizado</string>
+  <string name="bottomsheet_custom_field_option_remove">Borrar el campo</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Borrar el campo personalizado</string>
   <string name="create_login_add_custom_field_button">Añadir otro campo</string>
   <string name="custom_field_hidden_placeholder">Añadir el texto oculto</string>
   <string name="custom_field_hidden_icon_content_description">Ícono de campo personalizado oculto</string>

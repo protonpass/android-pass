@@ -2,7 +2,7 @@
 <resources>
   <!-- Actions -->
   <string name="action_save">Desa</string>
-  <string name="action_remove">Suprimeix</string>
+  <string name="action_remove">Esborra</string>
   <!-- Create item bottomsheet -->
   <string name="action_login">Inicia la sessió</string>
   <string name="action_alias">Àlies</string>
@@ -38,8 +38,8 @@
   <string name="bottomsheet_custom_field_type_hidden">Ocult</string>
   <string name="bottomsheet_custom_field_type_totp">Clau secreta 2FA (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Edit name</string>
-  <string name="bottomsheet_custom_field_option_remove">Suprimeix el camp</string>
-  <string name="bottomsheet_custom_field_option_remove_content_description">Suprimeix el camp personalitzat</string>
+  <string name="bottomsheet_custom_field_option_remove">Esborra el camp</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Esborra el camp personalitzat</string>
   <string name="create_login_add_custom_field_button">Afegeix un altre camp</string>
   <string name="custom_field_hidden_placeholder">Add hidden text</string>
   <string name="custom_field_hidden_icon_content_description">Icona de camp personalitzat amagat</string>

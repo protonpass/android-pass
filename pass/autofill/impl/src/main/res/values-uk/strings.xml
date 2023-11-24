@@ -4,7 +4,7 @@
   <string name="error_credentials_not_found">Не знайдено відповідних облікових даних</string>
   <string name="error_loading_items">Не вдалося завантажити елементи</string>
   <string name="topbar_search_query">Пошук у всіх сховищах…</string>
-  <string name="topbar_search_query_oldest_vaults">Search in your oldest vaults…</string>
+  <string name="topbar_search_query_oldest_vaults">Пошук у ваших найстаріших сховищах…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Пошук…</string>
   <string name="inline_suggestions_open_app">Відкрити Proton Pass</string>
   <string name="autofill_only_searching_in_oldest_vaults">Ваш план дозволяє використовувати для автозаповнення елементи лише з найстаріших сховищ.</string>

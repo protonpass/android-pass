@@ -55,8 +55,8 @@
   <string name="sharing_snackbar_get_vault_members_error">No se pudieron obtener los miembros de la bóveda</string>
   <string name="sharing_snackbar_change_permission_success">Los permisos han cambiado.</string>
   <string name="sharing_snackbar_change_permission_error">Error al cambiar los permisos</string>
-  <string name="sharing_snackbar_remove_member_success">El miembro fue eliminado de la bóveda.</string>
-  <string name="sharing_snackbar_remove_member_error">Error al eliminar de la bóveda</string>
+  <string name="sharing_snackbar_remove_member_success">El miembro fue borrado de la bóveda.</string>
+  <string name="sharing_snackbar_remove_member_error">Error al borrar de la bóveda</string>
   <string name="share_summary_title">Revisar y compartir</string>
   <string name="share_summary_vault">la bóveda %s</string>
   <string name="share_summary_share_vault">Compartir bóveda</string>

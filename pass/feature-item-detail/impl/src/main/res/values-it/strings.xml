@@ -8,7 +8,7 @@
   <!-- Alias details -->
   <string name="field_alias_title">Indirizzi alias</string>
   <string name="alias_copied_to_clipboard">Alias copiato</string>
-  <string name="alias_detail_field_mailboxes_title">Inoltro a</string>
+  <string name="alias_detail_field_mailboxes_title">Inoltra a</string>
   <string name="alias_create_login_from_alias">Crea login</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Nota</string>
@@ -54,14 +54,14 @@
   <string name="custom_field_hidden_icon_description">Campo personalizzato nascosto</string>
   <string name="custom_field_totp_icon_description">Campo personalizzato 2FA</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Name on card</string>
+  <string name="credit_card_cardholder_field_name">Nome sulla carta</string>
   <string name="credit_card_number_field_name">Numero della carta</string>
-  <string name="credit_card_cvv_field_name">Security code</string>
+  <string name="credit_card_cvv_field_name">Codice di sicurezza</string>
   <string name="credit_card_pin_field_name">Codice PIN</string>
-  <string name="credit_card_expiration_date_field_name">Expiration date</string>
+  <string name="credit_card_expiration_date_field_name">Data di scadenza</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Titolare della carta copiato negli appunti</string>
   <string name="credit_card_number_copied_to_clipboard">Numero carta copiato negli appunti</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Codice di sicurezza copiato negli appunti</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Sposta nel cestino</string>
   <string name="migrate_item_detail_bottom_sheet">Sposta in un\'altra cassaforte</string>

@@ -141,6 +141,19 @@ android {
                 isRemoveUnusedResources = true
                 file("proguard").listFiles()?.forEach { proguardFile(it) }
             }
+            signingConfig = if (isCustomBuild || isApkBuild) {
+                println("Using signing keystore")
+                signingConfigs["signingKeystore"]
+            } else {
+                println("Using upload keystore")
+                signingConfigs["uploadKeystore"]
+            }
+        }
+        create("benchmark") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks.add("release")
+            postprocessing.isObfuscate = false
         }
     }
 
@@ -153,25 +166,16 @@ android {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
-            signingConfig = signingConfigs["signingKeystore"]
         }
         create("alpha") {
             dimension = "version"
             applicationIdSuffix = ".alpha"
             versionNameSuffix = "-alpha.$appVersionCode"
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
-            signingConfig = signingConfigs["signingKeystore"]
         }
         create("play") {
             dimension = "version"
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
-            signingConfig = if (isCustomBuild || isApkBuild) {
-                println("Using signing keystore")
-                signingConfigs["signingKeystore"]
-            } else {
-                println("Using upload keystore")
-                signingConfigs["uploadKeystore"]
-            }
         }
     }
     flavorDimensions += "env"

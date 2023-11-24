@@ -18,7 +18,7 @@
   <string name="vault_delete_dialog_cancel_action">Annuler</string>
   <string name="vault_delete_dialog_delete_action">Supprimer</string>
   <string name="vault_leave_dialog_title">Quitter le coffre-fort</string>
-  <string name="vault_leave_dialog_body">Cela supprimera votre accès au coffre-fort __VAULT_NAME__ et à son contenu. Voulez-vous vraiment le quitter ?</string>
+  <string name="vault_leave_dialog_body">Cela retirera votre accès au coffre-fort __VAULT_NAME__ et à son contenu. Voulez-vous vraiment le quitter ?</string>
   <string name="vault_leave_dialog_cancel_action">Annuler</string>
   <string name="vault_leave_dialog_leave_action">Quitter</string>
   <string name="bottomsheet_close_icon_content_description">Fermer le coffre-fort créé</string>

@@ -54,14 +54,14 @@
   <string name="custom_field_hidden_icon_description">Oma piilotettu kenttä</string>
   <string name="custom_field_totp_icon_description">Oma 2FA-kenttä</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Name on card</string>
+  <string name="credit_card_cardholder_field_name">Kortinhaltijan nimi</string>
   <string name="credit_card_number_field_name">Kortin numero</string>
-  <string name="credit_card_cvv_field_name">Security code</string>
+  <string name="credit_card_cvv_field_name">Turvakoodi</string>
   <string name="credit_card_pin_field_name">PIN-koodi</string>
-  <string name="credit_card_expiration_date_field_name">Expiration date</string>
+  <string name="credit_card_expiration_date_field_name">Erääntymispäivä</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Kortinhaltija kopioitiin leikepöydälle</string>
   <string name="credit_card_number_copied_to_clipboard">Kortin numero kopioitiin leikepöydälle</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Turvakoodi kopioitiin leikepöydälle</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Siirrä roskakoriin</string>
   <string name="migrate_item_detail_bottom_sheet">Siirrä toiseen holviin</string>
@@ -86,7 +86,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Et voi muokata kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Jakaminen ei ole mahdollista</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Oikeutesi eivät riitä tämän holvin jakamiseen.</string>
-  <string name="password_score_vulnerable">Vulnerable</string>
-  <string name="password_score_weak">Weak</string>
-  <string name="password_score_strong">Strong</string>
+  <string name="password_score_vulnerable">Haavoittuva</string>
+  <string name="password_score_weak">Heikko</string>
+  <string name="password_score_strong">Vahva</string>
 </resources>

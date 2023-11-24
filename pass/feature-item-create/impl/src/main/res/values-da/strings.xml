@@ -45,7 +45,7 @@
   <string name="custom_field_hidden_icon_content_description">Ikon for skjult brugerdefineret felt</string>
   <string name="custom_field_text_placeholder">Tilføj tekst</string>
   <string name="custom_field_dialog_title">Navn på brugerdefineret felt</string>
-  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_body">Giv dit brugerdefinerede felt et navn</string>
   <string name="custom_field_dialog_placeholder">F.eks. bruger-ID, pinkode</string>
   <string name="custom_field_options_content_description">Indstillinger for brugerdefineret felt</string>
   <!-- Create Note -->

@@ -22,10 +22,10 @@
   <string name="vault_leave_dialog_cancel_action">Annulla</string>
   <string name="vault_leave_dialog_leave_action">Abbandona</string>
   <string name="bottomsheet_close_icon_content_description">Chiudi creazione cassaforte</string>
-  <string name="bottomsheet_create_vault_button">Crea cassaforte</string>
+  <string name="bottomsheet_create_vault_button">Crea la cassaforte</string>
   <string name="bottomsheet_edit_vault_button">Salva</string>
   <string name="bottomsheet_cannot_create_more_vaults">Hai raggiunto il limite di casseforti da poter creare. Crea casseforti illimitate aggiornando il tuo abbonamento.</string>
-  <string name="bottomsheet_cannot_select_not_primary_vault">Per interagire con altre casseforti è necessario aggiornare il proprio account.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Per interagire con le altre casseforti, devi effettuare l\'upgrade del tuo account.</string>
   <string name="bottomsheet_upgrade_now">Effettua l\'upgrade ora</string>
   <string name="bottomsheet_edit">Modifica</string>
   <string name="bottomsheet_migrate">Sposta tutti gli elementi su un\'altra cassaforte.</string>

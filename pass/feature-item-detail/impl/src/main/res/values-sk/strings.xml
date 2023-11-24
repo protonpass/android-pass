@@ -60,7 +60,7 @@
   <string name="credit_card_number_field_name">Číslo karty</string>
   <string name="credit_card_cvv_field_name">Bezpečnostný kód</string>
   <string name="credit_card_pin_field_name">PIN kód</string>
-  <string name="credit_card_expiration_date_field_name">Dátum exspirácie</string>
+  <string name="credit_card_expiration_date_field_name">Koniec platnosti</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Držiteľ karty skopírovaný do schránky</string>
   <string name="credit_card_number_copied_to_clipboard">Číslo karty skopírované do schránky</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Bezpečnostný kód skopírovaný do schránky</string>

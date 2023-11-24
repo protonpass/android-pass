@@ -86,9 +86,9 @@
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Dátum exspirácie</string>
+  <string name="field_card_expiration_date_title">Koniec platnosti</string>
   <string name="field_card_expiration_date_hint">MM / RRRR</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
+  <string name="field_card_expiration_date_error">Zadajte platný dátum vo formáte MM/RRRR</string>
   <string name="create_credit_card_item_creation_error">Nepodarilo sa vytvoriť platobnú kartu</string>
   <string name="create_credit_card_item_creation_success">Platobná karta vytvorená</string>
   <string name="credit_card_init_error">Problém s načítaním podrobností o platobnej karte</string>

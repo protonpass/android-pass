@@ -45,8 +45,8 @@
   <string name="custom_field_hidden_icon_content_description">Ícone de campo personalizado oculto</string>
   <string name="custom_field_text_placeholder">Adicionar texto</string>
   <string name="custom_field_dialog_title">Nome do campo personalizado</string>
-  <string name="custom_field_dialog_body">Give your custom field a name</string>
-  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
+  <string name="custom_field_dialog_body">Dê um nome ao seu campo personalizado</string>
+  <string name="custom_field_dialog_placeholder">Por exemplo, ID do usuário, PIN</string>
   <string name="custom_field_options_content_description">Opções de campo personalizado</string>
   <!-- Create Note -->
   <string name="title_create_note">Criar nota</string>
@@ -88,7 +88,7 @@
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Data de expiração</string>
   <string name="field_card_expiration_date_hint">MM / AAAA</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
+  <string name="field_card_expiration_date_error">Insira uma data válida no formato MM/AAAA</string>
   <string name="create_credit_card_item_creation_error">Não foi possível criar o cartão de crédito</string>
   <string name="create_credit_card_item_creation_success">Cartão de crédito criado</string>
   <string name="credit_card_init_error">Problema ao recuperar os detalhes do cartão de crédito.</string>

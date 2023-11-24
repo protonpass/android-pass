@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Oma tekstikenttä</string>
   <string name="bottomsheet_custom_field_type_hidden">Piilotettu</string>
   <string name="bottomsheet_custom_field_type_totp">2FA-salaisuus (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
+  <string name="bottomsheet_custom_field_option_edit">Muokkaa nimeä</string>
   <string name="bottomsheet_custom_field_option_remove">Poista kenttä</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Poista oma kenttä</string>
   <string name="create_login_add_custom_field_button">Lisää kenttä</string>
-  <string name="custom_field_hidden_placeholder">Add hidden text</string>
+  <string name="custom_field_hidden_placeholder">Lisää piilotettu teksti</string>
   <string name="custom_field_hidden_icon_content_description">Piilotetun oman kentän kuvake</string>
-  <string name="custom_field_text_placeholder">Add text</string>
+  <string name="custom_field_text_placeholder">Lisää teksti</string>
   <string name="custom_field_dialog_title">Oman kentän nimi</string>
-  <string name="custom_field_dialog_body">Give your custom field a name</string>
-  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
+  <string name="custom_field_dialog_body">Anna omalle kentällesi nimi</string>
+  <string name="custom_field_dialog_placeholder">Esim. käyttäjänimi, PIN-koodi</string>
   <string name="custom_field_options_content_description">Oman kentän valinnat</string>
   <!-- Create Note -->
   <string name="title_create_note">Luo muistiinpano</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Muistiinpano</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Luo maksukortti</string>
-  <string name="field_cardholder_name_title">Name on card</string>
+  <string name="field_cardholder_name_title">Kortinhaltijan nimi</string>
   <string name="field_cardholder_name_hint">Koko nimi</string>
   <string name="field_card_number_title">Kortin numero</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Security code</string>
+  <string name="field_card_cvv_title">Turvakoodi</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN</string>
+  <string name="field_card_pin_title">PIN-koodi</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expiration date</string>
+  <string name="field_card_expiration_date_title">Erääntymispäivä</string>
   <string name="field_card_expiration_date_hint">KK / VVVV</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
+  <string name="field_card_expiration_date_error">Syötä kelvollinen päivämäärä muodossa KK/VVVV.</string>
   <string name="create_credit_card_item_creation_error">Maksukorttia ei voitu luoda</string>
   <string name="create_credit_card_item_creation_success">Maksukortti luotiin</string>
   <string name="credit_card_init_error">Ongelma noudettaessa maksukortin tietoja</string>

@@ -55,8 +55,8 @@
   <string name="sharing_snackbar_get_vault_members_error">Impossible d\'obtenir les membres du coffre-fort.</string>
   <string name="sharing_snackbar_change_permission_success">Les autorisations ont été modifiées.</string>
   <string name="sharing_snackbar_change_permission_error">Impossible de modifier les autorisations</string>
-  <string name="sharing_snackbar_remove_member_success">Le membre a été supprimé du coffre-fort.</string>
-  <string name="sharing_snackbar_remove_member_error">Impossible de supprimer du coffre-fort</string>
+  <string name="sharing_snackbar_remove_member_success">Le membre a été retiré du coffre-fort.</string>
+  <string name="sharing_snackbar_remove_member_error">Impossible de retirer du coffre-fort</string>
   <string name="share_summary_title">Vérifier et partager</string>
   <string name="share_summary_vault">coffre-fort %s</string>
   <string name="share_summary_share_vault">Partager le coffre-fort</string>

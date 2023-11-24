@@ -378,17 +378,18 @@ object NodeClusterer {
         }
     }
 
-    private fun List<AssistField>.getUsernames(addedNodes: Set<AssistField>): List<AssistField> =
-        filter {
-            it.type == FieldType.Username || it.type == FieldType.Email && !addedNodes.contains(it)
-        }
+    private fun List<AssistField>.getUsernames(
+        addedNodes: Set<AssistField>
+    ): List<AssistField> = filter {
+        !addedNodes.contains(it) && (it.type == FieldType.Username || it.type == FieldType.Email)
+    }
 
     private fun List<AssistField>.getNodesForType(
         type: FieldType,
         addedNodes: Set<AssistField>
     ): List<AssistField> =
         filter {
-            it.type == type && !addedNodes.contains(it)
+            !addedNodes.contains(it) && it.type == type
         }
 
     private fun List<AssistField>.getNodeOfType(

@@ -2,7 +2,7 @@
 <resources>
   <string name="generate_password_copy">Copia e chiudi</string>
   <string name="password_copied_to_clipboard">Password copiata</string>
-  <string name="bottomsheet_generate_password_title">Genera password</string>
+  <string name="bottomsheet_generate_password_title">Genera una password</string>
   <string name="password_type">Tipo</string>
   <string name="special_characters">Caratteri speciali (!&amp;*)</string>
   <plurals name="character_count">
@@ -15,7 +15,7 @@
   </plurals>
   <string name="word_separator">Separatore parole</string>
   <string name="bottomsheet_option_capital_letters">Lettere maiuscole (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Maiuscolo</string>
+  <string name="bottomsheet_option_capitalise">Maiuscole</string>
   <string name="bottomsheet_option_include_numbers">Include numeri (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Trattini ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Spazi</string>

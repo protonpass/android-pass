@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
+import proton.android.pass.data.api.usecases.DefaultBrowser
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 
@@ -39,7 +40,8 @@ data class ProfileUiState(
     val appVersion: String,
     val accountType: PlanInfo,
     val event: ProfileEvent,
-    val showUpgradeButton: Boolean
+    val showUpgradeButton: Boolean,
+    val userBrowser: DefaultBrowser
 ) {
     companion object {
         fun getInitialState(
@@ -52,7 +54,8 @@ data class ProfileUiState(
             appVersion = appVersion,
             accountType = PlanInfo.Hide,
             event = ProfileEvent.Unknown,
-            showUpgradeButton = false
+            showUpgradeButton = false,
+            userBrowser = DefaultBrowser.Other
         )
     }
 }

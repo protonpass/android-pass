@@ -93,7 +93,7 @@ includeCoreBuild {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":app")
-include(":benchmark")
+include(":appmacrobenchmark")
 include(":pass:account:api")
 include(":pass:account:fakes")
 include(":pass:account:impl")

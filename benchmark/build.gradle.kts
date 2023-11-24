@@ -29,6 +29,14 @@ android {
     targetProjectPath = ":app"
     experimentalProperties["android.experimental.self-instrumenting"] = true
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
+    }
+
     testOptions {
         managedDevices {
             devices {
@@ -51,6 +59,6 @@ dependencies {
 
 androidComponents {
     beforeVariants(selector().all()) {
-        it.enabled = it.buildType == "benchmark"
+        it.enable = it.buildType == "benchmark"
     }
 }

@@ -101,7 +101,7 @@
   <string name="sharing_invites_info_dialog_title">Limite di membri</string>
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Questa cassaforte può avere fino a %1$d membri. Hai ancora %2$d inviti rimasti.</string>
   <string name="sharing_limit_reached">Questa cassaforte ha raggiunto il limite di membri e inviti.</string>
-  <string name="sharing_invites_info_upgrade_text">Effettua l’upgrade ora per invitare più persone.</string>
+  <string name="sharing_invites_info_upgrade_text">Effettua l\'upgrade ora per invitare più persone.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Condividi</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Usa le casseforti per poter condividere elementi con altri</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Condividi questa cassaforte</string>

@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Titolo (Z-A)</string>
   <string name="sort_by_creation_asc">Dal meno recente al più recente</string>
   <string name="sort_by_creation_desc">Dal più recente al meno recente</string>
-  <string name="sort_by_modification_date">Più recenti</string>
+  <string name="sort_by_modification_date">Ultimo utilizzo</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tutto</string>
   <plurals name="item_list_header_results">
@@ -18,12 +18,12 @@
   <string name="bottomsheet_move_to_trash">Sposta nel cestino</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Azione menu apri elemento</string>
-  <string name="action_upgrade_now">Effettua l\'upgrade adesso</string>
+  <string name="action_upgrade_now">Effettua l\'upgrade ora</string>
   <!-- Empty list -->
   <string name="empty_list_title">Aggiungi il tuo primo elemento</string>
   <string name="empty_search_results_title">Nessun risultato trovato</string>
   <string name="empty_list_open_extension">Visita l\'estensione web</string>
-  <string name="empty_list_create_item_button">Crea nuovo elemento</string>
+  <string name="empty_list_create_item_button">Crea un nuovo elemento</string>
   <!-- Field -->
   <string name="field_title_title">Titolo</string>
   <string name="field_title_hint">Senza titolo</string>
@@ -55,7 +55,7 @@
   <string name="most_recent_within_the_last_year">Nell\'ultimo anno</string>
   <string name="most_recent_more_than_1_year">Più di 1 anno</string>
   <!-- Search Top Bar -->
-  <string name="search_topbar_icon_content_description">Cerca icona</string>
+  <string name="search_topbar_icon_content_description">Icona ricerca</string>
   <!-- Setting option -->
   <string name="setting_option_icon_content_description">Icona Opzioni</string>
   <!-- Select Vault BottomSheet -->
@@ -65,7 +65,7 @@
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Annullare le modifiche?</string>
-  <string name="confirm_close_dialog_message">Sono presenti modifiche non salvate. Vuoi davvero scartarle?</string>
+  <string name="confirm_close_dialog_message">Sono presenti modifiche non salvate. Sei sicuro di volerle annullare?</string>
   <string name="confirm_close_dialog_close_button">Scarta</string>
   <!-- Upgrade -->
   <string name="upgrade">Effettua l\'upgrade</string>

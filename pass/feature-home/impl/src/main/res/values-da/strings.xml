@@ -17,7 +17,7 @@
   <string name="home_autofill_banner_text">Et tryk, og dit brugernavn og din adgangskode udfyldes øjeblikkeligt.</string>
   <string name="home_autofill_banner_settings">Slå autofyld til ›</string>
   <string name="home_trial_banner_title">Vores velkomstgave til dig</string>
-  <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
+  <string name="home_trial_banner_text">7 dage til at prøve premium-funktioner gratis. Kun i din første uge med Proton Pass.</string>
   <string name="home_trial_banner_settings">Lær mere ›</string>
   <string name="home_notification_permission_banner_title">Få vigtige opdateringer</string>
   <string name="home_notification_permission_banner_text">Aktivér push-notifikationer for at blive informeret, når andre deler en boks med dig.</string>

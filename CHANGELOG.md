@@ -6,7 +6,15 @@
 
 ### Other
 
-## 1.11. (2023-11-22)
+## 1.12.0 (2023-11-24)
+
+### Other
+
+- Search improvements.
+- Autofill improvements.
+- Update translations.
+
+## 1.11.2 (2023-11-22)
 
 ### Fixes :bug:
 

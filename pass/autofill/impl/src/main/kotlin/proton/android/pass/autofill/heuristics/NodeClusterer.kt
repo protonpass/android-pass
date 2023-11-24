@@ -177,16 +177,9 @@ object NodeClusterer {
         }
         val passwordFields = nodes.filter { it.type == FieldType.Password }
 
-        if (usernameFields.size == 1 && passwordFields.size == 2) {
-            val username = usernameFields.first()
-            val password = passwordFields.first()
-            val repeatPassword = passwordFields.last()
-            clusters.add(NodeCluster.SignUp(username, password, repeatPassword))
-            addedNodes.add(username)
-            addedNodes.add(password)
-            addedNodes.add(repeatPassword)
+        if (detectSignupForm(usernameFields, passwordFields, clusters, addedNodes)) return
+        if (detectCardNumberAsUsername(usernameFields, passwordFields, nodes, clusters, addedNodes))
             return
-        }
 
         for (usernameField in usernameFields) {
             val candidatePasswordFields = passwordFields.filter { !addedNodes.contains(it) }
@@ -237,6 +230,54 @@ object NodeClusterer {
         }
     }
 
+    @Suppress("ComplexCondition")
+    private fun detectCardNumberAsUsername(
+        usernameFields: List<AssistField>,
+        passwordFields: List<AssistField>,
+        nodes: List<AssistField>,
+        clusters: MutableList<NodeCluster>,
+        addedNodes: MutableSet<AssistField>
+    ): Boolean {
+        if (
+            usernameFields.isEmpty() &&
+            passwordFields.size == 1 &&
+            nodes.size == 2 &&
+            nodes.count { it.type == FieldType.CardNumber } == 1
+        ) {
+            clusters.add(
+                NodeCluster.Login.UsernameAndPassword(
+                    username = nodes.first { it.type == FieldType.CardNumber }.also {
+                        addedNodes.add(it)
+                    },
+                    password = passwordFields.first().also {
+                        addedNodes.add(it)
+                    }
+                )
+            )
+            return true
+        }
+        return false
+    }
+
+    private fun detectSignupForm(
+        usernameFields: List<AssistField>,
+        passwordFields: List<AssistField>,
+        clusters: MutableList<NodeCluster>,
+        addedNodes: MutableSet<AssistField>
+    ): Boolean {
+        if (usernameFields.size == 1 && passwordFields.size == 2) {
+            val username = usernameFields.first()
+            val password = passwordFields.first()
+            val repeatPassword = passwordFields.last()
+            clusters.add(NodeCluster.SignUp(username, password, repeatPassword))
+            addedNodes.add(username)
+            addedNodes.add(password)
+            addedNodes.add(repeatPassword)
+            return true
+        }
+        return false
+    }
+
     private fun clusterCreditCards(
         nodes: List<AssistField>,
         clusters: MutableList<NodeCluster>,
@@ -272,10 +313,12 @@ object NodeClusterer {
                     firstName = cardHolderFirstNameNode.also { addedNodes.add(it) },
                     lastName = cardHolderLastNameNode.also { addedNodes.add(it) }
                 )
+
                 cardHolderNode != null -> NodeCluster.CreditCard.CardHolder.FirstNameLastName(
                     firstName = cardHolderNode.also { addedNodes.add(it) },
                     lastName = cardHolderLastNameNode.also { addedNodes.add(it) }
                 )
+
                 else -> NodeCluster.CreditCard.CardHolder.SingleField(
                     field = cardHolderLastNameNode.also { addedNodes.add(it) }
                 )
@@ -286,6 +329,7 @@ object NodeClusterer {
                     firstName = cardHolderFirstNameNode.also { addedNodes.add(it) },
                     lastName = cardHolderNode.also { addedNodes.add(it) }
                 )
+
                 else -> NodeCluster.CreditCard.CardHolder.SingleField(
                     field = cardHolderFirstNameNode.also { addedNodes.add(it) }
                 )

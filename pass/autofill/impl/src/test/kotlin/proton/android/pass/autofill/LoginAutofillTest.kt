@@ -130,6 +130,11 @@ class LoginAutofillTest : BaseAutofillTest() {
         runLoginAutofillTest("login/chrome_store.steampowered.com_username.json")
     }
 
+    @Test
+    fun `can autofill cibc app where username is credit card number`() {
+        runLoginAutofillTest("login/app_cibc_username_is_ccnum.json")
+    }
+
     private fun runLoginAutofillTest(
         file: String,
         flags: List<RequestFlags> = emptyList()

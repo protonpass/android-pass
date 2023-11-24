@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Kolom kustom teks</string>
   <string name="bottomsheet_custom_field_type_hidden">Tersembunyi</string>
   <string name="bottomsheet_custom_field_type_totp">Rahasia 2FA (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
+  <string name="bottomsheet_custom_field_option_edit">Sunting nama</string>
   <string name="bottomsheet_custom_field_option_remove">Hapus kolom</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Hapus kolom khusus</string>
   <string name="create_login_add_custom_field_button">Tambah kolom lainnya</string>
-  <string name="custom_field_hidden_placeholder">Add hidden text</string>
+  <string name="custom_field_hidden_placeholder">Tambahkan teks tersembunyi</string>
   <string name="custom_field_hidden_icon_content_description">Ikon kolom khusus tersembunyi</string>
-  <string name="custom_field_text_placeholder">Add text</string>
+  <string name="custom_field_text_placeholder">Tambahkan teks</string>
   <string name="custom_field_dialog_title">Nama kolom khusus</string>
-  <string name="custom_field_dialog_body">Give your custom field a name</string>
-  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
+  <string name="custom_field_dialog_body">Beri nama pada kolom khusus Anda</string>
+  <string name="custom_field_dialog_placeholder">Misalnya, ID Pengguna, PIN</string>
   <string name="custom_field_options_content_description">Opsi kolom khusus</string>
   <!-- Create Note -->
   <string name="title_create_note">Buat catatan</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Catatan</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Buat kartu kredit</string>
-  <string name="field_cardholder_name_title">Name on card</string>
+  <string name="field_cardholder_name_title">Nama pada kartu</string>
   <string name="field_cardholder_name_hint">Nama lengkap</string>
   <string name="field_card_number_title">Nomor kartu</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Security code</string>
+  <string name="field_card_cvv_title">Kode keamanan</string>
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expiration date</string>
+  <string name="field_card_expiration_date_title">Tanggal kedaluwarsa</string>
   <string name="field_card_expiration_date_hint">BB / TTTT</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
+  <string name="field_card_expiration_date_error">Masukkan tanggal yang valid dalam format BB/TTTT</string>
   <string name="create_credit_card_item_creation_error">Tidak dapat membuat kartu kredit</string>
   <string name="create_credit_card_item_creation_success">Kartu kredit dibuat</string>
   <string name="credit_card_init_error">Terdapat masalah dalam memperoleh rincian kartu kredit</string>

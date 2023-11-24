@@ -18,7 +18,7 @@
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
   <string name="vault_delete_dialog_delete_action">Eliminar</string>
   <string name="vault_leave_dialog_title">Abandonar la caja fuerte</string>
-  <string name="vault_leave_dialog_body">Esto eliminará tu acceso a la caja fuerte __VAULT_NAME__ y todo su contenido. ¿Estás seguro de que quieres abandonarla?</string>
+  <string name="vault_leave_dialog_body">Esto borrará tu acceso a la caja fuerte __VAULT_NAME__ y todo su contenido. ¿Estás seguro de que quieres abandonarla?</string>
   <string name="vault_leave_dialog_cancel_action">Cancelar</string>
   <string name="vault_leave_dialog_leave_action">Abandonar</string>
   <string name="bottomsheet_close_icon_content_description">Cerrar la caja fuerte creada</string>

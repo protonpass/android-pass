@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trial_title">Your welcome gift</string>
-  <string name="trial_subtitle">Enjoy next-level password management</string>
+  <string name="trial_title">Tervetuliaislahjasi</string>
+  <string name="trial_subtitle">Nauti seuraavan tason salasananhallinnasta</string>
   <string name="trial_feature_1">20 holvia</string>
   <string name="trial_feature_3">Sisäänrakennettu kaksivaiheinen todentaja</string>
   <string name="trial_feature_4">Omat kentät</string>
-  <string name="trial_button_text">Upgrade now</string>
+  <string name="trial_button_text">Päivitä nyt</string>
   <plurals name="trial_days_left">
-    <item quantity="one">1 day left to try premium features</item>
-    <item quantity="other">%d days left to try premium features</item>
+    <item quantity="one">1 päivä aikaa kokeilla premium-ominaisuuksia</item>
+    <item quantity="other">%d päivää aikaa kokeilla premium-ominaisuuksia</item>
   </plurals>
   <string name="trial_learn_more">Lue lisää</string>
 </resources>

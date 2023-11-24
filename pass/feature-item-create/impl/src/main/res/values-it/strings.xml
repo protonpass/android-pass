@@ -15,7 +15,7 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Memorizza in modo sicuro le informazioni di pagamento</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genera una password sicura</string>
   <!-- Create Login -->
-  <string name="title_create_login">Crea login</string>
+  <string name="title_create_login">Crea il login</string>
   <string name="field_username_title">Nome utente o indirizzo email</string>
   <string name="field_username_hint">Aggiungi nome utente o indirizzo email</string>
   <string name="field_password_title">Password</string>
@@ -32,34 +32,34 @@
   <string name="create_login_init_error">Problema nel recupero dei dettagli del login</string>
   <string name="create_login_invalid_totp">Il contenuto 2FA non è valido</string>
   <string name="login_created">Login creato</string>
-  <string name="bottomsheet_modify_alias_title">Modifica alias</string>
+  <string name="bottomsheet_modify_alias_title">Modifica l\'alias</string>
   <string name="bottomsheet_custom_field_type_text">Testo</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Testo campo personalizzato</string>
   <string name="bottomsheet_custom_field_type_hidden">Nascosto</string>
-  <string name="bottomsheet_custom_field_type_totp">Segreto 2FA (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
+  <string name="bottomsheet_custom_field_type_totp">Chiave segreta 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_option_edit">Modifica il nome</string>
   <string name="bottomsheet_custom_field_option_remove">Rimuovi campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Rimuovi il campo personalizzato</string>
   <string name="create_login_add_custom_field_button">Aggiungi un altro campo</string>
-  <string name="custom_field_hidden_placeholder">Add hidden text</string>
+  <string name="custom_field_hidden_placeholder">Aggiungi testo nascosto</string>
   <string name="custom_field_hidden_icon_content_description">Icona campo personalizzato nascosto</string>
-  <string name="custom_field_text_placeholder">Add text</string>
+  <string name="custom_field_text_placeholder">Aggiungi testo</string>
   <string name="custom_field_dialog_title">Nome campo personalizzato</string>
-  <string name="custom_field_dialog_body">Give your custom field a name</string>
-  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
+  <string name="custom_field_dialog_body">Dai un nome al tuo campo personalizzato</string>
+  <string name="custom_field_dialog_placeholder">Es. ID utente o PIN</string>
   <string name="custom_field_options_content_description">Opzioni campo personalizzato</string>
   <!-- Create Note -->
-  <string name="title_create_note">Crea nota</string>
+  <string name="title_create_note">Crea la nota</string>
   <string name="create_note_item_creation_error">Impossibile creare la nota</string>
   <string name="create_note_item_update_error">Impossibile aggiornare la nota</string>
   <string name="create_note_init_error">Problema nel recupero dei dettagli della nota</string>
   <string name="note_created">Nota creata</string>
   <!-- Create Alias -->
-  <string name="title_create_alias">Crea alias</string>
+  <string name="title_create_alias">Crea l\'alias</string>
   <string name="field_alias_title">Indirizzi alias</string>
-  <string name="field_alias_hint">Alias nome utente</string>
+  <string name="field_alias_hint">Nome utente alias</string>
   <string name="field_mailboxes_creation_title">Inoltra a</string>
-  <string name="field_mailboxes_edit_title">Inoltro a</string>
+  <string name="field_mailboxes_edit_title">Inoltra a</string>
   <string name="field_alias_you_are_about_to_create">Stai per creare</string>
   <string name="field_alias_prefix">Prefisso</string>
   <string name="field_alias_suffix">Suffisso</string>
@@ -69,7 +69,7 @@
   <string name="create_alias_cannot_create_more_aliases_error">Non puoi creare altri alias</string>
   <string name="create_alias_email_not_validated_error">Non puoi creare alias senza aver prima verificato il tuo indirizzo email</string>
   <string name="alias_rate_limited">Troppi alias testati recentemente</string>
-  <string name="create_alias_item_update_error">Impossibile aggiornare l\'Alias</string>
+  <string name="create_alias_item_update_error">Impossibile aggiornare l\'alias</string>
   <string name="create_alias_init_error">Problema nel recupero dei dettagli dell\'alias</string>
   <string name="alias_created">Alias creato</string>
   <string name="cannot_retrieve_alias_options">Impossibile recuperare le opzioni degli alias</string>
@@ -78,17 +78,17 @@
   <string name="note_hint">Nota</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Crea carta di credito</string>
-  <string name="field_cardholder_name_title">Name on card</string>
+  <string name="field_cardholder_name_title">Nome sulla carta</string>
   <string name="field_cardholder_name_hint">Nome completo</string>
   <string name="field_card_number_title">Numero della carta</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Security code</string>
+  <string name="field_card_cvv_title">Codice di sicurezza</string>
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expiration date</string>
+  <string name="field_card_expiration_date_title">Data di scadenza</string>
   <string name="field_card_expiration_date_hint">MM / AAAA</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
+  <string name="field_card_expiration_date_error">Inserisci una data valida nel formato MM/AAAA</string>
   <string name="create_credit_card_item_creation_error">Impossibile creare la carta di credito</string>
   <string name="create_credit_card_item_creation_success">Carta di credito creata</string>
   <string name="credit_card_init_error">Problema nel recupero dei dettagli della carta di credito</string>
@@ -96,12 +96,12 @@
   <!--  Common create items  -->
   <string name="changes_saved">Modifiche salvate</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">Segreto 2FA (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Segreto 2FA errato</string>
-  <string name="totp_create_login_field_placeholder">Aggiungi 2FA segreto</string>
+  <string name="totp_create_login_field_title">Chiave segreta 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Chiave segreta 2FA non valida</string>
+  <string name="totp_create_login_field_placeholder">Aggiungi chiave 2FA segreta</string>
   <string name="close_scree_icon_content_description">Pulsante chiudi schermata</string>
-  <string name="totp_paste_code_action">Incolla codice</string>
-  <string name="totp_scan_code_action">Scansiona codice</string>
+  <string name="totp_paste_code_action">Incolla il codice</string>
+  <string name="totp_scan_code_action">Scansiona un codice</string>
   <string name="field_cannot_be_empty">Questo campo non può rimanere vuoto</string>
   <string name="camera_permission_explanation">Autorizzazione alla fotocamera richiesta per rendere disponibile questa funzionalità.</string>
   <string name="camera_permission_open_settings">Apri impostazioni</string>

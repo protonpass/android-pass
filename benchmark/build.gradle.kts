@@ -21,7 +21,7 @@ android {
     buildTypes {
         create("benchmark") {
             isDebuggable = true
-            signingConfig = getByName("debug").signingConfig
+            signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
         }
     }
@@ -29,12 +29,13 @@ android {
     targetProjectPath = ":app"
     experimentalProperties["android.experimental.self-instrumenting"] = true
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     testOptions {

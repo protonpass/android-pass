@@ -2,7 +2,7 @@
 <resources>
   <!-- Actions -->
   <string name="action_save">Enregistrer</string>
-  <string name="action_remove">Supprimer</string>
+  <string name="action_remove">Retirer</string>
   <!-- Create item bottomsheet -->
   <string name="action_login">Identifiant</string>
   <string name="action_alias">Alias</string>
@@ -38,8 +38,8 @@
   <string name="bottomsheet_custom_field_type_hidden">Masqué</string>
   <string name="bottomsheet_custom_field_type_totp">Clé secrète A2F (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Modifier le nom</string>
-  <string name="bottomsheet_custom_field_option_remove">Supprimer le champ</string>
-  <string name="bottomsheet_custom_field_option_remove_content_description">Supprimer le champ personnalisé</string>
+  <string name="bottomsheet_custom_field_option_remove">Retirer le champ</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Retirer le champ personnalisé</string>
   <string name="create_login_add_custom_field_button">Ajouter un autre champ</string>
   <string name="custom_field_hidden_placeholder">Ajoutez du texte caché.</string>
   <string name="custom_field_hidden_icon_content_description">Icône champ personnalisé masqué</string>
@@ -88,7 +88,7 @@
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Date d\'expiration</string>
   <string name="field_card_expiration_date_hint">MM / AAAA</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
+  <string name="field_card_expiration_date_error">Saisissez une date valide au format MM/AAAA.</string>
   <string name="create_credit_card_item_creation_error">Impossible de créer la carte de paiement</string>
   <string name="create_credit_card_item_creation_success">La carte de paiement a été créée.</string>
   <string name="credit_card_init_error">Problème de récupération des informations de la carte de paiement</string>

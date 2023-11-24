@@ -82,5 +82,5 @@
   <!-- Recent search -->
   <string name="recent_search_header_count">Búsquedas recientes</string>
   <string name="recent_search_clear">Borrar</string>
-  <string name="recent_search_remove_item">Eliminar de las búsquedas recientes</string>
+  <string name="recent_search_remove_item">Borrar de las búsquedas recientes</string>
 </resources>

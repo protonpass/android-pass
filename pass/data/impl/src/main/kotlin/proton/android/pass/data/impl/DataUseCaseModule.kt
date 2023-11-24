@@ -45,6 +45,7 @@ import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
+import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
@@ -134,6 +135,7 @@ import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
 import proton.android.pass.data.impl.usecases.GetAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.GetAllKeysByAddressImpl
+import proton.android.pass.data.impl.usecases.GetDefaultBrowserImpl
 import proton.android.pass.data.impl.usecases.GetInviteUserModeImpl
 import proton.android.pass.data.impl.usecases.GetItemActionsImpl
 import proton.android.pass.data.impl.usecases.GetItemByAliasEmailImpl
@@ -471,4 +473,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetItemActions(impl: GetItemActionsImpl): GetItemActions
+
+    @Binds
+    abstract fun bindGetDefaultBrowser(impl: GetDefaultBrowserImpl): GetDefaultBrowser
 }

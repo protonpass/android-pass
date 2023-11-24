@@ -50,11 +50,11 @@ android {
 }
 
 
-//androidComponents {
-//    beforeVariants(selector().all()) {
-//        it.enable = it.buildType == "release"
-//    }
-//}
+androidComponents {
+    beforeVariants(selector().all()) {
+        it.enable = it.buildType == "release"
+    }
+}
 
 
 dependencies {

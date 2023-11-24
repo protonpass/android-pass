@@ -59,6 +59,6 @@ class StartupBenchmark {
         startActivityAndWait()
 
         // Waits for content to be visible, which represents time to fully drawn.
-        device.wait(Until.hasObject(By.text("Iniciar sesión")), TIMEOUT)
+        device.wait(Until.hasObject(By.text("Sign in")), TIMEOUT)
     }
 }

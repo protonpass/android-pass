@@ -172,14 +172,11 @@ object NodeClusterer {
         clusters: MutableList<NodeCluster>,
         addedNodes: MutableSet<AssistField>
     ) {
-        val usernameFields = nodes.filter {
-            it.type == FieldType.Username || it.type == FieldType.Email
-        }
-        val passwordFields = nodes.filter { it.type == FieldType.Password }
+        detectSignupForm(nodes, clusters, addedNodes)
+        detectCardNumberAsUsername(nodes, clusters, addedNodes)
 
-        if (detectSignupForm(usernameFields, passwordFields, clusters, addedNodes)) return
-        if (detectCardNumberAsUsername(usernameFields, passwordFields, nodes, clusters, addedNodes))
-            return
+        val usernameFields = nodes.getUsernames(addedNodes)
+        val passwordFields = nodes.getNodesForType(FieldType.Password, addedNodes)
 
         for (usernameField in usernameFields) {
             val candidatePasswordFields = passwordFields.filter { !addedNodes.contains(it) }
@@ -232,12 +229,12 @@ object NodeClusterer {
 
     @Suppress("ComplexCondition")
     private fun detectCardNumberAsUsername(
-        usernameFields: List<AssistField>,
-        passwordFields: List<AssistField>,
         nodes: List<AssistField>,
         clusters: MutableList<NodeCluster>,
         addedNodes: MutableSet<AssistField>
-    ): Boolean {
+    ) {
+        val usernameFields = nodes.getUsernames(addedNodes)
+        val passwordFields = nodes.getNodesForType(FieldType.Password, addedNodes)
         if (
             usernameFields.isEmpty() &&
             passwordFields.size == 1 &&
@@ -254,17 +251,16 @@ object NodeClusterer {
                     }
                 )
             )
-            return true
         }
-        return false
     }
 
     private fun detectSignupForm(
-        usernameFields: List<AssistField>,
-        passwordFields: List<AssistField>,
+        nodes: List<AssistField>,
         clusters: MutableList<NodeCluster>,
         addedNodes: MutableSet<AssistField>
-    ): Boolean {
+    ) {
+        val usernameFields = nodes.getUsernames(addedNodes)
+        val passwordFields = nodes.getNodesForType(FieldType.Password, addedNodes)
         if (usernameFields.size == 1 && passwordFields.size == 2) {
             val username = usernameFields.first()
             val password = passwordFields.first()
@@ -273,9 +269,7 @@ object NodeClusterer {
             addedNodes.add(username)
             addedNodes.add(password)
             addedNodes.add(repeatPassword)
-            return true
         }
-        return false
     }
 
     private fun clusterCreditCards(
@@ -283,8 +277,8 @@ object NodeClusterer {
         clusters: MutableList<NodeCluster>,
         addedNodes: MutableSet<AssistField>
     ) {
-        val cardNumberNode = nodes.firstOrNull { it.type == FieldType.CardNumber } ?: return
-        val cardCvvNode = nodes.firstOrNull { it.type == FieldType.CardCvv }
+        val cardNumberNode = nodes.getNodeOfType(FieldType.CardNumber, addedNodes) ?: return
+        val cardCvvNode = nodes.getNodeOfType(FieldType.CardCvv, addedNodes)
         val cardHolder = getCardHolder(nodes, addedNodes)
         val expiration = getExpiration(nodes, addedNodes)
 
@@ -303,9 +297,9 @@ object NodeClusterer {
         nodes: List<AssistField>,
         addedNodes: MutableSet<AssistField>
     ): NodeCluster.CreditCard.CardHolder? {
-        val cardHolderNode = nodes.firstOrNull { it.type == FieldType.CardholderName }
-        val cardHolderFirstNameNode = nodes.firstOrNull { it.type == FieldType.CardholderFirstName }
-        val cardHolderLastNameNode = nodes.firstOrNull { it.type == FieldType.CardholderLastName }
+        val cardHolderNode = nodes.getNodeOfType(FieldType.CardholderName, addedNodes)
+        val cardHolderFirstNameNode = nodes.getNodeOfType(FieldType.CardholderFirstName, addedNodes)
+        val cardHolderLastNameNode = nodes.getNodeOfType(FieldType.CardholderLastName, addedNodes)
 
         return when {
             cardHolderLastNameNode != null -> when {
@@ -383,4 +377,22 @@ object NodeClusterer {
             else -> null
         }
     }
+
+    private fun List<AssistField>.getUsernames(addedNodes: Set<AssistField>): List<AssistField> =
+        filter {
+            it.type == FieldType.Username || it.type == FieldType.Email && !addedNodes.contains(it)
+        }
+
+    private fun List<AssistField>.getNodesForType(
+        type: FieldType,
+        addedNodes: Set<AssistField>
+    ): List<AssistField> =
+        filter {
+            it.type == type && !addedNodes.contains(it)
+        }
+
+    private fun List<AssistField>.getNodeOfType(
+        type: FieldType,
+        addedNodes: Set<AssistField>
+    ): AssistField? = getNodesForType(type, addedNodes).firstOrNull()
 }

@@ -36,20 +36,24 @@ import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
+import proton.android.pass.data.api.usecases.DefaultBrowser
+import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,7 +65,8 @@ class ProfileViewModel @Inject constructor(
     private val appConfig: AppConfig,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
-    observeUpgradeInfo: ObserveUpgradeInfo
+    observeUpgradeInfo: ObserveUpgradeInfo,
+    getDefaultBrowser: GetDefaultBrowser
 ) : ViewModel() {
 
     private val appLockSectionState: Flow<AppLockSectionState> = combine(
@@ -114,13 +119,14 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    val state: StateFlow<ProfileUiState> = combine(
+    val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionState,
         autofillStatusFlow,
         itemSummaryUiStateFlow,
         upgradeInfoFlow,
         eventFlow,
-    ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event ->
+        oneShot { getDefaultBrowser() }.asLoadingResult()
+    ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser ->
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
             is LoadingResult.Error -> {
@@ -143,6 +149,7 @@ class ProfileViewModel @Inject constructor(
             }
         }
 
+        val defaultBrowser = browser.getOrNull() ?: DefaultBrowser.Other
         ProfileUiState(
             appLockSectionState = appLockSectionState,
             autofillStatus = autofillStatus,
@@ -150,7 +157,8 @@ class ProfileViewModel @Inject constructor(
             appVersion = appConfig.versionName,
             accountType = accountType,
             event = event,
-            showUpgradeButton = showUpgradeButton
+            showUpgradeButton = showUpgradeButton,
+            userBrowser = defaultBrowser
         )
     }.stateIn(
         scope = viewModelScope,

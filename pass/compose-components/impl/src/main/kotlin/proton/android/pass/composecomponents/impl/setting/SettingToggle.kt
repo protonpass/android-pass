@@ -20,6 +20,7 @@ package proton.android.pass.composecomponents.impl.setting
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,27 +39,32 @@ fun SettingToggle(
     modifier: Modifier = Modifier,
     text: String,
     isChecked: Boolean,
+    belowContent: (@Composable () -> Unit)? = null,
     onClick: (Boolean) -> Unit
 ) {
-    Row(
+    Column(
         modifier = modifier
             .clickable { onClick(!isChecked) }
             .fillMaxWidth()
             .padding(16.dp, 26.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Text(
-            modifier = Modifier.weight(1f),
-            text = text,
-            style = ProtonTheme.typography.defaultWeak,
-            color = PassTheme.colors.textNorm
-        )
-        Switch(
-            checked = isChecked,
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = PassTheme.colors.interactionNormMajor1,
-            ),
-            onCheckedChange = null
-        )
+        Row(horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = text,
+                style = ProtonTheme.typography.defaultWeak,
+                color = PassTheme.colors.textNorm
+            )
+            Switch(
+                checked = isChecked,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = PassTheme.colors.interactionNormMajor1,
+                ),
+                onCheckedChange = null
+            )
+        }
+
+        belowContent?.invoke()
     }
 }

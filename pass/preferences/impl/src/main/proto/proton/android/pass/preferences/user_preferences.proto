@@ -26,4 +26,5 @@ message UserPreferences {
   AppLockTypePrefProto app_lock_type = 13;
   BooleanPrefProto biometric_system_lock = 14;
   BooleanPrefProto has_dismissed_notification_banner = 15;
+  string default_vault = 16;
 }

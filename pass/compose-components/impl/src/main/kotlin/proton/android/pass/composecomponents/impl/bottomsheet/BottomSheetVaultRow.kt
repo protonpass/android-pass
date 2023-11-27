@@ -62,11 +62,6 @@ fun BottomSheetVaultRow(
             }
         override val subtitle: @Composable (() -> Unit)
             get() = {
-                val color = if (enabled) {
-                    PassTheme.colors.textWeak
-                } else {
-                    PassTheme.colors.textDisabled
-                }
                 val text = customSubtitle ?: pluralStringResource(
                     id = R.plurals.bottomsheet_select_vault_item_count,
                     count = vault.activeItemCount.toInt(),
@@ -74,7 +69,7 @@ fun BottomSheetVaultRow(
                 )
                 Text(
                     text = text,
-                    color = color
+                    color = PassTheme.colors.textHint
                 )
             }
         override val leftIcon: @Composable (() -> Unit)

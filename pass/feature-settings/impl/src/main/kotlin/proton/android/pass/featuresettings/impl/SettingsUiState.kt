@@ -19,6 +19,9 @@
 package proton.android.pass.featuresettings.impl
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
@@ -38,7 +41,8 @@ data class SettingsUiState(
     val allowScreenshots: AllowScreenshotsPreference,
     val shareTelemetry: Boolean,
     val shareCrashes: Boolean,
-    val event: SettingsEvent
+    val event: SettingsEvent,
+    val defaultVault: Option<VaultWithItemCount>
 ) {
     companion object {
         val Initial = SettingsUiState(
@@ -49,7 +53,8 @@ data class SettingsUiState(
             allowScreenshots = AllowScreenshotsPreference.Disabled,
             shareTelemetry = true,
             shareCrashes = true,
-            event = SettingsEvent.Unknown
+            event = SettingsEvent.Unknown,
+            defaultVault = None
         )
     }
 }

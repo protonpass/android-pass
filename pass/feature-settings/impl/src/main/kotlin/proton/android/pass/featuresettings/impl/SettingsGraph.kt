@@ -21,6 +21,7 @@ package proton.android.pass.featuresettings.impl
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
+import proton.android.pass.featuresettings.impl.defaultvault.SelectDefaultVaultBottomSheet
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
@@ -45,11 +46,17 @@ object ClearClipboardOptions : NavItem(
     navItemType = NavItemType.Bottomsheet
 )
 
+object DefaultVault : NavItem(
+    baseRoute = "settings/defaultVault",
+    navItemType = NavItemType.Bottomsheet
+)
+
 sealed interface SettingsNavigation {
     object SelectTheme : SettingsNavigation
     object ClipboardSettings : SettingsNavigation
     object ClearClipboardSettings : SettingsNavigation
     object Close : SettingsNavigation
+    object DefaultVault : SettingsNavigation
     object DismissBottomSheet : SettingsNavigation
     object ViewLogs : SettingsNavigation
     object Restart : SettingsNavigation
@@ -84,6 +91,11 @@ fun NavGraphBuilder.settingsGraph(
         bottomSheet(ClearClipboardOptions) {
             BackHandler { onNavigate(SettingsNavigation.DismissBottomSheet) }
             ClearClipboardOptionsBottomSheet(onNavigate = onNavigate)
+        }
+
+        bottomSheet(DefaultVault) {
+            BackHandler { onNavigate(SettingsNavigation.DismissBottomSheet) }
+            SelectDefaultVaultBottomSheet(onNavigate = onNavigate)
         }
     }
 }

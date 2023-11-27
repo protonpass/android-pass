@@ -69,6 +69,7 @@ import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemCount
@@ -161,6 +162,7 @@ import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveHasConfirmedInvite
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
@@ -545,4 +547,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetDefaultBrowser(impl: TestGetDefaultBrowser): GetDefaultBrowser
+
+    @Binds
+    abstract fun bindObserveDefaultVault(impl: TestObserveDefaultVault): ObserveDefaultVault
 }

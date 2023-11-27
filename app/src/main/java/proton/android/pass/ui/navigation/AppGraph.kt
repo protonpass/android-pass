@@ -107,6 +107,7 @@ import proton.android.pass.featuresearchoptions.impl.SortingNavigation
 import proton.android.pass.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.featuresettings.impl.ClearClipboardOptions
 import proton.android.pass.featuresettings.impl.ClipboardSettings
+import proton.android.pass.featuresettings.impl.DefaultVault
 import proton.android.pass.featuresettings.impl.LogView
 import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featuresettings.impl.SettingsNavigation
@@ -450,6 +451,7 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 SettingsNavigation.Restart -> onNavigate(AppNavigation.Restart)
+                SettingsNavigation.DefaultVault -> appNavigator.navigate(DefaultVault)
                 SettingsNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
             }
         }

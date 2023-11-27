@@ -31,9 +31,13 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.usecases.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -51,7 +55,8 @@ class SettingsViewModel @Inject constructor(
     private val refreshContent: RefreshContent,
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
-    syncStatusRepository: ItemSyncStatusRepository
+    syncStatusRepository: ItemSyncStatusRepository,
+    observeDefaultVault: ObserveDefaultVault
 ) : ViewModel() {
 
     private val themeState: Flow<ThemePreference> = preferencesRepository
@@ -73,6 +78,9 @@ class SettingsViewModel @Inject constructor(
             .getAllowScreenshotsPreference()
             .distinctUntilChanged()
 
+    private val defaultVaultState: Flow<Option<VaultWithItemCount>> = observeDefaultVault()
+        .distinctUntilChanged()
+
     private val eventState: MutableStateFlow<SettingsEvent> =
         MutableStateFlow(SettingsEvent.Unknown)
 
@@ -88,13 +96,14 @@ class SettingsViewModel @Inject constructor(
         useFaviconsState
     ) { theme, totp, favicons -> PreferencesState(theme, totp, favicons) }
 
-    val state: StateFlow<SettingsUiState> = combine(
+    val state: StateFlow<SettingsUiState> = combineN(
         preferencesState,
         deviceSettingsRepository.observeDeviceSettings(),
         allowScreenshotsState,
         syncStatusRepository.observeSyncStatus(),
-        eventState
-    ) { preferences, deviceSettings, allowScreenshots, sync, event ->
+        eventState,
+        defaultVaultState
+    ) { preferences, deviceSettings, allowScreenshots, sync, event, defaultVault ->
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
@@ -103,7 +112,8 @@ class SettingsViewModel @Inject constructor(
             allowScreenshots = allowScreenshots,
             shareTelemetry = deviceSettings.isTelemetryEnabled,
             shareCrashes = deviceSettings.isCrashReportEnabled,
-            event = event
+            event = event,
+            defaultVault = defaultVault
         )
     }.stateIn(
         scope = viewModelScope,

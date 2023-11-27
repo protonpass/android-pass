@@ -30,4 +30,5 @@ sealed interface SettingsContentEvent {
     object Privacy : SettingsContentEvent
     object Terms : SettingsContentEvent
     object Up : SettingsContentEvent
+    object DefaultVault : SettingsContentEvent
 }

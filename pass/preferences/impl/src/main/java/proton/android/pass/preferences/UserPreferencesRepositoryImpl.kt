@@ -24,6 +24,9 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
 import javax.inject.Inject
@@ -184,6 +187,16 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> = getPreference {
         AllowScreenshotsPreference.from(fromBooleanPrefProto(it.allowScreenshots))
+    }
+
+    override fun setDefaultVault(shareId: String): Result<Unit> = setPreference {
+        it.setDefaultVault(shareId)
+    }
+
+    override fun getDefaultVault(): Flow<Option<String>> = getPreference {
+        val value = it.defaultVault
+        if (value.isNullOrBlank()) None
+        else value.some()
     }
 
     override fun tryClearPreferences(): Result<Unit> = runBlocking { clearPreferences() }

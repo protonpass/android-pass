@@ -22,6 +22,7 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
@@ -89,7 +90,7 @@ class E2EApp : Application() {
                 title = "Second card"
             )
         )
-        creditCardItems.sendValue(Result.success(creditCards))
+        creditCardItems.sendValue(Result.success(SuggestedCreditCardItemsResult.Items(creditCards)))
     }
 
     private fun setupLogger() {

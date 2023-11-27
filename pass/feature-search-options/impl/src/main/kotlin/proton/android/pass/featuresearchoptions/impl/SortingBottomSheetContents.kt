@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.featuresearchoptions.impl
+package proton.android.pass.featuresearchoptions.impl
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface

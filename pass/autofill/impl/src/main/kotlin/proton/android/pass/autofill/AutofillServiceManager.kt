@@ -45,6 +45,7 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
 import proton.android.pass.domain.Item
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
@@ -72,11 +73,17 @@ class AutofillServiceManager @Inject constructor(
         return when (autofillData.assistInfo.cluster) {
             NodeCluster.Empty -> emptyList()
             is NodeCluster.Login,
-            is NodeCluster.SignUp ->
-                handleSuggestions(inlineSuggestionsRequest, autofillData, SuggestionType.Login)
+            is NodeCluster.SignUp -> handleSuggestions(
+                request = inlineSuggestionsRequest,
+                autofillData = autofillData,
+                suggestionType = SuggestionType.Login
+            )
 
-            is NodeCluster.CreditCard ->
-                handleSuggestions(inlineSuggestionsRequest, autofillData, SuggestionType.CreditCard)
+            is NodeCluster.CreditCard -> handleSuggestions(
+                request = inlineSuggestionsRequest,
+                autofillData = autofillData,
+                suggestionType = SuggestionType.CreditCard
+            )
         }
     }
 
@@ -92,8 +99,39 @@ class AutofillServiceManager @Inject constructor(
     ): List<Dataset> {
         val suggestedItemsResult = getSuggestedItems(suggestionType, autofillData)
 
-        val specs = request.inlinePresentationSpecs
+        return when (suggestedItemsResult) {
+            SuggestedItemsResult.Hide -> emptyList()
+            SuggestedItemsResult.ShowUpgrade -> upgradeSuggestion(request, autofillData)
+            is SuggestedItemsResult.Show -> itemsSuggestions(
+                request = request,
+                autofillData = autofillData,
+                suggestedItems = suggestedItemsResult.items
+            )
+        }
+    }
 
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun upgradeSuggestion(
+        request: InlineSuggestionsRequest,
+        autofillData: AutofillData
+    ): List<Dataset> = when (request.inlinePresentationSpecs.size) {
+        0 -> emptyList()
+        else -> listOf(
+            createCcUpgradeDataset(
+                autofillData = autofillData,
+                inlinePresentationSpec = request.inlinePresentationSpecs.first()
+            )
+        )
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun itemsSuggestions(
+        request: InlineSuggestionsRequest,
+        autofillData: AutofillData,
+        suggestedItems: List<Item>
+    ): List<Dataset> {
+        val specs = request.inlinePresentationSpecs
         val pinnedIcon = { spec: InlinePresentationSpec ->
             createPinnedIcon(
                 autofillData = autofillData,
@@ -113,9 +151,9 @@ class AutofillServiceManager @Inject constructor(
             2 -> listOf(openApp(specs.first()), pinnedIcon(specs.last()))
             else -> {
                 val openAppDataSet = openApp(specs[specs.size - INLINE_SUGGESTIONS_OFFSET])
-                if (suggestedItemsResult.isNotEmpty()) {
+                if (suggestedItems.isNotEmpty()) {
                     createItemsDatasetList(
-                        suggestedItems = suggestedItemsResult,
+                        suggestedItems = suggestedItems,
                         inlineSuggestionsRequest = request,
                         autofillData = autofillData
                     ).plus(listOf(openAppDataSet, pinnedIcon(specs.last())))
@@ -129,25 +167,76 @@ class AutofillServiceManager @Inject constructor(
     private suspend fun getSuggestedItems(
         suggestionType: SuggestionType,
         autofillData: AutofillData
-    ): List<Item> = when (suggestionType) {
-        SuggestionType.CreditCard -> getSuggestedCreditCardItems()
-            .firstOrNull()
-            ?: emptyList()
+    ): SuggestedItemsResult = when (suggestionType) {
+        SuggestionType.CreditCard -> {
+            when (val cardsResult = getSuggestedCreditCardItems().firstOrNull()) {
+                SuggestedCreditCardItemsResult.Hide -> SuggestedItemsResult.Hide
+                is SuggestedCreditCardItemsResult.Items -> SuggestedItemsResult.Show(
+                    items = cardsResult.items
+                )
 
-        SuggestionType.Login -> getSuggestedLoginItems(
-            packageName = autofillData.packageInfo.map { it.packageName.value },
-            url = autofillData.assistInfo.url
-        ).firstOrNull() ?: emptyList()
+                SuggestedCreditCardItemsResult.ShowUpgrade -> SuggestedItemsResult.ShowUpgrade
+                null -> SuggestedItemsResult.Hide
+            }
+        }
+
+        SuggestionType.Login -> {
+            val items = getSuggestedLoginItems(
+                packageName = autofillData.packageInfo.map { it.packageName.value },
+                url = autofillData.assistInfo.url
+            ).firstOrNull() ?: emptyList()
+            SuggestedItemsResult.Show(items)
+        }
     }
 
     suspend fun createMenuPresentationDataset(autofillData: AutofillData): List<Dataset> {
         val suggestedItemsResult = when (autofillData.assistInfo.cluster) {
-            NodeCluster.Empty -> emptyList()
+            NodeCluster.Empty -> SuggestedItemsResult.Show(emptyList())
             is NodeCluster.Login,
             is NodeCluster.SignUp -> getSuggestedItems(SuggestionType.Login, autofillData)
 
             is NodeCluster.CreditCard -> getSuggestedItems(SuggestionType.CreditCard, autofillData)
         }
+
+        return when (suggestedItemsResult) {
+            SuggestedItemsResult.Hide -> emptyList()
+            SuggestedItemsResult.ShowUpgrade -> createUpgradePresentationDataset(autofillData)
+            is SuggestedItemsResult.Show -> createMenuPresentationDatasetWithItems(
+                autofillData = autofillData,
+                suggestedItems = suggestedItemsResult.items
+            )
+        }
+    }
+
+    private fun createUpgradePresentationDataset(autofillData: AutofillData): List<Dataset> {
+        val upgradePendingIntent = PendingIntentUtils.getUpgradePendingIntent(
+            context = context,
+            intentRequestCode = OPEN_PASS_UPGRADE_REQUEST_CODE
+        )
+        val upgradeRemoteView = RemoteViews(context.packageName, R.layout.autofill_item).apply {
+            setTextViewText(
+                R.id.title,
+                context.getText(R.string.suggestions_cc_autofill_paid_plans_title)
+            )
+            setViewVisibility(R.id.subtitle, View.GONE)
+        }
+        val upgradeDatasetOptions = DatasetBuilderOptions(
+            id = "RemoteView-OpenApp".some(),
+            remoteViewPresentation = upgradeRemoteView.some(),
+            pendingIntent = upgradePendingIntent.some()
+        )
+        val upgradeDataset = DatasetUtils.buildDataset(
+            options = upgradeDatasetOptions,
+            cluster = autofillData.assistInfo.cluster
+        )
+
+        return listOf(upgradeDataset)
+    }
+
+    private fun createMenuPresentationDatasetWithItems(
+        autofillData: AutofillData,
+        suggestedItems: List<Item>
+    ): List<Dataset> {
         val openAppPendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
             context = context,
             autofillData = autofillData,
@@ -168,7 +257,7 @@ class AutofillServiceManager @Inject constructor(
         )
         val shouldAuthenticate = runBlocking { needsBiometricAuth().first() }
 
-        return suggestedItemsResult.take(2)
+        return suggestedItems.take(2)
             .mapIndexed { index, item ->
                 val (view, autofillItem) = encryptionContextProvider.withEncryptionContext {
                     RemoteViews(context.packageName, R.layout.autofill_item)
@@ -299,6 +388,35 @@ class AutofillServiceManager @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
+    private fun createCcUpgradeDataset(
+        autofillData: AutofillData,
+        inlinePresentationSpec: InlinePresentationSpec
+    ): Dataset {
+        val inlinePresentation = InlinePresentationUtils.create(
+            title = context.getString(R.string.suggestions_cc_autofill_paid_plans_title),
+            subtitle = context.getString(
+                R.string.suggestions_cc_autofill_paid_plans_subtitle
+            ).some(),
+            inlinePresentationSpec = inlinePresentationSpec,
+            pendingIntent = PendingIntentUtils.getLongPressInlinePendingIntent(context),
+            icon = getIcon().some()
+        )
+        val pendingIntent = PendingIntentUtils.getUpgradePendingIntent(
+            context = context,
+            intentRequestCode = OPEN_PASS_UPGRADE_REQUEST_CODE
+        )
+        val builderOptions = DatasetBuilderOptions(
+            id = "InlineSuggestion-Upgrade".some(),
+            inlinePresentation = inlinePresentation.toOption(),
+            pendingIntent = pendingIntent.toOption()
+        )
+        return DatasetUtils.buildDataset(
+            options = builderOptions,
+            cluster = autofillData.assistInfo.cluster
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun createPinnedIcon(
         autofillData: AutofillData,
         inlinePresentationSpec: InlinePresentationSpec
@@ -347,6 +465,7 @@ class AutofillServiceManager @Inject constructor(
         private const val OPEN_PASS_SUGGESTION_REQUEST_CODE = 1000
         private const val OPEN_PASS_MENU_REQUEST_CODE = 1001
         private const val OPEN_PASS_PINNED_REQUEST_CODE = 1002
+        private const val OPEN_PASS_UPGRADE_REQUEST_CODE = 1003
 
         private const val TAG = "AutofillServiceManager"
     }
@@ -355,4 +474,12 @@ class AutofillServiceManager @Inject constructor(
 sealed interface SuggestionType {
     object Login : SuggestionType
     object CreditCard : SuggestionType
+}
+
+sealed interface SuggestedItemsResult {
+    object Hide : SuggestedItemsResult
+    object ShowUpgrade : SuggestedItemsResult
+
+    @JvmInline
+    value class Show(val items: List<Item>) : SuggestedItemsResult
 }

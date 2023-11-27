@@ -47,6 +47,16 @@ object PendingIntentUtils {
         autofillPendingIntentFlags
     )
 
+    internal fun getUpgradePendingIntent(
+        context: Context,
+        intentRequestCode: Int,
+    ): PendingIntent = PendingIntent.getActivity(
+        context,
+        intentRequestCode,
+        AutofillActivity.newIntentForUpgrade(context),
+        autofillPendingIntentFlags
+    )
+
     internal fun getSuggestionPendingIntent(
         context: Context,
         autofillData: AutofillData,

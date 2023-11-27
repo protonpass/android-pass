@@ -21,6 +21,13 @@ package proton.android.pass.data.api.usecases
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.Item
 
+sealed interface SuggestedCreditCardItemsResult {
+    @JvmInline
+    value class Items(val items: List<Item>) : SuggestedCreditCardItemsResult
+    object Hide : SuggestedCreditCardItemsResult
+    object ShowUpgrade : SuggestedCreditCardItemsResult
+}
+
 interface GetSuggestedCreditCardItems {
-    operator fun invoke(): Flow<List<Item>>
+    operator fun invoke(): Flow<SuggestedCreditCardItemsResult>
 }

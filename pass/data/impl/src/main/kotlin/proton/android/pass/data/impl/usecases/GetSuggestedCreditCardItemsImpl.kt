@@ -19,18 +19,43 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
-import proton.android.pass.domain.Item
+import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
+import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 
 class GetSuggestedCreditCardItemsImpl @Inject constructor(
-    private val observeActiveItems: ObserveActiveItems
+    private val observeActiveItems: ObserveActiveItems,
+    private val getUserPlan: GetUserPlan
 ) : GetSuggestedCreditCardItems {
 
-    override fun invoke(): Flow<List<Item>> =
+    override fun invoke(): Flow<SuggestedCreditCardItemsResult> = combine(
+        getUserPlan(),
         observeActiveItems(filter = ItemTypeFilter.CreditCards)
-            .map { list -> list.sortedBy { it.createTime } }
+    ) { plan, creditCards ->
+        when (plan.planType) {
+            is PlanType.Free -> if (creditCards.isEmpty()) {
+                SuggestedCreditCardItemsResult.Hide
+            } else {
+                SuggestedCreditCardItemsResult.ShowUpgrade
+            }
+            is PlanType.Paid,
+            is PlanType.Trial -> {
+                val sorted = creditCards.sortedByDescending {
+                    when (val autofillTime = it.lastAutofillTime) {
+                        None -> it.modificationTime
+                        is Some -> autofillTime.value
+                    }
+                }
+                SuggestedCreditCardItemsResult.Items(sorted)
+            }
+            is PlanType.Unknown -> SuggestedCreditCardItemsResult.Hide
+        }
+    }
 }

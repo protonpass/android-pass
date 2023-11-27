@@ -22,16 +22,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
-import proton.android.pass.domain.Item
+import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TestGetSuggestedCreditCardItems @Inject constructor() : GetSuggestedCreditCardItems {
 
-    private val resultFlow = MutableStateFlow<Result<List<Item>>>(Result.success(emptyList()))
+    private val resultFlow = MutableStateFlow<Result<SuggestedCreditCardItemsResult>>(
+        Result.success(SuggestedCreditCardItemsResult.Items(emptyList()))
+    )
 
-    fun sendValue(value: Result<List<Item>>) = resultFlow.tryEmit(value)
+    fun sendValue(value: Result<SuggestedCreditCardItemsResult>) = resultFlow.tryEmit(value)
 
-    override fun invoke(): Flow<List<Item>> = resultFlow.map { it.getOrThrow() }
+    override fun invoke(): Flow<SuggestedCreditCardItemsResult> = resultFlow.map { it.getOrThrow() }
 }

@@ -20,6 +20,9 @@ package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -52,6 +55,7 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     private val appLockTypePreference = MutableStateFlow(AppLockTypePreference.Biometrics)
     private val biometricSystemLockPreference: MutableStateFlow<BiometricSystemLockPreference> =
         MutableStateFlow(BiometricSystemLockPreference.Enabled)
+    private val defaultVaultPreference = MutableStateFlow<Option<String>>(None)
     private val passwordGenerationPreference = MutableStateFlow(
         PasswordGenerationPreference(
             mode = PasswordGenerationMode.Words,
@@ -180,6 +184,13 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> =
         allowScreenshotsPreference
+
+    override fun setDefaultVault(shareId: String): Result<Unit> {
+        defaultVaultPreference.tryEmit(shareId.toOption())
+        return Result.success(Unit)
+    }
+
+    override fun getDefaultVault(): Flow<Option<String>> = defaultVaultPreference
 
     override fun tryClearPreferences(): Result<Unit> = Result.success(Unit)
 

@@ -19,6 +19,7 @@
 package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.Option
 
 @Suppress("TooManyFunctions", "ComplexInterface")
 interface UserPreferencesRepository {
@@ -66,6 +67,9 @@ interface UserPreferencesRepository {
 
     fun setAllowScreenshotsPreference(preference: AllowScreenshotsPreference): Result<Unit>
     fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference>
+
+    fun setDefaultVault(shareId: String): Result<Unit>
+    fun getDefaultVault(): Flow<Option<String>>
 
     fun tryClearPreferences(): Result<Unit>
     suspend fun clearPreferences(): Result<Unit>

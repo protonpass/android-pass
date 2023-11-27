@@ -18,9 +18,10 @@
 
 package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.ShareId
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.VaultWithItemCount
 
-interface MarkVaultAsPrimary {
-    suspend operator fun invoke(userId: UserId? = null, shareId: ShareId)
+interface ObserveDefaultVault {
+    operator fun invoke(): Flow<Option<VaultWithItemCount>>
 }

@@ -42,6 +42,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import proton.android.pass.domain.ItemState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -51,7 +52,6 @@ import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.ConfirmTrashAliasDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
-import proton.android.pass.domain.ItemState
 
 @OptIn(
     ExperimentalComposeUiApi::class,
@@ -157,7 +157,11 @@ fun AliasDetail(
                         onCopyAlias = { viewModel.onCopyAlias(it) },
                         moreInfoUiState = moreInfoUiState,
                         onCreateLoginFromAlias = { alias ->
-                            onNavigate(ItemDetailNavigation.OnCreateLoginFromAlias(alias = alias))
+                            val event = ItemDetailNavigation.OnCreateLoginFromAlias(
+                                alias = alias,
+                                shareId = state.itemUiModel.shareId
+                            )
+                            onNavigate(event)
                         },
                         onVaultClick = {
                             state.vault?.shareId?.let {

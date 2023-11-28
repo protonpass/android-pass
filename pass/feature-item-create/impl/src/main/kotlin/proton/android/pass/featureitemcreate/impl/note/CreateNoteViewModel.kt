@@ -49,6 +49,9 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
@@ -62,8 +65,6 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,6 +78,7 @@ class CreateNoteViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
+    observeDefaultVault: ObserveDefaultVault
 ) : BaseNoteViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -107,6 +109,7 @@ class CreateNoteViewModel @Inject constructor(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
+        observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         viewModelScope = viewModelScope,
         tag = TAG
     )

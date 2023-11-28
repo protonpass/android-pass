@@ -33,6 +33,7 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
@@ -56,6 +57,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     encryptionContextProvider: EncryptionContextProvider,
     aliasPrefixValidator: AliasPrefixValidator,
+    observeDefaultVault: ObserveDefaultVault
 ) : CreateAliasViewModel(
     accountManager = accountManager,
     createAlias = createAlias,
@@ -69,6 +71,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     inAppReviewTriggerMetrics = inAppReviewTriggerMetrics,
     encryptionContextProvider = encryptionContextProvider,
     aliasPrefixValidator = aliasPrefixValidator,
+    observeDefaultVault = observeDefaultVault
 ) {
 
     private val isEditMode: Boolean = savedStateHandleProvider.get()

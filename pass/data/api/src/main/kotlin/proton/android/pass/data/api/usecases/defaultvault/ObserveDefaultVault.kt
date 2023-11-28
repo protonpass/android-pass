@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.api.usecases.defaultvault
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option

@@ -18,23 +18,29 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
-import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestObserveDefaultVault @Inject constructor() : ObserveDefaultVault {
+class TestSetDefaultVault @Inject constructor() : SetDefaultVault {
 
-    private val flow = MutableStateFlow<Option<VaultWithItemCount>>(None)
+    private var result: Result<Unit> = Result.success(Unit)
 
-    fun emitValue(value: Option<VaultWithItemCount>) {
-        flow.tryEmit(value)
+    private val memory = mutableListOf<Payload>()
+    fun getMemory(): List<Payload> = memory
+
+    fun setResult(value: Result<Unit>) {
+        result = value
     }
 
-    override fun invoke(): Flow<Option<VaultWithItemCount>> = flow
+    override suspend fun invoke(shareId: ShareId): Result<Unit> {
+        memory.add(Payload(shareId))
+        return result
+    }
+
+    @JvmInline
+    value class Payload(val shareId: ShareId)
+
 }

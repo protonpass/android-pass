@@ -16,25 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.impl.usecases.defaultvault
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
-import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestObserveDefaultVault @Inject constructor() : ObserveDefaultVault {
+class SetDefaultVaultImpl @Inject constructor(
+    private val userPreferencesRepository: UserPreferencesRepository
+) : SetDefaultVault {
 
-    private val flow = MutableStateFlow<Option<VaultWithItemCount>>(None)
+    override suspend fun invoke(shareId: ShareId): Result<Unit> =
+        userPreferencesRepository.setDefaultVault(shareId.id)
 
-    fun emitValue(value: Option<VaultWithItemCount>) {
-        flow.tryEmit(value)
-    }
-
-    override fun invoke(): Flow<Option<VaultWithItemCount>> = flow
 }

@@ -68,7 +68,6 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemCount
@@ -105,6 +104,8 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -198,6 +199,7 @@ import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanManageVaultAccessImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanMigrateVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanShareVaultImpl
+import proton.android.pass.data.impl.usecases.defaultvault.SetDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
@@ -481,4 +483,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveDefaultVault(impl: ObserveDefaultVaultImpl): ObserveDefaultVault
+
+    @Binds
+    abstract fun bindSetDefaultVault(impl: SetDefaultVaultImpl): SetDefaultVault
 }

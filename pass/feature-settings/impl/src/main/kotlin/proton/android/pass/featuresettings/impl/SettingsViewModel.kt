@@ -35,7 +35,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.usecases.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.image.api.ClearIconCache

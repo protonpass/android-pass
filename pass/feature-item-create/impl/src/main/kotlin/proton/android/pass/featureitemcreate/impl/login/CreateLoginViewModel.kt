@@ -58,6 +58,12 @@ import proton.android.pass.data.api.usecases.CreateItemAndAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.MFACreated
@@ -80,11 +86,6 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
-import proton.android.pass.domain.CustomField
-import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.VaultWithItemCount
-import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 @Suppress("LongParameterList")
@@ -104,6 +105,7 @@ class CreateLoginViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
+    observeDefaultVault: ObserveDefaultVault
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -146,6 +148,7 @@ class CreateLoginViewModel @Inject constructor(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
+        observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         viewModelScope = viewModelScope,
         tag = TAG
     )

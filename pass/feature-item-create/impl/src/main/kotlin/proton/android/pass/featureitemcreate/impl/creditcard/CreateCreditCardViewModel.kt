@@ -31,6 +31,9 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
@@ -44,8 +47,6 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 
 @HiltViewModel
@@ -59,6 +60,7 @@ class CreateCreditCardViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction,
+    observeDefaultVault: ObserveDefaultVault
 ) : BaseCreditCardViewModel(
     encryptionContextProvider = encryptionContextProvider,
     canPerformPaidAction = canPerformPaidAction,
@@ -88,6 +90,7 @@ class CreateCreditCardViewModel @Inject constructor(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
+        observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         viewModelScope = viewModelScope,
         tag = TAG
     )

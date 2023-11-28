@@ -394,9 +394,7 @@ class AutofillServiceManager @Inject constructor(
     ): Dataset {
         val inlinePresentation = InlinePresentationUtils.create(
             title = context.getString(R.string.suggestions_cc_autofill_paid_plans_title),
-            subtitle = context.getString(
-                R.string.suggestions_cc_autofill_paid_plans_subtitle
-            ).some(),
+            subtitle = None,
             inlinePresentationSpec = inlinePresentationSpec,
             pendingIntent = PendingIntentUtils.getLongPressInlinePendingIntent(context),
             icon = getIcon().some()

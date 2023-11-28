@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Sorting -->
-
     <string name="sort_by_title_asc">Title (A-Z)</string>
     <string name="sort_by_title_desc">Title (Z-A)</string>
     <string name="sort_by_creation_asc">Oldest to newest</string>

@@ -36,7 +36,7 @@ object SortingLocationNavArgId : NavArgId {
 }
 
 object SortingBottomsheet : NavItem(
-    baseRoute = "sorting/bottomsheet",
+    baseRoute = "searchoptions/sorting/bottomsheet",
     navArgIds = listOf(SortingLocationNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
@@ -46,6 +46,11 @@ object SortingBottomsheet : NavItem(
 
 object SearchOptionsBottomsheet : NavItem(
     baseRoute = "searchoptions/bottomsheet",
+    navItemType = NavItemType.Bottomsheet
+)
+
+object FilterBottomsheet : NavItem(
+    baseRoute = "searchoptions/filter/bottomsheet",
     navItemType = NavItemType.Bottomsheet
 )
 
@@ -59,6 +64,11 @@ fun NavGraphBuilder.searchOptionsGraph(
     }
     bottomSheet(SortingBottomsheet) {
         SortingBottomSheet(
+            onNavigateEvent = onNavigateEvent
+        )
+    }
+    bottomSheet(FilterBottomsheet) {
+        FilterBottomSheet(
             onNavigateEvent = onNavigateEvent
         )
     }

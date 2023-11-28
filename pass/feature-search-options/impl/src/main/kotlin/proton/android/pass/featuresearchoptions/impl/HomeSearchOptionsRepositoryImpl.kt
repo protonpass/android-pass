@@ -20,7 +20,6 @@ package proton.android.pass.featuresearchoptions.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
@@ -54,19 +53,21 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
         .getHomeSortingOption()
         .map { SortingOption(it.toDomain()) }
 
-    override fun observeFilterOption(): Flow<FilterOption> {
-        // TODO()
-        return emptyFlow()
-    }
+    override fun observeFilterOption(): Flow<FilterOption> =
+        internalSettingsRepository.getHomeFilterOption()
+            .map { FilterOption(it.toDomain()) }
 
     override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> =
         internalSettingsRepository
             .getSelectedVault()
             .map { it.toSelectionOption() }
 
-
     override fun setSortingOption(sortingOption: SortingOption) {
         internalSettingsRepository.setHomeSortingOption(sortingOption.toPreference())
+    }
+
+    override fun setFilterOption(filterOption: FilterOption) {
+        internalSettingsRepository.setHomeFilterOption(filterOption.toPreference())
     }
 
     override fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {

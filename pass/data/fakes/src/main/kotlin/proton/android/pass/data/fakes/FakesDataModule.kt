@@ -69,7 +69,6 @@ import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemCount
@@ -103,6 +102,8 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -185,6 +186,7 @@ import proton.android.pass.data.fakes.usecases.TestResendInvite
 import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
+import proton.android.pass.data.fakes.usecases.TestSetDefaultVault
 import proton.android.pass.data.fakes.usecases.TestSetVaultMemberPermission
 import proton.android.pass.data.fakes.usecases.TestTransferVaultOwnership
 import proton.android.pass.data.fakes.usecases.TestTrashItem
@@ -550,4 +552,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveDefaultVault(impl: TestObserveDefaultVault): ObserveDefaultVault
+
+    @Binds
+    abstract fun bindSetDefaultVault(impl: TestSetDefaultVault): SetDefaultVault
 }

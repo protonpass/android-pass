@@ -37,18 +37,18 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.featuresettings.impl.SettingsSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SelectDefaultVaultViewModel @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository,
+    private val setDefaultVault: SetDefaultVault,
     private val snackbarDispatcher: SnackbarDispatcher,
     observeVaults: ObserveVaultsWithItemCount
 ) : ViewModel() {
@@ -99,7 +99,7 @@ class SelectDefaultVaultViewModel @Inject constructor(
 
     fun onVaultSelected(vault: VaultWithItemCount) = viewModelScope.launch {
         loadingFlow.update { IsLoadingState.Loading }
-        userPreferencesRepository.setDefaultVault(shareId = vault.vault.shareId.id)
+        setDefaultVault(shareId = vault.vault.shareId)
             .onSuccess {
                 eventFlow.update { SelectDefaultVaultEvent.Selected }
                 snackbarDispatcher(SettingsSnackbarMessage.ChangeDefaultVaultSuccess)

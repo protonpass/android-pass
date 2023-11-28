@@ -23,6 +23,7 @@ import com.google.protobuf.Timestamp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
@@ -38,7 +39,8 @@ import javax.inject.Singleton
 @Suppress("TooManyFunctions")
 @Singleton
 class InternalSettingsRepositoryImpl @Inject constructor(
-    private val dataStore: DataStore<InternalSettings>
+    private val dataStore: DataStore<InternalSettings>,
+    private val inMemoryPreferences: InMemoryPreferences
 ) : InternalSettingsRepository {
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> = setPreference {
@@ -81,6 +83,15 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         SortingOptionPreference.fromValue(it.homeSortingOption)
     }
 
+    override fun setHomeFilterOption(filterOption: FilterOptionPreference): Result<Unit> =
+        runCatching {
+            inMemoryPreferences.set(FilterOptionPreference::class.java.name, filterOption.value())
+        }
+
+    override fun getHomeFilterOption(): Flow<FilterOptionPreference> =
+        flowOf(inMemoryPreferences.get<Int>(FilterOptionPreference::class.java.name))
+            .map { it?.let { FilterOptionPreference.fromValue(it) } ?: FilterOptionPreference.All }
+
     override fun setAutofillSortingOption(
         sortingOption: SortingOptionPreference
     ): Result<Unit> = setPreference { it.setAutofillSortingOption(sortingOption.value()) }
@@ -88,6 +99,15 @@ class InternalSettingsRepositoryImpl @Inject constructor(
     override fun getAutofillSortingOption(): Flow<SortingOptionPreference> = dataStore.data
         .catch { exception -> handleExceptions(exception) }
         .map { settings -> SortingOptionPreference.fromValue(settings.autofillSortingOption) }
+
+    override fun setAutofillFilterOption(filterOption: FilterOptionPreference): Result<Unit> =
+        runCatching {
+            inMemoryPreferences.set(FilterOptionPreference::class.java.name, filterOption.value())
+        }
+
+    override fun getAutofillFilterOption(): Flow<FilterOptionPreference> =
+        flowOf(inMemoryPreferences.get<Int>(FilterOptionPreference::class.java.name))
+            .map { it?.let { FilterOptionPreference.fromValue(it) } ?: FilterOptionPreference.All }
 
     override fun setSelectedVault(
         selectedVault: SelectedVaultPreference

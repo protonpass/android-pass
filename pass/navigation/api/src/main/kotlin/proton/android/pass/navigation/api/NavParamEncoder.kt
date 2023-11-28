@@ -22,7 +22,15 @@ import proton.android.pass.crypto.api.Base64
 
 object NavParamEncoder {
 
-    fun encode(value: String): String = Base64.encodeBase64String(value.encodeToByteArray())
+    fun encode(value: String): String = Base64.encodeBase64String(
+        array = value.encodeToByteArray(),
+        mode = Base64.Mode.UrlSafe
+    )
 
-    fun decode(value: String): String = String(Base64.decodeBase64(value.encodeToByteArray()))
+    fun decode(value: String): String = String(
+        Base64.decodeBase64(
+            array = value.encodeToByteArray(),
+            mode = Base64.Mode.UrlSafe
+        )
+    )
 }

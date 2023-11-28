@@ -72,9 +72,10 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
+import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
 import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SortingLocation
-import proton.android.pass.featuresearchoptions.impl.sortingGraph
+import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.featurevault.impl.vaultGraph
@@ -121,7 +122,6 @@ fun NavGraphBuilder.autofillActivityGraph(
                     appNavigator.navigate(
                         SortingBottomsheet,
                         SortingBottomsheet.createNavRoute(
-                            sortingType = it.searchSortingType,
                             location = SortingLocation.Autofill
                         )
                     )
@@ -135,7 +135,16 @@ fun NavGraphBuilder.autofillActivityGraph(
             }
         }
     )
-    sortingGraph { appNavigator.navigateBack() }
+    searchOptionsGraph(
+        onNavigateEvent = {
+            when (it) {
+                is SearchOptionsNavigation.SelectSorting -> appNavigator.navigateBack()
+
+                SearchOptionsNavigation.Filter -> TODO()
+                SearchOptionsNavigation.Sorting -> TODO()
+            }
+        }
+    )
 
     createUpdateLoginGraph(
         initialCreateLoginUiState = InitialCreateLoginUiState(

@@ -20,11 +20,9 @@ package proton.android.pass.featuresearchoptions.impl
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
-import proton.android.pass.navigation.api.SortingTypeNavArgId
 import proton.android.pass.navigation.api.bottomSheet
 
 enum class SortingLocation {
@@ -39,17 +37,26 @@ object SortingLocationNavArgId : NavArgId {
 
 object SortingBottomsheet : NavItem(
     baseRoute = "sorting/bottomsheet",
-    navArgIds = listOf(SortingTypeNavArgId, SortingLocationNavArgId),
+    navArgIds = listOf(SortingLocationNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRoute(sortingType: SearchSortingType, location: SortingLocation): String =
-        "$baseRoute/${sortingType.name}/${location.name}"
-
+    fun createNavRoute(location: SortingLocation): String =
+        "$baseRoute/${location.name}"
 }
 
-fun NavGraphBuilder.sortingGraph(
-    onNavigateEvent: (SortingNavigation) -> Unit
+object SearchOptionsBottomsheet : NavItem(
+    baseRoute = "searchoptions/bottomsheet",
+    navItemType = NavItemType.Bottomsheet
+)
+
+fun NavGraphBuilder.searchOptionsGraph(
+    onNavigateEvent: (SearchOptionsNavigation) -> Unit
 ) {
+    bottomSheet(SearchOptionsBottomsheet) {
+        SearchOptionsBottomSheet(
+            onNavigateEvent = onNavigateEvent
+        )
+    }
     bottomSheet(SortingBottomsheet) {
         SortingBottomSheet(
             onNavigateEvent = onNavigateEvent

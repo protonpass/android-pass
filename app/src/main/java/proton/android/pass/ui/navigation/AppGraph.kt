@@ -102,10 +102,11 @@ import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
+import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
 import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SortingLocation
-import proton.android.pass.featuresearchoptions.impl.SortingNavigation
-import proton.android.pass.featuresearchoptions.impl.sortingGraph
+import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.featuresettings.impl.ClearClipboardOptions
 import proton.android.pass.featuresettings.impl.ClipboardSettings
 import proton.android.pass.featuresettings.impl.DefaultVault
@@ -225,7 +226,6 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         SortingBottomsheet,
                         SortingBottomsheet.createNavRoute(
-                            sortingType = it.searchSortingType,
                             location = SortingLocation.Home
                         )
                     )
@@ -248,14 +248,27 @@ fun NavGraphBuilder.appGraph(
                 HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
                     destination = InviteConfirmed
                 )
+
+                HomeNavigation.SearchOptions -> appNavigator.navigate(SearchOptionsBottomsheet)
             }
         }
     )
-    sortingGraph(
+    searchOptionsGraph(
         onNavigateEvent = {
             when (it) {
-                is SortingNavigation.SelectSorting -> dismissBottomSheet {
+                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+
+                SearchOptionsNavigation.Filter -> TODO()
+                SearchOptionsNavigation.Sorting -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        SortingBottomsheet,
+                        SortingBottomsheet.createNavRoute(
+                            location = SortingLocation.Home
+                        ),
+                        Home
+                    )
                 }
             }
         }

@@ -25,6 +25,7 @@ import proton.android.pass.domain.ShareId
 interface HomeSearchOptionsRepository {
     fun observeSearchOptions(): Flow<SearchOptions>
     fun observeSortingOption(): Flow<SortingOption>
+    fun observeFilterOption(): Flow<FilterOption>
     fun observeVaultSelectionOption(): Flow<VaultSelectionOption>
     fun setSortingOption(sortingOption: SortingOption)
     fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption)
@@ -32,11 +33,13 @@ interface HomeSearchOptionsRepository {
 }
 
 data class SearchOptions(
+    val filterOption: FilterOption,
     val sortingOption: SortingOption,
     val vaultSelectionOption: VaultSelectionOption
 ) {
     companion object {
         val Initial = SearchOptions(
+            filterOption = FilterOption(SearchFilterType.All),
             sortingOption = SortingOption(SearchSortingType.MostRecent),
             vaultSelectionOption = VaultSelectionOption.AllVaults
         )
@@ -45,6 +48,7 @@ data class SearchOptions(
 
 
 data class SortingOption(val searchSortingType: SearchSortingType)
+data class FilterOption(val searchFilterType: SearchFilterType)
 
 @Stable
 sealed class VaultSelectionOption {

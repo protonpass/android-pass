@@ -21,9 +21,9 @@ package proton.android.pass.featuresearchoptions.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -31,7 +31,6 @@ import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsReposit
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.SortingOption
-import proton.android.pass.navigation.api.SortingTypeNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,16 +39,15 @@ class SortingBottomSheetViewModel @Inject constructor(
     private val autofillSearchOptionsRepository: AutofillSearchOptionsRepository,
     savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
-    private val sortingType: SearchSortingType = SearchSortingType.valueOf(
-        savedStateHandle.get().require(SortingTypeNavArgId.key)
-    )
 
     private val sortingLocation: SortingLocation = SortingLocation.valueOf(
         savedStateHandle.get().require(SortingLocationNavArgId.key)
     )
 
-    val state: StateFlow<SearchSortingType> = MutableStateFlow(sortingType)
-        .stateIn(viewModelScope, SharingStarted.Eagerly, sortingType)
+    val state: StateFlow<SearchSortingType> =
+        homeSearchOptionsRepository.observeSortingOption()
+            .map { it.searchSortingType }
+            .stateIn(viewModelScope, SharingStarted.Eagerly, SearchSortingType.TitleAsc)
 
     fun onSortingTypeChanged(searchSortingType: SearchSortingType) {
         val value = SortingOption(searchSortingType)

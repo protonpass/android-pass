@@ -22,9 +22,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -83,11 +82,14 @@ fun SearchTextField(
         singleLine = true,
         placeholder = {
             Row(
+                modifier = Modifier.applyIf(
+                    condition = !inSearchMode,
+                    ifTrue = { padding(horizontal = 16.dp) }
+                ),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 if (!inSearchMode) {
-                    Spacer(modifier = Modifier.width(16.dp))
                     Icon(
                         painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_magnifier),
                         contentDescription = stringResource(R.string.search_topbar_icon_content_description),

@@ -38,8 +38,13 @@ fun SelectDefaultVaultBottomSheet(
     BackHandler { onNavigate(SettingsNavigation.DismissBottomSheet) }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
-    if (state.event == SelectDefaultVaultEvent.Selected) {
-        LaunchedEffect(Unit) { onNavigate(SettingsNavigation.DismissBottomSheet) }
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            SelectDefaultVaultEvent.Selected -> onNavigate(SettingsNavigation.DismissBottomSheet)
+            SelectDefaultVaultEvent.Unknown -> {}
+        }
+
+        viewModel.clearEvent()
     }
 
     SelectDefaultVaultContents(

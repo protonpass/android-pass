@@ -22,47 +22,56 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 
 object Base64 {
 
-    fun encodeBase64String(array: ByteArray): EncryptedString = String(encodeBase64(array))
+    enum class Mode {
+        UrlSafe,
+        Standard
+    }
+
+    fun encodeBase64String(array: ByteArray, mode: Mode = Mode.Standard): EncryptedString =
+        String(encodeBase64(array, mode))
 
     fun decodeBase64(content: EncryptedString): ByteArray = decodeBase64(content.toByteArray())
 
-    fun encodeBase64(array: ByteArray): ByteArray = runCatching {
-        org.apache.commons.codec.binary.Base64.encodeBase64(array)
-    }.fold(
-        onSuccess = { it },
-        onFailure = {
-            if (it is NoSuchMethodError) {
-                // This is a workaround for implementations that don't have the proper support for B64
-                Base64Fallback.encodeBase64(array)
-            } else {
-                throw it
-            }
+    fun encodeBase64(array: ByteArray, mode: Mode = Mode.Standard): ByteArray = runCatching {
+        when (mode) {
+            Mode.Standard -> org.apache.commons.codec.binary.Base64.encodeBase64(array)
+            Mode.UrlSafe -> org.apache.commons.codec.binary.Base64.encodeBase64URLSafe(array)
         }
-    )
+    }.getOrElse {
+        if (it is NoSuchMethodError) {
+            // This is a workaround for implementations that don't have the proper support for B64
+            Base64Fallback.encodeBase64(array, mode)
+        } else {
+            throw it
+        }
+    }
 
-    fun decodeBase64(array: ByteArray): ByteArray = runCatching {
+    fun decodeBase64(array: ByteArray, mode: Mode = Mode.Standard): ByteArray = runCatching {
+        // We don't need to use the mode here, as the commons implementation is able to detect
+        // which encoding is used
         org.apache.commons.codec.binary.Base64.decodeBase64(array)
-    }.fold(
-        onSuccess = { it },
-        onFailure = { error ->
-            if (error is NoSuchMethodError) {
-                // This is a workaround for implementations that don't have the proper support for B64
-                Base64Fallback.decodeBase64(array)
-            } else {
-                throw error
-            }
+    }.getOrElse { error ->
+        if (error is NoSuchMethodError) {
+            // This is a workaround for implementations that don't have the proper support for B64
+            Base64Fallback.decodeBase64(array, mode)
+        } else {
+            throw error
         }
-    )
+    }
 }
 
 object Base64Fallback {
-    fun encodeBase64(array: ByteArray): ByteArray = KotlinBase64.UrlSafe.encodeToByteArray(array)
-    fun decodeBase64(array: ByteArray): ByteArray = runCatching {
-        KotlinBase64.UrlSafe.decode(array)
-    }.fold(
-        onSuccess = { it },
-        onFailure = {
-            KotlinBase64.decode(array)
+    fun encodeBase64(array: ByteArray, mode: Base64.Mode): ByteArray = when (mode) {
+        Base64.Mode.Standard -> KotlinBase64.encodeToByteArray(array)
+        Base64.Mode.UrlSafe -> KotlinBase64.UrlSafe.encodeToByteArray(array)
+
+    }
+    fun decodeBase64(array: ByteArray, mode: Base64.Mode): ByteArray = runCatching {
+        when (mode) {
+            Base64.Mode.Standard -> KotlinBase64.decode(array)
+            Base64.Mode.UrlSafe -> KotlinBase64.UrlSafe.decode(array)
         }
-    )
+    }.getOrElse {
+        KotlinBase64.decode(array)
+    }
 }

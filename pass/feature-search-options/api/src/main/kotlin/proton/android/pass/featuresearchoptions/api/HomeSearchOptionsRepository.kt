@@ -28,6 +28,7 @@ interface HomeSearchOptionsRepository {
     fun observeFilterOption(): Flow<FilterOption>
     fun observeVaultSelectionOption(): Flow<VaultSelectionOption>
     fun setSortingOption(sortingOption: SortingOption)
+    fun setFilterOption(filterOption: FilterOption)
     fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption)
     fun clearSearchOptions()
 }

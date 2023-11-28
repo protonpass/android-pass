@@ -18,7 +18,6 @@
 
 package proton.android.pass.featuresettings.impl.defaultvault
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,8 +34,6 @@ fun SelectDefaultVaultBottomSheet(
     onNavigate: (SettingsNavigation) -> Unit,
     viewModel: SelectDefaultVaultViewModel = hiltViewModel()
 ) {
-    BackHandler { onNavigate(SettingsNavigation.DismissBottomSheet) }
-
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         when (state.event) {

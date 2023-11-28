@@ -26,6 +26,7 @@ import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class ObserveItemCountImpl @Inject constructor(
@@ -34,15 +35,29 @@ class ObserveItemCountImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : ObserveItemCount {
 
-    override fun invoke(itemState: ItemState?): Flow<ItemCountSummary> = observeAllShares()
-        .flatMapLatest { items ->
-            observeCurrentUser()
-                .flatMapLatest { user ->
-                    itemRepository.observeItemCountSummary(
-                        userId = user.userId,
-                        shareIds = items.map { it.id },
-                        itemState = itemState
-                    )
-                }
-        }
+    override fun invoke(
+        itemState: ItemState?,
+        selectedShareId: ShareId?
+    ): Flow<ItemCountSummary> = if (selectedShareId != null) {
+        observeCurrentUser()
+            .flatMapLatest { user ->
+                itemRepository.observeItemCountSummary(
+                    userId = user.userId,
+                    shareIds = listOf(selectedShareId),
+                    itemState = itemState
+                )
+            }
+    } else {
+        observeAllShares()
+            .flatMapLatest { items ->
+                observeCurrentUser()
+                    .flatMapLatest { user ->
+                        itemRepository.observeItemCountSummary(
+                            userId = user.userId,
+                            shareIds = items.map { it.id },
+                            itemState = itemState
+                        )
+                    }
+            }
+    }
 }

@@ -29,6 +29,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as ComponentsR
@@ -53,11 +54,18 @@ private fun filtering(
 ): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = "Show") }
+            get() = { BottomSheetItemTitle(text = stringResource(R.string.show)) }
         override val subtitle: (@Composable () -> Unit)
             get() = {
                 (state as? SuccessSearchOptionsUIState)?.let {
-                    BottomSheetItemSubtitle(text = "All (154)")
+                    val title = when (it.filterType) {
+                        SearchFilterType.All -> stringResource(id = R.string.item_type_filter_all)
+                        SearchFilterType.Login -> stringResource(id = R.string.item_type_filter_login)
+                        SearchFilterType.Alias -> stringResource(id = R.string.item_type_filter_alias)
+                        SearchFilterType.Note -> stringResource(id = R.string.item_type_filter_note)
+                        SearchFilterType.CreditCard -> stringResource(id = R.string.item_type_filter_credit_card)
+                    }
+                    BottomSheetItemSubtitle(text = "$title (${it.count})")
                 }
             }
         override val leftIcon: (@Composable () -> Unit)

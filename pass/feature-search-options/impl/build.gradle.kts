@@ -65,4 +65,5 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.data.api)
 }

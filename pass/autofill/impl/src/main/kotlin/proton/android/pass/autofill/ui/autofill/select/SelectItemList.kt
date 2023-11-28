@@ -106,7 +106,7 @@ fun SelectItemList(
                             SortingButton(
                                 sortingType = uiState.listUiState.sortingType,
                                 onSortingOptionsClick = {
-                                    onNavigate(SelectItemNavigation.SortingBottomsheet(uiState.listUiState.sortingType))
+                                    onNavigate(SelectItemNavigation.SortingBottomsheet)
                                 }
                             )
                         }

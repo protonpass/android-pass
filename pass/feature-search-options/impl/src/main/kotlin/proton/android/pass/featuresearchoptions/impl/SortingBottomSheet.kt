@@ -24,12 +24,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation.SelectSorting
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SortingBottomSheet(
     modifier: Modifier = Modifier,
-    onNavigateEvent: (SortingNavigation) -> Unit,
+    onNavigateEvent: (SearchOptionsNavigation) -> Unit,
     viewModel: SortingBottomSheetViewModel = hiltViewModel()
 ) {
     val sortingType by viewModel.state.collectAsStateWithLifecycle()
@@ -38,12 +39,8 @@ fun SortingBottomSheet(
         sortingType = sortingType,
         onSortingTypeSelected = {
             viewModel.onSortingTypeChanged(it)
-            onNavigateEvent(SortingNavigation.SelectSorting)
+            onNavigateEvent(SelectSorting)
         }
     )
-}
-
-sealed interface SortingNavigation {
-    object SelectSorting : SortingNavigation
 }
 

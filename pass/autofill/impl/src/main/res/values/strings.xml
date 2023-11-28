@@ -11,11 +11,7 @@
     <string
         name="suggestions_cc_autofill_paid_plans_title"
         comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled"
-    >Autofill card details</string>
-    <string
-        name="suggestions_cc_autofill_paid_plans_subtitle"
-        comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled"
-    >Upgrade your plan</string>
+    >Upgrade to autofill</string>
     <string name="autofill_only_searching_in_oldest_vaults">Your plan only allows to use items in your oldest vaults for autofill purposes.</string>
 
     <!-- Placeholder will contain the domain / app name we are trying to autofill -->

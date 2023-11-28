@@ -29,14 +29,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.canCreate
@@ -50,7 +53,8 @@ import javax.inject.Inject
 class SelectDefaultVaultViewModel @Inject constructor(
     private val setDefaultVault: SetDefaultVault,
     private val snackbarDispatcher: SnackbarDispatcher,
-    observeVaults: ObserveVaultsWithItemCount
+    observeVaults: ObserveVaultsWithItemCount,
+    observeDefaultVault: ObserveDefaultVault
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<SelectDefaultVaultEvent> =
@@ -72,16 +76,22 @@ class SelectDefaultVaultViewModel @Inject constructor(
             }
         }
 
+    private val defaultVaultFlow: Flow<Option<VaultWithItemCount>> = observeDefaultVault()
+        .distinctUntilChanged()
+
     val state: StateFlow<SelectDefaultVaultUiState> = combine(
         vaultsFlow,
+        defaultVaultFlow,
         eventFlow,
         loadingFlow
-    ) { vaults, event, loading ->
-
-        val vaultsEnabled = vaults.map {
-            VaultEnabledPair(
-                vault = it,
-                enabled = it.vault.role.toPermissions().canCreate()
+    ) { vaults, defaultVault, event, loading ->
+        val vaultsEnabled = vaults.map { vault ->
+            VaultEnabledState(
+                vault = vault,
+                selected = defaultVault.map { default ->
+                    default.vault.shareId == vault.vault.shareId
+                }.value() ?: false,
+                enabled = vault.vault.role.toPermissions().canCreate()
             )
         }
 

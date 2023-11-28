@@ -29,8 +29,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
-import proton.android.pass.data.api.usecases.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.canCreate
@@ -55,6 +55,7 @@ class ObserveDefaultVaultImpl @Inject constructor(
                         setDefaultVault()
                         flowOf(None)
                     }
+
                     is Some -> getVaultWithItemCount(shareId = ShareId(defaultVault.value))
                         .map { it.toOption() }
                 }
@@ -76,8 +77,13 @@ class ObserveDefaultVaultImpl @Inject constructor(
             return
         }
 
-        PassLogger.i(TAG, "Set default vault to ${defaultVault.shareId.id}")
         preferencesRepository.setDefaultVault(defaultVault.shareId.id)
+            .onSuccess {
+                PassLogger.i(TAG, "Set default vault to ${defaultVault.shareId.id}")
+            }
+            .onFailure {
+                PassLogger.e(TAG, "Error setting default vault to ${defaultVault.shareId.id}")
+            }
     }
 
     companion object {

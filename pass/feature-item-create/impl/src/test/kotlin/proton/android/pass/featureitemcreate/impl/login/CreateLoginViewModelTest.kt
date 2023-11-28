@@ -40,9 +40,14 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.MFACreated
@@ -60,10 +65,6 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 
 internal class CreateLoginViewModelTest {
 
@@ -107,6 +108,7 @@ internal class CreateLoginViewModelTest {
             draftRepository = TestDraftRepository(),
             observeUpgradeInfo = observeUpgradeInfo,
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
+            observeDefaultVault = TestObserveDefaultVault()
         )
     }
 

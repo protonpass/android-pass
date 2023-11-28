@@ -27,34 +27,42 @@ import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions
+import proton.android.pass.log.api.PassLogger
 
 @Suppress("ComplexMethod", "CyclomaticComplexMethod", "LongParameterList", "MagicNumber")
 fun getShareUiStateFlow(
     navShareIdState: Flow<Option<ShareId>>,
     selectedShareIdState: Flow<Option<ShareId>>,
     observeAllVaultsFlow: Flow<LoadingResult<List<VaultWithItemCount>>>,
+    observeDefaultVaultFlow: Flow<LoadingResult<Option<VaultWithItemCount>>>,
     viewModelScope: CoroutineScope,
     tag: String
 ): StateFlow<ShareUiState> = combine(
     navShareIdState,
     selectedShareIdState,
     observeAllVaultsFlow,
-) { navShareId, selectedShareId, allSharesResult ->
+    observeDefaultVaultFlow,
+) { navShareId, selectedShareId, allSharesResult, defaultVaultResult ->
     val allShares = when (allSharesResult) {
         is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
         LoadingResult.Loading -> return@combine ShareUiState.Loading
         is LoadingResult.Success -> allSharesResult.data
     }
+    val defaultVault = when (defaultVaultResult) {
+        is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
+        LoadingResult.Loading -> return@combine ShareUiState.Loading
+        is LoadingResult.Success -> defaultVaultResult.data
+    }
     shareUiState(
         tag = tag,
         allShares = allShares,
         navShareId = navShareId,
-        selectedShareId = selectedShareId
+        selectedShareId = selectedShareId,
+        defaultVault = defaultVault
     )
 }.stateIn(
     scope = viewModelScope,
@@ -66,7 +74,8 @@ private fun shareUiState(
     tag: String,
     allShares: List<VaultWithItemCount>,
     selectedShareId: Option<ShareId>,
-    navShareId: Option<ShareId>
+    navShareId: Option<ShareId>,
+    defaultVault: Option<VaultWithItemCount>
 ): ShareUiState {
     val writeableVaults = allShares.filter { it.vault.role.toPermissions().canCreate() }
     if (writeableVaults.isEmpty()) {
@@ -77,14 +86,18 @@ private fun shareUiState(
     val selectedVault = if (selectedShareId is Some) {
         // Pick the selected vault if it is writeable
         // otherwise, pick the nav vault if it is writeable
+        // otherwise, pick the default vault if it is there
         // otherwise, just the first writeable vault
         writeableVaults.firstOrNull { it.vault.shareId == selectedShareId.value() }
             ?: writeableVaults.firstOrNull { it.vault.shareId == navShareId.value() }
+            ?: defaultVault.value()
             ?: writeableVaults.first()
     } else {
         // Pick the nav vault if it is writeable
+        // otherwise, pick the default vault if it is there
         // otherwise, just the first writeable vault
         writeableVaults.firstOrNull { it.vault.shareId == navShareId.value() }
+            ?: defaultVault.value()
             ?: writeableVaults.first()
     }
 

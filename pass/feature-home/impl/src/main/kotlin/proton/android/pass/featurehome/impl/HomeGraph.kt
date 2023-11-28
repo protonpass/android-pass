@@ -29,7 +29,6 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
@@ -85,11 +84,12 @@ sealed interface HomeNavigation {
     object Profile : HomeNavigation
     object CreateVault : HomeNavigation
     data class VaultOptions(val shareId: ShareId) : HomeNavigation
-    data class SortingBottomsheet(val searchSortingType: SearchSortingType) : HomeNavigation
+    object SortingBottomsheet : HomeNavigation
     object TrialInfo : HomeNavigation
     object OpenInvite : HomeNavigation
     object Finish : HomeNavigation
     object OnBoarding : HomeNavigation
     object SyncDialog : HomeNavigation
     object ConfirmedInvite : HomeNavigation
+    object SearchOptions : HomeNavigation
 }

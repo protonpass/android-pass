@@ -25,35 +25,31 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.commonui.api.require
-import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
-import proton.android.pass.featuresearchoptions.api.SortingOption
 import javax.inject.Inject
 
 @HiltViewModel
-class SortingBottomSheetViewModel @Inject constructor(
-    private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
-    private val autofillSearchOptionsRepository: AutofillSearchOptionsRepository,
-    savedStateHandle: SavedStateHandleProvider
+class SearchOptionsBottomSheetViewModel @Inject constructor(
+    homeSearchOptionsRepository: HomeSearchOptionsRepository
 ) : ViewModel() {
 
-    private val sortingLocation: SortingLocation = SortingLocation.valueOf(
-        savedStateHandle.get().require(SortingLocationNavArgId.key)
-    )
-
-    val state: StateFlow<SearchSortingType> =
-        homeSearchOptionsRepository.observeSortingOption()
-            .map { it.searchSortingType }
-            .stateIn(viewModelScope, SharingStarted.Eagerly, SearchSortingType.TitleAsc)
-
-    fun onSortingTypeChanged(searchSortingType: SearchSortingType) {
-        val value = SortingOption(searchSortingType)
-        when (sortingLocation) {
-            SortingLocation.Home -> homeSearchOptionsRepository.setSortingOption(value)
-            SortingLocation.Autofill -> autofillSearchOptionsRepository.setSortingOption(value)
+    val state: StateFlow<SearchOptionsUIState> = homeSearchOptionsRepository.observeSearchOptions()
+        .map {
+            SuccessSearchOptionsUIState(
+                sortingType = it.sortingOption.searchSortingType
+            )
         }
-    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = EmptySearchOptionsUIState
+        )
 }
+
+sealed interface SearchOptionsUIState
+object EmptySearchOptionsUIState : SearchOptionsUIState
+
+data class SuccessSearchOptionsUIState(
+    val sortingType: SearchSortingType
+) : SearchOptionsUIState

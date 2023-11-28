@@ -43,6 +43,12 @@
             android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"/>
 
+        <activity android:name="proton.android.pass.autofill.ui.autofill.upgrade.AutofillUpgradeActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:launchMode="singleTop"
+            android:clearTaskOnLaunch="true"
+            android:excludeFromRecents="true"/>
+
         <service
             android:name="proton.android.pass.autofill.ProtonPassAutofillService"
             android:label="@string/autofill_service_name"

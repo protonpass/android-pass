@@ -34,6 +34,5 @@ sealed interface AutofillUiState {
 
     object UninitialisedAutofillUiState : AutofillUiState
     object NotValidAutofillUiState : AutofillUiState
-    object UpgradeUiState : AutofillUiState
     object CloseScreen : AutofillUiState
 }

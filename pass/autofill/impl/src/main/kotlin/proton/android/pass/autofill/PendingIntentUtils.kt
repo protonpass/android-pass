@@ -26,6 +26,7 @@ import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.ui.autofill.AutofillActivity
 import proton.android.pass.autofill.ui.autofill.inlinesuggestions.InlineSuggestionsNoUiActivity
+import proton.android.pass.autofill.ui.autofill.upgrade.AutofillUpgradeActivity
 import proton.android.pass.common.api.some
 
 object PendingIntentUtils {
@@ -53,7 +54,7 @@ object PendingIntentUtils {
     ): PendingIntent = PendingIntent.getActivity(
         context,
         intentRequestCode,
-        AutofillActivity.newIntentForUpgrade(context),
+        AutofillUpgradeActivity.newIntent(context),
         autofillPendingIntentFlags
     )
 

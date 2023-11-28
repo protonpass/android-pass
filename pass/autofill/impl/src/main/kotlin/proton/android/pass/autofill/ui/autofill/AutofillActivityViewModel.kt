@@ -43,7 +43,6 @@ import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_EXTRAS_BUNDLE
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
-import proton.android.pass.autofill.ui.autofill.AutofillUiState.UpgradeUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.flatMap
@@ -86,26 +85,17 @@ class AutofillActivityViewModel @Inject constructor(
         copyTotpToClipboardPreferenceState,
         closeScreenFlow
     ) { themePreference, needsAuth, copyTotpToClipboard, closeScreen ->
-        if (closeScreen) {
-            return@combine AutofillUiState.CloseScreen
-        }
-
-        when (appInitialState) {
-            State.Unknown -> NotValidAutofillUiState
-            State.Upgrade -> UpgradeUiState
-            is State.AppState -> {
-                val (appState, selectedAutofillItem) = appInitialState
-                when {
-                    !appInitialState.appState.isValid() -> NotValidAutofillUiState
-                    else -> AutofillUiState.StartAutofillUiState(
-                        themePreference = themePreference.value(),
-                        needsAuth = needsAuth,
-                        autofillAppState = appState,
-                        copyTotpToClipboardPreference = copyTotpToClipboard.value(),
-                        selectedAutofillItem = selectedAutofillItem
-                    )
-                }
-            }
+        val (appState, selectedAutofillItem) = appInitialState
+        when {
+            closeScreen -> AutofillUiState.CloseScreen
+            !appInitialState.appState.isValid() -> NotValidAutofillUiState
+            else -> AutofillUiState.StartAutofillUiState(
+                themePreference = themePreference.value(),
+                needsAuth = needsAuth,
+                autofillAppState = appState,
+                copyTotpToClipboardPreference = copyTotpToClipboard.value(),
+                selectedAutofillItem = selectedAutofillItem
+            )
         }
     }
         .stateIn(
@@ -142,38 +132,23 @@ class AutofillActivityViewModel @Inject constructor(
         closeScreenFlow.update { true }
     }
 
-    private fun getAutofillAppState(): State =
-        when (val mode = savedStateHandle.require<Int>(MODE_AUTOFILL_KEY)) {
-            MODE_AUTOFILL -> {
-                val extras = AutofillIntentExtras.fromExtras(
-                    bundle = savedStateHandle.require(ARG_EXTRAS_BUNDLE)
-                )
-                State.AppState(
-                    appState = AutofillAppState(extras.first),
-                    selectedAutofillItem = extras.second
-                )
-            }
-            MODE_UPGRADE -> State.Upgrade
-            else -> {
-                PassLogger.w(TAG, "Unknown autofill mode [$mode]")
-                State.Unknown
-            }
-        }
-
-    sealed interface State {
-        data class AppState(
-            val appState: AutofillAppState,
-            val selectedAutofillItem: Option<AutofillItem>
-        ) : State
-        object Upgrade : State
-        object Unknown : State
+    private fun getAutofillAppState(): AppState {
+        val extras = AutofillIntentExtras.fromExtras(
+            bundle = savedStateHandle.require(ARG_EXTRAS_BUNDLE)
+        )
+        return AppState(
+            appState = AutofillAppState(extras.first),
+            selectedAutofillItem = extras.second
+        )
     }
 
-    companion object {
-        const val MODE_AUTOFILL = 1
-        const val MODE_UPGRADE = 2
-        const val MODE_AUTOFILL_KEY = "autofill_mode"
 
+    data class AppState(
+        val appState: AutofillAppState,
+        val selectedAutofillItem: Option<AutofillItem>
+    )
+
+    companion object {
         private const val TAG = "AutofillActivityViewModel"
     }
 }

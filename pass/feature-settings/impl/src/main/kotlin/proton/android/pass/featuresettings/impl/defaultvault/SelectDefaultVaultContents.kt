@@ -38,7 +38,7 @@ import proton.android.pass.featuresettings.impl.R
 @Composable
 fun SelectDefaultVaultContents(
     modifier: Modifier = Modifier,
-    vaults: ImmutableList<VaultEnabledPair>,
+    vaults: ImmutableList<VaultEnabledState>,
     loading: Boolean,
     onVaultSelected: (VaultWithItemCount) -> Unit
 ) {
@@ -52,13 +52,13 @@ fun SelectDefaultVaultContents(
 
     BottomSheetItemList(
         modifier = modifier,
-        items = vaults.map { vaultEnabledPair ->
-            val vaultItemCount = vaultEnabledPair.vault
+        items = vaults.map { vaultState ->
+            val vaultItemCount = vaultState.vault
             BottomSheetVaultRow(
-                vault = vaultEnabledPair.vault,
-                isSelected = false,
-                enabled = !loading && vaultEnabledPair.enabled,
-                customSubtitle = if (!vaultEnabledPair.enabled) {
+                vault = vaultState.vault,
+                isSelected = vaultState.selected,
+                enabled = !loading && vaultState.enabled,
+                customSubtitle = if (!vaultState.enabled) {
                     stringResource(R.string.settings_default_vault_disabled_reason)
                 } else null,
                 isLoading = vaultItemCount.vault.shareId == vaultBeingUpdated,

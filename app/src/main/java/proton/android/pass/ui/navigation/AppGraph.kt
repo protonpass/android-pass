@@ -102,6 +102,7 @@ import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
 import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
@@ -260,7 +261,12 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
 
-                SearchOptionsNavigation.Filter -> TODO()
+                SearchOptionsNavigation.Filter -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = FilterBottomsheet,
+                        backDestination = Home
+                    )
+                }
                 SearchOptionsNavigation.Sorting -> dismissBottomSheet {
                     appNavigator.navigate(
                         SortingBottomsheet,

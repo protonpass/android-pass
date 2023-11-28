@@ -19,9 +19,12 @@
 package proton.android.pass.featuresearchoptions.impl
 
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featuresearchoptions.api.FilterOption
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.preferences.FilterOptionPreference
 import proton.android.pass.preferences.SelectedVaultPreference
 import proton.android.pass.preferences.SortingOptionPreference
 
@@ -31,6 +34,14 @@ internal fun SortingOptionPreference.toDomain(): SearchSortingType = when (this)
     SortingOptionPreference.TitleZA -> SearchSortingType.TitleDesc
     SortingOptionPreference.OldestNewest -> SearchSortingType.CreationAsc
     SortingOptionPreference.NewestOldest -> SearchSortingType.CreationDesc
+}
+
+internal fun FilterOptionPreference.toDomain(): SearchFilterType = when (this) {
+    FilterOptionPreference.All -> SearchFilterType.All
+    FilterOptionPreference.Login -> SearchFilterType.Login
+    FilterOptionPreference.Alias -> SearchFilterType.Alias
+    FilterOptionPreference.Note -> SearchFilterType.Note
+    FilterOptionPreference.CreditCard -> SearchFilterType.CreditCard
 }
 
 internal fun SelectedVaultPreference.toSelectionOption(): VaultSelectionOption = when (this) {
@@ -45,6 +56,14 @@ internal fun SortingOption.toPreference(): SortingOptionPreference = when (this.
     SearchSortingType.TitleDesc -> SortingOptionPreference.TitleZA
     SearchSortingType.CreationAsc -> SortingOptionPreference.OldestNewest
     SearchSortingType.CreationDesc -> SortingOptionPreference.NewestOldest
+}
+
+internal fun FilterOption.toPreference(): FilterOptionPreference = when (this.searchFilterType) {
+    SearchFilterType.All -> FilterOptionPreference.All
+    SearchFilterType.Login -> FilterOptionPreference.Login
+    SearchFilterType.Alias -> FilterOptionPreference.Alias
+    SearchFilterType.Note -> FilterOptionPreference.Note
+    SearchFilterType.CreditCard -> FilterOptionPreference.CreditCard
 }
 
 internal fun VaultSelectionOption.toPreference(): SelectedVaultPreference = when (this) {

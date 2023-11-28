@@ -36,8 +36,14 @@ interface InternalSettingsRepository {
     fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit>
     fun getHomeSortingOption(): Flow<SortingOptionPreference>
 
+    fun setHomeFilterOption(filterOption: FilterOptionPreference): Result<Unit>
+    fun getHomeFilterOption(): Flow<FilterOptionPreference>
+
     fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit>
     fun getAutofillSortingOption(): Flow<SortingOptionPreference>
+
+    fun setAutofillFilterOption(filterOption: FilterOptionPreference): Result<Unit>
+    fun getAutofillFilterOption(): Flow<FilterOptionPreference>
 
     fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit>
     fun getSelectedVault(): Flow<SelectedVaultPreference>

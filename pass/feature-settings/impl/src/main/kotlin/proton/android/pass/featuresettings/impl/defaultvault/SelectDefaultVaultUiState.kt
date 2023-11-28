@@ -30,14 +30,15 @@ sealed interface SelectDefaultVaultEvent {
 }
 
 @Stable
-data class VaultEnabledPair(
+data class VaultEnabledState(
     val vault: VaultWithItemCount,
-    val enabled: Boolean
+    val enabled: Boolean,
+    val selected: Boolean
 )
 
 @Stable
 data class SelectDefaultVaultUiState(
-    val vaults: ImmutableList<VaultEnabledPair>,
+    val vaults: ImmutableList<VaultEnabledState>,
     val event: SelectDefaultVaultEvent,
     val loading: IsLoadingState
 ) {

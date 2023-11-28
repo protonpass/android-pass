@@ -111,6 +111,10 @@ class SelectDefaultVaultViewModel @Inject constructor(
         loadingFlow.update { IsLoadingState.NotLoading }
     }
 
+    fun clearEvent() = viewModelScope.launch {
+        eventFlow.update { SelectDefaultVaultEvent.Unknown }
+    }
+
     companion object {
         private const val TAG = "SelectDefaultVaultViewModel"
     }

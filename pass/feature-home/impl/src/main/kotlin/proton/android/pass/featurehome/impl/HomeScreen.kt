@@ -49,6 +49,8 @@ import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.CreditCardOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
@@ -70,8 +72,6 @@ import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.ConfirmTrashAliasDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ShareId
 
 @OptIn(
     ExperimentalMaterialApi::class,
@@ -314,7 +314,8 @@ fun HomeScreen(
                     icon = {
                         when (val contents = selectedItem!!.contents) {
                             is ItemContents.Login -> {
-                                val sortedPackages = contents.packageInfoSet.sortedBy { it.packageName.value }
+                                val sortedPackages =
+                                    contents.packageInfoSet.sortedBy { it.packageName.value }
                                 val packageName = sortedPackages.firstOrNull()?.packageName?.value
                                 val website = contents.urls.firstOrNull()
                                 LoginIcon(
@@ -387,7 +388,15 @@ fun HomeScreen(
                         }
                     },
                     onCreateVaultClick = remember { { onNavigateEvent(HomeNavigation.CreateVault) } },
-                    onVaultOptionsClick = remember { { onNavigateEvent(HomeNavigation.VaultOptions(it.id)) } }
+                    onVaultOptionsClick = remember {
+                        {
+                            onNavigateEvent(
+                                HomeNavigation.VaultOptions(
+                                    it.id
+                                )
+                            )
+                        }
+                    }
                 )
             }
         ) {
@@ -405,11 +414,7 @@ fun HomeScreen(
                 onEnterSearch = remember { { homeViewModel.onEnterSearch() } },
                 onStopSearch = remember { { homeViewModel.onStopSearching() } },
                 onDrawerIconClick = remember { { scope.launch { drawerState.open() } } },
-                onSortingOptionsClick = remember(homeUiState.homeListUiState.sortingType) {
-                    {
-                        onNavigateEvent(SortingBottomsheet(homeUiState.homeListUiState.sortingType))
-                    }
-                },
+                onSortingOptionsClick = { onNavigateEvent(SortingBottomsheet) },
                 onAddItemClick = remember {
                     { shareId: Option<ShareId>, itemTypeUiState: ItemTypeUiState ->
                         onNavigateEvent(HomeNavigation.AddItem(shareId, itemTypeUiState))
@@ -437,10 +442,12 @@ fun HomeScreen(
                 onScrollToTop = remember { { homeViewModel.onScrollToTop() } },
                 onProfileClick = remember { { onNavigateEvent(HomeNavigation.Profile) } },
                 onItemTypeSelected = remember { { homeViewModel.setItemTypeSelection(it) } },
-                onTrashActionsClick = remember {
-                    {
+                actionsClick = {
+                    if (isTrashMode) {
                         currentBottomSheet = TrashOptions
                         scope.launch { bottomSheetState.show() }
+                    } else {
+                        onNavigateEvent(HomeNavigation.SearchOptions)
                     }
                 },
                 onClearRecentSearchClick = homeViewModel::onClearAllRecentSearch,

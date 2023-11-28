@@ -23,21 +23,51 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.zip
+import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.domain.ItemState
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchOptionsBottomSheetViewModel @Inject constructor(
-    homeSearchOptionsRepository: HomeSearchOptionsRepository
+    homeSearchOptionsRepository: HomeSearchOptionsRepository,
+    observeItemCount: ObserveItemCount
 ) : ViewModel() {
 
     val state: StateFlow<SearchOptionsUIState> = homeSearchOptionsRepository.observeSearchOptions()
-        .map {
+        .flatMapLatest {
+            when (val vault = it.vaultSelectionOption) {
+                VaultSelectionOption.AllVaults -> observeItemCount()
+                VaultSelectionOption.Trash -> observeItemCount(
+                    itemState = ItemState.Trashed
+                )
+
+                is VaultSelectionOption.Vault -> observeItemCount(
+                    selectedShareId = vault.shareId
+                )
+            }.zip(flowOf(it)) { itemCount, searchOptions ->
+                itemCount to searchOptions
+            }
+        }
+        .map { (summary, options) ->
             SuccessSearchOptionsUIState(
-                sortingType = it.sortingOption.searchSortingType
+                filterType = options.filterOption.searchFilterType,
+                sortingType = options.sortingOption.searchSortingType,
+                count = when (options.filterOption.searchFilterType) {
+                    SearchFilterType.All -> summary.total
+                    SearchFilterType.Login -> summary.login
+                    SearchFilterType.Alias -> summary.alias
+                    SearchFilterType.Note -> summary.note
+                    SearchFilterType.CreditCard -> summary.creditCard
+                }.toInt()
             )
         }
         .stateIn(
@@ -51,5 +81,7 @@ sealed interface SearchOptionsUIState
 object EmptySearchOptionsUIState : SearchOptionsUIState
 
 data class SuccessSearchOptionsUIState(
-    val sortingType: SearchSortingType
+    val filterType: SearchFilterType,
+    val sortingType: SearchSortingType,
+    val count: Int
 ) : SearchOptionsUIState

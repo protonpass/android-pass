@@ -42,9 +42,6 @@ import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
-import proton.android.pass.autofill.ui.autofill.AutofillActivityViewModel.Companion.MODE_AUTOFILL
-import proton.android.pass.autofill.ui.autofill.AutofillActivityViewModel.Companion.MODE_AUTOFILL_KEY
-import proton.android.pass.autofill.ui.autofill.AutofillActivityViewModel.Companion.MODE_UPGRADE
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -84,12 +81,6 @@ class AutofillActivity : FragmentActivity() {
 
             AutofillUiState.NotValidAutofillUiState -> {
                 PassLogger.i(TAG, "Received AutofillUiState.NotValidAutofillUiState")
-                onAutofillCancel()
-            }
-
-            AutofillUiState.UpgradeUiState -> {
-                PassLogger.i(TAG, "Received AutofillUiState.UpgradeUiState")
-                viewModel.upgrade()
                 onAutofillCancel()
             }
 
@@ -169,16 +160,6 @@ class AutofillActivity : FragmentActivity() {
             autofillItem: Option<AutofillItem> = None
         ): Intent = Intent(context, AutofillActivity::class.java).apply {
             val extras = AutofillIntentExtras.toExtras(data, autofillItem)
-            extras.putInt(MODE_AUTOFILL_KEY, MODE_AUTOFILL)
-
-            putExtras(extras)
-        }
-
-        fun newIntentForUpgrade(
-            context: Context
-        ): Intent = Intent(context, AutofillActivity::class.java).apply {
-            val extras = Bundle()
-            extras.putInt(MODE_AUTOFILL_KEY, MODE_UPGRADE)
 
             putExtras(extras)
         }

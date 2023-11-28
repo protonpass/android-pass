@@ -72,6 +72,7 @@ dependencies {
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
+    androidTestImplementation(libs.truth)
     androidTestImplementation(projects.pass.appConfig.fakes)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)

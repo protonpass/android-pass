@@ -59,12 +59,13 @@ import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import proton.android.pass.domain.ShareId
+import me.proton.core.presentation.R as CoreR
 
 @Suppress("LongParameterList", "ComplexMethod")
 @ExperimentalComposeUiApi
@@ -87,7 +88,7 @@ internal fun HomeContent(
     onScrollToTop: () -> Unit,
     onProfileClick: () -> Unit,
     onItemTypeSelected: (HomeItemTypeSelection) -> Unit,
-    onTrashActionsClick: () -> Unit,
+    actionsClick: () -> Unit,
     onTrialInfoClick: () -> Unit,
     onInviteClick: () -> Unit
 ) {
@@ -117,20 +118,14 @@ internal fun HomeContent(
                         onStopSearch = onStopSearch
                     )
                 },
-                actions = if (isTrashMode) {
-                    {
-                        IconButton(onClick = onTrashActionsClick) {
-                            Icon(
-                                painter = painterResource(
-                                    id = me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical
-                                ),
-                                contentDescription = null,
-                                tint = PassTheme.colors.textWeak
-                            )
-                        }
+                actions = {
+                    IconButton(onClick = actionsClick) {
+                        Icon(
+                            painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
+                            contentDescription = null,
+                            tint = PassTheme.colors.textWeak
+                        )
                     }
-                } else {
-                    null
                 }
             )
         },

@@ -36,8 +36,13 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
+import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.domain.AliasOptions
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
@@ -49,10 +54,6 @@ import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
-import proton.android.pass.domain.AliasOptions
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 
 class CreateAliasViewModelTest {
 
@@ -250,7 +251,8 @@ class CreateAliasViewModelTest {
             draftRepository = draftRepository,
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
             encryptionContextProvider = TestEncryptionContextProvider(),
-            aliasPrefixValidator = TestAliasPrefixValidator()
+            aliasPrefixValidator = TestAliasPrefixValidator(),
+            observeDefaultVault = TestObserveDefaultVault()
         ).apply {
             setDraftStatus(isDraft)
         }
@@ -286,7 +288,7 @@ class CreateAliasViewModelTest {
     private fun setupAliasOptions() {
         setupVaults()
         observeAliasOptions.sendAliasOptions(
-            proton.android.pass.domain.AliasOptions(
+            AliasOptions(
                 suffixes = listOf(suffix.toDomain()),
                 mailboxes = listOf(mailbox.toDomain())
             )

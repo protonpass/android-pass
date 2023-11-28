@@ -62,6 +62,10 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
@@ -75,9 +79,6 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.VaultWithItemCount
-import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 @HiltViewModel
@@ -94,6 +95,7 @@ open class CreateAliasViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeUpgradeInfo: ObserveUpgradeInfo,
+    observeDefaultVault: ObserveDefaultVault
 ) : BaseAliasViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -128,6 +130,7 @@ open class CreateAliasViewModel @Inject constructor(
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
         viewModelScope = viewModelScope,
+        observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         tag = TAG
     )
 

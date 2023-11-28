@@ -36,8 +36,13 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
+import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
@@ -47,10 +52,6 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.totp.fakes.TestTotpManager
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 
 class CreateCreditCardViewModelTest {
 
@@ -82,7 +83,8 @@ class CreateCreditCardViewModelTest {
             observeVaults = observeVaults,
             telemetryManager = telemetryManager,
             canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
-            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics()
+            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
+            observeDefaultVault = TestObserveDefaultVault()
         )
     }
 

@@ -22,6 +22,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.featureaccount.impl.Account
@@ -683,7 +684,10 @@ fun NavGraphBuilder.appGraph(
                 is ItemDetailNavigation.OnCreateLoginFromAlias -> {
                     appNavigator.navigate(
                         destination = CreateLogin,
-                        route = CreateLogin.createNavRoute(username = it.alias.some()),
+                        route = CreateLogin.createNavRoute(
+                            username = it.alias.some(),
+                            shareId = it.shareId.toOption()
+                        ),
                         backDestination = Home
                     )
                 }

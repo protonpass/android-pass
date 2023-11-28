@@ -42,7 +42,10 @@ sealed interface ItemDetailNavigation {
         val itemId: ItemId
     ) : ItemDetailNavigation
 
-    data class OnCreateLoginFromAlias(val alias: String) : ItemDetailNavigation
+    data class OnCreateLoginFromAlias(
+        val alias: String,
+        val shareId: ShareId
+    ) : ItemDetailNavigation
     data class OnViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
     object Back : ItemDetailNavigation
 

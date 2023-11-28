@@ -22,6 +22,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
@@ -31,6 +32,8 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.image.fakes.TestClearIconCache
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.TestPreferenceRepository
@@ -38,8 +41,6 @@ import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import javax.inject.Inject
 import kotlin.test.assertTrue
 
@@ -119,6 +120,31 @@ class SettingsScreenTest {
             .performClick()
         composeTestRule.waitUntil { checker.isCalled }
     }
+
+    @Test
+    fun onDefaultVaultClick() {
+        val checker = CallChecker<Unit>()
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    SettingsScreen(
+                        onNavigate = {
+                            if (it is SettingsNavigation.DefaultVault) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+
+            val text = activity.getString(R.string.settings_default_vault_vault_selector_title)
+            onNodeWithText(text).performScrollTo()
+            onNodeWithText(text).performClick()
+
+            waitUntil { checker.isCalled }
+        }
+    }
+
 
     @Test
     fun onUpClick() {

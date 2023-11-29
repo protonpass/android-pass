@@ -49,12 +49,12 @@ class ObserveItemCountImpl @Inject constructor(
             }
     } else {
         observeAllShares()
-            .flatMapLatest { items ->
+            .flatMapLatest { shares ->
                 observeCurrentUser()
                     .flatMapLatest { user ->
                         itemRepository.observeItemCountSummary(
                             userId = user.userId,
-                            shareIds = items.map { it.id },
+                            shareIds = shares.map { it.id },
                             itemState = itemState
                         )
                     }

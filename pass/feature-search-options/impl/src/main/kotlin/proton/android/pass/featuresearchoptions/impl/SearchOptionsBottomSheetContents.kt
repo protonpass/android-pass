@@ -19,10 +19,15 @@
 package proton.android.pass.featuresearchoptions.impl
 
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -114,3 +119,24 @@ private fun sorting(
             get() = { onNavigateEvent(SearchOptionsNavigation.Sorting) }
         override val isDivider = false
     }
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview
+@Composable
+fun SearchOptionsBottomSheetContentsPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            SearchOptionsBottomSheetContents(
+                state = SuccessSearchOptionsUIState(
+                    filterType = SearchFilterType.All,
+                    sortingType = SearchSortingType.MostRecent,
+                    count = 2
+                ),
+                onNavigateEvent = {}
+            )
+        }
+    }
+}

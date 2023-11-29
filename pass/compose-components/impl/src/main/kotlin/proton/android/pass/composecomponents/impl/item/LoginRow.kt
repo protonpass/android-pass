@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -58,10 +59,6 @@ fun LoginRow(
         )
     }
 
-    val subtitles = (
-        listOfNotNull(fields.username, fields.note) + fields.websites
-        ).toPersistentList()
-
     ItemRow(
         modifier = modifier,
         icon = {
@@ -78,7 +75,7 @@ fun LoginRow(
             )
         },
         title = fields.title,
-        subtitles = subtitles,
+        subtitles = fields.subtitles,
         vaultIcon = vaultIcon
     )
 }
@@ -118,7 +115,8 @@ private fun getHighlightedFields(
         title = annotatedTitle,
         note = annotatedNote,
         username = annotatedUsername,
-        websites = annotatedWebsites
+        websites = annotatedWebsites,
+        subtitles = (listOfNotNull(annotatedUsername, annotatedNote) + annotatedWebsites).toPersistentList()
     )
 }
 
@@ -127,7 +125,8 @@ private data class LoginHighlightFields(
     val title: AnnotatedString,
     val note: AnnotatedString?,
     val username: AnnotatedString,
-    val websites: List<AnnotatedString>
+    val websites: List<AnnotatedString>,
+    val subtitles: ImmutableList<AnnotatedString>
 )
 
 class ThemedLoginItemPreviewProvider : ThemePairPreviewProvider<LoginRowParameter>(

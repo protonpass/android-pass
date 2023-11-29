@@ -19,19 +19,24 @@
 package proton.android.pass.featuresearchoptions.impl
 
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
+import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Alias
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.All
@@ -123,3 +128,28 @@ private fun filterItemList(
             }
         }
         .toImmutableList()
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview
+@Composable
+fun FilterBottomSheetContentsPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            FilterBottomSheetContents(
+                state = SuccessFilterOptionsUIState(
+                    filterType = All,
+                    summary = ItemCountSummary(
+                        total = 0,
+                        login = 0,
+                        note = 0,
+                        alias = 0,
+                        creditCard = 0
+                    )
+                ),
+                onSortingTypeSelected = {}
+            )
+        }
+    }
+}

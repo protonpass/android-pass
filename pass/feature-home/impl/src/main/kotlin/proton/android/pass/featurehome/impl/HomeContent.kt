@@ -64,6 +64,7 @@ import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 
@@ -87,7 +88,7 @@ internal fun HomeContent(
     onRefresh: () -> Unit,
     onScrollToTop: () -> Unit,
     onProfileClick: () -> Unit,
-    onItemTypeSelected: (HomeItemTypeSelection) -> Unit,
+    onItemTypeSelected: (SearchFilterType) -> Unit,
     actionsClick: () -> Unit,
     onTrialInfoClick: () -> Unit,
     onInviteClick: () -> Unit
@@ -154,7 +155,7 @@ internal fun HomeContent(
         ) {
             AnimatedVisibility(visible = uiState.searchUiState.inSearchMode && firstItemVisible) {
                 ItemTypeFilterList(
-                    selected = uiState.homeListUiState.homeItemTypeSelection,
+                    selected = uiState.homeListUiState.searchFilterType,
                     loginCount = uiState.searchUiState.itemTypeCount.loginCount,
                     aliasCount = uiState.searchUiState.itemTypeCount.aliasCount,
                     noteCount = uiState.searchUiState.itemTypeCount.noteCount,

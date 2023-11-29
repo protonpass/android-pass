@@ -330,14 +330,10 @@ class HomeViewModel @Inject constructor(
             result.map { grouped ->
                 grouped
                     .map {
-                        if (isInSearchMode) {
-                            GroupedItemList(
-                                it.key,
-                                filterByType(it.items, searchFilterType.searchFilterType)
-                            )
-                        } else {
-                            it
-                        }
+                        GroupedItemList(
+                            it.key,
+                            filterByType(it.items, searchFilterType.searchFilterType)
+                        )
                     }
                     .filter { it.items.isNotEmpty() }
                     .toImmutableList()

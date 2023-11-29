@@ -24,7 +24,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -38,22 +37,30 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ItemCount(
     modifier: Modifier = Modifier,
     showSearchResults: Boolean,
-    itemCount: Int?
+    itemCount: Int?,
+    itemType: SearchFilterType
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
+        val stringResource = when (itemType) {
+            SearchFilterType.All -> R.string.item_list_header_all_search_results
+            SearchFilterType.Login -> R.string.item_list_header_logins_type
+            SearchFilterType.Alias -> R.string.item_list_header_aliases_type
+            SearchFilterType.Note -> R.string.item_list_header_notes_type
+            SearchFilterType.CreditCard -> R.string.item_list_header_credit_cards_type
+        }
         Text(
             text = if (showSearchResults) itemCount?.let { "$it" }
-                ?: "0" else stringResource(R.string.item_list_header_all_search_results),
+                ?: "0" else stringResource(stringResource),
             style = PassTheme.typography.body3Bold()
         )
         Text(
@@ -100,7 +107,8 @@ fun ItemCountPreview(
         Surface {
             ItemCount(
                 showSearchResults = input.second.showSearchResults,
-                itemCount = input.second.itemCount
+                itemCount = input.second.itemCount,
+                itemType = SearchFilterType.All
             )
         }
     }

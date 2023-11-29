@@ -43,22 +43,23 @@ import me.proton.core.compose.theme.overlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
-import proton.android.pass.featurehome.impl.HomeItemTypeSelection.Aliases
-import proton.android.pass.featurehome.impl.HomeItemTypeSelection.AllItems
-import proton.android.pass.featurehome.impl.HomeItemTypeSelection.CreditCards
-import proton.android.pass.featurehome.impl.HomeItemTypeSelection.Logins
-import proton.android.pass.featurehome.impl.HomeItemTypeSelection.Notes
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
+import proton.android.pass.featuresearchoptions.api.SearchFilterType.Alias
+import proton.android.pass.featuresearchoptions.api.SearchFilterType.All
+import proton.android.pass.featuresearchoptions.api.SearchFilterType.CreditCard
+import proton.android.pass.featuresearchoptions.api.SearchFilterType.Login
+import proton.android.pass.featuresearchoptions.api.SearchFilterType.Note
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun ItemTypeFilterList(
     modifier: Modifier = Modifier,
-    selected: HomeItemTypeSelection,
+    selected: SearchFilterType,
     loginCount: Int,
     aliasCount: Int,
     noteCount: Int,
     creditCardCount: Int,
-    onItemTypeClick: (HomeItemTypeSelection) -> Unit
+    onItemTypeClick: (SearchFilterType) -> Unit
 ) {
     Row(
         modifier = modifier.horizontalScroll(rememberScrollState()),
@@ -66,24 +67,24 @@ fun ItemTypeFilterList(
     ) {
         Spacer(modifier = Modifier.width(12.dp))
         ItemTypeButton(
-            AllItems,
-            selected == AllItems,
+            All,
+            selected == All,
             loginCount + aliasCount + noteCount + creditCardCount,
             onItemTypeClick
         )
-        ItemTypeButton(Logins, selected == Logins, loginCount, onItemTypeClick)
-        ItemTypeButton(Aliases, selected == Aliases, aliasCount, onItemTypeClick)
-        ItemTypeButton(Notes, selected == Notes, noteCount, onItemTypeClick)
-        ItemTypeButton(CreditCards, selected == CreditCards, creditCardCount, onItemTypeClick)
+        ItemTypeButton(Login, selected == Login, loginCount, onItemTypeClick)
+        ItemTypeButton(Alias, selected == Alias, aliasCount, onItemTypeClick)
+        ItemTypeButton(Note, selected == Note, noteCount, onItemTypeClick)
+        ItemTypeButton(CreditCard, selected == CreditCard, creditCardCount, onItemTypeClick)
     }
 }
 
 @Composable
 private fun ItemTypeButton(
-    homeItemTypeSelection: HomeItemTypeSelection,
+    searchFilterType: SearchFilterType,
     isSelected: Boolean,
     count: Int,
-    onItemTypeClick: (HomeItemTypeSelection) -> Unit
+    onItemTypeClick: (SearchFilterType) -> Unit
 ) {
     CircleButton(
         contentPadding = PaddingValues(12.dp, 0.dp),
@@ -92,7 +93,7 @@ private fun ItemTypeButton(
         } else {
             PassTheme.colors.interactionNormMinor1
         },
-        onClick = { onItemTypeClick(homeItemTypeSelection) }
+        onClick = { onItemTypeClick(searchFilterType) }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -100,12 +101,12 @@ private fun ItemTypeButton(
         ) {
             Icon(
                 modifier = Modifier.height(16.dp),
-                painter = when (homeItemTypeSelection) {
-                    AllItems -> painterResource(CoreR.drawable.ic_proton_list_bullets)
-                    Logins -> painterResource(CoreR.drawable.ic_proton_user)
-                    Aliases -> painterResource(CoreR.drawable.ic_proton_alias)
-                    Notes -> painterResource(CoreR.drawable.ic_proton_file_lines)
-                    CreditCards -> painterResource(CoreR.drawable.ic_proton_credit_card)
+                painter = when (searchFilterType) {
+                    All -> painterResource(CoreR.drawable.ic_proton_list_bullets)
+                    Login -> painterResource(CoreR.drawable.ic_proton_user)
+                    Alias -> painterResource(CoreR.drawable.ic_proton_alias)
+                    Note -> painterResource(CoreR.drawable.ic_proton_file_lines)
+                    CreditCard -> painterResource(CoreR.drawable.ic_proton_credit_card)
                 },
                 contentDescription = stringResource(R.string.item_type_filter_list_icon_content_description),
                 tint = if (isSelected) {
@@ -115,12 +116,12 @@ private fun ItemTypeButton(
                 }
             )
             Text(
-                text = when (homeItemTypeSelection) {
-                    AllItems -> stringResource(R.string.item_type_filter_all)
-                    Logins -> stringResource(R.string.item_type_filter_login)
-                    Aliases -> stringResource(R.string.item_type_filter_alias)
-                    Notes -> stringResource(R.string.item_type_filter_note)
-                    CreditCards -> stringResource(R.string.item_type_filter_credit_card)
+                text = when (searchFilterType) {
+                    All -> stringResource(R.string.item_type_filter_all)
+                    Login -> stringResource(R.string.item_type_filter_login)
+                    Alias -> stringResource(R.string.item_type_filter_alias)
+                    Note -> stringResource(R.string.item_type_filter_note)
+                    CreditCard -> stringResource(R.string.item_type_filter_credit_card)
                 },
                 style = ProtonTheme.typography.defaultSmallNorm,
                 color = PassTheme.colors.textNorm
@@ -142,7 +143,7 @@ fun ItemTypeFilterListPreview(
     PassTheme(isDark = isDark) {
         Surface {
             ItemTypeFilterList(
-                selected = Logins,
+                selected = Login,
                 loginCount = 2,
                 aliasCount = 4,
                 noteCount = 1,

@@ -172,6 +172,7 @@ internal fun HomeContent(
                 ItemListHeader(
                     showSearchResults = uiState.searchUiState.inSearchMode &&
                         uiState.searchUiState.searchQuery.isNotEmpty(),
+                    itemType = uiState.homeListUiState.searchFilterType,
                     itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
                     sortingContent = {
                         SortingButton(

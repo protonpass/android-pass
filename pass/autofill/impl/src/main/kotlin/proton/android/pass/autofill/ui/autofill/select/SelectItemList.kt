@@ -39,6 +39,7 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 
 @Composable
 fun SelectItemList(
@@ -109,7 +110,8 @@ fun SelectItemList(
                                     onNavigate(SelectItemNavigation.SortingBottomsheet)
                                 }
                             )
-                        }
+                        },
+                        itemType = SearchFilterType.All
                     )
                 }
             }

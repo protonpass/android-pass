@@ -24,6 +24,7 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,7 +34,11 @@ class TestObserveItemCount @Inject constructor() : ObserveItemCount {
     private val observeVaultsFlow = testFlow<Result<ItemCountSummary>>()
 
     fun sendResult(result: Result<ItemCountSummary>) = observeVaultsFlow.tryEmit(result)
-    override fun invoke(itemState: ItemState?): Flow<ItemCountSummary> = observeVaultsFlow.map {
+
+    override fun invoke(
+        itemState: ItemState?,
+        selectedShareId: ShareId?
+    ): Flow<ItemCountSummary> = observeVaultsFlow.map {
         it.getOrThrow()
     }
 }

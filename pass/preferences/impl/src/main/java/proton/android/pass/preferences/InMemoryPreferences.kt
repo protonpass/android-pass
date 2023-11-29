@@ -18,23 +18,30 @@
 
 package proton.android.pass.preferences
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Singleton
 
 interface InMemoryPreferences {
     fun <T : Any> get(key: String): T?
+    fun <T : Any> observe(key: String): Flow<T?>
     fun <T : Any> set(key: String, value: T)
 }
 
 @Singleton
 class InMemoryPreferencesImpl @Inject constructor() : InMemoryPreferences {
 
-    private val map: MutableMap<String, Any> = mutableMapOf()
+    private val state: MutableStateFlow<MutableMap<String, Any>> = MutableStateFlow(mutableMapOf())
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : Any> get(key: String): T? = map[key] as? T
+    override fun <T : Any> get(key: String): T? = state.value[key] as? T?
+
+    override fun <T : Any> observe(key: String): Flow<T?> = state.map { it[key] as? T? }
 
     override fun <T : Any> set(key: String, value: T) {
-        map[key] = value
+        state.update { it.toMutableMap().apply { this[key] = value } }
     }
 }

@@ -31,13 +31,15 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 
 @Composable
 fun ItemListHeader(
     modifier: Modifier = Modifier,
     showSearchResults: Boolean,
+    itemType: SearchFilterType,
     itemCount: Int?,
-    sortingContent: @Composable () -> Unit,
+    sortingContent: @Composable () -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -47,6 +49,7 @@ fun ItemListHeader(
         ItemCount(
             modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp),
             showSearchResults = showSearchResults,
+            itemType = itemType,
             itemCount = itemCount
         )
         sortingContent()
@@ -63,7 +66,8 @@ fun ItemListHeaderPreview(
             ItemListHeader(
                 showSearchResults = input.second,
                 itemCount = 56,
-                sortingContent = {}
+                itemType = SearchFilterType.All,
+                sortingContent = {},
             )
         }
     }

@@ -29,6 +29,7 @@ import javax.inject.Inject
 class AutofillSearchOptionsRepositoryImpl @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository
 ) : AutofillSearchOptionsRepository {
+
     override fun observeSortingOption(): Flow<SortingOption> = internalSettingsRepository
         .getAutofillSortingOption()
         .map { SortingOption(it.toDomain()) }

@@ -28,6 +28,7 @@ import proton.android.pass.common.api.Some
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Suppress("TooManyFunctions")
 @Singleton
 class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRepository {
 
@@ -42,8 +43,11 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val masterPasswordAttemptsCountFlow = MutableStateFlow(0)
     private val itemCreateCountFlow = MutableStateFlow(0)
     private val itemAutofillCountFlow = MutableStateFlow(0)
-    private val appUsageFlow = MutableStateFlow(AppUsageConfig(timesUsed = 0, lastDateUsed = Clock.System.now()))
+    private val appUsageFlow =
+        MutableStateFlow(AppUsageConfig(timesUsed = 0, lastDateUsed = Clock.System.now()))
     private val inAppReviewTriggeredFlow = MutableStateFlow(false)
+    private val homeFilterOptionFlow = MutableStateFlow(FilterOptionPreference.All)
+    private val autofillFilterOptionFlow = MutableStateFlow(FilterOptionPreference.All)
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -73,12 +77,26 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
 
     override fun getHomeSortingOption(): Flow<SortingOptionPreference> = homeSortingFlow
 
+    override fun setHomeFilterOption(filterOption: FilterOptionPreference): Result<Unit> {
+        homeFilterOptionFlow.update { filterOption }
+        return Result.success(Unit)
+    }
+
+    override fun getHomeFilterOption(): Flow<FilterOptionPreference> = homeFilterOptionFlow
+
     override fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit> {
         autofillSortingFlow.update { sortingOption }
         return Result.success(Unit)
     }
 
     override fun getAutofillSortingOption(): Flow<SortingOptionPreference> = autofillSortingFlow
+
+    override fun setAutofillFilterOption(filterOption: FilterOptionPreference): Result<Unit> {
+        autofillFilterOptionFlow.update { filterOption }
+        return Result.success(Unit)
+    }
+
+    override fun getAutofillFilterOption(): Flow<FilterOptionPreference> = autofillFilterOptionFlow
 
     override fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> {
         selectedVaultFlow.update { selectedVault }

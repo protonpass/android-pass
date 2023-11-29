@@ -138,7 +138,9 @@ fun NavGraphBuilder.autofillActivityGraph(
     searchOptionsGraph(
         onNavigateEvent = {
             when (it) {
-                is SearchOptionsNavigation.SelectSorting -> appNavigator.navigateBack()
+                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 SearchOptionsNavigation.Filter -> TODO()
                 SearchOptionsNavigation.Sorting -> TODO()

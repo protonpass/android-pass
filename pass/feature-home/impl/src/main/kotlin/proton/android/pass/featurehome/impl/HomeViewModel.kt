@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -179,6 +180,7 @@ class HomeViewModel @Inject constructor(
     private val searchOptionsFlow = homeSearchOptionsRepository
         .observeSearchOptions()
         .distinctUntilChanged()
+        .onEach { shouldScrollToTopFlow.update { true } }
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
         searchOptionsFlow.map { it.vaultSelectionOption },

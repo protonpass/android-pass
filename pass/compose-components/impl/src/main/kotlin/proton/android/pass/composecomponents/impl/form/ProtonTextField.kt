@@ -149,7 +149,10 @@ fun ProtonTextField(
                 )
             }
         )
-        AnimatedVisibility(isError && errorMessage.isNotBlank()) {
+        AnimatedVisibility(
+            visible = isError && errorMessage.isNotBlank(),
+            label = "ProtonTextField-errorMessage"
+        ) {
             Row {
                 if (leadingIcon != null) {
                     Spacer(modifier = Modifier.width(50.dp))

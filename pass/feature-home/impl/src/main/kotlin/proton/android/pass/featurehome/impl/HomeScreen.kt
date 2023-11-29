@@ -41,9 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
@@ -134,12 +132,17 @@ fun HomeScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val isTrashMode = homeUiState.homeListUiState.homeVaultSelection == VaultSelectionOption.Trash
 
-    BackHandler(drawerState.isOpen || bottomSheetState.isVisible) {
+    val enableBackHandler = drawerState.isOpen ||
+        bottomSheetState.isVisible ||
+        homeUiState.homeListUiState.selectionState.isInSelectMode
+
+    BackHandler(enableBackHandler) {
         scope.launch {
-            if (drawerState.isOpen) {
-                drawerState.close()
-            } else if (bottomSheetState.isVisible) {
-                bottomSheetState.hide()
+            when {
+                drawerState.isOpen -> drawerState.close()
+                bottomSheetState.isVisible -> bottomSheetState.hide()
+                homeUiState.homeListUiState.selectionState.isInSelectMode ->
+                    homeViewModel.clearSelection()
             }
         }
     }
@@ -404,30 +407,43 @@ fun HomeScreen(
                 modifier = Modifier.background(PassTheme.colors.backgroundStrong),
                 uiState = homeUiState,
                 shouldScrollToTop = homeUiState.homeListUiState.shouldScrollToTop,
-                onItemClick = remember {
-                    { item ->
-                        homeViewModel.onItemClicked(item.shareId, item.id)
-                        onNavigateEvent(HomeNavigation.ItemDetail(item.shareId, item.id))
-                    }
-                },
-                onSearchQueryChange = remember { { homeViewModel.onSearchQueryChange(it) } },
-                onEnterSearch = remember { { homeViewModel.onEnterSearch() } },
-                onStopSearch = remember { { homeViewModel.onStopSearching() } },
-                onDrawerIconClick = remember { { scope.launch { drawerState.open() } } },
-                onSortingOptionsClick = { onNavigateEvent(SortingBottomsheet) },
-                onAddItemClick = remember {
-                    { shareId: Option<ShareId>, itemTypeUiState: ItemTypeUiState ->
-                        onNavigateEvent(HomeNavigation.AddItem(shareId, itemTypeUiState))
-                    }
-                },
-                onItemMenuClick = remember(isTrashMode) {
-                    { item ->
-                        selectedItem = item
-                        currentBottomSheet =
-                            if (isTrashMode) {
+                onEvent = {
+                    when (it) {
+                        is HomeUiEvent.ItemClick -> {
+                            homeViewModel.onItemClicked(it.item.shareId, it.item.id)
+                            onNavigateEvent(HomeNavigation.ItemDetail(it.item.shareId, it.item.id))
+                        }
+
+                        is HomeUiEvent.SearchQueryChange -> {
+                            homeViewModel.onSearchQueryChange(it.query)
+                        }
+
+                        is HomeUiEvent.EnterSearch -> {
+                            homeViewModel.onEnterSearch()
+                        }
+
+                        is HomeUiEvent.StopSearch -> {
+                            homeViewModel.onStopSearching()
+                        }
+
+                        is HomeUiEvent.DrawerIconClick -> {
+                            scope.launch { drawerState.open() }
+                        }
+
+                        is HomeUiEvent.SortingOptionsClick -> {
+                            onNavigateEvent(SortingBottomsheet)
+                        }
+
+                        is HomeUiEvent.AddItemClick -> {
+                            onNavigateEvent(HomeNavigation.AddItem(it.shareId, it.state))
+                        }
+
+                        is HomeUiEvent.ItemMenuClick -> {
+                            selectedItem = it.item
+                            currentBottomSheet = if (isTrashMode) {
                                 TrashItemOptions
                             } else {
-                                when (item.contents) {
+                                when (it.item.contents) {
                                     is ItemContents.Alias -> AliasOptions
                                     is ItemContents.Login -> LoginOptions
                                     is ItemContents.Note -> NoteOptions
@@ -435,24 +451,53 @@ fun HomeScreen(
                                     is ItemContents.Unknown -> LoginOptions
                                 }
                             }
-                        scope.launch { bottomSheetState.show() }
+                            scope.launch { bottomSheetState.show() }
+                        }
+
+                        is HomeUiEvent.Refresh -> {
+                            homeViewModel.onRefresh()
+                        }
+
+                        is HomeUiEvent.ScrollToTop -> {
+                            homeViewModel.onScrollToTop()
+                        }
+
+                        is HomeUiEvent.ProfileClick -> {
+                            onNavigateEvent(HomeNavigation.Profile)
+                        }
+
+                        is HomeUiEvent.ItemTypeSelected -> {
+                            homeViewModel.setItemTypeSelection(
+                                searchFilterType = it.searchFilterType
+                            )
+                        }
+
+                        is HomeUiEvent.ActionsClick -> {
+                            if (isTrashMode) {
+                                currentBottomSheet = TrashOptions
+                                scope.launch { bottomSheetState.show() }
+                            } else {
+                                onNavigateEvent(HomeNavigation.SearchOptions)
+                            }
+                        }
+
+                        is HomeUiEvent.ClearRecentSearchClick -> {
+                            homeViewModel.onClearAllRecentSearch()
+                        }
+
+                        is HomeUiEvent.TrialInfoClick -> {
+                            onNavigateEvent(HomeNavigation.TrialInfo)
+                        }
+
+                        is HomeUiEvent.InviteClick -> {
+                            onNavigateEvent(HomeNavigation.OpenInvite)
+                        }
+
+                        is HomeUiEvent.SelectItem -> {
+                            homeViewModel.onItemSelected(it.item)
+                        }
                     }
-                },
-                onRefresh = remember { { homeViewModel.onRefresh() } },
-                onScrollToTop = remember { { homeViewModel.onScrollToTop() } },
-                onProfileClick = remember { { onNavigateEvent(HomeNavigation.Profile) } },
-                onItemTypeSelected = remember { { homeViewModel.setItemTypeSelection(it) } },
-                actionsClick = {
-                    if (isTrashMode) {
-                        currentBottomSheet = TrashOptions
-                        scope.launch { bottomSheetState.show() }
-                    } else {
-                        onNavigateEvent(HomeNavigation.SearchOptions)
-                    }
-                },
-                onClearRecentSearchClick = homeViewModel::onClearAllRecentSearch,
-                onTrialInfoClick = remember { { onNavigateEvent(HomeNavigation.TrialInfo) } },
-                onInviteClick = remember { { onNavigateEvent(HomeNavigation.OpenInvite) } }
+                }
             )
 
             ConfirmRestoreAllDialog(

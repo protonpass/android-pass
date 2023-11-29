@@ -21,6 +21,7 @@ package proton.android.pass.featuresearchoptions.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchOptions
 import proton.android.pass.featuresearchoptions.api.SortingOption
@@ -34,6 +35,7 @@ class TestHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsR
     private val searchOptionsFlow = MutableStateFlow(SearchOptions.Initial)
 
     private val sortingOptionFlow = MutableStateFlow(SearchOptions.Initial.sortingOption)
+    private val filterOptionFlow = MutableStateFlow(SearchOptions.Initial.filterOption)
     private val vaultSelectionOptionFlow: MutableStateFlow<VaultSelectionOption> =
         MutableStateFlow(VaultSelectionOption.AllVaults)
 
@@ -41,11 +43,17 @@ class TestHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsR
 
     override fun observeSortingOption(): Flow<SortingOption> = sortingOptionFlow
 
+    override fun observeFilterOption(): Flow<FilterOption> = filterOptionFlow
+
     override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> =
         vaultSelectionOptionFlow
 
     override fun setSortingOption(sortingOption: SortingOption) {
         sortingOptionFlow.update { sortingOption }
+    }
+
+    override fun setFilterOption(filterOption: FilterOption) {
+        filterOptionFlow.update { filterOption }
     }
 
     override fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {

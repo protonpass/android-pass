@@ -18,6 +18,7 @@
 
 package proton.android.pass.featuresearchoptions.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,7 +34,7 @@ fun SearchOptionsBottomSheet(
     viewModel: SearchOptionsBottomSheetViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-
+    BackHandler { onNavigateEvent(SearchOptionsNavigation.Dismiss) }
     SearchOptionsBottomSheetContents(
         modifier = modifier,
         state = state,

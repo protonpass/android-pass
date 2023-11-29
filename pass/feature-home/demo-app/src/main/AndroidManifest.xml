@@ -29,6 +29,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
+        <profileable
+            android:shell="true"
+            tools:targetApi="q" />
         <activity
             android:name="proton.android.pass.featurehome.demoapp.FeatureHomeActivity"
             android:exported="true" >

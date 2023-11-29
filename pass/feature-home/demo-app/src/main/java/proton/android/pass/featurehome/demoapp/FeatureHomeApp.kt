@@ -90,7 +90,7 @@ class FeatureHomeApp : Application() {
             val login = TestObserveItems.createLogin(
                 shareId = ShareId(SHARE_ID),
                 itemId = ItemId("item_login_$i"),
-                title = "Item $i",
+                title = "Login $i",
                 username = "Username $i",
                 password = "Password$i"
             )
@@ -99,7 +99,7 @@ class FeatureHomeApp : Application() {
             val creditCard = TestObserveItems.createCreditCard(
                 shareId = ShareId(SHARE_ID),
                 itemId = ItemId("item_cc_$i"),
-                title = "Item $i",
+                title = "Card $i",
                 holder = "Holder $i",
                 number = "${i}23423423",
             )
@@ -108,7 +108,7 @@ class FeatureHomeApp : Application() {
             val note = TestObserveItems.createNote(
                 shareId = ShareId(SHARE_ID),
                 itemId = ItemId("item_note_$i"),
-                title = "Item $i",
+                title = "Note $i",
                 note = "Note $i"
             )
             items.add(note)
@@ -116,7 +116,7 @@ class FeatureHomeApp : Application() {
             val alias = TestObserveItems.createAlias(
                 shareId = ShareId(SHARE_ID),
                 itemId = ItemId("item_alias_$i"),
-                title = "Item $i",
+                title = "Alias $i",
                 alias = "alias$i@domain.test"
             )
             items.add(alias)

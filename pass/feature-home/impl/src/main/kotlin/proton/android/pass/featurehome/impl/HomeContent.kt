@@ -153,7 +153,10 @@ internal fun HomeContent(
         Column(
             modifier = Modifier.padding(contentPadding)
         ) {
-            AnimatedVisibility(visible = uiState.searchUiState.inSearchMode && firstItemVisible) {
+            AnimatedVisibility(
+                visible = uiState.searchUiState.inSearchMode && firstItemVisible,
+                label = "HomeContent-ItemTypeFilterList"
+            ) {
                 ItemTypeFilterList(
                     selected = uiState.homeListUiState.searchFilterType,
                     loginCount = uiState.searchUiState.itemTypeCount.loginCount,
@@ -199,6 +202,7 @@ internal fun HomeContent(
             }
 
             ItemsList(
+                modifier = Modifier.testTag("itemsList"),
                 items = uiState.homeListUiState.items,
                 shares = uiState.homeListUiState.shares,
                 isShareSelected = uiState.homeListUiState.selectedShare.isNotEmpty(),

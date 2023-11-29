@@ -44,10 +44,12 @@ class SortingBottomSheetViewModel @Inject constructor(
         savedStateHandle.get().require(SortingLocationNavArgId.key)
     )
 
-    val state: StateFlow<SearchSortingType> =
-        homeSearchOptionsRepository.observeSortingOption()
-            .map { it.searchSortingType }
-            .stateIn(viewModelScope, SharingStarted.Eagerly, SearchSortingType.TitleAsc)
+    val state: StateFlow<SearchSortingType> = when (sortingLocation) {
+        SortingLocation.Home -> homeSearchOptionsRepository.observeSortingOption()
+        SortingLocation.Autofill -> autofillSearchOptionsRepository.observeSortingOption()
+    }
+        .map { it.searchSortingType }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, SearchSortingType.TitleAsc)
 
     fun onSortingTypeChanged(searchSortingType: SearchSortingType) {
         val value = SortingOption(searchSortingType)

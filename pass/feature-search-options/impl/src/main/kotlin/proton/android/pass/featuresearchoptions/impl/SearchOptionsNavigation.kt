@@ -19,6 +19,7 @@
 package proton.android.pass.featuresearchoptions.impl
 
 sealed interface SearchOptionsNavigation {
+    object Dismiss : SearchOptionsNavigation
     object Sorting : SearchOptionsNavigation
     object Filter : SearchOptionsNavigation
     object SelectSorting : SearchOptionsNavigation

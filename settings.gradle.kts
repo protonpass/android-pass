@@ -194,3 +194,4 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+include(":pass:feature-home:macrobenchmark")

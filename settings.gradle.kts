@@ -137,6 +137,7 @@ include(":pass:feature-auth:impl")
 include(":pass:feature-feature-flags:impl")
 include(":pass:feature-home:demo-app")
 include(":pass:feature-home:impl")
+include(":pass:feature-home:macrobenchmark")
 include(":pass:feature-item-create:impl")
 include(":pass:feature-item-detail:impl")
 include(":pass:feature-migrate:impl")
@@ -194,4 +195,3 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-include(":pass:feature-home:macrobenchmark")

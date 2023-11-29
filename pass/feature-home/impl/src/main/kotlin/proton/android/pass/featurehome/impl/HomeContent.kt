@@ -40,11 +40,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
 import proton.android.pass.composecomponents.impl.extension.toColor
@@ -59,12 +57,10 @@ import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 
@@ -76,22 +72,7 @@ internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
     shouldScrollToTop: Boolean,
-    onItemClick: (ItemUiModel) -> Unit,
-    onSearchQueryChange: (String) -> Unit,
-    onEnterSearch: () -> Unit,
-    onStopSearch: () -> Unit,
-    onDrawerIconClick: () -> Unit,
-    onSortingOptionsClick: () -> Unit,
-    onClearRecentSearchClick: () -> Unit,
-    onAddItemClick: (Option<ShareId>, ItemTypeUiState) -> Unit,
-    onItemMenuClick: (ItemUiModel) -> Unit,
-    onRefresh: () -> Unit,
-    onScrollToTop: () -> Unit,
-    onProfileClick: () -> Unit,
-    onItemTypeSelected: (SearchFilterType) -> Unit,
-    actionsClick: () -> Unit,
-    onTrialInfoClick: () -> Unit,
-    onInviteClick: () -> Unit
+    onEvent: (HomeUiEvent) -> Unit
 ) {
     val isTrashMode = uiState.homeListUiState.homeVaultSelection == VaultSelectionOption.Trash
     Scaffold(
@@ -108,19 +89,19 @@ internal fun HomeContent(
                         uiState.homeListUiState.selectedShare.value()?.name ?: ""
                     )
                 },
-                onEnterSearch = onEnterSearch,
-                onStopSearch = onStopSearch,
-                onSearchQueryChange = onSearchQueryChange,
+                onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
+                onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
+                onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
                 drawerIcon = {
                     HomeDrawerIcon(
                         modifier = Modifier.testTag(DrawerIconTestTag),
                         uiState = uiState,
-                        onDrawerIconClick = onDrawerIconClick,
-                        onStopSearch = onStopSearch
+                        onDrawerIconClick = { onEvent(HomeUiEvent.DrawerIconClick) },
+                        onStopSearch = { onEvent(HomeUiEvent.StopSearch) }
                     )
                 },
                 actions = {
-                    IconButton(onClick = actionsClick) {
+                    IconButton(onClick = { onEvent(HomeUiEvent.ActionsClick) }) {
                         Icon(
                             painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
                             contentDescription = null,
@@ -137,9 +118,9 @@ internal fun HomeContent(
                 onListClick = {},
                 onCreateClick = {
                     val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                    onAddItemClick(shareId, ItemTypeUiState.Unknown)
+                    onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Unknown))
                 },
-                onProfileClick = onProfileClick
+                onProfileClick = { onEvent(HomeUiEvent.ProfileClick) }
             )
         }
     ) { contentPadding ->
@@ -163,7 +144,7 @@ internal fun HomeContent(
                     aliasCount = uiState.searchUiState.itemTypeCount.aliasCount,
                     noteCount = uiState.searchUiState.itemTypeCount.noteCount,
                     creditCardCount = uiState.searchUiState.itemTypeCount.creditCardCount,
-                    onItemTypeClick = onItemTypeSelected
+                    onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) }
                 )
             }
 
@@ -180,7 +161,7 @@ internal fun HomeContent(
                     sortingContent = {
                         SortingButton(
                             sortingType = uiState.homeListUiState.sortingType,
-                            onSortingOptionsClick = onSortingOptionsClick
+                            onSortingOptionsClick = { onEvent(HomeUiEvent.SortingOptionsClick) }
                         )
                     }
                 )
@@ -193,7 +174,7 @@ internal fun HomeContent(
                 }
                 RecentSearchListHeader(
                     itemCount = itemCount,
-                    onClearRecentSearchClick = onClearRecentSearchClick
+                    onClearRecentSearchClick = { onEvent(HomeUiEvent.ClearRecentSearchClick) }
                 )
             }
 
@@ -212,14 +193,14 @@ internal fun HomeContent(
                 canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
                 onItemClick = { item ->
                     keyboardController?.hide()
-                    onItemClick(item)
+                    onEvent(HomeUiEvent.ItemClick(item))
                 },
-                onItemMenuClick = onItemMenuClick,
+                onItemMenuClick = { onEvent(HomeUiEvent.ItemMenuClick(it)) },
                 isLoading = uiState.homeListUiState.isLoading,
                 isProcessingSearch = uiState.searchUiState.isProcessingSearch,
                 isRefreshing = uiState.homeListUiState.isRefreshing,
-                onRefresh = onRefresh,
-                onScrollToTop = onScrollToTop,
+                onRefresh = { onEvent(HomeUiEvent.Refresh) },
+                onScrollToTop = { onEvent(HomeUiEvent.ScrollToTop) },
                 emptyContent = {
                     if (isTrashMode) {
                         EmptyTrashContent()
@@ -230,15 +211,15 @@ internal fun HomeContent(
                             modifier = Modifier.fillMaxHeight(),
                             onCreateLoginClick = {
                                 val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                                onAddItemClick(shareId, ItemTypeUiState.Login)
+                                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Login))
                             },
                             onCreateAliasClick = {
                                 val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                                onAddItemClick(shareId, ItemTypeUiState.Alias)
+                                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Alias))
                             },
                             onCreateNoteClick = {
                                 val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                                onAddItemClick(shareId, ItemTypeUiState.Note)
+                                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Note))
                             }
                         )
                     }
@@ -248,8 +229,8 @@ internal fun HomeContent(
                 header = {
                     item {
                         OnBoardingTips(
-                            onTrialInfoClick = onTrialInfoClick,
-                            onInviteClick = onInviteClick
+                            onTrialInfoClick = { onEvent(HomeUiEvent.TrialInfoClick) },
+                            onInviteClick = { onEvent(HomeUiEvent.InviteClick) }
                         )
                     }
                 },

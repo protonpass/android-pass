@@ -44,6 +44,8 @@ android {
         versionName = appVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        proguardFiles.add(file("benchmark.pro"))
+
         buildFeatures {
             buildConfig = true
         }
@@ -71,6 +73,15 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
+    }
+
+    buildTypes {
+        create("benchmark") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks.add("release")
+            postprocessing.isObfuscate = false
+        }
     }
 }
 

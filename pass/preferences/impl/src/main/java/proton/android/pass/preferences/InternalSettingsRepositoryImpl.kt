@@ -23,7 +23,6 @@ import com.google.protobuf.Timestamp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
@@ -89,7 +88,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         }
 
     override fun getHomeFilterOption(): Flow<FilterOptionPreference> =
-        flowOf(inMemoryPreferences.get<Int>(FilterOptionPreference::class.java.name))
+        inMemoryPreferences.observe<Int>(FilterOptionPreference::class.java.name)
             .map { it?.let { FilterOptionPreference.fromValue(it) } ?: FilterOptionPreference.All }
 
     override fun setAutofillSortingOption(
@@ -106,7 +105,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         }
 
     override fun getAutofillFilterOption(): Flow<FilterOptionPreference> =
-        flowOf(inMemoryPreferences.get<Int>(FilterOptionPreference::class.java.name))
+        inMemoryPreferences.observe<Int>(FilterOptionPreference::class.java.name)
             .map { it?.let { FilterOptionPreference.fromValue(it) } ?: FilterOptionPreference.All }
 
     override fun setSelectedVault(

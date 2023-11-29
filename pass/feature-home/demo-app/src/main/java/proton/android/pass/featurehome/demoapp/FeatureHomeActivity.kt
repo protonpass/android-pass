@@ -24,7 +24,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +37,7 @@ import proton.android.pass.featurehome.impl.HomeScreen
 @AndroidEntryPoint
 class FeatureHomeActivity : FragmentActivity() {
 
+    @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -42,7 +46,10 @@ class FeatureHomeActivity : FragmentActivity() {
                 HomeScreen(
                     modifier = Modifier.background(PassTheme.colors.backgroundStrong)
                         .systemBarsPadding()
-                        .imePadding(),
+                        .imePadding()
+                        .semantics {
+                            testTagsAsResourceId = true
+                        },
                     onNavigateEvent = {}
                 )
             }

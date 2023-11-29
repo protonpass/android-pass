@@ -124,10 +124,16 @@ fun PassAppContent(
             },
             content = {
                 Column(modifier = Modifier.padding(contentPadding)) {
-                    AnimatedVisibility(visible = appUiState.networkStatus == NetworkStatus.Offline) {
+                    AnimatedVisibility(
+                        visible = appUiState.networkStatus == NetworkStatus.Offline,
+                        label = "PassAppContent-OfflineIndicator"
+                    ) {
                         OfflineIndicator()
                     }
-                    AnimatedVisibility(visible = appUiState.inAppUpdateState is InAppUpdateState.Downloading) {
+                    AnimatedVisibility(
+                        visible = appUiState.inAppUpdateState is InAppUpdateState.Downloading,
+                        label = "PassAppContent-InAppUpdateIndicator"
+                    ) {
                         if (appUiState.inAppUpdateState !is InAppUpdateState.Downloading) return@AnimatedVisibility
                         LinearProgressIndicator(
                             modifier = Modifier.fillMaxWidth(),

@@ -106,7 +106,9 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsError
+import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
@@ -161,14 +163,6 @@ class HomeViewModel @Inject constructor(
     // don't send an EnterSearch event every time they click on the search bar
     private var hasEnteredSearch = false
 
-    private data class FiltersWrapper(
-        val vaultSelection: VaultSelectionOption,
-        val sortingSelection: SearchSortingType,
-        val itemTypeSelection: HomeItemTypeSelection
-    )
-
-    private val itemTypeSelectionFlow: MutableStateFlow<HomeItemTypeSelection> =
-        MutableStateFlow(HomeItemTypeSelection.AllItems)
     private val shouldScrollToTopFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -182,12 +176,12 @@ class HomeViewModel @Inject constructor(
         .onStart { emit("") }
         .distinctUntilChanged()
 
-    private val vaultSelectionFlow: Flow<VaultSelectionOption> = homeSearchOptionsRepository
-        .observeVaultSelectionOption()
+    private val searchOptionsFlow = homeSearchOptionsRepository
+        .observeSearchOptions()
         .distinctUntilChanged()
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
-        vaultSelectionFlow,
+        searchOptionsFlow.map { it.vaultSelectionOption },
         observeVaults().asLoadingResult()
     ) { vaultSelection, vaultsResult ->
         val vaults: List<Vault> = vaultsResult.getOrNull() ?: emptyList()
@@ -226,7 +220,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private val searchEntryState: StateFlow<List<SearchEntry>> =
-        homeSearchOptionsRepository.observeVaultSelectionOption()
+        searchOptionsFlow.map { it.vaultSelectionOption }
             .flatMapLatest {
                 when (val vaultSelection = it) {
                     VaultSelectionOption.AllVaults ->
@@ -254,33 +248,32 @@ class HomeViewModel @Inject constructor(
     private val actionStateFlow: MutableStateFlow<ActionState> =
         MutableStateFlow(ActionState.Unknown)
 
-    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
-        homeSearchOptionsRepository.observeVaultSelectionOption()
-            .flatMapLatest { vault ->
-                val (shareSelection, itemState) = when (vault) {
-                    VaultSelectionOption.AllVaults -> ShareSelection.AllShares to ItemState.Active
-                    is VaultSelectionOption.Vault -> ShareSelection.Share(vault.shareId) to ItemState.Active
-                    VaultSelectionOption.Trash -> ShareSelection.AllShares to ItemState.Trashed
-                }
+    private val itemUiModelFlow = searchOptionsFlow.map { it.vaultSelectionOption }
+        .flatMapLatest { vault ->
+            val (shareSelection, itemState) = when (vault) {
+                VaultSelectionOption.AllVaults -> ShareSelection.AllShares to ItemState.Active
+                is VaultSelectionOption.Vault -> ShareSelection.Share(vault.shareId) to ItemState.Active
+                VaultSelectionOption.Trash -> ShareSelection.AllShares to ItemState.Trashed
+            }
 
-                observeItems(
-                    selection = shareSelection,
-                    itemState = itemState,
+            observeItems(
+                selection = shareSelection,
+                itemState = itemState,
 
-                    // We observe them all, because otherwise in the All part of the search we would not
-                    // know how many ItemTypes are there for the other ItemTypes.
-                    // We filter out the results using the filterByType function
-                    filter = ItemTypeFilter.All
-                ).asResultWithoutLoading()
-                    .map { itemResult ->
-                        itemResult.map { list ->
-                            encryptionContextProvider.withEncryptionContext {
-                                list.map { it.toUiModel(this@withEncryptionContext) }
-                            }
+                // We observe them all, because otherwise in the All part of the search we would not
+                // know how many ItemTypes are there for the other ItemTypes.
+                // We filter out the results using the filterByType function
+                filter = ItemTypeFilter.All
+            ).asResultWithoutLoading()
+                .map { itemResult ->
+                    itemResult.map { list ->
+                        encryptionContextProvider.withEncryptionContext {
+                            list.map { it.toUiModel(this@withEncryptionContext) }
                         }
                     }
-                    .distinctUntilChanged()
-            }
+                }
+                .distinctUntilChanged()
+        }
 
     private val filteredSearchEntriesFlow = combine(
         itemUiModelFlow,
@@ -298,7 +291,7 @@ class HomeViewModel @Inject constructor(
 
     private val sortedListItemFlow = combine(
         itemUiModelFlow,
-        homeSearchOptionsRepository.observeSortingOption()
+        searchOptionsFlow.map { it.sortingOption }
     ) { result, sortingOption ->
         when (sortingOption.searchSortingType) {
             SearchSortingType.TitleAsc -> result.map { list -> list.sortByTitleAsc() }
@@ -327,10 +320,10 @@ class HomeViewModel @Inject constructor(
     private val resultsFlow = combine(
         filteredSearchEntriesFlow,
         textFilterListItemFlow,
-        itemTypeSelectionFlow,
+        searchOptionsFlow.map { it.filterOption },
         isInSuggestionsModeState,
         isInSearchModeState
-    ) { recentSearchResult, result, itemTypeSelection, isInSuggestionsMode, isInSearchMode ->
+    ) { recentSearchResult, result, searchFilterType, isInSuggestionsMode, isInSearchMode ->
         if (isInSuggestionsMode && isInSearchMode) {
             recentSearchResult
         } else {
@@ -338,7 +331,10 @@ class HomeViewModel @Inject constructor(
                 grouped
                     .map {
                         if (isInSearchMode) {
-                            GroupedItemList(it.key, filterByType(it.items, itemTypeSelection))
+                            GroupedItemList(
+                                it.key,
+                                filterByType(it.items, searchFilterType.searchFilterType)
+                            )
                         } else {
                             it
                         }
@@ -381,18 +377,6 @@ class HomeViewModel @Inject constructor(
         ::SearchUiState
     )
 
-    private val filtersWrapperFlow = combine(
-        homeSearchOptionsRepository.observeSearchOptions(),
-        itemTypeSelectionFlow
-    ) { searchOptions, itemType ->
-        shouldScrollToTopFlow.update { true }
-        FiltersWrapper(
-            vaultSelection = searchOptions.vaultSelectionOption,
-            sortingSelection = searchOptions.sortingOption.searchSortingType,
-            itemTypeSelection = itemType
-        )
-    }.distinctUntilChanged()
-
     private val itemsFlow: Flow<LoadingResult<ImmutableList<GroupedItemList>>> = combine(
         shareListWrapperFlow,
         resultsFlow
@@ -409,14 +393,14 @@ class HomeViewModel @Inject constructor(
 
     val homeUiState: StateFlow<HomeUiState> = combineN(
         shareListWrapperFlow,
-        filtersWrapperFlow,
+        searchOptionsFlow,
         itemsFlow,
         searchUiStateFlow,
         refreshingLoadingFlow,
         shouldScrollToTopFlow,
         preferencesRepository.getUseFaviconsPreference(),
         getUserPlan().asLoadingResult()
-    ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading,
+    ) { shareListWrapper, searchOptions, itemsResult, searchUiState, refreshingLoading,
         shouldScrollToTop, useFavicons, userPlan ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
@@ -439,9 +423,9 @@ class HomeViewModel @Inject constructor(
                 items = items,
                 selectedShare = shareListWrapper.selectedShare,
                 shares = shareListWrapper.shares,
-                homeVaultSelection = filtersWrapper.vaultSelection,
-                homeItemTypeSelection = filtersWrapper.itemTypeSelection,
-                sortingType = filtersWrapper.sortingSelection,
+                homeVaultSelection = searchOptions.vaultSelectionOption,
+                searchFilterType = searchOptions.filterOption.searchFilterType,
+                sortingType = searchOptions.sortingOption.searchSortingType,
                 canLoadExternalImages = useFavicons.value()
             ),
             searchUiState = searchUiState,
@@ -466,7 +450,6 @@ class HomeViewModel @Inject constructor(
         searchQueryState.update { "" }
         isInSearchModeState.update { false }
         isInSuggestionsModeState.update { false }
-        itemTypeSelectionFlow.update { HomeItemTypeSelection.AllItems }
     }
 
     fun onEnterSearch() {
@@ -567,8 +550,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setItemTypeSelection(homeItemTypeSelection: HomeItemTypeSelection) {
-        itemTypeSelectionFlow.update { homeItemTypeSelection }
+    fun setItemTypeSelection(searchFilterType: SearchFilterType) {
+        homeSearchOptionsRepository.setFilterOption(FilterOption(searchFilterType))
         isInSuggestionsModeState.update { false }
     }
 
@@ -670,14 +653,14 @@ class HomeViewModel @Inject constructor(
 
     private fun filterByType(
         items: List<ItemUiModel>,
-        itemTypeSelection: HomeItemTypeSelection
+        searchFilterType: SearchFilterType
     ) = items.filter { item ->
-        when (itemTypeSelection) {
-            HomeItemTypeSelection.AllItems -> true
-            HomeItemTypeSelection.Aliases -> item.contents is ItemContents.Alias
-            HomeItemTypeSelection.Logins -> item.contents is ItemContents.Login
-            HomeItemTypeSelection.Notes -> item.contents is ItemContents.Note
-            HomeItemTypeSelection.CreditCards -> item.contents is ItemContents.CreditCard
+        when (searchFilterType) {
+            SearchFilterType.All -> true
+            SearchFilterType.Alias -> item.contents is ItemContents.Alias
+            SearchFilterType.Login -> item.contents is ItemContents.Login
+            SearchFilterType.Note -> item.contents is ItemContents.Note
+            SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
         }
     }
 

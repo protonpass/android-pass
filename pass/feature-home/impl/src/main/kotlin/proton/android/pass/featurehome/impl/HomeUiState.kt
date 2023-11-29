@@ -31,9 +31,10 @@ import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.domain.ShareId
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import proton.android.pass.domain.ShareId
 
 sealed interface ActionState {
     object Unknown : ActionState
@@ -67,7 +68,7 @@ data class HomeListUiState(
     val selectedShare: Option<ShareUiModel> = None,
     val shares: ImmutableMap<ShareId, ShareUiModel>,
     val homeVaultSelection: VaultSelectionOption = VaultSelectionOption.AllVaults,
-    val homeItemTypeSelection: HomeItemTypeSelection = HomeItemTypeSelection.AllItems,
+    val searchFilterType: SearchFilterType = SearchFilterType.All,
     val sortingType: SearchSortingType = SearchSortingType.MostRecent
 ) {
     companion object {

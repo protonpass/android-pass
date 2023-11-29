@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
@@ -36,13 +37,14 @@ fun CreditCardRow(
     }
 
     val highlightColor = PassTheme.colors.interactionNorm
-    val fields = remember(content.title, content.note, content.cardHolder, highlight) {
+    val fields = remember(content.title, content.note, content.cardHolder, highlight, maskedNumber) {
         getHighlightedFields(
             title = content.title,
             note = content.note,
             cardHolder = content.cardHolder,
             highlight = highlight,
-            highlightColor = highlightColor
+            highlightColor = highlightColor,
+            maskedNumber = maskedNumber
         )
     }
 
@@ -50,17 +52,19 @@ fun CreditCardRow(
         modifier = modifier,
         icon = { CreditCardIcon() },
         title = fields.title,
-        subtitles = listOfNotNull(maskedNumber, fields.note, fields.cardHolder).toPersistentList(),
+        subtitles = fields.subtitles,
         vaultIcon = vaultIcon
     )
 }
 
+@Suppress("LongParameterList")
 private fun getHighlightedFields(
     title: String,
     note: String,
     cardHolder: String,
     highlight: String,
-    highlightColor: Color
+    highlightColor: Color,
+    maskedNumber: AnnotatedString?
 ): CreditCardHighlightFields {
     var annotatedTitle = AnnotatedString(title.take(MAX_PREVIEW_LENGTH))
     var annotatedNote: AnnotatedString? = null
@@ -80,7 +84,8 @@ private fun getHighlightedFields(
     return CreditCardHighlightFields(
         title = annotatedTitle,
         note = annotatedNote,
-        cardHolder = annotatedCardHolder
+        cardHolder = annotatedCardHolder,
+        subtitles = listOfNotNull(maskedNumber, annotatedNote, annotatedCardHolder).toPersistentList()
     )
 }
 
@@ -88,7 +93,8 @@ private fun getHighlightedFields(
 private data class CreditCardHighlightFields(
     val title: AnnotatedString,
     val note: AnnotatedString?,
-    val cardHolder: AnnotatedString?
+    val cardHolder: AnnotatedString?,
+    val subtitles: ImmutableList<AnnotatedString>
 )
 
 class ThemedCreditCardPreviewProvider : ThemePairPreviewProvider<CreditCardRowParameter>(

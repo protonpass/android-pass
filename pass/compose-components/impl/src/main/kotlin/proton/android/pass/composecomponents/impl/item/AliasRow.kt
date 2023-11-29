@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -60,7 +61,7 @@ internal fun AliasRow(
         modifier = modifier,
         icon = { AliasIcon() },
         title = fields.title,
-        subtitles = listOfNotNull(fields.aliasEmail, fields.note).toImmutableList(),
+        subtitles = fields.subtitles,
         vaultIcon = vaultIcon
     )
 }
@@ -90,7 +91,8 @@ private fun getHighlightedFields(
     return AliasHighlightFields(
         title = annotatedTitle,
         aliasEmail = annotatedAliasEmail,
-        note = annotatedNote
+        note = annotatedNote,
+        subtitles = listOfNotNull(annotatedAliasEmail, annotatedNote).toImmutableList()
     )
 }
 
@@ -99,6 +101,7 @@ private data class AliasHighlightFields(
     val title: AnnotatedString,
     val aliasEmail: AnnotatedString,
     val note: AnnotatedString?,
+    val subtitles: ImmutableList<AnnotatedString>
 )
 
 class ThemedAliasItemPreviewProvider :

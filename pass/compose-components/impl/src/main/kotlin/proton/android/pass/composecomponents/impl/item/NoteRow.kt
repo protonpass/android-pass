@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -47,7 +48,7 @@ fun NoteRow(
     val content = item.contents as ItemContents.Note
 
     val highlightColor = PassTheme.colors.interactionNorm
-    val (title, note) = remember(content.title, content.note, highlight) {
+    val (title, subtitles) = remember(content.title, content.note, highlight) {
         getHighlightedFields(content.title, content.note, highlight, highlightColor)
     }
 
@@ -55,7 +56,7 @@ fun NoteRow(
         modifier = modifier,
         icon = { NoteIcon() },
         title = title,
-        subtitles = persistentListOf(note),
+        subtitles = subtitles,
         vaultIcon = vaultIcon
     )
 }
@@ -79,13 +80,13 @@ private fun getHighlightedFields(
         AnnotatedString(firstLines.take(MAX_NOTE_CHARS_PREVIEW))
     }
 
-    return NoteHighlightFields(annotatedTitle, annotatedNote)
+    return NoteHighlightFields(annotatedTitle, persistentListOf(annotatedNote))
 }
 
 @Stable
 private data class NoteHighlightFields(
     val title: AnnotatedString,
-    val note: AnnotatedString
+    val subtitles: ImmutableList<AnnotatedString>
 )
 
 class ThemedNoteItemPreviewProvider :

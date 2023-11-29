@@ -30,7 +30,7 @@ class HomeScrollBenchmark {
     ) {
         val contentList = device.findObject(By.res("itemsList"))
         val searchCondition = Until.hasObject(By.text("Login 49"))
-        // Wait until a snack collection item within the list is rendered
+        // Wait until the item list is loaded
         contentList.wait(searchCondition, 5_000)
 
         // Set gesture margin to avoid triggering system gesture navigation

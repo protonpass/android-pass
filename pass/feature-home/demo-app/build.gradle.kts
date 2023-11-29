@@ -101,6 +101,7 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.profileinstaller)
     implementation(libs.androidx.startup.runtime)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.collections)

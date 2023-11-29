@@ -1,5 +1,6 @@
 package proton.android.pass.featurehome.macrobenchmark
 
+import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.FrameTimingMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -18,8 +19,17 @@ class HomeScrollBenchmark {
     val benchmarkRule = MacrobenchmarkRule()
 
     @Test
-    fun startup() = benchmarkRule.measureRepeated(
-        packageName = "proton.android.pass.featurehome.demoapp",
+    fun scrollNoCompilation() = testScroll(CompilationMode.None())
+
+    @Test
+    fun scrollBaselineProfile() = testScroll(CompilationMode.Partial())
+
+    @Test
+    fun scrollFullCompilation() = testScroll(CompilationMode.Full())
+
+    private fun testScroll(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
+        compilationMode = compilationMode,
+        packageName = PACKAGE_NAME,
         metrics = listOf(FrameTimingMetric()),
         iterations = 5,
         startupMode = StartupMode.COLD,
@@ -28,13 +38,13 @@ class HomeScrollBenchmark {
             startActivityAndWait()
         }
     ) {
-        val contentList = device.findObject(By.res("itemsList"))
-        val searchCondition = Until.hasObject(By.text("Login 49"))
+        val contentList = device.findObject(By.res(ITEMS_LIST_ID))
+        val searchCondition = Until.hasObject(By.text(VISIBLE_ITEM))
         // Wait until the item list is loaded
-        contentList.wait(searchCondition, 5_000)
+        contentList.wait(searchCondition, TIMEOUT)
 
         // Set gesture margin to avoid triggering system gesture navigation
-        contentList.setGestureMargin(device.displayWidth / 5)
+        contentList.setSafeGestureMargin(device)
 
         // Scroll down the list
         contentList.fling(Direction.DOWN)

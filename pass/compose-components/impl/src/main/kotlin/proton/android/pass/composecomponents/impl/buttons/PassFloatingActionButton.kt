@@ -43,7 +43,8 @@ fun PassFloatingActionButton(
     AnimatedVisibility(
         visible = visible,
         enter = slideInVertically { it * 2 },
-        exit = slideOutVertically { it * 2 }
+        exit = slideOutVertically { it * 2 },
+        label = "PassFloatingActionButton"
     ) {
         FloatingActionButton(
             modifier = modifier,

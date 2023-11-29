@@ -276,6 +276,10 @@ fun NavGraphBuilder.appGraph(
                         Home
                     )
                 }
+
+                SearchOptionsNavigation.Dismiss -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )

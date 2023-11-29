@@ -70,6 +70,7 @@ fun LinkedAppIcon(
 
     val backgroundColor by if (CROSSFADE_ENABLED) {
         animateColorAsState(
+            label = "LinkedAppIcon-colorAnimation",
             targetValue = if (isLoaded) {
                 Color.White
             } else PassTheme.colors.loginInteractionNormMinor2,

@@ -32,9 +32,11 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -76,6 +78,12 @@ fun PassAppContent(
 
     val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
     val appNavigator = rememberAppNavigator(bottomSheetNavigator)
+
+    val backStack by appNavigator.navController.currentBackStack.collectAsStateWithLifecycle()
+    LaunchedEffect(backStack) {
+        PassLogger.i(TAG, "NavigationBackStack: ${backStack.map { it.destination.route }.joinToString()}")
+    }
+
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
 

@@ -30,6 +30,8 @@ internal fun ItemRowContents(
     highlight: String,
     vaultIcon: Int? = null,
     canLoadExternalImages: Boolean,
+    isInSelectionMode: Boolean = false,
+    isSelected: Boolean = false,
 ) {
     when (item.contents) {
         is ItemContents.Login -> LoginRow(

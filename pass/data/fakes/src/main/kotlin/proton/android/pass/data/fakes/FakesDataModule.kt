@@ -92,7 +92,7 @@ import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
-import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -278,7 +278,7 @@ abstract class FakesDataModule {
     @Binds
     abstract fun bindTrashItem(
         impl: TestTrashItem
-    ): TrashItem
+    ): TrashItems
 
     @Binds
     abstract fun bindUpdateVault(

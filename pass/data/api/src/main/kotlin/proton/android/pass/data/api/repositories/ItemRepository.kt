@@ -71,7 +71,7 @@ interface ItemRepository {
     ): Flow<List<Item>>
 
     suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Item
-    suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId)
+    suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId)
     suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId)
     suspend fun clearTrash(userId: UserId)

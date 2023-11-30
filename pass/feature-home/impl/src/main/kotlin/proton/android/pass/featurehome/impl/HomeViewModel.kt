@@ -28,6 +28,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentMap
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -170,6 +171,8 @@ class HomeViewModel @Inject constructor(
     private val isInSuggestionsModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
         MutableStateFlow(IsProcessingSearchState.NotLoading)
+    private val selectionState: MutableStateFlow<SelectionState> =
+        MutableStateFlow(SelectionState.Initial)
 
     @OptIn(FlowPreview::class)
     private val debouncedSearchQueryState = searchQueryState
@@ -397,9 +400,10 @@ class HomeViewModel @Inject constructor(
         refreshingLoadingFlow,
         shouldScrollToTopFlow,
         preferencesRepository.getUseFaviconsPreference(),
-        getUserPlan().asLoadingResult()
+        getUserPlan().asLoadingResult(),
+        selectionState
     ) { shareListWrapper, searchOptions, itemsResult, searchUiState, refreshingLoading,
-        shouldScrollToTop, useFavicons, userPlan ->
+        shouldScrollToTop, useFavicons, userPlan, selection ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
@@ -424,7 +428,8 @@ class HomeViewModel @Inject constructor(
                 homeVaultSelection = searchOptions.vaultSelectionOption,
                 searchFilterType = searchOptions.filterOption.searchFilterType,
                 sortingType = searchOptions.sortingOption.searchSortingType,
-                canLoadExternalImages = useFavicons.value()
+                canLoadExternalImages = useFavicons.value(),
+                selectionState = selection.toState()
             ),
             searchUiState = searchUiState,
             accountType = AccountType.fromPlan(userPlan)
@@ -650,6 +655,47 @@ class HomeViewModel @Inject constructor(
         shouldScrollToTopFlow.update { false }
     }
 
+    fun onBulkEnabled() = viewModelScope.launch {
+        selectionState.update { state ->
+            state.copy(isInSelectMode = true)
+        }
+    }
+
+    fun onClearBulk() = viewModelScope.launch {
+        selectionState.update { SelectionState.Initial }
+    }
+
+    fun onItemLongPressed(item: ItemUiModel) = viewModelScope.launch {
+        selectionState.update { state ->
+            if (state.isInSelectMode) {
+                state.copy(selectedItems = state.selectedItems + item)
+            } else {
+                state.copy(isInSelectMode = true, selectedItems = listOf(item))
+            }
+        }
+    }
+
+    fun onItemSelected(item: ItemUiModel) = viewModelScope.launch {
+        selectionState.update { state ->
+            if (state.selectedItems.contains(item)) {
+                val newSelectedItems = state.selectedItems - item
+                state.copy(
+                    selectedItems = newSelectedItems,
+                    isInSelectMode = newSelectedItems.isNotEmpty()
+                )
+            } else {
+                state.copy(
+                    selectedItems = state.selectedItems + item,
+                    isInSelectMode = true
+                )
+            }
+        }
+    }
+
+    fun clearSelection() = viewModelScope.launch {
+        selectionState.update { SelectionState.Initial }
+    }
+
     private fun filterByType(
         items: List<ItemUiModel>,
         searchFilterType: SearchFilterType
@@ -673,6 +719,20 @@ class HomeViewModel @Inject constructor(
 
     private fun checkCanModify(listWrapper: ShareListWrapper, shareId: ShareId): Boolean =
         listWrapper.shares[shareId]?.role?.toPermissions()?.canUpdate() ?: false
+
+    private data class SelectionState(
+        val selectedItems: List<ItemUiModel>,
+        val isInSelectMode: Boolean
+    ) {
+        fun toState(): HomeSelectionState = HomeSelectionState(
+            selectedItems = selectedItems.map { it.shareId to it.id }.toPersistentSet(),
+            isInSelectMode = isInSelectMode
+        )
+
+        companion object {
+            val Initial = SelectionState(emptyList(), false)
+        }
+    }
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

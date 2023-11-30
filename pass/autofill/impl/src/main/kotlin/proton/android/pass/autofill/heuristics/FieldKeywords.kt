@@ -48,14 +48,20 @@ internal val fieldKeywordsList = listOf(
         fieldType = FieldType.Username,
         allowedKeywords = listOf(
             View.AUTOFILL_HINT_USERNAME,
-            View.AUTOFILL_HINT_EMAIL_ADDRESS,
-            "email",
             "username",
             "identifier",
             "accountname",
             "userid"
         ),
-        deniedKeywords = emptyList()
+        deniedKeywords = listOf("composer")
+    ),
+    kw(
+        fieldType = FieldType.Email,
+        allowedKeywords = listOf(
+            View.AUTOFILL_HINT_EMAIL_ADDRESS,
+            "email",
+        ),
+        deniedKeywords = listOf("composer")
     ),
     kw(
         fieldType = FieldType.Password,

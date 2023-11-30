@@ -114,6 +114,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 PassLogger.d(TAG, "Discarding expiration field because not inCreditCardContext")
                 return
             }
+
             else -> {}
         }
 
@@ -126,14 +127,18 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             NodeSupportsAutofillResult.No -> None
             is NodeSupportsAutofillResult.Yes -> {
                 val fieldType = res.fieldType.value() ?: detectFieldType(node)
-                AssistField(
-                    id = node.id!!,
-                    type = fieldType,
-                    value = node.autofillValue,
-                    text = node.text.toString(),
-                    isFocused = node.isFocused,
-                    nodePath = context.parentPath,
-                ).some()
+                if (isNodeAllowed(fieldType, node)) {
+                    AssistField(
+                        id = node.id!!,
+                        type = fieldType,
+                        value = node.autofillValue,
+                        text = node.text.toString(),
+                        isFocused = node.isFocused,
+                        nodePath = context.parentPath,
+                    ).some()
+                } else {
+                    None
+                }
             }
 
             NodeSupportsAutofillResult.MaybeWithContext -> getAutofillNodeFromContext(context)
@@ -235,7 +240,10 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
     }
 
-    private fun getAutofillNodeFromContext(autofillContext: AutofillTraversalContext): Option<AssistField> {
+    @Suppress("LongMethod")
+    private fun getAutofillNodeFromContext(
+        autofillContext: AutofillTraversalContext
+    ): Option<AssistField> {
         // Invariant: node must be an EditText
         if (!autofillContext.node.isEditText()) return None
 
@@ -288,14 +296,19 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                     hintKeywordList = hintKeywordList
                 )
             }
-            AssistField(
-                id = autofillContext.node.id!!,
-                type = fieldType,
-                value = autofillContext.node.autofillValue,
-                text = autofillContext.node.text,
-                isFocused = autofillContext.node.isFocused,
-                nodePath = autofillContext.parentPath
-            ).some()
+
+            if (isNodeAllowed(fieldType, autofillContext.node)) {
+                AssistField(
+                    id = autofillContext.node.id!!,
+                    type = fieldType,
+                    value = autofillContext.node.autofillValue,
+                    text = autofillContext.node.text,
+                    isFocused = autofillContext.node.isFocused,
+                    nodePath = autofillContext.parentPath
+                ).some()
+            } else {
+                None
+            }
         } else {
             PassLogger.d(
                 TAG,
@@ -525,6 +538,26 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         ) -> FieldType.Username
          */
         else -> FieldType.Unknown
+    }
+
+    private fun isNodeAllowed(fieldType: FieldType, node: AutofillNode): Boolean {
+        val fieldTypeConfig = fieldKeywordsList.firstOrNull { it.fieldType == fieldType }
+            ?: return true
+
+        val nodeHints = node.autofillHints + node.hintKeywordList
+        for (nodeHint in nodeHints) {
+            for (deniedKeyword in fieldTypeConfig.deniedKeywords) {
+                if (nodeHint.contains(deniedKeyword)) {
+                    PassLogger.d(
+                        TAG,
+                        "[node=${node.id?.value()}] Denied node because contains deniedKeyword [$deniedKeyword]"
+                    )
+                    return false
+                }
+            }
+        }
+
+        return true
     }
 
     sealed interface CheckHintsResult {

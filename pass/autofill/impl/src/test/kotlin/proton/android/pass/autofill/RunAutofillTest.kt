@@ -64,13 +64,14 @@ private const val TAG = "RunAutofillTest"
 fun runAutofillTest(
     file: String,
     item: AutofillItem,
-    requestFlags: List<RequestFlags> = emptyList()
+    requestFlags: List<RequestFlags> = emptyList(),
+    allowEmptyFields: Boolean = false
 ) {
     val path = "src/test/resources/$file"
     val asFile = File(path)
     val content = asFile.readText()
     val parsed: AutofillDebugSaver.DebugAutofillEntry = Json.decodeFromString(content)
-    val nodesWithExpectedContents = getExpectedContents(parsed)
+    val nodesWithExpectedContents = getExpectedContents(parsed, allowEmptyFields)
 
     val asAutofillNodes = parsed.rootContent.toAutofillNode()
     val detectedNodes = NodeExtractor(requestFlags).extract(asAutofillNodes)
@@ -104,11 +105,12 @@ fun runAutofillTest(
 }
 
 private fun getExpectedContents(
-    entry: AutofillDebugSaver.DebugAutofillEntry
+    entry: AutofillDebugSaver.DebugAutofillEntry,
+    allowEmptyFields: Boolean
 ): List<Pair<AutofillDebugSaver.DebugAutofillNode, ExpectedAutofill>> {
     val withContents = mutableListOf<Pair<AutofillDebugSaver.DebugAutofillNode, ExpectedAutofill>>()
     getExpectedContents(entry.rootContent, withContents)
-    if (withContents.isEmpty()) {
+    if (withContents.isEmpty() && !allowEmptyFields) {
         throw IllegalStateException("There are no fields with 'expectedAutofill'")
     }
     return withContents
@@ -120,7 +122,6 @@ private fun getExpectedContents(
 ) {
     val expectedContents = node.expectedAutofill
     if (expectedContents != null) {
-
         val expectedAutofill = ExpectedAutofill.values()
             .firstOrNull { it.value == expectedContents }
             ?: throw IllegalStateException(

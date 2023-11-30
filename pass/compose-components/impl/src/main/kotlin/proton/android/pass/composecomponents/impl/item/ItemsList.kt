@@ -101,7 +101,7 @@ fun ItemsList(
     onScrollToTop: () -> Unit,
     canLoadExternalImages: Boolean,
     isInSelectionMode: Boolean = false,
-    selectedItemIds: ImmutableSet<ItemId> = persistentSetOf(),
+    selectedItemIds: ImmutableSet<Pair<ShareId, ItemId>> = persistentSetOf(),
     emptyContent: @Composable () -> Unit
 ) {
     LaunchedEffect(shouldScrollToTop && !scrollableState.isScrollInProgress) {
@@ -144,7 +144,7 @@ fun ItemsList(
                                 ?.icon
                         }
                         val isSelected = remember(isInSelectionMode, selectedItemIds) {
-                            isInSelectionMode && item.id in selectedItemIds
+                            isInSelectionMode && item.shareId to item.id in selectedItemIds
                         }
                         ActionableItemRow(
                             item = item,

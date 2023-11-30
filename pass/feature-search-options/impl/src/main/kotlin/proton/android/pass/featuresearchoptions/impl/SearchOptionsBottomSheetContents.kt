@@ -34,6 +34,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import me.proton.core.presentation.R as CoreR
@@ -48,10 +49,26 @@ fun SearchOptionsBottomSheetContents(
 ) {
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = listOf(filtering(state, onNavigateEvent), sorting(state, onNavigateEvent))
-            .toPersistentList()
+        items = listOf(
+            selectItems(onNavigateEvent),
+            filtering(state, onNavigateEvent),
+            sorting(state, onNavigateEvent)
+        ).withDividers().toPersistentList()
     )
 }
+
+private fun selectItems(onNavigateEvent: (SearchOptionsNavigation) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(R.string.select_items)) }
+        override val subtitle: (@Composable () -> Unit) = {}
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark_circle) }
+        override val endIcon: (@Composable () -> Unit)? = null
+        override val onClick: () -> Unit
+            get() = { onNavigateEvent(SearchOptionsNavigation.BulkActions) }
+        override val isDivider = false
+    }
 
 private fun filtering(
     state: SearchOptionsUIState,

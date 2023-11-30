@@ -61,7 +61,7 @@ fun NavGraphBuilder.homeGraph(
             .collectAsStateWithLifecycle()
 
         val enableBulkActions by navBackStack.savedStateHandle
-            .getStateFlow<Boolean?>(HOME_ENABLE_BULK_ACTIONS_KEY, false)
+            .getStateFlow(HOME_ENABLE_BULK_ACTIONS_KEY, false)
             .collectAsStateWithLifecycle()
 
         LaunchedEffect(goToVault) {
@@ -74,7 +74,7 @@ fun NavGraphBuilder.homeGraph(
         HomeScreen(
             modifier = Modifier.testTag(HomeScreenTestTag.screen),
             goToVault = goToVault.toOption().map { ShareId(it) }.value(),
-            enableBulkActions = enableBulkActions ?: false,
+            enableBulkActions = enableBulkActions,
             onNavigateEvent = onNavigateEvent
         )
     }

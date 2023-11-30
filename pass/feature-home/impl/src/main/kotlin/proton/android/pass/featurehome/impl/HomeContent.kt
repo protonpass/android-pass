@@ -19,6 +19,10 @@
 package proton.android.pass.featurehome.impl
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
@@ -78,50 +82,72 @@ internal fun HomeContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SearchTopBar(
-                searchQuery = uiState.searchUiState.searchQuery,
-                inSearchMode = uiState.searchUiState.inSearchMode,
-                placeholderText = when (uiState.homeListUiState.homeVaultSelection) {
-                    VaultSelectionOption.AllVaults -> stringResource(R.string.search_topbar_placeholder_all_vaults)
-                    VaultSelectionOption.Trash -> stringResource(R.string.search_topbar_placeholder_trash)
-                    is VaultSelectionOption.Vault -> stringResource(
-                        R.string.search_topbar_placeholder_vault,
-                        uiState.homeListUiState.selectedShare.value()?.name ?: ""
-                    )
-                },
-                onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
-                onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
-                onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
-                drawerIcon = {
-                    HomeDrawerIcon(
-                        modifier = Modifier.testTag(DrawerIconTestTag),
-                        uiState = uiState,
-                        onDrawerIconClick = { onEvent(HomeUiEvent.DrawerIconClick) },
-                        onStopSearch = { onEvent(HomeUiEvent.StopSearch) }
-                    )
-                },
-                actions = {
-                    IconButton(onClick = { onEvent(HomeUiEvent.ActionsClick) }) {
-                        Icon(
-                            painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
-                            contentDescription = null,
-                            tint = PassTheme.colors.textWeak
+            AnimatedVisibility(
+                visible = uiState.homeListUiState.selectionState.isInSelectMode,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut()
+            ) {
+                SelectionModeTopBar(
+                    homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
+                    onEvent = onEvent
+                )
+            }
+            AnimatedVisibility(
+                visible = !uiState.homeListUiState.selectionState.isInSelectMode,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut()
+            ) {
+                SearchTopBar(
+                    searchQuery = uiState.searchUiState.searchQuery,
+                    inSearchMode = uiState.searchUiState.inSearchMode,
+                    placeholderText = when (uiState.homeListUiState.homeVaultSelection) {
+                        VaultSelectionOption.AllVaults -> stringResource(R.string.search_topbar_placeholder_all_vaults)
+                        VaultSelectionOption.Trash -> stringResource(R.string.search_topbar_placeholder_trash)
+                        is VaultSelectionOption.Vault -> stringResource(
+                            R.string.search_topbar_placeholder_vault,
+                            uiState.homeListUiState.selectedShare.value()?.name ?: ""
                         )
+                    },
+                    onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
+                    onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
+                    onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
+                    drawerIcon = {
+                        HomeDrawerIcon(
+                            modifier = Modifier.testTag(DrawerIconTestTag),
+                            uiState = uiState,
+                            onDrawerIconClick = { onEvent(HomeUiEvent.DrawerIconClick) },
+                            onStopSearch = { onEvent(HomeUiEvent.StopSearch) }
+                        )
+                    },
+                    actions = {
+                        IconButton(onClick = { onEvent(HomeUiEvent.ActionsClick) }) {
+                            Icon(
+                                painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
+                                contentDescription = null,
+                                tint = PassTheme.colors.textWeak
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
         },
         bottomBar = {
-            BottomBar(
-                bottomBarSelected = BottomBarSelected.Home,
-                accountType = uiState.accountType,
-                onListClick = {},
-                onCreateClick = {
-                    val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                    onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Unknown))
-                },
-                onProfileClick = { onEvent(HomeUiEvent.ProfileClick) }
-            )
+            AnimatedVisibility(
+                visible = !uiState.homeListUiState.selectionState.isInSelectMode,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically()
+            ) {
+                BottomBar(
+                    bottomBarSelected = BottomBarSelected.Home,
+                    accountType = uiState.accountType,
+                    onListClick = {},
+                    onCreateClick = {
+                        val shareId = uiState.homeListUiState.selectedShare.map { it.id }
+                        onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Unknown))
+                    },
+                    onProfileClick = { onEvent(HomeUiEvent.ProfileClick) }
+                )
+            }
         }
     ) { contentPadding ->
         val keyboardController = LocalSoftwareKeyboardController.current

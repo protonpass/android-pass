@@ -81,6 +81,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateEvent: (HomeNavigation) -> Unit,
     goToVault: ShareId? = null,
+    enableBulkActions: Boolean = false,
     homeViewModel: HomeViewModel = hiltViewModel(),
     routerViewModel: RouterViewModel = hiltViewModel(),
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel()
@@ -99,6 +100,12 @@ fun HomeScreen(
     var shouldShowRestoreAllDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     var aliasToBeTrashed by rememberSaveable(stateSaver = ItemUiModelSaver) { mutableStateOf(null) }
+
+    LaunchedEffect(enableBulkActions) {
+        if (enableBulkActions) {
+            homeViewModel.onBulkEnabled()
+        }
+    }
 
     LaunchedEffect(goToVault) {
         if (goToVault != null) {

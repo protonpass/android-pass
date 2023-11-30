@@ -44,6 +44,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentSetOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.common.api.isInstrumentedTest
@@ -68,6 +70,7 @@ import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 private const val PLACEHOLDER_ELEMENTS = 40
@@ -94,8 +97,11 @@ fun ItemsList(
     onRefresh: () -> Unit,
     onItemClick: (ItemUiModel) -> Unit,
     onItemMenuClick: (ItemUiModel) -> Unit,
+    onItemLongClick: (ItemUiModel) -> Unit = {},
     onScrollToTop: () -> Unit,
     canLoadExternalImages: Boolean,
+    isInSelectionMode: Boolean = false,
+    selectedItemIds: ImmutableSet<ItemId> = persistentSetOf(),
     emptyContent: @Composable () -> Unit
 ) {
     LaunchedEffect(shouldScrollToTop && !scrollableState.isScrollInProgress) {
@@ -137,13 +143,19 @@ fun ItemsList(
                                 ?.takeIf { !isShareSelected }
                                 ?.icon
                         }
+                        val isSelected = remember(isInSelectionMode, selectedItemIds) {
+                            isInSelectionMode && item.id in selectedItemIds
+                        }
                         ActionableItemRow(
                             item = item,
+                            isInSelectionMode = isInSelectionMode,
+                            isSelected = isSelected,
                             vaultIcon = icon?.toSmallResource(),
                             highlight = highlight,
                             showMenuIcon = showMenuIcon,
                             canLoadExternalImages = canLoadExternalImages,
                             onItemClick = onItemClick,
+                            onItemLongClick = onItemLongClick,
                             onItemMenuClick = onItemMenuClick
                         )
                     }

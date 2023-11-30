@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -31,18 +31,15 @@ import javax.inject.Inject
 class TrashItemImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val itemsRepository: ItemRepository
-) : TrashItem {
+) : TrashItems {
 
-    override suspend fun invoke(
-        userId: UserId?,
-        shareId: ShareId,
-        itemId: ItemId
-    ) = if (userId == null) {
-        observeCurrentUser()
-            .map { itemsRepository.trashItem(it.userId, shareId, itemId) }
-            .first()
-    } else {
-        itemsRepository.trashItem(userId, shareId, itemId)
-    }
+    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) =
+        if (userId == null) {
+            observeCurrentUser()
+                .map { itemsRepository.trashItems(it.userId, items) }
+                .first()
+        } else {
+            itemsRepository.trashItems(userId, items)
+        }
 }
 

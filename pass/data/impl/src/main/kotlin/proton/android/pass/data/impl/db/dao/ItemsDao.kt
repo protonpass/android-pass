@@ -107,6 +107,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     @Query(
         """
         SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} IN (:itemIds)
+        """
+    )
+    abstract suspend fun getByIdList(shareId: String, itemIds: List<String>): List<ItemEntity>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.STATE} = :state
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC

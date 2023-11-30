@@ -23,4 +23,5 @@ sealed interface SearchOptionsNavigation {
     object Sorting : SearchOptionsNavigation
     object Filter : SearchOptionsNavigation
     object SelectSorting : SearchOptionsNavigation
+    object BulkActions : SearchOptionsNavigation
 }

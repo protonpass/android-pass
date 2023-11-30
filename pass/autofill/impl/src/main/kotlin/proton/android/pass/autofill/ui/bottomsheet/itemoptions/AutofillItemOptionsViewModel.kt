@@ -39,20 +39,20 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetVaultById
-import proton.android.pass.data.api.usecases.TrashItem
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.canUpdate
 import proton.android.pass.domain.toPermissions
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class AutofillItemOptionsViewModel @Inject constructor(
-    private val trashItem: TrashItem,
+    private val trashItem: TrashItems,
     private val savedStateHandle: SavedStateHandle,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val getItemById: GetItemById,
@@ -86,7 +86,7 @@ class AutofillItemOptionsViewModel @Inject constructor(
 
     fun onTrash() = viewModelScope.launch {
         loadingFlow.update { IsLoadingState.Loading }
-        runCatching { trashItem(shareId = shareId, itemId = itemId) }
+        runCatching { trashItem(items = mapOf(shareId to listOf(itemId))) }
             .onSuccess {
                 eventFlow.update { AutofillItemOptionsEvent.Close }
                 snackbarDispatcher(AutofillItemOptionsSnackbarMessage.SentToTrashSuccess)

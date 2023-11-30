@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
@@ -86,7 +87,7 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
-import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -122,10 +123,10 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
-@Suppress("LongParameterList", "LargeClass")
+@Suppress("LongParameterList", "LargeClass", "TooManyFunctions")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val trashItem: TrashItem,
+    private val trashItem: TrashItems,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val performSync: PerformSync,
@@ -482,7 +483,7 @@ class HomeViewModel @Inject constructor(
     fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch(coroutineExceptionHandler) {
         if (item == null) return@launch
 
-        runCatching { trashItem(shareId = item.shareId, itemId = item.id) }
+        runCatching { trashItem(items = mapOf(item.shareId to listOf(item.id))) }
             .onSuccess {
                 when (item.contents) {
                     is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
@@ -497,6 +498,21 @@ class HomeViewModel @Inject constructor(
                 snackbarDispatcher(HomeSnackbarMessage.MoveToTrashError)
             }
     }
+
+    fun sendItemsToTrash(items: ImmutableSet<Pair<ShareId, ItemId>>) =
+        viewModelScope.launch(coroutineExceptionHandler) {
+            if (items.isEmpty()) return@launch
+
+            runCatching { trashItem(items = items.groupBy({ it.first }, { it.second })) }
+                .onSuccess {
+                    clearSelection()
+                    snackbarDispatcher(HomeSnackbarMessage.ItemsMovedToTrashSuccess)
+                }
+                .onFailure {
+                    PassLogger.e(TAG, it, "Trash items failed")
+                    snackbarDispatcher(HomeSnackbarMessage.ItemsMovedToTrashError)
+                }
+        }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
         val sanitizedText = text.take(MAX_CLIPBOARD_LENGTH)

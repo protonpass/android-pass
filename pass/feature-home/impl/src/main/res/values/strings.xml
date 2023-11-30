@@ -17,6 +17,8 @@
     <string name="home_snackbar_note_moved_to_trash">Note moved to trash</string>
     <string name="home_snackbar_credit_card_moved_to_trash">Credit card moved to trash</string>
     <string name="home_snackbar_move_to_trash_error">Item could not be moved to trash</string>
+    <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
+    <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
 
     <string name="home_autofill_banner_title">Enjoy the magic of AutoFill</string>
     <string name="home_autofill_banner_text">One tap and—presto!—your username and password are filled in instantly.</string>

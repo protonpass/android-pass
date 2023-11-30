@@ -201,6 +201,7 @@ internal fun HomeContent(
                         onEvent(HomeUiEvent.ItemClick(item))
                     }
                 },
+                onItemLongClick = { onEvent(HomeUiEvent.SelectItem(it)) },
                 onItemMenuClick = { onEvent(HomeUiEvent.ItemMenuClick(it)) },
                 isLoading = uiState.homeListUiState.isLoading,
                 isProcessingSearch = uiState.searchUiState.isProcessingSearch,

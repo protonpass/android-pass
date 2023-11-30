@@ -44,6 +44,8 @@ fun LoginRow(
     highlight: String = "",
     vaultIcon: Int? = null,
     canLoadExternalImages: Boolean,
+    isInSelectionMode: Boolean = false,
+    isSelected: Boolean = false,
 ) {
     val content = remember(item.contents) { item.contents as ItemContents.Login }
 
@@ -62,17 +64,21 @@ fun LoginRow(
     ItemRow(
         modifier = modifier,
         icon = {
-            val sortedPackages = remember {
-                content.packageInfoSet.sortedBy { it.packageName.value }
+            if (isInSelectionMode) {
+                SelectModeIcon(isSelected = isSelected)
+            } else {
+                val sortedPackages = remember {
+                    content.packageInfoSet.sortedBy { it.packageName.value }
+                }
+                val packageName = remember { sortedPackages.firstOrNull()?.packageName?.value }
+                val website = remember { content.urls.firstOrNull() }
+                LoginIcon(
+                    text = fields.title.text,
+                    canLoadExternalImages = canLoadExternalImages,
+                    website = website,
+                    packageName = packageName,
+                )
             }
-            val packageName = remember { sortedPackages.firstOrNull()?.packageName?.value }
-            val website = remember { content.urls.firstOrNull() }
-            LoginIcon(
-                text = fields.title.text,
-                canLoadExternalImages = canLoadExternalImages,
-                website = website,
-                packageName = packageName,
-            )
         },
         title = fields.title,
         subtitles = fields.subtitles,

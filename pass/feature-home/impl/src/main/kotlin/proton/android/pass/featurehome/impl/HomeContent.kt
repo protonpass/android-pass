@@ -85,7 +85,8 @@ internal fun HomeContent(
             AnimatedVisibility(
                 visible = uiState.homeListUiState.selectionState.isInSelectMode,
                 enter = fadeIn() + expandVertically(),
-                exit = fadeOut()
+                exit = fadeOut(),
+                label = "HomeContent-SelectionModeTopBar"
             ) {
                 SelectionModeTopBar(
                     homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
@@ -95,7 +96,8 @@ internal fun HomeContent(
             AnimatedVisibility(
                 visible = !uiState.homeListUiState.selectionState.isInSelectMode,
                 enter = fadeIn() + expandVertically(),
-                exit = fadeOut()
+                exit = fadeOut(),
+                label = "HomeContent-SearchTopBar"
             ) {
                 SearchTopBar(
                     searchQuery = uiState.searchUiState.searchQuery,
@@ -135,7 +137,8 @@ internal fun HomeContent(
             AnimatedVisibility(
                 visible = !uiState.homeListUiState.selectionState.isInSelectMode,
                 enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically()
+                exit = fadeOut() + shrinkVertically(),
+                label = "HomeContent-BottomBar"
             ) {
                 BottomBar(
                     bottomBarSelected = BottomBarSelected.Home,

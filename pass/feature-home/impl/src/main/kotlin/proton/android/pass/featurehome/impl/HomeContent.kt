@@ -185,6 +185,8 @@ internal fun HomeContent(
             ItemsList(
                 modifier = Modifier.testTag("itemsList"),
                 items = uiState.homeListUiState.items,
+                selectedItemIds = uiState.homeListUiState.selectionState.selectedItems,
+                isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
                 shares = uiState.homeListUiState.shares,
                 isShareSelected = uiState.homeListUiState.selectedShare.isNotEmpty(),
                 shouldScrollToTop = shouldScrollToTop,

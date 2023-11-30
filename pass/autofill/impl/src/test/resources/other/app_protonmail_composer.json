@@ -1,0 +1,376 @@
+{
+  "rootContent": {
+    "id": 1027691955,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": -45900914,
+        "className": "android.widget.FrameLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": -45871123,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -45841332,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -45811541,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      ""
+                    ]
+                  },
+                  {
+                    "id": -45781750,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "send_message"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "composer_toolbar"
+                ]
+              },
+              {
+                "id": -45751959,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "layout_no_connectivity_info"
+                ]
+              },
+              {
+                "id": -45722168,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "screenProtectorView"
+                ]
+              },
+              {
+                "id": -45692377,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -45662586,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_fields_start_guideline"
+                    ]
+                  },
+                  {
+                    "id": -45632795,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_fields_end_guideline"
+                    ]
+                  },
+                  {
+                    "id": -45603004,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "composer_from_hint_text_view"
+                    ]
+                  },
+                  {
+                    "id": -45930705,
+                    "className": "android.widget.Spinner",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -45573213,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "composer_from_spinner"
+                    ]
+                  },
+                  {
+                    "id": -45543422,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "composer_to_hint_text_view"
+                    ]
+                  },
+                  {
+                    "id": -46079660,
+                    "className": "android.widget.MultiAutoCompleteTextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "isFocused": true,
+                    "inputType": 32,
+                    "hintKeywordList": [
+                      "",
+                      "composer_to_recipient_view"
+                    ]
+                  },
+                  {
+                    "id": -45513631,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_cc_top_divider"
+                    ]
+                  },
+                  {
+                    "id": -45483840,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "composer_cc_hint_text_view"
+                    ]
+                  },
+                  {
+                    "id": -46049869,
+                    "className": "android.widget.MultiAutoCompleteTextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "inputType": 32,
+                    "hintKeywordList": [
+                      "",
+                      "composer_cc_recipient_view"
+                    ]
+                  },
+                  {
+                    "id": -45454049,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_bcc_top_divider"
+                    ]
+                  },
+                  {
+                    "id": -45424258,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "composer_bcc_hint_text_view"
+                    ]
+                  },
+                  {
+                    "id": -46020078,
+                    "className": "android.widget.MultiAutoCompleteTextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "inputType": 32,
+                    "hintKeywordList": [
+                      "",
+                      "composer_bcc_recipient_view"
+                    ]
+                  },
+                  {
+                    "id": -45394467,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_expanded_recipients_group"
+                    ]
+                  },
+                  {
+                    "id": -45364676,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_subject_top_divider"
+                    ]
+                  },
+                  {
+                    "id": -45990287,
+                    "className": "android.widget.EditText",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "inputType": 147457,
+                    "hintKeywordList": [
+                      "",
+                      "composer_subject_edit_text",
+                      "Subject:"
+                    ]
+                  },
+                  {
+                    "id": -45334885,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_body_top_divider"
+                    ]
+                  },
+                  {
+                    "id": -45960496,
+                    "className": "android.widget.EditText",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "inputType": 147537,
+                    "hintKeywordList": [
+                      "",
+                      "composer_message_body_edit_text",
+                      "Compose email"
+                    ]
+                  },
+                  {
+                    "id": -45305094,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_body_start_guideline"
+                    ]
+                  },
+                  {
+                    "id": -45275303,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_body_end_guideline"
+                    ]
+                  },
+                  {
+                    "id": -45245512,
+                    "className": "android.widget.Button",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "composer_respond_inline_button"
+                    ]
+                  },
+                  {
+                    "id": -45215721,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "composer_quote_header_text_view"
+                    ]
+                  },
+                  {
+                    "id": -45185930,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_quoted_message_container"
+                    ]
+                  },
+                  {
+                    "id": -45156139,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "dummy_keyboard"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "composer_scroll_view"
+                ]
+              },
+              {
+                "id": -45126348,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -45096557,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_bottom_bar_start_guideline"
+                    ]
+                  },
+                  {
+                    "id": -45066766,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_bottom_bar_end_guideline"
+                    ]
+                  },
+                  {
+                    "id": -45036975,
+                    "className": "android.view.ViewGroup",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_password_button"
+                    ]
+                  },
+                  {
+                    "id": -45007184,
+                    "className": "android.view.ViewGroup",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "composer_expiration_button"
+                    ]
+                  },
+                  {
+                    "id": -44977393,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "composer_attachments_count_text_view"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "composer_bottom_app_bar"
+                ]
+              },
+              {
+                "id": -44947602,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "composer_progress_layout"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "root_layout"
+            ]
+          },
+          {
+            "id": -44917811,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "ch.protonmail.android"
+}

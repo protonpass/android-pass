@@ -503,6 +503,11 @@ fun HomeScreen(
                         is HomeUiEvent.SelectItem -> {
                             homeViewModel.onItemSelected(it.item)
                         }
+
+                        HomeUiEvent.DeleteItemsActionClick -> TODO()
+                        HomeUiEvent.MoveItemsActionClick -> TODO()
+                        HomeUiEvent.PermanentlyDeleteItemsActionClick -> TODO()
+                        HomeUiEvent.RestoreItemsActionClick -> TODO()
                     }
                 }
             )

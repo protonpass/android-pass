@@ -18,7 +18,8 @@
 
 package proton.android.pass.composecomponents.impl.item
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,6 +43,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.R
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ActionableItemRow(
     modifier: Modifier = Modifier,
@@ -49,14 +51,20 @@ fun ActionableItemRow(
     vaultIcon: Int? = null,
     highlight: String = "",
     showMenuIcon: Boolean,
+    isInSelectionMode: Boolean = false,
+    isSelected: Boolean = false,
     canLoadExternalImages: Boolean,
     onItemClick: (ItemUiModel) -> Unit = {},
+    onItemLongClick: (ItemUiModel) -> Unit = {},
     onItemMenuClick: (ItemUiModel) -> Unit = {},
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onItemClick(item) }
+            .combinedClickable(
+                onClick = { onItemClick(item) },
+                onLongClick = { onItemLongClick(item) }
+            )
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -64,11 +72,13 @@ fun ActionableItemRow(
         ItemRowContents(
             modifier = Modifier.weight(1f),
             item = item,
+            isInSelectionMode = isInSelectionMode,
+            isSelected = isSelected,
             highlight = highlight,
             vaultIcon = vaultIcon,
             canLoadExternalImages = canLoadExternalImages
         )
-        if (showMenuIcon) {
+        if (showMenuIcon && !isInSelectionMode) {
             IconButton(
                 onClick = { onItemMenuClick(item) },
                 modifier = Modifier.size(24.dp)

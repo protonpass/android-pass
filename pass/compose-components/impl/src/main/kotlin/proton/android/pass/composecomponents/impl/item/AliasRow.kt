@@ -42,7 +42,9 @@ internal fun AliasRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
     highlight: String = "",
-    vaultIcon: Int? = null
+    vaultIcon: Int? = null,
+    isInSelectionMode: Boolean = false,
+    isSelected: Boolean = false,
 ) {
     val content = item.contents as ItemContents.Alias
 
@@ -59,7 +61,13 @@ internal fun AliasRow(
 
     ItemRow(
         modifier = modifier,
-        icon = { AliasIcon() },
+        icon = {
+            if (isInSelectionMode) {
+                SelectModeIcon(isSelected = isSelected)
+            } else {
+                AliasIcon()
+            }
+        },
         title = fields.title,
         subtitles = fields.subtitles,
         vaultIcon = vaultIcon

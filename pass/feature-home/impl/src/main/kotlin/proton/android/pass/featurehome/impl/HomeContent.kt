@@ -195,7 +195,11 @@ internal fun HomeContent(
                 canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
                 onItemClick = { item ->
                     keyboardController?.hide()
-                    onEvent(HomeUiEvent.ItemClick(item))
+                    if (uiState.homeListUiState.selectionState.isInSelectMode) {
+                        onEvent(HomeUiEvent.SelectItem(item))
+                    } else {
+                        onEvent(HomeUiEvent.ItemClick(item))
+                    }
                 },
                 onItemMenuClick = { onEvent(HomeUiEvent.ItemMenuClick(it)) },
                 isLoading = uiState.homeListUiState.isLoading,

@@ -34,6 +34,7 @@ import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
+import proton.android.pass.featurehome.impl.HOME_ENABLE_BULK_ACTIONS_KEY
 import proton.android.pass.featurehome.impl.HOME_GO_TO_VAULT_KEY
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeNavigation
@@ -250,7 +251,10 @@ fun NavGraphBuilder.appGraph(
                     destination = InviteConfirmed
                 )
 
-                HomeNavigation.SearchOptions -> appNavigator.navigate(SearchOptionsBottomsheet)
+                HomeNavigation.SearchOptions -> appNavigator.navigate(
+                    destination = SearchOptionsBottomsheet,
+                    backDestination = Home
+                )
             }
         }
     )
@@ -279,6 +283,14 @@ fun NavGraphBuilder.appGraph(
 
                 SearchOptionsNavigation.Dismiss -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+
+                SearchOptionsNavigation.BulkActions -> dismissBottomSheet {
+                    appNavigator.navigateBackWithResult(
+                        key = HOME_ENABLE_BULK_ACTIONS_KEY,
+                        value = true,
+                        comesFromBottomsheet = true
+                    )
                 }
             }
         }

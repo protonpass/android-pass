@@ -41,10 +41,10 @@ sealed interface HomeUiEvent {
     value class ItemClick(val item: ItemUiModel) : HomeUiEvent
 
     @JvmInline
-    value class SearchQueryChange(val query: String) : HomeUiEvent
+    value class ItemMenuClick(val item: ItemUiModel) : HomeUiEvent
 
     @JvmInline
-    value class ItemMenuClick(val item: ItemUiModel) : HomeUiEvent
+    value class SearchQueryChange(val query: String) : HomeUiEvent
 
     @JvmInline
     value class ItemTypeSelected(val searchFilterType: SearchFilterType) : HomeUiEvent

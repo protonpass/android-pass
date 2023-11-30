@@ -80,6 +80,9 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity? =
         database.itemsDao().getById(shareId.id, itemId.id)
 
+    override suspend fun getByIdList(shareId: ShareId, itemIds: List<ItemId>): List<ItemEntity> =
+        database.itemsDao().getByIdList(shareId.id, itemIds.map { it.id })
+
     override suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState) =
         database.itemsDao().setItemState(shareId.id, itemId.id, itemState.value)
 

@@ -53,6 +53,7 @@ interface LocalItemDataSource {
     ): Flow<List<ItemEntity>>
 
     suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity?
+    suspend fun getByIdList(shareId: ShareId, itemIds: List<ItemId>): List<ItemEntity>
     suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState)
     suspend fun getTrashedItems(userId: UserId): List<ItemEntity>
     suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean

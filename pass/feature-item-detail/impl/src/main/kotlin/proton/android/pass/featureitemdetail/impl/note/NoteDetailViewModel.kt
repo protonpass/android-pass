@@ -51,7 +51,7 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.RestoreItem
-import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -79,7 +79,7 @@ import javax.inject.Inject
 class NoteDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val trashItem: TrashItem,
+    private val trashItem: TrashItems,
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
@@ -171,7 +171,7 @@ class NoteDetailViewModel @Inject constructor(
 
     fun onMoveToTrash(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
-        runCatching { trashItem(shareId = shareId, itemId = itemId) }
+        runCatching { trashItem(items = mapOf(shareId to listOf(itemId))) }
             .onSuccess {
                 isItemSentToTrashState.update { IsSentToTrashState.Sent }
                 snackbarDispatcher(ItemMovedToTrash)

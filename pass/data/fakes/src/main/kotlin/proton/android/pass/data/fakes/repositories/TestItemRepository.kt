@@ -26,9 +26,9 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
-import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareItemCount
+import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -108,11 +108,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun trashItem(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ) {
+    override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         TODO("Not yet implemented")
     }
 

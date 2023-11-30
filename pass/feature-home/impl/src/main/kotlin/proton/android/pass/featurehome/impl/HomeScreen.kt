@@ -504,7 +504,12 @@ fun HomeScreen(
                             homeViewModel.onItemSelected(it.item)
                         }
 
-                        HomeUiEvent.DeleteItemsActionClick -> TODO()
+                        HomeUiEvent.DeleteItemsActionClick -> {
+                            homeViewModel.sendItemsToTrash(
+                                homeUiState.homeListUiState.selectionState.selectedItems
+                            )
+                        }
+
                         HomeUiEvent.MoveItemsActionClick -> TODO()
                         HomeUiEvent.PermanentlyDeleteItemsActionClick -> TODO()
                         HomeUiEvent.RestoreItemsActionClick -> TODO()

@@ -38,7 +38,11 @@ enum class HomeSnackbarMessage(
     NoteCopied(R.string.note_copied_to_clipboard, SnackbarType.NORM, true),
     PasswordCopied(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
     UsernameCopied(R.string.username_copied_to_clipboard, SnackbarType.NORM, true),
-    CreditCardNumberCopied(R.string.credit_card_number_copied_to_clipboard, SnackbarType.NORM, true),
+    CreditCardNumberCopied(
+        R.string.credit_card_number_copied_to_clipboard,
+        SnackbarType.NORM,
+        true
+    ),
     CreditCardCvvCopied(R.string.credit_card_cvv_copied_to_clipboard, SnackbarType.NORM, true),
 
     ItemTooLongCopied(R.string.item_too_long_copied_to_clipboard, SnackbarType.WARNING, false),
@@ -46,5 +50,8 @@ enum class HomeSnackbarMessage(
     ClearTrashError(R.string.trash_error_clearing_trash, SnackbarType.ERROR),
     RestoreItemsError(R.string.trash_error_restoring_items, SnackbarType.ERROR),
     DeleteItemError(R.string.trash_error_deleting_item, SnackbarType.ERROR),
+
+    ItemsMovedToTrashSuccess(R.string.home_snackbar_items_move_to_trash_success, SnackbarType.SUCCESS),
+    ItemsMovedToTrashError(R.string.home_snackbar_items_move_to_trash_error, SnackbarType.ERROR);
 }
 

@@ -48,7 +48,6 @@ import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
-import proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -258,6 +257,7 @@ class ItemRepositoryImpl @Inject constructor(
                 itemState = itemState,
                 filter = itemTypeFilter
             )
+
             is ShareSelection.Shares -> localItemDataSource.observeItemsForShares(
                 userId = userId,
                 shareIds = shareSelection.shareIds,
@@ -294,35 +294,49 @@ class ItemRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun trashItem(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ) {
+    override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         withContext(Dispatchers.IO) {
-            val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-            if (item.state == ItemState.Trashed.value) {
-                throw CannotRemoveNotTrashedItemError()
-            }
+            val results = items.map { entry ->
+                async {
+                    trashItemsForShare(userId, entry.key, entry.value)
+                }
+            }.awaitAll().transpose()
 
-            val body = TrashItemsRequest(
-                listOf(TrashItemRevision(itemId = item.id, revision = item.revision))
-            )
-
-            val response = remoteItemDataSource.sendToTrash(userId, shareId, body)
-            return@withContext database.inTransaction {
-                response.items.find { it.itemId == item.id }
-                    ?.let {
-                        val updatedItem = item.copy(
-                            revision = it.revision,
-                            state = ItemState.Trashed.value
-                        )
-                        localItemDataSource.upsertItem(updatedItem)
-                    }
+            results.onFailure {
+                throw it
             }
         }
     }
 
+    private suspend fun trashItemsForShare(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): Result<Unit> = localItemDataSource.getByIdList(shareId, itemIds)
+        .chunked(MAX_BATCH_ITEMS_PER_REQUEST)
+        .map { items ->
+            val body = TrashItemsRequest(
+                items.map { TrashItemRevision(it.id, it.revision) }
+            )
+
+            runCatching { remoteItemDataSource.sendToTrash(userId, shareId, body) }
+                .onSuccess {
+                    database.inTransaction {
+                        items.forEach { item ->
+                            localItemDataSource.setItemState(
+                                shareId,
+                                ItemId(item.id),
+                                ItemState.Trashed
+                            )
+                        }
+                    }
+                }
+                .onFailure {
+                    PassLogger.w(TAG, it, "Error trashing items for share")
+                }
+        }
+        .transpose()
+        .map { }
 
     override suspend fun untrashItem(
         userId: UserId,
@@ -675,7 +689,7 @@ class ItemRepositoryImpl @Inject constructor(
                         localItemDataSource.setItemState(
                             shareId,
                             ItemId(item.id),
-                            proton.android.pass.domain.ItemState.Active
+                            ItemState.Active
                         )
                     }
                 }

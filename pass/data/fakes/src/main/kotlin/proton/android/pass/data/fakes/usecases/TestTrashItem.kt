@@ -19,14 +19,14 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestTrashItem @Inject constructor() : TrashItem {
+class TestTrashItem @Inject constructor() : TrashItems {
 
     private var result: Result<Unit> = Result.failure(IllegalStateException("TestTrashItem.result not set"))
 
@@ -37,14 +37,13 @@ class TestTrashItem @Inject constructor() : TrashItem {
         this.result = result
     }
 
-    override suspend fun invoke(userId: UserId?, shareId: ShareId, itemId: ItemId) {
-        memory.add(Payload(userId, shareId, itemId))
-        result.getOrThrow()
-    }
-
     data class Payload(
         val userId: UserId?,
-        val shareId: ShareId,
-        val itemId: ItemId
+        val items: Map<ShareId, List<ItemId>>
     )
+
+    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
+        memory.add(Payload(userId, items))
+        result.getOrThrow()
+    }
 }

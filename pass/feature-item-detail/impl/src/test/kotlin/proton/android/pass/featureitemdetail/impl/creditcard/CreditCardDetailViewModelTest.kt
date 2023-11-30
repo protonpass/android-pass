@@ -345,8 +345,9 @@ class CreditCardDetailViewModelTest {
         val memory = trashItem.getMemory()
         val expected = TestTrashItem.Payload(
             userId = null,
-            shareId = ShareId(SHARE_ID),
-            itemId = ItemId(ITEM_ID)
+            items = mapOf(
+                ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))
+            )
         )
         assertThat(memory).isEqualTo(listOf(expected))
     }

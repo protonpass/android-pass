@@ -22,10 +22,9 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-interface TrashItem {
+interface TrashItems {
     suspend operator fun invoke(
         userId: UserId? = null,
-        shareId: ShareId,
-        itemId: ItemId
+        items: Map<ShareId, List<ItemId>>
     )
 }

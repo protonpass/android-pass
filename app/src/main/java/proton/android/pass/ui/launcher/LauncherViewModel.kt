@@ -130,7 +130,12 @@ class LauncherViewModel @Inject constructor(
                     State.AccountNeeded
                 }
 
-                accounts.any { it.isReady() } -> State.PrimaryExist
+                accounts.any { it.isReady() } -> {
+                    accounts.firstOrNull { it.isReady() }?.let {
+                        PassLogger.i(TAG, "SessionID=${it.sessionId?.id}")
+                    }
+                    State.PrimaryExist
+                }
                 accounts.any { it.isStepNeeded() } -> State.StepNeeded
                 else -> State.Processing
             }

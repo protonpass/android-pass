@@ -338,34 +338,49 @@ class ItemRepositoryImpl @Inject constructor(
         .transpose()
         .map { }
 
-    override suspend fun untrashItem(
+
+    override suspend fun untrashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
+        withContext(Dispatchers.IO) {
+            val results = items.map { entry ->
+                async { untrashItemsForShare(userId, entry.key, entry.value) }
+            }.awaitAll().transpose()
+
+            results.onFailure {
+                throw it
+            }
+        }
+    }
+
+    private suspend fun untrashItemsForShare(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
-    ) {
-        withContext(Dispatchers.IO) {
-            // Optimistically update the local database
-            val originalItem: ItemEntity = database.inTransaction {
-                val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-                if (item.state == ItemState.Active.value) return@inTransaction null
-                val updatedItem = item.copy(state = ItemState.Active.value)
-                localItemDataSource.upsertItem(updatedItem)
-                item
-            } ?: return@withContext
-
-            // Perform the network request
+        itemIds: List<ItemId>
+    ): Result<Unit> = localItemDataSource.getByIdList(shareId, itemIds)
+        .chunked(MAX_BATCH_ITEMS_PER_REQUEST)
+        .map { items ->
             val body = TrashItemsRequest(
-                listOf(TrashItemRevision(originalItem.id, originalItem.revision))
+                items.map { TrashItemRevision(it.id, it.revision) }
             )
 
             runCatching { remoteItemDataSource.untrash(userId, shareId, body) }
+                .onSuccess {
+                    database.inTransaction {
+                        items.forEach { item ->
+                            localItemDataSource.setItemState(
+                                shareId,
+                                ItemId(item.id),
+                                ItemState.Active
+                            )
+                        }
+                    }
+                }
                 .onFailure {
-                    PassLogger.w(TAG, "Error untrashing item. Restoring the original one")
-                    localItemDataSource.upsertItem(originalItem)
-                    throw it
+                    PassLogger.w(TAG, it, "Error untrashing items for share")
                 }
         }
-    }
+        .transpose()
+        .map { }
+
 
     override suspend fun clearTrash(userId: UserId) {
         withContext(Dispatchers.IO) {

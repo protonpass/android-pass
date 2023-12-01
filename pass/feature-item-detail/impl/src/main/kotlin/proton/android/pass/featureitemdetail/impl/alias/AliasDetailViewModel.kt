@@ -216,7 +216,7 @@ class AliasDetailViewModel @Inject constructor(
     fun onItemRestore(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
         runCatching {
-            restoreItem(shareId = shareId, itemId = itemId)
+            restoreItem(items = mapOf(shareId to listOf(itemId)))
         }.onSuccess {
             isRestoredFromTrashState.update { IsRestoredFromTrashState.Restored }
             PassLogger.i(TAG, "Item restored successfully")

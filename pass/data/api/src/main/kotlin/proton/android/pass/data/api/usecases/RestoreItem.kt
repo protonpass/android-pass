@@ -23,5 +23,5 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface RestoreItem {
-    suspend operator fun invoke(userId: UserId? = null, shareId: ShareId, itemId: ItemId)
+    suspend operator fun invoke(userId: UserId? = null, items: Map<ShareId, List<ItemId>>)
 }

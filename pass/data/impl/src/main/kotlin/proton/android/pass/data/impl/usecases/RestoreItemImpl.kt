@@ -32,13 +32,13 @@ class RestoreItemImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : RestoreItem {
 
-    override suspend fun invoke(userId: UserId?, shareId: ShareId, itemId: ItemId) {
+    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
         val id = if (userId == null) {
             val user = requireNotNull(observeCurrentUser().first())
             user.userId
         } else {
             userId
         }
-        itemRepository.untrashItem(id, shareId, itemId)
+        itemRepository.untrashItems(id, items)
     }
 }

@@ -516,7 +516,11 @@ fun HomeScreen(
 
                         HomeUiEvent.MoveItemsActionClick -> TODO()
                         HomeUiEvent.PermanentlyDeleteItemsActionClick -> TODO()
-                        HomeUiEvent.RestoreItemsActionClick -> TODO()
+                        HomeUiEvent.RestoreItemsActionClick -> {
+                            homeViewModel.restoreItems(
+                                homeUiState.homeListUiState.selectionState.selectedItems
+                            )
+                        }
                     }
                 }
             )

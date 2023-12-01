@@ -370,8 +370,9 @@ class CreditCardDetailViewModelTest {
         val memory = restoreItem.memory()
         val expected = TestRestoreItem.Payload(
             userId = null,
-            shareId = ShareId(SHARE_ID),
-            itemId = ItemId(ITEM_ID)
+            items = mapOf(
+                ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))
+            )
         )
         assertThat(memory).isEqualTo(listOf(expected))
     }

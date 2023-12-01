@@ -66,7 +66,7 @@
     <item quantity="other">%d invites left</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
-    <item quantity="other">%d items</item>
+    <item quantity="other">%d 個項目</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">已送出邀請</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">待建立帳號</string>

@@ -5,7 +5,7 @@
   <string name="profile_option_account">帳號</string>
   <string name="profile_help_center">說明中心</string>
   <string name="profile_security">安全</string>
-  <string name="profile_option_feedback">意見反饋</string>
+  <string name="profile_option_feedback">意見回饋</string>
   <string name="profile_option_import_export">匯入/匯出</string>
   <string name="profile_option_rating">為應用程式評分</string>
   <string name="profile_option_autofill">自動填入</string>
@@ -26,7 +26,7 @@
   <string name="app_lock_ten_minutes">10分鐘後</string>
   <string name="app_lock_one_hour">1 小時之後</string>
   <string name="app_lock_four_hours">4小時之後</string>
-  <string name="profile_account_plan_name_trial">Pass Plus trial</string>
+  <string name="profile_account_plan_name_trial">Pass Plus 試用期</string>
   <string name="app_lock_config_none">無</string>
   <string name="app_lock_config_biometric">生物特徵辨識</string>
   <string name="app_lock_config_pin_code">PIN 碼</string>
@@ -45,4 +45,5 @@
   <string name="profile_option_lock_with">鎖定透過</string>
   <string name="profile_option_unlock_with">解鎖透過</string>
   <string name="profile_option_change_pin_code">變更 Pin 碼</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
 </resources>

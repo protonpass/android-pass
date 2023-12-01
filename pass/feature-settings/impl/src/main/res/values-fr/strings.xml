@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Partager l\'utilisation de façon anonyme</string>
   <string name="settings_share_crashes">Partager des rapports de plantage anonymes</string>
   <string name="settings_preference_updated">Vos préférences ont été mises à jour.</string>
+  <string name="settings_default_vault_updated">Votre coffre-fort par défaut a été mis à jour.</string>
+  <string name="settings_default_vault_update_error">Le coffre-fort par défaut n\'a pas pu être mis à jour.</string>
+  <string name="settings_default_vault_section_title">Coffres-forts</string>
+  <string name="settings_default_vault_vault_selector_title">Coffre-fort par défaut</string>
+  <string name="settings_default_vault_section_subtitle">Le coffre-fort dans lequel vos éléments seront créés par défaut.</string>
+  <string name="settings_default_vault_disabled_reason">Vous ne pouvez pas écrire dans ce coffre-fort.</string>
   <string name="view_logs_title">Afficher les journaux</string>
   <string name="clipboard_bottomsheet_title">Presse-papiers</string>
   <string name="clipboard_option_clear_clipboard_label">Effacer le presse-papiers</string>

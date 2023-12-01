@@ -41,7 +41,7 @@
   <string name="bottomsheet_custom_field_option_remove">Verwijder veld</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Aangepast veld verwijderen</string>
   <string name="create_login_add_custom_field_button">Nog een veld toevoegen</string>
-  <string name="custom_field_hidden_placeholder">Add hidden text</string>
+  <string name="custom_field_hidden_placeholder">Verborgen tekst toevoegen</string>
   <string name="custom_field_hidden_icon_content_description">Verborgen aangepast veldpictogram</string>
   <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">Aangepaste veldnaam</string>
@@ -84,9 +84,9 @@
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
   <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN</string>
+  <string name="field_card_pin_title">Pincode</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expiration date</string>
+  <string name="field_card_expiration_date_title">Verloopdatum</string>
   <string name="field_card_expiration_date_hint">MM / YYYY</string>
   <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Kon kredietkaart niet aanmaken</string>

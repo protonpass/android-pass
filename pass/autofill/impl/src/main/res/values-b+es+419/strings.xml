@@ -7,6 +7,7 @@
   <string name="topbar_search_query_oldest_vaults">Buscar en sus antiguas bóvedas…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Buscar…</string>
   <string name="inline_suggestions_open_app">Abrir Proton Pass</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Mejore para usar el completado automático</string>
   <string name="autofill_only_searching_in_oldest_vaults">Su plan solo permite usar los elementos en sus bóvedas antiguas para propósitos de completado automático.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Sugerencias para %s</string>
@@ -24,4 +25,6 @@
   <string name="autofill_user_logged_out">Se ha cerrado la sesión. Inicie sesión de nuevo abriendo la app.</string>
   <string name="bottomsheet_copy_password">Copiar contraseña</string>
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Completar los datos de la tarjeta</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">El completado automático de la tarjeta de crédito es una función de pago. Mejore a un plan de pago si desea que Proton Pass ingrese automáticamente los datos de su tarjeta en apps y sitios web.</string>
 </resources>

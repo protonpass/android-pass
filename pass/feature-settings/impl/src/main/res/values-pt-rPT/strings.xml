@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Partilhar utilização anónima</string>
   <string name="settings_share_crashes">Partilhar relatórios de acidente anônimo</string>
   <string name="settings_preference_updated">A sua preferência foi atualizada.</string>
+  <string name="settings_default_vault_updated">Your default vault has been updated</string>
+  <string name="settings_default_vault_update_error">Could not update the default vault</string>
+  <string name="settings_default_vault_section_title">Vaults</string>
+  <string name="settings_default_vault_vault_selector_title">Default vault</string>
+  <string name="settings_default_vault_section_subtitle">The vault where your items will be created by default.</string>
+  <string name="settings_default_vault_disabled_reason">You cannot write to this vault.</string>
   <string name="view_logs_title">Ver o registos</string>
   <string name="clipboard_bottomsheet_title">Área de transferência</string>
   <string name="clipboard_option_clear_clipboard_label">Limpar a área de transferência</string>
@@ -38,5 +44,5 @@
   <string name="clipboard_option_copy_totp_code_hint">Copie automaticamente os códigos de autenticação ao utilizar o preenchimento automático.</string>
   <string name="clipboard_option_clear_clipboard_never">Nunca</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Após 1 minuto</string>
-  <string name="clipboard_option_clear_clipboard_after_180_seconds">After 3 minutes</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Após 3 minutos</string>
 </resources>

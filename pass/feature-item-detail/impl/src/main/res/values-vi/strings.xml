@@ -3,7 +3,7 @@
   <string name="action_open">Mở</string>
   <string name="action_copy">Sao chép</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problem retrieving item details</string>
+  <string name="detail_init_error">Lỗi khi lấy thông tin nội dung</string>
   <string name="top_bar_edit_button_text">Sửa</string>
   <!-- Alias details -->
   <string name="field_alias_title">Địa chỉ bí danh</string>
@@ -45,7 +45,7 @@
     <item quantity="other">%d lần</item>
   </plurals>
   <string name="more_info_last_time_modified">Lần cuối, %s</string>
-  <string name="share_button_content_description">Open share button</string>
+  <string name="share_button_content_description">Mở nút chia sẻ</string>
   <string name="open_menu_icon_content_description">Nút mở menu</string>
   <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
   <string name="mfa_icon_content_description">biểu tượng 2FA</string>
@@ -53,14 +53,14 @@
   <string name="custom_field_hidden_icon_description">Ẩn trường nội dung tùy chỉnh</string>
   <string name="custom_field_totp_icon_description">Trường 2FA tùy chỉnh</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Name on card</string>
+  <string name="credit_card_cardholder_field_name">Tên trên thẻ</string>
   <string name="credit_card_number_field_name">Số thẻ</string>
-  <string name="credit_card_cvv_field_name">Security code</string>
+  <string name="credit_card_cvv_field_name">Mã bảo mật</string>
   <string name="credit_card_pin_field_name">Mã PIN</string>
-  <string name="credit_card_expiration_date_field_name">Expiration date</string>
+  <string name="credit_card_expiration_date_field_name">Ngày hết hạn</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Đã sao chép tên chủ thẻ vào bộ nhớ tạm</string>
   <string name="credit_card_number_copied_to_clipboard">Đã sao chép số thẻ vào bảng nhớ tạm.</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Đã sao chép mã bảo mật vào bộ nhớ tạm</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Chuyển vào thùng rác</string>
   <string name="migrate_item_detail_bottom_sheet">Chuyển đến kho lưu trữ khác</string>
@@ -80,12 +80,12 @@
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Không thể chỉnh sửa</string>
-  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Bạn không thể chỉnh sửa nội dung này vì bạn không có đủ quyền làm điều đó.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Bạn chỉ có thể chỉnh sửa nội dung trong các kho lưu trữ cũ nhất của mình. Để chỉnh sửa nội dung này, vui lòng nâng cấp gói của bạn.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Không thể chia sẽ</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
-  <string name="password_score_vulnerable">Vulnerable</string>
-  <string name="password_score_weak">Weak</string>
-  <string name="password_score_strong">Strong</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
+  <string name="password_score_vulnerable">Dễ bị bẻ khóa</string>
+  <string name="password_score_weak">Yếu</string>
+  <string name="password_score_strong">Mạnh</string>
 </resources>

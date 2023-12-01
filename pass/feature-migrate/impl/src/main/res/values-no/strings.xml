@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="migrate_item_confirm_title_bottom_sheet">Flytte dette elementet til følgende hvelv?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Flytte alle elementene til følgende hvelv?</string>
+  <string name="migrate_item_confirm_confirm_button">Flytt</string>
+  <string name="migrate_item_success_snackbar">Element flyttet</string>
+  <string name="migrate_item_error_snackbar">Feil ved flytting av element</string>
+  <string name="migrate_all_items_success_snackbar">Alle elementer flyttet</string>
+  <string name="migrate_all_items_error_snackbar">Feil ved flytting av alle elementer</string>
+  <string name="migrate_init_error_snackbar">Kunne ikke klargjøre overføringsskjermen</string>
+</resources>

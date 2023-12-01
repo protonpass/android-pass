@@ -4,26 +4,26 @@
   <string name="home_empty_vault_title">Seu cofre está vazio</string>
   <string name="home_empty_vault_subtitle">Comece criando seu primeiro item.</string>
   <string name="home_empty_vault_create_login">Criar um início de sessão</string>
-  <string name="home_empty_vault_create_alias">Crie um alias do hide-my-email</string>
+  <string name="home_empty_vault_create_alias">Crie um alias do Hide-my-email</string>
   <string name="home_empty_vault_create_note">Criar uma nota</string>
-  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Erro ao carregar os itens</string>
-  <string name="error_refreshing">Erro ao executar ação.</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Erro ao carregar itens</string>
+  <string name="error_refreshing">Erro ao realizar a atualização</string>
   <string name="home_snackbar_login_moved_to_trash">Início de sessão movido para a lixeira</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias movido para a lixeira</string>
   <string name="home_snackbar_note_moved_to_trash">Nota movida para a lixeira</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Cartão de crédito movido para a lixeira</string>
   <string name="home_snackbar_move_to_trash_error">Não foi possível mover o item para a lixeira</string>
   <string name="home_autofill_banner_title">Aproveite a mágica do preenchimento automático</string>
-  <string name="home_autofill_banner_text">Um toque e—voilà!—seu nome de usuário e senha são preenchidos instantaneamente.</string>
+  <string name="home_autofill_banner_text">Um toque e ⏤ pronto! ⏤ seu nome de usuário e senha são preenchidos instantaneamente.</string>
   <string name="home_autofill_banner_settings">Ativar o preenchimento automático ›</string>
   <string name="home_trial_banner_title">Nosso presente de boas-vindas para você</string>
-  <string name="home_trial_banner_text">7 dias para testar os recursos premium de graça. Somente durante a primeira semana do Proton Pass.</string>
+  <string name="home_trial_banner_text">Sete dias para testar os recursos premium de graça. Somente durante a primeira semana do Proton Pass.</string>
   <string name="home_trial_banner_settings">Saiba mais ›</string>
   <string name="home_notification_permission_banner_title">Obter atualizações importantes</string>
   <string name="home_notification_permission_banner_text">Ative as notificações push para ser informado quando outros compartilharem um cofre com você</string>
   <string name="home_notification_permission_banner_settings">Ativar permissão ›</string>
   <string name="home_invite_banner_title">Cofre compartilhado com você</string>
-  <string name="home_invite_banner_subtitle">Você recebeu convite para um cofre compartilhado. Toque para obter detalhes.</string>
+  <string name="home_invite_banner_subtitle">Você foi convidado para um cofre compartilhado. Toque para obter detalhes.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar senha</string>
   <string name="bottomsheet_copy_username">Copiar nome de usuário</string>

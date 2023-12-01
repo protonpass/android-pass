@@ -54,11 +54,11 @@
   <string name="custom_field_hidden_icon_description">Camp personalitzat ocult</string>
   <string name="custom_field_totp_icon_description">Camp personalitzat de 2FA</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Name on card</string>
+  <string name="credit_card_cardholder_field_name">Nom a la targeta</string>
   <string name="credit_card_number_field_name">Número de la targeta</string>
-  <string name="credit_card_cvv_field_name">Security code</string>
+  <string name="credit_card_cvv_field_name">Codi de seguretat</string>
   <string name="credit_card_pin_field_name">Codi PIN</string>
-  <string name="credit_card_expiration_date_field_name">Expiration date</string>
+  <string name="credit_card_expiration_date_field_name">Data de caducitat</string>
   <string name="credit_card_cardholder_copied_to_clipboard">S\'ha copiat el titular de la targeta al porta-retalls</string>
   <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta al porta-retalls</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
@@ -87,6 +87,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No es pot compartir.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
-  <string name="password_score_weak">Weak</string>
-  <string name="password_score_strong">Strong</string>
+  <string name="password_score_weak">Feble</string>
+  <string name="password_score_strong">Segura</string>
 </resources>

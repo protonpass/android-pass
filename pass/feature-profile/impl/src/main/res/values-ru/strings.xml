@@ -21,12 +21,12 @@
   <string name="feedback_option_vote_new_features">Vote for new features</string>
   <string name="app_lock_immediately">Immediately</string>
   <string name="app_lock_one_minute">After 1 minute</string>
-  <string name="app_lock_two_minutes">After 2 minutes</string>
-  <string name="app_lock_five_minutes">After 5 minutes</string>
-  <string name="app_lock_ten_minutes">After 10 minutes</string>
+  <string name="app_lock_two_minutes">Через 2 минуты</string>
+  <string name="app_lock_five_minutes">Через 5 минуты</string>
+  <string name="app_lock_ten_minutes">Через 10 минуты</string>
   <string name="app_lock_one_hour">After 1 hour</string>
   <string name="app_lock_four_hours">After 4 hours</string>
-  <string name="profile_account_plan_name_trial">Pass Plus trial</string>
+  <string name="profile_account_plan_name_trial">Проба Pass Plus</string>
   <string name="app_lock_config_none">Ничего</string>
   <string name="app_lock_config_biometric">Biometric</string>
   <string name="app_lock_config_pin_code">PIN-код</string>
@@ -35,7 +35,7 @@
   <string name="configure_pin_set_pin_code">Set PIN code</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Unlock the app with this code</string>
   <string name="configure_pin_enter_pin_code">Enter PIN code</string>
-  <string name="configure_pin_repeat_pin_code">Repeat PIN code</string>
+  <string name="configure_pin_repeat_pin_code">Повторите PIN-код</string>
   <string name="configure_pin_continue">Продолжить</string>
   <string name="configure_pin_pin_does_not_match">The PIN does not match</string>
   <string name="configure_pin_pin_too_short">The PIN is too short</string>
@@ -45,4 +45,5 @@
   <string name="profile_option_lock_with">Lock with</string>
   <string name="profile_option_unlock_with">Unlock with</string>
   <string name="profile_option_change_pin_code">Change PIN Code</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
 </resources>

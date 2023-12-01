@@ -75,10 +75,10 @@
     <item quantity="other">%d invites left</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
-    <item quantity="one">%d item</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="one">%d елемент</item>
+    <item quantity="few">Елементів: %d</item>
+    <item quantity="many">Елементів: %d</item>
+    <item quantity="other">Елементів: %d</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Запрошення надіслано</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Очікується створення облікового запису</string>

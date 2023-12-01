@@ -60,7 +60,7 @@
   <string name="credit_card_number_field_name">Номер картки</string>
   <string name="credit_card_cvv_field_name">Security code</string>
   <string name="credit_card_pin_field_name">PIN-код</string>
-  <string name="credit_card_expiration_date_field_name">Expiration date</string>
+  <string name="credit_card_expiration_date_field_name">Термін дії</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Власника картки скопійовано до буфера обміну</string>
   <string name="credit_card_number_copied_to_clipboard">Номер картки скопійовано до буфера обміну</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>

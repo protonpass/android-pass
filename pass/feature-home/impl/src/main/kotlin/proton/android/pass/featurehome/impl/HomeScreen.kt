@@ -510,6 +510,10 @@ fun HomeScreen(
                             )
                         }
 
+                        is HomeUiEvent.StopBulk -> {
+                            homeViewModel.clearSelection()
+                        }
+
                         HomeUiEvent.MoveItemsActionClick -> TODO()
                         HomeUiEvent.PermanentlyDeleteItemsActionClick -> TODO()
                         HomeUiEvent.RestoreItemsActionClick -> TODO()

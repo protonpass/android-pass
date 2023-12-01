@@ -52,6 +52,13 @@ import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestTrashItem
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.HasDismissedAutofillBanner
@@ -60,13 +67,6 @@ import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.featuretrash.R as TrashR
@@ -259,8 +259,7 @@ class HomeScreenTest {
         assertThat(memory.size).isEqualTo(1)
 
         val memoryItem = memory.first()
-        assertThat(memoryItem.itemId).isEqualTo(aliasItem.id)
-        assertThat(memoryItem.shareId).isEqualTo(aliasItem.shareId)
+        assertThat(memoryItem.items[aliasItem.shareId]!!.first()).isEqualTo(aliasItem.id)
     }
 
     private fun testEmptyScreenCreateItem(

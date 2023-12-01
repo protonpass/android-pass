@@ -91,6 +91,7 @@
     <string name="bottomsheet_empty_trash">Empty trash</string>
 
     <string name="trash_error_clearing_trash">Error clearing trash</string>
+    <string name="trash_success_restoring_items">Items restored</string>
     <string name="trash_error_restoring_items">Error restoring items</string>
     <string name="trash_error_deleting_item">Error deleting item</string>
 

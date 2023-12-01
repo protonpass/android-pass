@@ -48,7 +48,10 @@ enum class HomeSnackbarMessage(
     ItemTooLongCopied(R.string.item_too_long_copied_to_clipboard, SnackbarType.WARNING, false),
 
     ClearTrashError(R.string.trash_error_clearing_trash, SnackbarType.ERROR),
+
+    RestoreItemsSuccess(R.string.trash_success_restoring_items, SnackbarType.SUCCESS),
     RestoreItemsError(R.string.trash_error_restoring_items, SnackbarType.ERROR),
+
     DeleteItemError(R.string.trash_error_deleting_item, SnackbarType.ERROR),
 
     ItemsMovedToTrashSuccess(R.string.home_snackbar_items_move_to_trash_success, SnackbarType.SUCCESS),

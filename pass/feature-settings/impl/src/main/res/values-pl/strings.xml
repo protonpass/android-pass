@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Udostępnij anonimowe statystyki użytkowania</string>
   <string name="settings_share_crashes">Udostępnij anonimowe raporty o awariach</string>
   <string name="settings_preference_updated">Ustawienia zostały zaktualizowane</string>
+  <string name="settings_default_vault_updated">Domyślny sejf został zaktualizowany</string>
+  <string name="settings_default_vault_update_error">Nie można zaktualizować domyślnego sejfu</string>
+  <string name="settings_default_vault_section_title">Sejfy</string>
+  <string name="settings_default_vault_vault_selector_title">Domyślny sejf</string>
+  <string name="settings_default_vault_section_subtitle">Sejf, w którym będą domyślnie tworzone elementy.</string>
+  <string name="settings_default_vault_disabled_reason">Nie możesz zapisać danych w tym sejfie.</string>
   <string name="view_logs_title">Pokaż logi</string>
   <string name="clipboard_bottomsheet_title">Schowek</string>
   <string name="clipboard_option_clear_clipboard_label">Wyczyść schowek</string>

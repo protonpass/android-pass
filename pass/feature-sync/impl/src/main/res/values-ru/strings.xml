@@ -18,10 +18,10 @@
   -->
 <resources>
   <plurals name="sync_item_count">
-    <item quantity="one">%d item</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="one">%d элемент</item>
+    <item quantity="few">%d элементов</item>
+    <item quantity="many">%d элементов</item>
+    <item quantity="other">%d элемента</item>
   </plurals>
   <string name="sync_progress_item_count">%1$d of %2$d items</string>
   <string name="sync_dialog_title">Syncing items…</string>

@@ -8,6 +8,10 @@
   <string name="sort_by_modification_date">Самыя апошнія</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Усе</string>
+  <string name="item_list_header_logins_type">Запісы ўваходу</string>
+  <string name="item_list_header_aliases_type">Псеўданімы</string>
+  <string name="item_list_header_notes_type">Нататкі</string>
+  <string name="item_list_header_credit_cards_type">Крэдытныя карткі</string>
   <plurals name="item_list_header_results">
     <item quantity="one">вынік</item>
     <item quantity="few">вынікі</item>

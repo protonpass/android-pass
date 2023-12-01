@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Del anonyme brugsdata</string>
   <string name="settings_share_crashes">Del anonyme rapporter om nedbrud</string>
   <string name="settings_preference_updated">Dine præferencer er blevet opdateret</string>
+  <string name="settings_default_vault_updated">Din standardboks er blevet opdateret</string>
+  <string name="settings_default_vault_update_error">Kunne ikke opdatere standardboksen</string>
+  <string name="settings_default_vault_section_title">Bokse</string>
+  <string name="settings_default_vault_vault_selector_title">Standardboks</string>
+  <string name="settings_default_vault_section_subtitle">Den boks, hvor dine elementer vil blive oprettet som standard.</string>
+  <string name="settings_default_vault_disabled_reason">You cannot write to this vault.</string>
   <string name="view_logs_title">Vis logfiler</string>
   <string name="clipboard_bottomsheet_title">Udklipsholder</string>
   <string name="clipboard_option_clear_clipboard_label">Ryd udklipsholder</string>

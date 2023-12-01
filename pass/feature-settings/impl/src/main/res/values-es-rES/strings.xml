@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Compartir el uso anónimo</string>
   <string name="settings_share_crashes">Compartir reportes de error anónimos</string>
   <string name="settings_preference_updated">Se ha actualizado tu preferencia.</string>
+  <string name="settings_default_vault_updated">Tu caja fuerte por defecto ha sido actualizada.</string>
+  <string name="settings_default_vault_update_error">No se ha podido actualizar la caja fuerte por defecto.</string>
+  <string name="settings_default_vault_section_title">Cajas fuertes</string>
+  <string name="settings_default_vault_vault_selector_title">Caja fuerte por defecto</string>
+  <string name="settings_default_vault_section_subtitle">La caja fuerte donde se crearán tus elementos por defecto.</string>
+  <string name="settings_default_vault_disabled_reason">No puedes escribir en esta caja fuerte.</string>
   <string name="view_logs_title">Ver los registros</string>
   <string name="clipboard_bottomsheet_title">Portapapeles</string>
   <string name="clipboard_option_clear_clipboard_label">Limpiar el portapapeles</string>

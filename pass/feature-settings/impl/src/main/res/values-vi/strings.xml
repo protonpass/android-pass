@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Chia sẻ dữ liệu sử dụng ẩn danh</string>
   <string name="settings_share_crashes">Chia sẽ báo cáo dừng đột ngột ẩn danh</string>
   <string name="settings_preference_updated">Tùy chọn của bạn đã được cập nhật</string>
+  <string name="settings_default_vault_updated">Kho lưu trữ mặc định của bạn đã được cập nhật</string>
+  <string name="settings_default_vault_update_error">Không thể cập nhật kho lưu trữ mặc định</string>
+  <string name="settings_default_vault_section_title">Kho lưu trữ</string>
+  <string name="settings_default_vault_vault_selector_title">Kho lưu trữ mặc định</string>
+  <string name="settings_default_vault_section_subtitle">Kho lưu trữ nơi mà các nội dung của bạn được tạo mặc định trong.</string>
+  <string name="settings_default_vault_disabled_reason">Bạn không thể viết vào kho lưu trữ này.</string>
   <string name="view_logs_title">Xem nhật kí</string>
   <string name="clipboard_bottomsheet_title">Bộ nhớ tạm</string>
   <string name="clipboard_option_clear_clipboard_label">Xóa bộ nhớ tạm</string>

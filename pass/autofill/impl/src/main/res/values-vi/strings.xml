@@ -4,9 +4,10 @@
   <string name="error_credentials_not_found">Không tìm thấy thông tin đăng nhập phù hợp</string>
   <string name="error_loading_items">Không thể tải nội dung</string>
   <string name="topbar_search_query">Tìm trong tất cả kho lưu trữ…</string>
-  <string name="topbar_search_query_oldest_vaults">Search in your oldest vaults…</string>
+  <string name="topbar_search_query_oldest_vaults">Tìm trong các kho lưu trữ cũ nhất của bạn…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Tìm kiếm…</string>
   <string name="inline_suggestions_open_app">Mở Proton Pass</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Nâng cấp để tự động điền</string>
   <string name="autofill_only_searching_in_oldest_vaults">Gói của bạn chỉ cho phép sử dụng các nội dung trong kho lưu trữ cũ nhất để tự động điền.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Gợi ý cho %s</string>
@@ -14,7 +15,7 @@
   <string name="autofill_dialog_associate_and_autofill">Luôn dùng</string>
   <string name="autofill_dialog_just_autofill">Dùng một lần</string>
   <string name="autofill_dialog_cancel">Hủy</string>
-  <string name="autofill_notification_copy_to_clipboard">TOTP has been copied to clipboard</string>
+  <string name="autofill_notification_copy_to_clipboard">Đã sao chép mã TOTP vào bộ nhớ tạm</string>
   <string name="autofill_dialog_associate_title">Sử dụng đăng nhập này?</string>
   <string name="snackbar_item_move_to_trash_success">Nội dung đã được chuyển vào thùng rác</string>
   <string name="snackbar_item_move_to_trash_error">Không thể chuyển vào thùng rác</string>
@@ -24,4 +25,6 @@
   <string name="autofill_user_logged_out">Bạn đã đăng xuất. Hãy đăng nhập lại bằng cách mở lại ứng dụng.</string>
   <string name="bottomsheet_copy_password">Sao chép mật khẩu</string>
   <string name="bottomsheet_copy_username">Sao chép tên đăng nhập</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Thông tin tự động điền thẻ</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Tự đồng điền thông tin thẻ là một tính năng trả phí. Nếu bạn muốn Proton Pass tự động điền thông tin thẻ của mình trong ứng dụng và trang web, vui lòng nâng cấp lên một gói trả phí.</string>
 </resources>

@@ -8,6 +8,10 @@
   <string name="sort_by_modification_date">Son kullanıma göre</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tümü</string>
+  <string name="item_list_header_logins_type">Logins</string>
+  <string name="item_list_header_aliases_type">Aliases</string>
+  <string name="item_list_header_notes_type">Notes</string>
+  <string name="item_list_header_credit_cards_type">Credit cards</string>
   <plurals name="item_list_header_results">
     <item quantity="one">sonuç</item>
     <item quantity="other">sonuçlar</item>

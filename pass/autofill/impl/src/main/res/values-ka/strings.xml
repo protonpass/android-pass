@@ -7,6 +7,7 @@
   <string name="topbar_search_query_oldest_vaults">ძებნა თქვენს უძველეს საცავებში…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">ძებნა…</string>
   <string name="inline_suggestions_open_app">Proton Pass-ის გახსნა</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">ასწიეთ ტარიფი ავტოშევსებისთვის</string>
   <string name="autofill_only_searching_in_oldest_vaults">თქვენი სატარიფო გეგმა საშუალებას გაძლევთ ავტომატური შევსებისთვის ელემენტები, მხოლოდ, ყველაზე ძველი საცავებიდან გამოიყენოთ.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">მინიშნებები %s-სთვის</string>
@@ -24,4 +25,6 @@
   <string name="autofill_user_logged_out">თქვენ გახვედით. თავიდან შესასვლელად გახსენით აპი.</string>
   <string name="bottomsheet_copy_password">პაროლის კოპირება</string>
   <string name="bottomsheet_copy_username">მომხმარებლის სახელის კოპირება</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">ბარათის დეტალების ავტოშევსება</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofilling credit card details is a paid feature. If you want Proton Pass to automatically enter your card details for you in apps and websites, please upgrade to a paid plan.</string>
 </resources>

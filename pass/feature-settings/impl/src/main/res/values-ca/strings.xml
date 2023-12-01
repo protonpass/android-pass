@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Comparteix l\'ús de manera anònima</string>
   <string name="settings_share_crashes">Comparteix informes d\'error anònims</string>
   <string name="settings_preference_updated">S\'ha actualitzat la vostra preferència</string>
+  <string name="settings_default_vault_updated">Your default vault has been updated</string>
+  <string name="settings_default_vault_update_error">Could not update the default vault</string>
+  <string name="settings_default_vault_section_title">Caixes fortes</string>
+  <string name="settings_default_vault_vault_selector_title">Caixa forta per defecte</string>
+  <string name="settings_default_vault_section_subtitle">The vault where your items will be created by default.</string>
+  <string name="settings_default_vault_disabled_reason">You cannot write to this vault.</string>
   <string name="view_logs_title">Mostra els registres</string>
   <string name="clipboard_bottomsheet_title">Porta-retalls</string>
   <string name="clipboard_option_clear_clipboard_label">Neteja el porta-retalls</string>

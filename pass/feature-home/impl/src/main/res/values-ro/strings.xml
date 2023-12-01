@@ -3,22 +3,22 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Seiful este gol</string>
   <string name="home_empty_vault_subtitle">Începeți prin crearea primului articol.</string>
-  <string name="home_empty_vault_create_login">Creare autentificare</string>
+  <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">Creare alias hide-my-email</string>
-  <string name="home_empty_vault_create_note">Creare o notă</string>
-  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Eroare la încărcarea articolelor</string>
+  <string name="home_empty_vault_create_note">Create a note</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Eroare la încărcarea articolelor.</string>
   <string name="error_refreshing">Eroare executare împrospătare.</string>
   <string name="home_snackbar_login_moved_to_trash">Autentificarea s-a mutat în gunoi.</string>
   <string name="home_snackbar_alias_moved_to_trash">Aliasul s-a mutat în gunoi.</string>
   <string name="home_snackbar_note_moved_to_trash">Nota s-a mutat în gunoi.</string>
-  <string name="home_snackbar_credit_card_moved_to_trash">Cardul de credit s-a mutat în gunoi.</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">Cardul de plată s-a mutat în gunoi.</string>
   <string name="home_snackbar_move_to_trash_error">Articolul nu s-a putut muta în gunoi.</string>
   <string name="home_autofill_banner_title">Bucurați-vă de magia autocompletării</string>
   <string name="home_autofill_banner_text">O apăsare și gata - numele de utilizator și parola sunt completate instant.</string>
   <string name="home_autofill_banner_settings">Activare autocompletare ›</string>
   <string name="home_trial_banner_title">Cadoul nostru de bun venit</string>
   <string name="home_trial_banner_text">Aveți 7 zile de încercare gratuită a funcțiilor premium. Valabil doar pentru prima săptămână de utilizare a Proton Pass.</string>
-  <string name="home_trial_banner_settings">Detalii ›</string>
+  <string name="home_trial_banner_settings">Learn more ›</string>
   <string name="home_notification_permission_banner_title">Obțineți actualizări importante</string>
   <string name="home_notification_permission_banner_text">Activați notificările instante pentru a vă informa când alții vă partajează un seif.</string>
   <string name="home_notification_permission_banner_settings">Activare permisiune</string>
@@ -27,29 +27,29 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiere parolă</string>
   <string name="bottomsheet_copy_username">Copiere nume utilizator</string>
-  <string name="bottomsheet_copy_alias">Copiere adresă e-mail</string>
-  <string name="bottomsheet_copy_number">Copiere număr</string>
+  <string name="bottomsheet_copy_alias">Copiere adresă de e-mail</string>
+  <string name="bottomsheet_copy_number">Copy number</string>
   <string name="bottomsheet_copy_cvv">Copiere cod de securitate</string>
-  <string name="bottomsheet_copy_note">Copiere notă</string>
+  <string name="bottomsheet_copy_note">Copy note</string>
   <string name="bottomsheet_edit">Editare</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Alias copiat</string>
-  <string name="note_copied_to_clipboard">Notă copiată</string>
+  <string name="note_copied_to_clipboard">Note copied</string>
   <string name="username_copied_to_clipboard">Nume de utilizator copiat</string>
   <string name="password_copied_to_clipboard">Parola s-a copiat</string>
-  <string name="credit_card_number_copied_to_clipboard">Cardul de credit s-a copiat.</string>
+  <string name="credit_card_number_copied_to_clipboard">Numărul cardul de plată s-a copiat.</string>
   <string name="credit_card_cvv_copied_to_clipboard">Codul de securitate s-a copiat.</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Conținutul a fost prea lung, s-a copiat parțial în memorie.</string>
   <!-- Vault drawer -->
-  <string name="vault_drawer_vaults_title">Seifuri</string>
+  <string name="vault_drawer_vaults_title">Vaults</string>
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d articol</item>
     <item quantity="few">%d articole</item>
     <item quantity="other">%d de articole</item>
   </plurals>
-  <string name="vault_drawer_create_vault">Creare seif</string>
-  <string name="vault_drawer_item_trash">Gunoi</string>
-  <string name="vault_drawer_all_vaults">Toate seifurile</string>
+  <string name="vault_drawer_create_vault">Create vault</string>
+  <string name="vault_drawer_item_trash">Trash</string>
+  <string name="vault_drawer_all_vaults">All vaults</string>
   <!-- Vault management -->
   <string name="vault_delete_dialog_title">Ștergere seif</string>
   <string name="vault_delete_dialog_cancel_action">Anulare</string>
@@ -58,30 +58,30 @@
   <string name="snackbar_delete_vault_error">Seiful nu s-a șters.</string>
   <!-- Search top bar -->
   <string name="search_topbar_placeholder_all_vaults">Căutare în toate seifurile…</string>
-  <string name="search_topbar_placeholder_vault">Căutare în %s…</string>
+  <string name="search_topbar_placeholder_vault">Search in %s…</string>
   <string name="search_topbar_placeholder_trash">Căutare în gunoi…</string>
-  <string name="item_type_filter_list_icon_content_description">Pictogramă tip articol</string>
+  <string name="item_type_filter_list_icon_content_description">Item type icon</string>
   <string name="item_type_filter_all">Toate</string>
   <string name="item_type_filter_login">Autentificare</string>
   <string name="item_type_filter_alias">Alias</string>
   <string name="item_type_filter_note">Notă</string>
   <string name="item_type_filter_credit_card">Card</string>
   <!-- Trash -->
-  <string name="trash_empty_list_title">Gunoiul este gol</string>
+  <string name="trash_empty_list_title">Trash empty</string>
   <string name="trash_empty_list_message">Articolele mutate în gunoi apar aici.</string>
-  <string name="bottomsheet_trash_all_items_title">Gunoi</string>
+  <string name="bottomsheet_trash_all_items_title">Trash</string>
   <string name="bottomsheet_restore_all_items">Restaurare toate articolele</string>
-  <string name="bottomsheet_empty_trash">Golire gunoi</string>
-  <string name="trash_error_clearing_trash">Eroare golire gunoi.</string>
+  <string name="bottomsheet_empty_trash">Empty trash</string>
+  <string name="trash_error_clearing_trash">Eroare la golirea gunoiului.</string>
   <string name="trash_error_restoring_items">Eroare restaurare articole.</string>
   <string name="trash_error_deleting_item">Eroare ștergere articol.</string>
   <!-- Alerts -->
-  <string name="alert_confirm_clear_trash_title">Golire gunoi?</string>
+  <string name="alert_confirm_clear_trash_title">Clear trash?</string>
   <string name="alert_confirm_clear_trash_message">Sigur doriți să ștergeți gunoiul? Toate articolele din gunoi vor fi șterse definitiv.</string>
   <string name="alert_confirm_restore_all_title">Restaurare toate articolele?</string>
   <string name="alert_confirm_restore_all_message">Sigur doriți să ștergeți toate articolele selectate?</string>
   <!-- Recent search -->
   <string name="recent_search_header_count">Căutări recente</string>
-  <string name="recent_search_clear">Golire</string>
+  <string name="recent_search_clear">Clear</string>
   <string name="recent_search_remove_item">Eliminare din căutări recente</string>
 </resources>

@@ -41,7 +41,7 @@
   <string name="bottomsheet_custom_field_option_remove">フィールドを削除</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">カスタム フィールドを削除</string>
   <string name="create_login_add_custom_field_button">別のフィールドを追加</string>
-  <string name="custom_field_hidden_placeholder">Add hidden text</string>
+  <string name="custom_field_hidden_placeholder">非表示テキストを追加</string>
   <string name="custom_field_hidden_icon_content_description">非表示のカスタムフィールドアイコン</string>
   <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">カスタムフィールドの名前</string>
@@ -82,11 +82,11 @@
   <string name="field_cardholder_name_hint">フルネーム</string>
   <string name="field_card_number_title">カード番号</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Security code</string>
+  <string name="field_card_cvv_title">セキュリティコード</string>
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expiration date</string>
+  <string name="field_card_expiration_date_title">有効期限</string>
   <string name="field_card_expiration_date_hint">MM / YYYY</string>
   <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">クレジットカードを作成できませんでした</string>

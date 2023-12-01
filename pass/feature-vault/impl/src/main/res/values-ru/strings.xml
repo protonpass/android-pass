@@ -8,7 +8,7 @@
   <string name="snackbar_delete_vault_success">Хранилище удалено</string>
   <string name="snackbar_delete_vault_error">Хранилище не удалено</string>
   <string name="snackbar_leave_vault_success">Vault left</string>
-  <string name="snackbar_leave_vault_error">Could not leave vault</string>
+  <string name="snackbar_leave_vault_error">Не удалось покинуть хранилище</string>
   <string name="snackbar_retrieve_vault_error">Хранилище не найдено</string>
   <string name="snackbar_find_vault_error">Не могу найти созданное хранилище</string>
   <string name="snackbar_get_vault_list_error">Список хранилищ не может быть загружен</string>

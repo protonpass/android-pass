@@ -2,14 +2,14 @@
 <resources>
   <string name="generate_password_copy">Copy and close</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
-  <string name="bottomsheet_generate_password_title">Generate password</string>
+  <string name="bottomsheet_generate_password_title">Создать пароль</string>
   <string name="password_type">Тип</string>
   <string name="special_characters">Special characters (!&amp;*)</string>
   <plurals name="character_count">
-    <item quantity="one">%s character</item>
-    <item quantity="few">%s characters</item>
-    <item quantity="many">%s characters</item>
-    <item quantity="other">%s characters</item>
+    <item quantity="one">%s символ</item>
+    <item quantity="few">%s символа</item>
+    <item quantity="many">%s символов</item>
+    <item quantity="other">%s символов</item>
   </plurals>
   <plurals name="word_count">
     <item quantity="one">%s word</item>

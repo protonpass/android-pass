@@ -7,6 +7,7 @@
   <string name="topbar_search_query_oldest_vaults">Ricerca nelle tue casseforti più vecchie…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Ricerca…</string>
   <string name="inline_suggestions_open_app">Apri Proton Pass</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Effettua l\'upgrade per compilare automaticamente</string>
   <string name="autofill_only_searching_in_oldest_vaults">Il tuo piano consente di usare solamente gli elementi nelle tue casseforti più vecchie per scopi di compilazione automatica.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Suggerimenti per %s</string>
@@ -24,4 +25,6 @@
   <string name="autofill_user_logged_out">Sei stato disconnesso. Accedi nuovamente aprendo l\'app.</string>
   <string name="bottomsheet_copy_password">Copia password</string>
   <string name="bottomsheet_copy_username">Copia nome utente</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Compila automaticamente i dettagli della carta</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">La compilazione automatica dei dettagli della carta di credito è una funzionalità a pagamento. Se vuoi che Proton Pass inserisca automaticamente i dettagli della tua carta di credito nelle app e nei siti web, effettua l\'upgrade a un piano a pagamento.</string>
 </resources>

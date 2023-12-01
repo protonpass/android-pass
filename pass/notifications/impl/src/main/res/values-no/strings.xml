@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="updates_notification_channel_name">Oppdateringer</string>
+  <string name="autofill_notification_channel_name">Automatisk utfylling</string>
+  <string name="autofill_notification_copy_to_clipboard_title">TOTP-kode</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP er kopiert til utklippstavlen</string>
+  <string name="updates_new_invite_received_title">Du har mottatt en invitasjon</string>
+  <string name="updates_new_invite_received_message">Du er blitt invitert til et hvelv. Åpne appen for å se og godta invitasjonen.</string>
+</resources>

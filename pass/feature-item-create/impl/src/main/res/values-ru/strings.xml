@@ -41,7 +41,7 @@
   <string name="bottomsheet_custom_field_option_remove">Удалить поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Удалить пользовательское поле</string>
   <string name="create_login_add_custom_field_button">Добавить другое поле</string>
-  <string name="custom_field_hidden_placeholder">Add hidden text</string>
+  <string name="custom_field_hidden_placeholder">Добавить скрытый текст</string>
   <string name="custom_field_hidden_icon_content_description">Иконка скрытого настраиваемого поля</string>
   <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">Название настраиваемого поля</string>
@@ -86,7 +86,7 @@
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expiration date</string>
+  <string name="field_card_expiration_date_title">Срок действия</string>
   <string name="field_card_expiration_date_hint">ММ / ГГГГ</string>
   <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">Не могу создать кредитную карту</string>

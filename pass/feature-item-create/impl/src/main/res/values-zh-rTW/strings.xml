@@ -41,7 +41,7 @@
   <string name="bottomsheet_custom_field_option_remove">移除欄位</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">移除自訂欄位</string>
   <string name="create_login_add_custom_field_button">新增其他欄位</string>
-  <string name="custom_field_hidden_placeholder">Add hidden text</string>
+  <string name="custom_field_hidden_placeholder">新增隱藏文件</string>
   <string name="custom_field_hidden_icon_content_description">隱藏自訂的欄位圖示</string>
   <string name="custom_field_text_placeholder">Add text</string>
   <string name="custom_field_dialog_title">自訂欄位的名稱</string>
@@ -86,7 +86,7 @@
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Expiration date</string>
+  <string name="field_card_expiration_date_title">到期日</string>
   <string name="field_card_expiration_date_hint">月月 / 年年年年</string>
   <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
   <string name="create_credit_card_item_creation_error">無法創建信用卡</string>

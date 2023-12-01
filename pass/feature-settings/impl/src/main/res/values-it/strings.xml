@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Condividi l\'utilizzo anonimo</string>
   <string name="settings_share_crashes">Condividi segnalazioni anonime sugli arresti anomali</string>
   <string name="settings_preference_updated">La tua preferenza è stata aggiornata</string>
+  <string name="settings_default_vault_updated">La tua cassaforte predefinita è stata aggiornata</string>
+  <string name="settings_default_vault_update_error">Impossibile aggiornare la cassaforte predefinita</string>
+  <string name="settings_default_vault_section_title">Casseforti</string>
+  <string name="settings_default_vault_vault_selector_title">Cassaforte predefinita</string>
+  <string name="settings_default_vault_section_subtitle">La cassaforte dove verranno creati i tuoi elementi per impostazione predefinita.</string>
+  <string name="settings_default_vault_disabled_reason">Non puoi scrivere in questa cassaforte.</string>
   <string name="view_logs_title">Visualizza i log</string>
   <string name="clipboard_bottomsheet_title">Appunti</string>
   <string name="clipboard_option_clear_clipboard_label">Cancella appunti</string>

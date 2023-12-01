@@ -351,21 +351,23 @@ fun HomeScreen(
                 )
 
                 TrashOptions -> TrashAllBottomSheetContents(
-                    onEmptyTrash = remember {
-                        {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                shouldShowClearTrashDialog = true
-                            }
+                    onEmptyTrash = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            shouldShowClearTrashDialog = true
                         }
                     },
-                    onRestoreAll = remember {
-                        {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                shouldShowRestoreAllDialog = true
-                            }
+                    onRestoreAll = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            shouldShowRestoreAllDialog = true
                         }
+                    },
+                    onSelectItems = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                        }
+                        homeViewModel.onBulkEnabled()
                     }
                 )
             }

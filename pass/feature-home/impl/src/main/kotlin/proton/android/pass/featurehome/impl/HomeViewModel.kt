@@ -85,8 +85,8 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.PerformSync
+import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItem
-import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
@@ -133,7 +133,7 @@ class HomeViewModel @Inject constructor(
     private val performSync: PerformSync,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val restoreItem: RestoreItem,
-    private val restoreItems: RestoreItems,
+    private val restoreItems: RestoreAllItems,
     private val deleteItem: DeleteItem,
     private val clearTrash: ClearTrash,
     private val addSearchEntry: AddSearchEntry,
@@ -503,6 +503,7 @@ class HomeViewModel @Inject constructor(
     fun sendItemsToTrash(items: ImmutableSet<Pair<ShareId, ItemId>>) =
         viewModelScope.launch(coroutineExceptionHandler) {
             if (items.isEmpty()) return@launch
+            actionStateFlow.update { ActionState.Loading }
 
             runCatching { trashItem(items = items.groupBy({ it.first }, { it.second })) }
                 .onSuccess {
@@ -513,6 +514,7 @@ class HomeViewModel @Inject constructor(
                     PassLogger.e(TAG, it, "Trash items failed")
                     snackbarDispatcher(HomeSnackbarMessage.ItemsMovedToTrashError)
                 }
+            actionStateFlow.update { ActionState.Done }
         }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
@@ -592,7 +594,6 @@ class HomeViewModel @Inject constructor(
             PassLogger.i(TAG, "Item restored successfully")
         }.onFailure {
             PassLogger.e(TAG, it, "Error restoring item")
-            actionStateFlow.update { ActionState.Done }
             snackbarDispatcher(RestoreItemsError)
         }
     }
@@ -600,6 +601,7 @@ class HomeViewModel @Inject constructor(
     fun restoreItems(items: ImmutableSet<Pair<ShareId, ItemId>>) =
         viewModelScope.launch(coroutineExceptionHandler) {
             if (items.isEmpty()) return@launch
+            actionStateFlow.update { ActionState.Loading }
 
             runCatching { restoreItem(items = items.groupBy({ it.first }, { it.second })) }
                 .onSuccess {
@@ -610,6 +612,7 @@ class HomeViewModel @Inject constructor(
                     PassLogger.e(TAG, it, "Untrash items failed")
                     snackbarDispatcher(RestoreItemsError)
                 }
+            actionStateFlow.update { ActionState.Done }
         }
 
     fun deleteItem(itemUiModel: ItemUiModel) =
@@ -618,14 +621,13 @@ class HomeViewModel @Inject constructor(
             runCatching {
                 deleteItem.invoke(shareId = itemUiModel.shareId, itemId = itemUiModel.id)
             }.onSuccess {
-                actionStateFlow.update { ActionState.Done }
                 PassLogger.i(TAG, "Item deleted successfully")
                 telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
             }.onFailure {
                 PassLogger.e(TAG, it, "Error deleting item")
-                actionStateFlow.update { ActionState.Done }
                 snackbarDispatcher(DeleteItemError)
             }
+            actionStateFlow.update { ActionState.Done }
         }
 
     fun clearTrash() = viewModelScope.launch {
@@ -635,28 +637,26 @@ class HomeViewModel @Inject constructor(
         runCatching {
             clearTrash.invoke()
         }.onSuccess {
-            actionStateFlow.update { ActionState.Done }
             PassLogger.i(TAG, "Trash cleared successfully")
             emitDeletedItems(deletedItems)
         }.onFailure {
             PassLogger.e(TAG, it, "Error clearing trash")
-            actionStateFlow.update { ActionState.Done }
             snackbarDispatcher(ClearTrashError)
         }
+        actionStateFlow.update { ActionState.Done }
     }
 
-    fun restoreItems() = viewModelScope.launch {
+    fun restoreAllItems() = viewModelScope.launch {
         actionStateFlow.update { ActionState.Loading }
         runCatching {
             restoreItems.invoke()
         }.onSuccess {
-            actionStateFlow.update { ActionState.Done }
             PassLogger.i(TAG, "Items restored successfully")
         }.onFailure {
             PassLogger.e(TAG, it, "Error restoring items")
-            actionStateFlow.update { ActionState.Done }
             snackbarDispatcher(RestoreItemsError)
         }
+        actionStateFlow.update { ActionState.Done }
     }
 
     fun onItemClicked(shareId: ShareId, itemId: ItemId) {

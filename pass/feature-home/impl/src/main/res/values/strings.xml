@@ -101,6 +101,23 @@
     <string name="alert_confirm_restore_all_title">Restore all items?</string>
     <string name="alert_confirm_restore_all_message">Are you sure you want to restore all the trashed items?</string>
 
+    <plurals name="alert_confirm_restore_items_title">
+        <item quantity="one">Restore %d item?</item>
+        <item quantity="other">Restore %d items?</item>
+    </plurals>
+    <plurals name="alert_confirm_restore_items_message">
+        <item quantity="one">Are you sure you want to restore the trashed item?</item>
+        <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    </plurals>
+    <plurals name="alert_confirm_trash_items_title">
+        <item quantity="one">Move to trash %d item?</item>
+        <item quantity="other">Move to trash %d items?</item>
+    </plurals>
+    <plurals name="alert_confirm_trash_items_message">
+        <item quantity="one">Are you sure you want to move to the trash the item?</item>
+        <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    </plurals>
+
     <!-- Recent search -->
     <string name="recent_search_header_count">Recent searches</string>
     <string name="recent_search_clear">Clear</string>

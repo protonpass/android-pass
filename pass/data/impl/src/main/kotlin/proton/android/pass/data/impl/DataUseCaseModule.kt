@@ -90,7 +90,7 @@ import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreItem
-import proton.android.pass.data.api.usecases.RestoreItems
+import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
@@ -183,7 +183,7 @@ import proton.android.pass.data.impl.usecases.RequestImageImpl
 import proton.android.pass.data.impl.usecases.ResendInviteImpl
 import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
-import proton.android.pass.data.impl.usecases.RestoreItemsImpl
+import proton.android.pass.data.impl.usecases.RestoreAllItemsImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
 import proton.android.pass.data.impl.usecases.SetVaultMemberPermissionImpl
@@ -324,7 +324,7 @@ abstract class DataUseCaseModule {
     abstract fun bindRestoreItem(impl: RestoreItemImpl): RestoreItem
 
     @Binds
-    abstract fun bindRestoreItems(impl: RestoreItemsImpl): RestoreItems
+    abstract fun bindRestoreItems(impl: RestoreAllItemsImpl): RestoreAllItems
 
     @Binds
     abstract fun bindDeleteItem(impl: DeleteItemImpl): DeleteItem

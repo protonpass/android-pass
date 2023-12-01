@@ -6,6 +6,24 @@
 
 ### Other
 
+## 1.13.0 (2023-12-01)
+
+### Features :tada:
+
+- Add a default vault selector in the Settings screen.
+- Add a new 3-dot menu in the main list.
+
+### Fixes :bug:
+
+- Item details not showing properly on some languages.
+- Crash when editing custom fields.
+
+### Other
+
+- Autofill improvements.
+- Update translations.
+- Warning if the default browser doesn't support autofill.
+
 ## 1.12.0 (2023-11-24)
 
 ### Other

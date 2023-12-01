@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Fortsett</string>
+  <string name="sharing_can_view">Leser</string>
+  <string name="sharing_can_edit">Redigeringsprogram</string>
+  <string name="sharing_can_manage">Administrator</string>
+  <string name="sharing_can_view_description">Kan se elementer i dette hvelvet.</string>
+  <string name="sharing_can_edit_description">Kan opprette, redigere, slette og eksportere elementer i dette hvelvet.</string>
+  <string name="sharing_can_manage_description">Kan innvilge og oppheve tilgang til dette hvelvet.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d element</item>
+    <item quantity="other">%d elementer</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d medlem</item>
+    <item quantity="other">%d medlemmer</item>
+  </plurals>
+  <string name="share_with_title">Del med</string>
+  <string name="share_with_email_hint">E-postadresse</string>
+  <string name="share_with_email_error">Ugyldig e-postadresse</string>
+  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Kan ikke hente brukerinformasjonen til den inviterte</string>
+  <string name="share_permissions_title">Sett tilgangsnivå</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s inviterer deg til å få tilgang til elementer i</string>
+  <string name="sharing_join_shared_vault">Bli med og synkroniser</string>
+  <string name="sharing_reject_invitation">Avslå invitasjonen</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Gratulerer, tilgangen din er bekreftet</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Se delt hvelv</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Lukk</string>
+  <string name="sharing_snackbar_get_invite_error">Kunne ikke få invitasjon</string>
+  <string name="sharing_snackbar_invite_accepted">Invitasjon godtatt</string>
+  <string name="sharing_snackbar_invite_accept_error">Feil under godkjenning av invitasjonen</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kunne ikke godta invitasjonen da du har nådd hvelvgrensen.</string>
+  <string name="sharing_snackbar_invite_rejected">Invitasjon avslått</string>
+  <string name="sharing_snackbar_invite_reject_error">Feil under avvisning av invitasjonen</string>
+  <string name="sharing_snackbar_vault_not_found">Finner ikke hvelvet</string>
+  <string name="sharing_snackbar_invite_sent_success">Invitasjon sendt</string>
+  <string name="sharing_snackbar_invite_sent_error">Kunne ikke sende invitasjon</string>
+  <string name="sharing_snackbar_get_vault_members_error">Fikk ikke tak i hvelvmedlemmer</string>
+  <string name="sharing_snackbar_change_permission_success">Rettigheter endret</string>
+  <string name="sharing_snackbar_change_permission_error">Kunne ikke endre rettighetene</string>
+  <string name="sharing_snackbar_remove_member_success">Medlem fjernet fra hvelvet</string>
+  <string name="sharing_snackbar_remove_member_error">Kunne ikke fjerne fra hvelvet</string>
+  <string name="share_summary_title">Se over og del</string>
+  <string name="share_summary_vault">%s hvelv</string>
+  <string name="share_summary_share_vault">Del hvelv</string>
+  <string name="share_summary_email_title">Del med</string>
+  <string name="share_summary_vault_title">Hvelv</string>
+  <string name="share_summary_permissions_title">Tilgangsnivå</string>
+  <string name="share_manage_vault_share_with_more_people">Del med flere</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">%d invitasjon igjen</item>
+    <item quantity="other">%d invitasjoner igjen</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d element</item>
+    <item quantity="other">%d elementer</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitasjon sendt</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Venter på opprettelse av konto</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Bekreft tilgang</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitasjoner</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Medlemmer</string>
+  <string name="share_manage_vault_current_user_indicator">Deg</string>
+  <string name="share_role_can_view">Kan se</string>
+  <string name="share_role_can_edit">Kan redigere</string>
+  <string name="share_role_admin">Administrator</string>
+  <string name="share_role_owner">Eier</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Overfør eierskap</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan ikke overføre ditt sist eide hvelv.</string>
+  <string name="sharing_bottomsheet_remove_access">Opphev tilgang</string>
+  <string name="sharing_bottomsheet_resend_invite">Send invitasjon på nytt</string>
+  <string name="sharing_bottomsheet_cancel_invite">Avbryt invitasjon</string>
+  <string name="sharing_transfer_ownership_confirm_title">Overfør eierskap</string>
+  <string name="sharing_transfer_ownership_confirm_message">Overføre eierskap av dette hvelvet til %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Invitasjon kansellert</string>
+  <string name="sharing_snackbar_cancel_invite_error">Feil ved kansellering av invitasjon</string>
+  <string name="sharing_snackbar_resend_invite_success">Invitasjon sendt på nytt</string>
+  <string name="sharing_snackbar_resend_invite_error">Feil ved sending av invitasjon på nytt</string>
+  <string name="sharing_snackbar_confirm_invite_success">Invitasjon bekreftet</string>
+  <string name="sharing_snackbar_confirm_invite_error">Feil ved bekreftelse av invitasjon</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Adresse har blitt invitert for mange ganger</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Eierskap overført</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Feil under overføring av eierskap</string>
+  <string name="sharing_invites_info_dialog_title">Medlemsgrense</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Dette hvelvet kan ha opptil %1$d medlemmer. Du har fremdeles %2$d invitasjoner igjen.</string>
+  <string name="sharing_limit_reached">Dette hvelvet har nådd grensen for antall medlemmer og invitasjoner.</string>
+  <string name="sharing_invites_info_upgrade_text">Oppgrader nå for å invitere flere.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Del</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Bruk hvelv for å dele elementer med andre</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Del dette hvelvet</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Tilpass</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Flytt til et delt hvelv</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Opprett et nytt hvelv du vil dele</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Dette elementet vil bli flyttet til det nye hvelvet.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Oppgrader for å opprette flere hvelv</string>
+  <string name="sharing_from_item_vault_limit_reached">Du har nådd hvelvgrensen</string>
+</resources>

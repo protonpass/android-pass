@@ -74,13 +74,13 @@
     It would translate to
     12 February 12:34
     -->
-  <string name="date_full_date_format">ZZ LLLL HH:mm</string>
+  <string name="date_full_date_format">zz LLLL HH:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
-  <string name="date_full_date_format_with_year">ZZ LLLL AAAA HH:mm</string>
+  <string name="date_full_date_format_with_year">zz LLLL aaaa HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Nu se poate edita</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Nu puteți edita acest articol deoarece nu aveți suficiente permisiuni pentru a face acest lucru.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Aveți voie să editați doar articole din cele seifurile vechi. Pentru a edita acest articol, modificați-vă planul actual.</string>

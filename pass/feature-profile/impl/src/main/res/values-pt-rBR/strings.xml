@@ -45,4 +45,5 @@
   <string name="profile_option_lock_with">Bloquear com</string>
   <string name="profile_option_unlock_with">Desbloquear com</string>
   <string name="profile_option_change_pin_code">Alterar código PIN</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">O navegador Samsung está definido como navegador padrão. Não oferece suporte ao preenchimento automático por gerenciadores de senhas externos.</string>
 </resources>

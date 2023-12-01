@@ -26,7 +26,7 @@
   <string name="app_lock_ten_minutes">Després de 10 minuts</string>
   <string name="app_lock_one_hour">Després d\'1 hora</string>
   <string name="app_lock_four_hours">Després de 4 hores</string>
-  <string name="profile_account_plan_name_trial">Pass Plus trial</string>
+  <string name="profile_account_plan_name_trial">Prova Pass Plus</string>
   <string name="app_lock_config_none">Cap</string>
   <string name="app_lock_config_biometric">Biomètric</string>
   <string name="app_lock_config_pin_code">Codi PIN</string>
@@ -45,4 +45,5 @@
   <string name="profile_option_lock_with">Bloqueja amb</string>
   <string name="profile_option_unlock_with">Desbloqueja amb</string>
   <string name="profile_option_change_pin_code">Canviar el codi PIN</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
 </resources>

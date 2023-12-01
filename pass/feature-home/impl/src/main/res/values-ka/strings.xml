@@ -47,7 +47,7 @@
     <item quantity="other">%d ელემენტი</item>
   </plurals>
   <string name="vault_drawer_create_vault">საცავის შექმნა</string>
-  <string name="vault_drawer_item_trash">სანაგვე ყუთი</string>
+  <string name="vault_drawer_item_trash">ნაგვის ყუთი</string>
   <string name="vault_drawer_all_vaults">ყველა საცავი</string>
   <!-- Vault management -->
   <string name="vault_delete_dialog_title">საცავის წაშლა</string>
@@ -68,7 +68,7 @@
   <!-- Trash -->
   <string name="trash_empty_list_title">სანაგვე ყუთი ცარიელია</string>
   <string name="trash_empty_list_message">ნაგვის ყუთში გადატანილი ელემენტები აქ გამოჩნდება</string>
-  <string name="bottomsheet_trash_all_items_title">სანაგვე ყუთი</string>
+  <string name="bottomsheet_trash_all_items_title">ნაგვის ყუთი</string>
   <string name="bottomsheet_restore_all_items">ყველა ელემენტის აღდგენა</string>
   <string name="bottomsheet_empty_trash">ნაგვის ყუთის გასუფთავება</string>
   <string name="trash_error_clearing_trash">ნაგვის ყუთის გასუფთავების შეცდომა</string>

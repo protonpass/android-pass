@@ -57,7 +57,7 @@
   <string name="credit_card_number_field_name">カード番号</string>
   <string name="credit_card_cvv_field_name">Security code</string>
   <string name="credit_card_pin_field_name">PIN コード</string>
-  <string name="credit_card_expiration_date_field_name">Expiration date</string>
+  <string name="credit_card_expiration_date_field_name">有効期限</string>
   <string name="credit_card_cardholder_copied_to_clipboard">カードの名義がクリップボードにコピーされました</string>
   <string name="credit_card_number_copied_to_clipboard">カード番号がクリップボードにコピーされました</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>

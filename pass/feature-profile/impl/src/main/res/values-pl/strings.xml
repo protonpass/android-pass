@@ -45,4 +45,5 @@
   <string name="profile_option_lock_with">Zablokuj za pomocą</string>
   <string name="profile_option_unlock_with">Odblokuj za pomocą</string>
   <string name="profile_option_change_pin_code">Zmień kod PIN</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Przeglądarka Samsung Browser jest ustawiona jako domyślna przeglądarka. Ta przeglądarka nie obsługuje autouzupełniania za pomocą zewnętrznych menadżerów haseł.</string>
 </resources>

@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Sdílet anonymní údaje o využití</string>
   <string name="settings_share_crashes">Sdílet anonymní hlášení o pádech</string>
   <string name="settings_preference_updated">Vaše předvolby byly aktualizovány</string>
+  <string name="settings_default_vault_updated">Your default vault has been updated</string>
+  <string name="settings_default_vault_update_error">Could not update the default vault</string>
+  <string name="settings_default_vault_section_title">Vaults</string>
+  <string name="settings_default_vault_vault_selector_title">Default vault</string>
+  <string name="settings_default_vault_section_subtitle">The vault where your items will be created by default.</string>
+  <string name="settings_default_vault_disabled_reason">You cannot write to this vault.</string>
   <string name="view_logs_title">Zobrazit logy</string>
   <string name="clipboard_bottomsheet_title">Schránka</string>
   <string name="clipboard_option_clear_clipboard_label">Vyprázdnit schránku</string>

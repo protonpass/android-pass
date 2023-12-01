@@ -8,6 +8,10 @@
   <string name="sort_by_modification_date">最も最近のもの</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">すべて</string>
+  <string name="item_list_header_logins_type">Logins</string>
+  <string name="item_list_header_aliases_type">Aliases</string>
+  <string name="item_list_header_notes_type">Notes</string>
+  <string name="item_list_header_credit_cards_type">Credit cards</string>
   <plurals name="item_list_header_results">
     <item quantity="other">結果</item>
   </plurals>

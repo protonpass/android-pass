@@ -8,6 +8,10 @@
   <string name="sort_by_modification_date">Més recent</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tots</string>
+  <string name="item_list_header_logins_type">Inicis de sessió</string>
+  <string name="item_list_header_aliases_type">Àlies</string>
+  <string name="item_list_header_notes_type">Notes</string>
+  <string name="item_list_header_credit_cards_type">Targetes de pagament</string>
   <plurals name="item_list_header_results">
     <item quantity="one">resultat</item>
     <item quantity="other">resultats</item>

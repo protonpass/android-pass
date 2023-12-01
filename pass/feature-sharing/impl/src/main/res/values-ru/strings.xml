@@ -22,7 +22,7 @@
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">Может просматривать элементы в этом хранилище.</string>
-  <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
+  <string name="sharing_can_edit_description">Может создавать, редактировать, удалять и экспортировать элементы этого хранилища.</string>
   <string name="sharing_can_manage_description">Может представлять и отзывать доступ к этому хранилищу.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d элемент</item>
@@ -75,12 +75,12 @@
     <item quantity="other">%d invites left</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
-    <item quantity="one">%d item</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="one">%d элемент</item>
+    <item quantity="few">%d элементов</item>
+    <item quantity="many">%d элементов</item>
+    <item quantity="other">%d элемента</item>
   </plurals>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitation sent</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Приглашение отправлено</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Pending account creation</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirm access</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitations</string>

@@ -41,7 +41,7 @@
   <string name="sharing_join_shared_vault">Uniu-vos i sincronitzeu</string>
   <string name="sharing_reject_invitation">Rebutja la invitació</string>
   <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulations, your access has been confirmed</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">See the shared vault</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Mostra la caixa forta compartida</string>
   <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Tanca</string>
   <string name="sharing_snackbar_get_invite_error">No s’ha pogut obtenir la invitació.</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
@@ -55,8 +55,8 @@
   <string name="sharing_snackbar_get_vault_members_error">No s\'han pogut obtenir els membres de la caixa forta</string>
   <string name="sharing_snackbar_change_permission_success">S\'han canviat els permisos.</string>
   <string name="sharing_snackbar_change_permission_error">No s\'ha pogut canviar els permisos.</string>
-  <string name="sharing_snackbar_remove_member_success">S\'ha eliminat el membre de la caixa forta.</string>
-  <string name="sharing_snackbar_remove_member_error">No s\'ha pogut eliminar de la caixa forta.</string>
+  <string name="sharing_snackbar_remove_member_success">S\'ha esborrat el membre de la caixa forta.</string>
+  <string name="sharing_snackbar_remove_member_error">No s\'ha pogut esborrar de la caixa forta.</string>
   <string name="share_summary_title">Reviseu i comparteu</string>
   <string name="share_summary_vault">a caixa forta %s</string>
   <string name="share_summary_share_vault">Comparteix la caixa forta</string>
@@ -106,7 +106,7 @@
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Comparteix aquesta caixa forta</string>
   <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personalitza</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mou a una caixa forta compartida</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>

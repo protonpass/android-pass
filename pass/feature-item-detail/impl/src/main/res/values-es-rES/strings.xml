@@ -73,13 +73,13 @@
     It would translate to
     12 February 12:34
     -->
-  <string name="date_full_date_format">dd de LLLL HH:mm</string>
+  <string name="date_full_date_format">dd \'de\' LLLL HH:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
-  <string name="date_full_date_format_with_year">dd de LLLL de yyyy HH:mm</string>
+  <string name="date_full_date_format_with_year">dd \'de\' LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">No se puede editar.</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">No puedes editar este elemento porque no tienes los permisos suficientes.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Solo tienes permitido editar elementos en tus cajas fuertes antiguas. Mejora tu plan actual para editar este elemento.</string>

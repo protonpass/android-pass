@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Compartilhar uso anônimo</string>
   <string name="settings_share_crashes">Compartilhar relatórios de erros anônimos</string>
   <string name="settings_preference_updated">Sua preferência foi atualizada</string>
+  <string name="settings_default_vault_updated">Seu cofre padrão foi atualizado</string>
+  <string name="settings_default_vault_update_error">Não foi possível atualizar o cofre padrão</string>
+  <string name="settings_default_vault_section_title">Cofres</string>
+  <string name="settings_default_vault_vault_selector_title">Cofre padrão</string>
+  <string name="settings_default_vault_section_subtitle">O cofre onde seus itens serão criados por padrão.</string>
+  <string name="settings_default_vault_disabled_reason">Você não pode escrever neste cofre.</string>
   <string name="view_logs_title">Visualizar registros</string>
   <string name="clipboard_bottomsheet_title">Área de transferência</string>
   <string name="clipboard_option_clear_clipboard_label">Limpar área de transferência</string>

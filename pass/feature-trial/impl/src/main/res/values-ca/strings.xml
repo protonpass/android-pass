@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trial_title">Your welcome gift</string>
+  <string name="trial_title">El vostre regal de benvinguda</string>
   <string name="trial_subtitle">Enjoy next-level password management</string>
   <string name="trial_feature_1">20 caixes fortes</string>
   <string name="trial_feature_3">Autenticació de doble factor (A2F) integrada</string>
   <string name="trial_feature_4">Camps personalitzats</string>
-  <string name="trial_button_text">Upgrade now</string>
+  <string name="trial_button_text">Millora ara</string>
   <plurals name="trial_days_left">
     <item quantity="one">1 day left to try premium features</item>
     <item quantity="other">%d days left to try premium features</item>

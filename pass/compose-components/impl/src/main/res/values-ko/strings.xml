@@ -8,6 +8,10 @@
   <string name="sort_by_modification_date">가장 최근순</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">전체</string>
+  <string name="item_list_header_logins_type">로그인</string>
+  <string name="item_list_header_aliases_type">별칭</string>
+  <string name="item_list_header_notes_type">메모</string>
+  <string name="item_list_header_credit_cards_type">신용카드</string>
   <plurals name="item_list_header_results">
     <item quantity="other">결과</item>
   </plurals>

@@ -43,14 +43,14 @@ open class SyncWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
-        PassLogger.i(TAG, "Starting sync worker")
+        PassLogger.i(TAG, "Starting SyncWorker.doWork")
         return performSync().fold(
             onSuccess = {
-                PassLogger.i(TAG, "Sync worker finished successfully")
+                PassLogger.i(TAG, "SyncWorker.doWork finished successfully")
                 Result.success()
             },
             onFailure = {
-                PassLogger.w(TAG, it, "Sync worker finished with error")
+                PassLogger.w(TAG, it, "SyncWorker.doWork finished with error")
                 Result.failure()
             }
         )

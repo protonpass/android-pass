@@ -29,6 +29,7 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
+import kotlin.time.measureTimedValue
 
 class RefreshContentImpl @Inject constructor(
     private val accountManager: AccountManager,
@@ -43,7 +44,11 @@ class RefreshContentImpl @Inject constructor(
         syncStatusRepository.emit(ItemSyncStatus.Started)
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
-        val refreshSharesResult = shareRepository.refreshShares(userId)
+        val (refreshSharesResult, time) = measureTimedValue {
+            shareRepository.refreshShares(userId)
+        }
+        PassLogger.i(TAG, "Refreshed shares in ${time.inWholeMilliseconds} ms")
+
         val request = FetchItemsWorker.getRequestFor(refreshSharesResult.allShareIds.toList())
         workManager.enqueue(request)
     }

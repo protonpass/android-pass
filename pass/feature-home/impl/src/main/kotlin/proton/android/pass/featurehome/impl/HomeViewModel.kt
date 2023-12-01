@@ -109,6 +109,7 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsSuccess
 import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
@@ -585,11 +586,9 @@ class HomeViewModel @Inject constructor(
     }
 
     fun restoreItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        actionStateFlow.update { ActionState.Loading }
         runCatching {
-            restoreItem.invoke(shareId = shareId, itemId = itemId)
+            restoreItem(items = mapOf(shareId to listOf(itemId)))
         }.onSuccess {
-            actionStateFlow.update { ActionState.Done }
             PassLogger.i(TAG, "Item restored successfully")
         }.onFailure {
             PassLogger.e(TAG, it, "Error restoring item")
@@ -597,6 +596,21 @@ class HomeViewModel @Inject constructor(
             snackbarDispatcher(RestoreItemsError)
         }
     }
+
+    fun restoreItems(items: ImmutableSet<Pair<ShareId, ItemId>>) =
+        viewModelScope.launch(coroutineExceptionHandler) {
+            if (items.isEmpty()) return@launch
+
+            runCatching { restoreItem(items = items.groupBy({ it.first }, { it.second })) }
+                .onSuccess {
+                    clearSelection()
+                    snackbarDispatcher(RestoreItemsSuccess)
+                }
+                .onFailure {
+                    PassLogger.e(TAG, it, "Untrash items failed")
+                    snackbarDispatcher(RestoreItemsError)
+                }
+        }
 
     fun deleteItem(itemUiModel: ItemUiModel) =
         viewModelScope.launch {

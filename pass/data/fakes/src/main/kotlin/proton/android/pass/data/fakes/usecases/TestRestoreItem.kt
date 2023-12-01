@@ -34,8 +34,8 @@ class TestRestoreItem @Inject constructor() : RestoreItem {
     }
     fun memory(): List<Payload> = memory
 
-    override suspend fun invoke(userId: UserId?, shareId: ShareId, itemId: ItemId) {
-        memory.add(Payload(userId, shareId, itemId))
+    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
+        memory.add(Payload(userId, items))
         result.fold(
             onSuccess = {},
             onFailure = { throw it }
@@ -44,8 +44,7 @@ class TestRestoreItem @Inject constructor() : RestoreItem {
 
     data class Payload(
         val userId: UserId?,
-        val shareId: ShareId,
-        val itemId: ItemId
+        val items: Map<ShareId, List<ItemId>>
     )
 }
 

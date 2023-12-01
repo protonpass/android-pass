@@ -45,4 +45,5 @@
   <string name="profile_option_lock_with">Lås med</string>
   <string name="profile_option_unlock_with">Lås op med</string>
   <string name="profile_option_change_pin_code">Skift pinkode</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser er indstillet som standardbrowser. Den understøtter ikke autoudfyldning af eksterne adgangskodeadministratorer.</string>
 </resources>

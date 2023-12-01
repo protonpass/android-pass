@@ -57,7 +57,7 @@
   <string name="credit_card_number_field_name">卡號</string>
   <string name="credit_card_cvv_field_name">Security code</string>
   <string name="credit_card_pin_field_name">PIN 碼</string>
-  <string name="credit_card_expiration_date_field_name">Expiration date</string>
+  <string name="credit_card_expiration_date_field_name">到期日</string>
   <string name="credit_card_cardholder_copied_to_clipboard">卡片資料已複製至剪貼簿</string>
   <string name="credit_card_number_copied_to_clipboard">卡片號碼已複製至剪貼簿</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
@@ -72,13 +72,13 @@
     It would translate to
     12 February 12:34
     -->
-  <string name="date_full_date_format">LLLL dd 日 HH:mm</string>
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
-  <string name="date_full_date_format_with_year">yyyy 年 LLLL dd 日 HH:mm</string>
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">無法編輯</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>

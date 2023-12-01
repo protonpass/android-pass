@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">匿名分享資料</string>
   <string name="settings_share_crashes">分享匿名錯誤報告</string>
   <string name="settings_preference_updated">您的偏好已更新</string>
+  <string name="settings_default_vault_updated">Your default vault has been updated</string>
+  <string name="settings_default_vault_update_error">Could not update the default vault</string>
+  <string name="settings_default_vault_section_title">Vaults</string>
+  <string name="settings_default_vault_vault_selector_title">Default vault</string>
+  <string name="settings_default_vault_section_subtitle">The vault where your items will be created by default.</string>
+  <string name="settings_default_vault_disabled_reason">You cannot write to this vault.</string>
   <string name="view_logs_title">檢視記錄檔</string>
   <string name="clipboard_bottomsheet_title">剪貼簿</string>
   <string name="clipboard_option_clear_clipboard_label">清除剪貼簿</string>

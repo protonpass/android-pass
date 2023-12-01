@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Dela anonym användning</string>
   <string name="settings_share_crashes">Dela anonyma kraschrapporter</string>
   <string name="settings_preference_updated">Dina preferenser har uppdaterats</string>
+  <string name="settings_default_vault_updated">Ditt standardvalv har uppdaterats</string>
+  <string name="settings_default_vault_update_error">Kunde inte uppdatera standardvalvet</string>
+  <string name="settings_default_vault_section_title">Valv</string>
+  <string name="settings_default_vault_vault_selector_title">Standardvalv</string>
+  <string name="settings_default_vault_section_subtitle">Valvet där dina objekt kommer att skapas som standard.</string>
+  <string name="settings_default_vault_disabled_reason">Du kan inte skriva till detta valv.</string>
   <string name="view_logs_title">Visa loggar</string>
   <string name="clipboard_bottomsheet_title">Urklipp</string>
   <string name="clipboard_option_clear_clipboard_label">Rensa urklipp</string>

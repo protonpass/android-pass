@@ -73,13 +73,13 @@
     It would translate to
     12 February 12:34
     -->
-  <string name="date_full_date_format">12 Şubat 12:34</string>
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
-  <string name="date_full_date_format_with_year">12 Şubat 2023 12:34</string>
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Düzenlenemez</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Yeterli izniniz olmadığından bu ögeyi düzenleyemezsiniz.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Yalnızca en eski kasalarınızdaki ögeleri düzenlemenize izin veriliyor. Bu ögeyi düzenlemek için lütfen abonelik tarifenizi yükseltin.</string>

@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Διαμοιρασμός ανώνυμης χρήσης</string>
   <string name="settings_share_crashes">Κοινοποιήστε ανώνυμες αναφορές σφαλμάτων</string>
   <string name="settings_preference_updated">Η προτίμησή σας έχει ενημερωθεί</string>
+  <string name="settings_default_vault_updated">Η προεπιλεγμένη κρύπτη έχει ενημερωθεί</string>
+  <string name="settings_default_vault_update_error">Δεν ήταν δυνατή η ενημέρωση της προεπιλεγμένης κρύπτης</string>
+  <string name="settings_default_vault_section_title">Κρύπτες</string>
+  <string name="settings_default_vault_vault_selector_title">Προεπιλεγμένη κρύπτη</string>
+  <string name="settings_default_vault_section_subtitle">Η κρύπτη όπου θα δημιουργηθούν τα στοιχεία σας από προεπιλογή.</string>
+  <string name="settings_default_vault_disabled_reason">Δεν μπορείτε να γράψετε σε αυτή την κρύπτη</string>
   <string name="view_logs_title">Προβολή αρχείων καταγραφής</string>
   <string name="clipboard_bottomsheet_title">Πρόχειρο</string>
   <string name="clipboard_option_clear_clipboard_label">Εκκαθάριση Πρόχειρου</string>

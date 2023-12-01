@@ -8,6 +8,10 @@
   <string name="sort_by_modification_date">Ostatnie</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Wszystko</string>
+  <string name="item_list_header_logins_type">Dane logowania</string>
+  <string name="item_list_header_aliases_type">Aliasy</string>
+  <string name="item_list_header_notes_type">Notatki</string>
+  <string name="item_list_header_credit_cards_type">Karty płatnicze</string>
   <plurals name="item_list_header_results">
     <item quantity="one">wynik</item>
     <item quantity="few">wyniki</item>

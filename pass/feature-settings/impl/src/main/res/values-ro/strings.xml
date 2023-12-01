@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Partajare anonimă utilizare</string>
   <string name="settings_share_crashes">Partajare anonimă rapoarte de erori</string>
   <string name="settings_preference_updated">Preferințele au fost actualizate.</string>
+  <string name="settings_default_vault_updated">Seiful implicit a fost actualizat.</string>
+  <string name="settings_default_vault_update_error">Seiful principal nu a putut fi actualizat.</string>
+  <string name="settings_default_vault_section_title">Seifuri</string>
+  <string name="settings_default_vault_vault_selector_title">Seif implicit</string>
+  <string name="settings_default_vault_section_subtitle">Seiful unde vor fi create implicit articolele.</string>
+  <string name="settings_default_vault_disabled_reason">Nu puteți scrie în acest seif.</string>
   <string name="view_logs_title">Afișare jurnale</string>
   <string name="clipboard_bottomsheet_title">Memorie</string>
   <string name="clipboard_option_clear_clipboard_label">Golire memorie</string>

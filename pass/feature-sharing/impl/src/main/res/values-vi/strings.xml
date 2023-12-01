@@ -38,13 +38,13 @@
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mời bạn truy cập nội dung trong</string>
   <string name="sharing_join_shared_vault">Tham gia và đồng bộ</string>
   <string name="sharing_reject_invitation">Từ chối lời mời</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulations, your access has been confirmed</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">See the shared vault</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Chúc mừng, truy cập của bạn đã được xác nhận</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Xem kho lưu trữ được chia sẻ</string>
   <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Đóng</string>
   <string name="sharing_snackbar_get_invite_error">Không thể lấy lời mời</string>
   <string name="sharing_snackbar_invite_accepted">Đã chấp nhận lời mời</string>
   <string name="sharing_snackbar_invite_accept_error">Lỗi khi chấp nhận lời mời</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Không thể chấp nhận lời mời vì bạn đã đạt đến số lượng kho lưu trữ tối đa</string>
   <string name="sharing_snackbar_invite_rejected">Đã từ chối lời mời</string>
   <string name="sharing_snackbar_invite_reject_error">Lỗi khi từ chối lời mời</string>
   <string name="sharing_snackbar_vault_not_found">Không thể tìm thấy kho lưu trữ</string>
@@ -95,16 +95,16 @@
   <string name="sharing_snackbar_transfer_ownership_success">Đã chuyển quyền sở hữu</string>
   <string name="sharing_snackbar_transfer_ownership_error">Lỗi khi chuyển quyền sở hữu</string>
   <string name="sharing_invites_info_dialog_title">Giới hạn thành viên</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. You still have %2$d invites left.</string>
-  <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
-  <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Kho lưu trữ này có thể có %1$d thành viên. Bạn vẫn còn %2$d lời mời.</string>
+  <string name="sharing_limit_reached">Kho lưu trữ này đã đạt đến giới hạn thành viên và lời mời.</string>
+  <string name="sharing_invites_info_upgrade_text">Nâng cấp ngay để mời thêm.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Chia sẻ</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Dùng kho lưu trữ để chia sẻ nội dung với những người khác</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Chia sẽ kho lưu trữ này</string>
   <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Tuỳ chỉnh</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
-  <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
-  <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Chuyển đến một kho lưu trữ được chia sẻ</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Tạo một kho lưu trữ mới để chia sẻ</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Nội dung này sẽ được chuyển đến kho lưu trữ mới.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Nâng cấp để tạo thêm kho lưu trữ</string>
+  <string name="sharing_from_item_vault_limit_reached">Bạn đã đạt đến giới hạn kho lưu trữ</string>
 </resources>

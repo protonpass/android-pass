@@ -8,6 +8,10 @@
   <string name="sort_by_modification_date">Gần đây nhất</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tất cả</string>
+  <string name="item_list_header_logins_type">Đăng nhập</string>
+  <string name="item_list_header_aliases_type">Bí danh</string>
+  <string name="item_list_header_notes_type">Ghi chú</string>
+  <string name="item_list_header_credit_cards_type">Thẻ tín dụng</string>
   <plurals name="item_list_header_results">
     <item quantity="other">kết quả</item>
   </plurals>

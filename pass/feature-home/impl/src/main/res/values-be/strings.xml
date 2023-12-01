@@ -2,9 +2,9 @@
 <resources>
   <!-- Home -->
   <string name="home_empty_vault_title">Ваша сховішча нічога не змяшчае</string>
-  <string name="home_empty_vault_subtitle">Пачніце са стварэння вашага першага элемента.</string>
+  <string name="home_empty_vault_subtitle">Пачаць стварэнне свайго першага элемента.</string>
   <string name="home_empty_vault_create_login">Стварыць запіс уваходу</string>
-  <string name="home_empty_vault_create_alias">Стварэнне псеўданіма Hide-my-email</string>
+  <string name="home_empty_vault_create_alias">Стварыць псеўданім Hide-my-email</string>
   <string name="home_empty_vault_create_note">Стварыць нататку</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Памылка загрузкі элементаў</string>
   <string name="error_refreshing">Памылка падчас абнаўлення</string>

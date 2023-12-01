@@ -31,6 +31,12 @@
   <string name="settings_share_telemetry">Compartir uso anónimo</string>
   <string name="settings_share_crashes">Compartir reportes de error anónimos</string>
   <string name="settings_preference_updated">Su preferencia ha sido actualizada</string>
+  <string name="settings_default_vault_updated">Se actualizó su bóveda por defecto.</string>
+  <string name="settings_default_vault_update_error">No se pudo actualizar la bóveda por defecto.</string>
+  <string name="settings_default_vault_section_title">Bóvedas</string>
+  <string name="settings_default_vault_vault_selector_title">Bóveda por defecto</string>
+  <string name="settings_default_vault_section_subtitle">La bóveda donde se crearán sus elementos por defecto.</string>
+  <string name="settings_default_vault_disabled_reason">No puede escribir en esta bóveda.</string>
   <string name="view_logs_title">Ver registros</string>
   <string name="clipboard_bottomsheet_title">Portapapeles</string>
   <string name="clipboard_option_clear_clipboard_label">Borrar portapapeles</string>

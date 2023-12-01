@@ -8,6 +8,10 @@
   <string name="sort_by_modification_date">Cele mai noi</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Toate</string>
+  <string name="item_list_header_logins_type">Conectări</string>
+  <string name="item_list_header_aliases_type">Aliasuri</string>
+  <string name="item_list_header_notes_type">Note</string>
+  <string name="item_list_header_credit_cards_type">Carduri de plată</string>
   <plurals name="item_list_header_results">
     <item quantity="one">rezultat</item>
     <item quantity="few">rezultate</item>

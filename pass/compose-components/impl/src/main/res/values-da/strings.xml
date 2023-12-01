@@ -8,6 +8,10 @@
   <string name="sort_by_modification_date">Seneste</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Alle</string>
+  <string name="item_list_header_logins_type">Logins</string>
+  <string name="item_list_header_aliases_type">Aliasser</string>
+  <string name="item_list_header_notes_type">Noter</string>
+  <string name="item_list_header_credit_cards_type">Betalingskort</string>
   <plurals name="item_list_header_results">
     <item quantity="one">resultat</item>
     <item quantity="other">resultater</item>

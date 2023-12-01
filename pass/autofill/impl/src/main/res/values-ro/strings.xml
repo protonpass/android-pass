@@ -7,6 +7,7 @@
   <string name="topbar_search_query_oldest_vaults">Se caută în seifurile vechi…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Căutare…</string>
   <string name="inline_suggestions_open_app">Deschidere Proton Pass</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Treceți la un plan cu plată pentru autocompletare</string>
   <string name="autofill_only_searching_in_oldest_vaults">Planul actual vă permite să folosiți articole din seifurile vechi doar pentru autocompletări.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Sugestii pentru %s</string>
@@ -24,4 +25,6 @@
   <string name="autofill_user_logged_out">V-ați deconectat. Reconectați-vă deschizând aplicația.</string>
   <string name="bottomsheet_copy_password">Copiere parolă</string>
   <string name="bottomsheet_copy_username">Copiere nume utilizator</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Completare automată detalii card</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Completarea automată a detaliilor cardului de plată este o funcție cu plată. Dacă doriți ca Proton Pass să vă introducă automat detaliile cardului în aplicații și site-uri web, trebuie să treceți la un plan cu plată.</string>
 </resources>

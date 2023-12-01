@@ -58,7 +58,6 @@ import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -69,6 +68,7 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
 import java.sql.Date
 import javax.inject.Inject
@@ -312,41 +312,49 @@ class ShareRepositoryImpl @Inject constructor(
     private suspend fun storeShares(
         userAddress: UserAddress,
         shares: List<ShareResponse>
-    ): List<ShareEntity> {
-        val entities: List<Pair<ShareResponseEntity, List<ShareKey>>> =
-            withContext(Dispatchers.IO) {
-                shares.map { shareResponse ->
-                    getShareKeys(shareResponse, userAddress)
-                }.awaitAll()
-            }
+    ): List<ShareEntity> = withContext(Dispatchers.IO) {
+        PassLogger.i(TAG, "Fetching ShareKeys for ${shares.size} shares")
+        val entities: List<Pair<ShareResponseEntity, List<ShareKey>>> = shares.map { response ->
+            getShareKeys(response, userAddress)
+        }.awaitAll()
 
-        return database.inTransaction {
+        val shareEntities = entities.map { it.first.entity }
+        val shareKeyEntities = entities
+            .map { responsePair ->
+                responsePair.second.map { shareKey ->
+                    ShareKeyEntity(
+                        rotation = shareKey.rotation,
+                        userId = userAddress.userId.id,
+                        addressId = userAddress.addressId.id,
+                        shareId = responsePair.first.response.shareId,
+                        key = shareKey.responseKey,
+                        createTime = shareKey.createTime,
+                        symmetricallyEncryptedKey = shareKey.key,
+                        isActive = shareKey.isActive,
+                        userKeyId = shareKey.userKeyId
+                    )
+                }
+            }
+            .flatten()
+
+        PassLogger.i(
+            TAG,
+            "Going to store ${shareEntities.size} shares and ${shareKeyEntities.size} ShareKeys"
+        )
+
+        val allShareEntities = database.inTransaction {
             // First, store the shares
-            val shareEntities = entities.map { it.first.entity }
             localShareDataSource.upsertShares(shareEntities)
 
             // Now that we have inserted the shares, we can safely insert the shareKeys
-            val shareKeyEntities = entities
-                .map { responsePair ->
-                    responsePair.second.map { shareKey ->
-                        ShareKeyEntity(
-                            rotation = shareKey.rotation,
-                            userId = userAddress.userId.id,
-                            addressId = userAddress.addressId.id,
-                            shareId = responsePair.first.response.shareId,
-                            key = shareKey.responseKey,
-                            createTime = shareKey.createTime,
-                            symmetricallyEncryptedKey = shareKey.key,
-                            isActive = shareKey.isActive,
-                            userKeyId = shareKey.userKeyId
-                        )
-                    }
-                }
-                .flatten()
             shareKeyRepository.saveShareKeys(shareKeyEntities)
 
             shareEntities
         }
+
+        PassLogger.i(TAG, "Stored shares and ShareKeys")
+
+        allShareEntities
     }
 
     private fun CoroutineScope.getShareKeys(

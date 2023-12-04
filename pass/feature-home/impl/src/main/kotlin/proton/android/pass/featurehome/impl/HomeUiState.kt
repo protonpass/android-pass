@@ -45,17 +45,24 @@ sealed interface ActionState {
     object Done : ActionState
 }
 
+sealed interface HomeNavEvent {
+    object Unknown : HomeNavEvent
+    object ShowBulkMoveToVault : HomeNavEvent
+}
+
 @Immutable
 data class HomeUiState(
     val homeListUiState: HomeListUiState,
     val searchUiState: SearchUiState,
-    val accountType: AccountType
+    val accountType: AccountType,
+    val navEvent: HomeNavEvent,
 ) {
     companion object {
         val Loading = HomeUiState(
             homeListUiState = HomeListUiState.Loading,
             searchUiState = SearchUiState.Initial,
-            accountType = AccountType.Free
+            accountType = AccountType.Free,
+            navEvent = HomeNavEvent.Unknown
         )
     }
 }
@@ -83,7 +90,7 @@ data class HomeListUiState(
     val homeVaultSelection: VaultSelectionOption = VaultSelectionOption.AllVaults,
     val searchFilterType: SearchFilterType = SearchFilterType.All,
     val sortingType: SearchSortingType = SearchSortingType.MostRecent,
-    val selectionState: HomeSelectionState,
+    val selectionState: HomeSelectionState
 ) {
     companion object {
         val Loading = HomeListUiState(

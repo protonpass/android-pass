@@ -32,10 +32,11 @@ class TestDeleteItem @Inject constructor() : DeleteItem {
     fun setResult(value: Result<Unit>) {
         result = value
     }
+
     fun memory(): List<Payload> = memory
 
-    override suspend fun invoke(userId: UserId?, shareId: ShareId, itemId: ItemId) {
-        memory.add(Payload(userId, shareId, itemId))
+    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
+        memory.add(Payload(userId, items))
         result.fold(
             onSuccess = {},
             onFailure = { throw it }
@@ -44,7 +45,6 @@ class TestDeleteItem @Inject constructor() : DeleteItem {
 
     data class Payload(
         val userId: UserId?,
-        val shareId: ShareId,
-        val itemId: ItemId
+        val items: Map<ShareId, List<ItemId>>
     )
 }

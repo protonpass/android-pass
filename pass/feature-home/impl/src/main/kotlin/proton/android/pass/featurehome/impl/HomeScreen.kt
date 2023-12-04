@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
@@ -63,6 +64,7 @@ import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetCo
 import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetContents
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
+import proton.android.pass.featurehome.impl.trash.ConfirmDeleteItemsDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmRestoreAllDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmRestoreItemsDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmTrashItemsDialog
@@ -102,6 +104,7 @@ fun HomeScreen(
     var shouldShowRestoreAllDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowRestoreItemsDialog by rememberSaveable { mutableStateOf(false) }
+    var shouldShowMoveToTrashItemsDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowDeleteItemsDialog by rememberSaveable { mutableStateOf(false) }
     var aliasToBeTrashed by rememberSaveable(stateSaver = ItemUiModelSaver) { mutableStateOf(null) }
 
@@ -124,6 +127,7 @@ fun HomeScreen(
             shouldShowRestoreAllDialog = false
             shouldShowClearTrashDialog = false
             shouldShowRestoreItemsDialog = false
+            shouldShowMoveToTrashItemsDialog = false
             shouldShowDeleteItemsDialog = false
             homeViewModel.restoreActionState()
         }
@@ -512,8 +516,8 @@ fun HomeScreen(
                             homeViewModel.onItemSelected(it.item)
                         }
 
-                        HomeUiEvent.DeleteItemsActionClick -> {
-                            shouldShowDeleteItemsDialog = true
+                        HomeUiEvent.MoveToTrashItemsActionClick -> {
+                            shouldShowMoveToTrashItemsDialog = true
                         }
 
                         is HomeUiEvent.StopBulk -> {
@@ -521,7 +525,9 @@ fun HomeScreen(
                         }
 
                         HomeUiEvent.MoveItemsActionClick -> TODO()
-                        HomeUiEvent.PermanentlyDeleteItemsActionClick -> TODO()
+                        HomeUiEvent.PermanentlyDeleteItemsActionClick -> {
+                            shouldShowDeleteItemsDialog = true
+                        }
                         HomeUiEvent.RestoreItemsActionClick -> {
                             shouldShowRestoreItemsDialog = true
                         }
@@ -556,7 +562,7 @@ fun HomeScreen(
                 show = shouldShowDeleteItemDialog,
                 onConfirm = {
                     selectedItem?.let {
-                        homeViewModel.deleteItem(it)
+                        homeViewModel.deleteItems(persistentSetOf(it.shareId to it.id))
                     }
                 },
                 onDismiss = { shouldShowDeleteItemDialog = false }
@@ -584,11 +590,23 @@ fun HomeScreen(
             )
 
             ConfirmTrashItemsDialog(
-                show = shouldShowDeleteItemsDialog,
+                show = shouldShowMoveToTrashItemsDialog,
                 isLoading = actionState == ActionState.Loading,
                 amount = homeUiState.homeListUiState.selectionState.selectedItems.size,
                 onConfirm = {
                     homeViewModel.sendItemsToTrash(
+                        homeUiState.homeListUiState.selectionState.selectedItems
+                    )
+                },
+                onDismiss = { shouldShowMoveToTrashItemsDialog = false }
+            )
+
+            ConfirmDeleteItemsDialog(
+                show = shouldShowDeleteItemsDialog,
+                isLoading = actionState == ActionState.Loading,
+                amount = homeUiState.homeListUiState.selectionState.selectedItems.size,
+                onConfirm = {
+                    homeViewModel.deleteItems(
                         homeUiState.homeListUiState.selectionState.selectedItems
                     )
                 },

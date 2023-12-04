@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -45,7 +46,11 @@ fun MigrateConfirmVaultContents(
     onConfirm: () -> Unit
 ) {
     val title = when (state.mode) {
-        MigrateMode.MigrateItem -> stringResource(R.string.migrate_item_confirm_title_bottom_sheet)
+        is MigrateMode.MigrateSelectedItems -> pluralStringResource(
+            R.plurals.migrate_item_confirm_title_bottom_sheet,
+            state.mode.number,
+            state.mode.number
+        )
         MigrateMode.MigrateAll -> stringResource(R.string.migrate_all_items_confirm_title_bottom_sheet)
     }
 

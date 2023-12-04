@@ -103,11 +103,15 @@ import proton.android.pass.domain.canUpdate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ClearTrashError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.CreditCardMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemSuccess
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemsSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsMovedToTrashError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsMovedToTrashSuccess
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.MoveToTrashError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
@@ -484,38 +488,36 @@ class HomeViewModel @Inject constructor(
         isRefreshing.update { IsRefreshingState.NotRefreshing }
     }
 
-    fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch(coroutineExceptionHandler) {
-        if (item == null) return@launch
-
-        runCatching { trashItem(items = mapOf(item.shareId to listOf(item.id))) }
-            .onSuccess {
-                when (item.contents) {
-                    is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
-                    is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
-                    is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
-                    is ItemContents.CreditCard -> snackbarDispatcher(HomeSnackbarMessage.CreditCardMovedToTrash)
-                    is ItemContents.Unknown -> {}
-                }
-            }
-            .onFailure {
-                PassLogger.e(TAG, it, "Trash item failed")
-                snackbarDispatcher(HomeSnackbarMessage.MoveToTrashError)
-            }
-    }
-
     fun sendItemsToTrash(items: ImmutableSet<Pair<ShareId, ItemId>>) =
         viewModelScope.launch(coroutineExceptionHandler) {
             if (items.isEmpty()) return@launch
             actionStateFlow.update { ActionState.Loading }
+            val itemTypes = homeUiState.value.homeListUiState.items
+                .flatMap { it.items }
+                .filter { (itemId: ItemId, shareId: ShareId) -> items.contains(shareId to itemId) }
 
             runCatching { trashItem(items = items.groupBy({ it.first }, { it.second })) }
                 .onSuccess {
                     clearSelection()
-                    snackbarDispatcher(HomeSnackbarMessage.ItemsMovedToTrashSuccess)
+                    if (itemTypes.size == 1) {
+                        when (itemTypes.first().contents) {
+                            is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
+                            is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
+                            is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
+                            is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
+                            is ItemContents.Unknown -> {}
+                        }
+                    } else {
+                        snackbarDispatcher(ItemsMovedToTrashSuccess)
+                    }
                 }
                 .onFailure {
                     PassLogger.e(TAG, it, "Trash items failed")
-                    snackbarDispatcher(HomeSnackbarMessage.ItemsMovedToTrashError)
+                    if (itemTypes.size == 1) {
+                        snackbarDispatcher(MoveToTrashError)
+                    } else {
+                        snackbarDispatcher(ItemsMovedToTrashError)
+                    }
                 }
             actionStateFlow.update { ActionState.Done }
         }
@@ -588,17 +590,6 @@ class HomeViewModel @Inject constructor(
 
     fun restoreActionState() {
         actionStateFlow.update { ActionState.Unknown }
-    }
-
-    fun restoreItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        runCatching {
-            restoreItem(items = mapOf(shareId to listOf(itemId)))
-        }.onSuccess {
-            PassLogger.i(TAG, "Item restored successfully")
-        }.onFailure {
-            PassLogger.e(TAG, it, "Error restoring item")
-            snackbarDispatcher(RestoreItemsError)
-        }
     }
 
     fun restoreItems(items: ImmutableSet<Pair<ShareId, ItemId>>) =

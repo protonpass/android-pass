@@ -18,14 +18,13 @@
 
 package proton.android.pass.data.api.usecases
 
-import proton.android.pass.domain.Item
+import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-interface MigrateItem {
+interface MigrateItems {
     suspend operator fun invoke(
-        sourceShare: ShareId,
-        itemId: ItemId,
+        items: Map<ShareId, List<ItemId>>,
         destinationShare: ShareId
-    ): Item
+    ): MigrateItemsResult
 }

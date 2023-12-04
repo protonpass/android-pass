@@ -32,9 +32,14 @@ sealed interface ConfirmMigrateEvent {
     object AllItemsMigrated : ConfirmMigrateEvent
 }
 
-enum class MigrateMode {
-    MigrateItem,
-    MigrateAll
+@Stable
+sealed interface MigrateMode {
+    @Stable
+    @JvmInline
+    value class MigrateSelectedItems(val number: Int) : MigrateMode
+
+    @Stable
+    object MigrateAll : MigrateMode
 }
 
 @Stable

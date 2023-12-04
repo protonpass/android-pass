@@ -415,7 +415,7 @@ class LoginDetailViewModel @Inject constructor(
         viewModelScope.launch {
             isLoadingState.update { IsLoadingState.Loading }
             runCatching {
-                deleteItem(shareId = itemUiModel.shareId, itemId = itemUiModel.id)
+                deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
             }.onSuccess {
                 telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
                 isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }

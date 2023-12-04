@@ -40,7 +40,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 
-class MigrateSelectVaultForMigrateItemViewModelTest {
+class MigrateSelectVaultForMigrateItemsViewModelTest {
 
     @get:Rule
     val dispatcher = MainDispatcherRule()
@@ -157,6 +157,6 @@ class MigrateSelectVaultForMigrateItemViewModelTest {
         private val SHARE_ID = ShareId("123")
         private val ITEM_ID = ItemId("456")
 
-        private val MODE = MigrateModeValue.SingleItem
+        private val MODE = MigrateModeValue.SelectedItems
     }
 }

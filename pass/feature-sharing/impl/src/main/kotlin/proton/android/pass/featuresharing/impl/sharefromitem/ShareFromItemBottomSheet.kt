@@ -19,6 +19,7 @@
 package proton.android.pass.featuresharing.impl.sharefromitem
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,6 +33,16 @@ fun ShareFromItemBottomSheet(
     viewModel: ShareFromItemViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            ShareFromItemNavEvent.Unknown -> {}
+            ShareFromItemNavEvent.MoveToSharedVault -> {
+                onNavigateEvent(SharingNavigation.MoveItemToSharedVault)
+            }
+        }
+        viewModel.clearEvent()
+    }
 
     ShareFromItemContent(
         modifier = modifier,
@@ -49,12 +60,7 @@ fun ShareFromItemBottomSheet(
                     }
 
                     ShareFromItemEvent.MoveToSharedVault -> {
-                        onNavigateEvent(
-                            SharingNavigation.MoveItemToSharedVault(
-                                shareId = vault.vault.shareId,
-                                itemId = state.itemId
-                            )
-                        )
+                        viewModel.moveItemToSharedVault()
                     }
 
                     ShareFromItemEvent.ShareVault -> {

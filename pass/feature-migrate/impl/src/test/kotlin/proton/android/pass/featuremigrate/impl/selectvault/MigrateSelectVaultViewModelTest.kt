@@ -57,7 +57,7 @@ class MigrateSelectVaultViewModelTest {
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandle = TestSavedStateHandleProvider().apply {
                 get()[CommonNavArgId.ShareId.key] = SHARE_ID.id
-                get()[MigrateModeArg.key] = MigrateModeValue.SingleItem.name
+                get()[MigrateModeArg.key] = MigrateModeValue.SelectedItems.name
                 get()[CommonOptionalNavArgId.ItemId.key] = ITEM_ID.id
                 get()[MigrateVaultFilterArg.key] = MigrateVaultFilter.All.name
             }

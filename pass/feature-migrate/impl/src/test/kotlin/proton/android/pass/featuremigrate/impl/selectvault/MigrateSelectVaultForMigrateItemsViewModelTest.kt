@@ -20,13 +20,20 @@ package proton.android.pass.featuremigrate.impl.selectvault
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.featuremigrate.impl.MigrateVaultFilter
@@ -35,10 +42,6 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 
 class MigrateSelectVaultForMigrateItemsViewModelTest {
 
@@ -50,12 +53,16 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var savedState: TestSavedStateHandleProvider
+    private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
 
     @Before
     fun setup() {
         observeVaults = TestObserveVaultsWithItemCount()
         canPerformPaidAction = TestCanPerformPaidAction()
         snackbarDispatcher = TestSnackbarDispatcher()
+        bulkMoveToVaultRepository = TestBulkMoveToVaultRepository().apply {
+            runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID))) }
+        }
         savedState = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID.id
             get()[MigrateModeArg.key] = MODE.name
@@ -80,9 +87,10 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
             assertThat(event!!).isInstanceOf(SelectVaultEvent.VaultSelectedForMigrateItem::class.java)
 
             val castedEvent = event as SelectVaultEvent.VaultSelectedForMigrateItem
-            assertThat(castedEvent.itemId).isEqualTo(ITEM_ID)
-            assertThat(castedEvent.sourceShareId).isEqualTo(SHARE_ID)
             assertThat(castedEvent.destinationShareId).isEqualTo(otherVault.vault.shareId)
+
+            val bulkMemory = bulkMoveToVaultRepository.observe().first()
+            assertThat(bulkMemory.value()).isEqualTo(mapOf(SHARE_ID to listOf(ITEM_ID)))
         }
     }
 
@@ -118,7 +126,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
             val item = awaitItem()
             require(item is MigrateSelectVaultUiState.Success)
 
-            val expected = VaultEnabledPair(vault = sharedVault, isEnabled = true)
+            val expected = VaultEnabledPair(vault = sharedVault, status = VaultStatus.Enabled)
             assertThat(item.vaultList).isEqualTo(listOf(expected))
 
         }
@@ -128,7 +136,8 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
         instance = MigrateSelectVaultViewModel(
             observeVaults = observeVaults,
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandle = savedState
+            savedStateHandle = savedState,
+            bulkMoveToVaultRepository = bulkMoveToVaultRepository
         )
     }
 

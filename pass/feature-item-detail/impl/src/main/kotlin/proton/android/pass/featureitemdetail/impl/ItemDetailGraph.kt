@@ -37,10 +37,7 @@ import proton.android.pass.navigation.api.dialog
 sealed interface ItemDetailNavigation {
     data class OnEdit(val itemUiModel: ItemUiModel) : ItemDetailNavigation
 
-    data class OnMigrate(
-        val shareId: ShareId,
-        val itemId: ItemId
-    ) : ItemDetailNavigation
+    object OnMigrate : ItemDetailNavigation
 
     data class OnCreateLoginFromAlias(
         val alias: String,

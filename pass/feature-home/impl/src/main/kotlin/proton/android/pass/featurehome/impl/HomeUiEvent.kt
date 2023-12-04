@@ -37,7 +37,7 @@ sealed interface HomeUiEvent {
     object TrialInfoClick : HomeUiEvent
     object InviteClick : HomeUiEvent
     object MoveItemsActionClick : HomeUiEvent
-    object DeleteItemsActionClick : HomeUiEvent
+    object MoveToTrashItemsActionClick : HomeUiEvent
     object RestoreItemsActionClick : HomeUiEvent
     object PermanentlyDeleteItemsActionClick : HomeUiEvent
     object StopBulk : HomeUiEvent

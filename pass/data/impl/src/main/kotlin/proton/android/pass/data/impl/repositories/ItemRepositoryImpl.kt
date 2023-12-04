@@ -428,35 +428,46 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteItem(
+    override suspend fun deleteItems(
         userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
+        items: Map<ShareId, List<ItemId>>
     ) {
         withContext(Dispatchers.IO) {
-            val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-            if (item.state != ItemState.Trashed.value) return@withContext
+            val results = items.map { entry ->
+                async { deleteItemsForShare(userId, entry.key, entry.value) }
+            }.awaitAll().transpose()
 
-            val body =
-                TrashItemsRequest(
-                    listOf(
-                        TrashItemRevision(
-                            itemId = item.id,
-                            revision = item.revision
-                        )
-                    )
-                )
+            results.onFailure {
+                throw it
+            }
+        }
+    }
+
+    private suspend fun deleteItemsForShare(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): Result<Unit> = localItemDataSource.getByIdList(shareId, itemIds)
+        .chunked(MAX_BATCH_ITEMS_PER_REQUEST)
+        .map { items ->
+            val body = TrashItemsRequest(
+                items.map { TrashItemRevision(it.id, it.revision) }
+            )
 
             runCatching { remoteItemDataSource.delete(userId, shareId, body) }
                 .onSuccess {
-                    localItemDataSource.delete(shareId, itemId)
+                    database.inTransaction {
+                        items.forEach { item ->
+                            localItemDataSource.delete(shareId, ItemId(item.id))
+                        }
+                    }
                 }
                 .onFailure {
                     PassLogger.w(TAG, it, "Error deleting item")
-                    throw it
                 }
         }
-    }
+        .transpose()
+        .map { }
 
     @Suppress("ReturnCount")
     override suspend fun addPackageAndUrlToItem(

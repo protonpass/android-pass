@@ -52,7 +52,11 @@ enum class HomeSnackbarMessage(
     RestoreItemsSuccess(R.string.trash_success_restoring_items, SnackbarType.SUCCESS),
     RestoreItemsError(R.string.trash_error_restoring_items, SnackbarType.ERROR),
 
+    DeleteItemSuccess(R.string.trash_success_deleting_item, SnackbarType.SUCCESS),
     DeleteItemError(R.string.trash_error_deleting_item, SnackbarType.ERROR),
+
+    DeleteItemsSuccess(R.string.trash_deleting_items_success, SnackbarType.SUCCESS),
+    DeleteItemsError(R.string.trash_deleting_items_error, SnackbarType.ERROR),
 
     ItemsMovedToTrashSuccess(R.string.home_snackbar_items_move_to_trash_success, SnackbarType.SUCCESS),
     ItemsMovedToTrashError(R.string.home_snackbar_items_move_to_trash_error, SnackbarType.ERROR);

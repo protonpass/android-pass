@@ -26,9 +26,14 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -37,10 +42,6 @@ import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 
 class MigrateConfirmVaultViewModelTest {
 
@@ -52,6 +53,7 @@ class MigrateConfirmVaultViewModelTest {
     private lateinit var migrateVault: TestMigrateVault
     private lateinit var getVaultById: TestGetVaultWithItemCountById
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
 
     @Before
     fun setup() {
@@ -59,11 +61,13 @@ class MigrateConfirmVaultViewModelTest {
         migrateVault = TestMigrateVault()
         snackbarDispatcher = TestSnackbarDispatcher()
         getVaultById = TestGetVaultWithItemCountById()
+        bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
         instance = MigrateConfirmVaultViewModel(
             migrateItems = migrateItem,
             migrateVault = migrateVault,
             snackbarDispatcher = snackbarDispatcher,
             getVaultById = getVaultById,
+            bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID.id)
                 set(DestinationShareNavArgId.key, DESTINATION_SHARE_ID.id)

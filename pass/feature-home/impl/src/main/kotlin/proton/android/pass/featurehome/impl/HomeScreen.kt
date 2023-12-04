@@ -194,7 +194,7 @@ fun HomeScreen(
                         {
                             scope.launch {
                                 bottomSheetState.hide()
-                                homeViewModel.sendItemToTrash(it)
+                                homeViewModel.sendItemsToTrash(persistentSetOf(it.shareId to it.id))
                             }
                         }
                     },
@@ -260,7 +260,7 @@ fun HomeScreen(
                         {
                             scope.launch {
                                 bottomSheetState.hide()
-                                homeViewModel.sendItemToTrash(it)
+                                homeViewModel.sendItemsToTrash(persistentSetOf(it.shareId to it.id))
                             }
                         }
                     },
@@ -299,7 +299,7 @@ fun HomeScreen(
                         {
                             scope.launch {
                                 bottomSheetState.hide()
-                                homeViewModel.sendItemToTrash(it)
+                                homeViewModel.sendItemsToTrash(persistentSetOf(it.shareId to it.id))
                             }
                         }
                     },
@@ -319,7 +319,7 @@ fun HomeScreen(
                         { shareId, itemId ->
                             scope.launch {
                                 bottomSheetState.hide()
-                                homeViewModel.restoreItem(shareId, itemId)
+                                homeViewModel.restoreItems(persistentSetOf(shareId to itemId))
                             }
                         }
                     },
@@ -528,6 +528,7 @@ fun HomeScreen(
                         HomeUiEvent.PermanentlyDeleteItemsActionClick -> {
                             shouldShowDeleteItemsDialog = true
                         }
+
                         HomeUiEvent.RestoreItemsActionClick -> {
                             shouldShowRestoreItemsDialog = true
                         }
@@ -571,7 +572,8 @@ fun HomeScreen(
             ConfirmTrashAliasDialog(
                 show = aliasToBeTrashed != null,
                 onConfirm = {
-                    homeViewModel.sendItemToTrash(aliasToBeTrashed)
+                    val item = aliasToBeTrashed ?: return@ConfirmTrashAliasDialog
+                    homeViewModel.sendItemsToTrash(persistentSetOf(item.shareId to item.id))
                     aliasToBeTrashed = null
                 },
                 onDismiss = { aliasToBeTrashed = null }

@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.13.1 (2023-12-04)
+
+### Fixes :bug:
+
+- Crash on some devices when opening the app.
+
 ## 1.13.0 (2023-12-01)
 
 ### Features :tada:

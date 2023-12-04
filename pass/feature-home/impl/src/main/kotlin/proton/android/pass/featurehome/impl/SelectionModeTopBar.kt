@@ -83,7 +83,7 @@ fun SelectionModeTopBar(
                         tint = PassTheme.colors.textNorm
                     )
                 }
-                IconButton(onClick = { onEvent(HomeUiEvent.DeleteItemsActionClick) }) {
+                IconButton(onClick = { onEvent(HomeUiEvent.MoveToTrashItemsActionClick) }) {
                     Icon(
                         painter = painterResource(R.drawable.ic_proton_trash),
                         contentDescription = null,

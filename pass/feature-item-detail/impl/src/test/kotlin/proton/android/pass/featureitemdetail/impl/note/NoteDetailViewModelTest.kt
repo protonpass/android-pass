@@ -35,11 +35,11 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
-import proton.android.pass.data.fakes.usecases.TestDeleteItem
+import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
-import proton.android.pass.data.fakes.usecases.TestRestoreItem
-import proton.android.pass.data.fakes.usecases.TestTrashItem
+import proton.android.pass.data.fakes.usecases.TestRestoreItems
+import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -67,9 +67,9 @@ class NoteDetailViewModelTest {
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var getItemByIdWithVault: TestGetItemByIdWithVault
-    private lateinit var trashItem: TestTrashItem
-    private lateinit var deleteItem: TestDeleteItem
-    private lateinit var restoreItem: TestRestoreItem
+    private lateinit var trashItem: TestTrashItems
+    private lateinit var deleteItem: TestDeleteItems
+    private lateinit var restoreItem: TestRestoreItems
     private lateinit var encryptionContextProvider: TestEncryptionContextProvider
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var clipboardManager: TestClipboardManager
@@ -79,9 +79,9 @@ class NoteDetailViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         telemetryManager = TestTelemetryManager()
         getItemByIdWithVault = TestGetItemByIdWithVault()
-        trashItem = TestTrashItem()
-        deleteItem = TestDeleteItem()
-        restoreItem = TestRestoreItem()
+        trashItem = TestTrashItems()
+        deleteItem = TestDeleteItems()
+        restoreItem = TestRestoreItems()
         encryptionContextProvider = TestEncryptionContextProvider()
         canPerformPaidAction = TestCanPerformPaidAction()
         clipboardManager = TestClipboardManager()

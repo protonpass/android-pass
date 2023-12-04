@@ -19,20 +19,32 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.RestoreAllItems
+import proton.android.pass.data.api.usecases.RestoreItems
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TestRestoreItems @Inject constructor() : RestoreAllItems {
+class TestRestoreItems @Inject constructor() : RestoreItems {
 
     private var result: Result<Unit> = Result.success(Unit)
+    private val memory: MutableList<Payload> = mutableListOf()
 
     fun setResult(value: Result<Unit>) {
         result = value
     }
+    fun memory(): List<Payload> = memory
 
-    override suspend fun invoke(userId: UserId?) {
-        result.getOrThrow()
+    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
+        memory.add(Payload(userId, items))
+        result.fold(
+            onSuccess = {},
+            onFailure = { throw it }
+        )
     }
+
+    data class Payload(
+        val userId: UserId?,
+        val items: Map<ShareId, List<ItemId>>
+    )
 }
+

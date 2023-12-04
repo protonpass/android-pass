@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.RestoreItem
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -30,7 +30,7 @@ import javax.inject.Inject
 class RestoreItemImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val itemRepository: ItemRepository
-) : RestoreItem {
+) : RestoreItems {
 
     override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
         val id = if (userId == null) {

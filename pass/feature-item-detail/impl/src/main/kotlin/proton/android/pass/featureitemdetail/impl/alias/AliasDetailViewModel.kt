@@ -48,12 +48,12 @@ import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashSt
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
-import proton.android.pass.data.api.usecases.DeleteItem
+import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.data.api.usecases.RestoreItem
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.ItemId
@@ -82,8 +82,8 @@ class AliasDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val trashItem: TrashItems,
-    private val deleteItem: DeleteItem,
-    private val restoreItem: RestoreItem,
+    private val deleteItem: DeleteItems,
+    private val restoreItem: RestoreItems,
     private val telemetryManager: TelemetryManager,
     private val canShareVault: CanShareVault,
     canPerformPaidAction: CanPerformPaidAction,

@@ -102,4 +102,5 @@ sealed interface HomeNavigation {
     object SyncDialog : HomeNavigation
     object ConfirmedInvite : HomeNavigation
     object SearchOptions : HomeNavigation
+    object MoveToVault : HomeNavigation
 }

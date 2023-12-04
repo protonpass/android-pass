@@ -51,7 +51,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
-import proton.android.pass.data.fakes.usecases.TestTrashItem
+import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareColor
@@ -102,7 +102,7 @@ class HomeScreenTest {
     lateinit var preferencesRepository: TestPreferenceRepository
 
     @Inject
-    lateinit var trashItem: TestTrashItem
+    lateinit var trashItem: TestTrashItems
 
     @Before
     fun setup() {

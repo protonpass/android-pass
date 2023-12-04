@@ -16,35 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import javax.inject.Inject
 
-class TestDeleteItem @Inject constructor() : DeleteItem {
-
-    private var result: Result<Unit> = Result.success(Unit)
-    private val memory: MutableList<Payload> = mutableListOf()
-
-    fun setResult(value: Result<Unit>) {
-        result = value
-    }
-
-    fun memory(): List<Payload> = memory
-
-    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
-        memory.add(Payload(userId, items))
-        result.fold(
-            onSuccess = {},
-            onFailure = { throw it }
-        )
-    }
-
-    data class Payload(
-        val userId: UserId?,
-        val items: Map<ShareId, List<ItemId>>
-    )
+interface DeleteItems {
+    suspend operator fun invoke(userId: UserId? = null, items: Map<ShareId, List<ItemId>>)
 }

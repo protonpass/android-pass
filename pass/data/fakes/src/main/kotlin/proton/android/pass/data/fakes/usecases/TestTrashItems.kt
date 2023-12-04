@@ -19,32 +19,31 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.RestoreItem
+import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class TestRestoreItem @Inject constructor() : RestoreItem {
+@Singleton
+class TestTrashItems @Inject constructor() : TrashItems {
 
-    private var result: Result<Unit> = Result.success(Unit)
-    private val memory: MutableList<Payload> = mutableListOf()
+    private var result: Result<Unit> = Result.failure(IllegalStateException("TestTrashItem.result not set"))
 
-    fun setResult(value: Result<Unit>) {
-        result = value
-    }
-    fun memory(): List<Payload> = memory
+    private val memory = mutableListOf<Payload>()
+    fun getMemory(): List<Payload> = memory
 
-    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
-        memory.add(Payload(userId, items))
-        result.fold(
-            onSuccess = {},
-            onFailure = { throw it }
-        )
+    fun setResult(result: Result<Unit>) {
+        this.result = result
     }
 
     data class Payload(
         val userId: UserId?,
         val items: Map<ShareId, List<ItemId>>
     )
-}
 
+    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
+        memory.add(Payload(userId, items))
+        result.getOrThrow()
+    }
+}

@@ -42,16 +42,21 @@ import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestClearTrash
 import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
-import proton.android.pass.data.fakes.usecases.TestDeleteItem
+import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestPerformSync
-import proton.android.pass.data.fakes.usecases.TestRestoreItem
+import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
-import proton.android.pass.data.fakes.usecases.TestTrashItem
+import proton.android.pass.data.fakes.usecases.TestTrashItems
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuresearchoptions.fakes.TestHomeSearchOptionsRepository
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -61,11 +66,6 @@ import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 
 class HomeViewModelTest {
 
@@ -74,14 +74,14 @@ class HomeViewModelTest {
 
     private lateinit var instance: HomeViewModel
 
-    private lateinit var trashItem: TestTrashItem
+    private lateinit var trashItems: TestTrashItems
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var clipboardManager: TestClipboardManager
     private lateinit var performSync: TestPerformSync
     private lateinit var encryptionContextProvider: TestEncryptionContextProvider
-    private lateinit var restoreItem: TestRestoreItem
     private lateinit var restoreItems: TestRestoreItems
-    private lateinit var deleteItem: TestDeleteItem
+    private lateinit var restoreAllItems: TestRestoreAllItems
+    private lateinit var deleteItems: TestDeleteItems
     private lateinit var clearTrash: TestClearTrash
     private lateinit var addSearchEntry: TestAddSearchEntry
     private lateinit var deleteSearchEntry: TestDeleteSearchEntry
@@ -99,14 +99,14 @@ class HomeViewModelTest {
 
     @Before
     fun setup() {
-        trashItem = TestTrashItem()
+        trashItems = TestTrashItems()
         snackbarDispatcher = TestSnackbarDispatcher()
         clipboardManager = TestClipboardManager()
         performSync = TestPerformSync()
         encryptionContextProvider = TestEncryptionContextProvider()
-        restoreItem = TestRestoreItem()
         restoreItems = TestRestoreItems()
-        deleteItem = TestDeleteItem()
+        restoreAllItems = TestRestoreAllItems()
+        deleteItems = TestDeleteItems()
         clearTrash = TestClearTrash()
         addSearchEntry = TestAddSearchEntry()
         deleteSearchEntry = TestDeleteSearchEntry()
@@ -224,14 +224,14 @@ class HomeViewModelTest {
 
     private fun createViewModel() {
         instance = HomeViewModel(
-            trashItem = trashItem,
+            trashItems = trashItems,
             snackbarDispatcher = snackbarDispatcher,
             clipboardManager = clipboardManager,
             performSync = performSync,
             encryptionContextProvider = encryptionContextProvider,
-            restoreItem = restoreItem,
             restoreItems = restoreItems,
-            deleteItem = deleteItem,
+            restoreAllItems = restoreAllItems,
+            deleteItem = deleteItems,
             clearTrash = clearTrash,
             addSearchEntry = addSearchEntry,
             deleteSearchEntry = deleteSearchEntry,

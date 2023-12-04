@@ -31,12 +31,12 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
-import proton.android.pass.data.fakes.usecases.TestDeleteItem
+import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
-import proton.android.pass.data.fakes.usecases.TestRestoreItem
-import proton.android.pass.data.fakes.usecases.TestTrashItem
+import proton.android.pass.data.fakes.usecases.TestRestoreItems
+import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -56,23 +56,23 @@ class CreditCardDetailViewModelTest {
 
     private lateinit var getItem: TestGetItemByIdWithVault
     private lateinit var clipboardManager: TestClipboardManager
-    private lateinit var trashItem: TestTrashItem
-    private lateinit var restoreItem: TestRestoreItem
+    private lateinit var trashItem: TestTrashItems
+    private lateinit var restoreItem: TestRestoreItems
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
 
     @Before
     fun setup() {
         getItem = TestGetItemByIdWithVault()
         clipboardManager = TestClipboardManager()
-        trashItem = TestTrashItem()
-        restoreItem = TestRestoreItem()
+        trashItem = TestTrashItems()
+        restoreItem = TestRestoreItems()
         canPerformPaidAction = TestCanPerformPaidAction()
         instance = CreditCardDetailViewModel(
             snackbarDispatcher = TestSnackbarDispatcher(),
             clipboardManager = clipboardManager,
             encryptionContextProvider = TestEncryptionContextProvider(),
             trashItem = trashItem,
-            deleteItem = TestDeleteItem(),
+            deleteItem = TestDeleteItems(),
             restoreItem = restoreItem,
             telemetryManager = TestTelemetryManager(),
             canPerformPaidAction = canPerformPaidAction.apply {
@@ -343,7 +343,7 @@ class CreditCardDetailViewModelTest {
         instance.onMoveToTrash(ShareId(SHARE_ID), ItemId(ITEM_ID))
 
         val memory = trashItem.getMemory()
-        val expected = TestTrashItem.Payload(
+        val expected = TestTrashItems.Payload(
             userId = null,
             items = mapOf(
                 ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))
@@ -368,7 +368,7 @@ class CreditCardDetailViewModelTest {
         instance.onItemRestore(ShareId(SHARE_ID), ItemId(ITEM_ID))
 
         val memory = restoreItem.memory()
-        val expected = TestRestoreItem.Payload(
+        val expected = TestRestoreItems.Payload(
             userId = null,
             items = mapOf(
                 ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))

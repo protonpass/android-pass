@@ -61,6 +61,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashSt
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
+import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
@@ -94,6 +95,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.TotpCop
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.UsernameCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.WebsiteCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -119,6 +121,7 @@ class LoginDetailViewModel @Inject constructor(
     private val canDisplayTotp: CanDisplayTotp,
     private val canShareVault: CanShareVault,
     private val passwordScorer: PasswordScorer,
+    private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
@@ -147,6 +150,8 @@ class LoginDetailViewModel @Inject constructor(
     private val canPerformPaidActionFlow = canPerformPaidAction().asLoadingResult()
     private val customFieldsState: MutableStateFlow<List<CustomFieldUiContent>> =
         MutableStateFlow(emptyList())
+    private val eventState: MutableStateFlow<ItemDetailEvent> =
+        MutableStateFlow(ItemDetailEvent.Unknown)
 
     sealed interface DetailFields {
         object Password : DetailFields
@@ -293,7 +298,8 @@ class LoginDetailViewModel @Inject constructor(
         isRestoredFromTrashState,
         canPerformPaidActionFlow,
         customFieldsState,
-        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult()
+        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
+        eventState
     ) { itemDetails,
         totpUiState,
         isLoading,
@@ -302,7 +308,8 @@ class LoginDetailViewModel @Inject constructor(
         isRestoredFromTrash,
         canPerformPaidActionResult,
         customFields,
-        itemActions ->
+        itemActions,
+        event ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -344,7 +351,8 @@ class LoginDetailViewModel @Inject constructor(
                     canPerformItemActions = canPerformItemActions,
                     customFields = customFieldsList.toPersistentList(),
                     shareClickAction = details.shareClickAction,
-                    itemActions = actions
+                    itemActions = actions,
+                    event = event
                 )
             }
         }
@@ -520,6 +528,15 @@ class LoginDetailViewModel @Inject constructor(
             asMutable[index] = updated
             asMutable.toPersistentList()
         }
+    }
+
+    fun clearEvent() = viewModelScope.launch {
+        eventState.update { ItemDetailEvent.Unknown }
+    }
+
+    fun onMigrate() = viewModelScope.launch {
+        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+        eventState.update { ItemDetailEvent.MoveToVault }
     }
 
     private fun observeTotp(decryptedTotpUri: String): Flow<TotpUiState> =

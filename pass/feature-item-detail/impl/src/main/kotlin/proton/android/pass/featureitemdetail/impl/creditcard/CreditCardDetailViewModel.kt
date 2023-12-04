@@ -51,6 +51,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
+import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
@@ -68,6 +69,7 @@ import proton.android.pass.domain.canUpdate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -86,6 +88,7 @@ class CreditCardDetailViewModel @Inject constructor(
     private val restoreItem: RestoreItems,
     private val telemetryManager: TelemetryManager,
     private val canShareVault: CanShareVault,
+    private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
@@ -105,6 +108,8 @@ class CreditCardDetailViewModel @Inject constructor(
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
+    private val eventState: MutableStateFlow<ItemDetailEvent> =
+        MutableStateFlow(ItemDetailEvent.Unknown)
 
     private val fieldVisibilityFlow: MutableStateFlow<FieldVisibility> = MutableStateFlow(FieldVisibility())
 
@@ -177,9 +182,10 @@ class CreditCardDetailViewModel @Inject constructor(
         isRestoredFromTrashState,
         canPerformPaidActionFlow,
         shareActionFlow,
-        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult()
+        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
+        eventState
     ) { itemDetails, isLoading, isItemSentToTrash, isPermanentlyDeleted,
-        isRestoredFromTrash, canPerformPaidActionResult, shareAction, itemActions ->
+        isRestoredFromTrash, canPerformPaidActionResult, shareAction, itemActions, event ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(DetailSnackbarMessages.InitError)
@@ -214,7 +220,8 @@ class CreditCardDetailViewModel @Inject constructor(
                     isDowngradedMode = !isPaid,
                     canPerformActions = canPerformItemActions,
                     shareClickAction = shareAction,
-                    itemActions = actions
+                    itemActions = actions,
+                    event = event
                 )
             }
         }
@@ -310,6 +317,15 @@ class CreditCardDetailViewModel @Inject constructor(
 
     fun togglePin() = viewModelScope.launch {
         fieldVisibilityFlow.update { it.copy(pin = !it.pin) }
+    }
+
+    fun clearEvent() = viewModelScope.launch {
+        eventState.update { ItemDetailEvent.Unknown }
+    }
+
+    fun onMigrate() = viewModelScope.launch {
+        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+        eventState.update { ItemDetailEvent.MoveToVault }
     }
 
     private fun modelFromState(): ItemContents.CreditCard? {

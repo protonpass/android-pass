@@ -69,6 +69,7 @@ dependencies {
     testImplementation(libs.androidx.compose.ui)
     testImplementation(libs.androidx.compose.uiTooling)
     testImplementation(libs.core.presentation.compose)
+    testImplementation(libs.kotlin.reflect)
 
     testImplementation(libs.showkase)
     kspTest(libs.showkaseProcessor)

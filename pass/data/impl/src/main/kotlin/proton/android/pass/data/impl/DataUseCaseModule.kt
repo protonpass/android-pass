@@ -39,7 +39,7 @@ import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
 import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.data.api.usecases.CreateVault
-import proton.android.pass.data.api.usecases.DeleteItem
+import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
@@ -89,7 +89,7 @@ import proton.android.pass.data.api.usecases.RemoveMemberFromVault
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
-import proton.android.pass.data.api.usecases.RestoreItem
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
@@ -131,7 +131,7 @@ import proton.android.pass.data.impl.usecases.CreateItemAndAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemImpl
 import proton.android.pass.data.impl.usecases.CreatePinImpl
 import proton.android.pass.data.impl.usecases.CreateVaultImpl
-import proton.android.pass.data.impl.usecases.DeleteItemImpl
+import proton.android.pass.data.impl.usecases.DeleteItemsImpl
 import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
@@ -321,13 +321,13 @@ abstract class DataUseCaseModule {
     abstract fun bindSendUserAccessRequest(impl: SendUserAccessRequestImpl): SendUserAccessRequest
 
     @Binds
-    abstract fun bindRestoreItem(impl: RestoreItemImpl): RestoreItem
+    abstract fun bindRestoreItem(impl: RestoreItemImpl): RestoreItems
 
     @Binds
     abstract fun bindRestoreItems(impl: RestoreAllItemsImpl): RestoreAllItems
 
     @Binds
-    abstract fun bindDeleteItem(impl: DeleteItemImpl): DeleteItem
+    abstract fun bindDeleteItem(impl: DeleteItemsImpl): DeleteItems
 
     @Binds
     abstract fun bindClearTrash(impl: ClearTrashImpl): ClearTrash

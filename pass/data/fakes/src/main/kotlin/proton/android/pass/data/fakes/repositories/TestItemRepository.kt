@@ -44,7 +44,7 @@ import javax.inject.Inject
 @Suppress("NotImplementedDeclaration")
 class TestItemRepository @Inject constructor() : ItemRepository {
 
-    private var migrateItemResult: Result<Item> =
+    private var migrateItemResult: Result<List<Item>> =
         Result.failure(IllegalStateException("TestItemRepository.migrateItemResult not initialized"))
     private val observeItemListFlow: MutableSharedFlow<List<Item>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
@@ -55,7 +55,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     fun getMigrateItemMemory(): List<MigrateItemPayload> = migrateItemMemory
 
-    fun setMigrateItemResult(value: Result<Item>) {
+    fun setMigrateItemResult(value: Result<List<Item>>) {
         migrateItemResult = value
     }
 
@@ -180,18 +180,21 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun migrateItem(
+    override suspend fun migrateItems(
         userId: UserId,
-        source: Share,
-        destination: Share,
-        itemId: ItemId
-    ): Item {
-        migrateItemMemory.add(MigrateItemPayload(userId, source, destination, itemId))
+        items: Map<ShareId, List<ItemId>>,
+        destination: Share
+    ): List<Item> {
+        migrateItemMemory.add(MigrateItemPayload(userId, items, destination))
         return migrateItemResult.getOrThrow()
     }
 
 
-    override suspend fun migrateItems(userId: UserId, source: ShareId, destination: ShareId) {
+    override suspend fun migrateAllVaultItems(
+        userId: UserId,
+        source: ShareId,
+        destination: ShareId
+    ) {
         TODO("Not yet implemented")
     }
 
@@ -201,8 +204,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     data class MigrateItemPayload(
         val userId: UserId,
-        val source: Share,
-        val destination: Share,
-        val itemId: ItemId
+        val items: Map<ShareId, List<ItemId>>,
+        val destination: Share
     )
 }

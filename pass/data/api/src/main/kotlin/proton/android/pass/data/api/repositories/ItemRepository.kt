@@ -120,14 +120,13 @@ interface ItemRepository {
         itemId: ItemId
     )
 
-    suspend fun migrateItem(
-        userId: UserId,
-        source: Share,
-        destination: Share,
-        itemId: ItemId
-    ): Item
-
     suspend fun migrateItems(
+        userId: UserId,
+        items: Map<ShareId, List<ItemId>>,
+        destination: Share
+    ): MigrateItemsResult
+
+    suspend fun migrateAllVaultItems(
         userId: UserId,
         source: ShareId,
         destination: ShareId,
@@ -143,3 +142,14 @@ data class VaultProgress(
     val total: Int,
     val current: Int
 )
+
+sealed interface MigrateItemsResult {
+    @JvmInline
+    value class AllMigrated(val items: List<Item>) : MigrateItemsResult
+
+    @JvmInline
+    value class SomeMigrated(val migratedItems: List<Item>) : MigrateItemsResult
+
+    @JvmInline
+    value class NoneMigrated(val exception: Throwable) : MigrateItemsResult
+}

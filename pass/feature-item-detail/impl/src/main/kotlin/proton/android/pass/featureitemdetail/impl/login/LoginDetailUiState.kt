@@ -24,11 +24,12 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
+import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
 sealed interface LoginDetailUiState {
 
@@ -52,7 +53,8 @@ sealed interface LoginDetailUiState {
         val canPerformItemActions: Boolean,
         val customFields: ImmutableList<CustomFieldUiContent>,
         val shareClickAction: ShareClickAction,
-        val itemActions: ItemActions
+        val itemActions: ItemActions,
+        val event: ItemDetailEvent
     ) : LoginDetailUiState
 }
 

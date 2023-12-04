@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.FlowUtils
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
@@ -47,6 +47,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedS
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetAliasDetails
@@ -68,6 +69,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNot
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotRestored
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRestored
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -86,6 +88,7 @@ class AliasDetailViewModel @Inject constructor(
     private val restoreItem: RestoreItems,
     private val telemetryManager: TelemetryManager,
     private val canShareVault: CanShareVault,
+    private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
@@ -104,6 +107,8 @@ class AliasDetailViewModel @Inject constructor(
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
+    private val eventState: MutableStateFlow<ItemDetailEvent> =
+        MutableStateFlow(ItemDetailEvent.Unknown)
 
     private val canPerformPaidActionFlow: Flow<LoadingResult<Boolean>> =
         canPerformPaidAction().asLoadingResult()
@@ -127,7 +132,8 @@ class AliasDetailViewModel @Inject constructor(
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
         shareActionFlow,
-        FlowUtils.oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult()
+        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
+        eventState
     ) { itemLoadingResult,
         aliasDetailsResult,
         isLoading,
@@ -135,7 +141,8 @@ class AliasDetailViewModel @Inject constructor(
         isPermanentlyDeleted,
         isRestoredFromTrash,
         shareAction,
-        itemActions ->
+        itemActions,
+        event ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -164,7 +171,8 @@ class AliasDetailViewModel @Inject constructor(
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canPerformActions = canPerformItemActions,
                     shareClickAction = shareAction,
-                    itemActions = actions
+                    itemActions = actions,
+                    event = event
                 )
             }
         }
@@ -226,6 +234,15 @@ class AliasDetailViewModel @Inject constructor(
             snackbarDispatcher(ItemNotRestored)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    fun clearEvent() = viewModelScope.launch {
+        eventState.update { ItemDetailEvent.Unknown }
+    }
+
+    fun onMigrate() = viewModelScope.launch {
+        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+        eventState.update { ItemDetailEvent.MoveToVault }
     }
 
     companion object {

@@ -27,7 +27,7 @@ import org.junit.Test
 import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
-import proton.android.pass.data.fakes.usecases.TestMigrateItem
+import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
@@ -48,19 +48,19 @@ class MigrateConfirmVaultViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: MigrateConfirmVaultViewModel
-    private lateinit var migrateItem: TestMigrateItem
+    private lateinit var migrateItem: TestMigrateItems
     private lateinit var migrateVault: TestMigrateVault
     private lateinit var getVaultById: TestGetVaultWithItemCountById
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setup() {
-        migrateItem = TestMigrateItem()
+        migrateItem = TestMigrateItems()
         migrateVault = TestMigrateVault()
         snackbarDispatcher = TestSnackbarDispatcher()
         getVaultById = TestGetVaultWithItemCountById()
         instance = MigrateConfirmVaultViewModel(
-            migrateItem = migrateItem,
+            migrateItems = migrateItem,
             migrateVault = migrateVault,
             snackbarDispatcher = snackbarDispatcher,
             getVaultById = getVaultById,
@@ -126,6 +126,6 @@ class MigrateConfirmVaultViewModelTest {
         private val DESTINATION_SHARE_ID = ShareId("456")
         private val ITEM_ID = ItemId("789")
 
-        private val MODE = MigrateModeValue.SingleItem
+        private val MODE = MigrateModeValue.SelectedItems
     }
 }

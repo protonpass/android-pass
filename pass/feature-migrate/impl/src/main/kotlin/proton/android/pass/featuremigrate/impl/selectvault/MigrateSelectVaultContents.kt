@@ -20,12 +20,14 @@ package proton.android.pass.featuremigrate.impl.selectvault
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featuremigrate.R
 
 @Composable
 fun MigrateSelectVaultContents(
@@ -39,7 +41,19 @@ fun MigrateSelectVaultContents(
             BottomSheetVaultRow(
                 vault = vault.vault,
                 isSelected = false,
-                enabled = vault.isEnabled,
+                customSubtitle = when (vault.status) {
+                    is VaultStatus.Enabled -> null
+                    is VaultStatus.Disabled -> when (vault.status.reason) {
+                        VaultStatus.DisabledReason.NoPermission -> stringResource(
+                            R.string.migrate_disabled_vault_reason_no_permission
+                        )
+
+                        VaultStatus.DisabledReason.SameVault -> stringResource(
+                            R.string.migrate_disabled_vault_reason_same_vault
+                        )
+                    }
+                },
+                enabled = vault.status is VaultStatus.Enabled,
                 onVaultClick = { onVaultSelected(vault.vault.vault.shareId) }
             )
         }

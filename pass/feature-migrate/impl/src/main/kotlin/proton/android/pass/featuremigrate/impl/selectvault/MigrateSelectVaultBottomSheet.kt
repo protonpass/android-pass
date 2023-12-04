@@ -52,9 +52,7 @@ fun MigrateSelectVaultBottomSheet(
                         is SelectVaultEvent.VaultSelectedForMigrateItem -> {
                             onNavigate(
                                 MigrateNavigation.VaultSelectedForMigrateItem(
-                                    sourceShareId = value.sourceShareId,
                                     destShareId = value.destinationShareId,
-                                    itemId = value.itemId
                                 )
                             )
                         }

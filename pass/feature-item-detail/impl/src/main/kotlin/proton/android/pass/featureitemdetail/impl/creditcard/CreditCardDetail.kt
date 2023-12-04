@@ -45,6 +45,7 @@ import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.domain.ItemState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
+import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
@@ -69,6 +70,16 @@ fun CreditCardDetail(
         CreditCardDetailUiState.NotInitialised -> {}
         CreditCardDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is CreditCardDetailUiState.Success -> {
+            LaunchedEffect(state.event) {
+                when (state.event) {
+                    ItemDetailEvent.Unknown -> {}
+                    ItemDetailEvent.MoveToVault -> {
+                        onNavigate(ItemDetailNavigation.OnMigrate)
+                    }
+                }
+                viewModel.clearEvent()
+            }
+
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
                 LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
@@ -90,12 +101,7 @@ fun CreditCardDetail(
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
-                                    onNavigate(
-                                        ItemDetailNavigation.OnMigrate(
-                                            shareId = itemUiModel.shareId,
-                                            itemId = itemUiModel.id,
-                                        )
-                                    )
+                                    viewModel.onMigrate()
                                 }
                             },
                             onMoveToTrash = {

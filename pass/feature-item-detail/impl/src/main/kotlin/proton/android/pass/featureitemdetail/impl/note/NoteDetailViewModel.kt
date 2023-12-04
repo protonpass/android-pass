@@ -45,6 +45,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedS
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
@@ -67,6 +68,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemPer
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRestored
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.NoteCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -85,6 +87,7 @@ class NoteDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val clipboardManager: ClipboardManager,
     private val canShareVault: CanShareVault,
+    private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle,
@@ -102,6 +105,8 @@ class NoteDetailViewModel @Inject constructor(
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
+    private val eventState: MutableStateFlow<ItemDetailEvent> =
+        MutableStateFlow(ItemDetailEvent.Unknown)
 
     private val canPerformPaidActionFlow: Flow<LoadingResult<Boolean>> =
         canPerformPaidAction().asLoadingResult()
@@ -124,14 +129,16 @@ class NoteDetailViewModel @Inject constructor(
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
         shareActionFlow,
-        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult()
+        oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
+        eventState
     ) { itemLoadingResult,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
         shareAction,
-        itemActions ->
+        itemActions,
+        event ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -158,7 +165,8 @@ class NoteDetailViewModel @Inject constructor(
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canPerformActions = canPerformItemActions,
                     shareClickAction = shareAction,
-                    itemActions = actions
+                    itemActions = actions,
+                    event = event
                 )
             }
         }
@@ -219,6 +227,16 @@ class NoteDetailViewModel @Inject constructor(
         val contents = itemUiModel.contents as? ItemContents.Note ?: return@launch
         clipboardManager.copyToClipboard(contents.note, isSecure = false)
         snackbarDispatcher(NoteCopiedToClipboard)
+    }
+
+
+    fun clearEvent() = viewModelScope.launch {
+        eventState.update { ItemDetailEvent.Unknown }
+    }
+
+    fun onMigrate() = viewModelScope.launch {
+        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+        eventState.update { ItemDetailEvent.MoveToVault }
     }
 
     companion object {

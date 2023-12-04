@@ -21,8 +21,9 @@ package proton.android.pass.featureitemdetail.impl.note
 import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.domain.Vault
+import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
+import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
 sealed interface NoteDetailUiState {
 
@@ -42,6 +43,7 @@ sealed interface NoteDetailUiState {
         val isRestoredFromTrash: Boolean,
         val canPerformActions: Boolean,
         val shareClickAction: ShareClickAction,
-        val itemActions: ItemActions
+        val itemActions: ItemActions,
+        val event: ItemDetailEvent
     ) : NoteDetailUiState
 }

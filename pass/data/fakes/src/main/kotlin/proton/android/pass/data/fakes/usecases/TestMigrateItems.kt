@@ -18,41 +18,36 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import proton.android.pass.data.api.usecases.MigrateItem
-import proton.android.pass.domain.Item
+import proton.android.pass.data.api.repositories.MigrateItemsResult
+import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestMigrateItem @Inject constructor() : MigrateItem {
+class TestMigrateItems @Inject constructor() : MigrateItems {
 
-    private var result: Result<Item> = Result.failure(IllegalStateException("Result not set"))
+    private var result: Result<MigrateItemsResult> = Result.failure(IllegalStateException("Result not set"))
 
     private val memory = mutableListOf<Payload>()
 
     fun memory(): List<Payload> = memory
 
-    fun setResult(value: Result<Item>) {
+    fun setResult(value: Result<MigrateItemsResult>) {
         result = value
     }
 
     override suspend fun invoke(
-        sourceShare: ShareId,
-        itemId: ItemId,
+        items: Map<ShareId, List<ItemId>>,
         destinationShare: ShareId
-    ): Item {
-        memory.add(Payload(sourceShare, itemId, destinationShare))
-        return result.fold(
-            onSuccess = { it },
-            onFailure = { throw it }
-        )
+    ): MigrateItemsResult {
+        memory.add(Payload(items, destinationShare))
+        return result.getOrThrow()
     }
 
     data class Payload(
-        val sourceShare: ShareId,
-        val itemId: ItemId,
+        val items: Map<ShareId, List<ItemId>>,
         val destinationShare: ShareId
     )
 }

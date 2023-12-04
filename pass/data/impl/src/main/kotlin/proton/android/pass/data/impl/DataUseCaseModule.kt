@@ -61,7 +61,7 @@ import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.LeaveVault
-import proton.android.pass.data.api.usecases.MigrateItem
+import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveActiveItems
@@ -153,7 +153,7 @@ import proton.android.pass.data.impl.usecases.GetVaultMembersImpl
 import proton.android.pass.data.impl.usecases.GetVaultWithItemCountByIdImpl
 import proton.android.pass.data.impl.usecases.InviteToVaultImpl
 import proton.android.pass.data.impl.usecases.LeaveVaultImpl
-import proton.android.pass.data.impl.usecases.MigrateItemImpl
+import proton.android.pass.data.impl.usecases.MigrateItemsImpl
 import proton.android.pass.data.impl.usecases.MigrateVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveActiveItemsImpl
@@ -336,7 +336,7 @@ abstract class DataUseCaseModule {
     abstract fun bindGetUserPlan(impl: GetUserPlanImpl): GetUserPlan
 
     @Binds
-    abstract fun bindMigrateItem(impl: MigrateItemImpl): MigrateItem
+    abstract fun bindMigrateItem(impl: MigrateItemsImpl): MigrateItems
 
     @Binds
     abstract fun bindGetVaultWithItemCountById(

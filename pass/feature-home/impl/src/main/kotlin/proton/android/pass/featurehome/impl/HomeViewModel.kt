@@ -79,14 +79,14 @@ import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.usecases.ClearTrash
-import proton.android.pass.data.api.usecases.DeleteItem
+import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RestoreAllItems
-import proton.android.pass.data.api.usecases.RestoreItem
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
@@ -134,14 +134,14 @@ import javax.inject.Inject
 @Suppress("LongParameterList", "LargeClass", "TooManyFunctions")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val trashItem: TrashItems,
+    private val trashItems: TrashItems,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val performSync: PerformSync,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val restoreItem: RestoreItem,
-    private val restoreItems: RestoreAllItems,
-    private val deleteItem: DeleteItem,
+    private val restoreItems: RestoreItems,
+    private val restoreAllItems: RestoreAllItems,
+    private val deleteItem: DeleteItems,
     private val clearTrash: ClearTrash,
     private val addSearchEntry: AddSearchEntry,
     private val deleteSearchEntry: DeleteSearchEntry,
@@ -496,7 +496,7 @@ class HomeViewModel @Inject constructor(
                 .flatMap { it.items }
                 .filter { (itemId: ItemId, shareId: ShareId) -> items.contains(shareId to itemId) }
 
-            runCatching { trashItem(items = items.groupBy({ it.first }, { it.second })) }
+            runCatching { trashItems(items = items.groupBy({ it.first }, { it.second })) }
                 .onSuccess {
                     clearSelection()
                     if (itemTypes.size == 1) {
@@ -597,7 +597,7 @@ class HomeViewModel @Inject constructor(
             if (items.isEmpty()) return@launch
             actionStateFlow.update { ActionState.Loading }
 
-            runCatching { restoreItem(items = items.groupBy({ it.first }, { it.second })) }
+            runCatching { restoreItems(items = items.groupBy({ it.first }, { it.second })) }
                 .onSuccess {
                     clearSelection()
                     snackbarDispatcher(RestoreItemsSuccess)
@@ -659,7 +659,7 @@ class HomeViewModel @Inject constructor(
     fun restoreAllItems() = viewModelScope.launch {
         actionStateFlow.update { ActionState.Loading }
         runCatching {
-            restoreItems.invoke()
+            restoreAllItems.invoke()
         }.onSuccess {
             PassLogger.i(TAG, "Items restored successfully")
         }.onFailure {

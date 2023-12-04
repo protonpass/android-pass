@@ -45,7 +45,7 @@ import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
 import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.data.api.usecases.CreateVault
-import proton.android.pass.data.api.usecases.DeleteItem
+import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
@@ -88,7 +88,7 @@ import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveMemberFromVault
 import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
-import proton.android.pass.data.api.usecases.RestoreItem
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
@@ -137,7 +137,7 @@ import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestCreatePin
 import proton.android.pass.data.fakes.usecases.TestCreateVault
 import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
-import proton.android.pass.data.fakes.usecases.TestDeleteItem
+import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
 import proton.android.pass.data.fakes.usecases.TestGetAliasDetails
@@ -184,12 +184,12 @@ import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.TestRemoveMemberFromVault
 import proton.android.pass.data.fakes.usecases.TestResendInvite
 import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
-import proton.android.pass.data.fakes.usecases.TestRestoreItem
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
+import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestSetDefaultVault
 import proton.android.pass.data.fakes.usecases.TestSetVaultMemberPermission
 import proton.android.pass.data.fakes.usecases.TestTransferVaultOwnership
-import proton.android.pass.data.fakes.usecases.TestTrashItem
+import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUpdateAlias
 import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
@@ -277,7 +277,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindTrashItem(
-        impl: TestTrashItem
+        impl: TestTrashItems
     ): TrashItems
 
     @Binds
@@ -332,13 +332,13 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindDeleteItem(
-        impl: TestDeleteItem
-    ): DeleteItem
+        impl: TestDeleteItems
+    ): DeleteItems
 
     @Binds
     abstract fun bindRestoreItem(
-        impl: TestRestoreItem
-    ): RestoreItem
+        impl: TestRestoreItems
+    ): RestoreItems
 
     @Binds
     abstract fun bindRefreshContent(
@@ -352,7 +352,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindRestoreItems(
-        impl: TestRestoreItems
+        impl: TestRestoreAllItems
     ): RestoreAllItems
 
     @Binds

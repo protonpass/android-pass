@@ -16,34 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.DeleteItems
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TestTrashItem @Inject constructor() : TrashItems {
-
-    private var result: Result<Unit> = Result.failure(IllegalStateException("TestTrashItem.result not set"))
-
-    private val memory = mutableListOf<Payload>()
-    fun getMemory(): List<Payload> = memory
-
-    fun setResult(result: Result<Unit>) {
-        this.result = result
-    }
-
-    data class Payload(
-        val userId: UserId?,
-        val items: Map<ShareId, List<ItemId>>
-    )
+class DeleteItemsImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val itemRepository: ItemRepository
+) : DeleteItems {
 
     override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
-        memory.add(Payload(userId, items))
-        result.getOrThrow()
+        val id = if (userId == null) {
+            val user = requireNotNull(observeCurrentUser().first())
+            user.userId
+        } else {
+            userId
+        }
+        itemRepository.deleteItems(id, items)
     }
 }

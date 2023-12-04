@@ -32,6 +32,6 @@ class MigrateVaultImpl @Inject constructor(
 
     override suspend fun invoke(origin: ShareId, dest: ShareId) {
         val userId = requireNotNull(accountManager.getPrimaryUserId().firstOrNull())
-        itemRepository.migrateItems(userId = userId, source = origin, destination = dest)
+        itemRepository.migrateAllVaultItems(userId = userId, source = origin, destination = dest)
     }
 }

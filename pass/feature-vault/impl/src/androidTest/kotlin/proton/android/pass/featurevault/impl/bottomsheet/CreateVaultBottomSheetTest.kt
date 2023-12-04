@@ -33,7 +33,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.fakes.usecases.TestCreateVault
-import proton.android.pass.data.fakes.usecases.TestMigrateItem
+import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.featurevault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -60,7 +60,7 @@ class CreateVaultBottomSheetTest {
     lateinit var createVault: TestCreateVault
 
     @Inject
-    lateinit var migrateItem: TestMigrateItem
+    lateinit var migrateItem: TestMigrateItems
 
     @Inject
     lateinit var savedStateHandleProvider: TestSavedStateHandleProvider

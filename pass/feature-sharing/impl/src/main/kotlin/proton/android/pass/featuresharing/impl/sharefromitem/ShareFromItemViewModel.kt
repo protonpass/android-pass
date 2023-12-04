@@ -22,17 +22,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -47,6 +51,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ShareFromItemViewModel @Inject constructor(
+    private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     savedState: SavedStateHandleProvider,
     observeVaults: ObserveVaults,
     getVaultWithItemCount: GetVaultWithItemCountById,
@@ -56,6 +61,9 @@ class ShareFromItemViewModel @Inject constructor(
 
     private val shareId: ShareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
     private val itemId: ItemId = ItemId(savedState.get().require(CommonNavArgId.ItemId.key))
+
+    private val navEventState: MutableStateFlow<ShareFromItemNavEvent> =
+        MutableStateFlow(ShareFromItemNavEvent.Unknown)
 
     private val canMoveToSharedVaultFlow: Flow<LoadingResult<Boolean>> = observeVaults()
         .map { vaults ->
@@ -83,19 +91,30 @@ class ShareFromItemViewModel @Inject constructor(
     val state: StateFlow<ShareFromItemUiState> = combine(
         getVaultWithItemCount(shareId = shareId),
         canMoveToSharedVaultFlow,
-        showCreateVaultFlow
-    ) { vault, canMoveToSharedVault, createVault ->
+        showCreateVaultFlow,
+        navEventState
+    ) { vault, canMoveToSharedVault, createVault, event ->
         val showCreateVault = createVault.getOrNull() ?: CreateNewVaultState.Hide
 
         ShareFromItemUiState(
             vault = vault.some(),
             itemId = itemId,
             showMoveToSharedVault = canMoveToSharedVault.getOrNull() ?: false,
-            showCreateVault = showCreateVault
+            showCreateVault = showCreateVault,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = ShareFromItemUiState.Initial(itemId)
     )
+
+    fun moveItemToSharedVault() = viewModelScope.launch {
+        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+        navEventState.update { ShareFromItemNavEvent.MoveToSharedVault }
+    }
+
+    fun clearEvent() = viewModelScope.launch {
+        navEventState.update { ShareFromItemNavEvent.Unknown }
+    }
 }

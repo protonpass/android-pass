@@ -631,6 +631,7 @@ class HomeViewModel @Inject constructor(
                 deleteItem(items = items.groupBy({ it.first }, { it.second }))
             }.onSuccess {
                 PassLogger.i(TAG, "Items deleted successfully")
+                clearSelection()
                 itemTypes.forEach { telemetryManager.sendEvent(ItemDelete(it)) }
                 if (items.size > 1) {
                     snackbarDispatcher(DeleteItemsSuccess)
@@ -646,7 +647,6 @@ class HomeViewModel @Inject constructor(
                 }
             }
             actionStateFlow.update { ActionState.Done }
-            clearSelection()
         }
 
     fun clearTrash() = viewModelScope.launch {

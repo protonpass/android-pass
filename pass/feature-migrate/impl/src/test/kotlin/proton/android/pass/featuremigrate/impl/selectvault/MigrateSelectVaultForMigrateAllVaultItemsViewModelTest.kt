@@ -25,15 +25,16 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 
 class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
 
@@ -43,14 +44,17 @@ class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
     private lateinit var instance: MigrateSelectVaultViewModel
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
 
     @Before
     fun setup() {
         observeVaults = TestObserveVaultsWithItemCount()
         snackbarDispatcher = TestSnackbarDispatcher()
+        bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
         instance = MigrateSelectVaultViewModel(
             observeVaults = observeVaults,
             snackbarDispatcher = snackbarDispatcher,
+            bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             savedStateHandle = TestSavedStateHandleProvider().apply {
                 get()[CommonNavArgId.ShareId.key] = SHARE_ID.id
                 get()[MigrateModeArg.key] = MODE.name

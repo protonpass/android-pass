@@ -175,10 +175,7 @@ sealed interface SharingNavigation {
         val destEmail: String
     ) : SharingNavigation
 
-    data class MoveItemToSharedVault(
-        val shareId: ShareId,
-        val itemId: ItemId
-    ) : SharingNavigation
+    object MoveItemToSharedVault : SharingNavigation
 
     data class CreateVaultAndMoveItem(
         val shareId: ShareId,

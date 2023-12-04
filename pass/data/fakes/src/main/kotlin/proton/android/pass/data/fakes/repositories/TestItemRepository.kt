@@ -27,6 +27,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -44,7 +45,7 @@ import javax.inject.Inject
 @Suppress("NotImplementedDeclaration")
 class TestItemRepository @Inject constructor() : ItemRepository {
 
-    private var migrateItemResult: Result<List<Item>> =
+    private var migrateItemResult: Result<MigrateItemsResult> =
         Result.failure(IllegalStateException("TestItemRepository.migrateItemResult not initialized"))
     private val observeItemListFlow: MutableSharedFlow<List<Item>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
@@ -55,7 +56,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     fun getMigrateItemMemory(): List<MigrateItemPayload> = migrateItemMemory
 
-    fun setMigrateItemResult(value: Result<List<Item>>) {
+    fun setMigrateItemResult(value: Result<MigrateItemsResult>) {
         migrateItemResult = value
     }
 
@@ -184,7 +185,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         items: Map<ShareId, List<ItemId>>,
         destination: Share
-    ): List<Item> {
+    ): MigrateItemsResult {
         migrateItemMemory.add(MigrateItemPayload(userId, items, destination))
         return migrateItemResult.getOrThrow()
     }

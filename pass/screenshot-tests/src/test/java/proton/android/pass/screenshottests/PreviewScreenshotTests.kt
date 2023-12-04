@@ -46,16 +46,18 @@ class PreviewScreenshotTests {
     }
 
     @get:Rule
-    val paparazzi = Paparazzi(
-        deviceConfig = DeviceConfig.NEXUS_5,
-        maxPercentDifference = 0.0
+    val rule = PaparazziWrapperRule(
+        paparazzi = Paparazzi(
+            deviceConfig = DeviceConfig.NEXUS_5,
+            maxPercentDifference = 0.0
+        )
     )
 
     @Test
     fun preview_tests(
         @TestParameter(valuesProvider = PreviewProvider::class) componentPreview: ComponentPreview
     ) {
-        paparazzi.snapshot {
+        rule.paparazzi.snapshot {
             Box {
                 componentPreview.content()
             }

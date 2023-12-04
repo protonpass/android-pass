@@ -21,14 +21,11 @@ package proton.android.pass.featuremigrate.impl.selectvault
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 
 sealed interface SelectVaultEvent {
     data class VaultSelectedForMigrateItem(
-        val sourceShareId: ShareId,
-        val itemId: ItemId,
         val destinationShareId: ShareId
     ) : SelectVaultEvent
 
@@ -45,9 +42,28 @@ enum class MigrateMode {
     MigrateAll
 }
 
+@Stable
+sealed interface VaultStatus {
+    @Stable
+    object Enabled : VaultStatus
+
+    @JvmInline
+    @Stable
+    value class Disabled(val reason: DisabledReason) : VaultStatus
+
+    @Stable
+    sealed interface DisabledReason {
+        @Stable
+        object NoPermission : DisabledReason
+
+        @Stable
+        object SameVault : DisabledReason
+    }
+}
+
 data class VaultEnabledPair(
     val vault: VaultWithItemCount,
-    val isEnabled: Boolean
+    val status: VaultStatus
 )
 
 sealed class MigrateSelectVaultUiState {

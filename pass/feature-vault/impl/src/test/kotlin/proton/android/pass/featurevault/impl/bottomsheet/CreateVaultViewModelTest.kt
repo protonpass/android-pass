@@ -32,7 +32,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.fakes.usecases.TestCreateVault
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
-import proton.android.pass.data.fakes.usecases.TestMigrateItem
+import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -57,7 +57,7 @@ class CreateVaultViewModelTest {
     private lateinit var snackbar: TestSnackbarDispatcher
     private lateinit var createVault: TestCreateVault
     private lateinit var deleteVault: TestDeleteVault
-    private lateinit var migrateItem: TestMigrateItem
+    private lateinit var migrateItem: TestMigrateItems
     private lateinit var getUpgradeInfo: TestObserveUpgradeInfo
     private lateinit var savedState: TestSavedStateHandleProvider
 
@@ -66,7 +66,7 @@ class CreateVaultViewModelTest {
         snackbar = TestSnackbarDispatcher()
         createVault = TestCreateVault()
         deleteVault = TestDeleteVault()
-        migrateItem = TestMigrateItem()
+        migrateItem = TestMigrateItems()
         getUpgradeInfo = TestObserveUpgradeInfo().apply {
             setResult(TestObserveUpgradeInfo.DEFAULT)
         }
@@ -253,7 +253,7 @@ class CreateVaultViewModelTest {
         assertThat(createVaultMemory.size).isEqualTo(1)
 
         val migrateItemMemory = migrateItem.memory()
-        val expectedMigrateItem = TestMigrateItem.Payload(
+        val expectedMigrateItem = TestMigrateItems.Payload(
             sourceShare = ShareId(SHARE_ID),
             itemId = ItemId(ITEM_ID),
             destinationShare = ShareId(NEW_SHARE_ID)
@@ -313,7 +313,7 @@ class CreateVaultViewModelTest {
         assertThat(createVaultMemory.size).isEqualTo(1)
 
         val migrateItemMemory = migrateItem.memory()
-        val expectedMigrateItem = TestMigrateItem.Payload(
+        val expectedMigrateItem = TestMigrateItems.Payload(
             sourceShare = ShareId(SHARE_ID),
             itemId = ItemId(ITEM_ID),
             destinationShare = ShareId(NEW_SHARE_ID)
@@ -345,7 +345,7 @@ class CreateVaultViewModelTest {
             assertThat(createVaultMemory.size).isEqualTo(1)
 
             val migrateItemMemory = migrateItem.memory()
-            val expectedMigrateItem = TestMigrateItem.Payload(
+            val expectedMigrateItem = TestMigrateItems.Payload(
                 sourceShare = ShareId(SHARE_ID),
                 itemId = ItemId(ITEM_ID),
                 destinationShare = ShareId(NEW_SHARE_ID)
@@ -375,7 +375,7 @@ class CreateVaultViewModelTest {
             deleteVault = deleteVault,
             encryptionContextProvider = TestEncryptionContextProvider(),
             savedStateHandleProvider = savedState,
-            migrateItem = migrateItem,
+            migrateItems = migrateItem,
             observeUpgradeInfo = getUpgradeInfo,
         )
     }

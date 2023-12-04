@@ -16,12 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import proton.android.pass.data.api.usecases.RestoreAllItems
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface DeleteItem {
-    suspend operator fun invoke(userId: UserId? = null, items: Map<ShareId, List<ItemId>>)
+@Singleton
+class TestRestoreAllItems @Inject constructor() : RestoreAllItems {
+
+    private var result: Result<Unit> = Result.success(Unit)
+
+    fun setResult(value: Result<Unit>) {
+        result = value
+    }
+
+    override suspend fun invoke(userId: UserId?) {
+        result.getOrThrow()
+    }
 }

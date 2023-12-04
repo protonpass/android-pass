@@ -49,6 +49,7 @@ import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.VaultProgress
@@ -68,7 +69,6 @@ import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
-import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsBody
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
@@ -597,38 +597,71 @@ class ItemRepositoryImpl @Inject constructor(
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> =
         localItemDataSource.observeItemCount(shareIds)
 
-    override suspend fun migrateItem(
+    override suspend fun migrateItems(
         userId: UserId,
-        source: Share,
-        destination: Share,
-        itemId: ItemId
-    ): Item {
-        val item = requireNotNull(localItemDataSource.getById(source.id, itemId))
+        items: Map<ShareId, List<ItemId>>,
+        destination: Share
+    ): MigrateItemsResult = withContext(Dispatchers.IO) {
         val destinationKey = shareKeyRepository.getLatestKeyForShare(destination.id).first()
+        val migratedRevisions: List<Result<List<ItemEntity>>> = items.map { (shareId, items) ->
+            async {
+                runCatching {
+                    val shareItems = localItemDataSource.getByIdList(shareId, items)
+                    migrateItemsForShare(
+                        userId = userId,
+                        source = shareId,
+                        destination = destination.id,
+                        destinationKey = destinationKey,
+                        items = shareItems
+                    )
+                }
+            }
+        }.awaitAll()
 
-        val body =
-            migrateItem.migrate(destinationKey, item.encryptedContent, item.contentFormatVersion)
-        val request = MigrateItemRequest(
-            shareId = destination.id.id,
-            item = body.toRequest()
-        )
+        val (successes, failures) = migratedRevisions.partition { it.isSuccess }
+        when {
+            // Happy path
+            successes.isNotEmpty() && failures.isEmpty() -> {
+                val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
+                val migratedItemsMapped = encryptionContextProvider.withEncryptionContext {
+                    migrated.map { it.toDomain(this@withEncryptionContext) }
+                }
 
-        val res = remoteItemDataSource.migrateItem(userId, source.id, ItemId(item.id), request)
+                MigrateItemsResult.AllMigrated(migratedItemsMapped)
+            }
 
-        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        val resAsEntity =
-            itemResponseToEntity(userAddress, res, destination, listOf(destinationKey))
-        database.inTransaction {
-            localItemDataSource.upsertItem(resAsEntity)
-            localItemDataSource.delete(source.id, ItemId(item.id))
-        }
+            // Some succeeded
+            successes.isNotEmpty() && failures.isNotEmpty() -> {
+                val firstFailure = failures.first().exceptionOrNull()
+                    ?: IllegalStateException("Error migrating items. Could not migrate some")
+                PassLogger.w(TAG, firstFailure, "Error migrating items. Could not migrate some")
 
-        return encryptionContextProvider.withEncryptionContext {
-            resAsEntity.toDomain(this@withEncryptionContext)
+                val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
+                val migratedItemsMapped = encryptionContextProvider.withEncryptionContext {
+                    migrated.map { it.toDomain(this@withEncryptionContext) }
+                }
+                MigrateItemsResult.SomeMigrated(migratedItemsMapped)
+            }
+
+            // None succeeded
+            successes.isEmpty() && failures.isNotEmpty() -> {
+                val firstFailure = failures.first().exceptionOrNull()
+                    ?: IllegalStateException("Error migrating items. Could not migrate any")
+                PassLogger.w(TAG, firstFailure, "Error migrating items. Could not migrate any")
+                MigrateItemsResult.NoneMigrated(firstFailure)
+            }
+
+            // Should never happen
+            else -> MigrateItemsResult.AllMigrated(emptyList())
+
         }
     }
 
-    override suspend fun migrateItems(userId: UserId, source: ShareId, destination: ShareId) {
+    override suspend fun migrateAllVaultItems(
+        userId: UserId,
+        source: ShareId,
+        destination: ShareId
+    ) {
         val items = localItemDataSource.observeItemsForShares(
             userId = userId,
             shareIds = listOf(source),
@@ -637,13 +670,13 @@ class ItemRepositoryImpl @Inject constructor(
         ).first()
         val destinationKey = shareKeyRepository.getLatestKeyForShare(destination).first()
 
-        withContext(Dispatchers.Default) {
-            items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).map { chunk ->
-                async {
-                    migrateChunk(userId, source, destination, destinationKey, chunk)
-                }
-            }.awaitAll()
-        }
+        migrateItemsForShare(
+            userId = userId,
+            source = source,
+            destination = destination,
+            destinationKey = destinationKey,
+            items = items
+        )
     }
 
     override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): Item? {
@@ -654,13 +687,27 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    private suspend fun migrateItemsForShare(
+        userId: UserId,
+        source: ShareId,
+        destination: ShareId,
+        destinationKey: ShareKey,
+        items: List<ItemEntity>
+    ): List<ItemEntity> = withContext(Dispatchers.Default) {
+        items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).map { chunk ->
+            async {
+                migrateChunk(userId, source, destination, destinationKey, chunk)
+            }
+        }.awaitAll().flatten()
+    }
+
     private suspend fun migrateChunk(
         userId: UserId,
         source: ShareId,
         destination: ShareId,
         destinationKey: ShareKey,
         chunk: List<ItemEntity>
-    ) {
+    ): List<ItemEntity> {
         val migrations = chunk.map { item ->
             val req = migrateItem.migrate(
                 destinationKey = destinationKey,
@@ -693,6 +740,8 @@ class ItemRepositoryImpl @Inject constructor(
                 localItemDataSource.delete(source, ItemId(it.id))
             }
         }
+
+        return resAsEntities
     }
 
     private suspend fun restoreItemsForShare(

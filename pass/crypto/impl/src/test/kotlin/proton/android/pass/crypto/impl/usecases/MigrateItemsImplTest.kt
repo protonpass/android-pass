@@ -28,7 +28,7 @@ import proton.android.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
 import kotlin.test.assertEquals
 
-class MigrateItemImplTest {
+class MigrateItemsImplTest {
 
     private val encryptionContextProvider = TestEncryptionContextProvider()
     private val createItem = CreateItemImpl(encryptionContextProvider)

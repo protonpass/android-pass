@@ -104,6 +104,9 @@ import proton.android.pass.domain.toPermissions
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ClearTrashError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemsError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemsSuccess
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
@@ -615,19 +618,35 @@ class HomeViewModel @Inject constructor(
             actionStateFlow.update { ActionState.Done }
         }
 
-    fun deleteItem(itemUiModel: ItemUiModel) =
-        viewModelScope.launch {
+    fun deleteItems(items: ImmutableSet<Pair<ShareId, ItemId>>) =
+        viewModelScope.launch(coroutineExceptionHandler) {
+            if (items.isEmpty()) return@launch
             actionStateFlow.update { ActionState.Loading }
+            val itemTypes = homeUiState.value.homeListUiState.items
+                .flatMap { it.items }
+                .filter { (itemId: ItemId, shareId: ShareId) -> items.contains(shareId to itemId) }
+                .map { EventItemType.from(it.contents) }
+
             runCatching {
-                deleteItem.invoke(shareId = itemUiModel.shareId, itemId = itemUiModel.id)
+                deleteItem(items = items.groupBy({ it.first }, { it.second }))
             }.onSuccess {
-                PassLogger.i(TAG, "Item deleted successfully")
-                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
+                PassLogger.i(TAG, "Items deleted successfully")
+                itemTypes.forEach { telemetryManager.sendEvent(ItemDelete(it)) }
+                if (items.size > 1) {
+                    snackbarDispatcher(DeleteItemsSuccess)
+                } else {
+                    snackbarDispatcher(DeleteItemSuccess)
+                }
             }.onFailure {
-                PassLogger.e(TAG, it, "Error deleting item")
-                snackbarDispatcher(DeleteItemError)
+                PassLogger.e(TAG, it, "Error deleting items")
+                if (items.size > 1) {
+                    snackbarDispatcher(DeleteItemsError)
+                } else {
+                    snackbarDispatcher(DeleteItemError)
+                }
             }
             actionStateFlow.update { ActionState.Done }
+            clearSelection()
         }
 
     fun clearTrash() = viewModelScope.launch {

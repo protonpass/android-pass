@@ -95,6 +95,10 @@
     <string name="trash_success_restoring_items">Items restored</string>
     <string name="trash_error_restoring_items">Error restoring items</string>
     <string name="trash_error_deleting_item">Error deleting item</string>
+    <string name="trash_success_deleting_item">Item deleted</string>
+
+    <string name="trash_deleting_items_error">Error deleting items</string>
+    <string name="trash_deleting_items_success">Items deleted</string>
 
     <!-- Alerts -->
     <string name="alert_confirm_clear_trash_title">Clear trash?</string>
@@ -117,6 +121,14 @@
     <plurals name="alert_confirm_trash_items_message">
         <item quantity="one">Are you sure you want to move to the trash the item?</item>
         <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    </plurals>
+    <plurals name="alert_confirm_delete_items_title">
+        <item quantity="one">Delete permanently %d item?</item>
+        <item quantity="other">Delete permanently %d items?</item>
+    </plurals>
+    <plurals name="alert_confirm_delete_items_message">
+        <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
+        <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
     </plurals>
 
     <!-- Recent search -->

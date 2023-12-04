@@ -173,10 +173,9 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteItem(
+    override suspend fun deleteItems(
         userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
+        items: Map<ShareId, List<ItemId>>
     ) {
         TODO("Not yet implemented")
     }

@@ -46,6 +46,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
+import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
@@ -69,6 +70,16 @@ fun NoteDetail(
         NoteDetailUiState.NotInitialised -> {}
         NoteDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is NoteDetailUiState.Success -> {
+            LaunchedEffect(state.event) {
+                when (state.event) {
+                    ItemDetailEvent.Unknown -> {}
+                    ItemDetailEvent.MoveToVault -> {
+                        onNavigate(ItemDetailNavigation.OnMigrate)
+                    }
+                }
+                viewModel.clearEvent()
+            }
+
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
                 LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
@@ -88,12 +99,7 @@ fun NoteDetail(
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
-                                    onNavigate(
-                                        ItemDetailNavigation.OnMigrate(
-                                            shareId = state.itemUiModel.shareId,
-                                            itemId = state.itemUiModel.id
-                                        )
-                                    )
+                                    viewModel.onMigrate()
                                 }
                             },
                             onMoveToTrash = {

@@ -78,6 +78,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchSta
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
+import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
+import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -149,6 +151,7 @@ class HomeViewModel @Inject constructor(
     private val observeSearchEntry: ObserveSearchEntry,
     private val telemetryManager: TelemetryManager,
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
+    private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -160,14 +163,6 @@ class HomeViewModel @Inject constructor(
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
-    }
-
-    init {
-        val initialShareId: String? = savedState.get()[CommonOptionalNavArgId.ShareId.key]
-        if (initialShareId != null) {
-            val vaultSelection = VaultSelectionOption.Vault(ShareId(initialShareId))
-            homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
-        }
     }
 
     // Variable to keep track of whether the user has entered the search in this session, so we
@@ -182,6 +177,8 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(IsProcessingSearchState.NotLoading)
     private val selectionState: MutableStateFlow<SelectionState> =
         MutableStateFlow(SelectionState.Initial)
+    private val navEventState: MutableStateFlow<HomeNavEvent> =
+        MutableStateFlow(HomeNavEvent.Unknown)
 
     @OptIn(FlowPreview::class)
     private val debouncedSearchQueryState = searchQueryState
@@ -410,9 +407,10 @@ class HomeViewModel @Inject constructor(
         shouldScrollToTopFlow,
         preferencesRepository.getUseFaviconsPreference(),
         getUserPlan().asLoadingResult(),
-        selectionState
+        selectionState,
+        navEventState
     ) { shareListWrapper, searchOptions, itemsResult, searchUiState, refreshingLoading,
-        shouldScrollToTop, useFavicons, userPlan, selection ->
+        shouldScrollToTop, useFavicons, userPlan, selection, navEvent ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
@@ -441,7 +439,8 @@ class HomeViewModel @Inject constructor(
                 selectionState = selection.toState()
             ),
             searchUiState = searchUiState,
-            accountType = AccountType.fromPlan(userPlan)
+            accountType = AccountType.fromPlan(userPlan),
+            navEvent = navEvent
         )
     }
         .stateIn(
@@ -449,6 +448,27 @@ class HomeViewModel @Inject constructor(
             started = SharingStarted.Lazily,
             initialValue = HomeUiState.Loading
         )
+
+
+    init {
+        // Setup initial share id if we can get one from the route
+        val initialShareId: String? = savedState.get()[CommonOptionalNavArgId.ShareId.key]
+        if (initialShareId != null) {
+            val vaultSelection = VaultSelectionOption.Vault(ShareId(initialShareId))
+            homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
+        }
+
+        // Observe bulkMoveToVault event
+        viewModelScope.launch {
+            bulkMoveToVaultRepository.observeEvent().collect { event ->
+                if (event is BulkMoveToVaultEvent.Completed) {
+                    clearSelection()
+                    bulkMoveToVaultRepository.emitEvent(BulkMoveToVaultEvent.Idle)
+                }
+            }
+        }
+
+    }
 
     fun onSearchQueryChange(query: String) {
         if (query.contains("\n")) return
@@ -496,7 +516,8 @@ class HomeViewModel @Inject constructor(
                 .flatMap { it.items }
                 .filter { (itemId: ItemId, shareId: ShareId) -> items.contains(shareId to itemId) }
 
-            runCatching { trashItems(items = items.groupBy({ it.first }, { it.second })) }
+            val groupedItems = groupItems(items)
+            runCatching { trashItems(items = groupedItems) }
                 .onSuccess {
                     clearSelection()
                     if (itemTypes.size == 1) {
@@ -736,6 +757,16 @@ class HomeViewModel @Inject constructor(
         selectionState.update { SelectionState.Initial }
     }
 
+    fun moveItemsToVault(items: ImmutableSet<Pair<ShareId, ItemId>>) = viewModelScope.launch {
+        val groupedItems = groupItems(items)
+        bulkMoveToVaultRepository.save(groupedItems)
+        navEventState.update { HomeNavEvent.ShowBulkMoveToVault }
+    }
+
+    fun clearNavEvent() = viewModelScope.launch {
+        navEventState.update { HomeNavEvent.Unknown }
+    }
+
     private fun filterByType(
         items: List<ItemUiModel>,
         searchFilterType: SearchFilterType
@@ -759,6 +790,9 @@ class HomeViewModel @Inject constructor(
 
     private fun checkCanModify(listWrapper: ShareListWrapper, shareId: ShareId): Boolean =
         listWrapper.shares[shareId]?.role?.toPermissions()?.canUpdate() ?: false
+
+    private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
+        items.groupBy({ it.first }, { it.second })
 
     private data class SelectionState(
         val selectedItems: List<ItemUiModel>,

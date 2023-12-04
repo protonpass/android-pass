@@ -94,6 +94,16 @@ fun HomeScreen(
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
     val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(homeUiState.navEvent) {
+        when (homeUiState.navEvent) {
+            HomeNavEvent.ShowBulkMoveToVault -> {
+                onNavigateEvent(HomeNavigation.MoveToVault)
+            }
+            HomeNavEvent.Unknown -> {}
+        }
+        homeViewModel.clearNavEvent()
+    }
+
     var currentBottomSheet by rememberSaveable(stateSaver = HomeBottomSheetTypeSaver) {
         mutableStateOf(TrashOptions)
     }
@@ -524,13 +534,18 @@ fun HomeScreen(
                             homeViewModel.clearSelection()
                         }
 
-                        HomeUiEvent.MoveItemsActionClick -> TODO()
+
                         HomeUiEvent.PermanentlyDeleteItemsActionClick -> {
                             shouldShowDeleteItemsDialog = true
                         }
 
                         HomeUiEvent.RestoreItemsActionClick -> {
                             shouldShowRestoreItemsDialog = true
+                        }
+                        HomeUiEvent.MoveItemsActionClick -> {
+                            homeViewModel.moveItemsToVault(
+                                items = homeUiState.homeListUiState.selectionState.selectedItems
+                            )
                         }
                     }
                 }

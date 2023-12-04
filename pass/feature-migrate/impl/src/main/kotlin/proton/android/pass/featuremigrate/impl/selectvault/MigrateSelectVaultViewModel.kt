@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.LoadingResult
@@ -68,7 +67,6 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
     private val eventFlow: MutableStateFlow<Option<SelectVaultEvent>> = MutableStateFlow(None)
     private val selectedItemsFlow = bulkMoveToVaultRepository.observe()
-        .onEach { println("CarlosLog: SelectedItemsFlow $it") }
         .distinctUntilChanged()
 
     val state: StateFlow<MigrateSelectVaultUiState> = combine(

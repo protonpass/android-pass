@@ -30,10 +30,17 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
+import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.fakes.usecases.TestCreateVault
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
 import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -41,12 +48,6 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.Plan
-import proton.android.pass.domain.PlanLimit
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.ShareId
 
 class CreateVaultViewModelTest {
 
@@ -244,7 +245,7 @@ class CreateVaultViewModelTest {
         createViewModel()
 
         createVault.setResult(Result.success(TestShare.create(shareId = ShareId(NEW_SHARE_ID))))
-        migrateItem.setResult(Result.success(TestItem.create()))
+        migrateItem.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(TestItem.create()))))
 
         instance.onNameChange("name")
         instance.onCreateClick()
@@ -254,8 +255,7 @@ class CreateVaultViewModelTest {
 
         val migrateItemMemory = migrateItem.memory()
         val expectedMigrateItem = TestMigrateItems.Payload(
-            sourceShare = ShareId(SHARE_ID),
-            itemId = ItemId(ITEM_ID),
+            items = mapOf(ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))),
             destinationShare = ShareId(NEW_SHARE_ID)
         )
         assertThat(migrateItemMemory).isEqualTo(listOf(expectedMigrateItem))
@@ -314,8 +314,7 @@ class CreateVaultViewModelTest {
 
         val migrateItemMemory = migrateItem.memory()
         val expectedMigrateItem = TestMigrateItems.Payload(
-            sourceShare = ShareId(SHARE_ID),
-            itemId = ItemId(ITEM_ID),
+            items = mapOf(ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))),
             destinationShare = ShareId(NEW_SHARE_ID)
         )
         assertThat(migrateItemMemory).isEqualTo(listOf(expectedMigrateItem))
@@ -346,8 +345,7 @@ class CreateVaultViewModelTest {
 
             val migrateItemMemory = migrateItem.memory()
             val expectedMigrateItem = TestMigrateItems.Payload(
-                sourceShare = ShareId(SHARE_ID),
-                itemId = ItemId(ITEM_ID),
+                items = mapOf(ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))),
                 destinationShare = ShareId(NEW_SHARE_ID)
             )
             assertThat(migrateItemMemory).isEqualTo(listOf(expectedMigrateItem))

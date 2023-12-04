@@ -32,6 +32,7 @@ import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.fakes.usecases.TestCreateVault
 import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.featurevault.impl.R
@@ -117,7 +118,7 @@ class CreateVaultBottomSheetTest {
     fun canCreateVaultWhenModeIsSetToCreateAndShare() {
         val newVault = TestShare.create()
         createVault.setResult(Result.success(newVault))
-        migrateItem.setResult(Result.success(TestItem.create()))
+        migrateItem.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(TestItem.create()))))
         savedStateHandleProvider.get().apply {
             set(CreateVaultNextActionNavArgId.key, CreateVaultNextAction.NEXT_ACTION_SHARE)
             set(CommonOptionalNavArgId.ShareId.key, TestShare.create().id.id)

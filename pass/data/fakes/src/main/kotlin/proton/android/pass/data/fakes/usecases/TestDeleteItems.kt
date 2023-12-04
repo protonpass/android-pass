@@ -16,29 +16,35 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.DeleteItem
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
-class DeleteItemImpl @Inject constructor(
-    private val observeCurrentUser: ObserveCurrentUser,
-    private val itemRepository: ItemRepository
-) : DeleteItem {
+class TestDeleteItems @Inject constructor() : DeleteItems {
+
+    private var result: Result<Unit> = Result.success(Unit)
+    private val memory: MutableList<Payload> = mutableListOf()
+
+    fun setResult(value: Result<Unit>) {
+        result = value
+    }
+
+    fun memory(): List<Payload> = memory
 
     override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) {
-        val id = if (userId == null) {
-            val user = requireNotNull(observeCurrentUser().first())
-            user.userId
-        } else {
-            userId
-        }
-        itemRepository.deleteItems(id, items)
+        memory.add(Payload(userId, items))
+        result.fold(
+            onSuccess = {},
+            onFailure = { throw it }
+        )
     }
+
+    data class Payload(
+        val userId: UserId?,
+        val items: Map<ShareId, List<ItemId>>
+    )
 }

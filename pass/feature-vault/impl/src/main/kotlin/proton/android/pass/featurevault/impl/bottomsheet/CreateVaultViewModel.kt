@@ -33,9 +33,10 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
+import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteVault
-import proton.android.pass.data.api.usecases.MigrateItem
+import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
@@ -54,7 +55,7 @@ class CreateVaultViewModel @Inject constructor(
     private val deleteVault: DeleteVault,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val savedStateHandleProvider: SavedStateHandleProvider,
-    private val migrateItem: MigrateItem,
+    private val migrateItems: MigrateItems,
     observeUpgradeInfo: ObserveUpgradeInfo,
 ) : BaseVaultViewModel() {
 
@@ -128,15 +129,27 @@ class CreateVaultViewModel @Inject constructor(
             is CreateVaultNextAction.ShareVault -> {
                 PassLogger.d(TAG, "Migrating item")
                 runCatching {
-                    migrateItem(
-                        sourceShare = action.shareId,
-                        itemId = action.itemId,
+                    migrateItems(
+                        items = mapOf(action.shareId to listOf(action.itemId)),
                         destinationShare = newVault.id
                     )
                 }.onSuccess {
-                    PassLogger.d(TAG, "Item migrated successfully")
-                    snackbarDispatcher(VaultSnackbarMessage.CreateVaultSuccess)
-                    eventFlow.update { IsVaultCreatedEvent.CreatedAndMoveToShare(newVault.id) }
+                    when (it) {
+                        is MigrateItemsResult.AllMigrated -> {
+                            PassLogger.d(TAG, "Item migrated successfully")
+                            snackbarDispatcher(VaultSnackbarMessage.CreateVaultSuccess)
+                            eventFlow.update { IsVaultCreatedEvent.CreatedAndMoveToShare(newVault.id) }
+                        }
+
+                        // Cannot happen as we are only migrating one item
+                        is MigrateItemsResult.SomeMigrated -> {}
+
+                        is MigrateItemsResult.NoneMigrated -> {
+                            PassLogger.w(TAG, it.exception, "Error migrating item")
+                            snackbarDispatcher(VaultSnackbarMessage.CreateVaultError)
+                        }
+                    }
+
                 }.onFailure { migrateItemError ->
                     PassLogger.w(TAG, migrateItemError, "Migrate item failed. Deleting vault")
                     runCatching {

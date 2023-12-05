@@ -19,12 +19,14 @@
 package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -40,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.R
 
@@ -51,8 +55,7 @@ fun ActionableItemRow(
     vaultIcon: Int? = null,
     highlight: String = "",
     showMenuIcon: Boolean,
-    isInSelectionMode: Boolean = false,
-    isSelected: Boolean = false,
+    selectionModeState: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode,
     canLoadExternalImages: Boolean,
     onItemClick: (ItemUiModel) -> Unit = {},
     onItemLongClick: (ItemUiModel) -> Unit = {},
@@ -65,20 +68,32 @@ fun ActionableItemRow(
                 onClick = { onItemClick(item) },
                 onLongClick = { onItemLongClick(item) }
             )
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .applyIf(
+                condition = selectionModeState.isSelected(),
+                ifTrue = {
+                    padding(horizontal = 8.dp, vertical = 2.dp)
+                        .background(
+                            color = PassTheme.colors.interactionNormMinor1,
+                            shape = RoundedCornerShape(16.dp),
+                        )
+                        .padding(horizontal = 8.dp, vertical = 10.dp)
+                },
+                ifFalse = {
+                    padding(horizontal = 16.dp, vertical = 12.dp)
+                }
+            ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         ItemRowContents(
             modifier = Modifier.weight(1f),
             item = item,
-            isInSelectionMode = isInSelectionMode,
-            isSelected = isSelected,
+            selection = selectionModeState,
             highlight = highlight,
             vaultIcon = vaultIcon,
             canLoadExternalImages = canLoadExternalImages
         )
-        if (showMenuIcon && !isInSelectionMode) {
+        if (showMenuIcon && selectionModeState is ItemSelectionModeState.NotInSelectionMode) {
             IconButton(
                 onClick = { onItemMenuClick(item) },
                 modifier = Modifier.size(24.dp)
@@ -142,6 +157,29 @@ fun ActionableItemRowPreviewWithVaultIcon(
                 showMenuIcon = false,
                 vaultIcon = R.drawable.ic_bookmark_small,
                 canLoadExternalImages = false
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ActionableItemRowPreviewSelectionMode(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val state = if (input.second) {
+        ItemSelectionModeState.ItemSelectionState.Selected
+    } else {
+        ItemSelectionModeState.ItemSelectionState.NotSelectable
+    }
+    PassTheme(isDark = input.first) {
+        Surface {
+            ActionableItemRow(
+                item = ItemUiModelPreviewProvider().values.first(),
+                showMenuIcon = false,
+                vaultIcon = R.drawable.ic_bookmark_small,
+                canLoadExternalImages = false,
+                selectionModeState = ItemSelectionModeState.InSelectionMode(state)
             )
         }
     }

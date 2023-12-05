@@ -103,7 +103,9 @@ data class PassColors(
     val bottomBarBackground: Color,
     val bottomSheetBackground: Color,
     val itemDetailBackground: Color,
-    val loginIconBorder: Color
+    val loginIconBorder: Color,
+    val loginIconDisabledMask: Color
+
 ) {
     companion object {
         val Dark = PassColors(
@@ -186,7 +188,8 @@ data class PassColors(
             bottomBarBackground = PassPalette.ShadowyCove,
             bottomSheetBackground = PassPalette.DarkGunmetal,
             itemDetailBackground = PassPalette.EerieBlack,
-            loginIconBorder = PassPalette.White100
+            loginIconBorder = PassPalette.White100,
+            loginIconDisabledMask = PassPalette.CharcoalSmoke
         )
         val Light = PassColors(
             interactionNormContrast = PassPalette.SmokyBlack,
@@ -267,6 +270,7 @@ data class PassColors(
             bottomSheetBackground = PassPalette.White100,
             itemDetailBackground = PassPalette.White100,
             loginIconBorder = PassPalette.PearlWhite,
+            loginIconDisabledMask = PassPalette.SilverFog
         )
     }
 }
@@ -339,6 +343,7 @@ val LocalPassColors = staticCompositionLocalOf {
         bottomBarBackground = Color.Unspecified,
         bottomSheetBackground = Color.Unspecified,
         itemDetailBackground = Color.Unspecified,
-        loginIconBorder = Color.Unspecified
+        loginIconBorder = Color.Unspecified,
+        loginIconDisabledMask = Color.Unspecified
     )
 }

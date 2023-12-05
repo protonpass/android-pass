@@ -15,19 +15,26 @@ import proton.android.pass.composecomponents.impl.container.BoxedIcon
 @Composable
 fun CreditCardIcon(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     size: Int = 40,
-    shape: Shape = PassTheme.shapes.squircleMediumShape
+    shape: Shape = PassTheme.shapes.squircleMediumShape,
 ) {
+    val (backgroundColor, foregroundColor) = if (enabled) {
+        PassTheme.colors.cardInteractionNormMinor1 to PassTheme.colors.cardInteractionNormMajor2
+    } else {
+        PassTheme.colors.cardInteractionNormMinor2 to PassTheme.colors.cardInteractionNormMinor1
+    }
+
     BoxedIcon(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.cardInteractionNormMinor1,
+        backgroundColor = backgroundColor,
         size = size,
         shape = shape
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_credit_card),
             contentDescription = null,
-            tint = PassTheme.colors.cardInteractionNormMajor2
+            tint = foregroundColor
         )
     }
 }

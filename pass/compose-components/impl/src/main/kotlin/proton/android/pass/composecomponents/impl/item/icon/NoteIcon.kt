@@ -33,19 +33,26 @@ import proton.android.pass.composecomponents.impl.container.BoxedIcon
 @Composable
 fun NoteIcon(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     size: Int = 40,
-    shape: Shape = PassTheme.shapes.squircleMediumShape
+    shape: Shape = PassTheme.shapes.squircleMediumShape,
 ) {
+    val (backgroundColor, foregroundColor) = if (enabled) {
+        PassTheme.colors.noteInteractionNormMinor1 to PassTheme.colors.noteInteractionNormMajor2
+    } else {
+        PassTheme.colors.noteInteractionNormMinor2 to PassTheme.colors.noteInteractionNormMinor1
+    }
+
     BoxedIcon(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
+        backgroundColor = backgroundColor,
         size = size,
         shape = shape
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_file_lines),
             contentDescription = null,
-            tint = PassTheme.colors.noteInteractionNormMajor2
+            tint = foregroundColor
         )
     }
 }

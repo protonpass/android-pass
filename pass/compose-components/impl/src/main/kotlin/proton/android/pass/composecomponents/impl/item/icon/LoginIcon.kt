@@ -113,9 +113,9 @@ fun LoginIcon(
             remember { mutableStateOf(Color.White) }
         }
 
-        Box(modifier = Modifier.size(size.dp)) {
+        Box(modifier = modifier.size(size.dp)) {
             SubcomposeAsyncImage(
-                modifier = modifier
+                modifier = Modifier
                     .clip(shape)
                     .size(size.dp),
                 model = ImageRequest.Builder(LocalContext.current)

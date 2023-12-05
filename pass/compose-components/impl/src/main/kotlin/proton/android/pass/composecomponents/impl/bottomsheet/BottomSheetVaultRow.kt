@@ -18,11 +18,14 @@
 
 package proton.android.pass.composecomponents.impl.bottomsheet
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +41,7 @@ import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 
+@Suppress("LongMethod")
 fun BottomSheetVaultRow(
     vault: VaultWithItemCount,
     isSelected: Boolean,
@@ -45,59 +49,76 @@ fun BottomSheetVaultRow(
     enabled: Boolean = true,
     isLoading: Boolean = false,
     onVaultClick: ((ShareId) -> Unit)?
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                val color = if (enabled) {
-                    PassTheme.colors.textNorm
-                } else {
-                    PassTheme.colors.textHint
-                }
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            val color = if (enabled) {
+                PassTheme.colors.textNorm
+            } else {
+                PassTheme.colors.textHint
+            }
 
-                BottomSheetItemTitle(
-                    text = vault.vault.name,
-                    color = color
-                )
+            BottomSheetItemTitle(
+                text = vault.vault.name,
+                color = color
+            )
+        }
+    override val subtitle: @Composable (() -> Unit)
+        get() = {
+            val textColor = if (enabled) {
+                PassTheme.colors.textWeak
+            } else {
+                PassTheme.colors.textHint
             }
-        override val subtitle: @Composable (() -> Unit)
-            get() = {
-                val text = customSubtitle ?: pluralStringResource(
-                    id = R.plurals.bottomsheet_select_vault_item_count,
-                    count = vault.activeItemCount.toInt(),
-                    vault.activeItemCount
-                )
-                Text(
-                    text = text,
-                    color = PassTheme.colors.textHint
-                )
-            }
-        override val leftIcon: @Composable (() -> Unit)
-            get() = {
-                VaultIcon(
-                    backgroundColor = vault.vault.color.toColor(true),
-                    iconColor = vault.vault.color.toColor(),
-                    icon = vault.vault.icon.toResource()
-                )
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = if (isSelected) {
-                {
-                    BottomSheetItemIcon(
-                        iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                        tint = PassTheme.colors.loginInteractionNormMajor1
-                    )
+            val text = customSubtitle ?: pluralStringResource(
+                id = R.plurals.bottomsheet_select_vault_item_count,
+                count = vault.activeItemCount.toInt(),
+                vault.activeItemCount
+            )
+            Text(
+                text = text,
+                color = textColor
+            )
+        }
+    override val leftIcon: @Composable (() -> Unit)
+        get() = {
+            VaultIcon(
+                backgroundColor = vault.vault.color.toColor(true),
+                iconColor = vault.vault.color.toColor(),
+                icon = vault.vault.icon.toResource()
+            )
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = if (isLoading) {
+            { CircularProgressIndicator(modifier = Modifier.size(28.dp)) }
+        } else if (vault.vault.shared || isSelected) {
+            {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    if (vault.vault.shared) {
+                        BottomSheetItemIcon(
+                            iconId = me.proton.core.presentation.R.drawable.ic_proton_users,
+                            tint = PassTheme.colors.textWeak
+                        )
+                    }
+
+                    if (isSelected) {
+                        BottomSheetItemIcon(
+                            iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                            tint = PassTheme.colors.loginInteractionNormMajor1
+                        )
+                    }
                 }
-            } else if (isLoading) {
-                {
-                    CircularProgressIndicator(modifier = Modifier.size(28.dp))
-                }
-            } else null
-        override val onClick: (() -> Unit)? = if (onVaultClick != null && enabled) {
-            { onVaultClick(vault.vault.shareId) }
+            }
         } else null
-        override val isDivider = false
-    }
+
+    override val onClick: (() -> Unit)? = if (onVaultClick != null && enabled) {
+        { onVaultClick(vault.vault.shareId) }
+    } else null
+    override val isDivider = false
+}
 
 class ThemeBottomSheetVaultRowProvider :
     ThemePairPreviewProvider<VaultRowInput>(BottomSheetVaultRowPreviewProvider())

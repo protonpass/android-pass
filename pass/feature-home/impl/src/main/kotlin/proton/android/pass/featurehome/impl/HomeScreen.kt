@@ -99,6 +99,7 @@ fun HomeScreen(
             HomeNavEvent.ShowBulkMoveToVault -> {
                 onNavigateEvent(HomeNavigation.MoveToVault)
             }
+
             HomeNavEvent.Unknown -> {}
         }
         homeViewModel.clearNavEvent()
@@ -506,7 +507,8 @@ fun HomeScreen(
                                 currentBottomSheet = TrashOptions
                                 scope.launch { bottomSheetState.show() }
                             } else {
-                                onNavigateEvent(HomeNavigation.SearchOptions)
+                                val readOnly = homeUiState.isSelectedVaultReadOnly()
+                                onNavigateEvent(HomeNavigation.SearchOptions(readOnly))
                             }
                         }
 
@@ -542,6 +544,7 @@ fun HomeScreen(
                         HomeUiEvent.RestoreItemsActionClick -> {
                             shouldShowRestoreItemsDialog = true
                         }
+
                         HomeUiEvent.MoveItemsActionClick -> {
                             homeViewModel.moveItemsToVault(
                                 items = homeUiState.homeListUiState.selectionState.selectedItems

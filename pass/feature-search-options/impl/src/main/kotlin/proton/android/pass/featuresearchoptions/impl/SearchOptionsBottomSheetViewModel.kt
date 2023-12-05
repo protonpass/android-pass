@@ -21,6 +21,7 @@ package proton.android.pass.featuresearchoptions.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -28,6 +29,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ItemState
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
@@ -39,9 +42,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchOptionsBottomSheetViewModel @Inject constructor(
     homeSearchOptionsRepository: HomeSearchOptionsRepository,
-    observeItemCount: ObserveItemCount
+    observeItemCount: ObserveItemCount,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
+    private val isReadOnly: Boolean = savedStateHandleProvider.get().require(ReadOnlyNavArgId.key)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     val state: StateFlow<SearchOptionsUIState> = homeSearchOptionsRepository.observeSearchOptions()
         .flatMapLatest {
             when (val vault = it.vaultSelectionOption) {
@@ -67,7 +74,8 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
                     SearchFilterType.Alias -> summary.alias
                     SearchFilterType.Note -> summary.note
                     SearchFilterType.CreditCard -> summary.creditCard
-                }.toInt()
+                }.toInt(),
+                showBulkActionsOption = !isReadOnly
             )
         }
         .stateIn(
@@ -83,5 +91,6 @@ object EmptySearchOptionsUIState : SearchOptionsUIState
 data class SuccessSearchOptionsUIState(
     val filterType: SearchFilterType,
     val sortingType: SearchSortingType,
-    val count: Int
+    val count: Int,
+    val showBulkActionsOption: Boolean
 ) : SearchOptionsUIState

@@ -143,13 +143,17 @@ fun ItemsList(
                                 ?.takeIf { !isShareSelected }
                                 ?.icon
                         }
-                        val isSelected = remember(isInSelectionMode, selectedItemIds) {
-                            isInSelectionMode && item.shareId to item.id in selectedItemIds
+                        val selection = remember(isInSelectionMode, selectedItemIds) {
+                            val isSelected = item.shareId to item.id in selectedItemIds
+                            ItemSelectionModeState.fromValues(
+                                inSelectionMode = isInSelectionMode,
+                                isSelected = isSelected,
+                                isSelectable = true // TO BE CHANGED
+                            )
                         }
                         ActionableItemRow(
                             item = item,
-                            isInSelectionMode = isInSelectionMode,
-                            isSelected = isSelected,
+                            selectionModeState = selection,
                             vaultIcon = icon?.toSmallResource(),
                             highlight = highlight,
                             showMenuIcon = showMenuIcon,

@@ -58,6 +58,7 @@ class AutofillActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setSecureMode()
         super.onCreate(savedInstanceState)
+
         viewModel.register(this)
 
         lifecycleScope.launch {
@@ -114,6 +115,7 @@ class AutofillActivity : FragmentActivity() {
     }
 
     private fun onAutofillSuccess(autofillMappings: AutofillMappings) {
+        PassLogger.i(TAG, "Mappings found: ${autofillMappings.mappings.size}")
         val intent = prepareAutofillSuccessIntent(autofillMappings)
         setResult(RESULT_OK, intent)
         finishApp()

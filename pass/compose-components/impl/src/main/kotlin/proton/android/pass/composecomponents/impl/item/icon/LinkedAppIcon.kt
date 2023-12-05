@@ -22,6 +22,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -47,6 +48,7 @@ fun LinkedAppIcon(
     packageName: String,
     size: Int = 40,
     shape: Shape,
+    enabled: Boolean = true,
     emptyContent: @Composable () -> Unit
 ) {
     LinkedAppIcon(
@@ -54,6 +56,7 @@ fun LinkedAppIcon(
         packageName = PackageName(packageName),
         size = size,
         shape = shape,
+        enabled = enabled,
         emptyContent = emptyContent
     )
 }
@@ -64,6 +67,7 @@ fun LinkedAppIcon(
     packageName: PackageName,
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
+    enabled: Boolean,
     emptyContent: @Composable () -> Unit
 ) {
     var isLoaded by remember { mutableStateOf(false) }
@@ -82,41 +86,54 @@ fun LinkedAppIcon(
         remember { mutableStateOf(Color.White) }
     }
 
-    SubcomposeAsyncImage(
-        modifier = modifier
-            .clip(shape)
-            .size(size.dp),
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(packageName)
-            .size(size)
-            .apply {
-                if (CROSSFADE_ENABLED) {
-                    crossfade(CROSSFADE_ANIMATION_MS)
+    Box(modifier = Modifier.size(size.dp)) {
+        SubcomposeAsyncImage(
+            modifier = modifier
+                .clip(shape)
+                .size(size.dp),
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(packageName)
+                .size(size)
+                .apply {
+                    if (CROSSFADE_ENABLED) {
+                        crossfade(CROSSFADE_ANIMATION_MS)
+                    }
                 }
-            }
-            .build(),
-        loading = {
-            emptyContent()
-        },
-        error = {
-            emptyContent()
-        },
-        onSuccess = {
-            isLoaded = true
-        },
-        success = {
-            SubcomposeAsyncImageContent(
+                .build(),
+            loading = {
+                emptyContent()
+            },
+            error = {
+                emptyContent()
+            },
+            onSuccess = {
+                isLoaded = true
+            },
+            success = {
+                SubcomposeAsyncImageContent(
+                    modifier = Modifier
+                        .size(size.dp)
+                        .border(
+                            width = 1.dp,
+                            color = PassTheme.colors.loginIconBorder,
+                            shape = shape
+                        )
+                        .background(backgroundColor)
+                        .padding(8.dp)
+                )
+            },
+            contentDescription = null
+        )
+
+        if (!enabled) {
+            Box(
                 modifier = Modifier
                     .size(size.dp)
-                    .border(
-                        width = 1.dp,
-                        color = PassTheme.colors.loginIconBorder,
+                    .background(
+                        color = PassTheme.colors.loginIconDisabledMask,
                         shape = shape
                     )
-                    .background(backgroundColor)
-                    .padding(8.dp)
             )
-        },
-        contentDescription = null
-    )
+        }
+    }
 }

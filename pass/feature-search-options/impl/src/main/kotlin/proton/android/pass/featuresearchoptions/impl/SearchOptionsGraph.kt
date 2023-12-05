@@ -35,8 +35,8 @@ object SortingLocationNavArgId : NavArgId {
     override val navType = NavType.StringType
 }
 
-object ReadOnlyNavArgId : NavArgId {
-    override val key = "read_only"
+object EnableBulkActionsNavArgId : NavArgId {
+    override val key = "bulk_actions_enabled"
     override val navType = NavType.BoolType
 }
 
@@ -51,11 +51,11 @@ object SortingBottomsheet : NavItem(
 
 object SearchOptionsBottomsheet : NavItem(
     baseRoute = "searchoptions/bottomsheet",
-    navArgIds = listOf(ReadOnlyNavArgId),
+    navArgIds = listOf(EnableBulkActionsNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createRoute(readOnly: Boolean) =
-        "$baseRoute/$readOnly"
+    fun createRoute(bulkActionsEnabled: Boolean) =
+        "$baseRoute/$bulkActionsEnabled"
 }
 
 object FilterBottomsheet : NavItem(

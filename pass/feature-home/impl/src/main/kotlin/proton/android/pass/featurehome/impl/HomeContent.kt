@@ -68,7 +68,7 @@ import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 
-@Suppress("LongParameterList", "ComplexMethod")
+@Suppress("ComplexMethod")
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable

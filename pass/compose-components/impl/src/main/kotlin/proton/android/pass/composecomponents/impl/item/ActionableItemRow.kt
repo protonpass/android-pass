@@ -76,7 +76,7 @@ fun ActionableItemRow(
                             color = PassTheme.colors.interactionNormMinor1,
                             shape = RoundedCornerShape(16.dp),
                         )
-                        .padding(horizontal = 8.dp, vertical = 10.dp)
+                        .padding(horizontal = 8.dp, vertical = 10.2.dp)
                 },
                 ifFalse = {
                     padding(horizontal = 16.dp, vertical = 12.dp)

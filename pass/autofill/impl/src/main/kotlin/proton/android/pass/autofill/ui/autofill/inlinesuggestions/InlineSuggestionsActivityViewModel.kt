@@ -89,6 +89,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
                 if (mappingsOption.value.mappings.isNotEmpty()) {
                     telemetryManager.sendEvent(AutofillDone(AutofillTriggerSource.Source))
                     inAppReviewTriggerMetrics.incrementItemAutofillCount()
+                    PassLogger.i(TAG, "Mappings found: ${mappingsOption.value.mappings.size}")
                     InlineSuggestionAutofillNoUiState.Success(mappingsOption.value)
                 } else {
                     PassLogger.i(TAG, "Empty mappings")

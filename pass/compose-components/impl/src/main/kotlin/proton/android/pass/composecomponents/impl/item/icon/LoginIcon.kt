@@ -45,7 +45,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.domain.WebsiteUrl
@@ -241,15 +241,16 @@ private fun TwoLetterLoginIcon(
 @Preview
 @Composable
 fun LoginIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = input.first) {
         Surface {
             LoginIcon(
                 text = "login text",
                 website = null,
                 packageName = null,
-                canLoadExternalImages = false
+                canLoadExternalImages = false,
+                enabled = input.second
             )
         }
     }

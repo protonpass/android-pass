@@ -50,6 +50,7 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.CreditCardOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
@@ -526,7 +527,11 @@ fun HomeScreen(
                         }
 
                         is HomeUiEvent.SelectItem -> {
-                            homeViewModel.onItemSelected(it.item)
+                            val isReadOnly: Boolean =
+                                homeUiState.homeListUiState.shares[it.item.shareId]?.role == ShareRole.Read
+                            if (!isReadOnly) {
+                                homeViewModel.onItemSelected(it.item)
+                            }
                         }
 
                         HomeUiEvent.MoveToTrashItemsActionClick -> {

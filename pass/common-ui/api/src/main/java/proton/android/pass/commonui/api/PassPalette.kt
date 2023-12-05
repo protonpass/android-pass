@@ -166,4 +166,8 @@ object PassPalette {
 
     val ValleyNight = Color(0xFF302D45)
     val IvoryWhite = Color(0xFFEDEDED)
+
+    val SilverFog = Color(0xBBEEEEEE)
+    val CharcoalSmoke = Color(0xBB333333)
+
 }

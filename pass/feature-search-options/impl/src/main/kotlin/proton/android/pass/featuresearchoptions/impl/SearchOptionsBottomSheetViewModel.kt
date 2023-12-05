@@ -46,7 +46,8 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val isReadOnly: Boolean = savedStateHandleProvider.get().require(ReadOnlyNavArgId.key)
+    private val bulkActionsEnabled: Boolean =
+        savedStateHandleProvider.get().require(EnableBulkActionsNavArgId.key)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val state: StateFlow<SearchOptionsUIState> = homeSearchOptionsRepository.observeSearchOptions()
@@ -75,7 +76,7 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
                     SearchFilterType.Note -> summary.note
                     SearchFilterType.CreditCard -> summary.creditCard
                 }.toInt(),
-                showBulkActionsOption = !isReadOnly
+                showBulkActionsOption = bulkActionsEnabled
             )
         }
         .stateIn(

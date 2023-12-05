@@ -508,7 +508,8 @@ fun HomeScreen(
                                 scope.launch { bottomSheetState.show() }
                             } else {
                                 val readOnly = homeUiState.isSelectedVaultReadOnly()
-                                onNavigateEvent(HomeNavigation.SearchOptions(readOnly))
+                                val inSearchMode = homeUiState.searchUiState.inSearchMode
+                                onNavigateEvent(HomeNavigation.SearchOptions(!readOnly && !inSearchMode))
                             }
                         }
 

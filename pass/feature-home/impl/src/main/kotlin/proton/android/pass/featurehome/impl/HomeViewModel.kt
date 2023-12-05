@@ -738,8 +738,13 @@ class HomeViewModel @Inject constructor(
 
     fun onItemSelected(item: ItemUiModel) = viewModelScope.launch {
         selectionState.update { state ->
-            if (state.selectedItems.contains(item)) {
-                val newSelectedItems = state.selectedItems - item
+            val alreadyInList = state.selectedItems.any {
+                it.shareId == item.shareId && it.id == item.id
+            }
+            if (alreadyInList) {
+                val newSelectedItems = state.selectedItems.filterNot {
+                    it.shareId == item.shareId && it.id == item.id
+                }
                 state.copy(
                     selectedItems = newSelectedItems,
                     isInSelectMode = newSelectedItems.isNotEmpty()

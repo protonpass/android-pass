@@ -33,13 +33,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
-fun SelectModeIcon(
+fun ItemSelectedIcon(
     modifier: Modifier = Modifier,
-    isSelected: Boolean,
     size: Int = 40,
 ) {
     Box(
@@ -50,38 +48,29 @@ fun SelectModeIcon(
                 color = PassTheme.colors.inputBorderNorm,
                 shape = PassTheme.shapes.squircleMediumShape
             )
-            .applyIf(
-                condition = isSelected,
-                ifTrue = {
-                    background(
-                        color = PassTheme.colors.interactionNorm,
-                        shape = PassTheme.shapes.squircleMediumShape
-                    )
-                }
+            .background(
+                color = PassTheme.colors.interactionNorm,
+                shape = PassTheme.shapes.squircleMediumShape
             ),
         contentAlignment = Alignment.Center
     ) {
-        if (isSelected) {
-            Icon(
-                painter = painterResource(R.drawable.ic_proton_checkmark),
-                contentDescription = null,
-                tint = PassTheme.colors.textNorm,
-                modifier = Modifier.size(24.dp)
-            )
-        }
+        Icon(
+            painter = painterResource(R.drawable.ic_proton_checkmark),
+            contentDescription = null,
+            tint = PassTheme.colors.textNorm,
+            modifier = Modifier.size(24.dp)
+        )
     }
 }
 
 @Preview
 @Composable
-fun SelectModeIconPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+fun ItemSelectedIconPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    PassTheme(isDark = input.first) {
+    PassTheme(isDark = isDark) {
         Surface {
-            SelectModeIcon(
-                isSelected = input.second
-            )
+            ItemSelectedIcon()
         }
     }
 }

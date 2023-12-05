@@ -33,19 +33,26 @@ import proton.android.pass.composecomponents.impl.container.BoxedIcon
 @Composable
 fun AliasIcon(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
 ) {
+    val (backgroundColor, foregroundColor) = if (enabled) {
+        PassTheme.colors.aliasInteractionNormMinor1 to PassTheme.colors.aliasInteractionNormMajor2
+    } else {
+        PassTheme.colors.aliasInteractionNormMinor2 to PassTheme.colors.aliasInteractionNormMinor1
+    }
+
     BoxedIcon(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
+        backgroundColor = backgroundColor,
         size = size,
         shape = shape
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
             contentDescription = null,
-            tint = PassTheme.colors.aliasInteractionNormMajor2
+            tint = foregroundColor
         )
     }
 }

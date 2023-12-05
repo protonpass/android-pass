@@ -232,7 +232,9 @@ internal fun HomeContent(
                     }
                 },
                 onItemLongClick = {
-                    if (!uiState.isSelectedVaultReadOnly()) {
+                    val readOnly = uiState.isSelectedVaultReadOnly()
+                    val inSearchMode = uiState.searchUiState.inSearchMode
+                    if (!readOnly && !inSearchMode) {
                         onEvent(HomeUiEvent.SelectItem(it))
                     }
                 },

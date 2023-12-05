@@ -251,8 +251,9 @@ fun NavGraphBuilder.appGraph(
                     destination = InviteConfirmed
                 )
 
-                HomeNavigation.SearchOptions -> appNavigator.navigate(
+                is HomeNavigation.SearchOptions -> appNavigator.navigate(
                     destination = SearchOptionsBottomsheet,
+                    route = SearchOptionsBottomsheet.createRoute(it.readOnly),
                     backDestination = Home
                 )
 
@@ -278,6 +279,7 @@ fun NavGraphBuilder.appGraph(
                         backDestination = Home
                     )
                 }
+
                 SearchOptionsNavigation.Sorting -> dismissBottomSheet {
                     appNavigator.navigate(
                         SortingBottomsheet,

@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchSta
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
@@ -57,6 +58,15 @@ data class HomeUiState(
     val accountType: AccountType,
     val navEvent: HomeNavEvent,
 ) {
+    fun isSelectedVaultReadOnly() =
+        when (val selection = homeListUiState.homeVaultSelection) {
+            is VaultSelectionOption.AllVaults -> false
+            is VaultSelectionOption.Vault ->
+                homeListUiState.shares[selection.shareId]?.role == ShareRole.Read
+
+            is VaultSelectionOption.Trash -> false
+        }
+
     companion object {
         val Loading = HomeUiState(
             homeListUiState = HomeListUiState.Loading,

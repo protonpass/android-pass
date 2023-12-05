@@ -253,7 +253,7 @@ fun NavGraphBuilder.appGraph(
 
                 is HomeNavigation.SearchOptions -> appNavigator.navigate(
                     destination = SearchOptionsBottomsheet,
-                    route = SearchOptionsBottomsheet.createRoute(it.readOnly),
+                    route = SearchOptionsBottomsheet.createRoute(it.bulkActionsEnabled),
                     backDestination = Home
                 )
 

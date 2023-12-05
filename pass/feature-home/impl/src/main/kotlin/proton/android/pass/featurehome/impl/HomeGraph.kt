@@ -105,6 +105,6 @@ sealed interface HomeNavigation {
     object ConfirmedInvite : HomeNavigation
 
     @JvmInline
-    value class SearchOptions(val readOnly: Boolean) : HomeNavigation
+    value class SearchOptions(val bulkActionsEnabled: Boolean) : HomeNavigation
     object MoveToVault : HomeNavigation
 }

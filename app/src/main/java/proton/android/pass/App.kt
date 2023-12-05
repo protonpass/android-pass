@@ -29,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.initializer.MainInitializer
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -53,11 +54,15 @@ class App : Application(), ImageLoaderFactory {
         preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
         registerActivityLifecycleCallbacks(
             activityLifecycleCallbacks(
-                onActivityCreated = { _, _ ->
+                onActivityCreated = { activity, _ ->
                     CoroutineScope(Dispatchers.IO).launch {
                         inAppReviewTriggerMetrics.incrementAppLaunchStreakCount()
                     }
-                }
+                    PassLogger.i(TAG, "Created activity ${activity::class.java.simpleName}")
+                },
+                onActivityStopped = { activity ->
+                    PassLogger.i(TAG, "Stopped activity ${activity::class.java.simpleName}")
+                },
             )
         )
     }
@@ -98,5 +103,9 @@ class App : Application(), ImageLoaderFactory {
         override fun onActivityDestroyed(activity: Activity) {
             onActivityDestroyed(activity)
         }
+    }
+
+    companion object {
+        private const val TAG = "App"
     }
 }

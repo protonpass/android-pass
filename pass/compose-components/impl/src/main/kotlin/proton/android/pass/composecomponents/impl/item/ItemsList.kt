@@ -72,6 +72,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchSta
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.toPermissions
 
 private const val PLACEHOLDER_ELEMENTS = 40
 
@@ -138,17 +140,16 @@ fun ItemsList(
                 items.forEach { (key, value) ->
                     stickyItemListHeader(key)
                     items(items = value, key = { it.id.id }) { item ->
-                        val icon = remember {
-                            shares[item.shareId]
-                                ?.takeIf { !isShareSelected }
-                                ?.icon
-                        }
+                        val share = shares[item.shareId]
+                        val permissions = share?.role?.toPermissions()
+                        val isSelectable = permissions?.canCreate() ?: false
+                        val icon = share?.takeIf { !isShareSelected }?.icon
                         val selection = remember(isInSelectionMode, selectedItemIds) {
                             val isSelected = item.shareId to item.id in selectedItemIds
                             ItemSelectionModeState.fromValues(
                                 inSelectionMode = isInSelectionMode,
                                 isSelected = isSelected,
-                                isSelectable = true // TO BE CHANGED
+                                isSelectable = isSelectable
                             )
                         }
                         ActionableItemRow(

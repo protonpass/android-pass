@@ -44,7 +44,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 
@@ -54,7 +54,8 @@ internal fun ItemRow(
     icon: @Composable () -> Unit,
     title: AnnotatedString,
     subtitles: ImmutableList<AnnotatedString>,
-    vaultIcon: Int?
+    vaultIcon: Int?,
+    enabled: Boolean
 ) {
     Row(
         modifier = modifier
@@ -82,7 +83,7 @@ internal fun ItemRow(
                 }
                 Text(
                     text = title,
-                    style = ProtonTheme.typography.defaultNorm,
+                    style = ProtonTheme.typography.defaultNorm(enabled = enabled),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
@@ -91,7 +92,7 @@ internal fun ItemRow(
                 .forEach {
                     Text(
                         text = it,
-                        style = ProtonTheme.typography.defaultSmallWeak,
+                        style = ProtonTheme.typography.defaultSmallWeak(enabled = enabled),
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
@@ -103,15 +104,16 @@ internal fun ItemRow(
 @Preview
 @Composable
 fun ItemRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = input.first) {
         Surface {
             ItemRow(
                 icon = { NoteIcon() },
                 title = "title".asAnnotatedString(),
                 subtitles = persistentListOf("".asAnnotatedString()),
-                vaultIcon = null
+                vaultIcon = null,
+                enabled = input.second
             )
         }
     }

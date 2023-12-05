@@ -44,8 +44,7 @@ fun NoteRow(
     item: ItemUiModel,
     highlight: String = "",
     vaultIcon: Int? = null,
-    isInSelectionMode: Boolean = false,
-    isSelected: Boolean = false,
+    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode
 ) {
     val content = item.contents as ItemContents.Note
 
@@ -57,15 +56,19 @@ fun NoteRow(
     ItemRow(
         modifier = modifier,
         icon = {
-            if (isInSelectionMode) {
-                SelectModeIcon(isSelected = isSelected)
-            } else {
-                NoteIcon()
+            when (selection) {
+                ItemSelectionModeState.NotInSelectionMode -> NoteIcon()
+                is ItemSelectionModeState.InSelectionMode -> when (selection.state) {
+                    ItemSelectionModeState.ItemSelectionState.Selected -> ItemSelectedIcon()
+                    ItemSelectionModeState.ItemSelectionState.Unselected -> NoteIcon()
+                    ItemSelectionModeState.ItemSelectionState.NotSelectable -> NoteIcon(enabled = false)
+                }
             }
         },
         title = title,
         subtitles = subtitles,
-        vaultIcon = vaultIcon
+        vaultIcon = vaultIcon,
+        enabled = selection.isSelectable()
     )
 }
 
@@ -109,7 +112,7 @@ fun NoteRowPreview(
         Surface {
             NoteRow(
                 item = input.second.model,
-                highlight = input.second.highlight
+                highlight = input.second.highlight,
             )
         }
     }

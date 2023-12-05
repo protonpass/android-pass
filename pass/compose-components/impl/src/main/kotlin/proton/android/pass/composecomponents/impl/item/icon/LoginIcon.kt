@@ -22,6 +22,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -53,17 +54,23 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun LoginIcon(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     shape: Shape = PassTheme.shapes.squircleMediumShape
 ) {
+    val (backgroundColor, foregroundColor) = if (enabled) {
+        PassTheme.colors.loginInteractionNormMinor1 to PassTheme.colors.loginInteractionNormMajor2
+    } else {
+        PassTheme.colors.loginInteractionNormMinor2 to PassTheme.colors.loginInteractionNormMinor1
+    }
     BoxedIcon(
         modifier = modifier,
         shape = shape,
-        backgroundColor = PassTheme.colors.loginInteractionNormMinor2
+        backgroundColor = backgroundColor
     ) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_user),
             contentDescription = null,
-            tint = PassTheme.colors.loginInteractionNormMajor1
+            tint = foregroundColor
         )
     }
 }
@@ -77,6 +84,7 @@ fun LoginIcon(
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
     canLoadExternalImages: Boolean,
+    enabled: Boolean = true
 ) {
     if (website == null || !canLoadExternalImages) {
         FallbackLoginIcon(
@@ -84,10 +92,12 @@ fun LoginIcon(
             text = text,
             packageName = packageName,
             size = size,
-            shape = shape
+            shape = shape,
+            enabled = enabled
         )
     } else {
         var isLoaded by remember { mutableStateOf(false) }
+        var isError by remember { mutableStateOf(false) }
 
         val backgroundColor by if (CROSSFADE_ENABLED) {
             animateColorAsState(
@@ -103,51 +113,69 @@ fun LoginIcon(
             remember { mutableStateOf(Color.White) }
         }
 
-        SubcomposeAsyncImage(
-            modifier = modifier
-                .clip(shape)
-                .size(size.dp),
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(WebsiteUrl(website))
-                .size(size)
-                .apply {
-                    if (CROSSFADE_ENABLED) {
-                        crossfade(CROSSFADE_ANIMATION_MS)
+        Box(modifier = Modifier.size(size.dp)) {
+            SubcomposeAsyncImage(
+                modifier = modifier
+                    .clip(shape)
+                    .size(size.dp),
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(WebsiteUrl(website))
+                    .size(size)
+                    .apply {
+                        if (CROSSFADE_ENABLED) {
+                            crossfade(CROSSFADE_ANIMATION_MS)
+                        }
                     }
-                }
-                .build(),
-            loading = {
-                TwoLetterLoginIcon(
-                    text = text,
-                    shape = shape
-                )
-            },
-            error = {
-                FallbackLoginIcon(
-                    text = text,
-                    packageName = packageName,
-                    size = size,
-                    shape = shape
-                )
-            },
-            onSuccess = {
-                isLoaded = true
-            },
-            success = {
-                SubcomposeAsyncImageContent(
+                    .build(),
+                loading = {
+                    TwoLetterLoginIcon(
+                        text = text,
+                        shape = shape,
+                        enabled = enabled
+                    )
+                },
+                onError = {
+                    isError = true
+                },
+                error = {
+                    FallbackLoginIcon(
+                        text = text,
+                        packageName = packageName,
+                        size = size,
+                        shape = shape,
+                        enabled = enabled
+                    )
+                },
+                onSuccess = {
+                    isLoaded = true
+                },
+                success = {
+                    SubcomposeAsyncImageContent(
+                        modifier = Modifier
+                            .size(size.dp)
+                            .border(
+                                width = 1.dp,
+                                color = PassTheme.colors.loginIconBorder,
+                                shape = shape
+                            )
+                            .background(backgroundColor)
+                            .padding(8.dp)
+                    )
+                },
+                contentDescription = null
+            )
+
+            if (!enabled && !isError) {
+                Box(
                     modifier = Modifier
                         .size(size.dp)
-                        .border(
-                            width = 1.dp,
-                            color = PassTheme.colors.loginIconBorder,
+                        .background(
+                            color = PassTheme.colors.loginIconDisabledMask,
                             shape = shape
                         )
-                        .background(backgroundColor)
-                        .padding(8.dp)
                 )
-            },
-            contentDescription = null
-        )
+            }
+        }
     }
 }
 
@@ -157,26 +185,30 @@ private fun FallbackLoginIcon(
     text: String,
     packageName: String?,
     size: Int = 40,
-    shape: Shape
+    shape: Shape,
+    enabled: Boolean
 ) {
     if (packageName == null) {
         TwoLetterLoginIcon(
             modifier = modifier,
             text = text,
             size = size,
-            shape = shape
+            shape = shape,
+            enabled = enabled
         )
     } else {
         LinkedAppIcon(
             packageName = packageName,
             size = size,
             shape = shape,
+            enabled = enabled,
             emptyContent = {
                 TwoLetterLoginIcon(
                     modifier = modifier,
                     text = text,
                     size = size,
-                    shape = shape
+                    shape = shape,
+                    enabled = enabled
                 )
             }
         )
@@ -188,13 +220,19 @@ private fun TwoLetterLoginIcon(
     modifier: Modifier = Modifier,
     text: String,
     size: Int = 40,
-    shape: Shape
+    shape: Shape,
+    enabled: Boolean
 ) {
+    val (backgroundColor, foregroundColor) = if (enabled) {
+        PassTheme.colors.loginInteractionNormMinor1 to PassTheme.colors.loginInteractionNormMajor2
+    } else {
+        PassTheme.colors.loginInteractionNormMinor2 to PassTheme.colors.loginInteractionNormMinor1
+    }
     CircleTextIcon(
         modifier = modifier,
         text = text,
-        backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
-        textColor = PassTheme.colors.loginInteractionNormMajor2,
+        backgroundColor = backgroundColor,
+        textColor = foregroundColor,
         size = size,
         shape = shape
     )

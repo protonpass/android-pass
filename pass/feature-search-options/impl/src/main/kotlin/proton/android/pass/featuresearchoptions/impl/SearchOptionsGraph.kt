@@ -31,8 +31,13 @@ enum class SortingLocation {
 }
 
 object SortingLocationNavArgId : NavArgId {
-    override val key = "sortingLocation"
+    override val key = "sorting_location"
     override val navType = NavType.StringType
+}
+
+object ReadOnlyNavArgId : NavArgId {
+    override val key = "read_only"
+    override val navType = NavType.BoolType
 }
 
 object SortingBottomsheet : NavItem(
@@ -46,8 +51,12 @@ object SortingBottomsheet : NavItem(
 
 object SearchOptionsBottomsheet : NavItem(
     baseRoute = "searchoptions/bottomsheet",
+    navArgIds = listOf(ReadOnlyNavArgId),
     navItemType = NavItemType.Bottomsheet
-)
+) {
+    fun createRoute(readOnly: Boolean) =
+        "$baseRoute/$readOnly"
+}
 
 object FilterBottomsheet : NavItem(
     baseRoute = "searchoptions/filter/bottomsheet",

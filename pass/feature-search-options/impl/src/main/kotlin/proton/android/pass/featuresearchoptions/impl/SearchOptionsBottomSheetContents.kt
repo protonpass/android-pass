@@ -47,13 +47,15 @@ fun SearchOptionsBottomSheetContents(
     state: SearchOptionsUIState,
     onNavigateEvent: (SearchOptionsNavigation) -> Unit
 ) {
+    val items = mutableListOf<BottomSheetItem>()
+    if (state is SuccessSearchOptionsUIState && state.showBulkActionsOption) {
+        items.add(selectItems(onNavigateEvent))
+    }
+    items.add(filtering(state, onNavigateEvent))
+    items.add(sorting(state, onNavigateEvent))
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = listOf(
-            selectItems(onNavigateEvent),
-            filtering(state, onNavigateEvent),
-            sorting(state, onNavigateEvent)
-        ).withDividers().toPersistentList()
+        items = items.withDividers().toPersistentList()
     )
 }
 
@@ -150,7 +152,8 @@ fun SearchOptionsBottomSheetContentsPreview(
                 state = SuccessSearchOptionsUIState(
                     filterType = SearchFilterType.All,
                     sortingType = SearchSortingType.MostRecent,
-                    count = 2
+                    count = 2,
+                    showBulkActionsOption = true
                 ),
                 onNavigateEvent = {}
             )

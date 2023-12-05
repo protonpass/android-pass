@@ -93,7 +93,9 @@ sealed interface HomeNavigation {
     data class ItemDetail(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
     object Profile : HomeNavigation
     object CreateVault : HomeNavigation
-    data class VaultOptions(val shareId: ShareId) : HomeNavigation
+
+    @JvmInline
+    value class VaultOptions(val shareId: ShareId) : HomeNavigation
     object SortingBottomsheet : HomeNavigation
     object TrialInfo : HomeNavigation
     object OpenInvite : HomeNavigation
@@ -101,6 +103,8 @@ sealed interface HomeNavigation {
     object OnBoarding : HomeNavigation
     object SyncDialog : HomeNavigation
     object ConfirmedInvite : HomeNavigation
-    object SearchOptions : HomeNavigation
+
+    @JvmInline
+    value class SearchOptions(val readOnly: Boolean) : HomeNavigation
     object MoveToVault : HomeNavigation
 }

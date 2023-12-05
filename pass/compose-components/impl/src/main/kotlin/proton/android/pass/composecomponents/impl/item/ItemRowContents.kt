@@ -30,8 +30,7 @@ internal fun ItemRowContents(
     highlight: String,
     vaultIcon: Int? = null,
     canLoadExternalImages: Boolean,
-    isInSelectionMode: Boolean = false,
-    isSelected: Boolean = false,
+    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode
 ) {
     when (item.contents) {
         is ItemContents.Login -> LoginRow(
@@ -40,8 +39,7 @@ internal fun ItemRowContents(
             highlight = highlight,
             vaultIcon = vaultIcon,
             canLoadExternalImages = canLoadExternalImages,
-            isInSelectionMode = isInSelectionMode,
-            isSelected = isSelected,
+            selection = selection
         )
 
         is ItemContents.Note -> NoteRow(
@@ -49,8 +47,7 @@ internal fun ItemRowContents(
             item = item,
             highlight = highlight,
             vaultIcon = vaultIcon,
-            isInSelectionMode = isInSelectionMode,
-            isSelected = isSelected,
+            selection = selection
         )
 
         is ItemContents.Alias -> AliasRow(
@@ -58,8 +55,7 @@ internal fun ItemRowContents(
             item = item,
             highlight = highlight,
             vaultIcon = vaultIcon,
-            isInSelectionMode = isInSelectionMode,
-            isSelected = isSelected
+            selection = selection
         )
 
         is ItemContents.CreditCard -> CreditCardRow(
@@ -67,8 +63,7 @@ internal fun ItemRowContents(
             item = item,
             highlight = highlight,
             vaultIcon = vaultIcon,
-            isInSelectionMode = isInSelectionMode,
-            isSelected = isSelected,
+            selection = selection
         )
 
         is ItemContents.Unknown -> {

@@ -95,6 +95,7 @@ class SentryInitializer : Initializer<Unit> {
         entryPoint.accountSentryHubBuilder().invoke(
             sentryDsn = appConfig.accountSentryDSN ?: ""
         ) { options ->
+            options.isEnableAppLifecycleBreadcrumbs = false
             options.beforeSend = SentryOptions.BeforeSendCallback { event, _ ->
                 if (isCrashReportEnabled.get()) event else null
             }

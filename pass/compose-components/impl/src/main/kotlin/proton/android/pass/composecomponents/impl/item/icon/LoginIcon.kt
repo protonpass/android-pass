@@ -226,7 +226,7 @@ private fun TwoLetterLoginIcon(
     val (backgroundColor, foregroundColor) = if (enabled) {
         PassTheme.colors.loginInteractionNormMinor1 to PassTheme.colors.loginInteractionNormMajor2
     } else {
-        PassTheme.colors.loginInteractionNormMinor2 to PassTheme.colors.loginInteractionNormMinor1
+        PassTheme.colors.loginInteractionNormMinor2 to PassTheme.colors.textHint
     }
     CircleTextIcon(
         modifier = modifier,

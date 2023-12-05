@@ -122,13 +122,18 @@ class MigrateSelectVaultViewModel @Inject constructor(
         } else {
             true
         }
-    }.map {
-        val canCreate = it.vault.role.toPermissions().canCreate()
-        when (mode) {
+    }.map { prepareVault(it, selectedItems) }.toImmutableList()
+
+    private fun prepareVault(
+        vault: VaultWithItemCount,
+        selectedItems: Option<Map<ShareId, List<ItemId>>>
+    ): VaultEnabledPair {
+        val canCreate = vault.vault.role.toPermissions().canCreate()
+        return when (mode) {
             is Mode.MigrateSelectedItems -> {
                 when (selectedItems) {
                     None -> VaultEnabledPair(
-                        vault = it,
+                        vault = vault,
                         status = VaultStatus.Disabled(
                             reason = VaultStatus.DisabledReason.NoPermission
                         )
@@ -139,13 +144,16 @@ class MigrateSelectVaultViewModel @Inject constructor(
                         val state = if (selectedItemsMap.size == 1) {
                             // We only have 1 vault. Disable that one
                             val shareToBeMoved = selectedItemsMap.entries.first()
-                            val isNotCurrentOne = it.vault.shareId != shareToBeMoved.key
-                            if (isNotCurrentOne) {
-                                VaultStatus.Enabled
-                            } else if (!canCreate) {
-                                VaultStatus.Disabled(VaultStatus.DisabledReason.NoPermission)
-                            } else {
-                                VaultStatus.Disabled(VaultStatus.DisabledReason.SameVault)
+                            val isNotCurrentOne = vault.vault.shareId != shareToBeMoved.key
+                            when {
+                                isNotCurrentOne && canCreate -> VaultStatus.Enabled
+                                isNotCurrentOne && !canCreate -> VaultStatus.Disabled(
+                                    reason = VaultStatus.DisabledReason.NoPermission
+                                )
+
+                                else -> VaultStatus.Disabled(
+                                    reason = VaultStatus.DisabledReason.SameVault
+                                )
                             }
                         } else {
                             // We have many vaults. Enable only if permission matches
@@ -157,7 +165,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
                         }
 
                         VaultEnabledPair(
-                            vault = it,
+                            vault = vault,
                             status = state
                         )
                     }
@@ -165,16 +173,16 @@ class MigrateSelectVaultViewModel @Inject constructor(
             }
 
             is Mode.MigrateAllItems -> {
-                val isNotCurrentOne = it.vault.shareId != mode.shareId
+                val isNotCurrentOne = vault.vault.shareId != mode.shareId
                 VaultEnabledPair(
-                    vault = it,
+                    vault = vault,
                     status = if (isNotCurrentOne) VaultStatus.Enabled else VaultStatus.Disabled(
                         reason = VaultStatus.DisabledReason.SameVault
                     )
                 )
             }
         }
-    }.toImmutableList()
+    }
 
     private fun getMode(): Mode {
         val savedState = savedStateHandle.get()

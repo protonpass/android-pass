@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="migrate_item_confirm_title_bottom_sheet">Chuyển nội dung này vào kho lưu trữ trên?</string>
+  <plurals name="migrate_item_confirm_title_bottom_sheet">
+    <item quantity="other">Move %d items to the following vault?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Chuyển tất cả nội dung vào kho lưu trữ trên?</string>
   <string name="migrate_item_confirm_confirm_button">Di chuyển</string>
-  <string name="migrate_item_success_snackbar">Đã di chuyển nội dung</string>
-  <string name="migrate_item_error_snackbar">Lỗi khi di chuyển nội dung</string>
+  <string name="migrate_item_success_snackbar">Items moved</string>
+  <string name="migrate_item_error_snackbar">Error moving the items</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
   <string name="migrate_all_items_success_snackbar">Đã chuyển tất cả nội dung</string>
   <string name="migrate_all_items_error_snackbar">Lỗi khi chuyển tất cả nội dung trong kho lưu trữ</string>
   <string name="migrate_init_error_snackbar">Không thể chuẩn bị màn hình chuyển</string>
+  <string name="migrate_disabled_vault_reason_no_permission">You cannot create items in this vault</string>
+  <string name="migrate_disabled_vault_reason_same_vault">You cannot move an item to the same vault</string>
 </resources>

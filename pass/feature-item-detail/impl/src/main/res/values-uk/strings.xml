@@ -82,11 +82,11 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
-  <string name="item_detail_cannot_perform_action_edit_title">Неможливо редагувати</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Не може редагувати</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Неможливо поширити</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Не може поширювати</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Weak</string>

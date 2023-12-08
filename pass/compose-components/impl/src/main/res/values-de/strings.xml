@@ -8,10 +8,10 @@
   <string name="sort_by_modification_date">Änderungsdatum</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Alle</string>
-  <string name="item_list_header_logins_type">Logins</string>
-  <string name="item_list_header_aliases_type">Aliases</string>
-  <string name="item_list_header_notes_type">Notes</string>
-  <string name="item_list_header_credit_cards_type">Credit cards</string>
+  <string name="item_list_header_logins_type">Zugangsdaten</string>
+  <string name="item_list_header_aliases_type">Aliasse</string>
+  <string name="item_list_header_notes_type">Notizen</string>
+  <string name="item_list_header_credit_cards_type">Kreditkarten</string>
   <plurals name="item_list_header_results">
     <item quantity="one">Ergebnis</item>
     <item quantity="other">Ergebnisse</item>

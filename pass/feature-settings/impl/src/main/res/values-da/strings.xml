@@ -36,7 +36,7 @@
   <string name="settings_default_vault_section_title">Bokse</string>
   <string name="settings_default_vault_vault_selector_title">Standardboks</string>
   <string name="settings_default_vault_section_subtitle">Den boks, hvor dine elementer vil blive oprettet som standard.</string>
-  <string name="settings_default_vault_disabled_reason">You cannot write to this vault.</string>
+  <string name="settings_default_vault_disabled_reason">Du kan ikke skrive til denne boks</string>
   <string name="view_logs_title">Vis logfiler</string>
   <string name="clipboard_bottomsheet_title">Udklipsholder</string>
   <string name="clipboard_option_clear_clipboard_label">Ryd udklipsholder</string>

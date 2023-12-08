@@ -21,7 +21,7 @@
   <string name="sharing_can_view">Visualizador</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrador</string>
-  <string name="sharing_can_view_description">Pode ver itens para esse cofre.</string>
+  <string name="sharing_can_view_description">Pode visualizar itens neste cofre.</string>
   <string name="sharing_can_edit_description">Pode criar, editar, excluir, e exportar itens para esse cofre.</string>
   <string name="sharing_can_manage_description">Pode conceder ou revogar acesso para esse cofre.</string>
   <plurals name="sharing_item_count">

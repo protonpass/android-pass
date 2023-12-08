@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="migrate_item_confirm_title_bottom_sheet">გადავიტანო ეს ელემენტი შემდეგ საცავში?</string>
+  <plurals name="migrate_item_confirm_title_bottom_sheet">
+    <item quantity="one">გადავიტანო %d ელემენტი შემდეგ საცავში?</item>
+    <item quantity="other">გადავიტანო %d ელემენტი შემდეგ საცავში?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">გადავიტანო ყველა ელემენტი შემდეგ საცავში?</string>
   <string name="migrate_item_confirm_confirm_button">გადატანა</string>
-  <string name="migrate_item_success_snackbar">ელემენტი გადატანილია</string>
-  <string name="migrate_item_error_snackbar">ელემენტის გადატანის შეცდომა</string>
+  <string name="migrate_item_success_snackbar">ელემენტები გადატანილია</string>
+  <string name="migrate_item_error_snackbar">ელემენტების გადატანის შეცდომა</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">ზოგიერთი ელემენტის გადატანის შეცდომა</string>
   <string name="migrate_all_items_success_snackbar">ყველა ელემენტი გადატანილია</string>
   <string name="migrate_all_items_error_snackbar">ყველა საცავის ელემენტის გადატანის შეცდომა</string>
   <string name="migrate_init_error_snackbar">მიგრაციის ეკრანის მომზადება შეუძლებელია</string>
+  <string name="migrate_disabled_vault_reason_no_permission">ამ საცავში ელემენტების შექმნა არ შეგიძლიათ</string>
+  <string name="migrate_disabled_vault_reason_same_vault">ელემენტს იგივე საცავში ვერ გადაიტანთ</string>
 </resources>

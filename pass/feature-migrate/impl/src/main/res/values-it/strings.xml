@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="migrate_item_confirm_title_bottom_sheet">Vuoi spostare questo elemento nella seguente cassaforte?</string>
+  <plurals name="migrate_item_confirm_title_bottom_sheet">
+    <item quantity="one">Vuoi spostare %d elemento nella seguente cassaforte?</item>
+    <item quantity="other">Vuoi spostare %d elementi nella seguente cassaforte?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Vuoi spostare tutti gli elementi nella seguente cassaforte?</string>
   <string name="migrate_item_confirm_confirm_button">Sposta</string>
-  <string name="migrate_item_success_snackbar">Elemento spostato</string>
-  <string name="migrate_item_error_snackbar">Errore durante lo spostamento dell\'elemento</string>
+  <string name="migrate_item_success_snackbar">Elementi spostati</string>
+  <string name="migrate_item_error_snackbar">Errore nello spostamento degli elementi</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Errore nello spostamento di alcuni elementi</string>
   <string name="migrate_all_items_success_snackbar">Tutti gli elementi sono stati spostati</string>
   <string name="migrate_all_items_error_snackbar">Errore durante lo spostamento di tutti gli elementi della cassaforte</string>
   <string name="migrate_init_error_snackbar">Impossibile inizializzare la schermata di migrazione</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Non puoi creare elementi in questa cassaforte</string>
+  <string name="migrate_disabled_vault_reason_same_vault">Non puoi spostare un elemento nella stessa cassaforte</string>
 </resources>

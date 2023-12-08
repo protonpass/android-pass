@@ -31,12 +31,12 @@
   <string name="settings_share_telemetry">ანონიმური გამოყენების გაზიარება</string>
   <string name="settings_share_crashes">ავარიის ანონიმური ანგარიშების გაზიარება</string>
   <string name="settings_preference_updated">თქვენი პარამეტრები განახლდა</string>
-  <string name="settings_default_vault_updated">Your default vault has been updated</string>
-  <string name="settings_default_vault_update_error">Could not update the default vault</string>
+  <string name="settings_default_vault_updated">თქვენი ნაგულისხმევი საცავი განახლდა</string>
+  <string name="settings_default_vault_update_error">ნაგულისხმევი საცავის განახლება შეუძლებელია</string>
   <string name="settings_default_vault_section_title">საცავები</string>
   <string name="settings_default_vault_vault_selector_title">ნაგულისხმევი საცავი</string>
-  <string name="settings_default_vault_section_subtitle">The vault where your items will be created by default.</string>
-  <string name="settings_default_vault_disabled_reason">You cannot write to this vault.</string>
+  <string name="settings_default_vault_section_subtitle">საცავი, სადაც ელემენტები ნაგულისხმევად შეიქმნება.</string>
+  <string name="settings_default_vault_disabled_reason">ამ საცავში ჩაწერა არ შეგიძლიათ.</string>
   <string name="view_logs_title">ჟურნალის ნახვა</string>
   <string name="clipboard_bottomsheet_title">ბუფერი</string>
   <string name="clipboard_option_clear_clipboard_label">გაცვლის ბუფერის გასუფთავება</string>

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="migrate_item_confirm_title_bottom_sheet">Siirretäänkö tämä kohde seuraavaan holviin?</string>
+  <plurals name="migrate_item_confirm_title_bottom_sheet">
+    <item quantity="one">Move %d item to the following vault?</item>
+    <item quantity="other">Move %d items to the following vault?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Siirretäänkö kaikki kohteet seuraavaan holviin?</string>
   <string name="migrate_item_confirm_confirm_button">Siirrä</string>
-  <string name="migrate_item_success_snackbar">Kohde on siirrettiin</string>
-  <string name="migrate_item_error_snackbar">Virhe siirrettäessä kohdetta</string>
+  <string name="migrate_item_success_snackbar">Items moved</string>
+  <string name="migrate_item_error_snackbar">Error moving the items</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
   <string name="migrate_all_items_success_snackbar">Kaikki kohteet siirrettiin</string>
   <string name="migrate_all_items_error_snackbar">Virhe siirrettäessä holvin kaikkia kohteita</string>
   <string name="migrate_init_error_snackbar">Siirtymisruutua ei voitu valmistella</string>
+  <string name="migrate_disabled_vault_reason_no_permission">You cannot create items in this vault</string>
+  <string name="migrate_disabled_vault_reason_same_vault">You cannot move an item to the same vault</string>
 </resources>

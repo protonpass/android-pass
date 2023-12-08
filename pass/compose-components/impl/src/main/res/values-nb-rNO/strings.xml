@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Tittel (A-Å)</string>
+  <string name="sort_by_title_desc">Tittel (Å-A)</string>
+  <string name="sort_by_creation_asc">Eldste til nyeste</string>
+  <string name="sort_by_creation_desc">Nyeste til eldste</string>
+  <string name="sort_by_modification_date">Nyeste</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Alle</string>
+  <string name="item_list_header_logins_type">Pålogginger</string>
+  <string name="item_list_header_aliases_type">Aliaser</string>
+  <string name="item_list_header_notes_type">Notater</string>
+  <string name="item_list_header_credit_cards_type">Kredittkort</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">resultat</item>
+    <item quantity="other">resultater</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Bekreft</string>
+  <string name="bottomsheet_cancel_button">Avbryt</string>
+  <string name="bottomsheet_move_to_trash">Flytt til papirkurven</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åpne elementhandlingsmenyen</string>
+  <string name="action_upgrade_now">Oppgrader nå</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Legg til ditt første element</string>
+  <string name="empty_search_results_title">Ingen resultater funnet</string>
+  <string name="empty_list_open_extension">Besøk nettutvidelse</string>
+  <string name="empty_list_create_item_button">Opprett nytt element</string>
+  <!-- Field -->
+  <string name="field_title_title">Tittel</string>
+  <string name="field_title_hint">Uten tittel</string>
+  <string name="field_title_required">Tittel kreves</string>
+  <string name="small_cross_icon_content_description">Lite kryssikon</string>
+  <string name="field_note_title">Notat</string>
+  <string name="field_note_hint">Legg til notat</string>
+  <string name="linked_apps_title">Koblede apper</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Frakoblet</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Mangler appikon</string>
+  <string name="add_item_icon_content_description">Legg til elementsikon</string>
+  <string name="navigate_back_icon_content_description">Naviger tilbake ikon</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Hvelv</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">List elementer</string>
+  <string name="bottom_bar_add_item_icon_content_description">Legg til element</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">I dag</string>
+  <string name="most_recent_yesterday">I går</string>
+  <string name="most_recent_this_week">Denne uken</string>
+  <string name="most_recent_last_two_weeks">Siste to uker</string>
+  <string name="most_recent_last_30_days">Seneste 30 dager</string>
+  <string name="most_recent_last_60_days">Seneste 60 dager</string>
+  <string name="most_recent_last_90_days">Seneste 90 dager</string>
+  <string name="most_recent_within_the_last_year">I løpet av det siste året</string>
+  <string name="most_recent_more_than_1_year">Mer enn 1 år</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Søkeikon</string>
+  <!-- Setting option -->
+  <string name="setting_option_icon_content_description">Alternativikon</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 element</item>
+    <item quantity="other">%d elementer</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Forkaste endringer?</string>
+  <string name="confirm_close_dialog_message">Du har ulagrede endringer, er du sikker på at du vil forkaste dem?</string>
+  <string name="confirm_close_dialog_close_button">Forkast</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Oppgrader</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Avanserte innstillinger</string>
+  <string name="hide_advanced_options">Skjul avanserte innstillinger</string>
+</resources>

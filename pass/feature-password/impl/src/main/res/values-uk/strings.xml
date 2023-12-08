@@ -7,13 +7,13 @@
   <string name="special_characters">Спеціальні символи (!&amp;*)</string>
   <plurals name="character_count">
     <item quantity="one">%s символ</item>
-    <item quantity="few">%s символів</item>
+    <item quantity="few">%s символи</item>
     <item quantity="many">%s символів</item>
     <item quantity="other">%s символів</item>
   </plurals>
   <plurals name="word_count">
     <item quantity="one">%s слово</item>
-    <item quantity="few">%s слів</item>
+    <item quantity="few">%s слова</item>
     <item quantity="many">%s слів</item>
     <item quantity="other">%s слів</item>
   </plurals>
@@ -28,7 +28,7 @@
   <string name="bottomsheet_option_word_separator_underscores">Підкреслення ( _ )</string>
   <string name="bottomsheet_option_word_separator_numbers">Цифри</string>
   <string name="bottomsheet_option_word_separator_numbers_and_symbols">Цифри та символи</string>
-  <string name="regenerate_password_icon_content_description">Кнопка відновлення пароля</string>
+  <string name="regenerate_password_icon_content_description">Кнопка скидання пароля</string>
   <string name="password_mode_memorable">Пароль, який легко запам\'ятати</string>
   <string name="password_mode_random">Випадковий пароль</string>
   <string name="password_mode_icon">Піктограма режиму пароля</string>

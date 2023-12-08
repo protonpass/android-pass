@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="migrate_item_confirm_title_bottom_sheet">Déplacer cet élément vers ce coffre-fort ?</string>
+  <plurals name="migrate_item_confirm_title_bottom_sheet">
+    <item quantity="one">Déplacer %d élément vers ce coffre-fort ?</item>
+    <item quantity="other">Déplacer %d éléments vers ce coffre-fort ?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Déplacer tous les éléments vers ce coffre-fort ?</string>
   <string name="migrate_item_confirm_confirm_button">Déplacer</string>
-  <string name="migrate_item_success_snackbar">L\'élément a été déplacé.</string>
-  <string name="migrate_item_error_snackbar">Une erreur s\'est produite pendant le déplacement de l\'élément.</string>
+  <string name="migrate_item_success_snackbar">Les éléments ont été déplacés.</string>
+  <string name="migrate_item_error_snackbar">Une erreur s\'est produite pendant le déplacement des éléments.</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Une erreur s\'est produite lors du déplacement de certains éléments.</string>
   <string name="migrate_all_items_success_snackbar">Tous les éléments ont été déplacés.</string>
   <string name="migrate_all_items_error_snackbar">Une erreur s\'est produite pendant le déplacement des éléments du coffre-fort.</string>
   <string name="migrate_init_error_snackbar">Impossible de préparer l\'écran de transfert</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Vous ne pouvez pas des éléments dans ce coffre-fort.</string>
+  <string name="migrate_disabled_vault_reason_same_vault">Vous ne pouvez pas déplacer un élément vers le même coffre-fort.</string>
 </resources>

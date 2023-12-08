@@ -13,6 +13,8 @@
   <string name="home_snackbar_note_moved_to_trash">Nota spostata nel cestino</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Carta di credito spostata nel cestino</string>
   <string name="home_snackbar_move_to_trash_error">Impossibile spostare l\'elemento nel cestino</string>
+  <string name="home_snackbar_items_move_to_trash_success">Elementi spostati nel cestino</string>
+  <string name="home_snackbar_items_move_to_trash_error">Impossibile spostare gli elementi nel cestino</string>
   <string name="home_autofill_banner_title">Approfitta della magia della compilazione automatica</string>
   <string name="home_autofill_banner_text">Un tocco e voilà! Il tuo nome utente e la tua password vengono compilati all\'istante.</string>
   <string name="home_autofill_banner_settings">Attiva la compilazione automatica ›</string>
@@ -68,17 +70,46 @@
   <!-- Trash -->
   <string name="trash_empty_list_title">Il cestino è vuoto</string>
   <string name="trash_empty_list_message">Gli elementi spostati nel cestino appaiono qui.</string>
-  <string name="bottomsheet_trash_all_items_title">Cestino</string>
+  <string name="bottomsheet_trash_all_items_title">Sposta nel cestino</string>
   <string name="bottomsheet_restore_all_items">Ripristina tutti gli elementi</string>
   <string name="bottomsheet_empty_trash">Svuota il cestino</string>
+  <string name="bottomsheet_select_items">Seleziona gli elementi</string>
   <string name="trash_error_clearing_trash">Errore nello svuotamento del cestino</string>
+  <string name="trash_success_restoring_items">Elementi ripristinati</string>
   <string name="trash_error_restoring_items">Errore nel ripristino degli elementi</string>
   <string name="trash_error_deleting_item">Errore nell\'eliminazione dell\'elemento</string>
+  <string name="trash_success_deleting_item">Elemento eliminato</string>
+  <string name="trash_deleting_items_error">Errore nell\'eliminazione degli elementi</string>
+  <string name="trash_deleting_items_success">Elementi eliminati</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Vuoi svuotare il cestino?</string>
   <string name="alert_confirm_clear_trash_message">Sei sicuro di voler svuotare il cestino? Tutti gli elementi presenti in esso verranno eliminati definitivamente.</string>
   <string name="alert_confirm_restore_all_title">Vuoi ripristinare tutti gli elementi?</string>
   <string name="alert_confirm_restore_all_message">Sei sicuro di voler ripristinare tutti gli elementi presenti nel cestino?</string>
+  <plurals name="alert_confirm_restore_items_title">
+    <item quantity="one">Vuoi ripristinare %d elemento?</item>
+    <item quantity="other">Vuoi ripristinare %d elementi?</item>
+  </plurals>
+  <plurals name="alert_confirm_restore_items_message">
+    <item quantity="one">Sei sicuro di voler ripristinare 1 elemento presente nel cestino?</item>
+    <item quantity="other">Sei sicuro di voler ripristinare %d elementi presenti nel cestino?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_title">
+    <item quantity="one">Vuoi spostare %d elemento nel cestino?</item>
+    <item quantity="other">Vuoi spostare %d elementi nel cestino?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_message">
+    <item quantity="one">Sei sicuro di voler spostare 1 elemento nel cestino?</item>
+    <item quantity="other">Sei sicuro di voler spostare %d elementi nel cestino?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_title">
+    <item quantity="one">Vuoi eliminare definitivamente %d elemento?</item>
+    <item quantity="other">Vuoi eliminare definitivamente %d elementi?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_message">
+    <item quantity="one">Sei sicuro di voler eliminare 1 elemento? L\'azione è irreversibile.</item>
+    <item quantity="other">Sei sicuro di voler eliminare %d elementi? L\'azione è irreversibile.</item>
+  </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Ricerche recenti</string>
   <string name="recent_search_clear">Cancella</string>

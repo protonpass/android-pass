@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 hvelv</string>
+  <string name="unlimited_email_alias">Ubegrenset antall e-postaliaser</string>
+  <string name="custom_fields">Tilpassede felt</string>
+  <string name="restart_to_complete_the_update">Start på nytt for å fullføre oppdateringen</string>
+  <string name="action_restart">Start på nytt</string>
+</resources>

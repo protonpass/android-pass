@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Tekstowe pole niestandardowe</string>
   <string name="bottomsheet_custom_field_type_hidden">Ukryty tekst</string>
-  <string name="bottomsheet_custom_field_type_totp">Sekretny TOTP</string>
+  <string name="bottomsheet_custom_field_type_totp">Sekret TOTP</string>
   <string name="bottomsheet_custom_field_option_edit">Edytuj nazwę</string>
   <string name="bottomsheet_custom_field_option_remove">Usuń pole</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Usuń pole niestandardowe</string>

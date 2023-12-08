@@ -40,7 +40,7 @@
   <string name="sharing_reject_invitation">拒絕邀請</string>
   <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulations, your access has been confirmed</string>
   <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">See the shared vault</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Close</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">關閉</string>
   <string name="sharing_snackbar_get_invite_error">無法取得邀請</string>
   <string name="sharing_snackbar_invite_accepted">邀請已接受</string>
   <string name="sharing_snackbar_invite_accept_error">拒絕邀請時發生錯誤</string>

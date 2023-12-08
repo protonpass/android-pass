@@ -13,6 +13,8 @@
   <string name="home_snackbar_note_moved_to_trash">Заметка перемещена в корзину</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Кредитная карта перемещена в корзину</string>
   <string name="home_snackbar_move_to_trash_error">Элемент не может быть перемещен в корзину</string>
+  <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
+  <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
   <string name="home_autofill_banner_title">Насладитесь волшебством автозаполнения</string>
   <string name="home_autofill_banner_text">Одно касание и - престо! - ваше имя пользователя и пароль заполняются мгновенно.</string>
   <string name="home_autofill_banner_settings">Включить автозаполнение ›</string>
@@ -73,14 +75,55 @@
   <string name="bottomsheet_trash_all_items_title">Trash</string>
   <string name="bottomsheet_restore_all_items">Восстановить все элементы</string>
   <string name="bottomsheet_empty_trash">Empty trash</string>
+  <string name="bottomsheet_select_items">Select items</string>
   <string name="trash_error_clearing_trash">Ошибка очистки корзины</string>
+  <string name="trash_success_restoring_items">Items restored</string>
   <string name="trash_error_restoring_items">Ошибка восстановления элементов</string>
   <string name="trash_error_deleting_item">Ошибка удаления элемента</string>
+  <string name="trash_success_deleting_item">Item deleted</string>
+  <string name="trash_deleting_items_error">Error deleting items</string>
+  <string name="trash_deleting_items_success">Items deleted</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Clear trash?</string>
   <string name="alert_confirm_clear_trash_message">Вы уверены, что вы хотите очистить корзину? Все ваши удаленные элементы будут удалены навсегда.</string>
   <string name="alert_confirm_restore_all_title">Восстановить все элементы?</string>
   <string name="alert_confirm_restore_all_message">Вы уверены, что хотите восстановить все элементы из корзины?</string>
+  <plurals name="alert_confirm_restore_items_title">
+    <item quantity="one">Restore %d item?</item>
+    <item quantity="few">Restore %d items?</item>
+    <item quantity="many">Restore %d items?</item>
+    <item quantity="other">Restore %d items?</item>
+  </plurals>
+  <plurals name="alert_confirm_restore_items_message">
+    <item quantity="one">Are you sure you want to restore the trashed item?</item>
+    <item quantity="few">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="many">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_title">
+    <item quantity="one">Move to trash %d item?</item>
+    <item quantity="few">Move to trash %d items?</item>
+    <item quantity="many">Move to trash %d items?</item>
+    <item quantity="other">Move to trash %d items?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_message">
+    <item quantity="one">Are you sure you want to move to the trash the item?</item>
+    <item quantity="few">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="many">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_title">
+    <item quantity="one">Delete permanently %d item?</item>
+    <item quantity="few">Delete permanently %d items?</item>
+    <item quantity="many">Delete permanently %d items?</item>
+    <item quantity="other">Delete permanently %d items?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_message">
+    <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
+    <item quantity="few">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="many">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
+  </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Недавние поиски</string>
   <string name="recent_search_clear">Clear</string>

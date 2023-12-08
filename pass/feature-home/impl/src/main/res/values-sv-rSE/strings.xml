@@ -13,6 +13,8 @@
   <string name="home_snackbar_note_moved_to_trash">Anteckning flyttad till papperskorg</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kreditkort flyttat till papperskorg</string>
   <string name="home_snackbar_move_to_trash_error">Objekt kunde inte flyttas till papperskorg</string>
+  <string name="home_snackbar_items_move_to_trash_success">Objekt flyttat till papperskorg</string>
+  <string name="home_snackbar_items_move_to_trash_error">Objekt kunde inte flyttas till papperskorg</string>
   <string name="home_autofill_banner_title">Njut av magin med autofyll</string>
   <string name="home_autofill_banner_text">Ett tryck och—vips!—Ditt användarnamn och lösenord fylls i omedelbart.</string>
   <string name="home_autofill_banner_settings">Slå på autofyll ›</string>
@@ -23,7 +25,7 @@
   <string name="home_notification_permission_banner_text">Aktivera push-notiser för att informeras när andra delar ett valv med dig.</string>
   <string name="home_notification_permission_banner_settings">Aktivera behörighet ›</string>
   <string name="home_invite_banner_title">Valv delade med dig</string>
-  <string name="home_invite_banner_subtitle">Du är inbjuden till ett delat valv. Tryck för mer detaljer.</string>
+  <string name="home_invite_banner_subtitle">Du är inbjuden till ett delat valv. Tryck för detaljer.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiera lösenord</string>
   <string name="bottomsheet_copy_username">Kopiera användarnamn</string>
@@ -71,14 +73,43 @@
   <string name="bottomsheet_trash_all_items_title">Papperskorg</string>
   <string name="bottomsheet_restore_all_items">Återställ alla objekt</string>
   <string name="bottomsheet_empty_trash">Töm papperskorg</string>
+  <string name="bottomsheet_select_items">Välj objekt</string>
   <string name="trash_error_clearing_trash">Fel vid rensning av papperskorg</string>
+  <string name="trash_success_restoring_items">Objekt återställda</string>
   <string name="trash_error_restoring_items">Fel vid återställning av objekt</string>
   <string name="trash_error_deleting_item">Fel vid borttagning av objekt</string>
+  <string name="trash_success_deleting_item">Objekt borttaget</string>
+  <string name="trash_deleting_items_error">Fel vid borttagning av objekt</string>
+  <string name="trash_deleting_items_success">Objekt borttagna</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Rensa papperskorg?</string>
   <string name="alert_confirm_clear_trash_message">Är du säker på att du vill rensa papperskorgen? Alla dina kastade objekt kommer att tas bort permanent</string>
   <string name="alert_confirm_restore_all_title">Återställ alla objekt?</string>
   <string name="alert_confirm_restore_all_message">Är du säker på att du vill återställa alla kastade objekt?</string>
+  <plurals name="alert_confirm_restore_items_title">
+    <item quantity="one">Återställ %d objekt?</item>
+    <item quantity="other">Återställ %d objekt?</item>
+  </plurals>
+  <plurals name="alert_confirm_restore_items_message">
+    <item quantity="one">Are you sure you want to restore the trashed item?</item>
+    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_title">
+    <item quantity="one">Move to trash %d item?</item>
+    <item quantity="other">Move to trash %d items?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_message">
+    <item quantity="one">Are you sure you want to move to the trash the item?</item>
+    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_title">
+    <item quantity="one">Ta bort %d objekt permanent?</item>
+    <item quantity="other">Ta bort %d objekt permanent?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_message">
+    <item quantity="one">Är du säker på att du vill ta bort objektet? Denna åtgärd är oåterkallelig</item>
+    <item quantity="other">Är du säker på att du vill ta bort %d objekt? Denna åtgärd är oåterkallelig</item>
+  </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Senaste sökningar</string>
   <string name="recent_search_clear">Rensa</string>

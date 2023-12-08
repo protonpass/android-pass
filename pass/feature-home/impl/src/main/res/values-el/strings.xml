@@ -13,6 +13,8 @@
   <string name="home_snackbar_note_moved_to_trash">Η σημείωση μετακινήθηκε στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Η πιστωτική κάρτα μεταφέρθηκε στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση του στοιχείου στον κάδο απορριμμάτων</string>
+  <string name="home_snackbar_items_move_to_trash_success">Το στοιχεία μετακινήθηκαν στον κάδο απορριμμάτων</string>
+  <string name="home_snackbar_items_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση των στοιχείων στον κάδο απορριμμάτων</string>
   <string name="home_autofill_banner_title">Απολαύστε τη μαγεία της Αυτόματης Συμπλήρωσης</string>
   <string name="home_autofill_banner_text">Ένα πάτημα και—presto!—το όνομα χρήστη και ο κωδικός πρόσβασής σας συμπληρώνονται αμέσως.</string>
   <string name="home_autofill_banner_settings">Ενεργοποίηση Αυτόματης Συμπλήρωσης ›</string>
@@ -71,14 +73,43 @@
   <string name="bottomsheet_trash_all_items_title">Κάδος Απορριμμάτων</string>
   <string name="bottomsheet_restore_all_items">Επαναφορά όλων των αντικειμένων</string>
   <string name="bottomsheet_empty_trash">Αδειάστε τον κάδο απορριμμάτων</string>
+  <string name="bottomsheet_select_items">Επιλέξτε στοιχεία</string>
   <string name="trash_error_clearing_trash">Σφάλμα κατά την εκκαθάριση απορριμμάτων</string>
+  <string name="trash_success_restoring_items">Έγινε επαναφορά στοιχείων</string>
   <string name="trash_error_restoring_items">Σφάλμα κατά την επαναφορά στοιχείων</string>
   <string name="trash_error_deleting_item">Σφάλμα κατά τη διαγραφή στοιχείων</string>
+  <string name="trash_success_deleting_item">Το στοιχείο διαγράφηκε</string>
+  <string name="trash_deleting_items_error">Σφάλμα κατά τη διαγραφή στοιχείων</string>
+  <string name="trash_deleting_items_success">Τα στοιχεία διαγράφηκαν</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Εκκαθάριση κάδου απορριμμάτων;</string>
   <string name="alert_confirm_clear_trash_message">Είστε βέβαιοι ότι θέλετε να καθαρίσετε τον κάδο απορριμμάτων; Όλα τα απορριφθέντα στοιχεία σας θα διαγραφούν οριστικά</string>
   <string name="alert_confirm_restore_all_title">Επαναφορά όλων των αντικειμένων;</string>
   <string name="alert_confirm_restore_all_message">Είστε βέβαιοι ότι θέλετε να επαναφέρετε όλα τα απορριφθέντα στοιχεία;</string>
+  <plurals name="alert_confirm_restore_items_title">
+    <item quantity="one">Επαναφορά %d στοιχείου;</item>
+    <item quantity="other">Επαναφορά %d στοιχείων;</item>
+  </plurals>
+  <plurals name="alert_confirm_restore_items_message">
+    <item quantity="one">Είστε βέβαιοι ότι θέλετε να επαναφέρετε το απορριφθέντο στοιχείο;</item>
+    <item quantity="other">Είστε βέβαιοι ότι θέλετε να επαναφέρετε τα %d απορριφθέντα στοιχεία;</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_title">
+    <item quantity="one">Μετακίνηση στον κάδο απορριμμάτων %d στοιχείο;</item>
+    <item quantity="other">Μετακίνηση στον κάδο απορριμμάτων %d στοιχεία;</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_message">
+    <item quantity="one">Είστε βέβαιοι ότι θέλετε να μετακινήσετε το στοιχείο στα απορριφθέντα;</item>
+    <item quantity="other">Είστε βέβαιοι ότι θέλετε να μετακινήσετε τα %d στοιχεία στα απορριφθέντα;</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_title">
+    <item quantity="one">Οριστική διαγραφή %d στοιχείου;</item>
+    <item quantity="other">Οριστική διαγραφή %d στοιχείων;</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_message">
+    <item quantity="one">Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το στοιχείο; Αυτή η ενέργεια είναι μη αναστρέψιμη.</item>
+    <item quantity="other">Είστε σίγουροι ότι θέλετε να διαγράψετε αυτά τα %d στοιχεία; Αυτή η ενέργεια είναι μη αναστρέψιμη.</item>
+  </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Πρόσφατες αναζητήσεις</string>
   <string name="recent_search_clear">Εκκαθάριση</string>

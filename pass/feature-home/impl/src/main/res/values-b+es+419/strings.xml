@@ -13,6 +13,8 @@
   <string name="home_snackbar_note_moved_to_trash">Nota movida a la papelera</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Tarjeta de crédito movida a la papelera</string>
   <string name="home_snackbar_move_to_trash_error">No se pudo mover el elemento a la papelera</string>
+  <string name="home_snackbar_items_move_to_trash_success">Elementos movidos a la papelera</string>
+  <string name="home_snackbar_items_move_to_trash_error">No se pudieron mover los elementos a la papelera</string>
   <string name="home_autofill_banner_title">Disfrute de la magia del completado automático</string>
   <string name="home_autofill_banner_text">¡Una pulsación y listo! Su nombre de usuario y contraseña se completan al instante.</string>
   <string name="home_autofill_banner_settings">Activar el completado automático ›</string>
@@ -28,7 +30,7 @@
   <string name="bottomsheet_copy_password">Copiar contraseña</string>
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>
   <string name="bottomsheet_copy_alias">Copiar dirección de correo</string>
-  <string name="bottomsheet_copy_number">Copiar el número</string>
+  <string name="bottomsheet_copy_number">Copiar número</string>
   <string name="bottomsheet_copy_cvv">Copiar código de seguridad</string>
   <string name="bottomsheet_copy_note">Copiar la nota</string>
   <string name="bottomsheet_edit">Editar</string>
@@ -71,14 +73,43 @@
   <string name="bottomsheet_trash_all_items_title">Papelera</string>
   <string name="bottomsheet_restore_all_items">Restaurar todos los elementos</string>
   <string name="bottomsheet_empty_trash">Vaciar la papelera</string>
+  <string name="bottomsheet_select_items">Seleccionar elementos</string>
   <string name="trash_error_clearing_trash">Error al vaciar la papelera</string>
+  <string name="trash_success_restoring_items">Elementos restaurados</string>
   <string name="trash_error_restoring_items">Error al restaurar los elementos</string>
   <string name="trash_error_deleting_item">Error al eliminar el elemento</string>
+  <string name="trash_success_deleting_item">Elemento eliminado</string>
+  <string name="trash_deleting_items_error">Error al eliminar los elementos</string>
+  <string name="trash_deleting_items_success">Elementos eliminados</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">¿Vaciar la papelera?</string>
   <string name="alert_confirm_clear_trash_message">¿En verdad desea vaciar la papelera? Todos sus elementos se eliminarán permanentemente.</string>
   <string name="alert_confirm_restore_all_title">¿Restaurar todos los elementos?</string>
   <string name="alert_confirm_restore_all_message">¿En verdad desea restaurar todos los elementos eliminados?</string>
+  <plurals name="alert_confirm_restore_items_title">
+    <item quantity="one">¿Restaurar %d elemento?</item>
+    <item quantity="other">¿Restaurar %d elementos?</item>
+  </plurals>
+  <plurals name="alert_confirm_restore_items_message">
+    <item quantity="one">¿En verdad desea restaurar el elemento eliminado?</item>
+    <item quantity="other">¿En verdad desea restaurar %d elementos eliminados?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_title">
+    <item quantity="one">¿Mover %d elemento a la papelera?</item>
+    <item quantity="other">¿Mover %d elementos a la papelera?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_message">
+    <item quantity="one">¿En verdad desea mover el elemento a la papelera?</item>
+    <item quantity="other">¿En verdad desea mover %d elementos a la papelera?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_title">
+    <item quantity="one">¿Eliminar %d elemento permanentemente?</item>
+    <item quantity="other">¿Eliminar %d elementos permanentemente?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_message">
+    <item quantity="one">¿En verdad desea eliminar el elemento? Esta acción es irreversible.</item>
+    <item quantity="other">¿En verdad desea eliminar %d elementos? Esta acción es irreversible.</item>
+  </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Búsquedas recientes</string>
   <string name="recent_search_clear">Borrar</string>

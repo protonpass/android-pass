@@ -53,7 +53,7 @@
   <string name="custom_field_hidden_icon_description">隱藏自訂欄位</string>
   <string name="custom_field_totp_icon_description">雙重驗證自訂欄位</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Name on card</string>
+  <string name="credit_card_cardholder_field_name">持卡人姓名</string>
   <string name="credit_card_number_field_name">卡號</string>
   <string name="credit_card_cvv_field_name">Security code</string>
   <string name="credit_card_pin_field_name">PIN 碼</string>
@@ -83,9 +83,9 @@
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Cannot share</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">無法分享</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
-  <string name="password_score_weak">Weak</string>
-  <string name="password_score_strong">Strong</string>
+  <string name="password_score_weak">弱</string>
+  <string name="password_score_strong">強</string>
 </resources>

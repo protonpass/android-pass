@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">輸入自訂欄位</string>
   <string name="bottomsheet_custom_field_type_hidden">隱藏</string>
   <string name="bottomsheet_custom_field_type_totp">雙重驗證祕文(TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
+  <string name="bottomsheet_custom_field_option_edit">編輯名稱</string>
   <string name="bottomsheet_custom_field_option_remove">移除欄位</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">移除自訂欄位</string>
   <string name="create_login_add_custom_field_button">新增其他欄位</string>
   <string name="custom_field_hidden_placeholder">新增隱藏文件</string>
   <string name="custom_field_hidden_icon_content_description">隱藏自訂的欄位圖示</string>
-  <string name="custom_field_text_placeholder">Add text</string>
+  <string name="custom_field_text_placeholder">新增文字</string>
   <string name="custom_field_dialog_title">自訂欄位的名稱</string>
   <string name="custom_field_dialog_body">Give your custom field a name</string>
-  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
+  <string name="custom_field_dialog_placeholder">例如: 使用者ID、PIN碼</string>
   <string name="custom_field_options_content_description">自訂的選項</string>
   <!-- Create Note -->
   <string name="title_create_note">創建備註</string>
@@ -78,13 +78,13 @@
   <string name="note_hint">備註</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">創建信用卡</string>
-  <string name="field_cardholder_name_title">Name on card</string>
+  <string name="field_cardholder_name_title">持卡人姓名</string>
   <string name="field_cardholder_name_hint">全名</string>
   <string name="field_card_number_title">卡號</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
   <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN</string>
+  <string name="field_card_pin_title">PIN碼</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">到期日</string>
   <string name="field_card_expiration_date_hint">月月 / 年年年年</string>

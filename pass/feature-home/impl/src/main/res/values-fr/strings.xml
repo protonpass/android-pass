@@ -13,6 +13,8 @@
   <string name="home_snackbar_note_moved_to_trash">La note a été déplacée dans la corbeille.</string>
   <string name="home_snackbar_credit_card_moved_to_trash">La carte de paiement a été déplacée dans la corbeille.</string>
   <string name="home_snackbar_move_to_trash_error">L\'élément n\'a pas pu être déplacé dans la corbeille.</string>
+  <string name="home_snackbar_items_move_to_trash_success">Les éléments ont été déplacés dans la corbeille.</string>
+  <string name="home_snackbar_items_move_to_trash_error">Les éléments n\'ont pas pu être déplacés dans la corbeille.</string>
   <string name="home_autofill_banner_title">Profitez du confort du remplissage automatique</string>
   <string name="home_autofill_banner_text">Il vous suffit d\'appuyer pour que votre nom d\'utilisateur et votre mot de passe soient immédiatement renseignés.</string>
   <string name="home_autofill_banner_settings">Activer le remplissage automatique ›</string>
@@ -71,14 +73,43 @@
   <string name="bottomsheet_trash_all_items_title">Corbeille</string>
   <string name="bottomsheet_restore_all_items">Restaurer tous les éléments</string>
   <string name="bottomsheet_empty_trash">Vider la corbeille</string>
+  <string name="bottomsheet_select_items">Sélectionner les éléments</string>
   <string name="trash_error_clearing_trash">Une erreur s\'est produite pendant la suppression des éléments de la corbeille.</string>
+  <string name="trash_success_restoring_items">Les éléments ont été restaurés.</string>
   <string name="trash_error_restoring_items">Une erreur s\'est produite pendant la restauration des éléments.</string>
   <string name="trash_error_deleting_item">Une erreur s\'est produite pendant la suppression de l\'élément.</string>
+  <string name="trash_success_deleting_item">L\'élément a été supprimé.</string>
+  <string name="trash_deleting_items_error">Une erreur s\'est produite pendant la suppression des éléments.</string>
+  <string name="trash_deleting_items_success">Les éléments ont été supprimés.</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Vider la corbeille ?</string>
   <string name="alert_confirm_clear_trash_message">Voulez-vous vraiment vider la corbeille ? Tous les éléments qu\'elle contient seront définitivement supprimés.</string>
   <string name="alert_confirm_restore_all_title">Restaurer tous les éléments ?</string>
   <string name="alert_confirm_restore_all_message">Voulez-vous vraiment restaurer tous les éléments mis à la corbeille ?</string>
+  <plurals name="alert_confirm_restore_items_title">
+    <item quantity="one">Restaurer %d élément ?</item>
+    <item quantity="other">Restaurer %d éléments ?</item>
+  </plurals>
+  <plurals name="alert_confirm_restore_items_message">
+    <item quantity="one">Voulez-vous vraiment restaurer l\'élément mis à la corbeille ?</item>
+    <item quantity="other">Voulez-vous vraiment restaurer les %d éléments mis à la corbeille ?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_title">
+    <item quantity="one">Voulez-vous mettre à la corbeille %d élément ?</item>
+    <item quantity="other">Voulez-vous mettre à la corbeille %d éléments ?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_message">
+    <item quantity="one">Voulez-vous vraiment déplacer l\'élément mis à la corbeille ?</item>
+    <item quantity="other">Voulez-vous vraiment restaurer les %d éléments mis à la corbeille ?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_title">
+    <item quantity="one">Voulez-vous supprimer définitivement %d élément ?</item>
+    <item quantity="other">Voulez-vous supprimer définitivement %d éléments ?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_message">
+    <item quantity="one">Êtes-vous sûr de vouloir supprimer l\'élément ? Cette action est irréversible.</item>
+    <item quantity="other">Êtes-vous sûr de vouloir supprimer les %d élément ? Cette action est irréversible.</item>
+  </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Recherches récentes</string>
   <string name="recent_search_clear">Effacer</string>

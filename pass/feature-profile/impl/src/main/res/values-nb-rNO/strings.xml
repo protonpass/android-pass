@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Profil</string>
+  <string name="profile_option_settings">Innstillinger</string>
+  <string name="profile_option_account">Konto</string>
+  <string name="profile_help_center">Hjelpesenter</string>
+  <string name="profile_security">Sikkerhet</string>
+  <string name="profile_option_feedback">Tilbakemelding</string>
+  <string name="profile_option_import_export">Import/eksport</string>
+  <string name="profile_option_rating">Vurder app</string>
+  <string name="profile_option_autofill">Autofyll</string>
+  <string name="profile_option_autofill_subtitle">Fyll inn brukernavn og passord automatisk.</string>
+  <string name="profile_error_biometry_failed_to_start">Kunne ikke starte den biometriske autentiseringen</string>
+  <string name="profile_error_biometry_failed_to_authenticate">Kunne ikke autentisere</string>
+  <string name="profile_fingerprint_lock_enabled">Lås opp med fingeravtrykk aktivert</string>
+  <string name="profile_fingerprint_lock_disabled">Lås opp med fingeravtrykk deaktivert</string>
+  <string name="profile_error_performing_operation">Feil under utførelse av operasjon</string>
+  <string name="profile_app_version_copied_to_clipboard">Appversjon kopiert</string>
+  <string name="feedback_option_reddit">Sjekk ut Proton på Reddit</string>
+  <string name="feedback_option_mail">Send oss en melding</string>
+  <string name="feedback_option_vote_new_features">Stem på nye funksjoner</string>
+  <string name="app_lock_immediately">Umiddelbart</string>
+  <string name="app_lock_one_minute">Etter 1 minutt</string>
+  <string name="app_lock_two_minutes">Etter 2 minutter</string>
+  <string name="app_lock_five_minutes">Etter 5 minutter</string>
+  <string name="app_lock_ten_minutes">Etter 10 minutter</string>
+  <string name="app_lock_one_hour">Etter 1 time</string>
+  <string name="app_lock_four_hours">Etter 4 timer</string>
+  <string name="profile_account_plan_name_trial">Pass Plus-prøveversjon</string>
+  <string name="app_lock_config_none">Ingen</string>
+  <string name="app_lock_config_biometric">Biometrisk</string>
+  <string name="app_lock_config_pin_code">PIN-kode</string>
+  <string name="app_lock_config_app_lock_time">Lås automatisk</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Bruk systemlås når biometrisk svikter</string>
+  <string name="configure_pin_set_pin_code">Angi PIN-kode</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Lås opp appen med denne koden</string>
+  <string name="configure_pin_enter_pin_code">Angi PIN-kode</string>
+  <string name="configure_pin_repeat_pin_code">Gjenta PIN-kode</string>
+  <string name="configure_pin_continue">Fortsett</string>
+  <string name="configure_pin_pin_does_not_match">PIN-koden samsvarer ikke</string>
+  <string name="configure_pin_pin_too_short">PIN-koden er for kort</string>
+  <string name="configure_pin_pin_cannot_be_blank">PIN-koden kan ikke være blank</string>
+  <string name="configure_pin_pin_lock_enabled">Lås med PIN-kode aktivert</string>
+  <string name="configure_pin_pin_lock_disabled">Lås med PIN-kode deaktivert</string>
+  <string name="profile_option_lock_with">Lås med</string>
+  <string name="profile_option_unlock_with">Lås opp med</string>
+  <string name="profile_option_change_pin_code">Endre PIN-koden</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser er angitt som standard nettleser. Den støtter ikke automatisk utfylling av eksterne passordbehandlere.</string>
+</resources>

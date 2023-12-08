@@ -13,6 +13,8 @@
   <string name="home_snackbar_note_moved_to_trash">შენიშვნა გადატანილია ნაგვის ყუთში</string>
   <string name="home_snackbar_credit_card_moved_to_trash">საკრედიტო ბარათი ნაგვის ყუთშია გადატანილი</string>
   <string name="home_snackbar_move_to_trash_error">ელემენტის ნაგვის ყუთში გადატანის შეცდომა</string>
+  <string name="home_snackbar_items_move_to_trash_success">ელემენტები გადატანილია ნაგვის ყუთში</string>
+  <string name="home_snackbar_items_move_to_trash_error">ელემენტების ნაგვის ყუთში გადატანის შეცდომა</string>
   <string name="home_autofill_banner_title">ისიამოვნეთ ავტომატური შევსების ჯადოქრობით</string>
   <string name="home_autofill_banner_text">ერთი დატყაპუნება და-ეგაა!-თქვენი მომხმარებლის სახელი და პაროლი ავტომატურად შეივსება.</string>
   <string name="home_autofill_banner_settings">ავტომატური შევსების ჩართვა ›</string>
@@ -68,17 +70,46 @@
   <!-- Trash -->
   <string name="trash_empty_list_title">სანაგვე ყუთი ცარიელია</string>
   <string name="trash_empty_list_message">ნაგვის ყუთში გადატანილი ელემენტები აქ გამოჩნდება</string>
-  <string name="bottomsheet_trash_all_items_title">ნაგვის ყუთი</string>
+  <string name="bottomsheet_trash_all_items_title">ნაგვის ყუთში</string>
   <string name="bottomsheet_restore_all_items">ყველა ელემენტის აღდგენა</string>
-  <string name="bottomsheet_empty_trash">ნაგვის ყუთის გასუფთავება</string>
+  <string name="bottomsheet_empty_trash">სანაგვე ყუთის გასუფთავება</string>
+  <string name="bottomsheet_select_items">აირჩიეთ ელემენტები</string>
   <string name="trash_error_clearing_trash">ნაგვის ყუთის გასუფთავების შეცდომა</string>
+  <string name="trash_success_restoring_items">ელემენტები აღდგენილია</string>
   <string name="trash_error_restoring_items">ელემენტების აღდგენის შეცდომა</string>
   <string name="trash_error_deleting_item">ელემენტის წაშლის შეცდომა</string>
+  <string name="trash_success_deleting_item">ელემენტი წაიშალა</string>
+  <string name="trash_deleting_items_error">ელემენტების წაშლის შეცდომა</string>
+  <string name="trash_deleting_items_success">ელემენტები წაიშალა</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">გავასუფთაო ნაგვის ყუთი?</string>
   <string name="alert_confirm_clear_trash_message">დარწმუნებული ბრძანდებით, რომ გნებავთ ნაგვის ყუთის გამოსუფთავება? მასში გადატანილი ელემენტები სამუდამოდ წაიშლება</string>
   <string name="alert_confirm_restore_all_title">აღვადგინო ყველა ელემენტი?</string>
   <string name="alert_confirm_restore_all_message">ნამდვილად გსურთ ნაგვის ყუთიდან ყველა ელემენტის აღდგენა?</string>
+  <plurals name="alert_confirm_restore_items_title">
+    <item quantity="one">აღვადგინო %d ელემენტი?</item>
+    <item quantity="other">აღვადგინო %d ელემენტი?</item>
+  </plurals>
+  <plurals name="alert_confirm_restore_items_message">
+    <item quantity="one">დარწმუნებული ბრძანდებით, რომ გნებავთ სანაგვე ყუთიდან ელემენტი აღადგინოთ?</item>
+    <item quantity="other">დარწმუნებული ბრძანდებით, რომ გნებავთ სანაგვე ყუთიდან %d ელემენტი აღადგინოთ?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_title">
+    <item quantity="one">გადავიტანო სანაგვე ყუთში %d ელემენტი?</item>
+    <item quantity="other">გადავიტანო სანაგვე ყუთში %d ელემენტი?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_message">
+    <item quantity="one">დარწმუნებული ბრძანდებით, რომ გნებავთ, ელემენტი სანაგვე ყუთში გადაიტანოთ?</item>
+    <item quantity="other">დარწმუნებული ბრძანდებით, რომ გნებავთ, %d ელემენტი სანაგვე ყუთში გადაიტანოთ?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_title">
+    <item quantity="one">წავშალო სამუდამოდ %d ელემენტი?</item>
+    <item quantity="other">წავშალო სამუდამოდ %d ელემენტი?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_message">
+    <item quantity="one">დარწმუნებული ხართ რომ გსურთ ამ ელემენტის წაშლა? ეს ქმედება შეუქცევადია</item>
+    <item quantity="other">დარწმუნებული ხართ რომ გსურთ %d ელემენტის წაშლა? ეს ქმედება შეუქცევადია</item>
+  </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">ბოლო ძიებები</string>
   <string name="recent_search_clear">გასუფთავება</string>

@@ -13,6 +13,8 @@
   <string name="home_snackbar_note_moved_to_trash">La nota ha sido movida a la papelera.</string>
   <string name="home_snackbar_credit_card_moved_to_trash">La tarjeta de crédito ha sido movida a la papelera.</string>
   <string name="home_snackbar_move_to_trash_error">El elemento no se ha podido mover a la papelera.</string>
+  <string name="home_snackbar_items_move_to_trash_success">Los elementos han sido movidos a la papelera.</string>
+  <string name="home_snackbar_items_move_to_trash_error">No se han podido mover los elementos a la papelera.</string>
   <string name="home_autofill_banner_title">Disfruta de la magia del autorrelleno</string>
   <string name="home_autofill_banner_text">Un toque y, ¡listo!, su nombre de usuario y contraseña se completarán instantáneamente.</string>
   <string name="home_autofill_banner_settings">Activar el relleno automático ›</string>
@@ -71,14 +73,43 @@
   <string name="bottomsheet_trash_all_items_title">Papelera</string>
   <string name="bottomsheet_restore_all_items">Restaurar todos los elementos</string>
   <string name="bottomsheet_empty_trash">Papelera vacía</string>
+  <string name="bottomsheet_select_items">Seleccionar elementos</string>
   <string name="trash_error_clearing_trash">Error al vaciar la papelera</string>
+  <string name="trash_success_restoring_items">Los elementos han sido restaurados.</string>
   <string name="trash_error_restoring_items">Error al restaurar los elementos</string>
   <string name="trash_error_deleting_item">Error al eliminar el elemento</string>
+  <string name="trash_success_deleting_item">El elemento ha sido eliminado.</string>
+  <string name="trash_deleting_items_error">Error al eliminar los elementos</string>
+  <string name="trash_deleting_items_success">Los elementos han sido eliminados.</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">¿Vaciar la papelera?</string>
   <string name="alert_confirm_clear_trash_message">¿Estás seguro de que quieres vaciar la papelera? Todos sus elementos se eliminarán permanentemente.</string>
   <string name="alert_confirm_restore_all_title">¿Restaurar todos los elementos?</string>
   <string name="alert_confirm_restore_all_message">¿Estás seguro de que quieres restaurar todos los elementos eliminados?</string>
+  <plurals name="alert_confirm_restore_items_title">
+    <item quantity="one">¿Restaurar %d elemento?</item>
+    <item quantity="other">¿Restaurar %d elementos?</item>
+  </plurals>
+  <plurals name="alert_confirm_restore_items_message">
+    <item quantity="one">¿Estás seguro de que quieres restaurar el elemento eliminado?</item>
+    <item quantity="other">¿Estás seguro de que quieres restaurar los %d elementos eliminados?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_title">
+    <item quantity="one">¿Mover %d elemento a la papelera?</item>
+    <item quantity="other">¿Mover %d elementos a la papelera?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_message">
+    <item quantity="one">¿Estás seguro de que quieres mover el elemento a la papelera?</item>
+    <item quantity="other">¿Estás seguro de que quieres mover %d elementos a la papelera?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_title">
+    <item quantity="one">¿Eliminar %d elemento permanentemente?</item>
+    <item quantity="other">¿Eliminar %d elementos permanentemente?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_message">
+    <item quantity="one">¿Estás seguro de que quieres eliminar el elemento? Esta acción es irreversible.</item>
+    <item quantity="other">¿Estás seguro de que quieres eliminar los %d elementos? Esta acción es irreversible.</item>
+  </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Búsquedas recientes</string>
   <string name="recent_search_clear">Borrar</string>

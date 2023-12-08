@@ -37,13 +37,13 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Tekst aangepast veld</string>
   <string name="bottomsheet_custom_field_type_hidden">Verborgen</string>
   <string name="bottomsheet_custom_field_type_totp">2FA-geheim (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
+  <string name="bottomsheet_custom_field_option_edit">Naam bewerken</string>
   <string name="bottomsheet_custom_field_option_remove">Verwijder veld</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Aangepast veld verwijderen</string>
   <string name="create_login_add_custom_field_button">Nog een veld toevoegen</string>
   <string name="custom_field_hidden_placeholder">Verborgen tekst toevoegen</string>
   <string name="custom_field_hidden_icon_content_description">Verborgen aangepast veldpictogram</string>
-  <string name="custom_field_text_placeholder">Add text</string>
+  <string name="custom_field_text_placeholder">Tekst toevoegen</string>
   <string name="custom_field_dialog_title">Aangepaste veldnaam</string>
   <string name="custom_field_dialog_body">Give your custom field a name</string>
   <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
@@ -78,11 +78,11 @@
   <string name="note_hint">Notitie</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">Kredietkaart aanmaken</string>
-  <string name="field_cardholder_name_title">Name on card</string>
+  <string name="field_cardholder_name_title">Naam op de kaart</string>
   <string name="field_cardholder_name_hint">Volledige naam</string>
   <string name="field_card_number_title">Kaartnummer</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Security code</string>
+  <string name="field_card_cvv_title">Beveiligingscode</string>
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">Pincode</string>
   <string name="field_card_pin_hint">123456</string>

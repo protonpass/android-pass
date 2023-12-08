@@ -13,6 +13,8 @@
   <string name="home_snackbar_note_moved_to_trash">Notatka została przeniesiona do Kosza</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Karta płatnicza została przeniesiona do Kosza</string>
   <string name="home_snackbar_move_to_trash_error">Przenoszenie elementu do Kosza nie powiodło się</string>
+  <string name="home_snackbar_items_move_to_trash_success">Elementy zostały przeniesione do Kosza</string>
+  <string name="home_snackbar_items_move_to_trash_error">Przenoszenie elementów do Kosza nie powiodło się</string>
   <string name="home_autofill_banner_title">Ciesz się magią autouzupełniania</string>
   <string name="home_autofill_banner_text">Jedno kliknięcie i gotowe! Nazwa użytkownika i hasło są uzupełnione.</string>
   <string name="home_autofill_banner_settings">Włącz autouzupełnianie ›</string>
@@ -73,14 +75,55 @@
   <string name="bottomsheet_trash_all_items_title">Przenieś do Kosza</string>
   <string name="bottomsheet_restore_all_items">Przywróć wszystkie elementy</string>
   <string name="bottomsheet_empty_trash">Opróżnij Kosz</string>
+  <string name="bottomsheet_select_items">Zaznacz elementy</string>
   <string name="trash_error_clearing_trash">Wystąpił błąd podczas opróżniania Kosza</string>
+  <string name="trash_success_restoring_items">Elementy zostały przywrócone</string>
   <string name="trash_error_restoring_items">Wystąpił błąd podczas przywracania elementów</string>
   <string name="trash_error_deleting_item">Wystąpił błąd podczas usuwania elementu</string>
+  <string name="trash_success_deleting_item">Element został usunięty</string>
+  <string name="trash_deleting_items_error">Wystąpił błąd podczas usuwania elementów</string>
+  <string name="trash_deleting_items_success">Elementy zostały usunięte</string>
   <!-- Alerts -->
-  <string name="alert_confirm_clear_trash_title">Opróżnić Kosz?</string>
+  <string name="alert_confirm_clear_trash_title">Wyczyścić Kosz?</string>
   <string name="alert_confirm_clear_trash_message">Czy na pewno chcesz opróżnić Kosz? Wszystkie usunięte elementy zostaną trwale usunięte</string>
   <string name="alert_confirm_restore_all_title">Przywrócić wszystkie elementy?</string>
   <string name="alert_confirm_restore_all_message">Czy na pewno chcesz przywrócić wszystkie usunięte elementy?</string>
+  <plurals name="alert_confirm_restore_items_title">
+    <item quantity="one">Przywrócić %d element?</item>
+    <item quantity="few">Przywrócić %d elementy?</item>
+    <item quantity="many">Przywrócić %d elementów?</item>
+    <item quantity="other">Przywrócić %d elementów?</item>
+  </plurals>
+  <plurals name="alert_confirm_restore_items_message">
+    <item quantity="one">Czy na pewno chcesz przywrócić usunięty element?</item>
+    <item quantity="few">Czy na pewno chcesz przywrócić %d usunięte elementy?</item>
+    <item quantity="many">Czy na pewno chcesz przywrócić %d usuniętych elementów?</item>
+    <item quantity="other">Czy na pewno chcesz przywrócić %d usuniętych elementów?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_title">
+    <item quantity="one">Przenieść %d element do Kosza?</item>
+    <item quantity="few">Przenieść %d elementy do Kosza?</item>
+    <item quantity="many">Przenieść %d elementów do Kosza?</item>
+    <item quantity="other">Przenieść %d elementów do Kosza?</item>
+  </plurals>
+  <plurals name="alert_confirm_trash_items_message">
+    <item quantity="one">Czy na pewno chcesz przenieść element do Kosza?</item>
+    <item quantity="few">Czy na pewno chcesz przenieść %d elementy do Kosza?</item>
+    <item quantity="many">Czy na pewno chcesz przenieść %d elementów do Kosza?</item>
+    <item quantity="other">Czy na pewno chcesz przenieść %d elementów do Kosza?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_title">
+    <item quantity="one">Usunąć trwale %d element?</item>
+    <item quantity="few">Usunąć trwale %d elementy?</item>
+    <item quantity="many">Usunąć trwale %d elementów?</item>
+    <item quantity="other">Usunąć trwale %d elementów?</item>
+  </plurals>
+  <plurals name="alert_confirm_delete_items_message">
+    <item quantity="one">Czy na pewno chcesz usunąć element? Ta akcja jest nieodwracalna.</item>
+    <item quantity="few">Czy na pewno chcesz usunąć %d elementy? Ta akcja jest nieodwracalna.</item>
+    <item quantity="many">Czy na pewno chcesz usunąć %d elementów? Ta akcja jest nieodwracalna.</item>
+    <item quantity="other">Czy na pewno chcesz usunąć %d elementów? Ta akcja jest nieodwracalna.</item>
+  </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Ostatnie wyszukiwania</string>
   <string name="recent_search_clear">Wyczyść</string>

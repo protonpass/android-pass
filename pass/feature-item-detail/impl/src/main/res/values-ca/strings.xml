@@ -61,7 +61,7 @@
   <string name="credit_card_expiration_date_field_name">Data de caducitat</string>
   <string name="credit_card_cardholder_copied_to_clipboard">S\'ha copiat el titular de la targeta al porta-retalls</string>
   <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta al porta-retalls</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">S\'ah copiat el codi de verificació al porta-retalls.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mou a la paperera</string>
   <string name="migrate_item_detail_bottom_sheet">Mou a una altra caixa forta</string>

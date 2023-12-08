@@ -5,7 +5,7 @@
   <string name="trial_feature_1">20 個保管庫</string>
   <string name="trial_feature_3">整合式雙重驗證</string>
   <string name="trial_feature_4">自訂欄位</string>
-  <string name="trial_button_text">Upgrade now</string>
+  <string name="trial_button_text">立即升級</string>
   <plurals name="trial_days_left">
     <item quantity="other">%d days left to try premium features</item>
   </plurals>

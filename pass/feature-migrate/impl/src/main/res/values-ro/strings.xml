@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="migrate_item_confirm_title_bottom_sheet">Mutați acest articol în seiful următor?</string>
+  <plurals name="migrate_item_confirm_title_bottom_sheet">
+    <item quantity="one">Mutați %d articol în seiful următor?</item>
+    <item quantity="few">Mutați %d articole în seiful următor?</item>
+    <item quantity="other">Mutați %d de articole în seiful următor?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Mutați toate aceste articole în seiful următor?</string>
   <string name="migrate_item_confirm_confirm_button">Mutare</string>
-  <string name="migrate_item_success_snackbar">Articolul s-a mutat.</string>
-  <string name="migrate_item_error_snackbar">Eroare la mutarea articolului.</string>
+  <string name="migrate_item_success_snackbar">Articole au fost mutate.</string>
+  <string name="migrate_item_error_snackbar">Eroare la mutarea articolelor.</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Eroare la mutarea unor articole.</string>
   <string name="migrate_all_items_success_snackbar">S-au mutat toate articolele.</string>
   <string name="migrate_all_items_error_snackbar">Eroare la mutarea tuturor articolelor din seif.</string>
   <string name="migrate_init_error_snackbar">Nu s-a putut pregăti ecranul de migrare.</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Nu puteți crea articole în acest seif.</string>
+  <string name="migrate_disabled_vault_reason_same_vault">Nu puteți muta un articol în același seif.</string>
 </resources>

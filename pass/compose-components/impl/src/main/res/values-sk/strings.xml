@@ -8,10 +8,10 @@
   <string name="sort_by_modification_date">Najnovšie</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Všetko</string>
-  <string name="item_list_header_logins_type">Logins</string>
-  <string name="item_list_header_aliases_type">Aliases</string>
-  <string name="item_list_header_notes_type">Notes</string>
-  <string name="item_list_header_credit_cards_type">Credit cards</string>
+  <string name="item_list_header_logins_type">Prihlásenia</string>
+  <string name="item_list_header_aliases_type">Aliasy</string>
+  <string name="item_list_header_notes_type">Poznámky</string>
+  <string name="item_list_header_credit_cards_type">Platobné karty</string>
   <plurals name="item_list_header_results">
     <item quantity="one">výsledok</item>
     <item quantity="few">výsledky</item>

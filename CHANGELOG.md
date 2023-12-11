@@ -6,6 +6,13 @@
 
 ### Other
 
+## 1.13.1 (2023-12-12)
+
+### Features :tada:
+
+- Bulk actions.q
+- Display shared icons in Vault chooser list.
+
 ## 1.13.1 (2023-12-04)
 
 ### Fixes :bug:

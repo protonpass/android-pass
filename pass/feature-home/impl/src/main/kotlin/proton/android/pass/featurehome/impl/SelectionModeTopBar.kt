@@ -42,6 +42,7 @@ fun SelectionModeTopBar(
     selectedItemCount: Int,
     onEvent: (HomeUiEvent) -> Unit
 ) {
+    val actionsEnabled = selectedItemCount > 0
     ProtonTopAppBar(
         modifier = modifier.padding(vertical = 12.dp),
         title = {
@@ -61,33 +62,45 @@ fun SelectionModeTopBar(
         },
         actions = {
             if (homeVaultSelection == VaultSelectionOption.Trash) {
-                IconButton(onClick = { onEvent(HomeUiEvent.RestoreItemsActionClick) }) {
+                IconButton(
+                    enabled = actionsEnabled,
+                    onClick = { onEvent(HomeUiEvent.RestoreItemsActionClick) }
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_proton_clock_rotate_left),
                         contentDescription = null,
-                        tint = PassTheme.colors.textNorm
+                        tint = if (actionsEnabled) PassTheme.colors.textNorm else PassTheme.colors.textDisabled
                     )
                 }
-                IconButton(onClick = { onEvent(HomeUiEvent.PermanentlyDeleteItemsActionClick) }) {
+                IconButton(
+                    enabled = actionsEnabled,
+                    onClick = { onEvent(HomeUiEvent.PermanentlyDeleteItemsActionClick) }
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_proton_trash_cross),
                         contentDescription = null,
-                        tint = PassTheme.colors.textNorm
+                        tint = if (actionsEnabled) PassTheme.colors.textNorm else PassTheme.colors.textDisabled
                     )
                 }
             } else {
-                IconButton(onClick = { onEvent(HomeUiEvent.MoveItemsActionClick) }) {
+                IconButton(
+                    enabled = actionsEnabled,
+                    onClick = { onEvent(HomeUiEvent.MoveItemsActionClick) }
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_proton_folder_arrow_in),
                         contentDescription = null,
-                        tint = PassTheme.colors.textNorm
+                        tint = if (actionsEnabled) PassTheme.colors.textNorm else PassTheme.colors.textDisabled
                     )
                 }
-                IconButton(onClick = { onEvent(HomeUiEvent.MoveToTrashItemsActionClick) }) {
+                IconButton(
+                    enabled = actionsEnabled,
+                    onClick = { onEvent(HomeUiEvent.MoveToTrashItemsActionClick) }
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_proton_trash),
                         contentDescription = null,
-                        tint = PassTheme.colors.textNorm
+                        tint = if (actionsEnabled) PassTheme.colors.textNorm else PassTheme.colors.textDisabled
                     )
                 }
             }

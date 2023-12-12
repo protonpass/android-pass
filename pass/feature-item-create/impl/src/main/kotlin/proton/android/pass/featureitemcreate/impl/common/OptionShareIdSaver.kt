@@ -25,18 +25,20 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.domain.ShareId
 
+private const val SHARE_ID_KEY = "share_id"
+
 val OptionShareIdSaver: Saver<Option<ShareId>, Any> = run {
-    val shareId = "share_id"
     mapSaver(
-        save = {
-            if (it is Some) {
-                mapOf(shareId to it.value.id)
+        save = { shareIdOption: Option<ShareId>? ->
+            val value = shareIdOption?.value()
+            if (value != null) {
+                mapOf(SHARE_ID_KEY to value.id)
             } else {
                 emptyMap()
             }
         },
         restore = { values ->
-            values[shareId]
+            values[SHARE_ID_KEY]
                 ?.let { Some(ShareId(it as String)) }
                 ?: None
         }

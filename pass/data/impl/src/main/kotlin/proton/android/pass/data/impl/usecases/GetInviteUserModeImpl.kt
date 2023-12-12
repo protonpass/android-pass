@@ -18,63 +18,20 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteUserMode
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class GetInviteUserModeImpl @Inject constructor(
-    private val ffRepo: FeatureFlagsPreferencesRepository,
-    private val publicAddressRepository: PublicAddressRepository,
     private val getAllKeysByAddress: GetAllKeysByAddress
 ) : GetInviteUserMode {
-    override suspend fun invoke(userId: UserId, email: String): Result<InviteUserMode> {
-        val isInviteNewUserEnabled = ffRepo.get<Boolean>(FeatureFlag.SHARING_NEW_USERS)
-            .firstOrNull()
-            ?: false
-
-        return runCatching {
-            publicAddressRepository.getPublicAddress(userId, email)
-        }.fold(
-            onSuccess = { publicAddress ->
-                when {
-                    publicAddress.keys.isEmpty() -> {
-                        if (isInviteNewUserEnabled) {
-                            PassLogger.d(TAG, "Key list is empty. Checking with all keys")
-                            getInviteModeWithAllKeys(email = email)
-                        } else {
-                            PassLogger.i(TAG, "New user invites are not enabled yet")
-                            Result.failure(IllegalStateException("User key list is empty"))
-                        }
-                    }
-
-                    else -> {
-                        PassLogger.i(TAG, "Existing user invite")
-                        Result.success(InviteUserMode.ExistingUser)
-                    }
-                }
-            },
-            onFailure = {
-                return if (it.isAddressNotExistsError() && isInviteNewUserEnabled) {
-                    Result.success(InviteUserMode.NewUser)
-                } else {
-                    Result.failure(it)
-                }
-            }
-        )
-    }
-
-    private suspend fun getInviteModeWithAllKeys(email: String): Result<InviteUserMode> =
+    override suspend fun invoke(userId: UserId, email: String): Result<InviteUserMode> =
         getAllKeysByAddress(email = email)
             .fold(
                 onSuccess = {
@@ -110,7 +67,6 @@ class GetInviteUserModeImpl @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "GetInviteUserModeImpl"
         private const val ERROR_CODE_ADDRESS_NOT_EXIST = 33_102
     }
 }

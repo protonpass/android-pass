@@ -6,11 +6,17 @@
 
 ### Other
 
+## 1.14.1 (2023-12-12)
+
+### Fixes :bug:
+
+- Fix error on user invite
+
 ## 1.14.0 (2023-12-12)
 
 ### Features :tada:
 
-- Bulk actions.q
+- Bulk actions
 - Display shared icons in Vault chooser list.
 
 ## 1.13.1 (2023-12-04)

@@ -168,11 +168,13 @@ fun ItemsList(
                 footer()
             }
         } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            Column {
                 if (forceShowHeader) {
-                    header()
+                    LazyColumn {
+                        header()
+                    }
                 }
-                item { emptyContent() }
+                emptyContent()
             }
         }
         PullRefreshIndicator(

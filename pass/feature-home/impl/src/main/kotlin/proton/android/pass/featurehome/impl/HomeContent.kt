@@ -24,7 +24,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -54,7 +53,6 @@ import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
-import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
@@ -62,9 +60,8 @@ import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
-import proton.android.pass.featurehome.impl.empty.HomeEmptyList
+import proton.android.pass.featurehome.impl.HomeUiEvent.AddItemClick
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
-import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 
@@ -147,7 +144,7 @@ internal fun HomeContent(
                     onListClick = {},
                     onCreateClick = {
                         val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                        onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Unknown))
+                        onEvent(AddItemClick(shareId, ItemTypeUiState.Unknown))
                     },
                     onProfileClick = { onEvent(HomeUiEvent.ProfileClick) }
                 )
@@ -245,29 +242,14 @@ internal fun HomeContent(
                 onRefresh = { onEvent(HomeUiEvent.Refresh) },
                 onScrollToTop = { onEvent(HomeUiEvent.ScrollToTop) },
                 emptyContent = {
-                    if (isTrashMode) {
-                        EmptyTrashContent()
-                    } else if (uiState.searchUiState.inSearchMode) {
-                        EmptySearchResults()
-                    } else {
-                        HomeEmptyList(
-                            modifier = Modifier.fillMaxHeight(),
-                            onCreateLoginClick = {
-                                val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Login))
-                            },
-                            onCreateAliasClick = {
-                                val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Alias))
-                            },
-                            onCreateNoteClick = {
-                                val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Note))
-                            }
-                        )
-                    }
+                    HomeEmptyContent(
+                        isTrashMode = isTrashMode,
+                        inSearchMode = uiState.searchUiState.inSearchMode,
+                        readOnly = uiState.isSelectedVaultReadOnly(),
+                        shareId = uiState.homeListUiState.selectedShare.map { it.id },
+                        onEvent = onEvent
+                    )
                 },
-
                 forceShowHeader = forceShowHeader,
                 header = {
                     item {

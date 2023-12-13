@@ -16,68 +16,62 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl.trash
+package proton.android.pass.featurehome.impl.empty
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultWeak
-import me.proton.core.compose.theme.headlineNorm
+import me.proton.core.compose.theme.headlineSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.featurehome.impl.R
 
 @Composable
-fun EmptyTrashContent(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.empty_trash),
-            contentDescription = null
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = stringResource(R.string.trash_empty_list_title),
-            style = ProtonTheme.typography.headlineNorm,
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = stringResource(R.string.trash_empty_list_message),
-            style = ProtonTheme.typography.defaultWeak,
-            textAlign = TextAlign.Center
-        )
+fun EmptyReadOnly(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(
+            modifier = modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.home_empty_read_only_vault_title),
+                style = ProtonTheme.typography.headlineSmallNorm,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.home_empty_read_only_vault_subtitle),
+                style = PassTheme.typography.body3Norm(),
+                color = PassTheme.colors.textWeak,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
 @Preview
 @Composable
-fun EmptyTrashContentPreview(
+fun EmptyReadOnlyPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            EmptyTrashContent()
+            EmptyReadOnly()
         }
     }
 }

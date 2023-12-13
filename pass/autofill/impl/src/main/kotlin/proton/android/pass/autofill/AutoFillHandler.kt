@@ -23,6 +23,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
+import android.service.autofill.Dataset
 import android.service.autofill.FillCallback
 import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
@@ -43,6 +44,9 @@ import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.heuristics.NodeClusterer
 import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.heuristics.focused
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.domain.entity.AppName
@@ -76,18 +80,18 @@ object AutoFillHandler {
             PassLogger.e(TAG, exception)
             callback.onSuccess(null)
         }
-        val job = CoroutineScope(Dispatchers.IO)
-            .launch(handler) {
-                searchAndFill(
-                    context = context,
-                    windowNode = windowNode,
-                    callback = callback,
-                    request = request,
-                    autofillServiceManager = autofillServiceManager,
-                    telemetryManager = telemetryManager,
-                    accountManager = accountManager
-                )
-            }
+        val job = CoroutineScope(Dispatchers.IO).launch(handler) {
+            val response = searchAndFill(
+                context = context,
+                windowNode = windowNode,
+                request = request,
+                autofillServiceManager = autofillServiceManager,
+                telemetryManager = telemetryManager,
+                accountManager = accountManager
+            )
+
+            callback.onSuccess(response.value())
+        }
 
         cancellationSignal.setOnCancelListener {
             job.cancel()
@@ -98,12 +102,11 @@ object AutoFillHandler {
     private suspend fun searchAndFill(
         context: Context,
         windowNode: AssistStructure.WindowNode,
-        callback: FillCallback,
         request: FillRequest,
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
         accountManager: AccountManager
-    ) {
+    ): Option<FillResponse> {
         val shouldAutofill = shouldAutofill(
             accountManager = accountManager,
             request = request,
@@ -113,9 +116,9 @@ object AutoFillHandler {
         val assistInfo = when (shouldAutofill) {
             is ShouldAutofillResult.No -> {
                 PassLogger.i(TAG, "Should not autofill")
-                callback.onSuccess(null)
-                return
+                return None
             }
+
             is ShouldAutofillResult.Yes -> {
                 PassLogger.i(TAG, "Should autofill")
                 shouldAutofill.assistInfo
@@ -134,7 +137,6 @@ object AutoFillHandler {
             )
         }
         val autofillData = AutofillData(assistInfo, packageInfoOption)
-        val responseBuilder = FillResponse.Builder()
         val datasetList = if (hasSupportForInlineSuggestions(request)) {
             request.inlineSuggestionsRequest?.let {
                 autofillServiceManager.createSuggestedItemsDatasetList(
@@ -145,23 +147,45 @@ object AutoFillHandler {
         } else {
             autofillServiceManager.createMenuPresentationDataset(autofillData)
         }
-        datasetList.forEach {
-            responseBuilder.addDataset(it)
+
+        return generateResponse(
+            datasetList = datasetList,
+            packageName = packageNameOption,
+            assistInfo = assistInfo,
+            request = request,
+            telemetryManager = telemetryManager
+        )
+    }
+
+    private suspend fun generateResponse(
+        datasetList: List<Dataset>,
+        packageName: Option<String>,
+        assistInfo: AssistInfo,
+        request: FillRequest,
+        telemetryManager: TelemetryManager
+    ): Option<FillResponse> {
+        if (datasetList.isEmpty()) {
+            PassLogger.i(TAG, "No dataset found")
+            return None
         }
 
-        val isBrowser = packageNameOption.map { BROWSERS.contains(it) }.value() ?: false
+        val responseBuilder = FillResponse.Builder()
+        datasetList.forEach { responseBuilder.addDataset(it) }
+
+        val isBrowser = packageName.map { BROWSERS.contains(it) }.value() ?: false
         responseBuilder.addSaveInfo(
             cluster = assistInfo.cluster,
             currentClientState = request.clientState ?: Bundle(),
             isBrowser = isBrowser,
             autofillSessionId = request.id
         )
+
         return if (!currentCoroutineContext().isActive) {
             PassLogger.i(TAG, "Job was cancelled")
-            callback.onSuccess(null)
+            None
         } else {
             telemetryManager.sendEvent(AutofillDisplayed(AutofillTriggerSource.Source))
-            callback.onSuccess(responseBuilder.build())
+            responseBuilder.build().some()
         }
     }
 

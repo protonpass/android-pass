@@ -20,6 +20,7 @@ package proton.android.pass.autofill.sample.webview
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import proton.android.pass.autofill.sample.databinding.ActivityWebviewLoginBinding
 
@@ -36,8 +37,11 @@ class WebViewLoginActivity : AppCompatActivity() {
                 javaScriptEnabled = true
                 domStorageEnabled = true
                 databaseEnabled = true
+                loadWithOverviewMode = false
             }
-            if (url == null) loadUrl("https://account.proton.black/login")
+            webViewClient = WebViewClient()
+
+            if (url == null) loadUrl("https://autofilth.lol")
         }
 
         setContentView(binding.root)

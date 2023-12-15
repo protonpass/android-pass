@@ -3,9 +3,11 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Holvisi on tyhjä</string>
   <string name="home_empty_vault_subtitle">Aloita luomalla ensimmäinen kohteesi.</string>
-  <string name="home_empty_vault_create_login">Luo kirjautumistieto</string>
+  <string name="home_empty_read_only_vault_title">This vault is empty</string>
+  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
+  <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">Luo Hide-my-email -alias</string>
-  <string name="home_empty_vault_create_note">Luo muistiinpano</string>
+  <string name="home_empty_vault_create_note">Create a note</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Virhe ladatessa kohteita</string>
   <string name="error_refreshing">Virhe päivitettäessä</string>
   <string name="home_snackbar_login_moved_to_trash">Kirjautumistieto siirrettiin roskakoriin</string>
@@ -13,14 +15,14 @@
   <string name="home_snackbar_note_moved_to_trash">Muistiinpano siirrettiin roskakoriin</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Maksukortti siirrettiin roskakoriin</string>
   <string name="home_snackbar_move_to_trash_error">Kohteen siirto roskakoriin epäonnistui</string>
-  <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
-  <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
+  <string name="home_snackbar_items_move_to_trash_success">Kohde siirrettiin roskakoriin</string>
+  <string name="home_snackbar_items_move_to_trash_error">Kohteita ei voitu siirtää roskakoriin</string>
   <string name="home_autofill_banner_title">Nauti automaattitäytön taiasta</string>
   <string name="home_autofill_banner_text">Vain yksi napautus ja käyttäjätunnuksesi ja salasanasi on täytetty.</string>
   <string name="home_autofill_banner_settings">Ota automaattitäyttö käyttöön ›</string>
   <string name="home_trial_banner_title">Tervetuliaislahjamme sinulle</string>
   <string name="home_trial_banner_text">7 päivää aikaa kokeilla premium-ominaisuuksia ilmaiseksi. Vain Proton Passin ensimmäisen viikon aikana.</string>
-  <string name="home_trial_banner_settings">Lue lisää ›</string>
+  <string name="home_trial_banner_settings">Learn more ›</string>
   <string name="home_notification_permission_banner_title">Vastaanota tärkeitä ilmoituksia</string>
   <string name="home_notification_permission_banner_text">Ota push-ilmoitukset käyttöön saadaksesi ilmoituksen muiden käyttäjien jakaessa holvejaan sinulle.</string>
   <string name="home_notification_permission_banner_settings">Myönnä käyttöoikeus ›</string>
@@ -31,7 +33,7 @@
   <string name="bottomsheet_copy_username">Kopioi käyttäjätunnus</string>
   <string name="bottomsheet_copy_alias">Kopioi sähköpostiosoite</string>
   <string name="bottomsheet_copy_number">Copy number</string>
-  <string name="bottomsheet_copy_cvv">Kopioi turvakoodi</string>
+  <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">Copy note</string>
   <string name="bottomsheet_edit">Muokkaa</string>
   <!-- Clipboard -->
@@ -79,7 +81,7 @@
   <string name="trash_error_restoring_items">Virhe palautettaessa kohteita</string>
   <string name="trash_error_deleting_item">Virhe poistettaessa kohdetta</string>
   <string name="trash_success_deleting_item">Item deleted</string>
-  <string name="trash_deleting_items_error">Error deleting items</string>
+  <string name="trash_deleting_items_error">Virhe kohteiden poistamisessa</string>
   <string name="trash_deleting_items_success">Items deleted</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Clear trash?</string>
@@ -87,31 +89,31 @@
   <string name="alert_confirm_restore_all_title">Palautetaanko kaikki kohteet?</string>
   <string name="alert_confirm_restore_all_message">Haluatko varmasti palauttaa kaikki roskakorissa olevat kohteet?</string>
   <plurals name="alert_confirm_restore_items_title">
-    <item quantity="one">Restore %d item?</item>
-    <item quantity="other">Restore %d items?</item>
+    <item quantity="one">Palautetaanko %d kohde?</item>
+    <item quantity="other">Palautetaanko %d kohdetta?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Are you sure you want to restore the trashed item?</item>
-    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="one">Haluatko varmasti palauttaa roskakorissa olevan kohteen?</item>
+    <item quantity="other">Haluatko varmasti palauttaa %d roskakorissa olevaa kohdetta?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="one">Move to trash %d item?</item>
-    <item quantity="other">Move to trash %d items?</item>
+    <item quantity="one">Siirretäänkö %d kohde roskakoriin?</item>
+    <item quantity="other">Siirretäänkö %d kohdetta roskakoriin?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Are you sure you want to move to the trash the item?</item>
-    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="one">Haluatko varmasti siirtää kohteen roskakoriin?</item>
+    <item quantity="other">Haluatko varmasti siirtää %d kohdetta roskakoriin?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="one">Delete permanently %d item?</item>
-    <item quantity="other">Delete permanently %d items?</item>
+    <item quantity="one">Poistetaanko %d kohde pysyvästi?</item>
+    <item quantity="other">Poistetaanko %d kohdetta pysyvästi?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
-    <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="one">Haluatko varmasti poistaa kohteen? Toimintoa ei voi peruuttaa</item>
+    <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Toimintoa ei voi peruuttaa</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Viimeisimmät haut</string>
-  <string name="recent_search_clear">Tyhjennä</string>
+  <string name="recent_search_clear">Clear</string>
   <string name="recent_search_remove_item">Poista viimeisimmistä hauista</string>
 </resources>

@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Ваше сховище порожнє</string>
   <string name="home_empty_vault_subtitle">Почніть зі створення свого першого елементу.</string>
+  <string name="home_empty_read_only_vault_title">This vault is empty</string>
+  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
   <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">Створити псевдонім Hide-my-email</string>
   <string name="home_empty_vault_create_note">Create a note</string>
@@ -119,7 +121,7 @@
     <item quantity="other">Delete permanently %d items?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
+    <item quantity="one">Ви впевнені, що хочете видалити позицію? Ця дія є незворотньою.</item>
     <item quantity="few">Are you sure you want to delete the %d items? This action is irreversible</item>
     <item quantity="many">Are you sure you want to delete the %d items? This action is irreversible</item>
     <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>

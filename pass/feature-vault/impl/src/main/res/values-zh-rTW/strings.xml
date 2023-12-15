@@ -24,7 +24,7 @@
   <string name="bottomsheet_close_icon_content_description">關閉創建的保管庫</string>
   <string name="bottomsheet_create_vault_button">新增保管庫</string>
   <string name="bottomsheet_edit_vault_button">儲存</string>
-  <string name="bottomsheet_cannot_create_more_vaults">你已達到保管庫創建上限。升級訂閱已創建無限保管庫</string>
+  <string name="bottomsheet_cannot_create_more_vaults">你已達到保管庫創建上限。升級訂購授權已創建無限保管庫</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">若需使用您其他保管庫，需升級您的帳號</string>
   <string name="bottomsheet_upgrade_now">立即升級</string>
   <string name="bottomsheet_edit">編輯</string>
@@ -35,6 +35,6 @@
   <string name="bottomsheet_view_members">檢視成員</string>
   <string name="bottomsheet_manage_access">管理存取權限</string>
   <string name="bottomsheet_select_vault_read_only">您只能讀取</string>
-  <string name="bottomsheet_select_vault_only_oldest_vaults">您僅能在最舊的保管庫建立項目</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">您僅能在最舊的保管庫創建項目</string>
   <string name="vault_title">保管庫</string>
 </resources>

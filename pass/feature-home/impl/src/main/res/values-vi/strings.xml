@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Kho lưu trữ của bạn trống</string>
   <string name="home_empty_vault_subtitle">Bắt đầu bằng việc tạo nội dung đầu tiên của bạn.</string>
+  <string name="home_empty_read_only_vault_title">This vault is empty</string>
+  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
   <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">Tạo bí danh hide-my-email</string>
   <string name="home_empty_vault_create_note">Create a note</string>
@@ -31,7 +33,7 @@
   <string name="bottomsheet_copy_username">Sao chép tên đăng nhập</string>
   <string name="bottomsheet_copy_alias">Sao chép địa chỉ email</string>
   <string name="bottomsheet_copy_number">Copy number</string>
-  <string name="bottomsheet_copy_cvv">Sao chép mã bảo mật</string>
+  <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">Copy note</string>
   <string name="bottomsheet_edit">Sửa</string>
   <!-- Clipboard -->

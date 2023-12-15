@@ -26,5 +26,5 @@
   <string name="bottomsheet_copy_password">Kopioi salasana</string>
   <string name="bottomsheet_copy_username">Kopioi käyttäjätunnus</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Automaattitäytä kortin tiedot</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofilling credit card details is a paid feature. If you want Proton Pass to automatically enter your card details for you in apps and websites, please upgrade to a paid plan.</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Maksukorttitietojen automaattitäyttö on maksullinen ominaisuus. Jos haluat, että Proton Pass syöttää korttitietosi automaattisesti puolestasi sovelluksissa ja verkkosivustoilla, päivitä maksulliseen tilaukseen.</string>
 </resources>

@@ -6,7 +6,7 @@
   <string name="detail_init_error">Problem retrieving item details</string>
   <string name="top_bar_edit_button_text">編輯</string>
   <!-- Alias details -->
-  <string name="field_alias_title">別名地址</string>
+  <string name="field_alias_title">別名位址</string>
   <string name="alias_copied_to_clipboard">已複製別名</string>
   <string name="alias_detail_field_mailboxes_title">轉寄至</string>
   <string name="alias_create_login_from_alias">創建登入</string>
@@ -28,7 +28,7 @@
   <string name="item_restored_message_error">還原項目錯誤</string>
   <string name="login_item_generate_totp_error">雙重驗證生成條碼錯誤</string>
   <string name="login_item_view_alias_button">檢視別名</string>
-  <string name="field_username">使用者名稱或電子郵件地址</string>
+  <string name="field_username">使用者名稱或電子郵件位址</string>
   <string name="field_password">密碼</string>
   <string name="websites_section_title">網站</string>
   <string name="totp_section_title">雙重驗證憑證(TOTP)</string>

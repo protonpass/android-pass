@@ -22,12 +22,21 @@ import org.junit.Test
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 
-class OtherAutofillTest {
+class OtherAutofillTest : BaseAutofillTest() {
 
     @Test
     fun `do not autofill anything on protonmail composer`() {
         runOtherAutofillTest(
             file = "other/app_protonmail_composer.json",
+            item = loginItem(),
+            allowEmptyFields = true
+        )
+    }
+
+    @Test
+    fun `do not autofill anything on wallapop message`() {
+        runOtherAutofillTest(
+            file = "other/app_wallapop_message.json",
             item = loginItem(),
             allowEmptyFields = true
         )

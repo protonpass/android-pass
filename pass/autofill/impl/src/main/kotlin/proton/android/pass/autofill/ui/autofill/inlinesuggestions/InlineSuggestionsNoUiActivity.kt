@@ -23,6 +23,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.autofill.AutofillManager
 import android.widget.RemoteViews
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -37,6 +38,7 @@ import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
+import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialog
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 
@@ -56,9 +58,24 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
 
     private fun onStateReceived(state: InlineSuggestionAutofillNoUiState) {
         when (state) {
-            InlineSuggestionAutofillNoUiState.Error -> onAutofillError()
+            InlineSuggestionAutofillNoUiState.Close -> onAutofillError()
             InlineSuggestionAutofillNoUiState.NotInitialised -> {}
+            is InlineSuggestionAutofillNoUiState.SuccessWithConfirmation ->
+                onSuccessWithConfirmation(state.autofillMappings, state.mode)
             is InlineSuggestionAutofillNoUiState.Success -> onAutofillSuccess(state.autofillMappings)
+        }
+    }
+
+    private fun onSuccessWithConfirmation(
+        autofillMappings: AutofillMappings,
+        mode: AutofillConfirmMode
+    ) {
+        setContent {
+            ConfirmAutofillDialog(
+                mode = mode,
+                onConfirm = { onAutofillSuccess(autofillMappings) },
+                onClose = { onAutofillError() }
+            )
         }
     }
 

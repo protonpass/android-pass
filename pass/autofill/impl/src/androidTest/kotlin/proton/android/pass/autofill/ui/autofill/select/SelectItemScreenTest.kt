@@ -409,7 +409,8 @@ class SelectItemScreenTest {
                 ),
                 url = None
             ),
-            packageInfo = None
+            packageInfo = None,
+            isDangerousAutofill = false
         )
     )
 

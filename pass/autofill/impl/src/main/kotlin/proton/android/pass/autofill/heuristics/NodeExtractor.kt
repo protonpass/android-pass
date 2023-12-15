@@ -74,7 +74,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     }
 
     private fun traverseInternal(context: AutofillTraversalContext) {
-        if (detectedUrl is None) {
+        if (detectedUrl is None && context.node.isFocused) {
             detectedUrl = context.node.url
         }
 

@@ -36,6 +36,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.ClearClipboardPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.minutes
 import android.content.ClipboardManager as AndroidClipboardManager
 
 class ClipboardManagerImpl @Inject constructor(
@@ -46,9 +47,9 @@ class ClipboardManagerImpl @Inject constructor(
 
     private val clearClipboardPreferenceFlow = preferencesRepository.getClearClipboardPreference()
 
-    @Suppress("MagicNumber")
+    private val androidClipboard by lazy { context.getSystemService(AndroidClipboardManager::class.java) }
+
     override fun copyToClipboard(text: String, isSecure: Boolean) {
-        val androidClipboard = context.getSystemService(AndroidClipboardManager::class.java)
         if (androidClipboard == null) {
             PassLogger.i(TAG, "Could not get ClipboardManager")
             return
@@ -63,27 +64,46 @@ class ClipboardManagerImpl @Inject constructor(
         }
         when (runBlocking { clearClipboardPreferenceFlow.first() }) {
             ClearClipboardPreference.Never -> {}
-            ClearClipboardPreference.S60 -> scheduler.schedule(60, text)
-            ClearClipboardPreference.S180 -> scheduler.schedule(180, text)
+            ClearClipboardPreference.S60 -> scheduler.schedule(1.minutes.inWholeSeconds, text)
+            ClearClipboardPreference.S180 -> scheduler.schedule(3.minutes.inWholeSeconds, text)
         }
     }
 
-    override fun getClipboardContent(): Result<String> {
-        val androidClipboard = context.getSystemService(AndroidClipboardManager::class.java)
+    override fun clearClipboard() {
         if (androidClipboard == null) {
             PassLogger.i(TAG, "Could not get ClipboardManager")
-            return Result.failure(CouldNotAccessClipboard())
+            return
+        }
+
+        runCatching {
+            runBlocking(Dispatchers.IO) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    androidClipboard.clearPrimaryClip()
+                } else {
+                    androidClipboard.setPrimaryClip(ClipData.newPlainText("", ""))
+                }
+            }
+        }.onSuccess {
+            PassLogger.i(TAG, "Successfully cleared clipboard")
+        }.onFailure {
+            PassLogger.w(TAG, it, "Could not clear clipboard")
+        }
+    }
+
+    override fun getClipboardContent(): Result<String> = runCatching {
+        if (androidClipboard == null) {
+            PassLogger.i(TAG, "Could not get ClipboardManager")
+            throw CouldNotAccessClipboard()
         }
         if (!androidClipboard.hasPrimaryClip() ||
             androidClipboard.primaryClipDescription?.hasMimeType(MIMETYPE_TEXT_PLAIN) != true
         ) {
             PassLogger.i(TAG, "Could not get clipboard content")
-            return Result.failure(CouldNotGetClipboardContent())
+            throw CouldNotGetClipboardContent()
         }
 
-        return androidClipboard.primaryClip?.getItemAt(0)?.text?.toString()
-            ?.let { Result.success(it) }
-            ?: Result.failure(EmptyClipboardContent())
+        val value = androidClipboard.primaryClip?.getItemAt(0)?.coerceToText(context)?.toString()
+        return value?.let { Result.success(it) } ?: throw EmptyClipboardContent()
     }
 
     private fun applySecureFlag(clipData: ClipData) {

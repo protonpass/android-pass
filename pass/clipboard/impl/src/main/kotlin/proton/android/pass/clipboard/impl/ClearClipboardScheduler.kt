@@ -25,12 +25,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 class ClearClipboardScheduler @Inject constructor(
     @ApplicationContext private val applicationContext: Context,
     private val encryptionContextProvider: EncryptionContextProvider
 ) {
-    @Suppress("MagicNumber")
+
     fun schedule(delaySeconds: Long, expectedClipboardContents: String) {
         val intent = ClearClipboardBroadcastReceiver.prepareIntent(
             applicationContext,
@@ -44,7 +45,7 @@ class ClearClipboardScheduler @Inject constructor(
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val delayMilliseconds = delaySeconds * 1000
+        val delayMilliseconds = delaySeconds.seconds.inWholeMilliseconds
         val timeToTriggerInMillis = System.currentTimeMillis() + delayMilliseconds
         val alarmManager = applicationContext.getSystemService(AlarmManager::class.java)
         alarmManager.set(

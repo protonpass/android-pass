@@ -18,10 +18,23 @@
 
 package proton.android.pass.autofill.ui.autofill.inlinesuggestions
 
+import androidx.compose.runtime.Stable
 import proton.android.pass.autofill.entities.AutofillMappings
 
+@Stable
+enum class AutofillConfirmMode {
+    DangerousAutofill
+}
+
 sealed interface InlineSuggestionAutofillNoUiState {
-    data class Success(val autofillMappings: AutofillMappings) : InlineSuggestionAutofillNoUiState
-    object Error : InlineSuggestionAutofillNoUiState
+    @JvmInline
+    value class Success(val autofillMappings: AutofillMappings) : InlineSuggestionAutofillNoUiState
+
+    data class SuccessWithConfirmation(
+        val autofillMappings: AutofillMappings,
+        val mode: AutofillConfirmMode
+    ) : InlineSuggestionAutofillNoUiState
+
+    object Close : InlineSuggestionAutofillNoUiState
     object NotInitialised : InlineSuggestionAutofillNoUiState
 }

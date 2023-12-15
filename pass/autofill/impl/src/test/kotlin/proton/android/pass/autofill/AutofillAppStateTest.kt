@@ -39,7 +39,8 @@ class AutofillAppStateTest {
                     cluster = NodeCluster.Empty,
                     url = None
                 ),
-                packageInfo = None
+                packageInfo = None,
+                isDangerousAutofill = false
             )
         )
         assertThat(state.isValid()).isFalse()
@@ -62,7 +63,8 @@ class AutofillAppStateTest {
                     ),
                     url = None
                 ),
-                packageInfo = None
+                packageInfo = None,
+                isDangerousAutofill = false
             )
         )
         assertThat(state.isValid()).isTrue()

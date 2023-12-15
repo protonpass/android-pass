@@ -42,6 +42,15 @@ class OtherAutofillTest : BaseAutofillTest() {
         )
     }
 
+    @Test
+    fun `do not autofill anything on linkedin message`() {
+        runOtherAutofillTest(
+            file = "other/app_linkedin_message.json",
+            item = loginItem(),
+            allowEmptyFields = true
+        )
+    }
+
     private fun loginItem(): AutofillItem = AutofillItem.Login(
         itemId = "123",
         shareId = "123",

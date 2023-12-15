@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Ditt valv är tomt</string>
   <string name="home_empty_vault_subtitle">Kom igång genom att skapa ditt första objekt.</string>
+  <string name="home_empty_read_only_vault_title">Detta valv är tomt</string>
+  <string name="home_empty_read_only_vault_subtitle">Du kan inte lägga till objekt i ett skrivskyddat valv.</string>
   <string name="home_empty_vault_create_login">Skapa en inloggning</string>
   <string name="home_empty_vault_create_alias">Skapa ett Hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Skapa en anteckning</string>
@@ -91,16 +93,16 @@
     <item quantity="other">Återställ %d objekt?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Are you sure you want to restore the trashed item?</item>
-    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="one">Är du säker på att du vill återställa det kastade objektet?</item>
+    <item quantity="other">Är du säker på att du vill återställa %d kastade objekt?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="one">Move to trash %d item?</item>
-    <item quantity="other">Move to trash %d items?</item>
+    <item quantity="one">Flytta %d objekt till papperskorg?</item>
+    <item quantity="other">Flytta %d objekt till papperskorg?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Are you sure you want to move to the trash the item?</item>
-    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="one">Är du säker på att du vill flytta objektet till papperskorgen?</item>
+    <item quantity="other">Är du säker på att du vill flytta %d objekt till papperskorg?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Ta bort %d objekt permanent?</item>

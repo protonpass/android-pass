@@ -12,10 +12,10 @@
     <item quantity="other">%s символов</item>
   </plurals>
   <plurals name="word_count">
-    <item quantity="one">%s word</item>
-    <item quantity="few">%s words</item>
-    <item quantity="many">%s words</item>
-    <item quantity="other">%s words</item>
+    <item quantity="one">%s слово</item>
+    <item quantity="few">%s слова</item>
+    <item quantity="many">%s слов</item>
+    <item quantity="other">%s слов</item>
   </plurals>
   <string name="word_separator">Word separator</string>
   <string name="bottomsheet_option_capital_letters">Capital letters (A–Z)</string>

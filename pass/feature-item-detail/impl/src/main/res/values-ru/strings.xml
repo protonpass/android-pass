@@ -3,7 +3,7 @@
   <string name="action_open">Открыть</string>
   <string name="action_copy">Копировать</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problem retrieving item details</string>
+  <string name="detail_init_error">Проблема с получением сведений об элементе</string>
   <string name="top_bar_edit_button_text">Изменить</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адрес псевдонима</string>
@@ -48,7 +48,7 @@
     <item quantity="other">%d раз</item>
   </plurals>
   <string name="more_info_last_time_modified">Last time, %s</string>
-  <string name="share_button_content_description">Open share button</string>
+  <string name="share_button_content_description">Открыть кнопку \"поделиться\"</string>
   <string name="open_menu_icon_content_description">Open menu button</string>
   <string name="mfa_limit_reached">2FA limit reached</string>
   <string name="mfa_icon_content_description">2FA icon</string>
@@ -82,12 +82,12 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
-  <string name="item_detail_cannot_perform_action_edit_title">Cannot edit</string>
-  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Cannot share</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Невозможно отредактировать</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Вы не можете редактировать этот элемент, потому что у вас для этого недостаточно прав.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Вы можете редактировать элементы только в самых старых хранилищах. Чтобы отредактировать этот элемент, пожалуйста, обновите текущий тариф.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Вы не можете отредактировать этот элемент, потому что он находится в корзине. Пожалуйста, переместите его из корзины, прежде чем редактировать.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Невозможно поделиться</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостаточно прав для совместного использования этого хранилища.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Weak</string>
   <string name="password_score_strong">Strong</string>

@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Tu bóveda está vacía</string>
   <string name="home_empty_vault_subtitle">Comience creando su primer elemento.</string>
+  <string name="home_empty_read_only_vault_title">Esta caja fuerte está vacía.</string>
+  <string name="home_empty_read_only_vault_subtitle">No puedes añadir elementos a una caja fuerte de solo lectura.</string>
   <string name="home_empty_vault_create_login">Crear un inicio de sesión</string>
   <string name="home_empty_vault_create_alias">Crear un alias de hide-my-email</string>
   <string name="home_empty_vault_create_note">Crear una nota</string>
@@ -43,14 +45,14 @@
   <string name="credit_card_cvv_copied_to_clipboard">El código de seguridad ha sido copiado.</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">El contenido es demasiado largo. Se ha copiado parcialmente al portapapeles.</string>
   <!-- Vault drawer -->
-  <string name="vault_drawer_vaults_title">Bóvedas</string>
+  <string name="vault_drawer_vaults_title">Cajas fuertes</string>
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d elemento</item>
     <item quantity="other">%d elementos</item>
   </plurals>
-  <string name="vault_drawer_create_vault">Crear bóveda</string>
+  <string name="vault_drawer_create_vault">Crear una caja fuerte</string>
   <string name="vault_drawer_item_trash">Papelera</string>
-  <string name="vault_drawer_all_vaults">Todas las bóvedas</string>
+  <string name="vault_drawer_all_vaults">Todas las cajas fuertes</string>
   <!-- Vault management -->
   <string name="vault_delete_dialog_title">Eliminar caja fuerte</string>
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
@@ -72,8 +74,8 @@
   <string name="trash_empty_list_message">Los elementos movidos a la papelera aparecerán aquí.</string>
   <string name="bottomsheet_trash_all_items_title">Papelera</string>
   <string name="bottomsheet_restore_all_items">Restaurar todos los elementos</string>
-  <string name="bottomsheet_empty_trash">Papelera vacía</string>
-  <string name="bottomsheet_select_items">Seleccionar elementos</string>
+  <string name="bottomsheet_empty_trash">Vaciar la papelera</string>
+  <string name="bottomsheet_select_items">Seleccionar los elementos</string>
   <string name="trash_error_clearing_trash">Error al vaciar la papelera</string>
   <string name="trash_success_restoring_items">Los elementos han sido restaurados.</string>
   <string name="trash_error_restoring_items">Error al restaurar los elementos</string>

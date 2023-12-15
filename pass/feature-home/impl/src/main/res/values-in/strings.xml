@@ -3,11 +3,13 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Brankas Anda kosong</string>
   <string name="home_empty_vault_subtitle">Mulailah dengan membuat item pertama Anda.</string>
+  <string name="home_empty_read_only_vault_title">Brankas ini kosong</string>
+  <string name="home_empty_read_only_vault_subtitle">Anda tidak dapat menambahkan item ke brankas yang bersifat read-only.</string>
   <string name="home_empty_vault_create_login">Buat entri masuk</string>
   <string name="home_empty_vault_create_alias">Buat alias Hide-my-email</string>
   <string name="home_empty_vault_create_note">Buat catatan</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Terdapat kesalahan dalam memuat item</string>
-  <string name="error_refreshing">Terjadi kesalahan saat memuat ulang</string>
+  <string name="error_refreshing">Terjadi kesalahan dalam memuat ulang</string>
   <string name="home_snackbar_login_moved_to_trash">Login dipindahkan ke sampah</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias dipindahkan ke sampah</string>
   <string name="home_snackbar_note_moved_to_trash">Catatan dipindahkan ke sampah</string>
@@ -105,6 +107,6 @@
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Pencarian terkini</string>
-  <string name="recent_search_clear">Bersihkan</string>
+  <string name="recent_search_clear">Kosongkan</string>
   <string name="recent_search_remove_item">Hapus dari riwayat pencarian terkini</string>
 </resources>

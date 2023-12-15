@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <plurals name="migrate_item_confirm_title_bottom_sheet">
-    <item quantity="one">Move %d item to the following vault?</item>
-    <item quantity="other">Move %d items to the following vault?</item>
+    <item quantity="one">Mover %d item para o seguinte cofre?</item>
+    <item quantity="other">Mover %d itens para o seguinte cofre?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Mover todos os itens para o seguinte cofre?</string>
   <string name="migrate_item_confirm_confirm_button">Mover</string>
   <string name="migrate_item_success_snackbar">Itens movidos</string>
   <string name="migrate_item_error_snackbar">Erro ao mover os itens</string>
-  <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Erro ao mover alguns dos itens</string>
   <string name="migrate_all_items_success_snackbar">Todos os itens movidos</string>
   <string name="migrate_all_items_error_snackbar">Erro ao mover todos os itens do cofre</string>
   <string name="migrate_init_error_snackbar">Não foi possível preparar a tela de migração</string>
-  <string name="migrate_disabled_vault_reason_no_permission">You cannot create items in this vault</string>
-  <string name="migrate_disabled_vault_reason_same_vault">You cannot move an item to the same vault</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Você não pode criar itens neste cofre</string>
+  <string name="migrate_disabled_vault_reason_same_vault">Você não pode mover um item para o mesmo cofre</string>
 </resources>

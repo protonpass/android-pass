@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Η κρύπτη σας είναι άδεια</string>
   <string name="home_empty_vault_subtitle">Ξεκινήστε δημιουργώντας το πρώτο σας στοιχείο.</string>
+  <string name="home_empty_read_only_vault_title">Αυτή η κρύπτη είναι άδεια</string>
+  <string name="home_empty_read_only_vault_subtitle">Δεν μπορείτε να προσθέσετε στοιχεία σε κρύπτη ορισμένη μόνο για ανάγνωση.</string>
   <string name="home_empty_vault_create_login">Δημιουργία σύνδεσης</string>
   <string name="home_empty_vault_create_alias">Δημιουργήστε ένα Hide-my-email ψευδώνυμο</string>
   <string name="home_empty_vault_create_note">Δημιουργία σημείωσης</string>
@@ -31,7 +33,7 @@
   <string name="bottomsheet_copy_username">Αντιγραφή ονόματος χρήστη</string>
   <string name="bottomsheet_copy_alias">Αντιγραφή διεύθυνσης ηλεκτρονικού ταχυδρομείου</string>
   <string name="bottomsheet_copy_number">Αντιγραφή αριθμού</string>
-  <string name="bottomsheet_copy_cvv">Αντιγραφή κωδικού ασφαλείας</string>
+  <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">Αντιγραφή σημείωσης</string>
   <string name="bottomsheet_edit">Επεξεργασία</string>
   <!-- Clipboard -->
@@ -72,7 +74,7 @@
   <string name="trash_empty_list_message">Τα στοιχεία που μετακινούνται στον κάδο απορριμμάτων εμφανίζονται εδώ.</string>
   <string name="bottomsheet_trash_all_items_title">Κάδος Απορριμμάτων</string>
   <string name="bottomsheet_restore_all_items">Επαναφορά όλων των αντικειμένων</string>
-  <string name="bottomsheet_empty_trash">Αδειάστε τον κάδο απορριμμάτων</string>
+  <string name="bottomsheet_empty_trash">Άδειασμα Διαγραμμένων</string>
   <string name="bottomsheet_select_items">Επιλέξτε στοιχεία</string>
   <string name="trash_error_clearing_trash">Σφάλμα κατά την εκκαθάριση απορριμμάτων</string>
   <string name="trash_success_restoring_items">Έγινε επαναφορά στοιχείων</string>

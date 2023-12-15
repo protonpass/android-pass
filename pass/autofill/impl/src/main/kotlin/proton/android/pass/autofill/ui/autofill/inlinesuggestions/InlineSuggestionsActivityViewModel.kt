@@ -90,14 +90,22 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
                     telemetryManager.sendEvent(AutofillDone(AutofillTriggerSource.Source))
                     inAppReviewTriggerMetrics.incrementItemAutofillCount()
                     PassLogger.i(TAG, "Mappings found: ${mappingsOption.value.mappings.size}")
-                    InlineSuggestionAutofillNoUiState.Success(mappingsOption.value)
+
+                    if (appState.autofillData.isDangerousAutofill) {
+                        InlineSuggestionAutofillNoUiState.SuccessWithConfirmation(
+                            autofillMappings = mappingsOption.value,
+                            mode = AutofillConfirmMode.DangerousAutofill
+                        )
+                    } else {
+                        InlineSuggestionAutofillNoUiState.Success(mappingsOption.value)
+                    }
                 } else {
                     PassLogger.i(TAG, "Empty mappings")
-                    InlineSuggestionAutofillNoUiState.Error
+                    InlineSuggestionAutofillNoUiState.Close
                 }
             } else {
                 PassLogger.i(TAG, "No mappings found")
-                InlineSuggestionAutofillNoUiState.Error
+                InlineSuggestionAutofillNoUiState.Close
             }
         }
         .stateIn(

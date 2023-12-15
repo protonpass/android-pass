@@ -16,25 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.ui.autofill.inlinesuggestions
+package proton.android.pass.autofill.ui.autofill.common
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.autofill.entities.AutofillMappings
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import proton.android.pass.autofill.ui.autofill.inlinesuggestions.AutofillConfirmMode
+import proton.android.pass.commonui.api.PassTheme
 
-@Stable
-enum class AutofillConfirmMode {
-    DangerousAutofill
+@Composable
+fun ConfirmAutofillDialog(
+    modifier: Modifier = Modifier,
+    mode: AutofillConfirmMode,
+    onConfirm: () -> Unit,
+    onClose: () -> Unit
+) {
+    PassTheme(isDark = isSystemInDarkTheme()) {
+        ConfirmAutofillDialogContent(
+            modifier = modifier,
+            mode = mode,
+            onConfirm = onConfirm,
+            onClose = onClose
+        )
+    }
 }
 
-sealed interface InlineSuggestionAutofillNoUiState {
-    @JvmInline
-    value class Success(val autofillMappings: AutofillMappings) : InlineSuggestionAutofillNoUiState
-
-    data class SuccessWithConfirmation(
-        val autofillMappings: AutofillMappings,
-        val mode: AutofillConfirmMode
-    ) : InlineSuggestionAutofillNoUiState
-
-    object Close : InlineSuggestionAutofillNoUiState
-    object NotInitialised : InlineSuggestionAutofillNoUiState
-}

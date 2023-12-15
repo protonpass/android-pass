@@ -1,0 +1,223 @@
+{
+  "rootContent": {
+    "id": 851376255,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": -222335778,
+        "className": "android.widget.FrameLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": -222305987,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -222276196,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "toolbar"
+                ]
+              },
+              {
+                "id": -222246405,
+                "className": "android.widget.TextView",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "item_price"
+                ]
+              },
+              {
+                "id": -222216614,
+                "className": "android.widget.TextView",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "item_title"
+                ]
+              },
+              {
+                "id": -222186823,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "user_info_separator"
+                ]
+              },
+              {
+                "id": -222157032,
+                "className": "android.widget.TextView",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "user_name"
+                ]
+              },
+              {
+                "id": -222127241,
+                "className": "android.widget.RatingBar",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "rating"
+                ]
+              },
+              {
+                "id": -222097450,
+                "className": "android.widget.TextView",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "user_distance"
+                ]
+              },
+              {
+                "id": -222067659,
+                "className": "android.widget.TextView",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "last_connection_info"
+                ]
+              },
+              {
+                "id": -222037868,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "info_container_bottom_limit"
+                ]
+              },
+              {
+                "id": -222008077,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -221978286,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "chat_affiliate"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "ad_banner_affiliation"
+                ]
+              },
+              {
+                "id": -221948495,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -221918704,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -217420263,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "container"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "container"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "banner_delivery"
+                ]
+              },
+              {
+                "id": -221859122,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "translateButton"
+                ]
+              },
+              {
+                "id": -221829331,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "footer_upper_limit"
+                ]
+              },
+              {
+                "id": -221799540,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "safdsadf"
+                ]
+              },
+              {
+                "id": -222365569,
+                "className": "android.widget.EditText",
+                "isImportantForAutofill": true,
+                "text": "",
+                "isFocused": true,
+                "inputType": 147457,
+                "hintKeywordList": [
+                  "",
+                  "messageField",
+                  "Write something…"
+                ]
+              },
+              {
+                "id": -221769749,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -218820440,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "unread_message_count"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "scroll_to_bottom"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "root"
+            ]
+          },
+          {
+            "id": -221739958,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.wallapop"
+}

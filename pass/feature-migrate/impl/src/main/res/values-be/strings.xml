@@ -14,6 +14,6 @@
   <string name="migrate_all_items_success_snackbar">Усе элементы перамешчаны</string>
   <string name="migrate_all_items_error_snackbar">Памылка падчас перамяшчэння ўсіх элементаў сховішча</string>
   <string name="migrate_init_error_snackbar">Немагчыма падрыхтаваць экран пераносу</string>
-  <string name="migrate_disabled_vault_reason_no_permission">Вы не можаце стараць элементы ў гэтым сховішчы</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Вы не можаце ствараць элементы ў гэтым сховішчы</string>
   <string name="migrate_disabled_vault_reason_same_vault">Вы не можаце перамясціць элемент у тое ж самае сховішча</string>
 </resources>

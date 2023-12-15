@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">O seu cofre está vazio.</string>
   <string name="home_empty_vault_subtitle">Comece por criar o seu primeiro item.</string>
+  <string name="home_empty_read_only_vault_title">This vault is empty</string>
+  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
   <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">Create a Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Create a note</string>

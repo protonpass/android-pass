@@ -136,7 +136,13 @@ object AutoFillHandler {
                     ?: AppName(it)
             )
         }
-        val autofillData = AutofillData(assistInfo, packageInfoOption)
+
+        val isBrowser = packageNameOption.isEmpty()
+        val hasUrl = assistInfo.url.isNotEmpty()
+
+        val isDangerousAutofill = !isBrowser && hasUrl
+
+        val autofillData = AutofillData(assistInfo, packageInfoOption, isDangerousAutofill)
         val datasetList = if (hasSupportForInlineSuggestions(request)) {
             request.inlineSuggestionsRequest?.let {
                 autofillServiceManager.createSuggestedItemsDatasetList(

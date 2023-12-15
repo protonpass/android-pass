@@ -23,5 +23,6 @@ import proton.android.pass.domain.entity.PackageInfo
 
 data class AutofillData(
     val assistInfo: AssistInfo,
-    val packageInfo: Option<PackageInfo>
+    val packageInfo: Option<PackageInfo>,
+    val isDangerousAutofill: Boolean
 )

@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Hvelvet ditt er tomt</string>
   <string name="home_empty_vault_subtitle">Kom i gang ved å opprette ditt første element.</string>
+  <string name="home_empty_read_only_vault_title">Dette hvelvet er tomt</string>
+  <string name="home_empty_read_only_vault_subtitle">Du kan ikke legge til elementer i et skrivebeskyttet hvelv.</string>
   <string name="home_empty_vault_create_login">Opprett en pålogging</string>
   <string name="home_empty_vault_create_alias">Opprett et Hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Opprett et notat</string>
@@ -78,7 +80,7 @@
   <string name="trash_success_restoring_items">Elementer gjenopprettet</string>
   <string name="trash_error_restoring_items">Feil ved gjenoppretting av elementer</string>
   <string name="trash_error_deleting_item">Feil ved sletting av element</string>
-  <string name="trash_success_deleting_item">Elementet slettet</string>
+  <string name="trash_success_deleting_item">Element slettet</string>
   <string name="trash_deleting_items_error">Feil ved sletting av elementer</string>
   <string name="trash_deleting_items_success">Elementer slettet</string>
   <!-- Alerts -->

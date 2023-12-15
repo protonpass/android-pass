@@ -12,7 +12,7 @@
   <string name="on_boarding_skip">Не сейчас</string>
   <string name="on_boarding_pending_invite_content">По причинам безопасности, ваш доступ должен быть подтверждён.</string>
   <string name="on_boarding_pending_invite_title">Pending access to the shared data</string>
-  <string name="on_boarding_pending_invite_button">Learn more about Proton Pass</string>
+  <string name="on_boarding_pending_invite_button">Узнайте больше о Proton Pass</string>
   <string name="error_biometry_failed_to_start">Could not start the biometric authentication</string>
   <string name="error_biometry_failed_to_authenticate">Сбой аутентификации</string>
   <string name="settings_fingerprint_lock_enabled">Разблокировка отпечатком включена</string>

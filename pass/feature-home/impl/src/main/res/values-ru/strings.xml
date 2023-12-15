@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Ваше хранилище пусто</string>
   <string name="home_empty_vault_subtitle">Начните с создания первого элемента.</string>
+  <string name="home_empty_read_only_vault_title">This vault is empty</string>
+  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
   <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">Создать псевдоним hide-my-email</string>
   <string name="home_empty_vault_create_note">Create a note</string>
@@ -13,19 +15,19 @@
   <string name="home_snackbar_note_moved_to_trash">Заметка перемещена в корзину</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Кредитная карта перемещена в корзину</string>
   <string name="home_snackbar_move_to_trash_error">Элемент не может быть перемещен в корзину</string>
-  <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
-  <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
+  <string name="home_snackbar_items_move_to_trash_success">Элементы, перемещенные в корзину</string>
+  <string name="home_snackbar_items_move_to_trash_error">Элементы не могут быть перемещены в корзину</string>
   <string name="home_autofill_banner_title">Насладитесь волшебством автозаполнения</string>
   <string name="home_autofill_banner_text">Одно касание и - престо! - ваше имя пользователя и пароль заполняются мгновенно.</string>
   <string name="home_autofill_banner_settings">Включить автозаполнение ›</string>
   <string name="home_trial_banner_title">Our welcome gift to you</string>
-  <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
+  <string name="home_trial_banner_text">7 дней, чтобы попробовать платные функции бесплатно. Только в течение первой недели использования Proton Pass.</string>
   <string name="home_trial_banner_settings">Learn more ›</string>
-  <string name="home_notification_permission_banner_title">Get important updates</string>
-  <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
-  <string name="home_notification_permission_banner_settings">Enable permission ›</string>
-  <string name="home_invite_banner_title">Vault shared with you</string>
-  <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
+  <string name="home_notification_permission_banner_title">Получайте важные обновления</string>
+  <string name="home_notification_permission_banner_text">Включите push-уведомления, чтобы получать информацию о том, что другие пользователи разделяют с вами хранилище.</string>
+  <string name="home_notification_permission_banner_settings">Включить разрешение ›</string>
+  <string name="home_invite_banner_title">Хранилище, предоставленное вам</string>
+  <string name="home_invite_banner_subtitle">Вы приглашены в общее хранилище. Нажмите, чтобы узнать подробности.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Скопировать пароль</string>
   <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>
@@ -40,7 +42,7 @@
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
   <string name="credit_card_number_copied_to_clipboard">Номер кредитной карты скопирован</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Security code copied</string>
+  <string name="credit_card_cvv_copied_to_clipboard">Код безопасности скопирован</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Содержимое было слишком длинным, в буфер обмена скопирована только часть</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Vaults</string>
@@ -81,7 +83,7 @@
   <string name="trash_error_restoring_items">Ошибка восстановления элементов</string>
   <string name="trash_error_deleting_item">Ошибка удаления элемента</string>
   <string name="trash_success_deleting_item">Item deleted</string>
-  <string name="trash_deleting_items_error">Error deleting items</string>
+  <string name="trash_deleting_items_error">Ошибка при удалении элемента.</string>
   <string name="trash_deleting_items_success">Items deleted</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Clear trash?</string>
@@ -89,40 +91,40 @@
   <string name="alert_confirm_restore_all_title">Восстановить все элементы?</string>
   <string name="alert_confirm_restore_all_message">Вы уверены, что хотите восстановить все элементы из корзины?</string>
   <plurals name="alert_confirm_restore_items_title">
-    <item quantity="one">Restore %d item?</item>
-    <item quantity="few">Restore %d items?</item>
-    <item quantity="many">Restore %d items?</item>
-    <item quantity="other">Restore %d items?</item>
+    <item quantity="one">Восстановить %d элемент?</item>
+    <item quantity="few">Восстановить %d элемента?</item>
+    <item quantity="many">Восстановить %d элементов?</item>
+    <item quantity="other">Восстановить %d элементов?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Are you sure you want to restore the trashed item?</item>
-    <item quantity="few">Are you sure you want to restore the %d trashed items?</item>
-    <item quantity="many">Are you sure you want to restore the %d trashed items?</item>
-    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="one">Вы уверены, что хотите восстановить удаленный элемент?</item>
+    <item quantity="few">Вы уверены, что хотите восстановить %d удаленных элемента?</item>
+    <item quantity="many">Вы уверены, что хотите восстановить %d удаленных элементов?</item>
+    <item quantity="other">Вы уверены, что хотите восстановить %d удаленных элементов?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="one">Move to trash %d item?</item>
-    <item quantity="few">Move to trash %d items?</item>
-    <item quantity="many">Move to trash %d items?</item>
-    <item quantity="other">Move to trash %d items?</item>
+    <item quantity="one">Переместить в корзину %d элемент?</item>
+    <item quantity="few">Переместить в корзину %d элемента?</item>
+    <item quantity="many">Переместить в корзину %d элементов?</item>
+    <item quantity="other">Переместить в корзину %d элемента?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Are you sure you want to move to the trash the item?</item>
-    <item quantity="few">Are you sure you want to move to the trash the %d items?</item>
-    <item quantity="many">Are you sure you want to move to the trash the %d items?</item>
-    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="one">Вы уверены, что хотите переместить в корзину этот элемент?</item>
+    <item quantity="few">Вы уверены, что хотите переместить в корзину %d элемента?</item>
+    <item quantity="many">Переместить в корзину %d элементов?</item>
+    <item quantity="other">Вы уверены, что хотите переместить в корзину %d элемента?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="one">Delete permanently %d item?</item>
-    <item quantity="few">Delete permanently %d items?</item>
-    <item quantity="many">Delete permanently %d items?</item>
-    <item quantity="other">Delete permanently %d items?</item>
+    <item quantity="one">Удалить навсегда %d элемент?</item>
+    <item quantity="few">Удалить навсегда %d элемента?</item>
+    <item quantity="many">Удалить навсегда %d элементов?</item>
+    <item quantity="other">Удалить навсегда %d элемента?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
-    <item quantity="few">Are you sure you want to delete the %d items? This action is irreversible</item>
-    <item quantity="many">Are you sure you want to delete the %d items? This action is irreversible</item>
-    <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="one">Вы уверены, что хотите удалить этот элемент? Это действие необратимо</item>
+    <item quantity="few">Вы уверены, что хотите удалить %d элемента? Это действие необратимо</item>
+    <item quantity="many">Вы уверены, что хотите удалить %d элементов? Это действие необратимо</item>
+    <item quantity="other">Вы уверены, что хотите удалить %d элементов? Это действие необратимо</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Недавние поиски</string>

@@ -25,6 +25,6 @@
   <string name="autofill_user_logged_out">Heu tancat la sessió. Torneu a iniciar sessió obrint l\'aplicació.</string>
   <string name="bottomsheet_copy_password">Copia la contrasenya</string>
   <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofill card details</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Emplena les dades de la targeta</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofilling credit card details is a paid feature. If you want Proton Pass to automatically enter your card details for you in apps and websites, please upgrade to a paid plan.</string>
 </resources>

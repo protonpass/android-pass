@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <plurals name="migrate_item_confirm_title_bottom_sheet">
-    <item quantity="one">Move %d item to the following vault?</item>
-    <item quantity="other">Move %d items to the following vault?</item>
+    <item quantity="one">Voleu moure %d element a la caixa forta següent?</item>
+    <item quantity="other">Voleu moure %d elements a la caixa forta següent?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Voleu moure tots els elements a la caixa forta següent?</string>
   <string name="migrate_item_confirm_confirm_button">Mou</string>
-  <string name="migrate_item_success_snackbar">Items moved</string>
-  <string name="migrate_item_error_snackbar">Error moving the items</string>
+  <string name="migrate_item_success_snackbar">S\'han mogut els elements.</string>
+  <string name="migrate_item_error_snackbar">S\'ha produït un error en moure els elements.</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
   <string name="migrate_all_items_success_snackbar">S\'han mogut tots els elements</string>
   <string name="migrate_all_items_error_snackbar">S\'ha produït un error en moure tots els elements de la caixa forta</string>

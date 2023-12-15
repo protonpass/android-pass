@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Váš trezor je prázdný</string>
   <string name="home_empty_vault_subtitle">Začněte vytvořením první položky.</string>
+  <string name="home_empty_read_only_vault_title">This vault is empty</string>
+  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
   <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">Vytvořit alias hide-my-email</string>
   <string name="home_empty_vault_create_note">Create a note</string>
@@ -13,8 +15,8 @@
   <string name="home_snackbar_note_moved_to_trash">Poznámka přesunuta do koše</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Platební karta přesunuta do koše</string>
   <string name="home_snackbar_move_to_trash_error">Položku nelze přesunout do koše</string>
-  <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
-  <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
+  <string name="home_snackbar_items_move_to_trash_success">Položky přesunuty do koše</string>
+  <string name="home_snackbar_items_move_to_trash_error">Položky nemohly být přesunuty do koše</string>
   <string name="home_autofill_banner_title">Využijte přínosu automatického vyplňování</string>
   <string name="home_autofill_banner_text">Jedno klepnutí a vaše uživatelské jméno a heslo jsou okamžitě vyplněny.</string>
   <string name="home_autofill_banner_settings">Zapnout automatické vyplňování ›</string>
@@ -31,7 +33,7 @@
   <string name="bottomsheet_copy_username">Kopírovat uživatelské jméno</string>
   <string name="bottomsheet_copy_alias">Kopírovat e-mailovou adresu</string>
   <string name="bottomsheet_copy_number">Copy number</string>
-  <string name="bottomsheet_copy_cvv">Kopírovat bezpečnostní kód</string>
+  <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">Copy note</string>
   <string name="bottomsheet_edit">Upravit</string>
   <!-- Clipboard -->
@@ -81,7 +83,7 @@
   <string name="trash_error_restoring_items">Chyba při obnově položek</string>
   <string name="trash_error_deleting_item">Chyba při mazání položky</string>
   <string name="trash_success_deleting_item">Item deleted</string>
-  <string name="trash_deleting_items_error">Error deleting items</string>
+  <string name="trash_deleting_items_error">Chyba při mazání položek</string>
   <string name="trash_deleting_items_success">Items deleted</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Clear trash?</string>
@@ -89,40 +91,40 @@
   <string name="alert_confirm_restore_all_title">Obnovit všechny položky?</string>
   <string name="alert_confirm_restore_all_message">Jste si jisti, že chcete obnovit všechny položky z koše?</string>
   <plurals name="alert_confirm_restore_items_title">
-    <item quantity="one">Restore %d item?</item>
-    <item quantity="few">Restore %d items?</item>
-    <item quantity="many">Restore %d items?</item>
-    <item quantity="other">Restore %d items?</item>
+    <item quantity="one">Obnovit %d položku?</item>
+    <item quantity="few">Obnovit %d položky?</item>
+    <item quantity="many">Obnovit %d položek?</item>
+    <item quantity="other">Obnovit %d položek?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Are you sure you want to restore the trashed item?</item>
-    <item quantity="few">Are you sure you want to restore the %d trashed items?</item>
-    <item quantity="many">Are you sure you want to restore the %d trashed items?</item>
-    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="one">Jste si jisti, že chcete obnovit položku z koše?</item>
+    <item quantity="few">Jste si jisti, že chcete obnovit %d položky z koše?</item>
+    <item quantity="many">Jste si jisti, že chcete obnovit %d položek z koše?</item>
+    <item quantity="other">Jste si jisti, že chcete obnovit %d položek z koše?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="one">Move to trash %d item?</item>
-    <item quantity="few">Move to trash %d items?</item>
-    <item quantity="many">Move to trash %d items?</item>
-    <item quantity="other">Move to trash %d items?</item>
+    <item quantity="one">Přesunout do koše %d položku?</item>
+    <item quantity="few">Přesunout do koše %d položky?</item>
+    <item quantity="many">Přesunout do koše %d položek?</item>
+    <item quantity="other">Přesunout do koše %d položek?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Are you sure you want to move to the trash the item?</item>
-    <item quantity="few">Are you sure you want to move to the trash the %d items?</item>
-    <item quantity="many">Are you sure you want to move to the trash the %d items?</item>
-    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="one">Jste si jisti, že chcete přesunout položku do koše?</item>
+    <item quantity="few">Jste si jisti, že chcete přesunout %d položky do koše?</item>
+    <item quantity="many">Jste si jisti, že chcete přesunout %d položek do koše?</item>
+    <item quantity="other">Jste si jisti, že chcete přesunout %d položek do koše?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="one">Delete permanently %d item?</item>
-    <item quantity="few">Delete permanently %d items?</item>
-    <item quantity="many">Delete permanently %d items?</item>
-    <item quantity="other">Delete permanently %d items?</item>
+    <item quantity="one">Trvale smazat %d položku?</item>
+    <item quantity="few">Trvale smazat %d položky?</item>
+    <item quantity="many">Trvale smazat %d položek?</item>
+    <item quantity="other">Trvale smazat %d položek?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
-    <item quantity="few">Are you sure you want to delete the %d items? This action is irreversible</item>
-    <item quantity="many">Are you sure you want to delete the %d items? This action is irreversible</item>
-    <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="one">Jste si jisti, že chcete smazat položku? Tato akce je nevratná.</item>
+    <item quantity="few">Jste si jisti, že chcete smazat %d položky? Tato akce je nevratná.</item>
+    <item quantity="many">Jste si jisti, že chcete smazat %d položek? Tato akce je nevratná.</item>
+    <item quantity="other">Jste si jisti, že chcete smazat %d položek? Tato akce je nevratná.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Poslední vyhledávání</string>

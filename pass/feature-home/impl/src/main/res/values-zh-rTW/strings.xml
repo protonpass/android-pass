@@ -3,8 +3,10 @@
   <!-- Home -->
   <string name="home_empty_vault_title">您的保管庫是空的</string>
   <string name="home_empty_vault_subtitle">開始創建您第一個項目</string>
+  <string name="home_empty_read_only_vault_title">This vault is empty</string>
+  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
   <string name="home_empty_vault_create_login">Create a login</string>
-  <string name="home_empty_vault_create_alias">建立 Hide-my-email 別名</string>
+  <string name="home_empty_vault_create_alias">創建 Hide-my-email 別名</string>
   <string name="home_empty_vault_create_note">Create a note</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">載入項目時發生錯誤</string>
   <string name="error_refreshing">重新整理時發生錯誤</string>
@@ -13,13 +15,13 @@
   <string name="home_snackbar_note_moved_to_trash">備註已移至垃圾桶</string>
   <string name="home_snackbar_credit_card_moved_to_trash">信用卡已移至垃圾桶</string>
   <string name="home_snackbar_move_to_trash_error">項目已移動到垃圾桶</string>
-  <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
-  <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
+  <string name="home_snackbar_items_move_to_trash_success">項目丟進垃圾桶</string>
+  <string name="home_snackbar_items_move_to_trash_error">無法將項目丟進垃圾桶</string>
   <string name="home_autofill_banner_title">享受自動填入的神奇魔力</string>
   <string name="home_autofill_banner_text">輕輕一按，大功告成！您的使用者名稱和密碼就馬上填好。</string>
   <string name="home_autofill_banner_settings">啟用自動填滿＞</string>
-  <string name="home_trial_banner_title">Our welcome gift to you</string>
-  <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
+  <string name="home_trial_banner_title">我們為您準備的迎賓禮</string>
+  <string name="home_trial_banner_text">為期 7 天完全免費體驗頂級質子版功能。Proton Pass 授權後首週七天內皆可額外享用。</string>
   <string name="home_trial_banner_settings">Learn more ›</string>
   <string name="home_notification_permission_banner_title">取得重要更新</string>
   <string name="home_notification_permission_banner_text">啟用推送通知，以便在其他人與您分享保管庫時收到通知。</string>
@@ -29,7 +31,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">複製密碼</string>
   <string name="bottomsheet_copy_username">複製使用者名稱</string>
-  <string name="bottomsheet_copy_alias">複製電子郵件地址</string>
+  <string name="bottomsheet_copy_alias">複製電子郵件位址</string>
   <string name="bottomsheet_copy_number">Copy number</string>
   <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">Copy note</string>
@@ -40,7 +42,7 @@
   <string name="username_copied_to_clipboard">已複製使用者名稱</string>
   <string name="password_copied_to_clipboard">已複製密碼</string>
   <string name="credit_card_number_copied_to_clipboard">已複製信用卡卡號</string>
-  <string name="credit_card_cvv_copied_to_clipboard">Security code copied</string>
+  <string name="credit_card_cvv_copied_to_clipboard">已複製安全防護代碼</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">聯絡人太長，部分貼上至剪貼簿</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Vaults</string>
@@ -78,7 +80,7 @@
   <string name="trash_error_restoring_items">還原項目錯誤</string>
   <string name="trash_error_deleting_item">刪除項目錯誤</string>
   <string name="trash_success_deleting_item">Item deleted</string>
-  <string name="trash_deleting_items_error">Error deleting items</string>
+  <string name="trash_deleting_items_error">刪除項目時出錯</string>
   <string name="trash_deleting_items_success">Items deleted</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Clear trash?</string>
@@ -89,19 +91,19 @@
     <item quantity="other">Restore %d items?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="other">您確定要還原已丟進垃圾桶 %d 項目嗎？</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="other">Move to trash %d items?</item>
+    <item quantity="other">將 %d 項目丟進垃圾桶嗎？</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="other">您確定要將 %d 項目丟進垃圾桶嗎？</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="other">Delete permanently %d items?</item>
+    <item quantity="other">您確定要將 %d 項目永久刪除嗎？</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="other">您確定要將 %d 項目全數刪除嗎？請注意，此動作進行後無法復原。</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">最近搜尋</string>

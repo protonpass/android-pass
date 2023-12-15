@@ -1,0 +1,385 @@
+{
+  "rootContent": {
+    "id": 1404252107,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": 331046521,
+        "className": "android.widget.LinearLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": 331076312,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          },
+          {
+            "id": 331106103,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 355981588,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 356011379,
+                    "className": "android.view.ViewGroup",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 356041170,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "message_list_premium_branding_banner"
+                        ]
+                      },
+                      {
+                        "id": 356070961,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "message_list_container"
+                        ]
+                      },
+                      {
+                        "id": 356100752,
+                        "className": "android.widget.ScrollView",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "message_list_scroll_view"
+                        ]
+                      },
+                      {
+                        "id": 356130543,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "message_list_bottom_boundary_guideline"
+                        ]
+                      },
+                      {
+                        "id": 356160334,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "sponsored_messaging_legal_text_container"
+                        ]
+                      },
+                      {
+                        "id": 356190125,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "messaging_connection_invitation_view"
+                        ]
+                      },
+                      {
+                        "id": 356219916,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "messaging_mention_add_connection_view"
+                        ]
+                      },
+                      {
+                        "id": 356249707,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "message_list_premium_custom_button_banner"
+                        ]
+                      },
+                      {
+                        "id": 355922006,
+                        "className": "android.widget.Button",
+                        "isImportantForAutofill": true,
+                        "text": "Latest message",
+                        "hintKeywordList": [
+                          "Latest message",
+                          "message_list_new_message_chip"
+                        ]
+                      },
+                      {
+                        "id": 356279498,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 356309289,
+                            "className": "android.view.ViewGroup",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 356339080,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "messaging_toolbar_title"
+                                ]
+                              },
+                              {
+                                "id": 356368871,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "messaging_lever_toolbar_subtitle"
+                                ]
+                              },
+                              {
+                                "id": 356398662,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_create_video_meeting_onboarding_dot"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "messaging_lever_toolbar_title_container"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "message_list_toolbar_lever"
+                        ]
+                      },
+                      {
+                        "id": 356428453,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 356458244,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "mentions_list_container"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "message_list_content_container"
+                        ]
+                      },
+                      {
+                        "id": 356488035,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 356517826,
+                            "className": "android.view.ViewGroup",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 356547617,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "expanded_keyboard_background_mask"
+                                ]
+                              },
+                              {
+                                "id": 356577408,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_top_guideline"
+                                ]
+                              },
+                              {
+                                "id": 356607199,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_expanded_compose_top_transparent_space"
+                                ]
+                              },
+                              {
+                                "id": 356636990,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_divider"
+                                ]
+                              },
+                              {
+                                "id": 356666781,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_drawer_view_pager"
+                                ]
+                              },
+                              {
+                                "id": 356696572,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_background"
+                                ]
+                              },
+                              {
+                                "id": 356726363,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_bottom_decoration_bar"
+                                ]
+                              },
+                              {
+                                "id": 356756154,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_drawer_button"
+                                ]
+                              },
+                              {
+                                "id": 356785945,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_send_button"
+                                ]
+                              },
+                              {
+                                "id": 356815736,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_voice_dashboard_button"
+                                ]
+                              },
+                              {
+                                "id": 356845527,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_compose_background"
+                                ]
+                              },
+                              {
+                                "id": 356875318,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_sender_info"
+                                ]
+                              },
+                              {
+                                "id": 356905109,
+                                "className": "android.widget.ScrollView",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": 355951797,
+                                    "className": "android.widget.EditText",
+                                    "isImportantForAutofill": true,
+                                    "text": "",
+                                    "isFocused": true,
+                                    "inputType": 147457,
+                                    "hintKeywordList": [
+                                      "",
+                                      "messaging_keyboard_text_input_container",
+                                      "Write a message…"
+                                    ]
+                                  },
+                                  {
+                                    "id": 356934900,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "messaging_keyboard_inline_preview_container"
+                                    ]
+                                  },
+                                  {
+                                    "id": 356964691,
+                                    "className": "android.view.ViewGroup",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "message_feedback_layout"
+                                    ]
+                                  }
+                                ],
+                                "hintKeywordList": [
+                                  "messaging_keyboard_compose_and_preview_container"
+                                ]
+                              },
+                              {
+                                "id": 356994482,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "generative_ai_loading_layout"
+                                ]
+                              },
+                              {
+                                "id": 357024273,
+                                "className": "android.widget.RelativeLayout",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "messaging_keyboard_expandable_compose_mentions_boundary"
+                                ]
+                              },
+                              {
+                                "id": 357054064,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "page_admin_reminder"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "messaging_keyboard"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "message_list_keyboard_container"
+                        ]
+                      },
+                      {
+                        "id": 357083855,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "message_list_footer_container"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "message_list_fragment_inner_wrapper"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "message_list_fragment_outer_wrapper"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "infra_activity_container"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.linkedin.android"
+}

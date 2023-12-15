@@ -56,7 +56,7 @@
   <string name="custom_field_hidden_icon_description">Приховане власне поле</string>
   <string name="custom_field_totp_icon_description">Власне поле 2FA</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Name on card</string>
+  <string name="credit_card_cardholder_field_name">Ім\'я на картці</string>
   <string name="credit_card_number_field_name">Номер картки</string>
   <string name="credit_card_cvv_field_name">Security code</string>
   <string name="credit_card_pin_field_name">PIN-код</string>

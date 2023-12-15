@@ -19,16 +19,11 @@
 package proton.android.pass.clipboard.impl
 
 import android.content.BroadcastReceiver
-import android.content.ClipData
-import android.content.ClipDescription
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -39,15 +34,12 @@ class ClearClipboardBroadcastReceiver : BroadcastReceiver() {
     @Inject
     lateinit var encryptionContextProvider: EncryptionContextProvider
 
+    @Inject
+    lateinit var clipboardManager: ClipboardManager
+
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null || intent.action != INTENT_FILTER) return
         PassLogger.d(TAG, "Broadcast receiver invoked")
-
-        val clipboardManager = context.getSystemService(ClipboardManager::class.java)
-        if (clipboardManager == null) {
-            PassLogger.w(TAG, "Could not get ClipboardManager")
-            return
-        }
 
         val encryptedExpected = intent.getStringExtra(EXPECTED_CONTENTS_KEY)
         if (encryptedExpected == null) {
@@ -56,73 +48,25 @@ class ClearClipboardBroadcastReceiver : BroadcastReceiver() {
         }
 
         // Check if it has primary clip
-        if (shouldClearClipboard(context, clipboardManager, encryptedExpected)) {
-            clearClipboard(clipboardManager)
+        if (shouldClearClipboard(clipboardManager, encryptedExpected)) {
+            clipboardManager.clearClipboard()
         }
     }
 
     private fun shouldClearClipboard(
-        context: Context,
         clipboardManager: ClipboardManager,
         expected: EncryptedString
     ): Boolean {
-        if (clipboardManager.hasPrimaryClip()) {
-            if (clipboardManager.primaryClipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) != true) {
-                PassLogger.i(TAG, "Did not clear clipboard as it did not have the expected mime type")
-                return false
-            }
-
-            val primaryClip = clipboardManager.primaryClip
-            if (primaryClip != null) {
-                if (primaryClip.itemCount > 0) {
-                    val currentContents = primaryClip.getItemAt(0)
-                    val decryptedExpected = encryptionContextProvider.withEncryptionContext {
-                        decrypt(expected)
-                    }
-
-                    val clipboardContents = if (currentContents.text != null) {
-                        currentContents.text
-                    } else {
-                        currentContents.coerceToText(context)
-                    }
-
-                    if (clipboardContents == decryptedExpected) {
-                        return true
-                    } else {
-                        PassLogger.i(
-                            TAG,
-                            "Did not clear clipboard as it did not have the expected contents"
-                        )
-                    }
-                } else {
-                    PassLogger.i(TAG, "Did not clear clipboard as ItemCount = 0")
-                }
-            } else {
-                PassLogger.i(TAG, "Could not access the clipboard contents")
-            }
-        } else {
-            PassLogger.i(TAG, "System does not have PrimaryClip")
+        val result = clipboardManager.getClipboardContent()
+        val contentsMatch = result.getOrNull() == encryptionContextProvider.withEncryptionContext {
+            decrypt(expected)
         }
-        return false
-    }
 
-    private fun clearClipboard(clipboardManager: ClipboardManager) {
-        runBlocking(Dispatchers.IO) {
-            runCatching {
-                if (clipboardManager.primaryClip != null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        clipboardManager.clearPrimaryClip()
-                    } else {
-                        clipboardManager.setPrimaryClip(ClipData.newPlainText("", ""))
-                    }
-                }
-            }.onSuccess {
-                PassLogger.i(TAG, "Successfully cleared clipboard")
-            }.onFailure {
-                PassLogger.w(TAG, it, "Could not clear clipboard")
-            }
-
+        if (!contentsMatch) {
+            PassLogger.i(TAG, "Did not clear clipboard as it did not have the expected contents")
         }
+
+        return contentsMatch
     }
 
     companion object {

@@ -33,5 +33,9 @@ class TestClipboardManager @Inject constructor() : ClipboardManager {
         contents = text
     }
 
+    override fun clearClipboard() {
+        contents = ""
+    }
+
     override fun getClipboardContent(): Result<String> = Result.success("")
 }

@@ -3,8 +3,10 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Váš trezor je prázdny</string>
   <string name="home_empty_vault_subtitle">Začnite vytvorením prvej položky.</string>
+  <string name="home_empty_read_only_vault_title">Tento trezor je prázdny</string>
+  <string name="home_empty_read_only_vault_subtitle">Do trezoru určeného len na čítanie nemôžete pridávať položky.</string>
   <string name="home_empty_vault_create_login">Vytvoriť prihlásenie</string>
-  <string name="home_empty_vault_create_alias">Vytvoriť hide-my-email alias</string>
+  <string name="home_empty_vault_create_alias">Vytvoriť Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Vytvoriť poznámku</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Chyba pri načítaní položiek</string>
   <string name="error_refreshing">Chyba pri obnovení</string>
@@ -14,9 +16,9 @@
   <string name="home_snackbar_credit_card_moved_to_trash">Platobná karta presunutá do koša</string>
   <string name="home_snackbar_move_to_trash_error">Položku sa nepodarilo presunúť do koša</string>
   <string name="home_snackbar_items_move_to_trash_success">Položky boli presunuté do koša</string>
-  <string name="home_snackbar_items_move_to_trash_error">Položky nemôžu byť presunuté do koša</string>
+  <string name="home_snackbar_items_move_to_trash_error">Položky nemohli byť presunuté do koša</string>
   <string name="home_autofill_banner_title">Vychutnajte si čaro automatického vypĺňania</string>
-  <string name="home_autofill_banner_text">Jedno ťuknutie a hotovo! Vaše používateľské meno a heslo sa okamžite vyplní.</string>
+  <string name="home_autofill_banner_text">Jedno ťuknutie a hotovo! Vaše používateľské meno a heslo bude automaticky vyplnené.</string>
   <string name="home_autofill_banner_settings">Zapnúť automatické vypĺňanie ›</string>
   <string name="home_trial_banner_title">Náš uvítací darček pre vás</string>
   <string name="home_trial_banner_text">7 dní na bezplatné vyskúšanie prémiových funkcií. Len počas vášho prvého týždňa s Proton Pass.</string>
@@ -31,7 +33,7 @@
   <string name="bottomsheet_copy_username">Kopírovať meno používateľa</string>
   <string name="bottomsheet_copy_alias">Kopírovať emailovú adresu</string>
   <string name="bottomsheet_copy_number">Kopírovať číslo</string>
-  <string name="bottomsheet_copy_cvv">Kopírovať bezpečnostný kód</string>
+  <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">Kopírovať poznámku</string>
   <string name="bottomsheet_edit">Upraviť</string>
   <!-- Clipboard -->

@@ -26,7 +26,7 @@
   <string name="empty_list_title">加入您的第一個項目</string>
   <string name="empty_search_results_title">查無結果</string>
   <string name="empty_list_open_extension">參閱網頁擴充功能</string>
-  <string name="empty_list_create_item_button">建立新項目</string>
+  <string name="empty_list_create_item_button">創建新項目</string>
   <!-- Field -->
   <string name="field_title_title">標題</string>
   <string name="field_title_hint">無標題</string>

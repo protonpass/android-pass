@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Seiful este gol</string>
   <string name="home_empty_vault_subtitle">Începeți prin crearea primului articol.</string>
+  <string name="home_empty_read_only_vault_title">Acest seif este gol</string>
+  <string name="home_empty_read_only_vault_subtitle">Nu puteți adăuga articole într-un seif în mod doar citire.</string>
   <string name="home_empty_vault_create_login">Creare autentificare</string>
   <string name="home_empty_vault_create_alias">Creare alias hide-my-email</string>
   <string name="home_empty_vault_create_note">Creare notă</string>
@@ -74,33 +76,33 @@
   <string name="bottomsheet_trash_all_items_title">Gunoi</string>
   <string name="bottomsheet_restore_all_items">Restaurare toate articolele</string>
   <string name="bottomsheet_empty_trash">Golire gunoi</string>
-  <string name="bottomsheet_select_items">Selectare articole</string>
+  <string name="bottomsheet_select_items">Select items</string>
   <string name="trash_error_clearing_trash">Eroare la golirea gunoiului.</string>
-  <string name="trash_success_restoring_items">Articole restaurate</string>
+  <string name="trash_success_restoring_items">Items restored</string>
   <string name="trash_error_restoring_items">Eroare restaurare articole.</string>
   <string name="trash_error_deleting_item">Eroare ștergere articol.</string>
-  <string name="trash_success_deleting_item">Articolele au fost șterse.</string>
+  <string name="trash_success_deleting_item">Item deleted</string>
   <string name="trash_deleting_items_error">Eroare ștergere articole.</string>
-  <string name="trash_deleting_items_success">Articolele au fost șterse.</string>
+  <string name="trash_deleting_items_success">Items deleted</string>
   <!-- Alerts -->
-  <string name="alert_confirm_clear_trash_title">Golire gunoi?</string>
-  <string name="alert_confirm_clear_trash_message">Sigur doriți să ștergeți gunoiul? Toate articolele din gunoi vor fi șterse definitiv.</string>
-  <string name="alert_confirm_restore_all_title">Restaurare toate articolele?</string>
+  <string name="alert_confirm_clear_trash_title">Clear trash?</string>
+  <string name="alert_confirm_clear_trash_message">Sigur doriți să goliți gunoiul? Toate articolele din gunoi vor fi șterse definitiv.</string>
+  <string name="alert_confirm_restore_all_title">Restaurați toate articolele?</string>
   <string name="alert_confirm_restore_all_message">Sigur doriți să ștergeți toate articolele selectate?</string>
   <plurals name="alert_confirm_restore_items_title">
-    <item quantity="one">Restaurare %d articol?</item>
-    <item quantity="few">Restaurare %d articole?</item>
-    <item quantity="other">Restaurare %d de articole?</item>
+    <item quantity="one">Restaurați %d articol?</item>
+    <item quantity="few">Restaurați %d articole?</item>
+    <item quantity="other">Restaurați %d de articole?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
     <item quantity="one">Sigur doriți să restaurați articolul din gunoi?</item>
     <item quantity="few">Sigur doriți să restaurați %d articole din gunoi?</item>
-    <item quantity="other">Sigur doriți să ștergeți toate articolele din gunoi?</item>
+    <item quantity="other">Sigur doriți să restaurați %d articole din gunoi?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="one">Mutare %d articol în gunoi?</item>
-    <item quantity="few">Mutare %d articole în gunoi?</item>
-    <item quantity="other">Mutare %d de articole în gunoi?</item>
+    <item quantity="one">Mutați %d articol în gunoi?</item>
+    <item quantity="few">Mutați %d articole în gunoi?</item>
+    <item quantity="other">Mutați %d de articole în gunoi?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
     <item quantity="one">Sigur doriți să mutați articolul în gunoi?</item>
@@ -108,9 +110,9 @@
     <item quantity="other">Sigur doriți să mutați %d de articole în gunoi?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="one">Ștergere permanentă %d articol?</item>
-    <item quantity="few">Ștergere permanentă %d articole?</item>
-    <item quantity="other">Ștergere permanentă %d de articole?</item>
+    <item quantity="one">Ștergeți permanent %d articol?</item>
+    <item quantity="few">Ștergeți permanent %d articole?</item>
+    <item quantity="other">Ștergeți permanent %d de articole?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Sigur doriți să ștergeți acest articol? Această acțiune nu e reversibilă.</item>
@@ -119,6 +121,6 @@
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Căutări recente</string>
-  <string name="recent_search_clear">Golire</string>
+  <string name="recent_search_clear">Clear</string>
   <string name="recent_search_remove_item">Eliminare din căutări recente</string>
 </resources>

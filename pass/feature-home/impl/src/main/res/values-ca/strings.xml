@@ -3,6 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">La vostra caixa forta està buida</string>
   <string name="home_empty_vault_subtitle">Comenceu creant el primer element.</string>
+  <string name="home_empty_read_only_vault_title">This vault is empty</string>
+  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
   <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">Crea un àlies hide-my-email</string>
   <string name="home_empty_vault_create_note">Create a note</string>
@@ -13,12 +15,12 @@
   <string name="home_snackbar_note_moved_to_trash">La nota s\'ha mogut a la paperera</string>
   <string name="home_snackbar_credit_card_moved_to_trash">La targeta de crèdit s\'ha mogut a la paperera</string>
   <string name="home_snackbar_move_to_trash_error">No s\'ha pogut moure element a la paperera.</string>
-  <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
-  <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
+  <string name="home_snackbar_items_move_to_trash_success">Els elements s\'han mogut a la paperera.</string>
+  <string name="home_snackbar_items_move_to_trash_error">No s\'han pogut moure els elements a la paperera.</string>
   <string name="home_autofill_banner_title">Gaudiu de la màgia de l\'emplenament automàtic</string>
   <string name="home_autofill_banner_text">Un toc i -presto!- el vostre nom d\'usuari i contrasenya s\'omplen a l\'instant.</string>
   <string name="home_autofill_banner_settings">Activa l\'emplenament automàtic</string>
-  <string name="home_trial_banner_title">Our welcome gift to you</string>
+  <string name="home_trial_banner_title">El nostre regal de benvinguda per a vostè.</string>
   <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
   <string name="home_trial_banner_settings">Learn more ›</string>
   <string name="home_notification_permission_banner_title">Obteniu actualitzacions importants</string>
@@ -31,7 +33,7 @@
   <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>
   <string name="bottomsheet_copy_alias">Copia l\'adreça del correu electrònic</string>
   <string name="bottomsheet_copy_number">Copy number</string>
-  <string name="bottomsheet_copy_cvv">Copia el codi de seguretat</string>
+  <string name="bottomsheet_copy_cvv">Copy security code</string>
   <string name="bottomsheet_copy_note">Copy note</string>
   <string name="bottomsheet_edit">Edita</string>
   <!-- Clipboard -->
@@ -79,7 +81,7 @@
   <string name="trash_error_restoring_items">S\'ha produït un error en restaurar els elements</string>
   <string name="trash_error_deleting_item">S\'ha produït un error en eliminar l\'element</string>
   <string name="trash_success_deleting_item">Item deleted</string>
-  <string name="trash_deleting_items_error">Error deleting items</string>
+  <string name="trash_deleting_items_error">S\'ha produït un error en eliminar els elements.</string>
   <string name="trash_deleting_items_success">Items deleted</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Clear trash?</string>
@@ -87,20 +89,20 @@
   <string name="alert_confirm_restore_all_title">Voleu restaurar tots els elements?</string>
   <string name="alert_confirm_restore_all_message">Segur que voleu restaurar tots els elements de la paperera?</string>
   <plurals name="alert_confirm_restore_items_title">
-    <item quantity="one">Restore %d item?</item>
-    <item quantity="other">Restore %d items?</item>
+    <item quantity="one">Voleu restaurar %d element?</item>
+    <item quantity="other">Voleu restaurar %d elements?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
     <item quantity="one">Are you sure you want to restore the trashed item?</item>
     <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="one">Move to trash %d item?</item>
-    <item quantity="other">Move to trash %d items?</item>
+    <item quantity="one">Voleu moure %d element a la paperera?</item>
+    <item quantity="other">Voleu moure %d elements a la paperera?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Are you sure you want to move to the trash the item?</item>
-    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="one">Segur que voleu moure l\'element a la paperera?</item>
+    <item quantity="other">Segur que voleu moure els %d elements a la paperera?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Delete permanently %d item?</item>

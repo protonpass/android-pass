@@ -35,7 +35,7 @@
   <string name="settings_default_vault_update_error">Predvolený trezor sa nepodarilo aktualizovať</string>
   <string name="settings_default_vault_section_title">Trezory</string>
   <string name="settings_default_vault_vault_selector_title">Predvolený trezor</string>
-  <string name="settings_default_vault_section_subtitle">Predvolený trezor, v ktorom budú vaše položky vytvárané.</string>
+  <string name="settings_default_vault_section_subtitle">Trezor, v ktorom budú vaše položky predvolene vytvorené.</string>
   <string name="settings_default_vault_disabled_reason">Do tohto trezora nemôžete zapisovať.</string>
   <string name="view_logs_title">Zobraziť záznamy</string>
   <string name="clipboard_bottomsheet_title">Schránka</string>

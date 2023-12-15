@@ -18,9 +18,9 @@
   -->
 <resources>
   <string name="share_continue">Продолжить</string>
-  <string name="sharing_can_view">Viewer</string>
-  <string name="sharing_can_edit">Editor</string>
-  <string name="sharing_can_manage">Admin</string>
+  <string name="sharing_can_view">Читатель</string>
+  <string name="sharing_can_edit">Редактор</string>
+  <string name="sharing_can_manage">Администратор</string>
   <string name="sharing_can_view_description">Может просматривать элементы в этом хранилище.</string>
   <string name="sharing_can_edit_description">Может создавать, редактировать, удалять и экспортировать элементы этого хранилища.</string>
   <string name="sharing_can_manage_description">Может представлять и отзывать доступ к этому хранилищу.</string>
@@ -40,17 +40,17 @@
   <string name="share_with_email_hint">Адрес эл. почты</string>
   <string name="share_with_email_error">Недействительный адрес эл. почты</string>
   <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Cannot retrieve the invited user information</string>
-  <string name="share_permissions_title">Set access level</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s invites you to access items in</string>
+  <string name="share_permissions_title">Установить уровень доступа</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s приглашает вас получить доступ к элементам в</string>
   <string name="sharing_join_shared_vault">Join and sync</string>
   <string name="sharing_reject_invitation">Отклонить приглашение</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulations, your access has been confirmed</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">See the shared vault</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Close</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Поздравляем, ваш доступ подтвержден</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Просмотр общего хранилища</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Закрыть</string>
   <string name="sharing_snackbar_get_invite_error">Could not get invite</string>
   <string name="sharing_snackbar_invite_accepted">Приглашение принято</string>
   <string name="sharing_snackbar_invite_accept_error">Ошибка при принятии приглашения</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Не удалось принять приглашение, так как вы достигли предела объема хранилища</string>
   <string name="sharing_snackbar_invite_rejected">Приглашение отклонено</string>
   <string name="sharing_snackbar_invite_reject_error">Ошибка при отклонении приглашения</string>
   <string name="sharing_snackbar_vault_not_found">Хранилище не может быть найдено</string>
@@ -64,15 +64,15 @@
   <string name="share_summary_title">Review and share</string>
   <string name="share_summary_vault">%s хранилище</string>
   <string name="share_summary_share_vault">Поделиться хранилищем</string>
-  <string name="share_summary_email_title">Share with</string>
+  <string name="share_summary_email_title">Поделиться с</string>
   <string name="share_summary_vault_title">Хранилище</string>
-  <string name="share_summary_permissions_title">Access level</string>
+  <string name="share_summary_permissions_title">Уровень доступа</string>
   <string name="share_manage_vault_share_with_more_people">Share with more people</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
-    <item quantity="one">%d invite left</item>
-    <item quantity="few">%d invites left</item>
-    <item quantity="many">%d invites left</item>
-    <item quantity="other">%d invites left</item>
+    <item quantity="one">Осталось %d приглашение</item>
+    <item quantity="few">Осталось %d приглашения</item>
+    <item quantity="many">Осталось %d приглашений</item>
+    <item quantity="other">Осталось %d приглашений</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d элемент</item>
@@ -82,9 +82,9 @@
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Приглашение отправлено</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Pending account creation</string>
-  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirm access</string>
-  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitations</string>
-  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Members</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Подтвердите доступ</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Приглашения</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Участники</string>
   <string name="share_manage_vault_current_user_indicator">Вы</string>
   <string name="share_role_can_view">Can view</string>
   <string name="share_role_can_edit">Can edit</string>
@@ -92,31 +92,31 @@
   <string name="share_role_owner">Owner</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfer ownership</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можете передать последнее принадлежащее вам хранилище.</string>
-  <string name="sharing_bottomsheet_remove_access">Revoke access</string>
-  <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
-  <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
+  <string name="sharing_bottomsheet_remove_access">Отозвать доступ</string>
+  <string name="sharing_bottomsheet_resend_invite">Отправить повторное приглашение</string>
+  <string name="sharing_bottomsheet_cancel_invite">Отменить приглашение</string>
   <string name="sharing_transfer_ownership_confirm_title">Transfer ownership</string>
-  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">Invitation canceled</string>
+  <string name="sharing_transfer_ownership_confirm_message">Передать право собственности на это хранилище %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Приглашение отменено</string>
   <string name="sharing_snackbar_cancel_invite_error">Error cancelling invite</string>
   <string name="sharing_snackbar_resend_invite_success">Invite resent</string>
   <string name="sharing_snackbar_resend_invite_error">Error resending invite</string>
   <string name="sharing_snackbar_confirm_invite_success">Invite confirmed</string>
-  <string name="sharing_snackbar_confirm_invite_error">Error confirming invite</string>
+  <string name="sharing_snackbar_confirm_invite_error">Ошибка подтверждения приглашения</string>
   <string name="sharing_snackbar_too_many_invites_sent">Address has been invited too many times</string>
   <string name="sharing_snackbar_transfer_ownership_success">Ownership transferred</string>
   <string name="sharing_snackbar_transfer_ownership_error">Error transferring ownership</string>
-  <string name="sharing_invites_info_dialog_title">Member limit</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. You still have %2$d invites left.</string>
-  <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
-  <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
-  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Share</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Customize</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
-  <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
+  <string name="sharing_invites_info_dialog_title">Ограничение количества участников</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. У вас осталось еще %2$d приглашений.</string>
+  <string name="sharing_limit_reached">Это хранилище достигло предела количества участников и приглашений.</string>
+  <string name="sharing_invites_info_upgrade_text">Улучшите сейчас, чтобы пригласить больше.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Поделиться</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Используйте хранилища, чтобы делиться элементами с другими людьми</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Поделиться этим хранилищем</string>
+  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Настроить</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Переместить в общее хранилище</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Создать новое хранилище для того, чтобы делиться</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Этот элемент будет перенесен в новое хранилище.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Улучшите для создания дополнительных хранилищ</string>
   <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
 </resources>

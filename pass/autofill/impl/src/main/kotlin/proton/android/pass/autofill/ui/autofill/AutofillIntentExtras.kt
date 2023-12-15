@@ -40,6 +40,7 @@ data class AutofillExtras(
     val url: String?,
     val packageName: String?,
     val appName: String?,
+    val isDangerousAutofill: Boolean
 ) : Parcelable
 
 fun AutofillData.toExtras() = AutofillExtras(
@@ -47,6 +48,7 @@ fun AutofillData.toExtras() = AutofillExtras(
     url = assistInfo.url.map { it }.value(),
     packageName = packageInfo.map { it.packageName.value }.value(),
     appName = packageInfo.map { it.appName.value }.value(),
+    isDangerousAutofill = isDangerousAutofill
 )
 
 fun AutofillExtras.toData() = AutofillData(
@@ -61,7 +63,8 @@ fun AutofillExtras.toData() = AutofillData(
                 appName = AppName(aName),
             )
         }
-    }.toOption()
+    }.toOption(),
+    isDangerousAutofill = isDangerousAutofill
 )
 
 object AutofillIntentExtras {

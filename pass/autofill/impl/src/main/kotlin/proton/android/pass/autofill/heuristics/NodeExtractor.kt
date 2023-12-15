@@ -557,6 +557,9 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             }
         }
 
+        val inputTypeFlags = InputTypeFlags.fromValue(node.inputType)
+        if (inputTypeFlags.contains(InputTypeFlags.TEXT_FLAG_MULTI_LINE)) return false
+
         return true
     }
 

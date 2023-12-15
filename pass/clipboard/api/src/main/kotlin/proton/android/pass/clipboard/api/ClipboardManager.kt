@@ -24,6 +24,8 @@ interface ClipboardManager {
 
     fun copyToClipboard(text: String, isSecure: Boolean = false)
 
+    fun clearClipboard()
+
     @WorkerThread
     fun getClipboardContent(): Result<String>
 }

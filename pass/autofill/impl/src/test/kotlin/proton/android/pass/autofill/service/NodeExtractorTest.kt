@@ -237,7 +237,7 @@ class NodeExtractorTest {
             children = children,
             url = webDomain.toOption(),
             hintKeywordList = emptyList(),
-            isFocused = false
+            isFocused = true
         )
 
 }

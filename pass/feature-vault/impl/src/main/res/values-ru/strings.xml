@@ -35,6 +35,6 @@
   <string name="bottomsheet_view_members">View members</string>
   <string name="bottomsheet_manage_access">Manage access</string>
   <string name="bottomsheet_select_vault_read_only">You can only read</string>
-  <string name="bottomsheet_select_vault_only_oldest_vaults">You can only create items in your oldest vaults</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Вы можете создавать элементы только в самых старых хранилищах.</string>
   <string name="vault_title">Хранилище</string>
 </resources>

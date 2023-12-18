@@ -22,10 +22,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -51,6 +52,7 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.CopyTotpToClipboard
+import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -80,35 +82,42 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         .getCopyTotpToClipboardEnabled()
         .distinctUntilChanged()
 
-    val state: StateFlow<InlineSuggestionAutofillNoUiState> = copyTotpToClipboardState
-        .map { copyTotpToClipboard ->
-            val mappingsOption = selectedAutofillItem
-                .map { autofillItem ->
-                    getMappings(autofillItem, copyTotpToClipboard, appState)
-                }
-            if (mappingsOption is Some) {
-                if (mappingsOption.value.mappings.isNotEmpty()) {
-                    telemetryManager.sendEvent(AutofillDone(AutofillTriggerSource.Source))
-                    inAppReviewTriggerMetrics.incrementItemAutofillCount()
-                    PassLogger.i(TAG, "Mappings found: ${mappingsOption.value.mappings.size}")
+    private val themeState: Flow<ThemePreference> = preferenceRepository
+        .getThemePreference()
+        .distinctUntilChanged()
 
-                    if (appState.autofillData.isDangerousAutofill) {
-                        InlineSuggestionAutofillNoUiState.SuccessWithConfirmation(
-                            autofillMappings = mappingsOption.value,
-                            mode = AutofillConfirmMode.DangerousAutofill
-                        )
-                    } else {
-                        InlineSuggestionAutofillNoUiState.Success(mappingsOption.value)
-                    }
+    val state: StateFlow<InlineSuggestionAutofillNoUiState> = combine(
+        copyTotpToClipboardState,
+        themeState
+    ) { copyTotpToClipboard, theme ->
+        val mappingsOption = selectedAutofillItem
+            .map { autofillItem ->
+                getMappings(autofillItem, copyTotpToClipboard, appState)
+            }
+        if (mappingsOption is Some) {
+            if (mappingsOption.value.mappings.isNotEmpty()) {
+                telemetryManager.sendEvent(AutofillDone(AutofillTriggerSource.Source))
+                inAppReviewTriggerMetrics.incrementItemAutofillCount()
+                PassLogger.i(TAG, "Mappings found: ${mappingsOption.value.mappings.size}")
+
+                if (appState.autofillData.isDangerousAutofill) {
+                    InlineSuggestionAutofillNoUiState.SuccessWithConfirmation(
+                        autofillMappings = mappingsOption.value,
+                        mode = AutofillConfirmMode.DangerousAutofill,
+                        theme = theme
+                    )
                 } else {
-                    PassLogger.i(TAG, "Empty mappings")
-                    InlineSuggestionAutofillNoUiState.Close
+                    InlineSuggestionAutofillNoUiState.Success(mappingsOption.value)
                 }
             } else {
-                PassLogger.i(TAG, "No mappings found")
+                PassLogger.i(TAG, "Empty mappings")
                 InlineSuggestionAutofillNoUiState.Close
             }
+        } else {
+            PassLogger.i(TAG, "No mappings found")
+            InlineSuggestionAutofillNoUiState.Close
         }
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),

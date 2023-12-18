@@ -18,25 +18,9 @@
 
 package proton.android.pass.autofill.ui.autofill.common
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import proton.android.pass.commonui.api.PassTheme
+import androidx.compose.runtime.Stable
 
-@Composable
-fun ConfirmAutofillDialog(
-    modifier: Modifier = Modifier,
-    mode: AutofillConfirmMode,
-    onConfirm: () -> Unit,
-    onClose: () -> Unit
-) {
-    PassTheme(isDark = isSystemInDarkTheme()) {
-        ConfirmAutofillDialogContent(
-            modifier = modifier,
-            mode = mode,
-            onConfirm = onConfirm,
-            onClose = onClose
-        )
-    }
+@Stable
+enum class AutofillConfirmMode {
+    DangerousAutofill
 }
-

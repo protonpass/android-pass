@@ -33,8 +33,9 @@ open class DataMigrationWorker @AssistedInject constructor(
     private val dataMigrator: DataMigrator
 ) : CoroutineWorker(context, workerParameters) {
 
-    override suspend fun doWork(): Result =
-        dataMigrator.run()
+    override suspend fun doWork(): Result {
+        PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
+        return dataMigrator.run()
             .fold(
                 onSuccess = {
                     PassLogger.i(TAG, "Data migration worker completed")
@@ -46,6 +47,7 @@ open class DataMigrationWorker @AssistedInject constructor(
                     Result.failure()
                 }
             )
+    }
 
     companion object {
         private const val TAG = "DataMigrationWorker"

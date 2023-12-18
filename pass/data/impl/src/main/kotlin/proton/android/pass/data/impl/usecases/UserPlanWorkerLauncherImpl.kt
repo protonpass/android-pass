@@ -38,7 +38,6 @@ class UserPlanWorkerLauncherImpl @Inject constructor(
 ) : UserPlanWorkerLauncher {
 
     override fun start() {
-        PassLogger.i(TAG, "Starting UserAccessWorker")
         val backoffDelaySeconds = eventWorkerManager.getBackoffDelay().inWholeSeconds
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)

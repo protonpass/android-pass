@@ -22,10 +22,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class ObserveCurrentUserImpl @Inject constructor(
@@ -34,9 +37,13 @@ class ObserveCurrentUserImpl @Inject constructor(
 ) : ObserveCurrentUser {
 
     override fun invoke(): Flow<User> = accountManager.getPrimaryUserId()
-        .filterNotNull()
-        .flatMapLatest { userManager.observeUser(it) }
-        .filterNotNull()
+        .flatMapLatest { userId -> userId?.let { userManager.observeUser(it) } ?: flowOf(null) }
         .distinctUntilChanged()
+        .onEach { if (it == null) PassLogger.i(TAG, "Current user is null") }
+        .filterNotNull()
+
+    companion object {
+        private const val TAG = "ObserveCurrentUserImpl"
+    }
 }
 

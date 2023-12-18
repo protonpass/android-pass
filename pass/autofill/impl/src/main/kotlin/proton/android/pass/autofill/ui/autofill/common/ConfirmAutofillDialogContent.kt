@@ -30,7 +30,6 @@ import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultUnspecified
 import proton.android.pass.autofill.service.R
-import proton.android.pass.autofill.ui.autofill.inlinesuggestions.AutofillConfirmMode
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog

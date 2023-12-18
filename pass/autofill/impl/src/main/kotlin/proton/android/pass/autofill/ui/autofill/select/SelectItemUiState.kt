@@ -23,14 +23,17 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
+import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
-import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featuresearchoptions.api.SearchSortingType
 
 sealed interface SearchInMode {
     object OldestVaults : SearchInMode
@@ -42,11 +45,13 @@ sealed interface SearchInMode {
 data class SelectItemUiState(
     val listUiState: SelectItemListUiState,
     val searchUiState: SearchUiState,
+    val confirmMode: Option<AutofillConfirmMode>
 ) {
     companion object {
         val Loading = SelectItemUiState(
             listUiState = SelectItemListUiState.Loading,
             searchUiState = SearchUiState.Initial,
+            confirmMode = None
         )
     }
 }

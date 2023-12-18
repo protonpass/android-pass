@@ -18,13 +18,8 @@
 
 package proton.android.pass.autofill.ui.autofill.inlinesuggestions
 
-import androidx.compose.runtime.Stable
 import proton.android.pass.autofill.entities.AutofillMappings
-
-@Stable
-enum class AutofillConfirmMode {
-    DangerousAutofill
-}
+import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 
 sealed interface InlineSuggestionAutofillNoUiState {
     @JvmInline

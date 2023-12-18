@@ -38,6 +38,7 @@ import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
+import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialog
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption

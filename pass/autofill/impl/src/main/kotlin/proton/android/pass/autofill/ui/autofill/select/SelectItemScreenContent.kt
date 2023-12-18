@@ -31,10 +31,13 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.autofill.service.R
+import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
+import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialogContent
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -57,8 +60,11 @@ internal fun SelectItemScreenContent(
     onScrolledToTop: () -> Unit,
     onNavigate: (SelectItemNavigation) -> Unit
 ) {
-    var showAssociateDialog by remember { mutableStateOf(false) }
-    var itemClicked by remember { mutableStateOf<Option<ItemUiModel>>(None) }
+    val (showAssociateDialog, setShowAssociateDialog) = remember { mutableStateOf(false) }
+    val (showWarning, setShowWarning) = remember { mutableStateOf<Option<AutofillConfirmMode>>(None) }
+    val (itemClicked, setItemClicked) = remember { mutableStateOf<Option<ItemUiModel>>(None) }
+
+    var willNeedToShowAssociateDialog by remember { mutableStateOf(false) }
     val verticalScroll = rememberLazyListState()
     var showFab by remember { mutableStateOf(true) }
 
@@ -71,25 +77,23 @@ internal fun SelectItemScreenContent(
             }
     }
 
-    if (showAssociateDialog) {
-        AssociateAutofillItemDialog(
-            itemUiModel = itemClicked.value(),
-            onAssociateAndAutofill = {
-                onItemClicked(it, true)
-                showAssociateDialog = false
-                itemClicked = None
-            },
-            onAutofill = {
-                onItemClicked(it, false)
-                showAssociateDialog = false
-                itemClicked = None
-            },
-            onDismiss = {
-                showAssociateDialog = false
-                itemClicked = None
-            }
-        )
-    }
+    WarningDialog(
+        showWarning = showWarning,
+        setShowWarning = setShowWarning,
+        willNeedToShowAssociateDialog = willNeedToShowAssociateDialog,
+        setShowAssociateDialog = setShowAssociateDialog,
+        itemClicked = itemClicked,
+        onItemClicked = onItemClicked
+    )
+
+    AssociateDialog(
+        showAssociateDialog = showAssociateDialog,
+        setShowAssociateDialog = setShowAssociateDialog,
+        itemClicked = itemClicked,
+        setItemClicked = setItemClicked,
+        onItemClicked = onItemClicked,
+    )
+
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
@@ -134,30 +138,110 @@ internal fun SelectItemScreenContent(
             scrollState = verticalScroll,
             onScrolledToTop = onScrolledToTop,
             onItemOptionsClicked = onItemOptionsClicked,
-            onItemClicked = {
-                when (val contents = it.contents) {
+            onItemClicked = { item ->
+                when (val contents = item.contents) {
                     is ItemContents.Login -> {
                         val askForAssociation = shouldAskForAssociation(
                             contents,
                             packageInfo?.packageName,
                             webDomain
                         )
-                        if (askForAssociation) {
-                            itemClicked = it.toOption()
-                            showAssociateDialog = true
-                        } else {
-                            onItemClicked(it, false)
+
+                        when (uiState.confirmMode) {
+                            is Some -> {
+                                setItemClicked(item.some())
+                                willNeedToShowAssociateDialog = askForAssociation
+                                setShowWarning(uiState.confirmMode)
+                            }
+                            None -> {
+                                if (askForAssociation) {
+                                    setItemClicked(item.some())
+                                    setShowAssociateDialog(true)
+                                } else {
+                                    onItemClicked(item, false)
+                                }
+                            }
                         }
                     }
 
-                    is ItemContents.CreditCard -> onItemClicked(it, false)
+                    is ItemContents.CreditCard -> when (uiState.confirmMode) {
+                        None -> onItemClicked(item, false)
+                        is Some -> {
+                            setItemClicked(item.some())
+
+                            // Credit cards are not associated
+                            willNeedToShowAssociateDialog = false
+                            setShowWarning(uiState.confirmMode)
+                        }
+                    }
                     else -> throw IllegalStateException("Unhandled item type")
                 }
-
             },
             onNavigate = onNavigate
         )
     }
+}
+
+@Composable
+private fun WarningDialog(
+    modifier: Modifier = Modifier,
+    showWarning: Option<AutofillConfirmMode>,
+    setShowWarning: (Option<AutofillConfirmMode>) -> Unit,
+    willNeedToShowAssociateDialog: Boolean,
+    setShowAssociateDialog: (Boolean) -> Unit,
+    itemClicked: Option<ItemUiModel>,
+    onItemClicked: (ItemUiModel, Boolean) -> Unit
+) {
+    when (showWarning) {
+        None -> {}
+        is Some -> {
+            ConfirmAutofillDialogContent(
+                modifier = modifier,
+                mode = showWarning.value,
+                onClose = { setShowWarning(None) },
+                onConfirm = {
+                    if (willNeedToShowAssociateDialog) {
+                        setShowAssociateDialog(true)
+                    } else {
+                        itemClicked.value()?.let {
+                            onItemClicked(it, false)
+                        }
+                    }
+                    setShowWarning(None)
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun AssociateDialog(
+    modifier: Modifier = Modifier,
+    showAssociateDialog: Boolean,
+    setShowAssociateDialog: (Boolean) -> Unit,
+    itemClicked: Option<ItemUiModel>,
+    setItemClicked: (Option<ItemUiModel>) -> Unit,
+    onItemClicked: (ItemUiModel, Boolean) -> Unit
+) {
+    if (!showAssociateDialog) return
+    AssociateAutofillItemDialog(
+        modifier = modifier,
+        itemUiModel = itemClicked.value(),
+        onAssociateAndAutofill = {
+            onItemClicked(it, true)
+            setShowAssociateDialog(false)
+            setItemClicked(None)
+        },
+        onAutofill = {
+            onItemClicked(it, false)
+            setShowAssociateDialog(false)
+            setItemClicked(None)
+        },
+        onDismiss = {
+            setShowAssociateDialog(false)
+            setItemClicked(None)
+        }
+    )
 }
 
 private fun shouldAskForAssociation(

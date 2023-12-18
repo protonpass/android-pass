@@ -54,6 +54,7 @@ import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.service.R
+import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 import proton.android.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
@@ -65,6 +66,7 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.ItemSorter.sortByCreationAsc
@@ -330,7 +332,8 @@ class SelectItemViewModel @Inject constructor(
         shouldScrollToTopFlow,
         preferenceRepository.getUseFaviconsPreference(),
         planFlow,
-        observeUpgradeInfo().asLoadingResult()
+        observeUpgradeInfo().asLoadingResult(),
+        autofillAppState
     ) { itemsResult,
         shares,
         isRefreshing,
@@ -340,7 +343,8 @@ class SelectItemViewModel @Inject constructor(
         shouldScrollToTop,
         useFavicons,
         plan,
-        upgradeInfo ->
+        upgradeInfo,
+        appState ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
@@ -374,7 +378,7 @@ class SelectItemViewModel @Inject constructor(
         val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
 
         SelectItemUiState(
-            SelectItemListUiState(
+            listUiState = SelectItemListUiState(
                 isLoading = isLoading,
                 isRefreshing = isRefreshing,
                 itemClickedEvent = itemClicked,
@@ -386,12 +390,19 @@ class SelectItemViewModel @Inject constructor(
                 displayOnlyPrimaryVaultMessage = displayOnlyPrimaryVaultMessage,
                 canUpgrade = canUpgrade
             ),
-            SearchUiState(
+            searchUiState = SearchUiState(
                 searchQuery = search.searchQuery,
                 inSearchMode = search.isInSearchMode,
                 isProcessingSearch = search.isProcessingSearch,
                 searchInMode = searchIn
-            )
+            ),
+            confirmMode = appState.flatMap { state ->
+                if (state.autofillData.isDangerousAutofill) {
+                    AutofillConfirmMode.DangerousAutofill.some()
+                } else {
+                    None
+                }
+            }
         )
     }
         .stateIn(

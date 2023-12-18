@@ -38,6 +38,7 @@ import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
+import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some

@@ -64,7 +64,7 @@ open class FetchItemsWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
-        PassLogger.i(TAG, "Starting FetchItemsWorker")
+        PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
 
         val userId = accountManager.getPrimaryUserId().first() ?: return Result.failure()
         val shareIds = inputData.getStringArray(ARG_SHARE_IDS)?.map { ShareId(it) } ?: emptyList()

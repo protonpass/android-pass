@@ -45,7 +45,7 @@ open class TelemetrySenderWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
-        PassLogger.i(TAG, "Starting telemetry worker")
+        PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         return kotlin.runCatching {
             telemetryRepository.sendEvents()
         }.fold(

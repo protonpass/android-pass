@@ -44,8 +44,8 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 
 @HiltWorker
 open class FetchShareItemsWorker @AssistedInject constructor(
@@ -56,7 +56,7 @@ open class FetchShareItemsWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
-        PassLogger.i(TAG, "Starting FetchShareItemsWorker")
+        PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
 
         val userId = inputData.getString(ARG_USER_ID)?.let { UserId(it) } ?: return Result.failure()
         val shareId = inputData

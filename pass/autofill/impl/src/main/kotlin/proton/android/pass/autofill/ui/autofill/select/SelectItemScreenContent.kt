@@ -32,7 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
-import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialogContent
+import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialog
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -195,7 +195,7 @@ private fun WarningDialog(
     when (showWarning) {
         None -> {}
         is Some -> {
-            ConfirmAutofillDialogContent(
+            ConfirmAutofillDialog(
                 modifier = modifier,
                 mode = showWarning.value,
                 onClose = { setShowWarning(None) },

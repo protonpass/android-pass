@@ -20,6 +20,7 @@ package proton.android.pass.autofill.ui.autofill.inlinesuggestions
 
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
+import proton.android.pass.preferences.ThemePreference
 
 sealed interface InlineSuggestionAutofillNoUiState {
     @JvmInline
@@ -27,7 +28,8 @@ sealed interface InlineSuggestionAutofillNoUiState {
 
     data class SuccessWithConfirmation(
         val autofillMappings: AutofillMappings,
-        val mode: AutofillConfirmMode
+        val mode: AutofillConfirmMode,
+        val theme: ThemePreference
     ) : InlineSuggestionAutofillNoUiState
 
     object Close : InlineSuggestionAutofillNoUiState

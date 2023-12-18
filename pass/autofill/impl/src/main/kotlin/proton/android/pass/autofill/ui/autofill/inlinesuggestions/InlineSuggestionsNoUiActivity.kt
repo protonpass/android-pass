@@ -42,6 +42,9 @@ import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialog
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.preferences.ThemePreference
 
 @AndroidEntryPoint
 class InlineSuggestionsNoUiActivity : FragmentActivity() {
@@ -62,21 +65,24 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
             InlineSuggestionAutofillNoUiState.Close -> onAutofillError()
             InlineSuggestionAutofillNoUiState.NotInitialised -> {}
             is InlineSuggestionAutofillNoUiState.SuccessWithConfirmation ->
-                onSuccessWithConfirmation(state.autofillMappings, state.mode)
+                onSuccessWithConfirmation(state.autofillMappings, state.mode, state.theme)
             is InlineSuggestionAutofillNoUiState.Success -> onAutofillSuccess(state.autofillMappings)
         }
     }
 
     private fun onSuccessWithConfirmation(
         autofillMappings: AutofillMappings,
-        mode: AutofillConfirmMode
+        mode: AutofillConfirmMode,
+        theme: ThemePreference
     ) {
         setContent {
-            ConfirmAutofillDialog(
-                mode = mode,
-                onConfirm = { onAutofillSuccess(autofillMappings) },
-                onClose = { onAutofillError() }
-            )
+            PassTheme(isDark = isDark(theme)) {
+                ConfirmAutofillDialog(
+                    mode = mode,
+                    onConfirm = { onAutofillSuccess(autofillMappings) },
+                    onClose = { onAutofillError() }
+                )
+            }
         }
     }
 

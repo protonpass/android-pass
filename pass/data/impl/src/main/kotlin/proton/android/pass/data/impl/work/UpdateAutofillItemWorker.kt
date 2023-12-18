@@ -45,11 +45,11 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
 ) : CoroutineWorker(appContext, workerParameters) {
 
     override suspend fun doWork(): Result {
-        PassLogger.i(TAG, "Starting work")
+        PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         return getData(workerParameters.inputData)
             .fold(
                 onSuccess = { inputData ->
-                    run(inputData).also { PassLogger.i(TAG, "Completed work") }
+                    run(inputData).also { PassLogger.i(TAG, "Completed $TAG work") }
                 },
                 onFailure = { throwable ->
                     Result.failure().also { PassLogger.w(TAG, throwable) }

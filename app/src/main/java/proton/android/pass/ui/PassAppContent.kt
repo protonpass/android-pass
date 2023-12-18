@@ -81,7 +81,9 @@ fun PassAppContent(
 
     val backStack by appNavigator.navController.currentBackStack.collectAsStateWithLifecycle()
     LaunchedEffect(backStack) {
-        PassLogger.i(TAG, "NavigationBackStack: ${backStack.map { it.destination.route }.joinToString()}")
+        if (backStack.isNotEmpty()) {
+            PassLogger.i(TAG, "NavigationBackStack: ${backStack.map { it.destination.route }.joinToString()}")
+        }
     }
 
     val scaffoldState = rememberScaffoldState()

@@ -21,7 +21,6 @@ package proton.android.pass.autofill.ui.autofill.common
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import proton.android.pass.autofill.ui.autofill.inlinesuggestions.AutofillConfirmMode
 import proton.android.pass.commonui.api.PassTheme
 
 @Composable

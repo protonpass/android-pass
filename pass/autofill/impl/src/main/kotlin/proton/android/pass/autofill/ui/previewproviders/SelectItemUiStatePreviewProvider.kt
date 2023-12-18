@@ -28,16 +28,17 @@ import proton.android.pass.autofill.ui.autofill.select.SearchUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListItems
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemUiState
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
-import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featuresearchoptions.api.SearchSortingType
 
 class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiState> {
     override val values: Sequence<SelectItemUiState>
@@ -65,6 +66,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     canUpgrade = false
                 ),
                 SearchUiState.Initial,
+                None
             ),
             SelectItemUiState(
                 SelectItemListUiState(
@@ -92,6 +94,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     canUpgrade = false
                 ),
                 SearchUiState.Initial,
+                None
             ),
             SelectItemUiState(
                 SelectItemListUiState(
@@ -112,6 +115,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isProcessingSearch = IsProcessingSearchState.NotLoading,
                     searchInMode = SearchInMode.AllVaults
                 ),
+                None
             )
         )
 

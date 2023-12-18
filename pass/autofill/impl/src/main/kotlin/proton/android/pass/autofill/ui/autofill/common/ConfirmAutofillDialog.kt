@@ -18,10 +18,22 @@
 
 package proton.android.pass.autofill.ui.autofill.common
 
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import me.proton.core.compose.component.ProtonDialogTitle
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultUnspecified
+import proton.android.pass.autofill.service.R
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
+import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun ConfirmAutofillDialog(
@@ -30,13 +42,37 @@ fun ConfirmAutofillDialog(
     onConfirm: () -> Unit,
     onClose: () -> Unit
 ) {
-    PassTheme(isDark = isSystemInDarkTheme()) {
-        ConfirmAutofillDialogContent(
-            modifier = modifier,
-            mode = mode,
-            onConfirm = onConfirm,
-            onClose = onClose
-        )
+    val (title, body) = when (mode) {
+        AutofillConfirmMode.DangerousAutofill -> {
+            R.string.autofill_confirm_dangerous_title to R.string.autofill_confirm_dangerous_body
+        }
+    }
+
+    NoPaddingDialog(
+        modifier = modifier,
+        onDismissRequest = onClose,
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            ProtonDialogTitle(
+                title = stringResource(title)
+            )
+
+            Text(
+                text = stringResource(body),
+                style = ProtonTheme.typography.defaultUnspecified
+            )
+
+            DialogCancelConfirmSection(
+                color = PassTheme.colors.interactionNormMajor2,
+                confirmText = stringResource(R.string.autofill_confirm_button),
+                cancelText = stringResource(CompR.string.bottomsheet_cancel_button),
+                onDismiss = onClose,
+                onConfirm = onConfirm
+            )
+        }
     }
 }
 

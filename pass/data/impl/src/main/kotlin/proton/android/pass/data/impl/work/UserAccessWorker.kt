@@ -26,6 +26,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessResult
+import proton.android.pass.log.api.PassLogger
 
 @HiltWorker
 class UserAccessWorker @AssistedInject constructor(
@@ -34,14 +35,18 @@ class UserAccessWorker @AssistedInject constructor(
     private val sendUserAccessRequest: SendUserAccessRequest
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork(): Result =
-        when (sendUserAccessRequest()) {
+    override suspend fun doWork(): Result {
+        PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
+        return when (sendUserAccessRequest()) {
             SendUserAccessResult.Retry -> Result.retry()
             SendUserAccessResult.Failure -> Result.failure()
             SendUserAccessResult.Success -> Result.success()
         }
+    }
+
 
     companion object {
         const val WORKER_UNIQUE_NAME = "user_access_worker"
+        private const val TAG = "UserAccessWorker"
     }
 }

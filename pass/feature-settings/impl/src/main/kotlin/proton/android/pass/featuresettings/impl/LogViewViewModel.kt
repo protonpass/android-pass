@@ -72,7 +72,7 @@ class LogViewViewModel @Inject constructor(
     fun startShareIntent(context: Context) = viewModelScope.launch(Dispatchers.IO) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "*/*"
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("pass@proton.me"))
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("pass@protonme.zendesk.com"))
         intent.putExtra(Intent.EXTRA_SUBJECT, "Proton Pass: Share Logs")
         val cacheFile = File(context.cacheDir, "logs/pass.log")
         val contentUri: Uri = FileProvider.getUriForFile(

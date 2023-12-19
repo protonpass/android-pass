@@ -26,10 +26,12 @@ import javax.inject.Inject
 
 class RustPasswordStrengthCalculator @Inject constructor() : PasswordStrengthCalculator {
 
+    private val passwordScorer: PasswordScorer by lazy { PasswordScorer() }
+    
     override fun calculateStrength(password: String): PasswordStrength = if (password.isEmpty()) {
         PasswordStrength.None
     } else {
-        when (PasswordScorer().checkScore(password)) {
+        when (passwordScorer.checkScore(password)) {
             PasswordScore.VERY_DANGEROUS,
             PasswordScore.DANGEROUS -> PasswordStrength.Vulnerable
 

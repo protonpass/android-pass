@@ -29,6 +29,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -101,6 +102,7 @@ internal class CreateLoginViewModelTest {
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = TestSavedStateHandleProvider(),
             encryptionContextProvider = TestEncryptionContextProvider(),
+            passwordStrengthCalculator = TestPasswordStrengthCalculator(),
             createItemAndAlias = createItemAndAlias,
             observeVaults = observeVaults,
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },

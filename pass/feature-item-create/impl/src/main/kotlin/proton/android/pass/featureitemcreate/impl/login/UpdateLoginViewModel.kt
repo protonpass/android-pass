@@ -40,6 +40,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
@@ -47,7 +48,6 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.GetItemById
@@ -55,6 +55,13 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.datamodels.api.toContent
+import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.MFAUpdated
@@ -71,13 +78,6 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
-import proton.android.pass.domain.CustomField
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 @HiltViewModel
@@ -86,6 +86,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val updateItem: UpdateItem,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val telemetryManager: TelemetryManager,
     private val createAlias: CreateAlias,
     accountManager: AccountManager,
@@ -104,14 +105,13 @@ class UpdateLoginViewModel @Inject constructor(
     observeUpgradeInfo = observeUpgradeInfo,
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
+    passwordStrengthCalculator = passwordStrengthCalculator,
     savedStateHandleProvider = savedStateHandleProvider,
 ) {
     private val navShareId: ShareId =
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
-        proton.android.pass.domain.ItemId(
-            savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key)
-        )
+        ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -207,13 +207,14 @@ class UpdateLoginViewModel @Inject constructor(
                     encryptionContext = this@withEncryptionContext,
                     primaryTotp = itemContents.primaryTotp
                 )
-                val isPasswordEmpty = decrypt(itemContents.password.toEncryptedByteArray())
-                    .isEmpty()
-                val passwordHiddenState = if (isPasswordEmpty) {
+
+                val password = decrypt(itemContents.password)
+                val passwordHiddenState = if (password.isEmpty()) {
                     UIHiddenState.Empty(itemContents.password)
                 } else {
                     UIHiddenState.Concealed(itemContents.password)
                 }
+
                 val uiCustomFieldList = itemContents.customFields.mapNotNull {
                     convertCustomField(it, this@withEncryptionContext)
                 }.toImmutableList()
@@ -245,6 +246,7 @@ class UpdateLoginViewModel @Inject constructor(
                     title = decrypt(item.title),
                     username = itemContents.username,
                     password = passwordHiddenState,
+                    passwordStrength = passwordStrengthCalculator.calculateStrength(password),
                     urls = websites,
                     note = decrypt(item.note),
                     packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),

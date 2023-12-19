@@ -18,11 +18,11 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,10 +35,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
-import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
@@ -46,15 +47,13 @@ import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 
 @Composable
 internal fun PasswordInput(
-    modifier: Modifier = Modifier,
     value: UIHiddenState,
-    label: String = stringResource(id = R.string.field_password_title),
+    passwordStrength: PasswordStrength,
+    modifier: Modifier = Modifier,
     placeholder: String = stringResource(id = R.string.field_password_hint),
-    @DrawableRes icon: Int = me.proton.core.presentation.R.drawable.ic_proton_key,
-    iconContentDescription: String = "",
     isEditAllowed: Boolean,
     onChange: (String) -> Unit,
-    onFocus: (Boolean) -> Unit
+    onFocus: (Boolean) -> Unit,
 ) {
     val (text, visualTransformation) = when (value) {
         is UIHiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
@@ -73,15 +72,9 @@ internal fun PasswordInput(
         ),
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
         onChange = onChange,
-        label = { ProtonTextFieldLabel(text = label) },
+        label = { PasswordInputLabel(passwordStrength) },
         placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },
-        leadingIcon = {
-            Icon(
-                painter = painterResource(icon),
-                contentDescription = iconContentDescription,
-                tint = ProtonTheme.colors.iconWeak
-            )
-        },
+        leadingIcon = { PasswordInputLeadingIcon(passwordStrength) },
         trailingIcon = if (value is UIHiddenState.Revealed && text.isNotEmpty()) {
             { SmallCrossIconButton { onChange("") } }
         } else {
@@ -89,6 +82,73 @@ internal fun PasswordInput(
         },
         visualTransformation = visualTransformation,
         onFocusChange = { onFocus(it) }
+    )
+}
+
+@Composable
+private fun PasswordInputLabel(passwordStrength: PasswordStrength) {
+    val (labelStrengthResId, labelColor) = when (passwordStrength) {
+        PasswordStrength.None -> Pair(
+            null,
+            PassTheme.colors.textWeak,
+        )
+
+        PasswordStrength.Strong -> Pair(
+            R.string.field_password_label_strength_strong,
+            PassTheme.colors.signalSuccess,
+        )
+
+        PasswordStrength.Vulnerable -> Pair(
+            R.string.field_password_label_strength_vulnerable,
+            PassTheme.colors.signalDanger,
+        )
+
+        PasswordStrength.Weak -> Pair(
+            R.string.field_password_label_strength_weak,
+            PassTheme.colors.signalWarning,
+        )
+    }
+
+    val passwordLabel = stringResource(id = R.string.field_password_title)
+    val passwordStrengthLabel = labelStrengthResId
+        ?.let { " \u2022 ${stringResource(id = it)}" }
+        .orEmpty()
+
+    Text(
+        text = "$passwordLabel$passwordStrengthLabel",
+        color = labelColor,
+        style = PassTheme.typography.body3Norm(),
+    )
+}
+
+@Composable
+private fun PasswordInputLeadingIcon(passwordStrength: PasswordStrength) {
+    val (iconResId, iconTint) = when (passwordStrength) {
+        PasswordStrength.None -> Pair(
+            me.proton.core.presentation.R.drawable.ic_proton_key,
+            ProtonTheme.colors.iconWeak,
+        )
+
+        PasswordStrength.Strong -> Pair(
+            R.drawable.ic_shield_success,
+            PassTheme.colors.signalSuccess,
+        )
+
+        PasswordStrength.Vulnerable -> Pair(
+            R.drawable.ic_shield_danger,
+            PassTheme.colors.signalDanger,
+        )
+
+        PasswordStrength.Weak -> Pair(
+            R.drawable.ic_shield_warning,
+            PassTheme.colors.signalWarning,
+        )
+    }
+
+    Icon(
+        painter = painterResource(iconResId),
+        tint = iconTint,
+        contentDescription = null,
     )
 }
 
@@ -104,9 +164,10 @@ fun PasswordInputPreview(
         Surface {
             PasswordInput(
                 value = input.second.hiddenState,
+                passwordStrength = input.second.passwordStrength,
                 isEditAllowed = input.second.isEditAllowed,
                 onChange = {},
-                onFocus = {}
+                onFocus = {},
             )
         }
     }

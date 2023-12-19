@@ -52,6 +52,7 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -66,6 +67,10 @@ import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.PlanType
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
@@ -77,10 +82,6 @@ import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.totp.api.TotpManager
-import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.PlanType
 
 @Suppress("TooManyFunctions", "LargeClass")
 abstract class BaseLoginViewModel(
@@ -90,6 +91,7 @@ abstract class BaseLoginViewModel(
     private val totpManager: TotpManager,
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val passwordStrengthCalculator: PasswordStrengthCalculator,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -156,7 +158,7 @@ abstract class BaseLoginViewModel(
     private val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val canUpdateUsernameState: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
-    protected val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
+    private val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
 
     protected val itemHadTotpState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val totpUiStateFlow = combine(
@@ -243,10 +245,16 @@ abstract class BaseLoginViewModel(
         loginItemFormMutableState = loginItemFormMutableState.copy(username = value)
     }
 
-    fun onPasswordChange(value: String) {
+    fun onPasswordChange(newPasswordValue: String) {
         onUserEditedContent()
         loginItemFormMutableState = encryptionContextProvider.withEncryptionContext {
-            loginItemFormMutableState.copy(password = UIHiddenState.Revealed(encrypt(value), value))
+            loginItemFormMutableState.copy(
+                password = UIHiddenState.Revealed(
+                    encrypted = encrypt(newPasswordValue),
+                    clearText = newPasswordValue,
+                ),
+                passwordStrength = passwordStrengthCalculator.calculateStrength(newPasswordValue),
+            )
         }
     }
 
@@ -622,13 +630,15 @@ abstract class BaseLoginViewModel(
                 if (it is Some) {
                     draftRepository.delete<String>(DRAFT_PASSWORD_KEY).value()
                         ?.let { encryptedPassword ->
+                            val password = encryptionContextProvider.withEncryptionContext {
+                                decrypt(encryptedPassword)
+                            }
                             loginItemFormMutableState = loginItemFormState.copy(
                                 password = UIHiddenState.Revealed(
                                     encrypted = encryptedPassword,
-                                    clearText = encryptionContextProvider.withEncryptionContext {
-                                        decrypt(encryptedPassword)
-                                    }
-                                )
+                                    clearText = password,
+                                ),
+                                passwordStrength = passwordStrengthCalculator.calculateStrength(password),
                             )
                         }
                 }

@@ -27,6 +27,9 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.commonrust.api.PasswordGenerator
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -48,4 +51,8 @@ abstract class FakesCommonRustModule {
 
     @Binds
     abstract fun bindPasswordScorer(impl: TestPasswordScorer): PasswordScorer
+
+    @[Binds Singleton]
+    abstract fun bindPasswordStrengthCalculator(calculator: TestPasswordStrengthCalculator): PasswordStrengthCalculator
+
 }

@@ -33,48 +33,50 @@ class PerformSyncImpl @Inject constructor(
     private val refreshInvites: RefreshInvites
 ) : PerformSync {
     override suspend fun invoke(): Result<Unit> = withContext(Dispatchers.IO) {
+        PassLogger.i(TAG, "Performing sync started")
         val pendingEvents = async { performPendingEvents() }
         val refreshInvites = async { performRefreshInvites() }
         val res = awaitAll(pendingEvents, refreshInvites)
 
-        val error = res.firstOrNull { it.isFailure }
-        if (error != null) {
-            val exception = error.exceptionOrNull()
-            return@withContext if (exception != null) {
-                Result.failure(exception)
-            } else {
-                Result.failure(RuntimeException("Error performing sync"))
-            }
+        val exception = res.firstOrNull { it.isFailure }?.exceptionOrNull()
+        if (exception != null) {
+            PassLogger.i(TAG, "Performing sync error")
+            return@withContext Result.failure(exception)
+        } else {
+            PassLogger.i(TAG, "Performing sync finished")
+            Result.success(Unit)
         }
-        Result.success(Unit)
     }
 
 
-    private suspend fun performPendingEvents(): Result<Unit> {
-        return runCatching {
-            applyPendingEvents()
-        }.fold(
-            onSuccess = { Result.success(Unit) },
-            onFailure = {
-                PassLogger.w(TAG, "Apply pending events error")
+    private suspend fun performPendingEvents(): Result<Unit> =
+        runCatching { applyPendingEvents() }
+            .fold(
+                onSuccess = {
+                    PassLogger.i(TAG, "Pending events finished")
+                    Result.success(Unit)
+                },
+                onFailure = {
+                    PassLogger.w(TAG, "Pending events error")
+                    PassLogger.w(TAG, it)
+                    Result.failure(it)
+                }
+            )
+
+    private suspend fun performRefreshInvites(): Result<Unit> =
+        runCatching { refreshInvites() }
+            .fold(
+                onSuccess = {
+                    PassLogger.i(TAG, "Refresh invites finished")
+                    Result.success(Unit)
+                },
+                onFailure = {
+                    PassLogger.i(TAG, "Refresh invites error")
+                    PassLogger.w(TAG, it)
                 PassLogger.w(TAG, it)
-                Result.failure(it)
-            }
-        )
-    }
-
-    private suspend fun performRefreshInvites(): Result<Unit> {
-        return runCatching {
-            refreshInvites()
-        }.fold(
-            onSuccess = { Result.success(Unit) },
-            onFailure = {
-                PassLogger.w(TAG, "Refresh invites")
-                PassLogger.w(TAG, it)
-                Result.failure(it)
-            }
-        )
-    }
+                    Result.failure(it)
+                }
+            )
 
     companion object {
         private const val TAG = "PerformSyncImpl"

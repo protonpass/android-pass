@@ -78,7 +78,8 @@ class MigrateSelectVaultViewModel @Inject constructor(
             LoadingResult.Loading -> MigrateSelectVaultUiState.Loading
             is LoadingResult.Error -> {
                 snackbarDispatcher(CouldNotInit)
-                PassLogger.w(TAG, vaultResult.exception, "Error observing active vaults")
+                PassLogger.w(TAG, "Error observing active vaults")
+                PassLogger.w(TAG, vaultResult.exception)
                 MigrateSelectVaultUiState.Error
             }
 

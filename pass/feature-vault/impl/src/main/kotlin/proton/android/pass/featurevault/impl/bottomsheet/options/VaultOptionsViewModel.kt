@@ -37,13 +37,13 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotFindVaultError
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotGetVaultListError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltViewModel
@@ -70,7 +70,8 @@ class VaultOptionsViewModel @Inject constructor(
         val (allVaults, selectedVault) = when (vaultResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(CannotGetVaultListError)
-                PassLogger.w(TAG, vaultResult.exception, "Cannot get vault")
+                PassLogger.w(TAG, "Cannot get vault")
+                PassLogger.w(TAG, vaultResult.exception)
                 return@combine VaultOptionsUiState.Error
             }
 

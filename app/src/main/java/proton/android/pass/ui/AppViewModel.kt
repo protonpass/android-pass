@@ -120,7 +120,8 @@ class AppViewModel @Inject constructor(
             LoadingResult.Loading -> ThemePreference.System
             is LoadingResult.Success -> state.data
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, state.exception, "Error getting ThemePreference")
+                PassLogger.w(TAG, "Error getting ThemePreference")
+                PassLogger.w(TAG, state.exception)
                 ThemePreference.System
             }
         }

@@ -61,7 +61,8 @@ class ObserveDefaultVaultImpl @Inject constructor(
                 }
             }
             .catch {
-                PassLogger.w(TAG, it, "Could not find the default vault")
+                PassLogger.w(TAG, "Could not find the default vault")
+                PassLogger.w(TAG, it)
                 setDefaultVault()
                 emit(None)
             }

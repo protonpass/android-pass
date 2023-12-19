@@ -37,7 +37,8 @@ class ClearPinImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             runCatching { performPinClear() }
                 .onFailure {
-                    PassLogger.w(TAG, it, "Error deleting pin file")
+                    PassLogger.w(TAG, "Error deleting pin file")
+                    PassLogger.w(TAG, it)
                 }
         }
     }

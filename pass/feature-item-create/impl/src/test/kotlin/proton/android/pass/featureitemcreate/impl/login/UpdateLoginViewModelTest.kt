@@ -27,6 +27,7 @@ import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.some
+import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
@@ -77,6 +78,7 @@ class UpdateLoginViewModelTest {
                 get()[CommonNavArgId.ItemId.key] = ITEM_ID
             },
             encryptionContextProvider = TestEncryptionContextProvider(),
+            passwordStrengthCalculator = TestPasswordStrengthCalculator(),
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = TestTelemetryManager(),
             draftRepository = TestDraftRepository(),

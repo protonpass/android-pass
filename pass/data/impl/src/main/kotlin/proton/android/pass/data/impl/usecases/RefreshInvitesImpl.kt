@@ -33,11 +33,14 @@ class RefreshInvitesImpl @Inject constructor(
     private val notificationManager: NotificationManager
 ) : RefreshInvites {
     override suspend fun invoke() {
-        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
-        runCatching { inviteRepository.refreshInvites(userId) }
-            .onSuccess {
-                PassLogger.d(TAG, "Invites refreshed successfully")
-                if (it) {
+        PassLogger.i(TAG, "Refreshing invites started")
+        runCatching {
+            val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+            inviteRepository.refreshInvites(userId)
+        }
+            .onSuccess { hasInvite ->
+                PassLogger.i(TAG, "Invites refreshed successfully")
+                if (hasInvite) {
                     notificationManager.sendReceivedInviteNotification()
                 }
             }

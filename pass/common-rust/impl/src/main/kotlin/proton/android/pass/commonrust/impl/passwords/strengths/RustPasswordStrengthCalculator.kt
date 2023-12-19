@@ -31,18 +31,20 @@ class RustPasswordStrengthCalculator @Inject constructor() : PasswordStrengthCal
     override fun calculateStrength(password: String): PasswordStrength = if (password.isEmpty()) {
         PasswordStrength.None
     } else {
-        when (passwordScorer.checkScore(password)) {
-            PasswordScore.VERY_DANGEROUS,
-            PasswordScore.DANGEROUS -> PasswordStrength.Vulnerable
-
-            PasswordScore.VERY_WEAK,
-            PasswordScore.WEAK -> PasswordStrength.Weak
-
-            PasswordScore.GOOD,
-            PasswordScore.STRONG,
-            PasswordScore.VERY_STRONG,
-            PasswordScore.INVULNERABLE -> PasswordStrength.Strong
-        }
+        passwordScorer.checkScore(password).toPasswordStrength()
     }
 
+}
+
+internal fun PasswordScore.toPasswordStrength(): PasswordStrength = when (this) {
+    PasswordScore.VERY_DANGEROUS,
+    PasswordScore.DANGEROUS -> PasswordStrength.Vulnerable
+
+    PasswordScore.VERY_WEAK,
+    PasswordScore.WEAK -> PasswordStrength.Weak
+
+    PasswordScore.GOOD,
+    PasswordScore.STRONG,
+    PasswordScore.VERY_STRONG,
+    PasswordScore.INVULNERABLE -> PasswordStrength.Strong
 }

@@ -6,6 +6,17 @@
 
 ### Other
 
+## 1.14.2 (2023-12-19)
+
+### Features :tada:
+
+- Improve UX when autofilling credentials in potentially dangerous contexts.
+
+### Other
+
+- Update translations.
+- Update dependencies.
+
 ## 1.14.1 (2023-12-12)
 
 ### Fixes :bug:

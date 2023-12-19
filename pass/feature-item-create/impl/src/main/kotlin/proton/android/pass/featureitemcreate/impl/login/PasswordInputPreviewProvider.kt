@@ -19,31 +19,93 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 
+private const val PASSWORD_EMPTY = ""
+private const val PASSWORD_ENCRYPTED = "Encrypted password"
+private const val PASSWORD_PLAIN = "Plain password"
+
 class PasswordInputPreviewProvider : PreviewParameterProvider<PasswordInputPreviewParams> {
+
     override val values: Sequence<PasswordInputPreviewParams>
         get() = sequenceOf(
             PasswordInputPreviewParams(
-                UIHiddenState.Revealed("", "someValue"),
-                false
+                hiddenState = UIHiddenState.Revealed(PASSWORD_EMPTY, PASSWORD_EMPTY),
+                passwordStrength = PasswordStrength.None,
+                isEditAllowed = false,
             ),
             PasswordInputPreviewParams(
-                UIHiddenState.Revealed("", "someValue"),
-                true
+                hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
+                passwordStrength = PasswordStrength.Strong,
+                isEditAllowed = false,
             ),
             PasswordInputPreviewParams(
-                UIHiddenState.Concealed(""),
-                false,
+                hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
+                passwordStrength = PasswordStrength.Vulnerable,
+                isEditAllowed = false,
             ),
             PasswordInputPreviewParams(
-                UIHiddenState.Concealed(""),
-                true
-            )
+                hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
+                passwordStrength = PasswordStrength.Weak,
+                isEditAllowed = false,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Revealed(PASSWORD_EMPTY, PASSWORD_EMPTY),
+                passwordStrength = PasswordStrength.None,
+                isEditAllowed = true,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
+                passwordStrength = PasswordStrength.Strong,
+                isEditAllowed = true,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
+                passwordStrength = PasswordStrength.Vulnerable,
+                isEditAllowed = true,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
+                passwordStrength = PasswordStrength.Weak,
+                isEditAllowed = true,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
+                passwordStrength = PasswordStrength.Strong,
+                isEditAllowed = false,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
+                passwordStrength = PasswordStrength.Vulnerable,
+                isEditAllowed = false,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
+                passwordStrength = PasswordStrength.Weak,
+                isEditAllowed = false,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
+                passwordStrength = PasswordStrength.Strong,
+                isEditAllowed = true,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
+                passwordStrength = PasswordStrength.Vulnerable,
+                isEditAllowed = true,
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
+                passwordStrength = PasswordStrength.Weak,
+                isEditAllowed = true,
+            ),
         )
+
 }
 
 data class PasswordInputPreviewParams(
-    val hiddenState: UIHiddenState,
-    val isEditAllowed: Boolean
+    internal val hiddenState: UIHiddenState,
+    internal val passwordStrength: PasswordStrength,
+    internal val isEditAllowed: Boolean,
 )

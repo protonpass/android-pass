@@ -52,6 +52,7 @@ fun MainLoginSection(
         Divider(color = PassTheme.colors.inputBorderNorm)
         PasswordInput(
             value = loginItemFormState.password,
+            passwordStrength = loginItemFormState.passwordStrength,
             isEditAllowed = isEditAllowed,
             onChange = { onEvent(LoginContentEvent.OnPasswordChange(it)) },
             onFocus = { onFocusChange(LoginField.Password, it) }

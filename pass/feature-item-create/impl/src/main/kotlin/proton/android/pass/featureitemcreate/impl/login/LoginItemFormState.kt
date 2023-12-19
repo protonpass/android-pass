@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.login
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
@@ -36,6 +37,7 @@ data class LoginItemFormState(
     val note: String,
     val username: String,
     val password: UIHiddenState,
+    val passwordStrength: PasswordStrength,
     val urls: List<String>,
     val packageInfoSet: Set<PackageInfoUi>,
     val primaryTotp: UIHiddenState,
@@ -82,17 +84,21 @@ data class LoginItemFormState(
             customFields.zip(other.customFields).all { (a, b) -> a.compare(b, encryptionContext) }
 
     companion object {
+
         fun default(encryptionContext: EncryptionContext) = LoginItemFormState(
             title = "",
             note = "",
             username = "",
             password = UIHiddenState.Empty(encryptionContext.encrypt("")),
+            passwordStrength = PasswordStrength.None,
             urls = listOf(""),
             primaryTotp = UIHiddenState.Empty(encryptionContext.encrypt("")),
             packageInfoSet = emptySet(),
-            customFields = emptyList()
+            customFields = emptyList(),
         )
+
     }
+
 }
 
 sealed interface LoginItemValidationErrors {

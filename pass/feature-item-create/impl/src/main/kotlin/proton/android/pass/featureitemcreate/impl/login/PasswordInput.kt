@@ -86,7 +86,10 @@ internal fun PasswordInput(
 }
 
 @Composable
-private fun PasswordInputLabel(passwordStrength: PasswordStrength) {
+private fun PasswordInputLabel(
+    passwordStrength: PasswordStrength,
+    modifier: Modifier = Modifier,
+) {
     val (labelStrengthResId, labelColor) = when (passwordStrength) {
         PasswordStrength.None -> Pair(
             null,
@@ -115,6 +118,7 @@ private fun PasswordInputLabel(passwordStrength: PasswordStrength) {
         .orEmpty()
 
     Text(
+        modifier = modifier,
         text = "$passwordLabel$passwordStrengthLabel",
         color = labelColor,
         style = PassTheme.typography.body3Norm(),
@@ -122,7 +126,10 @@ private fun PasswordInputLabel(passwordStrength: PasswordStrength) {
 }
 
 @Composable
-private fun PasswordInputLeadingIcon(passwordStrength: PasswordStrength) {
+private fun PasswordInputLeadingIcon(
+    passwordStrength: PasswordStrength,
+    modifier: Modifier = Modifier,
+) {
     val (iconResId, iconTint) = when (passwordStrength) {
         PasswordStrength.None -> Pair(
             me.proton.core.presentation.R.drawable.ic_proton_key,
@@ -146,6 +153,7 @@ private fun PasswordInputLeadingIcon(passwordStrength: PasswordStrength) {
     }
 
     Icon(
+        modifier = modifier,
         painter = painterResource(iconResId),
         tint = iconTint,
         contentDescription = null,

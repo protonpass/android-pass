@@ -33,10 +33,16 @@ class ResetAppToDefaultsImpl @Inject constructor(
     override suspend fun invoke() {
         preferencesRepository.clearPreferences()
             .onSuccess { PassLogger.d(TAG, "Preferences cleared") }
-            .onFailure { PassLogger.w(TAG, it, "Error clearing preferences") }
+            .onFailure {
+                PassLogger.w(TAG, "Error clearing preferences")
+                PassLogger.w(TAG, it)
+            }
         internalSettingsRepository.clearSettings()
             .onSuccess { PassLogger.d(TAG, "Internal settings cleared") }
-            .onFailure { PassLogger.w(TAG, it, "Error clearing internal settings") }
+            .onFailure {
+                PassLogger.w(TAG, "Error clearing internal settings")
+                PassLogger.w(TAG, it)
+            }
         clearPin()
     }
 

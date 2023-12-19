@@ -88,7 +88,8 @@ class MainActivity : FragmentActivity() {
                     state == Processing || state == StepNeeded
                 }
             }.onFailure {
-                PassLogger.w(TAG, it, "Error setting splash screen keep on screen condition")
+                PassLogger.w(TAG, "Error setting splash screen keep on screen condition")
+                PassLogger.w(TAG, it)
             }
             LaunchedEffect(state) {
                 launcherViewModel.onUserStateChanced(state)

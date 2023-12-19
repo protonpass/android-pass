@@ -109,7 +109,8 @@ class AutofillManagerImpl @Inject constructor(
             val isAutofillSupported = autofillManager?.isAutofillSupported ?: false
             !hasEnabledAutofillServices && isAutofillSupported
         }.getOrElse {
-            PassLogger.w(TAG, it, "Error while checking if autofill selector can be opened")
+            PassLogger.w(TAG, "Error while checking if autofill selector can be opened")
+            PassLogger.w(TAG, it)
             false
         }
 
@@ -119,7 +120,8 @@ class AutofillManagerImpl @Inject constructor(
         }.onSuccess {
             PassLogger.i(TAG, "Disabled autofill services")
         }.onFailure {
-            PassLogger.w(TAG, it, "Could not disable autofill services")
+            PassLogger.w(TAG, "Could not disable autofill services")
+            PassLogger.w(TAG, it)
         }
     }
 

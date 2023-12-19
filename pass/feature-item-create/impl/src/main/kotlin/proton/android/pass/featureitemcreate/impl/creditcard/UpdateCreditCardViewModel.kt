@@ -23,6 +23,10 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.InitError
@@ -31,10 +35,6 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -81,7 +81,8 @@ class UpdateCreditCardViewModel @Inject constructor(
         runCatching { getItemById(navShareId, navItemId).first() }
             .onSuccess(::onCreditCardItemReceived)
             .onFailure {
-                PassLogger.w(TAG, it, "Error getting item by id")
+                PassLogger.w(TAG, "Error getting item by id")
+                PassLogger.w(TAG, it)
                 snackbarDispatcher(InitError)
             }
         isLoadingState.update { IsLoadingState.NotLoading }

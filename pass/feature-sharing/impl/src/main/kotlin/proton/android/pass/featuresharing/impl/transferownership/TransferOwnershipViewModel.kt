@@ -33,13 +33,13 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberEmailArg
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberShareIdArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -76,7 +76,8 @@ class TransferOwnershipViewModel @Inject constructor(
             eventFlow.update { TransferOwnershipEvent.OwnershipTransferred }
             snackbarDispatcher(SharingSnackbarMessage.TransferOwnershipSuccess)
         }.onFailure {
-            PassLogger.w(TAG, it, "Error transferring ownership")
+            PassLogger.w(TAG, "Error transferring ownership")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(SharingSnackbarMessage.TransferOwnershipError)
         }
         loadingFlow.update { IsLoadingState.NotLoading }

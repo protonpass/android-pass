@@ -148,7 +148,8 @@ open class CreateAliasViewModel @Inject constructor(
         .onEach {
             when (it) {
                 is LoadingResult.Error -> {
-                    PassLogger.w(TAG, it.exception, "Error loading AliasOptions")
+                    PassLogger.w(TAG, "Error loading AliasOptions")
+                    PassLogger.w(TAG, it.exception)
                     isLoadingState.update { IsLoadingState.NotLoading }
                     snackbarDispatcher(AliasSnackbarMessage.CannotRetrieveAliasOptions)
                     mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }

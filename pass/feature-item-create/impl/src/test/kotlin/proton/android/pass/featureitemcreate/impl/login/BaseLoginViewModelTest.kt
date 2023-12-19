@@ -54,6 +54,7 @@ internal class BaseLoginViewModelTest {
     private lateinit var baseLoginViewModel: BaseLoginViewModel
     private lateinit var encryptionContextProvider: EncryptionContextProvider
     private lateinit var draftRepository: DraftRepository
+    private lateinit var passwordStrengthCalculator: TestPasswordStrengthCalculator
 
 
     @Before
@@ -63,6 +64,7 @@ internal class BaseLoginViewModelTest {
         observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
         draftRepository = TestDraftRepository()
         encryptionContextProvider = TestEncryptionContextProvider()
+        passwordStrengthCalculator = TestPasswordStrengthCalculator()
         baseLoginViewModel = object : BaseLoginViewModel(
             accountManager = TestAccountManager(),
             snackbarDispatcher = TestSnackbarDispatcher(),
@@ -72,7 +74,7 @@ internal class BaseLoginViewModelTest {
             observeCurrentUser = observeCurrentUser,
             observeUpgradeInfo = TestObserveUpgradeInfo(),
             encryptionContextProvider = encryptionContextProvider,
-            passwordStrengthCalculator = TestPasswordStrengthCalculator(),
+            passwordStrengthCalculator = passwordStrengthCalculator,
             savedStateHandleProvider = TestSavedStateHandleProvider()
         ) {}
     }
@@ -104,6 +106,7 @@ internal class BaseLoginViewModelTest {
     fun `WHEN password changed by user THEN update password strength state`() = runTest {
         val newPasswordValue = TestUtils.randomString()
         val expectedPasswordStrength = PasswordStrength.Strong
+        passwordStrengthCalculator.setPasswordStrength(expectedPasswordStrength)
 
         baseLoginViewModel.onPasswordChange(newPasswordValue)
 
@@ -117,6 +120,7 @@ internal class BaseLoginViewModelTest {
             encrypt(TestUtils.randomString())
         }
         val expectedPasswordStrength = PasswordStrength.Strong
+        passwordStrengthCalculator.setPasswordStrength(expectedPasswordStrength)
         draftRepository.save(DRAFT_PASSWORD_KEY, newPasswordValue)
 
         assertThat(baseLoginViewModel.loginItemFormState.passwordStrength)

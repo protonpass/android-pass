@@ -24,6 +24,12 @@ import javax.inject.Inject
 
 class TestPasswordStrengthCalculator @Inject constructor() : PasswordStrengthCalculator {
 
-    override fun calculateStrength(password: String): PasswordStrength = PasswordStrength.Strong
+    private var passwordStrength = PasswordStrength.None
+
+    fun setPasswordStrength(expectedPasswordStrength: PasswordStrength) {
+        passwordStrength = expectedPasswordStrength
+    }
+
+    override fun calculateStrength(password: String): PasswordStrength = passwordStrength
 
 }

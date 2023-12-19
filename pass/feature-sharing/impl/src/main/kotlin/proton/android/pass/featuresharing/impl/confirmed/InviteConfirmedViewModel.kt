@@ -40,10 +40,10 @@ import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.RejectInvite
+import proton.android.pass.domain.PendingInvite
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.domain.PendingInvite
 import javax.inject.Inject
 
 @HiltViewModel
@@ -69,7 +69,8 @@ class InviteConfirmedViewModel @Inject constructor(
         .asLoadingResult()
         .onEach {
             if (it is LoadingResult.Error) {
-                PassLogger.w(TAG, it.exception, "Error loading invite")
+                PassLogger.w(TAG, "Error loading invite")
+                PassLogger.w(TAG, it.exception)
                 eventFlow.update { InviteConfirmedEvent.Close }
             }
         }
@@ -84,7 +85,8 @@ class InviteConfirmedViewModel @Inject constructor(
         val content = when (invite) {
             LoadingResult.Loading -> InviteConfirmedUiContent.Loading
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, invite.exception, "Error loading invite")
+                PassLogger.w(TAG, "Error loading invite")
+                PassLogger.w(TAG, invite.exception)
                 snackbarDispatcher(SharingSnackbarMessage.GetInviteError)
                 InviteConfirmedUiContent.Loading
             }
@@ -111,7 +113,8 @@ class InviteConfirmedViewModel @Inject constructor(
         if (invite == null) return@launch
         acceptInvite(invite.inviteToken)
             .catch {
-                PassLogger.w(TAG, it, "Error accepting invite")
+                PassLogger.w(TAG, "Error accepting invite")
+                PassLogger.w(TAG, it)
                 snackbarDispatcher(SharingSnackbarMessage.InviteAcceptError)
                 buttonsFlow.update {
                     InviteConfirmedButtonsState(
@@ -197,7 +200,8 @@ class InviteConfirmedViewModel @Inject constructor(
                 snackbarDispatcher(SharingSnackbarMessage.InviteRejected)
             }
             .onFailure {
-                PassLogger.w(TAG, it, "Error rejected invite")
+                PassLogger.w(TAG, "Error rejected invite")
+                PassLogger.w(TAG, it)
                 eventFlow.update { InviteConfirmedEvent.Close }
                 snackbarDispatcher(SharingSnackbarMessage.InviteRejectError)
             }

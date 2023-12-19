@@ -50,7 +50,8 @@ open class SyncWorker @AssistedInject constructor(
                 Result.success()
             },
             onFailure = {
-                PassLogger.w(TAG, it, "SyncWorker.doWork finished with error")
+                PassLogger.w(TAG, "SyncWorker.doWork finished with error")
+                PassLogger.w(TAG, it)
                 Result.failure()
             }
         )

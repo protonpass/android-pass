@@ -35,11 +35,11 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,7 +65,8 @@ class SelectVaultViewModel @Inject constructor(
             )
 
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, vaultsResult.exception, "Error observing vaults")
+                PassLogger.w(TAG, "Error observing vaults")
+                PassLogger.w(TAG, vaultsResult.exception)
                 snackbarDispatcher(VaultSnackbarMessage.CannotGetVaultListError)
                 SelectVaultUiState.Error
             }

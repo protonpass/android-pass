@@ -564,7 +564,8 @@ class LoginDetailViewModel @Inject constructor(
             }
         }
         .catch { e ->
-            PassLogger.w(TAG, e, "Error observing totp")
+            PassLogger.w(TAG, "Error observing totp")
+            PassLogger.w(TAG, e)
             snackbarDispatcher(DetailSnackbarMessages.GenerateTotpError)
             emit(TotpUiState.Hidden)
         }
@@ -583,7 +584,8 @@ class LoginDetailViewModel @Inject constructor(
                     }
                 },
                 onFailure = {
-                    PassLogger.w(TAG, it, "Error fetching alias for item")
+                    PassLogger.w(TAG, "Error fetching alias for item")
+                    PassLogger.w(TAG, it)
                     None
                 }
             )

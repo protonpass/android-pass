@@ -37,11 +37,11 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.api.usecases.ObserveVaultById
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -126,7 +126,8 @@ class SharingWithViewModel @Inject constructor(
                 }
             }
             .onFailure {
-                PassLogger.w(TAG, it, "Error getting invite user mode")
+                PassLogger.w(TAG, "Error getting invite user mode")
+                PassLogger.w(TAG, it)
                 isEmailNotValidState.update { EmailNotValidReason.CannotGetEmailInfo }
             }
         isLoadingState.update { IsLoadingState.NotLoading }

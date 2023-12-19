@@ -225,7 +225,8 @@ class LauncherViewModel @Inject constructor(
                 .flatMap { internalSettingsRepository.clearSettings() }
                 .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
                 .onFailure {
-                    PassLogger.w(TAG, it, "Error clearing preferences")
+                    PassLogger.w(TAG, "Error clearing preferences")
+                    PassLogger.w(TAG, it)
                 }
         }
     }
@@ -244,7 +245,8 @@ class LauncherViewModel @Inject constructor(
                         viewModelScope.launch {
                             runCatching { refreshPlan() }
                                 .onFailure { e ->
-                                    PassLogger.w(TAG, e, "Failed refreshing plan")
+                                    PassLogger.w(TAG, "Failed refreshing plan")
+                                    PassLogger.w(TAG, e)
                                 }
                         }
                     }
@@ -279,7 +281,8 @@ class LauncherViewModel @Inject constructor(
                 .flatMap { internalSettingsRepository.clearSettings() }
                 .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
                 .onFailure {
-                    PassLogger.w(TAG, it, "Error clearing preferences")
+                    PassLogger.w(TAG, "Error clearing preferences")
+                    PassLogger.w(TAG, it)
                 }
         }
     }

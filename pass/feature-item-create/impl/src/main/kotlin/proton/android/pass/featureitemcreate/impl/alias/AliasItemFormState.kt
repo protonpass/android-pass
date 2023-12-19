@@ -52,7 +52,8 @@ data class AliasItemFormState(
             if (it is AliasPrefixError) {
                 mutableSet.add(it.toError())
             } else {
-                PassLogger.w(TAG, it, "Error validating alias prefix")
+                PassLogger.w(TAG, "Error validating alias prefix")
+                PassLogger.w(TAG, it)
             }
         }
 

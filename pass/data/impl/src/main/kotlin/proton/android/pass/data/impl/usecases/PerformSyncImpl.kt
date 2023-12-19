@@ -56,7 +56,8 @@ class PerformSyncImpl @Inject constructor(
         }.fold(
             onSuccess = { Result.success(Unit) },
             onFailure = {
-                PassLogger.w(TAG, it, "Apply pending events error")
+                PassLogger.w(TAG, "Apply pending events error")
+                PassLogger.w(TAG, it)
                 Result.failure(it)
             }
         )
@@ -68,7 +69,8 @@ class PerformSyncImpl @Inject constructor(
         }.fold(
             onSuccess = { Result.success(Unit) },
             onFailure = {
-                PassLogger.w(TAG, it, "Refresh invites")
+                PassLogger.w(TAG, "Refresh invites")
+                PassLogger.w(TAG, it)
                 Result.failure(it)
             }
         )

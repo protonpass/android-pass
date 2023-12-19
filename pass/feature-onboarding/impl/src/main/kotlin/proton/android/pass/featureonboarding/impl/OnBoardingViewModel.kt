@@ -103,7 +103,8 @@ class OnBoardingViewModel @Inject constructor(
         val userAccessData = runCatching {
             observeUserAccessData().filterNotNull().first()
         }.getOrElse {
-            PassLogger.w(TAG, it, "Error getting user access data")
+            PassLogger.w(TAG, "Error getting user access data")
+            PassLogger.w(TAG, it)
             return false
         }
         return userAccessData.waitingNewUserInvites > 0

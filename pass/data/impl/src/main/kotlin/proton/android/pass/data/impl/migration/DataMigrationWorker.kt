@@ -41,7 +41,8 @@ open class DataMigrationWorker @AssistedInject constructor(
                     Result.success()
                 },
                 onFailure = {
-                    PassLogger.w(TAG, it, "Data migration worker failed")
+                    PassLogger.w(TAG, "Data migration worker failed")
+                    PassLogger.w(TAG, it)
                     Result.failure()
                 }
             )

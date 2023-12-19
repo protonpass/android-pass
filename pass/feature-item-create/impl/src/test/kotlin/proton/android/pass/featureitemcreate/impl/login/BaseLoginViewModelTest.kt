@@ -25,15 +25,21 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
+import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
+import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
 
@@ -46,21 +52,27 @@ internal class BaseLoginViewModelTest {
     private lateinit var clipboardManager: TestClipboardManager
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var baseLoginViewModel: BaseLoginViewModel
+    private lateinit var encryptionContextProvider: EncryptionContextProvider
+    private lateinit var draftRepository: DraftRepository
+
 
     @Before
     fun setUp() {
         totpManager = TestTotpManager()
         clipboardManager = TestClipboardManager()
         observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
+        draftRepository = TestDraftRepository()
+        encryptionContextProvider = TestEncryptionContextProvider()
         baseLoginViewModel = object : BaseLoginViewModel(
             accountManager = TestAccountManager(),
             snackbarDispatcher = TestSnackbarDispatcher(),
             clipboardManager = clipboardManager,
             totpManager = totpManager,
-            draftRepository = TestDraftRepository(),
+            draftRepository = draftRepository,
             observeCurrentUser = observeCurrentUser,
             observeUpgradeInfo = TestObserveUpgradeInfo(),
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            encryptionContextProvider = encryptionContextProvider,
+            passwordStrengthCalculator = TestPasswordStrengthCalculator(),
             savedStateHandleProvider = TestSavedStateHandleProvider()
         ) {}
     }
@@ -86,6 +98,29 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onPasswordChange(passwordInput)
         assertThat(baseLoginViewModel.loginItemFormState.password)
             .isEqualTo(UIHiddenState.Revealed(encryptedPassword, passwordInput))
+    }
+
+    @Test
+    fun `WHEN password changed by user THEN update password strength state`() = runTest {
+        val newPasswordValue = TestUtils.randomString()
+        val expectedPasswordStrength = PasswordStrength.Strong
+
+        baseLoginViewModel.onPasswordChange(newPasswordValue)
+
+        assertThat(baseLoginViewModel.loginItemFormState.passwordStrength)
+            .isEqualTo(expectedPasswordStrength)
+    }
+
+    @Test
+    fun `WHEN password changed by automatic generation THEN update password strength state`() {
+        val newPasswordValue = encryptionContextProvider.withEncryptionContext {
+            encrypt(TestUtils.randomString())
+        }
+        val expectedPasswordStrength = PasswordStrength.Strong
+        draftRepository.save(DRAFT_PASSWORD_KEY, newPasswordValue)
+
+        assertThat(baseLoginViewModel.loginItemFormState.passwordStrength)
+            .isEqualTo(expectedPasswordStrength)
     }
 
     @Test

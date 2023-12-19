@@ -120,7 +120,8 @@ class ItemRepositoryImpl @Inject constructor(
             val body = try {
                 createItem.create(shareKey, contents)
             } catch (e: RuntimeException) {
-                PassLogger.w(TAG, e, "Error creating item")
+                PassLogger.w(TAG, "Error creating item")
+                PassLogger.w(TAG, e)
                 throw e
             }
 
@@ -332,7 +333,8 @@ class ItemRepositoryImpl @Inject constructor(
                     }
                 }
                 .onFailure {
-                    PassLogger.w(TAG, it, "Error trashing items for share")
+                    PassLogger.w(TAG, "Error trashing items for share")
+                    PassLogger.w(TAG, it)
                 }
         }
         .transpose()
@@ -375,7 +377,8 @@ class ItemRepositoryImpl @Inject constructor(
                     }
                 }
                 .onFailure {
-                    PassLogger.w(TAG, it, "Error untrashing items for share")
+                    PassLogger.w(TAG, "Error untrashing items for share")
+                    PassLogger.w(TAG, it)
                 }
         }
         .transpose()
@@ -463,7 +466,8 @@ class ItemRepositoryImpl @Inject constructor(
                     }
                 }
                 .onFailure {
-                    PassLogger.w(TAG, it, "Error deleting item")
+                    PassLogger.w(TAG, "Error deleting item")
+                    PassLogger.w(TAG, it)
                 }
         }
         .transpose()
@@ -634,7 +638,8 @@ class ItemRepositoryImpl @Inject constructor(
             successes.isNotEmpty() && failures.isNotEmpty() -> {
                 val firstFailure = failures.first().exceptionOrNull()
                     ?: IllegalStateException("Error migrating items. Could not migrate some")
-                PassLogger.w(TAG, firstFailure, "Error migrating items. Could not migrate some")
+                PassLogger.w(TAG, "Error migrating items. Could not migrate some")
+                PassLogger.w(TAG, firstFailure)
 
                 val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
                 val migratedItemsMapped = encryptionContextProvider.withEncryptionContext {
@@ -647,7 +652,8 @@ class ItemRepositoryImpl @Inject constructor(
             successes.isEmpty() && failures.isNotEmpty() -> {
                 val firstFailure = failures.first().exceptionOrNull()
                     ?: IllegalStateException("Error migrating items. Could not migrate any")
-                PassLogger.w(TAG, firstFailure, "Error migrating items. Could not migrate any")
+                PassLogger.w(TAG, "Error migrating items. Could not migrate any")
+                PassLogger.w(TAG, firstFailure)
                 MigrateItemsResult.NoneMigrated(firstFailure)
             }
 
@@ -798,7 +804,8 @@ class ItemRepositoryImpl @Inject constructor(
                 }
             }
             .onFailure {
-                PassLogger.w(TAG, it, "Error clearing items for share")
+                PassLogger.w(TAG, "Error clearing items for share")
+                PassLogger.w(TAG, it)
             }
     }.transpose().map { }
 

@@ -99,7 +99,8 @@ class ShareRepositoryImpl @Inject constructor(
         }.fold(
             onSuccess = { it },
             onFailure = {
-                PassLogger.w(TAG, it, "Error in CreateVaultRequest")
+                PassLogger.w(TAG, "Error in CreateVaultRequest")
+                PassLogger.w(TAG, it)
                 throw it
             }
         )
@@ -267,7 +268,8 @@ class ShareRepositoryImpl @Inject constructor(
         }.fold(
             onSuccess = { it },
             onFailure = {
-                PassLogger.w(TAG, it, "Error in updateVault")
+                PassLogger.w(TAG, "Error in updateVault")
+                PassLogger.w(TAG, it)
                 throw it
             }
         )
@@ -444,7 +446,8 @@ class ShareRepositoryImpl @Inject constructor(
         val shareType = ShareType.map[entity.targetType]
         if (shareType == null) {
             val e = IllegalStateException("Unknown ShareType")
-            PassLogger.w(TAG, e, "Unknown ShareType [shareType=${entity.targetType}]")
+            PassLogger.w(TAG, "Unknown ShareType [shareType=${entity.targetType}]")
+            PassLogger.w(TAG, e)
             throw e
         }
 

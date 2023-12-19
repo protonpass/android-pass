@@ -39,6 +39,13 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RemoveMemberFromVault
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.SharePermission
+import proton.android.pass.domain.SharePermissionFlag
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.hasFlag
+import proton.android.pass.domain.toPermissions
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberEmailArg
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberShareIdArg
@@ -47,13 +54,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.SharePermission
-import proton.android.pass.domain.SharePermissionFlag
-import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.hasFlag
-import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 
 @HiltViewModel
@@ -146,7 +146,8 @@ class MemberOptionsViewModel @Inject constructor(
             eventFlow.update { MemberOptionsEvent.Close(refresh = true) }
             snackbarDispatcher(SharingSnackbarMessage.ChangeMemberPermissionSuccess)
         }.onFailure {
-            PassLogger.w(TAG, it, "Error changing member permissions")
+            PassLogger.w(TAG, "Error changing member permissions")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(SharingSnackbarMessage.ChangeMemberPermissionError)
         }
         isLoadingFlow.update { IsLoadingState.NotLoading }
@@ -166,7 +167,8 @@ class MemberOptionsViewModel @Inject constructor(
             eventFlow.update { MemberOptionsEvent.Close(refresh = true) }
             snackbarDispatcher(SharingSnackbarMessage.RemoveMemberSuccess)
         }.onFailure {
-            PassLogger.w(TAG, it, "Error removing member")
+            PassLogger.w(TAG, "Error removing member")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(SharingSnackbarMessage.RemoveMemberError)
         }
         isLoadingFlow.update { IsLoadingState.NotLoading }

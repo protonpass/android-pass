@@ -76,7 +76,8 @@ class AutosaveActivityViewModel @Inject constructor(
             .flatMap { internalSettingsRepository.clearSettings() }
             .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
             .onFailure {
-                PassLogger.w(TAG, it, "Error clearing preferences")
+                PassLogger.w(TAG, "Error clearing preferences")
+                PassLogger.w(TAG, it)
             }
 
         eventFlow.update { AutosaveEvent.Close.some() }

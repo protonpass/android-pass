@@ -34,6 +34,9 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.errors.CannotSendMoreInvitesError
 import proton.android.pass.data.api.usecases.CancelInvite
 import proton.android.pass.data.api.usecases.ResendInvite
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteIdArg
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeArg
@@ -43,9 +46,6 @@ import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeValu
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.domain.InviteId
-import proton.android.pass.domain.NewUserInviteId
-import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -98,7 +98,8 @@ class InviteOptionsViewModel @Inject constructor(
             eventFlow.update { InviteOptionsEvent.Close(refresh = true) }
             snackbarDispatcher(SharingSnackbarMessage.CancelInviteSuccess)
         }.onFailure {
-            PassLogger.w(TAG, it, "Error canceling invite")
+            PassLogger.w(TAG, "Error canceling invite")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(SharingSnackbarMessage.CancelInviteError)
         }
 
@@ -120,7 +121,8 @@ class InviteOptionsViewModel @Inject constructor(
             eventFlow.update { InviteOptionsEvent.Close(refresh = true) }
             snackbarDispatcher(SharingSnackbarMessage.ResendInviteSuccess)
         }.onFailure {
-            PassLogger.w(TAG, it, "Error resending invite")
+            PassLogger.w(TAG, "Error resending invite")
+            PassLogger.w(TAG, it)
             val message = if (it is CannotSendMoreInvitesError) {
                 SharingSnackbarMessage.TooManyInvitesSentError
             } else {

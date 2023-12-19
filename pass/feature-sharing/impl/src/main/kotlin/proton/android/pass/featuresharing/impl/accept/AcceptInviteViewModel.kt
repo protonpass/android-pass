@@ -41,10 +41,10 @@ import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.RejectInvite
+import proton.android.pass.domain.PendingInvite
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.domain.PendingInvite
 import javax.inject.Inject
 
 @HiltViewModel
@@ -70,7 +70,8 @@ class AcceptInviteViewModel @Inject constructor(
         .asLoadingResult()
         .onEach {
             if (it is LoadingResult.Error) {
-                PassLogger.w(TAG, it.exception, "Error loading invite")
+                PassLogger.w(TAG, "Error loading invite")
+                PassLogger.w(TAG, it.exception)
                 eventFlow.update { AcceptInviteEvent.Close }
             }
         }
@@ -85,7 +86,8 @@ class AcceptInviteViewModel @Inject constructor(
         val content = when (invite) {
             LoadingResult.Loading -> AcceptInviteUiContent.Loading
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, invite.exception, "Error loading invite")
+                PassLogger.w(TAG, "Error loading invite")
+                PassLogger.w(TAG, invite.exception)
                 snackbarDispatcher(SharingSnackbarMessage.GetInviteError)
                 AcceptInviteUiContent.Loading
             }
@@ -112,7 +114,8 @@ class AcceptInviteViewModel @Inject constructor(
         if (invite == null) return@launch
         acceptInvite(invite.inviteToken)
             .catch {
-                PassLogger.w(TAG, it, "Error accepting invite")
+                PassLogger.w(TAG, "Error accepting invite")
+                PassLogger.w(TAG, it)
 
                 val message = if (it is CannotCreateMoreVaultsError) {
                     SharingSnackbarMessage.InviteAcceptErrorCannotCreateMoreVaults
@@ -205,7 +208,8 @@ class AcceptInviteViewModel @Inject constructor(
                 snackbarDispatcher(SharingSnackbarMessage.InviteRejected)
             }
             .onFailure {
-                PassLogger.w(TAG, it, "Error rejected invite")
+                PassLogger.w(TAG, "Error rejected invite")
+                PassLogger.w(TAG, it)
                 eventFlow.update { AcceptInviteEvent.Close }
                 snackbarDispatcher(SharingSnackbarMessage.InviteRejectError)
             }

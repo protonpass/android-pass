@@ -198,7 +198,8 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 }
 
                 is MigrateItemsResult.NoneMigrated -> {
-                    PassLogger.w(TAG, migrateResult.exception, "Error migrating items")
+                    PassLogger.w(TAG, "Error migrating items")
+                    PassLogger.w(TAG, migrateResult.exception)
                     snackbarDispatcher(MigrateSnackbarMessage.ItemNotMigrated)
                 }
             }

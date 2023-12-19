@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.dialogs
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
@@ -84,6 +85,7 @@ fun ConfirmWithLoadingDialog(
     onCancel: () -> Unit
 ) {
     if (!show) return
+    BackHandler { onDismiss() }
 
     val confirmColor = if (isConfirmEnabled) {
         if (isConfirmActionDestructive) {

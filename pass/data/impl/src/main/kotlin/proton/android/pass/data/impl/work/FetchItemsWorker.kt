@@ -49,8 +49,8 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.impl.R
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.atomic.AtomicBoolean
 import me.proton.core.notification.R as CoreR
 
@@ -96,7 +96,8 @@ open class FetchItemsWorker @AssistedInject constructor(
                             PassLogger.d(TAG, "ShareId $shareId progress: $progress")
                         }.collect()
                     }.onFailure {
-                        PassLogger.w(TAG, it, "Error refreshing items on share ${shareId.id}")
+                        PassLogger.w(TAG, "Error refreshing items on share ${shareId.id}")
+                        PassLogger.w(TAG, it)
                     }
                     semaphore.release()
                     result

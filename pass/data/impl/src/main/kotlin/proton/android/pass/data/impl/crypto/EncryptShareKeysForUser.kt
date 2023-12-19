@@ -25,9 +25,9 @@ import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -99,7 +99,8 @@ class EncryptShareKeysForUserImpl @Inject constructor(
         }.fold(
             onSuccess = { Result.success(it) },
             onFailure = {
-                PassLogger.w(TAG, it, "Failed to encrypt invite keys")
+                PassLogger.w(TAG, "Failed to encrypt invite keys")
+                PassLogger.w(TAG, it)
                 Result.failure(it)
             }
         )

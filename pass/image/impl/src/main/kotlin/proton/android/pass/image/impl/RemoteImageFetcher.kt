@@ -36,9 +36,9 @@ import proton.android.pass.crypto.api.HashUtils
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ImageResponseResult
 import proton.android.pass.data.api.usecases.RequestImage
+import proton.android.pass.domain.WebsiteUrl
 import proton.android.pass.image.impl.CacheUtils.cacheDir
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.domain.WebsiteUrl
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -86,7 +86,8 @@ class RemoteImageFetcher(
         val res = requestImage.invoke(domain).first()
         val imageData = when (res) {
             is ImageResponseResult.Error -> {
-                PassLogger.w(TAG, res.throwable, "Error fetching the image")
+                PassLogger.w(TAG, "Error fetching the image")
+                PassLogger.w(TAG, res.throwable)
                 return null
             }
             is ImageResponseResult.Empty -> {

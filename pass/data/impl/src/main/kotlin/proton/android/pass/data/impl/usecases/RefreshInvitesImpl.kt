@@ -42,7 +42,8 @@ class RefreshInvitesImpl @Inject constructor(
                 }
             }
             .onFailure {
-                PassLogger.w(TAG, it, "Error refreshing invites")
+                PassLogger.w(TAG, "Error refreshing invites")
+                PassLogger.w(TAG, it)
             }
     }
 

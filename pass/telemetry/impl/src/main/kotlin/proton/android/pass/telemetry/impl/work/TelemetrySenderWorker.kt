@@ -51,7 +51,8 @@ open class TelemetrySenderWorker @AssistedInject constructor(
         }.fold(
             onSuccess = { Result.success() },
             onFailure = {
-                PassLogger.w(TAG, it, "Error sending telemetry")
+                PassLogger.w(TAG, "Error sending telemetry")
+                PassLogger.w(TAG, it)
                 if (it is ApiException && it.isRetryable()) {
                     Result.retry()
                 } else {

@@ -80,10 +80,12 @@ fun PhotoPickerTotpScreen(
                             .onSuccess { withContext(Dispatchers.Main) { onQrReceived(it) } }
                             .onFailure { withContext(Dispatchers.Main) { onQrNotDetected() } }
                     } catch (e: IOException) {
-                        PassLogger.w(TAG, e, "Error decoding bitmap")
+                        PassLogger.w(TAG, "Error decoding bitmap")
+                        PassLogger.w(TAG, e)
                         withContext(Dispatchers.Main) { onQrNotDetected() }
                     } catch (e: FileNotFoundException) {
-                        PassLogger.w(TAG, e, "File not found")
+                        PassLogger.w(TAG, "File not found")
+                        PassLogger.w(TAG, e)
                         withContext(Dispatchers.Main) { onQrNotDetected() }
                     }
                 }

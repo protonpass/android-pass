@@ -69,7 +69,8 @@ class CreateVaultViewModel @Inject constructor(
             is LoadingResult.Success -> baseState.isLoading to upgrade.data.hasReachedVaultLimit()
             LoadingResult.Loading -> IsLoadingState.Loading to false
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, upgrade.exception, "Get upgrade info failed")
+                PassLogger.w(TAG, "Get upgrade info failed")
+                PassLogger.w(TAG, upgrade.exception)
                 baseState.isLoading to false
             }
         }
@@ -108,7 +109,8 @@ class CreateVaultViewModel @Inject constructor(
                 val message = if (it is CannotCreateMoreVaultsError) {
                     VaultSnackbarMessage.CannotCreateMoreVaultsError
                 } else {
-                    PassLogger.w(TAG, it, "Create vault failed")
+                    PassLogger.w(TAG, "Create vault failed")
+                    PassLogger.w(TAG, it)
                     VaultSnackbarMessage.CreateVaultError
                 }
                 snackbarDispatcher(message)
@@ -145,20 +147,23 @@ class CreateVaultViewModel @Inject constructor(
                         is MigrateItemsResult.SomeMigrated -> {}
 
                         is MigrateItemsResult.NoneMigrated -> {
-                            PassLogger.w(TAG, it.exception, "Error migrating item")
+                            PassLogger.w(TAG, "Error migrating item")
+                            PassLogger.w(TAG, it.exception)
                             snackbarDispatcher(VaultSnackbarMessage.CreateVaultError)
                         }
                     }
 
                 }.onFailure { migrateItemError ->
-                    PassLogger.w(TAG, migrateItemError, "Migrate item failed. Deleting vault")
+                    PassLogger.w(TAG, "Migrate item failed. Deleting vault")
+                    PassLogger.w(TAG, migrateItemError)
                     runCatching {
                         deleteVault(newVault.id)
                     }.onSuccess {
                         PassLogger.d(TAG, "Vault deleted successfully")
                         snackbarDispatcher(VaultSnackbarMessage.CreateVaultError)
                     }.onFailure { deleteVaultError ->
-                        PassLogger.w(TAG, deleteVaultError, "Could not delete vault")
+                        PassLogger.w(TAG, "Could not delete vault")
+                        PassLogger.w(TAG, deleteVaultError)
                         snackbarDispatcher(VaultSnackbarMessage.CreateVaultError)
                     }
                 }

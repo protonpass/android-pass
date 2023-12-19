@@ -35,8 +35,8 @@ import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.ConfirmInviteRequest
 import proton.android.pass.data.impl.requests.InviteKeyRotation
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -69,7 +69,8 @@ class ConfirmNewUserInviteImpl @Inject constructor(
         }
 
         val body = createRequest(userId, shareId, invite).getOrElse {
-            PassLogger.w(TAG, it, "Error creating confirmation request")
+            PassLogger.w(TAG, "Error creating confirmation request")
+            PassLogger.w(TAG, it)
             return Result.failure(it)
         }
 
@@ -82,7 +83,8 @@ class ConfirmNewUserInviteImpl @Inject constructor(
         }.exceptionOrNull
 
         return if (error != null) {
-            PassLogger.w(TAG, error, "Error confirming invite")
+            PassLogger.w(TAG, "Error confirming invite")
+            PassLogger.w(TAG, error)
             Result.failure(error)
         } else {
             Result.success(Unit)
@@ -106,7 +108,8 @@ class ConfirmNewUserInviteImpl @Inject constructor(
                     address
                 },
                 onFailure = {
-                    PassLogger.w(TAG, it, "Failed to get user addresses")
+                    PassLogger.w(TAG, "Failed to get user addresses")
+                    PassLogger.w(TAG, it)
                     return Result.failure(it)
                 }
             )
@@ -127,7 +130,8 @@ class ConfirmNewUserInviteImpl @Inject constructor(
             email = invite.email,
             vaultKey = vaultKey
         ).getOrElse {
-            PassLogger.w(TAG, it, "Error validating invite signature")
+            PassLogger.w(TAG, "Error validating invite signature")
+            PassLogger.w(TAG, it)
             return Result.failure(it)
         }
 
@@ -137,7 +141,8 @@ class ConfirmNewUserInviteImpl @Inject constructor(
             targetEmail = invite.email,
             shareKeys = shareKeys
         ).getOrElse {
-            PassLogger.w(TAG, it, "Error encrypting share keys")
+            PassLogger.w(TAG, "Error encrypting share keys")
+            PassLogger.w(TAG, it)
             return Result.failure(it)
         }
 

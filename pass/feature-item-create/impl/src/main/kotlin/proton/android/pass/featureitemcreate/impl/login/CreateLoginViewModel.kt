@@ -312,7 +312,8 @@ class CreateLoginViewModel @Inject constructor(
                 is AliasRateLimitError -> snackbarDispatcher(AliasRateLimited)
                 else -> snackbarDispatcher(ItemCreationError)
             }
-            PassLogger.w(TAG, it, "Could not create item")
+            PassLogger.w(TAG, "Could not create item")
+            PassLogger.w(TAG, it)
         }
     }
 

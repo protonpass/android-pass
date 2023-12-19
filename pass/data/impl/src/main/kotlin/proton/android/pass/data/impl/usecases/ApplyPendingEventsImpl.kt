@@ -114,7 +114,7 @@ class ApplyPendingEventsImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId
     ) {
-        while (true) {
+        while (currentCoroutineContext().isActive) {
             val events = eventRepository.getEvents(userId, addressId, shareId)
             if (events.shareResponse != null) {
                 shareRepository.applyUpdateShareEvent(

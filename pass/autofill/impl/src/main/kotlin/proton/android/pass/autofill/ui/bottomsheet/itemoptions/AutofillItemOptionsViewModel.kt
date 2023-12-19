@@ -92,7 +92,8 @@ class AutofillItemOptionsViewModel @Inject constructor(
                 snackbarDispatcher(AutofillItemOptionsSnackbarMessage.SentToTrashSuccess)
             }
             .onFailure {
-                PassLogger.w(TAG, it, "Error sending item to trash")
+                PassLogger.w(TAG, "Error sending item to trash")
+                PassLogger.w(TAG, it)
                 snackbarDispatcher(AutofillItemOptionsSnackbarMessage.SentToTrashError)
             }
         loadingFlow.update { IsLoadingState.NotLoading }

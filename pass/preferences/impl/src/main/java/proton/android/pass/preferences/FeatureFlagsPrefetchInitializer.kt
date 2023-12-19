@@ -60,7 +60,8 @@ class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
                         featureFlagManager.refresh()
                     }
                 }.onFailure {
-                    PassLogger.w(TAG, it, "Failed to refresh feature flags")
+                    PassLogger.w(TAG, "Failed to refresh feature flags")
+                    PassLogger.w(TAG, it)
                 }
             }
             .launchIn(passAppLifecycleProvider.lifecycle.coroutineScope)

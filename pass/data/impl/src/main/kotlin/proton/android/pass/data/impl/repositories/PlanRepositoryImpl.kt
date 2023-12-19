@@ -31,10 +31,10 @@ import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
 import proton.android.pass.data.impl.local.LocalPlanDataSource
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.RemotePlanDataSource
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.log.api.PassLogger
 import java.lang.Math.ceil
 import javax.inject.Inject
 
@@ -89,7 +89,8 @@ class PlanRepositoryImpl @Inject constructor(
         }.onSuccess {
             PassLogger.i(TAG, "Plan refreshed")
         }.onFailure {
-            PassLogger.w(TAG, it, "Plan failed to refresh")
+            PassLogger.w(TAG, "Plan failed to refresh")
+            PassLogger.w(TAG, it)
         }
     }
 

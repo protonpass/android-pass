@@ -75,7 +75,8 @@ class SyncManagerImpl @Inject constructor(
                             while (currentCoroutineContext().isActive) {
                                 performSync()
                                     .onFailure { error ->
-                                        PassLogger.w(TAG, error, "Error in performSync")
+                                        PassLogger.w(TAG, "Error in performSync")
+                                        PassLogger.w(TAG, error)
                                     }
                                 delay(initialDelay)
                             }

@@ -42,7 +42,8 @@ class BiometryAuthTimeHolderImpl @Inject constructor(
         if (authTime is Some) {
             internalSettingsRepository.setLastUnlockedTime(authTime.value)
                 .onFailure {
-                    PassLogger.w(TAG, it, "Error storing last unlocked time")
+                    PassLogger.w(TAG, "Error storing last unlocked time")
+                    PassLogger.w(TAG, it)
                 }
         }
 
@@ -50,7 +51,8 @@ class BiometryAuthTimeHolderImpl @Inject constructor(
         if (bootCount is Some)
             internalSettingsRepository.setBootCount(bootCount.value)
                 .onFailure {
-                    PassLogger.w(TAG, it, "Error storing boot count")
+                    PassLogger.w(TAG, "Error storing boot count")
+                    PassLogger.w(TAG, it)
                 }
     }
 

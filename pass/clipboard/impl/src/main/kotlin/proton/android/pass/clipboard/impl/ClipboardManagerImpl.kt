@@ -86,7 +86,8 @@ class ClipboardManagerImpl @Inject constructor(
         }.onSuccess {
             PassLogger.i(TAG, "Successfully cleared clipboard")
         }.onFailure {
-            PassLogger.w(TAG, it, "Could not clear clipboard")
+            PassLogger.w(TAG, "Could not clear clipboard")
+            PassLogger.w(TAG, it)
         }
     }
 

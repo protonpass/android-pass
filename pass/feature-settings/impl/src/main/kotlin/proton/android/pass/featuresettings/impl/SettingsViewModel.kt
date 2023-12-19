@@ -35,8 +35,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
@@ -130,7 +130,8 @@ class SettingsViewModel @Inject constructor(
                     snackbarDispatcher(SettingsSnackbarMessage.ClearIconCacheSuccess)
                 }
                 .onFailure {
-                    PassLogger.w(TAG, it, "Error clearing icon cache")
+                    PassLogger.w(TAG, "Error clearing icon cache")
+                    PassLogger.w(TAG, it)
                     snackbarDispatcher(SettingsSnackbarMessage.ClearIconCacheError)
                 }
         }

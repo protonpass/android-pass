@@ -130,7 +130,8 @@ class ProfileViewModel @Inject constructor(
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, upgradeInfo.exception, "Error getting upgradeInfo")
+                PassLogger.w(TAG, "Error getting upgradeInfo")
+                PassLogger.w(TAG, upgradeInfo.exception)
                 PlanInfo.Hide to false
             }
 

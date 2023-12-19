@@ -59,7 +59,8 @@ class VaultDrawerViewModel @Inject constructor(
             )
 
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, shares.exception, "Cannot retrieve all shares")
+                PassLogger.w(TAG, "Cannot retrieve all shares")
+                PassLogger.w(TAG, shares.exception)
                 VaultDrawerUiState(
                     vaultSelection = selectedVault,
                     shares = persistentListOf(),

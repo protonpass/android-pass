@@ -32,9 +32,9 @@ import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.CreateInviteKey
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class InviteToVaultImpl @Inject constructor(
@@ -75,7 +75,8 @@ class InviteToVaultImpl @Inject constructor(
                     address
                 },
                 onFailure = {
-                    PassLogger.w(TAG, it, "Failed to get user addresses")
+                    PassLogger.w(TAG, "Failed to get user addresses")
+                    PassLogger.w(TAG, it)
                     return Result.failure(it)
                 }
             )
@@ -155,7 +156,8 @@ class InviteToVaultImpl @Inject constructor(
             email = targetEmail,
             vaultKey = vaultKey
         ).getOrElse {
-            PassLogger.w(TAG, it, "Failed to create new user invite signature")
+            PassLogger.w(TAG, "Failed to create new user invite signature")
+            PassLogger.w(TAG, it)
             return Result.failure(it)
         }
 

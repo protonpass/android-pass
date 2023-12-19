@@ -30,12 +30,12 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
+import proton.android.pass.log.api.PassLogger
 
 @HiltWorker
 class UpdateAutofillItemWorker @AssistedInject constructor(
@@ -108,7 +108,8 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
                 Result.success()
             },
             onFailure = {
-                PassLogger.w(TAG, it, "Failed update last used")
+                PassLogger.w(TAG, "Failed update last used")
+                PassLogger.w(TAG, it)
                 Result.failure()
             }
         )

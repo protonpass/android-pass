@@ -159,9 +159,4 @@
     <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade for more inboxes</string>
     <string name="create_alias_content_limit_banner">You have reached the limit of aliases you can create. Create unlimited number of aliases when you upgrade your subscription.</string>
 
-    <!--  TOTP limit  -->
-    <string name="input_password_strength_strong">Strong</string>
-    <string name="input_password_strength_vulnerable">Vulnerable</string>
-    <string name="input_password_strength_weak">Weak</string>
-
 </resources>

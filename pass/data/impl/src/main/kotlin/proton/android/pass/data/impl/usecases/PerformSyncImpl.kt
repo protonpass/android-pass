@@ -73,7 +73,6 @@ class PerformSyncImpl @Inject constructor(
                 onFailure = {
                     PassLogger.i(TAG, "Refresh invites error")
                     PassLogger.w(TAG, it)
-                PassLogger.w(TAG, it)
                     Result.failure(it)
                 }
             )

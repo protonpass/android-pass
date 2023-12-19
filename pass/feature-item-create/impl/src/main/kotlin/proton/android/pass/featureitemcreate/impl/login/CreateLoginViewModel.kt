@@ -45,6 +45,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -98,6 +99,7 @@ class CreateLoginViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val draftRepository: DraftRepository,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    passwordStrengthCalculator: PasswordStrengthCalculator,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
@@ -115,7 +117,8 @@ class CreateLoginViewModel @Inject constructor(
     observeUpgradeInfo = observeUpgradeInfo,
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
-    savedStateHandleProvider = savedStateHandleProvider
+    passwordStrengthCalculator = passwordStrengthCalculator,
+    savedStateHandleProvider = savedStateHandleProvider,
 ) {
     private val navShareId: Option<ShareId> =
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
@@ -227,6 +230,7 @@ class CreateLoginViewModel @Inject constructor(
             title = initialContents.title ?: currentValue.title,
             username = username,
             password = password,
+            passwordStrength = currentValue.passwordStrength,
             urls = websites,
             packageInfoSet = packageInfoSet,
             primaryTotp = primaryTotp,

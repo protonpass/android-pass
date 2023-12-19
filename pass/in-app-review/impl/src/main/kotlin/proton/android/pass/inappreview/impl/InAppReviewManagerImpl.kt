@@ -29,10 +29,10 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.domain.PlanType
 import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
-import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 
 class InAppReviewManagerImpl @Inject constructor(
@@ -68,7 +68,8 @@ class InAppReviewManagerImpl @Inject constructor(
             .addOnSuccessListener { reviewInfo ->
                 manager.launchReviewFlow(activity, reviewInfo)
                     .addOnFailureListener { exception ->
-                        PassLogger.w(TAG, exception, "Review flow failed")
+                        PassLogger.w(TAG, "Review flow failed")
+                        PassLogger.w(TAG, exception)
                     }
                     .addOnSuccessListener {
                         PassLogger.i(TAG, "Review flow completed")
@@ -76,7 +77,8 @@ class InAppReviewManagerImpl @Inject constructor(
             }
             .addOnFailureListener { exception ->
                 @ReviewErrorCode val reviewErrorCode = (exception as? ReviewException)?.errorCode
-                PassLogger.w(TAG, exception, "reviewErrorCode=$reviewErrorCode")
+                PassLogger.w(TAG, "reviewErrorCode=$reviewErrorCode")
+                PassLogger.w(TAG, exception)
             }
             .addOnCompleteListener {
                 internalSettingsRepository.setInAppReviewTriggered(true)

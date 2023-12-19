@@ -184,7 +184,8 @@ class SelectItemViewModel @Inject constructor(
         val vaults = when (vaultsRes) {
             is LoadingResult.Success -> vaultsRes.data
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, vaultsRes.exception, "Error observing vaults")
+                PassLogger.w(TAG, "Error observing vaults")
+                PassLogger.w(TAG, vaultsRes.exception)
                 return@flatMapLatest flowOf(LoadingResult.Error(vaultsRes.exception))
             }
 

@@ -49,16 +49,16 @@ import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
-import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermissionFlag
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.hasFlag
 import proton.android.pass.domain.toPermissions
+import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -192,6 +192,7 @@ class ManageVaultViewModel @Inject constructor(
             refreshFlow.update { true }
         }.onFailure {
             PassLogger.w(TAG, "Error confirming invite ${inviteId.value}")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(SharingSnackbarMessage.ConfirmInviteError)
         }
 

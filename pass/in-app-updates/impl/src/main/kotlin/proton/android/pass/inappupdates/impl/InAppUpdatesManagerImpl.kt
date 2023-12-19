@@ -85,7 +85,8 @@ class InAppUpdatesManagerImpl @Inject constructor(
             .addOnCanceledListener { appUpdateManager.unregisterListener(listener) }
             .addOnFailureListener {
                 appUpdateManager.unregisterListener(listener)
-                PassLogger.w(TAG, it, "checkForUpdates failed")
+                PassLogger.w(TAG, "checkForUpdates failed")
+                PassLogger.w(TAG, it)
             }
     }
 
@@ -126,7 +127,8 @@ class InAppUpdatesManagerImpl @Inject constructor(
                 val updateOptions = AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build()
                 appUpdateManager.startUpdateFlowForResult(appUpdateInfo, launcher, updateOptions)
             } catch (e: IntentSender.SendIntentException) {
-                PassLogger.w(TAG, e, "startUpdateFlowForResult failed")
+                PassLogger.w(TAG, "startUpdateFlowForResult failed")
+                PassLogger.w(TAG, e)
             }
         }
     }

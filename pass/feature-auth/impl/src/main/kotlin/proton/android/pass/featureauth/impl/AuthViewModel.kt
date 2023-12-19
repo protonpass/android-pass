@@ -93,7 +93,8 @@ class AuthViewModel @Inject constructor(
         val address = when (userEmail) {
             LoadingResult.Loading -> None
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, userEmail.exception, "Error loading userEmail")
+                PassLogger.w(TAG, "Error loading userEmail")
+                PassLogger.w(TAG, userEmail.exception)
                 None
             }
             is LoadingResult.Success -> userEmail.data.some()
@@ -184,7 +185,8 @@ class AuthViewModel @Inject constructor(
                 }
             }
             .onFailure { err ->
-                PassLogger.w(TAG, err, "Error checking master password")
+                PassLogger.w(TAG, "Error checking master password")
+                PassLogger.w(TAG, err)
                 formContentFlow.update { it.copy(error = AuthError.UnknownError.some()) }
             }
 

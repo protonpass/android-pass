@@ -24,12 +24,12 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class CanShareVaultImpl @Inject constructor(
@@ -40,7 +40,8 @@ class CanShareVaultImpl @Inject constructor(
 
     override suspend fun invoke(shareId: ShareId): CanShareVaultStatus {
         val vault = runCatching { getVaultById(shareId = shareId).first() }.getOrElse {
-            PassLogger.w(TAG, it, "canShare vault not found")
+            PassLogger.w(TAG, "canShare vault not found")
+            PassLogger.w(TAG, it)
             return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown)
         }
 
@@ -54,7 +55,8 @@ class CanShareVaultImpl @Inject constructor(
         }
 
         val share = runCatching { getShareById(shareId = vault.shareId) }.getOrElse {
-            PassLogger.w(TAG, it, "canShare share not found")
+            PassLogger.w(TAG, "canShare share not found")
+            PassLogger.w(TAG, it)
             return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown)
         }
 

@@ -76,7 +76,8 @@ class TelemetryRepositoryImpl @Inject constructor(
                         val max = eventChunk.last().id
                         localDataSource.removeInRange(min = min, max = max)
                     }.onFailure {
-                        PassLogger.w(TAG, it, "Error sending events")
+                        PassLogger.w(TAG, "Error sending events")
+                        PassLogger.w(TAG, it)
                     }
                 }
             }

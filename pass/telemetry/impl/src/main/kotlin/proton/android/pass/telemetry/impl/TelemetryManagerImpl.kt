@@ -53,7 +53,8 @@ class TelemetryManagerImpl @Inject constructor(
                 }.onSuccess {
                     PassLogger.v(TAG, "Event sent successfully")
                 }.onFailure {
-                    PassLogger.w(TAG, it, "Error sending event")
+                    PassLogger.w(TAG, "Error sending event")
+                    PassLogger.w(TAG, it)
                 }
             }
     }

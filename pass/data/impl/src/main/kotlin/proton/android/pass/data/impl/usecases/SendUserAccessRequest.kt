@@ -57,7 +57,8 @@ class SendUserAccessRequestImpl @Inject constructor(
                 SendUserAccessResult.Success
             },
             onFailure = {
-                PassLogger.w(TAG, it, "ApiException when sending user request")
+                PassLogger.w(TAG, "ApiException when sending user request")
+                PassLogger.w(TAG, it)
                 if (it is ApiException && it.isRetryable()) {
                     SendUserAccessResult.Retry
                 } else {

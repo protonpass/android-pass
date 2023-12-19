@@ -84,7 +84,8 @@ object AutofillDebugSaver {
         }.onSuccess {
             PassLogger.i(TAG, "Debug autofill stored")
         }.onFailure {
-            PassLogger.w(TAG, it, "Error storing debug autofill")
+            PassLogger.w(TAG, "Error storing debug autofill")
+            PassLogger.w(TAG, it)
         }
     }
 

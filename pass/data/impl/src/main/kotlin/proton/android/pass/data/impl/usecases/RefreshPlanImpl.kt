@@ -41,7 +41,8 @@ class RefreshPlanImpl @Inject constructor(
                     )
                     .first()
             }.onFailure {
-                PassLogger.w(TAG, it, "Error refreshing plan")
+                PassLogger.w(TAG, "Error refreshing plan")
+                PassLogger.w(TAG, it)
             }
         }
     }

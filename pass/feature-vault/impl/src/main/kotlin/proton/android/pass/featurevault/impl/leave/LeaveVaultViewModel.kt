@@ -37,12 +37,12 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.LeaveVault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,7 +71,8 @@ class LeaveVaultViewModel @Inject constructor(
     ) { vaultResult, event, isLoadingState ->
         val (vaultName, loading) = when (vaultResult) {
             is LoadingResult.Error -> {
-                PassLogger.w(TAG, vaultResult.exception, "Error getting vault by id")
+                PassLogger.w(TAG, "Error getting vault by id")
+                PassLogger.w(TAG, vaultResult.exception)
                 snackbarDispatcher(VaultSnackbarMessage.CannotRetrieveVaultError)
                 eventFlow.update { LeaveVaultEvent.Close }
                 "" to isLoadingState

@@ -36,6 +36,8 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.featuresharing.impl.EmailNavArgId
 import proton.android.pass.featuresharing.impl.PermissionNavArgId
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentError
@@ -47,8 +49,6 @@ import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
 import javax.inject.Inject
 
 @HiltViewModel
@@ -125,7 +125,8 @@ class SharingSummaryViewModel @Inject constructor(
                 }.onFailure {
                     isLoadingStateFlow.update { IsLoadingState.NotLoading }
                     snackbarDispatcher(InviteSentError)
-                    PassLogger.w(TAG, it, "Error sending invite")
+                    PassLogger.w(TAG, "Error sending invite")
+                    PassLogger.w(TAG, it)
                 }
             } else {
                 snackbarDispatcher(VaultNotFound)

@@ -20,8 +20,9 @@ package proton.android.pass.commonrust.fakes.passwords.strengths
 
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import javax.inject.Inject
 
-class TestPasswordStrengthCalculator : PasswordStrengthCalculator {
+class TestPasswordStrengthCalculator @Inject constructor(): PasswordStrengthCalculator {
 
     override fun calculateStrength(password: String): PasswordStrength = PasswordStrength.Strong
 

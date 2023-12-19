@@ -28,6 +28,9 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.commonrust.api.PasswordGenerator
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonrust.impl.passwords.strengths.RustPasswordStrengthCalculator
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -52,4 +55,8 @@ abstract class CommonRustModule {
 
     @Binds
     abstract fun bindPasswordScorer(impl: PasswordScorerImpl): PasswordScorer
+
+    @[Binds Singleton]
+    abstract fun bindPasswordStrengthCalculator(calculator: RustPasswordStrengthCalculator): PasswordStrengthCalculator
+
 }

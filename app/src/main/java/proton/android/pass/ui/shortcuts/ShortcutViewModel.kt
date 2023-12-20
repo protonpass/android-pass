@@ -32,7 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ShortcutViewModel @Inject constructor(
     private val shareLogs: ShareLogs
-): ViewModel() {
+) : ViewModel() {
 
     private val _closeFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val closeState: StateFlow<Boolean> = _closeFlow

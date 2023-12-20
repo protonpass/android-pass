@@ -46,8 +46,15 @@ object CustomFieldOptionsBottomSheet : NavItem(
     navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun buildRoute(index: Int, currentTitle: String) =
-        "$baseRoute/$index/${NavParamEncoder.encode(currentTitle)}"
+    fun buildRoute(index: Int, currentTitle: String) = buildString {
+        append("$baseRoute/$index/")
+        val encodedTitle = NavParamEncoder.encode(currentTitle)
+        if (encodedTitle.isNotBlank()) {
+            append(encodedTitle)
+        } else {
+            append("Unknown")
+        }
+    }
 }
 
 enum class CustomFieldType {

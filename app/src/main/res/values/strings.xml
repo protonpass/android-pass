@@ -8,6 +8,5 @@
     <string name="restart_to_complete_the_update">Restart to complete the update</string>
     <string name="action_restart">Restart</string>
 
-    <string name="shortcut_share_logs_action_id" translatable="false">sharelogs</string>
     <string name="shortcut_share_logs_title">Share logs</string>
 </resources>

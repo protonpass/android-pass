@@ -18,12 +18,13 @@
 
 package proton.android.pass.telemetry.impl.startup
 
+import androidx.lifecycle.coroutineScope
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.util.kotlin.CoroutineScopeProvider
+import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.telemetry.impl.work.TelemetrySenderWorker
@@ -37,7 +38,7 @@ interface TelemetryStartupManager {
 }
 
 class TelemetryStartupManagerImpl @Inject constructor(
-    private val scopeProvider: CoroutineScopeProvider,
+    private val appLifecycleProvider: AppLifecycleProvider,
     private val workManager: WorkManager,
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager
@@ -45,23 +46,21 @@ class TelemetryStartupManagerImpl @Inject constructor(
 
     override fun start() {
         PassLogger.i(TAG, "TelemetryStartupManager start")
-        scopeProvider.GlobalIOSupervisedScope.launch {
+        appLifecycleProvider.lifecycle.coroutineScope.launch {
             launch { startListener() }
             startWorker()
         }
     }
 
     private suspend fun startWorker() {
-        accountManager.getPrimaryUserId().collectLatest {
-            if (it == null) {
-                // User not logged in
-                workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
-                PassLogger.i(TAG, "$WORKER_UNIQUE_NAME cancelled")
-            } else {
-                enqueueWorker()
-                PassLogger.i(TAG, "$WORKER_UNIQUE_NAME enqueued")
+        accountManager.getPrimaryUserId()
+            .collectLatest {
+                if (it == null) {
+                    cancelWorker()
+                } else {
+                    enqueueWorker()
+                }
             }
-        }
     }
 
     private fun enqueueWorker() {
@@ -75,6 +74,12 @@ class TelemetryStartupManagerImpl @Inject constructor(
             ExistingPeriodicWorkPolicy.KEEP,
             request
         )
+        PassLogger.i(TAG, "$WORKER_UNIQUE_NAME enqueued")
+    }
+
+    private fun cancelWorker() {
+        workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
+        PassLogger.i(TAG, "$WORKER_UNIQUE_NAME cancelled")
     }
 
     private suspend fun startListener() {

@@ -21,7 +21,9 @@ package proton.android.pass.telemetry.impl.startup
 import androidx.lifecycle.coroutineScope
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.presentation.app.AppLifecycleProvider
@@ -54,6 +56,7 @@ class TelemetryStartupManagerImpl @Inject constructor(
 
     private suspend fun startWorker() {
         accountManager.getPrimaryUserId()
+            .flowOn(Dispatchers.IO)
             .collectLatest {
                 if (it == null) {
                     cancelWorker()

@@ -18,11 +18,12 @@
 
 package proton.android.pass.data.impl.sync
 
+import androidx.lifecycle.coroutineScope
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.isActive
@@ -30,7 +31,6 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
-import me.proton.core.util.kotlin.CoroutineScopeProvider
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.impl.sync.SyncWorker.Companion.WORKER_UNIQUE_NAME
 import proton.android.pass.log.api.PassLogger
@@ -40,20 +40,12 @@ import kotlin.time.Duration
 
 @Singleton
 class SyncManagerImpl @Inject constructor(
-    private val scopeProvider: CoroutineScopeProvider,
     private val workManager: WorkManager,
     private val eventWorkerManager: EventWorkerManager,
     private val performSync: PerformSync,
-    appLifecycleProvider: AppLifecycleProvider,
-    accountManager: AccountManager
+    private val appLifecycleProvider: AppLifecycleProvider,
+    private val accountManager: AccountManager
 ) : SyncManager {
-
-    private val state: Flow<SyncState> = combine(
-        accountManager.getPrimaryUserId(),
-        appLifecycleProvider.state
-    ) { userId, appLifecycle ->
-        SyncState(userId != null, appLifecycle)
-    }
 
     data class SyncState(
         val isLoggedIn: Boolean,
@@ -62,33 +54,42 @@ class SyncManagerImpl @Inject constructor(
 
     override fun start() {
         PassLogger.i(TAG, "SyncManager start")
-        scopeProvider.GlobalIOSupervisedScope.launch {
-            state.collectLatest {
-                if (it.isLoggedIn) {
-                    val initialDelay = when (it.appLifecycle) {
-                        AppLifecycleProvider.State.Background -> eventWorkerManager.getRepeatIntervalBackground()
-                        AppLifecycleProvider.State.Foreground -> eventWorkerManager.getRepeatIntervalForeground()
-                    }
-                    when (it.appLifecycle) {
-                        AppLifecycleProvider.State.Foreground -> {
-                            workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
-                            while (currentCoroutineContext().isActive) {
-                                performSync()
-                                    .onFailure { error ->
-                                        PassLogger.w(TAG, "Error in performSync")
-                                        PassLogger.w(TAG, error)
-                                    }
-                                delay(initialDelay)
-                            }
-                        }
-
-                        AppLifecycleProvider.State.Background -> enqueueWorker(initialDelay)
-                    }
-                } else {
-                    workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
-                    PassLogger.i(TAG, "$WORKER_UNIQUE_NAME cancelled")
-                }
+        appLifecycleProvider.lifecycle.coroutineScope.launch {
+            combine(
+                appLifecycleProvider.state,
+                accountManager.getPrimaryUserId()
+            ) { appLifecycle, userId ->
+                SyncState(userId != null, appLifecycle)
             }
+                .catch { PassLogger.w(TAG, it) }
+                .collectLatest(::onSyncStateReceived)
+        }
+    }
+
+    private suspend fun onSyncStateReceived(state: SyncState) {
+        if (state.isLoggedIn) {
+            val initialDelay = when (state.appLifecycle) {
+                AppLifecycleProvider.State.Background -> eventWorkerManager.getRepeatIntervalBackground()
+                AppLifecycleProvider.State.Foreground -> eventWorkerManager.getRepeatIntervalForeground()
+            }
+            when (state.appLifecycle) {
+                AppLifecycleProvider.State.Foreground -> {
+                    cancelWorker()
+                    while (currentCoroutineContext().isActive) {
+                        performSync()
+                            .onFailure { error ->
+                                PassLogger.w(TAG, "Error in performSync")
+                                PassLogger.w(TAG, error)
+                            }
+
+                        delay(initialDelay)
+                    }
+                }
+
+                AppLifecycleProvider.State.Background -> enqueueWorker(initialDelay)
+            }
+        } else {
+            cancelWorker()
         }
     }
 
@@ -100,6 +101,11 @@ class SyncManagerImpl @Inject constructor(
             request
         )
         PassLogger.i(TAG, "$WORKER_UNIQUE_NAME enqueued")
+    }
+
+    private fun cancelWorker() {
+        workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
+        PassLogger.i(TAG, "$WORKER_UNIQUE_NAME cancelled")
     }
 
     companion object {

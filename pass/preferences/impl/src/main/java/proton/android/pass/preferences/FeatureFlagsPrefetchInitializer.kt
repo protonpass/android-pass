@@ -19,19 +19,20 @@
 package proton.android.pass.preferences
 
 import android.content.Context
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
-import androidx.lifecycle.flowWithLifecycle
 import androidx.startup.Initializer
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import me.proton.core.account.domain.entity.AccountState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.onAccountState
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
@@ -48,23 +49,33 @@ class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
         val accountManager: AccountManager = entryPoint.accountManager()
         val passAppLifecycleProvider: PassAppLifecycleProvider =
             entryPoint.passAppLifecycleProvider()
+        passAppLifecycleProvider.lifecycle.coroutineScope.launch {
+            combine(
+                passAppLifecycleProvider.state,
+                accountManager.getPrimaryUserId().flowOn(Dispatchers.IO)
+            ) { state, userId -> state to userId }
+                .catch { PassLogger.w(TAG, it) }
+                .collectLatest { (state, userId) ->
+                    if (state == PassAppLifecycleProvider.State.Foreground && userId != null) {
+                        val featureFlags: Set<String> = FeatureFlag.values()
+                            .mapNotNull { flag -> flag.key }
+                            .toSet()
 
-        accountManager.onAccountState(AccountState.Ready, initialState = true)
-            .flowWithLifecycle(passAppLifecycleProvider.lifecycle, Lifecycle.State.CREATED)
-            .onEach { _ ->
-                val featureFlags: Set<String> = FeatureFlag.values()
-                    .mapNotNull { it.key }
-                    .toSet()
-                runCatching {
-                    if (featureFlags.isNotEmpty()) {
-                        featureFlagManager.refresh()
+                        runCatching {
+                            if (featureFlags.isNotEmpty()) {
+                                withContext(Dispatchers.IO) {
+                                    featureFlagManager.refresh(userId)
+                                }
+                            }
+                        }
+                            .onSuccess { PassLogger.i(TAG, "Feature flags refreshed") }
+                            .onFailure {
+                                PassLogger.w(TAG, "Failed to refresh feature flags")
+                                PassLogger.w(TAG, it)
+                            }
                     }
-                }.onFailure {
-                    PassLogger.w(TAG, "Failed to refresh feature flags")
-                    PassLogger.w(TAG, it)
                 }
-            }
-            .launchIn(passAppLifecycleProvider.lifecycle.coroutineScope)
+        }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()

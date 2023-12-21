@@ -77,6 +77,7 @@ dependencies {
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.image.fakes)
+    androidTestImplementation(projects.pass.log.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
 }

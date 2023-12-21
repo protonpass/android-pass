@@ -23,26 +23,14 @@ import proton.android.pass.totp.api.TotpUriException
 
 @Suppress("ComplexMethod")
 fun TotpException.toTotpUriException(): TotpUriException = when (this) {
-    is TotpException.EmptySecret ->
-        TotpUriException.EmptySecret(message ?: "")
-    is TotpException.InvalidAlgorithm ->
-        TotpUriException.InvalidAlgorithm(message ?: "")
-    is TotpException.InvalidAuthority ->
-        TotpUriException.InvalidAuthority(message ?: "")
-    is TotpException.InvalidScheme ->
-        TotpUriException.InvalidScheme(message ?: "")
-    is TotpException.NoAuthority ->
-        TotpUriException.NoAuthority(message ?: "")
-    is TotpException.NoQueries ->
-        TotpUriException.NoQueries(message ?: "")
-    is TotpException.NoSecret ->
-        TotpUriException.NoSecret(message ?: "")
-    is TotpException.NotTotpUri ->
-        TotpUriException.NotTotpUri(message ?: "")
-    is TotpException.SecretParseException ->
-        TotpUriException.SecretParseException(message ?: "")
-    is TotpException.SystemTimeException ->
-        TotpUriException.SystemTimeException(message ?: "")
-    is TotpException.UrlParseException ->
-        TotpUriException.UrlParseException(message ?: "")
+    is TotpException.EmptySecret -> TotpUriException.EmptySecret(message.orEmpty())
+    is TotpException.InvalidAlgorithm -> TotpUriException.InvalidAlgorithm(message.orEmpty())
+    is TotpException.InvalidAuthority -> TotpUriException.InvalidAuthority(message.orEmpty())
+    is TotpException.InvalidScheme -> TotpUriException.InvalidScheme(message.orEmpty())
+    is TotpException.NoAuthority -> TotpUriException.NoAuthority(message.orEmpty())
+    is TotpException.NoQueries -> TotpUriException.NoQueries(message.orEmpty())
+    is TotpException.NoSecret -> TotpUriException.NoSecret(message.orEmpty())
+    is TotpException.NotTotpUri -> TotpUriException.NotTotpUri(message.orEmpty())
+    is TotpException.SecretParseException -> TotpUriException.SecretParseException(message.orEmpty())
+    is TotpException.UrlParseException -> TotpUriException.UrlParseException(message.orEmpty())
 }

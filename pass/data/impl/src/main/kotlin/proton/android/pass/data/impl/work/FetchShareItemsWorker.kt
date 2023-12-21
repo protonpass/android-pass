@@ -88,8 +88,14 @@ open class FetchShareItemsWorker @AssistedInject constructor(
         }
 
         return result.fold(
-            onSuccess = { Result.success() },
-            onFailure = { Result.retry() }
+            onSuccess = {
+                PassLogger.i(TAG, "$TAG finished successfully")
+                Result.success()
+            },
+            onFailure = {
+                PassLogger.w(TAG, "$TAG failed")
+                Result.retry()
+            }
         )
     }
 

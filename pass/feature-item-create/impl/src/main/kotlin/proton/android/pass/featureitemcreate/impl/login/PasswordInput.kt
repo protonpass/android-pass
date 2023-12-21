@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -38,10 +37,12 @@ import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
+import proton.android.pass.composecomponents.impl.icon.ProtonPasswordStrengthIcon
+import proton.android.pass.composecomponents.impl.labels.ProtonPasswordStrengthLabel
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 
@@ -90,39 +91,22 @@ private fun PasswordInputLabel(
     passwordStrength: PasswordStrength,
     modifier: Modifier = Modifier,
 ) {
-    val (labelStrengthResId, labelColor) = when (passwordStrength) {
-        PasswordStrength.None -> Pair(
-            null,
-            PassTheme.colors.textWeak,
+    val text = stringResource(id = R.string.field_password_title)
+
+    when (passwordStrength) {
+        PasswordStrength.None -> ProtonTextFieldLabel(
+            text = text,
+            modifier = modifier,
         )
 
-        PasswordStrength.Strong -> Pair(
-            R.string.field_password_label_strength_strong,
-            PassTheme.colors.signalSuccess,
-        )
-
-        PasswordStrength.Vulnerable -> Pair(
-            R.string.field_password_label_strength_vulnerable,
-            PassTheme.colors.signalDanger,
-        )
-
-        PasswordStrength.Weak -> Pair(
-            R.string.field_password_label_strength_weak,
-            PassTheme.colors.signalWarning,
+        PasswordStrength.Strong,
+        PasswordStrength.Vulnerable,
+        PasswordStrength.Weak -> ProtonPasswordStrengthLabel(
+            passwordStrength = passwordStrength,
+            modifier = modifier,
+            labelPrefix = text,
         )
     }
-
-    val passwordLabel = stringResource(id = R.string.field_password_title)
-    val passwordStrengthLabel = labelStrengthResId
-        ?.let { " \u2022 ${stringResource(id = it)}" }
-        .orEmpty()
-
-    Text(
-        modifier = modifier,
-        text = "$passwordLabel$passwordStrengthLabel",
-        color = labelColor,
-        style = PassTheme.typography.body3Norm(),
-    )
 }
 
 @Composable
@@ -130,34 +114,21 @@ private fun PasswordInputLeadingIcon(
     passwordStrength: PasswordStrength,
     modifier: Modifier = Modifier,
 ) {
-    val (iconResId, iconTint) = when (passwordStrength) {
-        PasswordStrength.None -> Pair(
-            me.proton.core.presentation.R.drawable.ic_proton_key,
-            ProtonTheme.colors.iconWeak,
+    when (passwordStrength) {
+        PasswordStrength.None -> Icon(
+            modifier = modifier,
+            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
+            tint = ProtonTheme.colors.iconWeak,
+            contentDescription = null,
         )
 
-        PasswordStrength.Strong -> Pair(
-            R.drawable.ic_shield_success,
-            PassTheme.colors.signalSuccess,
-        )
-
-        PasswordStrength.Vulnerable -> Pair(
-            R.drawable.ic_shield_danger,
-            PassTheme.colors.signalDanger,
-        )
-
-        PasswordStrength.Weak -> Pair(
-            R.drawable.ic_shield_warning,
-            PassTheme.colors.signalWarning,
+        PasswordStrength.Strong,
+        PasswordStrength.Vulnerable,
+        PasswordStrength.Weak -> ProtonPasswordStrengthIcon(
+            passwordStrength = passwordStrength,
+            modifier = modifier,
         )
     }
-
-    Icon(
-        modifier = modifier,
-        painter = painterResource(iconResId),
-        tint = iconTint,
-        contentDescription = null,
-    )
 }
 
 class ThemePasswordInputPreviewProvider :

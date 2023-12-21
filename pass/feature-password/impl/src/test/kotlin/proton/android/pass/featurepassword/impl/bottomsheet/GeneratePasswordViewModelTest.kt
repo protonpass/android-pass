@@ -52,7 +52,7 @@ internal class GeneratePasswordViewModelTest {
         savedStateHandle = TestSavedStateHandleProvider().get()
         savedStateHandle[GeneratePasswordBottomsheetMode.key] =
             GeneratePasswordBottomsheetModeValue.CancelConfirm.name
-        
+
         passwordStrengthCalculator = TestPasswordStrengthCalculator()
 
         viewModel = GeneratePasswordViewModel(

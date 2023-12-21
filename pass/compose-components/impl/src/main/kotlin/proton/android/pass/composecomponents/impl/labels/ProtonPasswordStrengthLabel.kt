@@ -18,17 +18,12 @@
 
 package proton.android.pass.composecomponents.impl.labels
 
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R
 
@@ -66,41 +61,4 @@ fun ProtonPasswordStrengthLabel(
         color = labelColor,
         style = PassTheme.typography.body3Norm(),
     )
-}
-
-@Preview
-@Composable
-fun ProtonPasswordStrengthLabelPreview(
-    @PreviewParameter(ThemeProtonPasswordStrengthLabelPreview::class) input: Pair<Boolean, PreviewParams>,
-) {
-    val (isDark, params) = input
-
-    PassTheme(isDark = isDark) {
-        Surface {
-            ProtonPasswordStrengthLabel(
-                passwordStrength = params.passwordStrength,
-                labelPrefix = params.labelPrefix,
-            )
-        }
-    }
-}
-
-data class PreviewParams(
-    val passwordStrength: PasswordStrength,
-    val labelPrefix: String? = null,
-)
-
-class ThemeProtonPasswordStrengthLabelPreview :
-    ThemePairPreviewProvider<PreviewParams>(ProtonPasswordStrengthLabelPreviewProvider())
-
-private class ProtonPasswordStrengthLabelPreviewProvider :
-    PreviewParameterProvider<PreviewParams> {
-
-    override val values: Sequence<PreviewParams> = sequence {
-        PasswordStrength.values().forEach { passwordStrength ->
-            yield(PreviewParams(passwordStrength))
-            yield(PreviewParams(passwordStrength, labelPrefix = "Prefix"))
-        }
-    }
-
 }

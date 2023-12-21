@@ -119,7 +119,7 @@
             android:name=".ui.shortcuts.ShortcutActivity"
             android:exported="true"
             android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.NoDisplay" />
 
         <!-- Core-Auth activities -->
         <activity

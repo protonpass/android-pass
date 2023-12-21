@@ -19,12 +19,14 @@
 package proton.android.pass.featurepassword.impl.bottomsheet
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import proton.android.pass.common.api.PasswordStrength
 
 class GeneratePasswordStatePreviewProvider : PreviewParameterProvider<GeneratePasswordUiState> {
     override val values: Sequence<GeneratePasswordUiState>
         get() = sequenceOf(
             GeneratePasswordUiState(
                 password = "a1b!c_d3e#fg",
+                passwordStrength = PasswordStrength.Strong,
                 content = GeneratePasswordContent.RandomPassword(
                     length = 12,
                     hasSpecialCharacters = true,
@@ -35,6 +37,7 @@ class GeneratePasswordStatePreviewProvider : PreviewParameterProvider<GeneratePa
             ),
             GeneratePasswordUiState(
                 password = "a1!2",
+                passwordStrength = PasswordStrength.Strong,
                 content = GeneratePasswordContent.RandomPassword(
                     length = 4,
                     hasSpecialCharacters = false,
@@ -45,6 +48,7 @@ class GeneratePasswordStatePreviewProvider : PreviewParameterProvider<GeneratePa
             ),
             GeneratePasswordUiState(
                 password = buildString { repeat(64) { append("a") } },
+                passwordStrength = PasswordStrength.Strong,
                 content = GeneratePasswordContent.RandomPassword(
                     length = 64,
                     hasSpecialCharacters = false,

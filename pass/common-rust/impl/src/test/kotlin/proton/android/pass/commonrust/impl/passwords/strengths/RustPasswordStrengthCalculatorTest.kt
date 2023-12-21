@@ -20,7 +20,6 @@ package proton.android.pass.commonrust.impl.passwords.strengths
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
 
 internal class RustPasswordStrengthCalculatorTest {
 

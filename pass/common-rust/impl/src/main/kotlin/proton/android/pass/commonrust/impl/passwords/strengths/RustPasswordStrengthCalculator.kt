@@ -18,9 +18,9 @@
 
 package proton.android.pass.commonrust.impl.passwords.strengths
 
+import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonrust.PasswordScore
 import proton.android.pass.commonrust.PasswordScorer
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import javax.inject.Inject
 

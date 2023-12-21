@@ -23,7 +23,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import proton.android.pass.commonrust.PasswordScore
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
 
 @RunWith(Parameterized::class)
 internal class RustPasswordStrengthMapperTest(

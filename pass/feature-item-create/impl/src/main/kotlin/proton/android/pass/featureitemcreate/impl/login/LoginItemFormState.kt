@@ -21,14 +21,14 @@ package proton.android.pass.featureitemcreate.impl.login
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
+import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.url.UrlSanitizer
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
-import proton.android.pass.domain.ItemContents
 
 @Parcelize
 @Immutable

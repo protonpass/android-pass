@@ -52,6 +52,9 @@ fun GeneratePasswordViewContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(
+            modifier = Modifier
+                .height(110.dp)
+                .wrapContentHeight(align = Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Spacing.small),
         ) {
@@ -61,9 +64,6 @@ fun GeneratePasswordViewContent(
                 letterColor = PassTheme.colors.textNorm,
             )
             Text(
-                modifier = Modifier
-                    .height(110.dp)
-                    .wrapContentHeight(align = Alignment.CenterVertically),
                 text = annotatedString,
                 style = ProtonTheme.typography.subheadlineNorm,
             )

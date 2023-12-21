@@ -25,5 +25,5 @@ import javax.inject.Singleton
 
 @Singleton
 class TestShareLogs @Inject constructor(): ShareLogs {
-    override suspend fun createIntent(): Intent? = null
+    override fun createIntent(): Intent? = null
 }

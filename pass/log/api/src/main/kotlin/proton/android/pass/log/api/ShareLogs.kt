@@ -21,5 +21,5 @@ package proton.android.pass.log.api
 import android.content.Intent
 
 interface ShareLogs {
-    suspend fun createIntent(): Intent?
+    fun createIntent(): Intent?
 }

@@ -26,5 +26,5 @@ import javax.inject.Singleton
 @Singleton
 class TestPasswordScorer @Inject constructor() : PasswordScorer {
 
-    override fun check(input: String): PasswordScore = PasswordScore.GOOD
+    override fun check(input: String): PasswordScore = PasswordScore.STRONG
 }

@@ -24,7 +24,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="proton.android.pass.ui.shortcuts.ShortcutActivity"
-            android:targetPackage="proton.android.pass.dev.black">
+            android:targetPackage="proton.android.pass">
             <extra
                 android:name="shortcutaction"
                 android:value="sharelogs" />

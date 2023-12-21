@@ -29,8 +29,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.featureitemdetail.impl.login.totp.TotpRow
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.featureitemdetail.impl.login.totp.TotpRow
 
 @Composable
 fun MainLoginSection(
@@ -119,7 +119,7 @@ fun MainLoginSectionPreview(
             MainLoginSection(
                 username = input.second.username,
                 passwordHiddenState = input.second.passwordState,
-                passwordScore = PasswordScore.GOOD,
+                passwordScore = PasswordScore.STRONG,
                 totpUiState = input.second.totpUiState,
                 showViewAlias = input.second.showViewAlias,
                 onEvent = {}

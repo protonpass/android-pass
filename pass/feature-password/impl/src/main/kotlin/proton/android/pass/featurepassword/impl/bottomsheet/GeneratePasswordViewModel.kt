@@ -18,6 +18,7 @@
 
 package proton.android.pass.featurepassword.impl.bottomsheet
 
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,6 +35,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -58,7 +60,8 @@ class GeneratePasswordViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val savedStateHandle: SavedStateHandle,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val passwordGenerator: proton.android.pass.commonrust.api.PasswordGenerator
+    private val passwordGenerator: proton.android.pass.commonrust.api.PasswordGenerator,
+    private val passwordStrengthCalculator: PasswordStrengthCalculator,
 ) : ViewModel() {
 
     private val mode = getMode()
@@ -79,8 +82,9 @@ class GeneratePasswordViewModel @Inject constructor(
     ) { pref, password ->
         GeneratePasswordUiState(
             password = password,
+            passwordStrength = passwordStrengthCalculator.calculateStrength(password),
             mode = mode,
-            content = pref.toContent()
+            content = pref.toContent(),
         )
     }
         .stateIn(
@@ -90,8 +94,9 @@ class GeneratePasswordViewModel @Inject constructor(
                 val pref = runBlocking { getCurrentPreference() }
                 GeneratePasswordUiState(
                     password = "",
+                    passwordStrength = PasswordStrength.None,
                     mode = mode,
-                    content = pref.toContent()
+                    content = pref.toContent(),
                 )
             }
         )

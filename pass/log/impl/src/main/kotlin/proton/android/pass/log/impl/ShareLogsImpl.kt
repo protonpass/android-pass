@@ -23,8 +23,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.FileProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.log.api.ShareLogs
 import java.io.File
@@ -36,7 +34,7 @@ class ShareLogsImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val appConfig: AppConfig
 ): ShareLogs {
-    override suspend fun createIntent(): Intent? = withContext(Dispatchers.IO) {
+    override fun createIntent(): Intent? {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "*/*"
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("pass@protonme.zendesk.com"))
@@ -50,6 +48,6 @@ class ShareLogsImpl @Inject constructor(
         )
         intent.putExtra(Intent.EXTRA_STREAM, contentUri)
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        Intent.createChooser(intent, "Share log")
+        return Intent.createChooser(intent, "Share log")
     }
 }

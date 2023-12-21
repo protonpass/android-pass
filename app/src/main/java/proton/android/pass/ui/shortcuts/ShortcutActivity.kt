@@ -19,45 +19,42 @@
 package proton.android.pass.ui.shortcuts
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.log.api.ShareLogs
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ShortcutActivity : FragmentActivity() {
 
-    private val shortcutViewModel: ShortcutViewModel by viewModels()
+    @Inject
+    lateinit var shareLogs: ShareLogs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                shortcutViewModel.closeState.collectLatest(::onCloseReceived)
-            }
-        }
 
         val shortcutAction = intent.extras?.getString("shortcutaction")
         PassLogger.i(TAG, "Started from shortcut $shortcutAction")
         when (shortcutAction) {
             "sharelogs" -> {
-                shortcutViewModel.onShareLogs(this)
+                onShareLogs()
             }
 
             else -> finish()
         }
     }
 
-    private fun onCloseReceived(close: Boolean) {
-        if (close) {
-            finish()
+    private fun onShareLogs() {
+        val intent = runBlocking { withContext(Dispatchers.IO) { shareLogs.createIntent() } }
+        if (intent != null) {
+            startActivity(intent)
         }
+        finish()
+
     }
 
     companion object {

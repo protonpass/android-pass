@@ -18,13 +18,13 @@
 
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
-        android:icon="@drawable/ic_proton_envelope_open_text"
+        android:icon="@drawable/ic_share_logs_shortcut"
         android:shortcutId="sharelogs"
         android:shortcutShortLabel="@string/shortcut_share_logs_title">
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="proton.android.pass.ui.shortcuts.ShortcutActivity"
-            android:targetPackage="proton.android.pass">
+            android:targetPackage="proton.android.pass.dev.black">
             <extra
                 android:name="shortcutaction"
                 android:value="sharelogs" />

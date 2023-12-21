@@ -24,6 +24,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestShareLogs @Inject constructor(): ShareLogs {
+class TestShareLogs @Inject constructor() : ShareLogs {
     override fun createIntent(): Intent? = null
 }

@@ -36,7 +36,7 @@ class ShareLogsImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val appConfig: AppConfig
 ): ShareLogs {
-    override suspend fun invoke(): Intent? = withContext(Dispatchers.IO) {
+    override suspend fun createIntent(): Intent? = withContext(Dispatchers.IO) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "*/*"
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("pass@protonme.zendesk.com"))

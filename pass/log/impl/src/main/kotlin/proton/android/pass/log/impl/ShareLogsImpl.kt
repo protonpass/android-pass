@@ -33,7 +33,7 @@ import javax.inject.Singleton
 class ShareLogsImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val appConfig: AppConfig
-): ShareLogs {
+) : ShareLogs {
     override fun createIntent(): Intent? {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "*/*"

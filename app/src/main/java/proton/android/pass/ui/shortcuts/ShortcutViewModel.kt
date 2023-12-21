@@ -38,7 +38,7 @@ class ShortcutViewModel @Inject constructor(
     val closeState: StateFlow<Boolean> = _closeFlow
 
     fun onShareLogs(context: Context) = viewModelScope.launch {
-        val intent = shareLogs()
+        val intent = shareLogs.createIntent()
         if (intent != null) {
             context.startActivity(intent)
         }

@@ -54,7 +54,7 @@
     <string
         name="autofill_confirm_dangerous_body"
         comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action"
-    >You are about to autofill your credentials into an app that has opened a website. Only do it if you trust the app.</string>
+    >You are about to autofill your credentials into a website that\'s opened by your current app. The app can have access to the credential after autofill - only do it if you trust the app.</string>
     <string
         name="autofill_confirm_button"
         comment="Confirmation button for actually performing the autofill action"

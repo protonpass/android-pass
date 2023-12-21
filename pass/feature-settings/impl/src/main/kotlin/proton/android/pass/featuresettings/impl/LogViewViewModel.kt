@@ -67,7 +67,7 @@ class LogViewViewModel @Inject constructor(
     }
 
     fun startShareIntent(context: Context) = viewModelScope.launch {
-        val intent = shareLogs()
+        val intent = shareLogs.createIntent()
         if (intent != null) {
             context.startActivity(intent)
         }

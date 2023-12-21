@@ -54,7 +54,6 @@ fun PasswordScoreIndicator(modifier: Modifier = Modifier, passwordScore: Passwor
 @Composable
 fun ShieldIcon(modifier: Modifier = Modifier, passwordScore: PasswordScore) {
     when (passwordScore) {
-        PasswordScore.VERY_DANGEROUS,
         PasswordScore.DANGEROUS -> Icon(
             modifier = modifier,
             painter = painterResource(R.drawable.ic_shield_bad),
@@ -62,7 +61,6 @@ fun ShieldIcon(modifier: Modifier = Modifier, passwordScore: PasswordScore) {
             contentDescription = null,
         )
 
-        PasswordScore.VERY_WEAK,
         PasswordScore.WEAK -> Icon(
             modifier = modifier,
             painter = painterResource(R.drawable.ic_shield_warning),
@@ -70,10 +68,7 @@ fun ShieldIcon(modifier: Modifier = Modifier, passwordScore: PasswordScore) {
             contentDescription = null,
         )
 
-        PasswordScore.GOOD,
-        PasswordScore.STRONG,
-        PasswordScore.VERY_STRONG,
-        PasswordScore.INVULNERABLE -> Icon(
+        PasswordScore.STRONG -> Icon(
             modifier = modifier,
             painter = painterResource(R.drawable.ic_shield_check),
             tint = PassTheme.colors.signalSuccess,
@@ -85,24 +80,19 @@ fun ShieldIcon(modifier: Modifier = Modifier, passwordScore: PasswordScore) {
 @Composable
 fun ScoreText(modifier: Modifier = Modifier, passwordScore: PasswordScore) {
     when (passwordScore) {
-        PasswordScore.VERY_DANGEROUS,
         PasswordScore.DANGEROUS -> Text(
             modifier = modifier,
             text = stringResource(R.string.password_score_vulnerable),
             style = ProtonTheme.typography.captionNorm
         )
 
-        PasswordScore.VERY_WEAK,
         PasswordScore.WEAK -> Text(
             modifier = modifier,
             text = stringResource(R.string.password_score_weak),
             style = ProtonTheme.typography.captionNorm
         )
 
-        PasswordScore.GOOD,
-        PasswordScore.STRONG,
-        PasswordScore.VERY_STRONG,
-        PasswordScore.INVULNERABLE -> Text(
+        PasswordScore.STRONG -> Text(
             modifier = modifier,
             text = stringResource(R.string.password_score_strong),
             style = ProtonTheme.typography.captionNorm

@@ -19,6 +19,7 @@
 package proton.android.pass.featurepassword.impl.bottomsheet
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.common.api.PasswordStrength
 
 @Immutable
 enum class GeneratePasswordMode {
@@ -29,6 +30,7 @@ enum class GeneratePasswordMode {
 @Immutable
 data class GeneratePasswordUiState(
     val password: String,
+    val passwordStrength: PasswordStrength,
     val mode: GeneratePasswordMode,
     val content: GeneratePasswordContent
 )

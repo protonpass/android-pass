@@ -105,16 +105,19 @@ open class FetchItemsWorker @AssistedInject constructor(
             }.awaitAll()
         }
 
-        results.any { it.isFailure }.let { hasErrors ->
-            if (hasErrors) {
-                itemSyncStatusRepository.emit(ItemSyncStatus.ErrorSyncing)
-                return Result.retry()
-            } else {
-                itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = hasItems.get()))
-            }
+        val hasErrors = results.any { it.isFailure }
+        val result: Result = if (hasErrors) {
+            itemSyncStatusRepository.emit(ItemSyncStatus.ErrorSyncing)
+            PassLogger.i(TAG, "$TAG finished with errors")
+            Result.retry()
+        } else {
+            itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = hasItems.get()))
+            PassLogger.i(TAG, "$TAG finished successfully")
+            Result.success()
         }
+
         itemSyncStatusRepository.setMode(SyncMode.Background)
-        return Result.success()
+        return result
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo = ForegroundInfo(

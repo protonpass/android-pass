@@ -46,20 +46,22 @@ open class TelemetrySenderWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        return kotlin.runCatching {
-            telemetryRepository.sendEvents()
-        }.fold(
-            onSuccess = { Result.success() },
-            onFailure = {
-                PassLogger.w(TAG, "Error sending telemetry")
-                PassLogger.w(TAG, it)
-                if (it is ApiException && it.isRetryable()) {
-                    Result.retry()
-                } else {
-                    Result.failure()
+        return runCatching { telemetryRepository.sendEvents() }
+            .fold(
+                onSuccess = {
+                    PassLogger.i(TAG, "$TelemetrySenderWorker finished  successfully")
+                    Result.success()
+                },
+                onFailure = {
+                    PassLogger.w(TAG, "Error sending telemetry")
+                    PassLogger.w(TAG, it)
+                    if (it is ApiException && it.isRetryable()) {
+                        Result.retry()
+                    } else {
+                        Result.failure()
+                    }
                 }
-            }
-        )
+            )
     }
 
     companion object {

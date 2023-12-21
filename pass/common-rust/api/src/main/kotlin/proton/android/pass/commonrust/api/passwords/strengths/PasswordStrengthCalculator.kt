@@ -1,7 +1,3 @@
-package proton.android.pass.commonrust.api.passwords.strengths
-
-import proton.android.pass.common.api.PasswordStrength
-
 /*
  * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
@@ -19,6 +15,10 @@ import proton.android.pass.common.api.PasswordStrength
  * You should have received a copy of the GNU General Public License
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+package proton.android.pass.commonrust.api.passwords.strengths
+
+import proton.android.pass.common.api.PasswordStrength
 
 interface PasswordStrengthCalculator {
 

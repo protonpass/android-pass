@@ -19,16 +19,11 @@
 package proton.android.pass.composecomponents.impl.icon
 
 import androidx.compose.material.Icon
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
@@ -62,29 +57,3 @@ fun ProtonPasswordStrengthIcon(
         contentDescription = null,
     )
 }
-
-@Preview
-@Composable
-fun ProtonPasswordStrengthIconPreview(
-    @PreviewParameter(ThemeProtonPasswordStrengthIconPreview::class) input: Pair<Boolean, PasswordStrength>,
-) {
-    val (isDark, passwordStrength) = input
-
-    PassTheme(isDark = isDark) {
-        Surface {
-            ProtonPasswordStrengthIcon(passwordStrength = passwordStrength)
-        }
-    }
-}
-
-class ThemeProtonPasswordStrengthIconPreview :
-    ThemePairPreviewProvider<PasswordStrength>(ProtonPasswordStrengthIconPreviewProvider())
-
-private class ProtonPasswordStrengthIconPreviewProvider :
-    PreviewParameterProvider<PasswordStrength> {
-
-    override val values: Sequence<PasswordStrength> = PasswordStrength.values().asSequence()
-
-}
-
-

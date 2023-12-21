@@ -19,7 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrength
+import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 
 private const val PASSWORD_EMPTY = ""

@@ -33,12 +33,7 @@ class PasswordScorerImpl @Inject constructor() : PasswordScorer {
 }
 
 fun RustPasswordScore.toPasswordScore(): PasswordScore = when (this) {
-    RustPasswordScore.VERY_DANGEROUS -> PasswordScore.VERY_DANGEROUS
-    RustPasswordScore.DANGEROUS -> PasswordScore.DANGEROUS
-    RustPasswordScore.VERY_WEAK -> PasswordScore.VERY_WEAK
-    RustPasswordScore.WEAK -> PasswordScore.WEAK
-    RustPasswordScore.GOOD -> PasswordScore.GOOD
     RustPasswordScore.STRONG -> PasswordScore.STRONG
-    RustPasswordScore.VERY_STRONG -> PasswordScore.VERY_STRONG
-    RustPasswordScore.INVULNERABLE -> PasswordScore.INVULNERABLE
+    RustPasswordScore.VULNERABLE -> PasswordScore.DANGEROUS
+    RustPasswordScore.WEAK -> PasswordScore.WEAK
 }

@@ -37,14 +37,7 @@ class RustPasswordStrengthCalculator @Inject constructor() : PasswordStrengthCal
 }
 
 internal fun PasswordScore.toPasswordStrength(): PasswordStrength = when (this) {
-    PasswordScore.VERY_DANGEROUS,
-    PasswordScore.DANGEROUS -> PasswordStrength.Vulnerable
-
-    PasswordScore.VERY_WEAK,
+    PasswordScore.STRONG -> PasswordStrength.Strong
+    PasswordScore.VULNERABLE -> PasswordStrength.Vulnerable
     PasswordScore.WEAK -> PasswordStrength.Weak
-
-    PasswordScore.GOOD,
-    PasswordScore.STRONG,
-    PasswordScore.VERY_STRONG,
-    PasswordScore.INVULNERABLE -> PasswordStrength.Strong
 }

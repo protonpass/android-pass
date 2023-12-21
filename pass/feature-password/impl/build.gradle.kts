@@ -84,7 +84,6 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.preferences.api)
 
-    testImplementation(libs.turbine)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)
     testImplementation(libs.coroutines.test)

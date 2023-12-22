@@ -16,7 +16,7 @@
   <string name="settings_error_performing_operation">Ошибка выполнения операции</string>
   <string name="settings_option_clipboard">Буфер обмена</string>
   <string name="settings_application_section_title">Приложение</string>
-  <string name="settings_option_view_logs">View logs</string>
+  <string name="settings_option_view_logs">Просмотр журналов</string>
   <string name="settings_option_force_sync">Force synchronization</string>
   <string name="settings_about_section_title">О программе</string>
   <string name="settings_option_privacy_policy">Политика конфиденциальности</string>

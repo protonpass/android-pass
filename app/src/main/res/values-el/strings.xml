@@ -5,4 +5,5 @@
   <string name="custom_fields">Προσαρμοσμένα πεδία</string>
   <string name="restart_to_complete_the_update">Για ολοκλήρωση της ενημέρωσης, κάντε επανεκκίνηση</string>
   <string name="action_restart">Επανεκκίνηση</string>
+  <string name="shortcut_share_logs_title">Share logs</string>
 </resources>

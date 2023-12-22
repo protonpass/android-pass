@@ -45,7 +45,7 @@
   <string name="custom_field_hidden_icon_content_description">隱藏自訂的欄位圖示</string>
   <string name="custom_field_text_placeholder">新增文字</string>
   <string name="custom_field_dialog_title">自訂欄位的名稱</string>
-  <string name="custom_field_dialog_body">Give your custom field a name</string>
+  <string name="custom_field_dialog_body">提供自訂欄位名稱</string>
   <string name="custom_field_dialog_placeholder">例如: 使用者ID、PIN碼</string>
   <string name="custom_field_options_content_description">自訂的選項</string>
   <!-- Create Note -->

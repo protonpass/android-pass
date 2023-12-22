@@ -3,8 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">您的保管庫是空的</string>
   <string name="home_empty_vault_subtitle">開始創建您第一個項目</string>
-  <string name="home_empty_read_only_vault_title">This vault is empty</string>
-  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
+  <string name="home_empty_read_only_vault_title">此保管庫是空的</string>
+  <string name="home_empty_read_only_vault_subtitle">您無法向唯讀的保管庫添加項目。</string>
   <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">創建 Hide-my-email 別名</string>
   <string name="home_empty_vault_create_note">Create a note</string>
@@ -33,7 +33,7 @@
   <string name="bottomsheet_copy_username">複製使用者名稱</string>
   <string name="bottomsheet_copy_alias">複製電子郵件位址</string>
   <string name="bottomsheet_copy_number">Copy number</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
+  <string name="bottomsheet_copy_cvv">複製安全防護代碼</string>
   <string name="bottomsheet_copy_note">Copy note</string>
   <string name="bottomsheet_edit">編輯</string>
   <!-- Clipboard -->
@@ -88,7 +88,7 @@
   <string name="alert_confirm_restore_all_title">還原全部項目?</string>
   <string name="alert_confirm_restore_all_message">您確定要還原全部垃圾項目嗎？</string>
   <plurals name="alert_confirm_restore_items_title">
-    <item quantity="other">Restore %d items?</item>
+    <item quantity="other">還原%d項目?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
     <item quantity="other">您確定要還原已丟進垃圾桶 %d 項目嗎？</item>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="generate_password_copy">Copy and close</string>
+  <string name="generate_password_copy">Скопировать и закрыть</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
   <string name="bottomsheet_generate_password_title">Создать пароль</string>
   <string name="password_type">Тип</string>
@@ -18,18 +18,18 @@
     <item quantity="other">%s слов</item>
   </plurals>
   <string name="word_separator">Word separator</string>
-  <string name="bottomsheet_option_capital_letters">Capital letters (A–Z)</string>
+  <string name="bottomsheet_option_capital_letters">Заглавные буквы (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Capitalize</string>
-  <string name="bottomsheet_option_include_numbers">Include numbers (0–9)</string>
+  <string name="bottomsheet_option_include_numbers">Включить числа (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Hyphens ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Spaces</string>
   <string name="bottomsheet_option_word_separator_periods">Periods ( . )</string>
   <string name="bottomsheet_option_word_separator_commas">Commas ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Underscores ( _ )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Подчеркивания ( _ )</string>
   <string name="bottomsheet_option_word_separator_numbers">Numbers</string>
   <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numbers and symbols</string>
   <string name="regenerate_password_icon_content_description">Regenerate password button</string>
-  <string name="password_mode_memorable">Memorable password</string>
+  <string name="password_mode_memorable">Запоминающийся пароль</string>
   <string name="password_mode_random">Random password</string>
   <string name="password_mode_icon">Password mode icon</string>
   <string name="password_words_separator_icon">Password words separator</string>

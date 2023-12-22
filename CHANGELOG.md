@@ -6,6 +6,17 @@
 
 ### Other
 
+## 1.15.0 (2023-12-22)
+
+### Features :tada:
+
+- Added password strength indicator.
+- Added share logs shortcut.
+
+### Other
+
+- Updated translations.
+
 ## 1.14.2 (2023-12-19)
 
 ### Features :tada:

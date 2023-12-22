@@ -23,12 +23,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
-import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -42,7 +44,6 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toPendingEvent
 import proton.android.pass.data.impl.repositories.EventRepository
@@ -59,7 +60,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val eventRepository: EventRepository,
     private val addressRepository: UserAddressRepository,
     private val itemRepository: ItemRepository,
-    private val observeCurrentUser: ObserveCurrentUser,
+    private val accountManager: AccountManager,
     private val shareRepository: ShareRepository,
     private val createVault: CreateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -67,24 +68,25 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ApplyPendingEvents {
 
-    override suspend fun invoke() {
-        withContext(Dispatchers.IO) {
-            val user = observeCurrentUser().first()
-            val address = requireNotNull(addressRepository.getAddresses(user.userId).primary())
-            val refreshSharesResult = shareRepository.refreshShares(user.userId)
+    override suspend fun invoke(userId: UserId?) {
+        val currentUserId = userId ?: accountManager.getPrimaryUserId()
+            .flowOn(Dispatchers.IO)
+            .filterNotNull()
+            .first()
+        val address = requireNotNull(addressRepository.getAddresses(currentUserId).primary())
+        val refreshSharesResult = shareRepository.refreshShares(currentUserId)
 
-            if (refreshSharesResult.allShareIds.isEmpty()) {
-                handleSharesWhenEmpty(user)
-            } else {
-                handleExistingShares(user.userId, address.addressId, refreshSharesResult)
-            }
+        if (refreshSharesResult.allShareIds.isEmpty()) {
+            handleSharesWhenEmpty(currentUserId)
+        } else {
+            handleExistingShares(currentUserId, address.addressId, refreshSharesResult)
         }
     }
 
-    private suspend fun handleSharesWhenEmpty(user: User) {
+    private suspend fun handleSharesWhenEmpty(userId: UserId) {
         PassLogger.i(TAG, "Received an empty list of shares, creating default vault")
         itemSyncStatusRepository.setMode(SyncMode.Background)
-        createDefaultVault(user.userId)
+        createDefaultVault(userId)
         itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(false))
     }
 

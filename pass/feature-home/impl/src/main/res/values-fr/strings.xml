@@ -8,7 +8,7 @@
   <string name="home_empty_vault_create_login">Créer un identifiant</string>
   <string name="home_empty_vault_create_alias">Créer un alias « hide-my-email »</string>
   <string name="home_empty_vault_create_note">Créer une note</string>
-  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Erreur lors du chargement des éléments</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Une erreur s\'est produite pendant le chargement des éléments.</string>
   <string name="error_refreshing">Une erreur s\'est produite pendant l\'actualisation.</string>
   <string name="home_snackbar_login_moved_to_trash">L\'identifiant a été déplacé dans la corbeille.</string>
   <string name="home_snackbar_alias_moved_to_trash">L\'alias a été déplacé dans la corbeille.</string>
@@ -97,20 +97,20 @@
     <item quantity="other">Voulez-vous vraiment restaurer les %d éléments mis à la corbeille ?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="one">Voulez-vous mettre à la corbeille %d élément ?</item>
-    <item quantity="other">Voulez-vous mettre à la corbeille %d éléments ?</item>
+    <item quantity="one">Voulez-vous mettre %d élément à la corbeille ?</item>
+    <item quantity="other">Voulez-vous mettre %d éléments à la corbeille ?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Voulez-vous vraiment déplacer l\'élément mis à la corbeille ?</item>
-    <item quantity="other">Voulez-vous vraiment restaurer les %d éléments mis à la corbeille ?</item>
+    <item quantity="one">Voulez-vous vraiment déplacer l\'élément vers la corbeille ?</item>
+    <item quantity="other">Voulez-vous vraiment déplacer %d éléments vers la corbeille ?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Voulez-vous supprimer définitivement %d élément ?</item>
     <item quantity="other">Voulez-vous supprimer définitivement %d éléments ?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Êtes-vous sûr de vouloir supprimer l\'élément ? Cette action est irréversible.</item>
-    <item quantity="other">Êtes-vous sûr de vouloir supprimer les %d élément ? Cette action est irréversible.</item>
+    <item quantity="one">Voulez-vous vraiment supprimer l\'élément ? Cette action est irréversible.</item>
+    <item quantity="other">Voulez-vous vraiment supprimer les %d éléments ? Cette action est irréversible.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Recherches récentes</string>

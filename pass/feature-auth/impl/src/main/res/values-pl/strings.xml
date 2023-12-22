@@ -26,12 +26,12 @@
     <item quantity="other">Kod PIN jest nieprawidłowy. Pozostało %d prób.</item>
   </plurals>
   <string name="auth_unlock_app_title">Odblokuj Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Wpisz hasło główne dla %s</string>
+  <string name="auth_unlock_app_subtitle">Wpisz hasło główne dla konta %s</string>
   <string name="auth_master_password_label">Hasło główne</string>
   <string name="auth_action_reveal_password">Pokaż hasło główne</string>
   <string name="auth_action_conceal_password">Ukryj hasło główne</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Wpisz kod PIN</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Odblokowywanie odciskiem palca</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Odblokuj odciskiem palca</string>
   <string name="auth_unlock_button">Odblokuj</string>
   <string name="auth_error_verifying_password">Wystąpił błąd podczas weryfikowania hasła</string>
   <string name="auth_error_empty_password">Hasło nie może być puste</string>

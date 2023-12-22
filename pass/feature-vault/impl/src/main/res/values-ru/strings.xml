@@ -20,7 +20,7 @@
   <string name="vault_leave_dialog_title">Leave vault</string>
   <string name="vault_leave_dialog_body">This will remove your access from the vault __VAULT_NAME__ and all its contents. Are you sure you want to leave?</string>
   <string name="vault_leave_dialog_cancel_action">Cancel</string>
-  <string name="vault_leave_dialog_leave_action">Leave</string>
+  <string name="vault_leave_dialog_leave_action">Оставить</string>
   <string name="bottomsheet_close_icon_content_description">Close Create Vault</string>
   <string name="bottomsheet_create_vault_button">Создать хранилище</string>
   <string name="bottomsheet_edit_vault_button">Сохранить</string>

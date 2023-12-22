@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.RefreshInvites
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,7 +32,7 @@ class TestRefreshInvites @Inject constructor() : RefreshInvites {
         refreshResult = value
     }
 
-    override suspend fun invoke() {
+    override suspend fun invoke(userId: UserId?) {
         refreshResult.getOrThrow()
     }
 }

@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,7 +32,7 @@ class TestApplyPendingEvents @Inject constructor() : ApplyPendingEvents {
         result = value
     }
 
-    override suspend fun invoke() {
+    override suspend fun invoke(userId: UserId?) {
         result.getOrThrow()
     }
 }

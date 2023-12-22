@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RefreshInvites
@@ -32,16 +33,33 @@ class PerformSyncImpl @Inject constructor(
     private val applyPendingEvents: ApplyPendingEvents,
     private val refreshInvites: RefreshInvites
 ) : PerformSync {
-    override suspend fun invoke(): Result<Unit> = withContext(Dispatchers.IO) {
+
+    override suspend fun invoke(userId: UserId?) {
         PassLogger.i(TAG, "Performing sync started")
-        val pendingEvents = async { performPendingEvents() }
-        val refreshInvites = async { performRefreshInvites() }
-        val res = awaitAll(pendingEvents, refreshInvites)
+        val res = withContext(Dispatchers.IO) {
+            val pendingEvents = async { performPendingEvents(userId) }
+            pendingEvents.invokeOnCompletion {
+                if (it != null) {
+                    PassLogger.w(TAG, it)
+                } else {
+                    PassLogger.i(TAG, "Pending events finished")
+                }
+            }
+            val refreshInvites = async { performRefreshInvites(userId) }
+            refreshInvites.invokeOnCompletion {
+                if (it != null) {
+                    PassLogger.w(TAG, it)
+                } else {
+                    PassLogger.i(TAG, "Refresh invites finished")
+                }
+            }
+            awaitAll(pendingEvents, refreshInvites)
+        }
 
         val exception = res.firstOrNull { it.isFailure }?.exceptionOrNull()
         if (exception != null) {
             PassLogger.i(TAG, "Performing sync error")
-            return@withContext Result.failure(exception)
+            Result.failure(exception)
         } else {
             PassLogger.i(TAG, "Performing sync finished")
             Result.success(Unit)
@@ -49,32 +67,18 @@ class PerformSyncImpl @Inject constructor(
     }
 
 
-    private suspend fun performPendingEvents(): Result<Unit> =
-        runCatching { applyPendingEvents() }
+    private suspend fun performPendingEvents(userId: UserId?): Result<Unit> =
+        runCatching { applyPendingEvents(userId) }
             .fold(
-                onSuccess = {
-                    PassLogger.i(TAG, "Pending events finished")
-                    Result.success(Unit)
-                },
-                onFailure = {
-                    PassLogger.w(TAG, "Pending events error")
-                    PassLogger.w(TAG, it)
-                    Result.failure(it)
-                }
+                onSuccess = { Result.success(Unit) },
+                onFailure = { Result.failure(it) }
             )
 
-    private suspend fun performRefreshInvites(): Result<Unit> =
-        runCatching { refreshInvites() }
+    private suspend fun performRefreshInvites(userId: UserId?): Result<Unit> =
+        runCatching { refreshInvites(userId) }
             .fold(
-                onSuccess = {
-                    PassLogger.i(TAG, "Refresh invites finished")
-                    Result.success(Unit)
-                },
-                onFailure = {
-                    PassLogger.i(TAG, "Refresh invites error")
-                    PassLogger.w(TAG, it)
-                    Result.failure(it)
-                }
+                onSuccess = { Result.success(Unit) },
+                onFailure = { Result.failure(it) }
             )
 
     companion object {

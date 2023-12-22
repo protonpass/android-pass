@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.data.api.usecases.PerformSync
@@ -50,7 +51,7 @@ class SyncManagerImpl @Inject constructor(
 ) : SyncManager {
 
     data class SyncState(
-        val isLoggedIn: Boolean,
+        val userId: UserId?,
         val appLifecycle: AppLifecycleProvider.State
     )
 
@@ -61,37 +62,45 @@ class SyncManagerImpl @Inject constructor(
                 appLifecycleProvider.state,
                 accountManager.getPrimaryUserId().flowOn(Dispatchers.IO)
             ) { appLifecycle, userId ->
-                SyncState(userId != null, appLifecycle)
+                SyncState(userId, appLifecycle)
             }
                 .catch { PassLogger.w(TAG, it) }
-                .collectLatest(::onSyncStateReceived)
+                .collectLatest {
+                    if (it.userId != null) {
+                        onUserLoggedInPerformSync(it.userId, it.appLifecycle)
+                    } else {
+                        cancelWorker()
+                    }
+                }
         }
     }
 
-    private suspend fun onSyncStateReceived(state: SyncState) {
-        if (state.isLoggedIn) {
-            val initialDelay = when (state.appLifecycle) {
-                AppLifecycleProvider.State.Background -> eventWorkerManager.getRepeatIntervalBackground()
-                AppLifecycleProvider.State.Foreground -> eventWorkerManager.getRepeatIntervalForeground()
-            }
-            when (state.appLifecycle) {
-                AppLifecycleProvider.State.Foreground -> {
-                    cancelWorker()
-                    while (currentCoroutineContext().isActive) {
-                        performSync()
-                            .onFailure { error ->
-                                PassLogger.w(TAG, "Error in performSync")
-                                PassLogger.w(TAG, error)
-                            }
+    private suspend fun onUserLoggedInPerformSync(
+        userId: UserId?,
+        state: AppLifecycleProvider.State
+    ) {
+        val initialDelay = when (state) {
+            AppLifecycleProvider.State.Background -> eventWorkerManager.getRepeatIntervalBackground()
+            AppLifecycleProvider.State.Foreground -> eventWorkerManager.getRepeatIntervalForeground()
+        }
+        when (state) {
+            AppLifecycleProvider.State.Foreground -> {
+                cancelWorker()
+                while (currentCoroutineContext().isActive) {
+                    runCatching { performSync(userId) }
+                        .onSuccess { PassLogger.i(TAG, "Sync finished") }
+                        .onFailure { error ->
+                            PassLogger.w(TAG, "Error in performSync")
+                            PassLogger.w(TAG, error)
+                        }
 
-                        delay(initialDelay)
-                    }
+                    delay(initialDelay)
                 }
-
-                AppLifecycleProvider.State.Background -> enqueueWorker(initialDelay)
             }
-        } else {
-            cancelWorker()
+
+            AppLifecycleProvider.State.Background -> {
+                enqueueWorker(initialDelay)
+            }
         }
     }
 

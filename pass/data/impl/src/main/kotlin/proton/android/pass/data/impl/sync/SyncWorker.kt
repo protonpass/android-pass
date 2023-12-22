@@ -44,17 +44,18 @@ open class SyncWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        return performSync().fold(
-            onSuccess = {
-                PassLogger.i(TAG, "$TAG finished successfully")
-                Result.success()
-            },
-            onFailure = {
-                PassLogger.w(TAG, "$TAG finished with error")
-                PassLogger.w(TAG, it)
-                Result.failure()
-            }
-        )
+        return runCatching { performSync() }
+            .fold(
+                onSuccess = {
+                    PassLogger.i(TAG, "$TAG finished successfully")
+                    Result.success()
+                },
+                onFailure = {
+                    PassLogger.w(TAG, "$TAG finished with error")
+                    PassLogger.w(TAG, it)
+                    Result.failure()
+                }
+            )
     }
 
     companion object {

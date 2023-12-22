@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.PerformSync
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,5 +32,5 @@ class TestPerformSync @Inject constructor() : PerformSync {
         result = value
     }
 
-    override suspend fun invoke(): Result<Unit> = result
+    override suspend fun invoke(userId: UserId?) = result.getOrThrow()
 }

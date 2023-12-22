@@ -18,9 +18,12 @@
 
 package proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -35,9 +38,11 @@ import proton.android.pass.data.impl.local.InviteAndKeysEntity
 import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
+import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
@@ -57,15 +62,35 @@ class InviteRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun refreshInvites(userId: UserId): Boolean {
-        val remoteInvites = remoteDataSource.fetchInvites(userId)
-        val localInvites = localDatasource.observeAllInvites(userId).firstOrNull() ?: emptyList()
+    override suspend fun refreshInvites(userId: UserId): Boolean = withContext(Dispatchers.IO) {
+        val deferredRemoteInvites = async { remoteDataSource.fetchInvites(userId) }
+        deferredRemoteInvites.invokeOnCompletion {
+            if (it != null) {
+                PassLogger.w(TAG, it)
+            } else {
+                PassLogger.i(TAG, "Fetched remote invites")
+            }
+        }
+        val deferredLocalInvites =
+            async { localDatasource.observeAllInvites(userId).firstOrNull() ?: emptyList() }
+        deferredLocalInvites.invokeOnCompletion {
+            if (it != null) {
+                PassLogger.w(TAG, it)
+            } else {
+                PassLogger.i(TAG, "Fetched local invites")
+            }
+        }
+        val remoteInvites = deferredRemoteInvites.await()
+        val localInvites = deferredLocalInvites.await()
 
         // Remove deleted invites
         val deletedInvites = localInvites.filter { local ->
             remoteInvites.none { remote -> remote.inviteToken == local.token }
         }
-        localDatasource.removeInvites(deletedInvites)
+        if (deletedInvites.isNotEmpty()) {
+            PassLogger.i(TAG, "Deleting ${deletedInvites.size} invites")
+            localDatasource.removeInvites(deletedInvites)
+        }
 
         // Insert new invites
         val newInvites = remoteInvites.filter { remote ->
@@ -78,43 +103,52 @@ class InviteRepositoryImpl @Inject constructor(
             observeHasConfirmedInvite.send(true)
         }
 
-        val invitesWithKeys: List<InviteAndKeysEntity> = newInvites.map { invite ->
-            val vaultData = invite.vaultData
-            val reencryptedInviteContent = reencryptInviteContents(userId, invite)
-            val inviteEntity = InviteEntity(
-                token = invite.inviteToken,
-                userId = userId.id,
-                inviterEmail = invite.inviterEmail,
-                invitedEmail = invite.invitedEmail,
-                invitedAddressId = invite.invitedAddressId,
-                memberCount = vaultData.memberCount,
-                itemCount = vaultData.itemCount,
-                reminderCount = invite.remindersSent,
-                shareContent = vaultData.content,
-                shareContentKeyRotation = vaultData.contentKeyRotation,
-                shareContentFormatVersion = vaultData.contentFormatVersion,
-                createTime = invite.createTime,
-                encryptedContent = reencryptedInviteContent,
-                fromNewUser = invite.fromNewUser
-            )
+        val invitesWithKeys: List<InviteAndKeysEntity> = newInvites
+            .map { invite -> inviteAndKeysEntity(invite, userId) }
 
-            val inviteKeys = invite.keys.map { key ->
-                InviteKeyEntity(
-                    inviteToken = invite.inviteToken,
-                    key = key.key,
-                    keyRotation = key.keyRotation,
-                    createTime = invite.createTime
-                )
-            }
+        if (invitesWithKeys.isNotEmpty()) {
+            PassLogger.i(TAG, "Inserting ${invitesWithKeys.size} invites")
+            localDatasource.storeInvites(invitesWithKeys)
+        }
+        hasNewInvites
+    }
 
-            InviteAndKeysEntity(
-                inviteEntity = inviteEntity,
-                inviteKeys = inviteKeys
+    private suspend fun inviteAndKeysEntity(
+        invite: PendingInviteResponse,
+        userId: UserId
+    ): InviteAndKeysEntity {
+        val vaultData = invite.vaultData
+        val reencryptedInviteContent = reencryptInviteContents(userId, invite)
+        val inviteEntity = InviteEntity(
+            token = invite.inviteToken,
+            userId = userId.id,
+            inviterEmail = invite.inviterEmail,
+            invitedEmail = invite.invitedEmail,
+            invitedAddressId = invite.invitedAddressId,
+            memberCount = vaultData.memberCount,
+            itemCount = vaultData.itemCount,
+            reminderCount = invite.remindersSent,
+            shareContent = vaultData.content,
+            shareContentKeyRotation = vaultData.contentKeyRotation,
+            shareContentFormatVersion = vaultData.contentFormatVersion,
+            createTime = invite.createTime,
+            encryptedContent = reencryptedInviteContent,
+            fromNewUser = invite.fromNewUser
+        )
+
+        val inviteKeys = invite.keys.map { key ->
+            InviteKeyEntity(
+                inviteToken = invite.inviteToken,
+                key = key.key,
+                keyRotation = key.keyRotation,
+                createTime = invite.createTime
             )
         }
 
-        localDatasource.storeInvites(invitesWithKeys)
-        return hasNewInvites
+        return InviteAndKeysEntity(
+            inviteEntity = inviteEntity,
+            inviteKeys = inviteKeys
+        )
     }
 
     override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId {
@@ -150,5 +184,9 @@ class InviteRepositoryImpl @Inject constructor(
             color = decoded.display.color.toDomain(),
             fromNewUser = fromNewUser
         )
+    }
+
+    companion object {
+        private const val TAG = "InviteRepositoryImpl"
     }
 }

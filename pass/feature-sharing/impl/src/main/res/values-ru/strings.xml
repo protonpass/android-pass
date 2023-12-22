@@ -86,10 +86,10 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Приглашения</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Участники</string>
   <string name="share_manage_vault_current_user_indicator">Вы</string>
-  <string name="share_role_can_view">Can view</string>
-  <string name="share_role_can_edit">Can edit</string>
-  <string name="share_role_admin">Admin</string>
-  <string name="share_role_owner">Owner</string>
+  <string name="share_role_can_view">Может просматривать</string>
+  <string name="share_role_can_edit">Может редактировать</string>
+  <string name="share_role_admin">Администратор</string>
+  <string name="share_role_owner">Владелец</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfer ownership</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можете передать последнее принадлежащее вам хранилище.</string>
   <string name="sharing_bottomsheet_remove_access">Отозвать доступ</string>

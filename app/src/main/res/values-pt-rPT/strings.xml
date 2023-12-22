@@ -5,4 +5,5 @@
   <string name="custom_fields">Campos personalizados</string>
   <string name="restart_to_complete_the_update">Reinicie para concluir a actualização</string>
   <string name="action_restart">Reiniciar</string>
+  <string name="shortcut_share_logs_title">Share logs</string>
 </resources>

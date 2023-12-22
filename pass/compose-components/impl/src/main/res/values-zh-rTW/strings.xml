@@ -9,9 +9,9 @@
   <!-- List header results -->
   <string name="item_list_header_all_search_results">全部</string>
   <string name="item_list_header_logins_type">登入</string>
-  <string name="item_list_header_aliases_type">Aliases</string>
+  <string name="item_list_header_aliases_type">別名</string>
   <string name="item_list_header_notes_type">備註</string>
-  <string name="item_list_header_credit_cards_type">Credit cards</string>
+  <string name="item_list_header_credit_cards_type">信用卡</string>
   <plurals name="item_list_header_results">
     <item quantity="other">結果</item>
   </plurals>
@@ -74,4 +74,8 @@
   <!-- Advanced options -->
   <string name="show_advanced_options">進階選項</string>
   <string name="hide_advanced_options">隱藏進階選項</string>
+  <!-- Labels -->
+  <string name="label_password_strength_strong">Strong</string>
+  <string name="label_password_strength_vulnerable">Vulnerable</string>
+  <string name="label_password_strength_weak">Weak</string>
 </resources>

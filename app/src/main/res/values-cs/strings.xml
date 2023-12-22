@@ -5,4 +5,5 @@
   <string name="custom_fields">Vlastní pole</string>
   <string name="restart_to_complete_the_update">Restartováním dokončíte aktualizaci</string>
   <string name="action_restart">Restartovat</string>
+  <string name="shortcut_share_logs_title">Sdílet logy</string>
 </resources>

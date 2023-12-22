@@ -27,4 +27,7 @@
   <string name="bottomsheet_copy_username">Kopiera användarnamn</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofyll kortuppgifter</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofyllning av kreditkortsuppgifter är en betald funktion. Om du vill att Proton Pass automatiskt ska ange dina kortuppgifter åt dig i appar och webbplatser, uppgradera till ett betalt paket.</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Bekräfta din åtgärd</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Du är på väg att fylla i dina autentiseringsuppgifter automatiskt till en webbplats som öppnas av din nuvarande app. Appen kan få åtkomst till autentiseringsuppgifterna efter automatisk ifyllnad – gör det bara om du litar på appen.</string>
+  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Autofyll</string>
 </resources>

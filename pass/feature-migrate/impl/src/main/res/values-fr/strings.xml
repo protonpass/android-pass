@@ -12,6 +12,6 @@
   <string name="migrate_all_items_success_snackbar">Tous les éléments ont été déplacés.</string>
   <string name="migrate_all_items_error_snackbar">Une erreur s\'est produite pendant le déplacement des éléments du coffre-fort.</string>
   <string name="migrate_init_error_snackbar">Impossible de préparer l\'écran de transfert</string>
-  <string name="migrate_disabled_vault_reason_no_permission">Vous ne pouvez pas des éléments dans ce coffre-fort.</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Vous ne pouvez pas créer d\'éléments dans ce coffre-fort.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Vous ne pouvez pas déplacer un élément vers le même coffre-fort.</string>
 </resources>

@@ -5,4 +5,5 @@
   <string name="custom_fields">自訂欄位</string>
   <string name="restart_to_complete_the_update">重新啟動已完成更新</string>
   <string name="action_restart">重新啟動</string>
+  <string name="shortcut_share_logs_title">Share logs</string>
 </resources>

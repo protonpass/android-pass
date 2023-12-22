@@ -5,7 +5,7 @@
   <string name="home_empty_vault_subtitle">Начните с создания первого элемента.</string>
   <string name="home_empty_read_only_vault_title">This vault is empty</string>
   <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
-  <string name="home_empty_vault_create_login">Create a login</string>
+  <string name="home_empty_vault_create_login">Создать логин</string>
   <string name="home_empty_vault_create_alias">Создать псевдоним hide-my-email</string>
   <string name="home_empty_vault_create_note">Create a note</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Ошибка загрузки событий</string>
@@ -32,13 +32,13 @@
   <string name="bottomsheet_copy_password">Скопировать пароль</string>
   <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>
   <string name="bottomsheet_copy_alias">Скопировать адрес электронной почты</string>
-  <string name="bottomsheet_copy_number">Copy number</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
-  <string name="bottomsheet_copy_note">Copy note</string>
+  <string name="bottomsheet_copy_number">Скопировать номер</string>
+  <string name="bottomsheet_copy_cvv">Скопировать код безопасности</string>
+  <string name="bottomsheet_copy_note">Скопировать заметку</string>
   <string name="bottomsheet_edit">Редактировать</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Псевдоним скопирован</string>
-  <string name="note_copied_to_clipboard">Note copied</string>
+  <string name="note_copied_to_clipboard">Заметка скопирована</string>
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
   <string name="credit_card_number_copied_to_clipboard">Номер кредитной карты скопирован</string>
@@ -53,7 +53,7 @@
     <item quantity="other">Элементов: %d</item>
   </plurals>
   <string name="vault_drawer_create_vault">Create vault</string>
-  <string name="vault_drawer_item_trash">Trash</string>
+  <string name="vault_drawer_item_trash">Корзина</string>
   <string name="vault_drawer_all_vaults">All vaults</string>
   <!-- Vault management -->
   <string name="vault_delete_dialog_title">Удалить хранилище</string>
@@ -65,28 +65,28 @@
   <string name="search_topbar_placeholder_all_vaults">Поиск во всех хранилищах...</string>
   <string name="search_topbar_placeholder_vault">Search in %s…</string>
   <string name="search_topbar_placeholder_trash">Поиск в Корзине…</string>
-  <string name="item_type_filter_list_icon_content_description">Item type icon</string>
+  <string name="item_type_filter_list_icon_content_description">Значок типа элемента</string>
   <string name="item_type_filter_all">All</string>
-  <string name="item_type_filter_login">Login</string>
-  <string name="item_type_filter_alias">Alias</string>
-  <string name="item_type_filter_note">Note</string>
-  <string name="item_type_filter_credit_card">Card</string>
+  <string name="item_type_filter_login">Имя пользователя</string>
+  <string name="item_type_filter_alias">Псевдоним</string>
+  <string name="item_type_filter_note">Заметка</string>
+  <string name="item_type_filter_credit_card">Карта</string>
   <!-- Trash -->
-  <string name="trash_empty_list_title">Trash empty</string>
+  <string name="trash_empty_list_title">Корзина пуста</string>
   <string name="trash_empty_list_message">Элементы, переменные в корзину, появляются здесь</string>
-  <string name="bottomsheet_trash_all_items_title">Trash</string>
+  <string name="bottomsheet_trash_all_items_title">Корзина</string>
   <string name="bottomsheet_restore_all_items">Восстановить все элементы</string>
-  <string name="bottomsheet_empty_trash">Empty trash</string>
+  <string name="bottomsheet_empty_trash">Очистить корзину</string>
   <string name="bottomsheet_select_items">Select items</string>
   <string name="trash_error_clearing_trash">Ошибка очистки корзины</string>
-  <string name="trash_success_restoring_items">Items restored</string>
+  <string name="trash_success_restoring_items">Элементы восстановлены</string>
   <string name="trash_error_restoring_items">Ошибка восстановления элементов</string>
   <string name="trash_error_deleting_item">Ошибка удаления элемента</string>
   <string name="trash_success_deleting_item">Item deleted</string>
   <string name="trash_deleting_items_error">Ошибка при удалении элемента.</string>
   <string name="trash_deleting_items_success">Items deleted</string>
   <!-- Alerts -->
-  <string name="alert_confirm_clear_trash_title">Clear trash?</string>
+  <string name="alert_confirm_clear_trash_title">Очистить корзину?</string>
   <string name="alert_confirm_clear_trash_message">Вы уверены, что вы хотите очистить корзину? Все ваши удаленные элементы будут удалены навсегда.</string>
   <string name="alert_confirm_restore_all_title">Восстановить все элементы?</string>
   <string name="alert_confirm_restore_all_message">Вы уверены, что хотите восстановить все элементы из корзины?</string>
@@ -128,6 +128,6 @@
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Недавние поиски</string>
-  <string name="recent_search_clear">Clear</string>
+  <string name="recent_search_clear">Очистить</string>
   <string name="recent_search_remove_item">Удалить из недавних поисков</string>
 </resources>

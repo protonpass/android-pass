@@ -80,7 +80,7 @@
   <string name="trash_success_restoring_items">Elementer gjenopprettet</string>
   <string name="trash_error_restoring_items">Feil ved gjenoppretting av elementer</string>
   <string name="trash_error_deleting_item">Feil ved sletting av element</string>
-  <string name="trash_success_deleting_item">Element slettet</string>
+  <string name="trash_success_deleting_item">Elementet slettet</string>
   <string name="trash_deleting_items_error">Feil ved sletting av elementer</string>
   <string name="trash_deleting_items_success">Elementer slettet</string>
   <!-- Alerts -->

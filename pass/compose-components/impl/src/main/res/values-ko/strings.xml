@@ -74,4 +74,8 @@
   <!-- Advanced options -->
   <string name="show_advanced_options">고급 옵션</string>
   <string name="hide_advanced_options">고급 옵션 숨기기</string>
+  <!-- Labels -->
+  <string name="label_password_strength_strong">Strong</string>
+  <string name="label_password_strength_vulnerable">Vulnerable</string>
+  <string name="label_password_strength_weak">Weak</string>
 </resources>

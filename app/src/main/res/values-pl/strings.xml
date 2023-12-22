@@ -5,4 +5,5 @@
   <string name="custom_fields">Pola niestandardowe</string>
   <string name="restart_to_complete_the_update">Uruchom ponownie, aby zakończyć aktualizację</string>
   <string name="action_restart">Uruchom ponownie</string>
+  <string name="shortcut_share_logs_title">Udostępnij logi</string>
 </resources>

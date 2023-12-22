@@ -5,4 +5,5 @@
   <string name="custom_fields">Tilpassede felt</string>
   <string name="restart_to_complete_the_update">Start på nytt for å fullføre oppdateringen</string>
   <string name="action_restart">Start på nytt</string>
+  <string name="shortcut_share_logs_title">Del logger</string>
 </resources>

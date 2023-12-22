@@ -33,7 +33,7 @@
   <string name="bottomsheet_copy_username">მომხმარებლის სახელის კოპირება</string>
   <string name="bottomsheet_copy_alias">ელფოსტის მისამართის კოპირება</string>
   <string name="bottomsheet_copy_number">ნომრის კოპირება</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
+  <string name="bottomsheet_copy_cvv">უსაფრთხოების კოდის კოპირება</string>
   <string name="bottomsheet_copy_note">შენიშვნის კოპირება</string>
   <string name="bottomsheet_edit">ჩასწორება</string>
   <!-- Clipboard -->
@@ -72,9 +72,9 @@
   <!-- Trash -->
   <string name="trash_empty_list_title">ნაგვის ყუთი ცარიელია</string>
   <string name="trash_empty_list_message">ნაგვის ყუთში გადატანილი ელემენტები აქ გამოჩნდება</string>
-  <string name="bottomsheet_trash_all_items_title">ნაგვის ყუთი</string>
+  <string name="bottomsheet_trash_all_items_title">ნაგვის ყუთში</string>
   <string name="bottomsheet_restore_all_items">ყველა ელემენტის აღდგენა</string>
-  <string name="bottomsheet_empty_trash">ნაგვის ყუთის გასუფთავება</string>
+  <string name="bottomsheet_empty_trash">ნაგვის ყუთის დაცარიელება</string>
   <string name="bottomsheet_select_items">აირჩიეთ ელემენტები</string>
   <string name="trash_error_clearing_trash">ნაგვის ყუთის გასუფთავების შეცდომა</string>
   <string name="trash_success_restoring_items">ელემენტები აღდგენილია</string>

@@ -27,4 +27,7 @@
   <string name="bottomsheet_copy_username">Copia nome utente</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Compila automaticamente i dettagli della carta</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">La compilazione automatica dei dettagli della carta di credito è una funzionalità a pagamento. Se vuoi che Proton Pass inserisca automaticamente i dettagli della tua carta di credito nelle app e nei siti web, effettua l\'upgrade a un piano a pagamento.</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Conferma l\'azione</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Stai per compilare automaticamente le tue credenziali in un sito web aperto dall\'attuale app. L\'app può avere accesso alle credenziali dopo la compilazione automatica. Prosegui solo se consideri l\'app attendibile.</string>
+  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Compila automaticamente</string>
 </resources>

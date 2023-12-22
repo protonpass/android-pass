@@ -5,4 +5,5 @@
   <string name="custom_fields">Champs personnalisés</string>
   <string name="restart_to_complete_the_update">Redémarrer pour terminer la mise à jour</string>
   <string name="action_restart">Redémarrer</string>
+  <string name="shortcut_share_logs_title">Share logs</string>
 </resources>

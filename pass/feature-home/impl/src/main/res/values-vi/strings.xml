@@ -3,8 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Kho lưu trữ của bạn trống</string>
   <string name="home_empty_vault_subtitle">Bắt đầu bằng việc tạo nội dung đầu tiên của bạn.</string>
-  <string name="home_empty_read_only_vault_title">This vault is empty</string>
-  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
+  <string name="home_empty_read_only_vault_title">Kho lưu trữ này trống</string>
+  <string name="home_empty_read_only_vault_subtitle">Bạn không thể thêm nội dung vào một kho lưu trữ chỉ đọc.</string>
   <string name="home_empty_vault_create_login">Create a login</string>
   <string name="home_empty_vault_create_alias">Tạo bí danh hide-my-email</string>
   <string name="home_empty_vault_create_note">Create a note</string>
@@ -15,8 +15,8 @@
   <string name="home_snackbar_note_moved_to_trash">Ghi chú đã được chuyển vào thùng rác</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Thẻ tín dụng đã được chuyển vào thùng rác</string>
   <string name="home_snackbar_move_to_trash_error">Nội dung không thể dời được tới thùng rác</string>
-  <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
-  <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
+  <string name="home_snackbar_items_move_to_trash_success">Đã chuyển nội dung vào thùng rác</string>
+  <string name="home_snackbar_items_move_to_trash_error">Nội dung không thể chuyển được tới thùng rác</string>
   <string name="home_autofill_banner_title">Tận hưởng ma thuật của Tự động Điền</string>
   <string name="home_autofill_banner_text">Chỉ một chạm và—pốc!—tên đăng nhập và mật khẩu của bạn được điền vào ngay lập tức.</string>
   <string name="home_autofill_banner_settings">Bật Tự đồng Điền</string>
@@ -33,7 +33,7 @@
   <string name="bottomsheet_copy_username">Sao chép tên đăng nhập</string>
   <string name="bottomsheet_copy_alias">Sao chép địa chỉ email</string>
   <string name="bottomsheet_copy_number">Copy number</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
+  <string name="bottomsheet_copy_cvv">Sao chép mã bảo mật</string>
   <string name="bottomsheet_copy_note">Copy note</string>
   <string name="bottomsheet_edit">Sửa</string>
   <!-- Clipboard -->
@@ -80,7 +80,7 @@
   <string name="trash_error_restoring_items">Lỗi khi khôi phục nội dung</string>
   <string name="trash_error_deleting_item">Lỗi khi xóa nội dung</string>
   <string name="trash_success_deleting_item">Item deleted</string>
-  <string name="trash_deleting_items_error">Error deleting items</string>
+  <string name="trash_deleting_items_error">Lỗi khi xóa nội dung</string>
   <string name="trash_deleting_items_success">Items deleted</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Clear trash?</string>
@@ -88,22 +88,22 @@
   <string name="alert_confirm_restore_all_title">Khôi phục tất cả nội dung?</string>
   <string name="alert_confirm_restore_all_message">Bạn có muốn khôi phục tất cả nội dung rác không?</string>
   <plurals name="alert_confirm_restore_items_title">
-    <item quantity="other">Restore %d items?</item>
+    <item quantity="other">Khôi phục %d mục?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="other">Bạn có muốn khôi phục %d nội dung rác không?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="other">Move to trash %d items?</item>
+    <item quantity="other">Chuyển %d nội dung tới thùng rác?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="other">Bạn có muốn chuyển %d nội dung này tới thùng rác không?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="other">Delete permanently %d items?</item>
+    <item quantity="other">Xóa vĩnh viễn %d nội dung?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="other">Bạn có muốn xóa %d nội dung này không? Hành động này không thể đảo ngược</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Tìm kiếm gần đây</string>

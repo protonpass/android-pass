@@ -10,10 +10,10 @@
   <string name="migrate_item_confirm_confirm_button">Přesunout</string>
   <string name="migrate_item_success_snackbar">Položky přesunuty</string>
   <string name="migrate_item_error_snackbar">Chyba při přesouvání položek</string>
-  <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Chyba při přesouvání některých položek</string>
   <string name="migrate_all_items_success_snackbar">Všechny položky byly přesunuty</string>
   <string name="migrate_all_items_error_snackbar">Chyba při přesunu všech položek trezoru</string>
   <string name="migrate_init_error_snackbar">Nelze připravit obrazovku pro přechod</string>
-  <string name="migrate_disabled_vault_reason_no_permission">You cannot create items in this vault</string>
+  <string name="migrate_disabled_vault_reason_no_permission">V tomto trezoru nelze vytvářet položky</string>
   <string name="migrate_disabled_vault_reason_same_vault">Položku nelze přesunout do stejného trezoru</string>
 </resources>

@@ -33,7 +33,7 @@
   <string name="bottomsheet_copy_username">Benutzername kopieren</string>
   <string name="bottomsheet_copy_alias">E-Mail-Adresse kopieren</string>
   <string name="bottomsheet_copy_number">Nummer kopieren</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
+  <string name="bottomsheet_copy_cvv">Sicherheitscode kopieren</string>
   <string name="bottomsheet_copy_note">Notiz kopieren</string>
   <string name="bottomsheet_edit">Bearbeiten</string>
   <!-- Clipboard -->
@@ -70,19 +70,19 @@
   <string name="item_type_filter_note">Notiz</string>
   <string name="item_type_filter_credit_card">Karte</string>
   <!-- Trash -->
-  <string name="trash_empty_list_title">Leerer Papierkorb</string>
+  <string name="trash_empty_list_title">Papierkorb leer</string>
   <string name="trash_empty_list_message">Einträge, die in den Papierkorb verschoben wurden, erscheinen hier.</string>
   <string name="bottomsheet_trash_all_items_title">Papierkorb</string>
   <string name="bottomsheet_restore_all_items">Alle Einträge wiederherstellen</string>
-  <string name="bottomsheet_empty_trash">Papierkorb leeren</string>
+  <string name="bottomsheet_empty_trash">Leerer Papierkorb</string>
   <string name="bottomsheet_select_items">Einträge auswählen</string>
   <string name="trash_error_clearing_trash">Fehler beim Leeren des Papierkorbs</string>
-  <string name="trash_success_restoring_items">Elemente wiederhergestellt</string>
+  <string name="trash_success_restoring_items">Einträge wiederhergestellt</string>
   <string name="trash_error_restoring_items">Fehler beim Wiederherstellen der Einträge</string>
   <string name="trash_error_deleting_item">Fehler beim Löschen des Eintrags</string>
-  <string name="trash_success_deleting_item">Element gelöscht</string>
+  <string name="trash_success_deleting_item">Eintrag gelöscht</string>
   <string name="trash_deleting_items_error">Fehler beim Löschen der Einträge.</string>
-  <string name="trash_deleting_items_success">Elemente gelöscht</string>
+  <string name="trash_deleting_items_success">Einträge gelöscht</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Papierkorb leeren?</string>
   <string name="alert_confirm_clear_trash_message">Bist du dir sicher, dass du den Papierkorb leeren möchtest? Alle Einträge im Papierkorb werden dauerhaft gelöscht.</string>
@@ -114,6 +114,6 @@
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Letzte Suchanfragen</string>
-  <string name="recent_search_clear">Leer</string>
+  <string name="recent_search_clear">Leeren</string>
   <string name="recent_search_remove_item">Aus kürzlichen Suchanfragen entfernen</string>
 </resources>

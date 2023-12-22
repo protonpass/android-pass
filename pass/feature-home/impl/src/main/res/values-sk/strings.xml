@@ -27,13 +27,13 @@
   <string name="home_notification_permission_banner_text">Povoľte push oznámenia, aby ste dostali informáciu, keď s vami ostatní budú zdieľať trezor.</string>
   <string name="home_notification_permission_banner_settings">Povoľte oprávnenie ›</string>
   <string name="home_invite_banner_title">Trezor zdieľaný s vami</string>
-  <string name="home_invite_banner_subtitle">Ste pozvaný do zdieľaného trezoru. Kliknite pre podrobnosti.</string>
+  <string name="home_invite_banner_subtitle">Ste pozvaní do zdieľaného trezoru. Kliknite pre podrobnosti.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopírovať heslo</string>
   <string name="bottomsheet_copy_username">Kopírovať meno používateľa</string>
   <string name="bottomsheet_copy_alias">Kopírovať emailovú adresu</string>
   <string name="bottomsheet_copy_number">Kopírovať číslo</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
+  <string name="bottomsheet_copy_cvv">Kopírovať bezpečnostný kód</string>
   <string name="bottomsheet_copy_note">Kopírovať poznámku</string>
   <string name="bottomsheet_edit">Upraviť</string>
   <!-- Clipboard -->

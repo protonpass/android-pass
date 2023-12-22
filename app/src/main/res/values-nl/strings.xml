@@ -5,4 +5,5 @@
   <string name="custom_fields">Zelf gedefinieerde velden</string>
   <string name="restart_to_complete_the_update">Herstart op de update te vervolledigen</string>
   <string name="action_restart">Herstart</string>
+  <string name="shortcut_share_logs_title">Share logs</string>
 </resources>

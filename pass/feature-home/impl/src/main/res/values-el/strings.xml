@@ -33,7 +33,7 @@
   <string name="bottomsheet_copy_username">Αντιγραφή ονόματος χρήστη</string>
   <string name="bottomsheet_copy_alias">Αντιγραφή διεύθυνσης ηλεκτρονικού ταχυδρομείου</string>
   <string name="bottomsheet_copy_number">Αντιγραφή αριθμού</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
+  <string name="bottomsheet_copy_cvv">Αντιγραφή κωδικού ασφαλείας</string>
   <string name="bottomsheet_copy_note">Αντιγραφή σημείωσης</string>
   <string name="bottomsheet_edit">Επεξεργασία</string>
   <!-- Clipboard -->

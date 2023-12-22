@@ -33,7 +33,7 @@
   <string name="bottomsheet_copy_username">사용자 이름 복사</string>
   <string name="bottomsheet_copy_alias">이메일 주소 복사</string>
   <string name="bottomsheet_copy_number">번호 복사</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
+  <string name="bottomsheet_copy_cvv">보안 코드 복사</string>
   <string name="bottomsheet_copy_note">메모 복사</string>
   <string name="bottomsheet_edit">편집</string>
   <!-- Clipboard -->
@@ -51,7 +51,7 @@
   </plurals>
   <string name="vault_drawer_create_vault">금고 생성</string>
   <string name="vault_drawer_item_trash">휴지통</string>
-  <string name="vault_drawer_all_vaults">모든 금고</string>
+  <string name="vault_drawer_all_vaults">전체 금고</string>
   <!-- Vault management -->
   <string name="vault_delete_dialog_title">금고 삭제</string>
   <string name="vault_delete_dialog_cancel_action">취소</string>

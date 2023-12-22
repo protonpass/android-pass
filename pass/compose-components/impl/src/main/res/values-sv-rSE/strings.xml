@@ -76,4 +76,8 @@
   <!-- Advanced options -->
   <string name="show_advanced_options">Avancerade alternativ</string>
   <string name="hide_advanced_options">Dölj avancerade alternativ</string>
+  <!-- Labels -->
+  <string name="label_password_strength_strong">Starkt</string>
+  <string name="label_password_strength_vulnerable">Sårbart</string>
+  <string name="label_password_strength_weak">Svagt</string>
 </resources>

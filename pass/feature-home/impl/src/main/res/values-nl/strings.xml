@@ -33,7 +33,7 @@
   <string name="bottomsheet_copy_username">Gebruikersnaam kopiëren</string>
   <string name="bottomsheet_copy_alias">E-mailadres kopiëren</string>
   <string name="bottomsheet_copy_number">Copy number</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
+  <string name="bottomsheet_copy_cvv">Beveiligingscode kopiëren</string>
   <string name="bottomsheet_copy_note">Copy note</string>
   <string name="bottomsheet_edit">Bewerken</string>
   <!-- Clipboard -->

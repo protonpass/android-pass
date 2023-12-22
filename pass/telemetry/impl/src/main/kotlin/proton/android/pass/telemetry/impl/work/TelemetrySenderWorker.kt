@@ -49,7 +49,7 @@ open class TelemetrySenderWorker @AssistedInject constructor(
         return runCatching { telemetryRepository.sendEvents() }
             .fold(
                 onSuccess = {
-                    PassLogger.i(TAG, "$TelemetrySenderWorker finished  successfully")
+                    PassLogger.i(TAG, "$TAG finished  successfully")
                     Result.success()
                 },
                 onFailure = {

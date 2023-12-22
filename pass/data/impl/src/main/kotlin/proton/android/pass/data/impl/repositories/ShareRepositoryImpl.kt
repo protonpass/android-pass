@@ -147,8 +147,10 @@ class ShareRepositoryImpl @Inject constructor(
                 shares.map { shareEntityToShare(it) }
             }
 
+    @Suppress("LongMethod")
     override suspend fun refreshShares(userId: UserId): RefreshSharesResult =
         withContext(Dispatchers.IO) {
+            PassLogger.i(TAG, "Refreshing shares")
             val userAddress = userAddressRepository.getAddresses(userId).primary()
                 ?: throw IllegalStateException("Could not find PrimaryAddress")
 
@@ -156,12 +158,14 @@ class ShareRepositoryImpl @Inject constructor(
             val remoteShares = remoteShareDataSource.getShares(userAddress.userId)
             val remoteShareMap = remoteShares.associateBy { ShareId(it.shareId) }
 
+            PassLogger.i(TAG, "Fetched ${remoteShareMap.size} shares")
             val (toSave, inactiveShares) = database.inTransaction {
 
                 // Retrieve local shares and create a map ShareId->ShareEntity
                 val localShares = localShareDataSource
                     .getAllSharesForUser(userAddress.userId)
                     .first()
+                PassLogger.i(TAG, "Found ${localShares.size} shares in local storage")
                 val localSharesMap = localShares.associateBy { ShareId(it.id) }
 
                 // Update local share if needed
@@ -186,14 +190,21 @@ class ShareRepositoryImpl @Inject constructor(
                     )
                 }
 
-                localShareDataSource.upsertShares(sharesToUpdate)
+                if (sharesToUpdate.isNotEmpty()) {
+                    PassLogger.i(TAG, "Updating ${sharesToUpdate.size} shares")
+                    localShareDataSource.upsertShares(sharesToUpdate)
+                }
 
                 // Delete from the local data source the shares that are not in remote response
                 val toDelete = localSharesMap.keys.subtract(remoteShareMap.keys)
-                localShareDataSource.deleteShares(toDelete)
+
+                if (toDelete.isNotEmpty()) {
+                    PassLogger.i(TAG, "Deleting ${toDelete.size} shares")
+                    val deletedShareResult = localShareDataSource.deleteShares(toDelete)
+                    PassLogger.i(TAG, "Deleted $deletedShareResult shares")
+                }
 
                 val sharesNotInLocal = remoteShares
-
                     // Filter out shares that are not in the local storage
                     .filterNot { localSharesMap.containsKey(ShareId(it.shareId)) }
                     .map { ShareId(it.shareId) }
@@ -216,6 +227,7 @@ class ShareRepositoryImpl @Inject constructor(
 
             val allShareIds = remoteShareMap.keys.filterNot { inactiveShares.contains(it) }.toSet()
 
+            PassLogger.i(TAG, "Refreshed shares")
             RefreshSharesResult(
                 allShareIds = allShareIds,
                 newShareIds = newShares.map { ShareId(it.id) }.toSet()

@@ -18,9 +18,12 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOn
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.log.api.PassLogger
@@ -32,11 +35,14 @@ class RefreshInvitesImpl @Inject constructor(
     private val inviteRepository: InviteRepository,
     private val notificationManager: NotificationManager
 ) : RefreshInvites {
-    override suspend fun invoke() {
+    override suspend fun invoke(userId: UserId?) {
         PassLogger.i(TAG, "Refreshing invites started")
         runCatching {
-            val userId = accountManager.getPrimaryUserId().filterNotNull().first()
-            inviteRepository.refreshInvites(userId)
+            val currentUserId = userId ?: accountManager.getPrimaryUserId()
+                .flowOn(Dispatchers.IO)
+                .filterNotNull()
+                .first()
+            inviteRepository.refreshInvites(currentUserId)
         }
             .onSuccess { hasInvite ->
                 PassLogger.i(TAG, "Invites refreshed successfully")

@@ -74,7 +74,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     }
 
     private fun traverseInternal(context: AutofillTraversalContext) {
-        if (detectedUrl is None && context.node.isFocused) {
+        if (detectedUrl is None) {
             detectedUrl = context.node.url
         }
 
@@ -558,9 +558,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
 
         val inputTypeFlags = InputTypeFlags.fromValue(node.inputType)
-        if (inputTypeFlags.contains(InputTypeFlags.TEXT_FLAG_MULTI_LINE)) return false
-
-        return true
+        return !inputTypeFlags.contains(InputTypeFlags.TEXT_FLAG_MULTI_LINE)
     }
 
     sealed interface CheckHintsResult {

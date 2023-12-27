@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.15.1 (2023-12-27)
+
+### Fixes :bug:
+
+- Fix autofill suggestions for Chromium based browsers
+
 ## 1.15.0 (2023-12-22)
 
 ### Features :tada:

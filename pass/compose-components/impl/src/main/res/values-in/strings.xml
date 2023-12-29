@@ -8,7 +8,7 @@
   <string name="sort_by_modification_date">Terkini</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Semua</string>
-  <string name="item_list_header_logins_type">Login</string>
+  <string name="item_list_header_logins_type">Entri masuk</string>
   <string name="item_list_header_aliases_type">Alias</string>
   <string name="item_list_header_notes_type">Catatan</string>
   <string name="item_list_header_credit_cards_type">Kartu kredit</string>
@@ -75,7 +75,7 @@
   <string name="show_advanced_options">Opsi lanjutan</string>
   <string name="hide_advanced_options">Sembunyikan opsi lanjutan</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">Kuat</string>
+  <string name="label_password_strength_vulnerable">Rentan</string>
+  <string name="label_password_strength_weak">Lemah</string>
 </resources>

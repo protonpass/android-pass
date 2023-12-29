@@ -77,7 +77,7 @@
   <string name="show_advanced_options">Opcions avançades</string>
   <string name="hide_advanced_options">Amaga les opcions avançades</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
+  <string name="label_password_strength_strong">Segura</string>
   <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_weak">Feble</string>
 </resources>

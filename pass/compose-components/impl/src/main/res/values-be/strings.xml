@@ -81,7 +81,7 @@
   <string name="show_advanced_options">Дадатковыя параметры</string>
   <string name="hide_advanced_options">Не паказваць дадатковыя параметры</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">Надзейны</string>
+  <string name="label_password_strength_vulnerable">Уразлівы</string>
+  <string name="label_password_strength_weak">Ненадзейны</string>
 </resources>

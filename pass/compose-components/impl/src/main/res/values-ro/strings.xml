@@ -79,7 +79,7 @@
   <string name="show_advanced_options">Opțiuni avansate</string>
   <string name="hide_advanced_options">Ascundere opțiuni avansate</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">Puternică</string>
+  <string name="label_password_strength_vulnerable">Vulnerabilă</string>
+  <string name="label_password_strength_weak">Slabă</string>
 </resources>

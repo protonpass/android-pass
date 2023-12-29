@@ -9,7 +9,7 @@
   <string name="field_alias_title">Alamat alias</string>
   <string name="alias_copied_to_clipboard">Alias disalin</string>
   <string name="alias_detail_field_mailboxes_title">Meneruskan ke</string>
-  <string name="alias_create_login_from_alias">Buat login</string>
+  <string name="alias_create_login_from_alias">Buat entri masuk</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Catatan</string>
   <string name="note_detail_copy_note_to_clipboard">Salin catatan</string>

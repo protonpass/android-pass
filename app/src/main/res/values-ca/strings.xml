@@ -5,5 +5,5 @@
   <string name="custom_fields">Camps personalitzats</string>
   <string name="restart_to_complete_the_update">Reinicieu per a completar l\'actualització</string>
   <string name="action_restart">Reinicia</string>
-  <string name="shortcut_share_logs_title">Share logs</string>
+  <string name="shortcut_share_logs_title">Comparteix els registres</string>
 </resources>

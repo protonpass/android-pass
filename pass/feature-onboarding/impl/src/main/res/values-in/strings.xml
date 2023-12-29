@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Biarkan Proton Pass mengisi rincian login Anda secara otomatis. Anda tidak lagi perlu mengetik atau menyalin.</string>
+  <string name="on_boarding_autofill_content">Biarkan Proton Pass mengisi rincian entri masuk Anda secara otomatis. Anda tidak lagi perlu mengetik atau menyalin.</string>
   <string name="on_boarding_autofill_title">Masuk ke aplikasi secara instan</string>
   <string name="on_boarding_autofill_button">Isi otomatis dengan Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Atur Proton Pass untuk membuka kunci dengan sidik jari Anda sehingga hanya Anda yang memiliki akses.</string>

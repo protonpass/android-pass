@@ -81,7 +81,7 @@
   <string name="show_advanced_options">Rozšírené nastavenia</string>
   <string name="hide_advanced_options">Skryť rozšírené nastavenia</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">Silné</string>
+  <string name="label_password_strength_vulnerable">Zraniteľné</string>
+  <string name="label_password_strength_weak">Slabé</string>
 </resources>

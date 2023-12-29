@@ -5,5 +5,5 @@
   <string name="custom_fields">Benutzerdefinierte Felder</string>
   <string name="restart_to_complete_the_update">Neu starten, um das Update abzuschließen.</string>
   <string name="action_restart">Neu starten</string>
-  <string name="shortcut_share_logs_title">Share logs</string>
+  <string name="shortcut_share_logs_title">Logs teilen</string>
 </resources>

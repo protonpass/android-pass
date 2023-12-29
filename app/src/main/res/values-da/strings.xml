@@ -5,5 +5,5 @@
   <string name="custom_fields">Brugerdefinerede felter</string>
   <string name="restart_to_complete_the_update">Genstart for at fuldføre opdateringen</string>
   <string name="action_restart">Genstart</string>
-  <string name="shortcut_share_logs_title">Share logs</string>
+  <string name="shortcut_share_logs_title">Del logs</string>
 </resources>

@@ -77,7 +77,7 @@
   <string name="show_advanced_options">Προηγμένες επιλογές</string>
   <string name="hide_advanced_options">Απόκρυψη σύνθετων επιλογών</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">Δυνατό</string>
+  <string name="label_password_strength_vulnerable">Ευάλωτο</string>
+  <string name="label_password_strength_weak">Αδύναμο</string>
 </resources>

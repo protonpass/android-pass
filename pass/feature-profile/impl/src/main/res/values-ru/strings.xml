@@ -6,7 +6,7 @@
   <string name="profile_help_center">Help center</string>
   <string name="profile_security">Безопасность</string>
   <string name="profile_option_feedback">Обратная связь</string>
-  <string name="profile_option_import_export">Import/export</string>
+  <string name="profile_option_import_export">Импорт и экспорт</string>
   <string name="profile_option_rating">Rate app</string>
   <string name="profile_option_autofill">Автозаполнение</string>
   <string name="profile_option_autofill_subtitle">Automatically fill in your usernames and passwords.</string>

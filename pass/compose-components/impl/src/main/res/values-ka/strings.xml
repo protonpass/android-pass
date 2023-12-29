@@ -77,7 +77,7 @@
   <string name="show_advanced_options">დამატებითი პარამეტრები</string>
   <string name="hide_advanced_options">დამატებითი პარამეტრების დამალვა</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">ძლიერი</string>
+  <string name="label_password_strength_vulnerable">მოწყვლადი</string>
+  <string name="label_password_strength_weak">სუსტი</string>
 </resources>

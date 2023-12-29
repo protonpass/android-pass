@@ -21,12 +21,12 @@
   <string name="bottomsheet_option_capital_letters">Заглавные буквы (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Capitalize</string>
   <string name="bottomsheet_option_include_numbers">Включить числа (0–9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Hyphens ( - )</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Дефисы ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Spaces</string>
-  <string name="bottomsheet_option_word_separator_periods">Periods ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Commas ( , )</string>
+  <string name="bottomsheet_option_word_separator_periods">Точки ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Запятые ( , )</string>
   <string name="bottomsheet_option_word_separator_underscores">Подчеркивания ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Numbers</string>
+  <string name="bottomsheet_option_word_separator_numbers">Цифры</string>
   <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numbers and symbols</string>
   <string name="regenerate_password_icon_content_description">Regenerate password button</string>
   <string name="password_mode_memorable">Запоминающийся пароль</string>

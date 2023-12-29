@@ -5,5 +5,5 @@
   <string name="custom_fields">사용자 지정 필드</string>
   <string name="restart_to_complete_the_update">이 업데이트를 완료하려면 재시작 하십시오</string>
   <string name="action_restart">재시작</string>
-  <string name="shortcut_share_logs_title">Share logs</string>
+  <string name="shortcut_share_logs_title">로그 공유</string>
 </resources>

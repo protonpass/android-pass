@@ -37,7 +37,7 @@
   <string name="bottomsheet_custom_field_type_text_content_description">Текстовое настраиваемое поле</string>
   <string name="bottomsheet_custom_field_type_hidden">Скрыто</string>
   <string name="bottomsheet_custom_field_type_totp">Секрет 2ФА (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
+  <string name="bottomsheet_custom_field_option_edit">Изменить имя</string>
   <string name="bottomsheet_custom_field_option_remove">Удалить поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Удалить пользовательское поле</string>
   <string name="create_login_add_custom_field_button">Добавить другое поле</string>
@@ -82,7 +82,7 @@
   <string name="field_cardholder_name_hint">Полное имя</string>
   <string name="field_card_number_title">Номер карты</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Security code</string>
+  <string name="field_card_cvv_title">Код безопасности</string>
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>

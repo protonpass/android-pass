@@ -2,7 +2,7 @@
 <resources>
   <string name="autofill_authenticate_prompt">Dapatkan dari Proton Pass</string>
   <string name="error_credentials_not_found">Tidak ditemukan kredensial yang cocok</string>
-  <string name="error_loading_items">Tidak dapat memuat item</string>
+  <string name="error_loading_items">Item tidak dapat dimuat</string>
   <string name="topbar_search_query">Cari di seluruh brankas…</string>
   <string name="topbar_search_query_oldest_vaults">Cari dalam brankas terlawas Anda…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Cari...</string>
@@ -11,23 +11,23 @@
   <string name="autofill_only_searching_in_oldest_vaults">Paket Anda hanya mengizinkan penggunaan item dalam brankas terlawas Anda untuk kebutuhan pengisian otomatis.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Saran untuk %s</string>
-  <string name="autofill_associate_web_app_name_dialog_title">Gunakan detail login dari \"%s\" di aplikasi atau situs web ini.</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Gunakan rincian entri masuk dari \"%s\" pada aplikasi atau situs web ini.</string>
   <string name="autofill_dialog_associate_and_autofill">Gunakan selalu</string>
   <string name="autofill_dialog_just_autofill">Gunakan sekali</string>
   <string name="autofill_dialog_cancel">Batalkan</string>
   <string name="autofill_notification_copy_to_clipboard">Kode TOTP disalin ke papan klip</string>
-  <string name="autofill_dialog_associate_title">Gunakan login?</string>
+  <string name="autofill_dialog_associate_title">Gunakan entri masuk?</string>
   <string name="snackbar_item_move_to_trash_success">Item dipindahkan ke sampah</string>
   <string name="snackbar_item_move_to_trash_error">Tidak dapat memindahkan ke tempat sampah</string>
   <string name="snackbar_item_copy_username_success">Nama pengguna disalin ke papan klip</string>
   <string name="snackbar_item_copy_password_success">Kata sandi disalin ke papan klip</string>
   <string name="snackbar_item_copy_clipboard_error">Tidak dapat menyalin ke papan klip</string>
-  <string name="autofill_user_logged_out">Anda telah dikeluarkan. Silakan masuk lagi dengan membuka aplikasi.</string>
+  <string name="autofill_user_logged_out">Anda telah keluar dari akun. Silakan masuk kembali dengan membuka aplikasi.</string>
   <string name="bottomsheet_copy_password">Salin kata sandi</string>
   <string name="bottomsheet_copy_username">Salin nama pengguna</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Rincian kartu isi otomatis</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Isi rincian kartu secara otomatis</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Isi otomatis rincian kartu adalah fitur berbayar. Jika Anda mau Proton Pass mengisi rincian kartu Anda secara otomatis untuk aplikasi dan situs web, silakan tingkatkan ke langganan berbayar.</string>
-  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirm your action</string>
-  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">You are about to autofill your credentials into a website that\'s opened by your current app. The app can have access to the credential after autofill - only do it if you trust the app.</string>
-  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Autofill</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Konfirmasi tindakan Anda</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Anda akan mengisi kredensial Anda pada situs web yang terbuka pada aplikasi Anda saat ini secara otomatis. Ke depannya, aplikasi ini akan dapat mengakses kredensial Anda setelah pengisian otomatis - mohon lanjutkan hanya apabila Anda percaya dengan aplikasi ini.</string>
+  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Isi otomatis</string>
 </resources>

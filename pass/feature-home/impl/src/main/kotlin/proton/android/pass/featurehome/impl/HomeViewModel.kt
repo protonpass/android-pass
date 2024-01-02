@@ -716,6 +716,10 @@ class HomeViewModel @Inject constructor(
         shouldScrollToTopFlow.update { false }
     }
 
+    fun scrollToTop() {
+        shouldScrollToTopFlow.update { true }
+    }
+
     fun onBulkEnabled() = viewModelScope.launch {
         selectionState.update { state ->
             state.copy(isInSelectMode = true)

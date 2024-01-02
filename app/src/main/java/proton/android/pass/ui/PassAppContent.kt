@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
@@ -81,8 +82,12 @@ fun PassAppContent(
 
     val backStack by appNavigator.navController.currentBackStack.collectAsStateWithLifecycle()
     LaunchedEffect(backStack) {
+        PassLogger.i(TAG, "NavigationBackStack 0")
         if (backStack.isNotEmpty()) {
-            PassLogger.i(TAG, "NavigationBackStack: ${backStack.map { it.destination.route }.joinToString()}")
+            PassLogger.i(
+                TAG,
+                "NavigationBackStack: ${backStack.map { it.destination.route }.joinToString()}"
+            )
         }
     }
 
@@ -154,7 +159,14 @@ fun PassAppContent(
                         PassModalBottomSheetLayout(unAuthAppNavigator.passBottomSheetNavigator) {
                             PassUnAuthNavHost(
                                 appNavigator = unAuthAppNavigator,
-                                onNavigate = onNavigate
+                                onNavigate = onNavigate,
+                                dismissBottomSheet = { block ->
+                                    onBottomSheetDismissed(
+                                        coroutineScope = coroutineScope,
+                                        modalBottomSheetState = unAuthBottomSheetState,
+                                        block = block,
+                                    )
+                                }
                             )
                         }
                     } else {
@@ -163,15 +175,12 @@ fun PassAppContent(
                                 modifier = Modifier.weight(1f),
                                 appNavigator = appNavigator,
                                 onNavigate = onNavigate,
-                                dismissBottomSheet = { callback ->
-                                    coroutineScope.launch {
-                                        try {
-                                            bottomSheetState.hide()
-                                        } catch (e: CancellationException) {
-                                            PassLogger.d(TAG, e, "Animation interrupted")
-                                        }
-                                        callback()
-                                    }
+                                dismissBottomSheet = { block ->
+                                    onBottomSheetDismissed(
+                                        coroutineScope = coroutineScope,
+                                        modalBottomSheetState = bottomSheetState,
+                                        block = block,
+                                    )
                                 }
                             )
                         }
@@ -198,5 +207,25 @@ private fun SnackBarLaunchedEffect(
             snackBarMessageLocale
         )
         onSnackBarMessageDelivered()
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+private fun onBottomSheetDismissed(
+    coroutineScope: CoroutineScope,
+    modalBottomSheetState: ModalBottomSheetState,
+    block: () -> Unit,
+) {
+    coroutineScope.launch {
+        coroutineScope.launch {
+            if (modalBottomSheetState.isVisible) {
+                try {
+                    modalBottomSheetState.hide()
+                } catch (e: CancellationException) {
+                    PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
+                }
+            }
+            block()
+        }
     }
 }

@@ -18,12 +18,14 @@
 
 package proton.android.pass.featureauth.impl
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -31,7 +33,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
+import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 
 @Composable
@@ -49,7 +53,13 @@ fun PinInput(
     }
     val focusRequester = remember { FocusRequester() }
     ProtonTextField(
-        modifier = modifier.focusRequester(focusRequester),
+        modifier = modifier
+            .focusRequester(focusRequester)
+            .roundedContainer(
+                backgroundColor = Color.Transparent,
+                borderColor = PassTheme.colors.inputBorderNorm,
+            )
+            .padding(Spacing.medium),
         editable = data?.isLoadingState?.value() != true,
         value = (state as? EnterPinUiState.Data)?.pin.orEmpty(),
         textStyle = PassTheme.typography.heroNorm().copy(textAlign = TextAlign.Center),

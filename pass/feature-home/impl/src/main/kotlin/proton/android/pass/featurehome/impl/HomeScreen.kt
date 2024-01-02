@@ -20,6 +20,7 @@ package proton.android.pass.featurehome.impl
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -126,6 +127,7 @@ fun HomeScreen(
     var shouldShowMoveToTrashItemsDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowDeleteItemsDialog by rememberSaveable { mutableStateOf(false) }
     var aliasToBeTrashed by rememberSaveable(stateSaver = ItemUiModelSaver) { mutableStateOf(null) }
+    val scrollableState = rememberLazyListState()
 
     LaunchedEffect(enableBulkActions) {
         if (enableBulkActions) {
@@ -159,9 +161,8 @@ fun HomeScreen(
             RouterEvent.None -> {}
         }
     }
-
-    LaunchedEffect(onBoardingTipsUiState.tipsToShow.size) {
-        if (onBoardingTipsUiState.tipsToShow.isNotEmpty()) {
+    LaunchedEffect(onBoardingTipsUiState.tipsToShow.hashCode()) {
+        if (onBoardingTipsUiState.tipsToShow.isNotEmpty() && scrollableState.firstVisibleItemIndex == 0) {
             homeViewModel.scrollToTop()
         }
     }
@@ -470,6 +471,7 @@ fun HomeScreen(
             HomeContent(
                 modifier = Modifier.background(PassTheme.colors.backgroundStrong),
                 uiState = homeUiState,
+                scrollableState = scrollableState,
                 shouldScrollToTop = homeUiState.homeListUiState.shouldScrollToTop,
                 header = {
                     item("header") {

@@ -46,6 +46,7 @@ import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.featureitemdetail.impl.common.TopBarType
 import me.proton.core.presentation.R as CoreR
 
 @ExperimentalComposeUiApi
@@ -53,6 +54,7 @@ import me.proton.core.presentation.R as CoreR
 internal fun ItemDetailTopBar(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
+    topBarType: TopBarType,
     actions: ItemActions,
     iconColor: Color,
     iconBackgroundColor: Color,
@@ -77,6 +79,7 @@ internal fun ItemDetailTopBar(
         actions = {
             ItemTopBarActions(
                 actions = actions,
+                topBarType = topBarType,
                 isLoading = isLoading,
                 actionColor = actionColor,
                 iconColor = iconColor,
@@ -92,6 +95,7 @@ internal fun ItemDetailTopBar(
 @Composable
 private fun ItemTopBarActions(
     modifier: Modifier = Modifier,
+    topBarType: TopBarType,
     actions: ItemActions,
     isLoading: Boolean,
     actionColor: Color,
@@ -122,7 +126,14 @@ private fun ItemTopBarActions(
             onShareClick = onShareClick
         )
 
-        AnimatedVisibility(visible = !isLoading) {
+        val shouldDisplayOptions = when (topBarType) {
+            TopBarType.Login,
+            TopBarType.Alias,
+            TopBarType.CreditCard -> actions.canMoveToTrash
+
+            TopBarType.Note -> true
+        }
+        AnimatedVisibility(visible = !isLoading && shouldDisplayOptions) {
             Circle(
                 backgroundColor = iconBackgroundColor,
                 onClick = { onOptionsClick() }
@@ -230,6 +241,7 @@ fun ItemDetailTopBarPreview(
         Surface {
             ItemDetailTopBar(
                 isLoading = input.second.isLoading,
+                topBarType = TopBarType.Login,
                 actionColor = input.second.color,
                 iconBackgroundColor = input.second.closeBackgroundColor,
                 iconColor = input.second.color,

@@ -34,8 +34,6 @@ sealed interface HomeUiEvent {
     object ScrollToTop : HomeUiEvent
     object ProfileClick : HomeUiEvent
     object ActionsClick : HomeUiEvent
-    object TrialInfoClick : HomeUiEvent
-    object InviteClick : HomeUiEvent
     object MoveItemsActionClick : HomeUiEvent
     object MoveToTrashItemsActionClick : HomeUiEvent
     object RestoreItemsActionClick : HomeUiEvent

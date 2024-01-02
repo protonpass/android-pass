@@ -54,7 +54,7 @@ fun OnBoardingTipContent(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = modifier.padding(16.dp)) {
+            Box(modifier = Modifier.padding(16.dp)) {
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {
@@ -82,7 +82,7 @@ fun OnBoardingTipContent(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = modifier.padding(16.dp)) {
+            Box(modifier = Modifier.padding(16.dp)) {
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {
@@ -110,7 +110,7 @@ fun OnBoardingTipContent(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = modifier.padding(16.dp)) {
+            Box(modifier = Modifier.padding(16.dp)) {
                 InviteCard(
                     onClick = { onClick(INVITE) }
                 )
@@ -122,7 +122,7 @@ fun OnBoardingTipContent(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = modifier.padding(16.dp)) {
+            Box(modifier = Modifier.padding(16.dp)) {
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {

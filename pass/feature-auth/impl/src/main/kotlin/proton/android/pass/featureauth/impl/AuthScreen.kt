@@ -24,6 +24,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 
 @Composable
@@ -36,20 +38,22 @@ fun AuthScreen(
     val ctx = LocalContext.current
 
     LaunchedEffect(state.event) {
-        when (state.event) {
-            AuthEvent.Success -> navigation(AuthNavigation.Success)
-            AuthEvent.Failed -> navigation(AuthNavigation.Failed)
-            AuthEvent.Canceled -> navigation(AuthNavigation.Dismissed)
-            AuthEvent.SignOut -> navigation(AuthNavigation.SignOut)
-            AuthEvent.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
-            AuthEvent.EnterPin -> navigation(AuthNavigation.EnterPin)
-            AuthEvent.Unknown -> {}
+        when (val authEventOption = state.event) {
+            None -> viewModel.onAuthMethodRequested()
+            is Some -> {
+                when (authEventOption.value) {
+                    AuthEvent.Success -> navigation(AuthNavigation.Success)
+                    AuthEvent.Failed -> navigation(AuthNavigation.Failed)
+                    AuthEvent.Canceled -> navigation(AuthNavigation.Dismissed)
+                    AuthEvent.SignOut -> navigation(AuthNavigation.SignOut)
+                    AuthEvent.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
+                    AuthEvent.EnterPin -> navigation(AuthNavigation.EnterPin)
+                    AuthEvent.EnterBiometrics -> viewModel.onBiometricsRequired(ctx.toClassHolder())
+                    AuthEvent.Unknown -> return@LaunchedEffect
+                }
+                viewModel.clearEvent()
+            }
         }
-        viewModel.clearEvent()
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.init(ctx.toClassHolder())
     }
 
     AuthScreenContent(
@@ -62,7 +66,8 @@ fun AuthScreen(
                 AuthUiEvent.OnSignOut -> viewModel.onSignOut()
                 is AuthUiEvent.OnTogglePasswordVisibility ->
                     viewModel.onTogglePasswordVisibility(it.value)
-                AuthUiEvent.OnAuthAgainClick -> viewModel.onAuthAgainClick(ctx.toClassHolder())
+
+                AuthUiEvent.OnAuthAgainClick -> viewModel.onAuthMethodRequested()
             }
         }
     )

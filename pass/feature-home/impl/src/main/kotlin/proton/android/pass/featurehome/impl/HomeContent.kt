@@ -26,6 +26,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -61,7 +62,6 @@ import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIco
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.featurehome.impl.HomeUiEvent.AddItemClick
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 
@@ -73,7 +73,8 @@ internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
     shouldScrollToTop: Boolean,
-    onEvent: (HomeUiEvent) -> Unit
+    header: LazyListScope.() -> Unit = {},
+    onEvent: (HomeUiEvent) -> Unit,
 ) {
     val isTrashMode = uiState.homeListUiState.homeVaultSelection == VaultSelectionOption.Trash
     Scaffold(
@@ -251,14 +252,7 @@ internal fun HomeContent(
                     )
                 },
                 forceShowHeader = forceShowHeader,
-                header = {
-                    item {
-                        OnBoardingTips(
-                            onTrialInfoClick = { onEvent(HomeUiEvent.TrialInfoClick) },
-                            onInviteClick = { onEvent(HomeUiEvent.InviteClick) }
-                        )
-                    }
-                },
+                header = header,
             )
         }
     }

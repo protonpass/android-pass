@@ -64,6 +64,10 @@ import proton.android.pass.featurehome.impl.bottomsheet.CreditCardOptionsBottomS
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetContents
+import proton.android.pass.featurehome.impl.onboardingtips.NotificationPermissionLaunchedEffect
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsEvent
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsViewModel
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmDeleteItemsDialog
@@ -90,11 +94,13 @@ fun HomeScreen(
     enableBulkActions: Boolean = false,
     homeViewModel: HomeViewModel = hiltViewModel(),
     routerViewModel: RouterViewModel = hiltViewModel(),
-    vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel()
+    vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel(),
+    onBoardingTipsViewModel: OnBoardingTipsViewModel = hiltViewModel()
 ) {
     val routerEvent by routerViewModel.eventStateFlow.collectAsStateWithLifecycle()
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
     val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
+    val onBoardingTipsUiState by onBoardingTipsViewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(homeUiState.navEvent) {
         when (homeUiState.navEvent) {
@@ -154,6 +160,32 @@ fun HomeScreen(
         }
     }
 
+    LaunchedEffect(onBoardingTipsUiState.tipsToShow.size) {
+        if (onBoardingTipsUiState.tipsToShow.isNotEmpty()) {
+            homeViewModel.scrollToTop()
+        }
+    }
+    LaunchedEffect(onBoardingTipsUiState.event) {
+        when (onBoardingTipsUiState.event) {
+            OnBoardingTipsEvent.OpenTrialScreen -> {
+                onNavigateEvent(HomeNavigation.TrialInfo)
+                onBoardingTipsViewModel.clearEvent()
+            }
+
+            OnBoardingTipsEvent.OpenInviteScreen -> {
+                onNavigateEvent(HomeNavigation.OpenInvite)
+                onBoardingTipsViewModel.clearEvent()
+            }
+
+            OnBoardingTipsEvent.RequestNotificationPermission -> {}
+            OnBoardingTipsEvent.Unknown -> {}
+        }
+    }
+    NotificationPermissionLaunchedEffect(
+        shouldRequestPermissions = onBoardingTipsUiState.event == OnBoardingTipsEvent.RequestNotificationPermission,
+        onPermissionRequested = onBoardingTipsViewModel::clearEvent,
+        onPermissionChanged = onBoardingTipsViewModel::onNotificationPermissionChanged
+    )
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
@@ -439,6 +471,15 @@ fun HomeScreen(
                 modifier = Modifier.background(PassTheme.colors.backgroundStrong),
                 uiState = homeUiState,
                 shouldScrollToTop = homeUiState.homeListUiState.shouldScrollToTop,
+                header = {
+                    item("header") {
+                        OnBoardingTips(
+                            onClick = onBoardingTipsViewModel::onClick,
+                            onDismiss = onBoardingTipsViewModel::onDismiss,
+                            state = onBoardingTipsUiState,
+                        )
+                    }
+                },
                 onEvent = {
                     when (it) {
                         is HomeUiEvent.ItemClick -> {
@@ -517,14 +558,6 @@ fun HomeScreen(
 
                         is HomeUiEvent.ClearRecentSearchClick -> {
                             homeViewModel.onClearAllRecentSearch()
-                        }
-
-                        is HomeUiEvent.TrialInfoClick -> {
-                            onNavigateEvent(HomeNavigation.TrialInfo)
-                        }
-
-                        is HomeUiEvent.InviteClick -> {
-                            onNavigateEvent(HomeNavigation.OpenInvite)
                         }
 
                         is HomeUiEvent.SelectItem -> {

@@ -48,7 +48,7 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
-import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
+import proton.android.pass.featureitemdetail.impl.common.TopBarType
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
@@ -93,9 +93,9 @@ fun NoteDetail(
                 sheetState = bottomSheetState,
                 sheetContent = {
                     when (state.itemUiModel.state) {
-                        ItemState.Active.value -> TopBarOptionsBottomSheetContents(
+                        ItemState.Active.value -> NoteTopBarOptionsBottomSheetContents(
                             canMigrate = state.itemActions.canMoveToOtherVault.value(),
-                            showCopyNote = true,
+                            canMoveToTrash = state.itemActions.canMoveToTrash,
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
@@ -136,6 +136,7 @@ fun NoteDetail(
                     modifier = modifier,
                     topBar = {
                         ItemDetailTopBar(
+                            topBarType = TopBarType.Note,
                             isLoading = state.isLoading,
                             actions = state.itemActions,
                             actionColor = PassTheme.colors.noteInteractionNormMajor1,

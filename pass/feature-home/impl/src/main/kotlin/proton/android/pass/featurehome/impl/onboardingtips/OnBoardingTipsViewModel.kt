@@ -31,12 +31,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
@@ -44,6 +42,7 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveInvites
+import proton.android.pass.domain.PlanType
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
@@ -55,7 +54,6 @@ import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -142,18 +140,10 @@ class OnBoardingTipsViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = runBlocking {
-                val userPlan = getUserPlan().first()
-
-                val tips = getTips(
-                    planType = userPlan.planType,
-                    shouldShowTrial = shouldShowTrialFlow.first(),
-                    shouldShowAutofill = shouldShowAutofillFlow.first(),
-                    shouldShowInvites = shouldShowInvitesFlow.first(),
-                    shouldShowNotificationPermission = shouldShowNotificationPermissionFlow.first()
-                )
-                OnBoardingTipsUiState(tips)
-            }
+            initialValue = OnBoardingTipsUiState(
+                tipsToShow = persistentSetOf(),
+                event = OnBoardingTipsEvent.Unknown
+            )
         )
 
     private fun getTips(

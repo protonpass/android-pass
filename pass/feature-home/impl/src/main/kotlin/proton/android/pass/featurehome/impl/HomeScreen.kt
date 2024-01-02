@@ -167,20 +167,15 @@ fun HomeScreen(
         }
     }
     LaunchedEffect(onBoardingTipsUiState.event) {
-        when (onBoardingTipsUiState.event) {
-            OnBoardingTipsEvent.OpenTrialScreen -> {
-                onNavigateEvent(HomeNavigation.TrialInfo)
-                onBoardingTipsViewModel.clearEvent()
-            }
-
-            OnBoardingTipsEvent.OpenInviteScreen -> {
-                onNavigateEvent(HomeNavigation.OpenInvite)
-                onBoardingTipsViewModel.clearEvent()
-            }
-
-            OnBoardingTipsEvent.RequestNotificationPermission -> {}
-            OnBoardingTipsEvent.Unknown -> {}
+        val homeNavigationEvent = when (onBoardingTipsUiState.event) {
+            OnBoardingTipsEvent.OpenTrialScreen -> HomeNavigation.TrialInfo
+            OnBoardingTipsEvent.OpenInviteScreen -> HomeNavigation.OpenInvite
+            OnBoardingTipsEvent.RequestNotificationPermission,
+            OnBoardingTipsEvent.Unknown -> return@LaunchedEffect
         }
+
+        onNavigateEvent(homeNavigationEvent)
+        onBoardingTipsViewModel.clearEvent()
     }
     NotificationPermissionLaunchedEffect(
         shouldRequestPermissions = onBoardingTipsUiState.event == OnBoardingTipsEvent.RequestNotificationPermission,

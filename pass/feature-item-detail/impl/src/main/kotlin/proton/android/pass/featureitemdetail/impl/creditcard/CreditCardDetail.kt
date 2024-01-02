@@ -48,6 +48,7 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
+import proton.android.pass.featureitemdetail.impl.common.TopBarType
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
@@ -98,6 +99,7 @@ fun CreditCardDetail(
                     when (itemUiModel.state) {
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
                             canMigrate = state.itemActions.canMoveToOtherVault.value(),
+                            canMoveToTrash = state.itemActions.canMoveToTrash,
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
@@ -132,6 +134,7 @@ fun CreditCardDetail(
                     modifier = modifier,
                     topBar = {
                         ItemDetailTopBar(
+                            topBarType = TopBarType.CreditCard,
                             isLoading = state.isLoading,
                             actions = state.itemActions,
                             actionColor = PassTheme.colors.cardInteractionNormMajor1,

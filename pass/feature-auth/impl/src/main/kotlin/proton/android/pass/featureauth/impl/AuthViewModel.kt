@@ -70,7 +70,7 @@ class AuthViewModel @Inject constructor(
     observePrimaryUserEmail: ObservePrimaryUserEmail
 ) : ViewModel() {
 
-    private val eventFlow: MutableStateFlow<AuthEvent> = MutableStateFlow(AuthEvent.Unknown)
+    private val eventFlow: MutableStateFlow<Option<AuthEvent>> = MutableStateFlow(None)
     private val formContentFlow: MutableStateFlow<FormContents> = MutableStateFlow(FormContents())
     private val authMethodFlow: Flow<Option<AuthMethod>> = preferenceRepository
         .getAppLockTypePreference()
@@ -97,6 +97,7 @@ class AuthViewModel @Inject constructor(
                 PassLogger.w(TAG, userEmail.exception)
                 None
             }
+
             is LoadingResult.Success -> userEmail.data.some()
         }
         AuthState(
@@ -117,10 +118,6 @@ class AuthViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = AuthState.Initial
         )
-
-    fun init(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
-        showAuthMethod(contextHolder)
-    }
 
     fun onPasswordChanged(value: String) = viewModelScope.launch {
         formContentFlow.update {
@@ -159,7 +156,7 @@ class AuthViewModel @Inject constructor(
                 if (isPasswordRight) {
                     storeAuthSuccessful()
                     formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
-                    eventFlow.update { AuthEvent.Success }
+                    updateAuthEvent(AuthEvent.Success)
                 } else {
                     withContext(appDispatchers.default) {
                         delay(WRONG_PASSWORD_DELAY_SECONDS)
@@ -175,7 +172,7 @@ class AuthViewModel @Inject constructor(
 
                     if (remainingAttempts <= 0) {
                         PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                        eventFlow.update { AuthEvent.ForceSignOut }
+                        updateAuthEvent(AuthEvent.ForceSignOut)
                     } else {
                         PassLogger.i(TAG, "Wrong password. Remaining attempts: $remainingAttempts")
                         formContentFlow.update {
@@ -194,45 +191,46 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onSignOut() = viewModelScope.launch {
-        eventFlow.update { AuthEvent.SignOut }
+        updateAuthEvent(AuthEvent.SignOut)
     }
 
     fun onTogglePasswordVisibility(value: Boolean) = viewModelScope.launch {
         formContentFlow.update { it.copy(isPasswordVisible = value) }
     }
 
-    fun onAuthAgainClick(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
-        showAuthMethod(contextHolder)
-    }
-
-    fun clearEvent() = viewModelScope.launch {
-        eventFlow.update { AuthEvent.Unknown }
-    }
-
-    private suspend fun showAuthMethod(contextHolder: ClassHolder<Context>) {
-        when (preferenceRepository.getAppLockTypePreference().first()) {
-            AppLockTypePreference.Biometrics -> when (biometryManager.getBiometryStatus()) {
-                BiometryStatus.CanAuthenticate -> {
-                    val biometricLockState = preferenceRepository.getAppLockState().first()
-                    if (biometricLockState == AppLockState.Disabled) {
-                        // If there is biometry available, but the user does not have it enabled
-                        // we should proceed
-                        eventFlow.update { AuthEvent.Success }
-                    } else {
-                        // If there is biometry available, and the user has it enabled, perform auth
-                        openBiometrics(contextHolder)
-                    }
-                }
-
-                else -> {
-                    // If there is no biometry available, emit success
-                    eventFlow.update { AuthEvent.Success }
-                }
-            }
-
-            AppLockTypePreference.Pin -> eventFlow.update { AuthEvent.EnterPin }
-            AppLockTypePreference.None -> {}
+    internal fun onAuthMethodRequested() = viewModelScope.launch {
+        val newAuthEvent = when (preferenceRepository.getAppLockTypePreference().first()) {
+            AppLockTypePreference.None -> AuthEvent.Unknown
+            AppLockTypePreference.Biometrics -> AuthEvent.EnterBiometrics
+            AppLockTypePreference.Pin -> AuthEvent.EnterPin
         }
+
+        updateAuthEvent(newAuthEvent)
+    }
+
+    internal fun clearEvent() = viewModelScope.launch {
+        updateAuthEvent(AuthEvent.Unknown)
+    }
+
+    internal suspend fun onBiometricsRequired(contextHolder: ClassHolder<Context>) {
+        val newAuthEvent = when (biometryManager.getBiometryStatus()) {
+            BiometryStatus.NotAvailable,
+            BiometryStatus.NotEnrolled -> AuthEvent.Success
+
+            BiometryStatus.CanAuthenticate -> {
+                val biometricLockState = preferenceRepository.getAppLockState().first()
+                if (biometricLockState == AppLockState.Enabled) {
+                    // If there is biometry available, and the user has it enabled, perform auth
+                    openBiometrics(contextHolder)
+                    return
+                }
+                // If there is biometry available, but the user does not have it enabled
+                // we should proceed
+                AuthEvent.Success
+            }
+        }
+
+        updateAuthEvent(newAuthEvent)
     }
 
     private suspend fun openBiometrics(contextHolder: ClassHolder<Context>) {
@@ -243,7 +241,7 @@ class AuthViewModel @Inject constructor(
                 when (result) {
                     BiometryResult.Success -> {
                         formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
-                        eventFlow.update { AuthEvent.Success }
+                        updateAuthEvent(AuthEvent.Success)
                     }
 
                     is BiometryResult.Error -> {
@@ -254,7 +252,7 @@ class AuthViewModel @Inject constructor(
                             BiometryAuthError.NegativeButton -> {
                             }
 
-                            else -> eventFlow.update { AuthEvent.Failed }
+                            else -> updateAuthEvent(AuthEvent.Failed)
                         }
                     }
 
@@ -262,10 +260,14 @@ class AuthViewModel @Inject constructor(
                     BiometryResult.Failed -> {}
 
                     is BiometryResult.FailedToStart -> {
-                        eventFlow.update { AuthEvent.Failed }
+                        updateAuthEvent(AuthEvent.Failed)
                     }
                 }
             }
+    }
+
+    private fun updateAuthEvent(newAuthEvent: AuthEvent) {
+        eventFlow.update { newAuthEvent.some() }
     }
 
     private data class FormContents(

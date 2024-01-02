@@ -30,6 +30,7 @@ sealed interface AuthEvent {
     object SignOut : AuthEvent
     object ForceSignOut : AuthEvent
     object EnterPin : AuthEvent
+    object EnterBiometrics : AuthEvent
     object Unknown : AuthEvent
 }
 
@@ -72,13 +73,15 @@ data class AuthContent(
 
 @Stable
 data class AuthState(
-    val event: AuthEvent,
-    val content: AuthContent
+    val event: Option<AuthEvent>,
+    val content: AuthContent,
 ) {
+
     companion object {
         val Initial = AuthState(
-            event = AuthEvent.Unknown,
-            content = AuthContent.default(None)
+            event = None,
+            content = AuthContent.default(None),
         )
     }
+
 }

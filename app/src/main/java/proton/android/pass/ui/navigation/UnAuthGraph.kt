@@ -18,6 +18,7 @@
 
 package proton.android.pass.ui.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.featureaccount.impl.AccountNavigation
@@ -39,7 +40,8 @@ internal const val UN_AUTH_GRAPH = "un_auth_graph"
 
 fun NavGraphBuilder.unAuthGraph(
     appNavigator: AppNavigator,
-    onNavigate: (AppNavigation) -> Unit
+    onNavigate: (AppNavigation) -> Unit,
+    dismissBottomSheet: (() -> Unit) -> Unit,
 ) {
     navigation(
         route = UN_AUTH_GRAPH,
@@ -49,17 +51,19 @@ fun NavGraphBuilder.unAuthGraph(
             AuthScreen(
                 canLogout = true,
                 navigation = {
-                    when (it) {
-                        AuthNavigation.Dismissed,
-                        AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
+                    dismissBottomSheet {
+                        when (it) {
+                            AuthNavigation.Dismissed,
+                            AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
 
-                        AuthNavigation.Success,
-                        AuthNavigation.Failed -> {
+                            AuthNavigation.Success,
+                            AuthNavigation.Failed -> {
+                            }
+
+                            AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
+                            AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
+                            AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
                         }
-
-                        AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
-                        AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
-                        AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
                     }
                 }
             )
@@ -81,6 +85,12 @@ fun NavGraphBuilder.unAuthGraph(
         }
 
         bottomSheet(EnterPin) {
+            BackHandler {
+                dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+            }
+
             EnterPinBottomsheet(
                 onNavigate = {
                     when (it) {

@@ -27,7 +27,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -73,6 +73,7 @@ internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
     shouldScrollToTop: Boolean,
+    scrollableState: LazyListState,
     header: LazyListScope.() -> Unit = {},
     onEvent: (HomeUiEvent) -> Unit,
 ) {
@@ -153,7 +154,6 @@ internal fun HomeContent(
         }
     ) { contentPadding ->
         val keyboardController = LocalSoftwareKeyboardController.current
-        val scrollableState = rememberLazyListState()
         val firstItemVisible by remember {
             derivedStateOf {
                 scrollableState.firstVisibleItemIndex <= 1

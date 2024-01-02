@@ -21,98 +21,50 @@ package proton.android.pass.featureitemdetail.impl.common
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
 fun TopBarOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     canMigrate: Boolean,
-    showCopyNote: Boolean = false,
+    canMoveToTrash: Boolean,
     onMigrate: () -> Unit,
-    onMoveToTrash: () -> Unit,
-    onCopyNote: () -> Unit = {}
+    onMoveToTrash: () -> Unit
 ) {
     val items = mutableListOf<BottomSheetItem>()
-    if (showCopyNote) {
-        items.add(copyNote(onClick = onCopyNote))
-    }
     if (canMigrate) {
         items.add(migrate(onClick = onMigrate))
     }
-    items.add(moveToTrash(onClick = onMoveToTrash))
+    if (canMoveToTrash) {
+        items.add(moveToTrash(onClick = onMoveToTrash))
+    }
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = items.withDividers().toPersistentList()
     )
 }
 
-private fun migrate(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(R.string.migrate_item_detail_bottom_sheet)) }
-        override val subtitle: @Composable (() -> Unit)?
-            get() = null
-        override val leftIcon: @Composable (() -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_folder_arrow_in) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
-
-private fun copyNote(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(R.string.note_detail_copy_note_to_clipboard)) }
-        override val subtitle: @Composable (() -> Unit)?
-            get() = null
-        override val leftIcon: @Composable (() -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_squares) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
-
-private fun moveToTrash(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(R.string.move_to_trash_item_detail_bottom_sheet)) }
-        override val subtitle: @Composable (() -> Unit)?
-            get() = null
-        override val leftIcon: @Composable (() -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_trash) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
+class ThemedTopBarOptionsPreviewProvider :
+    ThemePairPreviewProvider<TopBarOptionsParameters>(TopBarOptionsParametersPreviewProvider())
 
 @Preview
 @Composable
 fun TopBarOptionsBottomSheetContentsPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemedTopBarOptionsPreviewProvider::class) input: Pair<Boolean, TopBarOptionsParameters>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             TopBarOptionsBottomSheetContents(
-                canMigrate = input.second,
-                showCopyNote = input.second,
+                canMigrate = input.second.canMigrate,
+                canMoveToTrash = input.second.canMoveToTrash,
                 onMigrate = {},
                 onMoveToTrash = {}
             )

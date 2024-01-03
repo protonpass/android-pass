@@ -18,10 +18,13 @@
 
 package proton.android.pass.data.impl.repositories
 
+import androidx.lifecycle.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -31,7 +34,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusRepository {
+class ItemSyncStatusRepositoryImpl @Inject constructor(
+    private val lifecycleProvider: AppLifecycleProvider
+) : ItemSyncStatusRepository {
 
     private val syncStatus: MutableSharedFlow<ItemSyncStatus> =
         MutableSharedFlow<ItemSyncStatus>(replay = 1, extraBufferCapacity = 1)
@@ -45,7 +50,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusReposit
 
     private val mutex: Mutex = Mutex()
 
-    override suspend fun emit(status: ItemSyncStatus) {
+    private suspend fun updateSyncStatus(status: ItemSyncStatus, emit: suspend (ItemSyncStatus) -> Unit) {
         mutex.withLock {
             when (status) {
                 is ItemSyncStatus.Syncing -> {
@@ -62,25 +67,16 @@ class ItemSyncStatusRepositoryImpl @Inject constructor() : ItemSyncStatusReposit
                 else -> {}
             }
         }
-        syncStatus.emit(status)
+        emit(status)
+    }
+
+    override suspend fun emit(status: ItemSyncStatus) {
+        updateSyncStatus(status) { syncStatus.emit(it) }
     }
 
     override fun tryEmit(status: ItemSyncStatus) {
-        when (status) {
-            is ItemSyncStatus.Syncing -> {
-                payloadMutableMap[status.shareId] =
-                    ItemSyncStatusPayload(status.current, status.total)
-                accSyncStatus.tryEmit(payloadMutableMap.toMap())
-            }
-
-            ItemSyncStatus.NotStarted -> {
-                payloadMutableMap.clear()
-                accSyncStatus.tryEmit(payloadMutableMap.toMap())
-            }
-
-            else -> {}
-        }
-        syncStatus.tryEmit(status)
+        lifecycleProvider.lifecycle.coroutineScope
+            .launch { updateSyncStatus(status) { syncStatus.tryEmit(it) } }
     }
 
     override suspend fun setMode(mode: SyncMode) {

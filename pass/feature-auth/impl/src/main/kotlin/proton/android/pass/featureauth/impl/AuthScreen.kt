@@ -28,6 +28,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 
+@Suppress("ComplexMethod")
 @Composable
 fun AuthScreen(
     navigation: (AuthNavigation) -> Unit,

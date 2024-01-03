@@ -156,7 +156,7 @@ class AuthViewModel @Inject constructor(
                 if (isPasswordRight) {
                     storeAuthSuccessful()
                     formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
-                    updateAuthEvent(AuthEvent.Success)
+                    updateAuthEventFlow(AuthEvent.Success)
                 } else {
                     withContext(appDispatchers.default) {
                         delay(WRONG_PASSWORD_DELAY_SECONDS)
@@ -172,7 +172,7 @@ class AuthViewModel @Inject constructor(
 
                     if (remainingAttempts <= 0) {
                         PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                        updateAuthEvent(AuthEvent.ForceSignOut)
+                        updateAuthEventFlow(AuthEvent.ForceSignOut)
                     } else {
                         PassLogger.i(TAG, "Wrong password. Remaining attempts: $remainingAttempts")
                         formContentFlow.update {
@@ -191,7 +191,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onSignOut() = viewModelScope.launch {
-        updateAuthEvent(AuthEvent.SignOut)
+        updateAuthEventFlow(AuthEvent.SignOut)
     }
 
     fun onTogglePasswordVisibility(value: Boolean) = viewModelScope.launch {
@@ -205,14 +205,14 @@ class AuthViewModel @Inject constructor(
             AppLockTypePreference.Pin -> AuthEvent.EnterPin
         }
 
-        updateAuthEvent(newAuthEvent)
+        updateAuthEventFlow(newAuthEvent)
     }
 
     internal fun clearEvent() = viewModelScope.launch {
-        updateAuthEvent(AuthEvent.Unknown)
+        updateAuthEventFlow(AuthEvent.Unknown)
     }
 
-    internal suspend fun onBiometricsRequired(contextHolder: ClassHolder<Context>) {
+    internal fun onBiometricsRequired(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
         val newAuthEvent = when (biometryManager.getBiometryStatus()) {
             BiometryStatus.NotAvailable,
             BiometryStatus.NotEnrolled -> AuthEvent.Success
@@ -222,7 +222,7 @@ class AuthViewModel @Inject constructor(
                 if (biometricLockState == AppLockState.Enabled) {
                     // If there is biometry available, and the user has it enabled, perform auth
                     openBiometrics(contextHolder)
-                    return
+                    return@launch
                 }
                 // If there is biometry available, but the user does not have it enabled
                 // we should proceed
@@ -230,7 +230,7 @@ class AuthViewModel @Inject constructor(
             }
         }
 
-        updateAuthEvent(newAuthEvent)
+        updateAuthEventFlow(newAuthEvent)
     }
 
     private suspend fun openBiometrics(contextHolder: ClassHolder<Context>) {
@@ -241,7 +241,7 @@ class AuthViewModel @Inject constructor(
                 when (result) {
                     BiometryResult.Success -> {
                         formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
-                        updateAuthEvent(AuthEvent.Success)
+                        updateAuthEventFlow(AuthEvent.Success)
                     }
 
                     is BiometryResult.Error -> {
@@ -252,7 +252,7 @@ class AuthViewModel @Inject constructor(
                             BiometryAuthError.NegativeButton -> {
                             }
 
-                            else -> updateAuthEvent(AuthEvent.Failed)
+                            else -> updateAuthEventFlow(AuthEvent.Failed)
                         }
                     }
 
@@ -260,13 +260,13 @@ class AuthViewModel @Inject constructor(
                     BiometryResult.Failed -> {}
 
                     is BiometryResult.FailedToStart -> {
-                        updateAuthEvent(AuthEvent.Failed)
+                        updateAuthEventFlow(AuthEvent.Failed)
                     }
                 }
             }
     }
 
-    private fun updateAuthEvent(newAuthEvent: AuthEvent) {
+    private fun updateAuthEventFlow(newAuthEvent: AuthEvent) {
         eventFlow.update { newAuthEvent.some() }
     }
 

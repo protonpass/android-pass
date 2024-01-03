@@ -94,6 +94,8 @@ fun NavGraphBuilder.autofillActivityGraph(
 ) {
     authGraph(
         canLogout = false,
+        appNavigator = appNavigator,
+        dismissBottomSheet = dismissBottomSheet,
         navigation = {
             when (it) {
                 AuthNavigation.Back -> onNavigate(AutofillNavigation.Cancel)

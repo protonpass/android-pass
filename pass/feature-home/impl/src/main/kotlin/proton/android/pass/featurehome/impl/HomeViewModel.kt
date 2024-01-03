@@ -32,6 +32,7 @@ import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -40,6 +41,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -48,6 +50,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import kotlinx.datetime.Clock
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
@@ -84,6 +87,7 @@ import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.PerformSync
@@ -132,6 +136,7 @@ import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @Suppress("LongParameterList", "LargeClass", "TooManyFunctions")
 @HiltViewModel
@@ -155,6 +160,7 @@ class HomeViewModel @Inject constructor(
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
+    observeCurrentUser: ObserveCurrentUser,
     preferencesRepository: UserPreferencesRepository,
     getUserPlan: GetUserPlan,
     appDispatchers: AppDispatchers,
@@ -179,6 +185,27 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(SelectionState.Initial)
     private val navEventState: MutableStateFlow<HomeNavEvent> =
         MutableStateFlow(HomeNavEvent.Unknown)
+
+    init {
+        // Temporary telemetry to monitor sync issues.
+        viewModelScope.launch {
+            val result = runCatching {
+                withTimeout(10.seconds) {
+                    observeCurrentUser().first()
+                }
+            }
+
+            if (result.isFailure) {
+                when (result.exceptionOrNull()) {
+                    is TimeoutCancellationException -> {
+                        PassLogger.e(TAG, UserTimeoutException())
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+    }
 
     @OptIn(FlowPreview::class)
     private val debouncedSearchQueryState = searchQueryState
@@ -286,8 +313,11 @@ class HomeViewModel @Inject constructor(
                 .distinctUntilChanged()
         }
 
+
     private val filteredSearchEntriesFlow = combine(
-        itemUiModelFlow,
+        itemUiModelFlow.onEach {
+            PassLogger.i(TAG, "Item list size: ${it.getOrNull()?.size}")
+        },
         searchEntryState
     ) { itemResult, searchEntryList ->
         itemResult.map { list ->
@@ -604,7 +634,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun setVaultSelection(vaultSelection: VaultSelectionOption) {
-        PassLogger.d(TAG, "Setting vault selection: $vaultSelection")
         homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
         homeSearchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.All))
     }

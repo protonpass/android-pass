@@ -57,6 +57,8 @@ fun NavGraphBuilder.autosaveActivityGraph(
 ) {
     authGraph(
         canLogout = false,
+        appNavigator = appNavigator,
+        dismissBottomSheet = dismissBottomSheet,
         navigation = {
             when (it) {
                 AuthNavigation.Back -> onNavigate(AutosaveNavigation.Cancel)

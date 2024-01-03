@@ -26,6 +26,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -47,7 +48,8 @@ class VaultDrawerViewModel @Inject constructor(
 
     val drawerUiState: StateFlow<VaultDrawerUiState> = combine(
         observeVaultsWithItemCount().asLoadingResult(),
-        homeSearchOptionsRepository.observeVaultSelectionOption(),
+        homeSearchOptionsRepository.observeVaultSelectionOption()
+            .onEach { PassLogger.i(TAG, "Vault selection: ${it.javaClass.simpleName}") },
         canCreateVault().asLoadingResult()
     ) { shares, selectedVault, canCreateVault ->
         when (shares) {

@@ -94,13 +94,6 @@ fun PassAppContent(
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
 
-    val unAuthBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-    val unAuthBottomSheetNavigator = rememberBottomSheetNavigator(unAuthBottomSheetState)
-    val unAuthAppNavigator = rememberAppNavigator(unAuthBottomSheetNavigator)
-
     SnackBarLaunchedEffect(
         appUiState.snackbarMessage.value(),
         passSnackbarHostState,
@@ -156,6 +149,13 @@ fun PassAppContent(
                         )
                     }
                     if (appUiState.needsAuth) {
+                        val unAuthBottomSheetState = rememberModalBottomSheetState(
+                            initialValue = ModalBottomSheetValue.Hidden,
+                            skipHalfExpanded = true
+                        )
+                        val unAuthBottomSheetNavigator =
+                            rememberBottomSheetNavigator(unAuthBottomSheetState)
+                        val unAuthAppNavigator = rememberAppNavigator(unAuthBottomSheetNavigator)
                         PassModalBottomSheetLayout(unAuthAppNavigator.passBottomSheetNavigator) {
                             PassUnAuthNavHost(
                                 appNavigator = unAuthAppNavigator,
@@ -217,15 +217,13 @@ private fun onBottomSheetDismissed(
     block: () -> Unit,
 ) {
     coroutineScope.launch {
-        coroutineScope.launch {
-            if (modalBottomSheetState.isVisible) {
-                try {
-                    modalBottomSheetState.hide()
-                } catch (e: CancellationException) {
-                    PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
-                }
+        if (modalBottomSheetState.isVisible) {
+            try {
+                modalBottomSheetState.hide()
+            } catch (e: CancellationException) {
+                PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
             }
-            block()
         }
+        block()
     }
 }

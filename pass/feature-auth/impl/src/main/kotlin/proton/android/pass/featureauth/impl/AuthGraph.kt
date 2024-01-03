@@ -21,6 +21,7 @@ package proton.android.pass.featureauth.impl
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
+import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
@@ -47,11 +48,13 @@ sealed interface AuthNavigation {
 
 fun NavGraphBuilder.authGraph(
     canLogout: Boolean,
-    navigation: (AuthNavigation) -> Unit
+    navigation: (AuthNavigation) -> Unit,
+    appNavigator: AppNavigator,
+    dismissBottomSheet: (() -> Unit) -> Unit,
 ) {
     navigation(
         route = AUTH_GRAPH,
-        startDestination = Auth.route
+        startDestination = Auth.route,
     ) {
         composable(Auth) {
             BackHandler { navigation(AuthNavigation.Back) }
@@ -60,7 +63,14 @@ fun NavGraphBuilder.authGraph(
                 navigation = navigation
             )
         }
+
         bottomSheet(EnterPin) {
+            BackHandler {
+                dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+            }
+
             EnterPinBottomsheet(
                 onNavigate = {
                     when (it) {
@@ -70,5 +80,6 @@ fun NavGraphBuilder.authGraph(
                 }
             )
         }
+
     }
 }

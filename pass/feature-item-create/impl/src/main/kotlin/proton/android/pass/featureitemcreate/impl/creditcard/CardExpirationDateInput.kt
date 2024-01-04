@@ -128,7 +128,7 @@ fun CardExpirationDateInputPreview(
     PassTheme(isDark = input.first) {
         Surface {
             CardExpirationDateInput(
-                value = "122048",
+                value = "1248",
                 enabled = true,
                 hasError = input.second,
                 onChange = {}

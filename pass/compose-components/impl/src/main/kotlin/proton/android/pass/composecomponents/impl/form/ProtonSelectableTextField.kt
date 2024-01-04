@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,9 +35,12 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.LayoutDirection
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionNorm
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 
 private const val SELECTABLE_TEXT_FIELD_ERROR_LABEL = "ProtonSelectableTextField-errorMessage"
@@ -97,4 +101,25 @@ fun ProtonSelectableTextField(
         }
     }
 
+}
+
+@Preview
+@Composable
+fun ProtonSelectableTextFieldPreview(
+    @PreviewParameter(ThemedProtonTextFieldPreviewProvider::class)
+    input: Pair<Boolean, ProtonSelectableTextFieldPreviewParams>,
+) {
+    val (isDark, params) = input
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            ProtonSelectableTextField(
+                text = params.text,
+                onTextChanged = {},
+                textStyle = ProtonTheme.typography.defaultNorm,
+                isEnabled = params.isEnabled,
+                errorText = params.errorText,
+            )
+        }
+    }
 }

@@ -160,4 +160,12 @@ class BaseCreditCardViewModelTest {
             assertThat(awaitItem().isDowngradedMode).isTrue()
         }
     }
+
+    @Test
+    fun `given a long expiration date the state should hold the correct`() = runTest {
+        val rightExpirationDate = "1".repeat(BaseCreditCardViewModel.EXPIRATION_DATE_MAX_LENGTH)
+        val tooLongDate = "${rightExpirationDate}1"
+        instance.onExpirationDateChanged(tooLongDate)
+        assertThat(instance.creditCardItemFormState.expirationDate).isEqualTo(rightExpirationDate)
+    }
 }

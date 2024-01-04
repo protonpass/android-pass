@@ -22,11 +22,16 @@ import proton.android.pass.commonrust.AliasPrefixException
 import proton.android.pass.commonrust.api.AliasPrefixError
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import javax.inject.Inject
+import javax.inject.Singleton
 import proton.android.pass.commonrust.AliasPrefixValidator as RustValidator
 
+@Singleton
 class AliasPrefixValidatorImpl @Inject constructor() : AliasPrefixValidator {
+
+    private val aliasPrefixValidator by lazy { RustValidator() }
+
     override fun validate(prefix: String) = runCatching {
-        RustValidator().validate(prefix)
+        aliasPrefixValidator.validate(prefix)
     }.fold(
         onSuccess = { Result.success(Unit) },
         onFailure = {

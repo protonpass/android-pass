@@ -46,7 +46,8 @@ import proton.android.pass.featureitemcreate.impl.alias.mailboxes.AliasToBeCreat
 fun AliasToBeCreated(
     modifier: Modifier = Modifier,
     prefix: String,
-    suffix: AliasSuffixUiModel?
+    suffix: AliasSuffixUiModel?,
+    isError: Boolean = false
 ) {
     Row(
         modifier = modifier
@@ -62,7 +63,10 @@ fun AliasToBeCreated(
             tint = PassTheme.colors.aliasInteractionNorm
         )
         Column(modifier = Modifier.fillMaxWidth()) {
-            ProtonTextFieldLabel(text = stringResource(id = R.string.field_alias_you_are_about_to_create))
+            ProtonTextFieldLabel(
+                text = stringResource(id = R.string.field_alias_you_are_about_to_create),
+                isError = isError
+            )
             AliasPrefixSuffixText(
                 prefix = prefix,
                 suffix = suffix?.suffix ?: "",

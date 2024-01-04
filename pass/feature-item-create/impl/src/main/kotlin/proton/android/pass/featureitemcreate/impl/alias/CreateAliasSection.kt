@@ -41,7 +41,8 @@ internal fun CreateAliasSection(
     Column(modifier) {
         AliasToBeCreated(
             prefix = state.prefix,
-            suffix = state.selectedSuffix
+            suffix = state.selectedSuffix,
+            isError = onAliasRequiredError || onInvalidAliasError,
         )
         AliasAdvancedOptions(
             enabled = canEdit,

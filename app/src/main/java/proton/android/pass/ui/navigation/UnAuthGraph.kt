@@ -51,19 +51,17 @@ fun NavGraphBuilder.unAuthGraph(
             AuthScreen(
                 canLogout = true,
                 navigation = {
-                    dismissBottomSheet {
-                        when (it) {
-                            AuthNavigation.Dismissed,
-                            AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
+                    when (it) {
+                        AuthNavigation.Dismissed,
+                        AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
 
-                            AuthNavigation.Success,
-                            AuthNavigation.Failed -> {
-                            }
-
-                            AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
-                            AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
-                            AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
+                        AuthNavigation.Success,
+                        AuthNavigation.Failed -> {
                         }
+
+                        AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
+                        AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
+                        AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
                     }
                 }
             )

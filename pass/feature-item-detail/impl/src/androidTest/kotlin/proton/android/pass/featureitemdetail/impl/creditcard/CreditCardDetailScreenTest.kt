@@ -47,6 +47,9 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
 import proton.android.pass.featureitemdetail.impl.R
@@ -54,9 +57,6 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -119,7 +119,7 @@ class CreditCardDetailScreenTest {
 
             onNode(hasText(itemTitle)).assertExists()
             onNode(hasText("1234 •••• •••• 1234")).assertExists()
-            onNode(hasText("02 / 2010")).assertExists()
+            onNode(hasText("02 / 10")).assertExists()
             onNode(hasText(note)).assertExists()
         }
     }
@@ -274,7 +274,7 @@ class CreditCardDetailScreenTest {
         val cvv = "333"
         val pin = "6543"
         val expirationDate = "2010-02"
-        val formattedExpirationDate = "02 / 2010"
+        val formattedExpirationDate = "02 / 10"
         val title = performSetup(
             cardHolder = cardHolder,
             expirationDate = expirationDate,

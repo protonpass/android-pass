@@ -24,6 +24,24 @@ class ExpirationDateProtoMapperTest {
     }
 
     @Test
+    fun `toProto handles invalid input`() {
+        val input = "invalid-format"
+
+        val result = ExpirationDateProtoMapper.toProto(input)
+
+        assertEquals("", result)
+    }
+
+    @Test
+    fun `toProto handles long input strings`() {
+        val input = "1234567890"
+
+        val result = ExpirationDateProtoMapper.toProto(input)
+
+        assertEquals("", result)
+    }
+
+    @Test
     fun `fromProto converts YYYY-MM to MMYY format`() {
         val input = "2022-01"
 

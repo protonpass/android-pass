@@ -18,12 +18,15 @@
 
 package proton.android.pass.featureitemcreate.impl.creditcard
 
+import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
+
 object ExpirationDateProtoMapper {
 
+    private const val EXPIRATION_DATE_LENGTH = 4
     private val ProtoRegex = Regex("""^\d{4}-\d{2}$""")
 
     fun toProto(value: String): String {
-        if (value.length <= 2) return ""
+        if (value.length != EXPIRATION_DATE_LENGTH && !NON_DIGIT_REGEX.matches(value)) return ""
         val month = value.substring(0, 2)
         val year = value.substring(2)
         return "20$year-$month"

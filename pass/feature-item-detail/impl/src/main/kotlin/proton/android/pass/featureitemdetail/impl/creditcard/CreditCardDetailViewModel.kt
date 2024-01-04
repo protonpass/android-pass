@@ -363,7 +363,7 @@ class CreditCardDetailViewModel @Inject constructor(
     private fun adaptExpirationDate(input: String): String {
         val parts = input.split("-")
         return if (parts.size == 2) {
-            val year = parts[0]
+            val year = parts[0].substring(2)
             val month = parts[1].padStart(2, '0')
             "$month / $year"
         } else {

@@ -41,17 +41,17 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
+import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
-import proton.android.pass.domain.CreditCardType
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -138,9 +138,10 @@ class UpdateCreditCardScreenTest {
         val newPin = "555"
         val newCvv = "777"
         val newExpirationDateMonth = "04"
-        val newExpirationDateYear = "6543"
-        val newExpirationDate = "${newExpirationDateMonth}${newExpirationDateYear}"
-        val newFormattedExpirationDate = "$newExpirationDateMonth / $newExpirationDateYear"
+        val newExpirationDateYear = "2043"
+        val newExpirationDate = "${newExpirationDateMonth}${newExpirationDateYear.substring(2)}"
+        val newFormattedExpirationDate =
+            "$newExpirationDateMonth / ${newExpirationDateYear.substring(2)}"
         val newItemExpirationDate = "${newExpirationDateYear}-${newExpirationDateMonth}"
         val newNote = "Updated note"
 
@@ -277,7 +278,8 @@ class UpdateCreditCardScreenTest {
             val buttonText = activity.getString(R.string.action_save)
             waitUntilExists(hasText(buttonText))
 
-            val closeContentDescription = activity.getString(R.string.close_scree_icon_content_description)
+            val closeContentDescription =
+                activity.getString(R.string.close_scree_icon_content_description)
             onNode(hasContentDescription(closeContentDescription)).performClick()
 
             waitUntil { checker.isCalled }
@@ -322,11 +324,11 @@ class UpdateCreditCardScreenTest {
         private const val DEFAULT_NOTE = "This is some note"
         private const val HIDDEN_FIELD_VALUE = "••••••••"
         private const val DEFAULT_EXPIRATION_DATE_MONTH = "12"
-        private const val DEFAULT_EXPIRATION_DATE_YEAR = "3456"
+        private const val DEFAULT_EXPIRATION_DATE_YEAR = "2056"
         private const val ITEM_EXPIRATION_DATE =
             "${DEFAULT_EXPIRATION_DATE_YEAR}-${DEFAULT_EXPIRATION_DATE_MONTH}"
-        private const val FORMATTED_EXPIRATION_DATE =
-            "$DEFAULT_EXPIRATION_DATE_MONTH / $DEFAULT_EXPIRATION_DATE_YEAR"
+        private val FORMATTED_EXPIRATION_DATE =
+            "$DEFAULT_EXPIRATION_DATE_MONTH / ${DEFAULT_EXPIRATION_DATE_YEAR.substring(2)}"
 
         private val USER_ID = UserId("user-id-123")
     }

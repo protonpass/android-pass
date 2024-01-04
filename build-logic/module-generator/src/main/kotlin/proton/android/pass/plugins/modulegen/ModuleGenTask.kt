@@ -82,16 +82,15 @@ open class ModuleGenTask : DefaultTask() {
         configurationSet: Set<Configuration>
     ) {
         require(modulePath.isNotEmpty()) { "Module path is empty" }
-        if (configurationSet.none { it == Configuration.IMPL || it == Configuration.FAKES }) {
-            return
-        }
-        val manifestTemplate = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest/>\n"
-        configurationSet.forEach { conf ->
-            val lcConfiguration = conf.name.lowercase()
-            val dir = modulePath.joinToString(File.separator)
-            val manifestFilePath = "$dir/$lcConfiguration/src/main/AndroidManifest.xml"
-            file(manifestFilePath).writeText(manifestTemplate)
-        }
+        val manifestTemplate = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest />\n"
+        configurationSet
+            .filter { it == Configuration.IMPL || it == Configuration.FAKES }
+            .forEach { conf ->
+                val lcConfiguration = conf.name.lowercase()
+                val dir = modulePath.joinToString(File.separator)
+                val manifestFilePath = "$dir/$lcConfiguration/src/main/AndroidManifest.xml"
+                file(manifestFilePath).writeText(manifestTemplate)
+            }
     }
 
     private fun Project.generateDirs(

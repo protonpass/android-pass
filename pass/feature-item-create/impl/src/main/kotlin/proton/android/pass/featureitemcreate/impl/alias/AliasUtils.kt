@@ -29,23 +29,18 @@ object AliasUtils {
 
     private const val SPACE_REPLACEMENT_CHAR = '-'
     private val ALLOWED_SPECIAL_CHARACTERS: List<Char> = listOf('_', '-', '.')
+    private val CONSECUTIVE_DOTS = Regex("\\.{2,}")
 
     fun formatAlias(value: String): String =
         value.replace(" ", SPACE_REPLACEMENT_CHAR.toString())
             .filter { it.isLetterOrDigit() || ALLOWED_SPECIAL_CHARACTERS.contains(it) }
             .lowercase()
             .removeAccents()
+            .replace(CONSECUTIVE_DOTS, ".")
+            .let(::removeLeadingDots)
 
-    fun areAllAliasCharactersValid(alias: String): Boolean {
-        for (char in alias) {
-            // If it's not a letter or a digit, check if it's one of the allowed symbols
-            if (!char.isLetterOrDigit() && !ALLOWED_SPECIAL_CHARACTERS.contains(char)) return false
-
-            // If it's a letter, must be lowercase
-            if (char.isLetter() && char.isUpperCase()) return false
-        }
-        return true
-    }
+    private tailrec fun removeLeadingDots(str: String): String =
+        if (str.startsWith(".")) removeLeadingDots(str.removePrefix(".")) else str
 
     fun extractPrefixSuffix(email: String): PrefixSuffix {
         // Validate it's a proper email.

@@ -47,14 +47,16 @@ fun NoteTopBarOptionsBottomSheetContents(
     onMoveToTrash: () -> Unit,
     onCopyNote: () -> Unit = {}
 ) {
-    val items = mutableListOf<BottomSheetItem>()
-    items.add(copyNote(onClick = onCopyNote))
-    if (canMigrate) {
-        items.add(migrate(onClick = onMigrate))
+    val items = mutableListOf<BottomSheetItem>().apply {
+        add(copyNote(onClick = onCopyNote))
+        if (canMigrate) {
+            add(migrate(onClick = onMigrate))
+        }
+        if (canMoveToTrash) {
+            add(moveToTrash(onClick = onMoveToTrash))
+        }
     }
-    if (canMoveToTrash) {
-        items.add(moveToTrash(onClick = onMoveToTrash))
-    }
+
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = items.withDividers().toPersistentList()

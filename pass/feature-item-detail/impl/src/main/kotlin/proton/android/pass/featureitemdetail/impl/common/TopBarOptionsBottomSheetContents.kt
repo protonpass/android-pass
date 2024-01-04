@@ -39,13 +39,15 @@ fun TopBarOptionsBottomSheetContents(
     onMigrate: () -> Unit,
     onMoveToTrash: () -> Unit
 ) {
-    val items = mutableListOf<BottomSheetItem>()
-    if (canMigrate) {
-        items.add(migrate(onClick = onMigrate))
+    val items = mutableListOf<BottomSheetItem>().apply {
+        if (canMigrate) {
+            add(migrate(onClick = onMigrate))
+        }
+        if (canMoveToTrash) {
+            add(moveToTrash(onClick = onMoveToTrash))
+        }
     }
-    if (canMoveToTrash) {
-        items.add(moveToTrash(onClick = onMoveToTrash))
-    }
+
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = items.withDividers().toPersistentList()

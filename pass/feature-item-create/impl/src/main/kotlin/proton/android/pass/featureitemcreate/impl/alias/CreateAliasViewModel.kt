@@ -256,7 +256,10 @@ open class CreateAliasViewModel @Inject constructor(
 
         aliasItemValidationErrorsState.update {
             it.toMutableSet()
-                .apply { remove(AliasItemValidationErrors.BlankTitle) }
+                .apply {
+                    remove(AliasItemValidationErrors.BlankTitle)
+                    remove(AliasItemValidationErrors.InvalidAliasContent)
+                }
         }
     }
 

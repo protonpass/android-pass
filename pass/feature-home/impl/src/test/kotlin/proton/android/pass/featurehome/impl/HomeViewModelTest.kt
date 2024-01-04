@@ -39,6 +39,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestClearTrash
@@ -46,6 +47,7 @@ import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
@@ -97,6 +99,7 @@ class HomeViewModelTest {
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var savedState: TestSavedStateHandleProvider
     private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
+    private lateinit var observeCurrentUser: ObserveCurrentUser
 
 
     @Before
@@ -123,6 +126,7 @@ class HomeViewModelTest {
         getUserPlan = TestGetUserPlan()
         savedState = TestSavedStateHandleProvider()
         bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
+        observeCurrentUser = TestObserveCurrentUser()
         createViewModel()
     }
 
@@ -249,7 +253,8 @@ class HomeViewModelTest {
             getUserPlan = getUserPlan,
             appDispatchers = TestAppDispatchers(),
             savedState = savedState,
-            bulkMoveToVaultRepository = bulkMoveToVaultRepository
+            bulkMoveToVaultRepository = bulkMoveToVaultRepository,
+            observeCurrentUser = observeCurrentUser
         )
     }
 

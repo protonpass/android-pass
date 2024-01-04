@@ -82,7 +82,6 @@ fun PassAppContent(
 
     val backStack by appNavigator.navController.currentBackStack.collectAsStateWithLifecycle()
     LaunchedEffect(backStack) {
-        PassLogger.i(TAG, "NavigationBackStack 0")
         if (backStack.isNotEmpty()) {
             PassLogger.i(
                 TAG,

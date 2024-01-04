@@ -50,6 +50,16 @@ class AliasUtilsTest {
     }
 
     @Test
+    fun `alias clears all first dots`() {
+        assertEquals(AliasUtils.formatAlias(".....abcd.efg"), "abcd.efg")
+    }
+
+    @Test
+    fun `alias removes all consecutive dots`() {
+        assertEquals(AliasUtils.formatAlias("abcd.....efg"), "abcd.efg")
+    }
+
+    @Test
     fun `should be able to extract the prefix and suffix`() {
         val prefix = "some.random"
         val suffix = "suffix@domain.tld"

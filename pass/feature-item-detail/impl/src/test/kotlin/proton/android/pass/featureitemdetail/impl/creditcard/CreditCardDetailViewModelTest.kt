@@ -157,7 +157,7 @@ class CreditCardDetailViewModelTest {
                     HiddenState.Concealed(TestEncryptionContext.encrypt(verificationNumber))
                 )
 
-            val expectedExpiration = "$expirationDateMonth / $expirationDateYear"
+            val expectedExpiration = "$expirationDateMonth / ${expirationDateYear.substring(2)}"
             assertThat(cardContent.expirationDate).isEqualTo(expectedExpiration)
         }
     }

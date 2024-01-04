@@ -19,12 +19,18 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -36,43 +42,47 @@ import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.container.roundedContainer
-import proton.android.pass.composecomponents.impl.form.ProtonTextField
+import proton.android.pass.composecomponents.impl.form.ProtonSelectableTextField
 
 @Composable
 fun PinInput(
     modifier: Modifier = Modifier,
     state: EnterPinUiState,
     onPinChanged: (String) -> Unit,
-    onPinSubmit: () -> Unit
+    onPinSubmit: () -> Unit,
 ) {
     val data = state as? EnterPinUiState.Data
     val error = data?.pinError?.value()
-    val errorMessage = when (error) {
-        is PinError.PinEmpty -> stringResource(R.string.auth_error_pin_cannot_be_empty)
-        else -> ""
-    }
     val focusRequester = remember { FocusRequester() }
-    ProtonTextField(
+    var hasFocus by rememberSaveable { mutableStateOf(false) }
+
+    ProtonSelectableTextField(
         modifier = modifier
             .focusRequester(focusRequester)
+            .onFocusChanged { focusState -> hasFocus = focusState.hasFocus }
             .roundedContainer(
                 backgroundColor = Color.Transparent,
                 borderColor = PassTheme.colors.inputBorderNorm,
             )
             .padding(Spacing.medium),
-        editable = data?.isLoadingState?.value() != true,
-        value = (state as? EnterPinUiState.Data)?.pin.orEmpty(),
+        text = data?.pin.orEmpty(),
+        onTextChanged = onPinChanged,
+        isEnabled = data?.isLoadingState?.value() != true,
         textStyle = PassTheme.typography.heroNorm().copy(textAlign = TextAlign.Center),
+        keyboardActions = KeyboardActions(
+            onDone = { onPinSubmit() },
+        ),
         keyboardOptions = KeyboardOptions(
             autoCorrect = false,
             keyboardType = KeyboardType.NumberPassword,
-            imeAction = ImeAction.Done
+            imeAction = ImeAction.Done,
         ),
-        isError = error is PinError.PinEmpty,
-        errorMessage = errorMessage,
         visualTransformation = PasswordVisualTransformation(),
-        onChange = onPinChanged,
-        onDoneClick = onPinSubmit
+        errorText = stringResource(R.string.auth_error_pin_cannot_be_empty).takeIf { error is PinError.PinEmpty },
     )
-    RequestFocusLaunchedEffect(focusRequester)
+
+    RequestFocusLaunchedEffect(
+        focusRequester = focusRequester,
+        requestFocus = !hasFocus,
+    )
 }

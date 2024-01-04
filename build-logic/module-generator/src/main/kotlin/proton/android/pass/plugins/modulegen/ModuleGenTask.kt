@@ -84,7 +84,7 @@ open class ModuleGenTask : DefaultTask() {
         require(modulePath.isNotEmpty()) { "Module path is empty" }
         val manifestTemplate = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest />\n"
         configurationSet
-            .filter { it == Configuration.IMPL || it == Configuration.FAKES }
+            .filter { it != Configuration.API }
             .forEach { conf ->
                 val lcConfiguration = conf.name.lowercase()
                 val dir = modulePath.joinToString(File.separator)

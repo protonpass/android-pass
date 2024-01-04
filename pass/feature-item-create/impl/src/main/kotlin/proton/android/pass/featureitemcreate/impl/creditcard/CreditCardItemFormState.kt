@@ -23,10 +23,10 @@ import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
-import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
-import proton.android.pass.featureitemcreate.impl.common.UIHiddenState.Companion.from
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState.Companion.from
 
 @Parcelize
 @Immutable
@@ -83,8 +83,11 @@ data class CreditCardItemFormState(
                 .contentEquals(encryptionContext.decrypt(other.pin.encrypted.toEncryptedByteArray())) &&
             type == other.type
 
+    fun sanitise(): CreditCardItemFormState =
+        copy(expirationDate = ExpirationDateProtoMapper.toProto(expirationDate))
+
     companion object {
-        private val expirationDateRegex = Regex("^\\d{4}-(0[1-9]|1[0-2])\$")
+        private val expirationDateRegex = Regex("^(0[1-9]|1[0-2])\\d{2}\$")
 
         fun default(encryptionContext: EncryptionContext) = CreditCardItemFormState(
             title = "",

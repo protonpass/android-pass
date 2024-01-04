@@ -84,7 +84,8 @@ abstract class BaseCreditCardViewModel(
     fun onNumberChanged(value: String) {
         val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(19)
         onUserEditedContent()
-        creditCardItemFormMutableState = creditCardItemFormMutableState.copy(number = sanitisedValue)
+        creditCardItemFormMutableState =
+            creditCardItemFormMutableState.copy(number = sanitisedValue)
     }
 
     fun onCVVChanged(value: String) {
@@ -122,23 +123,14 @@ abstract class BaseCreditCardViewModel(
     }
 
     fun onExpirationDateChanged(value: String) {
-        val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(6)
-        val converted = adaptToProtoFormat(sanitisedValue)
+        val sanitisedValue = value.replace(NON_DIGIT_REGEX, "").take(EXPIRATION_DATE_MAX_LENGTH)
         onUserEditedContent()
-        creditCardItemFormMutableState = creditCardItemFormMutableState.copy(expirationDate = converted)
+        creditCardItemFormMutableState =
+            creditCardItemFormMutableState.copy(expirationDate = sanitisedValue)
         validationErrorsState.update {
             it.toMutableSet().apply { remove(CreditCardValidationErrors.InvalidExpirationDate) }
         }
     }
-
-    private fun adaptToProtoFormat(value: String): String =
-        if (value.length < 2) {
-            value
-        } else {
-            val firstPart = value.substring(0, 2)
-            val secondPart = value.substring(2)
-            "$secondPart-$firstPart"
-        }
 
     fun onNoteChanged(value: String) {
         onUserEditedContent()
@@ -205,5 +197,8 @@ abstract class BaseCreditCardViewModel(
 
         @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
         const val PIN_MAX_LENGTH = 12
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+        const val EXPIRATION_DATE_MAX_LENGTH = 4
     }
 }

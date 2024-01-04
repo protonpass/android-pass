@@ -54,10 +54,9 @@ class UpdateCreditCardViewModel @Inject constructor(
 ) {
     private val navShareId: ShareId =
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
-    private val navItemId: ItemId =
-        proton.android.pass.domain.ItemId(
-            savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key)
-        )
+    private val navItemId: ItemId = ItemId(
+        savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key)
+    )
     private var itemOption: Option<Item> = None
 
     init {
@@ -93,9 +92,11 @@ class UpdateCreditCardViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             val default = CreditCardItemFormState.default(this)
             if (creditCardItemFormState.compare(default, this)) {
-                val itemContents = item.toItemContents(this)
+                val itemContents = item.toItemContents(this) as ItemContents.CreditCard
+                val expirationDate =
+                    ExpirationDateProtoMapper.fromProto(itemContents.expirationDate)
                 creditCardItemFormMutableState =
-                    CreditCardItemFormState(itemContents as ItemContents.CreditCard)
+                    CreditCardItemFormState(itemContents.copy(expirationDate = expirationDate))
             }
         }
     }
@@ -111,11 +112,12 @@ class UpdateCreditCardViewModel @Inject constructor(
             val userId = accountManager.getPrimaryUserId().first()
                 ?: throw IllegalStateException("User id is null")
             val item = itemOption.value() ?: throw IllegalStateException("Item is null")
+            val sanitisedItemFormState = creditCardItemFormState.sanitise()
             updateItem(
                 userId = userId,
                 shareId = navShareId,
                 item = item,
-                contents = creditCardItemFormState.toItemContents()
+                contents = sanitisedItemFormState.toItemContents()
             )
         }.onSuccess { item ->
             PassLogger.i(TAG, "Credit card successfully updated")

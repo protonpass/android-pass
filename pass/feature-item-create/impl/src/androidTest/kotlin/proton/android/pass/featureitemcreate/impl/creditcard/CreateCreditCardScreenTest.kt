@@ -39,18 +39,18 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
-import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.test.CallChecker
-import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.waitUntilExists
-import proton.android.pass.test.writeTextAndWait
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.test.CallChecker
+import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.waitUntilExists
+import proton.android.pass.test.writeTextAndWait
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -112,8 +112,8 @@ class CreateCreditCardScreenTest {
 
         val expirationMonth = "12"
         val expirationYear = "2030"
-        val expirationDate = "${expirationMonth}${expirationYear}"
-        val formattedExpirationDate = "$expirationMonth / $expirationYear"
+        val expirationDate = "${expirationMonth}${expirationYear.substring(2)}"
+        val formattedExpirationDate = "$expirationMonth / ${expirationYear.substring(2)}"
         val expirationDateToBeSaved = "${expirationYear}-${expirationMonth}"
         val note = "some note"
 

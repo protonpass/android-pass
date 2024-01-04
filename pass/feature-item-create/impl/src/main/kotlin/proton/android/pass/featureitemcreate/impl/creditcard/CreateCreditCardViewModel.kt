@@ -129,10 +129,11 @@ class CreateCreditCardViewModel @Inject constructor(
             .firstOrNull { userId -> userId != null }
         if (userId != null && vault != null) {
             runCatching {
+                val sanitisedItemFormState = creditCardItemFormState.sanitise()
                 createItem(
                     userId = userId,
                     shareId = vault.vault.shareId,
-                    itemContents = creditCardItemFormState.toItemContents()
+                    itemContents = sanitisedItemFormState.toItemContents()
                 )
             }.onSuccess { item ->
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()

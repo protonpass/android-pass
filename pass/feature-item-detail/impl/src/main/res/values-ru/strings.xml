@@ -50,7 +50,7 @@
   <string name="more_info_last_time_modified">Последний раз, %s</string>
   <string name="share_button_content_description">Открыть кнопку \"поделиться\"</string>
   <string name="open_menu_icon_content_description">Open menu button</string>
-  <string name="mfa_limit_reached">2FA limit reached</string>
+  <string name="mfa_limit_reached">Достигнут предел двухфакторных идентификаций</string>
   <string name="mfa_icon_content_description">2FA icon</string>
   <string name="custom_field_text_icon_description">Текстовое настраиваемое поле</string>
   <string name="custom_field_hidden_icon_description">Hidden custom field</string>

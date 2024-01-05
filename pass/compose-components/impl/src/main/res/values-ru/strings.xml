@@ -8,10 +8,10 @@
   <string name="sort_by_modification_date">Самые новые</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Все</string>
-  <string name="item_list_header_logins_type">Logins</string>
+  <string name="item_list_header_logins_type">Имена пользователей</string>
   <string name="item_list_header_aliases_type">Псевдонимы</string>
   <string name="item_list_header_notes_type">Примечания</string>
-  <string name="item_list_header_credit_cards_type">Credit cards</string>
+  <string name="item_list_header_credit_cards_type">Кредитные карты</string>
   <plurals name="item_list_header_results">
     <item quantity="one">результат</item>
     <item quantity="few">результаты</item>

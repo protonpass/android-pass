@@ -75,7 +75,7 @@
   <string name="show_advanced_options">進階選項</string>
   <string name="hide_advanced_options">隱藏進階選項</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">強</string>
+  <string name="label_password_strength_vulnerable">具有風險</string>
+  <string name="label_password_strength_weak">弱</string>
 </resources>

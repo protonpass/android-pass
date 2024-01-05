@@ -55,7 +55,7 @@
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">持卡人姓名</string>
   <string name="credit_card_number_field_name">卡號</string>
-  <string name="credit_card_cvv_field_name">Security code</string>
+  <string name="credit_card_cvv_field_name">安全碼</string>
   <string name="credit_card_pin_field_name">PIN 碼</string>
   <string name="credit_card_expiration_date_field_name">到期日</string>
   <string name="credit_card_cardholder_copied_to_clipboard">卡片資料已複製至剪貼簿</string>
@@ -85,7 +85,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">無法分享</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
-  <string name="password_score_vulnerable">Vulnerable</string>
+  <string name="password_score_vulnerable">具有風險</string>
   <string name="password_score_weak">弱</string>
   <string name="password_score_strong">強</string>
 </resources>

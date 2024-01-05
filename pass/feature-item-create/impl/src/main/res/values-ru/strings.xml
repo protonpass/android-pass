@@ -106,7 +106,7 @@
   <string name="camera_permission_explanation">Camera permission required for this feature to be available.</string>
   <string name="camera_permission_open_settings">Открыть настройки</string>
   <!--  TOTP limit  -->
-  <string name="mfa_limit_reached">2FA limit reached</string>
+  <string name="mfa_limit_reached">Достигнут предел двухфакторных идентификаций</string>
   <string name="upgrade">Повысить</string>
   <string name="mfa_icon_content_description">2FA icon</string>
   <string name="select_suffix_upgrade_for_custom_domains">Upgrade for custom domains</string>

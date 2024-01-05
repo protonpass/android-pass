@@ -18,7 +18,12 @@
 
 package proton.android.pass.notifications.api
 
+import androidx.annotation.StringRes
+
 interface ToastManager {
+
     fun showToast(message: String)
-    fun showToast(message: Int)
+
+    fun showToast(@StringRes message: Int)
+
 }

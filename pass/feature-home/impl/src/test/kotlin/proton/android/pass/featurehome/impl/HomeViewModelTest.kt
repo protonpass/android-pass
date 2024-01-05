@@ -64,16 +64,17 @@ import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuresearchoptions.fakes.TestHomeSearchOptionsRepository
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.TestToastManager
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
 
-class HomeViewModelTest {
+internal class HomeViewModelTest {
 
     @get:Rule
-    val dispatcher = MainDispatcherRule()
+    internal val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: HomeViewModel
 
@@ -100,10 +101,10 @@ class HomeViewModelTest {
     private lateinit var savedState: TestSavedStateHandleProvider
     private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
     private lateinit var observeCurrentUser: ObserveCurrentUser
-
+    private lateinit var toastManager: TestToastManager
 
     @Before
-    fun setup() {
+    internal fun setup() {
         trashItems = TestTrashItems()
         snackbarDispatcher = TestSnackbarDispatcher()
         clipboardManager = TestClipboardManager()
@@ -127,6 +128,7 @@ class HomeViewModelTest {
         savedState = TestSavedStateHandleProvider()
         bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
         observeCurrentUser = TestObserveCurrentUser()
+        toastManager = TestToastManager()
         createViewModel()
     }
 
@@ -229,6 +231,13 @@ class HomeViewModelTest {
         return items
     }
 
+    @Test
+    internal fun `WHEN read only item is selected THEN show toast message`() {
+        instance.onReadOnlyItemSelected()
+
+        assertThat(toastManager.stringResourceMessage).isEqualTo(R.string.home_toast_items_selected_read_only)
+    }
+
     private fun createViewModel() {
         instance = HomeViewModel(
             trashItems = trashItems,
@@ -254,7 +263,8 @@ class HomeViewModelTest {
             appDispatchers = TestAppDispatchers(),
             savedState = savedState,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
-            observeCurrentUser = observeCurrentUser
+            observeCurrentUser = observeCurrentUser,
+            toastManager = toastManager,
         )
     }
 

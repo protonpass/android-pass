@@ -51,8 +51,6 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.canCreate
-import proton.android.pass.domain.toPermissions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.CreditCardOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
@@ -477,15 +475,23 @@ fun HomeScreen(
                         )
                     }
                 },
-                onEvent = {
-                    when (it) {
+                onEvent = { homeUiEvent ->
+                    when (homeUiEvent) {
                         is HomeUiEvent.ItemClick -> {
-                            homeViewModel.onItemClicked(it.item.shareId, it.item.id)
-                            onNavigateEvent(HomeNavigation.ItemDetail(it.item.shareId, it.item.id))
+                            homeViewModel.onItemClicked(
+                                homeUiEvent.item.shareId,
+                                homeUiEvent.item.id
+                            )
+                            onNavigateEvent(
+                                HomeNavigation.ItemDetail(
+                                    homeUiEvent.item.shareId,
+                                    homeUiEvent.item.id
+                                )
+                            )
                         }
 
                         is HomeUiEvent.SearchQueryChange -> {
-                            homeViewModel.onSearchQueryChange(it.query)
+                            homeViewModel.onSearchQueryChange(homeUiEvent.query)
                         }
 
                         is HomeUiEvent.EnterSearch -> {
@@ -505,15 +511,20 @@ fun HomeScreen(
                         }
 
                         is HomeUiEvent.AddItemClick -> {
-                            onNavigateEvent(HomeNavigation.AddItem(it.shareId, it.state))
+                            onNavigateEvent(
+                                HomeNavigation.AddItem(
+                                    homeUiEvent.shareId,
+                                    homeUiEvent.state
+                                )
+                            )
                         }
 
                         is HomeUiEvent.ItemMenuClick -> {
-                            selectedItem = it.item
+                            selectedItem = homeUiEvent.item
                             currentBottomSheet = if (isTrashMode) {
                                 TrashItemOptions
                             } else {
-                                when (it.item.contents) {
+                                when (homeUiEvent.item.contents) {
                                     is ItemContents.Alias -> AliasOptions
                                     is ItemContents.Login -> LoginOptions
                                     is ItemContents.Note -> NoteOptions
@@ -538,7 +549,7 @@ fun HomeScreen(
 
                         is HomeUiEvent.ItemTypeSelected -> {
                             homeViewModel.setItemTypeSelection(
-                                searchFilterType = it.searchFilterType
+                                searchFilterType = homeUiEvent.searchFilterType
                             )
                         }
 
@@ -558,12 +569,10 @@ fun HomeScreen(
                         }
 
                         is HomeUiEvent.SelectItem -> {
-                            val share = homeUiState.homeListUiState.shares[it.item.shareId]
-                            if (share != null) {
-                                val canCreate = share.role.toPermissions().canCreate()
-                                if (canCreate) {
-                                    homeViewModel.onItemSelected(it.item)
-                                }
+                            if (homeUiEvent.item.canModify) {
+                                homeViewModel.onItemSelected(homeUiEvent.item)
+                            } else {
+                                homeViewModel.onReadOnlyItemSelected()
                             }
                         }
 

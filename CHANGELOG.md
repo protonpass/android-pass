@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.15.3 (2024-01-05)
+
+### Fixes :bug:
+
+- Fix external account invites.
+
 ## 1.15.2 (2024-01-05)
 
 ### Fixes :bug:

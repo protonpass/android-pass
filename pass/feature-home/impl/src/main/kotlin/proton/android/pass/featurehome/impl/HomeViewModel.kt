@@ -131,6 +131,7 @@ import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
@@ -157,6 +158,7 @@ class HomeViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
+    private val toastManager: ToastManager,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -789,6 +791,10 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    internal fun onReadOnlyItemSelected() {
+        toastManager.showToast(R.string.home_toast_items_selected_read_only)
     }
 
     fun clearSelection() = viewModelScope.launch {

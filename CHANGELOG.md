@@ -6,6 +6,19 @@
 
 ### Other
 
+## 1.15.2 (2024-01-05)
+
+### Fixes :bug:
+
+- Fixed PIN code bottom sheet behaviour when device orientation changes.
+- Do not allow read only items being moved to trash.
+
+### Other
+
+- Onboarding tips improvements.
+- Improved Alias title on Alias creation.
+- Updated translations.
+
 ## 1.15.1 (2023-12-27)
 
 ### Fixes :bug:
@@ -110,11 +123,10 @@
 - Improve autofill and autosave.
 - Update translations.
 
-
 ## 1.10.4 (2023-11-15)
 
 ### Fixes :bug:
- 
+
 - Make camera not mandatory to install the app.
 - Don't disable autofill on user logout.
 
@@ -207,7 +219,7 @@
 
 - Wording in some screens.
 
-## 1.9.2 (2023-10-10) 
+## 1.9.2 (2023-10-10)
 
 ### Fixes :bug:
 
@@ -248,12 +260,14 @@
 ## 1.8.3 (2023-09-08)
 
 ### Fixes :bug:
+
 - Crash when clearing the clipboard on some devices.
 - Crash when disabling autofill on older devices.
 
 ## 1.8.2 (2023-09-07)
 
 ### Fixes :bug:
+
 - Search on long notes.
 - Updating the vault name in another client now gets reflected on Android.
 - Improved username detection in autofill.

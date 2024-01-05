@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.androidx.annotation)
     implementation(libs.kotlinx.coroutines.core)
     compileOnly(libs.compose.stable.marker)
 

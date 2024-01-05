@@ -25,11 +25,14 @@ import javax.inject.Singleton
 @Singleton
 class TestToastManager @Inject constructor() : ToastManager {
 
+    var stringResourceMessage: Int? = null
+
     override fun showToast(message: String) {
         // no op
     }
 
     override fun showToast(message: Int) {
-        // no op
+        stringResourceMessage = message
     }
+
 }

@@ -56,7 +56,9 @@ class GetInviteUserModeImpl @Inject constructor(
             if (exceptionError is ApiResult.Error.Http) {
                 val protonData = exceptionError.proton
                 if (protonData != null) {
-                    if (protonData.code == ERROR_CODE_ADDRESS_NOT_EXIST) {
+                    if (protonData.code in
+                        setOf(ERROR_CODE_ADDRESS_NOT_EXIST, ERROR_CODE_ADDRESS_EXTERNAL)
+                    ) {
                         return true
                     }
                 }
@@ -68,5 +70,6 @@ class GetInviteUserModeImpl @Inject constructor(
 
     companion object {
         private const val ERROR_CODE_ADDRESS_NOT_EXIST = 33_102
+        private const val ERROR_CODE_ADDRESS_EXTERNAL = 33_103
     }
 }

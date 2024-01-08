@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CREDIT_CARD_AUTOFILL
+import proton.android.pass.preferences.FeatureFlag.PINNING_V1
 import proton.android.pass.preferences.FeatureFlag.SHARING_NEW_USERS
 import proton.android.pass.preferences.FeatureFlag.SHARING_V1
 import javax.inject.Inject
@@ -41,6 +42,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             SHARING_NEW_USERS -> it.getOrDefault(SHARING_NEW_USERS, false) as T
             SHARING_V1 -> it.getOrDefault(SHARING_V1, false) as T
             CREDIT_CARD_AUTOFILL -> it.getOrDefault(CREDIT_CARD_AUTOFILL, false) as T
+            PINNING_V1 -> it.getOrDefault(PINNING_V1, false) as T
         }
     }
 

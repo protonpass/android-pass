@@ -69,16 +69,19 @@ class ApplyPendingEventsImpl @Inject constructor(
 ) : ApplyPendingEvents {
 
     override suspend fun invoke(userId: UserId?) {
+        PassLogger.i(TAG, "Applying pending events started")
         val currentUserId = userId ?: accountManager.getPrimaryUserId()
             .flowOn(Dispatchers.IO)
             .filterNotNull()
             .first()
-        val address = requireNotNull(addressRepository.getAddresses(currentUserId).primary())
+        PassLogger.i(TAG, "Retrieved current user id")
         val refreshSharesResult = shareRepository.refreshShares(currentUserId)
-
+        PassLogger.i(TAG, "Shares refreshed")
         if (refreshSharesResult.allShareIds.isEmpty()) {
             handleSharesWhenEmpty(currentUserId)
         } else {
+            val address = requireNotNull(addressRepository.getAddresses(currentUserId).primary())
+            PassLogger.i(TAG, "Retrieved user address")
             handleExistingShares(currentUserId, address.addressId, refreshSharesResult)
         }
     }

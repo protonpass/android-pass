@@ -159,10 +159,10 @@ class HomeViewModel @Inject constructor(
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val toastManager: ToastManager,
+    private val observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
-    observeCurrentUser: ObserveCurrentUser,
     preferencesRepository: UserPreferencesRepository,
     getUserPlan: GetUserPlan,
     appDispatchers: AppDispatchers,
@@ -187,27 +187,6 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(SelectionState.Initial)
     private val navEventState: MutableStateFlow<HomeNavEvent> =
         MutableStateFlow(HomeNavEvent.Unknown)
-
-    init {
-        // Temporary telemetry to monitor sync issues.
-        viewModelScope.launch {
-            val result = runCatching {
-                withTimeout(10.seconds) {
-                    observeCurrentUser().first()
-                }
-            }
-
-            if (result.isFailure) {
-                when (result.exceptionOrNull()) {
-                    is TimeoutCancellationException -> {
-                        PassLogger.e(TAG, UserTimeoutException())
-                    }
-
-                    else -> {}
-                }
-            }
-        }
-    }
 
     @OptIn(FlowPreview::class)
     private val debouncedSearchQueryState = searchQueryState
@@ -809,6 +788,27 @@ class HomeViewModel @Inject constructor(
 
     fun clearNavEvent() = viewModelScope.launch {
         navEventState.update { HomeNavEvent.Unknown }
+    }
+
+    fun onTimeout() {
+        // Temporary telemetry to monitor sync issues.
+        viewModelScope.launch {
+            val result = runCatching {
+                withTimeout(10.seconds) {
+                    observeCurrentUser().first()
+                }
+            }
+
+            if (result.isFailure) {
+                when (result.exceptionOrNull()) {
+                    is TimeoutCancellationException -> {
+                        PassLogger.e(TAG, UserTimeoutException())
+                    }
+
+                    else -> {}
+                }
+            }
+        }
     }
 
     private fun filterByType(

@@ -34,6 +34,7 @@ import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsBottomSheet
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsNavigation
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.autofillItemOptionsGraph
+import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
@@ -158,12 +159,12 @@ fun NavGraphBuilder.autofillActivityGraph(
         initialCreateLoginUiState = InitialCreateLoginUiState(
             title = run {
                 val url = autofillAppState.autofillData.assistInfo.url
-                val appName = autofillAppState.autofillData.packageInfo.map { it.appName.value }
-                Utils.getTitle(url, appName)
+                val appName = autofillAppState.autofillData.packageInfo.appName.value
+                Utils.getTitle(url, appName.some())
             },
             url = autofillAppState.autofillData.assistInfo.url.value(),
             aliasItemFormState = null,
-            packageInfoUi = autofillAppState.autofillData.packageInfo.map(::PackageInfoUi).value(),
+            packageInfoUi = PackageInfoUi(packageInfo = autofillAppState.autofillData.packageInfo),
         ),
         onNavigate = {
             when (it) {

@@ -61,6 +61,9 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsModule
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -409,7 +412,10 @@ class SelectItemScreenTest {
                 ),
                 url = None
             ),
-            packageInfo = None,
+            packageInfo = PackageInfo(
+                packageName = PackageName("some.app"),
+                appName = AppName("Some app")
+            ),
             isDangerousAutofill = false
         )
     )

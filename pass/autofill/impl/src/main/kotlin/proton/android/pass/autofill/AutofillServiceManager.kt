@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.service.R
@@ -50,7 +51,6 @@ import proton.android.pass.domain.Item
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
-import proton.android.pass.preferences.value
 import javax.inject.Inject
 import kotlin.math.min
 
@@ -181,8 +181,13 @@ class AutofillServiceManager @Inject constructor(
         }
 
         SuggestionType.Login -> {
+            val packageName = autofillData.packageInfo.packageName
+                .takeIf { !it.isBrowser() }
+                .toOption()
+                .map { it.value }
+
             val items = getSuggestedLoginItems(
-                packageName = autofillData.packageInfo.map { it.packageName.value },
+                packageName = packageName,
                 url = autofillData.assistInfo.url
             ).firstOrNull() ?: emptyList()
             SuggestedItemsResult.Show(items)

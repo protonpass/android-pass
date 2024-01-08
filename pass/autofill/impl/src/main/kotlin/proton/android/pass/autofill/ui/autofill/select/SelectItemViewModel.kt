@@ -50,6 +50,7 @@ import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.MFAAutofillCopied
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
+import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.heuristics.NodeCluster
@@ -101,6 +102,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
@@ -133,10 +135,6 @@ class SelectItemViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     clock: Clock
 ) : ViewModel() {
-
-    init {
-        telemetryManager.sendEvent(AutofillDisplayed(AutofillTriggerSource.App))
-    }
 
     private val autofillAppState: MutableStateFlow<Option<AutofillAppState>> =
         MutableStateFlow(None)
@@ -260,10 +258,18 @@ class SelectItemViewModel @Inject constructor(
                     when (autofillData.assistInfo.cluster) {
                         is NodeCluster.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
                         is NodeCluster.Login,
-                        is NodeCluster.SignUp -> getSuggestedLoginItems(
-                            packageName = autofillData.packageInfo.map { it.packageName.value },
-                            url = autofillData.assistInfo.url
-                        ).asResultWithoutLoading()
+                        is NodeCluster.SignUp -> {
+                            val packageName = if (autofillData.packageInfo.packageName.isBrowser()) {
+                                None
+                            } else {
+                                autofillData.packageInfo.packageName.value.some()
+                            }
+
+                            getSuggestedLoginItems(
+                                packageName = packageName,
+                                url = autofillData.assistInfo.url
+                            ).asResultWithoutLoading()
+                        }
 
                         else -> flowOf(LoadingResult.Success(emptyList()))
                     }
@@ -449,6 +455,12 @@ class SelectItemViewModel @Inject constructor(
 
     fun setInitialState(autofillAppState: AutofillAppState) {
         this.autofillAppState.update { autofillAppState.toOption() }
+
+        val event = AutofillDisplayed(
+            source = AutofillTriggerSource.App,
+            app = autofillAppState.autofillData.packageInfo.packageName
+        )
+        telemetryManager.sendEvent(event)
     }
 
     fun onScrolledToTop() {
@@ -461,11 +473,13 @@ class SelectItemViewModel @Inject constructor(
         shouldAssociate: Boolean
     ) = encryptionContextProvider.withEncryptionContext {
         handleTotpUri(this@withEncryptionContext, autofillItem.totp)
+
+        val updatePackageInfo = autofillAppState.updatePackageInfo()
         updateAutofillItem(
             UpdateAutofillItemData(
                 shareId = ShareId(autofillItem.shareId),
                 itemId = ItemId(autofillItem.itemId),
-                packageInfo = autofillAppState.autofillData.packageInfo,
+                packageInfo = updatePackageInfo,
                 url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = shouldAssociate
             )
@@ -485,11 +499,19 @@ class SelectItemViewModel @Inject constructor(
         autofillItem: AutofillItem.CreditCard,
         autofillAppState: AutofillAppState
     ) = encryptionContextProvider.withEncryptionContext {
+
+        val packageInfo = autofillAppState.autofillData.packageInfo
+        val updatePackageInfo = if (!packageInfo.packageName.isBrowser()) {
+            packageInfo.some()
+        } else {
+            None
+        }
+
         updateAutofillItem(
             UpdateAutofillItemData(
                 shareId = ShareId(autofillItem.shareId),
                 itemId = ItemId(autofillItem.itemId),
-                packageInfo = autofillAppState.autofillData.packageInfo,
+                packageInfo = updatePackageInfo,
                 url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = false
             )
@@ -508,10 +530,8 @@ class SelectItemViewModel @Inject constructor(
     private fun getSuggestionsTitle(autofillAppState: AutofillAppState): String =
         if (autofillAppState.autofillData.assistInfo.url is Some) {
             getSuggestionsTitleForDomain(autofillAppState.autofillData.assistInfo.url.value)
-        } else if (autofillAppState.autofillData.packageInfo is Some) {
-            autofillAppState.autofillData.packageInfo.value.appName.value
         } else {
-            ""
+            autofillAppState.autofillData.packageInfo.appName.value
         }
 
     private fun getSuggestionsTitleForDomain(domain: String): String =
@@ -562,6 +582,16 @@ class SelectItemViewModel @Inject constructor(
                     .map { it.shareId }
                 ShareSelection.Shares(writeableVaults)
             }
+        }
+    }
+
+    private fun AutofillAppState.updatePackageInfo(): Option<PackageInfo> {
+        val packageInfo = autofillData.packageInfo
+
+        return if (!packageInfo.packageName.isBrowser()) {
+            packageInfo.some()
+        } else {
+            None
         }
     }
 

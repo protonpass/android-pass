@@ -42,5 +42,10 @@ enum class FeatureFlag(
         title = "Credit card autofill",
         description = "Enable credit card autofill",
         key = "PassCreditCardAutofill"
+    ),
+    PINNING_V1(
+        title = "Pinning (v1)",
+        description = "Enable pinning",
+        key = "PassPinningV1"
     )
 }

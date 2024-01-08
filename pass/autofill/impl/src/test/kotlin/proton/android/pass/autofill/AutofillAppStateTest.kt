@@ -28,6 +28,9 @@ import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.isValid
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.None
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 
 class AutofillAppStateTest {
 
@@ -39,7 +42,7 @@ class AutofillAppStateTest {
                     cluster = NodeCluster.Empty,
                     url = None
                 ),
-                packageInfo = None,
+                packageInfo = PackageInfo(PackageName("some.example"), AppName("Some example")),
                 isDangerousAutofill = false
             )
         )
@@ -63,7 +66,7 @@ class AutofillAppStateTest {
                     ),
                     url = None
                 ),
-                packageInfo = None,
+                packageInfo = PackageInfo(PackageName("some.example"), AppName("Some example")),
                 isDangerousAutofill = false
             )
         )

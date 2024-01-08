@@ -36,13 +36,16 @@ import proton.android.pass.autofill.MFAAutofillCopied
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
 import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.require
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -96,7 +99,11 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
             }
         if (mappingsOption is Some) {
             if (mappingsOption.value.mappings.isNotEmpty()) {
-                telemetryManager.sendEvent(AutofillDone(AutofillTriggerSource.Source))
+                val event = AutofillDone(
+                    source = AutofillTriggerSource.Source,
+                    app = appState.autofillData.packageInfo.packageName
+                )
+                telemetryManager.sendEvent(event)
                 inAppReviewTriggerMetrics.incrementItemAutofillCount()
                 PassLogger.i(TAG, "Mappings found: ${mappingsOption.value.mappings.size}")
 
@@ -137,11 +144,18 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
             )
         }
 
+        val packageInfo = autofillAppState.autofillData.packageInfo
+
+        val updatePackageInfo = if (!packageInfo.packageName.isBrowser()) {
+            packageInfo.some()
+        } else {
+            None
+        }
         updateAutofillItem(
             UpdateAutofillItemData(
                 shareId = autofillItem.shareId(),
                 itemId = autofillItem.itemId(),
-                packageInfo = autofillAppState.autofillData.packageInfo,
+                packageInfo = updatePackageInfo,
                 url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = false
             )

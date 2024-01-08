@@ -22,12 +22,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.minutes
 
 class PerformSyncImpl @Inject constructor(
     private val applyPendingEvents: ApplyPendingEvents,
@@ -41,14 +43,15 @@ class PerformSyncImpl @Inject constructor(
             pendingEvents.invokeOnCompletion {
                 if (it != null) {
                     PassLogger.w(TAG, it)
-                } else {
-                    PassLogger.i(TAG, "Pending events finished")
+                    PassLogger.i(TAG, "Pending events error")
                 }
+                PassLogger.i(TAG, "Pending events finished")
             }
             val refreshInvites = async { performRefreshInvites(userId) }
             refreshInvites.invokeOnCompletion {
                 if (it != null) {
                     PassLogger.w(TAG, it)
+                    PassLogger.i(TAG, "Refresh invites error")
                 } else {
                     PassLogger.i(TAG, "Refresh invites finished")
                 }
@@ -66,16 +69,15 @@ class PerformSyncImpl @Inject constructor(
         }
     }
 
-
     private suspend fun performPendingEvents(userId: UserId?): Result<Unit> =
-        runCatching { applyPendingEvents(userId) }
+        runCatching { withTimeout(1.minutes) { applyPendingEvents(userId) } }
             .fold(
                 onSuccess = { Result.success(Unit) },
                 onFailure = { Result.failure(it) }
             )
 
     private suspend fun performRefreshInvites(userId: UserId?): Result<Unit> =
-        runCatching { refreshInvites(userId) }
+        runCatching { withTimeout(1.minutes) { refreshInvites(userId) } }
             .fold(
                 onSuccess = { Result.success(Unit) },
                 onFailure = { Result.failure(it) }

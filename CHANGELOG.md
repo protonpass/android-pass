@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.15.4 (2024-01-08)
+
+### Fixes :bug:
+
+- Add timeout to avoid leaving worker locked.
+
 ## 1.15.3 (2024-01-05)
 
 ### Fixes :bug:

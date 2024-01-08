@@ -38,16 +38,16 @@ import proton.android.pass.domain.entity.PackageName
 data class AutofillExtras(
     val cluster: NodeCluster,
     val url: String?,
-    val packageName: String?,
-    val appName: String?,
+    val packageName: String,
+    val appName: String,
     val isDangerousAutofill: Boolean
 ) : Parcelable
 
 fun AutofillData.toExtras() = AutofillExtras(
     cluster = assistInfo.cluster,
     url = assistInfo.url.map { it }.value(),
-    packageName = packageInfo.map { it.packageName.value }.value(),
-    appName = packageInfo.map { it.appName.value }.value(),
+    packageName = packageInfo.packageName.value,
+    appName = packageInfo.appName.value,
     isDangerousAutofill = isDangerousAutofill
 )
 
@@ -56,14 +56,10 @@ fun AutofillExtras.toData() = AutofillData(
         cluster = cluster,
         url = url.toOption(),
     ),
-    packageInfo = packageName?.let { pName ->
-        appName?.let { aName ->
-            PackageInfo(
-                packageName = PackageName(pName),
-                appName = AppName(aName),
-            )
-        }
-    }.toOption(),
+    packageInfo = PackageInfo(
+        packageName = PackageName(packageName),
+        appName = AppName(appName),
+    ),
     isDangerousAutofill = isDangerousAutofill
 )
 

@@ -30,12 +30,16 @@ import proton.android.pass.autofill.MFAAutofillCopied
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
+import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -66,11 +70,17 @@ class AutofillAppViewModel @Inject constructor(
             handleTotpUri(autofillItem.totp)
         }
 
+        val packageInfo = autofillAppState.autofillData.packageInfo
+        val updatePackageInfo = if (!packageInfo.packageName.isBrowser()) {
+            packageInfo.some()
+        } else {
+            None
+        }
         updateAutofillItem(
             UpdateAutofillItemData(
                 shareId = autofillItem.shareId(),
                 itemId = autofillItem.itemId(),
-                packageInfo = autofillAppState.autofillData.packageInfo,
+                packageInfo = updatePackageInfo,
                 url = autofillAppState.autofillData.assistInfo.url,
                 shouldAssociate = false
             )
@@ -85,8 +95,11 @@ class AutofillAppViewModel @Inject constructor(
         }
     }
 
-    fun onAutofillItemSelected(source: AutofillTriggerSource) = viewModelScope.launch {
-        telemetryManager.sendEvent(AutofillDone(source))
+    fun onAutofillItemSelected(
+        source: AutofillTriggerSource,
+        packageInfo: PackageInfo
+    ) = viewModelScope.launch {
+        telemetryManager.sendEvent(AutofillDone(source, packageInfo.packageName))
         inAppReviewTriggerMetrics.incrementItemAutofillCount()
     }
 

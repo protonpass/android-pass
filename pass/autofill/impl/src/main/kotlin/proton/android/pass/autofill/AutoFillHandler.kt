@@ -40,6 +40,7 @@ import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addSaveInfo
+import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.heuristics.NodeClusterer
 import proton.android.pass.autofill.heuristics.NodeExtractor
@@ -47,7 +48,6 @@ import proton.android.pass.autofill.heuristics.focused
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
@@ -125,24 +125,21 @@ object AutoFillHandler {
             }
         }
 
-        val packageNameOption = Utils.getApplicationPackageName(windowNode)
-            .takeIf { !BROWSERS.contains(it) }
-            .toOption()
-        val packageInfoOption = packageNameOption.map {
-            PackageInfo(
-                packageName = PackageName(it),
-                appName = AndroidUtils.getApplicationName(context, it).value()
-                    ?.let { appName -> AppName(appName) }
-                    ?: AppName(it)
-            )
-        }
+        val applicationPackageName = PackageName(Utils.getApplicationPackageName(windowNode))
 
-        val isBrowser = packageNameOption.isEmpty()
+        val packageInfo = PackageInfo(
+            packageName = applicationPackageName,
+            appName = AndroidUtils.getApplicationName(context, applicationPackageName.value).value()
+                ?.let { appName -> AppName(appName) }
+                ?: AppName(applicationPackageName.value)
+        )
+
+        val isBrowser = applicationPackageName.isBrowser()
         val hasUrl = assistInfo.url.isNotEmpty()
 
         val isDangerousAutofill = !isBrowser && hasUrl
 
-        val autofillData = AutofillData(assistInfo, packageInfoOption, isDangerousAutofill)
+        val autofillData = AutofillData(assistInfo, packageInfo, isDangerousAutofill)
         val datasetList = if (hasSupportForInlineSuggestions(request)) {
             request.inlineSuggestionsRequest?.let {
                 autofillServiceManager.createSuggestedItemsDatasetList(
@@ -156,7 +153,7 @@ object AutoFillHandler {
 
         return generateResponse(
             datasetList = datasetList,
-            packageName = packageNameOption,
+            packageName = applicationPackageName,
             assistInfo = assistInfo,
             request = request,
             telemetryManager = telemetryManager
@@ -165,7 +162,7 @@ object AutoFillHandler {
 
     private suspend fun generateResponse(
         datasetList: List<Dataset>,
-        packageName: Option<String>,
+        packageName: PackageName,
         assistInfo: AssistInfo,
         request: FillRequest,
         telemetryManager: TelemetryManager
@@ -178,7 +175,7 @@ object AutoFillHandler {
         val responseBuilder = FillResponse.Builder()
         datasetList.forEach { responseBuilder.addDataset(it) }
 
-        val isBrowser = packageName.map { BROWSERS.contains(it) }.value() ?: false
+        val isBrowser = packageName.isBrowser()
         responseBuilder.addSaveInfo(
             cluster = assistInfo.cluster,
             currentClientState = request.clientState ?: Bundle(),
@@ -190,7 +187,11 @@ object AutoFillHandler {
             PassLogger.i(TAG, "Job was cancelled")
             None
         } else {
-            telemetryManager.sendEvent(AutofillDisplayed(AutofillTriggerSource.Source))
+            val event = AutofillDisplayed(
+                source = AutofillTriggerSource.Source,
+                app = packageName
+            )
+            telemetryManager.sendEvent(event)
             responseBuilder.build().some()
         }
     }

@@ -18,6 +18,8 @@
 
 package proton.android.pass.autofill
 
+import proton.android.pass.autofill.extensions.isBrowser
+import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.telemetry.api.TelemetryEvent
 
 enum class AutofillTriggerSource(val source: String) {
@@ -28,11 +30,31 @@ enum class AutofillTriggerSource(val source: String) {
 object AutosaveDone : TelemetryEvent("autosave.done")
 object AutosaveDisplay : TelemetryEvent("autosave.display")
 
-data class AutofillDisplayed(val source: AutofillTriggerSource) : TelemetryEvent("autofill.display") {
-    override fun dimensions(): Map<String, String> = mapOf("location" to source.source)
+data class AutofillDisplayed(
+    val source: AutofillTriggerSource,
+    val app: PackageName
+) : TelemetryEvent("autofill.display") {
+    override fun dimensions(): Map<String, String> {
+        val map = mutableMapOf("location" to source.source)
+        if (app.isBrowser()) {
+            map["mobileBrowser"] = app.value
+        }
+
+        return map
+    }
 }
-data class AutofillDone(val source: AutofillTriggerSource) : TelemetryEvent("autofill.triggered") {
-    override fun dimensions(): Map<String, String> = mapOf("location" to source.source)
+data class AutofillDone(
+    val source: AutofillTriggerSource,
+    val app: PackageName
+) : TelemetryEvent("autofill.triggered") {
+    override fun dimensions(): Map<String, String> {
+        val map = mutableMapOf("location" to source.source)
+        if (app.isBrowser()) {
+            map["mobileBrowser"] = app.value
+        }
+
+        return map
+    }
 }
 
 object MFAAutofillCopied : TelemetryEvent("2fa.autofill")

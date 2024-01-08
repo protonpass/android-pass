@@ -45,7 +45,7 @@ fun SelectItemScreen(
     SelectItemScreenContent(
         modifier = modifier,
         uiState = uiState,
-        packageInfo = autofillAppState.autofillData.packageInfo.map(::PackageInfoUi).value(),
+        packageInfo = PackageInfoUi(autofillAppState.autofillData.packageInfo),
         webDomain = autofillAppState.autofillData.assistInfo.url.value(),
         onItemClicked = { item, shouldAssociate ->
             viewModel.onItemClicked(item, autofillAppState, shouldAssociate)

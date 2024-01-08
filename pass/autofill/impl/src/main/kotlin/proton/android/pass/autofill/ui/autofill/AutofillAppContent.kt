@@ -71,6 +71,22 @@ fun AutofillAppContent(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )
     val coroutineScope = rememberCoroutineScope()
+
+    val onAutofillItemSelected = {
+        val source = if (selectedAutofillItem == null) {
+            // We didn't have an item selected, so the user must have opened the app
+            AutofillTriggerSource.App
+        } else {
+            // We had an item selected
+            AutofillTriggerSource.Source
+        }
+
+        viewModel.onAutofillItemSelected(
+            source = source,
+            packageInfo = autofillAppState.autofillData.packageInfo
+        )
+    }
+
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
         NavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
@@ -81,16 +97,17 @@ fun AutofillAppContent(
                 appNavigator = appNavigator,
                 autofillAppState = autofillAppState,
                 selectedAutofillItem = selectedAutofillItem,
-                onNavigate = onNavigate,
-                onAutofillItemReceived = { autofillItem ->
-                    val source = if (selectedAutofillItem == null) {
-                        // We didn't have an item selected, so the user must have opened the app
-                        AutofillTriggerSource.App
-                    } else {
-                        // We had an item selected
-                        AutofillTriggerSource.Source
+                onNavigate = {
+                    when (it) {
+                        is AutofillNavigation.Selected -> {
+                            onAutofillItemSelected()
+                            onNavigate(it)
+                        }
+                        else -> onNavigate(it)
                     }
-                    viewModel.onAutofillItemSelected(source)
+                },
+                onAutofillItemReceived = { autofillItem ->
+                    onAutofillItemSelected()
                     val mappings = viewModel.getMappings(autofillItem, autofillAppState)
                     if (mappings.mappings.isNotEmpty()) {
                         onNavigate(AutofillNavigation.Selected(mappings))

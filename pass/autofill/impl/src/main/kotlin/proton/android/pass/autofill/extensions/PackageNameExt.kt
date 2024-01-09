@@ -19,17 +19,6 @@
 package proton.android.pass.autofill.extensions
 
 import proton.android.pass.autofill.BROWSERS
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.entity.PackageName
 
 fun PackageName.isBrowser(): Boolean = BROWSERS.contains(value)
-
-fun Option<PackageName>.valueIfBrowser(): Option<String> = this.flatMap {
-    if (it.isBrowser()) {
-        it.value.toOption()
-    } else {
-        None
-    }
-}

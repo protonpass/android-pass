@@ -318,7 +318,8 @@ class NoteDetailViewModelTest {
                 state = 0,
                 modificationTime = now,
                 createTime = now,
-                lastAutofillTime = None
+                lastAutofillTime = None,
+                isPinned = false,
             )
         }
     }

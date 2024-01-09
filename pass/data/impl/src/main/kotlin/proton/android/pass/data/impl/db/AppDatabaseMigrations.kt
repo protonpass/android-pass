@@ -109,7 +109,7 @@ object AppDatabaseMigrations {
     }
 
     @RenameTable.Entries(
-        value = [RenameTable(fromTableName = "PlanLimitsEntity", toTableName = "PlanEntity"), ]
+        value = [RenameTable(fromTableName = "PlanLimitsEntity", toTableName = "PlanEntity")]
     )
     class MIGRATION_11_12 : AutoMigrationSpec
 
@@ -193,17 +193,6 @@ object AppDatabaseMigrations {
     val MIGRATION_36_37 = object : Migration(36, 37) {
         override fun migrate(database: SupportSQLiteDatabase) {
             UserSettingsDatabase.MIGRATION_4.migrate(database)
-        }
-    }
-
-    val MIGRATION_38_39 = object : Migration(38, 39) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-            database.addTableColumn(
-                table = ItemEntity.TABLE,
-                column = ItemEntity.Columns.IS_PINNED,
-                type = "INTEGER",
-                defaultValue = "0",
-            )
         }
     }
 }

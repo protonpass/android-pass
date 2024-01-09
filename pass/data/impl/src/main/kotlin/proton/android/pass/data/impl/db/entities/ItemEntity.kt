@@ -83,7 +83,7 @@ data class ItemEntity(
     val lastUsedTime: Long?,
     @ColumnInfo(name = Columns.HAS_TOTP)
     val hasTotp: Boolean?,
-    @ColumnInfo(name = Columns.IS_PINNED)
+    @ColumnInfo(name = Columns.IS_PINNED, defaultValue = "0")
     val isPinned: Boolean,
 
     // Keystore Encrypted contents

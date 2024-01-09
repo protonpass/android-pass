@@ -24,7 +24,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -34,6 +36,8 @@ import kotlinx.datetime.Clock
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -44,15 +48,26 @@ fun PinCarousel(
     modifier: Modifier = Modifier,
     list: ImmutableList<ItemUiModel> = persistentListOf(),
     canLoadExternalImages: Boolean,
-    onItemClick: (ShareId, ItemId) -> Unit
+    onItemClick: (ShareId, ItemId) -> Unit,
+    onSeeAllClick: () -> Unit
 ) {
     AnimatedVisibility(modifier = modifier, visible = list.isNotEmpty()) {
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        LazyRow(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             items(items = list, key = { it.id.id }) { item ->
                 PinItem(
                     item = item,
                     canLoadExternalImages = canLoadExternalImages,
                     onItemClick = onItemClick
+                )
+            }
+            item {
+                TransparentTextButton(
+                    text = stringResource(R.string.pinning_carousel_see_all),
+                    color = PassTheme.colors.interactionNormMajor2,
+                    onClick = onSeeAllClick
                 )
             }
         }
@@ -98,22 +113,10 @@ fun PinCarouselPreview(
                         modificationTime = Clock.System.now(),
                         lastAutofillTime = Clock.System.now()
                     ),
-                    ItemUiModel(
-                        id = ItemId("3"),
-                        shareId = ShareId("345"),
-                        contents = ItemContents.Alias(
-                            title = "Alias title",
-                            note = "",
-                            aliasEmail = ""
-                        ),
-                        state = 0,
-                        createTime = Clock.System.now(),
-                        modificationTime = Clock.System.now(),
-                        lastAutofillTime = Clock.System.now()
-                    ),
                 ),
                 canLoadExternalImages = false,
-                onItemClick = { _, _ -> }
+                onItemClick = { _, _ -> },
+                onSeeAllClick = { }
             )
         }
     }

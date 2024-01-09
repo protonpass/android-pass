@@ -34,6 +34,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface RemoteItemDataSource {
+
     suspend fun createItem(
         userId: UserId,
         shareId: ShareId,
@@ -99,6 +100,19 @@ interface RemoteItemDataSource {
         shareId: ShareId,
         body: MigrateItemsRequest
     ): List<ItemRevision>
+
+    suspend fun pinItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+    ): ItemRevision
+
+    suspend fun unpinItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+    ): ItemRevision
+
 }
 
 data class ItemTotal(

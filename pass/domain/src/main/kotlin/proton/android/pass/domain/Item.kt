@@ -40,5 +40,6 @@ data class Item(
     val packageInfoSet: Set<PackageInfo>,
     val createTime: Instant,
     val modificationTime: Instant,
-    val lastAutofillTime: Option<Instant>
+    val lastAutofillTime: Option<Instant>,
+    val isPinned: Boolean,
 )

@@ -63,6 +63,7 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
         packageInfoSet = allowedApps(context),
         modificationTime = Instant.fromEpochSeconds(modifyTime),
         createTime = Instant.fromEpochSeconds(createTime),
-        lastAutofillTime = lastUsedTime.toOption().map(Instant::fromEpochSeconds)
+        lastAutofillTime = lastUsedTime.toOption().map(Instant::fromEpochSeconds),
+        isPinned = isPinned,
     )
 }

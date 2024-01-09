@@ -148,6 +148,9 @@ internal fun SelectItemScreenContent(
                             packageName = packageInfo.toPackageInfo().packageName,
                             webDomain = webDomain
                         )
+                        println("CarlosLog: AskForAssociation: $askForAssociation")
+                        println("CarlosLog: PackageName: ${packageInfo.toPackageInfo().packageName}")
+                        println("CarlosLog: WebDomain: $webDomain")
 
                         when (uiState.confirmMode) {
                             is Some -> {
@@ -251,11 +254,15 @@ private fun shouldAskForAssociation(
     packageName: PackageName,
     webDomain: String?
 ): Boolean = when {
+    // If is browser, do not ask for association
     packageName.isBrowser() -> false
-    packageName.value.isBlank() -> false
+
+    // If the item is associated with the package, do not ask for association
     item.packageInfoSet.map { it.packageName }.contains(packageName) -> false
-    webDomain.isNullOrBlank() -> false
-    item.urls.contains(webDomain) -> false
+
+    // If there is webDomain and the item is already associated with the webDomain,
+    // do not ask for association
+    !webDomain.isNullOrBlank() && item.urls.contains(webDomain) -> false
 
     else -> true
 }

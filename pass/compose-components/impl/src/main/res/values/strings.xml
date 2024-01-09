@@ -103,4 +103,7 @@
     <string name="label_password_strength_vulnerable">Vulnerable</string>
     <string name="label_password_strength_weak">Weak</string>
 
+    <!-- Pinning -->
+    <string name="pinning_carousel_see_all">See all</string>
+
 </resources>

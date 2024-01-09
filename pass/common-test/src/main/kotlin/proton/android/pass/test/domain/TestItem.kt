@@ -57,7 +57,8 @@ object TestItem {
             state = 0,
             modificationTime = now,
             createTime = now,
-            lastAutofillTime = None
+            lastAutofillTime = None,
+            isPinned = false,
         )
     }
 
@@ -97,6 +98,7 @@ object TestItem {
             createTime = now,
             modificationTime = now,
             lastAutofillTime = None,
+            isPinned = Random.nextBoolean(),
         )
     }
 }

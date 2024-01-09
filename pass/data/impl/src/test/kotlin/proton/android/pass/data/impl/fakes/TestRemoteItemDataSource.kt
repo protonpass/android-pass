@@ -41,7 +41,8 @@ import proton.android.pass.domain.ShareId
 
 class TestRemoteItemDataSource : RemoteItemDataSource {
 
-    private var createItemResponse: () -> ItemRevision = { throw IllegalStateException("response not set") }
+    private var createItemResponse: () -> ItemRevision =
+        { throw IllegalStateException("response not set") }
     private var createItemMemory: MutableList<CreateItemParams> = mutableListOf()
 
     fun getCreateItemMemory(): List<CreateItemParams> = createItemMemory
@@ -142,6 +143,14 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
+    override suspend fun pinItem(userId: UserId, shareId: ShareId, itemId: ItemId): ItemRevision {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override suspend fun unpinItem(userId: UserId, shareId: ShareId, itemId: ItemId): ItemRevision {
+        throw IllegalStateException("Not yet implemented")
+    }
+
     data class CreateItemParams(
         val userId: UserId,
         val shareId: ShareId,
@@ -163,7 +172,8 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
                 modifyTime = now,
                 lastUseTime = now,
                 revisionTime = now,
-                itemKey = null
+                itemKey = null,
+                isPinned = false,
             )
         }
     }

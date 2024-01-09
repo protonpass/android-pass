@@ -228,4 +228,21 @@ class RemoteItemDataSourceImpl @Inject constructor(
         api.get<PasswordManagerApi>(userId)
             .invoke { migrateItems(shareId.id, body).items }
             .valueOrThrow
+
+    override suspend fun pinItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+    ): ItemRevision = api.get<PasswordManagerApi>(userId)
+        .invoke { pinItem(shareId.id, itemId.id).item }
+        .valueOrThrow
+
+    override suspend fun unpinItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+    ): ItemRevision = api.get<PasswordManagerApi>(userId)
+        .invoke { unpinItem(shareId.id, itemId.id).item }
+        .valueOrThrow
+
 }

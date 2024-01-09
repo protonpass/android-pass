@@ -45,6 +45,8 @@ import javax.inject.Inject
 @Suppress("NotImplementedDeclaration")
 class TestItemRepository @Inject constructor() : ItemRepository {
 
+    private var item: Item? = null
+
     private var migrateItemResult: Result<MigrateItemsResult> =
         Result.failure(IllegalStateException("TestItemRepository.migrateItemResult not initialized"))
     private val observeItemListFlow: MutableSharedFlow<List<Item>> =
@@ -52,12 +54,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     private val migrateItemMemory = mutableListOf<MigrateItemPayload>()
 
-    fun sendObserveItemList(items: List<Item>) = observeItemListFlow.tryEmit(items)
-
-    fun getMigrateItemMemory(): List<MigrateItemPayload> = migrateItemMemory
-
-    fun setMigrateItemResult(value: Result<MigrateItemsResult>) {
-        migrateItemResult = value
+    fun setItem(newItem: Item) {
+        item = newItem
     }
 
     override suspend fun createItem(
@@ -203,9 +201,28 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun pinItem(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Item = item?.copy(
+        id = itemId,
+        shareId = shareId,
+        isPinned = true,
+    ) ?: throw IllegalStateException("Item cannot be null. Did you forget to call setItem(item)?")
+
+    override suspend fun unpinItem(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Item = item?.copy(
+        id = itemId,
+        shareId = shareId,
+        isPinned = false,
+    ) ?: throw IllegalStateException("Item cannot be null. Did you forget to call setItem(item)?")
+
     data class MigrateItemPayload(
         val userId: UserId,
         val items: Map<ShareId, List<ItemId>>,
         val destination: Share
     )
+
 }

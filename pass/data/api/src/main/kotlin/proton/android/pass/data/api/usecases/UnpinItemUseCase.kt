@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,18 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain
+package proton.android.pass.data.api.usecases
 
-object ItemStateValues {
-    const val ACTIVE = 1
-    const val TRASHED = 2
-}
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
-enum class ItemState(val value: Int) {
-    Active(ItemStateValues.ACTIVE),
-    Trashed(ItemStateValues.TRASHED);
+interface UnpinItemUseCase {
 
-    companion object {
-        val map = values().associateBy { it.value }
-    }
+    suspend fun execute(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Item
+
 }

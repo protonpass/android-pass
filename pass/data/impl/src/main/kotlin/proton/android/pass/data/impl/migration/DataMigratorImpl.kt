@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.migration
 
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.data.impl.db.AppDatabase
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSource
@@ -42,29 +41,32 @@ class DataMigratorImpl @Inject constructor(
 
     override suspend fun areMigrationsNeeded(): Boolean {
         if (!waitForRoomToBeInitialized()) {
-            PassLogger.w(TAG, "Room is not initialized yet, we can't check if migrations are needed")
+            PassLogger.w(
+                TAG,
+                "Room is not initialized yet, we can't check if migrations are needed"
+            )
             return true
         }
         val migrationsToExecute = getPendingMigrations()
         return migrationsToExecute.isNotEmpty()
     }
 
-    override fun run(): Result<Unit> = runBlocking { runCatching { runMigrations() } }
+    override suspend fun run(): Result<Unit> = runCatching { runMigrations() }
 
     private suspend fun runMigrations() {
         if (!waitForRoomToBeInitialized()) {
             PassLogger.w(TAG, "Room is not initialized yet, we can't perform any operation")
             return
         }
-        val pendingMigrations = getPendingMigrations()
-        database.inTransaction {
-            pendingMigrations.forEach {
-                PassLogger.i(TAG, "Running migration ${it.migrationName}")
-                it.migrate()
-                PassLogger.i(TAG, "Successfully run migration ${it.migrationName}")
-                migrationDataSource.markMigrationAsExecuted(it.migrationName)
+        getPendingMigrations()
+            .forEach { migrator ->
+                database.inTransaction {
+                    PassLogger.i(TAG, "Running migration ${migrator.migrationName}")
+                    migrator.migrate()
+                    PassLogger.i(TAG, "Successfully run migration ${migrator.migrationName}")
+                    migrationDataSource.markMigrationAsExecuted(migrator.migrationName)
+                }
             }
-        }
     }
 
     private suspend fun getPendingMigrations(): List<Migrator> {

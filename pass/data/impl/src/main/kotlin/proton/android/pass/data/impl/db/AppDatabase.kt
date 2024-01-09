@@ -154,6 +154,7 @@ import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
         AutoMigration(from = 32, to = 33),
         AutoMigration(from = 33, to = 34),
         AutoMigration(from = 34, to = 35, spec = AppDatabaseMigrations.MIGRATION_34_35::class),
+        AutoMigration(from = 37, to = 38),
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -212,7 +213,6 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_27_28,
             AppDatabaseMigrations.MIGRATION_35_36,
             AppDatabaseMigrations.MIGRATION_36_37,
-            AppDatabaseMigrations.MIGRATION_38_39,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

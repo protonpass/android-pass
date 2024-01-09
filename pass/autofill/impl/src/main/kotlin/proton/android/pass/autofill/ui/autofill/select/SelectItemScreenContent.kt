@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialog
@@ -45,12 +46,13 @@ import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButt
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.entity.PackageName
 
 @Composable
 internal fun SelectItemScreenContent(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
-    packageInfo: PackageInfoUi?,
+    packageInfo: PackageInfoUi,
     webDomain: String?,
     onItemClicked: (ItemUiModel, Boolean) -> Unit,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
@@ -142,9 +144,9 @@ internal fun SelectItemScreenContent(
                 when (val contents = item.contents) {
                     is ItemContents.Login -> {
                         val askForAssociation = shouldAskForAssociation(
-                            contents,
-                            packageInfo?.packageName,
-                            webDomain
+                            item = contents,
+                            packageName = packageInfo.toPackageInfo().packageName,
+                            webDomain = webDomain
                         )
 
                         when (uiState.confirmMode) {
@@ -246,8 +248,14 @@ private fun AssociateDialog(
 
 private fun shouldAskForAssociation(
     item: ItemContents.Login,
-    packageName: String?,
+    packageName: PackageName,
     webDomain: String?
-): Boolean = !packageName.isNullOrBlank() &&
-    !item.packageInfoSet.map { it.packageName.value }.contains(packageName) ||
-    !webDomain.isNullOrBlank() && !item.urls.contains(webDomain)
+): Boolean = when {
+    packageName.isBrowser() -> false
+    packageName.value.isBlank() -> false
+    item.packageInfoSet.map { it.packageName }.contains(packageName) -> false
+    webDomain.isNullOrBlank() -> false
+    item.urls.contains(webDomain) -> false
+
+    else -> true
+}

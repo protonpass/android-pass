@@ -81,6 +81,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.PerformSync
+import proton.android.pass.data.api.usecases.PinItemUseCase
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -89,11 +90,12 @@ import proton.android.pass.data.api.usecases.RemoveMemberFromVault
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
-import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.RestoreAllItems
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.data.api.usecases.UnpinItemUseCase
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -174,6 +176,7 @@ import proton.android.pass.data.impl.usecases.ObserveVaultCountImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.PerformSyncImpl
+import proton.android.pass.data.impl.usecases.PinItemUseCaseImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
@@ -182,13 +185,14 @@ import proton.android.pass.data.impl.usecases.RemoveMemberFromVaultImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
 import proton.android.pass.data.impl.usecases.ResendInviteImpl
 import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
-import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.RestoreAllItemsImpl
+import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
 import proton.android.pass.data.impl.usecases.SetVaultMemberPermissionImpl
 import proton.android.pass.data.impl.usecases.TransferVaultOwnershipImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
+import proton.android.pass.data.impl.usecases.UnpinItemUseCaseImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
@@ -486,4 +490,11 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindSetDefaultVault(impl: SetDefaultVaultImpl): SetDefaultVault
+
+    @Binds
+    abstract fun bindPinItemUseCase(impl: PinItemUseCaseImpl): PinItemUseCase
+
+    @Binds
+    abstract fun bindUnpinItemUseCase(impl: UnpinItemUseCaseImpl): UnpinItemUseCase
+
 }

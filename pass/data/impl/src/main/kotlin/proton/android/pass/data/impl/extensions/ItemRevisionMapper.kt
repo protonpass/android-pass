@@ -35,6 +35,7 @@ fun ItemRevision.toPendingEvent(): PendingEventItemRevision =
         lastUseTime = lastUseTime,
         revisionTime = revisionTime,
         key = itemKey,
+        isPinned = isPinned,
     )
 
 fun PendingEventItemRevision.toItemRevision(): ItemRevision =
@@ -51,4 +52,5 @@ fun PendingEventItemRevision.toItemRevision(): ItemRevision =
         lastUseTime = lastUseTime,
         revisionTime = revisionTime,
         itemKey = key,
+        isPinned = isPinned,
     )

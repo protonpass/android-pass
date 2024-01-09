@@ -135,6 +135,7 @@ class OpenItemImplTest {
             modifyTime = 1664195804,
             lastUseTime = 1664195804,
             revisionTime = 1664195804,
+            isPinned = false,
         )
     }
 }

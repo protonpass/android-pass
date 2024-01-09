@@ -693,6 +693,47 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun pinItem(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Item = handleItemPinning(shareId, itemId, remoteItemDataSource::pinItem)
+
+    override suspend fun unpinItem(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Item = handleItemPinning(shareId, itemId, remoteItemDataSource::unpinItem)
+
+    private suspend fun handleItemPinning(
+        shareId: ShareId,
+        itemId: ItemId,
+        block: suspend (userId: UserId, shareId: ShareId, itemId: ItemId) -> ItemRevision,
+    ): Item {
+        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+        val share = shareRepository.getById(userId, shareId)
+
+        return block(userId, shareId, itemId).let { itemRevision ->
+            createItemEntity(userId, itemRevision, share).let { itemEntity ->
+                localItemDataSource.upsertItem(itemEntity)
+                encryptionContextProvider.withEncryptionContext {
+                    itemEntity.toDomain(this@withEncryptionContext)
+                }
+            }
+        }
+    }
+
+    private suspend fun createItemEntity(
+        userId: UserId,
+        itemRevision: ItemRevision,
+        share: Share,
+    ) = withUserAddress(userId) { userAddress ->
+        itemResponseToEntity(
+            userAddress,
+            itemRevision,
+            share,
+            listOf(shareKeyRepository.getLatestKeyForShare(share.id).first()),
+        )
+    }
+
     private suspend fun migrateItemsForShare(
         userId: UserId,
         source: ShareId,
@@ -977,6 +1018,7 @@ class ItemRepositoryImpl @Inject constructor(
             key = itemRevision.itemKey,
             encryptedKey = output.itemKey,
             hasTotp = hasTotp,
+            isPinned = itemRevision.isPinned,
         )
     }
 

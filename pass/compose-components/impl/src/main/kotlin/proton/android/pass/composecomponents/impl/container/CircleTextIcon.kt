@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
@@ -51,10 +52,12 @@ fun CircleTextIcon(
         size = size,
         shape = shape
     ) {
+        val textStyle =
+            if (size >= 40) ProtonTheme.typography.defaultNorm else ProtonTheme.typography.defaultSmallNorm
         Text(
             text = textToShow,
             color = textColor,
-            style = ProtonTheme.typography.defaultNorm,
+            style = textStyle,
             textAlign = TextAlign.Center
         )
     }

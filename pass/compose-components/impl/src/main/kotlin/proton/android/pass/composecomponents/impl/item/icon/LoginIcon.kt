@@ -55,13 +55,18 @@ import me.proton.core.presentation.R as CoreR
 fun LoginIcon(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    shape: Shape = PassTheme.shapes.squircleMediumShape
-) {
-    val (backgroundColor, foregroundColor) = if (enabled) {
-        PassTheme.colors.loginInteractionNormMinor1 to PassTheme.colors.loginInteractionNormMajor2
+    shape: Shape = PassTheme.shapes.squircleMediumShape,
+    backgroundColor: Color = if (enabled) {
+        PassTheme.colors.loginInteractionNormMinor1
     } else {
-        PassTheme.colors.loginInteractionNormMinor2 to PassTheme.colors.loginInteractionNormMinor1
+        PassTheme.colors.loginInteractionNormMinor2
+    },
+    foregroundColor: Color = if (enabled) {
+        PassTheme.colors.loginInteractionNormMajor2
+    } else {
+        PassTheme.colors.loginInteractionNormMinor1
     }
+) {
     BoxedIcon(
         modifier = modifier,
         shape = shape,
@@ -84,7 +89,17 @@ fun LoginIcon(
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
     canLoadExternalImages: Boolean,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    backgroundColor: Color = if (enabled) {
+        PassTheme.colors.loginInteractionNormMinor1
+    } else {
+        PassTheme.colors.loginInteractionNormMinor2
+    },
+    foregroundColor: Color = if (enabled) {
+        PassTheme.colors.loginInteractionNormMajor2
+    } else {
+        PassTheme.colors.textHint
+    }
 ) {
     if (website == null || !canLoadExternalImages) {
         FallbackLoginIcon(
@@ -93,13 +108,15 @@ fun LoginIcon(
             packageName = packageName,
             size = size,
             shape = shape,
-            enabled = enabled
+            enabled = enabled,
+            backgroundColor = backgroundColor,
+            foregroundColor = foregroundColor
         )
     } else {
         var isLoaded by remember { mutableStateOf(false) }
         var isError by remember { mutableStateOf(false) }
 
-        val backgroundColor by if (CROSSFADE_ENABLED) {
+        val animatedBackgroundColor by if (CROSSFADE_ENABLED) {
             animateColorAsState(
                 targetValue = if (isLoaded) {
                     Color.White
@@ -131,7 +148,8 @@ fun LoginIcon(
                     TwoLetterLoginIcon(
                         text = text,
                         shape = shape,
-                        enabled = enabled
+                        backgroundColor = backgroundColor,
+                        foregroundColor = foregroundColor
                     )
                 },
                 onError = {
@@ -143,7 +161,9 @@ fun LoginIcon(
                         packageName = packageName,
                         size = size,
                         shape = shape,
-                        enabled = enabled
+                        enabled = enabled,
+                        backgroundColor = backgroundColor,
+                        foregroundColor = foregroundColor
                     )
                 },
                 onSuccess = {
@@ -158,7 +178,7 @@ fun LoginIcon(
                                 color = PassTheme.colors.loginIconBorder,
                                 shape = shape
                             )
-                            .background(backgroundColor)
+                            .background(animatedBackgroundColor)
                             .padding(8.dp)
                     )
                 },
@@ -186,7 +206,9 @@ private fun FallbackLoginIcon(
     packageName: String?,
     size: Int = 40,
     shape: Shape,
-    enabled: Boolean
+    enabled: Boolean,
+    backgroundColor: Color,
+    foregroundColor: Color
 ) {
     if (packageName == null) {
         TwoLetterLoginIcon(
@@ -194,7 +216,8 @@ private fun FallbackLoginIcon(
             text = text,
             size = size,
             shape = shape,
-            enabled = enabled
+            backgroundColor = backgroundColor,
+            foregroundColor = foregroundColor
         )
     } else {
         LinkedAppIcon(
@@ -208,7 +231,8 @@ private fun FallbackLoginIcon(
                     text = text,
                     size = size,
                     shape = shape,
-                    enabled = enabled
+                    backgroundColor = backgroundColor,
+                    foregroundColor = foregroundColor
                 )
             }
         )
@@ -221,13 +245,9 @@ private fun TwoLetterLoginIcon(
     text: String,
     size: Int = 40,
     shape: Shape,
-    enabled: Boolean
+    backgroundColor: Color,
+    foregroundColor: Color
 ) {
-    val (backgroundColor, foregroundColor) = if (enabled) {
-        PassTheme.colors.loginInteractionNormMinor1 to PassTheme.colors.loginInteractionNormMajor2
-    } else {
-        PassTheme.colors.loginInteractionNormMinor2 to PassTheme.colors.textHint
-    }
     CircleTextIcon(
         modifier = modifier,
         text = text,

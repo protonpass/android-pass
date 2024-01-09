@@ -18,14 +18,17 @@
 
 package proton.android.pass.composecomponents.impl.item.icon
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
@@ -36,13 +39,17 @@ fun AliasIcon(
     enabled: Boolean = true,
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
-) {
-    val (backgroundColor, foregroundColor) = if (enabled) {
-        PassTheme.colors.aliasInteractionNormMinor1 to PassTheme.colors.aliasInteractionNormMajor2
+    backgroundColor: Color = if (enabled) {
+        PassTheme.colors.aliasInteractionNormMinor1
     } else {
-        PassTheme.colors.aliasInteractionNormMinor2 to PassTheme.colors.aliasInteractionNormMinor1
+        PassTheme.colors.aliasInteractionNormMinor2
+    },
+    foregroundColor: Color = if (enabled) {
+        PassTheme.colors.aliasInteractionNormMajor2
+    } else {
+        PassTheme.colors.aliasInteractionNormMinor1
     }
-
+) {
     BoxedIcon(
         modifier = modifier,
         backgroundColor = backgroundColor,
@@ -50,6 +57,7 @@ fun AliasIcon(
         shape = shape
     ) {
         Icon(
+            modifier = Modifier.padding(4.dp),
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
             contentDescription = null,
             tint = foregroundColor

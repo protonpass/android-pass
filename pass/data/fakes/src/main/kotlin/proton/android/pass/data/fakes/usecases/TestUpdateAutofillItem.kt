@@ -26,5 +26,11 @@ import javax.inject.Singleton
 @Singleton
 class TestUpdateAutofillItem @Inject constructor() : UpdateAutofillItem {
 
-    override fun invoke(data: UpdateAutofillItemData) {}
+    private val memory = mutableListOf<UpdateAutofillItemData>()
+
+    fun getMemory(): List<UpdateAutofillItemData> = memory
+
+    override fun invoke(data: UpdateAutofillItemData) {
+        memory.add(data)
+    }
 }

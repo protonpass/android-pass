@@ -34,8 +34,7 @@ import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
@@ -70,12 +69,9 @@ class AutofillAppViewModel @Inject constructor(
             handleTotpUri(autofillItem.totp)
         }
 
-        val packageInfo = autofillAppState.autofillData.packageInfo
-        val updatePackageInfo = if (!packageInfo.packageName.isBrowser()) {
-            packageInfo.some()
-        } else {
-            None
-        }
+        val updatePackageInfo = autofillAppState.autofillData.packageInfo
+            .takeIf { !it.packageName.isBrowser() }
+            .toOption()
         updateAutofillItem(
             UpdateAutofillItemData(
                 shareId = autofillItem.shareId(),

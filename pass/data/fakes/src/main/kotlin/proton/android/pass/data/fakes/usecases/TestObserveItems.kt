@@ -99,7 +99,8 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     state = ItemState.Active.value,
                     modificationTime = now,
                     createTime = now,
-                    lastAutofillTime = None
+                    lastAutofillTime = None,
+                    isPinned = false,
                 )
             }
         }

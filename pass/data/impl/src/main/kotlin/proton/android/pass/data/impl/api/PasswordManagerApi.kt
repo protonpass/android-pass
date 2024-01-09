@@ -40,7 +40,6 @@ import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.CreateItemAliasResponse
-import proton.android.pass.data.impl.responses.CreateItemResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
 import proton.android.pass.data.impl.responses.DeleteVaultResponse
 import proton.android.pass.data.impl.responses.FeatureFlagsResponse
@@ -54,6 +53,7 @@ import proton.android.pass.data.impl.responses.GetShareMembersResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.data.impl.responses.GetShareResponse
 import proton.android.pass.data.impl.responses.GetSharesResponse
+import proton.android.pass.data.impl.responses.ItemRevisionResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.MigrateItemsResponse
 import proton.android.pass.data.impl.responses.PendingInvitesResponse
@@ -117,13 +117,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun createItem(
         @Path("shareId") shareId: String,
         @Body request: CreateItemRequest
-    ): CreateItemResponse
+    ): ItemRevisionResponse
 
     @POST("$PREFIX/share/{shareId}/alias/custom")
     suspend fun createAlias(
         @Path("shareId") shareId: String,
         @Body request: CreateAliasRequest
-    ): CreateItemResponse
+    ): ItemRevisionResponse
 
     @POST("$PREFIX/share/{shareId}/item/with_alias")
     suspend fun createItemAndAlias(
@@ -136,7 +136,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
         @Body request: UpdateItemRequest
-    ): CreateItemResponse
+    ): ItemRevisionResponse
 
     @PUT("$PREFIX/share/{shareId}/item/{itemId}/lastuse")
     suspend fun updateLastUsedTime(
@@ -144,6 +144,18 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String,
         @Body request: UpdateLastUsedTimeRequest
     ): UpdateLastUsedTimeResponse
+
+    @POST("$PREFIX/share/{shareId}/item/{itemId}/pin")
+    suspend fun pinItem(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+    ): ItemRevisionResponse
+
+    @DELETE("$PREFIX/share/{shareId}/item/{itemId}/pin")
+    suspend fun unpinItem(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+    ): ItemRevisionResponse
 
     @POST("$PREFIX/share/{shareId}/item/trash")
     suspend fun trashItems(
@@ -165,7 +177,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
         @Body request: MigrateItemRequest
-    ): CreateItemResponse
+    ): ItemRevisionResponse
 
     @PUT("$PREFIX/share/{shareId}/item/share")
     suspend fun migrateItems(

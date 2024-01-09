@@ -136,6 +136,16 @@ interface ItemRepository {
         userId: UserId,
         aliasEmail: String
     ): Item?
+
+    suspend fun pinItem(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Item
+
+    suspend fun unpinItem(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Item
 }
 
 data class VaultProgress(

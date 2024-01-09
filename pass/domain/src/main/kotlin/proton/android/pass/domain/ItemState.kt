@@ -24,8 +24,8 @@ object ItemStateValues {
 }
 
 enum class ItemState(val value: Int) {
-    Active(proton.android.pass.domain.ItemStateValues.ACTIVE),
-    Trashed(proton.android.pass.domain.ItemStateValues.TRASHED);
+    Active(ItemStateValues.ACTIVE),
+    Trashed(ItemStateValues.TRASHED);
 
     companion object {
         val map = values().associateBy { it.value }

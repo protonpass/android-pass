@@ -35,7 +35,8 @@ data class EncryptedItemRevision(
     val createTime: Long,
     val modifyTime: Long,
     val lastUseTime: Long?,
-    val revisionTime: Long
+    val revisionTime: Long,
+    val isPinned: Boolean,
 )
 
 data class OpenItemOutput(

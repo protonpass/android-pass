@@ -22,11 +22,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateItemResponse(
-    @SerialName("Code")
-    val code: Int,
-    @SerialName("Item")
-    val item: ItemRevision
+data class ItemRevisionResponse(
+    @SerialName("Code") val code: Int,
+    @SerialName("Item") val item: ItemRevision,
 )
 
 @Serializable
@@ -72,5 +70,7 @@ data class ItemRevision(
     @SerialName("LastUseTime")
     val lastUseTime: Long?,
     @SerialName("RevisionTime")
-    val revisionTime: Long
+    val revisionTime: Long,
+    @SerialName("Pinned")
+    val isPinned: Boolean,
 )

@@ -195,4 +195,15 @@ object AppDatabaseMigrations {
             UserSettingsDatabase.MIGRATION_4.migrate(database)
         }
     }
+
+    val MIGRATION_38_39 = object : Migration(38, 39) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.addTableColumn(
+                table = ItemEntity.TABLE,
+                column = ItemEntity.Columns.IS_PINNED,
+                type = "INTEGER",
+                defaultValue = "0",
+            )
+        }
+    }
 }

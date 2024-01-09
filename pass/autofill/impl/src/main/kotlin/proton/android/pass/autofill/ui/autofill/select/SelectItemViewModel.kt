@@ -259,11 +259,10 @@ class SelectItemViewModel @Inject constructor(
                         is NodeCluster.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
                         is NodeCluster.Login,
                         is NodeCluster.SignUp -> {
-                            val packageName = if (autofillData.packageInfo.packageName.isBrowser()) {
-                                None
-                            } else {
-                                autofillData.packageInfo.packageName.value.some()
-                            }
+                            val packageName = autofillData.packageInfo.packageName
+                                .takeIf { !it.isBrowser() }
+                                .toOption()
+                                .map { it.value }
 
                             getSuggestedLoginItems(
                                 packageName = packageName,
@@ -500,13 +499,7 @@ class SelectItemViewModel @Inject constructor(
         autofillAppState: AutofillAppState
     ) = encryptionContextProvider.withEncryptionContext {
 
-        val packageInfo = autofillAppState.autofillData.packageInfo
-        val updatePackageInfo = if (!packageInfo.packageName.isBrowser()) {
-            packageInfo.some()
-        } else {
-            None
-        }
-
+        val updatePackageInfo = autofillAppState.updatePackageInfo()
         updateAutofillItem(
             UpdateAutofillItemData(
                 shareId = ShareId(autofillItem.shareId),
@@ -585,15 +578,9 @@ class SelectItemViewModel @Inject constructor(
         }
     }
 
-    private fun AutofillAppState.updatePackageInfo(): Option<PackageInfo> {
-        val packageInfo = autofillData.packageInfo
-
-        return if (!packageInfo.packageName.isBrowser()) {
-            packageInfo.some()
-        } else {
-            None
-        }
-    }
+    private fun AutofillAppState.updatePackageInfo(): Option<PackageInfo> = autofillData.packageInfo
+        .takeIf { !it.packageName.isBrowser() }
+        .toOption()
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

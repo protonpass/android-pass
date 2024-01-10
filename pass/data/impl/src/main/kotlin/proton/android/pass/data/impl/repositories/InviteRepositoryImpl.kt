@@ -18,10 +18,12 @@
 
 package proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
@@ -63,7 +65,9 @@ class InviteRepositoryImpl @Inject constructor(
         }
 
     override suspend fun refreshInvites(userId: UserId): Boolean = withContext(Dispatchers.IO) {
-        val deferredRemoteInvites = async { remoteDataSource.fetchInvites(userId) }
+        PassLogger.i(TAG, "Refresh invites started")
+        val deferredRemoteInvites: Deferred<List<PendingInviteResponse>> =
+            async { remoteDataSource.fetchInvites(userId) }
         deferredRemoteInvites.invokeOnCompletion {
             if (it != null) {
                 PassLogger.w(TAG, it)
@@ -71,17 +75,21 @@ class InviteRepositoryImpl @Inject constructor(
                 PassLogger.i(TAG, "Fetched remote invites")
             }
         }
-        val deferredLocalInvites =
-            async { localDatasource.observeAllInvites(userId).firstOrNull() ?: emptyList() }
+        val deferredLocalInvites: Deferred<List<InviteEntity>> =
+            async { localDatasource.observeAllInvites(userId).first() }
         deferredLocalInvites.invokeOnCompletion {
             if (it != null) {
                 PassLogger.w(TAG, it)
             } else {
-                PassLogger.i(TAG, "Fetched local invites")
+                PassLogger.i(TAG, "Retrieved local invites")
             }
         }
-        val remoteInvites = deferredRemoteInvites.await()
-        val localInvites = deferredLocalInvites.await()
+        val sources = awaitAll(deferredRemoteInvites, deferredLocalInvites)
+        val remoteInvites = sources[0].filterIsInstance<PendingInviteResponse>()
+        PassLogger.i(TAG, "Fetched ${remoteInvites.size} remote invites")
+
+        val localInvites = sources[1].filterIsInstance<InviteEntity>()
+        PassLogger.i(TAG, "Retrieved ${localInvites.size} local invites")
 
         // Remove deleted invites
         val deletedInvites = localInvites.filter { local ->

@@ -61,7 +61,8 @@ class AutofillAppStateTest {
                             value = null,
                             text = null,
                             isFocused = true,
-                            nodePath = emptyList()
+                            nodePath = emptyList(),
+                            url = null
                         )
                     ),
                     url = None

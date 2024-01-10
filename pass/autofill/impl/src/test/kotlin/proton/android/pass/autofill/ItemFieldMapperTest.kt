@@ -139,7 +139,8 @@ class ItemFieldMapperTest {
         value = null,
         text = null,
         isFocused = false,
-        nodePath = emptyList()
+        nodePath = emptyList(),
+        url = null
     )
 
     private fun autofillItem(

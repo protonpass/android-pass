@@ -93,7 +93,8 @@ fun PinCarouselPreview(
                         state = 0,
                         createTime = Clock.System.now(),
                         modificationTime = Clock.System.now(),
-                        lastAutofillTime = Clock.System.now()
+                        lastAutofillTime = Clock.System.now(),
+                        isPinned = true,
                     ),
                     ItemUiModel(
                         id = ItemId("2"),
@@ -111,7 +112,8 @@ fun PinCarouselPreview(
                         state = 0,
                         createTime = Clock.System.now(),
                         modificationTime = Clock.System.now(),
-                        lastAutofillTime = Clock.System.now()
+                        lastAutofillTime = Clock.System.now(),
+                        isPinned = true,
                     ),
                 ),
                 canLoadExternalImages = false,

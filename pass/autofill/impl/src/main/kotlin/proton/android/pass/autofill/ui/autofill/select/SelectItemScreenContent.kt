@@ -148,9 +148,6 @@ internal fun SelectItemScreenContent(
                             packageName = packageInfo.toPackageInfo().packageName,
                             webDomain = webDomain
                         )
-                        println("CarlosLog: AskForAssociation: $askForAssociation")
-                        println("CarlosLog: PackageName: ${packageInfo.toPackageInfo().packageName}")
-                        println("CarlosLog: WebDomain: $webDomain")
 
                         when (uiState.confirmMode) {
                             is Some -> {

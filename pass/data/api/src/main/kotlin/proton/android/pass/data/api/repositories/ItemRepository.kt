@@ -70,6 +70,11 @@ interface ItemRepository {
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All
     ): Flow<List<Item>>
 
+    fun observeById(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Flow<Item>
+
     suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Item
     suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun untrashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)

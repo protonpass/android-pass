@@ -61,7 +61,8 @@ class PerformSyncImpl @Inject constructor(
 
         val exception = res.firstOrNull { it.isFailure }?.exceptionOrNull()
         if (exception != null) {
-            PassLogger.i(TAG, "Performing sync error")
+            PassLogger.w(TAG, exception)
+            PassLogger.w(TAG, "Performing sync error")
             Result.failure(exception)
         } else {
             PassLogger.i(TAG, "Performing sync finished")

@@ -156,7 +156,8 @@ class ShareRepositoryImpl @Inject constructor(
             PassLogger.i(TAG, "Found primary user address")
 
             // Retrieve remote shares and create a map ShareId->ShareResponse
-            val remoteSharesDeferred = async { remoteShareDataSource.getShares(userAddress.userId) }
+            val remoteSharesDeferred: Deferred<List<ShareResponse>> =
+                async { remoteShareDataSource.getShares(userAddress.userId) }
             remoteSharesDeferred.invokeOnCompletion {
                 if (it != null) {
                     PassLogger.w(TAG, it)
@@ -164,9 +165,8 @@ class ShareRepositoryImpl @Inject constructor(
                     PassLogger.i(TAG, "Fetched remote shares")
                 }
             }
-
             // Retrieve local shares and create a map ShareId->ShareEntity
-            val localSharesDeferred = async {
+            val localSharesDeferred: Deferred<List<ShareEntity>> = async {
                 localShareDataSource
                     .getAllSharesForUser(userAddress.userId)
                     .first()
@@ -175,14 +175,16 @@ class ShareRepositoryImpl @Inject constructor(
                 if (it != null) {
                     PassLogger.w(TAG, it)
                 } else {
-                    PassLogger.i(TAG, "Got local shares")
+                    PassLogger.i(TAG, "Retrieved local shares")
                 }
             }
 
-            val remoteShares = remoteSharesDeferred.await()
-            val localShares = localSharesDeferred.await()
-            PassLogger.i(TAG, "Fetched ${remoteShares.size} shares")
-            PassLogger.i(TAG, "Found ${localShares.size} shares in local storage")
+            val sources = awaitAll(remoteSharesDeferred, localSharesDeferred)
+            val remoteShares = sources[0].filterIsInstance<ShareResponse>()
+            PassLogger.i(TAG, "Fetched ${remoteShares.size} remote shares")
+
+            val localShares = sources[1].filterIsInstance<ShareEntity>()
+            PassLogger.i(TAG, "Retrieved ${localShares.size} local shares")
             val remoteShareMap = remoteShares.associateBy { ShareId(it.shareId) }
             val localSharesMap = localShares.associateBy { ShareId(it.id) }
 

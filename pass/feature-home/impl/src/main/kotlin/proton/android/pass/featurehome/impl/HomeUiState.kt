@@ -62,8 +62,11 @@ data class HomeUiState(
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
 
     fun shouldShowItemListHeader() =
-        homeListUiState.items.isNotEmpty() && homeListUiState.isLoading == IsLoadingState.NotLoading &&
-            !searchUiState.isInSuggestionsMode && searchUiState.inSearchMode
+        homeListUiState.items.isNotEmpty() &&
+            homeListUiState.isLoading == IsLoadingState.NotLoading &&
+            !searchUiState.isInSuggestionsMode &&
+            !searchUiState.isProcessingSearch.value() &&
+            searchUiState.inSearchMode
 
     fun isSelectedVaultReadOnly() =
         when (val selection = homeListUiState.homeVaultSelection) {

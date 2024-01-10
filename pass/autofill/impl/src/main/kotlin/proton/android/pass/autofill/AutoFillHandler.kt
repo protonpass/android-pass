@@ -48,6 +48,7 @@ import proton.android.pass.autofill.heuristics.focused
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
@@ -134,10 +135,9 @@ object AutoFillHandler {
                 ?: AppName(applicationPackageName.value)
         )
 
-        val isBrowser = applicationPackageName.isBrowser()
         val hasUrl = assistInfo.url.isNotEmpty()
 
-        val isDangerousAutofill = !isBrowser && hasUrl
+        val isDangerousAutofill = !applicationPackageName.isBrowser() && hasUrl
 
         val autofillData = AutofillData(assistInfo, packageInfo, isDangerousAutofill)
         val datasetList = if (hasSupportForInlineSuggestions(request)) {
@@ -235,7 +235,7 @@ object AutoFillHandler {
 
         val assistInfo = AssistInfo(
             cluster = focusedCluster,
-            url = extractionResult.url
+            url = focusedCluster.url().toOption()
         )
 
         return ShouldAutofillResult.Yes(assistInfo)

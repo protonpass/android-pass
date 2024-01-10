@@ -41,7 +41,6 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.item.header.ItemCount
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 
 @Composable
@@ -96,8 +95,11 @@ fun SelectItemList(
                 onItemClicked = onItemClicked,
                 onUpgradeClick = { onNavigate(SelectItemNavigation.Upgrade) }
             )
-            if (shouldShowItemListHeader(uiState)) {
-                item {
+            item {
+                val shouldShowItemListHeader = remember(uiState) {
+                    uiState.shouldShowItemListHeader()
+                }
+                if (shouldShowItemListHeader) {
                     val count = remember(uiState.listUiState.items) {
                         uiState.listUiState.items.items.map { it.items }.flatten().count() +
                             uiState.listUiState.items.suggestions.count()
@@ -127,14 +129,8 @@ fun SelectItemList(
     )
 }
 
-private fun shouldShowItemListHeader(uiState: SelectItemUiState) =
-    uiState.listUiState.items.items.isNotEmpty() &&
-        uiState.listUiState.isLoading == IsLoadingState.NotLoading &&
-        !uiState.searchUiState.isProcessingSearch.value()
-
 class ThemeAndSelectItemUiStateProvider :
     ThemePairPreviewProvider<SelectItemUiState>(SelectItemUiStatePreviewProvider())
-
 
 @Preview
 @Composable

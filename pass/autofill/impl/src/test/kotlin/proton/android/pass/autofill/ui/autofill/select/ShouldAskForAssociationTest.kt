@@ -30,21 +30,21 @@ import proton.android.pass.domain.entity.PackageName
 class ShouldAskForAssociationTest {
 
     @Test
-    fun `should not ask for association if package name is browser`() {
+    fun `should not ask for association if package name is already present`() {
         val res = shouldAskForAssociation(
-            item = itemContent(),
-            packageName = browserPackageName,
+            item = itemContent(packageName = appPackageName),
+            packageName = appPackageName,
             webDomain = null
         )
         assertThat(res).isFalse()
     }
 
     @Test
-    fun `should not ask for association if package name is not browser but is already present`() {
+    fun `should not ask for association if url is already present`() {
         val res = shouldAskForAssociation(
-            item = itemContent(packageName = appPackageName),
+            item = itemContent(url = "some.url"),
             packageName = appPackageName,
-            webDomain = null
+            webDomain = "some.url"
         )
         assertThat(res).isFalse()
     }
@@ -64,6 +64,16 @@ class ShouldAskForAssociationTest {
         val res = shouldAskForAssociation(
             item = itemContent(),
             packageName = appPackageName,
+            webDomain = "some.domain"
+        )
+        assertThat(res).isTrue()
+    }
+
+    @Test
+    fun `should ask for association if package name is browser and url is not empty`() {
+        val res = shouldAskForAssociation(
+            item = itemContent(),
+            packageName = browserPackageName,
             webDomain = "some.domain"
         )
         assertThat(res).isTrue()

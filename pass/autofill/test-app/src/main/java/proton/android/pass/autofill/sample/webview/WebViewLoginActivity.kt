@@ -41,10 +41,15 @@ class WebViewLoginActivity : AppCompatActivity() {
             }
             webViewClient = WebViewClient()
 
-            if (url == null) loadUrl("https://autofilth.lol")
+            if (url == null) loadUrl(URL)
         }
 
         setContentView(binding.root)
+    }
+
+    companion object {
+        @Suppress("MaxLineLength")
+        private const val URL = "https://www.autofilth.lol/form?definition=JTdCJTIyaWQlMjIlM0ElMjJsb2dpbiUyMiUyQyUyMm5hbWUlMjIlM0ElMjIlRjAlOUYlOTElQTQlMjBMb2dpbiUyMHVzZXJuYW1lJTIyJTJDJTIyZGVzY3JpcHRpb24lMjIlM0ElMjJMb2dpbiUyMGZvcm0lMjB3aXRoJTIwcmVxdWlyZWQlMjB1c2VybmFtZSUyMGFuZCUyMHBhc3N3b3JkJTIwZmllbGRzLiUyMiUyQyUyMmZpZWxkcyUyMiUzQSU1QiU3QiUyMmlkJTIyJTNBJTIydXNlcm5hbWUlMjIlMkMlMjJsYWJlbCUyMiUzQSUyMlVzZXJuYW1lJTIyJTJDJTIyYXV0b2NvbXBsZXRlJTIyJTNBJTIydXNlcm5hbWUlMjIlMkMlMjJyZXF1aXJlZCUyMiUzQXRydWUlN0QlMkMlN0IlMjJpZCUyMiUzQSUyMnBhc3N3b3JkJTIyJTJDJTIydHlwZSUyMiUzQSUyMnBhc3N3b3JkJTIyJTJDJTIybGFiZWwlMjIlM0ElMjJQYXNzd29yZCUyMiUyQyUyMmF1dG9jb21wbGV0ZSUyMiUzQSUyMmN1cnJlbnQtcGFzc3dvcmQlMjIlMkMlMjJyZXF1aXJlZCUyMiUzQXRydWUlN0QlNUQlMkMlMjJzdWJtaXRUZXh0JTIyJTNBJTIyTG9naW4lMjIlMkMlMjJlcnJvclRleHQlMjIlM0ElMjIlRTIlOUQlOEMlMjBTb21ldGhpbmclMjB3ZW50JTIwd3JvbmclMjIlMkMlMjJva1RleHQlMjIlM0ElMjIlRTIlOUMlODUlMjBMb2dnZWQlMjBpbiUyMCElMjIlN0Q%3D"
     }
 
 }

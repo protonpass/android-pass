@@ -34,19 +34,30 @@ import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.orRight
 import proton.android.pass.common.api.removeAccents
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
 
 class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) {
 
     data class ExtractionResult(
-        val fields: List<AssistField>,
-        val url: Option<String>
-    )
+        val fields: List<AssistField>
+    ) {
+        fun urls(): List<String> = fields.mapNotNull { it.url }
+
+        fun mainUrl(): Option<String> {
+            val focusedField = fields.firstOrNull { it.isFocused }
+            if (focusedField?.url != null) {
+                return focusedField.url.some()
+            }
+
+            return fields.firstOrNull { it.url != null }?.url.toOption()
+        }
+    }
 
     private var autoFillNodes = mutableListOf<AssistField>()
-    private var detectedUrl: Option<String> = None
     private var inCreditCardContext = false
 
     // For testing purposes
@@ -64,20 +75,16 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 node = node,
                 parent = None,
                 siblings = emptyList(),
-                parentPath = emptyList()
+                parentPath = emptyList(),
+                parentUrl = node.url
             )
         )
         return ExtractionResult(
             fields = autoFillNodes,
-            url = detectedUrl
         )
     }
 
     private fun traverseInternal(context: AutofillTraversalContext) {
-        if (detectedUrl is None) {
-            detectedUrl = context.node.url
-        }
-
         val pathToCurrentNode = context.parentPath
             .toMutableList()
             .apply { add(context.node.id!!) }
@@ -94,7 +101,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                     node = it,
                     parent = Some(context),
                     siblings = context.node.children,
-                    parentPath = pathToCurrentNode
+                    parentPath = pathToCurrentNode,
+                    parentUrl = context.parentUrl.orRight(context.node.url)
                 )
 
                 traverseInternal(newContext)
@@ -135,6 +143,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                         text = node.text.toString(),
                         isFocused = node.isFocused,
                         nodePath = context.parentPath,
+                        url = context.parentUrl.orRight(context.node.url).value()
                     ).some()
                 } else {
                     None
@@ -304,7 +313,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                     value = autofillContext.node.autofillValue,
                     text = autofillContext.node.text,
                     isFocused = autofillContext.node.isFocused,
-                    nodePath = autofillContext.parentPath
+                    nodePath = autofillContext.parentPath,
+                    url = autofillContext.parentUrl.orRight(autofillContext.node.url).value()
                 ).some()
             } else {
                 None
@@ -596,7 +606,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         val node: AutofillNode,
         val parent: Option<AutofillTraversalContext>,
         val siblings: List<AutofillNode>,
-        val parentPath: List<AutofillFieldId>
+        val parentPath: List<AutofillFieldId>,
+        val parentUrl: Option<String>
     )
 
     companion object {

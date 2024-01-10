@@ -47,4 +47,34 @@ class NodeExtractorNestedUrlTest {
         assertThat(res.fields[3].url).isEqualTo("https://www.autofilth.lol")
     }
 
+    @Test
+    fun `can extract the web url for chrome websites`() {
+        val domain = "https://account.dyn.com"
+        val parsed = parseResourceFile("login/chrome_account.dyn.com.json")
+        val asAutofillNode = parsed.rootContent.toAutofillNode()
+
+        val res = NodeExtractor().extract(asAutofillNode)
+        assertThat(res.fields.all { it.url == domain }).isTrue()
+    }
+
+    @Test
+    fun `can extract the web url for firefox websites`() {
+        val domain = "https://news.ycombinator.com"
+        val parsed = parseResourceFile("login/firefox_news.ycombinator.com_firstpassword.json")
+        val asAutofillNode = parsed.rootContent.toAutofillNode()
+
+        val res = NodeExtractor().extract(asAutofillNode)
+        assertThat(res.fields.all { it.url == domain }).isTrue()
+    }
+
+    @Test
+    fun `can extract the web url for duckduckgo websites`() {
+        val domain = "https://account.proton.me"
+        val parsed = parseResourceFile("login/duckduckgo.proton.me.username.json")
+        val asAutofillNode = parsed.rootContent.toAutofillNode()
+
+        val res = NodeExtractor().extract(asAutofillNode)
+        assertThat(res.fields.all { it.url == domain }).isTrue()
+    }
+
 }

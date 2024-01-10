@@ -31,25 +31,33 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import proton.android.pass.composecomponents.impl.pinning.BoxedPin
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
 import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
-import proton.android.pass.domain.Vault
 
 @Composable
 fun AliasTitle(
     modifier: Modifier = Modifier,
     title: String,
     vault: Vault?,
-    onVaultClick: () -> Unit
+    onVaultClick: () -> Unit,
+    isPinned: Boolean,
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        AliasIcon(size = 60, shape = PassTheme.shapes.squircleMediumLargeShape)
+        BoxedPin(
+            pinBackgroundColor = PassTheme.colors.aliasInteractionNormMajor2,
+            isShown = isPinned,
+        ) {
+            AliasIcon(size = 60, shape = PassTheme.shapes.squircleMediumLargeShape)
+        }
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -70,7 +78,8 @@ fun AliasTitlePreview(
             AliasTitle(
                 title = input.second.title,
                 vault = input.second.vault,
-                onVaultClick = {}
+                onVaultClick = {},
+                isPinned = false,
             )
         }
     }

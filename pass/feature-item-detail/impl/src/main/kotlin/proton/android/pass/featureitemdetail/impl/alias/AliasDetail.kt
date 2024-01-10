@@ -114,11 +114,17 @@ fun AliasDetail(
                             },
                             onPinned = {
                                 scope.launch { bottomSheetState.hide() }
-                                // handle pinning (it would be implemented on its own MR)
+                                viewModel.pinItem(
+                                    shareId = state.itemUiModel.shareId,
+                                    itemId = state.itemUiModel.id,
+                                )
                             },
                             onUnpinned = {
                                 scope.launch { bottomSheetState.hide() }
-                                // handle unpinning (it would be implemented on its own MR)
+                                viewModel.unpinItem(
+                                    shareId = state.itemUiModel.shareId,
+                                    itemId = state.itemUiModel.id,
+                                )
                             },
                         )
 

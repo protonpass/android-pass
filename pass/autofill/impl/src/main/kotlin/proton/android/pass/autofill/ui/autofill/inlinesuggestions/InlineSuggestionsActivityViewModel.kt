@@ -36,7 +36,6 @@ import proton.android.pass.autofill.MFAAutofillCopied
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
-import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
@@ -44,7 +43,6 @@ import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.require
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -143,15 +141,13 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
             )
         }
 
-        val updatePackageInfo = autofillAppState.autofillData.packageInfo
-            .takeIf { !it.packageName.isBrowser() }
-            .toOption()
+        val (updatePackageInfo, updateUrl) = autofillAppState.updateAutofillFields()
         updateAutofillItem(
             UpdateAutofillItemData(
                 shareId = autofillItem.shareId(),
                 itemId = autofillItem.itemId(),
                 packageInfo = updatePackageInfo,
-                url = autofillAppState.autofillData.assistInfo.url,
+                url = updateUrl,
                 shouldAssociate = false
             )
         )

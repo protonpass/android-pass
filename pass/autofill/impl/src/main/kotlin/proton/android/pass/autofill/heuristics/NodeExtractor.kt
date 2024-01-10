@@ -58,6 +58,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     }
 
     private var autoFillNodes = mutableListOf<AssistField>()
+    private var detectedUrl: Option<String> = None
     private var inCreditCardContext = false
 
     // For testing purposes
@@ -79,12 +80,23 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 parentUrl = node.url
             )
         )
+
+        val nodesWithUrl = autoFillNodes.count { it.url != null }
+        if (nodesWithUrl == 0 && detectedUrl.isNotEmpty()) {
+            PassLogger.d(TAG, "No nodes with url found, using detectedUrl")
+            autoFillNodes = autoFillNodes.map { it.copy(url = detectedUrl.value()) }.toMutableList()
+        }
+
         return ExtractionResult(
             fields = autoFillNodes,
         )
     }
 
     private fun traverseInternal(context: AutofillTraversalContext) {
+        if (detectedUrl is None) {
+            detectedUrl = context.node.url
+        }
+
         val pathToCurrentNode = context.parentPath
             .toMutableList()
             .apply { add(context.node.id!!) }

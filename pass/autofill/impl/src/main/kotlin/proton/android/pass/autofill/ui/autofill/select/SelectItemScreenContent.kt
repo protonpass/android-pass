@@ -253,21 +253,18 @@ fun shouldAskForAssociation(
     packageName: PackageName,
     webDomain: String?
 ): Boolean = when {
-    // If is browser, do not ask for association
-    packageName.isBrowser() -> false
+    // If the package name is not a browser and the package name is already associated with the item
+    // do not ask for association
+    !packageName.isBrowser() && item.packageInfoSet.map {
+        it.packageName
+    }.contains(packageName) -> false
 
-    // If the item is associated with the package, do not ask for association
-    item.packageInfoSet.map { it.packageName }.contains(packageName) -> false
-
-    // From then on we are sure that the PackageName is not a browser and the item is not associated
-    // with that package
-
-    // If there is no web domain, ask for association
-    webDomain.isNullOrBlank() -> true
+    // If the package name is not a browser and there is no web domain, ask for association
+    !packageName.isBrowser() && webDomain.isNullOrBlank() -> true
 
     // From then on we are sure that there is a webDomain
     // Check if is already there, and if it is, do not ask for association
-    item.urls.contains(webDomain) -> false
+    !webDomain.isNullOrBlank() && item.urls.contains(webDomain) -> false
 
     else -> true
 }

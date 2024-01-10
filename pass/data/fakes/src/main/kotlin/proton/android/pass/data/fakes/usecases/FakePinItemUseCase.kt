@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,23 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonuimodels.api
+package proton.android.pass.data.fakes.usecases
 
-import androidx.compose.runtime.Stable
-import kotlinx.datetime.Instant
-import proton.android.pass.domain.ItemContents
+import proton.android.pass.data.api.usecases.PinItemUseCase
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.test.domain.TestItem
 
-@Stable
-data class ItemUiModel(
-    val id: ItemId,
-    val shareId: ShareId,
-    val contents: ItemContents,
-    val state: Int,
-    val createTime: Instant,
-    val modificationTime: Instant,
-    val lastAutofillTime: Instant?,
-    val isPinned: Boolean,
-    val canModify: Boolean = true
-)
+class FakePinItemUseCase : PinItemUseCase {
+
+    private var item: Item? = null
+
+    fun setItem(newItem: Item) {
+        item = newItem
+    }
+
+    override suspend fun execute(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Item = item?.copy(isPinned = true) ?: TestItem.random().copy(
+        id = itemId,
+        shareId = shareId,
+        isPinned = true,
+    )
+
+}

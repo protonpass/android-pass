@@ -31,7 +31,8 @@ data class AssistField(
     val value: AutofillValue?,
     val text: String?,
     val isFocused: Boolean,
-    val nodePath: List<AutofillFieldId>
+    val nodePath: List<AutofillFieldId>,
+    val url: String?
 ) : IdentifiableNode, Parcelable {
     @IgnoredOnParcel
     override val nodeId = id

@@ -31,6 +31,8 @@ sealed interface NodeCluster : Parcelable {
     fun fields(): List<AssistField>
     fun type(): String
 
+    fun url(): String? = fields().firstOrNull()?.url
+
     @Parcelize
     object Empty : NodeCluster {
         override fun isFocused() = true

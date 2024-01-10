@@ -18,6 +18,7 @@
 
 package proton.android.pass.autofill.ui.autofill.select
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
@@ -246,7 +247,8 @@ private fun AssociateDialog(
     )
 }
 
-private fun shouldAskForAssociation(
+@VisibleForTesting
+fun shouldAskForAssociation(
     item: ItemContents.Login,
     packageName: PackageName,
     webDomain: String?
@@ -257,12 +259,15 @@ private fun shouldAskForAssociation(
     // If the item is associated with the package, do not ask for association
     item.packageInfoSet.map { it.packageName }.contains(packageName) -> false
 
-    // If there is no package name and no webDomain, do not ask for association, nothing can be
-    !packageName.isBrowser() && webDomain.isNullOrBlank() -> false
+    // From then on we are sure that the PackageName is not a browser and the item is not associated
+    // with that package
 
-    // If there is webDomain and the item is already associated with the webDomain,
-    // do not ask for association
-    !webDomain.isNullOrBlank() && item.urls.contains(webDomain) -> false
+    // If there is no web domain, ask for association
+    webDomain.isNullOrBlank() -> true
+
+    // From then on we are sure that there is a webDomain
+    // Check if is already there, and if it is, do not ask for association
+    item.urls.contains(webDomain) -> false
 
     else -> true
 }

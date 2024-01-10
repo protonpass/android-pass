@@ -58,6 +58,13 @@ data class HomeUiState(
     val accountType: AccountType,
     val navEvent: HomeNavEvent,
 ) {
+    fun shouldShowRecentSearchHeader() =
+        homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
+
+    fun shouldShowItemListHeader() =
+        homeListUiState.items.isNotEmpty() && homeListUiState.isLoading == IsLoadingState.NotLoading &&
+            !searchUiState.isProcessingSearch.value() && !searchUiState.isInSuggestionsMode
+
     fun isSelectedVaultReadOnly() =
         when (val selection = homeListUiState.homeVaultSelection) {
             is VaultSelectionOption.AllVaults -> false

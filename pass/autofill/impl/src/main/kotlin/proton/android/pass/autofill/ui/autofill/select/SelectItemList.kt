@@ -107,7 +107,12 @@ fun SelectItemList(
                     ItemListHeader(
                         countContent = {
                             ItemCount(
-                                modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp),
+                                modifier = Modifier.padding(
+                                    start = 16.dp,
+                                    top = 0.dp,
+                                    end = 0.dp,
+                                    bottom = 0.dp
+                                ),
                                 showSearchResults = uiState.searchUiState.inSearchMode &&
                                     uiState.searchUiState.searchQuery.isNotEmpty(),
                                 itemType = SearchFilterType.All,

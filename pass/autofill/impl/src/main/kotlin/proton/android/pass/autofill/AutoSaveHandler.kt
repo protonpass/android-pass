@@ -29,6 +29,7 @@ import proton.android.pass.autofill.entities.SaveItemType
 import proton.android.pass.autofill.extensions.MultiStepUtils
 import proton.android.pass.autofill.extensions.MultiStepUtils.getPasswordFromState
 import proton.android.pass.autofill.extensions.MultiStepUtils.getUsernameFromState
+import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.heuristics.findChildById
 import proton.android.pass.autofill.service.R
@@ -39,6 +40,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
 import proton.android.pass.data.api.url.UrlSanitizer
+import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.log.api.PassLogger
 
 object AutoSaveHandler {
@@ -114,9 +116,10 @@ object AutoSaveHandler {
         passwordField: AssistStructure.ViewNode?
     ) {
         val assistInfo = NodeExtractor().extract(windowNode.rootViewNode)
+        val infoUrl = assistInfo.mainUrl()
 
         val packageName = getApplicationPackageName(windowNode)
-        val itemTitle = getItemTitle(context, packageName, assistInfo.url)
+        val itemTitle = getItemTitle(context, packageName, infoUrl)
 
         val usernameValue = usernameField?.autofillValue?.textValue
         val passwordValue = passwordField?.autofillValue?.textValue
@@ -139,7 +142,7 @@ object AutoSaveHandler {
             else -> return
         }
 
-        val linkedAppInfo = if (BROWSERS.contains(packageName)) {
+        val linkedAppInfo = if (PackageName(packageName).isBrowser()) {
             null
         } else {
             val appName = getApplicationName(context, packageName).value() ?: ""
@@ -150,7 +153,7 @@ object AutoSaveHandler {
             context = context,
             saveInformation = saveInfo,
             title = itemTitle,
-            website = assistInfo.url,
+            website = infoUrl,
             linkedAppInfo = linkedAppInfo
         )
     }

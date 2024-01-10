@@ -77,3 +77,27 @@ fun <A> A.some(): Option<A> = Some(this)
 fun <A> none(): Option<A> = None
 
 fun <T> T?.toOption(): Option<T> = this?.let { Some(it) } ?: None
+
+/**
+ * "or" operation for Option that returns the "this" Option if it is already Some, or the "other"
+ * value if the current one is None, preserving the first Some found.
+ */
+fun <T> Option<T>.orLeft(other: Option<T>) = when (this) {
+    None -> other
+    is Some -> this
+}
+
+/**
+ * "or" operation for Option that returns:
+ * - current: None -> other
+ * - current: Some and other: None -> current
+ * - current: Some and other: Some -> other
+ * This aims to replace the value with the latest Some found in the chain.
+ */
+fun <T> Option<T>.orRight(other: Option<T>) = when (this) {
+    None -> other
+    is Some -> when (other) {
+        None -> this
+        is Some -> other
+    }
+}

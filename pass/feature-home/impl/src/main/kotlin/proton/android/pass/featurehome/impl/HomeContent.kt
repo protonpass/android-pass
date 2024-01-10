@@ -177,7 +177,10 @@ internal fun HomeContent(
             }
 
             val showItemListHeader = remember(uiState) { uiState.shouldShowItemListHeader() }
-            if (showItemListHeader) {
+            AnimatedVisibility(
+                visible = showItemListHeader,
+                label = "HomeContent-ItemListHeader"
+            ) {
                 val count = remember(uiState.homeListUiState.items) {
                     uiState.homeListUiState.items.map { it.items }.flatten().count()
                 }

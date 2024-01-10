@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -49,7 +48,6 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
-import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -158,8 +156,6 @@ class LoginDetailViewModel @Inject constructor(
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
 
-    private val isItemPinnedState = MutableStateFlow<Option<Boolean>>(None)
-
     sealed interface DetailFields {
         object Password : DetailFields
     }
@@ -170,7 +166,7 @@ class LoginDetailViewModel @Inject constructor(
         // TOTP custom fields to be rescheduled, but the previous ones would not be cancelled
         // We should try to keep a reference to the running jobs and cancel them if this flow
         // re-emits
-        getItemByIdWithVault(shareId, itemId).take(1).asLoadingResult(),
+        getItemByIdWithVault(shareId, itemId).asLoadingResult(),
         canPerformPaidActionFlow
     ) { detailsResult, paidActionResult ->
         paidActionResult.flatMap { isPaid ->
@@ -307,7 +303,6 @@ class LoginDetailViewModel @Inject constructor(
         customFieldsState,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        isItemPinnedState,
     ) { itemDetails,
         totpUiState,
         isLoading,
@@ -317,8 +312,7 @@ class LoginDetailViewModel @Inject constructor(
         canPerformPaidActionResult,
         customFields,
         itemActions,
-        event,
-        isItemPinnedOption ->
+        event ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -348,11 +342,7 @@ class LoginDetailViewModel @Inject constructor(
                     ?.let { passwordScorer.check(it) }
 
                 LoginDetailUiState.Success(
-                    itemUiModel = if (isItemPinnedOption is Some) {
-                        details.itemUiModel.copy(isPinned = isItemPinnedOption.value)
-                    } else {
-                        details.itemUiModel
-                    },
+                    itemUiModel = details.itemUiModel,
                     passwordScore = passwordScore,
                     vault = vault,
                     linkedAlias = details.linkedAlias,
@@ -436,13 +426,8 @@ class LoginDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.Loading }
 
         runCatching { pinItemUseCase.execute(shareId, itemId) }
-            .onSuccess { pinnedItem ->
-                isItemPinnedState.update { pinnedItem.isPinned.some() }
-                snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess)
-            }
-            .onFailure {
-                snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
-            }
+            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
+            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError) }
 
         isLoadingState.update { IsLoadingState.NotLoading }
     }
@@ -451,13 +436,8 @@ class LoginDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.Loading }
 
         runCatching { unpinItemUseCase.execute(shareId, itemId) }
-            .onSuccess { unpinnedItem ->
-                isItemPinnedState.update { unpinnedItem.isPinned.some() }
-                snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess)
-            }
-            .onFailure {
-                snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
-            }
+            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
+            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError) }
 
         isLoadingState.update { IsLoadingState.NotLoading }
     }

@@ -47,6 +47,11 @@ data class SelectItemUiState(
     val searchUiState: SearchUiState,
     val confirmMode: Option<AutofillConfirmMode>
 ) {
+
+    fun shouldShowItemListHeader() =
+        listUiState.items.items.isNotEmpty() && listUiState.isLoading == IsLoadingState.NotLoading &&
+            !searchUiState.isProcessingSearch.value()
+
     companion object {
         val Loading = SelectItemUiState(
             listUiState = SelectItemListUiState.Loading,

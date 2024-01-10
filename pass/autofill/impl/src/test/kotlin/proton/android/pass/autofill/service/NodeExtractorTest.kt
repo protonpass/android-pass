@@ -20,6 +20,7 @@ package proton.android.pass.autofill.service
 
 import android.text.InputType
 import android.view.View
+import com.google.common.truth.Truth.assertThat
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,7 +31,7 @@ import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.newAutofillFieldId
-import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 
 @RunWith(JUnit4::class)
@@ -54,19 +55,6 @@ class NodeExtractorTest {
         Assert.assertEquals(5, traversal.visitedNodes)
     }
 
-/*    @Test
-    fun canExtractFieldFromHints() {
-        val rootNode = makeNode(
-            autofillId = newAutofillFieldId(),
-            autofillHints = listOf(View.AUTOFILL_HINT_EMAIL_ADDRESS),
-            isImportantForAutofill = true
-        )
-
-        val result = AssistNodeTraversal().traverse(rootNode)
-
-        Assert.assertEquals(FieldType.Email, result.firstOrNull()?.type)
-    }*/
-
     @Test
     fun canExtractFieldFromInputType() {
         val rootNode = makeNode(
@@ -79,21 +67,6 @@ class NodeExtractorTest {
 
         Assert.assertEquals(FieldType.Email, result.fields.firstOrNull()?.type)
     }
-
-/*
-    @Test
-    fun canExtractFieldFromHtmlAttributes() {
-        val rootNode = makeNode(
-            autofillId = newAutofillFieldId(),
-            htmlAttributes = listOf("type" to "text"),
-            isImportantForAutofill = true
-        )
-
-        val result = AssistNodeTraversal().traverse(rootNode)
-
-        Assert.assertEquals(FieldType.Other, result.firstOrNull()?.type)
-    }
-*/
 
     @Test
     fun autofillHintsParsingReturnsKnownFieldType() {
@@ -117,127 +90,148 @@ class NodeExtractorTest {
     fun `is able to extract URL`() {
         val domain = "somedomain.example"
         val structure = makeNode(
-            children = listOf(
-                makeNode(
-                    webDomain = domain
-                )
-            )
+            children = listOf(makeExtractableNode(webDomain = domain))
         )
         val result = NodeExtractor().extract(structure)
-        Assert.assertEquals(Some(domain), result.url)
+        assertThat(result.fields.size).isEqualTo(1)
+
+        val extractedNode = result.fields.first()
+        assertThat(extractedNode.url).isEqualTo(domain)
     }
 
     @Test
-    fun `return the first URL if it contains multiple ones`() {
+    fun `return the right url for each node`() {
         val domain1 = "somedomain.example"
         val domain2 = "other.example"
         val structure = makeNode(
+            webDomain = "root.example",
             children = listOf(
-                makeNode(webDomain = domain1),
-                makeNode(webDomain = domain2)
+                makeExtractableNode(webDomain = domain1),
+                makeExtractableNode(webDomain = domain2)
             )
         )
         val result = NodeExtractor().extract(structure)
-        Assert.assertEquals(Some(domain1), result.url)
+        assertThat(result.fields.size).isEqualTo(2)
+
+        val extractedNode1 = result.fields[0]
+        assertThat(extractedNode1.url).isEqualTo(domain1)
+
+        val extractedNode2 = result.fields[1]
+        assertThat(extractedNode2.url).isEqualTo(domain2)
     }
 
     @Test
-    fun `return the parent URL if the child also contains a URL`() {
+    fun `return the child URL if the parent also contains a URL`() {
         val domain1 = "somedomain.example"
         val domain2 = "other.example"
         val structure = makeNode(
             webDomain = domain1,
+            children = listOf(makeExtractableNode(webDomain = domain2))
+        )
+        val result = NodeExtractor().extract(structure)
+        assertThat(result.fields.size).isEqualTo(1)
+
+        val extractedNode = result.fields.first()
+        assertThat(extractedNode.url).isEqualTo(domain2)
+    }
+
+    @Test
+    fun `return the parent URL if the current node does not contain a URL`() {
+        val domain = "somedomain.example"
+        val nodeToExtract = makeExtractableNode()
+        val structure = makeNode(
+            webDomain = domain,
+            children = listOf(nodeToExtract)
+        )
+        val result = NodeExtractor().extract(structure)
+        assertThat(result.fields.size).isEqualTo(1)
+
+        val extractedNode = result.fields.first()
+        assertThat(extractedNode.url).isEqualTo(domain)
+        assertThat(extractedNode.id).isEqualTo(nodeToExtract.id)
+    }
+
+    @Test
+    fun `can return the found urls`() {
+        val domain1 = "somedomain.example"
+        val domain2 = "other.example"
+        val structure = makeNode(
+            webDomain = "root.example",
             children = listOf(
-                makeNode(
-                    webDomain = domain2
-                )
+                makeExtractableNode(webDomain = domain1),
+                makeExtractableNode(webDomain = domain2)
             )
         )
         val result = NodeExtractor().extract(structure)
-        Assert.assertEquals(Some(domain1), result.url)
-
-
+        assertThat(result.urls()).isEqualTo(listOf(domain1, domain2))
     }
 
-/*    @Test
-    fun inputTypeParsingReturnsKnownFieldType() {
-        val traversal = AssistNodeTraversal()
-
-        val fieldWithInputType = { inputType: Int ->
-            traversal.detectFieldTypeUsingInputType(InputTypeValue(inputType))
-        }
-
-        val phoneType = fieldWithInputType(InputType.TYPE_CLASS_PHONE)
-        val emailType = fieldWithInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-        val webEmailType = fieldWithInputType(InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS)
-        val passwordType = fieldWithInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
-        val numPasswordType = fieldWithInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-        val webPasswordType = fieldWithInputType(InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD)
-        val visiblePasswordType = fieldWithInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
-        val nameType = fieldWithInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME)
-        val longMessageType = fieldWithInputType(InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE)
-
-        Assert.assertEquals(FieldType.Phone, phoneType)
-        Assert.assertEquals(FieldType.Email, emailType)
-        Assert.assertEquals(FieldType.Email, webEmailType)
-        Assert.assertEquals(FieldType.Password, passwordType)
-        Assert.assertEquals(FieldType.Password, numPasswordType)
-        Assert.assertEquals(FieldType.Password, webPasswordType)
-        Assert.assertEquals(FieldType.Password, visiblePasswordType)
-        Assert.assertEquals(FieldType.FullName, nameType)
-        // Not supported
-        Assert.assertEquals(FieldType.Unknown, longMessageType)
-    }*/
-
-/*    @Test
-    fun htmlAttributesParsingReturnsKnownFieldType() {
-        val traversal = AssistNodeTraversal()
-
-        val phoneType = traversal.detectFieldTypeUsingHtmlInfo(listOf("type" to "tel"))
-        val emailType = traversal.detectFieldTypeUsingHtmlInfo(listOf("type" to "email"))
-        val passwordType = traversal.detectFieldTypeUsingHtmlInfo(listOf("type" to "password"))
-        val genericType = traversal.detectFieldTypeUsingHtmlInfo(listOf("type" to "text"))
-        val buttonType = traversal.detectFieldTypeUsingHtmlInfo(listOf("type" to "button"))
-
-        Assert.assertEquals(FieldType.Phone, phoneType)
-        Assert.assertEquals(FieldType.Email, emailType)
-        Assert.assertEquals(FieldType.Password, passwordType)
-        Assert.assertEquals(FieldType.Other, genericType)
-        // Not supported
-        Assert.assertEquals(FieldType.Unknown, buttonType)
-    }*/
-
-    private fun makeValidNode(children: List<AutofillNode> = emptyList()) =
-        makeNode(
-            text = "a@b.com",
-            inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
-            children = children
+    @Test
+    fun `can return the selected url`() {
+        val domain1 = "somedomain.example"
+        val domain2 = "other.example"
+        val structure = makeNode(
+            webDomain = "root.example",
+            children = listOf(
+                makeExtractableNode(webDomain = domain1, isFocused = true),
+                makeExtractableNode(webDomain = domain2)
+            )
         )
+        val result = NodeExtractor().extract(structure)
+        assertThat(result.mainUrl()).isEqualTo(domain1.some())
+    }
+
+    private fun makeValidNode(children: List<AutofillNode> = emptyList()) = makeNode(
+        text = "a@b.com",
+        inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+        children = children
+    )
 
     private fun makeNode(
         autofillId: AutofillFieldId? = newAutofillFieldId(),
         className: String? = null,
-        isImportantForAutofill: Boolean = false,
+        isImportantForAutofill: Boolean = true,
         text: String? = null,
         inputType: Int = 0,
         autofillHints: List<String> = emptyList(),
         htmlAttributes: List<Pair<String, String>> = emptyList(),
         children: List<AutofillNode> = emptyList(),
         webDomain: String? = null
-    ) =
-        AutofillNode(
-            id = autofillId,
-            className = className,
-            isImportantForAutofill = isImportantForAutofill,
-            text = text,
-            autofillValue = null,
-            inputType = InputTypeValue(inputType),
-            autofillHints = autofillHints,
-            htmlAttributes = htmlAttributes,
-            children = children,
-            url = webDomain.toOption(),
-            hintKeywordList = emptyList(),
-            isFocused = true
-        )
+    ) = AutofillNode(
+        id = autofillId,
+        className = className,
+        isImportantForAutofill = isImportantForAutofill,
+        text = text,
+        autofillValue = null,
+        inputType = InputTypeValue(inputType),
+        autofillHints = autofillHints,
+        htmlAttributes = htmlAttributes,
+        children = children,
+        url = webDomain.toOption(),
+        hintKeywordList = emptyList(),
+        isFocused = false
+    )
 
+    private fun makeExtractableNode(
+        autofillId: AutofillFieldId? = newAutofillFieldId(),
+        text: String? = null,
+        autofillHints: List<String> = emptyList(),
+        htmlAttributes: List<Pair<String, String>> = emptyList(),
+        children: List<AutofillNode> = emptyList(),
+        webDomain: String? = null,
+        isFocused: Boolean = false
+    ) = AutofillNode(
+        id = autofillId,
+        className = "android.widget.EditText",
+        isImportantForAutofill = true,
+        text = text,
+        autofillValue = null,
+        inputType = InputTypeValue(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS),
+        autofillHints = autofillHints,
+        htmlAttributes = htmlAttributes,
+        children = children,
+        url = webDomain.toOption(),
+        hintKeywordList = emptyList(),
+        isFocused = isFocused
+    )
 }

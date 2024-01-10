@@ -1,0 +1,202 @@
+{
+  "rootContent": {
+    "id": 1379957772,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": 306215948,
+        "className": "android.widget.LinearLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": 306245739,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          },
+          {
+            "id": 306275530,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 306156366,
+                "className": "android.widget.EditText",
+                "isImportantForAutofill": true,
+                "text": "",
+                "inputType": 33,
+                "hintKeywordList": [
+                  "",
+                  "loginEditText",
+                  "Email"
+                ]
+              },
+              {
+                "id": 306305321,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true
+              },
+              {
+                "id": 306335112,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true
+              }
+            ]
+          },
+          {
+            "id": 306364903,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 306186157,
+                "className": "android.widget.EditText",
+                "isImportantForAutofill": true,
+                "text": "",
+                "inputType": 129,
+                "autofillHints": [
+                  "passwordAuto"
+                ],
+                "hintKeywordList": [
+                  "",
+                  "passwordEditText",
+                  "Password"
+                ]
+              },
+              {
+                "id": 306394694,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true
+              },
+              {
+                "id": 306424485,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true
+              }
+            ]
+          },
+          {
+            "id": 306454276,
+            "className": "android.webkit.WebView",
+            "isImportantForAutofill": true,
+            "isFocused": true,
+            "htmlAttributes": [
+              {
+                "key": "name",
+                "value": "login"
+              }
+            ],
+            "children": [
+              {
+                "id": 432415429,
+                "expectedAutofill": "username",
+                "isImportantForAutofill": true,
+                "text": "",
+                "isFocused": true,
+                "autofillHints": [
+                  "username"
+                ],
+                "htmlAttributes": [
+                  {
+                    "key": "name",
+                    "value": "username"
+                  },
+                  {
+                    "key": "type",
+                    "value": "text"
+                  },
+                  {
+                    "key": "label",
+                    "value": "username"
+                  },
+                  {
+                    "key": "id",
+                    "value": "username"
+                  },
+                  {
+                    "key": "crowdsourcing-autofill-hints",
+                    "value": "no_server_data"
+                  },
+                  {
+                    "key": "computed-autofill-hints",
+                    "value": "html_type_email"
+                  },
+                  {
+                    "key": "crowdsourcing-predictions-autofill-hints",
+                    "value": "no_server_data"
+                  },
+                  {
+                    "key": "maxlength",
+                    "value": "2147483647"
+                  }
+                ],
+                "hintKeywordList": [
+                  "",
+                  ""
+                ]
+              },
+              {
+                "id": 432416390,
+                "expectedAutofill": "password",
+                "isImportantForAutofill": true,
+                "text": "",
+                "autofillHints": [
+                  "current-password"
+                ],
+                "htmlAttributes": [
+                  {
+                    "key": "name",
+                    "value": "password"
+                  },
+                  {
+                    "key": "type",
+                    "value": "password"
+                  },
+                  {
+                    "key": "label",
+                    "value": "password"
+                  },
+                  {
+                    "key": "id",
+                    "value": "password"
+                  },
+                  {
+                    "key": "crowdsourcing-autofill-hints",
+                    "value": "no_server_data"
+                  },
+                  {
+                    "key": "computed-autofill-hints",
+                    "value": "unknown_type"
+                  },
+                  {
+                    "key": "crowdsourcing-predictions-autofill-hints",
+                    "value": "no_server_data"
+                  },
+                  {
+                    "key": "maxlength",
+                    "value": "2147483647"
+                  }
+                ],
+                "hintKeywordList": [
+                  "",
+                  ""
+                ]
+              }
+            ],
+            "url": "https://www.autofilth.lol",
+            "hintKeywordList": [
+              "webView"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "proton.android.pass.autofill.sample"
+}

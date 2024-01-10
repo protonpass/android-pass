@@ -399,7 +399,8 @@ class SelectItemScreenTest {
                         value = null,
                         text = null,
                         isFocused = false,
-                        nodePath = listOf()
+                        nodePath = listOf(),
+                        url = null
                     ),
                     password = AssistField(
                         id = newAutofillFieldId(),
@@ -407,7 +408,8 @@ class SelectItemScreenTest {
                         value = null,
                         text = null,
                         isFocused = false,
-                        nodePath = listOf()
+                        nodePath = listOf(),
+                        url = null
                     )
                 ),
                 url = None

@@ -169,7 +169,8 @@ class CreateCreditCardViewModelTest {
                             createTime = item.createTime,
                             state = ItemState.Active.value,
                             modificationTime = item.modificationTime,
-                            lastAutofillTime = item.lastAutofillTime.value()
+                            lastAutofillTime = item.lastAutofillTime.value(),
+                            isPinned = false,
                         )
                     )
                 )

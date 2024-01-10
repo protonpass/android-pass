@@ -135,7 +135,8 @@ fun AssociateAutofillItemDialogPreview(
                     state = 6128,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
-                    lastAutofillTime = null
+                    lastAutofillTime = null,
+                    isPinned = false,
                 ),
                 onAssociateAndAutofill = {},
                 onAutofill = {},

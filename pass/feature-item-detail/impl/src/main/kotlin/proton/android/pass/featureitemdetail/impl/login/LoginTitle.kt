@@ -31,11 +31,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import proton.android.pass.composecomponents.impl.pinning.BoxedPin
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
 import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
-import proton.android.pass.domain.Vault
 
 @Composable
 fun LoginTitle(
@@ -45,21 +46,29 @@ fun LoginTitle(
     packageName: String?,
     vault: Vault?,
     canLoadExternalImages: Boolean,
-    onVaultClick: () -> Unit
+    onVaultClick: () -> Unit,
+    isPinned: Boolean,
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        LoginIcon(
-            size = 60,
-            shape = PassTheme.shapes.squircleMediumLargeShape,
-            text = title,
-            website = website,
-            packageName = packageName,
-            canLoadExternalImages = canLoadExternalImages
-        )
+
+        BoxedPin(
+            pinBackgroundColor = PassTheme.colors.loginInteractionNormMajor2,
+            isShown = isPinned,
+        ) {
+            LoginIcon(
+                size = 60,
+                shape = PassTheme.shapes.squircleMediumLargeShape,
+                text = title,
+                website = website,
+                packageName = packageName,
+                canLoadExternalImages = canLoadExternalImages
+            )
+        }
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -83,7 +92,8 @@ fun LoginTitlePreview(
                 packageName = null,
                 vault = input.second.vault,
                 canLoadExternalImages = false,
-                onVaultClick = {}
+                onVaultClick = {},
+                isPinned = false,
             )
         }
     }

@@ -151,7 +151,8 @@ fun TrashItemBottomSheetContentsPreview(
                     createTime = Clock.System.now(),
                     state = 0,
                     modificationTime = Clock.System.now(),
-                    lastAutofillTime = Clock.System.now()
+                    lastAutofillTime = Clock.System.now(),
+                    isPinned = false,
                 ),
                 onRestoreItem = { _: ShareId, _: ItemId -> },
                 onDeleteItem = { _: ShareId, _: ItemId -> },

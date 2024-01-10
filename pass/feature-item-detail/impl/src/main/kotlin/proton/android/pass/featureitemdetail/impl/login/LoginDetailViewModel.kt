@@ -49,6 +49,7 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -69,8 +70,10 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.PinItemUseCase
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.data.api.usecases.UnpinItemUseCase
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
@@ -122,6 +125,8 @@ class LoginDetailViewModel @Inject constructor(
     private val canShareVault: CanShareVault,
     private val passwordScorer: PasswordScorer,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
+    private val pinItemUseCase: PinItemUseCase,
+    private val unpinItemUseCase: UnpinItemUseCase,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
@@ -152,6 +157,8 @@ class LoginDetailViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
+
+    private val isItemPinnedState = MutableStateFlow<Option<Boolean>>(None)
 
     sealed interface DetailFields {
         object Password : DetailFields
@@ -299,7 +306,8 @@ class LoginDetailViewModel @Inject constructor(
         canPerformPaidActionFlow,
         customFieldsState,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
-        eventState
+        eventState,
+        isItemPinnedState,
     ) { itemDetails,
         totpUiState,
         isLoading,
@@ -309,7 +317,8 @@ class LoginDetailViewModel @Inject constructor(
         canPerformPaidActionResult,
         customFields,
         itemActions,
-        event ->
+        event,
+        isItemPinnedOption ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -339,7 +348,11 @@ class LoginDetailViewModel @Inject constructor(
                     ?.let { passwordScorer.check(it) }
 
                 LoginDetailUiState.Success(
-                    itemUiModel = details.itemUiModel,
+                    itemUiModel = if (isItemPinnedOption is Some) {
+                        details.itemUiModel.copy(isPinned = isItemPinnedOption.value)
+                    } else {
+                        details.itemUiModel
+                    },
                     passwordScore = passwordScore,
                     vault = vault,
                     linkedAlias = details.linkedAlias,
@@ -416,6 +429,36 @@ class LoginDetailViewModel @Inject constructor(
                 snackbarDispatcher(ItemNotMovedToTrash)
                 PassLogger.d(TAG, it, "Could not delete item")
             }
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
+        runCatching { pinItemUseCase.execute(shareId, itemId) }
+            .onSuccess { pinnedItem ->
+                isItemPinnedState.update { pinnedItem.isPinned.some() }
+                snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess)
+            }
+            .onFailure {
+                snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
+            }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    internal fun unpinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
+        runCatching { unpinItemUseCase.execute(shareId, itemId) }
+            .onSuccess { unpinnedItem ->
+                isItemPinnedState.update { unpinnedItem.isPinned.some() }
+                snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess)
+            }
+            .onFailure {
+                snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
+            }
+
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 

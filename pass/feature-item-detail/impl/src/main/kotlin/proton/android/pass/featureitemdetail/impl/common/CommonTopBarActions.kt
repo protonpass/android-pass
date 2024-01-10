@@ -54,3 +54,35 @@ fun migrate(onClick: () -> Unit): BottomSheetItem =
             get() = { onClick() }
         override val isDivider = false
     }
+
+fun pin(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.pin_item_detail_bottom_sheet)) }
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_pin_angled) }
+    override val endIcon: @Composable (() -> Unit)?
+        get() = null
+    override val onClick: (() -> Unit)
+        get() = { onClick() }
+    override val isDivider: Boolean
+        get() = false
+
+}
+
+fun unpin(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.unpin_item_detail_bottom_sheet)) }
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_unpin_angled) }
+    override val endIcon: @Composable (() -> Unit)?
+        get() = null
+    override val onClick: (() -> Unit)
+        get() = { onClick() }
+    override val isDivider: Boolean
+        get() = false
+
+}

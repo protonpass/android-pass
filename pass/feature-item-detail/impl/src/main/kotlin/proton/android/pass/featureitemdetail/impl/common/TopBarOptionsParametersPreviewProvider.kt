@@ -25,20 +25,39 @@ class TopBarOptionsParametersPreviewProvider : PreviewParameterProvider<TopBarOp
         get() = sequenceOf(
             TopBarOptionsParameters(
                 canMigrate = true,
-                canMoveToTrash = true
+                canMoveToTrash = true,
+                isPinned = false,
             ),
             TopBarOptionsParameters(
                 canMigrate = false,
-                canMoveToTrash = true
+                canMoveToTrash = true,
+                isPinned = false,
             ),
             TopBarOptionsParameters(
                 canMigrate = true,
-                canMoveToTrash = false
+                canMoveToTrash = false,
+                isPinned = false,
+            ),
+            TopBarOptionsParameters(
+                canMigrate = true,
+                canMoveToTrash = true,
+                isPinned = true,
+            ),
+            TopBarOptionsParameters(
+                canMigrate = false,
+                canMoveToTrash = true,
+                isPinned = true,
+            ),
+            TopBarOptionsParameters(
+                canMigrate = true,
+                canMoveToTrash = false,
+                isPinned = true,
             ),
         )
 }
 
 data class TopBarOptionsParameters(
     val canMigrate: Boolean,
-    val canMoveToTrash: Boolean
+    val canMoveToTrash: Boolean,
+    val isPinned: Boolean,
 )

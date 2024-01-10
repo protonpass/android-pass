@@ -82,6 +82,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.PerformSync
+import proton.android.pass.data.api.usecases.PinItemUseCase
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -89,11 +90,12 @@ import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveMemberFromVault
 import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
-import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.RestoreAllItems
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.data.api.usecases.UnpinItemUseCase
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -116,6 +118,8 @@ import proton.android.pass.data.fakes.repositories.TestFeatureFlagRepository
 import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
+import proton.android.pass.data.fakes.usecases.FakePinItemUseCase
+import proton.android.pass.data.fakes.usecases.FakeUnpinItemUseCase
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
@@ -186,8 +190,8 @@ import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.TestRemoveMemberFromVault
 import proton.android.pass.data.fakes.usecases.TestResendInvite
 import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
-import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
+import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestSetDefaultVault
 import proton.android.pass.data.fakes.usecases.TestSetVaultMemberPermission
 import proton.android.pass.data.fakes.usecases.TestTransferVaultOwnership
@@ -560,4 +564,11 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindBulkMoveToVaultRepository(impl: TestBulkMoveToVaultRepository): BulkMoveToVaultRepository
+
+    @Binds
+    abstract fun bindPinItemUseCase(impl: FakePinItemUseCase): PinItemUseCase
+
+    @Binds
+    abstract fun bindUnpinItemUseCase(impl: FakeUnpinItemUseCase): UnpinItemUseCase
+
 }

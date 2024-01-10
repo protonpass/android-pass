@@ -38,7 +38,8 @@ fun CreditCardDetailContent(
     moreInfoUiState: MoreInfoUiState,
     vault: Vault?,
     isDowngradedMode: Boolean,
-    onEvent: (CreditCardDetailEvent) -> Unit
+    onEvent: (CreditCardDetailEvent) -> Unit,
+    isPinned: Boolean,
 ) {
     val model = contents.model.contents as ItemContents.CreditCard
     Column(
@@ -49,7 +50,8 @@ fun CreditCardDetailContent(
             modifier = Modifier.padding(0.dp, 12.dp),
             title = model.title,
             vault = vault,
-            onVaultClick = { onEvent(CreditCardDetailEvent.OnVaultClick) }
+            onVaultClick = { onEvent(CreditCardDetailEvent.OnVaultClick) },
+            isPinned = isPinned,
         )
         MainCreditCardSection(
             cardHolder = model.cardHolder,

@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -57,8 +56,10 @@ import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.PinItemUseCase
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.data.api.usecases.UnpinItemUseCase
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
@@ -89,6 +90,8 @@ class CreditCardDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val canShareVault: CanShareVault,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
+    private val pinItemUseCase: PinItemUseCase,
+    private val unpinItemUseCase: UnpinItemUseCase,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
@@ -111,7 +114,8 @@ class CreditCardDetailViewModel @Inject constructor(
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
 
-    private val fieldVisibilityFlow: MutableStateFlow<FieldVisibility> = MutableStateFlow(FieldVisibility())
+    private val fieldVisibilityFlow: MutableStateFlow<FieldVisibility> =
+        MutableStateFlow(FieldVisibility())
 
     private val canPerformPaidActionFlow = canPerformPaidAction().asLoadingResult()
 
@@ -140,8 +144,8 @@ class CreditCardDetailViewModel @Inject constructor(
     )
 
     private val itemInfoFlow: Flow<LoadingResult<CreditCardItemInfo>> = combine(
-        getItemByIdWithVault(shareId, itemId).take(1).asLoadingResult(),
-        fieldVisibilityFlow
+        getItemByIdWithVault(shareId, itemId).asLoadingResult(),
+        fieldVisibilityFlow,
     ) { detailsResult, fieldVisibility ->
         detailsResult.map { details ->
             val (itemUiModel, cardNumber) = encryptionContextProvider.withEncryptionContext {
@@ -293,6 +297,7 @@ class CreditCardDetailViewModel @Inject constructor(
                         decrypt(content.encrypted)
                     }
                 }
+
                 is HiddenState.Revealed -> content.clearText
             }
             clipboardManager.copyToClipboard(cvv, isSecure = true)
@@ -327,6 +332,27 @@ class CreditCardDetailViewModel @Inject constructor(
         bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
         eventState.update { ItemDetailEvent.MoveToVault }
     }
+
+    internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
+        runCatching { pinItemUseCase.execute(shareId, itemId) }
+            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
+            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError) }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    internal fun unpinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
+        runCatching { unpinItemUseCase.execute(shareId, itemId) }
+            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
+            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError) }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
 
     private fun modelFromState(): ItemContents.CreditCard? {
         val state = uiState.value

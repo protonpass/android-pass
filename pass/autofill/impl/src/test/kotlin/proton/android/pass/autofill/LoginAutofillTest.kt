@@ -135,6 +135,16 @@ class LoginAutofillTest : BaseAutofillTest() {
         runLoginAutofillTest("login/app_cibc_username_is_ccnum.json")
     }
 
+    @Test
+    fun `can autofill autospill sample focusing on the app fields`() {
+        runLoginAutofillTest("other/app_autofillsample_autospill_app_focus.json")
+    }
+
+    @Test
+    fun `can autofill autospill sample focusing on the web fields`() {
+        runLoginAutofillTest("other/app_autofillsample_autospill_web_focus.json")
+    }
+
     private fun runLoginAutofillTest(
         file: String,
         flags: List<RequestFlags> = emptyList()

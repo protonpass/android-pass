@@ -60,7 +60,6 @@ import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.featurehome.impl.HomeUiEvent.AddItemClick
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
@@ -177,7 +176,7 @@ internal fun HomeContent(
                 )
             }
 
-            val showItemListHeader = remember(uiState) { shouldShowItemListHeader(uiState) }
+            val showItemListHeader = remember(uiState) { uiState.shouldShowItemListHeader() }
             if (showItemListHeader) {
                 val count = remember(uiState.homeListUiState.items) {
                     uiState.homeListUiState.items.map { it.items }.flatten().count()
@@ -201,7 +200,8 @@ internal fun HomeContent(
                 )
             }
 
-            val showRecentSearchHeader = remember(uiState) { shouldShowRecentSearchHeader(uiState) }
+            val showRecentSearchHeader =
+                remember(uiState) { uiState.shouldShowRecentSearchHeader() }
             if (showRecentSearchHeader) {
                 val itemCount = remember(uiState.homeListUiState.items) {
                     uiState.homeListUiState.items.map { it.items }.flatten().count()
@@ -263,17 +263,6 @@ internal fun HomeContent(
         }
     }
 }
-
-private fun shouldShowRecentSearchHeader(uiState: HomeUiState) =
-    uiState.homeListUiState.items.isNotEmpty() &&
-        uiState.searchUiState.inSearchMode &&
-        uiState.searchUiState.isInSuggestionsMode
-
-private fun shouldShowItemListHeader(uiState: HomeUiState) =
-    uiState.homeListUiState.items.isNotEmpty() &&
-        uiState.homeListUiState.isLoading == IsLoadingState.NotLoading &&
-        !uiState.searchUiState.isProcessingSearch.value() &&
-        !uiState.searchUiState.isInSuggestionsMode
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

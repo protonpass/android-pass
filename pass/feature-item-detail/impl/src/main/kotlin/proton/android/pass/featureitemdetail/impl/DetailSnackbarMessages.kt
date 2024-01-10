@@ -49,4 +49,8 @@ enum class DetailSnackbarMessages(
     ItemRestored(R.string.item_restored_message, SnackbarType.NORM),
     ItemNotRestored(R.string.item_restored_message_error, SnackbarType.ERROR),
     GenerateTotpError(R.string.login_item_generate_totp_error, SnackbarType.ERROR),
+    ItemPinnedSuccess(R.string.item_pinned_message, SnackbarType.SUCCESS),
+    ItemPinnedError(R.string.item_pinned_message_error, SnackbarType.ERROR),
+    ItemUnpinnedSuccess(R.string.item_unpinned_message, SnackbarType.SUCCESS),
+    ItemUnpinnedError(R.string.item_unpinned_message_error, SnackbarType.ERROR),
 }

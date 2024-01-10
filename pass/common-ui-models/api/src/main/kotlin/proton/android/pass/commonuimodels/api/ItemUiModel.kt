@@ -33,5 +33,6 @@ data class ItemUiModel(
     val createTime: Instant,
     val modificationTime: Instant,
     val lastAutofillTime: Instant?,
+    val isPinned: Boolean,
     val canModify: Boolean = true
 )

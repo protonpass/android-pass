@@ -36,21 +36,21 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val modificationTime = "modification_time"
     val lastAutofillTime = "last_autofill_time"
     val canModify = "can_modify"
+    val isPinned = "is_pinned"
     mapSaver(
         save = {
-            if (it != null) {
+            it?.let { itemUiModel ->
                 mapOf(
-                    itemId to it.id.id,
-                    shareId to it.shareId.id,
-                    itemContent to Json.encodeToString(it.contents),
-                    createTime to it.createTime.toString(),
-                    modificationTime to it.modificationTime.toString(),
-                    lastAutofillTime to it.lastAutofillTime?.toString(),
-                    canModify to it.canModify
+                    itemId to itemUiModel.id.id,
+                    shareId to itemUiModel.shareId.id,
+                    itemContent to Json.encodeToString(itemUiModel.contents),
+                    createTime to itemUiModel.createTime.toString(),
+                    modificationTime to itemUiModel.modificationTime.toString(),
+                    lastAutofillTime to itemUiModel.lastAutofillTime?.toString(),
+                    canModify to itemUiModel.canModify,
+                    isPinned to itemUiModel.isPinned,
                 )
-            } else {
-                emptyMap()
-            }
+            } ?: emptyMap()
         },
         restore = { values ->
             if (values.isNotEmpty()) {
@@ -62,7 +62,8 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     createTime = (values[createTime] as String).let { Instant.parse(it) },
                     modificationTime = (values[modificationTime] as String).let { Instant.parse(it) },
                     lastAutofillTime = (values[modificationTime] as? String)?.let { Instant.parse(it) },
-                    canModify = values[canModify] as Boolean
+                    canModify = values[canModify] as Boolean,
+                    isPinned = values[isPinned] as Boolean,
                 )
             } else {
                 null

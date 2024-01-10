@@ -53,7 +53,8 @@ class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
                     state = 0,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
-                    lastAutofillTime = Clock.System.now()
+                    lastAutofillTime = Clock.System.now(),
+                    isPinned = false,
                 ),
                 highlight = highlight
             )

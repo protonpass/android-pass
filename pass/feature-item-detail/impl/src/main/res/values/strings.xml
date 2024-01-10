@@ -30,6 +30,10 @@
     <string name="item_permanently_deleted_message_error">Error deleting item</string>
     <string name="item_restored_message">Item restored</string>
     <string name="item_restored_message_error">Error restoring item</string>
+    <string name="item_pinned_message">Item successfully pinned</string>
+    <string name="item_pinned_message_error">There was an error pinning this item</string>
+    <string name="item_unpinned_message">Item successfully unpinned</string>
+    <string name="item_unpinned_message_error">There was an error unpinning this item</string>
     <string name="login_item_generate_totp_error">Error generating 2FA code</string>
     <string name="login_item_view_alias_button">View alias</string>
 
@@ -77,6 +81,8 @@
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>
     <string name="migrate_item_detail_bottom_sheet">Move to another vault</string>
+    <string name="pin_item_detail_bottom_sheet">Pin</string>
+    <string name="unpin_item_detail_bottom_sheet">Unpin</string>
 
     <!-- More info -->
     <string name="date_today">Today %s</string>

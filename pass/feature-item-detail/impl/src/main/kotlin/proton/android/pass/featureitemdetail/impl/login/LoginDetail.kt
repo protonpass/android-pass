@@ -123,6 +123,7 @@ fun LoginDetail(
                             ItemState.Active.value -> TopBarOptionsBottomSheetContents(
                                 canMigrate = state.itemActions.canMoveToOtherVault.value(),
                                 canMoveToTrash = state.itemActions.canMoveToTrash,
+                                isPinned = state.itemUiModel.isPinned,
                                 onMigrate = {
                                     scope.launch {
                                         bottomSheetState.hide()
@@ -135,7 +136,21 @@ fun LoginDetail(
                                         state.itemUiModel.id
                                     )
                                     scope.launch { bottomSheetState.hide() }
-                                }
+                                },
+                                onPinned = {
+                                    scope.launch { bottomSheetState.hide() }
+                                    viewModel.pinItem(
+                                        shareId = state.itemUiModel.shareId,
+                                        itemId = state.itemUiModel.id,
+                                    )
+                                },
+                                onUnpinned = {
+                                    scope.launch { bottomSheetState.hide() }
+                                    viewModel.unpinItem(
+                                        shareId = state.itemUiModel.shareId,
+                                        itemId = state.itemUiModel.id,
+                                    )
+                                },
                             )
 
                             ItemState.Trashed.value -> TrashItemBottomSheetContents(

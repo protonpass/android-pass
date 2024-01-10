@@ -1,0 +1,32 @@
+<!--
+  ~ Copyright (c) 2024 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:autoMirrored="true"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@color/icon_norm"
+        android:pathData="M11.701,17.656L12.297,16.065L13.462,17.23L12.786,19.032C12.553,19.656 11.753,19.829 11.282,19.358L7.059,15.135L1.926,20.268C1.568,20.625 0.989,20.625 0.631,20.268C0.273,19.91 0.273,19.331 0.631,18.973L5.764,13.84L1.639,9.716C1.168,9.245 1.342,8.445 1.965,8.211L3.767,7.535L4.932,8.7L3.342,9.297L11.701,17.656Z" />
+    <path
+        android:fillColor="@color/icon_norm"
+        android:fillType="evenOdd"
+        android:pathData="M14.506,14.446L19.03,18.97C19.323,19.263 19.323,19.737 19.03,20.03C18.737,20.323 18.263,20.323 17.97,20.03L0.97,3.03C0.677,2.737 0.677,2.263 0.97,1.97C1.263,1.677 1.737,1.677 2.03,1.97L6.552,6.491L9.804,5.271C10.519,5.003 10.992,4.32 10.992,3.557V1.857C10.992,1.041 11.979,0.633 12.555,1.209L19.788,8.442C20.365,9.019 19.956,10.005 19.14,10.005H17.441C16.677,10.005 15.994,10.478 15.726,11.193L14.506,14.446ZM7.717,7.656L10.331,6.676C11.631,6.188 12.492,4.945 12.492,3.557V3.268L17.73,8.505H17.441C16.052,8.505 14.809,9.366 14.322,10.667L13.341,13.281L7.717,7.656Z" />
+</vector>

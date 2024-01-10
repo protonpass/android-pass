@@ -54,8 +54,10 @@ import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.PinItemUseCase
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.data.api.usecases.UnpinItemUseCase
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -78,7 +80,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
-@HiltViewModel
+@[HiltViewModel Suppress("LongParameterList")]
 class AliasDetailViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -89,6 +91,8 @@ class AliasDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val canShareVault: CanShareVault,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
+    private val pinItemUseCase: PinItemUseCase,
+    private val unpinItemUseCase: UnpinItemUseCase,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
@@ -133,7 +137,7 @@ class AliasDetailViewModel @Inject constructor(
         isRestoredFromTrashState,
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
-        eventState
+        eventState,
     ) { itemLoadingResult,
         aliasDetailsResult,
         isLoading,
@@ -243,6 +247,26 @@ class AliasDetailViewModel @Inject constructor(
     fun onMigrate() = viewModelScope.launch {
         bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
         eventState.update { ItemDetailEvent.MoveToVault }
+    }
+
+    internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
+        runCatching { pinItemUseCase.execute(shareId, itemId) }
+            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
+            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError) }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    internal fun unpinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
+        runCatching { unpinItemUseCase.execute(shareId, itemId) }
+            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
+            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError) }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     companion object {

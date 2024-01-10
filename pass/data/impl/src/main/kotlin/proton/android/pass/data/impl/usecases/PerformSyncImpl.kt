@@ -70,14 +70,14 @@ class PerformSyncImpl @Inject constructor(
     }
 
     private suspend fun performPendingEvents(userId: UserId?): Result<Unit> =
-        runCatching { withTimeout(1.minutes) { applyPendingEvents(userId) } }
+        runCatching { withTimeout(2.minutes) { applyPendingEvents(userId) } }
             .fold(
                 onSuccess = { Result.success(Unit) },
                 onFailure = { Result.failure(it) }
             )
 
     private suspend fun performRefreshInvites(userId: UserId?): Result<Unit> =
-        runCatching { withTimeout(1.minutes) { refreshInvites(userId) } }
+        runCatching { withTimeout(2.minutes) { refreshInvites(userId) } }
             .fold(
                 onSuccess = { Result.success(Unit) },
                 onFailure = { Result.failure(it) }

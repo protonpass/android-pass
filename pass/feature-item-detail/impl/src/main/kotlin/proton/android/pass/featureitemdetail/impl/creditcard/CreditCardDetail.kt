@@ -116,11 +116,18 @@ fun CreditCardDetail(
                             },
                             onPinned = {
                                 scope.launch { bottomSheetState.hide() }
-                                // handle pinning (it would be implemented on its own MR)
+                                viewModel.pinItem(
+                                    shareId = itemUiModel.shareId,
+                                    itemId = itemUiModel.id,
+                                )
+
                             },
                             onUnpinned = {
                                 scope.launch { bottomSheetState.hide() }
-                                // handle unpinning (it would be implemented on its own MR)
+                                viewModel.unpinItem(
+                                    shareId = itemUiModel.shareId,
+                                    itemId = itemUiModel.id,
+                                )
                             },
                         )
 
@@ -172,6 +179,7 @@ fun CreditCardDetail(
                         vault = state.vault,
                         moreInfoUiState = moreInfoUiState,
                         isDowngradedMode = state.isDowngradedMode,
+                        isPinned = itemUiModel.isPinned,
                         onEvent = {
                             when (it) {
                                 CreditCardDetailEvent.OnCardHolderClick -> {

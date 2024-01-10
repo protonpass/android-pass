@@ -282,6 +282,16 @@ class ItemRepositoryImpl @Inject constructor(
             }
             .flowOn(Dispatchers.IO)
 
+    override fun observeById(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Flow<Item> = localItemDataSource.observeItem(shareId, itemId)
+        .map { itemEntity ->
+            encryptionContextProvider.withEncryptionContext {
+                itemEntity.toDomain(this@withEncryptionContext)
+            }
+        }
+
     override suspend fun getById(
         userId: UserId,
         shareId: ShareId,

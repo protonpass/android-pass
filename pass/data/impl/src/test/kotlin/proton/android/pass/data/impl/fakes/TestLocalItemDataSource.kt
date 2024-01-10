@@ -37,9 +37,12 @@ import proton.android.pass.domain.ShareId
 class TestLocalItemDataSource : LocalItemDataSource {
 
     private val memory: MutableList<ItemEntity> = mutableListOf()
-    private var summary: MutableStateFlow<ItemCountSummary> = MutableStateFlow(ItemCountSummary.Initial)
-    private var itemCount: MutableStateFlow<Map<ShareId, ShareItemCount>> = MutableStateFlow(emptyMap())
+    private var summary: MutableStateFlow<ItemCountSummary> =
+        MutableStateFlow(ItemCountSummary.Initial)
+    private var itemCount: MutableStateFlow<Map<ShareId, ShareItemCount>> =
+        MutableStateFlow(emptyMap())
     private val itemsWithTotpFlow = testFlow<Result<List<ItemWithTotp>>>()
+    private val itemEntityFlow = testFlow<ItemEntity>()
 
     fun getMemory(): List<ItemEntity> = memory
 
@@ -49,6 +52,10 @@ class TestLocalItemDataSource : LocalItemDataSource {
 
     fun emitItemCount(value: Map<ShareId, ShareItemCount>) {
         itemCount.tryEmit(value)
+    }
+
+    suspend fun emitItemEntity(newItemEntity: ItemEntity) {
+        itemEntityFlow.emit(newItemEntity)
     }
 
     fun emitItemsWithTotp(value: Result<List<ItemWithTotp>>) {
@@ -77,6 +84,11 @@ class TestLocalItemDataSource : LocalItemDataSource {
     ): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }
+
+    override fun observeItem(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Flow<ItemEntity> = itemEntityFlow
 
     override suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity? {
         throw IllegalStateException("Not yet implemented")
@@ -116,7 +128,8 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> = itemCount
+    override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> =
+        itemCount
 
     override suspend fun getItemsPendingForTotpMigration(): List<ItemEntity> {
         throw IllegalStateException("Not yet implemented")

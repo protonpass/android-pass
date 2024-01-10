@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
@@ -42,7 +43,7 @@ import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
 import javax.inject.Inject
 
-@Suppress("NotImplementedDeclaration")
+@Suppress("NotImplementedDeclaration", "TooManyFunctions")
 class TestItemRepository @Inject constructor() : ItemRepository {
 
     private var item: Item? = null
@@ -52,7 +53,13 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     private val observeItemListFlow: MutableSharedFlow<List<Item>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
+    private val itemFlow = testFlow<Item>()
+
     private val migrateItemMemory = mutableListOf<MigrateItemPayload>()
+
+    suspend fun emitItem(newItem: Item) {
+        itemFlow.emit(newItem)
+    }
 
     fun setItem(newItem: Item) {
         item = newItem
@@ -98,6 +105,11 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter
     ): Flow<List<Item>> = observeItemListFlow
+
+    override fun observeById(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Flow<Item> = itemFlow
 
     override suspend fun getById(
         userId: UserId,

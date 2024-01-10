@@ -19,22 +19,21 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetItemById
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class GetItemByIdImpl @Inject constructor(
-    private val observeCurrentUser: ObserveCurrentUser,
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
 ) : GetItemById {
 
-    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<Item> =
-        observeCurrentUser()
-            .map { itemRepository.getById(it.userId, shareId, itemId) }
+    override fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Flow<Item> = itemRepository.observeById(shareId, itemId)
+
 }
 

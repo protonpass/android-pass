@@ -52,6 +52,11 @@ interface LocalItemDataSource {
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>>
 
+    fun observeItem(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Flow<ItemEntity>
+
     suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity?
     suspend fun getByIdList(shareId: ShareId, itemIds: List<ItemId>): List<ItemEntity>
     suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState)

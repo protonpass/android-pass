@@ -181,14 +181,32 @@ class AutofillServiceManager @Inject constructor(
         }
 
         SuggestionType.Login -> {
-            val packageName = autofillData.packageInfo.packageName
+            val autofillDataPackageName = autofillData.packageInfo.packageName
                 .takeIf { !it.isBrowser() }
                 .toOption()
                 .map { it.value }
 
+            val autofillDataUrl = autofillData.assistInfo.url
+
+            val (packageName, url) = when {
+                // App with a webview
+                autofillDataPackageName.isNotEmpty() && autofillDataUrl.isNotEmpty() -> {
+                    None to autofillDataUrl
+                }
+
+                autofillDataPackageName.isNotEmpty() && autofillDataUrl.isEmpty() -> {
+                    autofillDataPackageName to None
+                }
+
+                autofillDataPackageName.isEmpty() -> None to autofillDataUrl
+
+                // Should not happen
+                else -> None to None
+            }
+
             val items = getSuggestedLoginItems(
                 packageName = packageName,
-                url = autofillData.assistInfo.url
+                url = url
             ).firstOrNull() ?: emptyList()
             SuggestedItemsResult.Show(items)
         }

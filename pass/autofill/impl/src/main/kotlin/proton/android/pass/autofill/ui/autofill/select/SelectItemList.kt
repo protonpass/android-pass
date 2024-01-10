@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill.ui.autofill.select
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -100,10 +99,7 @@ fun SelectItemList(
                 val shouldShowItemListHeader = remember(uiState) {
                     uiState.shouldShowItemListHeader()
                 }
-                AnimatedVisibility(
-                    visible = shouldShowItemListHeader,
-                    label = "SelectItemList-ItemListHeader"
-                ) {
+                if (shouldShowItemListHeader) {
                     val count = remember(uiState.listUiState.items) {
                         uiState.listUiState.items.items.map { it.items }.flatten().count() +
                             uiState.listUiState.items.suggestions.count()

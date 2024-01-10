@@ -49,8 +49,10 @@ data class SelectItemUiState(
 ) {
 
     fun shouldShowItemListHeader() =
-        listUiState.items.items.isNotEmpty() && listUiState.isLoading == IsLoadingState.NotLoading &&
-            searchUiState.inSearchMode
+        listUiState.items.items.isNotEmpty() &&
+            listUiState.isLoading == IsLoadingState.NotLoading &&
+            searchUiState.inSearchMode &&
+            !searchUiState.isProcessingSearch.value()
 
     companion object {
         val Loading = SelectItemUiState(

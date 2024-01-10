@@ -133,16 +133,29 @@ class NodeClustererTest {
         assertThat(clusters).isEqualTo(listOf(cluster1, cluster2))
     }
 
+    @Test
+    fun `returns the right url for the cluster`() {
+        val url = "some.url"
+        val cluster = NodeCluster.Login.UsernameAndPassword(
+            username = loginField(11, emptyList(), url),
+            password = loginField(12, emptyList())
+        )
+
+        assertThat(cluster.url()).isEqualTo(url)
+    }
+
     private fun loginField(
         id: Int,
-        nodePath: List<Int>
+        nodePath: List<Int>,
+        url: String? = null
     ): AssistField = AssistField(
         id = TestAutofillId(id),
         type = FieldType.Username,
         value = null,
         text = null,
         isFocused = false,
-        nodePath = nodePath.map(::TestAutofillId)
+        nodePath = nodePath.map(::TestAutofillId),
+        url = url
     )
 
     private fun passwordField(
@@ -154,6 +167,7 @@ class NodeClustererTest {
         value = null,
         text = null,
         isFocused = false,
-        nodePath = nodePath.map(::TestAutofillId)
+        nodePath = nodePath.map(::TestAutofillId),
+        url = null
     )
 }

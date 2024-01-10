@@ -19,19 +19,14 @@
 package proton.android.pass.autofill
 
 import com.google.common.truth.Truth.assertThat
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import proton.android.pass.autofill.debug.AutofillDebugSaver
+import proton.android.pass.autofill.TestUtils.toAutofillNode
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.heuristics.NodeClusterer
 import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.heuristics.focused
-import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.log.api.PassLogger
-import java.io.File
 
 const val CC_EXPIRATION_YEAR = "2025"
 const val CC_EXPIRATION_MONTH = "12"
@@ -67,12 +62,8 @@ fun runAutofillTest(
     requestFlags: List<RequestFlags> = emptyList(),
     allowEmptyFields: Boolean = false
 ) {
-    val path = "src/test/resources/$file"
-    val asFile = File(path)
-    val content = asFile.readText()
-    val parsed: AutofillDebugSaver.DebugAutofillEntry = Json.decodeFromString(content)
-    val nodesWithExpectedContents = getExpectedContents(parsed, allowEmptyFields)
-
+    val parsed = TestUtils.parseResourceFile(file)
+    val nodesWithExpectedContents = TestUtils.getExpectedContents(parsed, allowEmptyFields)
     val asAutofillNodes = parsed.rootContent.toAutofillNode()
     val detectedNodes = NodeExtractor(requestFlags).extract(asAutofillNodes)
     val clusters = NodeClusterer.cluster(detectedNodes.fields)
@@ -103,47 +94,3 @@ fun runAutofillTest(
         assertThat(field!!.contents).isEqualTo(expectedAutofill.assertedValue)
     }
 }
-
-private fun getExpectedContents(
-    entry: AutofillDebugSaver.DebugAutofillEntry,
-    allowEmptyFields: Boolean
-): List<Pair<AutofillDebugSaver.DebugAutofillNode, ExpectedAutofill>> {
-    val withContents = mutableListOf<Pair<AutofillDebugSaver.DebugAutofillNode, ExpectedAutofill>>()
-    getExpectedContents(entry.rootContent, withContents)
-    if (withContents.isEmpty() && !allowEmptyFields) {
-        throw IllegalStateException("There are no fields with 'expectedAutofill'")
-    }
-    return withContents
-}
-
-private fun getExpectedContents(
-    node: AutofillDebugSaver.DebugAutofillNode,
-    withExpectedContents: MutableList<Pair<AutofillDebugSaver.DebugAutofillNode, ExpectedAutofill>>
-) {
-    val expectedContents = node.expectedAutofill
-    if (expectedContents != null) {
-        val expectedAutofill = ExpectedAutofill.values()
-            .firstOrNull { it.value == expectedContents }
-            ?: throw IllegalStateException(
-                "Unknown expectedAutofill: $expectedContents. Must be one of ${ExpectedAutofill.all()}"
-            )
-
-        withExpectedContents.add(node to expectedAutofill)
-    }
-    node.children.forEach { getExpectedContents(it, withExpectedContents) }
-}
-
-fun AutofillDebugSaver.DebugAutofillNode.toAutofillNode(): AutofillNode = AutofillNode(
-    className = className,
-    isImportantForAutofill = isImportantForAutofill,
-    text = text,
-    isFocused = isFocused,
-    inputType = inputType,
-    autofillHints = autofillHints,
-    htmlAttributes = htmlAttributes.map { it.key to it.value },
-    children = children.map { it.toAutofillNode() },
-    url = url.toOption(),
-    hintKeywordList = hintKeywordList,
-    autofillValue = null,
-    id = TestAutofillId(id)
-)

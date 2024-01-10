@@ -102,6 +102,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.ID} = :itemId
         """
     )
+    abstract fun observeById(shareId: String, itemId: String): Flow<ItemEntity>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} = :itemId
+        """
+    )
     abstract suspend fun getById(shareId: String, itemId: String): ItemEntity?
 
     @Query(

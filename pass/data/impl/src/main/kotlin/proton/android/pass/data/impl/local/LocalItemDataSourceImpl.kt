@@ -77,6 +77,15 @@ class LocalItemDataSourceImpl @Inject constructor(
             database.itemsDao().observeAllForAddress(userId.id, itemState?.value, filter.value())
         }
 
+    override fun observeItem(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Flow<ItemEntity> = database.itemsDao()
+        .observeById(
+            shareId = shareId.id,
+            itemId = itemId.id,
+        )
+
     override suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity? =
         database.itemsDao().getById(shareId.id, itemId.id)
 
@@ -106,7 +115,8 @@ class LocalItemDataSourceImpl @Inject constructor(
                 val logins = values.firstOrNull { it.itemKind == ITEM_TYPE_LOGIN }?.itemCount ?: 0
                 val aliases = values.firstOrNull { it.itemKind == ITEM_TYPE_ALIAS }?.itemCount ?: 0
                 val notes = values.firstOrNull { it.itemKind == ITEM_TYPE_NOTE }?.itemCount ?: 0
-                val creditCards = values.firstOrNull { it.itemKind == ITEM_TYPE_CREDIT_CARD }?.itemCount ?: 0
+                val creditCards =
+                    values.firstOrNull { it.itemKind == ITEM_TYPE_CREDIT_CARD }?.itemCount ?: 0
                 ItemCountSummary(
                     total = logins + aliases + notes + creditCards,
                     login = logins,

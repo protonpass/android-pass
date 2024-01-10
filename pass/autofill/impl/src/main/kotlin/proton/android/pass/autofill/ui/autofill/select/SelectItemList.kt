@@ -18,6 +18,7 @@
 
 package proton.android.pass.autofill.ui.autofill.select
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.autofill.ui.previewproviders.SelectItemUiStatePreviewProvider
@@ -36,6 +38,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.EmptyList
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
+import proton.android.pass.composecomponents.impl.item.header.ItemCount
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -93,16 +96,22 @@ fun SelectItemList(
                 onItemClicked = onItemClicked,
                 onUpgradeClick = { onNavigate(SelectItemNavigation.Upgrade) }
             )
-            item {
-                if (shouldShowItemListHeader(uiState)) {
+            if (shouldShowItemListHeader(uiState)) {
+                item {
                     val count = remember(uiState.listUiState.items) {
                         uiState.listUiState.items.items.map { it.items }.flatten().count() +
                             uiState.listUiState.items.suggestions.count()
                     }
                     ItemListHeader(
-                        showSearchResults = uiState.searchUiState.inSearchMode &&
-                            uiState.searchUiState.searchQuery.isNotEmpty(),
-                        itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
+                        countContent = {
+                            ItemCount(
+                                modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp),
+                                showSearchResults = uiState.searchUiState.inSearchMode &&
+                                    uiState.searchUiState.searchQuery.isNotEmpty(),
+                                itemType = SearchFilterType.All,
+                                itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() }
+                            )
+                        },
                         sortingContent = {
                             SortingButton(
                                 sortingType = uiState.listUiState.sortingType,
@@ -111,7 +120,6 @@ fun SelectItemList(
                                 }
                             )
                         },
-                        itemType = SearchFilterType.All
                     )
                 }
             }

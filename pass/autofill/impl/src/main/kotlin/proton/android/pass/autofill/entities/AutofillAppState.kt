@@ -19,11 +19,33 @@
 package proton.android.pass.autofill.entities
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.heuristics.NodeCluster
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
+import proton.android.pass.domain.entity.PackageInfo
 
 @Immutable
 data class AutofillAppState(
     val autofillData: AutofillData
-)
+) {
+    fun updateAutofillFields(): Pair<Option<PackageInfo>, Option<String>> {
+        val packageInfo = autofillData.packageInfo
+        val url = autofillData.assistInfo.url
+
+        if (packageInfo.packageName.isBrowser()) {
+            return None to url
+        }
+
+        // We are sure it's not a browser
+        if (url.value().isNullOrBlank()) {
+            return packageInfo.some() to None
+        }
+
+        // It's not a browser and we have a url, then the URL takes precedence
+        return None to url
+    }
+}
 
 fun AutofillAppState.isValid(): Boolean = autofillData.assistInfo.cluster != NodeCluster.Empty

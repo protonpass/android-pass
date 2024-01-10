@@ -102,7 +102,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.canCreate
-import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
@@ -473,13 +472,13 @@ class SelectItemViewModel @Inject constructor(
     ) = encryptionContextProvider.withEncryptionContext {
         handleTotpUri(this@withEncryptionContext, autofillItem.totp)
 
-        val updatePackageInfo = autofillAppState.updatePackageInfo()
+        val (updatePackageInfo, updateUrl) = autofillAppState.updateAutofillFields()
         updateAutofillItem(
             UpdateAutofillItemData(
                 shareId = ShareId(autofillItem.shareId),
                 itemId = ItemId(autofillItem.itemId),
                 packageInfo = updatePackageInfo,
-                url = autofillAppState.autofillData.assistInfo.url,
+                url = updateUrl,
                 shouldAssociate = shouldAssociate
             )
         )
@@ -499,13 +498,13 @@ class SelectItemViewModel @Inject constructor(
         autofillAppState: AutofillAppState
     ) = encryptionContextProvider.withEncryptionContext {
 
-        val updatePackageInfo = autofillAppState.updatePackageInfo()
+        val (updatePackageInfo, updateUrl) = autofillAppState.updateAutofillFields()
         updateAutofillItem(
             UpdateAutofillItemData(
                 shareId = ShareId(autofillItem.shareId),
                 itemId = ItemId(autofillItem.itemId),
                 packageInfo = updatePackageInfo,
-                url = autofillAppState.autofillData.assistInfo.url,
+                url = updateUrl,
                 shouldAssociate = false
             )
         )
@@ -577,10 +576,6 @@ class SelectItemViewModel @Inject constructor(
             }
         }
     }
-
-    private fun AutofillAppState.updatePackageInfo(): Option<PackageInfo> = autofillData.packageInfo
-        .takeIf { !it.packageName.isBrowser() }
-        .toOption()
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

@@ -46,5 +46,5 @@ object TestItemUiModel {
         lastAutofillTime = lastAutofillTime,
         isPinned = isPinned,
     )
-    
+
 }

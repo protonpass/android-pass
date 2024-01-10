@@ -23,8 +23,9 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.test.domain.TestItem
+import javax.inject.Inject
 
-class FakeUnpinItemUseCase : UnpinItemUseCase {
+class FakeUnpinItemUseCase @Inject constructor() : UnpinItemUseCase {
 
     private var item: Item? = null
 

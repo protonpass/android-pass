@@ -34,16 +34,17 @@ object TestItemUiModel {
         itemContents: ItemContents = ItemContents.Note(title, note),
         createTime: Instant = Clock.System.now(),
         modificationTime: Instant = Clock.System.now(),
-        lastAutofillTime: Instant? = null
-    ): ItemUiModel {
-        return ItemUiModel(
-            id = ItemId(id = id),
-            shareId = ShareId(id = "share-id"),
-            contents = itemContents,
-            createTime = createTime,
-            state = 0,
-            modificationTime = modificationTime,
-            lastAutofillTime = lastAutofillTime,
-        )
-    }
+        lastAutofillTime: Instant? = null,
+        isPinned: Boolean = false,
+    ): ItemUiModel = ItemUiModel(
+        id = ItemId(id = id),
+        shareId = ShareId(id = "share-id"),
+        contents = itemContents,
+        createTime = createTime,
+        state = 0,
+        modificationTime = modificationTime,
+        lastAutofillTime = lastAutofillTime,
+        isPinned = isPinned,
+    )
+    
 }

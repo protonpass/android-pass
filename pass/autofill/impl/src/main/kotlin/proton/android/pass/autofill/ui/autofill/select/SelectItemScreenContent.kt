@@ -257,6 +257,9 @@ private fun shouldAskForAssociation(
     // If the item is associated with the package, do not ask for association
     item.packageInfoSet.map { it.packageName }.contains(packageName) -> false
 
+    // If there is no package name and no webDomain, do not ask for association, nothing can be
+    !packageName.isBrowser() && webDomain.isNullOrBlank() -> false
+
     // If there is webDomain and the item is already associated with the webDomain,
     // do not ask for association
     !webDomain.isNullOrBlank() && item.urls.contains(webDomain) -> false

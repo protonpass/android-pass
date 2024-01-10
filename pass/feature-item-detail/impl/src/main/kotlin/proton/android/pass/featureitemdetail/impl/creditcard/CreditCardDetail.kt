@@ -100,6 +100,7 @@ fun CreditCardDetail(
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
                             canMigrate = state.itemActions.canMoveToOtherVault.value(),
                             canMoveToTrash = state.itemActions.canMoveToTrash,
+                            isPinned = state.itemContent.model.isPinned,
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
@@ -112,7 +113,15 @@ fun CreditCardDetail(
                                     itemUiModel.shareId,
                                     itemUiModel.id
                                 )
-                            }
+                            },
+                            onPinned = {
+                                scope.launch { bottomSheetState.hide() }
+                                // handle pinning (it would be implemented on its own MR)
+                            },
+                            onUnpinned = {
+                                scope.launch { bottomSheetState.hide() }
+                                // handle unpinning (it would be implemented on its own MR)
+                            },
                         )
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(

@@ -36,6 +36,7 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel =
         createTime = createTime,
         modificationTime = modificationTime,
         lastAutofillTime = lastAutofillTime.value(),
+        isPinned = isPinned,
     )
 
 fun Item.itemName(context: EncryptionContext): String =

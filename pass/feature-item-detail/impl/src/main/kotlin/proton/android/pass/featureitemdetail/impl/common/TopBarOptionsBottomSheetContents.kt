@@ -37,12 +37,22 @@ fun TopBarOptionsBottomSheetContents(
     canMigrate: Boolean,
     canMoveToTrash: Boolean,
     onMigrate: () -> Unit,
-    onMoveToTrash: () -> Unit
+    onMoveToTrash: () -> Unit,
+    isPinned: Boolean,
+    onPinned: () -> Unit,
+    onUnpinned: () -> Unit,
 ) {
     val items = mutableListOf<BottomSheetItem>().apply {
         if (canMigrate) {
             add(migrate(onClick = onMigrate))
         }
+
+        if (isPinned) {
+            add(unpin(onClick = onUnpinned))
+        } else {
+            add(pin(onClick = onPinned))
+        }
+
         if (canMoveToTrash) {
             add(moveToTrash(onClick = onMoveToTrash))
         }
@@ -62,14 +72,21 @@ class ThemedTopBarOptionsPreviewProvider :
 fun TopBarOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemedTopBarOptionsPreviewProvider::class) input: Pair<Boolean, TopBarOptionsParameters>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, params) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
-            TopBarOptionsBottomSheetContents(
-                canMigrate = input.second.canMigrate,
-                canMoveToTrash = input.second.canMoveToTrash,
-                onMigrate = {},
-                onMoveToTrash = {}
-            )
+            with(params) {
+                TopBarOptionsBottomSheetContents(
+                    canMigrate = canMigrate,
+                    canMoveToTrash = canMoveToTrash,
+                    isPinned = isPinned,
+                    onMigrate = {},
+                    onMoveToTrash = {},
+                    onPinned = {},
+                    onUnpinned = {},
+                )
+            }
         }
     }
 }

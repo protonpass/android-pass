@@ -55,6 +55,7 @@ import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.ItemsList
+import proton.android.pass.composecomponents.impl.item.header.ItemCount
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
@@ -182,10 +183,15 @@ internal fun HomeContent(
                     uiState.homeListUiState.items.map { it.items }.flatten().count()
                 }
                 ItemListHeader(
-                    showSearchResults = uiState.searchUiState.inSearchMode &&
-                        uiState.searchUiState.searchQuery.isNotEmpty(),
-                    itemType = uiState.homeListUiState.searchFilterType,
-                    itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
+                    countContent = {
+                        ItemCount(
+                            modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp),
+                            showSearchResults = uiState.searchUiState.inSearchMode &&
+                                uiState.searchUiState.searchQuery.isNotEmpty(),
+                            itemType = uiState.homeListUiState.searchFilterType,
+                            itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() }
+                        )
+                    },
                     sortingContent = {
                         SortingButton(
                             sortingType = uiState.homeListUiState.sortingType,

@@ -29,6 +29,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.MigrateItemsResult
+import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -213,23 +214,13 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun pinItem(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = item?.copy(
-        id = itemId,
-        shareId = shareId,
-        isPinned = true,
-    ) ?: throw IllegalStateException("Item cannot be null. Did you forget to call setItem(item)?")
+    override suspend fun pinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult {
+        TODO("Not yet implemented")
+    }
 
-    override suspend fun unpinItem(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = item?.copy(
-        id = itemId,
-        shareId = shareId,
-        isPinned = false,
-    ) ?: throw IllegalStateException("Item cannot be null. Did you forget to call setItem(item)?")
+    override suspend fun unpinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult {
+        TODO("Not yet implemented")
+    }
 
     data class MigrateItemPayload(
         val userId: UserId,

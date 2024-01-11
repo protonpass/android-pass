@@ -64,7 +64,7 @@ fun NoteRow(
                     pin = {
                         CircledPin(
                             ratio = 0.8f,
-                            backgroundColor = PassTheme.colors.noteInteractionNormMajor2
+                            backgroundColor = PassTheme.colors.noteInteractionNormMajor1
                         )
                     },
                     content = { NoteIcon() }
@@ -81,7 +81,7 @@ fun NoteRow(
                             pin = {
                                 CircledPin(
                                     ratio = 0.8f,
-                                    backgroundColor = PassTheme.colors.noteInteractionNormMajor2
+                                    backgroundColor = PassTheme.colors.noteInteractionNormMajor1
                                 )
                             },
                             content = { NoteIcon(enabled = isEnabled) }

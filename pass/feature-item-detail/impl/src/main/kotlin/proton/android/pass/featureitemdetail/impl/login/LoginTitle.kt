@@ -60,7 +60,7 @@ fun LoginTitle(
             isShown = isPinned,
             pin = {
                 CircledPin(
-                    backgroundColor = PassTheme.colors.loginInteractionNormMajor2
+                    backgroundColor = PassTheme.colors.loginInteractionNormMajor1
                 )
             },
             content = {

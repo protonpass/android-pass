@@ -28,17 +28,17 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestItem
 
-internal class PinItemUseCaseImplTest {
+internal class PinItemImplTest {
 
     private lateinit var itemRepository: TestItemRepository
 
-    private lateinit var pinItemUseCase: PinItemUseCaseImpl
+    private lateinit var pinItemUseCase: PinItemImpl
 
     @Before
     internal fun setup() {
         itemRepository = TestItemRepository()
 
-        pinItemUseCase = PinItemUseCaseImpl(itemRepository)
+        pinItemUseCase = PinItemImpl(itemRepository)
     }
 
     @Test

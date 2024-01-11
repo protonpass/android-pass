@@ -249,7 +249,7 @@ class NoteDetailViewModel @Inject constructor(
         runCatching { pinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
             .onFailure { error ->
-                PassLogger.e(TAG, error, "An error occurred pinning Note item")
+                PassLogger.w(TAG, error, "An error occurred pinning Note item")
                 snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
             }
 
@@ -262,7 +262,7 @@ class NoteDetailViewModel @Inject constructor(
         runCatching { unpinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
             .onFailure { error ->
-                PassLogger.e(TAG, error, "An error occurred unpinning Note item")
+                PassLogger.w(TAG, error, "An error occurred unpinning Note item")
                 snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
             }
 

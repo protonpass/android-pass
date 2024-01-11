@@ -428,7 +428,7 @@ class LoginDetailViewModel @Inject constructor(
         runCatching { pinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
             .onFailure { error ->
-                PassLogger.e(TAG, error, "An error occurred pinning Login item")
+                PassLogger.w(TAG, error, "An error occurred pinning Login item")
                 snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
             }
 
@@ -441,7 +441,7 @@ class LoginDetailViewModel @Inject constructor(
         runCatching { unpinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
             .onFailure { error ->
-                PassLogger.e(TAG, error, "An error occurred unpinning Login item")
+                PassLogger.w(TAG, error, "An error occurred unpinning Login item")
                 snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
             }
 

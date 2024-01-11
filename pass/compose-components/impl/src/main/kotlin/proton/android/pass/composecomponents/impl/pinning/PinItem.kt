@@ -44,8 +44,6 @@ import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 
 private const val MAX_LENGTH = 20
 
@@ -54,7 +52,7 @@ fun PinItem(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
     canLoadExternalImages: Boolean,
-    onItemClick: (ShareId, ItemId) -> Unit
+    onItemClick: (ItemUiModel) -> Unit
 ) {
     val pinBackgroundColor = when (item.contents) {
         is ItemContents.Note -> PassTheme.colors.noteInteractionNormMinor1
@@ -69,7 +67,7 @@ fun PinItem(
                 backgroundColor = pinBackgroundColor,
                 borderColor = Color.Transparent,
             )
-            .clickable { onItemClick(item.shareId, item.id) }
+            .clickable { onItemClick(item) }
             .padding(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -123,7 +121,7 @@ fun PinItemPreview(
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            PinItem(item = input.second, canLoadExternalImages = true, onItemClick = { _, _ -> })
+            PinItem(item = input.second, canLoadExternalImages = true, onItemClick = { _ -> })
         }
     }
 }

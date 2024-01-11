@@ -57,7 +57,7 @@ import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
-import proton.android.pass.data.api.usecases.UnpinItemUseCase
+import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -92,7 +92,7 @@ class AliasDetailViewModel @Inject constructor(
     private val canShareVault: CanShareVault,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
-    private val unpinItemUseCase: UnpinItemUseCase,
+    private val unpinItem: UnpinItem,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
@@ -262,7 +262,7 @@ class AliasDetailViewModel @Inject constructor(
     internal fun unpinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
 
-        runCatching { unpinItemUseCase.execute(shareId, itemId) }
+        runCatching { unpinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
             .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError) }
 

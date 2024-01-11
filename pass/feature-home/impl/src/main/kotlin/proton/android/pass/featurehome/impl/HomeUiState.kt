@@ -28,6 +28,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupedItemList
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -105,6 +106,7 @@ data class HomeListUiState(
     val canLoadExternalImages: Boolean,
     val actionState: ActionState = ActionState.Unknown,
     val items: ImmutableList<GroupedItemList>,
+    val pinnedItems: ImmutableList<ItemUiModel>,
     val selectedShare: Option<ShareUiModel> = None,
     val shares: ImmutableMap<ShareId, ShareUiModel>,
     val homeVaultSelection: VaultSelectionOption = VaultSelectionOption.AllVaults,
@@ -119,6 +121,7 @@ data class HomeListUiState(
             shouldScrollToTop = false,
             canLoadExternalImages = false,
             items = persistentListOf(),
+            pinnedItems = persistentListOf(),
             shares = persistentMapOf(),
             selectionState = HomeSelectionState.Initial
         )

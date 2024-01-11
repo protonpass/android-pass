@@ -95,7 +95,7 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
-import proton.android.pass.data.api.usecases.UnpinItemUseCase
+import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -192,7 +192,7 @@ import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
 import proton.android.pass.data.impl.usecases.SetVaultMemberPermissionImpl
 import proton.android.pass.data.impl.usecases.TransferVaultOwnershipImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
-import proton.android.pass.data.impl.usecases.UnpinItemUseCaseImpl
+import proton.android.pass.data.impl.usecases.UnpinItemImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
@@ -495,6 +495,6 @@ abstract class DataUseCaseModule {
     abstract fun bindPinItemUseCase(impl: PinItemImpl): PinItem
 
     @Binds
-    abstract fun bindUnpinItemUseCase(impl: UnpinItemUseCaseImpl): UnpinItemUseCase
+    abstract fun bindUnpinItemUseCase(impl: UnpinItemImpl): UnpinItem
 
 }

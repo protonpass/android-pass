@@ -33,6 +33,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import proton.android.pass.composecomponents.impl.pinning.BoxedPin
+import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.ItemContents
 
 private const val MAX_PREVIEW_LENGTH = 128
@@ -62,11 +64,34 @@ internal fun AliasRow(
         modifier = modifier,
         icon = {
             when (selection) {
-                ItemSelectionModeState.NotInSelectionMode -> AliasIcon()
-                is ItemSelectionModeState.InSelectionMode -> when (selection.state) {
-                    ItemSelectionModeState.ItemSelectionState.Selected -> ItemSelectedIcon()
-                    ItemSelectionModeState.ItemSelectionState.Unselected -> AliasIcon()
-                    ItemSelectionModeState.ItemSelectionState.NotSelectable -> AliasIcon(enabled = false)
+                ItemSelectionModeState.NotInSelectionMode -> BoxedPin(
+                    isShown = item.isPinned,
+                    pin = {
+                        CircledPin(
+                            ratio = 0.8f,
+                            backgroundColor = PassTheme.colors.aliasInteractionNormMajor2
+                        )
+                    },
+                    content = { AliasIcon() }
+                )
+
+                is ItemSelectionModeState.InSelectionMode -> {
+                    if (selection.state == ItemSelectionModeState.ItemSelectionState.Selected) {
+                        ItemSelectedIcon()
+                    } else {
+                        val isEnabled =
+                            selection.state != ItemSelectionModeState.ItemSelectionState.NotSelectable
+                        BoxedPin(
+                            isShown = item.isPinned,
+                            pin = {
+                                CircledPin(
+                                    ratio = 0.8f,
+                                    backgroundColor = PassTheme.colors.aliasInteractionNormMajor2
+                                )
+                            },
+                            content = { AliasIcon(enabled = isEnabled) }
+                        )
+                    }
                 }
             }
         },

@@ -146,10 +146,12 @@ private fun getHighlightedFields(
         note = annotatedNote,
         username = annotatedUsername,
         websites = annotatedWebsites,
-        subtitles = (listOfNotNull(
-            annotatedUsername,
-            annotatedNote
-        ) + annotatedWebsites).toPersistentList()
+        subtitles = (
+            listOfNotNull(
+                annotatedUsername,
+                annotatedNote
+            ) + annotatedWebsites
+            ).toPersistentList()
     )
 }
 

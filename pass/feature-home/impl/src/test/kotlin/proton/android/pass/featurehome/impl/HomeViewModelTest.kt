@@ -49,6 +49,7 @@ import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestPerformSync
@@ -98,6 +99,7 @@ internal class HomeViewModelTest {
     private lateinit var observeVaults: TestObserveVaults
     private lateinit var clock: FixedClock
     private lateinit var observeItems: TestObserveItems
+    private lateinit var observePinnedItems: TestObservePinnedItems
     private lateinit var preferencesRepository: TestPreferenceRepository
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var savedState: TestSavedStateHandleProvider
@@ -133,6 +135,7 @@ internal class HomeViewModelTest {
         observeCurrentUser = TestObserveCurrentUser()
         toastManager = TestToastManager()
         featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+        observePinnedItems = TestObservePinnedItems()
         createViewModel()
     }
 
@@ -262,6 +265,7 @@ internal class HomeViewModelTest {
             observeVaults = observeVaults,
             clock = clock,
             observeItems = observeItems,
+            observePinnedItems = observePinnedItems,
             preferencesRepository = preferencesRepository,
             getUserPlan = getUserPlan,
             appDispatchers = TestAppDispatchers(),

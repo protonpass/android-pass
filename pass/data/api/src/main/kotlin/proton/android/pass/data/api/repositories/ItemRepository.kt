@@ -70,6 +70,8 @@ interface ItemRepository {
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All
     ): Flow<List<Item>>
 
+    fun observePinnedItems(userId: UserId): Flow<List<Item>>
+
     fun observeById(
         shareId: ShareId,
         itemId: ItemId,

@@ -20,6 +20,12 @@ package proton.android.pass.totp.impl
 
 import proton.android.pass.totp.api.TotpSpec
 
+data class TotpGenerationResult(
+    val spec: TotpSpec,
+    val token: String,
+    val timestamp: ULong
+)
+
 interface TotpTokenGenerator {
-    fun generate(spec: TotpSpec, currentTime: ULong): Result<String>
+    fun generate(uri: String, currentTime: ULong): Result<TotpGenerationResult>
 }

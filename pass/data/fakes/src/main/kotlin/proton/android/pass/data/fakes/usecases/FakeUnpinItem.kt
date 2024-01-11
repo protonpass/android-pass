@@ -18,14 +18,14 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import proton.android.pass.data.api.usecases.UnpinItemUseCase
+import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.test.domain.TestItem
 import javax.inject.Inject
 
-class FakeUnpinItemUseCase @Inject constructor() : UnpinItemUseCase {
+class FakeUnpinItem @Inject constructor() : UnpinItem {
 
     private var item: Item? = null
 

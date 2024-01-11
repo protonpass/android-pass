@@ -67,7 +67,11 @@ fun BoxedPinPreview(
         Surface {
             BoxedPin(
                 isShown = true,
-                pin = { CircledPin() },
+                pin = {
+                    CircledPin(
+                        backgroundColor = PassTheme.colors.loginInteractionNormMajor2
+                    )
+                },
                 content = {
                     LoginIcon(
                         size = 60,

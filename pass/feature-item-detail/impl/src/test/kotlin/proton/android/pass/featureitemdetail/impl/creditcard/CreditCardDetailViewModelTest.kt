@@ -47,6 +47,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 
@@ -94,6 +95,7 @@ class CreditCardDetailViewModelTest {
             bulkMoveToVaultRepository = TestBulkMoveToVaultRepository(),
             pinItem = FakePinItem(),
             unpinItem = FakeUnpinItem(),
+            featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
         )
     }
 

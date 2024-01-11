@@ -150,6 +150,7 @@ fun LoginDetail(
                                         itemId = state.itemUiModel.id,
                                     )
                                 },
+                                isPinningFeatureEnabled = state.isPinningFeatureEnabled,
                             )
 
                             ItemState.Trashed.value -> TrashItemBottomSheetContents(
@@ -200,7 +201,8 @@ fun LoginDetail(
                             },
                             onShareClick = {
                                 onShareClick(state.itemActions, onNavigate, state.itemUiModel)
-                            }
+                            },
+                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled,
                         )
                     }
                 ) { padding ->

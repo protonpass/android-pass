@@ -399,7 +399,7 @@ class SelectItemScreenTest {
                         value = null,
                         text = null,
                         isFocused = false,
-                        nodePath = listOf(),
+                        nodePath = emptyList(),
                         url = null
                     ),
                     password = AssistField(
@@ -408,7 +408,7 @@ class SelectItemScreenTest {
                         value = null,
                         text = null,
                         isFocused = false,
-                        nodePath = listOf(),
+                        nodePath = emptyList(),
                         url = null
                     )
                 ),

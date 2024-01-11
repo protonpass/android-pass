@@ -32,19 +32,19 @@ data class AutofillAppState(
 ) {
     fun updateAutofillFields(): Pair<Option<PackageInfo>, Option<String>> {
         val packageInfo = autofillData.packageInfo
-        val url = autofillData.assistInfo.url
+        val optionUrl = autofillData.assistInfo.url
 
         if (packageInfo.packageName.isBrowser()) {
-            return None to url
+            return None to optionUrl
         }
 
         // We are sure it's not a browser
-        if (url.value().isNullOrBlank()) {
+        if (optionUrl.value().isNullOrBlank()) {
             return packageInfo.some() to None
         }
 
         // It's not a browser and we have a url, then the URL takes precedence
-        return None to url
+        return None to optionUrl
     }
 }
 

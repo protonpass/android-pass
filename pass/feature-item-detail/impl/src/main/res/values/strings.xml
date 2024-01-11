@@ -81,8 +81,6 @@
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>
     <string name="migrate_item_detail_bottom_sheet">Move to another vault</string>
-    <string name="pin_item_detail_bottom_sheet">Pin</string>
-    <string name="unpin_item_detail_bottom_sheet">Unpin</string>
 
     <!-- More info -->
     <string name="date_today">Today %s</string>

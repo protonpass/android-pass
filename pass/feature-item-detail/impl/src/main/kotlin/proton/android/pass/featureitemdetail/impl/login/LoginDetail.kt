@@ -52,7 +52,6 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
-import proton.android.pass.featureitemdetail.impl.common.TopBarType
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
@@ -186,7 +185,6 @@ fun LoginDetail(
                     modifier = modifier,
                     topBar = {
                         ItemDetailTopBar(
-                            topBarType = TopBarType.Login,
                             isLoading = state.isLoading,
                             actions = state.itemActions,
                             actionColor = PassTheme.colors.loginInteractionNormMajor1,

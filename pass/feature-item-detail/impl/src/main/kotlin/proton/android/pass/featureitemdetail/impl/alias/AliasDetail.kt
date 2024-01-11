@@ -48,7 +48,6 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
-import proton.android.pass.featureitemdetail.impl.common.TopBarType
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
@@ -149,7 +148,6 @@ fun AliasDetail(
                     modifier = modifier,
                     topBar = {
                         ItemDetailTopBar(
-                            topBarType = TopBarType.Alias,
                             isLoading = state.isLoading,
                             actions = state.itemActions,
                             actionColor = PassTheme.colors.aliasInteractionNormMajor1,

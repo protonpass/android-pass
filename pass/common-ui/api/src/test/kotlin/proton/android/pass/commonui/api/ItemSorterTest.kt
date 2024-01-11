@@ -25,11 +25,11 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import org.junit.Assert.fail
 import org.junit.Test
-import proton.android.pass.commonui.api.ItemSorter.sortByCreationAsc
-import proton.android.pass.commonui.api.ItemSorter.sortByCreationDesc
-import proton.android.pass.commonui.api.ItemSorter.sortByMostRecent
-import proton.android.pass.commonui.api.ItemSorter.sortByTitleAsc
-import proton.android.pass.commonui.api.ItemSorter.sortByTitleDesc
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationAsc
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationDesc
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByMostRecent
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByTitleAsc
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByTitleDesc
 import proton.android.pass.commonuimodels.fakes.TestItemUiModel
 
 class ItemSorterTest {
@@ -40,7 +40,7 @@ class ItemSorterTest {
         val sortingKeyA = GroupingKeys.AlphabeticalKey('A')
         val sortingKeyB = GroupingKeys.AlphabeticalKey('B')
         val sortingKeyS = GroupingKeys.AlphabeticalKey('#')
-        val sorted = itemList.sortByTitleDesc()
+        val sorted = itemList.groupAndSortByTitleDesc()
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
 
@@ -64,7 +64,7 @@ class ItemSorterTest {
         val sortingKeyA = GroupingKeys.AlphabeticalKey('A')
         val sortingKeyB = GroupingKeys.AlphabeticalKey('B')
         val sortingKeyS = GroupingKeys.AlphabeticalKey('#')
-        val sorted = itemList.sortByTitleAsc()
+        val sorted = itemList.groupAndSortByTitleAsc()
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
 
@@ -92,7 +92,7 @@ class ItemSorterTest {
             GroupingKeys.MonthlyKey(AUGUST_2019, item1Aug().createTime)
         val sortingKeyFebruary =
             GroupingKeys.MonthlyKey(FEBRUARY_2022, item1Feb().createTime)
-        val sorted = itemList.sortByCreationAsc()
+        val sorted = itemList.groupAndSortByCreationAsc()
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
 
@@ -122,7 +122,7 @@ class ItemSorterTest {
             GroupingKeys.MonthlyKey(AUGUST_2019, item1Aug().createTime)
         val sortingKeyFebruary =
             GroupingKeys.MonthlyKey(FEBRUARY_2022, item1Feb().createTime)
-        val sorted = itemList.sortByCreationDesc()
+        val sorted = itemList.groupAndSortByCreationDesc()
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
 
@@ -151,7 +151,7 @@ class ItemSorterTest {
             formatResultKey = DateFormatUtils.Format.Today,
             instant = itemToday().modificationTime
         )
-        val sorted = itemList.sortByMostRecent(now)
+        val sorted = itemList.groupAndSortByMostRecent(now)
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
         sorted.onEachIndexed { index, entry ->

@@ -338,7 +338,10 @@ class CreditCardDetailViewModel @Inject constructor(
 
         runCatching { pinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
-            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError) }
+            .onFailure { error ->
+                PassLogger.e(TAG, error, "An error occurred pinning Credit Card item")
+                snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
+            }
 
         isLoadingState.update { IsLoadingState.NotLoading }
     }
@@ -348,7 +351,10 @@ class CreditCardDetailViewModel @Inject constructor(
 
         runCatching { unpinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
-            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError) }
+            .onFailure { error ->
+                PassLogger.e(TAG, error, "An error occurred unpinning Credit Card item")
+                snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
+            }
 
         isLoadingState.update { IsLoadingState.NotLoading }
     }

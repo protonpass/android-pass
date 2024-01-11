@@ -65,6 +65,8 @@ import proton.android.pass.featuresearchoptions.fakes.TestHomeSearchOptionsRepos
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.notifications.fakes.TestToastManager
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
@@ -102,6 +104,7 @@ internal class HomeViewModelTest {
     private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
     private lateinit var observeCurrentUser: ObserveCurrentUser
     private lateinit var toastManager: TestToastManager
+    private lateinit var featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 
     @Before
     internal fun setup() {
@@ -129,6 +132,7 @@ internal class HomeViewModelTest {
         bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
         observeCurrentUser = TestObserveCurrentUser()
         toastManager = TestToastManager()
+        featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         createViewModel()
     }
 
@@ -265,6 +269,7 @@ internal class HomeViewModelTest {
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             observeCurrentUser = observeCurrentUser,
             toastManager = toastManager,
+            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository
         )
     }
 

@@ -108,7 +108,7 @@ class LocalItemDataSourceImpl @Inject constructor(
                 val notes = values.firstOrNull { it.itemKind == ITEM_TYPE_NOTE }?.itemCount ?: 0
                 val creditCards = values.firstOrNull { it.itemKind == ITEM_TYPE_CREDIT_CARD }?.itemCount ?: 0
                 ItemCountSummary(
-                    total = logins + aliases + notes,
+                    total = logins + aliases + notes + creditCards,
                     login = logins,
                     alias = aliases,
                     note = notes,

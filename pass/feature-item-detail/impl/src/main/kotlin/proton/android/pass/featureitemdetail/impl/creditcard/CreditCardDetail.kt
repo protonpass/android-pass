@@ -48,7 +48,6 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
-import proton.android.pass.featureitemdetail.impl.common.TopBarType
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
@@ -150,7 +149,6 @@ fun CreditCardDetail(
                     modifier = modifier,
                     topBar = {
                         ItemDetailTopBar(
-                            topBarType = TopBarType.CreditCard,
                             isLoading = state.isLoading,
                             actions = state.itemActions,
                             actionColor = PassTheme.colors.cardInteractionNormMajor1,
@@ -185,24 +183,31 @@ fun CreditCardDetail(
                                 CreditCardDetailEvent.OnCardHolderClick -> {
                                     viewModel.copyCardHolderName()
                                 }
+
                                 CreditCardDetailEvent.OnCvvClick -> {
                                     viewModel.copyCvv()
                                 }
+
                                 CreditCardDetailEvent.OnNumberClick -> {
                                     viewModel.copyNumber()
                                 }
+
                                 CreditCardDetailEvent.OnToggleCvvClick -> {
                                     viewModel.toggleCvv()
                                 }
+
                                 CreditCardDetailEvent.OnToggleNumberClick -> {
                                     viewModel.toggleNumber()
                                 }
+
                                 CreditCardDetailEvent.OnTogglePinClick -> {
                                     viewModel.togglePin()
                                 }
+
                                 CreditCardDetailEvent.OnUpgradeClick -> {
                                     onNavigate(ItemDetailNavigation.Upgrade())
                                 }
+
                                 CreditCardDetailEvent.OnVaultClick -> {
                                     state.vault?.shareId?.let { shareId ->
                                         onNavigate(ItemDetailNavigation.ManageVault(shareId))

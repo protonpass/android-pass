@@ -338,7 +338,9 @@ class SelectItemScreenTest {
                     username = "${SUGGESTION_USERNAME_PREFIX}$it",
                     password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
                     urls = emptyList(),
-                    packageInfoSet = emptySet(),
+                    packageInfoSet = setOf(
+                        PackageInfo(PackageName(PACKAGE_NAME), AppName(""))
+                    ),
                     primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
                     customFields = emptyList()
                 )
@@ -356,7 +358,9 @@ class SelectItemScreenTest {
                     username = "${SUGGESTION_USERNAME_PREFIX}$it",
                     password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
                     urls = emptyList(),
-                    packageInfoSet = emptySet(),
+                    packageInfoSet = setOf(
+                        PackageInfo(PackageName(PACKAGE_NAME), AppName(""))
+                    ),
                     primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
                     customFields = emptyList()
                 )
@@ -415,7 +419,7 @@ class SelectItemScreenTest {
                 url = None
             ),
             packageInfo = PackageInfo(
-                packageName = PackageName("some.app"),
+                packageName = PackageName(PACKAGE_NAME),
                 appName = AppName("Some app")
             ),
             isDangerousAutofill = false
@@ -443,5 +447,7 @@ class SelectItemScreenTest {
         private const val SUGGESTION_TITLE_PREFIX = "suggestion-"
         private const val OTHER_ITEM_TITLE_PREFIX = "other-"
         private const val SUGGESTION_USERNAME_PREFIX = "username-"
+
+        private const val PACKAGE_NAME = "some.package.name"
     }
 }

@@ -32,13 +32,13 @@ internal class UnpinItemImplTest {
 
     private lateinit var itemRepository: TestItemRepository
 
-    private lateinit var unpinItemUseCase: UnpinItemImpl
+    private lateinit var unpinItem: UnpinItemImpl
 
     @Before
     internal fun setup() {
         itemRepository = TestItemRepository()
 
-        unpinItemUseCase = UnpinItemImpl(itemRepository)
+        unpinItem = UnpinItemImpl(itemRepository)
     }
 
     @Test
@@ -50,7 +50,7 @@ internal class UnpinItemImplTest {
             val expectedItem = newItem.copy(id = itemId, shareId = sharedId, isPinned = false)
             itemRepository.setItem(newItem)
 
-            val item = unpinItemUseCase.execute(sharedId, itemId)
+            val item = unpinItem(sharedId, itemId)
 
             assertThat(item).isEqualTo(expectedItem)
         }

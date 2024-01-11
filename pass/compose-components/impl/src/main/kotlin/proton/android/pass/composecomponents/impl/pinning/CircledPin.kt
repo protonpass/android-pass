@@ -27,6 +27,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -36,7 +37,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun CircledPin(modifier: Modifier = Modifier, ratio: Float = 1f) {
+fun CircledPin(modifier: Modifier = Modifier, ratio: Float = 1f, backgroundColor: Color) {
     Icon(
         modifier = modifier
             .size(24.dp * ratio)
@@ -47,7 +48,7 @@ fun CircledPin(modifier: Modifier = Modifier, ratio: Float = 1f) {
             )
             .padding(2.dp * ratio)
             .background(
-                color = PassTheme.colors.loginInteractionNormMajor2,
+                color = backgroundColor,
                 shape = CircleShape,
             )
             .padding(4.dp * ratio),
@@ -64,7 +65,9 @@ fun CircledPinPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            CircledPin()
+            CircledPin(
+                backgroundColor = PassTheme.colors.noteInteractionNormMajor2
+            )
         }
     }
 }

@@ -58,7 +58,11 @@ fun LoginTitle(
 
         BoxedPin(
             isShown = isPinned,
-            pin = { CircledPin() },
+            pin = {
+                CircledPin(
+                    backgroundColor = PassTheme.colors.loginInteractionNormMajor2
+                )
+            },
             content = {
                 LoginIcon(
                     size = 60,

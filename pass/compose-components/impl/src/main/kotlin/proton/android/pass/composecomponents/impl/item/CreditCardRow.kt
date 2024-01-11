@@ -16,6 +16,8 @@ import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.pinning.BoxedPin
+import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.ItemContents
 
 private const val MAX_PREVIEW_LENGTH = 128
@@ -38,26 +40,50 @@ fun CreditCardRow(
     }
 
     val highlightColor = PassTheme.colors.interactionNorm
-    val fields = remember(content.title, content.note, content.cardHolder, highlight, maskedNumber) {
-        getHighlightedFields(
-            title = content.title,
-            note = content.note,
-            cardHolder = content.cardHolder,
-            highlight = highlight,
-            highlightColor = highlightColor,
-            maskedNumber = maskedNumber
-        )
-    }
+    val fields =
+        remember(content.title, content.note, content.cardHolder, highlight, maskedNumber) {
+            getHighlightedFields(
+                title = content.title,
+                note = content.note,
+                cardHolder = content.cardHolder,
+                highlight = highlight,
+                highlightColor = highlightColor,
+                maskedNumber = maskedNumber
+            )
+        }
 
     ItemRow(
         modifier = modifier,
         icon = {
             when (selection) {
-                ItemSelectionModeState.NotInSelectionMode -> CreditCardIcon()
-                is ItemSelectionModeState.InSelectionMode -> when (selection.state) {
-                    ItemSelectionModeState.ItemSelectionState.Selected -> ItemSelectedIcon()
-                    ItemSelectionModeState.ItemSelectionState.Unselected -> CreditCardIcon()
-                    ItemSelectionModeState.ItemSelectionState.NotSelectable -> CreditCardIcon(enabled = false)
+                ItemSelectionModeState.NotInSelectionMode -> BoxedPin(
+                    isShown = item.isPinned,
+                    pin = {
+                        CircledPin(
+                            ratio = 0.8f,
+                            backgroundColor = PassTheme.colors.cardInteractionNormMajor2
+                        )
+                    },
+                    content = { CreditCardIcon() }
+                )
+
+                is ItemSelectionModeState.InSelectionMode -> {
+                    if (selection.state == ItemSelectionModeState.ItemSelectionState.Selected) {
+                        ItemSelectedIcon()
+                    } else {
+                        val isEnabled =
+                            selection.state != ItemSelectionModeState.ItemSelectionState.NotSelectable
+                        BoxedPin(
+                            isShown = item.isPinned,
+                            pin = {
+                                CircledPin(
+                                    ratio = 0.8f,
+                                    backgroundColor = PassTheme.colors.cardInteractionNormMajor2
+                                )
+                            },
+                            content = { CreditCardIcon(enabled = isEnabled) }
+                        )
+                    }
                 }
             }
         },
@@ -96,7 +122,11 @@ private fun getHighlightedFields(
         title = annotatedTitle,
         note = annotatedNote,
         cardHolder = annotatedCardHolder,
-        subtitles = listOfNotNull(maskedNumber, annotatedNote, annotatedCardHolder).toPersistentList()
+        subtitles = listOfNotNull(
+            maskedNumber,
+            annotatedNote,
+            annotatedCardHolder
+        ).toPersistentList()
     )
 }
 

@@ -23,7 +23,7 @@ interface PasswordScorer {
 }
 
 enum class PasswordScore {
-    DANGEROUS,
+    VULNERABLE,
     STRONG,
     WEAK,
 }

@@ -492,9 +492,9 @@ abstract class DataUseCaseModule {
     abstract fun bindSetDefaultVault(impl: SetDefaultVaultImpl): SetDefaultVault
 
     @Binds
-    abstract fun bindPinItemUseCase(impl: PinItemImpl): PinItem
+    abstract fun bindPinItem(impl: PinItemImpl): PinItem
 
     @Binds
-    abstract fun bindUnpinItemUseCase(impl: UnpinItemImpl): UnpinItem
+    abstract fun bindUnpinItem(impl: UnpinItemImpl): UnpinItem
 
 }

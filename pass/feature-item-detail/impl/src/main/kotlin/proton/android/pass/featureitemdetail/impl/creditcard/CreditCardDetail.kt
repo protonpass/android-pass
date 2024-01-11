@@ -128,6 +128,7 @@ fun CreditCardDetail(
                                     itemId = itemUiModel.id,
                                 )
                             },
+                            isPinningFeatureEnabled = state.isPinningFeatureEnabled,
                         )
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
@@ -163,7 +164,8 @@ fun CreditCardDetail(
                             },
                             onShareClick = {
                                 onShareClick(state.itemActions, onNavigate, state.itemContent.model)
-                            }
+                            },
+                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled,
                         )
                     }
                 ) { padding ->

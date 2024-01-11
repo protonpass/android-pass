@@ -18,8 +18,9 @@
 
 package proton.android.pass.composecomponents.impl.pinning
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
@@ -43,32 +44,40 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
+private const val PIN_LENGTH = 5
+
 @Composable
 fun PinCarousel(
     modifier: Modifier = Modifier,
-    list: ImmutableList<ItemUiModel> = persistentListOf(),
+    list: ImmutableList<ItemUiModel>,
     canLoadExternalImages: Boolean,
-    onItemClick: (ShareId, ItemId) -> Unit,
+    onItemClick: (ItemUiModel) -> Unit,
     onSeeAllClick: () -> Unit
 ) {
-    AnimatedVisibility(modifier = modifier, visible = list.isNotEmpty()) {
+    if (list.isNotEmpty()) {
         LazyRow(
+            modifier = modifier,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(items = list, key = { it.id.id }) { item ->
+            item {
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+            items(items = list.take(PIN_LENGTH), key = { it.id.id }) { item ->
                 PinItem(
                     item = item,
                     canLoadExternalImages = canLoadExternalImages,
                     onItemClick = onItemClick
                 )
             }
-            item {
-                TransparentTextButton(
-                    text = stringResource(R.string.pinning_carousel_see_all),
-                    color = PassTheme.colors.interactionNormMajor2,
-                    onClick = onSeeAllClick
-                )
+            if (list.size > PIN_LENGTH) {
+                item {
+                    TransparentTextButton(
+                        text = stringResource(R.string.pinning_carousel_see_all),
+                        color = PassTheme.colors.interactionNormMajor2,
+                        onClick = onSeeAllClick
+                    )
+                }
             }
         }
     }
@@ -117,7 +126,7 @@ fun PinCarouselPreview(
                     ),
                 ),
                 canLoadExternalImages = false,
-                onItemClick = { _, _ -> },
+                onItemClick = { _ -> },
                 onSeeAllClick = { }
             )
         }

@@ -51,16 +51,19 @@ fun NoteTopBarOptionsBottomSheetContents(
     onCopyNote: () -> Unit = {},
     onPinned: () -> Unit,
     onUnpinned: () -> Unit,
+    isPinningFeatureEnabled: Boolean,
 ) {
     val items = mutableListOf(copyNote(onClick = onCopyNote)).apply {
         if (canMigrate) {
             add(migrate(onClick = onMigrate))
         }
 
-        if (isPinned) {
-            add(unpin(onClick = onUnpinned))
-        } else {
-            add(pin(onClick = onPinned))
+        if (isPinningFeatureEnabled) {
+            if (isPinned) {
+                add(unpin(onClick = onUnpinned))
+            } else {
+                add(pin(onClick = onPinned))
+            }
         }
 
         if (canMoveToTrash) {
@@ -106,6 +109,7 @@ fun NoteTopBarOptionsBSContentsPreview(
                 onMoveToTrash = {},
                 onPinned = {},
                 onUnpinned = {},
+                isPinningFeatureEnabled = true,
             )
         }
     }

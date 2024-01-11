@@ -81,7 +81,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.PerformSync
-import proton.android.pass.data.api.usecases.PinItemUseCase
+import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -176,7 +176,7 @@ import proton.android.pass.data.impl.usecases.ObserveVaultCountImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.PerformSyncImpl
-import proton.android.pass.data.impl.usecases.PinItemUseCaseImpl
+import proton.android.pass.data.impl.usecases.PinItemImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
@@ -492,7 +492,7 @@ abstract class DataUseCaseModule {
     abstract fun bindSetDefaultVault(impl: SetDefaultVaultImpl): SetDefaultVault
 
     @Binds
-    abstract fun bindPinItemUseCase(impl: PinItemUseCaseImpl): PinItemUseCase
+    abstract fun bindPinItemUseCase(impl: PinItemImpl): PinItem
 
     @Binds
     abstract fun bindUnpinItemUseCase(impl: UnpinItemUseCaseImpl): UnpinItemUseCase

@@ -24,6 +24,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
@@ -58,6 +59,7 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.item.header.ItemCount
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
+import proton.android.pass.composecomponents.impl.pinning.PinCarousel
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
@@ -162,6 +164,15 @@ internal fun HomeContent(
         Column(
             modifier = Modifier.padding(contentPadding)
         ) {
+            if (!uiState.searchUiState.inSearchMode) {
+                PinCarousel(
+                    modifier = Modifier.height(48.dp),
+                    list = uiState.homeListUiState.pinnedItems,
+                    canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
+                    onItemClick = { item -> onEvent(HomeUiEvent.ItemClick(item)) },
+                    onSeeAllClick = {},
+                )
+            }
             AnimatedVisibility(
                 visible = uiState.searchUiState.inSearchMode && firstItemVisible,
                 label = "HomeContent-ItemTypeFilterList"

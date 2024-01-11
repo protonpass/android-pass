@@ -19,23 +19,9 @@
 package proton.android.pass.data.api.usecases
 
 import proton.android.pass.data.api.repositories.PinItemsResult
-import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface PinItems {
-
-    suspend operator fun invoke(shareId: ShareId, itemId: ItemId): Item {
-        when (val result = invoke(listOf(shareId to itemId))) {
-            is PinItemsResult.NonePinned -> throw result.exception
-            is PinItemsResult.SomePinned -> {
-                throw IllegalStateException("Cannot return SomePinned if there is only 1 item")
-            }
-            is PinItemsResult.AllPinned -> {
-                return result.items.first()
-            }
-        }
-    }
-
     suspend operator fun invoke(items: List<Pair<ShareId, ItemId>>): PinItemsResult
 }

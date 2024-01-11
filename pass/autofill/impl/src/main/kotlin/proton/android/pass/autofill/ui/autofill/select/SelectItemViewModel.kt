@@ -96,6 +96,7 @@ import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
+import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
@@ -136,6 +137,7 @@ class SelectItemViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeActiveItems: ObserveActiveItems,
+    observePinnedItems: ObservePinnedItems,
     getSuggestedLoginItems: GetSuggestedLoginItems,
     observeVaults: ObserveVaults,
     autofillSearchOptionsRepository: AutofillSearchOptionsRepository,
@@ -259,12 +261,20 @@ class SelectItemViewModel @Inject constructor(
     }.flowOn(Dispatchers.Default)
 
     private val pinnedItemsFlow = combine(
-        itemUiModelFlow,
+        observePinnedItems().asLoadingResult(),
         sortingSelectionFlow,
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1)
-    ) { itemsResult, sorting, isPinningEnabled ->
-        val pinnedItems = (itemsResult.getOrNull().takeIf { isPinningEnabled } ?: emptyList())
-            .filter { it.isPinned }
+    ) { pinnedItemsResult, sorting, isPinningEnabled ->
+        val pinnedItems = if (isPinningEnabled) {
+            pinnedItemsResult.getOrNull()?.let { list ->
+                encryptionContextProvider.withEncryptionContext {
+                    list.map { it.toUiModel(this@withEncryptionContext) }
+                }
+            } ?: emptyList()
+        } else {
+            emptyList()
+        }
+
         when (sorting.searchSortingType) {
             SearchSortingType.MostRecent -> pinnedItems.sortMostRecent()
             SearchSortingType.TitleAsc -> pinnedItems.sortByTitleAsc()

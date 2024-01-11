@@ -43,14 +43,9 @@ internal class RustPasswordStrengthMapperTest(
         @JvmStatic
         @Parameterized.Parameters
         fun scoreToStrengthMapping() = listOf(
-            arrayOf(PasswordScore.INVULNERABLE, PasswordStrength.Strong),
-            arrayOf(PasswordScore.VERY_STRONG, PasswordStrength.Strong),
+            arrayOf(PasswordScore.VULNERABLE, PasswordStrength.Vulnerable),
             arrayOf(PasswordScore.STRONG, PasswordStrength.Strong),
-            arrayOf(PasswordScore.GOOD, PasswordStrength.Strong),
             arrayOf(PasswordScore.WEAK, PasswordStrength.Weak),
-            arrayOf(PasswordScore.VERY_WEAK, PasswordStrength.Weak),
-            arrayOf(PasswordScore.DANGEROUS, PasswordStrength.Vulnerable),
-            arrayOf(PasswordScore.VERY_DANGEROUS, PasswordStrength.Vulnerable),
         )
 
     }

@@ -95,6 +95,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RestoreAllItems
@@ -172,6 +173,7 @@ class HomeViewModel @Inject constructor(
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
+    observePinnedItems: ObservePinnedItems,
     preferencesRepository: UserPreferencesRepository,
     getUserPlan: GetUserPlan,
     appDispatchers: AppDispatchers,
@@ -373,12 +375,20 @@ class HomeViewModel @Inject constructor(
     }.flowOn(appDispatchers.default)
 
     private val pinnedItemsFlow = combine(
-        itemUiModelFlow,
+        observePinnedItems().asLoadingResult(),
         searchOptionsFlow.map { it.sortingOption },
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1)
-    ) { itemsResult, sorting, isPinningEnabled ->
-        val pinnedItems = (itemsResult.getOrNull().takeIf { isPinningEnabled } ?: emptyList())
-            .filter { it.isPinned }
+    ) { pinnedItemsResult, sorting, isPinningEnabled ->
+        val pinnedItems = if (isPinningEnabled) {
+            pinnedItemsResult.getOrNull()?.let { list ->
+                encryptionContextProvider.withEncryptionContext {
+                    list.map { it.toUiModel(this@withEncryptionContext) }
+                }
+            } ?: emptyList()
+        } else {
+            emptyList()
+        }
+
         when (sorting.searchSortingType) {
             SearchSortingType.MostRecent -> pinnedItems.sortMostRecent()
             SearchSortingType.TitleAsc -> pinnedItems.sortByTitleAsc()

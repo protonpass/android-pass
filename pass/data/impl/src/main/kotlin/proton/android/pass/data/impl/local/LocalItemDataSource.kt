@@ -52,6 +52,8 @@ interface LocalItemDataSource {
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>>
 
+    fun observePinnedItems(userId: UserId): Flow<List<ItemEntity>>
+
     fun observeItem(
         shareId: ShareId,
         itemId: ItemId,

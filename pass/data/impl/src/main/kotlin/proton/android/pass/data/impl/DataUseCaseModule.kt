@@ -73,6 +73,7 @@ import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
@@ -170,6 +171,7 @@ import proton.android.pass.data.impl.usecases.ObserveInvitesImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
+import proton.android.pass.data.impl.usecases.ObservePinnedItemsImpl
 import proton.android.pass.data.impl.usecases.ObservePrimaryUserEmailImpl
 import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
 import proton.android.pass.data.impl.usecases.ObserveUserAccessDataImpl
@@ -271,6 +273,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveItems(impl: ObserveItemsImpl): ObserveItems
+
+    @Binds
+    abstract fun bindObservePinnedItems(impl: ObservePinnedItemsImpl): ObservePinnedItems
 
     @Binds
     abstract fun bindObserveShares(impl: ObserveAllSharesImpl): ObserveAllShares

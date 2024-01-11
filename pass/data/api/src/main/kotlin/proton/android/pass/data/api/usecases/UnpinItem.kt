@@ -22,9 +22,9 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-interface UnpinItemUseCase {
+interface UnpinItem {
 
-    suspend fun execute(
+    suspend operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
     ): Item

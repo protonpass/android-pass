@@ -82,6 +82,7 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
+import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -96,6 +97,7 @@ import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.UnpinItems
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -177,6 +179,7 @@ import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.PerformSyncImpl
 import proton.android.pass.data.impl.usecases.PinItemImpl
+import proton.android.pass.data.impl.usecases.PinItemsImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
@@ -193,6 +196,7 @@ import proton.android.pass.data.impl.usecases.SetVaultMemberPermissionImpl
 import proton.android.pass.data.impl.usecases.TransferVaultOwnershipImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
 import proton.android.pass.data.impl.usecases.UnpinItemImpl
+import proton.android.pass.data.impl.usecases.UnpinItemsImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
@@ -496,5 +500,11 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindUnpinItem(impl: UnpinItemImpl): UnpinItem
+
+    @Binds
+    abstract fun bindPinItems(impl: PinItemsImpl): PinItems
+
+    @Binds
+    abstract fun bindUnpinItems(impl: UnpinItemsImpl): UnpinItems
 
 }

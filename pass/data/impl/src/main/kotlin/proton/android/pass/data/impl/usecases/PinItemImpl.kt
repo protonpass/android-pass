@@ -18,20 +18,20 @@
 
 package proton.android.pass.data.impl.usecases
 
-import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.PinItem
+import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class PinItemImpl @Inject constructor(
-    private val itemRepository: ItemRepository,
+    private val pinItem: PinItems,
 ) : PinItem {
 
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-    ): Item = itemRepository.pinItem(shareId, itemId)
+    ): Item = pinItem(shareId, itemId)
 
 }

@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
@@ -50,6 +51,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.MigrateItemsResult
+import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.VaultProgress
@@ -703,33 +705,104 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun pinItem(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = handleItemPinning(shareId, itemId, remoteItemDataSource::pinItem)
+    override suspend fun pinItems(
+        items: List<Pair<ShareId, ItemId>>
+    ): PinItemsResult = handleItemPinning(items, remoteItemDataSource::pinItem)
 
-    override suspend fun unpinItem(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = handleItemPinning(shareId, itemId, remoteItemDataSource::unpinItem)
+    override suspend fun unpinItems(
+        items: List<Pair<ShareId, ItemId>>
+    ): PinItemsResult = handleItemPinning(items, remoteItemDataSource::unpinItem)
 
     private suspend fun handleItemPinning(
-        shareId: ShareId,
-        itemId: ItemId,
+        items: List<Pair<ShareId, ItemId>>,
         block: suspend (userId: UserId, shareId: ShareId, itemId: ItemId) -> ItemRevision,
-    ): Item {
+    ): PinItemsResult = withContext(Dispatchers.IO) {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
-        val share = shareRepository.getById(userId, shareId)
 
-        return block(userId, shareId, itemId).let { itemRevision ->
-            createItemEntity(userId, itemRevision, share).let { itemEntity ->
-                localItemDataSource.upsertItem(itemEntity)
-                encryptionContextProvider.withEncryptionContext {
-                    itemEntity.toDomain(this@withEncryptionContext)
+        val pinResults: List<Result<Pair<ShareId, ItemRevision>>> = items.map { (shareId, itemId) ->
+            async { runCatching { shareId to block(userId, shareId, itemId) } }
+        }.awaitAll().toList()
+
+        generateItemPinningResponse(userId, items, pinResults)
+    }
+
+    private suspend fun generateItemPinningResponse(
+        userId: UserId,
+        items: List<Pair<ShareId, ItemId>>,
+        pinResults: List<Result<Pair<ShareId, ItemRevision>>>
+    ): PinItemsResult = coroutineScope {
+
+        // Obtain all the shares for the items being pinned
+        val allShareIds = items.map { it.first }.toSet()
+        val shares: Map<ShareId, Share> = allShareIds.map {
+            async { it to shareRepository.getById(userId, it) }
+        }.awaitAll().toMap()
+
+        // Function that mapps from a given ItemRevision to an ItemEntity
+        val revisionToEntity: suspend (ShareId, ItemRevision) -> ItemEntity = { shareId, revision ->
+            val share = shares[shareId] ?: throw IllegalStateException("Could not find share")
+            createItemEntity(userId, revision, share)
+        }
+
+        val (successes, failures) = pinResults.partition { it.isSuccess }
+        when {
+            // Happy path
+            successes.isNotEmpty() && failures.isEmpty() -> {
+                val pinnedRevisions: List<Pair<ShareId, ItemRevision>> = successes.mapNotNull {
+                    it.getOrNull()
                 }
+
+                val pinned: List<ItemEntity> = database.inTransaction {
+                    pinnedRevisions.map { (shareId, revision) ->
+                        revisionToEntity(shareId, revision)
+                    }
+                }
+
+                val pinnedItemsMapped = encryptionContextProvider.withEncryptionContext {
+                    pinned.map { it.toDomain(this@withEncryptionContext) }
+                }
+
+                PinItemsResult.AllPinned(pinnedItemsMapped)
             }
+
+            // Some succeeded
+            successes.isNotEmpty() && failures.isNotEmpty() -> {
+                val firstFailure = failures.first().exceptionOrNull()
+                    ?: IllegalStateException("Error pinning items. Could not pin some")
+                PassLogger.w(TAG, "Error pinning items. Could not pin some")
+                PassLogger.w(TAG, firstFailure)
+
+                val pinnedRevisions: List<Pair<ShareId, ItemRevision>> = successes.mapNotNull {
+                    it.getOrNull()
+                }
+
+                val pinned: List<ItemEntity> = database.inTransaction {
+                    pinnedRevisions.map { (shareId, revision) ->
+                        revisionToEntity(shareId, revision)
+                    }
+                }
+
+                val pinnedItemsMapped = encryptionContextProvider.withEncryptionContext {
+                    pinned.map { it.toDomain(this@withEncryptionContext) }
+                }
+
+                PinItemsResult.SomePinned(pinnedItemsMapped)
+            }
+
+            // None succeeded
+            successes.isEmpty() && failures.isNotEmpty() -> {
+                val firstFailure = failures.first().exceptionOrNull()
+                    ?: IllegalStateException("Error pinning items. Could not pin any")
+                PassLogger.w(TAG, "Error pinning items. Could not pin any")
+                PassLogger.w(TAG, firstFailure)
+                PinItemsResult.NonePinned(firstFailure)
+            }
+
+            // Should never happen
+            else -> PinItemsResult.AllPinned(emptyList())
         }
     }
+
 
     private suspend fun createItemEntity(
         userId: UserId,

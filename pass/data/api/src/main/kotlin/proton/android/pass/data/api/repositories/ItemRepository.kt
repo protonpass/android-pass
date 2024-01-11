@@ -142,15 +142,8 @@ interface ItemRepository {
         aliasEmail: String
     ): Item?
 
-    suspend fun pinItem(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item
-
-    suspend fun unpinItem(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item
+    suspend fun pinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult
+    suspend fun unpinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult
 }
 
 data class VaultProgress(
@@ -167,4 +160,15 @@ sealed interface MigrateItemsResult {
 
     @JvmInline
     value class NoneMigrated(val exception: Throwable) : MigrateItemsResult
+}
+
+sealed interface PinItemsResult {
+    @JvmInline
+    value class AllPinned(val items: List<Item>) : PinItemsResult
+
+    @JvmInline
+    value class SomePinned(val migratedItems: List<Item>) : PinItemsResult
+
+    @JvmInline
+    value class NonePinned(val exception: Throwable) : PinItemsResult
 }

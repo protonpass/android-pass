@@ -83,6 +83,7 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
+import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -96,6 +97,7 @@ import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.UnpinItems
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -183,6 +185,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultById
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestPerformSync
+import proton.android.pass.data.fakes.usecases.TestPinItems
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
 import proton.android.pass.data.fakes.usecases.TestRefreshInvites
 import proton.android.pass.data.fakes.usecases.TestRefreshPlan
@@ -196,6 +199,7 @@ import proton.android.pass.data.fakes.usecases.TestSetDefaultVault
 import proton.android.pass.data.fakes.usecases.TestSetVaultMemberPermission
 import proton.android.pass.data.fakes.usecases.TestTransferVaultOwnership
 import proton.android.pass.data.fakes.usecases.TestTrashItems
+import proton.android.pass.data.fakes.usecases.TestUnpinItems
 import proton.android.pass.data.fakes.usecases.TestUpdateAlias
 import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
@@ -570,5 +574,11 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindUnpinItem(impl: FakeUnpinItem): UnpinItem
+
+    @Binds
+    abstract fun bindPinItems(impl: TestPinItems): PinItems
+
+    @Binds
+    abstract fun bindUnpinItems(impl: TestUnpinItems): UnpinItems
 
 }

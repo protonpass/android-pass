@@ -19,7 +19,7 @@
 package proton.android.pass.totp.impl
 
 import proton.android.pass.commonrust.TotpException
-import proton.android.pass.totp.api.TotpSpec
+import proton.android.pass.commonrust.TotpTokenResult
 import javax.inject.Inject
 import proton.android.pass.commonrust.TotpTokenGenerator as RustTotpTokenGenerator
 
@@ -27,10 +27,21 @@ class TotpTokenGeneratorImpl @Inject constructor() : TotpTokenGenerator {
 
     private val totpTokenGenerator by lazy { RustTotpTokenGenerator() }
 
-    override fun generate(spec: TotpSpec, currentTime: ULong): Result<String> =
-        runCatching { totpTokenGenerator.generateCurrentToken(spec.toRustTotpSpec(), currentTime) }
-            .fold(
-                onSuccess = { Result.success(it) },
-                onFailure = { Result.failure((it as TotpException).toTotpUriException()) }
-            )
+    override fun generate(
+        uri: String,
+        currentTime: ULong
+    ): Result<TotpGenerationResult> = runCatching {
+        totpTokenGenerator.generateToken(uri, currentTime)
+    }.fold(
+        onSuccess = { Result.success(it.toDomain()) },
+        onFailure = {
+            Result.failure((it as TotpException).toTotpUriException())
+        }
+    )
+
+    private fun TotpTokenResult.toDomain() = TotpGenerationResult(
+        spec = totp.toTotpSpec(),
+        token = token,
+        timestamp = timestamp
+    )
 }

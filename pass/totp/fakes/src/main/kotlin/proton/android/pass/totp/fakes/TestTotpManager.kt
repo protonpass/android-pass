@@ -47,7 +47,7 @@ class TestTotpManager @Inject constructor() : TotpManager {
         sanitisedSaveResultsQueue.add(result)
     }
 
-    override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> = flowOf(totpWrapper)
+    override fun observeCode(uri: String): Flow<TotpManager.TotpWrapper> = flowOf(totpWrapper)
 
     override fun parse(uri: String): Result<TotpSpec> = parseResult
 

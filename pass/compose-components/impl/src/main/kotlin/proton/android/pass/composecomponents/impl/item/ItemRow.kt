@@ -65,7 +65,7 @@ internal fun ItemRow(
         icon()
         Column(
             modifier = Modifier
-                .padding(horizontal = 20.dp)
+                .padding(start = 14.dp, end = 20.dp)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center
         ) {

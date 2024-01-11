@@ -75,11 +75,13 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
-@HiltViewModel
+@[HiltViewModel Suppress("LongParameterList")]
 class CreditCardDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
@@ -95,7 +97,8 @@ class CreditCardDetailViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
-    getItemActions: GetItemActions
+    getItemActions: GetItemActions,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -187,9 +190,18 @@ class CreditCardDetailViewModel @Inject constructor(
         canPerformPaidActionFlow,
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
-        eventState
-    ) { itemDetails, isLoading, isItemSentToTrash, isPermanentlyDeleted,
-        isRestoredFromTrash, canPerformPaidActionResult, shareAction, itemActions, event ->
+        eventState,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1)
+    ) { itemDetails,
+        isLoading,
+        isItemSentToTrash,
+        isPermanentlyDeleted,
+        isRestoredFromTrash,
+        canPerformPaidActionResult,
+        shareAction,
+        itemActions,
+        event,
+        isPinningFeatureEnabled ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(DetailSnackbarMessages.InitError)
@@ -225,7 +237,8 @@ class CreditCardDetailViewModel @Inject constructor(
                     canPerformActions = canPerformItemActions,
                     shareClickAction = shareAction,
                     itemActions = actions,
-                    event = event
+                    event = event,
+                    isPinningFeatureEnabled = isPinningFeatureEnabled,
                 )
             }
         }

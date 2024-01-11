@@ -54,7 +54,8 @@ sealed interface LoginDetailUiState {
         val customFields: ImmutableList<CustomFieldUiContent>,
         val shareClickAction: ShareClickAction,
         val itemActions: ItemActions,
-        val event: ItemDetailEvent
+        val event: ItemDetailEvent,
+        val isPinningFeatureEnabled: Boolean,
     ) : LoginDetailUiState
 }
 

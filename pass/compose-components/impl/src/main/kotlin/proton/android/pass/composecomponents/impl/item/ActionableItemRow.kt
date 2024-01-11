@@ -79,7 +79,7 @@ fun ActionableItemRow(
                         .padding(horizontal = 8.dp, vertical = 10.2.dp)
                 },
                 ifFalse = {
-                    padding(horizontal = 16.dp, vertical = 12.dp)
+                    padding(horizontal = 16.dp, vertical = 6.dp)
                 }
             ),
         verticalAlignment = Alignment.CenterVertically,

@@ -19,13 +19,14 @@
 package proton.android.pass.composecomponents.impl.pinning
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -35,18 +36,23 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun CircledPin(
-    modifier: Modifier = Modifier,
-    backgroundColor: Color,
-) {
+fun CircledPin(modifier: Modifier = Modifier, ratio: Float = 1f) {
     Icon(
         modifier = modifier
+            .size(24.dp * ratio)
+            .border(
+                width = 2.dp * ratio,
+                color = PassTheme.colors.backgroundNorm,
+                shape = CircleShape
+            )
+            .padding(2.dp * ratio)
             .background(
-                color = backgroundColor,
+                color = PassTheme.colors.loginInteractionNormMajor2,
                 shape = CircleShape,
             )
-            .padding(6.dp),
+            .padding(4.dp * ratio),
         painter = painterResource(R.drawable.ic_pin_filled),
+        tint = PassTheme.colors.backgroundNorm,
         contentDescription = null,
     )
 }
@@ -58,7 +64,7 @@ fun CircledPinPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            CircledPin(backgroundColor = PassTheme.colors.noteInteractionNormMajor1)
+            CircledPin()
         }
     }
 }

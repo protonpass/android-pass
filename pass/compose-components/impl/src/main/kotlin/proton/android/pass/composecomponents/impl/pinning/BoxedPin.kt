@@ -22,16 +22,12 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -43,31 +39,21 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 @Composable
 fun BoxedPin(
     modifier: Modifier = Modifier,
-    pinBackgroundColor: Color,
     isShown: Boolean = false,
+    pin: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
     Box(modifier = modifier) {
-        Box(modifier = Modifier.padding(2.dp)) {
+        Box(modifier = Modifier.padding(0.dp, 6.dp, 6.dp, 6.dp)) {
             content()
         }
         AnimatedVisibility(
-            modifier = Modifier
-                .align(Alignment.BottomEnd),
+            modifier = Modifier.align(Alignment.BottomEnd),
             visible = isShown,
             enter = scaleIn(),
             exit = scaleOut()
         ) {
-            CircledPin(
-                modifier = Modifier
-                    .border(
-                        width = 2.dp,
-                        color = PassTheme.colors.backgroundMedium,
-                        shape = CircleShape
-                    )
-                    .size(24.dp),
-                backgroundColor = pinBackgroundColor
-            )
+            pin()
         }
     }
 }
@@ -80,18 +66,19 @@ fun BoxedPinPreview(
     PassTheme(isDark = isDark) {
         Surface {
             BoxedPin(
-                pinBackgroundColor = PassTheme.colors.loginInteractionNorm,
-                isShown = true
-            ) {
-                LoginIcon(
-                    size = 60,
-                    shape = PassTheme.shapes.squircleMediumLargeShape,
-                    text = "My title",
-                    website = null,
-                    packageName = null,
-                    canLoadExternalImages = false
-                )
-            }
+                isShown = true,
+                pin = { CircledPin() },
+                content = {
+                    LoginIcon(
+                        size = 60,
+                        shape = PassTheme.shapes.squircleMediumLargeShape,
+                        text = "My title",
+                        website = null,
+                        packageName = null,
+                        canLoadExternalImages = false
+                    )
+                }
+            )
         }
     }
 }

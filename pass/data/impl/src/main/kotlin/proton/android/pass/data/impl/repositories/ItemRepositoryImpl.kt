@@ -757,6 +757,7 @@ class ItemRepositoryImpl @Inject constructor(
                         revisionToEntity(shareId, revision)
                     }
                 }
+                localItemDataSource.upsertItems(pinned)
 
                 val pinnedItemsMapped = encryptionContextProvider.withEncryptionContext {
                     pinned.map { it.toDomain(this@withEncryptionContext) }
@@ -781,6 +782,7 @@ class ItemRepositoryImpl @Inject constructor(
                         revisionToEntity(shareId, revision)
                     }
                 }
+                localItemDataSource.upsertItems(pinned)
 
                 val pinnedItemsMapped = encryptionContextProvider.withEncryptionContext {
                     pinned.map { it.toDomain(this@withEncryptionContext) }

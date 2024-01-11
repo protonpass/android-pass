@@ -21,6 +21,8 @@ package proton.android.pass.autofill.heuristics
 import android.view.View
 import proton.android.pass.autofill.entities.FieldType
 
+private const val MOZILLA_BROWSER_PREFIX = "mozac"
+
 internal data class FieldKeywords(
     val fieldType: FieldType,
     val allowedKeywords: List<String>,
@@ -53,7 +55,7 @@ internal val fieldKeywordsList = listOf(
             "accountname",
             "userid"
         ),
-        deniedKeywords = listOf("composer", "message", "mozac")
+        deniedKeywords = listOf("composer", "message", MOZILLA_BROWSER_PREFIX)
     ),
     kw(
         fieldType = FieldType.Email,
@@ -61,7 +63,7 @@ internal val fieldKeywordsList = listOf(
             View.AUTOFILL_HINT_EMAIL_ADDRESS,
             "email",
         ),
-        deniedKeywords = listOf("composer", "message", "mozac")
+        deniedKeywords = listOf("composer", "message", MOZILLA_BROWSER_PREFIX)
     ),
     kw(
         fieldType = FieldType.Password,

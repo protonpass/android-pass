@@ -255,7 +255,7 @@ class AliasDetailViewModel @Inject constructor(
         runCatching { pinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
             .onFailure { error ->
-                PassLogger.e(TAG, error, "An error occurred pinning Alias item")
+                PassLogger.w(TAG, error, "An error occurred pinning Alias item")
                 snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
             }
 
@@ -268,7 +268,7 @@ class AliasDetailViewModel @Inject constructor(
         runCatching { unpinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
             .onFailure { error ->
-                PassLogger.e(TAG, error, "An error occurred unpinning Alias item")
+                PassLogger.w(TAG, error, "An error occurred unpinning Alias item")
                 snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
             }
 

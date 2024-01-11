@@ -82,7 +82,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.PerformSync
-import proton.android.pass.data.api.usecases.PinItemUseCase
+import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -118,7 +118,7 @@ import proton.android.pass.data.fakes.repositories.TestFeatureFlagRepository
 import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
-import proton.android.pass.data.fakes.usecases.FakePinItemUseCase
+import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItemUseCase
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
@@ -566,7 +566,7 @@ abstract class FakesDataModule {
     abstract fun bindBulkMoveToVaultRepository(impl: TestBulkMoveToVaultRepository): BulkMoveToVaultRepository
 
     @Binds
-    abstract fun bindPinItemUseCase(impl: FakePinItemUseCase): PinItemUseCase
+    abstract fun bindPinItemUseCase(impl: FakePinItem): PinItem
 
     @Binds
     abstract fun bindUnpinItemUseCase(impl: FakeUnpinItemUseCase): UnpinItemUseCase

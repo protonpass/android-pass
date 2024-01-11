@@ -56,7 +56,7 @@ import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.data.api.usecases.PinItemUseCase
+import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItemUseCase
@@ -90,7 +90,7 @@ class CreditCardDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val canShareVault: CanShareVault,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
-    private val pinItemUseCase: PinItemUseCase,
+    private val pinItem: PinItem,
     private val unpinItemUseCase: UnpinItemUseCase,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
@@ -336,7 +336,7 @@ class CreditCardDetailViewModel @Inject constructor(
     internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
 
-        runCatching { pinItemUseCase.execute(shareId, itemId) }
+        runCatching { pinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
             .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError) }
 

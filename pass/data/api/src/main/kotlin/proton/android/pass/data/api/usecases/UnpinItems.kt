@@ -16,22 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.api.usecases
 
-import proton.android.pass.data.api.usecases.UnpinItem
-import proton.android.pass.data.api.usecases.UnpinItems
+import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import javax.inject.Inject
 
-class UnpinItemImpl @Inject constructor(
-    private val unpinItem: UnpinItems
-) : UnpinItem {
+interface UnpinItems {
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = unpinItem(shareId, itemId)
+    suspend operator fun invoke(shareId: ShareId, itemId: ItemId): Item {
+        when (val result = invoke(listOf(shareId to itemId))) {
+            is PinItemsResult.NonePinned -> throw result.exception
+            is PinItemsResult.SomePinned -> {
+                throw IllegalStateException("Cannot return SomePinned if there is only 1 item")
+            }
+            is PinItemsResult.AllPinned -> {
+                return result.items.first()
+            }
+        }
+    }
+
+    suspend operator fun invoke(items: List<Pair<ShareId, ItemId>>): PinItemsResult
 
 }

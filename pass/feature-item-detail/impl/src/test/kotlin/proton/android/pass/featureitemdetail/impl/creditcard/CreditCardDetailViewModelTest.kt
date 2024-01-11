@@ -30,7 +30,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
-import proton.android.pass.data.fakes.usecases.FakePinItemUseCase
+import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItemUseCase
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
@@ -92,7 +92,7 @@ class CreditCardDetailViewModelTest {
             canShareVault = TestCanShareVault(),
             getItemActions = TestGetItemActions(),
             bulkMoveToVaultRepository = TestBulkMoveToVaultRepository(),
-            pinItemUseCase = FakePinItemUseCase(),
+            pinItem = FakePinItem(),
             unpinItemUseCase = FakeUnpinItemUseCase(),
         )
     }

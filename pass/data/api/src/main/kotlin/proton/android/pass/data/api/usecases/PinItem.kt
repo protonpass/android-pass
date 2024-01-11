@@ -16,22 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.api.usecases
 
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.PinItemUseCase
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import javax.inject.Inject
 
-class PinItemUseCaseImpl @Inject constructor(
-    private val itemRepository: ItemRepository,
-) : PinItemUseCase {
+interface PinItem {
 
-    override suspend fun execute(
+    suspend operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-    ): Item = itemRepository.pinItem(shareId, itemId)
+    ): Item
 
 }

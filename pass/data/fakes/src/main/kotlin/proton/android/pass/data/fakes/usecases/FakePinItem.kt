@@ -18,14 +18,14 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import proton.android.pass.data.api.usecases.PinItemUseCase
+import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.test.domain.TestItem
 import javax.inject.Inject
 
-class FakePinItemUseCase @Inject constructor() : PinItemUseCase {
+class FakePinItem @Inject constructor() : PinItem {
 
     private var item: Item? = null
 

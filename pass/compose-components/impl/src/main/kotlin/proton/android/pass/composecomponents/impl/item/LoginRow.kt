@@ -85,7 +85,12 @@ fun LoginRow(
 
                 BoxedPin(
                     isShown = item.isPinned,
-                    pin = { CircledPin(ratio = 0.8f) },
+                    pin = {
+                        CircledPin(
+                            ratio = 0.8f,
+                            backgroundColor = PassTheme.colors.loginInteractionNormMajor2
+                        )
+                    },
                     content = {
                         LoginIcon(
                             text = fields.title.text,
@@ -141,7 +146,10 @@ private fun getHighlightedFields(
         note = annotatedNote,
         username = annotatedUsername,
         websites = annotatedWebsites,
-        subtitles = (listOfNotNull(annotatedUsername, annotatedNote) + annotatedWebsites).toPersistentList()
+        subtitles = (listOfNotNull(
+            annotatedUsername,
+            annotatedNote
+        ) + annotatedWebsites).toPersistentList()
     )
 }
 

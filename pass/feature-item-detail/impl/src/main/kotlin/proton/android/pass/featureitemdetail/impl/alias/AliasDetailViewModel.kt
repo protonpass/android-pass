@@ -76,6 +76,8 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -97,7 +99,8 @@ class AliasDetailViewModel @Inject constructor(
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
     savedStateHandle: SavedStateHandle,
-    getItemActions: GetItemActions
+    getItemActions: GetItemActions,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
 ) : ViewModel() {
 
     private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
@@ -138,6 +141,7 @@ class AliasDetailViewModel @Inject constructor(
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1)
     ) { itemLoadingResult,
         aliasDetailsResult,
         isLoading,
@@ -146,7 +150,8 @@ class AliasDetailViewModel @Inject constructor(
         isRestoredFromTrash,
         shareAction,
         itemActions,
-        event ->
+        event,
+        isPinningFeatureEnabled ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -176,7 +181,8 @@ class AliasDetailViewModel @Inject constructor(
                     canPerformActions = canPerformItemActions,
                     shareClickAction = shareAction,
                     itemActions = actions,
-                    event = event
+                    event = event,
+                    isPinningFeatureEnabled = isPinningFeatureEnabled,
                 )
             }
         }

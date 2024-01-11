@@ -44,7 +44,8 @@ sealed interface CreditCardDetailUiState {
         val canPerformActions: Boolean,
         val shareClickAction: ShareClickAction,
         val itemActions: ItemActions,
-        val event: ItemDetailEvent
+        val event: ItemDetailEvent,
+        val isPinningFeatureEnabled: Boolean,
     ) : CreditCardDetailUiState
 
     @Stable

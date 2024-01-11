@@ -75,11 +75,13 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
-@HiltViewModel
+@[HiltViewModel Suppress("LongParameterList")]
 class NoteDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -95,7 +97,8 @@ class NoteDetailViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle,
-    getItemActions: GetItemActions
+    getItemActions: GetItemActions,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
 ) : ViewModel() {
 
     private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
@@ -134,7 +137,8 @@ class NoteDetailViewModel @Inject constructor(
         isRestoredFromTrashState,
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
-        eventState
+        eventState,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1)
     ) { itemLoadingResult,
         isLoading,
         isItemSentToTrash,
@@ -142,7 +146,8 @@ class NoteDetailViewModel @Inject constructor(
         isRestoredFromTrash,
         shareAction,
         itemActions,
-        event ->
+        event,
+        isPinningFeatureEnabled ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -170,7 +175,8 @@ class NoteDetailViewModel @Inject constructor(
                     canPerformActions = canPerformItemActions,
                     shareClickAction = shareAction,
                     itemActions = actions,
-                    event = event
+                    event = event,
+                    isPinningFeatureEnabled = isPinningFeatureEnabled,
                 )
             }
         }

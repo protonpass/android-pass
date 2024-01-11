@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases
 
+import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.domain.Item
@@ -26,12 +27,20 @@ import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class PinItemImpl @Inject constructor(
-    private val pinItem: PinItems,
+    private val pinItems: PinItems,
 ) : PinItem {
 
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-    ): Item = pinItem(shareId, itemId)
+    ): Item = when (val result = pinItems(listOf(shareId to itemId))) {
+        is PinItemsResult.NonePinned -> throw result.exception
+        is PinItemsResult.SomePinned -> {
+            throw IllegalStateException("Cannot return SomePinned if there is only 1 item")
+        }
+        is PinItemsResult.AllPinned -> {
+            result.items.first()
+        }
+    }
 
 }

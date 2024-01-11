@@ -30,23 +30,46 @@ class ThemeItemTitleProvider : ThemePairPreviewProvider<ItemTitleInput>(ItemTitl
 class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
     override val values: Sequence<ItemTitleInput>
         get() = sequence {
-            val title = "A really long title to check if the element is multiline"
-            yield(ItemTitleInput(title = title, vault = null))
             yield(
                 ItemTitleInput(
-                    title = title,
+                    vault = null,
+                    isPinned = false,
+                )
+            )
+            yield(
+                ItemTitleInput(
                     vault = Vault(
                         shareId = ShareId("123"),
                         name = "A vault",
                         color = ShareColor.Color1,
                         icon = ShareIcon.Icon1,
-                    )
+                    ),
+                    isPinned = false,
+                )
+            )
+            yield(
+                ItemTitleInput(
+                    vault = null,
+                    isPinned = true,
+                )
+            )
+            yield(
+                ItemTitleInput(
+                    vault = Vault(
+                        shareId = ShareId("123"),
+                        name = "A vault",
+                        color = ShareColor.Color1,
+                        icon = ShareIcon.Icon1,
+                    ),
+                    isPinned = true,
                 )
             )
         }
 }
 
 data class ItemTitleInput(
-    val title: String,
-    val vault: Vault?
+    val title: String = "A really long title to check if the element is multiline",
+    val note: String = "Note body",
+    val vault: Vault?,
+    val isPinned: Boolean,
 )

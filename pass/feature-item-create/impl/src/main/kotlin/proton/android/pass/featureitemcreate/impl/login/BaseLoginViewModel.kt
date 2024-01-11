@@ -347,12 +347,8 @@ abstract class BaseLoginViewModel(
         val sanitisedUri = totpManager.sanitiseToSave(originalTotpUri, editedTotpUri)
             .getOrElse { return showInvalidTOTP() }
         if (editedTotpUri.isNotBlank()) {
-            val uriSpec = totpManager.parse(sanitisedUri).getOrElse {
-                return showInvalidTOTP()
-            }
-
             val code = kotlin.runCatching {
-                runBlocking { totpManager.observeCode(uriSpec).firstOrNull() }
+                runBlocking { totpManager.observeCode(sanitisedUri).firstOrNull() }
             }
             if (code.isFailure) {
                 return showInvalidTOTP()
@@ -454,13 +450,13 @@ abstract class BaseLoginViewModel(
                 return field to true
             }
         if (sanitisedUri.isNotBlank()) {
-            val uriSpec = totpManager.parse(sanitisedUri).getOrElse {
+            totpManager.parse(sanitisedUri).getOrElse {
                 addValidationError(CustomFieldValidationError.InvalidTotp(index))
                 return field to true
             }
 
             val code = kotlin.runCatching {
-                runBlocking { totpManager.observeCode(uriSpec).firstOrNull() }
+                runBlocking { totpManager.observeCode(sanitisedUri).firstOrNull() }
             }
             if (code.isFailure) {
                 addValidationError(CustomFieldValidationError.InvalidTotp(index))

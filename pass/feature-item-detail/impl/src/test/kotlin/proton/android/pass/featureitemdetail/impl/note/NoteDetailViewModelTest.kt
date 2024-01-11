@@ -35,7 +35,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakePinItem
-import proton.android.pass.data.fakes.usecases.FakeUnpinItemUseCase
+import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
@@ -106,7 +106,7 @@ class NoteDetailViewModelTest {
             getItemActions = TestGetItemActions(),
             bulkMoveToVaultRepository = TestBulkMoveToVaultRepository(),
             pinItem = FakePinItem(),
-            unpinItemUseCase = FakeUnpinItemUseCase(),
+            unpinItem = FakeUnpinItem(),
         )
     }
 

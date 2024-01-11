@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -70,11 +71,16 @@ import proton.android.pass.common.api.map
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.GroupedItemList
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationAsc
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationDesc
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByMostRecent
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByTitleAsc
+import proton.android.pass.commonui.api.ItemSorter.groupAndSortByTitleDesc
 import proton.android.pass.commonui.api.ItemSorter.sortByCreationAsc
 import proton.android.pass.commonui.api.ItemSorter.sortByCreationDesc
-import proton.android.pass.commonui.api.ItemSorter.sortByMostRecent
 import proton.android.pass.commonui.api.ItemSorter.sortByTitleAsc
 import proton.android.pass.commonui.api.ItemSorter.sortByTitleDesc
+import proton.android.pass.commonui.api.ItemSorter.sortMostRecent
 import proton.android.pass.commonui.api.ItemSorter.sortSuggestionsByMostRecent
 import proton.android.pass.commonui.api.ItemUiFilter
 import proton.android.pass.commonui.api.toUiModel
@@ -108,6 +114,8 @@ import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -126,6 +134,7 @@ class SelectItemViewModel @Inject constructor(
     private val toastManager: ToastManager,
     private val preferenceRepository: UserPreferencesRepository,
     private val telemetryManager: TelemetryManager,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeActiveItems: ObserveActiveItems,
     getSuggestedLoginItems: GetSuggestedLoginItems,
     observeVaults: ObserveVaults,
@@ -220,11 +229,11 @@ class SelectItemViewModel @Inject constructor(
         sortingSelectionFlow
     ) { result, sortingType ->
         when (sortingType.searchSortingType) {
-            SearchSortingType.TitleAsc -> result.map { list -> list.sortByTitleAsc() }
-            SearchSortingType.TitleDesc -> result.map { list -> list.sortByTitleDesc() }
-            SearchSortingType.CreationAsc -> result.map { list -> list.sortByCreationAsc() }
-            SearchSortingType.CreationDesc -> result.map { list -> list.sortByCreationDesc() }
-            SearchSortingType.MostRecent -> result.map { list -> list.sortByMostRecent(clock.now()) }
+            SearchSortingType.TitleAsc -> result.map { list -> list.groupAndSortByTitleAsc() }
+            SearchSortingType.TitleDesc -> result.map { list -> list.groupAndSortByTitleDesc() }
+            SearchSortingType.CreationAsc -> result.map { list -> list.groupAndSortByCreationAsc() }
+            SearchSortingType.CreationDesc -> result.map { list -> list.groupAndSortByCreationDesc() }
+            SearchSortingType.MostRecent -> result.map { list -> list.groupAndSortByMostRecent(clock.now()) }
         }
     }.distinctUntilChanged()
 
@@ -248,6 +257,22 @@ class SelectItemViewModel @Inject constructor(
             result
         }
     }.flowOn(Dispatchers.Default)
+
+    private val pinnedItemsFlow = combine(
+        itemUiModelFlow,
+        sortingSelectionFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1)
+    ) { itemsResult, sorting, isPinningEnabled ->
+        val pinnedItems = (itemsResult.getOrNull().takeIf { isPinningEnabled } ?: emptyList())
+            .filter { it.isPinned }
+        when (sorting.searchSortingType) {
+            SearchSortingType.MostRecent -> pinnedItems.sortMostRecent()
+            SearchSortingType.TitleAsc -> pinnedItems.sortByTitleAsc()
+            SearchSortingType.TitleDesc -> pinnedItems.sortByTitleDesc()
+            SearchSortingType.CreationAsc -> pinnedItems.sortByCreationAsc()
+            SearchSortingType.CreationDesc -> pinnedItems.sortByCreationDesc()
+        }.toPersistentList()
+    }
 
     private val suggestionsItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
         autofillAppState
@@ -287,8 +312,9 @@ class SelectItemViewModel @Inject constructor(
         autofillAppState,
         textFilterListItemFlow,
         suggestionsItemUIModelFlow,
-        isInSearchModeState
-    ) { autofillAppState, result, suggestionsResult, isInSearchMode ->
+        isInSearchModeState,
+        pinnedItemsFlow
+    ) { autofillAppState, result, suggestionsResult, isInSearchMode, pinnedItems ->
         result.map { grouped ->
             if (isInSearchMode) {
                 SelectItemListItems(
@@ -296,6 +322,7 @@ class SelectItemViewModel @Inject constructor(
                     items = grouped.map { GroupedItemList(it.key, it.items) }
                         .filter { it.items.isNotEmpty() }
                         .toImmutableList(),
+                    pinnedItems = persistentListOf(),
                     suggestionsForTitle = ""
                 )
             } else {
@@ -313,6 +340,7 @@ class SelectItemViewModel @Inject constructor(
                         }
                         .filter { it.items.isNotEmpty() }
                         .toImmutableList(),
+                    pinnedItems = pinnedItems,
                     suggestionsForTitle = autofillAppState.value()
                         ?.let(::getSuggestionsTitle)
                         ?: ""

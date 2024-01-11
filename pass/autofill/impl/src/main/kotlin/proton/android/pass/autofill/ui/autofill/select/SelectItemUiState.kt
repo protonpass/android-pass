@@ -93,12 +93,14 @@ data class SelectItemListUiState(
 data class SelectItemListItems(
     val suggestions: ImmutableList<ItemUiModel>,
     val items: ImmutableList<GroupedItemList>,
+    val pinnedItems: ImmutableList<ItemUiModel>,
     val suggestionsForTitle: String
 ) {
     companion object {
         val Initial = SelectItemListItems(
             suggestions = persistentListOf(),
             items = persistentListOf(),
+            pinnedItems = persistentListOf(),
             suggestionsForTitle = ""
         )
     }

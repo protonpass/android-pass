@@ -32,13 +32,13 @@ internal class PinItemImplTest {
 
     private lateinit var itemRepository: TestItemRepository
 
-    private lateinit var pinItemUseCase: PinItemImpl
+    private lateinit var pinItem: PinItemImpl
 
     @Before
     internal fun setup() {
         itemRepository = TestItemRepository()
 
-        pinItemUseCase = PinItemImpl(itemRepository)
+        pinItem = PinItemImpl(itemRepository)
     }
 
     @Test
@@ -50,7 +50,7 @@ internal class PinItemImplTest {
             val expectedItem = newItem.copy(id = itemId, shareId = sharedId, isPinned = true)
             itemRepository.setItem(newItem)
 
-            val item = pinItemUseCase.execute(sharedId, itemId)
+            val item = pinItem(sharedId, itemId)
 
             assertThat(item).isEqualTo(expectedItem)
         }

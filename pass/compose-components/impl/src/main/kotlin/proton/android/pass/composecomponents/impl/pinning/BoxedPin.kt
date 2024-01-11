@@ -69,7 +69,7 @@ fun BoxedPinPreview(
                 isShown = true,
                 pin = {
                     CircledPin(
-                        backgroundColor = PassTheme.colors.loginInteractionNormMajor2
+                        backgroundColor = PassTheme.colors.loginInteractionNormMajor1
                     )
                 },
                 content = {

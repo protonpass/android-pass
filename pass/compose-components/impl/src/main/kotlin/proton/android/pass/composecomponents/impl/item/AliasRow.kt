@@ -69,7 +69,7 @@ internal fun AliasRow(
                     pin = {
                         CircledPin(
                             ratio = 0.8f,
-                            backgroundColor = PassTheme.colors.aliasInteractionNormMajor2
+                            backgroundColor = PassTheme.colors.aliasInteractionNormMajor1
                         )
                     },
                     content = { AliasIcon() }
@@ -86,7 +86,7 @@ internal fun AliasRow(
                             pin = {
                                 CircledPin(
                                     ratio = 0.8f,
-                                    backgroundColor = PassTheme.colors.aliasInteractionNormMajor2
+                                    backgroundColor = PassTheme.colors.aliasInteractionNormMajor1
                                 )
                             },
                             content = { AliasIcon(enabled = isEnabled) }

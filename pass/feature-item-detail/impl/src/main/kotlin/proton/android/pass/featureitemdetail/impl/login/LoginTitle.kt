@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.pinning.BoxedPin
+import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
@@ -56,18 +57,19 @@ fun LoginTitle(
     ) {
 
         BoxedPin(
-            pinBackgroundColor = PassTheme.colors.loginInteractionNormMajor2,
             isShown = isPinned,
-        ) {
-            LoginIcon(
-                size = 60,
-                shape = PassTheme.shapes.squircleMediumLargeShape,
-                text = title,
-                website = website,
-                packageName = packageName,
-                canLoadExternalImages = canLoadExternalImages
-            )
-        }
+            pin = { CircledPin() },
+            content = {
+                LoginIcon(
+                    size = 60,
+                    shape = PassTheme.shapes.squircleMediumLargeShape,
+                    text = title,
+                    website = website,
+                    packageName = packageName,
+                    canLoadExternalImages = canLoadExternalImages
+                )
+            },
+        )
 
         Column(
             modifier = Modifier.fillMaxWidth(),

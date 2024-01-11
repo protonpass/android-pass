@@ -33,6 +33,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import proton.android.pass.composecomponents.impl.pinning.BoxedPin
+import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.ItemContents
 
 private const val MAX_PREVIEW_LENGTH = 128
@@ -81,12 +83,18 @@ fun LoginRow(
                     }
                 }
 
-                LoginIcon(
-                    text = fields.title.text,
-                    canLoadExternalImages = canLoadExternalImages,
-                    website = website,
-                    packageName = packageName,
-                    enabled = enabled
+                BoxedPin(
+                    isShown = item.isPinned,
+                    pin = { CircledPin(ratio = 0.8f) },
+                    content = {
+                        LoginIcon(
+                            text = fields.title.text,
+                            canLoadExternalImages = canLoadExternalImages,
+                            website = website,
+                            packageName = packageName,
+                            enabled = enabled
+                        )
+                    }
                 )
             }
         },

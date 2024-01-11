@@ -284,6 +284,15 @@ class ItemRepositoryImpl @Inject constructor(
             }
             .flowOn(Dispatchers.IO)
 
+    override fun observePinnedItems(userId: UserId): Flow<List<Item>> =
+        localItemDataSource.observePinnedItems(userId)
+            .map { items ->
+                encryptionContextProvider.withEncryptionContext {
+                    items.map { it.toDomain(this@withEncryptionContext) }
+                }
+            }
+            .flowOn(Dispatchers.IO)
+
     override fun observeById(
         shareId: ShareId,
         itemId: ItemId,

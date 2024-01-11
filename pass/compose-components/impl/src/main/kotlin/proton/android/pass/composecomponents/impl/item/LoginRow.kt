@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.item
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
@@ -66,7 +68,7 @@ fun LoginRow(
         modifier = modifier,
         icon = {
             if (selection.isSelected()) {
-                ItemSelectedIcon()
+                ItemSelectedIcon(Modifier.padding(end = 6.dp))
             } else {
                 val sortedPackages = remember {
                     content.packageInfoSet.sortedBy { it.packageName.value }

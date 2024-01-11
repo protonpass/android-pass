@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.pinning.BoxedPin
+import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
@@ -52,11 +53,16 @@ fun AliasTitle(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         BoxedPin(
-            pinBackgroundColor = PassTheme.colors.aliasInteractionNormMajor2,
             isShown = isPinned,
-        ) {
-            AliasIcon(size = 60, shape = PassTheme.shapes.squircleMediumLargeShape)
-        }
+            pin = {
+                CircledPin(
+                    backgroundColor = PassTheme.colors.aliasInteractionNormMajor2
+                )
+            },
+            content = {
+                AliasIcon(size = 60, shape = PassTheme.shapes.squircleMediumLargeShape)
+            }
+        )
 
         Column(
             modifier = Modifier.fillMaxWidth(),

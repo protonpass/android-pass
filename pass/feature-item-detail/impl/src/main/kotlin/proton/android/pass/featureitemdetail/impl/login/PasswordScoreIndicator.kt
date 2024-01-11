@@ -54,7 +54,7 @@ fun PasswordScoreIndicator(modifier: Modifier = Modifier, passwordScore: Passwor
 @Composable
 fun ShieldIcon(modifier: Modifier = Modifier, passwordScore: PasswordScore) {
     when (passwordScore) {
-        PasswordScore.DANGEROUS -> Icon(
+        PasswordScore.VULNERABLE -> Icon(
             modifier = modifier,
             painter = painterResource(R.drawable.ic_shield_bad),
             tint = PassTheme.colors.signalDanger,
@@ -80,7 +80,7 @@ fun ShieldIcon(modifier: Modifier = Modifier, passwordScore: PasswordScore) {
 @Composable
 fun ScoreText(modifier: Modifier = Modifier, passwordScore: PasswordScore) {
     when (passwordScore) {
-        PasswordScore.DANGEROUS -> Text(
+        PasswordScore.VULNERABLE -> Text(
             modifier = modifier,
             text = stringResource(R.string.password_score_vulnerable),
             style = ProtonTheme.typography.captionNorm

@@ -39,11 +39,14 @@ class TotpManagerImpl @Inject constructor(
     private val totpTokenGenerator: TotpTokenGenerator
 ) : TotpManager {
 
-    override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> = flow {
+    override fun observeCode(uri: String): Flow<TotpManager.TotpWrapper> = flow {
         while (currentCoroutineContext().isActive) {
             val timestamp = clock.now().toJavaInstant()
-            val code = totpTokenGenerator.generate(spec, timestamp.epochSecond.toULong())
+            val generated = totpTokenGenerator.generate(uri, timestamp.epochSecond.toULong())
                 .getOrThrow()
+            val code = generated.token
+            val spec = generated.spec
+
             val remainingSeconds =
                 spec.validPeriodSeconds - floor(timestamp.epochSecond.toDouble()) % spec.validPeriodSeconds
             val wrapper = TotpManager.TotpWrapper(

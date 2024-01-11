@@ -18,14 +18,18 @@
 
 package proton.android.pass.featureitemdetail.impl.note
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandHorizontally
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -33,13 +37,15 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.pinning.CircledPin
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
 import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
-import proton.android.pass.domain.Vault
 
 @Composable
 fun NoteContent(
@@ -48,16 +54,34 @@ fun NoteContent(
     note: String,
     vault: Vault?,
     moreInfoUiState: MoreInfoUiState,
-    onVaultClick: () -> Unit
+    onVaultClick: () -> Unit,
+    isPinned: Boolean,
 ) {
     Column(
         modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            ItemTitleText(text = name, maxLines = Int.MAX_VALUE)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.small),
+            ) {
+                AnimatedVisibility(
+                    visible = isPinned,
+                    enter = expandHorizontally(),
+                ) {
+                    CircledPin(
+                        ratio = 1f,
+                        backgroundColor = PassTheme.colors.noteInteractionNormMajor1,
+                    )
+                }
+
+                ItemTitleText(text = name, maxLines = Int.MAX_VALUE)
+            }
+
             VaultNameSubtitle(vault = vault, onClick = onVaultClick)
         }
+
         SelectionContainer(modifier = Modifier.fillMaxWidth()) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -65,6 +89,7 @@ fun NoteContent(
                 style = ProtonTheme.typography.defaultNorm
             )
         }
+
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
 }
@@ -74,15 +99,18 @@ fun NoteContent(
 fun NoteContentPreview(
     @PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, params) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             NoteContent(
-                name = input.second.title,
-                note = "Note body",
+                name = params.title,
+                note = params.note,
                 vault = input.second.vault,
                 // We don't care about the MoreInfo as we are not showing it
                 moreInfoUiState = MoreInfoUiState.Initial,
-                onVaultClick = {}
+                onVaultClick = {},
+                isPinned = params.isPinned,
             )
         }
     }

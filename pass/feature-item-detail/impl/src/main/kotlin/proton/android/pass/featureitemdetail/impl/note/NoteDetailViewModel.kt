@@ -248,7 +248,10 @@ class NoteDetailViewModel @Inject constructor(
 
         runCatching { pinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
-            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError) }
+            .onFailure { error ->
+                PassLogger.e(TAG, error, "An error occurred pinning Note item")
+                snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
+            }
 
         isLoadingState.update { IsLoadingState.NotLoading }
     }
@@ -258,7 +261,10 @@ class NoteDetailViewModel @Inject constructor(
 
         runCatching { unpinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
-            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError) }
+            .onFailure { error ->
+                PassLogger.e(TAG, error, "An error occurred unpinning Note item")
+                snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
+            }
 
         isLoadingState.update { IsLoadingState.NotLoading }
     }

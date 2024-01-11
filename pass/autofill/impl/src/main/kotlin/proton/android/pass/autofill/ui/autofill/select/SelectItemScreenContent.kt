@@ -19,6 +19,8 @@
 package proton.android.pass.autofill.ui.autofill.select
 
 import androidx.annotation.VisibleForTesting
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
@@ -31,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
@@ -44,6 +47,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
+import proton.android.pass.composecomponents.impl.pinning.PinCarousel
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.domain.ItemContents
@@ -70,6 +74,47 @@ internal fun SelectItemScreenContent(
     var willNeedToShowAssociateDialog by remember { mutableStateOf(false) }
     val verticalScroll = rememberLazyListState()
     var showFab by remember { mutableStateOf(true) }
+    val onItemClickedCallback: (ItemUiModel) -> Unit = {
+        when (val contents = it.contents) {
+            is ItemContents.Login -> {
+                val askForAssociation = shouldAskForAssociation(
+                    item = contents,
+                    packageName = packageInfo.toPackageInfo().packageName,
+                    webDomain = webDomain
+                )
+
+                when (uiState.confirmMode) {
+                    is Some -> {
+                        setItemClicked(it.some())
+                        willNeedToShowAssociateDialog = askForAssociation
+                        setShowWarning(uiState.confirmMode)
+                    }
+
+                    None -> {
+                        if (askForAssociation) {
+                            setItemClicked(it.some())
+                            setShowAssociateDialog(true)
+                        } else {
+                            onItemClicked(it, false)
+                        }
+                    }
+                }
+            }
+
+            is ItemContents.CreditCard -> when (uiState.confirmMode) {
+                None -> onItemClicked(it, false)
+                is Some -> {
+                    setItemClicked(it.some())
+
+                    // Credit cards are not associated
+                    willNeedToShowAssociateDialog = false
+                    setShowWarning(uiState.confirmMode)
+                }
+            }
+
+            else -> throw IllegalStateException("Unhandled item type")
+        }
+    }
 
     LaunchedEffect(verticalScroll) {
         var prev = 0
@@ -135,53 +180,27 @@ internal fun SelectItemScreenContent(
             )
         }
     ) { padding ->
-        SelectItemList(
-            modifier = Modifier.padding(padding),
-            uiState = uiState,
-            scrollState = verticalScroll,
-            onScrolledToTop = onScrolledToTop,
-            onItemOptionsClicked = onItemOptionsClicked,
-            onItemClicked = { item ->
-                when (val contents = item.contents) {
-                    is ItemContents.Login -> {
-                        val askForAssociation = shouldAskForAssociation(
-                            item = contents,
-                            packageName = packageInfo.toPackageInfo().packageName,
-                            webDomain = webDomain
-                        )
-
-                        when (uiState.confirmMode) {
-                            is Some -> {
-                                setItemClicked(item.some())
-                                willNeedToShowAssociateDialog = askForAssociation
-                                setShowWarning(uiState.confirmMode)
-                            }
-                            None -> {
-                                if (askForAssociation) {
-                                    setItemClicked(item.some())
-                                    setShowAssociateDialog(true)
-                                } else {
-                                    onItemClicked(item, false)
-                                }
-                            }
-                        }
-                    }
-
-                    is ItemContents.CreditCard -> when (uiState.confirmMode) {
-                        None -> onItemClicked(item, false)
-                        is Some -> {
-                            setItemClicked(item.some())
-
-                            // Credit cards are not associated
-                            willNeedToShowAssociateDialog = false
-                            setShowWarning(uiState.confirmMode)
-                        }
-                    }
-                    else -> throw IllegalStateException("Unhandled item type")
-                }
-            },
-            onNavigate = onNavigate
-        )
+        Column(
+            modifier = Modifier.padding(padding)
+        ) {
+            if (!uiState.searchUiState.inSearchMode) {
+                PinCarousel(
+                    modifier = Modifier.height(48.dp),
+                    list = uiState.listUiState.items.pinnedItems,
+                    canLoadExternalImages = uiState.listUiState.canLoadExternalImages,
+                    onItemClick = onItemClickedCallback,
+                    onSeeAllClick = {},
+                )
+            }
+            SelectItemList(
+                uiState = uiState,
+                scrollState = verticalScroll,
+                onScrolledToTop = onScrolledToTop,
+                onItemOptionsClicked = onItemOptionsClicked,
+                onItemClicked = onItemClickedCallback,
+                onNavigate = onNavigate
+            )
+        }
     }
 }
 

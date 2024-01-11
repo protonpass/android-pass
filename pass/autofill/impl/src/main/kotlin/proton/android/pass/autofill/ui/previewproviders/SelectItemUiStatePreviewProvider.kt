@@ -56,6 +56,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                                 items = persistentListOf(item("Item with long text"))
                             )
                         ),
+                        pinnedItems = persistentListOf(),
                         suggestionsForTitle = ""
                     ),
                     shares = persistentMapOf(),
@@ -84,6 +85,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                                 )
                             )
                         ),
+                        pinnedItems = persistentListOf(),
                         suggestionsForTitle = "some.website.local"
                     ),
                     shares = persistentMapOf(),

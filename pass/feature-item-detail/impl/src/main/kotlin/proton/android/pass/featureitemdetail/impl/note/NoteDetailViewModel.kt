@@ -51,8 +51,10 @@ import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.PinItemUseCase
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.data.api.usecases.UnpinItemUseCase
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -88,6 +90,8 @@ class NoteDetailViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val canShareVault: CanShareVault,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
+    private val pinItemUseCase: PinItemUseCase,
+    private val unpinItemUseCase: UnpinItemUseCase,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle,
@@ -239,7 +243,28 @@ class NoteDetailViewModel @Inject constructor(
         eventState.update { ItemDetailEvent.MoveToVault }
     }
 
+    internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
+        runCatching { pinItemUseCase.execute(shareId, itemId) }
+            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
+            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError) }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    internal fun unpinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
+        runCatching { unpinItemUseCase.execute(shareId, itemId) }
+            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
+            .onFailure { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError) }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
     companion object {
         private const val TAG = "NoteDetailViewModel"
     }
+
 }

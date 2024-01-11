@@ -56,7 +56,7 @@ fun AliasTitle(
             isShown = isPinned,
             pin = {
                 CircledPin(
-                    backgroundColor = PassTheme.colors.aliasInteractionNormMajor2
+                    backgroundColor = PassTheme.colors.aliasInteractionNormMajor1
                 )
             },
             content = {

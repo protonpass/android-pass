@@ -88,7 +88,7 @@ fun LoginRow(
                     pin = {
                         CircledPin(
                             ratio = 0.8f,
-                            backgroundColor = PassTheme.colors.loginInteractionNormMajor2
+                            backgroundColor = PassTheme.colors.loginInteractionNormMajor1
                         )
                     },
                     content = {

@@ -185,7 +185,8 @@ fun NoteDetail(
                             state.vault?.shareId?.let {
                                 onNavigate(ItemDetailNavigation.ManageVault(it))
                             }
-                        }
+                        },
+                        isPinned = state.itemUiModel.isPinned,
                     )
                 }
                 ConfirmDeleteItemDialog(

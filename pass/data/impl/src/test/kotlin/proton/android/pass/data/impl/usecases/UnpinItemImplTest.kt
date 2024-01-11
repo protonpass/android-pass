@@ -28,17 +28,17 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestItem
 
-internal class UnpinItemUseCaseImplTest {
+internal class UnpinItemImplTest {
 
     private lateinit var itemRepository: TestItemRepository
 
-    private lateinit var unpinItemUseCase: UnpinItemUseCaseImpl
+    private lateinit var unpinItemUseCase: UnpinItemImpl
 
     @Before
     internal fun setup() {
         itemRepository = TestItemRepository()
 
-        unpinItemUseCase = UnpinItemUseCaseImpl(itemRepository)
+        unpinItemUseCase = UnpinItemImpl(itemRepository)
     }
 
     @Test

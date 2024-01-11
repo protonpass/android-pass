@@ -37,7 +37,11 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun CircledPin(modifier: Modifier = Modifier, ratio: Float = 1f, backgroundColor: Color) {
+fun CircledPin(
+    modifier: Modifier = Modifier,
+    ratio: Float = 1f,
+    backgroundColor: Color
+) {
     Icon(
         modifier = modifier
             .size(24.dp * ratio)
@@ -66,7 +70,7 @@ fun CircledPinPreview(
     PassTheme(isDark = isDark) {
         Surface {
             CircledPin(
-                backgroundColor = PassTheme.colors.noteInteractionNormMajor2
+                backgroundColor = PassTheme.colors.noteInteractionNormMajor1
             )
         }
     }

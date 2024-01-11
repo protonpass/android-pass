@@ -61,7 +61,7 @@ fun CreditCardRow(
                     pin = {
                         CircledPin(
                             ratio = 0.8f,
-                            backgroundColor = PassTheme.colors.cardInteractionNormMajor2
+                            backgroundColor = PassTheme.colors.cardInteractionNormMajor1
                         )
                     },
                     content = { CreditCardIcon() }
@@ -78,7 +78,7 @@ fun CreditCardRow(
                             pin = {
                                 CircledPin(
                                     ratio = 0.8f,
-                                    backgroundColor = PassTheme.colors.cardInteractionNormMajor2
+                                    backgroundColor = PassTheme.colors.cardInteractionNormMajor1
                                 )
                             },
                             content = { CreditCardIcon(enabled = isEnabled) }

@@ -56,7 +56,7 @@ fun CreditCardTitle(
             isShown = isPinned,
             pin = {
                 CircledPin(
-                    backgroundColor = PassTheme.colors.cardInteractionNormMajor2
+                    backgroundColor = PassTheme.colors.cardInteractionNormMajor1
                 )
             },
             content = {

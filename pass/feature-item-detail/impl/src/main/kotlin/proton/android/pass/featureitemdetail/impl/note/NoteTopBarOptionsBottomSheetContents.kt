@@ -37,21 +37,32 @@ import proton.android.pass.featureitemdetail.impl.common.ThemedTopBarOptionsPrev
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsParameters
 import proton.android.pass.featureitemdetail.impl.common.migrate
 import proton.android.pass.featureitemdetail.impl.common.moveToTrash
+import proton.android.pass.featureitemdetail.impl.common.pin
+import proton.android.pass.featureitemdetail.impl.common.unpin
 
 @Composable
 fun NoteTopBarOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     canMigrate: Boolean,
     canMoveToTrash: Boolean,
+    isPinned: Boolean,
     onMigrate: () -> Unit,
     onMoveToTrash: () -> Unit,
-    onCopyNote: () -> Unit = {}
+    onCopyNote: () -> Unit = {},
+    onPinned: () -> Unit,
+    onUnpinned: () -> Unit,
 ) {
-    val items = mutableListOf<BottomSheetItem>().apply {
-        add(copyNote(onClick = onCopyNote))
+    val items = mutableListOf(copyNote(onClick = onCopyNote)).apply {
         if (canMigrate) {
             add(migrate(onClick = onMigrate))
         }
+
+        if (isPinned) {
+            add(unpin(onClick = onUnpinned))
+        } else {
+            add(pin(onClick = onPinned))
+        }
+
         if (canMoveToTrash) {
             add(moveToTrash(onClick = onMoveToTrash))
         }
@@ -83,13 +94,18 @@ private fun copyNote(onClick: () -> Unit): BottomSheetItem =
 fun NoteTopBarOptionsBSContentsPreview(
     @PreviewParameter(ThemedTopBarOptionsPreviewProvider::class) input: Pair<Boolean, TopBarOptionsParameters>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, params) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             NoteTopBarOptionsBottomSheetContents(
-                canMigrate = input.second.canMigrate,
-                canMoveToTrash = input.second.canMoveToTrash,
+                canMigrate = params.canMigrate,
+                canMoveToTrash = params.canMoveToTrash,
+                isPinned = params.isPinned,
                 onMigrate = {},
-                onMoveToTrash = {}
+                onMoveToTrash = {},
+                onPinned = {},
+                onUnpinned = {},
             )
         }
     }

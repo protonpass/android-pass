@@ -24,6 +24,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.featureitemdetail.impl.R
+import proton.android.pass.composecomponents.impl.R as ComponentR
 
 fun moveToTrash(onClick: () -> Unit): BottomSheetItem =
     object : BottomSheetItem {
@@ -57,11 +58,11 @@ fun migrate(onClick: () -> Unit): BottomSheetItem =
 
 fun pin(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(R.string.pin_item_detail_bottom_sheet)) }
+        get() = { BottomSheetItemTitle(text = stringResource(ComponentR.string.bottomsheet_pin_item)) }
     override val subtitle: @Composable (() -> Unit)?
         get() = null
     override val leftIcon: @Composable (() -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_pin_angled) }
+        get() = { BottomSheetItemIcon(iconId = ComponentR.drawable.ic_pin_angled) }
     override val endIcon: @Composable (() -> Unit)?
         get() = null
     override val onClick: (() -> Unit)
@@ -73,11 +74,11 @@ fun pin(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
 fun unpin(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(R.string.unpin_item_detail_bottom_sheet)) }
+        get() = { BottomSheetItemTitle(text = stringResource(ComponentR.string.bottomsheet_unpin_item)) }
     override val subtitle: @Composable (() -> Unit)?
         get() = null
     override val leftIcon: @Composable (() -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_unpin_angled) }
+        get() = { BottomSheetItemIcon(iconId = ComponentR.drawable.ic_unpin_angled) }
     override val endIcon: @Composable (() -> Unit)?
         get() = null
     override val onClick: (() -> Unit)

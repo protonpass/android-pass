@@ -96,6 +96,7 @@ fun NoteDetail(
                         ItemState.Active.value -> NoteTopBarOptionsBottomSheetContents(
                             canMigrate = state.itemActions.canMoveToOtherVault.value(),
                             canMoveToTrash = state.itemActions.canMoveToTrash,
+                            isPinned = state.itemUiModel.isPinned,
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
@@ -114,7 +115,22 @@ fun NoteDetail(
                                     bottomSheetState.hide()
                                     viewModel.onCopyToClipboard(state.itemUiModel)
                                 }
-                            }
+                            },
+                            onPinned = {
+                                scope.launch { bottomSheetState.hide() }
+                                viewModel.pinItem(
+                                    shareId = state.itemUiModel.shareId,
+                                    itemId = state.itemUiModel.id,
+                                )
+
+                            },
+                            onUnpinned = {
+                                scope.launch { bottomSheetState.hide() }
+                                viewModel.unpinItem(
+                                    shareId = state.itemUiModel.shareId,
+                                    itemId = state.itemUiModel.id,
+                                )
+                            },
                         )
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(

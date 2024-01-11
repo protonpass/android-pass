@@ -566,9 +566,9 @@ abstract class FakesDataModule {
     abstract fun bindBulkMoveToVaultRepository(impl: TestBulkMoveToVaultRepository): BulkMoveToVaultRepository
 
     @Binds
-    abstract fun bindPinItemUseCase(impl: FakePinItem): PinItem
+    abstract fun bindPinItem(impl: FakePinItem): PinItem
 
     @Binds
-    abstract fun bindUnpinItemUseCase(impl: FakeUnpinItem): UnpinItem
+    abstract fun bindUnpinItem(impl: FakeUnpinItem): UnpinItem
 
 }

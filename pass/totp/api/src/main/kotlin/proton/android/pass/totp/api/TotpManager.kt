@@ -21,7 +21,7 @@ package proton.android.pass.totp.api
 import kotlinx.coroutines.flow.Flow
 
 interface TotpManager {
-    fun observeCode(spec: TotpSpec): Flow<TotpWrapper>
+    fun observeCode(uri: String): Flow<TotpWrapper>
     fun parse(uri: String): Result<TotpSpec>
     fun sanitiseToEdit(uri: String): Result<String>
     fun sanitiseToSave(originalUri: String, editedUri: String): Result<String>

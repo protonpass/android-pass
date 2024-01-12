@@ -43,10 +43,10 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSub
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
-import proton.android.pass.featuretrash.R
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featuretrash.R
 import me.proton.core.presentation.R as CoreR
 
 @ExperimentalMaterialApi
@@ -54,8 +54,8 @@ import me.proton.core.presentation.R as CoreR
 fun TrashItemBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
-    onRestoreItem: (ShareId, ItemId) -> Unit,
-    onDeleteItem: (ShareId, ItemId) -> Unit,
+    onRestoreItem: (ItemUiModel) -> Unit,
+    onDeleteItem: (ItemUiModel) -> Unit,
     icon: @Composable () -> Unit
 ) {
     Column(modifier.bottomSheet()) {
@@ -77,18 +77,17 @@ fun TrashItemBottomSheetContents(
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = persistentListOf(
-                restoreItem(itemUiModel.shareId, itemUiModel.id, onRestoreItem),
+                restoreItem(itemUiModel, onRestoreItem),
                 bottomSheetDivider(),
-                deleteItem(itemUiModel.shareId, itemUiModel.id, onDeleteItem)
+                deleteItem(itemUiModel, onDeleteItem)
             )
         )
     }
 }
 
 private fun restoreItem(
-    shareId: ShareId,
-    itemId: ItemId,
-    onRestoreItem: (ShareId, ItemId) -> Unit
+    item: ItemUiModel,
+    onRestoreItem: (ItemUiModel) -> Unit
 ): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(id = R.string.trash_action_restore)) }
@@ -99,14 +98,13 @@ private fun restoreItem(
     override val endIcon: (@Composable () -> Unit)?
         get() = null
     override val onClick: () -> Unit
-        get() = { onRestoreItem(shareId, itemId) }
+        get() = { onRestoreItem(item) }
     override val isDivider = false
 }
 
 private fun deleteItem(
-    shareId: ShareId,
-    itemId: ItemId,
-    onDeleteItem: (ShareId, ItemId) -> Unit
+    item: ItemUiModel,
+    onDeleteItem: (ItemUiModel) -> Unit
 ): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
@@ -127,7 +125,7 @@ private fun deleteItem(
     override val endIcon: (@Composable () -> Unit)?
         get() = null
     override val onClick: () -> Unit
-        get() = { onDeleteItem(shareId, itemId) }
+        get() = { onDeleteItem(item) }
     override val isDivider = false
 }
 
@@ -154,8 +152,8 @@ fun TrashItemBottomSheetContentsPreview(
                     lastAutofillTime = Clock.System.now(),
                     isPinned = false,
                 ),
-                onRestoreItem = { _: ShareId, _: ItemId -> },
-                onDeleteItem = { _: ShareId, _: ItemId -> },
+                onRestoreItem = { },
+                onDeleteItem = { },
                 icon = { AliasIcon() }
             )
         }

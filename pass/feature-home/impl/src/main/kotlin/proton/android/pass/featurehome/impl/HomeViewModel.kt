@@ -127,6 +127,12 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemsSuccess
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsMovedToTrashError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsMovedToTrashSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedPartialSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsUnpinnedError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsUnpinnedPartialSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsUnpinnedSuccess
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.MoveToTrashError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
@@ -134,12 +140,6 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsErro
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsSuccess
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedSuccess
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedPartialSuccess
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedError
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsUnpinnedSuccess
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsUnpinnedPartialSuccess
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsUnpinnedError
 import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
@@ -578,15 +578,17 @@ class HomeViewModel @Inject constructor(
         isRefreshing.update { IsRefreshingState.NotRefreshing }
     }
 
-    fun sendItemsToTrash(items: ImmutableSet<Pair<ShareId, ItemId>>) =
+    fun sendItemsToTrash(items: List<ItemUiModel>) =
         viewModelScope.launch(coroutineExceptionHandler) {
             if (items.isEmpty()) return@launch
             actionStateFlow.update { ActionState.Loading }
+
+            val mappedItems = items.toShareIdItemId().toPersistentSet()
             val itemTypes = homeUiState.value.homeListUiState.items
                 .flatMap { it.items }
-                .filter { (itemId: ItemId, shareId: ShareId) -> items.contains(shareId to itemId) }
+                .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
 
-            val groupedItems = groupItems(items)
+            val groupedItems = groupItems(mappedItems)
             runCatching { trashItems(items = groupedItems) }
                 .onSuccess {
                     clearSelection()
@@ -682,12 +684,13 @@ class HomeViewModel @Inject constructor(
         actionStateFlow.update { ActionState.Unknown }
     }
 
-    fun restoreItems(items: ImmutableSet<Pair<ShareId, ItemId>>) =
+    fun restoreItems(items: List<ItemUiModel>) =
         viewModelScope.launch(coroutineExceptionHandler) {
             if (items.isEmpty()) return@launch
             actionStateFlow.update { ActionState.Loading }
 
-            runCatching { restoreItems(items = items.groupBy({ it.first }, { it.second })) }
+            val mappedItems = groupItems(items.toShareIdItemId().toPersistentSet())
+            runCatching { restoreItems(items = mappedItems) }
                 .onSuccess {
                     clearSelection()
                     snackbarDispatcher(RestoreItemsSuccess)
@@ -699,17 +702,21 @@ class HomeViewModel @Inject constructor(
             actionStateFlow.update { ActionState.Done }
         }
 
-    fun deleteItems(items: ImmutableSet<Pair<ShareId, ItemId>>) =
+    fun deleteItems(items: List<ItemUiModel>) =
         viewModelScope.launch(coroutineExceptionHandler) {
             if (items.isEmpty()) return@launch
             actionStateFlow.update { ActionState.Loading }
+
+            val mappedItems = items.toShareIdItemId()
             val itemTypes = homeUiState.value.homeListUiState.items
                 .flatMap { it.items }
-                .filter { (itemId: ItemId, shareId: ShareId) -> items.contains(shareId to itemId) }
+                .filter { (itemId: ItemId, shareId: ShareId) ->
+                    mappedItems.contains(shareId to itemId)
+                }
                 .map { EventItemType.from(it.contents) }
 
             runCatching {
-                deleteItem(items = items.groupBy({ it.first }, { it.second }))
+                deleteItem(items = mappedItems.groupBy({ it.first }, { it.second }))
             }.onSuccess {
                 PassLogger.i(TAG, "Items deleted successfully")
                 clearSelection()
@@ -825,16 +832,23 @@ class HomeViewModel @Inject constructor(
         selectionState.update { SelectionState.Initial }
     }
 
-    fun moveItemsToVault(items: ImmutableSet<Pair<ShareId, ItemId>>) = viewModelScope.launch {
-        val groupedItems = groupItems(items)
+    fun moveItemsToVault(items: List<ItemUiModel>) = viewModelScope.launch {
+        val selectedItemsAsPairs = items.map { it.shareId to it.id }.toPersistentSet()
+        val groupedItems = groupItems(selectedItemsAsPairs)
         bulkMoveToVaultRepository.save(groupedItems)
         navEventState.update { HomeNavEvent.ShowBulkMoveToVault }
     }
 
-    fun pinSelectedItems(items: ImmutableSet<Pair<ShareId, ItemId>>) = viewModelScope.launch {
+    fun pinSelectedItems(items: List<ItemUiModel>) = viewModelScope.launch {
+        val nonPinnedItems = items.filter { !it.isPinned }.toShareIdItemId()
+        if (nonPinnedItems.isEmpty()) {
+            PassLogger.w(TAG, "No items to be pinned")
+            return@launch
+        }
+
         selectionState.update { it.copy(pinningLoadingState = IsLoadingState.Loading) }
         runCatching {
-            pinItems(items.toList())
+            pinItems(nonPinnedItems)
         }.onSuccess {
             when (it) {
                 is PinItemsResult.AllPinned -> {
@@ -858,10 +872,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun unpinSelectedItems(items: ImmutableSet<Pair<ShareId, ItemId>>) = viewModelScope.launch {
+    fun unpinSelectedItems(items: List<ItemUiModel>) = viewModelScope.launch {
+        val pinnedItems = items.filter { it.isPinned }.toShareIdItemId()
+        if (pinnedItems.isEmpty()) {
+            PassLogger.w(TAG, "No items to be unpinned")
+            return@launch
+        }
+
         selectionState.update { it.copy(pinningLoadingState = IsLoadingState.Loading) }
         runCatching {
-            unpinItems(items.toList())
+            unpinItems(pinnedItems)
         }.onSuccess {
             when (it) {
                 is PinItemsResult.AllPinned -> {
@@ -934,13 +954,16 @@ class HomeViewModel @Inject constructor(
     private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
         items.groupBy({ it.first }, { it.second })
 
+    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> =
+        map { it.shareId to it.id }
+
     private data class SelectionState(
         val selectedItems: List<ItemUiModel>,
         val isInSelectMode: Boolean,
         val pinningLoadingState: IsLoadingState
     ) {
         fun toState(isTrash: Boolean, isPinningEnabled: Boolean) = HomeSelectionState(
-            selectedItems = selectedItems.map { it.shareId to it.id }.toPersistentSet(),
+            selectedItems = selectedItems.toPersistentList(),
             isInSelectMode = isInSelectMode,
             topBarState = SelectionTopBarState(
                 isTrash = isTrash,
@@ -953,7 +976,6 @@ class HomeViewModel @Inject constructor(
                 // is not in progress
                 actionsEnabled = selectedItems.isNotEmpty() && !pinningLoadingState.value()
             ),
-
         )
 
         companion object {

@@ -18,13 +18,16 @@
 
 package proton.android.pass.composecomponents.impl.item.header
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,23 +47,25 @@ fun ItemCount(
     modifier: Modifier = Modifier,
     showSearchResults: Boolean,
     itemCount: Int?,
-    itemType: SearchFilterType
+    itemType: SearchFilterType,
+    isPinnedMode: Boolean,
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        val stringResource = when (itemType) {
-            SearchFilterType.All -> R.string.item_list_header_all_search_results
-            SearchFilterType.Login -> R.string.item_list_header_logins_type
-            SearchFilterType.Alias -> R.string.item_list_header_aliases_type
-            SearchFilterType.Note -> R.string.item_list_header_notes_type
-            SearchFilterType.CreditCard -> R.string.item_list_header_credit_cards_type
+        if (isPinnedMode) {
+            Icon(
+                painter = painterResource(R.drawable.ic_pin_filled),
+                contentDescription = null,
+                modifier = Modifier.align(Alignment.CenterVertically),
+                tint = ProtonTheme.colors.iconNorm
+            )
         }
         Text(
             text = if (showSearchResults) itemCount?.let { "$it" }
-                ?: "0" else stringResource(stringResource),
+                ?: "0" else stringResource(getTitleCountRes(itemType, isPinnedMode)),
             style = PassTheme.typography.body3Bold()
         )
         Text(
@@ -72,6 +77,23 @@ fun ItemCount(
             style = ProtonTheme.typography.captionWeak
         )
     }
+}
+
+@StringRes
+fun getTitleCountRes(
+    itemType: SearchFilterType,
+    isPinnedMode: Boolean
+): Int = when (itemType) {
+    SearchFilterType.All -> if (!isPinnedMode) {
+        R.string.item_list_header_all_search_results
+    } else {
+        R.string.item_list_header_pinned_search_results
+    }
+
+    SearchFilterType.Login -> R.string.item_list_header_logins_type
+    SearchFilterType.Alias -> R.string.item_list_header_aliases_type
+    SearchFilterType.Note -> R.string.item_list_header_notes_type
+    SearchFilterType.CreditCard -> R.string.item_list_header_credit_cards_type
 }
 
 class ItemCountPreviewProvider : PreviewParameterProvider<ItemCountParameter> {
@@ -108,7 +130,8 @@ fun ItemCountPreview(
             ItemCount(
                 showSearchResults = input.second.showSearchResults,
                 itemCount = input.second.itemCount,
-                itemType = SearchFilterType.All
+                itemType = SearchFilterType.All,
+                isPinnedMode = false
             )
         }
     }

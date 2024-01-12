@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">アイテムをゴミ箱への移動に失敗</string>
   <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
   <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
+  <string name="home_toast_items_selected_read_only">Read-only items cannot be selected</string>
   <string name="home_autofill_banner_title">自動入力マジックをお楽しみください</string>
   <string name="home_autofill_banner_text">ワンタップでユーザー名とパスワードが即座に入力される。</string>
   <string name="home_autofill_banner_settings">自動入力を有効にする ›</string>

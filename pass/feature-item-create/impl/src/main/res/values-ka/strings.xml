@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">PIN-კოდი</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">ვადის ამოწურვის თარიღი</string>
-  <string name="field_card_expiration_date_hint">თთ / წწწწ</string>
-  <string name="field_card_expiration_date_error">შეიყვანეთ სწორი თარიღი თთ/წწწწ ფორმატში</string>
+  <string name="field_card_expiration_date_hint">თთ /წწ</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YY format</string>
   <string name="create_credit_card_item_creation_error">საკრედიტო ბარათის შექმნის შეცდომა</string>
   <string name="create_credit_card_item_creation_success">საკრედიტო ბარათი შეიქმნა</string>
   <string name="credit_card_init_error">შეცდომა საკრედიტო ბარათის დეტალების მიღებისას</string>

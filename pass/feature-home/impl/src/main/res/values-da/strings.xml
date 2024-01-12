@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Element kunne ikke flyttes til papirkurven</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementer flyttet til papirkurv</string>
   <string name="home_snackbar_items_move_to_trash_error">Elementer kunne ikke flyttes til papirkurven</string>
+  <string name="home_toast_items_selected_read_only">Read-only items cannot be selected</string>
   <string name="home_autofill_banner_title">Nyd magien ved autofyld</string>
   <string name="home_autofill_banner_text">Ét tryk, og dit brugernavn og din adgangskode udfyldes øjeblikkeligt.</string>
   <string name="home_autofill_banner_settings">Slå autofyld til ›</string>

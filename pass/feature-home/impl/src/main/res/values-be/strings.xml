@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Не атрымалася перамясціць элемент у сметніцу</string>
   <string name="home_snackbar_items_move_to_trash_success">Элементы перамешчаны ў сметніцу</string>
   <string name="home_snackbar_items_move_to_trash_error">Не атрымалася перамясціць элементы ў сметніцу</string>
+  <string name="home_toast_items_selected_read_only">Элементы толькі для чытання не могуць быць выбраны</string>
   <string name="home_autofill_banner_title">Атрымлівайце асалоду ад магіі аўтазапаўнення</string>
   <string name="home_autofill_banner_text">Ваша імя карыстальніка і пароль запаўняюцца імгненна.</string>
   <string name="home_autofill_banner_settings">Уключыць аўтазапаўненне ›</string>

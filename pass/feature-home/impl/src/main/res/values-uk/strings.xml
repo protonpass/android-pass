@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Не вдалося перемістити елемент до смітника</string>
   <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
   <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
+  <string name="home_toast_items_selected_read_only">Read-only items cannot be selected</string>
   <string name="home_autofill_banner_title">Насолоджуйтеся магією автозаповнення</string>
   <string name="home_autofill_banner_text">Ваше ім\'я користувача та пароль заповнюються одним дотиком.</string>
   <string name="home_autofill_banner_settings">Увімкнути автозаповнення ›</string>

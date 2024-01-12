@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.domain.Item
@@ -31,7 +32,7 @@ class ObservePinnedItemsImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
 ) : ObservePinnedItems {
 
-    override fun invoke(): Flow<List<Item>> = observeCurrentUser()
-        .flatMapLatest { itemRepository.observePinnedItems(it.userId) }
+    override fun invoke(filter: ItemTypeFilter): Flow<List<Item>> = observeCurrentUser()
+        .flatMapLatest { itemRepository.observePinnedItems(it.userId, filter) }
 }
 

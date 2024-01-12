@@ -22,5 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.Item
 
 interface ObservePinnedItems {
-    operator fun invoke(): Flow<List<Item>>
+
+    operator fun invoke(
+        filter: ItemTypeFilter = ItemTypeFilter.All,
+    ): Flow<List<Item>>
 }

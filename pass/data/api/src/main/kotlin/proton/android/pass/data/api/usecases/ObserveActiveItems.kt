@@ -22,14 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareSelection
 
-enum class ItemTypeFilter {
-    All,
-    Logins,
-    Aliases,
-    Notes,
-    CreditCards;
-}
-
 interface ObserveActiveItems {
     operator fun invoke(
         filter: ItemTypeFilter = ItemTypeFilter.All,

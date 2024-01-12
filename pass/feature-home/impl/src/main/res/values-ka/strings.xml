@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">ელემენტის ნაგვის ყუთში გადატანის შეცდომა</string>
   <string name="home_snackbar_items_move_to_trash_success">ელემენტები გადატანილია ნაგვის ყუთში</string>
   <string name="home_snackbar_items_move_to_trash_error">ელემენტების ნაგვის ყუთში გადატანის შეცდომა</string>
+  <string name="home_toast_items_selected_read_only">მხოლოდ-კითხვადი ელემენტების მონიშვნა შეუძლებელია</string>
   <string name="home_autofill_banner_title">ისიამოვნეთ ავტომატური შევსების ჯადოქრობით</string>
   <string name="home_autofill_banner_text">ერთი დატყაპუნება და-ეგაა!-თქვენი მომხმარებლის სახელი და პაროლი ავტომატურად შეივსება.</string>
   <string name="home_autofill_banner_settings">ავტომატური შევსების ჩართვა ›</string>

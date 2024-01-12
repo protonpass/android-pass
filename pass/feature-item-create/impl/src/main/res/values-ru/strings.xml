@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Срок действия</string>
-  <string name="field_card_expiration_date_hint">ММ / ГГГГ</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
+  <string name="field_card_expiration_date_hint">MM / YY</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YY format</string>
   <string name="create_credit_card_item_creation_error">Не могу создать кредитную карту</string>
   <string name="create_credit_card_item_creation_success">Кредитная карта создана</string>
   <string name="credit_card_init_error">Проблема с получением данных о кредитной карте</string>
@@ -100,9 +100,9 @@
   <string name="totp_create_login_field_invalid">Недействительный секрет 2ФА</string>
   <string name="totp_create_login_field_placeholder">Добавить секрет 2ФА</string>
   <string name="close_scree_icon_content_description">Close screen button</string>
-  <string name="totp_paste_code_action">Paste code</string>
+  <string name="totp_paste_code_action">Вставить код</string>
   <string name="totp_scan_code_action">Сканировать код</string>
-  <string name="field_cannot_be_empty">This field cannot be empty</string>
+  <string name="field_cannot_be_empty">Это поле не может быть пустым</string>
   <string name="camera_permission_explanation">Camera permission required for this feature to be available.</string>
   <string name="camera_permission_open_settings">Открыть настройки</string>
   <!--  TOTP limit  -->

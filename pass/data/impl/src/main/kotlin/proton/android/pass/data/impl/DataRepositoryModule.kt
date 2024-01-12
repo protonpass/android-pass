@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.InviteRepository
@@ -33,6 +34,7 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
+import proton.android.pass.data.impl.repositories.BulkInviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkMoveToVaultRepositoryImpl
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.EventRepositoryImpl
@@ -107,4 +109,9 @@ abstract class DataRepositoryModule {
     abstract fun bindBulkMoveToVaultRepository(
         impl: BulkMoveToVaultRepositoryImpl
     ): BulkMoveToVaultRepository
+
+    @Binds
+    abstract fun bindBulkInviteRepository(
+        impl: BulkInviteRepositoryImpl
+    ): BulkInviteRepository
 }

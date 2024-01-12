@@ -42,7 +42,7 @@ class TestBulkInviteRepository @Inject constructor() : BulkInviteRepository {
     override suspend fun setPermission(address: String, permission: ShareRole) {
         addressesFlow.update { state ->
             val index = state.indexOfFirst { it.address == address }
-            state[index] = state[index].copy(permission = permission)
+            state[index] = state[index].copy(shareRole = permission)
             state
         }
     }

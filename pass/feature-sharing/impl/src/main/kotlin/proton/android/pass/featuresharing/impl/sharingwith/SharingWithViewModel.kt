@@ -29,11 +29,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
@@ -41,12 +39,11 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
+import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -54,9 +51,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SharingWithViewModel @Inject constructor(
-    private val accountManager: AccountManager,
-    private val getInviteUserMode: GetInviteUserMode,
     private val emailValidator: EmailValidator,
+    private val bulkInviteRepository: BulkInviteRepository,
     observeVaultById: ObserveVaultById,
     observeInviteRecommendations: ObserveInviteRecommendations,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -137,14 +133,6 @@ class SharingWithViewModel @Inject constructor(
     fun onEmailSubmit() = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
         val email = emailState.value
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
-        userId ?: run {
-            PassLogger.i(TAG, "User id not found")
-            isEmailNotValidState.update { EmailNotValidReason.UserIdNotFound }
-            isLoadingState.update { IsLoadingState.NotLoading }
-            return@launch
-        }
-
         if (email.isBlank() || !emailValidator.isValid(email)) {
             PassLogger.i(TAG, "Email not valid")
             isEmailNotValidState.update { EmailNotValidReason.NotValid }
@@ -152,22 +140,10 @@ class SharingWithViewModel @Inject constructor(
             return@launch
         }
 
-        getInviteUserMode(userId, email)
-            .onSuccess { userMode ->
-                PassLogger.d(TAG, "Invite user mode: $userMode")
-                eventState.update {
-                    SharingWithEvents.NavigateToPermissions(
-                        shareId = shareId,
-                        email = email,
-                        userMode = userMode.toUserModeType()
-                    )
-                }
-            }
-            .onFailure {
-                PassLogger.w(TAG, "Error getting invite user mode")
-                PassLogger.w(TAG, it)
-                isEmailNotValidState.update { EmailNotValidReason.CannotGetEmailInfo }
-            }
+        bulkInviteRepository.storeAddresses(listOf(email))
+        eventState.update {
+            SharingWithEvents.NavigateToPermissions(shareId = shareId)
+        }
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 

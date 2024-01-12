@@ -89,12 +89,38 @@ data class HomeUiState(
 }
 
 @Immutable
-data class HomeSelectionState(
-    val selectedItems: ImmutableSet<Pair<ShareId, ItemId>>,
-    val isInSelectMode: Boolean
+data class SelectionTopBarState(
+    val isTrash: Boolean,
+    val selectedItemCount: Int,
+    val areAllSelectedPinned: Boolean,
+    val isPinningEnabled: Boolean,
+    val pinningLoadingState: IsLoadingState,
+    val actionsEnabled: Boolean
 ) {
     companion object {
-        val Initial = HomeSelectionState(persistentSetOf(), false)
+        val Initial = SelectionTopBarState(
+            isTrash = false,
+            selectedItemCount = 0,
+            areAllSelectedPinned = false,
+            isPinningEnabled = false,
+            pinningLoadingState = IsLoadingState.NotLoading,
+            actionsEnabled = true
+        )
+    }
+}
+
+@Immutable
+data class HomeSelectionState(
+    val selectedItems: ImmutableSet<Pair<ShareId, ItemId>>,
+    val isInSelectMode: Boolean,
+    val topBarState: SelectionTopBarState
+) {
+    companion object {
+        val Initial = HomeSelectionState(
+            selectedItems = persistentSetOf(),
+            isInSelectMode = false,
+            topBarState = SelectionTopBarState.Initial
+        )
     }
 }
 

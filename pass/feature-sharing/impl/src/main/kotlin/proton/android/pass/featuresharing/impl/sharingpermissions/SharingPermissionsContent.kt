@@ -49,7 +49,7 @@ fun SharingPermissionsContent(
     state: SharingPermissionsUIState,
     onNavigateEvent: (SharingNavigation) -> Unit,
     onPermissionsSubmit: () -> Unit,
-    onPermissionChange: (SharingType) -> Unit
+    onPermissionChange: (String, SharingType) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -99,7 +99,7 @@ fun SharingPermissionsContent(
                 subtitle = stringResource(R.string.sharing_can_view_description),
                 isChecked = state.sharingType == SharingType.Read,
                 colors = RadioButtonDefaults.colors(selectedColor = PassTheme.colors.interactionNormMajor1),
-                onClick = { onPermissionChange(SharingType.Read) }
+                onClick = { onPermissionChange(state.email, SharingType.Read) }
             )
             SettingRadio(
                 modifier = Modifier.roundedContainer(
@@ -114,7 +114,7 @@ fun SharingPermissionsContent(
                 subtitle = stringResource(R.string.sharing_can_edit_description),
                 isChecked = state.sharingType == SharingType.Write,
                 colors = RadioButtonDefaults.colors(selectedColor = PassTheme.colors.interactionNormMajor1),
-                onClick = { onPermissionChange(SharingType.Write) }
+                onClick = { onPermissionChange(state.email, SharingType.Write) }
             )
             SettingRadio(
                 modifier = Modifier.roundedContainer(
@@ -129,7 +129,7 @@ fun SharingPermissionsContent(
                 subtitle = stringResource(R.string.sharing_can_manage_description),
                 isChecked = state.sharingType == SharingType.Admin,
                 colors = RadioButtonDefaults.colors(selectedColor = PassTheme.colors.interactionNormMajor1),
-                onClick = { onPermissionChange(SharingType.Admin) }
+                onClick = { onPermissionChange(state.email, SharingType.Admin) }
             )
         }
     }

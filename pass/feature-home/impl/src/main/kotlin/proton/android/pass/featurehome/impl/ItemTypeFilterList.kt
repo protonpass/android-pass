@@ -55,10 +55,7 @@ import me.proton.core.presentation.R as CoreR
 fun ItemTypeFilterList(
     modifier: Modifier = Modifier,
     selected: SearchFilterType,
-    loginCount: Int,
-    aliasCount: Int,
-    noteCount: Int,
-    creditCardCount: Int,
+    itemTypeCount: ItemTypeCount,
     onItemTypeClick: (SearchFilterType) -> Unit
 ) {
     Row(
@@ -69,13 +66,13 @@ fun ItemTypeFilterList(
         ItemTypeButton(
             All,
             selected == All,
-            loginCount + aliasCount + noteCount + creditCardCount,
+            itemTypeCount.totalCount,
             onItemTypeClick
         )
-        ItemTypeButton(Login, selected == Login, loginCount, onItemTypeClick)
-        ItemTypeButton(Alias, selected == Alias, aliasCount, onItemTypeClick)
-        ItemTypeButton(Note, selected == Note, noteCount, onItemTypeClick)
-        ItemTypeButton(CreditCard, selected == CreditCard, creditCardCount, onItemTypeClick)
+        ItemTypeButton(Login, selected == Login, itemTypeCount.loginCount, onItemTypeClick)
+        ItemTypeButton(Alias, selected == Alias, itemTypeCount.aliasCount, onItemTypeClick)
+        ItemTypeButton(Note, selected == Note, itemTypeCount.noteCount, onItemTypeClick)
+        ItemTypeButton(CreditCard, selected == CreditCard, itemTypeCount.creditCardCount, onItemTypeClick)
     }
 }
 
@@ -144,10 +141,12 @@ fun ItemTypeFilterListPreview(
         Surface {
             ItemTypeFilterList(
                 selected = Login,
-                loginCount = 2,
-                aliasCount = 4,
-                noteCount = 1,
-                creditCardCount = 3,
+                itemTypeCount = ItemTypeCount(
+                    loginCount = 2,
+                    aliasCount = 4,
+                    noteCount = 1,
+                    creditCardCount = 3
+                ),
                 onItemTypeClick = {}
             )
         }

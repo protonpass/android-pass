@@ -24,6 +24,7 @@ data class ItemTypeCount(
     val noteCount: Int,
     val creditCardCount: Int
 ) {
+    val totalCount: Int = loginCount + aliasCount + noteCount + creditCardCount
     companion object {
         val Initial = ItemTypeCount(
             loginCount = 0,

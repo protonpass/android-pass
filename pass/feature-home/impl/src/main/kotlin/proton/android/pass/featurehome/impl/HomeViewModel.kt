@@ -24,7 +24,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
@@ -54,6 +53,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
@@ -144,6 +144,7 @@ import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -208,6 +209,7 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(IsProcessingSearchState.NotLoading)
     private val selectionState: MutableStateFlow<SelectionState> =
         MutableStateFlow(SelectionState.Initial)
+    private val isInSeeAllPinsModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val navEventState: MutableStateFlow<HomeNavEvent> =
         MutableStateFlow(HomeNavEvent.Unknown)
 
@@ -338,13 +340,7 @@ class HomeViewModel @Inject constructor(
         itemUiModelFlow,
         searchOptionsFlow.map { it.sortingOption }
     ) { result, sortingOption ->
-        when (sortingOption.searchSortingType) {
-            SearchSortingType.TitleAsc -> result.map { list -> list.groupAndSortByTitleAsc() }
-            SearchSortingType.TitleDesc -> result.map { list -> list.groupAndSortByTitleDesc() }
-            SearchSortingType.CreationAsc -> result.map { list -> list.groupAndSortByCreationAsc() }
-            SearchSortingType.CreationDesc -> result.map { list -> list.groupAndSortByCreationDesc() }
-            SearchSortingType.MostRecent -> result.map { list -> list.groupAndSortByMostRecent(clock.now()) }
-        }
+        result.map { it.groupedItemLists(sortingOption, clock.now()) }
     }.distinctUntilChanged()
 
     private val textFilterListItemFlow = combine(
@@ -355,7 +351,7 @@ class HomeViewModel @Inject constructor(
         isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
         if (isInSearchMode && searchQuery.isNotBlank()) {
             result.map { grouped ->
-                grouped.map { GroupedItemList(it.key, filterByQuery(it.items, searchQuery)) }
+                grouped.map { GroupedItemList(it.key, it.items.filterByQuery(searchQuery)) }
             }
         } else {
             result
@@ -377,7 +373,7 @@ class HomeViewModel @Inject constructor(
                     .map {
                         GroupedItemList(
                             it.key,
-                            filterByType(it.items, searchFilterType.searchFilterType)
+                            it.items.filterByType(searchFilterType.searchFilterType)
                         )
                     }
                     .filter { it.items.isNotEmpty() }
@@ -386,11 +382,13 @@ class HomeViewModel @Inject constructor(
         }
     }.flowOn(appDispatchers.default)
 
-    private val pinnedItemsFlow: Flow<PinnedItemsState> = combine(
+    private val pinningUiStateFlow = combine(
         observePinnedItems().asLoadingResult(),
-        searchOptionsFlow.map { it.sortingOption },
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1)
-    ) { pinnedItemsResult, sorting, isPinningEnabled ->
+        searchOptionsFlow,
+        isInSeeAllPinsModeState,
+        debouncedSearchQueryState,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1),
+    ) { pinnedItemsResult, searchOptions, isInSeeAllPinsMode, searchQuery, isPinningEnabled ->
         val pinnedItems = if (isPinningEnabled) {
             pinnedItemsResult.getOrNull()?.let { list ->
                 encryptionContextProvider.withEncryptionContext {
@@ -400,22 +398,27 @@ class HomeViewModel @Inject constructor(
         } else {
             emptyList()
         }
-
-        val itemsList = when (sorting.searchSortingType) {
-            SearchSortingType.MostRecent -> pinnedItems.sortMostRecent()
-            SearchSortingType.TitleAsc -> pinnedItems.sortByTitleAsc()
-            SearchSortingType.TitleDesc -> pinnedItems.sortByTitleDesc()
-            SearchSortingType.CreationAsc -> pinnedItems.sortByCreationAsc()
-            SearchSortingType.CreationDesc -> pinnedItems.sortByCreationDesc()
-        }.toPersistentList()
-
-        PinnedItemsState(itemsList, isPinningEnabled)
+        val sortedPinnedItems = pinnedItems.sortItemLists(searchOptions.sortingOption)
+            .toPersistentList()
+        val filteredPinnedItems = pinnedItems
+            .filterByType(searchOptions.filterOption.searchFilterType)
+            .filterByQuery(searchQuery)
+        val groupedItems = filteredPinnedItems
+            .groupedItemLists(searchOptions.sortingOption, clock.now())
+            .toPersistentList()
+        PinningUiState(
+            inPinningMode = isInSeeAllPinsMode,
+            isPinningEnabled = isPinningEnabled,
+            filteredItems = groupedItems,
+            unFilteredItems = sortedPinnedItems,
+            itemTypeCount = ItemTypeCount(
+                loginCount = filteredPinnedItems.count { it.contents is ItemContents.Login },
+                aliasCount = filteredPinnedItems.count { it.contents is ItemContents.Alias },
+                noteCount = filteredPinnedItems.count { it.contents is ItemContents.Note },
+                creditCardCount = filteredPinnedItems.count { it.contents is ItemContents.CreditCard }
+            )
+        )
     }
-
-    data class PinnedItemsState(
-        val pinnedItems: PersistentList<ItemUiModel>,
-        val isPinningEnabled: Boolean
-    )
 
     private val refreshingLoadingFlow = combine(
         isRefreshing,
@@ -474,9 +477,9 @@ class HomeViewModel @Inject constructor(
         getUserPlan().asLoadingResult(),
         selectionState,
         navEventState,
-        pinnedItemsFlow,
+        pinningUiStateFlow
     ) { shareListWrapper, searchOptions, itemsResult, searchUiState, refreshingLoading,
-        shouldScrollToTop, useFavicons, userPlan, selection, navEvent, pinnedItemsState ->
+        shouldScrollToTop, useFavicons, userPlan, selection, navEvent, pinningUiState ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
@@ -496,7 +499,6 @@ class HomeViewModel @Inject constructor(
                 shouldScrollToTop = shouldScrollToTop,
                 actionState = refreshingLoading.actionState,
                 items = items,
-                pinnedItems = pinnedItemsState.pinnedItems,
                 selectedShare = shareListWrapper.selectedShare,
                 shares = shareListWrapper.shares,
                 homeVaultSelection = searchOptions.vaultSelectionOption,
@@ -505,10 +507,11 @@ class HomeViewModel @Inject constructor(
                 canLoadExternalImages = useFavicons.value(),
                 selectionState = selection.toState(
                     isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash,
-                    isPinningEnabled = pinnedItemsState.isPinningEnabled
+                    isPinningEnabled = pinningUiState.isPinningEnabled
                 )
             ),
             searchUiState = searchUiState,
+            pinningUiState = pinningUiState,
             accountType = AccountType.fromPlan(userPlan),
             navEvent = navEvent
         )
@@ -551,6 +554,7 @@ class HomeViewModel @Inject constructor(
     fun onStopSearching() {
         searchQueryState.update { "" }
         isInSearchModeState.update { false }
+        isInSeeAllPinsModeState.update { false }
         isInSuggestionsModeState.update { false }
     }
 
@@ -856,10 +860,12 @@ class HomeViewModel @Inject constructor(
                     snackbarDispatcher(ItemsPinnedSuccess)
                     clearSelection()
                 }
+
                 is PinItemsResult.NonePinned -> {
                     PassLogger.w(TAG, "Could not pin any item")
                     snackbarDispatcher(ItemsPinnedError)
                 }
+
                 is PinItemsResult.SomePinned -> {
                     PassLogger.w(TAG, "Could not pin any item")
                     snackbarDispatcher(ItemsPinnedPartialSuccess)
@@ -888,9 +894,11 @@ class HomeViewModel @Inject constructor(
                     snackbarDispatcher(ItemsUnpinnedSuccess)
                     clearSelection()
                 }
+
                 is PinItemsResult.NonePinned -> {
                     snackbarDispatcher(ItemsUnpinnedError)
                 }
+
                 is PinItemsResult.SomePinned -> {
                     snackbarDispatcher(ItemsUnpinnedPartialSuccess)
                     clearSelection()
@@ -904,6 +912,10 @@ class HomeViewModel @Inject constructor(
 
     fun clearNavEvent() = viewModelScope.launch {
         navEventState.update { HomeNavEvent.Unknown }
+    }
+
+    fun onSeeAllPinned() {
+        isInSeeAllPinsModeState.update { true }
     }
 
     fun onTimeout() {
@@ -927,10 +939,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun filterByType(
-        items: List<ItemUiModel>,
+    private fun List<ItemUiModel>.filterByType(
         searchFilterType: SearchFilterType
-    ) = items.filter { item ->
+    ) = filter { item ->
         when (searchFilterType) {
             SearchFilterType.All -> true
             SearchFilterType.Alias -> item.contents is ItemContents.Alias
@@ -956,6 +967,26 @@ class HomeViewModel @Inject constructor(
 
     private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> =
         map { it.shareId to it.id }
+
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
+        when (sortingOption.searchSortingType) {
+            SearchSortingType.MostRecent -> sortMostRecent()
+            SearchSortingType.TitleAsc -> sortByTitleAsc()
+            SearchSortingType.TitleDesc -> sortByTitleDesc()
+            SearchSortingType.CreationAsc -> sortByCreationAsc()
+            SearchSortingType.CreationDesc -> sortByCreationDesc()
+        }
+
+    private fun List<ItemUiModel>.groupedItemLists(
+        sortingOption: SortingOption,
+        instant: Instant
+    ) = when (sortingOption.searchSortingType) {
+        SearchSortingType.MostRecent -> groupAndSortByMostRecent(instant)
+        SearchSortingType.TitleAsc -> groupAndSortByTitleAsc()
+        SearchSortingType.TitleDesc -> groupAndSortByTitleDesc()
+        SearchSortingType.CreationAsc -> groupAndSortByCreationAsc()
+        SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
+    }
 
     private data class SelectionState(
         val selectedItems: List<ItemUiModel>,

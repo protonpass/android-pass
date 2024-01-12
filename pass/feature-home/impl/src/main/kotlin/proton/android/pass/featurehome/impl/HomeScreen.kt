@@ -602,6 +602,10 @@ fun HomeScreen(
                             )
                         }
 
+                        HomeUiEvent.SeeAllPinned -> {
+                            homeViewModel.onSeeAllPinned()
+                        }
+
                         HomeUiEvent.PinItemsActionClick -> {
                             homeViewModel.pinSelectedItems(
                                 items = homeUiState.homeListUiState.selectionState.selectedItems

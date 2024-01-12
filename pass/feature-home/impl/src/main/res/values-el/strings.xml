@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση του στοιχείου στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_items_move_to_trash_success">Το στοιχεία μετακινήθηκαν στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_items_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση των στοιχείων στον κάδο απορριμμάτων</string>
+  <string name="home_toast_items_selected_read_only">Δεν είναι δυνατή η επιλογή στοιχείων μόνο για ανάγνωση</string>
   <string name="home_autofill_banner_title">Απολαύστε τη μαγεία της Αυτόματης Συμπλήρωσης</string>
   <string name="home_autofill_banner_text">Ένα πάτημα και—presto!—το όνομα χρήστη και ο κωδικός πρόσβασής σας συμπληρώνονται αμέσως.</string>
   <string name="home_autofill_banner_settings">Ενεργοποίηση Αυτόματης Συμπλήρωσης ›</string>

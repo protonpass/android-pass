@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Kohteen siirto roskakoriin epäonnistui</string>
   <string name="home_snackbar_items_move_to_trash_success">Kohde siirrettiin roskakoriin</string>
   <string name="home_snackbar_items_move_to_trash_error">Kohteita ei voitu siirtää roskakoriin</string>
+  <string name="home_toast_items_selected_read_only">Vain luku -kohteita ei voi valita</string>
   <string name="home_autofill_banner_title">Nauti automaattitäytön taiasta</string>
   <string name="home_autofill_banner_text">Vain yksi napautus ja käyttäjätunnuksesi ja salasanasi on täytetty.</string>
   <string name="home_autofill_banner_settings">Ota automaattitäyttö käyttöön ›</string>

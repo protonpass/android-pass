@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">No s\'ha pogut moure element a la paperera.</string>
   <string name="home_snackbar_items_move_to_trash_success">Els elements s\'han mogut a la paperera.</string>
   <string name="home_snackbar_items_move_to_trash_error">No s\'han pogut moure els elements a la paperera.</string>
+  <string name="home_toast_items_selected_read_only">Read-only items cannot be selected</string>
   <string name="home_autofill_banner_title">Gaudiu de la màgia de l\'emplenament automàtic</string>
   <string name="home_autofill_banner_text">Un toc i -presto!- el vostre nom d\'usuari i contrasenya s\'omplen a l\'instant.</string>
   <string name="home_autofill_banner_settings">Activa l\'emplenament automàtic</string>

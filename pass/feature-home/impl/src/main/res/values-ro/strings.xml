@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Articolul nu s-a putut muta în gunoi.</string>
   <string name="home_snackbar_items_move_to_trash_success">Articolele s-au mutat în gunoi.</string>
   <string name="home_snackbar_items_move_to_trash_error">Articolele nu s-au putut muta în gunoi.</string>
+  <string name="home_toast_items_selected_read_only">Articolele în mod doar citire nu pot fi selectate</string>
   <string name="home_autofill_banner_title">Bucurați-vă de magia autocompletării</string>
   <string name="home_autofill_banner_text">O apăsare și gata - numele de utilizator și parola sunt completate instant.</string>
   <string name="home_autofill_banner_settings">Activare autocompletare ›</string>

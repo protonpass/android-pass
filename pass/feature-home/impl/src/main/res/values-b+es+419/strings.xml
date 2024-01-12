@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">No se pudo mover el elemento a la papelera</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementos movidos a la papelera</string>
   <string name="home_snackbar_items_move_to_trash_error">No se pudieron mover los elementos a la papelera</string>
+  <string name="home_toast_items_selected_read_only">No se pueden seleccionar los elementos de solo lectura</string>
   <string name="home_autofill_banner_title">Disfrute de la magia del completado automático</string>
   <string name="home_autofill_banner_text">¡Una pulsación y listo! Su nombre de usuario y contraseña se completan al instante.</string>
   <string name="home_autofill_banner_settings">Activar el completado automático ›</string>

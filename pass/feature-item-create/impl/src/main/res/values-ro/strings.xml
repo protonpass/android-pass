@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Data de expirare</string>
-  <string name="field_card_expiration_date_hint">LL/AAAA</string>
-  <string name="field_card_expiration_date_error">Introduceți o dată validă în format LL/AAAA.</string>
+  <string name="field_card_expiration_date_hint">LL/AA</string>
+  <string name="field_card_expiration_date_error">Introduceți o dată validă în format LL/AA.</string>
   <string name="create_credit_card_item_creation_error">Nu s-a putut crea cardul de credit.</string>
   <string name="create_credit_card_item_creation_success">S-a creat cardul de credit.</string>
   <string name="credit_card_init_error">Problemă preluare detalii card de credit.</string>

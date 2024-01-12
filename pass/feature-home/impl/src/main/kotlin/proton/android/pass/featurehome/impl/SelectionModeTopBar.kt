@@ -18,12 +18,18 @@
 
 package proton.android.pass.featurehome.impl
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,21 +39,20 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun SelectionModeTopBar(
     modifier: Modifier = Modifier,
-    homeVaultSelection: VaultSelectionOption,
-    selectedItemCount: Int,
+    selectionState: SelectionTopBarState,
     onEvent: (HomeUiEvent) -> Unit
 ) {
-    val actionsEnabled = selectedItemCount > 0
     ProtonTopAppBar(
         modifier = modifier.padding(vertical = 12.dp),
         title = {
             Text(
-                text = selectedItemCount.toString(),
+                text = selectionState.selectedItemCount.toString(),
                 color = PassTheme.colors.textNorm
             )
         },
@@ -61,51 +66,127 @@ fun SelectionModeTopBar(
             }
         },
         actions = {
-            if (homeVaultSelection == VaultSelectionOption.Trash) {
-                IconButton(
-                    enabled = actionsEnabled,
-                    onClick = { onEvent(HomeUiEvent.RestoreItemsActionClick) }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_proton_clock_rotate_left),
-                        contentDescription = null,
-                        tint = if (actionsEnabled) PassTheme.colors.textNorm else PassTheme.colors.textDisabled
-                    )
-                }
-                IconButton(
-                    enabled = actionsEnabled,
-                    onClick = { onEvent(HomeUiEvent.PermanentlyDeleteItemsActionClick) }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_proton_trash_cross),
-                        contentDescription = null,
-                        tint = if (actionsEnabled) PassTheme.colors.textNorm else PassTheme.colors.textDisabled
-                    )
-                }
+            if (selectionState.isTrash) {
+                TrashSelectionModeTopBar(selectionState = selectionState, onEvent = onEvent)
             } else {
+                NonTrashSelectionModeTopBar(selectionState = selectionState, onEvent = onEvent)
+            }
+        }
+    )
+}
+
+@Composable
+private fun RowScope.NonTrashSelectionModeTopBar(
+    selectionState: SelectionTopBarState,
+    onEvent: (HomeUiEvent) -> Unit
+) {
+    if (selectionState.isPinningEnabled) {
+        when (selectionState.pinningLoadingState) {
+            IsLoadingState.NotLoading -> {
                 IconButton(
-                    enabled = actionsEnabled,
-                    onClick = { onEvent(HomeUiEvent.MoveItemsActionClick) }
+                    enabled = selectionState.actionsEnabled,
+                    onClick = {
+                        val event = if (selectionState.areAllSelectedPinned) {
+                            HomeUiEvent.UnpinItemsActionClick
+                        } else {
+                            HomeUiEvent.PinItemsActionClick
+                        }
+                        onEvent(event)
+                    }
                 ) {
+                    val iconRes = if (selectionState.areAllSelectedPinned) {
+                        CompR.drawable.ic_unpin_angled
+                    } else {
+                        CompR.drawable.ic_pin_angled
+                    }
                     Icon(
-                        painter = painterResource(R.drawable.ic_proton_folder_arrow_in),
+                        painter = painterResource(iconRes),
                         contentDescription = null,
-                        tint = if (actionsEnabled) PassTheme.colors.textNorm else PassTheme.colors.textDisabled
+                        tint = if (selectionState.actionsEnabled) {
+                            PassTheme.colors.textNorm
+                        } else {
+                            PassTheme.colors.textDisabled
+                        }
                     )
                 }
-                IconButton(
-                    enabled = actionsEnabled,
-                    onClick = { onEvent(HomeUiEvent.MoveToTrashItemsActionClick) }
+            }
+
+            IsLoadingState.Loading -> {
+                Box(
+                    modifier = Modifier.minimumInteractiveComponentSize(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_proton_trash),
-                        contentDescription = null,
-                        tint = if (actionsEnabled) PassTheme.colors.textNorm else PassTheme.colors.textDisabled
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 2.dp
                     )
                 }
             }
         }
-    )
+    }
+    IconButton(
+        enabled = selectionState.actionsEnabled,
+        onClick = { onEvent(HomeUiEvent.MoveItemsActionClick) }
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_proton_folder_arrow_in),
+            contentDescription = null,
+            tint = if (selectionState.actionsEnabled) {
+                PassTheme.colors.textNorm
+            } else {
+                PassTheme.colors.textDisabled
+            }
+        )
+    }
+    IconButton(
+        enabled = selectionState.actionsEnabled,
+        onClick = { onEvent(HomeUiEvent.MoveToTrashItemsActionClick) }
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_proton_trash),
+            contentDescription = null,
+            tint = if (selectionState.actionsEnabled) {
+                PassTheme.colors.textNorm
+            } else {
+                PassTheme.colors.textDisabled
+            }
+        )
+    }
+}
+
+@Composable
+private fun RowScope.TrashSelectionModeTopBar(
+    selectionState: SelectionTopBarState,
+    onEvent: (HomeUiEvent) -> Unit
+) {
+    IconButton(
+        enabled = selectionState.actionsEnabled,
+        onClick = { onEvent(HomeUiEvent.RestoreItemsActionClick) }
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_proton_clock_rotate_left),
+            contentDescription = null,
+            tint = if (selectionState.actionsEnabled) {
+                PassTheme.colors.textNorm
+            } else {
+                PassTheme.colors.textDisabled
+            }
+        )
+    }
+    IconButton(
+        enabled = selectionState.actionsEnabled,
+        onClick = { onEvent(HomeUiEvent.PermanentlyDeleteItemsActionClick) }
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_proton_trash_cross),
+            contentDescription = null,
+            tint = if (selectionState.actionsEnabled) {
+                PassTheme.colors.textNorm
+            } else {
+                PassTheme.colors.textDisabled
+            }
+        )
+    }
 }
 
 @Preview
@@ -113,12 +194,17 @@ fun SelectionModeTopBar(
 fun SelectionModeTopBarPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    val selection = if (input.second) VaultSelectionOption.Trash else VaultSelectionOption.AllVaults
     PassTheme(isDark = input.first) {
         Surface {
             SelectionModeTopBar(
-                homeVaultSelection = selection,
-                selectedItemCount = 2,
+                selectionState = SelectionTopBarState(
+                    isTrash = input.second,
+                    selectedItemCount = 2,
+                    areAllSelectedPinned = false,
+                    isPinningEnabled = true,
+                    pinningLoadingState = IsLoadingState.NotLoading,
+                    actionsEnabled = true
+                ),
                 onEvent = {}
             )
         }

@@ -82,7 +82,7 @@ import proton.android.pass.commonui.api.ItemSorter.sortByTitleAsc
 import proton.android.pass.commonui.api.ItemSorter.sortByTitleDesc
 import proton.android.pass.commonui.api.ItemSorter.sortMostRecent
 import proton.android.pass.commonui.api.ItemSorter.sortSuggestionsByMostRecent
-import proton.android.pass.commonui.api.ItemUiFilter
+import proton.android.pass.commonui.api.ItemUiFilter.filterByQuery
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
@@ -251,7 +251,7 @@ class SelectItemViewModel @Inject constructor(
                 grouped.map {
                     GroupedItemList(
                         it.key,
-                        ItemUiFilter.filterByQuery(it.items, searchQuery)
+                        it.items.filterByQuery(searchQuery)
                     )
                 }
             }

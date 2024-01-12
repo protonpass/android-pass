@@ -25,50 +25,45 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.GetVaultById
-import proton.android.pass.featuresharing.impl.EmailNavArgId
-import proton.android.pass.featuresharing.impl.SharingWithUserModeArgId
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
-import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featuresharing.impl.extensions.toShareRole
+import proton.android.pass.featuresharing.impl.extensions.toSharingType
+import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
 class SharingPermissionsViewModel @Inject constructor(
+    private val bulkInviteRepository: BulkInviteRepository,
     getVaultById: GetVaultById,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
 ) : ViewModel() {
 
-    private val shareId: ShareId =
-        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
-    private val email: String = savedStateHandleProvider.get().require(EmailNavArgId.key)
-    private val userMode: SharingWithUserModeType = SharingWithUserModeType
-        .values()
-        .first {
-            it.name == savedStateHandleProvider.get().require(SharingWithUserModeArgId.key)
-        }
+    private val shareId: ShareId = ShareId(
+        id = savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key)
+    )
 
-    private val sharingTypeState: MutableStateFlow<SharingType> = MutableStateFlow(SharingType.Read)
     private val eventState: MutableStateFlow<SharingPermissionsEvents> =
         MutableStateFlow(SharingPermissionsEvents.Unknown)
 
     val state: StateFlow<SharingPermissionsUIState> = combine(
-        flowOf(email),
+        bulkInviteRepository.observeAddresses(),
         getVaultById(shareId = shareId).asLoadingResult(),
-        sharingTypeState,
         eventState
-    ) { email, vault, sharingType, event ->
+    ) { addresses, vault, event ->
+        val address = addresses.first()
         SharingPermissionsUIState(
-            email = email,
+            email = address.address,
             vaultName = vault.getOrNull()?.name,
-            sharingType = sharingType,
+            sharingType = address.shareRole.toSharingType(),
             event = event
         )
     }.stateIn(
@@ -77,22 +72,18 @@ class SharingPermissionsViewModel @Inject constructor(
         initialValue = SharingPermissionsUIState()
     )
 
-    fun onPermissionChange(sharingType: SharingType) {
-        sharingTypeState.update { sharingType }
+    fun onPermissionChange(address: String, sharingType: SharingType) = viewModelScope.launch {
+        bulkInviteRepository.setPermission(address, sharingType.toShareRole())
     }
 
-    fun onPermissionsSubmit() {
+    fun onPermissionsSubmit() = viewModelScope.launch {
         eventState.update {
-            SharingPermissionsEvents.NavigateToSummary(
-                shareId = shareId,
-                email = email,
-                permission = sharingTypeState.value.ordinal,
-                mode = userMode
-            )
+            SharingPermissionsEvents.NavigateToSummary(shareId = shareId)
         }
     }
 
     fun clearEvent() {
         eventState.update { SharingPermissionsEvents.Unknown }
     }
+
 }

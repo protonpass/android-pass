@@ -47,11 +47,7 @@ fun SharingSummaryScreen(
         state = state,
         onNavigateEvent = onNavigateEvent,
         onSubmit = {
-            viewModel.onSubmit(
-                email = state.email,
-                shareId = state.vaultWithItemCount?.vault?.shareId,
-                sharingType = state.sharingType
-            )
+            viewModel.onSubmit()
         }
     )
 }

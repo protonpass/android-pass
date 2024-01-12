@@ -24,19 +24,18 @@ import proton.android.pass.domain.ItemContents
 
 object ItemUiFilter {
 
-    fun filterByQuery(
-        list: List<ItemUiModel>,
+    fun List<ItemUiModel>.filterByQuery(
         query: String
     ): List<ItemUiModel> =
         if (query.isNotEmpty()) {
             if (query.isNotBlank()) {
                 val cleanQuery = query.preprocess()
-                list.filter { it.matchesQuery(cleanQuery) }
+                filter { it.matchesQuery(cleanQuery) }
             } else {
                 emptyList()
             }
         } else {
-            list
+            this
         }
 
     private fun isItemMatch(item: ItemUiModel, query: String): Boolean {

@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.InviteRepository
@@ -116,6 +117,7 @@ import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
+import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.repositories.TestInviteRepository
@@ -596,4 +598,6 @@ abstract class FakesDataModule {
     @Binds
     abstract fun bindUnpinItems(impl: TestUnpinItems): UnpinItems
 
+    @Binds
+    abstract fun bindBulkInviteRepository(impl: TestBulkInviteRepository): BulkInviteRepository
 }

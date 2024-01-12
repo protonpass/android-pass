@@ -36,6 +36,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionStrongNorm
 import proton.android.pass.common.api.ellipsize
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.container.roundedContainer
@@ -45,7 +46,8 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemContents
 
-private const val MAX_LENGTH = 20
+private const val ICON_SIZE = 24
+private const val TEXT_MAX_LENGTH_BEFORE_ELLIPSE = 20
 
 @Composable
 fun PinItem(
@@ -68,36 +70,37 @@ fun PinItem(
                 borderColor = Color.Transparent,
             )
             .clickable { onItemClick(item) }
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+            .padding(Spacing.small),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small),
         verticalAlignment = Alignment.CenterVertically
     ) {
         when (val contents = item.contents) {
             is ItemContents.Note -> NoteIcon(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
                 backgroundColor = PassTheme.colors.noteInteractionNormMinor2
             )
 
             is ItemContents.Login -> LoginIcon(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(ICON_SIZE.dp),
                 text = contents.title,
                 shape = PassTheme.shapes.squircleSmallShape,
                 canLoadExternalImages = canLoadExternalImages,
-                size = 20,
+                size = ICON_SIZE,
+                favIconPadding = 2.dp,
                 website = contents.urls.firstOrNull(),
                 packageName = contents.packageInfoSet.firstOrNull()?.packageName?.value,
                 backgroundColor = PassTheme.colors.loginInteractionNormMinor2
             )
 
             is ItemContents.Alias -> AliasIcon(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
                 backgroundColor = PassTheme.colors.aliasInteractionNormMinor2
             )
 
             is ItemContents.CreditCard -> CreditCardIcon(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
                 backgroundColor = PassTheme.colors.cardInteractionNormMinor2
             )
@@ -105,7 +108,7 @@ fun PinItem(
             is ItemContents.Unknown -> {}
         }
         Text(
-            text = item.contents.title.ellipsize(MAX_LENGTH),
+            text = item.contents.title.ellipsize(TEXT_MAX_LENGTH_BEFORE_ELLIPSE),
             style = ProtonTheme.typography.captionStrongNorm
         )
     }

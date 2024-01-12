@@ -38,8 +38,6 @@ fun SharingWithScreen(
             is SharingWithEvents.NavigateToPermissions -> onNavigateEvent(
                 SharingNavigation.Permissions(
                     shareId = event.shareId,
-                    email = event.email,
-                    mode = event.userMode
                 )
             )
 

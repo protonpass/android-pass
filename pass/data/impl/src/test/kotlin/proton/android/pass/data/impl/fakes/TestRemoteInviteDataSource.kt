@@ -22,7 +22,9 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
+import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
+import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.responses.InviteRecommendationResponse
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
@@ -71,21 +73,13 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
         inviteRecommendationResponseResult = value
     }
 
-    override suspend fun sendInvite(
+    override suspend fun sendInvites(
         userId: UserId,
         shareId: ShareId,
-        request: CreateInviteRequest
+        existingUserRequests: CreateInvitesRequest,
+        newUserRequests: CreateNewUserInvitesRequest
     ) {
-        memory.add(InvitePayload(userId, shareId, request))
-        sendInviteResult.getOrThrow()
-    }
-
-    override suspend fun sendNewUserInvite(
-        userId: UserId,
-        shareId: ShareId,
-        request: CreateNewUserInviteRequest
-    ) {
-        newUserInviteMemory.add(NewUserInvitePayload(userId, shareId, request))
+        memory.add(InvitePayload(userId, shareId, existingUserRequests, newUserRequests))
         sendInviteResult.getOrThrow()
     }
 

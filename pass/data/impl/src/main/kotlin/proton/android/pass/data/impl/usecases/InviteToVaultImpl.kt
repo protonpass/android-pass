@@ -18,12 +18,20 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
+import proton.android.pass.common.api.transpose
+import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteToVault
+import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.local.LocalShareDataSource
@@ -31,7 +39,9 @@ import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.CreateInviteKey
 import proton.android.pass.data.impl.requests.CreateInviteRequest
+import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
+import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.log.api.PassLogger
@@ -44,64 +54,115 @@ class InviteToVaultImpl @Inject constructor(
     private val shareKeyRepository: ShareKeyRepository,
     private val remoteInviteDataSource: RemoteInviteDataSource,
     private val localShareDataSource: LocalShareDataSource,
-    private val newUserInviteSignatureManager: NewUserInviteSignatureManager
+    private val newUserInviteSignatureManager: NewUserInviteSignatureManager,
+    private val getInviteUserMode: GetInviteUserMode
 ) : InviteToVault {
 
     @Suppress("ReturnCount")
     override suspend fun invoke(
         userId: UserId?,
-        targetEmail: String,
         shareId: ShareId,
-        shareRole: ShareRole,
-        userMode: InviteToVault.UserMode
-    ): Result<Unit> {
+        inviteAddresses: List<AddressPermission>
+    ): Result<Unit> = withContext(Dispatchers.IO) {
         val id = userId ?: run {
             val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
             if (primaryUserId == null) {
                 PassLogger.w(TAG, "No primary user")
-                return Result.failure(IllegalStateException("No primary user"))
+                return@withContext Result.failure(IllegalStateException("No primary user"))
             }
             primaryUserId
         }
 
         val share = localShareDataSource.getById(id, shareId)
-            ?: return Result.failure(IllegalStateException("No share with id $shareId"))
+            ?: return@withContext Result.failure(IllegalStateException("No share with id $shareId"))
 
-        val inviterUserAddress = runCatching { userAddressRepository.getAddresses(id) }
-            .fold(
-                onSuccess = { addresses ->
-                    val address = addresses.firstOrNull { it.addressId.id == share.addressId }
-                        ?: return Result.failure(IllegalStateException("No primary address for inviter user"))
-                    address
-                },
-                onFailure = {
-                    PassLogger.w(TAG, "Failed to get user addresses")
-                    PassLogger.w(TAG, it)
-                    return Result.failure(it)
-                }
-            )
-
-        return when (userMode) {
-            InviteToVault.UserMode.ExistingUser -> buildExistingUserRequest(
-                shareId = shareId,
-                address = inviterUserAddress,
-                targetEmail = targetEmail,
-                shareRole = shareRole,
-            ).mapCatching { request ->
-                remoteInviteDataSource.sendInvite(id, shareId, request)
+        val inviterUserAddresses = runCatching { userAddressRepository.getAddresses(id) }
+            .getOrElse {
+                PassLogger.w(TAG, "Failed to get current user addresses")
+                PassLogger.w(TAG, it)
+                return@withContext Result.failure(it)
             }
 
-            InviteToVault.UserMode.NewUser -> buildNewUserRequest(
+        val inviterUserAddress = inviterUserAddresses.firstOrNull {
+            it.addressId.id == share.addressId
+        } ?: return@withContext Result.failure(
+            exception = IllegalStateException("No primary address for inviter user")
+        )
+
+        generateInvites(
+            userId = id,
+            shareId = shareId,
+            inviterUserAddress = inviterUserAddress,
+            inviteAddresses = inviteAddresses
+        ).mapCatching { (existingUserInvites, newUserInvites) ->
+            val existing = existingUserInvites.invites.size
+            val new = newUserInvites.invites.size
+
+            PassLogger.i(TAG, "Sending $existing existing user invites and $new new user invites")
+            remoteInviteDataSource.sendInvites(
                 userId = id,
                 shareId = shareId,
-                address = inviterUserAddress,
-                targetEmail = targetEmail,
-                shareRole = shareRole,
-            ).mapCatching { request ->
-                remoteInviteDataSource.sendNewUserInvite(id, shareId, request)
-            }
+                existingUserRequests = existingUserInvites,
+                newUserRequests = newUserInvites
+            )
         }
     }
+
+    private suspend fun generateInvites(
+        userId: UserId,
+        shareId: ShareId,
+        inviterUserAddress: UserAddress,
+        inviteAddresses: List<AddressPermission>
+    ): Result<Pair<CreateInvitesRequest, CreateNewUserInvitesRequest>> =
+        withContext(Dispatchers.IO) {
+            val inviteUserModes: Map<String, InviteUserMode> = inviteAddresses.map {
+                async { getInviteUserMode(userId, it.address).map { mode -> it.address to mode } }
+            }.awaitAll().transpose().getOrElse {
+                PassLogger.w(TAG, "Error obtaining inviteUserModes")
+                PassLogger.w(TAG, it)
+                return@withContext Result.failure(it)
+            }.toMap()
+
+            val (newUserInvites, existingUserInvites) = inviteAddresses.partition {
+                inviteUserModes[it.address] == InviteUserMode.NewUser
+            }
+
+            val newUserInvitesRequests = newUserInvites.map {
+                async {
+                    buildNewUserRequest(
+                        userId,
+                        shareId,
+                        inviterUserAddress,
+                        it.address,
+                        it.shareRole
+                    )
+                }
+            }.awaitAll().transpose().getOrElse {
+                PassLogger.w(TAG, "Error creating newUserInvites")
+                PassLogger.w(TAG, it)
+                return@withContext Result.failure(it)
+            }
+
+            val existingUserInvitesRequests = existingUserInvites.map {
+                async {
+                    buildExistingUserRequest(
+                        shareId,
+                        inviterUserAddress,
+                        it.address,
+                        it.shareRole
+                    )
+                }
+            }.awaitAll().transpose().getOrElse {
+                PassLogger.w(TAG, "Error creating existingUserInvites")
+                PassLogger.w(TAG, it)
+                return@withContext Result.failure(it)
+            }
+
+            val existing = CreateInvitesRequest(existingUserInvitesRequests)
+            val new = CreateNewUserInvitesRequest(newUserInvitesRequests)
+
+            return@withContext Result.success(existing to new)
+        }
 
     @Suppress("ReturnCount")
     private suspend fun buildExistingUserRequest(
@@ -146,7 +207,8 @@ class InviteToVaultImpl @Inject constructor(
             addressId = address.addressId,
             shareId = shareId,
             forceRefresh = false
-        ).firstOrNull() ?: return Result.failure(IllegalStateException("No ShareKey found for share"))
+        ).firstOrNull()
+            ?: return Result.failure(IllegalStateException("No ShareKey found for share"))
 
         val vaultKey = vaultKeyList.maxByOrNull { it.rotation }
             ?: return Result.failure(IllegalStateException("ShareKey list is empty"))

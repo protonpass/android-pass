@@ -23,9 +23,11 @@ import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.ConfirmInviteRequest
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
+import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
+import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
@@ -245,10 +247,22 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: CreateInviteRequest
     ): CodeOnlyResponse
 
+    @POST("$PREFIX/share/{shareId}/invite/batch")
+    suspend fun inviteUsers(
+        @Path("shareId") shareId: String,
+        @Body request: CreateInvitesRequest
+    ): CodeOnlyResponse
+
     @POST("$PREFIX/share/{shareId}/invite/new_user")
     suspend fun inviteNewUser(
         @Path("shareId") shareId: String,
         @Body request: CreateNewUserInviteRequest
+    ): CodeOnlyResponse
+
+    @POST("$PREFIX/share/{shareId}/invite/new_user/batch")
+    suspend fun inviteNewUsers(
+        @Path("shareId") shareId: String,
+        @Body request: CreateNewUserInvitesRequest
     ): CodeOnlyResponse
 
     @GET("$PREFIX/invite")

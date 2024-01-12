@@ -200,7 +200,9 @@ internal fun HomeContent(
                     onSeeAllClick = { onEvent(HomeUiEvent.SeeAllPinned) },
                 )
 
-                Spacer(modifier = Modifier.height(Spacing.medium))
+                if (uiState.pinningUiState.unFilteredItems.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(Spacing.medium))
+                }
             }
             AnimatedVisibility(
                 visible = isPinningOrSearch && firstItemVisible,

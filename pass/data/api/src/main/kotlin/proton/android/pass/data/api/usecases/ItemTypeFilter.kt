@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,12 +18,10 @@
 
 package proton.android.pass.data.api.usecases
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.domain.Item
-
-interface ObservePinnedItems {
-
-    operator fun invoke(
-        filter: ItemTypeFilter = ItemTypeFilter.All,
-    ): Flow<List<Item>>
+enum class ItemTypeFilter {
+    All,
+    Logins,
+    Aliases,
+    Notes,
+    CreditCards;
 }

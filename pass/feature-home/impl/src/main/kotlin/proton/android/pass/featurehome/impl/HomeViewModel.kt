@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
@@ -89,6 +90,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -98,9 +100,11 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.PerformSync
+import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.data.api.usecases.UnpinItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -130,6 +134,12 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsErro
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedPartialSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsUnpinnedSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsUnpinnedPartialSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsUnpinnedError
 import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
@@ -170,6 +180,8 @@ class HomeViewModel @Inject constructor(
     private val toastManager: ToastManager,
     private val observeCurrentUser: ObserveCurrentUser,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val pinItems: PinItems,
+    private val unpinItems: UnpinItems,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -374,7 +386,7 @@ class HomeViewModel @Inject constructor(
         }
     }.flowOn(appDispatchers.default)
 
-    private val pinnedItemsFlow = combine(
+    private val pinnedItemsFlow: Flow<PinnedItemsState> = combine(
         observePinnedItems().asLoadingResult(),
         searchOptionsFlow.map { it.sortingOption },
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1)
@@ -389,14 +401,21 @@ class HomeViewModel @Inject constructor(
             emptyList()
         }
 
-        when (sorting.searchSortingType) {
+        val itemsList = when (sorting.searchSortingType) {
             SearchSortingType.MostRecent -> pinnedItems.sortMostRecent()
             SearchSortingType.TitleAsc -> pinnedItems.sortByTitleAsc()
             SearchSortingType.TitleDesc -> pinnedItems.sortByTitleDesc()
             SearchSortingType.CreationAsc -> pinnedItems.sortByCreationAsc()
             SearchSortingType.CreationDesc -> pinnedItems.sortByCreationDesc()
         }.toPersistentList()
+
+        PinnedItemsState(itemsList, isPinningEnabled)
     }
+
+    data class PinnedItemsState(
+        val pinnedItems: PersistentList<ItemUiModel>,
+        val isPinningEnabled: Boolean
+    )
 
     private val refreshingLoadingFlow = combine(
         isRefreshing,
@@ -457,7 +476,7 @@ class HomeViewModel @Inject constructor(
         navEventState,
         pinnedItemsFlow,
     ) { shareListWrapper, searchOptions, itemsResult, searchUiState, refreshingLoading,
-        shouldScrollToTop, useFavicons, userPlan, selection, navEvent, pinnedItems ->
+        shouldScrollToTop, useFavicons, userPlan, selection, navEvent, pinnedItemsState ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
@@ -477,14 +496,17 @@ class HomeViewModel @Inject constructor(
                 shouldScrollToTop = shouldScrollToTop,
                 actionState = refreshingLoading.actionState,
                 items = items,
-                pinnedItems = pinnedItems,
+                pinnedItems = pinnedItemsState.pinnedItems,
                 selectedShare = shareListWrapper.selectedShare,
                 shares = shareListWrapper.shares,
                 homeVaultSelection = searchOptions.vaultSelectionOption,
                 searchFilterType = searchOptions.filterOption.searchFilterType,
                 sortingType = searchOptions.sortingOption.searchSortingType,
                 canLoadExternalImages = useFavicons.value(),
-                selectionState = selection.toState()
+                selectionState = selection.toState(
+                    isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash,
+                    isPinningEnabled = pinnedItemsState.isPinningEnabled
+                )
             ),
             searchUiState = searchUiState,
             accountType = AccountType.fromPlan(userPlan),
@@ -773,20 +795,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onClearBulk() = viewModelScope.launch {
-        selectionState.update { SelectionState.Initial }
-    }
-
-    fun onItemLongPressed(item: ItemUiModel) = viewModelScope.launch {
-        selectionState.update { state ->
-            if (state.isInSelectMode) {
-                state.copy(selectedItems = state.selectedItems + item)
-            } else {
-                state.copy(isInSelectMode = true, selectedItems = listOf(item))
-            }
-        }
-    }
-
     fun onItemSelected(item: ItemUiModel) = viewModelScope.launch {
         selectionState.update { state ->
             val alreadyInList = state.selectedItems.any {
@@ -821,6 +829,57 @@ class HomeViewModel @Inject constructor(
         val groupedItems = groupItems(items)
         bulkMoveToVaultRepository.save(groupedItems)
         navEventState.update { HomeNavEvent.ShowBulkMoveToVault }
+    }
+
+    fun pinSelectedItems(items: ImmutableSet<Pair<ShareId, ItemId>>) = viewModelScope.launch {
+        selectionState.update { it.copy(pinningLoadingState = IsLoadingState.Loading) }
+        runCatching {
+            pinItems(items.toList())
+        }.onSuccess {
+            when (it) {
+                is PinItemsResult.AllPinned -> {
+                    PassLogger.i(TAG, "All items pinned successfully")
+                    snackbarDispatcher(ItemsPinnedSuccess)
+                    clearSelection()
+                }
+                is PinItemsResult.NonePinned -> {
+                    PassLogger.w(TAG, "Could not pin any item")
+                    snackbarDispatcher(ItemsPinnedError)
+                }
+                is PinItemsResult.SomePinned -> {
+                    PassLogger.w(TAG, "Could not pin any item")
+                    snackbarDispatcher(ItemsPinnedPartialSuccess)
+                    clearSelection()
+                }
+            }
+        }.onFailure {
+            PassLogger.w(TAG, "Error pinning items")
+            PassLogger.w(TAG, it)
+        }
+    }
+
+    fun unpinSelectedItems(items: ImmutableSet<Pair<ShareId, ItemId>>) = viewModelScope.launch {
+        selectionState.update { it.copy(pinningLoadingState = IsLoadingState.Loading) }
+        runCatching {
+            unpinItems(items.toList())
+        }.onSuccess {
+            when (it) {
+                is PinItemsResult.AllPinned -> {
+                    snackbarDispatcher(ItemsUnpinnedSuccess)
+                    clearSelection()
+                }
+                is PinItemsResult.NonePinned -> {
+                    snackbarDispatcher(ItemsUnpinnedError)
+                }
+                is PinItemsResult.SomePinned -> {
+                    snackbarDispatcher(ItemsUnpinnedPartialSuccess)
+                    clearSelection()
+                }
+            }
+        }.onFailure {
+            PassLogger.w(TAG, "Error unpinning items")
+            PassLogger.w(TAG, it)
+        }
     }
 
     fun clearNavEvent() = viewModelScope.launch {
@@ -877,15 +936,32 @@ class HomeViewModel @Inject constructor(
 
     private data class SelectionState(
         val selectedItems: List<ItemUiModel>,
-        val isInSelectMode: Boolean
+        val isInSelectMode: Boolean,
+        val pinningLoadingState: IsLoadingState
     ) {
-        fun toState(): HomeSelectionState = HomeSelectionState(
+        fun toState(isTrash: Boolean, isPinningEnabled: Boolean) = HomeSelectionState(
             selectedItems = selectedItems.map { it.shareId to it.id }.toPersistentSet(),
-            isInSelectMode = isInSelectMode
+            isInSelectMode = isInSelectMode,
+            topBarState = SelectionTopBarState(
+                isTrash = isTrash,
+                selectedItemCount = selectedItems.size,
+                areAllSelectedPinned = selectedItems.all { it.isPinned },
+                isPinningEnabled = isPinningEnabled,
+                pinningLoadingState = pinningLoadingState,
+
+                // Actions are only enabled if there are selected items and the pinning operation
+                // is not in progress
+                actionsEnabled = selectedItems.isNotEmpty() && !pinningLoadingState.value()
+            ),
+
         )
 
         companion object {
-            val Initial = SelectionState(emptyList(), false)
+            val Initial = SelectionState(
+                selectedItems = emptyList(),
+                isInSelectMode = false,
+                pinningLoadingState = IsLoadingState.NotLoading
+            )
         }
     }
 

@@ -59,6 +59,14 @@ enum class HomeSnackbarMessage(
     DeleteItemsError(R.string.trash_deleting_items_error, SnackbarType.ERROR),
 
     ItemsMovedToTrashSuccess(R.string.home_snackbar_items_move_to_trash_success, SnackbarType.SUCCESS),
-    ItemsMovedToTrashError(R.string.home_snackbar_items_move_to_trash_error, SnackbarType.ERROR);
+    ItemsMovedToTrashError(R.string.home_snackbar_items_move_to_trash_error, SnackbarType.ERROR),
+
+    ItemsPinnedSuccess(R.string.home_snackbar_items_pinned_success, SnackbarType.SUCCESS),
+    ItemsPinnedPartialSuccess(R.string.home_snackbar_items_pinned_partial_success, SnackbarType.ERROR),
+    ItemsPinnedError(R.string.home_snackbar_items_pinned_error, SnackbarType.ERROR),
+
+    ItemsUnpinnedSuccess(R.string.home_snackbar_items_unpinned_success, SnackbarType.SUCCESS),
+    ItemsUnpinnedPartialSuccess(R.string.home_snackbar_items_unpinned_partial_success, SnackbarType.ERROR),
+    ItemsUnpinnedError(R.string.home_snackbar_items_unpinned_error, SnackbarType.ERROR),
 }
 

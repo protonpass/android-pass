@@ -602,6 +602,18 @@ fun HomeScreen(
                                 items = homeUiState.homeListUiState.selectionState.selectedItems
                             )
                         }
+
+                        HomeUiEvent.PinItemsActionClick -> {
+                            homeViewModel.pinSelectedItems(
+                                items = homeUiState.homeListUiState.selectionState.selectedItems
+                            )
+                        }
+
+                        HomeUiEvent.UnpinItemsActionClick -> {
+                            homeViewModel.unpinSelectedItems(
+                                items = homeUiState.homeListUiState.selectionState.selectedItems
+                            )
+                        }
                     }
                 }
             )

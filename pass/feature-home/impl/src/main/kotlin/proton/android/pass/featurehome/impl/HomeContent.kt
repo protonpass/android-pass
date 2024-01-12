@@ -24,6 +24,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -47,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
@@ -172,6 +174,8 @@ internal fun HomeContent(
                     onItemClick = { item -> onEvent(HomeUiEvent.ItemClick(item)) },
                     onSeeAllClick = {},
                 )
+
+                Spacer(modifier = Modifier.height(Spacing.medium))
             }
             AnimatedVisibility(
                 visible = uiState.searchUiState.inSearchMode && firstItemVisible,

@@ -116,7 +116,8 @@ fun SelectItemList(
                                 showSearchResults = uiState.searchUiState.inSearchMode &&
                                     uiState.searchUiState.searchQuery.isNotEmpty(),
                                 itemType = SearchFilterType.All,
-                                itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() }
+                                itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
+                                isPinnedMode = false
                             )
                         },
                         sortingContent = {

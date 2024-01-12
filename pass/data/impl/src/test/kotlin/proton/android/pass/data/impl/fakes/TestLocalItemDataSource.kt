@@ -85,7 +85,10 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun observePinnedItems(userId: UserId): Flow<List<ItemEntity>> {
+    override fun observePinnedItems(
+        userId: UserId,
+        filter: ItemTypeFilter
+    ): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }
 

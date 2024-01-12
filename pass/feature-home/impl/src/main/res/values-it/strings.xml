@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Impossibile spostare l\'elemento nel cestino</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementi spostati nel cestino</string>
   <string name="home_snackbar_items_move_to_trash_error">Impossibile spostare gli elementi nel cestino</string>
+  <string name="home_toast_items_selected_read_only">Gli oggetti in sola lettura non possono essere selezionati</string>
   <string name="home_autofill_banner_title">Approfitta della magia della compilazione automatica</string>
   <string name="home_autofill_banner_text">Un tocco e voilà! Il tuo nome utente e la tua password vengono compilati all\'istante.</string>
   <string name="home_autofill_banner_settings">Attiva la compilazione automatica ›</string>

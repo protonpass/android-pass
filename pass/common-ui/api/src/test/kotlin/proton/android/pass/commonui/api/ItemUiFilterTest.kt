@@ -21,6 +21,7 @@ import com.google.common.truth.Truth.assertThat
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
+import proton.android.pass.commonui.api.ItemUiFilter.filterByQuery
 import proton.android.pass.commonuimodels.fakes.TestItemUiModel
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
@@ -37,7 +38,7 @@ class ItemUiFilterTest {
         )
         val query = ""
 
-        val result = ItemUiFilter.filterByQuery(list, query)
+        val result = list.filterByQuery(query)
 
         assertEquals(list, result)
     }
@@ -50,7 +51,7 @@ class ItemUiFilterTest {
         )
         val query = "   "
 
-        val result = ItemUiFilter.filterByQuery(list, query)
+        val result = list.filterByQuery(query)
 
         assertTrue(result.isEmpty())
     }
@@ -63,7 +64,7 @@ class ItemUiFilterTest {
         )
         val query = "item1"
 
-        val result = ItemUiFilter.filterByQuery(list, query)
+        val result = list.filterByQuery(query)
 
         assertEquals(1, result.size)
         assertEquals("item1", result[0].contents.title)
@@ -73,7 +74,7 @@ class ItemUiFilterTest {
     @Test
     fun `filterByQuery should match alias title`() {
         val itemList = createAliasList()
-        val filteredList = ItemUiFilter.filterByQuery(itemList, "title")
+        val filteredList = itemList.filterByQuery("title")
 
         assertEquals(2, filteredList.size)
     }
@@ -81,7 +82,7 @@ class ItemUiFilterTest {
     @Test
     fun `filterByQuery should match alias email`() {
         val itemList = createAliasList()
-        val filteredList = ItemUiFilter.filterByQuery(itemList, "test@example.com")
+        val filteredList = itemList.filterByQuery("test@example.com")
 
         assertEquals(1, filteredList.size)
     }
@@ -89,7 +90,7 @@ class ItemUiFilterTest {
     @Test
     fun `filterByQuery should match login username `() {
         val itemList = createLoginList()
-        val filteredList = ItemUiFilter.filterByQuery(itemList, "user")
+        val filteredList = itemList.filterByQuery("user")
 
         assertEquals(2, filteredList.size)
     }
@@ -97,7 +98,7 @@ class ItemUiFilterTest {
     @Test
     fun `filterByQuery should match URL`() {
         val itemList = createLoginList()
-        val filteredList = ItemUiFilter.filterByQuery(itemList, "test")
+        val filteredList = itemList.filterByQuery("test")
 
         assertEquals(1, filteredList.size)
     }
@@ -105,7 +106,7 @@ class ItemUiFilterTest {
     @Test
     fun `filterByQuery should match cc title`() {
         val itemList = createCreditCardList()
-        val filteredList = ItemUiFilter.filterByQuery(itemList, "cc")
+        val filteredList = itemList.filterByQuery("cc")
 
         assertEquals(1, filteredList.size)
     }
@@ -113,7 +114,7 @@ class ItemUiFilterTest {
     @Test
     fun `filterByQuery should match cc cardholder`() {
         val itemList = createCreditCardList()
-        val filteredList = ItemUiFilter.filterByQuery(itemList, "maecenas")
+        val filteredList = itemList.filterByQuery("maecenas")
 
         assertEquals(1, filteredList.size)
     }
@@ -121,7 +122,7 @@ class ItemUiFilterTest {
     @Test
     fun `filterByQuery should match cc note`() {
         val itemList = createCreditCardList()
-        val filteredList = ItemUiFilter.filterByQuery(itemList, "pertinacia")
+        val filteredList = itemList.filterByQuery("pertinacia")
 
         assertEquals(1, filteredList.size)
     }
@@ -177,7 +178,7 @@ class ItemUiFilterTest {
             ),
         )
 
-        val filteredList = ItemUiFilter.filterByQuery(items, "tablet    example ")
+        val filteredList = items.filterByQuery("tablet    example ")
         assertThat(filteredList.size).isEqualTo(1)
         assertThat(filteredList.first().id).isEqualTo(ItemId(selectedId))
     }

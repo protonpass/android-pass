@@ -4,7 +4,7 @@
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
   <string name="bottomsheet_generate_password_title">Создать пароль</string>
   <string name="password_type">Тип</string>
-  <string name="special_characters">Special characters (!&amp;*)</string>
+  <string name="special_characters">Специальные символы (!&amp;*)</string>
   <plurals name="character_count">
     <item quantity="one">%s символ</item>
     <item quantity="few">%s символа</item>
@@ -17,20 +17,20 @@
     <item quantity="many">%s слов</item>
     <item quantity="other">%s слов</item>
   </plurals>
-  <string name="word_separator">Word separator</string>
+  <string name="word_separator">Разделитель слов</string>
   <string name="bottomsheet_option_capital_letters">Заглавные буквы (A–Z)</string>
   <string name="bottomsheet_option_capitalise">Capitalize</string>
   <string name="bottomsheet_option_include_numbers">Включить числа (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Дефисы ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Spaces</string>
+  <string name="bottomsheet_option_word_separator_spaces">Пробелы</string>
   <string name="bottomsheet_option_word_separator_periods">Точки ( . )</string>
   <string name="bottomsheet_option_word_separator_commas">Запятые ( , )</string>
   <string name="bottomsheet_option_word_separator_underscores">Подчеркивания ( _ )</string>
   <string name="bottomsheet_option_word_separator_numbers">Цифры</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numbers and symbols</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Цифры и символы</string>
   <string name="regenerate_password_icon_content_description">Regenerate password button</string>
   <string name="password_mode_memorable">Запоминающийся пароль</string>
-  <string name="password_mode_random">Random password</string>
+  <string name="password_mode_random">Случайный пароль</string>
   <string name="password_mode_icon">Password mode icon</string>
   <string name="password_words_separator_icon">Password words separator</string>
 </resources>

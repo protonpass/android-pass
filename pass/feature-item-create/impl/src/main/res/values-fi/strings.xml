@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">PIN-koodi</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Erääntymispäivä</string>
-  <string name="field_card_expiration_date_hint">KK / VVVV</string>
-  <string name="field_card_expiration_date_error">Syötä kelvollinen päivämäärä muodossa KK/VVVV.</string>
+  <string name="field_card_expiration_date_hint">KK / VV</string>
+  <string name="field_card_expiration_date_error">Syötä kelvollinen päivämäärä muodossa KK/VV</string>
   <string name="create_credit_card_item_creation_error">Maksukorttia ei voitu luoda</string>
   <string name="create_credit_card_item_creation_success">Maksukortti luotiin</string>
   <string name="credit_card_init_error">Ongelma noudettaessa maksukortin tietoja</string>

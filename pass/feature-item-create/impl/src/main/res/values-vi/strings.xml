@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">Mã PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Ngày hết hạn</string>
-  <string name="field_card_expiration_date_hint">MM / YYYY</string>
-  <string name="field_card_expiration_date_error">Nhập một ngày hợp lệ ở dạng MM/YYYY</string>
+  <string name="field_card_expiration_date_hint">MM / YY</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YY format</string>
   <string name="create_credit_card_item_creation_error">Không thể tạo thẻ</string>
   <string name="create_credit_card_item_creation_success">Đã tạo thẻ</string>
   <string name="credit_card_init_error">Lỗi khi lấy thông tin thẻ</string>

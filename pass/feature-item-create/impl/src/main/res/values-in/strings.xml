@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Tanggal kedaluwarsa</string>
-  <string name="field_card_expiration_date_hint">BB / TTTT</string>
-  <string name="field_card_expiration_date_error">Masukkan tanggal yang valid dalam format BB/TTTT</string>
+  <string name="field_card_expiration_date_hint">BB / TT</string>
+  <string name="field_card_expiration_date_error">Masukkan tanggal yang valid dalam format BB/TT</string>
   <string name="create_credit_card_item_creation_error">Tidak dapat membuat kartu kredit</string>
   <string name="create_credit_card_item_creation_success">Kartu kredit dibuat</string>
   <string name="credit_card_init_error">Terdapat masalah dalam memperoleh rincian kartu kredit</string>

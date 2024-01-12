@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Utløpsdato</string>
-  <string name="field_card_expiration_date_hint">MM/ÅÅÅÅ</string>
-  <string name="field_card_expiration_date_error">Angi en gyldig dato i MM/ÅÅÅÅ-format</string>
+  <string name="field_card_expiration_date_hint">MM / ÅÅ</string>
+  <string name="field_card_expiration_date_error">Angi en gyldig dato i MM/ÅÅ-format</string>
   <string name="create_credit_card_item_creation_error">Kunne ikke opprette kredittkort</string>
   <string name="create_credit_card_item_creation_success">Kredittkort opprettet</string>
   <string name="credit_card_init_error">Problem ved innhenting av kredittkortinformasjon</string>

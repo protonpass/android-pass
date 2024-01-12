@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">Codi PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Data de caducitat</string>
-  <string name="field_card_expiration_date_hint">MM/AAAA</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YYYY format</string>
+  <string name="field_card_expiration_date_hint">MM / YY</string>
+  <string name="field_card_expiration_date_error">Enter a valid date in MM/YY format</string>
   <string name="create_credit_card_item_creation_error">No s\'ha pogut crear la targeta de crèdit</string>
   <string name="create_credit_card_item_creation_success">S\'ha creat la targeta de crèdit</string>
   <string name="credit_card_init_error">Problema en recuperar els detalls de la targeta de crèdit</string>

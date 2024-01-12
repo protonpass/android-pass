@@ -92,8 +92,7 @@ internal fun HomeContent(
                 label = "HomeContent-SelectionModeTopBar"
             ) {
                 SelectionModeTopBar(
-                    homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
-                    selectedItemCount = uiState.homeListUiState.selectionState.selectedItems.size,
+                    selectionState = uiState.homeListUiState.selectionState.topBarState,
                     onEvent = onEvent
                 )
             }

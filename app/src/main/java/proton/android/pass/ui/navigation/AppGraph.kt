@@ -934,21 +934,12 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.Permissions -> appNavigator.navigate(
                 destination = SharingPermissions,
-                route = SharingPermissions.createRoute(
-                    shareId = it.shareId,
-                    email = it.email,
-                    mode = it.mode
-                )
+                route = SharingPermissions.createRoute(shareId = it.shareId)
             )
 
             is SharingNavigation.Summary -> appNavigator.navigate(
                 destination = SharingSummary,
-                route = SharingSummary.createRoute(
-                    shareId = it.shareId,
-                    email = it.email,
-                    permission = it.permission,
-                    mode = it.mode
-                )
+                route = SharingSummary.createRoute(shareId = it.shareId)
             )
 
             is SharingNavigation.ShareVault -> dismissBottomSheet {

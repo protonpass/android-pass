@@ -18,16 +18,11 @@
 
 package proton.android.pass.featuresharing.impl.sharingpermissions
 
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.domain.ShareId
 
 sealed interface SharingPermissionsEvents {
-    data class NavigateToSummary(
-        val shareId: ShareId,
-        val email: String,
-        val permission: Int,
-        val mode: SharingWithUserModeType
-    ) : SharingPermissionsEvents
+    @JvmInline
+    value class NavigateToSummary(val shareId: ShareId) : SharingPermissionsEvents
 
     object Unknown : SharingPermissionsEvents
 }

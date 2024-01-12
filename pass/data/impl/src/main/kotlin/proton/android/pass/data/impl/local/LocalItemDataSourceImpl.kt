@@ -77,8 +77,15 @@ class LocalItemDataSourceImpl @Inject constructor(
             database.itemsDao().observeAllForAddress(userId.id, itemState?.value, filter.value())
         }
 
-    override fun observePinnedItems(userId: UserId): Flow<List<ItemEntity>> =
-        database.itemsDao().observeAllPinnedItems(userId.id)
+    override fun observePinnedItems(
+        userId: UserId,
+        filter: ItemTypeFilter
+    ): Flow<List<ItemEntity>> =
+        if (filter == ItemTypeFilter.All) {
+            database.itemsDao().observeAllPinnedItems(userId.id)
+        } else {
+            database.itemsDao().observeAllPinnedItems(userId.id, filter.value())
+        }
 
     override fun observeItem(
         shareId: ShareId,

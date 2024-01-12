@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -34,17 +34,15 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
-import proton.android.pass.featuresharing.impl.EmailNavArgId
-import proton.android.pass.featuresharing.impl.PermissionNavArgId
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentError
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentSuccess
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.VaultNotFound
-import proton.android.pass.featuresharing.impl.SharingWithUserModeArgId
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
+import proton.android.pass.featuresharing.impl.extensions.toSharingType
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -55,6 +53,7 @@ import javax.inject.Inject
 class SharingSummaryViewModel @Inject constructor(
     private val inviteToVault: InviteToVault,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val bulkInviteRepository: BulkInviteRepository,
     getVaultWithItemCountById: GetVaultWithItemCountById,
     savedStateHandleProvider: SavedStateHandleProvider,
 ) : ViewModel() {
@@ -62,14 +61,6 @@ class SharingSummaryViewModel @Inject constructor(
     private val shareId: ShareId = ShareId(
         savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key)
     )
-    private val email: String = savedStateHandleProvider.get().require(EmailNavArgId.key)
-    private val sharingType: SharingType = SharingType
-        .values()[savedStateHandleProvider.get().require(PermissionNavArgId.key)]
-    private val userMode: SharingWithUserModeType = SharingWithUserModeType
-        .values()
-        .first {
-            it.name == savedStateHandleProvider.get().require(SharingWithUserModeArgId.key)
-        }
 
     private val isLoadingStateFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -77,13 +68,23 @@ class SharingSummaryViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<SharingSummaryEvent> =
         MutableStateFlow(SharingSummaryEvent.Unknown)
 
+    private val addressesFlow: StateFlow<List<AddressPermission>> = bulkInviteRepository
+        .observeAddresses()
+        .distinctUntilChanged()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = emptyList()
+        )
+
     val state: StateFlow<SharingSummaryUIState> = combine(
-        flowOf(email),
-        flowOf(sharingType),
+        addressesFlow,
         getVaultWithItemCountById(shareId = shareId).asLoadingResult(),
         isLoadingStateFlow,
         eventFlow
-    ) { email, sharingType, vaultResult, isLoadingState, event ->
+    ) { addresses, vaultResult, isLoadingState, event ->
+        val address = addresses.firstOrNull()
+
         val vaultWithItemCount = when (vaultResult) {
             is LoadingResult.Success -> vaultResult.data
             is LoadingResult.Error -> {
@@ -96,9 +97,9 @@ class SharingSummaryViewModel @Inject constructor(
         val isLoading = vaultResult is LoadingResult.Loading ||
             isLoadingState is IsLoadingState.Loading
         SharingSummaryUIState(
-            email = email,
+            email = address?.address ?: "",
             vaultWithItemCount = vaultWithItemCount,
-            sharingType = sharingType,
+            sharingType = address?.shareRole?.toSharingType() ?: SharingType.Read,
             isLoading = isLoading,
             event = event
         )
@@ -108,43 +109,26 @@ class SharingSummaryViewModel @Inject constructor(
         initialValue = SharingSummaryUIState()
     )
 
-    fun onSubmit(email: String, shareId: ShareId?, sharingType: SharingType) =
-        viewModelScope.launch {
-            if (shareId != null) {
-                isLoadingStateFlow.update { IsLoadingState.Loading }
-                inviteToVault(
-                    targetEmail = email,
-                    shareId = shareId,
-                    shareRole = sharingType.toShareRole(),
-                    userMode = userMode.toUserMode()
-                ).onSuccess {
-                    isLoadingStateFlow.update { IsLoadingState.NotLoading }
-                    snackbarDispatcher(InviteSentSuccess)
-                    PassLogger.i(TAG, "Invite sent successfully")
-                    eventFlow.update { SharingSummaryEvent.Shared }
-                }.onFailure {
-                    isLoadingStateFlow.update { IsLoadingState.NotLoading }
-                    snackbarDispatcher(InviteSentError)
-                    PassLogger.w(TAG, "Error sending invite")
-                    PassLogger.w(TAG, it)
-                }
-            } else {
-                snackbarDispatcher(VaultNotFound)
-            }
+    fun onSubmit() = viewModelScope.launch {
+        isLoadingStateFlow.update { IsLoadingState.Loading }
+        inviteToVault(
+            inviteAddresses = addressesFlow.value,
+            shareId = shareId,
+        ).onSuccess {
+            bulkInviteRepository.clear()
+            isLoadingStateFlow.update { IsLoadingState.NotLoading }
+            snackbarDispatcher(InviteSentSuccess)
+            PassLogger.i(TAG, "Invite sent successfully")
+            eventFlow.update { SharingSummaryEvent.Shared }
+        }.onFailure {
+            isLoadingStateFlow.update { IsLoadingState.NotLoading }
+            snackbarDispatcher(InviteSentError)
+            PassLogger.w(TAG, "Error sending invite")
+            PassLogger.w(TAG, it)
         }
+    }
 
     companion object {
         private const val TAG = "SharingSummaryViewModel"
     }
-}
-
-private fun SharingWithUserModeType.toUserMode(): InviteToVault.UserMode = when (this) {
-    SharingWithUserModeType.ExistingUser -> InviteToVault.UserMode.ExistingUser
-    SharingWithUserModeType.NewUser -> InviteToVault.UserMode.NewUser
-}
-
-fun SharingType.toShareRole(): ShareRole = when (this) {
-    SharingType.Read -> ShareRole.Read
-    SharingType.Write -> ShareRole.Write
-    SharingType.Admin -> ShareRole.Admin
 }

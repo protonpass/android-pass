@@ -23,7 +23,7 @@ import proton.android.pass.domain.ShareRole
 
 data class AddressPermission(
     val address: String,
-    val permission: ShareRole
+    val shareRole: ShareRole
 )
 
 interface BulkInviteRepository {

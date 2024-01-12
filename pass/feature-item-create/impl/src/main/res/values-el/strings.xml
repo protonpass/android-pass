@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Ημερομηνία λήξης</string>
-  <string name="field_card_expiration_date_hint">MM / ΕΕΕΕ</string>
-  <string name="field_card_expiration_date_error">Εισαγάγετε μια έγκυρη ημερομηνία σε μορφή ΜΜ/ΧΧΧΧ</string>
+  <string name="field_card_expiration_date_hint">ΜΜ / ΕΕ</string>
+  <string name="field_card_expiration_date_error">Εισαγάγετε μια έγκυρη ημερομηνία σε μορφή ΜΜ/ΕΕ</string>
   <string name="create_credit_card_item_creation_error">Δεν ήταν δυνατή η δημιουργία πιστωτικής κάρτας</string>
   <string name="create_credit_card_item_creation_success">Η πιστωτική κάρτα δημιουργήθηκε</string>
   <string name="credit_card_init_error">Πρόβλημα ανάκτησης λεπτομερειών πιστωτικής κάρτας</string>

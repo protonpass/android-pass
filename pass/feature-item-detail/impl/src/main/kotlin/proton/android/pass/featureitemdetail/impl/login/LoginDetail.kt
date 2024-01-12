@@ -155,11 +155,11 @@ fun LoginDetail(
 
                             ItemState.Trashed.value -> TrashItemBottomSheetContents(
                                 itemUiModel = state.itemUiModel,
-                                onRestoreItem = { shareId, itemId ->
+                                onRestoreItem = { item ->
                                     scope.launch { bottomSheetState.hide() }
-                                    viewModel.onItemRestore(shareId, itemId)
+                                    viewModel.onItemRestore(item.shareId, item.id)
                                 },
-                                onDeleteItem = { _, _ ->
+                                onDeleteItem = {
                                     scope.launch { bottomSheetState.hide() }
                                     shouldShowDeleteItemDialog = true
                                 },

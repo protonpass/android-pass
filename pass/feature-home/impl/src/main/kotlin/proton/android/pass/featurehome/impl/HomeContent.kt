@@ -45,6 +45,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
@@ -64,6 +66,8 @@ import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.pinning.PinCarousel
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.featurehome.impl.HomeUiEvent.AddItemClick
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
@@ -230,10 +234,18 @@ internal fun HomeContent(
                 !uiState.searchUiState.inSearchMode
             }
 
+            val selectedItemIds: PersistentSet<Pair<ShareId, ItemId>> = remember(
+                key1 = uiState.homeListUiState.selectionState.selectedItems
+            ) {
+                uiState.homeListUiState.selectionState.selectedItems
+                    .map { it.shareId to it.id }
+                    .toPersistentSet()
+            }
+
             ItemsList(
                 modifier = Modifier.testTag("itemsList"),
                 items = uiState.homeListUiState.items,
-                selectedItemIds = uiState.homeListUiState.selectionState.selectedItems,
+                selectedItemIds = selectedItemIds,
                 isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
                 shares = uiState.homeListUiState.shares,
                 isShareSelected = uiState.homeListUiState.selectedShare.isNotEmpty(),

@@ -21,10 +21,8 @@ package proton.android.pass.featurehome.impl
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
-import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
-import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupedItemList
@@ -34,7 +32,6 @@ import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
-import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
@@ -111,13 +108,13 @@ data class SelectionTopBarState(
 
 @Immutable
 data class HomeSelectionState(
-    val selectedItems: ImmutableSet<Pair<ShareId, ItemId>>,
+    val selectedItems: ImmutableList<ItemUiModel>,
     val isInSelectMode: Boolean,
     val topBarState: SelectionTopBarState
 ) {
     companion object {
         val Initial = HomeSelectionState(
-            selectedItems = persistentSetOf(),
+            selectedItems = persistentListOf(),
             isInSelectMode = false,
             topBarState = SelectionTopBarState.Initial
         )

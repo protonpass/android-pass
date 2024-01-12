@@ -41,7 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
@@ -237,7 +236,7 @@ fun HomeScreen(
                         {
                             scope.launch {
                                 bottomSheetState.hide()
-                                homeViewModel.sendItemsToTrash(persistentSetOf(it.shareId to it.id))
+                                homeViewModel.sendItemsToTrash(listOf(it))
                             }
                         }
                     },
@@ -303,7 +302,7 @@ fun HomeScreen(
                         {
                             scope.launch {
                                 bottomSheetState.hide()
-                                homeViewModel.sendItemsToTrash(persistentSetOf(it.shareId to it.id))
+                                homeViewModel.sendItemsToTrash(listOf(it))
                             }
                         }
                     },
@@ -342,7 +341,7 @@ fun HomeScreen(
                         {
                             scope.launch {
                                 bottomSheetState.hide()
-                                homeViewModel.sendItemsToTrash(persistentSetOf(it.shareId to it.id))
+                                homeViewModel.sendItemsToTrash(listOf(it))
                             }
                         }
                     },
@@ -359,15 +358,15 @@ fun HomeScreen(
                 TrashItemOptions -> TrashItemBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onRestoreItem = remember {
-                        { shareId, itemId ->
+                        {
                             scope.launch {
                                 bottomSheetState.hide()
-                                homeViewModel.restoreItems(persistentSetOf(shareId to itemId))
+                                homeViewModel.restoreItems(listOf(it))
                             }
                         }
                     },
                     onDeleteItem = remember {
-                        { _, _ ->
+                        {
                             scope.launch {
                                 bottomSheetState.hide()
                                 shouldShowDeleteItemDialog = true
@@ -645,7 +644,7 @@ fun HomeScreen(
                 show = shouldShowDeleteItemDialog,
                 onConfirm = {
                     selectedItem?.let {
-                        homeViewModel.deleteItems(persistentSetOf(it.shareId to it.id))
+                        homeViewModel.deleteItems(listOf(it))
                     }
                 },
                 onDismiss = { shouldShowDeleteItemDialog = false }
@@ -655,7 +654,7 @@ fun HomeScreen(
                 show = aliasToBeTrashed != null,
                 onConfirm = {
                     val item = aliasToBeTrashed ?: return@ConfirmTrashAliasDialog
-                    homeViewModel.sendItemsToTrash(persistentSetOf(item.shareId to item.id))
+                    homeViewModel.sendItemsToTrash(listOf(item))
                     aliasToBeTrashed = null
                 },
                 onDismiss = { aliasToBeTrashed = null }

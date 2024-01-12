@@ -21,6 +21,7 @@ package proton.android.pass.featurehome.impl
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import proton.android.pass.common.api.None
@@ -53,6 +54,7 @@ sealed interface HomeNavEvent {
 data class HomeUiState(
     val homeListUiState: HomeListUiState,
     val searchUiState: SearchUiState,
+    val pinningUiState: PinningUiState,
     val accountType: AccountType,
     val navEvent: HomeNavEvent,
 ) {
@@ -64,7 +66,7 @@ data class HomeUiState(
             homeListUiState.isLoading == IsLoadingState.NotLoading &&
             !searchUiState.isInSuggestionsMode &&
             !searchUiState.isProcessingSearch.value() &&
-            searchUiState.inSearchMode
+            (searchUiState.inSearchMode || pinningUiState.inPinningMode)
 
     fun isSelectedVaultReadOnly() =
         when (val selection = homeListUiState.homeVaultSelection) {
@@ -79,6 +81,7 @@ data class HomeUiState(
         val Loading = HomeUiState(
             homeListUiState = HomeListUiState.Loading,
             searchUiState = SearchUiState.Initial,
+            pinningUiState = PinningUiState.Initial,
             accountType = AccountType.Free,
             navEvent = HomeNavEvent.Unknown
         )
@@ -129,7 +132,6 @@ data class HomeListUiState(
     val canLoadExternalImages: Boolean,
     val actionState: ActionState = ActionState.Unknown,
     val items: ImmutableList<GroupedItemList>,
-    val pinnedItems: ImmutableList<ItemUiModel>,
     val selectedShare: Option<ShareUiModel> = None,
     val shares: ImmutableMap<ShareId, ShareUiModel>,
     val homeVaultSelection: VaultSelectionOption = VaultSelectionOption.AllVaults,
@@ -144,7 +146,6 @@ data class HomeListUiState(
             shouldScrollToTop = false,
             canLoadExternalImages = false,
             items = persistentListOf(),
-            pinnedItems = persistentListOf(),
             shares = persistentMapOf(),
             selectionState = HomeSelectionState.Initial
         )
@@ -166,6 +167,25 @@ data class SearchUiState(
             inSearchMode = false,
             isInSuggestionsMode = false,
             itemTypeCount = ItemTypeCount(0, 0, 0, 0)
+        )
+    }
+}
+
+@Immutable
+data class PinningUiState(
+    val inPinningMode: Boolean,
+    val isPinningEnabled: Boolean,
+    val filteredItems: ImmutableList<GroupedItemList>,
+    val itemTypeCount: ItemTypeCount,
+    val unFilteredItems: PersistentList<ItemUiModel>
+) {
+    companion object {
+        val Initial = PinningUiState(
+            inPinningMode = false,
+            isPinningEnabled = false,
+            filteredItems = persistentListOf(),
+            unFilteredItems = persistentListOf(),
+            itemTypeCount = ItemTypeCount(0, 0, 0, 0),
         )
     }
 }

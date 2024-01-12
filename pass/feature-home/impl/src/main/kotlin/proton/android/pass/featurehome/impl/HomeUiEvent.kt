@@ -39,6 +39,7 @@ sealed interface HomeUiEvent {
     object RestoreItemsActionClick : HomeUiEvent
     object PermanentlyDeleteItemsActionClick : HomeUiEvent
     object StopBulk : HomeUiEvent
+    object SeeAllPinned : HomeUiEvent
     object PinItemsActionClick : HomeUiEvent
     object UnpinItemsActionClick : HomeUiEvent
 

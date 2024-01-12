@@ -48,10 +48,12 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
 import proton.android.pass.composecomponents.impl.extension.toColor
@@ -86,6 +88,10 @@ internal fun HomeContent(
     onEvent: (HomeUiEvent) -> Unit,
 ) {
     val isTrashMode = uiState.homeListUiState.homeVaultSelection == VaultSelectionOption.Trash
+    val isPinningOrSearch =
+        remember(uiState.pinningUiState.inPinningMode, uiState.searchUiState.inSearchMode) {
+            uiState.pinningUiState.inPinningMode || uiState.searchUiState.inSearchMode
+        }
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -109,13 +115,21 @@ internal fun HomeContent(
                 SearchTopBar(
                     searchQuery = uiState.searchUiState.searchQuery,
                     inSearchMode = uiState.searchUiState.inSearchMode,
-                    placeholderText = when (uiState.homeListUiState.homeVaultSelection) {
-                        VaultSelectionOption.AllVaults -> stringResource(R.string.search_topbar_placeholder_all_vaults)
-                        VaultSelectionOption.Trash -> stringResource(R.string.search_topbar_placeholder_trash)
-                        is VaultSelectionOption.Vault -> stringResource(
-                            R.string.search_topbar_placeholder_vault,
-                            uiState.homeListUiState.selectedShare.value()?.name ?: ""
-                        )
+                    placeholderText = if (uiState.pinningUiState.inPinningMode) {
+                        stringResource(R.string.search_topbar_placeholder_pinning)
+                    } else {
+                        when (uiState.homeListUiState.homeVaultSelection) {
+                            VaultSelectionOption.AllVaults ->
+                                stringResource(R.string.search_topbar_placeholder_all_vaults)
+
+                            VaultSelectionOption.Trash ->
+                                stringResource(R.string.search_topbar_placeholder_trash)
+
+                            is VaultSelectionOption.Vault -> stringResource(
+                                R.string.search_topbar_placeholder_vault,
+                                uiState.homeListUiState.selectedShare.value()?.name ?: ""
+                            )
+                        }
                     },
                     onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
                     onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
@@ -123,7 +137,9 @@ internal fun HomeContent(
                     drawerIcon = {
                         HomeDrawerIcon(
                             modifier = Modifier.testTag(DrawerIconTestTag),
-                            uiState = uiState,
+                            selectedShare = uiState.homeListUiState.selectedShare,
+                            homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
+                            isPinningOrSearch = isPinningOrSearch,
                             onDrawerIconClick = { onEvent(HomeUiEvent.DrawerIconClick) },
                             onStopSearch = { onEvent(HomeUiEvent.StopSearch) }
                         )
@@ -166,47 +182,57 @@ internal fun HomeContent(
                 scrollableState.firstVisibleItemIndex <= 1
             }
         }
+        val listItemCount = remember(uiState.homeListUiState.items) {
+            uiState.homeListUiState.items.map { it.items }.flatten().count()
+        }
+        val pinningItemsCount = remember(uiState.pinningUiState.filteredItems) {
+            uiState.pinningUiState.filteredItems.map { it.items }.flatten().count()
+        }
         Column(
             modifier = Modifier.padding(contentPadding)
         ) {
-            if (!uiState.searchUiState.inSearchMode) {
+            if (!isPinningOrSearch) {
                 PinCarousel(
                     modifier = Modifier.height(48.dp),
-                    list = uiState.homeListUiState.pinnedItems,
+                    list = uiState.pinningUiState.unFilteredItems,
                     canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
                     onItemClick = { item -> onEvent(HomeUiEvent.ItemClick(item)) },
-                    onSeeAllClick = {},
+                    onSeeAllClick = { onEvent(HomeUiEvent.SeeAllPinned) },
                 )
 
                 Spacer(modifier = Modifier.height(Spacing.medium))
             }
             AnimatedVisibility(
-                visible = uiState.searchUiState.inSearchMode && firstItemVisible,
+                visible = isPinningOrSearch && firstItemVisible,
                 label = "HomeContent-ItemTypeFilterList"
             ) {
+                val itemTypeCount = if (uiState.pinningUiState.inPinningMode) {
+                    uiState.pinningUiState.itemTypeCount
+                } else {
+                    uiState.searchUiState.itemTypeCount
+                }
                 ItemTypeFilterList(
                     selected = uiState.homeListUiState.searchFilterType,
-                    loginCount = uiState.searchUiState.itemTypeCount.loginCount,
-                    aliasCount = uiState.searchUiState.itemTypeCount.aliasCount,
-                    noteCount = uiState.searchUiState.itemTypeCount.noteCount,
-                    creditCardCount = uiState.searchUiState.itemTypeCount.creditCardCount,
+                    itemTypeCount = itemTypeCount,
                     onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) }
                 )
             }
 
             val showItemListHeader = remember(uiState) { uiState.shouldShowItemListHeader() }
             if (showItemListHeader) {
-                val count = remember(uiState.homeListUiState.items) {
-                    uiState.homeListUiState.items.map { it.items }.flatten().count()
-                }
                 ItemListHeader(
                     countContent = {
+                        val itemCount = if (uiState.pinningUiState.inPinningMode) {
+                            pinningItemsCount
+                        } else {
+                            listItemCount
+                        }
                         ItemCount(
                             modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp),
-                            showSearchResults = uiState.searchUiState.inSearchMode &&
-                                uiState.searchUiState.searchQuery.isNotEmpty(),
+                            showSearchResults = isPinningOrSearch && uiState.searchUiState.searchQuery.isNotEmpty(),
                             itemType = uiState.homeListUiState.searchFilterType,
-                            itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() }
+                            itemCount = itemCount.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
+                            isPinnedMode = uiState.pinningUiState.inPinningMode
                         )
                     },
                     sortingContent = {
@@ -234,6 +260,12 @@ internal fun HomeContent(
                 !uiState.searchUiState.inSearchMode
             }
 
+            val items = if (!uiState.pinningUiState.inPinningMode) {
+                uiState.homeListUiState.items
+            } else {
+                uiState.pinningUiState.filteredItems
+            }
+
             val selectedItemIds: PersistentSet<Pair<ShareId, ItemId>> = remember(
                 key1 = uiState.homeListUiState.selectionState.selectedItems
             ) {
@@ -244,7 +276,7 @@ internal fun HomeContent(
 
             ItemsList(
                 modifier = Modifier.testTag("itemsList"),
-                items = uiState.homeListUiState.items,
+                items = items,
                 selectedItemIds = selectedItemIds,
                 isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
                 shares = uiState.homeListUiState.shares,
@@ -263,8 +295,7 @@ internal fun HomeContent(
                 },
                 onItemLongClick = {
                     val readOnly = uiState.isSelectedVaultReadOnly()
-                    val inSearchMode = uiState.searchUiState.inSearchMode
-                    if (!readOnly && !inSearchMode) {
+                    if (!readOnly && !isPinningOrSearch) {
                         onEvent(HomeUiEvent.SelectItem(it))
                     }
                 },
@@ -277,7 +308,7 @@ internal fun HomeContent(
                 emptyContent = {
                     HomeEmptyContent(
                         isTrashMode = isTrashMode,
-                        inSearchMode = uiState.searchUiState.inSearchMode,
+                        inSearchMode = isPinningOrSearch,
                         readOnly = uiState.isSelectedVaultReadOnly(),
                         shareId = uiState.homeListUiState.selectedShare.map { it.id },
                         onEvent = onEvent
@@ -294,14 +325,16 @@ internal fun HomeContent(
 @Composable
 private fun HomeDrawerIcon(
     modifier: Modifier = Modifier,
-    uiState: HomeUiState,
+    selectedShare: Option<ShareUiModel>,
+    homeVaultSelection: VaultSelectionOption,
+    isPinningOrSearch: Boolean,
     onDrawerIconClick: () -> Unit,
     onStopSearch: () -> Unit
 ) {
-    if (!uiState.searchUiState.inSearchMode) {
-        when (val share = uiState.homeListUiState.selectedShare) {
+    if (!isPinningOrSearch) {
+        when (selectedShare) {
             None -> {
-                when (uiState.homeListUiState.homeVaultSelection) {
+                when (homeVaultSelection) {
                     VaultSelectionOption.AllVaults -> {
                         AllVaultsIcon(
                             modifier = modifier,
@@ -326,9 +359,9 @@ private fun HomeDrawerIcon(
             is Some -> {
                 VaultIcon(
                     modifier = modifier.size(48.dp),
-                    backgroundColor = share.value.color.toColor(true),
-                    iconColor = share.value.color.toColor(),
-                    icon = share.value.icon.toResource(),
+                    backgroundColor = selectedShare.value.color.toColor(true),
+                    iconColor = selectedShare.value.color.toColor(),
+                    icon = selectedShare.value.icon.toResource(),
                     onClick = onDrawerIconClick
                 )
             }

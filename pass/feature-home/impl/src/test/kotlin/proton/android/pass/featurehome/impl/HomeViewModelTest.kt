@@ -53,9 +53,11 @@ import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestPerformSync
+import proton.android.pass.data.fakes.usecases.TestPinItems
 import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
+import proton.android.pass.data.fakes.usecases.TestUnpinItems
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -273,7 +275,9 @@ internal class HomeViewModelTest {
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             observeCurrentUser = observeCurrentUser,
             toastManager = toastManager,
-            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository
+            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
+            pinItems = TestPinItems(),
+            unpinItems = TestUnpinItems()
         )
     }
 

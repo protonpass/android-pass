@@ -21,16 +21,9 @@ package proton.android.pass.data.impl.fakes
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
-<<<<<<< HEAD
-import proton.android.pass.data.impl.requests.CreateInviteRequest
-import proton.android.pass.data.impl.requests.CreateInvitesRequest
-import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.responses.InviteRecommendationResponse
-=======
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
-import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
->>>>>>> 4448ab378 (test: fix unit tests)
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken

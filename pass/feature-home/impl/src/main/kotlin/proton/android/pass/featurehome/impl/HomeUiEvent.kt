@@ -39,6 +39,8 @@ sealed interface HomeUiEvent {
     object RestoreItemsActionClick : HomeUiEvent
     object PermanentlyDeleteItemsActionClick : HomeUiEvent
     object StopBulk : HomeUiEvent
+    object PinItemsActionClick : HomeUiEvent
+    object UnpinItemsActionClick : HomeUiEvent
 
     @JvmInline
     value class ItemClick(val item: ItemUiModel) : HomeUiEvent

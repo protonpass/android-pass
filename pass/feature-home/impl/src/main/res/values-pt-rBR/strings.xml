@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Não foi possível mover o item para a lixeira</string>
   <string name="home_snackbar_items_move_to_trash_success">Itens movidos para a lixeira</string>
   <string name="home_snackbar_items_move_to_trash_error">Não foi possível mover os itens para a lixeira</string>
+  <string name="home_toast_items_selected_read_only">Itens somente-leitura não podem ser selecionados</string>
   <string name="home_autofill_banner_title">Aproveite a mágica do preenchimento automático</string>
   <string name="home_autofill_banner_text">Um toque e ⏤ pronto! ⏤ seu nome de usuário e senha são preenchidos instantaneamente.</string>
   <string name="home_autofill_banner_settings">Ativar o preenchimento automático ›</string>

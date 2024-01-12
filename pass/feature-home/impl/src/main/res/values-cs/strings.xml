@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Položku nelze přesunout do koše</string>
   <string name="home_snackbar_items_move_to_trash_success">Položky přesunuty do koše</string>
   <string name="home_snackbar_items_move_to_trash_error">Položky nemohly být přesunuty do koše</string>
+  <string name="home_toast_items_selected_read_only">Položky určené pouze ke čtení nelze vybrat</string>
   <string name="home_autofill_banner_title">Využijte přínosu automatického vyplňování</string>
   <string name="home_autofill_banner_text">Jedno klepnutí a vaše uživatelské jméno a heslo jsou okamžitě vyplněny.</string>
   <string name="home_autofill_banner_settings">Zapnout automatické vyplňování ›</string>

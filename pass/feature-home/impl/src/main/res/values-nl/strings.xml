@@ -17,6 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">Item kon niet verplaatst worden naar prullenbak.</string>
   <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
   <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
+  <string name="home_toast_items_selected_read_only">Read-only items cannot be selected</string>
   <string name="home_autofill_banner_title">Geniet van de magie van Automatisch aanvullen</string>
   <string name="home_autofill_banner_text">Eén keer tikken en uw gebruikersnaam en wachtwoord zijn direct ingevuld.</string>
   <string name="home_autofill_banner_settings">Automatisch aanvullen inschakelen ›</string>

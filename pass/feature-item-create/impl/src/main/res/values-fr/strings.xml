@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">Code PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Date d\'expiration</string>
-  <string name="field_card_expiration_date_hint">MM / AAAA</string>
-  <string name="field_card_expiration_date_error">Saisissez une date valide au format MM/AAAA.</string>
+  <string name="field_card_expiration_date_hint">MM / AA</string>
+  <string name="field_card_expiration_date_error">Saisissez une date valide avec le format MM/AA.</string>
   <string name="create_credit_card_item_creation_error">Impossible de créer la carte de paiement</string>
   <string name="create_credit_card_item_creation_success">La carte de paiement a été créée.</string>
   <string name="credit_card_init_error">Problème de récupération des informations de la carte de paiement</string>

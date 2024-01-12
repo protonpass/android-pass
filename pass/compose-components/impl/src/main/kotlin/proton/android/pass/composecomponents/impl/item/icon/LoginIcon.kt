@@ -40,11 +40,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
@@ -87,6 +89,7 @@ fun LoginIcon(
     website: String?,
     packageName: String?,
     size: Int = 40,
+    favIconPadding: Dp = Spacing.small,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
     canLoadExternalImages: Boolean,
     enabled: Boolean = true,
@@ -179,7 +182,7 @@ fun LoginIcon(
                                 shape = shape
                             )
                             .background(animatedBackgroundColor)
-                            .padding(8.dp)
+                            .padding(favIconPadding)
                     )
                 },
                 contentDescription = null

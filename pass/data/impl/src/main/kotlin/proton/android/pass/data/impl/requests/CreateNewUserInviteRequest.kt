@@ -22,6 +22,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+data class CreateNewUserInvitesRequest(
+    @SerialName("NewUserInvites")
+    val invites: List<CreateNewUserInviteRequest>
+)
+
+@Serializable
 data class CreateNewUserInviteRequest(
     @SerialName("Email")
     val email: String,

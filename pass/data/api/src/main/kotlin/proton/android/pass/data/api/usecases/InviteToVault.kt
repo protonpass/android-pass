@@ -19,22 +19,15 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
 
 interface InviteToVault {
 
-    enum class UserMode {
-        ExistingUser,
-        NewUser
-    }
-
     suspend operator fun invoke(
         userId: UserId? = null,
-        targetEmail: String,
         shareId: ShareId,
-        shareRole: ShareRole,
-        userMode: UserMode
+        inviteAddresses: List<AddressPermission>
     ): Result<Unit>
 
 }

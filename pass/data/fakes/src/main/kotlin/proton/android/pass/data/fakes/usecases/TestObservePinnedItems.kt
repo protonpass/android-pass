@@ -24,6 +24,7 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
@@ -51,7 +52,7 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
         flow.tryEmit(defaultValues.asList())
     }
 
-    override fun invoke(): Flow<List<Item>> = flow
+    override fun invoke(filter: ItemTypeFilter): Flow<List<Item>> = flow
 
     data class DefaultValues(
         val login: Item,

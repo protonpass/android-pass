@@ -72,6 +72,7 @@ interface ItemRepository {
 
     fun observePinnedItems(
         userId: UserId,
+        shareSelection: ShareSelection,
         itemTypeFilter: ItemTypeFilter
     ): Flow<List<Item>>
 

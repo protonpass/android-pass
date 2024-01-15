@@ -24,6 +24,7 @@ import org.junit.Test
 import proton.android.pass.commonui.api.ItemUiFilter.filterByQuery
 import proton.android.pass.commonuimodels.fakes.TestItemUiModel
 import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -181,6 +182,49 @@ class ItemUiFilterTest {
         val filteredList = items.filterByQuery("tablet    example ")
         assertThat(filteredList.size).isEqualTo(1)
         assertThat(filteredList.first().id).isEqualTo(ItemId(selectedId))
+    }
+
+    @Test
+    fun `filterByQuery should take login item custom fields of type text into account`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                id = "itemId",
+                title = "Tablet",
+                note = "Tablet note",
+                itemContents = ItemContents.Login(
+                    title = "tablet",
+                    note = "Tablet note",
+                    username = "username",
+                    password = HiddenState.Concealed(""),
+                    urls = listOf("exampleurl.test", "otherurl.test"),
+                    packageInfoSet = setOf(),
+                    primaryTotp = HiddenState.Concealed(""),
+                    customFields = listOf(
+                        CustomFieldContent.Text(label = "label", value = "value"),
+                        CustomFieldContent.Hidden(label = "hidden", value = HiddenState.Empty("")),
+                        CustomFieldContent.Totp(label = "totp", value = HiddenState.Empty("")),
+
+                    )
+                )
+            )
+        )
+
+        // By value
+        val filteredValueList = ItemUiFilter.filterByQuery(items, "value")
+        assertThat(filteredValueList.size).isEqualTo(1)
+
+        // By label
+        val filteredLabelList = ItemUiFilter.filterByQuery(items, "label")
+        assertThat(filteredLabelList.size).isEqualTo(1)
+
+        // Cannot find Hidden text fields
+        val filteredHiddenList = ItemUiFilter.filterByQuery(items, "hidden")
+        assertThat(filteredHiddenList.size).isEqualTo(0)
+
+        // Cannot find Totp text fields
+        val filteredTotpList = ItemUiFilter.filterByQuery(items, "totp")
+        assertThat(filteredTotpList.size).isEqualTo(0)
+
     }
 
     private fun createAliasList() = listOf(

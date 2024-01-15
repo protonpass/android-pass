@@ -77,6 +77,10 @@ data class SelectItemListUiState(
     val displayOnlyPrimaryVaultMessage: Boolean,
     val canUpgrade: Boolean
 ) {
+
+    val itemCount: Int =
+        items.items.map { it.items }.flatten().count() + items.suggestions.count()
+
     companion object {
         val Loading = SelectItemListUiState(
             isLoading = IsLoadingState.Loading,
@@ -132,6 +136,9 @@ data class PinningUiState(
     val filteredItems: ImmutableList<GroupedItemList>,
     val unFilteredItems: PersistentList<ItemUiModel>
 ) {
+
+    val itemCount = filteredItems.map { it.items }.flatten().count()
+
     companion object {
         val Initial = PinningUiState(
             inPinningMode = false,

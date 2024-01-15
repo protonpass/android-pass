@@ -30,33 +30,35 @@ import javax.inject.Singleton
 @Singleton
 class TestBulkInviteRepository @Inject constructor() : BulkInviteRepository {
 
-    private val addressesFlow: MutableStateFlow<MutableList<AddressPermission>> =
-        MutableStateFlow(mutableListOf())
+    private val addressesFlow: MutableStateFlow<List<AddressPermission>> =
+        MutableStateFlow(emptyList())
 
     override suspend fun storeAddresses(addresses: List<String>) {
         addressesFlow.update {
-            addresses.map { AddressPermission(it, ShareRole.Read) }.toMutableList()
+            addresses.map { AddressPermission(it, ShareRole.Read) }
         }
     }
 
     override suspend fun setPermission(address: String, permission: ShareRole) {
         addressesFlow.update { state ->
-            val index = state.indexOfFirst { it.address == address }
-            state[index] = state[index].copy(shareRole = permission)
-            state
+            val newList = state.toMutableList()
+            val index = newList.indexOfFirst { it.address == address }
+            newList[index] = newList[index].copy(shareRole = permission)
+            newList
         }
     }
 
     override suspend fun removeAddress(address: String) {
         addressesFlow.update { state ->
-            state.removeIf { it.address == address }
-            state
+            val newList = state.toMutableList()
+            newList.removeIf { it.address == address }
+            newList
         }
     }
 
     override fun observeAddresses(): Flow<List<AddressPermission>> = addressesFlow
 
     override suspend fun clear() {
-        addressesFlow.update { mutableListOf() }
+        addressesFlow.update { emptyList() }
     }
 }

@@ -49,8 +49,8 @@ abstract class FeatureFlagsDao : BaseDao<ProtonFeatureFlagEntity>() {
         """
         DELETE FROM ${ProtonFeatureFlagEntity.TABLE}
         WHERE ${ProtonFeatureFlagEntity.Columns.USER_ID} = :userId
-          AND ${ProtonFeatureFlagEntity.Columns.NAME} = :name
+          AND ${ProtonFeatureFlagEntity.Columns.NAME} IN (:names)
         """
     )
-    abstract fun deleteFlag(userId: String, name: String)
+    abstract fun deleteFlags(userId: String, names: List<String>)
 }

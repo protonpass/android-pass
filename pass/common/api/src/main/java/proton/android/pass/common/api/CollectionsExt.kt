@@ -18,6 +18,23 @@
 
 package proton.android.pass.common.api
 
+/**
+ * This function is meant to be used instead of filterIsInstance.
+ * The main problem with filterIsInstance is that it's not type-aware, so in case of a type change
+ * in the data types you get no compilation error. Let's see it with an example:
+ *
+ * ```
+ * listOf(1, 2, 3).filterIsInstance<String>() // This compiles, but it's wrong
+ * ```
+ *
+ * However, we can do
+ *
+ * ```
+ * listOf(1, 2, 3).filterByType<Int, String>() // This doesn't compile
+ * ```
+ *
+ * This is just syntactic sugar over `filter { it is F }.map { it as F }`, but it's more readable
+ * and doesn't require you to suppress the warning.
+ */
 @Suppress("SimplifiableCall")
-inline fun <reified T, reified F> Collection<T>.filterByType(): List<F>
-    where F : T = filter { it is F }.map { it as F }
+inline fun <reified F: T, T> Collection<T>.filterByType(): List<F> = filter { it is F }.map { it as F }

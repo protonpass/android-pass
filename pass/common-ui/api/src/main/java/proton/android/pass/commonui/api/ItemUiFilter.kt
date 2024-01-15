@@ -63,8 +63,7 @@ object ItemUiFilter {
         val anyWebsiteMatches = content.urls.any { it.preprocess().contains(query) }
         if (anyWebsiteMatches) return true
 
-        val textCustomFields = content.customFields
-            .filterByType<CustomFieldContent, CustomFieldContent.Text>()
+        val textCustomFields: List<CustomFieldContent.Text> = content.customFields.filterByType()
 
         val anyCustomFieldLabelMatches = textCustomFields.any { it.label.preprocess().contains(query) }
         if (anyCustomFieldLabelMatches) return true

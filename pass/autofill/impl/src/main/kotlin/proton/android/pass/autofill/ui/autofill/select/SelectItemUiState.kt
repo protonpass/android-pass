@@ -20,6 +20,7 @@ package proton.android.pass.autofill.ui.autofill.select
 
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
@@ -45,6 +46,7 @@ sealed interface SearchInMode {
 data class SelectItemUiState(
     val listUiState: SelectItemListUiState,
     val searchUiState: SearchUiState,
+    val pinningUiState: PinningUiState,
     val confirmMode: Option<AutofillConfirmMode>
 ) {
 
@@ -57,6 +59,7 @@ data class SelectItemUiState(
         val Loading = SelectItemUiState(
             listUiState = SelectItemListUiState.Loading,
             searchUiState = SearchUiState.Initial,
+            pinningUiState = PinningUiState.Initial,
             confirmMode = None
         )
     }
@@ -93,14 +96,12 @@ data class SelectItemListUiState(
 data class SelectItemListItems(
     val suggestions: ImmutableList<ItemUiModel>,
     val items: ImmutableList<GroupedItemList>,
-    val pinnedItems: ImmutableList<ItemUiModel>,
     val suggestionsForTitle: String
 ) {
     companion object {
         val Initial = SelectItemListItems(
             suggestions = persistentListOf(),
             items = persistentListOf(),
-            pinnedItems = persistentListOf(),
             suggestionsForTitle = ""
         )
     }
@@ -120,6 +121,23 @@ data class SearchUiState(
             inSearchMode = false,
             isProcessingSearch = IsProcessingSearchState.NotLoading,
             searchInMode = SearchInMode.Uninitialized
+        )
+    }
+}
+
+@Immutable
+data class PinningUiState(
+    val inPinningMode: Boolean,
+    val isPinningEnabled: Boolean,
+    val filteredItems: ImmutableList<GroupedItemList>,
+    val unFilteredItems: PersistentList<ItemUiModel>
+) {
+    companion object {
+        val Initial = PinningUiState(
+            inPinningMode = false,
+            isPinningEnabled = false,
+            filteredItems = persistentListOf(),
+            unFilteredItems = persistentListOf()
         )
     }
 }

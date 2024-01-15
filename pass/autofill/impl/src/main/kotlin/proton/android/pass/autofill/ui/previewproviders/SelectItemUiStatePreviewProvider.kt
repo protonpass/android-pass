@@ -23,6 +23,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.Clock
 import proton.android.pass.autofill.ui.autofill.select.AutofillItemClickedEvent
+import proton.android.pass.autofill.ui.autofill.select.PinningUiState
 import proton.android.pass.autofill.ui.autofill.select.SearchInMode
 import proton.android.pass.autofill.ui.autofill.select.SearchUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListItems
@@ -56,7 +57,6 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                                 items = persistentListOf(item("Item with long text"))
                             )
                         ),
-                        pinnedItems = persistentListOf(),
                         suggestionsForTitle = ""
                     ),
                     shares = persistentMapOf(),
@@ -67,6 +67,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     canUpgrade = false
                 ),
                 SearchUiState.Initial,
+                PinningUiState.Initial,
                 None
             ),
             SelectItemUiState(
@@ -85,7 +86,6 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                                 )
                             )
                         ),
-                        pinnedItems = persistentListOf(),
                         suggestionsForTitle = "some.website.local"
                     ),
                     shares = persistentMapOf(),
@@ -96,6 +96,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     canUpgrade = false
                 ),
                 SearchUiState.Initial,
+                PinningUiState.Initial,
                 None
             ),
             SelectItemUiState(
@@ -117,6 +118,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isProcessingSearch = IsProcessingSearchState.NotLoading,
                     searchInMode = SearchInMode.AllVaults
                 ),
+                PinningUiState.Initial,
                 None
             )
         )

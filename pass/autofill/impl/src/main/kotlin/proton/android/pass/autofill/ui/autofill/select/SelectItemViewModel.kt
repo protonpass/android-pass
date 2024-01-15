@@ -40,11 +40,13 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDisplayed
 import proton.android.pass.autofill.AutofillTriggerSource
@@ -102,7 +104,6 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
@@ -112,6 +113,7 @@ import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
@@ -124,7 +126,7 @@ import proton.android.pass.totp.api.GetTotpCodeFromUri
 import java.net.URI
 import javax.inject.Inject
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "LargeClass")
 @HiltViewModel
 class SelectItemViewModel @Inject constructor(
     private val updateAutofillItem: UpdateAutofillItem,
@@ -146,15 +148,23 @@ class SelectItemViewModel @Inject constructor(
     clock: Clock
 ) : ViewModel() {
 
-    private val autofillAppState: MutableStateFlow<Option<AutofillAppState>> =
+    private val autofillAppStateFlow: MutableStateFlow<Option<AutofillAppState>> =
         MutableStateFlow(None)
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
+
+    @OptIn(FlowPreview::class)
+    private val debouncedSearchQueryState = searchQueryState
+        .debounce(DEBOUNCE_TIMEOUT)
+        .onStart { emit("") }
+        .distinctUntilChanged()
+
+    private val isInSeeAllPinsModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
         MutableStateFlow(IsProcessingSearchState.NotLoading)
     private val shouldScrollToTopFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val sortingSelectionFlow = autofillSearchOptionsRepository.observeSortingOption()
+    private val sortingOptionFlow = autofillSearchOptionsRepository.observeSortingOption()
         .distinctUntilChanged()
         .onEach { shouldScrollToTopFlow.update { true } }
 
@@ -171,7 +181,8 @@ class SelectItemViewModel @Inject constructor(
         val isProcessingSearch: IsProcessingSearchState
     )
 
-    private val planFlow: Flow<Plan> = getUserPlan()
+    private val planFlow = getUserPlan()
+        .asLoadingResult()
         .distinctUntilChanged()
 
     private val vaultsFlow = observeVaults().asLoadingResult()
@@ -184,39 +195,60 @@ class SelectItemViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
+    private val itemFiltersFlow = combine(
         planFlow,
         vaultsFlow,
-        autofillAppState,
-        ::Triple
-    ).flatMapLatest { (plan, vaultsRes, appState) ->
-
+        autofillAppStateFlow
+    ) { planRes, vaultsRes, appStateOption ->
         val vaults = when (vaultsRes) {
             is LoadingResult.Success -> vaultsRes.data
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Error observing vaults")
                 PassLogger.w(TAG, vaultsRes.exception)
-                return@flatMapLatest flowOf(LoadingResult.Error(vaultsRes.exception))
+                return@combine LoadingResult.Error(vaultsRes.exception)
             }
 
-            LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
+            LoadingResult.Loading -> return@combine LoadingResult.Loading
         }
+        val plan = when (planRes) {
+            is LoadingResult.Success -> planRes.data
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, "Error observing plan")
+                PassLogger.w(TAG, planRes.exception)
+                return@combine LoadingResult.Error(planRes.exception)
+            }
 
-        val selection = getShareSelection(plan.planType, vaults)
-
-        val state = appState.value() ?: return@flatMapLatest flowOf(LoadingResult.Loading)
-        val filter = when (state.autofillData.assistInfo.cluster) {
+            LoadingResult.Loading -> return@combine LoadingResult.Loading
+        }
+        val shareSelection = getShareSelection(plan.planType, vaults)
+        val state = appStateOption.value() ?: return@combine LoadingResult.Loading
+        val itemTypeFilter: ItemTypeFilter = when (state.autofillData.assistInfo.cluster) {
             is NodeCluster.CreditCard -> ItemTypeFilter.CreditCards
             is NodeCluster.Login,
             is NodeCluster.SignUp -> ItemTypeFilter.Logins
 
-            else -> return@flatMapLatest flowOf(LoadingResult.Error(IllegalStateException("Unknown cluster type")))
+            else -> return@combine LoadingResult.Error(IllegalStateException("Unknown cluster type"))
         }
-        observeActiveItems(
-            filter = filter,
-            shareSelection = selection
-        ).asResultWithoutLoading()
+        LoadingResult.Success(itemTypeFilter to shareSelection)
     }
+
+    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = itemFiltersFlow
+        .flatMapLatest {
+            val (filter, selection) = when (it) {
+                is LoadingResult.Error -> {
+                    PassLogger.w(TAG, "Error observing plan")
+                    PassLogger.w(TAG, it.exception)
+                    return@flatMapLatest flowOf(LoadingResult.Error(it.exception))
+                }
+
+                LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
+                is LoadingResult.Success -> it.data
+            }
+            observeActiveItems(
+                filter = filter,
+                shareSelection = selection
+            ).asResultWithoutLoading()
+        }
         .map { itemResult ->
             itemResult.map { list ->
                 encryptionContextProvider.withEncryptionContext {
@@ -228,21 +260,14 @@ class SelectItemViewModel @Inject constructor(
 
     private val sortedListItemFlow: Flow<LoadingResult<List<GroupedItemList>>> = combine(
         itemUiModelFlow,
-        sortingSelectionFlow
-    ) { result, sortingType ->
-        when (sortingType.searchSortingType) {
-            SearchSortingType.TitleAsc -> result.map { list -> list.groupAndSortByTitleAsc() }
-            SearchSortingType.TitleDesc -> result.map { list -> list.groupAndSortByTitleDesc() }
-            SearchSortingType.CreationAsc -> result.map { list -> list.groupAndSortByCreationAsc() }
-            SearchSortingType.CreationDesc -> result.map { list -> list.groupAndSortByCreationDesc() }
-            SearchSortingType.MostRecent -> result.map { list -> list.groupAndSortByMostRecent(clock.now()) }
-        }
+        sortingOptionFlow
+    ) { result, sortingOption ->
+        result.map { it.groupedItemLists(sortingOption, clock.now()) }
     }.distinctUntilChanged()
 
-    @OptIn(FlowPreview::class)
     private val textFilterListItemFlow: Flow<LoadingResult<List<GroupedItemList>>> = combine(
         sortedListItemFlow,
-        searchQueryState.debounce(DEBOUNCE_TIMEOUT),
+        debouncedSearchQueryState,
         isInSearchModeState
     ) { result, searchQuery, isInSearchMode ->
         isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
@@ -260,11 +285,23 @@ class SelectItemViewModel @Inject constructor(
         }
     }.flowOn(Dispatchers.Default)
 
-    private val pinnedItemsFlow = combine(
-        observePinnedItems().asLoadingResult(),
-        sortingSelectionFlow,
+    private val pinnedItemsFlow = itemFiltersFlow
+        .flatMapLatest {
+            val (filter, shareSelection) = when (it) {
+                is LoadingResult.Error -> return@flatMapLatest flowOf(LoadingResult.Error(it.exception))
+                LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
+                is LoadingResult.Success -> it.data
+            }
+            observePinnedItems(filter = filter, shareSelection = shareSelection).asLoadingResult()
+        }
+
+    private val pinningUiStateFlow = combine(
+        pinnedItemsFlow,
+        sortingOptionFlow,
+        debouncedSearchQueryState,
+        isInSeeAllPinsModeState,
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1)
-    ) { pinnedItemsResult, sorting, isPinningEnabled ->
+    ) { pinnedItemsResult, sortingOption, searchQuery, isInSeeAllPinsMode, isPinningEnabled ->
         val pinnedItems = if (isPinningEnabled) {
             pinnedItemsResult.getOrNull()?.let { list ->
                 encryptionContextProvider.withEncryptionContext {
@@ -274,18 +311,23 @@ class SelectItemViewModel @Inject constructor(
         } else {
             emptyList()
         }
-
-        when (sorting.searchSortingType) {
-            SearchSortingType.MostRecent -> pinnedItems.sortMostRecent()
-            SearchSortingType.TitleAsc -> pinnedItems.sortByTitleAsc()
-            SearchSortingType.TitleDesc -> pinnedItems.sortByTitleDesc()
-            SearchSortingType.CreationAsc -> pinnedItems.sortByCreationAsc()
-            SearchSortingType.CreationDesc -> pinnedItems.sortByCreationDesc()
-        }.toPersistentList()
+        val unfilteredItems = pinnedItems
+            .sortItemLists(sortingOption)
+            .toPersistentList()
+        val filteredItems = pinnedItems
+            .filterByQuery(searchQuery)
+            .groupedItemLists(sortingOption, clock.now())
+            .toPersistentList()
+        PinningUiState(
+            inPinningMode = isInSeeAllPinsMode,
+            isPinningEnabled = isPinningEnabled,
+            filteredItems = filteredItems,
+            unFilteredItems = unfilteredItems,
+        )
     }
 
     private val suggestionsItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
-        autofillAppState
+        autofillAppStateFlow
             .flatMapLatest { state ->
                 if (state is Some) {
                     val autofillData = state.value.autofillData
@@ -319,12 +361,11 @@ class SelectItemViewModel @Inject constructor(
             }
 
     private val resultsFlow: Flow<LoadingResult<SelectItemListItems>> = combine(
-        autofillAppState,
+        autofillAppStateFlow,
         textFilterListItemFlow,
         suggestionsItemUIModelFlow,
-        isInSearchModeState,
-        pinnedItemsFlow
-    ) { autofillAppState, result, suggestionsResult, isInSearchMode, pinnedItems ->
+        isInSearchModeState
+    ) { autofillAppState, result, suggestionsResult, isInSearchMode ->
         result.map { grouped ->
             if (isInSearchMode) {
                 SelectItemListItems(
@@ -332,7 +373,6 @@ class SelectItemViewModel @Inject constructor(
                     items = grouped.map { GroupedItemList(it.key, it.items) }
                         .filter { it.items.isNotEmpty() }
                         .toImmutableList(),
-                    pinnedItems = persistentListOf(),
                     suggestionsForTitle = ""
                 )
             } else {
@@ -350,7 +390,6 @@ class SelectItemViewModel @Inject constructor(
                         }
                         .filter { it.items.isNotEmpty() }
                         .toImmutableList(),
-                    pinnedItems = pinnedItems,
                     suggestionsForTitle = autofillAppState.value()
                         ?.let(::getSuggestionsTitle)
                         ?: ""
@@ -364,30 +403,27 @@ class SelectItemViewModel @Inject constructor(
     private val itemClickedFlow: MutableStateFlow<AutofillItemClickedEvent> =
         MutableStateFlow(AutofillItemClickedEvent.None)
 
-    val uiState: StateFlow<SelectItemUiState> = combineN(
+    private val selectItemListUiStateFlow = combineN(
         resultsFlow,
-        shareIdToSharesFlow,
         isRefreshing,
         itemClickedFlow,
-        searchWrapper,
-        sortingSelectionFlow,
+        sortingOptionFlow,
+        shareIdToSharesFlow,
         shouldScrollToTopFlow,
         preferenceRepository.getUseFaviconsPreference(),
         planFlow,
         observeUpgradeInfo().asLoadingResult(),
-        autofillAppState
     ) { itemsResult,
-        shares,
         isRefreshing,
         itemClicked,
-        search,
         sortingSelection,
+        shares,
         shouldScrollToTop,
         useFavicons,
-        plan,
-        upgradeInfo,
-        appState ->
-        val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
+        planRes,
+        upgradeInfo ->
+        val isLoading =
+            IsLoadingState.from(itemsResult is LoadingResult.Loading || planRes is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
             is LoadingResult.Success -> itemsResult.data
@@ -402,42 +438,73 @@ class SelectItemViewModel @Inject constructor(
             }
         }
 
-        val (displayOnlyPrimaryVaultMessage, searchIn) = when (plan.planType) {
-            is PlanType.Free -> {
-                when (val limit = plan.vaultLimit) {
-                    PlanLimit.Unlimited -> false to SearchInMode.AllVaults
-                    is PlanLimit.Limited -> if (shares.size > limit.limit) {
-                        true to SearchInMode.OldestVaults
-                    } else {
-                        false to SearchInMode.AllVaults
-                    }
+        val displayOnlyPrimaryVaultMessage = planRes.getOrNull()?.run {
+            when (planType) {
+                is PlanType.Free -> when (val limit = vaultLimit) {
+                    PlanLimit.Unlimited -> false
+                    is PlanLimit.Limited -> shares.size > limit.limit
                 }
-            }
 
-            else -> false to SearchInMode.AllVaults
-        }
+                else -> false
+            }
+        } ?: false
 
         val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
 
+        SelectItemListUiState(
+            isLoading = isLoading,
+            isRefreshing = isRefreshing,
+            itemClickedEvent = itemClicked,
+            items = items,
+            shares = shares,
+            sortingType = sortingSelection.searchSortingType,
+            shouldScrollToTop = shouldScrollToTop,
+            canLoadExternalImages = useFavicons.value(),
+            displayOnlyPrimaryVaultMessage = displayOnlyPrimaryVaultMessage,
+            canUpgrade = canUpgrade
+        )
+    }
+
+    val uiState: StateFlow<SelectItemUiState> = combineN(
+        selectItemListUiStateFlow,
+        searchWrapper,
+        pinningUiStateFlow,
+        planFlow,
+        autofillAppStateFlow,
+        shareIdToSharesFlow,
+    ) { selectItemListUiState,
+        search,
+        pinningUiState,
+        planRes,
+        appState,
+        shares ->
+
+        val searchIn = planRes.getOrNull()?.run {
+            when (planType) {
+                is PlanType.Free -> {
+                    when (val limit = vaultLimit) {
+                        PlanLimit.Unlimited -> SearchInMode.AllVaults
+                        is PlanLimit.Limited -> if (shares.size > limit.limit) {
+                            SearchInMode.OldestVaults
+                        } else {
+                            SearchInMode.AllVaults
+                        }
+                    }
+                }
+
+                else -> SearchInMode.AllVaults
+            }
+        } ?: SearchInMode.OldestVaults
+
         SelectItemUiState(
-            listUiState = SelectItemListUiState(
-                isLoading = isLoading,
-                isRefreshing = isRefreshing,
-                itemClickedEvent = itemClicked,
-                items = items,
-                shares = shares,
-                sortingType = sortingSelection.searchSortingType,
-                shouldScrollToTop = shouldScrollToTop,
-                canLoadExternalImages = useFavicons.value(),
-                displayOnlyPrimaryVaultMessage = displayOnlyPrimaryVaultMessage,
-                canUpgrade = canUpgrade
-            ),
+            listUiState = selectItemListUiState,
             searchUiState = SearchUiState(
                 searchQuery = search.searchQuery,
                 inSearchMode = search.isInSearchMode,
                 isProcessingSearch = search.isProcessingSearch,
                 searchInMode = searchIn
             ),
+            pinningUiState = pinningUiState,
             confirmMode = appState.flatMap { state ->
                 if (state.autofillData.isDangerousAutofill) {
                     AutofillConfirmMode.DangerousAutofill.some()
@@ -490,7 +557,7 @@ class SelectItemViewModel @Inject constructor(
     }
 
     fun setInitialState(autofillAppState: AutofillAppState) {
-        this.autofillAppState.update { autofillAppState.toOption() }
+        autofillAppStateFlow.update { autofillAppState.toOption() }
 
         val event = AutofillDisplayed(
             source = AutofillTriggerSource.App,
@@ -501,6 +568,14 @@ class SelectItemViewModel @Inject constructor(
 
     fun onScrolledToTop() {
         shouldScrollToTopFlow.update { false }
+    }
+
+    fun onEnterSeeAllPinsMode() {
+        isInSeeAllPinsModeState.update { true }
+    }
+
+    fun onStopPinningMode() {
+        isInSeeAllPinsModeState.update { false }
     }
 
     private fun onLoginItemClicked(
@@ -613,6 +688,26 @@ class SelectItemViewModel @Inject constructor(
                 ShareSelection.Shares(writeableVaults)
             }
         }
+    }
+
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
+        when (sortingOption.searchSortingType) {
+            SearchSortingType.MostRecent -> sortMostRecent()
+            SearchSortingType.TitleAsc -> sortByTitleAsc()
+            SearchSortingType.TitleDesc -> sortByTitleDesc()
+            SearchSortingType.CreationAsc -> sortByCreationAsc()
+            SearchSortingType.CreationDesc -> sortByCreationDesc()
+        }
+
+    private fun List<ItemUiModel>.groupedItemLists(
+        sortingOption: SortingOption,
+        instant: Instant
+    ) = when (sortingOption.searchSortingType) {
+        SearchSortingType.MostRecent -> groupAndSortByMostRecent(instant)
+        SearchSortingType.TitleAsc -> groupAndSortByTitleAsc()
+        SearchSortingType.TitleDesc -> groupAndSortByTitleDesc()
+        SearchSortingType.CreationAsc -> groupAndSortByCreationAsc()
+        SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
     }
 
     companion object {

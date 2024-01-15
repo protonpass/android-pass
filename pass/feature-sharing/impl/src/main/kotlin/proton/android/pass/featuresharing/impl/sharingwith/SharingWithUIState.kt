@@ -21,13 +21,16 @@ package proton.android.pass.featuresharing.impl.sharingwith
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Vault
 
 @Stable
 data class SharingWithUIState(
-    val email: String = "",
+    val enteredEmails: ImmutableList<String> = persistentListOf(),
+    val selectedEmailIndex: Option<Int> = None,
     val vault: Vault? = null,
-    val emailNotValidReason: EmailNotValidReason? = null,
+    val showEmailNotValidError: Boolean = false,
     val event: SharingWithEvents = SharingWithEvents.Unknown,
     val isLoading: Boolean = false,
     val showEditVault: Boolean = false,

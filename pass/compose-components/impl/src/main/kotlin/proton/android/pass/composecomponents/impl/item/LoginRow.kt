@@ -37,6 +37,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.pinning.BoxedPin
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
+import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ItemContents
 
 private const val MAX_PREVIEW_LENGTH = 128
@@ -53,12 +54,23 @@ fun LoginRow(
     val content = remember(item.contents) { item.contents as ItemContents.Login }
 
     val highlightColor = PassTheme.colors.interactionNorm
-    val fields = remember(content.title, content.username, content.note, content.urls, highlight) {
+    val textCustomFields = remember(content.customFields) {
+        content.customFields.filterIsInstance<CustomFieldContent.Text>()
+    }
+    val fields = remember(
+        content.title,
+        content.username,
+        content.note,
+        content.urls,
+        textCustomFields,
+        highlight
+    ) {
         getHighlightedFields(
             title = content.title,
             username = content.username,
             note = content.note,
             urls = content.urls,
+            customFields = textCustomFields,
             highlight = highlight,
             highlightColor = highlightColor
         )
@@ -118,6 +130,7 @@ private fun getHighlightedFields(
     username: String,
     note: String,
     urls: List<String>,
+    customFields: List<CustomFieldContent.Text>,
     highlight: String,
     highlightColor: Color
 ): LoginHighlightFields {
@@ -125,6 +138,7 @@ private fun getHighlightedFields(
     var annotatedUsername = AnnotatedString(username.take(MAX_PREVIEW_LENGTH))
     var annotatedNote: AnnotatedString? = null
     val annotatedWebsites: MutableList<AnnotatedString> = mutableListOf()
+    val annotatedCustomFields: MutableList<AnnotatedString> = mutableListOf()
     if (highlight.isNotBlank()) {
         title.highlight(highlight, highlightColor)?.let {
             annotatedTitle = it
@@ -141,6 +155,15 @@ private fun getHighlightedFields(
             }
             if (annotatedWebsites.size >= 2) return@forEach
         }
+
+        customFields.forEach { customField ->
+            val customFieldText = "${customField.label}: ${customField.value}"
+            customFieldText.highlight(highlight, highlightColor)?.let {
+                annotatedCustomFields.add(it)
+            }
+
+            if (annotatedCustomFields.size >= 2) return@forEach
+        }
     }
 
     return LoginHighlightFields(
@@ -152,7 +175,7 @@ private fun getHighlightedFields(
             listOfNotNull(
                 annotatedUsername,
                 annotatedNote
-            ) + annotatedWebsites
+            ) + annotatedWebsites + annotatedCustomFields
             ).toPersistentList()
     )
 }

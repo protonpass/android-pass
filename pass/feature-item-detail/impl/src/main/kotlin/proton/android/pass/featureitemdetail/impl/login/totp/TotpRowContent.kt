@@ -32,9 +32,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
@@ -70,7 +73,8 @@ fun TotpRowContent(
             SectionTitle(text = label)
             val half = state.code.length / 2
             SectionSubtitle(
-                text = (state.code.take(half) + "•" + state.code.takeLast(half)).asAnnotatedString()
+                text = (state.code.take(half) + "•" + state.code.takeLast(half)).asAnnotatedString(),
+                textStyle = ProtonTheme.typography.defaultNorm.copy(fontFamily = FontFamily.Monospace)
             )
         }
         Spacer(modifier = Modifier.weight(1f))

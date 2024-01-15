@@ -34,9 +34,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.applyIf
@@ -49,6 +52,7 @@ fun HiddenContentRow(
     modifier: Modifier = Modifier,
     sectionContent: AnnotatedString,
     label: String,
+    textStyle: TextStyle = ProtonTheme.typography.defaultNorm,
     isContentVisible: Boolean,
     toggleIconBackground: Color,
     toggleIconForeground: Color,
@@ -82,7 +86,7 @@ fun HiddenContentRow(
         Column(modifier = Modifier.weight(1f)) {
             SectionTitle(text = label)
             Spacer(modifier = Modifier.height(8.dp))
-            SectionSubtitle(text = sectionContent)
+            SectionSubtitle(text = sectionContent, textStyle = textStyle)
         }
         middleSection()
         Circle(

@@ -109,6 +109,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     override fun observePinnedItems(
         userId: UserId,
+        shareSelection: ShareSelection,
         itemTypeFilter: ItemTypeFilter
     ): Flow<List<Item>> {
         TODO("Not yet implemented")

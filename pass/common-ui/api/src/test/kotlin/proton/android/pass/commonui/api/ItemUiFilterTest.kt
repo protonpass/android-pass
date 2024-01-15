@@ -210,19 +210,19 @@ class ItemUiFilterTest {
         )
 
         // By value
-        val filteredValueList = ItemUiFilter.filterByQuery(items, "value")
+        val filteredValueList = items.filterByQuery("value")
         assertThat(filteredValueList.size).isEqualTo(1)
 
         // By label
-        val filteredLabelList = ItemUiFilter.filterByQuery(items, "label")
+        val filteredLabelList = items.filterByQuery("label")
         assertThat(filteredLabelList.size).isEqualTo(1)
 
         // Cannot find Hidden text fields
-        val filteredHiddenList = ItemUiFilter.filterByQuery(items, "hidden")
+        val filteredHiddenList = items.filterByQuery("hidden")
         assertThat(filteredHiddenList.size).isEqualTo(0)
 
         // Cannot find Totp text fields
-        val filteredTotpList = ItemUiFilter.filterByQuery(items, "totp")
+        val filteredTotpList = items.filterByQuery("totp")
         assertThat(filteredTotpList.size).isEqualTo(0)
 
     }

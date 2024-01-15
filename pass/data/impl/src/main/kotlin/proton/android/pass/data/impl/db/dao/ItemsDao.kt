@@ -110,6 +110,34 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         SELECT * FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.IS_PINNED} = 1
+          AND ${ItemEntity.Columns.ITEM_TYPE} = :itemType
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+        """
+    )
+    abstract fun observeAllPinnedItemsForShares(
+        userId: String,
+        itemType: Int,
+        shareIds: List<String>,
+    ): Flow<List<ItemEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE} 
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.IS_PINNED} = 1
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+        """
+    )
+    abstract fun observeAllPinnedItemsForShares(
+        userId: String,
+        shareIds: List<String>,
+    ): Flow<List<ItemEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE} 
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.IS_PINNED} = 1
         """
     )
     abstract fun observeAllPinnedItems(userId: String): Flow<List<ItemEntity>>

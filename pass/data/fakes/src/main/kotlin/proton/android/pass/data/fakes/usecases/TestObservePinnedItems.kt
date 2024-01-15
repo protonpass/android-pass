@@ -36,6 +36,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -52,7 +53,7 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
         flow.tryEmit(defaultValues.asList())
     }
 
-    override fun invoke(filter: ItemTypeFilter): Flow<List<Item>> = flow
+    override fun invoke(filter: ItemTypeFilter, shareSelection: ShareSelection): Flow<List<Item>> = flow
 
     data class DefaultValues(
         val login: Item,

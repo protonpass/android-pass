@@ -20,6 +20,7 @@ package proton.android.pass.commonui.api
 
 import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ItemContents
 
 object ItemUiFilter {
@@ -54,11 +55,21 @@ object ItemUiFilter {
     private fun isAliasMatch(content: ItemContents.Alias, query: String): Boolean =
         content.aliasEmail.preprocess().contains(query)
 
+    @Suppress("ReturnCount")
     private fun isLoginMatch(content: ItemContents.Login, query: String): Boolean {
         if (content.username.preprocess().contains(query)) return true
 
         val anyWebsiteMatches = content.urls.any { it.preprocess().contains(query) }
         if (anyWebsiteMatches) return true
+
+        val textCustomFields = content.customFields
+            .filterInstances<CustomFieldContent, CustomFieldContent.Text>()
+
+        val anyCustomFieldLabelMatches = textCustomFields.any { it.label.preprocess().contains(query) }
+        if (anyCustomFieldLabelMatches) return true
+
+        val anyCustomFieldValueMatches = textCustomFields.any { it.value.preprocess().contains(query) }
+        if (anyCustomFieldValueMatches) return true
 
         return false
     }
@@ -81,4 +92,9 @@ object ItemUiFilter {
 
     private fun String.preprocess(): String =
         this.lowercase().removeAccents()
+
+    @Suppress("SimplifiableCall")
+    private inline fun <reified T, reified F> Collection<T>.filterInstances(): List<F>
+        where F : T = filter { it is F }.map { it as F }
+
 }

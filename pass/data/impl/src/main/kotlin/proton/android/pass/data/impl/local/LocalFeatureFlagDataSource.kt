@@ -28,27 +28,30 @@ import proton.android.pass.data.impl.db.entities.ProtonFeatureFlagEntity
 import javax.inject.Inject
 
 interface LocalFeatureFlagDataSource {
-    fun observeFeatureFlag(userId: UserId, featureName: String): Flow<Option<ProtonFeatureFlagEntity>>
+    fun observeFeatureFlag(
+        userId: UserId,
+        featureName: String
+    ): Flow<Option<ProtonFeatureFlagEntity>>
+
     fun observeAllFeatureFlags(userId: UserId): Flow<List<ProtonFeatureFlagEntity>>
-    suspend fun deleteFeatureFlags(userId: UserId, featureNames: List<String>)
+    fun deleteFeatureFlags(userId: UserId, featureNames: List<String>)
     suspend fun storeFeatureFlags(featureFlags: List<ProtonFeatureFlagEntity>)
 }
 
 class LocalFeatureFlagDataSourceImpl @Inject constructor(
     private val database: PassDatabase
 ) : LocalFeatureFlagDataSource {
-    override fun observeFeatureFlag(userId: UserId, featureName: String): Flow<Option<ProtonFeatureFlagEntity>> =
+    override fun observeFeatureFlag(
+        userId: UserId,
+        featureName: String
+    ): Flow<Option<ProtonFeatureFlagEntity>> =
         database.featureFlagsDao().observeFeatureFlag(userId.id, featureName).map { it.toOption() }
 
     override fun observeAllFeatureFlags(userId: UserId): Flow<List<ProtonFeatureFlagEntity>> =
         database.featureFlagsDao().observeAllForUser(userId.id)
 
-    override suspend fun deleteFeatureFlags(userId: UserId, featureNames: List<String>) {
-        database.inTransaction {
-            featureNames.forEach { featureName ->
-                database.featureFlagsDao().deleteFlag(userId.id, featureName)
-            }
-        }
+    override fun deleteFeatureFlags(userId: UserId, featureNames: List<String>) {
+        database.featureFlagsDao().deleteFlags(userId.id, featureNames)
     }
 
     override suspend fun storeFeatureFlags(featureFlags: List<ProtonFeatureFlagEntity>) {

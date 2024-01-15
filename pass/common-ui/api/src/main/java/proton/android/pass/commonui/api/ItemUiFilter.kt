@@ -18,6 +18,7 @@
 
 package proton.android.pass.commonui.api
 
+import proton.android.pass.common.api.filterByType
 import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.CustomFieldContent
@@ -63,7 +64,7 @@ object ItemUiFilter {
         if (anyWebsiteMatches) return true
 
         val textCustomFields = content.customFields
-            .filterInstances<CustomFieldContent, CustomFieldContent.Text>()
+            .filterByType<CustomFieldContent, CustomFieldContent.Text>()
 
         val anyCustomFieldLabelMatches = textCustomFields.any { it.label.preprocess().contains(query) }
         if (anyCustomFieldLabelMatches) return true
@@ -92,9 +93,5 @@ object ItemUiFilter {
 
     private fun String.preprocess(): String =
         this.lowercase().removeAccents()
-
-    @Suppress("SimplifiableCall")
-    private inline fun <reified T, reified F> Collection<T>.filterInstances(): List<F>
-        where F : T = filter { it is F }.map { it as F }
 
 }

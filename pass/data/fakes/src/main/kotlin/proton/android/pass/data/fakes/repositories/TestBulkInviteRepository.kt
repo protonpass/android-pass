@@ -35,7 +35,7 @@ class TestBulkInviteRepository @Inject constructor() : BulkInviteRepository {
 
     override suspend fun storeAddresses(addresses: List<String>) {
         addressesFlow.update {
-            addresses.map { AddressPermission(it, ShareRole.Read) }.toMutableList()
+            addresses.map { AddressPermission(it, ShareRole.Read) }
         }
     }
 

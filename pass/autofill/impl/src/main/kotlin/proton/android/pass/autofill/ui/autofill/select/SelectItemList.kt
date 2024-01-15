@@ -63,11 +63,10 @@ fun SelectItemList(
         pinningUiState.filteredItems
     }
     val listItemCount = remember(uiState.listUiState.items) {
-        uiState.listUiState.items.items.map { it.items }.flatten().count() +
-            uiState.listUiState.items.suggestions.count()
+        uiState.listUiState.itemCount
     }
     val pinningItemsCount = remember(uiState.pinningUiState.filteredItems) {
-        uiState.pinningUiState.filteredItems.map { it.items }.flatten().count()
+        uiState.pinningUiState.itemCount
     }
 
     ItemsList(

@@ -48,9 +48,12 @@ fun SharingWithScreen(
     SharingWithContent(
         modifier = modifier,
         state = state,
+        editingEmail = viewModel.editingEmail,
         onNavigateEvent = onNavigateEvent,
         onEmailChange = viewModel::onEmailChange,
         onEmailSubmit = viewModel::onEmailSubmit,
-        onInviteSuggestionToggle = viewModel::onItemToggle
+        onInviteSuggestionToggle = viewModel::onItemToggle,
+        onContinueClick = viewModel::onContinueClick,
+        onEmailClick = viewModel::onEmailClick
     )
 }

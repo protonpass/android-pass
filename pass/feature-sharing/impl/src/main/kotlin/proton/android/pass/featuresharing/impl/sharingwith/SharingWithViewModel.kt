@@ -35,6 +35,9 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -65,14 +68,18 @@ class SharingWithViewModel @Inject constructor(
     private val showEditVault: Boolean = savedStateHandleProvider.get()
         .require(ShowEditVaultArgId.key)
 
-    private val isEmailNotValidState: MutableStateFlow<EmailNotValidReason?> =
-        MutableStateFlow(null)
+    private val showEmailNotValidFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
-    private val emailState: MutableStateFlow<String> =
-        MutableStateFlow("")
     private val eventState: MutableStateFlow<SharingWithEvents> =
         MutableStateFlow(SharingWithEvents.Unknown)
+    private val enteredEmailsState: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    private val selectedEmailIndexFlow: MutableStateFlow<Option<Int>> = MutableStateFlow(None)
+
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var editingEmailState by savedStateHandleProvider.get().saveable {
+        mutableStateOf("")
+    }
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var checkedEmails: Set<String> by savedStateHandleProvider.get()
@@ -80,44 +87,46 @@ class SharingWithViewModel @Inject constructor(
 
     private val checkedEmailFlow = MutableStateFlow(checkedEmails)
 
-    private val suggestionsUIStateFlow =
-        combine(
-            observeInviteRecommendations(shareId = shareId).asLoadingResult(),
-            checkedEmailFlow
-        ) { result, checkedEmails ->
-            when (result) {
-                is LoadingResult.Error -> SuggestionsUIState.Initial
-                LoadingResult.Loading -> SuggestionsUIState.Loading
-                is LoadingResult.Success -> SuggestionsUIState.Content(
-                    groupDisplayName = result.data.groupDisplayName,
-                    recentEmails = result.data.recommendedEmails.map { email ->
-                        email to checkedEmails.contains(email)
-                    }.toPersistentList(),
-                    planEmails = result.data.planRecommendedEmails.map { email ->
-                        email to checkedEmails.contains(email)
-                    }.toPersistentList()
-                )
-            }
+    private val suggestionsUIStateFlow = combine(
+        observeInviteRecommendations(shareId = shareId).asLoadingResult(),
+        checkedEmailFlow
+    ) { result, checkedEmails ->
+        when (result) {
+            is LoadingResult.Error -> SuggestionsUIState.Initial
+            LoadingResult.Loading -> SuggestionsUIState.Loading
+            is LoadingResult.Success -> SuggestionsUIState.Content(
+                groupDisplayName = result.data.groupDisplayName,
+                recentEmails = result.data.recommendedEmails.map { email ->
+                    email to checkedEmails.contains(email)
+                }.toPersistentList(),
+                planEmails = result.data.planRecommendedEmails.map { email ->
+                    email to checkedEmails.contains(email)
+                }.toPersistentList()
+            )
         }
+    }
 
+    val editingEmail: String get() = editingEmailState
 
     val state: StateFlow<SharingWithUIState> = combineN(
-        emailState,
-        isEmailNotValidState,
+        enteredEmailsState,
+        showEmailNotValidFlow,
         observeVaultById(shareId = shareId),
         isLoadingState,
         eventState,
-        suggestionsUIStateFlow
-    ) { email, isEmailNotValid, vault, isLoading, event, suggestionsUIState ->
+        suggestionsUIStateFlow,
+        selectedEmailIndexFlow
+    ) { emails, isEmailNotValid, vault, isLoading, event, suggestionsUiState, selectedEmailIndex ->
         val vaultValue = vault.value()
         SharingWithUIState(
-            email = email,
+            enteredEmails = emails.toPersistentList(),
+            selectedEmailIndex = selectedEmailIndex,
             vault = vaultValue,
-            emailNotValidReason = isEmailNotValid,
+            showEmailNotValidError = isEmailNotValid,
             isLoading = isLoading.value() || vaultValue == null,
             event = event,
             showEditVault = showEditVault,
-            suggestionsUIState = suggestionsUIState
+            suggestionsUIState = suggestionsUiState
         )
     }.stateIn(
         scope = viewModelScope,
@@ -127,21 +136,43 @@ class SharingWithViewModel @Inject constructor(
 
     fun onEmailChange(value: String) {
         val sanitised = value.replace(" ", "").replace("\n", "")
-        emailState.update { sanitised }
-        isEmailNotValidState.update { null }
+        editingEmailState = sanitised
+        showEmailNotValidFlow.update { false }
+        selectedEmailIndexFlow.update { None }
     }
 
     fun onEmailSubmit() = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
-        val email = emailState.value
-        if (email.isBlank() || !emailValidator.isValid(email)) {
-            PassLogger.i(TAG, "Email not valid")
-            isEmailNotValidState.update { EmailNotValidReason.NotValid }
-            isLoadingState.update { IsLoadingState.NotLoading }
-            return@launch
+        if (checkValidEmail()) {
+            enteredEmailsState.update { it + editingEmailState }
+            editingEmailState = ""
+        }
+    }
+
+    fun onEmailClick(index: Int) = viewModelScope.launch {
+        if (selectedEmailIndexFlow.value.value() == index) {
+            enteredEmailsState.update {
+                it.filterIndexed { idx, _ -> idx != index }
+            }
+            selectedEmailIndexFlow.update { None }
+        } else {
+            selectedEmailIndexFlow.update { index.some() }
+        }
+    }
+
+    fun onContinueClick() = viewModelScope.launch {
+        if (editingEmailState.isNotBlank()) {
+            if (checkValidEmail()) {
+                enteredEmailsState.update { it + editingEmailState }
+                editingEmailState = ""
+            } else {
+                return@launch
+            }
         }
 
-        bulkInviteRepository.storeAddresses(listOf(email))
+        isLoadingState.update { IsLoadingState.Loading }
+
+        val emails = enteredEmailsState.value
+        bulkInviteRepository.storeAddresses(emails)
         eventState.update {
             SharingWithEvents.NavigateToPermissions(shareId = shareId)
         }
@@ -166,13 +197,18 @@ class SharingWithViewModel @Inject constructor(
         InviteUserMode.ExistingUser -> SharingWithUserModeType.ExistingUser
     }
 
+    private fun checkValidEmail()
+        : Boolean {
+        if (editingEmailState.isBlank() || !emailValidator.isValid(editingEmailState)) {
+            PassLogger.i(TAG, "Email not valid")
+            showEmailNotValidFlow.update { true }
+            return false
+        }
+        return true
+    }
+
     companion object {
         private const val TAG = "SharingWithViewModel"
     }
 }
 
-enum class EmailNotValidReason {
-    NotValid,
-    CannotGetEmailInfo,
-    UserIdNotFound
-}

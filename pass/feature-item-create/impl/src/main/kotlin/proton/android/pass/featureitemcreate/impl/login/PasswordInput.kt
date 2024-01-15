@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -71,7 +72,7 @@ internal fun PasswordInput(
             autoCorrect = false,
             keyboardType = KeyboardType.Password
         ),
-        textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
+        textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed).copy(fontFamily = FontFamily.Monospace),
         onChange = onChange,
         label = { PasswordInputLabel(passwordStrength) },
         placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },

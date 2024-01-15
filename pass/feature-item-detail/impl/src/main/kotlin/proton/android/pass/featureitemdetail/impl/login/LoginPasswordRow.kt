@@ -26,14 +26,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.toPasswordAnnotatedString
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.HiddenContentRow
-import proton.android.pass.domain.HiddenState
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -62,6 +64,7 @@ internal fun LoginPasswordRow(
         isContentVisible = isContentVisible,
         sectionContent = sectionContent,
         label = label,
+        textStyle = ProtonTheme.typography.defaultNorm.copy(fontFamily = FontFamily.Monospace),
         icon = {
             Icon(
                 painter = painterResource(iconRes),

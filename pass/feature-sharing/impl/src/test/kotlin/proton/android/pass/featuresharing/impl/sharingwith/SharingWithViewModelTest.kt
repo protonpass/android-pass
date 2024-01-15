@@ -35,7 +35,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
-import proton.android.pass.featuresharing.impl.sharingwith.EmailNotValidReason.NotValid
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
 
@@ -44,7 +43,6 @@ class SharingWithViewModelTest {
     private lateinit var viewModel: SharingWithViewModel
     private lateinit var observeVaultById: TestObserveVaultById
     private lateinit var emailValidator: TestEmailValidator
-    private lateinit var getInviteUserMode: TestGetInviteUserMode
     private lateinit var observeInviteRecommendations: FakeObserveInviteRecommendations
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var bulkInviteRepository: TestBulkInviteRepository
@@ -66,7 +64,6 @@ class SharingWithViewModelTest {
         viewModel = SharingWithViewModel(
             observeVaultById = observeVaultById,
             savedStateHandleProvider = savedStateHandleProvider,
-            getInviteUserMode = getInviteUserMode,
             emailValidator = emailValidator,
             observeInviteRecommendations = observeInviteRecommendations
             emailValidator = emailValidator,

@@ -18,12 +18,18 @@
 
 package proton.android.pass.featuresharing.impl.sharingwith
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -32,12 +38,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.subheadlineNorm
+import me.proton.core.presentation.R as CoreR
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
@@ -45,6 +54,7 @@ import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.loading.Loading
@@ -52,14 +62,18 @@ import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.SharingNavigation
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SharingWithContent(
     modifier: Modifier = Modifier,
     state: SharingWithUIState,
+    editingEmail: String,
     onNavigateEvent: (SharingNavigation) -> Unit,
     onEmailChange: (String) -> Unit,
     onInviteSuggestionToggle: (String, Boolean) -> Unit,
-    onEmailSubmit: () -> Unit
+    onEmailSubmit: () -> Unit,
+    onContinueClick: () -> Unit,
+    onEmailClick: (Int) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -71,7 +85,7 @@ fun SharingWithContent(
                     LoadingCircleButton(
                         modifier = Modifier.padding(12.dp, 0.dp),
                         color = PassTheme.colors.interactionNormMajor1,
-                        onClick = onEmailSubmit,
+                        onClick = onContinueClick,
                         isLoading = state.isLoading,
                         text = {
                             Text(
@@ -96,29 +110,57 @@ fun SharingWithContent(
                 style = PassTheme.typography.heroNorm()
             )
 
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                state.enteredEmails.forEachIndexed { idx, email ->
+                    Row(
+                        modifier = Modifier
+                            .padding(
+                                top = Spacing.small,
+                                bottom = Spacing.small,
+                                end = Spacing.small
+                            )
+                            .roundedContainer(
+                                backgroundColor = PassTheme.colors.interactionNormMinor1,
+                                borderColor = Color.Transparent,
+                            )
+                            .clickable { onEmailClick(idx) }
+                            .padding(Spacing.small),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = email,
+                            style = ProtonTheme.typography.subheadlineNorm,
+                        )
+
+                        if (state.selectedEmailIndex.value() == idx) {
+                            Icon(
+                                modifier = Modifier.padding(start = Spacing.small),
+                                painter = painterResource(id = CoreR.drawable.ic_proton_cross_circle),
+                                tint = PassTheme.colors.textNorm,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                }
+            }
+
             val focusRequester = remember { FocusRequester() }
             ProtonTextField(
                 modifier = Modifier.focusRequester(focusRequester),
-                value = state.email,
+                value = editingEmail,
                 placeholder = {
                     ProtonTextFieldPlaceHolder(
                         text = stringResource(R.string.share_with_email_hint),
                         textStyle = ProtonTheme.typography.subheadlineNorm.copy(color = ProtonTheme.colors.textHint)
                     )
                 },
-                isError = state.emailNotValidReason != null,
-                errorMessage = when (state.emailNotValidReason) {
-                    EmailNotValidReason.NotValid -> stringResource(R.string.share_with_email_error)
-                    EmailNotValidReason.CannotGetEmailInfo -> stringResource(
-                        id = R.string.share_with_email_cannot_get_email_info
-                    )
-
-                    EmailNotValidReason.UserIdNotFound -> stringResource(
-                        id = R.string.share_with_email_error
-                    )
-
-                    null -> ""
-                },
+                isError = state.showEmailNotValidError,
+                errorMessage = if (state.showEmailNotValidError) {
+                    stringResource(R.string.share_with_email_error)
+                } else "",
                 textStyle = ProtonTheme.typography.subheadlineNorm,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     capitalization = KeyboardCapitalization.None,

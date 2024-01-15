@@ -20,6 +20,7 @@ package proton.android.pass.autofill.ui.autofill.select
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -44,6 +45,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
@@ -53,6 +55,7 @@ import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCir
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.entity.PackageName
 
+@Suppress("ComplexMethod")
 @Composable
 internal fun SelectItemScreenContent(
     modifier: Modifier = Modifier,
@@ -64,7 +67,9 @@ internal fun SelectItemScreenContent(
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
     onStopSearching: () -> Unit,
+    onStopPinningMode: () -> Unit,
     onScrolledToTop: () -> Unit,
+    onSeeAllPinned: () -> Unit,
     onNavigate: (SelectItemNavigation) -> Unit
 ) {
     val (showAssociateDialog, setShowAssociateDialog) = remember { mutableStateOf(false) }
@@ -74,6 +79,10 @@ internal fun SelectItemScreenContent(
     var willNeedToShowAssociateDialog by remember { mutableStateOf(false) }
     val verticalScroll = rememberLazyListState()
     var showFab by remember { mutableStateOf(true) }
+    val isPinningOrSearch =
+        remember(uiState.pinningUiState.inPinningMode, uiState.searchUiState.inSearchMode) {
+            uiState.pinningUiState.inPinningMode || uiState.searchUiState.inSearchMode
+        }
     val onItemClickedCallback: (ItemUiModel) -> Unit = {
         when (val contents = it.contents) {
             is ItemContents.Login -> {
@@ -151,10 +160,14 @@ internal fun SelectItemScreenContent(
             )
         },
         topBar = {
-            val placeholder = when (uiState.searchUiState.searchInMode) {
-                SearchInMode.AllVaults -> stringResource(id = R.string.topbar_search_query)
-                SearchInMode.OldestVaults -> stringResource(id = R.string.topbar_search_query_oldest_vaults)
-                SearchInMode.Uninitialized -> stringResource(id = R.string.topbar_search_query_uninitialized)
+            val placeholder = if (!uiState.pinningUiState.inPinningMode) {
+                when (uiState.searchUiState.searchInMode) {
+                    SearchInMode.AllVaults -> stringResource(id = R.string.topbar_search_query)
+                    SearchInMode.OldestVaults -> stringResource(id = R.string.topbar_search_query_oldest_vaults)
+                    SearchInMode.Uninitialized -> stringResource(id = R.string.topbar_search_query_uninitialized)
+                }
+            } else {
+                stringResource(id = R.string.topbar_search_pinned_items)
             }
 
             SearchTopBar(
@@ -169,10 +182,16 @@ internal fun SelectItemScreenContent(
                         color = PassTheme.colors.loginInteractionNorm,
                         backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
                         onUpClick = {
-                            if (uiState.searchUiState.inSearchMode) {
-                                onStopSearching()
-                            } else {
-                                onNavigate(SelectItemNavigation.Cancel)
+                            when {
+                                uiState.searchUiState.inSearchMode -> {
+                                    onStopSearching()
+                                }
+                                uiState.pinningUiState.inPinningMode -> {
+                                    onStopPinningMode()
+                                }
+                                else -> {
+                                    onNavigate(SelectItemNavigation.Cancel)
+                                }
                             }
                         }
                     )
@@ -183,14 +202,18 @@ internal fun SelectItemScreenContent(
         Column(
             modifier = Modifier.padding(padding)
         ) {
-            if (!uiState.searchUiState.inSearchMode) {
+            if (!isPinningOrSearch) {
                 PinCarousel(
                     modifier = Modifier.height(48.dp),
-                    list = uiState.listUiState.items.pinnedItems,
+                    list = uiState.pinningUiState.unFilteredItems,
                     canLoadExternalImages = uiState.listUiState.canLoadExternalImages,
                     onItemClick = onItemClickedCallback,
-                    onSeeAllClick = {},
+                    onSeeAllClick = onSeeAllPinned,
                 )
+
+                if (uiState.pinningUiState.unFilteredItems.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(Spacing.medium))
+                }
             }
             SelectItemList(
                 uiState = uiState,

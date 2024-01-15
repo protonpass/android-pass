@@ -286,8 +286,26 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun observePinnedItems(
         userId: UserId,
+        shareSelection: ShareSelection,
         itemTypeFilter: ItemTypeFilter
-    ): Flow<List<Item>> = localItemDataSource.observePinnedItems(userId, itemTypeFilter)
+    ): Flow<List<Item>> = when (shareSelection) {
+        is ShareSelection.Share -> localItemDataSource.observeAllPinnedItemsForShares(
+            userId = userId,
+            shareIds = listOf(shareSelection.shareId),
+            filter = itemTypeFilter
+        )
+
+        is ShareSelection.Shares -> localItemDataSource.observeAllPinnedItemsForShares(
+            userId = userId,
+            shareIds = shareSelection.shareIds,
+            filter = itemTypeFilter
+        )
+
+        is ShareSelection.AllShares -> localItemDataSource.observePinnedItems(
+            userId = userId,
+            filter = itemTypeFilter
+        )
+    }
         .map { items ->
             encryptionContextProvider.withEncryptionContext {
                 items.map { it.toDomain(this@withEncryptionContext) }

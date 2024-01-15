@@ -57,6 +57,8 @@ fun SelectItemScreen(
         onEnterSearch = { viewModel.onEnterSearch() },
         onStopSearching = { viewModel.onStopSearching() },
         onScrolledToTop = { viewModel.onScrolledToTop() },
+        onSeeAllPinned = { viewModel.onEnterSeeAllPinsMode() },
+        onStopPinningMode = { viewModel.onStopPinningMode() },
         onNavigate = onNavigate
     )
 }

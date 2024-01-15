@@ -55,11 +55,25 @@ fun SelectItemList(
 ) {
     val searchUiState = uiState.searchUiState
     val listUiState = uiState.listUiState
+    val pinningUiState = uiState.pinningUiState
+
+    val items = if (!uiState.pinningUiState.inPinningMode) {
+        listUiState.items.items
+    } else {
+        pinningUiState.filteredItems
+    }
+    val listItemCount = remember(uiState.listUiState.items) {
+        uiState.listUiState.items.items.map { it.items }.flatten().count() +
+            uiState.listUiState.items.suggestions.count()
+    }
+    val pinningItemsCount = remember(uiState.pinningUiState.filteredItems) {
+        uiState.pinningUiState.filteredItems.map { it.items }.flatten().count()
+    }
 
     ItemsList(
         modifier = modifier,
         scrollableState = scrollState,
-        items = listUiState.items.items,
+        items = items,
         shares = listUiState.shares,
         shouldScrollToTop = uiState.listUiState.shouldScrollToTop,
         highlight = searchUiState.searchQuery,
@@ -85,27 +99,30 @@ fun SelectItemList(
         },
         forceContent = listUiState.items.suggestions.isNotEmpty() || listUiState.displayOnlyPrimaryVaultMessage,
         header = {
-            SelectItemListHeader(
-                suggestionsForTitle = listUiState.items.suggestionsForTitle,
-                suggestions = listUiState.items.suggestions,
-                canLoadExternalImages = listUiState.canLoadExternalImages,
-                showUpgradeMessage = listUiState.displayOnlyPrimaryVaultMessage,
-                canUpgrade = listUiState.canUpgrade,
-                onItemOptionsClicked = onItemOptionsClicked,
-                onItemClicked = onItemClicked,
-                onUpgradeClick = { onNavigate(SelectItemNavigation.Upgrade) }
-            )
+            if (!pinningUiState.inPinningMode) {
+                SelectItemListHeader(
+                    suggestionsForTitle = listUiState.items.suggestionsForTitle,
+                    suggestions = listUiState.items.suggestions,
+                    canLoadExternalImages = listUiState.canLoadExternalImages,
+                    showUpgradeMessage = listUiState.displayOnlyPrimaryVaultMessage,
+                    canUpgrade = listUiState.canUpgrade,
+                    onItemOptionsClicked = onItemOptionsClicked,
+                    onItemClicked = onItemClicked,
+                    onUpgradeClick = { onNavigate(SelectItemNavigation.Upgrade) }
+                )
+            }
             item {
                 val shouldShowItemListHeader = remember(uiState) {
                     uiState.shouldShowItemListHeader()
                 }
                 if (shouldShowItemListHeader) {
-                    val count = remember(uiState.listUiState.items) {
-                        uiState.listUiState.items.items.map { it.items }.flatten().count() +
-                            uiState.listUiState.items.suggestions.count()
-                    }
                     ItemListHeader(
                         countContent = {
+                            val count = if (uiState.pinningUiState.inPinningMode) {
+                                pinningItemsCount
+                            } else {
+                                listItemCount
+                            }
                             ItemCount(
                                 modifier = Modifier.padding(
                                     start = 16.dp,
@@ -117,7 +134,7 @@ fun SelectItemList(
                                     uiState.searchUiState.searchQuery.isNotEmpty(),
                                 itemType = SearchFilterType.All,
                                 itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
-                                isPinnedMode = false
+                                isPinnedMode = uiState.pinningUiState.inPinningMode
                             )
                         },
                         sortingContent = {

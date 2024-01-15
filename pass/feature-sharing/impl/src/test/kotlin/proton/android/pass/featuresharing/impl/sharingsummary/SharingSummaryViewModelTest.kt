@@ -21,29 +21,27 @@ package proton.android.pass.featuresharing.impl.sharingsummary
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
-import proton.android.pass.featuresharing.impl.EmailNavArgId
-import proton.android.pass.featuresharing.impl.PermissionNavArgId
-import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentError
-import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentSuccess
-import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.VaultNotFound
-import proton.android.pass.featuresharing.impl.SharingWithUserModeArgId
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
-import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentError
+import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentSuccess
+import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.VaultNotFound
+import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.test.MainDispatcherRule
 
 class SharingSummaryViewModelTest {
 
@@ -52,28 +50,29 @@ class SharingSummaryViewModelTest {
     private lateinit var inviteToVault: TestInviteToVault
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
+    private lateinit var bulkInviteRepository: TestBulkInviteRepository
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
-
-    private val email = "myemail@proton.me"
 
     @Before
     fun setUp() {
         getVaultWithItemCountById = TestGetVaultWithItemCountById()
         inviteToVault = TestInviteToVault()
         snackbarDispatcher = TestSnackbarDispatcher()
+        bulkInviteRepository = TestBulkInviteRepository().apply {
+            runBlocking { storeAddresses(listOf(TEST_EMAIL)) }
+        }
+
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-            get()[CommonNavArgId.ShareId.key] = "my share id"
-            get()[EmailNavArgId.key] = email
-            get()[PermissionNavArgId.key] = 1
-            get()[SharingWithUserModeArgId.key] = SharingWithUserModeType.ExistingUser.name
+            get()[CommonNavArgId.ShareId.key] = TEST_SHARE_ID
         }
         viewModel = SharingSummaryViewModel(
             getVaultWithItemCountById = getVaultWithItemCountById,
             inviteToVault = inviteToVault,
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandleProvider = savedStateHandleProvider
+            savedStateHandleProvider = savedStateHandleProvider,
+            bulkInviteRepository = bulkInviteRepository
         )
     }
 
@@ -81,8 +80,8 @@ class SharingSummaryViewModelTest {
     fun `test view model initialization`() = runTest {
         viewModel.state.test {
             val initialState = awaitItem()
-            assertThat(initialState.email).isEqualTo(email)
-            assertThat(initialState.sharingType).isEqualTo(SharingType.Write)
+            assertThat(initialState.email).isEqualTo(TEST_EMAIL)
+            assertThat(initialState.sharingType).isEqualTo(SharingType.Read)
             assertThat(initialState.vaultWithItemCount).isNull()
             assertThat(initialState.isLoading).isTrue()
         }
@@ -96,9 +95,9 @@ class SharingSummaryViewModelTest {
         viewModel.state.test {
             val initialState = awaitItem()
             val expectedState = SharingSummaryUIState(
-                email = email,
+                email = TEST_EMAIL,
                 vaultWithItemCount = vaultData,
-                sharingType = SharingType.Write,
+                sharingType = SharingType.Read,
                 isLoading = false,
             )
             assertThat(initialState).isEqualTo(expectedState)
@@ -113,9 +112,9 @@ class SharingSummaryViewModelTest {
         viewModel.state.test {
             val initialState = awaitItem()
             val expectedState = SharingSummaryUIState(
-                email = email,
+                email = TEST_EMAIL,
                 vaultWithItemCount = null,
-                sharingType = SharingType.Write,
+                sharingType = SharingType.Read,
                 isLoading = false,
             )
             assertThat(initialState).isEqualTo(expectedState)
@@ -126,20 +125,10 @@ class SharingSummaryViewModelTest {
     }
 
     @Test
-    fun `test view model onSubmit with null shareId`() = runTest {
-
-        viewModel.onSubmit(email, null, SharingType.Read)
-
-        val message = snackbarDispatcher.snackbarMessage.first().value()
-        assertThat(message).isNotNull()
-        assertThat(message).isEqualTo(VaultNotFound)
-    }
-
-    @Test
     fun `test view model onSubmit success`() = runTest {
         inviteToVault.setResult(Result.success(Unit))
 
-        viewModel.onSubmit(email, ShareId("my share id"), SharingType.Read)
+        viewModel.onSubmit()
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isNotNull()
@@ -151,20 +140,25 @@ class SharingSummaryViewModelTest {
     fun `test view model onSubmit failure`() = runTest {
         inviteToVault.setResult(Result.failure(RuntimeException("test exception")))
 
-        viewModel.onSubmit(email, ShareId("my share id"), SharingType.Read)
+        viewModel.onSubmit()
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isNotNull()
         assertThat(message).isEqualTo(InviteSentError)
     }
-}
 
-private fun createVaultWithItemCount() = VaultWithItemCount(
-    vault = Vault(
-        shareId = ShareId(id = "sociis"),
-        name = "Evangeline Potter",
-        color = ShareColor.Color1,
-        icon = ShareIcon.Icon1,
-    ),
-    activeItemCount = 5521, trashedItemCount = 6902
-)
+    private fun createVaultWithItemCount() = VaultWithItemCount(
+        vault = Vault(
+            shareId = ShareId(id = TEST_SHARE_ID),
+            name = "Evangeline Potter",
+            color = ShareColor.Color1,
+            icon = ShareIcon.Icon1,
+        ),
+        activeItemCount = 5521, trashedItemCount = 6902
+    )
+
+    companion object {
+        private const val TEST_SHARE_ID = "SharingSummaryViewModelTest-ShareID"
+        private const val TEST_EMAIL = "myemail@proton.me"
+    }
+}

@@ -20,24 +20,24 @@ package proton.android.pass.featuresharing.impl.sharingpermissions
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
-import proton.android.pass.featuresharing.impl.EmailNavArgId
-import proton.android.pass.featuresharing.impl.SharingWithUserModeArgId
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
+import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.domain.ShareId
 
 class SharingPermissionsViewModelTest {
 
     private lateinit var viewModel: SharingPermissionsViewModel
     private lateinit var getVaultById: TestGetVaultById
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
+    private lateinit var bulkInviteRepository: TestBulkInviteRepository
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
@@ -45,14 +45,16 @@ class SharingPermissionsViewModelTest {
     @Before
     fun setUp() {
         getVaultById = TestGetVaultById()
+        bulkInviteRepository = TestBulkInviteRepository().apply {
+            runBlocking { storeAddresses(listOf(TEST_EMAIL)) }
+        }
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-            get()[CommonNavArgId.ShareId.key] = "my share id"
-            get()[EmailNavArgId.key] = "test@example.com"
-            get()[SharingWithUserModeArgId.key] = SharingWithUserModeType.ExistingUser.name
+            get()[CommonNavArgId.ShareId.key] = TEST_SHARE_ID
         }
         viewModel = SharingPermissionsViewModel(
             getVaultById = getVaultById,
-            savedStateHandleProvider = savedStateHandleProvider
+            savedStateHandleProvider = savedStateHandleProvider,
+            bulkInviteRepository = bulkInviteRepository
         )
     }
 
@@ -60,7 +62,7 @@ class SharingPermissionsViewModelTest {
     fun `test initial state`() = runTest {
         viewModel.state.test {
             val initialState = awaitItem()
-            assertThat(initialState.email).isEqualTo("test@example.com")
+            assertThat(initialState.email).isEqualTo(TEST_EMAIL)
             assertThat(initialState.vaultName).isNull()
             assertThat(initialState.sharingType).isEqualTo(SharingType.Read)
             assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Unknown)
@@ -69,7 +71,7 @@ class SharingPermissionsViewModelTest {
 
     @Test
     fun `test onPermissionChange`() = runTest {
-        viewModel.onPermissionChange(SharingType.Write)
+        viewModel.onPermissionChange(TEST_EMAIL, SharingType.Write)
         viewModel.state.test {
             val initialState = awaitItem()
             assertThat(initialState.sharingType).isEqualTo(SharingType.Write)
@@ -83,10 +85,7 @@ class SharingPermissionsViewModelTest {
             val initialState = awaitItem()
             assertThat(initialState.event).isInstanceOf(SharingPermissionsEvents.NavigateToSummary::class.java)
             val navigationEvent = initialState.event as SharingPermissionsEvents.NavigateToSummary
-            assertThat(navigationEvent.shareId).isEqualTo(ShareId("my share id"))
-            assertThat(navigationEvent.email).isEqualTo("test@example.com")
-            assertThat(navigationEvent.permission).isEqualTo(SharingType.Read.ordinal)
-            assertThat(navigationEvent.mode).isEqualTo(SharingWithUserModeType.ExistingUser)
+            assertThat(navigationEvent.shareId).isEqualTo(ShareId(TEST_SHARE_ID))
         }
     }
 
@@ -97,5 +96,10 @@ class SharingPermissionsViewModelTest {
             val initialState = awaitItem()
             assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Unknown)
         }
+    }
+
+    companion object {
+        private const val TEST_EMAIL = "test@example.com"
+        private const val TEST_SHARE_ID = "SharingPermissionsViewModelTest-ShareID"
     }
 }

@@ -37,4 +37,4 @@ package proton.android.pass.common.api
  * and doesn't require you to suppress the warning.
  */
 @Suppress("SimplifiableCall")
-inline fun <reified F: T, T> Collection<T>.filterByType(): List<F> = filter { it is F }.map { it as F }
+inline fun <reified F : T, T> Collection<T>.filterByType(): List<F> = filter { it is F }.map { it as F }

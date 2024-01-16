@@ -36,6 +36,9 @@ sealed interface AliasDetailUiState {
     object Error : AliasDetailUiState
 
     @Stable
+    object Pending : AliasDetailUiState
+
+    @Stable
     data class Success(
         val itemUiModel: ItemUiModel,
         val vault: Vault?,

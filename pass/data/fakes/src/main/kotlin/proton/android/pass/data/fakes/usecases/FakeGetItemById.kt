@@ -16,30 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class GetItemByIdImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-) : GetItemById {
+@Singleton
+class FakeGetItemById @Inject constructor() : GetItemById {
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item {
-        val userId = accountManager.getPrimaryUserId().first()
-            ?: throw IllegalStateException("No user logged in")
-        return itemRepository.getById(userId, shareId, itemId)
+    private var result: Result<Item> = Result.failure(IllegalStateException("Result not set"))
+
+    fun emit(result: Result<Item>) {
+        this.result = result
     }
 
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item = result.getOrThrow()
 }
-

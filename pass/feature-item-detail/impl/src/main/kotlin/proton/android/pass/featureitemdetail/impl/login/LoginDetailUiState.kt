@@ -40,6 +40,9 @@ sealed interface LoginDetailUiState {
     object Error : LoginDetailUiState
 
     @Stable
+    object Pending : LoginDetailUiState
+
+    @Stable
     data class Success(
         val itemUiModel: ItemUiModel,
         val passwordScore: PasswordScore?,

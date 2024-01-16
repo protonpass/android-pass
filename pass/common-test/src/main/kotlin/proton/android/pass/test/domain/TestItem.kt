@@ -38,6 +38,8 @@ object TestItem {
 
     fun create(
         itemType: ItemType = ItemType.Password,
+        itemId: ItemId = ItemId(id = "item-id"),
+        shareId: ShareId = ShareId(id = "share-id"),
         packageInfoSet: Set<PackageInfo> = emptySet(),
         keyStoreCrypto: KeyStoreCrypto? = null
     ): Item {
@@ -45,10 +47,10 @@ object TestItem {
         val note = "item-note"
         val now = Clock.System.now()
         return Item(
-            id = ItemId(id = "item-id"),
+            id = itemId,
             itemUuid = "uuid",
             revision = 0,
-            shareId = ShareId(id = "share-id"),
+            shareId = shareId,
             itemType = itemType,
             title = keyStoreCrypto?.let { title.encrypt(it) } ?: title,
             note = keyStoreCrypto?.let { note.encrypt(it) } ?: note,

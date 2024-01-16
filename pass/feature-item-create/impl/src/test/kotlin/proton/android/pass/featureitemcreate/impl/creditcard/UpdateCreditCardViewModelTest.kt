@@ -32,7 +32,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestGetItemById
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -53,14 +53,14 @@ class UpdateCreditCardViewModelTest {
 
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var getItemById: TestGetItemById
+    private lateinit var getItemById: TestObserveItemById
     private lateinit var updateItem: TestUpdateItem
 
     @Before
     fun setup() {
         telemetryManager = TestTelemetryManager()
         snackbarDispatcher = TestSnackbarDispatcher()
-        getItemById = TestGetItemById()
+        getItemById = TestObserveItemById()
         updateItem = TestUpdateItem()
 
         instance = UpdateCreditCardViewModel(

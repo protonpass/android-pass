@@ -24,9 +24,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.Clock
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -60,12 +60,8 @@ class ItemDetailViewModel @Inject constructor(
     private val shareId: ShareId = ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
     private val itemId: ItemId = ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
 
-    private val itemFlow = getItemById(shareId, itemId)
-        .asLoadingResult()
-        .distinctUntilChanged()
-
     val uiState: StateFlow<ItemDetailScreenUiState> = combine(
-        itemFlow,
+        oneShot { getItemById(shareId, itemId) }.asLoadingResult(),
         userPreferenceRepository.getUseFaviconsPreference()
     ) { result, favicons ->
         when (result) {

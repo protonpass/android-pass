@@ -150,8 +150,12 @@ class NoteDetailViewModel @Inject constructor(
         isPinningFeatureEnabled ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
-                snackbarDispatcher(InitError)
-                NoteDetailUiState.Error
+                if (!isPermanentlyDeleted.value()) {
+                    snackbarDispatcher(InitError)
+                    NoteDetailUiState.Error
+                } else {
+                    NoteDetailUiState.Pending
+                }
             }
 
             LoadingResult.Loading -> NoteDetailUiState.NotInitialised

@@ -33,7 +33,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
-import proton.android.pass.data.fakes.usecases.TestGetItemById
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
@@ -57,12 +57,12 @@ class UpdateLoginViewModelTest {
 
     private lateinit var instance: UpdateLoginViewModel
 
-    private lateinit var getItemById: TestGetItemById
+    private lateinit var getItemById: TestObserveItemById
     private lateinit var totpManager: TestTotpManager
 
     @Before
     fun setup() {
-        getItemById = TestGetItemById()
+        getItemById = TestObserveItemById()
         totpManager = TestTotpManager()
 
         instance = UpdateLoginViewModel(

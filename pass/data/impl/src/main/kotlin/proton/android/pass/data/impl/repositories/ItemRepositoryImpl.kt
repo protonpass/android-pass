@@ -324,7 +324,6 @@ class ItemRepositoryImpl @Inject constructor(
         }
 
     override suspend fun getById(
-        userId: UserId,
         shareId: ShareId,
         itemId: ItemId
     ): Item =

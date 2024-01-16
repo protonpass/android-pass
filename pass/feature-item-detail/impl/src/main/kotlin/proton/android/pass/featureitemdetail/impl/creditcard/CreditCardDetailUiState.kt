@@ -33,6 +33,9 @@ sealed interface CreditCardDetailUiState {
     object Error : CreditCardDetailUiState
 
     @Stable
+    object Pending : CreditCardDetailUiState
+
+    @Stable
     data class Success(
         val itemContent: ItemContent,
         val vault: Vault?,

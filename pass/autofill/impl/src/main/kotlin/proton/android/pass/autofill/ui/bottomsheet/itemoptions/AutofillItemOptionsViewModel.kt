@@ -37,7 +37,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.domain.ItemId
@@ -55,7 +55,7 @@ class AutofillItemOptionsViewModel @Inject constructor(
     private val trashItem: TrashItems,
     private val savedStateHandle: SavedStateHandle,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val getItemById: GetItemById,
+    private val getItemById: ObserveItemById,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
     getVaultById: GetVaultById

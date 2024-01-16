@@ -30,6 +30,7 @@ interface BulkInviteRepository {
 
     suspend fun storeAddresses(addresses: List<String>)
     suspend fun setPermission(address: String, permission: ShareRole)
+    suspend fun setAllPermissions(permission: ShareRole)
     suspend fun removeAddress(address: String)
 
     fun observeAddresses(): Flow<List<AddressPermission>>

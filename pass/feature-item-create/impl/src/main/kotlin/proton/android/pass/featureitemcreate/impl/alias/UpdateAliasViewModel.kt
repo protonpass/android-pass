@@ -52,6 +52,11 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.domain.AliasDetails
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasUpdated
@@ -63,11 +68,6 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.domain.AliasDetails
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -165,7 +165,7 @@ class UpdateAliasViewModel @Inject constructor(
 
     private suspend fun fetchInitialData(userId: UserId, shareId: ShareId, itemId: ItemId) {
         runCatching {
-            itemRepository.getById(userId, shareId, itemId)
+            itemRepository.getById(shareId, itemId)
         }.onSuccess { item ->
             itemOption = item.some()
             aliasRepository.getAliasDetails(userId, shareId, itemId)

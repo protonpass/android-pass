@@ -20,8 +20,10 @@ package proton.android.pass.data.fakes.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InviteRepository
+import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
@@ -35,6 +37,15 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
     private var refreshResult: Result<Boolean> = Result.success(false)
     private var acceptResult: Result<ShareId> = Result.success(DEFAULT_SHARE_ID)
     private var rejectResult: Result<Unit> = Result.success(Unit)
+    private var inviteRecommendationsResult: Result<InviteRecommendations> = Result.success(
+        InviteRecommendations(
+            recommendedEmails = listOf(),
+            planInternalName = "",
+            groupDisplayName = "",
+            planRecommendedEmails = listOf(),
+            planRecommendedEmailsNextToken = ""
+        )
+    )
 
     fun emitInvites(invites: List<PendingInvite>) {
         invitesFlow.tryEmit(invites)
@@ -62,6 +73,13 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
     override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {
         rejectResult.getOrThrow()
     }
+
+    override fun observeInviteRecommendations(
+        userId: UserId,
+        shareId: ShareId,
+        lastToken: String?,
+        startsWith: String?
+    ): Flow<InviteRecommendations> = flowOf(inviteRecommendationsResult.getOrThrow())
 
     companion object {
         val DEFAULT_SHARE_ID = ShareId("TestInviteRepository-ShareId")

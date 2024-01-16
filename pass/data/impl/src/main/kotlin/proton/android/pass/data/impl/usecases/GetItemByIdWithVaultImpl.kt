@@ -21,7 +21,7 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -32,7 +32,7 @@ import javax.inject.Singleton
 
 @Singleton
 class GetItemByIdWithVaultImpl @Inject constructor(
-    private val getItemById: GetItemById,
+    private val getItemById: ObserveItemById,
     private val observeVaults: ObserveVaults,
 ) : GetItemByIdWithVault {
 

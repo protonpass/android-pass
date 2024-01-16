@@ -72,6 +72,7 @@ import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInvites
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -121,6 +122,7 @@ import proton.android.pass.data.fakes.repositories.TestFeatureFlagRepository
 import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
@@ -155,7 +157,6 @@ import proton.android.pass.data.fakes.usecases.TestGetDefaultBrowser
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetItemByAliasEmail
-import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
@@ -175,6 +176,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveHasConfirmedInvite
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveMFACount
@@ -337,10 +339,16 @@ abstract class FakesDataModule {
         impl: TestGetUserPlan
     ): GetUserPlan
 
+
     @Binds
     abstract fun bindGetItemById(
-        impl: TestGetItemById
+        impl: FakeGetItemById
     ): GetItemById
+
+    @Binds
+    abstract fun bindObserveItemById(
+        impl: TestObserveItemById
+    ): ObserveItemById
 
     @Binds
     abstract fun bindDeleteItem(

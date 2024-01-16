@@ -48,6 +48,12 @@ class BulkInviteRepositoryImpl @Inject constructor() : BulkInviteRepository {
         }
     }
 
+    override suspend fun setAllPermissions(permission: ShareRole) {
+        addressesFlow.update { state ->
+            state.map { it.copy(shareRole = permission) }
+        }
+    }
+
     override suspend fun removeAddress(address: String) {
         addressesFlow.update { state ->
             val newList = state.toMutableList()

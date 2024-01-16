@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.featuresharing.impl.SharingNavigation
+import proton.android.pass.featuresharing.impl.extensions.toShareRole
 
 @Composable
 fun SharingPermissionsScreen(
@@ -47,9 +48,22 @@ fun SharingPermissionsScreen(
         modifier = modifier,
         state = state,
         onNavigateEvent = onNavigateEvent,
-        onPermissionsSubmit = { viewModel.onPermissionsSubmit() },
-        onPermissionChange = { email, permission ->
-            viewModel.onPermissionChange(email, permission)
+        onEvent = {
+            when (it) {
+                is SharingPermissionsUiEvent.OnPermissionChangeClick -> {
+                    val event = SharingNavigation.InviteToVaultEditPermissions(
+                        email = it.address.address,
+                        permission = it.address.permission.toShareRole()
+                    )
+                    onNavigateEvent(event)
+                }
+                SharingPermissionsUiEvent.OnSetAllPermissionsClick -> {
+                    onNavigateEvent(SharingNavigation.InviteToVaultEditAllPermissions)
+                }
+                SharingPermissionsUiEvent.OnSubmit -> {
+                    viewModel.onPermissionsSubmit()
+                }
+            }
         }
     )
 }

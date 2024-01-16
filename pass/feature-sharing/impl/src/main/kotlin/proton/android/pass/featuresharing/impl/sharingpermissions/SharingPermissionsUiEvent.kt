@@ -16,24 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.featuresharing.impl.sharingpermissions
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.domain.ShareRole
+sealed interface SharingPermissionsUiEvent {
 
-data class AddressPermission(
-    val address: String,
-    val shareRole: ShareRole
-)
+    object OnSubmit : SharingPermissionsUiEvent
 
-interface BulkInviteRepository {
+    object OnSetAllPermissionsClick : SharingPermissionsUiEvent
 
-    suspend fun storeAddresses(addresses: List<String>)
-    suspend fun setPermission(address: String, permission: ShareRole)
-    suspend fun setAllPermissions(permission: ShareRole)
-    suspend fun removeAddress(address: String)
+    @JvmInline
+    value class OnPermissionChangeClick(
+        val address: AddressPermissionUiState
+    ) : SharingPermissionsUiEvent
 
-    fun observeAddresses(): Flow<List<AddressPermission>>
-
-    suspend fun clear()
 }

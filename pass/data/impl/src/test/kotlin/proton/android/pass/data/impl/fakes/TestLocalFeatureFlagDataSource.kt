@@ -55,7 +55,7 @@ class TestLocalFeatureFlagDataSource : LocalFeatureFlagDataSource {
     override fun observeAllFeatureFlags(userId: UserId): Flow<List<ProtonFeatureFlagEntity>> =
         observeAllFeatureFlagsFlow
 
-    override suspend fun deleteFeatureFlags(userId: UserId, featureNames: List<String>) {
+    override fun deleteFeatureFlags(userId: UserId, featureNames: List<String>) {
         deleteMemory.add(featureNames)
     }
 

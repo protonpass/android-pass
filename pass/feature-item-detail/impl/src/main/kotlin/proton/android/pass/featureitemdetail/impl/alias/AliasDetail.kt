@@ -67,7 +67,7 @@ fun AliasDetail(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     when (val state = uiState) {
-        AliasDetailUiState.NotInitialised -> {}
+        AliasDetailUiState.NotInitialised, AliasDetailUiState.Pending -> {}
         AliasDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is AliasDetailUiState.Success -> {
 

@@ -38,7 +38,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
-import proton.android.pass.data.fakes.usecases.TestGetItemById
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
@@ -71,7 +71,7 @@ class LoginDetailScreenTest {
     lateinit var savedStateHandle: TestSavedStateHandleProvider
 
     @Inject
-    lateinit var getItemById: TestGetItemById
+    lateinit var getItemById: TestObserveItemById
 
     @Inject
     lateinit var getItemByIdWithVault: TestGetItemByIdWithVault

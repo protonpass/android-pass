@@ -34,6 +34,9 @@ sealed interface NoteDetailUiState {
     object Error : NoteDetailUiState
 
     @Stable
+    object Pending : NoteDetailUiState
+
+    @Stable
     data class Success(
         val itemUiModel: ItemUiModel,
         val vault: Vault?,

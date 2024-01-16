@@ -25,7 +25,7 @@ import org.junit.Test
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
-import proton.android.pass.data.fakes.usecases.TestGetItemById
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.domain.ItemId
@@ -41,14 +41,14 @@ import proton.android.pass.test.domain.TestItem
 class GetItemActionsImplTest {
 
     private lateinit var instance: GetItemActionsImpl
-    private lateinit var getItemById: TestGetItemById
+    private lateinit var getItemById: TestObserveItemById
     private lateinit var observeUserPlan: TestGetUserPlan
     private lateinit var canShareVault: TestCanShareVault
     private lateinit var observeVaults: TestObserveVaults
 
     @Before
     fun setup() {
-        getItemById = TestGetItemById()
+        getItemById = TestObserveItemById()
         observeUserPlan = TestGetUserPlan()
         canShareVault = TestCanShareVault()
         observeVaults = TestObserveVaults()

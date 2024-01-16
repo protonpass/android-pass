@@ -127,11 +127,13 @@ import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.SharingPermissions
 import proton.android.pass.featuresharing.impl.SharingSummary
 import proton.android.pass.featuresharing.impl.SharingWith
+import proton.android.pass.featuresharing.impl.extensions.toSharingType
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.ConfirmTransferOwnership
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeValue
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.sharingGraph
+import proton.android.pass.featuresharing.impl.sharingpermissions.bottomsheet.SharingEditPermissions
 import proton.android.pass.featuresync.impl.SyncDialog
 import proton.android.pass.featuresync.impl.SyncNavigation
 import proton.android.pass.featuresync.impl.syncGraph
@@ -1040,8 +1042,20 @@ fun NavGraphBuilder.appGraph(
                         )
                     }
                 }
-
             }
+
+            is SharingNavigation.InviteToVaultEditPermissions -> appNavigator.navigate(
+                destination = SharingEditPermissions,
+                route = SharingEditPermissions.buildRouteForEditOne(
+                    email = it.email,
+                    permission = it.permission.toSharingType()
+                )
+            )
+
+            is SharingNavigation.InviteToVaultEditAllPermissions -> appNavigator.navigate(
+                destination = SharingEditPermissions,
+                route = SharingEditPermissions.buildRouteForEditAll()
+            )
         }
     }
     syncGraph {

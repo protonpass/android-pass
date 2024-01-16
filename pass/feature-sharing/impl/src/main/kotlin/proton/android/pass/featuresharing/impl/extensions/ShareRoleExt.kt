@@ -19,6 +19,7 @@
 package proton.android.pass.featuresharing.impl.extensions
 
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.android.pass.log.api.PassLogger
 
@@ -41,4 +42,10 @@ fun SharingType.toShareRole(): ShareRole = when (this) {
     SharingType.Read -> ShareRole.Read
     SharingType.Write -> ShareRole.Write
     SharingType.Admin -> ShareRole.Admin
+}
+
+fun SharingType.toStringResource() = when (this) {
+    SharingType.Read -> R.string.sharing_can_view
+    SharingType.Write -> R.string.sharing_can_edit
+    SharingType.Admin -> R.string.sharing_can_manage
 }

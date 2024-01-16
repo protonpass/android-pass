@@ -56,6 +56,12 @@ class TestBulkInviteRepository @Inject constructor() : BulkInviteRepository {
         }
     }
 
+    override suspend fun setAllPermissions(permission: ShareRole) {
+        addressesFlow.update { state ->
+            state.map { it.copy(shareRole = permission) }
+        }
+    }
+
     override fun observeAddresses(): Flow<List<AddressPermission>> = addressesFlow
 
     override suspend fun clear() {

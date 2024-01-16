@@ -191,7 +191,7 @@ internal fun HomeContent(
         Column(
             modifier = Modifier.padding(contentPadding)
         ) {
-            if (!isPinningOrSearch) {
+            if (!isPinningOrSearch && !isTrashMode) {
                 PinCarousel(
                     modifier = Modifier.height(48.dp),
                     list = uiState.pinningUiState.unFilteredItems,

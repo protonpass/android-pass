@@ -16,30 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.api.usecases
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.GetItemById
+import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import javax.inject.Inject
 
-class GetItemByIdImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-) : GetItemById {
-
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item {
-        val userId = accountManager.getPrimaryUserId().first()
-            ?: throw IllegalStateException("No user logged in")
-        return itemRepository.getById(userId, shareId, itemId)
-    }
-
+interface ObserveItemById {
+    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<Item>
 }
-

@@ -77,7 +77,7 @@ fun LoginDetail(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     when (val state = uiState) {
-        LoginDetailUiState.NotInitialised -> {}
+        LoginDetailUiState.NotInitialised, LoginDetailUiState.Pending -> {}
         LoginDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is LoginDetailUiState.Success -> {
             LaunchedEffect(state.event) {

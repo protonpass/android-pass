@@ -67,7 +67,7 @@ fun CreditCardDetail(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     when (val state = uiState) {
-        CreditCardDetailUiState.NotInitialised -> {}
+        CreditCardDetailUiState.NotInitialised, CreditCardDetailUiState.Pending -> {}
         CreditCardDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is CreditCardDetailUiState.Success -> {
             LaunchedEffect(state.event) {

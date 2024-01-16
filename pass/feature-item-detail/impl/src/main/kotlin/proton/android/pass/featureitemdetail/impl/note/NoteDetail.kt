@@ -66,7 +66,7 @@ fun NoteDetail(
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     when (val state = uiState) {
-        NoteDetailUiState.NotInitialised -> {}
+        NoteDetailUiState.NotInitialised, NoteDetailUiState.Pending -> {}
         NoteDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is NoteDetailUiState.Success -> {
             LaunchedEffect(state.event) {

@@ -154,8 +154,12 @@ class AliasDetailViewModel @Inject constructor(
         isPinningFeatureEnabled ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
-                snackbarDispatcher(InitError)
-                AliasDetailUiState.Error
+                if (!isPermanentlyDeleted.value()) {
+                    snackbarDispatcher(InitError)
+                    AliasDetailUiState.Error
+                } else {
+                    AliasDetailUiState.Pending
+                }
             }
 
             LoadingResult.Loading -> AliasDetailUiState.NotInitialised

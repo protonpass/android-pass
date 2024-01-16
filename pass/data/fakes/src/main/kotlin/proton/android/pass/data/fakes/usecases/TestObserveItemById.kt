@@ -16,30 +16,34 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.GetItemById
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import proton.android.pass.common.api.FlowUtils.testFlow
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class GetItemByIdImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-) : GetItemById {
+@Singleton
+class TestObserveItemById @Inject constructor() : ObserveItemById {
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item {
-        val userId = accountManager.getPrimaryUserId().first()
-            ?: throw IllegalStateException("No user logged in")
-        return itemRepository.getById(userId, shareId, itemId)
+    private var result = testFlow<Result<Item>>()
+    private val memory: MutableList<Payload> = mutableListOf()
+
+    fun memory(): List<Payload> = memory
+
+    fun emitValue(value: Result<Item>) {
+        result.tryEmit(value)
     }
 
-}
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<Item> {
+        memory.add(Payload(shareId, itemId))
+        return result.map { it.getOrThrow() }
+    }
 
+    data class Payload(val shareId: ShareId, val itemId: ItemId)
+}

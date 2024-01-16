@@ -18,15 +18,37 @@
 
 package proton.android.pass.featuresharing.impl.sharingpermissions
 
-data class SharingPermissionsUIState(
-    val email: String = "",
-    val vaultName: String? = null,
-    val sharingType: SharingType = SharingType.Read,
-    val event: SharingPermissionsEvents = SharingPermissionsEvents.Unknown,
-)
+import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 enum class SharingType {
     Read,
     Write,
     Admin
 }
+
+@Immutable
+data class SharingPermissionsHeaderState(
+    val memberCount: Int
+) {
+    companion object {
+        val Initial = SharingPermissionsHeaderState(
+            memberCount = 0
+        )
+    }
+}
+
+@Immutable
+data class AddressPermissionUiState(
+    val address: String,
+    val permission: SharingType
+)
+
+@Immutable
+data class SharingPermissionsUIState(
+    val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
+    val headerState: SharingPermissionsHeaderState = SharingPermissionsHeaderState.Initial,
+    val vaultName: String? = null,
+    val event: SharingPermissionsEvents = SharingPermissionsEvents.Unknown,
+)

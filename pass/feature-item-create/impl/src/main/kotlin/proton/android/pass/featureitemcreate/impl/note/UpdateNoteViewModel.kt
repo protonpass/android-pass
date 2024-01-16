@@ -97,19 +97,13 @@ class UpdateNoteViewModel @Inject constructor(
     private suspend fun setupInitialState() {
         if (itemOption != None) return
         isLoadingState.update { IsLoadingState.Loading }
-        val userId = accountManager.getPrimaryUserId()
-            .first { userId -> userId != null }
-        if (userId != null) {
-            runCatching { itemRepository.getById(userId, navShareId, navItemId) }
-                .onSuccess(::onNoteItemReceived)
-                .onFailure {
-                    PassLogger.i(TAG, it, "Get by id error")
-                    snackbarDispatcher(InitError)
-                }
-        } else {
-            PassLogger.i(TAG, "Empty user/share/item Id")
-            snackbarDispatcher(InitError)
-        }
+        runCatching { itemRepository.getById(navShareId, navItemId) }
+            .onSuccess(::onNoteItemReceived)
+            .onFailure {
+                PassLogger.i(TAG, it, "Get by id error")
+                snackbarDispatcher(InitError)
+            }
+
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 

@@ -43,9 +43,10 @@ import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -77,7 +78,10 @@ class CreditCardDetailScreenTest {
     lateinit var getItemByIdWithVault: TestGetItemByIdWithVault
 
     @Inject
-    lateinit var getItemById: TestObserveItemById
+    lateinit var observeItemById: TestObserveItemById
+
+    @Inject
+    lateinit var getItemById: FakeGetItemById
 
     @Inject
     lateinit var clipboardManager: TestClipboardManager
@@ -374,9 +378,9 @@ class CreditCardDetailScreenTest {
             ),
             hasMoreThanOneVault = hasManyVaults
         )
-        getItemById.emitValue(Result.success(item))
+        observeItemById.emitValue(Result.success(item))
         getItemByIdWithVault.emitValue(Result.success(withVault))
-
+        getItemById.emit(Result.success(item))
         return title
     }
 

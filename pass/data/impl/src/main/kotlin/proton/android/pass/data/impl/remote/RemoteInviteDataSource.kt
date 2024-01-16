@@ -22,6 +22,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
+import proton.android.pass.data.impl.responses.InviteRecommendationResponse
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken
@@ -33,6 +34,7 @@ interface RemoteInviteDataSource {
         shareId: ShareId,
         request: CreateInviteRequest
     )
+
     suspend fun sendNewUserInvite(
         userId: UserId,
         shareId: ShareId,
@@ -45,5 +47,13 @@ interface RemoteInviteDataSource {
         inviteToken: InviteToken,
         body: AcceptInviteRequest
     ): ShareResponse
+
     suspend fun rejectInvite(userId: UserId, token: InviteToken)
+
+    suspend fun fetchInviteRecommendations(
+        userId: UserId,
+        shareId: ShareId,
+        lastToken: String? = null,
+        startsWith: String? = null
+    ): InviteRecommendationResponse
 }

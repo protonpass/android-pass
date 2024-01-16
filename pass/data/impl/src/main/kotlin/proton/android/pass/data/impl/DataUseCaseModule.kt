@@ -70,6 +70,7 @@ import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInvites
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -168,6 +169,7 @@ import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveHasConfirmedInviteImpl
 import proton.android.pass.data.impl.usecases.ObserveInvitesImpl
+import proton.android.pass.data.impl.usecases.ObserveItemByIdImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
@@ -252,6 +254,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetItemById(impl: GetItemByIdImpl): GetItemById
+
+    @Binds
+    abstract fun bindObserveItemById(impl: ObserveItemByIdImpl): ObserveItemById
 
     @Binds
     abstract fun bindGetAliasDetails(impl: GetAliasDetailsImpl): GetAliasDetails

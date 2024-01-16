@@ -21,7 +21,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
-import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -39,7 +39,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpdateCreditCardViewModel @Inject constructor(
-    private val getItemById: GetItemById,
+    private val getItemById: ObserveItemById,
     private val updateItem: UpdateItem,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher,

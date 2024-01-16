@@ -320,8 +320,12 @@ class LoginDetailViewModel @Inject constructor(
         isPinningFeatureEnabled ->
         when (itemDetails) {
             is LoadingResult.Error -> {
-                snackbarDispatcher(InitError)
-                LoginDetailUiState.Error
+                if (!isPermanentlyDeleted.value()) {
+                    snackbarDispatcher(InitError)
+                    LoginDetailUiState.Error
+                } else {
+                    LoginDetailUiState.Pending
+                }
             }
 
             LoadingResult.Loading -> LoginDetailUiState.NotInitialised

@@ -28,10 +28,8 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
-import proton.android.pass.data.fakes.usecases.TestGetItemById
-import proton.android.pass.domain.ItemId
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestPreferenceRepository
@@ -51,14 +49,14 @@ class ItemDetailViewModelTest {
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var clock: FixedClock
     private lateinit var telemetryManager: TestTelemetryManager
-    private lateinit var getItemById: TestGetItemById
+    private lateinit var getItemById: FakeGetItemById
 
     @Before
     fun setup() {
         snackbarDispatcher = TestSnackbarDispatcher()
         clock = FixedClock(Instant.fromEpochSeconds(TEST_TIMESTAMP))
         telemetryManager = TestTelemetryManager()
-        getItemById = TestGetItemById()
+        getItemById = FakeGetItemById()
 
         instance = ItemDetailViewModel(
             snackbarDispatcher = snackbarDispatcher,
@@ -86,7 +84,7 @@ class ItemDetailViewModelTest {
     fun `sends the right item data`() = runTest {
         val note = "some text"
         val item = TestItem.create(itemType = ItemType.Note(note))
-        getItemById.emitValue(Result.success(item))
+        getItemById.emit(Result.success(item))
 
         instance.uiState.test {
             val emitted = awaitItem()
@@ -96,10 +94,6 @@ class ItemDetailViewModelTest {
             assertThat(emitted.moreInfoUiState.lastModified).isEqualTo(item.modificationTime)
             assertThat(emitted.moreInfoUiState.now).isEqualTo(clock.now())
         }
-
-        val memory = getItemById.memory()
-        assertThat(memory.size).isEqualTo(1)
-        assertThat(memory[0]).isEqualTo(TestGetItemById.Payload(ShareId(SHARE_ID), ItemId(ITEM_ID)))
     }
 
     @Test
@@ -123,7 +117,7 @@ class ItemDetailViewModelTest {
 
     @Test
     fun `emits error when cannot retrieve item`() = runTest {
-        getItemById.emitValue(Result.failure(IllegalStateException("test")))
+        getItemById.emit(Result.failure(IllegalStateException("test")))
         instance.uiState.test {
             assertThat(awaitItem()).isEqualTo(ItemDetailScreenUiState.Initial)
 

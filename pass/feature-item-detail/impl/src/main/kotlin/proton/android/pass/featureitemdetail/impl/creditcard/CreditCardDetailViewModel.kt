@@ -204,8 +204,12 @@ class CreditCardDetailViewModel @Inject constructor(
         isPinningFeatureEnabled ->
         when (itemDetails) {
             is LoadingResult.Error -> {
-                snackbarDispatcher(DetailSnackbarMessages.InitError)
-                CreditCardDetailUiState.Error
+                if (!isPermanentlyDeleted.value()) {
+                    snackbarDispatcher(DetailSnackbarMessages.InitError)
+                    CreditCardDetailUiState.Error
+                } else {
+                    CreditCardDetailUiState.Pending
+                }
             }
 
             LoadingResult.Loading -> CreditCardDetailUiState.NotInitialised

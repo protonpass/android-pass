@@ -44,7 +44,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestGetItemById
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.domain.ItemId
@@ -77,7 +77,7 @@ class CreditCardDetailScreenTest {
     lateinit var getItemByIdWithVault: TestGetItemByIdWithVault
 
     @Inject
-    lateinit var getItemById: TestGetItemById
+    lateinit var getItemById: TestObserveItemById
 
     @Inject
     lateinit var clipboardManager: TestClipboardManager

@@ -23,6 +23,7 @@ import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
+import proton.android.pass.data.impl.responses.InviteRecommendationResponse
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken
@@ -36,8 +37,19 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
     private var fetchInvitesResult: Result<List<PendingInviteResponse>> =
         Result.success(emptyList())
     private var acceptInviteResult: Result<ShareResponse> = Result.success(DEFAULT_RESPONSE)
+    private var inviteRecommendationResponseResult: Result<InviteRecommendationResponse> =
+        Result.success(
+            InviteRecommendationResponse(
+                recommendedEmails = emptyList(),
+                planInternalName = "",
+                groupDisplayName = "",
+                planRecommendedEmails = emptyList(),
+                planRecommendedEmailsNextToken = ""
+            )
+        )
 
     private var memory: MutableList<InvitePayload> = mutableListOf()
+
     private var newUserInviteMemory: MutableList<NewUserInvitePayload> = mutableListOf()
 
     fun getInviteMemory(): List<InvitePayload> = memory
@@ -53,6 +65,10 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
 
     fun setAcceptInviteResult(value: Result<ShareResponse>) {
         acceptInviteResult = value
+    }
+
+    fun setInviteRecommendationResponseResult(value: Result<InviteRecommendationResponse>) {
+        inviteRecommendationResponseResult = value
     }
 
     override suspend fun sendInvite(
@@ -84,6 +100,13 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
 
     override suspend fun rejectInvite(userId: UserId, token: InviteToken) {
     }
+
+    override suspend fun fetchInviteRecommendations(
+        userId: UserId,
+        shareId: ShareId,
+        lastToken: String?,
+        startsWith: String?
+    ): InviteRecommendationResponse = inviteRecommendationResponseResult.getOrThrow()
 
     data class InvitePayload(
         val userId: UserId,

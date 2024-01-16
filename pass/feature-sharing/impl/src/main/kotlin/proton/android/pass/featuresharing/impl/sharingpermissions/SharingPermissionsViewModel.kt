@@ -21,6 +21,7 @@ package proton.android.pass.featuresharing.impl.sharingpermissions
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -32,10 +33,10 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featuresharing.impl.extensions.toShareRole
 import proton.android.pass.featuresharing.impl.extensions.toSharingType
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
@@ -59,11 +60,12 @@ class SharingPermissionsViewModel @Inject constructor(
         getVaultById(shareId = shareId).asLoadingResult(),
         eventState
     ) { addresses, vault, event ->
-        val address = addresses.first()
         SharingPermissionsUIState(
-            email = address.address,
+            addresses = addresses.map { it.toUiState() }.toImmutableList(),
+            headerState = SharingPermissionsHeaderState(
+                memberCount = addresses.size
+            ),
             vaultName = vault.getOrNull()?.name,
-            sharingType = address.shareRole.toSharingType(),
             event = event
         )
     }.stateIn(
@@ -71,10 +73,6 @@ class SharingPermissionsViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = SharingPermissionsUIState()
     )
-
-    fun onPermissionChange(address: String, sharingType: SharingType) = viewModelScope.launch {
-        bulkInviteRepository.setPermission(address, sharingType.toShareRole())
-    }
 
     fun onPermissionsSubmit() = viewModelScope.launch {
         eventState.update {
@@ -85,5 +83,10 @@ class SharingPermissionsViewModel @Inject constructor(
     fun clearEvent() {
         eventState.update { SharingPermissionsEvents.Unknown }
     }
+
+    private fun AddressPermission.toUiState() = AddressPermissionUiState(
+        address = address,
+        permission = shareRole.toSharingType()
+    )
 
 }

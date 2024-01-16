@@ -35,6 +35,7 @@ import proton.android.pass.featuresharing.impl.manage.ManageVaultScreen
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberOptionsBottomSheetGraph
 import proton.android.pass.featuresharing.impl.sharefromitem.ShareFromItemBottomSheet
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingPermissionsScreen
+import proton.android.pass.featuresharing.impl.sharingpermissions.bottomsheet.sharingPermissionsBottomsheetGraph
 import proton.android.pass.featuresharing.impl.sharingsummary.SharingSummaryScreen
 import proton.android.pass.featuresharing.impl.sharingwith.SharingWithScreen
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -44,21 +45,6 @@ import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
-
-object EmailNavArgId : NavArgId {
-    override val key: String = "email"
-    override val navType: NavType<*> = NavType.StringType
-}
-
-object PermissionNavArgId : NavArgId {
-    override val key: String = "permission"
-    override val navType: NavType<*> = NavType.IntType
-}
-
-object SharingWithUserModeArgId : NavArgId {
-    override val key: String = "sharing_with_user_mode"
-    override val navType: NavType<*> = NavType.StringType
-}
 
 object ShowEditVaultArgId : NavArgId {
     override val key: String = "show_edit_vault"
@@ -71,11 +57,6 @@ object SharingWith : NavItem(
 ) {
     fun createRoute(shareId: ShareId, showEditVault: Boolean) =
         "$baseRoute/${shareId.id}/$showEditVault"
-}
-
-enum class SharingWithUserModeType {
-    ExistingUser,
-    NewUser
 }
 
 object SharingPermissions : NavItem(
@@ -179,6 +160,13 @@ sealed interface SharingNavigation {
 
     @JvmInline
     value class ViewVault(val shareId: ShareId) : SharingNavigation
+
+    data class InviteToVaultEditPermissions(
+        val email: String,
+        val permission: ShareRole
+    ) : SharingNavigation
+
+    object InviteToVaultEditAllPermissions : SharingNavigation
 }
 
 fun NavGraphBuilder.sharingGraph(
@@ -227,6 +215,7 @@ fun NavGraphBuilder.sharingGraph(
     }
 
     memberOptionsBottomSheetGraph(onNavigateEvent)
+    sharingPermissionsBottomsheetGraph(onNavigateEvent)
 }
 
 const val REFRESH_MEMBER_LIST_FLAG = "refreshMemberList"

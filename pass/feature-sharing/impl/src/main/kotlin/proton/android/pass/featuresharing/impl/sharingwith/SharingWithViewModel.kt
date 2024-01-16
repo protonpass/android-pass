@@ -143,7 +143,13 @@ class SharingWithViewModel @Inject constructor(
 
     fun onEmailSubmit() = viewModelScope.launch {
         if (checkValidEmail()) {
-            enteredEmailsState.update { it + editingEmailState }
+            enteredEmailsState.update {
+                if (!it.contains(editingEmailState)) {
+                    it + editingEmailState
+                } else {
+                    it
+                }
+            }
             editingEmailState = ""
         }
     }

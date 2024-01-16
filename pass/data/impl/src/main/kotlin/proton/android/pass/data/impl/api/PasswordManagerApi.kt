@@ -53,6 +53,7 @@ import proton.android.pass.data.impl.responses.GetShareMembersResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.data.impl.responses.GetShareResponse
 import proton.android.pass.data.impl.responses.GetSharesResponse
+import proton.android.pass.data.impl.responses.InviteRecommendationsResponse
 import proton.android.pass.data.impl.responses.ItemRevisionResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.MigrateItemsResponse
@@ -275,6 +276,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun rejectInvite(
         @Path("inviteId") inviteId: String,
     ): CodeOnlyResponse
+
+    @DELETE("$PREFIX/share/{shareId}/invite/recommended_emails")
+    suspend fun inviteRecommendations(
+        @Path("shareId") shareId: String,
+        @Query("PlanSince") lastToken: String?,
+        @Query("StartsWith") startsWith: String?
+    ): InviteRecommendationsResponse
 
     @GET("$PREFIX/share/{shareId}/user")
     suspend fun getVaultMembers(

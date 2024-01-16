@@ -24,6 +24,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
@@ -41,6 +42,7 @@ import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.responses.PendingInviteResponse
+import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
@@ -176,6 +178,21 @@ class InviteRepositoryImpl @Inject constructor(
     override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {
         remoteDataSource.rejectInvite(userId, inviteToken)
         localDatasource.removeInvite(userId, inviteToken)
+    }
+
+    override fun observeInviteRecommendations(
+        userId: UserId,
+        shareId: ShareId,
+        lastToken: String?,
+        startsWith: String?
+    ): Flow<InviteRecommendations> = flow {
+        val result = remoteDataSource.fetchInviteRecommendations(
+            userId,
+            shareId,
+            lastToken,
+            startsWith
+        )
+        emit(result.toDomain())
     }
 
     private fun InviteEntity.toDomain(encryptionContext: EncryptionContext): PendingInvite {

@@ -120,11 +120,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         itemId: ItemId,
     ): Flow<Item> = itemFlow
 
-    override suspend fun getById(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ): Item {
+    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item {
         TODO("Not yet implemented")
     }
 

@@ -191,6 +191,16 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
+        UPDATE ${ItemEntity.TABLE}
+        SET ${ItemEntity.Columns.STATE} = :state
+        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} IN (:itemIds)
+        """
+    )
+    abstract suspend fun setItemStates(shareId: String, itemIds: List<String>, state: Int)
+
+    @Query(
+        """
         DELETE FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
           AND ${ItemEntity.Columns.ID} = :itemId

@@ -31,6 +31,7 @@ import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.TelemetryDao
 import proton.android.pass.data.impl.db.dao.UserAccessDataDao
+import proton.android.pass.log.api.PassLogger
 
 interface PassDatabase : Database {
 
@@ -46,4 +47,15 @@ interface PassDatabase : Database {
     fun inviteDao(): InviteDao
     fun inviteKeyDao(): InviteKeyDao
     fun userAccessDataDao(): UserAccessDataDao
+
+
+    suspend fun <R> inTransaction(name: String, block: suspend () -> R): R {
+        PassLogger.i(TAG, "$name transaction started")
+        return inTransaction { block() }
+            .also { PassLogger.i(TAG, "$name transaction finished") }
+    }
+
+    companion object {
+        private const val TAG = "PassDatabase"
+    }
 }

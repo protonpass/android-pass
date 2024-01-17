@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.16.1 (2024-01-17)
+
+### Fixes :bug:
+
+- Fix pinning issues.
+
 ## 1.16.0 (2024-01-17)
 
 ### Features :tada:

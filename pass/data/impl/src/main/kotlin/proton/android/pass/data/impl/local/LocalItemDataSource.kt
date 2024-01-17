@@ -35,6 +35,7 @@ data class ItemWithTotp(
     val createTime: Instant
 )
 
+@Suppress("TooManyFunctions", "ComplexInterface")
 interface LocalItemDataSource {
     suspend fun upsertItem(item: ItemEntity)
     suspend fun upsertItems(items: List<ItemEntity>)
@@ -68,6 +69,7 @@ interface LocalItemDataSource {
     suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity?
     suspend fun getByIdList(shareId: ShareId, itemIds: List<ItemId>): List<ItemEntity>
     suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState)
+    suspend fun setItemStates(shareId: ShareId, itemIds: List<ItemId>, itemState: ItemState)
     suspend fun getTrashedItems(userId: UserId): List<ItemEntity>
     suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean
     suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean

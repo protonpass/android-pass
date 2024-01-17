@@ -210,6 +210,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
+        DELETE FROM ${ItemEntity.TABLE} 
+        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} IN (:itemIds)
+        """
+    )
+    abstract suspend fun deleteList(shareId: String, itemIds: List<String>): Int
+
+    @Query(
+        """
         SELECT COUNT(*)
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId

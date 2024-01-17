@@ -38,9 +38,15 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
 import proton.android.pass.featureitemdetail.impl.R
@@ -50,11 +56,6 @@ import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.fakes.TestObserveTotpFromUri
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import javax.inject.Inject
 import kotlin.test.assertEquals
 
@@ -71,7 +72,10 @@ class LoginDetailScreenTest {
     lateinit var savedStateHandle: TestSavedStateHandleProvider
 
     @Inject
-    lateinit var getItemById: TestObserveItemById
+    lateinit var observeItemById: TestObserveItemById
+
+    @Inject
+    lateinit var getItemById: FakeGetItemById
 
     @Inject
     lateinit var getItemByIdWithVault: TestGetItemByIdWithVault
@@ -267,7 +271,8 @@ class LoginDetailScreenTest {
             hasMoreThanOneVault = hasManyVaults
         )
         getItemByIdWithVault.emitValue(Result.success(withVault))
-        getItemById.emitValue(Result.success(item))
+        observeItemById.emitValue(Result.success(item))
+        getItemById.emit(Result.success(item))
 
         return title
     }

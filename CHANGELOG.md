@@ -6,6 +6,24 @@
 
 ### Other
 
+## 1.16.0 (2024-01-17)
+
+### Features :tada:
+
+- Item pinning.
+- Add adaptive icon.
+
+### Fixes :bug:
+
+- Item count mismatch between the search and the filters.
+
+### Other
+
+- Add monospace font to the password and otp fields.
+- Support custom field search.
+- Change CC expiration date format to YY.
+- Updated translations.
+
 ## 1.15.4 (2024-01-08)
 
 ### Fixes :bug:

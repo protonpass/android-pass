@@ -72,6 +72,7 @@ interface LocalItemDataSource {
     suspend fun setItemStates(shareId: ShareId, itemIds: List<ItemId>, itemState: ItemState)
     suspend fun getTrashedItems(userId: UserId): List<ItemEntity>
     suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean
+    suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean
     suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean
     fun observeItemCountSummary(
         userId: UserId,

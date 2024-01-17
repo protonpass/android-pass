@@ -593,7 +593,7 @@ class ItemRepositoryImpl @Inject constructor(
                 )
             }
 
-            database.inTransaction {
+            database.inTransaction("applyEvents") {
                 localItemDataSource.upsertItems(updateAsEntities)
                 events.deletedItemIds.forEach { itemId ->
                     localItemDataSource.delete(shareId, ItemId(itemId))
@@ -882,7 +882,7 @@ class ItemRepositoryImpl @Inject constructor(
             itemResponseToEntity(userAddress, it, destinationShare, listOf(destinationKey))
         }
 
-        database.inTransaction {
+        database.inTransaction("migrateChunk") {
             localItemDataSource.upsertItems(resAsEntities)
             chunk.forEach {
                 localItemDataSource.delete(source, ItemId(it.id))
@@ -907,15 +907,11 @@ class ItemRepositoryImpl @Inject constructor(
         )
         runCatching { remoteItemDataSource.untrash(userId, shareId, body) }
             .onSuccess {
-                database.inTransaction {
-                    items.forEach { item ->
-                        localItemDataSource.setItemState(
-                            shareId,
-                            ItemId(item.id),
-                            ItemState.Active
-                        )
-                    }
-                }
+                localItemDataSource.setItemStates(
+                    shareId,
+                    items.map { ItemId(it.id) },
+                    ItemState.Active
+                )
             }
     }.transpose().map { }
 
@@ -936,14 +932,10 @@ class ItemRepositoryImpl @Inject constructor(
 
         runCatching { remoteItemDataSource.delete(userId, shareId, body) }
             .onSuccess {
-                database.inTransaction {
-                    items.forEach { item ->
-                        localItemDataSource.delete(
-                            shareId,
-                            ItemId(item.id)
-                        )
-                    }
-                }
+                localItemDataSource.deleteList(
+                    shareId,
+                    items.map { ItemId(it.id) }
+                )
             }
             .onFailure {
                 PassLogger.w(TAG, "Error clearing items for share")

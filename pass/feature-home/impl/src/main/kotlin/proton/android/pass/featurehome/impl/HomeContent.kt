@@ -333,7 +333,7 @@ private fun HomeDrawerIcon(
     isSearchMode: Boolean,
     onEvent: (HomeUiEvent) -> Unit
 ) {
-    if (!(isSeeAllPinsMode || isSearchMode)) {
+    if (!isSeeAllPinsMode && !isSearchMode) {
         when (selectedShare) {
             None -> {
                 when (homeVaultSelection) {

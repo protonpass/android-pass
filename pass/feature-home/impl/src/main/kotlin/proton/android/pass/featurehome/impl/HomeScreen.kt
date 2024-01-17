@@ -524,7 +524,7 @@ fun HomeScreen(
 
                         is HomeUiEvent.ItemMenuClick -> {
                             selectedItem = homeUiEvent.item
-                            currentBottomSheet = if (isTrashMode) {
+                            currentBottomSheet = if (isTrashMode || homeUiEvent.item.isInTrash()) {
                                 TrashItemOptions
                             } else {
                                 when (homeUiEvent.item.contents) {

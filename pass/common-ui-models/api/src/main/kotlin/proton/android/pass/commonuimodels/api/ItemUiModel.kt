@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import kotlinx.datetime.Instant
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 
 @Stable
@@ -35,4 +36,6 @@ data class ItemUiModel(
     val lastAutofillTime: Instant?,
     val isPinned: Boolean,
     val canModify: Boolean = true
-)
+) {
+    fun isInTrash() = state == ItemState.Trashed.value
+}

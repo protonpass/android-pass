@@ -121,6 +121,9 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState) =
         database.itemsDao().setItemState(shareId.id, itemId.id, itemState.value)
 
+    override suspend fun setItemStates(shareId: ShareId, itemIds: List<ItemId>, itemState: ItemState) =
+        database.itemsDao().setItemStates(shareId.id, itemIds.map(ItemId::id), itemState.value)
+
     override suspend fun getTrashedItems(userId: UserId): List<ItemEntity> =
         database.itemsDao().getItemsWithState(userId.id, ItemState.Trashed.value)
 

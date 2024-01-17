@@ -219,7 +219,7 @@ class ItemRepositoryImpl @Inject constructor(
                 itemResponseToEntity(userAddress, itemResponse.item, share, listOf(shareKey))
             val aliasEntity =
                 itemResponseToEntity(userAddress, itemResponse.alias, share, listOf(shareKey))
-            database.inTransaction {
+            database.inTransaction("createItemAndAlias") {
                 localItemDataSource.upsertItem(itemEntity)
                 localItemDataSource.upsertItem(aliasEntity)
             }
@@ -362,15 +362,11 @@ class ItemRepositoryImpl @Inject constructor(
 
             runCatching { remoteItemDataSource.sendToTrash(userId, shareId, body) }
                 .onSuccess {
-                    database.inTransaction {
-                        items.forEach { item ->
-                            localItemDataSource.setItemState(
-                                shareId,
-                                ItemId(item.id),
-                                ItemState.Trashed
-                            )
-                        }
-                    }
+                    localItemDataSource.setItemStates(
+                        shareId,
+                        items.map { ItemId(it.id) },
+                        ItemState.Trashed
+                    )
                 }
                 .onFailure {
                     PassLogger.w(TAG, "Error trashing items for share")

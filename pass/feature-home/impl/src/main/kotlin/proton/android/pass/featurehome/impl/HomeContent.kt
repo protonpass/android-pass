@@ -139,9 +139,9 @@ internal fun HomeContent(
                             modifier = Modifier.testTag(DrawerIconTestTag),
                             selectedShare = uiState.homeListUiState.selectedShare,
                             homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
-                            isPinningOrSearch = isPinningOrSearch,
-                            onDrawerIconClick = { onEvent(HomeUiEvent.DrawerIconClick) },
-                            onStopSearch = { onEvent(HomeUiEvent.StopSearch) }
+                            isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
+                            isSearchMode = uiState.searchUiState.inSearchMode,
+                            onEvent = onEvent
                         )
                     },
                     actions = {
@@ -329,11 +329,11 @@ private fun HomeDrawerIcon(
     modifier: Modifier = Modifier,
     selectedShare: Option<ShareUiModel>,
     homeVaultSelection: VaultSelectionOption,
-    isPinningOrSearch: Boolean,
-    onDrawerIconClick: () -> Unit,
-    onStopSearch: () -> Unit
+    isSeeAllPinsMode: Boolean,
+    isSearchMode: Boolean,
+    onEvent: (HomeUiEvent) -> Unit
 ) {
-    if (!isPinningOrSearch) {
+    if (!(isSeeAllPinsMode || isSearchMode)) {
         when (selectedShare) {
             None -> {
                 when (homeVaultSelection) {
@@ -341,7 +341,7 @@ private fun HomeDrawerIcon(
                         AllVaultsIcon(
                             modifier = modifier,
                             size = 48,
-                            onClick = onDrawerIconClick
+                            onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                         )
                     }
 
@@ -350,7 +350,7 @@ private fun HomeDrawerIcon(
                             modifier = modifier,
                             size = 48,
                             iconSize = 20,
-                            onClick = onDrawerIconClick
+                            onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                         )
                     }
 
@@ -364,12 +364,17 @@ private fun HomeDrawerIcon(
                     backgroundColor = selectedShare.value.color.toColor(true),
                     iconColor = selectedShare.value.color.toColor(),
                     icon = selectedShare.value.icon.toResource(),
-                    onClick = onDrawerIconClick
+                    onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                 )
             }
         }
     } else {
-        ArrowBackIconButton(modifier) { onStopSearch() }
+        ArrowBackIconButton(modifier) {
+            when {
+                isSearchMode -> onEvent(HomeUiEvent.StopSearch)
+                isSeeAllPinsMode -> onEvent(HomeUiEvent.StopSeeAllPinned)
+            }
+        }
     }
 }
 

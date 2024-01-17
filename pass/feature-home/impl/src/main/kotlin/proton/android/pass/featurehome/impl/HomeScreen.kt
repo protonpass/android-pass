@@ -617,6 +617,10 @@ fun HomeScreen(
                                 items = homeUiState.homeListUiState.selectionState.selectedItems
                             )
                         }
+
+                        HomeUiEvent.StopSeeAllPinned -> {
+                            homeViewModel.onStopSeeAllPinned()
+                        }
                     }
                 }
             )

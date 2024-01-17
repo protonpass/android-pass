@@ -20,10 +20,12 @@ package proton.android.pass.featuresharing.impl.sharingpermissions.bottomsheet
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.headlineNorm
@@ -88,8 +90,9 @@ private fun titleText(text: String): BottomSheetItem = object : BottomSheetItem 
     override val title: @Composable () -> Unit
         get() = {
             Text(
+                modifier = Modifier.fillMaxWidth(),
                 text = text,
-                style = ProtonTheme.typography.headlineNorm
+                style = ProtonTheme.typography.headlineNorm.copy(textAlign = TextAlign.Center),
             )
         }
     override val subtitle: (@Composable () -> Unit)?

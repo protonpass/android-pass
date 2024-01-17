@@ -99,7 +99,7 @@ class FeatureFlagRepositoryImpl @Inject constructor(
             }
         }
 
-        database.inTransaction {
+        database.inTransaction("refreshFeatureFlags") {
             local.deleteFeatureFlags(id, toDelete)
             local.storeFeatureFlags(toInsert)
             local.storeFeatureFlags(toUpdate)

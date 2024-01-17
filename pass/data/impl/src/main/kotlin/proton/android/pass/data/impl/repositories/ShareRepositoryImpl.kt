@@ -126,7 +126,7 @@ class ShareRepositoryImpl @Inject constructor(
             isActive = true,
             userKeyId = userPrimaryKey
         )
-        database.inTransaction {
+        database.inTransaction("createVault") {
             localShareDataSource.upsertShares(listOf(responseAsEntity))
             shareKeyRepository.saveShareKeys(listOf(shareKeyEntity))
         }
@@ -213,15 +213,17 @@ class ShareRepositoryImpl @Inject constructor(
             // Delete from the local data source the shares that are not in remote response
             val toDelete = localSharesMap.keys.subtract(remoteShareMap.keys)
 
-            database.inTransaction {
-                if (sharesToUpdate.isNotEmpty()) {
-                    PassLogger.i(TAG, "Updating ${sharesToUpdate.size} shares")
-                    localShareDataSource.upsertShares(sharesToUpdate)
-                }
-                if (toDelete.isNotEmpty()) {
-                    PassLogger.i(TAG, "Deleting ${toDelete.size} shares")
-                    val deletedShareResult = localShareDataSource.deleteShares(toDelete)
-                    PassLogger.i(TAG, "Deleted $deletedShareResult shares")
+            if (sharesToUpdate.isNotEmpty() || toDelete.isNotEmpty()) {
+                database.inTransaction("refreshShares") {
+                    if (sharesToUpdate.isNotEmpty()) {
+                        PassLogger.i(TAG, "Updating ${sharesToUpdate.size} shares")
+                        localShareDataSource.upsertShares(sharesToUpdate)
+                    }
+                    if (toDelete.isNotEmpty()) {
+                        PassLogger.i(TAG, "Deleting ${toDelete.size} shares")
+                        val deletedShareResult = localShareDataSource.deleteShares(toDelete)
+                        PassLogger.i(TAG, "Deleted $deletedShareResult shares")
+                    }
                 }
             }
 
@@ -368,16 +370,18 @@ class ShareRepositoryImpl @Inject constructor(
             .flatten()
 
 
-        database.inTransaction {
-            // First, store the shares
-            if (shareEntities.isNotEmpty()) {
-                PassLogger.i(TAG, "Storing ${shareEntities.size} shares")
-                localShareDataSource.upsertShares(shareEntities)
-            }
-            // Now that we have inserted the shares, we can safely insert the shareKeys
-            if (shareKeyEntities.isNotEmpty()) {
-                PassLogger.i(TAG, "Storing ${shareKeyEntities.size} ShareKeys")
-                shareKeyRepository.saveShareKeys(shareKeyEntities)
+        if (shareEntities.isNotEmpty() || shareKeyEntities.isNotEmpty()) {
+            database.inTransaction("storeShares") {
+                // First, store the shares
+                if (shareEntities.isNotEmpty()) {
+                    PassLogger.i(TAG, "Storing ${shareEntities.size} shares")
+                    localShareDataSource.upsertShares(shareEntities)
+                }
+                // Now that we have inserted the shares, we can safely insert the shareKeys
+                if (shareKeyEntities.isNotEmpty()) {
+                    PassLogger.i(TAG, "Storing ${shareKeyEntities.size} ShareKeys")
+                    shareKeyRepository.saveShareKeys(shareKeyEntities)
+                }
             }
         }
 

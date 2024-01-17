@@ -50,7 +50,7 @@ class LocalInviteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun storeInvites(invites: List<InviteAndKeysEntity>) {
-        database.inTransaction {
+        database.inTransaction("storeInvites") {
             invites.forEach {
                 database.inviteDao().insertOrUpdate(it.inviteEntity)
                 database.inviteKeyDao().insertOrUpdate(*it.inviteKeys.toTypedArray())

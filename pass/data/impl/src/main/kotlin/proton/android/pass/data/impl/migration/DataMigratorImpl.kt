@@ -60,7 +60,7 @@ class DataMigratorImpl @Inject constructor(
         }
         getPendingMigrations()
             .forEach { migrator ->
-                database.inTransaction {
+                database.inTransaction("getPendingMigrations") {
                     PassLogger.i(TAG, "Running migration ${migrator.migrationName}")
                     migrator.migrate()
                     PassLogger.i(TAG, "Successfully run migration ${migrator.migrationName}")

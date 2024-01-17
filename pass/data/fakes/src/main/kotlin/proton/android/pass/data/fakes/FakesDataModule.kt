@@ -25,7 +25,6 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -119,7 +118,6 @@ import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
-import proton.android.pass.data.fakes.repositories.TestFeatureFlagRepository
 import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
@@ -483,9 +481,6 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindCreatePin(impl: TestCreatePin): CreatePin
-
-    @Binds
-    abstract fun bindFeatureFlagRepository(impl: TestFeatureFlagRepository): FeatureFlagRepository
 
     @Binds
     abstract fun bindClearAppData(impl: TestResetAppToDefaults): ResetAppToDefaults

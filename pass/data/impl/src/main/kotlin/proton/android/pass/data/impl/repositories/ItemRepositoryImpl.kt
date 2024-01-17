@@ -402,15 +402,11 @@ class ItemRepositoryImpl @Inject constructor(
 
             runCatching { remoteItemDataSource.untrash(userId, shareId, body) }
                 .onSuccess {
-                    database.inTransaction {
-                        items.forEach { item ->
-                            localItemDataSource.setItemState(
-                                shareId,
-                                ItemId(item.id),
-                                ItemState.Active
-                            )
-                        }
-                    }
+                    localItemDataSource.setItemStates(
+                        shareId,
+                        items.map { ItemId(it.id) },
+                        ItemState.Active
+                    )
                 }
                 .onFailure {
                     PassLogger.w(TAG, "Error untrashing items for share")

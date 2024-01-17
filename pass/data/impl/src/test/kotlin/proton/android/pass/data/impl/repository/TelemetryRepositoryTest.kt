@@ -30,15 +30,14 @@ import proton.android.pass.account.fakes.TestDeviceSettingsRepository
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.fakes.TestLocalTelemetryDataSource
-import proton.android.pass.data.impl.fakes.TestPassDatabase
 import proton.android.pass.data.impl.fakes.TestRemoteTelemetryDataSource
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 import proton.android.pass.data.impl.util.DimensionsSerializer
-import proton.android.pass.test.FixedClock
-import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.test.FixedClock
+import proton.android.pass.test.MainDispatcherRule
 
 class TelemetryRepositoryTest {
 
@@ -63,7 +62,6 @@ class TelemetryRepositoryTest {
         deviceSettingsRepository = TestDeviceSettingsRepository()
 
         instance = TelemetryRepositoryImpl(
-            passDatabase = TestPassDatabase(),
             localDataSource = localDataSource,
             remoteDataSource = remoteDataSource,
             accountManager = accountManager,
@@ -208,7 +206,7 @@ class TelemetryRepositoryTest {
         accountManager.sendPrimaryUserId(UserId(userId))
         getUserPlan.setResult(Result.success(planWithType(PlanType.Paid(plan, plan))))
 
-        (0 until numItems).forEach { idx ->
+        repeat(numItems) { idx ->
             localDataSource.store(
                 TelemetryEntity(
                     id = idx.toLong(),

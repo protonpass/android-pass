@@ -117,11 +117,23 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
+    override suspend fun setItemStates(
+        shareId: ShareId,
+        itemIds: List<ItemId>,
+        itemState: ItemState
+    ) {
+        throw IllegalStateException("Not yet implemented")
+    }
+
     override suspend fun getTrashedItems(userId: UserId): List<ItemEntity> {
         throw IllegalStateException("Not yet implemented")
     }
 
     override suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean {
         throw IllegalStateException("Not yet implemented")
     }
 

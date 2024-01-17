@@ -27,7 +27,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.local.LocalTelemetryDataSource
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
@@ -38,7 +37,6 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class TelemetryRepositoryImpl @Inject constructor(
-    private val passDatabase: PassDatabase,
     private val localDataSource: LocalTelemetryDataSource,
     private val remoteDataSource: RemoteTelemetryDataSource,
     private val accountManager: AccountManager,
@@ -64,27 +62,29 @@ class TelemetryRepositoryImpl @Inject constructor(
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
         val planName = requireNotNull(getUserPlan(userId).firstOrNull())
         val planInternalName = planName.planType.internalName()
+        val all = localDataSource.getAll(userId)
 
-        passDatabase.inTransaction {
-            val all = localDataSource.getAll(userId)
-            if (all.isNotEmpty()) {
-                all.chunked(MAX_EVENT_BATCH_SIZE).forEach { eventChunk ->
-                    runCatching {
-                        performSend(userId, planInternalName, eventChunk)
-                    }.onSuccess {
-                        val min = eventChunk.first().id
-                        val max = eventChunk.last().id
-                        localDataSource.removeInRange(min = min, max = max)
-                    }.onFailure {
-                        PassLogger.w(TAG, "Error sending events")
-                        PassLogger.w(TAG, it)
-                    }
+        if (all.isNotEmpty()) {
+            all.chunked(MAX_EVENT_BATCH_SIZE).forEach { eventChunk ->
+                runCatching {
+                    performSend(userId, planInternalName, eventChunk)
+                }.onSuccess {
+                    val min = eventChunk.first().id
+                    val max = eventChunk.last().id
+                    localDataSource.removeInRange(min = min, max = max)
+                }.onFailure {
+                    PassLogger.w(TAG, "Error sending events")
+                    PassLogger.w(TAG, it)
                 }
             }
         }
     }
 
-    private suspend fun performSend(userId: UserId, planName: String, events: List<TelemetryEntity>) {
+    private suspend fun performSend(
+        userId: UserId,
+        planName: String,
+        events: List<TelemetryEntity>
+    ) {
         if (shouldSendTelemetry()) {
             val request = buildRequest(planName, events)
             remoteDataSource.send(userId, request)

@@ -554,8 +554,11 @@ class HomeViewModel @Inject constructor(
     fun onStopSearching() {
         searchQueryState.update { "" }
         isInSearchModeState.update { false }
-        isInSeeAllPinsModeState.update { false }
         isInSuggestionsModeState.update { false }
+    }
+
+    fun onStopSeeAllPinned() {
+        isInSeeAllPinsModeState.update { false }
     }
 
     fun onEnterSearch() {

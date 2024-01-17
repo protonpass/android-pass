@@ -491,11 +491,7 @@ class ItemRepositoryImpl @Inject constructor(
 
             runCatching { remoteItemDataSource.delete(userId, shareId, body) }
                 .onSuccess {
-                    database.inTransaction {
-                        items.forEach { item ->
-                            localItemDataSource.delete(shareId, ItemId(item.id))
-                        }
-                    }
+                    localItemDataSource.deleteList(shareId, items.map { ItemId(it.id) })
                 }
                 .onFailure {
                     PassLogger.w(TAG, "Error deleting item")

@@ -130,6 +130,9 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean =
         database.itemsDao().delete(shareId.id, itemId.id) > 0
 
+    override suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean =
+        database.itemsDao().deleteList(shareId.id, itemIds.map(ItemId::id)) > 0
+
     override suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean =
         database.itemsDao().countItems(userId.id, shareId.id) > 0
 

@@ -33,8 +33,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
-import proton.android.pass.data.api.repositories.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
 
 class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
@@ -64,7 +64,7 @@ class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
                         runCatching {
                             if (featureFlags.isNotEmpty()) {
                                 withContext(Dispatchers.IO) {
-                                    featureFlagManager.refresh(userId)
+                                    featureFlagManager.refreshAllOneTime(userId)
                                 }
                             }
                         }

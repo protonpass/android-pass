@@ -90,10 +90,19 @@ object AcceptInvite : NavItem("sharing/accept", navItemType = NavItemType.Bottom
 
 object SharingSummary : NavItem(
     baseRoute = "sharing/summary/screen",
-    navArgIds = listOf(CommonNavArgId.ShareId, EmailNavArgId, PermissionNavArgId, SharingWithUserModeArgId)
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        EmailNavArgId,
+        PermissionNavArgId,
+        SharingWithUserModeArgId,
+    )
 ) {
-    fun createRoute(shareId: ShareId, email: String, permission: Int, mode: SharingWithUserModeType) =
-        "$baseRoute/${shareId.id}/$email/$permission/${mode.name}"
+    fun createRoute(
+        shareId: ShareId,
+        email: String,
+        permission: Int,
+        mode: SharingWithUserModeType
+    ) = "$baseRoute/${shareId.id}/$email/$permission/${mode.name}"
 }
 
 object ManageVault : NavItem(
@@ -231,7 +240,6 @@ fun NavGraphBuilder.sharingGraph(
     }
 
     bottomSheet(ShareFromItem) {
-        BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(false)) }
         ShareFromItemBottomSheet(onNavigateEvent = onNavigateEvent)
     }
 

@@ -195,4 +195,8 @@ object AppDatabaseMigrations {
             UserSettingsDatabase.MIGRATION_4.migrate(database)
         }
     }
+
+    @DeleteTable.Entries(value = [DeleteTable(tableName = "ProtonFeatureFlagEntity")])
+    class MIGRATION_38_39 : AutoMigrationSpec
+
 }

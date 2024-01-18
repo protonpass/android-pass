@@ -18,9 +18,13 @@
 
 package proton.android.pass.featuresharing.impl.sharingwith
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,12 +34,16 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteUserMode
+import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresharing.impl.SharingWithUserModeType
@@ -50,6 +58,7 @@ class SharingWithViewModel @Inject constructor(
     private val getInviteUserMode: GetInviteUserMode,
     private val emailValidator: EmailValidator,
     observeVaultById: ObserveVaultById,
+    observeInviteRecommendations: ObserveInviteRecommendations,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -68,13 +77,41 @@ class SharingWithViewModel @Inject constructor(
     private val eventState: MutableStateFlow<SharingWithEvents> =
         MutableStateFlow(SharingWithEvents.Unknown)
 
-    val state: StateFlow<SharingWithUIState> = combine(
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var checkedEmails: List<String> by savedStateHandleProvider.get()
+        .saveable { mutableStateOf(emptyList<String>()) }
+
+    private val checkedEmailFlow = MutableStateFlow(checkedEmails)
+
+    private val suggestionsUIStateFlow =
+        combine(
+            observeInviteRecommendations(shareId = shareId).asLoadingResult(),
+            checkedEmailFlow
+        ) { result, checkedEmails ->
+            when (result) {
+                is LoadingResult.Error -> SuggestionsUIState.Initial
+                LoadingResult.Loading -> SuggestionsUIState.Loading
+                is LoadingResult.Success -> SuggestionsUIState.Content(
+                    groupDisplayName = result.data.groupDisplayName,
+                    recentEmails = result.data.recommendedEmails.map { email ->
+                        email to checkedEmails.contains(email)
+                    }.toPersistentList(),
+                    planEmails = result.data.planRecommendedEmails.map { email ->
+                        email to checkedEmails.contains(email)
+                    }.toPersistentList()
+                )
+            }
+        }
+
+
+    val state: StateFlow<SharingWithUIState> = combineN(
         emailState,
         isEmailNotValidState,
         observeVaultById(shareId = shareId),
         isLoadingState,
-        eventState
-    ) { email, isEmailNotValid, vault, isLoading, event ->
+        eventState,
+        suggestionsUIStateFlow
+    ) { email, isEmailNotValid, vault, isLoading, event, suggestionsUIState ->
         val vaultValue = vault.value()
         SharingWithUIState(
             email = email,
@@ -82,7 +119,8 @@ class SharingWithViewModel @Inject constructor(
             emailNotValidReason = isEmailNotValid,
             isLoading = isLoading.value() || vaultValue == null,
             event = event,
-            showEditVault = showEditVault
+            showEditVault = showEditVault,
+            suggestionsUIState = suggestionsUIState
         )
     }.stateIn(
         scope = viewModelScope,
@@ -135,6 +173,15 @@ class SharingWithViewModel @Inject constructor(
 
     fun clearEvent() {
         eventState.update { SharingWithEvents.Unknown }
+    }
+
+    fun onItemToggle(email: String, checked: Boolean) {
+        checkedEmails = if (!checked) {
+            checkedEmails + email
+        } else {
+            checkedEmails - email
+        }
+        checkedEmailFlow.update { checkedEmails }
     }
 
     private fun InviteUserMode.toUserModeType(): SharingWithUserModeType = when (this) {

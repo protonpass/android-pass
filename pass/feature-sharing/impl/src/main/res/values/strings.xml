@@ -185,4 +185,7 @@
     <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
     <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
 
+    <string name="share_with_suggestions_title">Suggestions</string>
+    <string name="share_with_recents_title">Recents</string>
+
 </resources>

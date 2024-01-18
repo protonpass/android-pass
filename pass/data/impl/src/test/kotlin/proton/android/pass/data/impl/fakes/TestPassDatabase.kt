@@ -64,10 +64,6 @@ class TestPassDatabase : PassDatabase {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun featureFlagsDao(): FeatureFlagsDao {
-        throw IllegalStateException("This method should not be called")
-    }
-
     override fun inviteDao(): InviteDao {
         throw IllegalStateException("This method should not be called")
     }

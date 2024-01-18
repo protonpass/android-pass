@@ -21,6 +21,10 @@ package proton.android.pass.featuresharing.impl.manage.bottomsheet
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.featuresharing.impl.SharingNavigation
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.inviteoptions.InviteOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberoptions.MemberOptionsBottomSheet
@@ -32,10 +36,6 @@ import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.dialog
-import proton.android.pass.domain.InviteId
-import proton.android.pass.domain.NewUserInviteId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
 
 object InviteIdArg : NavArgId {
     override val key = "inviteId"
@@ -118,12 +118,10 @@ fun NavGraphBuilder.memberOptionsBottomSheetGraph(
     onNavigateEvent: (SharingNavigation) -> Unit
 ) {
     bottomSheet(InviteOptionsBottomSheet) {
-        BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(refresh = false)) }
         InviteOptionsBottomSheet(onNavigate = onNavigateEvent)
     }
 
     bottomSheet(MemberOptionsBottomSheet) {
-        BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(refresh = false)) }
         MemberOptionsBottomSheet(onNavigate = onNavigateEvent)
     }
 

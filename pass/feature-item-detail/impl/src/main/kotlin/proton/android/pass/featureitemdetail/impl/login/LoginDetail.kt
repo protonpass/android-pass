@@ -44,6 +44,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
@@ -94,13 +95,19 @@ fun LoginDetail(
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
                 LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
             }
+            val scope = rememberCoroutineScope()
             val bottomSheetState = rememberModalBottomSheetState(
                 initialValue = ModalBottomSheetValue.Hidden,
                 skipHalfExpanded = true
             )
+
+            ProtonBottomSheetBackHandler(
+                bottomSheetState = bottomSheetState,
+                coroutineScope = scope,
+            )
+
             var currentBottomSheet by remember { mutableStateOf(WebsiteOptions) }
             var selectedWebsite by remember { mutableStateOf("") }
-            val scope = rememberCoroutineScope()
             val context = LocalContext.current
             PassModalBottomSheetLayout(
                 sheetState = bottomSheetState,

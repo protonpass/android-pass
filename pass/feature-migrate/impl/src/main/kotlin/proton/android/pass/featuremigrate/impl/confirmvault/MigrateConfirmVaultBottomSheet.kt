@@ -18,7 +18,6 @@
 
 package proton.android.pass.featuremigrate.impl.confirmvault
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -38,8 +37,6 @@ fun MigrateConfirmVaultBottomSheet(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    BackHandler { navigation(MigrateNavigation.Close) }
-
     LaunchedEffect(state.event) {
         val event = state.event
         if (event is Some) {
@@ -47,9 +44,11 @@ fun MigrateConfirmVaultBottomSheet(
                 is ConfirmMigrateEvent.ItemMigrated -> {
                     navigation(MigrateNavigation.ItemMigrated(value.shareId, value.itemId))
                 }
+
                 is ConfirmMigrateEvent.AllItemsMigrated -> {
                     navigation(MigrateNavigation.VaultMigrated)
                 }
+
                 ConfirmMigrateEvent.Close -> navigation(MigrateNavigation.Close)
             }
         }

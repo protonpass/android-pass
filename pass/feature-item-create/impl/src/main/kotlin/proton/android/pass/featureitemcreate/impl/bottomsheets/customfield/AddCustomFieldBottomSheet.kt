@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.bottomsheets.customfield
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -43,8 +42,6 @@ fun AddCustomFieldBottomSheet(
     modifier: Modifier = Modifier,
     onNavigate: (AddCustomFieldNavigation) -> Unit
 ) {
-    BackHandler { onNavigate(AddCustomFieldNavigation.Close) }
-
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = listOf(

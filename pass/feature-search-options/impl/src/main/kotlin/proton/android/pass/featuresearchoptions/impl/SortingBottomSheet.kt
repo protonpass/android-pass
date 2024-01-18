@@ -18,7 +18,6 @@
 
 package proton.android.pass.featuresearchoptions.impl
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,7 +34,7 @@ fun SortingBottomSheet(
     viewModel: SortingBottomSheetViewModel = hiltViewModel()
 ) {
     val sortingType by viewModel.state.collectAsStateWithLifecycle()
-    BackHandler { onNavigateEvent(SearchOptionsNavigation.Dismiss) }
+
     SortingBottomSheetContents(
         modifier = modifier,
         sortingType = sortingType,

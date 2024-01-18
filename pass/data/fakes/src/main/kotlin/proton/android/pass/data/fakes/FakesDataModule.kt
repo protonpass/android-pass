@@ -71,6 +71,7 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
+import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveItemCount
@@ -123,6 +124,7 @@ import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
@@ -499,6 +501,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveInvites(impl: TestObserveInvites): ObserveInvites
+
+    @Binds
+    abstract fun bindObserveInviteRecommendations(impl: FakeObserveInviteRecommendations): ObserveInviteRecommendations
 
     @Binds
     abstract fun bindRefreshInvites(impl: TestRefreshInvites): RefreshInvites

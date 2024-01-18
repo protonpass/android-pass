@@ -50,11 +50,30 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> =
         when (featureFlag) {
-            AUTOFILL_DEBUG_MODE -> getFeatureFlag(featureFlag.key) { autofillDebugModeEnabled.value }
-            SHARING_V1 -> getFeatureFlag(featureFlag.key) { sharingV1Enabled.value }
-            SHARING_NEW_USERS -> getFeatureFlag(featureFlag.key) { sharingNewUsersEnabled.value }
-            CREDIT_CARD_AUTOFILL -> getFeatureFlag(featureFlag.key) { creditCardAutofillEnabled.value }
-            PINNING_V1 -> getFeatureFlag(featureFlag.key) { pinningV1Enabled.value }
+            AUTOFILL_DEBUG_MODE -> getFeatureFlag(
+                key = featureFlag.key,
+                defaultValue = featureFlag.isEnabledDefault,
+            ) { autofillDebugModeEnabled.value }
+
+            SHARING_V1 -> getFeatureFlag(
+                key = featureFlag.key,
+                defaultValue = featureFlag.isEnabledDefault,
+            ) { sharingV1Enabled.value }
+
+            SHARING_NEW_USERS -> getFeatureFlag(
+                key = featureFlag.key,
+                defaultValue = featureFlag.isEnabledDefault,
+            ) { sharingNewUsersEnabled.value }
+
+            CREDIT_CARD_AUTOFILL -> getFeatureFlag(
+                key = featureFlag.key,
+                defaultValue = featureFlag.isEnabledDefault,
+            ) { creditCardAutofillEnabled.value }
+
+            PINNING_V1 -> getFeatureFlag(
+                key = featureFlag.key,
+                defaultValue = featureFlag.isEnabledDefault,
+            ) { pinningV1Enabled.value }
         }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =
@@ -82,6 +101,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
     private fun <T> getFeatureFlag(
         key: String?,
+        defaultValue: Boolean,
         prefGetter: FeatureFlagsPreferences.() -> BooleanPrefProto
     ): Flow<T> =
         if (key != null) {
@@ -98,7 +118,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
                         .map { preferences ->
                             fromBooleanPrefProto(
                                 pref = prefGetter(preferences),
-                                default = featureFlag?.value ?: false,
+                                default = featureFlag?.value ?: defaultValue,
                             ) as T
                         }
                 }

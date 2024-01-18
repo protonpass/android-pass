@@ -30,15 +30,16 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.InviteUserMode
+import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.TestObserveVaultById
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.featuresharing.impl.sharingwith.EmailNotValidReason.NotValid
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 
 class SharingWithViewModelTest {
 
@@ -47,6 +48,7 @@ class SharingWithViewModelTest {
     private lateinit var accountManager: TestAccountManager
     private lateinit var emailValidator: TestEmailValidator
     private lateinit var getInviteUserMode: TestGetInviteUserMode
+    private lateinit var observeInviteRecommendations: FakeObserveInviteRecommendations
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
 
     @get:Rule
@@ -59,6 +61,7 @@ class SharingWithViewModelTest {
         accountManager = TestAccountManager()
         getInviteUserMode = TestGetInviteUserMode()
         emailValidator = TestEmailValidator()
+        observeInviteRecommendations = FakeObserveInviteRecommendations()
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID
             get()[ShowEditVaultArgId.key] = false
@@ -68,7 +71,8 @@ class SharingWithViewModelTest {
             accountManager = accountManager,
             savedStateHandleProvider = savedStateHandleProvider,
             getInviteUserMode = getInviteUserMode,
-            emailValidator = emailValidator
+            emailValidator = emailValidator,
+            observeInviteRecommendations = observeInviteRecommendations
         )
     }
 

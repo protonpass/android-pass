@@ -26,8 +26,6 @@ import proton.android.pass.data.impl.local.LocalDataMigrationDataSource
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSourceImpl
 import proton.android.pass.data.impl.local.LocalEventDataSource
 import proton.android.pass.data.impl.local.LocalEventDataSourceImpl
-import proton.android.pass.data.impl.local.LocalFeatureFlagDataSource
-import proton.android.pass.data.impl.local.LocalFeatureFlagDataSourceImpl
 import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.local.LocalInviteDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -72,9 +70,6 @@ abstract class DataLocalDataSourceModule {
 
     @Binds
     abstract fun bindLocalDataMigrationDataSource(impl: LocalDataMigrationDataSourceImpl): LocalDataMigrationDataSource
-
-    @Binds
-    abstract fun bindLocalFeatureFlagDataSource(impl: LocalFeatureFlagDataSourceImpl): LocalFeatureFlagDataSource
 
     @Binds
     abstract fun bindLocalInviteDataSource(impl: LocalInviteDataSourceImpl): LocalInviteDataSource

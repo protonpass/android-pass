@@ -21,31 +21,37 @@ package proton.android.pass.preferences
 enum class FeatureFlag(
     val title: String,
     val description: String,
+    val isEnabledDefault: Boolean,
     val key: String? = null
 ) {
     AUTOFILL_DEBUG_MODE(
         title = "Autofill debug mode",
         description = "Enable autofill debug mode",
-        key = null // Cannot be activated server-side
+        key = null, // Cannot be activated server-side,
+        isEnabledDefault = false,
     ),
     SHARING_V1(
         title = "Sharing (v1)",
         description = "Enable sharing (v1)",
-        key = "PassSharingV1"
+        key = "PassSharingV1",
+        isEnabledDefault = true,
     ),
     SHARING_NEW_USERS(
         title = "Sharing with new users",
         description = "Enable sharing with new users",
-        key = "PassSharingNewUsers"
+        key = "PassSharingNewUsers",
+        isEnabledDefault = true,
     ),
     CREDIT_CARD_AUTOFILL(
         title = "Credit card autofill",
         description = "Enable credit card autofill",
-        key = "PassCreditCardAutofill"
+        key = "PassCreditCardAutofill",
+        isEnabledDefault = true,
     ),
     PINNING_V1(
         title = "Pinning (v1)",
         description = "Enable pinning",
-        key = "PassPinningV1"
+        key = "PassPinningV1",
+        isEnabledDefault = false,
     )
 }

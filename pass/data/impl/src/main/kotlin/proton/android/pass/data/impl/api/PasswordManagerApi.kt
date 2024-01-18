@@ -277,7 +277,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("inviteId") inviteId: String,
     ): CodeOnlyResponse
 
-    @DELETE("$PREFIX/share/{shareId}/invite/recommended_emails")
+    @GET("$PREFIX/share/{shareId}/invite/recommended_emails")
     suspend fun inviteRecommendations(
         @Path("shareId") shareId: String,
         @Query("PlanSince") lastToken: String?,

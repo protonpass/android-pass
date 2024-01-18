@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.db
 
 import me.proton.core.data.room.db.Database
-import proton.android.pass.data.impl.db.dao.FeatureFlagsDao
 import proton.android.pass.data.impl.db.dao.InviteDao
 import proton.android.pass.data.impl.db.dao.InviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
@@ -43,7 +42,6 @@ interface PassDatabase : Database {
     fun searchEntryDao(): SearchEntryDao
     fun planDao(): PlanDao
     fun dataMigrationDao(): PassDataMigrationDao
-    fun featureFlagsDao(): FeatureFlagsDao
     fun inviteDao(): InviteDao
     fun inviteKeyDao(): InviteKeyDao
     fun userAccessDataDao(): UserAccessDataDao

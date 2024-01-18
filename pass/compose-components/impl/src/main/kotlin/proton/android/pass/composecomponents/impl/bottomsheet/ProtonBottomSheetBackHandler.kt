@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,28 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresearchoptions.impl
+package proton.android.pass.composecomponents.impl.bottomsheet
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun SearchOptionsBottomSheet(
-    modifier: Modifier = Modifier,
-    onNavigateEvent: (SearchOptionsNavigation) -> Unit,
-    viewModel: SearchOptionsBottomSheetViewModel = hiltViewModel()
+
+@[Composable OptIn(ExperimentalMaterialApi::class)]
+fun ProtonBottomSheetBackHandler(
+    bottomSheetState: ModalBottomSheetState,
+    coroutineScope: CoroutineScope,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    if (bottomSheetState.isVisible) {
+        BackHandler {
+            coroutineScope.launch {
+                bottomSheetState.hide()
+            }
+        }
+    }
 
-    SearchOptionsBottomSheetContents(
-        modifier = modifier,
-        state = state,
-        onNavigateEvent = onNavigateEvent
-    )
 }
-

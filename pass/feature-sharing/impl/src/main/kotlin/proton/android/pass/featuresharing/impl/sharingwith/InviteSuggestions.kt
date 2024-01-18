@@ -41,8 +41,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultWeak
@@ -57,13 +59,12 @@ import proton.android.pass.featuresharing.impl.R
 @Composable
 fun InviteSuggestions(
     modifier: Modifier = Modifier,
-    recentItems: List<Pair<String, Boolean>>,
-    groupItems: List<Pair<String, Boolean>>,
-    onItemClicked: (String) -> Unit
+    state: SuggestionsUIState.Content,
+    onItemClicked: (String, Boolean) -> Unit,
 ) {
     Column(
-        modifier = modifier.padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(Spacing.small)
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         Text(
             style = ProtonTheme.typography.defaultWeak,
@@ -88,12 +89,13 @@ fun InviteSuggestions(
                             condition = selected,
                             ifTrue = { background(PassTheme.colors.interactionNorm) },
                         ),
-                    text = {
+                    content = {
                         val title = when (tab) {
                             InviteSuggestionTabs.Recents -> stringResource(id = R.string.share_with_recents_title)
-                            InviteSuggestionTabs.GroupSuggestions -> "Family" // this has to come from BE
+                            InviteSuggestionTabs.GroupSuggestions -> state.groupDisplayName
                         }
                         Text(
+                            modifier = Modifier.padding(Spacing.small),
                             text = title,
                             style = PassTheme.typography.body3Norm()
                         )
@@ -105,12 +107,12 @@ fun InviteSuggestions(
         }
         when (InviteSuggestionTabs.values()[selectedIndex]) {
             InviteSuggestionTabs.Recents -> InviteSuggestionList(
-                items = recentItems,
+                items = state.recentEmails,
                 onItemClicked = onItemClicked
             )
 
             InviteSuggestionTabs.GroupSuggestions -> InviteSuggestionList(
-                items = groupItems,
+                items = state.planEmails,
                 onItemClicked = onItemClicked
             )
         }
@@ -121,14 +123,15 @@ fun InviteSuggestions(
 fun InviteSuggestionList(
     modifier: Modifier = Modifier,
     items: List<Pair<String, Boolean>>,
-    onItemClicked: (String) -> Unit
+    onItemClicked: (String, Boolean) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(Spacing.small),
         content = {
             items(items = items, key = { it.first }) { (email, isChecked) ->
                 Row(
-                    modifier = Modifier.clickable { onItemClicked(email) },
+                    modifier = Modifier.clickable { onItemClicked(email, isChecked) },
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
                 ) {
@@ -141,9 +144,14 @@ fun InviteSuggestionList(
                     Text(
                         modifier = Modifier.weight(1f),
                         text = email,
-                        style = ProtonTheme.typography.defaultNorm
+                        style = ProtonTheme.typography.defaultNorm,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
-                    Checkbox(checked = isChecked, onCheckedChange = { })
+                    Checkbox(
+                        checked = isChecked,
+                        onCheckedChange = { onItemClicked(email, isChecked) }
+                    )
                 }
             }
         }
@@ -163,9 +171,15 @@ fun InviteSuggestionsPreview(
     PassTheme(isDark = isDark) {
         Surface {
             InviteSuggestions(
-                recentItems = listOf("test1@proton.me" to true, "test2@proton.me" to false),
-                groupItems = listOf(),
-                onItemClicked = {}
+                state = SuggestionsUIState.Content(
+                    groupDisplayName = "Group",
+                    recentEmails = persistentListOf(
+                        "test1@proton.me" to true,
+                        "test2@proton.me" to false
+                    ),
+                    planEmails = persistentListOf()
+                ),
+                onItemClicked = { _, _ -> },
             )
         }
     }

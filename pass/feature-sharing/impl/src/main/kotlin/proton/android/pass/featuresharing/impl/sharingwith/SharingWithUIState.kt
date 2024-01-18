@@ -19,6 +19,8 @@
 package proton.android.pass.featuresharing.impl.sharingwith
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.domain.Vault
 
 @Stable
@@ -28,5 +30,21 @@ data class SharingWithUIState(
     val emailNotValidReason: EmailNotValidReason? = null,
     val event: SharingWithEvents = SharingWithEvents.Unknown,
     val isLoading: Boolean = false,
-    val showEditVault: Boolean = false
+    val showEditVault: Boolean = false,
+    val suggestionsUIState: SuggestionsUIState = SuggestionsUIState.Initial
 )
+
+sealed interface SuggestionsUIState {
+    @Stable
+    object Initial : SuggestionsUIState
+
+    @Stable
+    object Loading : SuggestionsUIState
+
+    @Stable
+    data class Content(
+        val groupDisplayName: String = "",
+        val recentEmails: ImmutableList<Pair<String, Boolean>> = persistentListOf(),
+        val planEmails: ImmutableList<Pair<String, Boolean>> = persistentListOf(),
+    ) : SuggestionsUIState
+}

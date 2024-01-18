@@ -41,6 +41,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.domain.ItemState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
@@ -91,6 +92,12 @@ fun AliasDetail(
                 initialValue = ModalBottomSheetValue.Hidden,
                 skipHalfExpanded = true
             )
+
+            ProtonBottomSheetBackHandler(
+                bottomSheetState = bottomSheetState,
+                coroutineScope = scope,
+            )
+
             PassModalBottomSheetLayout(
                 sheetState = bottomSheetState,
                 sheetContent = {

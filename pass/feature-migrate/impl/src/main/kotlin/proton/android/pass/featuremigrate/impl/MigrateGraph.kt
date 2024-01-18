@@ -18,7 +18,6 @@
 
 package proton.android.pass.featuremigrate.impl
 
-import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.domain.ItemId
@@ -38,14 +37,17 @@ sealed interface MigrateNavigation {
     data class VaultSelectedForMigrateItem(
         val destShareId: ShareId,
     ) : MigrateNavigation
+
     data class VaultSelectedForMigrateAll(
         val sourceShareId: ShareId,
         val destShareId: ShareId
     ) : MigrateNavigation
+
     data class ItemMigrated(
         val shareId: ShareId,
         val itemId: ItemId
     ) : MigrateNavigation
+
     object VaultMigrated : MigrateNavigation
     object Close : MigrateNavigation
 }
@@ -118,14 +120,12 @@ fun NavGraphBuilder.migrateGraph(
     navigation: (MigrateNavigation) -> Unit,
 ) {
     bottomSheet(MigrateSelectVault) {
-        BackHandler { navigation(MigrateNavigation.Close) }
         MigrateSelectVaultBottomSheet(
             onNavigate = navigation,
         )
     }
 
     bottomSheet(MigrateConfirmVault) {
-        BackHandler { navigation(MigrateNavigation.Close) }
         MigrateConfirmVaultBottomSheet(
             navigation = navigation
         )

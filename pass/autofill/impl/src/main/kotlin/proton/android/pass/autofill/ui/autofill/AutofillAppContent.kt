@@ -74,7 +74,7 @@ fun AutofillAppContent(
         bottomSheetState = bottomSheetState,
         coroutineScope = coroutineScope,
     )
-    
+
     val appNavigator = rememberAppNavigator(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )

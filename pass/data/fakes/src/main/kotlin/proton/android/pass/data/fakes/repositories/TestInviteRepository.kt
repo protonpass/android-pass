@@ -42,8 +42,7 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
             recommendedEmails = listOf(),
             planInternalName = "",
             groupDisplayName = "",
-            planRecommendedEmails = listOf(),
-            planRecommendedEmailsNextToken = ""
+            planRecommendedEmails = listOf()
         )
     )
 

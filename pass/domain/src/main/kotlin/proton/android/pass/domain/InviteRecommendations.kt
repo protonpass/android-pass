@@ -22,6 +22,5 @@ data class InviteRecommendations(
     val recommendedEmails: List<String>,
     val planInternalName: String,
     val groupDisplayName: String,
-    val planRecommendedEmails: List<String>,
-    val planRecommendedEmailsNextToken: String
+    val planRecommendedEmails: List<String>
 )

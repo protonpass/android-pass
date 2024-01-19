@@ -204,7 +204,8 @@ fun lastPageUiState(): OnBoardingPageUiState =
             )
         },
         mainButton = stringResource(R.string.on_boarding_last_page_button),
-        showSkipButton = false
+        showSkipButton = false,
+        showVideoTutorialButton = true
     )
 
 class ThemeAndOnBoardingUiStatePreviewProvider :

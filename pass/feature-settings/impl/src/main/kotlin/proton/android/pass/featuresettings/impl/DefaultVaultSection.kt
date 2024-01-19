@@ -60,7 +60,7 @@ fun DefaultVaultSection(
                 trailingIcon = {
                     Icon(
                         painter = painterResource(PassR.drawable.ic_chevron_tiny_right),
-                        contentDescription = stringResource(PassR.string.setting_option_icon_content_description),
+                        contentDescription = null,
                         tint = PassTheme.colors.textHint
                     )
                 },

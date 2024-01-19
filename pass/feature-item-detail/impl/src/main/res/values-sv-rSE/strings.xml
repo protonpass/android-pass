@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Fel vid borttagning av objekt</string>
   <string name="item_restored_message">Objekt återställt</string>
   <string name="item_restored_message_error">Fel vid återställning av objekt</string>
+  <string name="item_pinned_message">Item successfully pinned</string>
+  <string name="item_pinned_message_error">Det gick inte att fästa detta objekt</string>
+  <string name="item_unpinned_message">Objekt lossat</string>
+  <string name="item_unpinned_message_error">Det gick inte att lossa detta objekt</string>
   <string name="login_item_generate_totp_error">Gick inte generera 2FA-kod</string>
   <string name="login_item_view_alias_button">Visa alias</string>
   <string name="field_username">Användarnamn eller e-postadress</string>

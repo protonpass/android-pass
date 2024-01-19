@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">ელემენტის წაშლის შეცდომა</string>
   <string name="item_restored_message">ელემენტი აღდგენილია</string>
   <string name="item_restored_message_error">ელემენტის აღდგენის შეცდომა</string>
+  <string name="item_pinned_message">ელემენტი წარმატებით მიმაგრდა</string>
+  <string name="item_pinned_message_error">ელემენტის მიმაგრების შეცდომა</string>
+  <string name="item_unpinned_message">ელემენტის მოხსნა წარმატებულია</string>
+  <string name="item_unpinned_message_error">ელემენტის მოხსნის შეცდომა</string>
   <string name="login_item_generate_totp_error">2FA კოდის გენერაციის შეცდომა</string>
   <string name="login_item_view_alias_button">ფსევდონიმის ნახვა</string>
   <string name="field_username">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>

@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Geen overeenkomende inloggegevens gevonden</string>
   <string name="error_loading_items">Kan de items niet laden</string>
   <string name="topbar_search_query">Zoeken in alle kluizen…</string>
+  <string name="topbar_search_pinned_items">Search in Pinned…</string>
   <string name="topbar_search_query_oldest_vaults">Zoeken in uw oudste kluizen...</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Zoeken...</string>
   <string name="inline_suggestions_open_app">Open Proton Pass</string>

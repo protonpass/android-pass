@@ -8,6 +8,7 @@
   <string name="sort_by_modification_date">Ostatnie</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Wszystko</string>
+  <string name="item_list_header_pinned_search_results">Przypięte</string>
   <string name="item_list_header_logins_type">Dane logowania</string>
   <string name="item_list_header_aliases_type">Aliasy</string>
   <string name="item_list_header_notes_type">Notatki</string>
@@ -22,6 +23,8 @@
   <string name="bottomsheet_confirm_button">Potwierdź</string>
   <string name="bottomsheet_cancel_button">Anuluj</string>
   <string name="bottomsheet_move_to_trash">Przenieś do Kosza</string>
+  <string name="bottomsheet_pin_item">Kod PIN</string>
+  <string name="bottomsheet_unpin_item">Odepnij</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otwórz menu akcji elementu</string>
   <string name="action_upgrade_now">Ulepsz teraz</string>
@@ -82,6 +85,8 @@
   <string name="hide_advanced_options">Ukryj opcje zaawansowane</string>
   <!-- Labels -->
   <string name="label_password_strength_strong">Silne</string>
-  <string name="label_password_strength_vulnerable">Słabe</string>
+  <string name="label_password_strength_vulnerable">Bardzo słabe</string>
   <string name="label_password_strength_weak">Słabe</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">Zobacz wszystko</string>
 </resources>

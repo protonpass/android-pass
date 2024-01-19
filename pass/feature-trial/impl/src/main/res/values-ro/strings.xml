@@ -7,9 +7,9 @@
   <string name="trial_feature_4">Câmpuri personale</string>
   <string name="trial_button_text">Modificare</string>
   <plurals name="trial_days_left">
-    <item quantity="one">A mai rămas o zi cu funcții premium</item>
-    <item quantity="few">Au mai rămas %d zile cu funcții premium</item>
-    <item quantity="other">Au mai rămas %d de zile cu funcții premium</item>
+    <item quantity="one">A mai rămas o zi cu funcții premium.</item>
+    <item quantity="few">Au mai rămas %d zile cu funcții premium.</item>
+    <item quantity="other">Au mai rămas %d de zile cu funcții premium.</item>
   </plurals>
   <string name="trial_learn_more">Detalii</string>
 </resources>

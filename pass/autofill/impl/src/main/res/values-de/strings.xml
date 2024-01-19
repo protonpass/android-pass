@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Keine passenden Zugangsdaten gefunden</string>
   <string name="error_loading_items">Einträge konnten nicht geladen werden. </string>
   <string name="topbar_search_query">In allen Tresoren suchen…</string>
+  <string name="topbar_search_pinned_items">Suche in angehefteten Einträgen…</string>
   <string name="topbar_search_query_oldest_vaults">In den ältesten Tresoren suchen…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Suchen…</string>
   <string name="inline_suggestions_open_app">Proton Pass öffnen</string>

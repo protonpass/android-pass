@@ -111,4 +111,6 @@
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Dit item zal worden verplaatst naar de nieuwe kluis.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade om meer kluizen aan te maken</string>
   <string name="sharing_from_item_vault_limit_reached">U heeft de kluislimiet bereikt.</string>
+  <string name="share_with_suggestions_title">Suggestions</string>
+  <string name="share_with_recents_title">Recents</string>
 </resources>

@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Eroare ștergere articol.</string>
   <string name="item_restored_message">Articolul s-a restaurat.</string>
   <string name="item_restored_message_error">Eroare restaurare articol.</string>
+  <string name="item_pinned_message">Elementul a fost fixat.</string>
+  <string name="item_pinned_message_error">A apărut o eroare la fixarea acestui articol.</string>
+  <string name="item_unpinned_message">Fixarea elementului s-a anulat.</string>
+  <string name="item_unpinned_message_error">A apărut o eroare la anularea fixării acestui articol.</string>
   <string name="login_item_generate_totp_error">Eroare generare cod A2F.</string>
   <string name="login_item_view_alias_button">Afișare alias</string>
   <string name="field_username">Numele de utilizator sau adresa de e-mail</string>

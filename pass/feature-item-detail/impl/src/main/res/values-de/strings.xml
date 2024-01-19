@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Fehler beim Löschen des Eintrags</string>
   <string name="item_restored_message">Eintrag wiederhergestellt</string>
   <string name="item_restored_message_error">Fehler beim Wiederherstellen des Eintrags</string>
+  <string name="item_pinned_message">Eintrag erfolgreich angeheftet</string>
+  <string name="item_pinned_message_error">Beim Anheften dieses Eintrags ist ein Fehler aufgetreten.</string>
+  <string name="item_unpinned_message">Eintrag erfolgreich losgelöst</string>
+  <string name="item_unpinned_message_error">Fehler beim Loslösen dieses Eintrags.</string>
   <string name="login_item_generate_totp_error">Fehler beim Generieren des 2FA-Codes</string>
   <string name="login_item_view_alias_button">Alias anzeigen</string>
   <string name="field_username">Benutzername oder E-Mail-Adresse</string>

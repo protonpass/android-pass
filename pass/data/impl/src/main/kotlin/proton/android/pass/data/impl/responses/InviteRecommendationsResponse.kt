@@ -46,8 +46,8 @@ data class InviteRecommendationResponse(
     fun toDomain(): InviteRecommendations =
         InviteRecommendations(
             recommendedEmails = recommendedEmails,
-            planInternalName = planInternalName ?: "",
-            groupDisplayName = groupDisplayName ?: "",
+            planInternalName = planInternalName.orEmpty(),
+            groupDisplayName = groupDisplayName.orEmpty(),
             planRecommendedEmails = planRecommendedEmails
         )
 }

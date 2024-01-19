@@ -18,18 +18,25 @@
 
 package proton.android.pass.featuresharing.impl.sharingsummary
 
-import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
+import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
 
+@Immutable
 sealed interface SharingSummaryEvent {
+    @Immutable
     object Unknown : SharingSummaryEvent
+
+    @Immutable
     object Shared : SharingSummaryEvent
 }
 
+@Immutable
 data class SharingSummaryUIState(
-    val email: String = "",
+    val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
     val vaultWithItemCount: VaultWithItemCount? = null,
-    val sharingType: SharingType = SharingType.Read,
     val isLoading: Boolean = false,
     val event: SharingSummaryEvent = SharingSummaryEvent.Unknown
 )

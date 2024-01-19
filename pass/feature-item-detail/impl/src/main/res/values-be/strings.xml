@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Памылка выдалення элемента</string>
   <string name="item_restored_message">Элемент адноўлены</string>
   <string name="item_restored_message_error">Памылка аднаўлення элемента</string>
+  <string name="item_pinned_message">Элемент паспяхова замацаваны</string>
+  <string name="item_pinned_message_error">Памылка замацавання гэтага элемента</string>
+  <string name="item_unpinned_message">Элемент паспяхова адмацаваны</string>
+  <string name="item_unpinned_message_error">Памылка адмацавання гэтага элемента</string>
   <string name="login_item_generate_totp_error">Памылка генерацыі кода 2ФА</string>
   <string name="login_item_view_alias_button">Паглядзець псеўданім</string>
   <string name="field_username">Імя карыстальніка або адрас электроннай пошты</string>

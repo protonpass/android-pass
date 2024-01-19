@@ -8,6 +8,8 @@
     <string name="account_delete_account_icon_content_description">Delete account button</string>
     <string name="account_sign_out">Sign out</string>
     <string name="account_sign_out_icon_content_description">Sign out button</string>
+    <string name="account_manage_account">Manage account</string>
+    <string name="account_manage_account_icon_content_description">Manage account button</string>
     <string name="account_manage_subscription">Manage subscription</string>
     <string name="account_get_user_info_error">Could not retrieve the user information</string>
     <string name="manage_subscription_icon_content_description">Manage subscription button</string>

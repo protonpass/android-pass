@@ -60,8 +60,7 @@
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">検索アイコン</string>
   <!-- Setting option -->
-  <string name="setting_option_icon_content_description">設定アイコン</string>
-  <!-- Select Vault BottomSheet -->
+    <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="other">%d 項目</item>
   </plurals>

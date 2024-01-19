@@ -22,27 +22,36 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
@@ -53,8 +62,8 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
-import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.loading.Loading
@@ -100,10 +109,14 @@ fun SharingWithContent(
             )
         }
     ) {
+
+        var parentHeight: Dp by remember { mutableStateOf(Dp.Unspecified) }
+        val density = LocalDensity.current
         Column(
             modifier = Modifier
                 .padding(it)
-                .padding(Spacing.medium),
+                .padding(Spacing.medium)
+                .onSizeChanged { parentHeight = with(density) { it.height.toDp() } },
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
@@ -111,38 +124,44 @@ fun SharingWithContent(
                 style = PassTheme.typography.heroNorm()
             )
 
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            Box(
+                modifier = Modifier
+                    .heightIn(min = 0.dp, max = parentHeight * RATIO_HEIGHT_EMAIL_LIST)
+                    .verticalScroll(rememberScrollState())
             ) {
-                state.enteredEmails.forEachIndexed { idx, email ->
-                    Row(
-                        modifier = Modifier
-                            .padding(
-                                top = Spacing.small,
-                                bottom = Spacing.small,
-                                end = Spacing.small
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    state.enteredEmails.forEachIndexed { idx, email ->
+                        Row(
+                            modifier = Modifier
+                                .padding(
+                                    top = Spacing.small,
+                                    bottom = Spacing.small,
+                                    end = Spacing.small
+                                )
+                                .roundedContainer(
+                                    backgroundColor = PassTheme.colors.interactionNormMinor1,
+                                    borderColor = Color.Transparent,
+                                )
+                                .clickable { onEmailClick(idx) }
+                                .padding(Spacing.small),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = email,
+                                style = ProtonTheme.typography.defaultNorm,
                             )
-                            .roundedContainer(
-                                backgroundColor = PassTheme.colors.interactionNormMinor1,
-                                borderColor = Color.Transparent,
-                            )
-                            .clickable { onEmailClick(idx) }
-                            .padding(Spacing.small),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = email,
-                            style = ProtonTheme.typography.defaultNorm,
-                        )
 
-                        if (state.selectedEmailIndex.value() == idx) {
-                            Icon(
-                                modifier = Modifier.padding(start = Spacing.small),
-                                painter = painterResource(id = CoreR.drawable.ic_proton_cross_circle),
-                                tint = PassTheme.colors.textNorm,
-                                contentDescription = null
-                            )
+                            if (state.selectedEmailIndex.value() == idx) {
+                                Icon(
+                                    modifier = Modifier.padding(start = Spacing.small),
+                                    painter = painterResource(id = CoreR.drawable.ic_proton_cross_circle),
+                                    tint = PassTheme.colors.textNorm,
+                                    contentDescription = null
+                                )
+                            }
                         }
                     }
                 }
@@ -199,3 +218,5 @@ fun SharingWithContent(
         }
     }
 }
+
+private const val RATIO_HEIGHT_EMAIL_LIST = 0.2f

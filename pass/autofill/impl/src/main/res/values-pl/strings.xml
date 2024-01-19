@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Nie znaleziono pasujących danych logowania</string>
   <string name="error_loading_items">Nie można załadować elementów</string>
   <string name="topbar_search_query">Przeszukaj wszystkie sejfy…</string>
+  <string name="topbar_search_pinned_items">Przeszukaj przypięte…</string>
   <string name="topbar_search_query_oldest_vaults">Przeszukaj najstarsze sejfy…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Szukaj…</string>
   <string name="inline_suggestions_open_app">Otwórz Proton Pass</string>

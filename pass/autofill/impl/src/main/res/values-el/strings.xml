@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Δε βρέθηκαν διαπιστευτήρια που να ταιριάζουν</string>
   <string name="error_loading_items">Αδυναμία φόρτωσης των στοιχείων</string>
   <string name="topbar_search_query">Αναζήτηση σε όλες τις κρύπτες...</string>
+  <string name="topbar_search_pinned_items">Αναζήτηση στα Καρφιτσωμένα…</string>
   <string name="topbar_search_query_oldest_vaults">Αναζήτηση στις παλαιότερες κρύπτες σας…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Αναζήτηση…</string>
   <string name="inline_suggestions_open_app">Άνοιγμα Proton Pass</string>

@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Terdapat kesalahan dalam menghapus berkas</string>
   <string name="item_restored_message">Item dipulihkan</string>
   <string name="item_restored_message_error">Terdapat kesalahan dalam memulihkan item</string>
+  <string name="item_pinned_message">Item berhasil disematkan</string>
+  <string name="item_pinned_message_error">Terdapat kesalahan dalam menyematkan item ini</string>
+  <string name="item_unpinned_message">Sematan item berhasil dilepas</string>
+  <string name="item_unpinned_message_error">Terdapat kesalahan dalam melepas sematan item ini</string>
   <string name="login_item_generate_totp_error">Terdapat kesalahan dalam menghasilkan kode 2FA</string>
   <string name="login_item_view_alias_button">Tampilkan alias</string>
   <string name="field_username">Nama pengguna atau alamat surel</string>

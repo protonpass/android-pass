@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">刪除項目錯誤</string>
   <string name="item_restored_message">項目已還原</string>
   <string name="item_restored_message_error">還原項目錯誤</string>
+  <string name="item_pinned_message">Item successfully pinned</string>
+  <string name="item_pinned_message_error">There was an error pinning this item</string>
+  <string name="item_unpinned_message">Item successfully unpinned</string>
+  <string name="item_unpinned_message_error">There was an error unpinning this item</string>
   <string name="login_item_generate_totp_error">雙重驗證生成條碼錯誤</string>
   <string name="login_item_view_alias_button">檢視別名</string>
   <string name="field_username">使用者名稱或電子郵件位址</string>

@@ -23,8 +23,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
@@ -186,13 +188,47 @@ class InviteRepositoryImpl @Inject constructor(
         lastToken: String?,
         startsWith: String?
     ): Flow<InviteRecommendations> = flow {
+        observeInviteRecommendationsRecursive(
+            userId = userId,
+            shareId = shareId,
+            lastToken = lastToken,
+            startsWith = startsWith,
+            cumulativePlanRecommendedEmails = mutableSetOf()
+        )
+    }.flowOn(Dispatchers.IO)
+
+    private suspend fun FlowCollector<InviteRecommendations>.observeInviteRecommendationsRecursive(
+        userId: UserId,
+        shareId: ShareId,
+        lastToken: String?,
+        startsWith: String?,
+        cumulativePlanRecommendedEmails: MutableSet<String>
+    ) {
         val result = remoteDataSource.fetchInviteRecommendations(
+            userId = userId,
+            shareId = shareId,
+            lastToken = lastToken,
+            startsWith = startsWith
+        )
+
+        cumulativePlanRecommendedEmails.addAll(result.planRecommendedEmails)
+
+        val modifiedResult = result.copy(
+            planRecommendedEmails = cumulativePlanRecommendedEmails.toList()
+        )
+        emit(modifiedResult.toDomain())
+
+        if (result.planRecommendedEmailsNextToken.isNullOrBlank() || result.planRecommendedEmails.isEmpty()) {
+            return
+        }
+
+        observeInviteRecommendationsRecursive(
             userId,
             shareId,
-            lastToken,
-            startsWith
+            result.planRecommendedEmailsNextToken,
+            startsWith,
+            cumulativePlanRecommendedEmails
         )
-        emit(result.toDomain())
     }
 
     private fun InviteEntity.toDomain(encryptionContext: EncryptionContext): PendingInvite {

@@ -20,7 +20,6 @@ package proton.android.pass.featureprofile.impl
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +33,7 @@ import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 
 @Composable
@@ -41,7 +41,8 @@ fun HelpCenterProfileSection(
     modifier: Modifier = Modifier,
     onFeedbackClick: () -> Unit,
     onImportExportClick: () -> Unit,
-    onRateAppClick: () -> Unit
+    onRateAppClick: () -> Unit,
+    onTutorialClick: () -> Unit,
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
@@ -55,13 +56,18 @@ fun HelpCenterProfileSection(
                 text = stringResource(R.string.profile_option_feedback),
                 onClick = onFeedbackClick
             )
-            Divider(color = PassTheme.colors.inputBorderNorm)
+            PassDivider()
             SettingOption(
                 text = stringResource(R.string.profile_option_import_export),
                 onClick = onImportExportClick
             )
+            PassDivider()
+            SettingOption(
+                text = stringResource(R.string.profile_option_tutorial),
+                onClick = onTutorialClick
+            )
             if (SHOW_RATING_OPTION) {
-                Divider(color = PassTheme.colors.inputBorderNorm)
+                PassDivider()
                 SettingOption(
                     text = stringResource(R.string.profile_option_rating),
                     onClick = onRateAppClick
@@ -81,7 +87,8 @@ fun HelpCenterSectionPreview(
             HelpCenterProfileSection(
                 onFeedbackClick = {},
                 onImportExportClick = {},
-                onRateAppClick = {}
+                onRateAppClick = {},
+                onTutorialClick = {},
             )
         }
     }

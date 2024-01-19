@@ -116,6 +116,7 @@ fun ProfileContent(
                     onFeedbackClick = { onEvent(ProfileUiEvent.OnFeedbackClick) },
                     onImportExportClick = { onEvent(ProfileUiEvent.OnImportExportClick) },
                     onRateAppClick = { onEvent(ProfileUiEvent.OnRateAppClick) },
+                    onTutorialClick = { onEvent(ProfileUiEvent.OnTutorialClick) },
                 )
                 Box(
                     modifier = Modifier

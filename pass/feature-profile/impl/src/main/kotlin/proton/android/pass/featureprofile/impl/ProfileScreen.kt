@@ -84,6 +84,7 @@ fun ProfileScreen(
                     viewModel.onToggleBiometricSystemLock(it.value)
 
                 ProfileUiEvent.OnChangePinClick -> onNavigateEvent(ProfileNavigation.EnterPin)
+                ProfileUiEvent.OnTutorialClick -> openWebsite(context, PASS_TUTORIAL)
             }
         }
     )
@@ -98,3 +99,6 @@ const val PASS_IMPORT = "https://proton.me/support/pass-import"
 
 @VisibleForTesting
 const val PASS_STORE = "https://play.google.com/store/apps/details?id=proton.android.pass"
+
+@VisibleForTesting
+const val PASS_TUTORIAL = "https://www.youtube.com/watch?v=Nm4DCAjePOM"

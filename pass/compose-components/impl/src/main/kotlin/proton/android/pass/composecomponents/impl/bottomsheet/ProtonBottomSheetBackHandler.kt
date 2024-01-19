@@ -24,7 +24,10 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import proton.android.pass.log.api.PassLogger
+import kotlin.coroutines.cancellation.CancellationException
 
+private const val TAG = "ProtonBottomSheetBackHandler"
 
 @[Composable OptIn(ExperimentalMaterialApi::class)]
 fun ProtonBottomSheetBackHandler(
@@ -34,9 +37,12 @@ fun ProtonBottomSheetBackHandler(
     if (bottomSheetState.isVisible) {
         BackHandler {
             coroutineScope.launch {
-                bottomSheetState.hide()
+                try {
+                    bottomSheetState.hide()
+                } catch (e: CancellationException) {
+                    PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
+                }
             }
         }
     }
-
 }

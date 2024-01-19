@@ -21,6 +21,7 @@ package proton.android.pass.featuresharing.impl.sharingsummary
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -42,8 +43,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentError
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentSuccess
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.VaultNotFound
-import proton.android.pass.featuresharing.impl.extensions.toSharingType
-import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
+import proton.android.pass.featuresharing.impl.common.toUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -83,8 +83,6 @@ class SharingSummaryViewModel @Inject constructor(
         isLoadingStateFlow,
         eventFlow
     ) { addresses, vaultResult, isLoadingState, event ->
-        val address = addresses.firstOrNull()
-
         val vaultWithItemCount = when (vaultResult) {
             is LoadingResult.Success -> vaultResult.data
             is LoadingResult.Error -> {
@@ -97,9 +95,8 @@ class SharingSummaryViewModel @Inject constructor(
         val isLoading = vaultResult is LoadingResult.Loading ||
             isLoadingState is IsLoadingState.Loading
         SharingSummaryUIState(
-            email = address?.address ?: "",
+            addresses = addresses.map { it.toUiState() }.toPersistentList(),
             vaultWithItemCount = vaultWithItemCount,
-            sharingType = address?.shareRole?.toSharingType() ?: SharingType.Read,
             isLoading = isLoading,
             event = event
         )

@@ -81,6 +81,7 @@ fun AccountContent(
                     onSubscriptionClick = { onNavigate(AccountNavigation.Subscription) }
                 )
             }
+            ManageAccount(onManageAccountClick = { onNavigate(AccountNavigation.ManageAccount) })
             SignOut(onSignOutClick = { onNavigate(AccountNavigation.SignOut) })
             DeleteAccount(onDeleteAccountClick = onDeleteAccountClick)
             Text(

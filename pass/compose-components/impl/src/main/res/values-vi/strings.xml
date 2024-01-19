@@ -60,8 +60,7 @@
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Biểu tượng tìm kiếm</string>
   <!-- Setting option -->
-  <string name="setting_option_icon_content_description">Biểu tượng tùy chọn</string>
-  <!-- Select Vault BottomSheet -->
+    <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="other">%d nội dung</item>
   </plurals>

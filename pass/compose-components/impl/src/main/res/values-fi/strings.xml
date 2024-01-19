@@ -61,8 +61,7 @@
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Hakukuvake</string>
   <!-- Setting option -->
-  <string name="setting_option_icon_content_description">Asetuskuvake</string>
-  <!-- Select Vault BottomSheet -->
+    <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">Yksi kohde</item>
     <item quantity="other">%d kohdetta</item>

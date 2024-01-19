@@ -20,6 +20,8 @@ package proton.android.pass.featuresharing.impl.sharingsummary
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -38,6 +40,7 @@ import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentError
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentSuccess
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.VaultNotFound
+import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -80,10 +83,12 @@ class SharingSummaryViewModelTest {
     fun `test view model initialization`() = runTest {
         viewModel.state.test {
             val initialState = awaitItem()
-            assertThat(initialState.email).isEqualTo(TEST_EMAIL)
-            assertThat(initialState.sharingType).isEqualTo(SharingType.Read)
+
             assertThat(initialState.vaultWithItemCount).isNull()
             assertThat(initialState.isLoading).isTrue()
+
+            val expected = AddressPermissionUiState(TEST_EMAIL, SharingType.Read)
+            assertThat(initialState.addresses).isEqualTo(listOf(expected))
         }
     }
 
@@ -94,10 +99,11 @@ class SharingSummaryViewModelTest {
 
         viewModel.state.test {
             val initialState = awaitItem()
+
+            val addresses = listOf(AddressPermissionUiState(TEST_EMAIL, SharingType.Read))
             val expectedState = SharingSummaryUIState(
-                email = TEST_EMAIL,
+                addresses = addresses.toPersistentList(),
                 vaultWithItemCount = vaultData,
-                sharingType = SharingType.Read,
                 isLoading = false,
             )
             assertThat(initialState).isEqualTo(expectedState)
@@ -112,9 +118,13 @@ class SharingSummaryViewModelTest {
         viewModel.state.test {
             val initialState = awaitItem()
             val expectedState = SharingSummaryUIState(
-                email = TEST_EMAIL,
+                addresses = persistentListOf(
+                    AddressPermissionUiState(
+                        TEST_EMAIL,
+                        SharingType.Read
+                    )
+                ),
                 vaultWithItemCount = null,
-                sharingType = SharingType.Read,
                 isLoading = false,
             )
             assertThat(initialState).isEqualTo(expectedState)

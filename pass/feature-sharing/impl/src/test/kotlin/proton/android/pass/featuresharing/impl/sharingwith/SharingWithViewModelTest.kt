@@ -29,9 +29,10 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
-import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
+import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.fakes.usecases.TestObserveVaultById
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
@@ -73,10 +74,9 @@ class SharingWithViewModelTest {
 
     @Test
     fun `onEmailChange should update emailState correctly`() = runTest {
-        viewModel.onEmailChange("test@example.com")
-        viewModel.state.test {
-            assertThat(awaitItem().email).isEqualTo("test@example.com")
-        }
+        val testEmail = "test@email.test"
+        viewModel.onEmailChange(testEmail)
+        assertThat(viewModel.editingEmail).isEqualTo(testEmail)
     }
 
     @Test
@@ -86,6 +86,28 @@ class SharingWithViewModelTest {
         viewModel.state.test {
             assertThat(awaitItem().emailNotValidReason).isNull()
         }
+    }
+
+    @Test
+    fun `onEmailSubmit with valid email should add the email to the list`() = runTest {
+        val email = "test@example.com"
+        viewModel.onEmailChange(email)
+        viewModel.onEmailSubmit()
+        viewModel.state.test {
+            assertThat(awaitItem().enteredEmails).isEqualTo(listOf(email))
+        }
+        assertThat(viewModel.editingEmail).isEmpty()
+    }
+
+    @Test
+    fun `onContinueClick with valid email should send it to repository`() = runTest {
+        val email = "test@example.com"
+        viewModel.onEmailChange(email)
+        viewModel.onEmailSubmit()
+        viewModel.onContinueClick()
+
+        val memory = bulkInviteRepository.observeAddresses().first()
+        assertThat(memory).isEqualTo(listOf(AddressPermission(email, ShareRole.Read)))
     }
 
     @Test
@@ -112,9 +134,9 @@ class SharingWithViewModelTest {
         viewModel.onEmailChange(invitedEmail)
 
         viewModel.onEmailSubmit()
+        viewModel.onContinueClick()
         viewModel.state.test {
             val currentState = awaitItem()
-            assertThat(currentState.email).isEqualTo(invitedEmail)
             assertThat(currentState.vault).isEqualTo(testVault)
             assertThat(currentState.emailNotValidReason).isNull()
             assertThat(currentState.event).isEqualTo(

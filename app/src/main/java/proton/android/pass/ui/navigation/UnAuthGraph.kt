@@ -18,7 +18,6 @@
 
 package proton.android.pass.ui.navigation
 
-import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.featureaccount.impl.AccountNavigation
@@ -41,7 +40,6 @@ internal const val UN_AUTH_GRAPH = "un_auth_graph"
 fun NavGraphBuilder.unAuthGraph(
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit,
-    dismissBottomSheet: (() -> Unit) -> Unit,
 ) {
     navigation(
         route = UN_AUTH_GRAPH,
@@ -83,12 +81,6 @@ fun NavGraphBuilder.unAuthGraph(
         }
 
         bottomSheet(EnterPin) {
-            BackHandler {
-                dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
-            }
-
             EnterPinBottomsheet(
                 onNavigate = {
                     when (it) {

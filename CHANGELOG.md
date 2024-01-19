@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.16.3 (2024-01-19)
+
+### Other
+
+- Add tutorial link to onboarding.
+
 ## 1.16.2 (2024-01-19)
 
 ### Other

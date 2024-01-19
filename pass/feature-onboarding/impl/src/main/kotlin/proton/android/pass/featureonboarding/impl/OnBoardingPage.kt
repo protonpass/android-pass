@@ -18,6 +18,8 @@
 
 package proton.android.pass.featureonboarding.impl
 
+import androidx.annotation.VisibleForTesting
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,19 +28,25 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.theme.headlineNorm
+import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 
 @Composable
@@ -107,8 +115,32 @@ fun OnBoardingPage(
                         maxLines = 1
                     )
                 }
-            } else {
-                Spacer(modifier = Modifier.height(48.dp))
+            }
+            if (onBoardingPageData.showVideoTutorialButton) {
+                val context = LocalContext.current
+                ProtonTextButton(
+                    modifier = Modifier
+                        .padding(32.dp, 0.dp)
+                        .fillMaxWidth(),
+                    onClick = { openWebsite(context, PASS_TUTORIAL) }
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.on_boarding_tutorial),
+                            textAlign = TextAlign.Center,
+                            style = ProtonTheme.typography.defaultNorm,
+                            color = PassTheme.colors.interactionNormMajor1,
+                        )
+                        Icon(
+                            painter = painterResource(R.drawable.ic_pass_youtube),
+                            contentDescription = null,
+                            tint = PassTheme.colors.interactionNormMajor1
+                        )
+                    }
+                }
             }
             Spacer(
                 modifier = Modifier
@@ -118,6 +150,9 @@ fun OnBoardingPage(
         }
     }
 }
+
+@VisibleForTesting
+const val PASS_TUTORIAL = "https://www.youtube.com/watch?v=Nm4DCAjePOM"
 
 object OnBoardingPageTestTag {
     const val mainButton = "mainButton"

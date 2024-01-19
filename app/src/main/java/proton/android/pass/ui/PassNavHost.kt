@@ -59,7 +59,6 @@ fun PassUnAuthNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit,
-    dismissBottomSheet: (() -> Unit) -> Unit,
 ) {
     NavHost(
         modifier = modifier,
@@ -69,7 +68,6 @@ fun PassUnAuthNavHost(
         unAuthGraph(
             appNavigator = appNavigator,
             onNavigate = onNavigate,
-            dismissBottomSheet = dismissBottomSheet,
         )
     }
 }

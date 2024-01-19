@@ -45,8 +45,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.subheadlineNorm
-import me.proton.core.presentation.R as CoreR
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
@@ -61,6 +61,7 @@ import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.SharingNavigation
+import me.proton.core.presentation.R as CoreR
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -132,7 +133,7 @@ fun SharingWithContent(
                     ) {
                         Text(
                             text = email,
-                            style = ProtonTheme.typography.subheadlineNorm,
+                            style = ProtonTheme.typography.defaultNorm,
                         )
 
                         if (state.selectedEmailIndex.value() == idx) {

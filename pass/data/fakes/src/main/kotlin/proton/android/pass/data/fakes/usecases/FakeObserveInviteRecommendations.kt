@@ -34,8 +34,7 @@ class FakeObserveInviteRecommendations @Inject constructor() : ObserveInviteReco
             recommendedEmails = emptyList(),
             planInternalName = "",
             groupDisplayName = "",
-            planRecommendedEmails = emptyList(),
-            planRecommendedEmailsNextToken = ""
+            planRecommendedEmails = emptyList()
         )
     )
 

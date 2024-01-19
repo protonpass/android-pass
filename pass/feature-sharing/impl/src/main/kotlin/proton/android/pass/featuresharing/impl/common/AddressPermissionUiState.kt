@@ -16,19 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresharing.impl.sharingpermissions
+package proton.android.pass.featuresharing.impl.common
 
-import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
+import androidx.compose.runtime.Immutable
+import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.featuresharing.impl.extensions.toSharingType
+import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 
-sealed interface SharingPermissionsUiEvent {
+@Immutable
+data class AddressPermissionUiState(
+    val address: String,
+    val permission: SharingType
+)
 
-    object OnSubmit : SharingPermissionsUiEvent
-
-    object OnSetAllPermissionsClick : SharingPermissionsUiEvent
-
-    @JvmInline
-    value class OnPermissionChangeClick(
-        val address: AddressPermissionUiState
-    ) : SharingPermissionsUiEvent
-
-}
+fun AddressPermission.toUiState() = AddressPermissionUiState(
+    address = address,
+    permission = shareRole.toSharingType()
+)

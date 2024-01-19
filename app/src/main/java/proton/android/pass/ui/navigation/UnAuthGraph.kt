@@ -76,7 +76,6 @@ fun NavGraphBuilder.unAuthGraph(
                         AccountNavigation.SignOut -> {}
                         AccountNavigation.Subscription -> {}
                         AccountNavigation.Upgrade -> {}
-                        AccountNavigation.ManageAccount -> {}
                     }
                 }
             )

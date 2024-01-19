@@ -35,20 +35,19 @@ data class InviteRecommendationResponse(
     @SerialName("RecommendedEmails")
     val recommendedEmails: List<String>,
     @SerialName("PlanInternalName")
-    val planInternalName: String,
+    val planInternalName: String?,
     @SerialName("GroupDisplayName")
-    val groupDisplayName: String,
+    val groupDisplayName: String?,
     @SerialName("PlanRecommendedEmails")
     val planRecommendedEmails: List<String>,
     @SerialName("PlanRecommendedEmailsNextToken")
-    val planRecommendedEmailsNextToken: String
+    val planRecommendedEmailsNextToken: String?
 ) {
     fun toDomain(): InviteRecommendations =
         InviteRecommendations(
             recommendedEmails = recommendedEmails,
-            planInternalName = planInternalName,
-            groupDisplayName = groupDisplayName,
-            planRecommendedEmails = planRecommendedEmails,
-            planRecommendedEmailsNextToken = planRecommendedEmailsNextToken
+            planInternalName = planInternalName ?: "",
+            groupDisplayName = groupDisplayName ?: "",
+            planRecommendedEmails = planRecommendedEmails
         )
 }

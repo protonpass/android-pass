@@ -28,13 +28,13 @@ import org.junit.Test
 import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
+import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.TestObserveVaultById
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
-import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
@@ -66,8 +66,7 @@ class SharingWithViewModelTest {
             observeVaultById = observeVaultById,
             savedStateHandleProvider = savedStateHandleProvider,
             emailValidator = emailValidator,
-            observeInviteRecommendations = observeInviteRecommendations
-            emailValidator = emailValidator,
+            observeInviteRecommendations = observeInviteRecommendations,
             bulkInviteRepository = bulkInviteRepository
         )
     }
@@ -84,7 +83,7 @@ class SharingWithViewModelTest {
         viewModel.onEmailChange("test@example.com")
         viewModel.onEmailSubmit()
         viewModel.state.test {
-            assertThat(awaitItem().emailNotValidReason).isNull()
+            assertThat(awaitItem().showEmailNotValidError).isFalse()
         }
     }
 
@@ -118,7 +117,7 @@ class SharingWithViewModelTest {
             viewModel.state.test {
                 skipItems(1)
                 viewModel.onEmailSubmit()
-                assertThat(awaitItem().emailNotValidReason).isEqualTo(NotValid)
+                assertThat(awaitItem().showEmailNotValidError).isTrue()
             }
         }
 
@@ -138,7 +137,7 @@ class SharingWithViewModelTest {
         viewModel.state.test {
             val currentState = awaitItem()
             assertThat(currentState.vault).isEqualTo(testVault)
-            assertThat(currentState.emailNotValidReason).isNull()
+            assertThat(currentState.showEmailNotValidError).isFalse()
             assertThat(currentState.event).isEqualTo(
                 SharingWithEvents.NavigateToPermissions(shareId = ShareId(SHARE_ID))
             )

@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">No se encontraron credenciales coincidentes</string>
   <string name="error_loading_items">No se pudieron cargar los elementos</string>
   <string name="topbar_search_query">Buscar en todas las bóvedas…</string>
+  <string name="topbar_search_pinned_items">Buscar en Anclados...</string>
   <string name="topbar_search_query_oldest_vaults">Buscar en sus antiguas bóvedas…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Buscar…</string>
   <string name="inline_suggestions_open_app">Abrir Proton Pass</string>

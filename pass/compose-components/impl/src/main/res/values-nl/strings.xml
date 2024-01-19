@@ -8,6 +8,7 @@
   <string name="sort_by_modification_date">Meest recent</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Alle</string>
+  <string name="item_list_header_pinned_search_results">Pinned</string>
   <string name="item_list_header_logins_type">Logins</string>
   <string name="item_list_header_aliases_type">Aliassen</string>
   <string name="item_list_header_notes_type">Notities</string>
@@ -20,6 +21,8 @@
   <string name="bottomsheet_confirm_button">Bevestigen</string>
   <string name="bottomsheet_cancel_button">Annuleer</string>
   <string name="bottomsheet_move_to_trash">Verplaats naar prullenbak</string>
+  <string name="bottomsheet_pin_item">Pin</string>
+  <string name="bottomsheet_unpin_item">Unpin</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>
@@ -80,4 +83,6 @@
   <string name="label_password_strength_strong">Strong</string>
   <string name="label_password_strength_vulnerable">Vulnerable</string>
   <string name="label_password_strength_weak">Weak</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">See all</string>
 </resources>

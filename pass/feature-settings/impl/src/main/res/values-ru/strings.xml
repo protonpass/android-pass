@@ -7,7 +7,7 @@
   <string name="settings_authentication_section_title">Аутентификация</string>
   <string name="settings_authentication_preference_title">Разблокировка отпечатком пальца</string>
   <string name="settings_authentication_preference_description_enabled">South Carolina</string>
-  <string name="settings_authentication_preference_description_no_fingerprint">You cannot require your fingerprint for interacting with the app as there are no fingerprints registered on this device.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">Вы не можете требовать отпечатка для взаимодействия с приложением, поскольку на устройстве не зарегистрировано отпечатков.</string>
   <string name="settings_appearance_preference_title">Тема</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Как в системе</string>
   <string name="settings_appearance_preference_subtitle_light">Светлая тема</string>
@@ -30,13 +30,13 @@
   <string name="settings_clear_icon_cache_error">Не могу очистить кэш иконок</string>
   <string name="settings_share_telemetry">Анонимно делиться данными об использовании</string>
   <string name="settings_share_crashes">Делиться анонимными отчётами об ошибках</string>
-  <string name="settings_preference_updated">Your preference has been updated</string>
-  <string name="settings_default_vault_updated">Your default vault has been updated</string>
-  <string name="settings_default_vault_update_error">Could not update the default vault</string>
+  <string name="settings_preference_updated">Настройки были обновлены</string>
+  <string name="settings_default_vault_updated">Хранилище по умолчанию было обновлено</string>
+  <string name="settings_default_vault_update_error">Хранилище по умолчанию не может быть обновлено</string>
   <string name="settings_default_vault_section_title">Хранилища</string>
   <string name="settings_default_vault_vault_selector_title">Хранилище по умолчанию</string>
   <string name="settings_default_vault_section_subtitle">Хранилище, в котором по умолчанию будут создаваться ваши элементы.</string>
-  <string name="settings_default_vault_disabled_reason">You cannot write to this vault.</string>
+  <string name="settings_default_vault_disabled_reason">Вы не можете писать в это хранилище.</string>
   <string name="view_logs_title">Просмотр журналов</string>
   <string name="clipboard_bottomsheet_title">Буфер обмена</string>
   <string name="clipboard_option_clear_clipboard_label">Очистить буфер обмена</string>

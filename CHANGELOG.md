@@ -6,6 +6,13 @@
 
 ### Other
 
+## 1.16.2 (2024-01-19)
+
+### Other
+
+- Add manage account link.
+- Add tutorial link.
+
 ## 1.16.1 (2024-01-17)
 
 ### Fixes :bug:

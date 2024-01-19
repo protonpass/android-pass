@@ -29,6 +29,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
 
@@ -62,19 +63,15 @@ class SharingPermissionsViewModelTest {
     fun `test initial state`() = runTest {
         viewModel.state.test {
             val initialState = awaitItem()
-            assertThat(initialState.email).isEqualTo(TEST_EMAIL)
-            assertThat(initialState.vaultName).isNull()
-            assertThat(initialState.sharingType).isEqualTo(SharingType.Read)
-            assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Unknown)
-        }
-    }
 
-    @Test
-    fun `test onPermissionChange`() = runTest {
-        viewModel.onPermissionChange(TEST_EMAIL, SharingType.Write)
-        viewModel.state.test {
-            val initialState = awaitItem()
-            assertThat(initialState.sharingType).isEqualTo(SharingType.Write)
+            assertThat(initialState.vaultName).isNull()
+            assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Unknown)
+
+            val expected = AddressPermissionUiState(
+                address = TEST_EMAIL,
+                permission = SharingType.Read
+            )
+            assertThat(initialState.addresses).isEqualTo(listOf(expected))
         }
     }
 

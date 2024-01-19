@@ -189,6 +189,5 @@
     <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
     <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
     <string name="sharing_edit_permissions_remove_user">Remove user</string>
->>>>>>> 00d9b8284 (feat(sharing): invite multiple users set permissions ui)
 
 </resources>

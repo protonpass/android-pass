@@ -72,10 +72,9 @@ fun InviteSuggestions(
         )
         var selectedIndex by remember { mutableStateOf(0) }
         TabRow(
+            modifier = Modifier.clip(CircleShape),
             selectedTabIndex = selectedIndex,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
-            modifier = Modifier
-                .clip(CircleShape),
             indicator = { },
             divider = { }
         ) {
@@ -107,11 +106,13 @@ fun InviteSuggestions(
         }
         when (InviteSuggestionTabs.values()[selectedIndex]) {
             InviteSuggestionTabs.Recents -> InviteSuggestionList(
+                modifier = Modifier.weight(1f),
                 items = state.recentEmails,
                 onItemClicked = onItemClicked
             )
 
             InviteSuggestionTabs.GroupSuggestions -> InviteSuggestionList(
+                modifier = Modifier.weight(1f),
                 items = state.planEmails,
                 onItemClicked = onItemClicked
             )

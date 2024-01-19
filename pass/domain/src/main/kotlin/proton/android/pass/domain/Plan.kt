@@ -34,42 +34,73 @@ sealed interface PlanLimit {
     object Unlimited : PlanLimit {
         override fun limitOrNull() = null
     }
+
     data class Limited(val limit: Int) : PlanLimit {
         override fun limitOrNull() = limit
     }
+
 }
 
-sealed interface PlanType {
+sealed class PlanType(
+    val internalName: String,
+    val humanReadableName: String,
+) {
 
-    fun humanReadableName(): String
-    fun internalName(): String
+    data class Free(
+        private val name: String,
+        private val displayName: String,
+    ) : PlanType(
+        internalName = name,
+        humanReadableName = displayName,
+    )
 
-    data class Free(val internal: String, val humanReadable: String) : PlanType {
-        override fun humanReadableName(): String = humanReadable
-        override fun internalName(): String = internal
-    }
-
-    data class Unknown(val internal: String, val humanReadable: String) : PlanType {
-        override fun humanReadableName(): String = humanReadable
-        override fun internalName(): String = internal
-    }
+    data class Unknown(
+        private val name: String,
+        private val displayName: String,
+    ) : PlanType(
+        internalName = name,
+        humanReadableName = displayName,
+    )
 
     data class Trial(
-        val internal: String,
-        val humanReadable: String,
+        private val name: String,
+        private val displayName: String,
         val remainingDays: Int
-    ) : PlanType {
-        override fun humanReadableName(): String = humanReadable
-        override fun internalName(): String = internal
-    }
+    ) : PlanType(
+        internalName = name,
+        humanReadableName = displayName,
+    )
 
-    data class Paid(val internal: String, val humanReadable: String) : PlanType {
-        override fun humanReadableName(): String = humanReadable
-        override fun internalName(): String = internal
+    sealed class Paid(
+        internalName: String,
+        humanReadableName: String,
+    ) : PlanType(
+        internalName = internalName,
+        humanReadableName = humanReadableName,
+    ) {
+
+        data class Business(
+            private val name: String,
+            private val displayName: String,
+        ) : Paid(
+            internalName = name,
+            humanReadableName = displayName,
+        )
+
+        data class Plus(
+            private val name: String,
+            private val displayName: String,
+        ) : Paid(
+            internalName = name,
+            humanReadableName = displayName,
+        )
+
     }
 
     companion object {
+        const val PLAN_NAME_BUSINESS = "business"
         const val PLAN_NAME_FREE = "free"
         const val PLAN_NAME_PLUS = "plus"
     }
+
 }

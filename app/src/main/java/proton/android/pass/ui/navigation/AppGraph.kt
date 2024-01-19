@@ -290,10 +290,6 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                SearchOptionsNavigation.Dismiss -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
-
                 SearchOptionsNavigation.BulkActions -> dismissBottomSheet {
                     appNavigator.navigateBackWithResult(
                         key = HOME_ENABLE_BULK_ACTIONS_KEY,

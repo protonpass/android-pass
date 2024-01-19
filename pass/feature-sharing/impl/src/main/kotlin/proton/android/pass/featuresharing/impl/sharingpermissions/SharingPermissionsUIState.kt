@@ -21,6 +21,7 @@ package proton.android.pass.featuresharing.impl.sharingpermissions
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
 
 enum class SharingType {
     Read,
@@ -38,12 +39,6 @@ data class SharingPermissionsHeaderState(
         )
     }
 }
-
-@Immutable
-data class AddressPermissionUiState(
-    val address: String,
-    val permission: SharingType
-)
 
 @Immutable
 data class SharingPermissionsUIState(

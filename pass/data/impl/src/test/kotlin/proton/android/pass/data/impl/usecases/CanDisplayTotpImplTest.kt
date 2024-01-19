@@ -29,15 +29,15 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
 import proton.android.pass.data.impl.local.ItemWithTotp
-import proton.android.pass.test.TestConstants
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.test.TestConstants
 import kotlin.time.Duration.Companion.days
 
-class CanDisplayTotpImplTest {
+internal class CanDisplayTotpImplTest {
 
     private lateinit var instance: CanDisplayTotpImpl
     private lateinit var getUserPlan: TestGetUserPlan
@@ -124,7 +124,7 @@ class CanDisplayTotpImplTest {
     }
 
     companion object {
-        private val PAID_PLAN = PlanType.Paid("", "")
+        private val PAID_PLAN = PlanType.Paid.Plus("", "")
         private val TRIAL_PLAN = PlanType.Trial("", "", 1)
     }
 

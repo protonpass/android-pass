@@ -100,11 +100,10 @@ class TelemetryRepositoryTest {
 
     @Test
     fun `sendEvents can work with empty results`() = runTest {
-        // GIVEN
+        val plan = PlanType.Paid.Plus("plan", "plan")
         accountManager.sendPrimaryUserId(UserId("123"))
-        getUserPlan.setResult(Result.success(planWithType(PlanType.Paid("plan", "plan"))))
+        getUserPlan.setResult(Result.success(planWithType(plan)))
 
-        // WHEN
         instance.sendEvents()
 
         // THEN
@@ -140,9 +139,8 @@ class TelemetryRepositoryTest {
 
         // Verify removals
         val operations = localDataSource.getOperationMemory()
-        val removalOperations = operations
-            .filter { it is TestLocalTelemetryDataSource.Operation.RemoveInRange }
-            .map { it as TestLocalTelemetryDataSource.Operation.RemoveInRange }
+        val removalOperations =
+            operations.filterIsInstance<TestLocalTelemetryDataSource.Operation.RemoveInRange>()
         assertThat(removalOperations.size).isEqualTo(2)
 
         assertThat(removalOperations[0].min).isEqualTo(0)
@@ -193,7 +191,7 @@ class TelemetryRepositoryTest {
         // Verify removals
         val operations = localDataSource.getOperationMemory()
         val removalOperations = operations
-            .filter { it is TestLocalTelemetryDataSource.Operation.RemoveInRange }
+            .filterIsInstance<TestLocalTelemetryDataSource.Operation.RemoveInRange>()
         assertThat(removalOperations).isEmpty() // No removals should have been called
     }
 
@@ -204,7 +202,7 @@ class TelemetryRepositoryTest {
         event: String
     ) {
         accountManager.sendPrimaryUserId(UserId(userId))
-        getUserPlan.setResult(Result.success(planWithType(PlanType.Paid(plan, plan))))
+        getUserPlan.setResult(Result.success(planWithType(PlanType.Paid.Plus(plan, plan))))
 
         repeat(numItems) { idx ->
             localDataSource.store(

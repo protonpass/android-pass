@@ -31,7 +31,7 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 
-class GetSuggestedCreditCardsItemsTest {
+internal class GetSuggestedCreditCardsItemsTest {
 
     private lateinit var instance: GetSuggestedCreditCardItemsImpl
 
@@ -68,7 +68,7 @@ class GetSuggestedCreditCardsItemsTest {
 
     @Test
     fun `when plan is paid and no credit cards, show empty list`() = runTest {
-        getUserPlan.setResult(Result.success(buildPlan(PlanType.Paid("", ""))))
+        getUserPlan.setResult(Result.success(buildPlan(PlanType.Paid.Plus("", ""))))
         observeActiveItems.sendItemList(emptyList())
 
         val result = instance().first()
@@ -80,7 +80,7 @@ class GetSuggestedCreditCardsItemsTest {
 
     @Test
     fun `when plan is paid and credit cards, show credit cards sorted by last used`() = runTest {
-        getUserPlan.setResult(Result.success(buildPlan(PlanType.Paid("", ""))))
+        getUserPlan.setResult(Result.success(buildPlan(PlanType.Paid.Plus("", ""))))
 
         val item1 = buildItem()
         val item2 = buildItem()

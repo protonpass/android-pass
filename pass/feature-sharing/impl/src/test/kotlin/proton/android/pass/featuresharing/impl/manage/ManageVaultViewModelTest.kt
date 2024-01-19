@@ -26,16 +26,17 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestConfirmNewUserInvite
+import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultMembers
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 
-class ManageVaultViewModelTest {
+internal class ManageVaultViewModelTest {
 
     private lateinit var instance: ManageVaultViewModel
 
@@ -52,7 +53,8 @@ class ManageVaultViewModelTest {
                 get()[CommonNavArgId.ShareId.key] = SHARE_ID
             },
             snackbarDispatcher = TestSnackbarDispatcher(),
-            confirmNewUserInvite = confirmNewUserInvite
+            confirmNewUserInvite = confirmNewUserInvite,
+            getUserPlan = TestGetUserPlan(),
         )
     }
 

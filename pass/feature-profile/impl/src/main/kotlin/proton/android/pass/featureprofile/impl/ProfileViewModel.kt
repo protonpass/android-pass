@@ -140,7 +140,7 @@ class ProfileViewModel @Inject constructor(
                 when (val plan = info.plan.planType) {
                     is PlanType.Free -> PlanInfo.Hide to info.isUpgradeAvailable
                     is PlanType.Paid -> PlanInfo.Unlimited(
-                        planName = plan.humanReadable,
+                        planName = plan.humanReadableName,
                         accountType = AccountType.Unlimited
                     ) to false
 

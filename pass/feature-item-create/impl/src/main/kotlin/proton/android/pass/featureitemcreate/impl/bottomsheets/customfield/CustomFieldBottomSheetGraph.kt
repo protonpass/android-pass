@@ -41,6 +41,7 @@ object AddCustomFieldBottomSheet : NavItem(
     baseRoute = "item/create/customfield/add/bottomsheet",
     navItemType = NavItemType.Bottomsheet
 )
+
 object CustomFieldOptionsBottomSheet : NavItem(
     baseRoute = "item/create/customfield/options/bottomsheet",
     navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
@@ -64,7 +65,6 @@ enum class CustomFieldType {
 }
 
 sealed interface AddCustomFieldNavigation {
-    object Close : AddCustomFieldNavigation
     object AddText : AddCustomFieldNavigation
     object AddHidden : AddCustomFieldNavigation
     object AddTotp : AddCustomFieldNavigation
@@ -82,15 +82,14 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
     bottomSheet(AddCustomFieldBottomSheet) {
         AddCustomFieldBottomSheet {
             when (it) {
-                is AddCustomFieldNavigation.Close -> {
-                    onNavigate(BaseLoginNavigation.Close)
-                }
                 is AddCustomFieldNavigation.AddText -> {
                     onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Text))
                 }
+
                 is AddCustomFieldNavigation.AddHidden -> {
                     onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Hidden))
                 }
+
                 is AddCustomFieldNavigation.AddTotp -> {
                     onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Totp))
                 }
@@ -105,9 +104,11 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
                     is CustomFieldOptionsNavigation.EditCustomField -> {
                         onNavigate(BaseLoginNavigation.EditCustomField(it.title, it.index))
                     }
+
                     CustomFieldOptionsNavigation.RemoveCustomField -> {
                         onNavigate(BaseLoginNavigation.RemovedCustomField)
                     }
+
                     CustomFieldOptionsNavigation.Close -> {
                         onNavigate(BaseLoginNavigation.Close)
                     }

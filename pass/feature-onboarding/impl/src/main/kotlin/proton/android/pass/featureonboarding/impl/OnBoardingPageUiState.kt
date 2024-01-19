@@ -27,5 +27,6 @@ data class OnBoardingPageUiState(
     val subtitle: String,
     val image: @Composable ColumnScope.() -> Unit,
     val mainButton: String,
-    val showSkipButton: Boolean
+    val showSkipButton: Boolean,
+    val showVideoTutorialButton: Boolean = false
 )

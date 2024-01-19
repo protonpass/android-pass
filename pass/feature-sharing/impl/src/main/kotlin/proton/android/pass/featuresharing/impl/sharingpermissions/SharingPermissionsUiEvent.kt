@@ -18,6 +18,8 @@
 
 package proton.android.pass.featuresharing.impl.sharingpermissions
 
+import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
+
 sealed interface SharingPermissionsUiEvent {
 
     object OnSubmit : SharingPermissionsUiEvent

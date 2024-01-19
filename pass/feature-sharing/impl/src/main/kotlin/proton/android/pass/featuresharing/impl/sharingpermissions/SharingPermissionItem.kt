@@ -38,6 +38,7 @@ import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
+import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
 import proton.android.pass.featuresharing.impl.extensions.toStringResource
 
 @Composable

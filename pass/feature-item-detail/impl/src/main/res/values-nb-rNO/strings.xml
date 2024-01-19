@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Feil ved sletting av element</string>
   <string name="item_restored_message">Element gjenopprettet</string>
   <string name="item_restored_message_error">Feil ved gjenoppretting av element</string>
+  <string name="item_pinned_message">Element festet</string>
+  <string name="item_pinned_message_error">Feil ved festing av dette elementet</string>
+  <string name="item_unpinned_message">Element løsnet</string>
+  <string name="item_unpinned_message_error">Feil ved løsing av dette elementet</string>
   <string name="login_item_generate_totp_error">Feil ved generering av 2FA-kode</string>
   <string name="login_item_view_alias_button">Vis alias</string>
   <string name="field_username">Brukernavn eller e-postadresse</string>

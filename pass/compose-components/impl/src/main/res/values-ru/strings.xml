@@ -8,6 +8,7 @@
   <string name="sort_by_modification_date">Самые новые</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Все</string>
+  <string name="item_list_header_pinned_search_results">Закреплённые</string>
   <string name="item_list_header_logins_type">Имена пользователей</string>
   <string name="item_list_header_aliases_type">Псевдонимы</string>
   <string name="item_list_header_notes_type">Примечания</string>
@@ -22,6 +23,8 @@
   <string name="bottomsheet_confirm_button">Подтвердить</string>
   <string name="bottomsheet_cancel_button">Отменить</string>
   <string name="bottomsheet_move_to_trash">Переместить в корзину</string>
+  <string name="bottomsheet_pin_item">Закрепить</string>
+  <string name="bottomsheet_unpin_item">Открепить</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
@@ -84,4 +87,6 @@
   <string name="label_password_strength_strong">Надежный</string>
   <string name="label_password_strength_vulnerable">Уязвимый</string>
   <string name="label_password_strength_weak">Слабый</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">Увидеть все</string>
 </resources>

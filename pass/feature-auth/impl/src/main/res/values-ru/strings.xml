@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="enter_your_pin_code">Введите PIN-код.</string>
+  <string name="enter_your_pin_code">Введите PIN-код</string>
   <string name="unlock">Разблокировать</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Неправильный PIN-код. Осталась %d попытка.</item>
@@ -30,12 +30,12 @@
   <string name="auth_master_password_label">Мастер-пароль</string>
   <string name="auth_action_reveal_password">Показать мастер-пароль</string>
   <string name="auth_action_conceal_password">Скрыть мастер-пароль</string>
-  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Вместо этого ввести PIN</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Вместо этого ввести PIN-код</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Вместо этого ввести отпечаток ключа</string>
   <string name="auth_unlock_button">Разблокировать</string>
   <string name="auth_error_verifying_password">Возникла ошибка при проверке вашего пароля</string>
   <string name="auth_error_empty_password">Пароль не может быть пустым</string>
-  <string name="auth_error_pin_cannot_be_empty">Пин-код не может быть пустым</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN-код не может быть пустым</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Неправильный пароль. Осталась %d попытка</item>
     <item quantity="few">Неправильный пароль. Осталось %d попытки</item>

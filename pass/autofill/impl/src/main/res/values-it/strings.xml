@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Nessuna credenziale corrispondente trovata</string>
   <string name="error_loading_items">Impossibile caricare gli elementi</string>
   <string name="topbar_search_query">Ricerca in tutte le casseforti…</string>
+  <string name="topbar_search_pinned_items">Cerca negli elementi fissati…</string>
   <string name="topbar_search_query_oldest_vaults">Ricerca nelle tue casseforti più vecchie…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Ricerca…</string>
   <string name="inline_suggestions_open_app">Apri Proton Pass</string>

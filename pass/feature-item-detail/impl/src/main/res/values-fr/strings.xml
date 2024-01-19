@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Une erreur s\'est produite pendant la suppression de l\'élément.</string>
   <string name="item_restored_message">L\'élément a été restauré.</string>
   <string name="item_restored_message_error">Une erreur s\'est produite pendant la restauration de l\'élément.</string>
+  <string name="item_pinned_message">L\'élément a été épinglé.</string>
+  <string name="item_pinned_message_error">Une erreur est survenue lors de l\'épinglage de cet élément</string>
+  <string name="item_unpinned_message">L\'élément a été désépinglé.</string>
+  <string name="item_unpinned_message_error">Une erreur est survenue lors du retrait de l\'épinglage de cet élément.</string>
   <string name="login_item_generate_totp_error">Une erreur s\'est produite pendant la génération du code A2F.</string>
   <string name="login_item_view_alias_button">Afficher l\'alias</string>
   <string name="field_username">Nom d\'utilisateur ou adresse e-mail</string>

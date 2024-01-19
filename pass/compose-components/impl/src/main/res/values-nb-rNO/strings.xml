@@ -8,6 +8,7 @@
   <string name="sort_by_modification_date">Nyeste</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Alle</string>
+  <string name="item_list_header_pinned_search_results">Festet</string>
   <string name="item_list_header_logins_type">Pålogginger</string>
   <string name="item_list_header_aliases_type">Aliaser</string>
   <string name="item_list_header_notes_type">Notater</string>
@@ -20,6 +21,8 @@
   <string name="bottomsheet_confirm_button">Bekreft</string>
   <string name="bottomsheet_cancel_button">Avbryt</string>
   <string name="bottomsheet_move_to_trash">Flytt til papirkurven</string>
+  <string name="bottomsheet_pin_item">Fest</string>
+  <string name="bottomsheet_unpin_item">Løs</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åpne elementhandlingsmenyen</string>
   <string name="action_upgrade_now">Oppgrader nå</string>
@@ -80,4 +83,6 @@
   <string name="label_password_strength_strong">Sterk</string>
   <string name="label_password_strength_vulnerable">Sårbar</string>
   <string name="label_password_strength_weak">Svak</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">Se alle</string>
 </resources>

@@ -31,8 +31,8 @@
   <string name="settings_share_telemetry">익명 사용 데이터 공유</string>
   <string name="settings_share_crashes">익명 충돌 보고서 공유</string>
   <string name="settings_preference_updated">설정이 변경되었습니다</string>
-  <string name="settings_default_vault_updated">기본 금고를 업데이트 했습니다.</string>
-  <string name="settings_default_vault_update_error">기본 금고 업데이트할 수 없음.</string>
+  <string name="settings_default_vault_updated">기본 금고를 업데이트함</string>
+  <string name="settings_default_vault_update_error">기본 금고를 업데이트할 수 없음</string>
   <string name="settings_default_vault_section_title">금고</string>
   <string name="settings_default_vault_vault_selector_title">기본 금고</string>
   <string name="settings_default_vault_section_subtitle">기본적으로 항목이 생성될 금고입니다.</string>

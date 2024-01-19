@@ -16,14 +16,14 @@
   <string name="settings_error_performing_operation">Памылка выканання аперацыі</string>
   <string name="settings_option_clipboard">Буфер абмену</string>
   <string name="settings_application_section_title">Праграма</string>
-  <string name="settings_option_view_logs">Паглядзець журналы</string>
+  <string name="settings_option_view_logs">Паглядзець журнал</string>
   <string name="settings_option_force_sync">Прымусовая сінхранізацыя</string>
   <string name="settings_about_section_title">Аб праграме</string>
   <string name="settings_option_privacy_policy">Палітыка прыватнасці</string>
   <string name="settings_option_terms_of_service">Умовы абслугоўвання</string>
   <string name="settings_privacy_section_title">Прыватнасць</string>
   <string name="settings_use_favicons_preference_title">Выкарыстоўваць значок вэб-сайта</string>
-  <string name="settings_use_favicons_preference_subtitle">Вырашыце, ці хочаце вы прагледзець значкі вэб-сайтаў на вашых элементах.</string>
+  <string name="settings_use_favicons_preference_subtitle">Вырашыце, ці хочаце вы праглядаць значкі вэб-сайтаў на вашых элементах.</string>
   <string name="settings_allow_screenshots_preference_title">Дазволіць здымкі экрана</string>
   <string name="settings_allow_screenshots_preference_subtitle">Калі ўключана, вы зможаце рабіць здымкі экрана праграмы.</string>
   <string name="settings_clear_icon_cache_success">Кэш значка ачышчаны</string>
@@ -37,7 +37,7 @@
   <string name="settings_default_vault_vault_selector_title">Прадвызначанае сховішча</string>
   <string name="settings_default_vault_section_subtitle">Сховішча, дзе вашы элементы будуць стварацца прадвызначана.</string>
   <string name="settings_default_vault_disabled_reason">У вас няма магчымасці рабіць запіс у гэта сховішча.</string>
-  <string name="view_logs_title">Паглядзець журналы</string>
+  <string name="view_logs_title">Паглядзець журнал</string>
   <string name="clipboard_bottomsheet_title">Буфер абмену</string>
   <string name="clipboard_option_clear_clipboard_label">Ачыстка буфера абмену</string>
   <string name="clipboard_option_copy_totp_code">Капіяваць коды аўтэнтыфікацыі</string>

@@ -42,12 +42,12 @@
   <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Cannot retrieve the invited user information</string>
   <string name="share_permissions_title">Установить уровень доступа</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s приглашает вас получить доступ к элементам в</string>
-  <string name="sharing_join_shared_vault">Join and sync</string>
+  <string name="sharing_join_shared_vault">Присоединиться и синхронизировать</string>
   <string name="sharing_reject_invitation">Отклонить приглашение</string>
   <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Поздравляем, ваш доступ подтвержден</string>
   <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Просмотр общего хранилища</string>
   <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Закрыть</string>
-  <string name="sharing_snackbar_get_invite_error">Could not get invite</string>
+  <string name="sharing_snackbar_get_invite_error">Не могу получить приглашение</string>
   <string name="sharing_snackbar_invite_accepted">Приглашение принято</string>
   <string name="sharing_snackbar_invite_accept_error">Ошибка при принятии приглашения</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Не удалось принять приглашение, так как вы достигли предела объема хранилища</string>
@@ -56,18 +56,18 @@
   <string name="sharing_snackbar_vault_not_found">Хранилище не может быть найдено</string>
   <string name="sharing_snackbar_invite_sent_success">Приглашение отправлено</string>
   <string name="sharing_snackbar_invite_sent_error">Не могу отправить приглашение</string>
-  <string name="sharing_snackbar_get_vault_members_error">Could not get vault members</string>
-  <string name="sharing_snackbar_change_permission_success">Permissions changed</string>
-  <string name="sharing_snackbar_change_permission_error">Could not change the permissions</string>
-  <string name="sharing_snackbar_remove_member_success">Member removed from the vault</string>
-  <string name="sharing_snackbar_remove_member_error">Could not remove from the vault</string>
+  <string name="sharing_snackbar_get_vault_members_error">Не могу получить участников хранилища</string>
+  <string name="sharing_snackbar_change_permission_success">Разрешения изменены</string>
+  <string name="sharing_snackbar_change_permission_error">Не могу изменить разрешения</string>
+  <string name="sharing_snackbar_remove_member_success">Участник удален из хранилища</string>
+  <string name="sharing_snackbar_remove_member_error">Не могу удалить из хранилища</string>
   <string name="share_summary_title">Review and share</string>
   <string name="share_summary_vault">%s хранилище</string>
   <string name="share_summary_share_vault">Поделиться хранилищем</string>
   <string name="share_summary_email_title">Поделиться с</string>
   <string name="share_summary_vault_title">Хранилище</string>
   <string name="share_summary_permissions_title">Уровень доступа</string>
-  <string name="share_manage_vault_share_with_more_people">Share with more people</string>
+  <string name="share_manage_vault_share_with_more_people">Делитесь с большим числом людей</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Осталось %d приглашение</item>
     <item quantity="few">Осталось %d приглашения</item>
@@ -90,22 +90,22 @@
   <string name="share_role_can_edit">Может редактировать</string>
   <string name="share_role_admin">Администратор</string>
   <string name="share_role_owner">Владелец</string>
-  <string name="sharing_bottomsheet_transfer_ownership">Transfer ownership</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Передать права владельца</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можете передать последнее принадлежащее вам хранилище.</string>
   <string name="sharing_bottomsheet_remove_access">Отозвать доступ</string>
   <string name="sharing_bottomsheet_resend_invite">Отправить повторное приглашение</string>
   <string name="sharing_bottomsheet_cancel_invite">Отменить приглашение</string>
-  <string name="sharing_transfer_ownership_confirm_title">Transfer ownership</string>
+  <string name="sharing_transfer_ownership_confirm_title">Передать права владельца</string>
   <string name="sharing_transfer_ownership_confirm_message">Передать право собственности на это хранилище %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Приглашение отменено</string>
-  <string name="sharing_snackbar_cancel_invite_error">Error cancelling invite</string>
-  <string name="sharing_snackbar_resend_invite_success">Invite resent</string>
-  <string name="sharing_snackbar_resend_invite_error">Error resending invite</string>
+  <string name="sharing_snackbar_cancel_invite_error">Ошибка отмены приглашения</string>
+  <string name="sharing_snackbar_resend_invite_success">Приглашение отправлено повторно</string>
+  <string name="sharing_snackbar_resend_invite_error">Ошибка при повторной отправке приглашения</string>
   <string name="sharing_snackbar_confirm_invite_success">Invite confirmed</string>
   <string name="sharing_snackbar_confirm_invite_error">Ошибка подтверждения приглашения</string>
-  <string name="sharing_snackbar_too_many_invites_sent">Address has been invited too many times</string>
-  <string name="sharing_snackbar_transfer_ownership_success">Ownership transferred</string>
-  <string name="sharing_snackbar_transfer_ownership_error">Error transferring ownership</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Адрес приглашался слишком много раз</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Владение передано</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Ошибка при передаче владения</string>
   <string name="sharing_invites_info_dialog_title">Ограничение количества участников</string>
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. У вас осталось еще %2$d приглашений.</string>
   <string name="sharing_limit_reached">Это хранилище достигло предела количества участников и приглашений.</string>
@@ -119,4 +119,6 @@
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Этот элемент будет перенесен в новое хранилище.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Улучшите для создания дополнительных хранилищ</string>
   <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
+  <string name="share_with_suggestions_title">Рекомендации</string>
+  <string name="share_with_recents_title">Недавние</string>
 </resources>

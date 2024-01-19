@@ -8,6 +8,7 @@
   <string name="sort_by_modification_date">가장 최근순</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">전체</string>
+  <string name="item_list_header_pinned_search_results">고정됨</string>
   <string name="item_list_header_logins_type">로그인</string>
   <string name="item_list_header_aliases_type">별칭</string>
   <string name="item_list_header_notes_type">메모</string>
@@ -19,6 +20,8 @@
   <string name="bottomsheet_confirm_button">확인</string>
   <string name="bottomsheet_cancel_button">취소</string>
   <string name="bottomsheet_move_to_trash">휴지통으로 이동</string>
+  <string name="bottomsheet_pin_item">고정</string>
+  <string name="bottomsheet_unpin_item">고정 해제</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">항목을 액션 매뉴서 열기</string>
   <string name="action_upgrade_now">지금 업그레이드</string>
@@ -78,4 +81,6 @@
   <string name="label_password_strength_strong">강함</string>
   <string name="label_password_strength_vulnerable">취약함</string>
   <string name="label_password_strength_weak">약함</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">모두 보기</string>
 </resources>

@@ -8,6 +8,7 @@
     <string name="profile_security">Security</string>
     <string name="profile_option_feedback">Feedback</string>
     <string name="profile_option_import_export">Import/export</string>
+    <string name="profile_option_tutorial">Tutorial</string>
     <string name="profile_option_rating">Rate app</string>
     <string name="profile_option_autofill">Autofill</string>
     <string name="profile_option_autofill_subtitle">Automatically fill in your usernames and passwords.</string>

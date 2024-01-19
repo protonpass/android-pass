@@ -61,7 +61,7 @@ class TelemetryRepositoryImpl @Inject constructor(
     override suspend fun sendEvents() {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
         val planName = requireNotNull(getUserPlan(userId).firstOrNull())
-        val planInternalName = planName.planType.internalName()
+        val planInternalName = planName.planType.internalName
         val all = localDataSource.getAll(userId)
 
         if (all.isNotEmpty()) {

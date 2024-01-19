@@ -38,9 +38,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
-import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestConstants
-import proton.android.pass.test.domain.TestItem
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
@@ -49,12 +46,15 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
+import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.TestConstants
+import proton.android.pass.test.domain.TestItem
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-private typealias Filter = (proton.android.pass.domain.Item) -> Boolean
+private typealias Filter = (Item) -> Boolean
 
-class FakeSuggestionItemFilterer : SuggestionItemFilterer {
+internal class FakeSuggestionItemFilterer : SuggestionItemFilterer {
     private var filter: Filter = {
         throw IllegalStateException("Filter has not been initialized")
     }
@@ -198,7 +198,7 @@ class GetSuggestedLoginItemsImplTest {
             name = "default",
         )
         observeVaults.sendResult(Result.success(listOf(defaultVault)))
-        getUserPlan.setResult(Result.success(createPlan(PlanType.Paid("", ""))))
+        getUserPlan.setResult(Result.success(createPlan(PlanType.Paid.Plus("", ""))))
     }
 
     private fun createPlan(planType: PlanType) = Plan(

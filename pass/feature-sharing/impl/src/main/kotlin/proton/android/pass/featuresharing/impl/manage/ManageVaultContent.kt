@@ -79,6 +79,7 @@ fun ManageVaultContent(
                                     onNavigateEvent(event)
                                 }
                             }
+
                             is VaultMember.InvitePending -> {
                                 val event = SharingNavigation.ExistingUserInviteOptions(
                                     shareId = shareId,
@@ -127,6 +128,7 @@ fun ManageVaultContent(
                             onClick = { onNavigateEvent(SharingNavigation.Upgrade) }
                         )
                     }
+
                     is ShareOptions.ShareOptionsSubtitle.RemainingInvites -> {
                         RemainingInvitesText(
                             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -134,6 +136,8 @@ fun ManageVaultContent(
                             onClick = onPendingInvitesClick
                         )
                     }
+
+                    ShareOptions.ShareOptionsSubtitle.None -> {}
                 }
             }
         }

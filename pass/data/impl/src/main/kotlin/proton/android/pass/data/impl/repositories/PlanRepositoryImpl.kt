@@ -130,36 +130,46 @@ class PlanRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun PlanEntity.toPlanType(isTrial: Boolean, remainingTrialDays: Int = 0): PlanType =
-        when (type) {
-            PlanType.PLAN_NAME_FREE -> if (isTrial) {
-                PlanType.Trial(
-                    internal = internalName,
-                    humanReadable = displayName,
-                    remainingDays = remainingTrialDays
-                )
-            } else {
-                PlanType.Free(
-                    internal = internalName,
-                    humanReadable = displayName
-                )
-            }
-
-            PlanType.PLAN_NAME_PLUS -> if (isTrial) {
-                PlanType.Trial(
-                    internal = internalName,
-                    humanReadable = displayName,
-                    remainingDays = remainingTrialDays
-                )
-            } else {
-                PlanType.Paid(
-                    internal = internalName,
-                    humanReadable = displayName
-                )
-            }
-
-            else -> PlanType.Unknown(internal = internalName, humanReadable = displayName)
+    private fun PlanEntity.toPlanType(
+        isTrial: Boolean,
+        remainingTrialDays: Int = 0,
+    ): PlanType = when (type) {
+        PlanType.PLAN_NAME_FREE -> if (isTrial) {
+            PlanType.Trial(
+                name = internalName,
+                displayName = displayName,
+                remainingDays = remainingTrialDays,
+            )
+        } else {
+            PlanType.Free(
+                name = internalName,
+                displayName = displayName,
+            )
         }
+
+        PlanType.PLAN_NAME_PLUS -> if (isTrial) {
+            PlanType.Trial(
+                name = internalName,
+                displayName = displayName,
+                remainingDays = remainingTrialDays,
+            )
+        } else {
+            PlanType.Paid.Plus(
+                name = internalName,
+                displayName = displayName,
+            )
+        }
+
+        PlanType.PLAN_NAME_BUSINESS -> PlanType.Paid.Business(
+            name = internalName,
+            displayName = displayName,
+        )
+
+        else -> PlanType.Unknown(
+            name = internalName,
+            displayName = displayName,
+        )
+    }
 
     private fun toPlanLimit(value: Int): PlanLimit = if (value == -1) {
         PlanLimit.Unlimited

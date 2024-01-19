@@ -62,6 +62,7 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.inAppReview.api)
+    implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)

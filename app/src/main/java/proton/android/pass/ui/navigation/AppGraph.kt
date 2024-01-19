@@ -869,8 +869,6 @@ fun NavGraphBuilder.appGraph(
     )
     authGraph(
         canLogout = true,
-        appNavigator = appNavigator,
-        dismissBottomSheet = dismissBottomSheet,
         navigation = {
             when (it) {
                 AuthNavigation.Back -> onNavigate(AppNavigation.Finish)

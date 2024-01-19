@@ -39,10 +39,10 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
     private var rejectResult: Result<Unit> = Result.success(Unit)
     private var inviteRecommendationsResult: Result<InviteRecommendations> = Result.success(
         InviteRecommendations(
-            recommendedEmails = listOf(),
+            recommendedEmails = emptyList(),
             planInternalName = "",
             groupDisplayName = "",
-            planRecommendedEmails = listOf()
+            planRecommendedEmails = emptyList()
         )
     )
 

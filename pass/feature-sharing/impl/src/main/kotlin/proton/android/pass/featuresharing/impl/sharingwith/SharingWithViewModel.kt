@@ -33,21 +33,19 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.InviteUserMode
-import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.repositories.BulkInviteRepository
+import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featuresharing.impl.SharingWithUserModeType
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -198,13 +196,7 @@ class SharingWithViewModel @Inject constructor(
         checkedEmailFlow.update { checkedEmails }
     }
 
-    private fun InviteUserMode.toUserModeType(): SharingWithUserModeType = when (this) {
-        InviteUserMode.NewUser -> SharingWithUserModeType.NewUser
-        InviteUserMode.ExistingUser -> SharingWithUserModeType.ExistingUser
-    }
-
-    private fun checkValidEmail()
-        : Boolean {
+    private fun checkValidEmail(): Boolean {
         if (editingEmailState.isBlank() || !emailValidator.isValid(editingEmailState)) {
             PassLogger.i(TAG, "Email not valid")
             showEmailNotValidFlow.update { true }

@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Chyba při mazání položky</string>
   <string name="item_restored_message">Položka obnovena</string>
   <string name="item_restored_message_error">Chyba při obnově položky</string>
+  <string name="item_pinned_message">Položka úspěšně připnuta</string>
+  <string name="item_pinned_message_error">Při připínání této položky došlo k chybě</string>
+  <string name="item_unpinned_message">Položka úspěšně odepnuta</string>
+  <string name="item_unpinned_message_error">Při odepínání této položky došlo k chybě</string>
   <string name="login_item_generate_totp_error">Chyba při generování kódu 2FA</string>
   <string name="login_item_view_alias_button">Zobrazit alias</string>
   <string name="field_username">Uživatelské jméno nebo e-mailová adresa</string>

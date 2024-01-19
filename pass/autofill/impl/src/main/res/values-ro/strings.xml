@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Nu există autentificări corespunzătoare</string>
   <string name="error_loading_items">Nu s-au putut încărca articolele</string>
   <string name="topbar_search_query">Căutare în toate seifurile…</string>
+  <string name="topbar_search_pinned_items">Căutare în fixate…</string>
   <string name="topbar_search_query_oldest_vaults">Se caută în seifurile vechi…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Căutare…</string>
   <string name="inline_suggestions_open_app">Deschidere Proton Pass</string>

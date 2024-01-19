@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Inga matchande inloggningsuppgifter hittades</string>
   <string name="error_loading_items">Kunde inte ladda objekten</string>
   <string name="topbar_search_query">Sök i alla valv…</string>
+  <string name="topbar_search_pinned_items">Sök i fästade…</string>
   <string name="topbar_search_query_oldest_vaults">Sök i dina äldsta valv…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Sök…</string>
   <string name="inline_suggestions_open_app">Öppna Proton Pass</string>

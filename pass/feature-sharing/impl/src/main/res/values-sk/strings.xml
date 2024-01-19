@@ -119,4 +119,6 @@
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Táto položka bude presunutá do nového trezoru.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgradujte, aby ste mohli vytvárať ďalšie trezory</string>
   <string name="sharing_from_item_vault_limit_reached">Dosiahli ste limit trezora</string>
+  <string name="share_with_suggestions_title">Suggestions</string>
+  <string name="share_with_recents_title">Recents</string>
 </resources>

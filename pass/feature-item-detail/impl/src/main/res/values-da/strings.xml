@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Fejl under sletning af element</string>
   <string name="item_restored_message">Element gendannet</string>
   <string name="item_restored_message_error">Fejl under gendannelse af element</string>
+  <string name="item_pinned_message">Element fastgjort</string>
+  <string name="item_pinned_message_error">Der opstod en fejl ved fastgørelsen af dette element</string>
+  <string name="item_unpinned_message">Element frigjort</string>
+  <string name="item_unpinned_message_error">Der opstod en fejl ved frigørelse af dette element</string>
   <string name="login_item_generate_totp_error">Fejl i generering af 2FA-kode</string>
   <string name="login_item_view_alias_button">Vis alias</string>
   <string name="field_username">Brugernavn eller e-mailadresse</string>

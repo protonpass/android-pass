@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Nebyly nalezeny žádné odpovídající přihlašovací údaje</string>
   <string name="error_loading_items">Nelze načíst položky.</string>
   <string name="topbar_search_query">Hledání ve všech trezorech…</string>
+  <string name="topbar_search_pinned_items">Hledat v připnutých…</string>
   <string name="topbar_search_query_oldest_vaults">Hledání ve vašich nejstarších trezorech…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Hledání…</string>
   <string name="inline_suggestions_open_app">Otevřit Proton Pass</string>

@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Virhe poistettaessa kohdetta</string>
   <string name="item_restored_message">Kohde palautettiin</string>
   <string name="item_restored_message_error">Virhe palautettaessa kohdetta</string>
+  <string name="item_pinned_message">Kohde kiinnitettiin</string>
+  <string name="item_pinned_message_error">Kohteen kiinnityksessä tapahtui virhe</string>
+  <string name="item_unpinned_message">Kohde irrotettiin</string>
+  <string name="item_unpinned_message_error">Kohteen irrotuksessa tapahtui virhe</string>
   <string name="login_item_generate_totp_error">Virhe luotaessa 2FA-koodia</string>
   <string name="login_item_view_alias_button">Näytä alias</string>
   <string name="field_username">Käyttäjätunnus tai sähköpostiosoite</string>

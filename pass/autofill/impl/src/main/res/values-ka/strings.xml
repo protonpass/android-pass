@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">შესაბამისი ავტორიზაციის დეტალები აღმოჩენილი არაა</string>
   <string name="error_loading_items">ელემენტების ჩატვირთვა შეუძლებელია</string>
   <string name="topbar_search_query">ყველა საცავში ძებნა…</string>
+  <string name="topbar_search_pinned_items">მიმაგრებულებში ძებნა…</string>
   <string name="topbar_search_query_oldest_vaults">ძებნა თქვენს უძველეს საცავებში…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">ძებნა…</string>
   <string name="inline_suggestions_open_app">Proton Pass-ის გახსნა</string>

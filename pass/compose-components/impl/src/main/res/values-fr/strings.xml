@@ -8,6 +8,7 @@
   <string name="sort_by_modification_date">Le plus récent</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tous</string>
+  <string name="item_list_header_pinned_search_results">Épinglé</string>
   <string name="item_list_header_logins_type">Identifiants</string>
   <string name="item_list_header_aliases_type">Alias</string>
   <string name="item_list_header_notes_type">Notes</string>
@@ -20,6 +21,8 @@
   <string name="bottomsheet_confirm_button">Confirmer</string>
   <string name="bottomsheet_cancel_button">Annuler</string>
   <string name="bottomsheet_move_to_trash">Déplacer dans la corbeille</string>
+  <string name="bottomsheet_pin_item">Épingler</string>
+  <string name="bottomsheet_unpin_item">Désépingler</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ouvrir le menu d\'action de l\'élément</string>
   <string name="action_upgrade_now">Changer d\'abonnement</string>
@@ -80,4 +83,6 @@
   <string name="label_password_strength_strong">Fort</string>
   <string name="label_password_strength_vulnerable">Vulnérable</string>
   <string name="label_password_strength_weak">Faible</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">Tout afficher</string>
 </resources>

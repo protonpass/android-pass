@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">항목 삭제 오류</string>
   <string name="item_restored_message">항목이 복구되었습니다</string>
   <string name="item_restored_message_error">항목 복구 오류</string>
+  <string name="item_pinned_message">항목을 성공적으로 고정했습니다.</string>
+  <string name="item_pinned_message_error">이 항목을 고정하는데 오류가 발생했습니다.</string>
+  <string name="item_unpinned_message">항목을 성공적으로 고정 해제했습니다.</string>
+  <string name="item_unpinned_message_error">이 항목을 고정 해제하는데 오류가 발생했습니다.</string>
   <string name="login_item_generate_totp_error">2FA 코드 구성에 오류가 발생했습니다</string>
   <string name="login_item_view_alias_button">별명 보기</string>
   <string name="field_username">아이디 또는 이메일 주소</string>

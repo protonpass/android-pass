@@ -8,6 +8,7 @@
   <string name="sort_by_modification_date">Käytön mukaan</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Kaikki</string>
+  <string name="item_list_header_pinned_search_results">Kiinnitetyt</string>
   <string name="item_list_header_logins_type">Kirjautumistiedot</string>
   <string name="item_list_header_aliases_type">Aliakset</string>
   <string name="item_list_header_notes_type">Muistiinpanot</string>
@@ -20,6 +21,8 @@
   <string name="bottomsheet_confirm_button">Vahvista</string>
   <string name="bottomsheet_cancel_button">Peruuta</string>
   <string name="bottomsheet_move_to_trash">Siirrä roskakoriin</string>
+  <string name="bottomsheet_pin_item">Kiinnitä</string>
+  <string name="bottomsheet_unpin_item">Irrota</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Avaa kohteen toimintovalikko</string>
   <string name="action_upgrade_now">Päivitä nyt</string>
@@ -80,4 +83,6 @@
   <string name="label_password_strength_strong">Vahva</string>
   <string name="label_password_strength_vulnerable">Haavoittuva</string>
   <string name="label_password_strength_weak">Heikko</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">Näytä kaikki</string>
 </resources>

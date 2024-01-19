@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Wystąpił błąd podczas usuwania elementu</string>
   <string name="item_restored_message">Element został przywrócony</string>
   <string name="item_restored_message_error">Wystąpił błąd podczas przywracania elementu</string>
+  <string name="item_pinned_message">Element został przypięty</string>
+  <string name="item_pinned_message_error">Wystąpił błąd podczas przypinania elementu</string>
+  <string name="item_unpinned_message">Element został odpięty</string>
+  <string name="item_unpinned_message_error">Wystąpił błąd podczas odpinania elementu</string>
   <string name="login_item_generate_totp_error">Wystąpił błąd podczas generowania kodu uwierzytelniającego</string>
   <string name="login_item_view_alias_button">Pokaż alias</string>
   <string name="field_username">Nazwa użytkownika lub adres e-mail</string>
@@ -88,7 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nie można edytować elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nie można udostępnić</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
-  <string name="password_score_vulnerable">Zagrożone</string>
+  <string name="password_score_vulnerable">Bardzo słabe</string>
   <string name="password_score_weak">Słabe</string>
   <string name="password_score_strong">Silne</string>
 </resources>

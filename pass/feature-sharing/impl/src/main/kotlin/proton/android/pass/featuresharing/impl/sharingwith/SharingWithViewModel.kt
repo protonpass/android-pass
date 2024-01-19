@@ -189,8 +189,23 @@ class SharingWithViewModel @Inject constructor(
 
     fun onItemToggle(email: String, checked: Boolean) {
         checkedEmails = if (!checked) {
+            enteredEmailsState.update {
+                if (!it.contains(email)) {
+                    it + email
+                } else {
+                    it
+                }
+            }
             checkedEmails + email
+
         } else {
+            enteredEmailsState.update {
+                if (it.contains(email)) {
+                    it - email
+                } else {
+                    it
+                }
+            }
             checkedEmails - email
         }
         checkedEmailFlow.update { checkedEmails }

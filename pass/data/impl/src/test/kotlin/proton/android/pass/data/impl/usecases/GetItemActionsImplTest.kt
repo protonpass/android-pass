@@ -25,8 +25,8 @@ import org.junit.Test
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -38,7 +38,7 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
 import proton.android.pass.test.domain.TestItem
 
-class GetItemActionsImplTest {
+internal class GetItemActionsImplTest {
 
     private lateinit var instance: GetItemActionsImpl
     private lateinit var getItemById: TestObserveItemById
@@ -80,10 +80,10 @@ class GetItemActionsImplTest {
     @Test
     fun `cannot share if canShareVault returns so`() = runTest {
         for (
-            reason in listOf(
-                CanShareVaultStatus.CannotShareReason.NotEnoughPermissions,
-                CanShareVaultStatus.CannotShareReason.NotEnoughInvites
-            )
+        reason in listOf(
+            CanShareVaultStatus.CannotShareReason.NotEnoughPermissions,
+            CanShareVaultStatus.CannotShareReason.NotEnoughInvites
+        )
         ) {
             val canShareResult = CanShareVaultStatus.CannotShare(reason)
             canShareVault.setResult(canShareResult)
@@ -251,7 +251,7 @@ class GetItemActionsImplTest {
 
     private fun setDefaultState() {
         setItem()
-        setPlan(planType = PlanType.Paid("", ""))
+        setPlan(planType = PlanType.Paid.Plus("", ""))
         canShareVault.setResult(CanShareVaultStatus.CanShare(1))
 
         val vaults = listOf(

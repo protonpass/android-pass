@@ -34,11 +34,11 @@ import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
 import proton.android.pass.data.impl.responses.AccessResponse
 import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
-import proton.android.pass.test.FixedClock
 import proton.android.pass.domain.PlanType
+import proton.android.pass.test.FixedClock
 import kotlin.time.Duration.Companion.days
 
-class PlanRepositoryImplTest {
+internal class PlanRepositoryImplTest {
 
     private lateinit var instance: PlanRepositoryImpl
     private lateinit var local: TestLocalPlanDataSource
@@ -61,13 +61,14 @@ class PlanRepositoryImplTest {
     }
 
     @Test
-    fun `sendUserAccessAndObservePlan return trial if trial is not expired and not paid`() = runTest {
-        val future = clock.now().plus(2.days)
-        local.emitPlan(planEntity(trialEnd = future))
+    fun `sendUserAccessAndObservePlan return trial if trial is not expired and not paid`() =
+        runTest {
+            val future = clock.now().plus(2.days)
+            local.emitPlan(planEntity(trialEnd = future))
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
-        assertThat(plan.planType).isInstanceOf(PlanType.Trial::class.java)
-    }
+            val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+            assertThat(plan.planType).isInstanceOf(PlanType.Trial::class.java)
+        }
 
     @Test
     fun `sendUserAccessAndObservePlan return paid if trial is not expired and paid`() = runTest {
@@ -97,22 +98,24 @@ class PlanRepositoryImplTest {
     }
 
     @Test
-    fun `sendUserAccessAndObservePlan return unknown if trial is expired and is unknown`() = runTest {
-        val past = clock.now().minus(2.days)
-        local.emitPlan(planEntity(type = "unknown", trialEnd = past))
+    fun `sendUserAccessAndObservePlan return unknown if trial is expired and is unknown`() =
+        runTest {
+            val past = clock.now().minus(2.days)
+            local.emitPlan(planEntity(type = "unknown", trialEnd = past))
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
-        assertThat(plan.planType).isInstanceOf(PlanType.Unknown::class.java)
-    }
+            val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+            assertThat(plan.planType).isInstanceOf(PlanType.Unknown::class.java)
+        }
 
     @Test
-    fun `sendUserAccessAndObservePlan return unknown if trial is not expired and is unknown`() = runTest {
-        val future = clock.now().plus(2.days)
-        local.emitPlan(planEntity(type = "unknown", trialEnd = future))
+    fun `sendUserAccessAndObservePlan return unknown if trial is not expired and is unknown`() =
+        runTest {
+            val future = clock.now().plus(2.days)
+            local.emitPlan(planEntity(type = "unknown", trialEnd = future))
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
-        assertThat(plan.planType).isInstanceOf(PlanType.Unknown::class.java)
-    }
+            val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+            assertThat(plan.planType).isInstanceOf(PlanType.Unknown::class.java)
+        }
 
 
     @Test
@@ -202,6 +205,20 @@ class PlanRepositoryImplTest {
         assertThat(userAccessData).isNotNull()
         assertThat(userAccessData!!.pendingInvites).isEqualTo(pendingInvites)
         assertThat(userAccessData.waitingNewUserInvites).isEqualTo(waitingNewUserInvites)
+    }
+
+    @Test
+    internal fun `GIVEN business plan WHEN observing plan THEN return business plan`() = runTest {
+        val planType = "business"
+        val expectedPlan = PlanType.Paid.Business(
+            name = planType,
+            displayName = planType,
+        )
+        local.emitPlan(planEntity(type = planType, trialEnd = null))
+
+        val plan = instance.observePlan(USER_ID).first()
+
+        assertThat(plan.planType).isEqualTo(expectedPlan)
     }
 
     private fun planEntity(

@@ -64,6 +64,7 @@ fun HelpCenterProfileSection(
             PassDivider()
             SettingOption(
                 text = stringResource(R.string.profile_option_tutorial),
+                isLink = true,
                 onClick = onTutorialClick
             )
             if (SHOW_RATING_OPTION) {

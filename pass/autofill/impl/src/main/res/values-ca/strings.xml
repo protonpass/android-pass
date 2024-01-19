@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">No s\'han trobat les credencials coincidents.</string>
   <string name="error_loading_items">No s\'ha pogut carregar els elements.</string>
   <string name="topbar_search_query">Cerca en totes les caixes fortes…</string>
+  <string name="topbar_search_pinned_items">Search in Pinned…</string>
   <string name="topbar_search_query_oldest_vaults">Search in your oldest vaults…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Cerca…</string>
   <string name="inline_suggestions_open_app">Obriu Proton Pass</string>

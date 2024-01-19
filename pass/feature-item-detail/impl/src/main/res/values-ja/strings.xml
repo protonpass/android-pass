@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">項目の削除エラー</string>
   <string name="item_restored_message">項目を復旧</string>
   <string name="item_restored_message_error">項目の復元中エラー</string>
+  <string name="item_pinned_message">Item successfully pinned</string>
+  <string name="item_pinned_message_error">There was an error pinning this item</string>
+  <string name="item_unpinned_message">Item successfully unpinned</string>
+  <string name="item_unpinned_message_error">There was an error unpinning this item</string>
   <string name="login_item_generate_totp_error">2要素認証コードの生成中エラー</string>
   <string name="login_item_view_alias_button">エイリアスを表示</string>
   <string name="field_username">ユーザー名またはメールアドレス</string>

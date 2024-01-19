@@ -13,7 +13,7 @@
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Атрымайце псеўданім электроннай пошты для выкарыстання ў новых праграмах</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Запішыце PIN, код або нататку для сябе</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Бяспечна захоўвайце сваю плацежную інфармацыю</string>
-  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Згенерыраваць надзейны пароль</string>
+  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Згенерыруйце надзейны пароль</string>
   <!-- Create Login -->
   <string name="title_create_login">Стварыць запіс уваходу</string>
   <string name="field_username_title">Імя карыстальніка або адрас электроннай пошты</string>
@@ -35,7 +35,7 @@
   <string name="bottomsheet_modify_alias_title">Змяніць псеўданім</string>
   <string name="bottomsheet_custom_field_type_text">Тэкст</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Карыстальніцкае тэкставае поле</string>
-  <string name="bottomsheet_custom_field_type_hidden">Схавана</string>
+  <string name="bottomsheet_custom_field_type_hidden">Схаванае</string>
   <string name="bottomsheet_custom_field_type_totp">Сакрэтны ключ 2ФА (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Рэдагаваць назву</string>
   <string name="bottomsheet_custom_field_option_remove">Выдаліць поле</string>

@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Σφάλμα κατά τη διαγραφή στοιχείων</string>
   <string name="item_restored_message">Έγινε επαναφορά στοιχείου</string>
   <string name="item_restored_message_error">Σφάλμα κατά την επαναφορά στοιχείου</string>
+  <string name="item_pinned_message">Το στοιχείο καρφιτσώθηκε επιτυχώς</string>
+  <string name="item_pinned_message_error">Παρουσιάστηκε σφάλμα κατά το καρφίτσωμα αυτού του στοιχείου</string>
+  <string name="item_unpinned_message">Το στοιχείο ξεκαρφιτσώθηκε επιτυχώς</string>
+  <string name="item_unpinned_message_error">Παρουσιάστηκε σφάλμα κατά το ξεκαρφίτσωμα αυτού του στοιχείου</string>
   <string name="login_item_generate_totp_error">Σφάλμα κατά τη δημιουργία κωδικού 2FA</string>
   <string name="login_item_view_alias_button">Προβολή ψευδωνύμου</string>
   <string name="field_username">Όνομα χρήστη ή διεύθυνση email</string>

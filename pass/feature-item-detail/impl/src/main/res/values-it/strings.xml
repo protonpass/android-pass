@@ -26,6 +26,10 @@
   <string name="item_permanently_deleted_message_error">Errore durante l\'eliminazione dell\'elemento</string>
   <string name="item_restored_message">Elemento ripristinato</string>
   <string name="item_restored_message_error">Errore durante il ripristino dell\'elemento</string>
+  <string name="item_pinned_message">Elemento fissato</string>
+  <string name="item_pinned_message_error">Errore nel fissaggio di questo elemento</string>
+  <string name="item_unpinned_message">Elemento non più fissato</string>
+  <string name="item_unpinned_message_error">Errore nell\'annullamento del fissaggio di questo elemento</string>
   <string name="login_item_generate_totp_error">Errore nella generazione del codice 2FA</string>
   <string name="login_item_view_alias_button">Visualizza l\'alias</string>
   <string name="field_username">Nome utente o indirizzo email</string>

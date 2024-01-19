@@ -8,6 +8,7 @@
   <string name="sort_by_modification_date">უახლესი</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">ყველა</string>
+  <string name="item_list_header_pinned_search_results">მიმაგრებული</string>
   <string name="item_list_header_logins_type">შესვლები</string>
   <string name="item_list_header_aliases_type">ფსევდონიმები</string>
   <string name="item_list_header_notes_type">შენიშვნები</string>
@@ -20,6 +21,8 @@
   <string name="bottomsheet_confirm_button">დასტური</string>
   <string name="bottomsheet_cancel_button">გაუქმება</string>
   <string name="bottomsheet_move_to_trash">ნაგვის ყუთში გადატანა</string>
+  <string name="bottomsheet_pin_item">მიმაგრება</string>
+  <string name="bottomsheet_unpin_item">მოხსნა</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
   <string name="action_upgrade_now">ტარიფის განახლება</string>
@@ -80,4 +83,6 @@
   <string name="label_password_strength_strong">ძლიერი</string>
   <string name="label_password_strength_vulnerable">მოწყვლადი</string>
   <string name="label_password_strength_weak">სუსტი</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">ყველას ნახვა</string>
 </resources>

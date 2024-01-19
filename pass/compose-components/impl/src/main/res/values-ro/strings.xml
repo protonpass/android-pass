@@ -8,6 +8,7 @@
   <string name="sort_by_modification_date">Cele mai noi</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Toate</string>
+  <string name="item_list_header_pinned_search_results">Fixate</string>
   <string name="item_list_header_logins_type">Conectări</string>
   <string name="item_list_header_aliases_type">Aliasuri</string>
   <string name="item_list_header_notes_type">Note</string>
@@ -21,6 +22,8 @@
   <string name="bottomsheet_confirm_button">Confirmare</string>
   <string name="bottomsheet_cancel_button">Anulare</string>
   <string name="bottomsheet_move_to_trash">Mutare în gunoi</string>
+  <string name="bottomsheet_pin_item">Fixare</string>
+  <string name="bottomsheet_unpin_item">Anulare fixare</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
   <string name="action_upgrade_now">Modificare</string>
@@ -82,4 +85,6 @@
   <string name="label_password_strength_strong">Puternică</string>
   <string name="label_password_strength_vulnerable">Vulnerabilă</string>
   <string name="label_password_strength_weak">Slabă</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">Afișare toate</string>
 </resources>

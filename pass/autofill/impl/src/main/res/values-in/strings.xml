@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Tidak ditemukan kredensial yang cocok</string>
   <string name="error_loading_items">Item tidak dapat dimuat</string>
   <string name="topbar_search_query">Cari di seluruh brankas…</string>
+  <string name="topbar_search_pinned_items">Cari di Tersemat…</string>
   <string name="topbar_search_query_oldest_vaults">Cari dalam brankas terlawas Anda…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Cari...</string>
   <string name="inline_suggestions_open_app">Buka Proton Pass</string>
@@ -12,8 +13,8 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">Saran untuk %s</string>
   <string name="autofill_associate_web_app_name_dialog_title">Gunakan rincian entri masuk dari \"%s\" pada aplikasi atau situs web ini.</string>
-  <string name="autofill_dialog_associate_and_autofill">Gunakan selalu</string>
-  <string name="autofill_dialog_just_autofill">Gunakan sekali</string>
+  <string name="autofill_dialog_associate_and_autofill">Selalu gunakan</string>
+  <string name="autofill_dialog_just_autofill">Gunakan sekali ini saja</string>
   <string name="autofill_dialog_cancel">Batalkan</string>
   <string name="autofill_notification_copy_to_clipboard">Kode TOTP disalin ke papan klip</string>
   <string name="autofill_dialog_associate_title">Gunakan entri masuk?</string>

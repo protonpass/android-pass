@@ -13,34 +13,38 @@
   <!-- Note details -->
   <string name="field_detail_note_title">Заметка</string>
   <string name="note_detail_copy_note_to_clipboard">Скопировать заметку</string>
-  <string name="note_copied_to_clipboard">Note copied to clipboard</string>
+  <string name="note_copied_to_clipboard">Заметка скопирована в буфер обмена</string>
   <!-- Login details -->
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
-  <string name="website_copied_to_clipboard">Website copied</string>
-  <string name="totp_copied_to_clipboard">TOTP copied</string>
-  <string name="field_copied_to_clipboard">Field copied</string>
+  <string name="website_copied_to_clipboard">Веб-сайт скопирован</string>
+  <string name="totp_copied_to_clipboard">TOTP скопирован</string>
+  <string name="field_copied_to_clipboard">Поле скопировано</string>
   <string name="move_item_to_trash_message">Элемент перемещен в корзину</string>
-  <string name="error_move_item_to_trash_message">Error moving to trash</string>
+  <string name="error_move_item_to_trash_message">Ошибка при перемещении в корзину</string>
   <string name="item_permanently_deleted_message">Элемент удален окончательно</string>
   <string name="item_permanently_deleted_message_error">Ошибка удаления элемента</string>
   <string name="item_restored_message">Элемент восстановлен</string>
-  <string name="item_restored_message_error">Error restoring item</string>
-  <string name="login_item_generate_totp_error">Error generating 2FA code</string>
-  <string name="login_item_view_alias_button">View alias</string>
+  <string name="item_restored_message_error">Ошибка при восстановлении элемента</string>
+  <string name="item_pinned_message">Элемент успешно закреплен</string>
+  <string name="item_pinned_message_error">При закреплении элемента произошла ошибка</string>
+  <string name="item_unpinned_message">Элемент успешно откреплен</string>
+  <string name="item_unpinned_message_error">При откреплении элемента произошла ошибка</string>
+  <string name="login_item_generate_totp_error">Ошибка при генерации кода 2FA</string>
+  <string name="login_item_view_alias_button">Посмотреть псевдоним</string>
   <string name="field_username">Имя пользователя или адрес электронной почты</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Веб-сайты</string>
   <string name="totp_section_title">Токен 2ФА (TOTP)</string>
   <string name="action_reveal_password">Показать пароль</string>
-  <string name="action_conceal_password">Conceal password</string>
-  <string name="action_reveal_number">Reveal number</string>
-  <string name="action_conceal_number">Conceal number</string>
+  <string name="action_conceal_password">Скрыть пароль</string>
+  <string name="action_reveal_number">Показать номер</string>
+  <string name="action_conceal_number">Скрыть номер</string>
   <string name="more_info_created">Создано:</string>
   <string name="more_info_modified">Изменено:</string>
-  <string name="more_info_autofilled">Auto-filled:</string>
+  <string name="more_info_autofilled">Автоматически заполнено:</string>
   <string name="more_info_title">Подробнее</string>
-  <string name="more_info_icon">More info icon</string>
+  <string name="more_info_icon">Иконка \"больше информации\"</string>
   <plurals name="more_info_modified_times">
     <item quantity="one">1 раз</item>
     <item quantity="few">%d раза</item>
@@ -49,12 +53,12 @@
   </plurals>
   <string name="more_info_last_time_modified">Последний раз, %s</string>
   <string name="share_button_content_description">Открыть кнопку \"поделиться\"</string>
-  <string name="open_menu_icon_content_description">Open menu button</string>
+  <string name="open_menu_icon_content_description">Кнопка чтобы открыть меню</string>
   <string name="mfa_limit_reached">Достигнут предел двухфакторных идентификаций</string>
   <string name="mfa_icon_content_description">2FA icon</string>
   <string name="custom_field_text_icon_description">Текстовое настраиваемое поле</string>
-  <string name="custom_field_hidden_icon_description">Hidden custom field</string>
-  <string name="custom_field_totp_icon_description">2FA custom field</string>
+  <string name="custom_field_hidden_icon_description">Скрытое настраиваемое поле</string>
+  <string name="custom_field_totp_icon_description">Настраиваемое поле 2FA</string>
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Имя на карте</string>
   <string name="credit_card_number_field_name">Номер карты</string>
@@ -63,7 +67,7 @@
   <string name="credit_card_expiration_date_field_name">Срок действия</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Владелец карты скопирован в буфер обмена</string>
   <string name="credit_card_number_copied_to_clipboard">Номер карты скопирован в буфер обмена</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Код безопасности скопирован в буфер обмена</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Переместить в корзину</string>
   <string name="migrate_item_detail_bottom_sheet">Переместить в другое хранилище</string>
@@ -88,7 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Вы не можете отредактировать этот элемент, потому что он находится в корзине. Пожалуйста, переместите его из корзины, прежде чем редактировать.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Невозможно поделиться</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостаточно прав для совместного использования этого хранилища.</string>
-  <string name="password_score_vulnerable">Vulnerable</string>
-  <string name="password_score_weak">Weak</string>
-  <string name="password_score_strong">Strong</string>
+  <string name="password_score_vulnerable">Уязвимый</string>
+  <string name="password_score_weak">Слабый</string>
+  <string name="password_score_strong">Надежный</string>
 </resources>

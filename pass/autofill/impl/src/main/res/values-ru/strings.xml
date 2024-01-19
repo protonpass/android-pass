@@ -4,6 +4,7 @@
   <string name="error_credentials_not_found">Совпадающих учётных данных не найдено</string>
   <string name="error_loading_items">Не могу загрузить элементы</string>
   <string name="topbar_search_query">Поиск во всех хранилищах...</string>
+  <string name="topbar_search_pinned_items">Поиск в закрепленных…</string>
   <string name="topbar_search_query_oldest_vaults">Поищите в своих старых хранилищах...</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Поиск…</string>
   <string name="inline_suggestions_open_app">Открыть Proton Pass</string>

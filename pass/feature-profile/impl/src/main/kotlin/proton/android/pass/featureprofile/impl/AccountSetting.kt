@@ -67,7 +67,7 @@ fun AccountSetting(
 
         Icon(
             painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
-            contentDescription = stringResource(CompR.string.setting_option_icon_content_description),
+            contentDescription = null,
             tint = PassTheme.colors.textHint
         )
     }

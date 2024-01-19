@@ -41,7 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
@@ -131,7 +131,7 @@ fun OnBoardingPage(
                         Text(
                             text = stringResource(R.string.on_boarding_tutorial),
                             textAlign = TextAlign.Center,
-                            style = ProtonTheme.typography.defaultNorm,
+                            style = ProtonTheme.typography.defaultSmallNorm,
                             color = PassTheme.colors.interactionNormMajor1,
                         )
                         Icon(

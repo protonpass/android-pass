@@ -41,7 +41,7 @@ fun ManageAccount(modifier: Modifier = Modifier, onManageAccountClick: () -> Uni
         iconBgColor = PassTheme.colors.interactionNormMinor1,
         icon = {
             Icon(
-                painter = painterResource(CoreR.drawable.ic_proton_arrow_out_from_rectangle),
+                painter = painterResource(CoreR.drawable.ic_proton_arrow_out_square),
                 contentDescription = stringResource(R.string.account_manage_account_icon_content_description),
                 tint = PassTheme.colors.interactionNormMajor2
             )

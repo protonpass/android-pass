@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -43,6 +42,7 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.placeholder
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun SettingOption(
@@ -50,6 +50,7 @@ fun SettingOption(
     text: String,
     label: String? = null,
     isLoading: Boolean = false,
+    isLink: Boolean = false,
     onClick: (() -> Unit)? = null
 ) {
     Row(
@@ -81,11 +82,19 @@ fun SettingOption(
             )
         }
         if (onClick != null) {
-            Icon(
-                painter = painterResource(R.drawable.ic_chevron_tiny_right),
-                contentDescription = stringResource(R.string.setting_option_icon_content_description),
-                tint = PassTheme.colors.textHint
-            )
+            if (isLink) {
+                Icon(
+                    painter = painterResource(CoreR.drawable.ic_proton_arrow_out_square),
+                    contentDescription = null,
+                    tint = PassTheme.colors.textHint
+                )
+            } else {
+                Icon(
+                    painter = painterResource(R.drawable.ic_chevron_tiny_right),
+                    contentDescription = null,
+                    tint = PassTheme.colors.textHint
+                )
+            }
         }
     }
 }

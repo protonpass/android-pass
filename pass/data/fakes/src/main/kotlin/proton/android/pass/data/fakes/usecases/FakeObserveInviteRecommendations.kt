@@ -31,10 +31,10 @@ class FakeObserveInviteRecommendations @Inject constructor() : ObserveInviteReco
 
     private val invitesFlow: MutableStateFlow<InviteRecommendations> = MutableStateFlow(
         InviteRecommendations(
-            recommendedEmails = listOf(),
+            recommendedEmails = emptyList(),
             planInternalName = "",
             groupDisplayName = "",
-            planRecommendedEmails = listOf(),
+            planRecommendedEmails = emptyList(),
             planRecommendedEmailsNextToken = ""
         )
     )
@@ -42,7 +42,6 @@ class FakeObserveInviteRecommendations @Inject constructor() : ObserveInviteReco
     fun emitInvites(recommendations: InviteRecommendations) {
         invitesFlow.tryEmit(recommendations)
     }
-
 
     override fun invoke(shareId: ShareId): Flow<InviteRecommendations> = invitesFlow
 }

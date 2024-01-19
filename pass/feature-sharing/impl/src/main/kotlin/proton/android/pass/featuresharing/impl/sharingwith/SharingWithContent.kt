@@ -40,6 +40,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
@@ -87,7 +88,7 @@ fun SharingWithContent(
         Column(
             modifier = Modifier
                 .padding(it)
-                .padding(16.dp),
+                .padding(Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(

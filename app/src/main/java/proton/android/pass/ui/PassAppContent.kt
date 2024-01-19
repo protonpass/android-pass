@@ -159,6 +159,12 @@ fun PassAppContent(
                             initialValue = ModalBottomSheetValue.Hidden,
                             skipHalfExpanded = true
                         )
+
+                        ProtonBottomSheetBackHandler(
+                            bottomSheetState = unAuthBottomSheetState,
+                            coroutineScope = coroutineScope,
+                        )
+
                         val unAuthBottomSheetNavigator =
                             rememberBottomSheetNavigator(unAuthBottomSheetState)
                         val unAuthAppNavigator = rememberAppNavigator(unAuthBottomSheetNavigator)
@@ -166,13 +172,6 @@ fun PassAppContent(
                             PassUnAuthNavHost(
                                 appNavigator = unAuthAppNavigator,
                                 onNavigate = onNavigate,
-                                dismissBottomSheet = { block ->
-                                    onBottomSheetDismissed(
-                                        coroutineScope = coroutineScope,
-                                        modalBottomSheetState = unAuthBottomSheetState,
-                                        block = block,
-                                    )
-                                }
                             )
                         }
                     } else {

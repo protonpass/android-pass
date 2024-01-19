@@ -78,8 +78,8 @@ class SharingWithViewModel @Inject constructor(
         MutableStateFlow(SharingWithEvents.Unknown)
 
     @OptIn(SavedStateHandleSaveableApi::class)
-    private var checkedEmails: List<String> by savedStateHandleProvider.get()
-        .saveable { mutableStateOf(emptyList<String>()) }
+    private var checkedEmails: Set<String> by savedStateHandleProvider.get()
+        .saveable { mutableStateOf(emptySet<String>()) }
 
     private val checkedEmailFlow = MutableStateFlow(checkedEmails)
 

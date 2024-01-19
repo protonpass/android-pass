@@ -29,11 +29,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
+import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
@@ -81,7 +83,9 @@ fun AccountContent(
                     onSubscriptionClick = { onNavigate(AccountNavigation.Subscription) }
                 )
             }
-            ManageAccount(onManageAccountClick = { onNavigate(AccountNavigation.ManageAccount) })
+            val context = LocalContext.current
+
+            ManageAccount(onManageAccountClick = { openWebsite(context, PASS_MANAGE_ACCOUNT) })
             SignOut(onSignOutClick = { onNavigate(AccountNavigation.SignOut) })
             DeleteAccount(onDeleteAccountClick = onDeleteAccountClick)
             Text(
@@ -91,6 +95,8 @@ fun AccountContent(
         }
     }
 }
+
+private const val PASS_MANAGE_ACCOUNT = "https://account.proton.me/pass/account-password"
 
 object AccountContentTestTag {
     const val upgrade = "upgrade"

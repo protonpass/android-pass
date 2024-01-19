@@ -61,8 +61,7 @@
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Arama simgesi</string>
   <!-- Setting option -->
-  <string name="setting_option_icon_content_description">Seçenek simgesi</string>
-  <!-- Select Vault BottomSheet -->
+    <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 öge</item>
     <item quantity="other">%d öge</item>

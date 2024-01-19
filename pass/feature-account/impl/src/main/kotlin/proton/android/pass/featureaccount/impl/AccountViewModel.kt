@@ -57,7 +57,7 @@ class AccountViewModel @Inject constructor(
             LoadingResult.Loading -> PlanSection.Loading
             is LoadingResult.Success ->
                 PlanSection.Data(
-                    planName = upgradeInfoResult.data.plan.planType.humanReadableName()
+                    planName = upgradeInfoResult.data.plan.planType.humanReadableName
                 )
         }
 

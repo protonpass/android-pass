@@ -52,10 +52,13 @@ sealed interface ShareOptions {
 
     sealed interface ShareOptionsSubtitle {
 
+        object None : ShareOptionsSubtitle
+
+        object LimitReached : ShareOptionsSubtitle
+
         @JvmInline
         value class RemainingInvites(val remainingInvites: Int) : ShareOptionsSubtitle
 
-        object LimitReached : ShareOptionsSubtitle
     }
 }
 

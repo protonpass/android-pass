@@ -44,12 +44,14 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermissionFlag
 import proton.android.pass.domain.VaultWithItemCount
@@ -65,6 +67,7 @@ import javax.inject.Inject
 class ManageVaultViewModel @Inject constructor(
     getVaultMembers: GetVaultMembers,
     getVaultById: GetVaultWithItemCountById,
+    getUserPlan: GetUserPlan,
     savedStateHandleProvider: SavedStateHandleProvider,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val canShareVault: CanShareVault,
@@ -114,8 +117,15 @@ class ManageVaultViewModel @Inject constructor(
         showShareButtonFlow,
         canEditFlow,
         eventFlow,
-        invitesBeingConfirmedFlow.distinctUntilChanged()
-    ) { vaultMembers, vault, showShareButton, canEdit, event, invitesBeingConfirmed ->
+        invitesBeingConfirmedFlow.distinctUntilChanged(),
+        getUserPlan(),
+    ) { vaultMembers,
+        vault,
+        showShareButton,
+        canEdit,
+        event,
+        invitesBeingConfirmed,
+        userPlan ->
         val content = when (vaultMembers) {
             is LoadingResult.Error -> ManageVaultUiContent.Loading
             LoadingResult.Loading -> ManageVaultUiContent.Loading
@@ -133,23 +143,30 @@ class ManageVaultViewModel @Inject constructor(
 
         val sharingOptions = when (showShareButton) {
             is CanShareVaultStatus.CanShare -> {
-                ShareOptions.Show(
-                    enableButton = true,
-                    subtitle = ShareOptions.ShareOptionsSubtitle.RemainingInvites(
+                val subtitle = if (userPlan.planType is PlanType.Paid.Business) {
+                    ShareOptions.ShareOptionsSubtitle.None
+                } else {
+                    ShareOptions.ShareOptionsSubtitle.RemainingInvites(
                         remainingInvites = showShareButton.invitesRemaining
                     )
+                }
+                ShareOptions.Show(
+                    enableButton = true,
+                    subtitle = subtitle,
                 )
             }
+
             is CanShareVaultStatus.CannotShare -> {
                 when (showShareButton.reason) {
                     CanShareVaultStatus.CannotShareReason.NotEnoughInvites -> {
                         ShareOptions.Show(
                             enableButton = false,
-                            subtitle = ShareOptions.ShareOptionsSubtitle.LimitReached
+                            subtitle = ShareOptions.ShareOptionsSubtitle.LimitReached,
                         )
                     }
-                    CanShareVaultStatus.CannotShareReason.NotEnoughPermissions -> ShareOptions.Hide
-                    CanShareVaultStatus.CannotShareReason.SharingDisabled -> ShareOptions.Hide
+
+                    CanShareVaultStatus.CannotShareReason.NotEnoughPermissions,
+                    CanShareVaultStatus.CannotShareReason.SharingDisabled,
                     CanShareVaultStatus.CannotShareReason.Unknown -> ShareOptions.Hide
                 }
             }

@@ -60,6 +60,7 @@ sealed interface AccountNavigation {
     object Subscription : AccountNavigation
     object Upgrade : AccountNavigation
     object SignOut : AccountNavigation
+    object ManageAccount : AccountNavigation
     object ConfirmSignOut : AccountNavigation
     object DismissDialog : AccountNavigation
     object Back : AccountNavigation

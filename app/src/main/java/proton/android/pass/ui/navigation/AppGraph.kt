@@ -442,6 +442,7 @@ fun NavGraphBuilder.appGraph(
                 AccountNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
                 AccountNavigation.Subscription -> onNavigate(AppNavigation.Subscription)
                 AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                AccountNavigation.ManageAccount -> TODO()
             }
         }
     )

@@ -18,11 +18,18 @@
 
 package proton.android.pass.featuresharing.impl.sharingpermissions
 
+import androidx.compose.runtime.Immutable
 import proton.android.pass.domain.ShareId
 
+@Immutable
 sealed interface SharingPermissionsEvents {
+    @Immutable
     @JvmInline
     value class NavigateToSummary(val shareId: ShareId) : SharingPermissionsEvents
 
+    @Immutable
+    object BackToHome : SharingPermissionsEvents
+
+    @Immutable
     object Unknown : SharingPermissionsEvents
 }

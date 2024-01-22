@@ -95,6 +95,15 @@ class SharingPermissionsViewModelTest {
         }
     }
 
+    @Test
+    fun `if addresses is empty send back to home`() = runTest {
+        bulkInviteRepository.clear()
+        viewModel.state.test {
+            val state = awaitItem()
+            assertThat(state.event).isEqualTo(SharingPermissionsEvents.BackToHome)
+        }
+    }
+
     companion object {
         private const val TEST_EMAIL = "test@example.com"
         private const val TEST_SHARE_ID = "SharingPermissionsViewModelTest-ShareID"

@@ -83,6 +83,12 @@ class SharingSummaryViewModel @Inject constructor(
         isLoadingStateFlow,
         eventFlow
     ) { addresses, vaultResult, isLoadingState, event ->
+        val uiEvent = if (event == SharingSummaryEvent.Unknown && addresses.isEmpty()) {
+            SharingSummaryEvent.BackToHome
+        } else {
+            event
+        }
+
         val vaultWithItemCount = when (vaultResult) {
             is LoadingResult.Success -> vaultResult.data
             is LoadingResult.Error -> {
@@ -98,7 +104,7 @@ class SharingSummaryViewModel @Inject constructor(
             addresses = addresses.map { it.toUiState() }.toPersistentList(),
             vaultWithItemCount = vaultWithItemCount,
             isLoading = isLoading,
-            event = event
+            event = uiEvent
         )
     }.stateIn(
         scope = viewModelScope,
@@ -123,6 +129,10 @@ class SharingSummaryViewModel @Inject constructor(
             PassLogger.w(TAG, "Error sending invite")
             PassLogger.w(TAG, it)
         }
+    }
+
+    fun clearEvent() = viewModelScope.launch {
+        eventFlow.update { SharingSummaryEvent.Unknown }
     }
 
     companion object {

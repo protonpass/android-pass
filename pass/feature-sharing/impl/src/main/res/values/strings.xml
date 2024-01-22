@@ -181,6 +181,7 @@
 
     <string name="share_with_suggestions_title">Suggestions</string>
     <string name="share_with_recents_title">Recents</string>
+    <string name="share_with_remove_email_content_description">Remove email</string>
 
     <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
     <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>

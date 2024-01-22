@@ -87,7 +87,7 @@ fun SharingWithContent(
         topBar = {
             BackArrowTopAppBar(
                 title = "",
-                onUpClick = { onNavigateEvent(SharingNavigation.Back) },
+                onUpClick = { onNavigateEvent(SharingNavigation.BackToHome) },
                 actions = {
                     LoadingCircleButton(
                         modifier = Modifier.padding(12.dp, 0.dp),

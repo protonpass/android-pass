@@ -30,6 +30,9 @@ sealed interface SharingSummaryEvent {
     object Unknown : SharingSummaryEvent
 
     @Immutable
+    object BackToHome : SharingSummaryEvent
+
+    @Immutable
     object Shared : SharingSummaryEvent
 }
 

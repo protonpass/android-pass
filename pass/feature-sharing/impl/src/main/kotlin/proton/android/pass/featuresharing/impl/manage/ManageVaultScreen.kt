@@ -46,7 +46,7 @@ fun ManageVaultScreen(
     LaunchedEffect(state.event) {
         when (val event = state.event) {
             ManageVaultEvent.Close -> {
-                onNavigateEvent(SharingNavigation.Back)
+                onNavigateEvent(SharingNavigation.BackToHome)
             }
             is ManageVaultEvent.ShowInvitesInfo -> {
                 onNavigateEvent(SharingNavigation.ShowInvitesInfo(event.shareId))

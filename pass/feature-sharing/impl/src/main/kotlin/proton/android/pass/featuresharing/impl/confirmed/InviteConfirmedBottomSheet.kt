@@ -44,7 +44,7 @@ fun InviteConfirmedBottomSheet(
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         when (val event = state.event) {
-            InviteConfirmedEvent.Close -> onNavigateEvent(SharingNavigation.Back)
+            InviteConfirmedEvent.Close -> onNavigateEvent(SharingNavigation.BackToHome)
             is InviteConfirmedEvent.Confirmed -> onNavigateEvent(
                 SharingNavigation.ViewVault(event.shareId)
             )

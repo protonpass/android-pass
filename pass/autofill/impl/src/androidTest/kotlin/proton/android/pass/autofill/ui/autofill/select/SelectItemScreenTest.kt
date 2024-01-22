@@ -109,7 +109,7 @@ class SelectItemScreenTest {
             vaults = 1,
             suggestions = 3,
             otherItems = 0,
-            planType = PlanType.Paid("", "")
+            planType = PlanType.Paid.Plus("", "")
         )
         clickOnItemTest("${SUGGESTION_TITLE_PREFIX}0")
     }
@@ -120,7 +120,7 @@ class SelectItemScreenTest {
             vaults = 1,
             suggestions = 3,
             otherItems = 2,
-            planType = PlanType.Paid("", "")
+            planType = PlanType.Paid.Plus("", "")
         )
         clickOnItemTest("${SUGGESTION_TITLE_PREFIX}0")
     }
@@ -131,7 +131,7 @@ class SelectItemScreenTest {
             vaults = 1,
             suggestions = 0,
             otherItems = 2,
-            planType = PlanType.Paid("", "")
+            planType = PlanType.Paid.Plus("", "")
         )
 
         clickOnItemTest("${OTHER_ITEM_TITLE_PREFIX}0")
@@ -143,7 +143,7 @@ class SelectItemScreenTest {
             vaults = 1,
             suggestions = 3,
             otherItems = 2,
-            planType = PlanType.Paid("", "")
+            planType = PlanType.Paid.Plus("", "")
         )
 
         clickOnItemTest("${OTHER_ITEM_TITLE_PREFIX}0")
@@ -260,7 +260,7 @@ class SelectItemScreenTest {
             vaults = 1,
             suggestions = 3,
             otherItems = 0,
-            planType = PlanType.Paid("", "")
+            planType = PlanType.Paid.Plus("", "")
         )
 
         searchTest(query = SUGGESTION_TITLE_PREFIX, itemText = "${SUGGESTION_TITLE_PREFIX}0")
@@ -272,7 +272,7 @@ class SelectItemScreenTest {
             vaults = 1,
             suggestions = 1,
             otherItems = 2,
-            planType = PlanType.Paid("", "")
+            planType = PlanType.Paid.Plus("", "")
         )
 
         searchTest(query = OTHER_ITEM_TITLE_PREFIX, itemText = "${OTHER_ITEM_TITLE_PREFIX}0")

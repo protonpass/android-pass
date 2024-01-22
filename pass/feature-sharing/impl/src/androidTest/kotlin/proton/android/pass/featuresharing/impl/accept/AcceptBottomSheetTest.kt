@@ -87,7 +87,7 @@ class AcceptBottomSheetTest {
                 PassTheme {
                     AcceptInviteBottomSheet(
                         onNavigateEvent = {
-                            if (it == SharingNavigation.Back) {
+                            if (it == SharingNavigation.BackToHome) {
                                 checker.call()
                             }
                         }
@@ -112,7 +112,7 @@ class AcceptBottomSheetTest {
                 PassTheme {
                     AcceptInviteBottomSheet(
                         onNavigateEvent = {
-                            if (it == SharingNavigation.Back) {
+                            if (it == SharingNavigation.BackToHome) {
                                 checker.call()
                             }
                         }

@@ -31,14 +31,14 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.pin
+import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.ThemedTopBarOptionsPreviewProvider
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsParameters
 import proton.android.pass.featureitemdetail.impl.common.migrate
 import proton.android.pass.featureitemdetail.impl.common.moveToTrash
-import proton.android.pass.featureitemdetail.impl.common.pin
-import proton.android.pass.featureitemdetail.impl.common.unpin
 
 @Composable
 fun NoteTopBarOptionsBottomSheetContents(

@@ -29,6 +29,8 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.pin
+import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 
 @Composable

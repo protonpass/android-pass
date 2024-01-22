@@ -35,11 +35,15 @@ fun SharingSummaryScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        if (state.event == SharingSummaryEvent.Shared) {
-            state.vaultWithItemCount?.let {
+        when (state.event) {
+            SharingSummaryEvent.BackToHome -> onNavigateEvent(SharingNavigation.BackToHome)
+            SharingSummaryEvent.Shared -> state.vaultWithItemCount?.let {
                 onNavigateEvent(SharingNavigation.ManageVault(it.vault.shareId))
             }
+            SharingSummaryEvent.Unknown -> {}
         }
+
+        viewModel.clearEvent()
     }
 
     SharingSummaryContent(

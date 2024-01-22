@@ -42,7 +42,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SharingPermissionsViewModel @Inject constructor(
-    private val bulkInviteRepository: BulkInviteRepository,
+    bulkInviteRepository: BulkInviteRepository,
     getVaultById: GetVaultById,
     savedStateHandleProvider: SavedStateHandleProvider,
 ) : ViewModel() {
@@ -59,13 +59,18 @@ class SharingPermissionsViewModel @Inject constructor(
         getVaultById(shareId = shareId).asLoadingResult(),
         eventState
     ) { addresses, vault, event ->
+        val uiEvent = if (event == SharingPermissionsEvents.Unknown && addresses.isEmpty()) {
+            SharingPermissionsEvents.BackToHome
+        } else {
+            event
+        }
         SharingPermissionsUIState(
             addresses = addresses.map { it.toUiState() }.toImmutableList(),
             headerState = SharingPermissionsHeaderState(
                 memberCount = addresses.size
             ),
             vaultName = vault.getOrNull()?.name,
-            event = event
+            event = uiEvent
         )
     }.stateIn(
         scope = viewModelScope,

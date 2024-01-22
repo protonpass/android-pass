@@ -39,6 +39,7 @@ fun SharingPermissionsScreen(
             is SharingPermissionsEvents.NavigateToSummary -> onNavigateEvent(
                 SharingNavigation.Summary(shareId = event.shareId)
             )
+            SharingPermissionsEvents.BackToHome -> onNavigateEvent(SharingNavigation.BackToHome)
 
             SharingPermissionsEvents.Unknown -> {}
         }

@@ -42,13 +42,13 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveMFACount
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.waitUntilExists
-import proton.android.pass.domain.Plan
-import proton.android.pass.domain.PlanLimit
-import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -79,7 +79,7 @@ class ProfileScreenTest {
     @Before
     fun setup() {
         hiltRule.inject()
-        setupPlan(PlanType.Paid("", ""), true)
+        setupPlan(PlanType.Paid.Plus("", ""), true)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         observeItemCount.sendResult(Result.success(ItemCountSummary.Initial))
         observeMfaCount.emitResult(0)
@@ -226,7 +226,7 @@ class ProfileScreenTest {
 
     @Test
     fun doesNotShowUpgradeButtonIfPlanIsPaidAndUpgradeIsAvailable() {
-        setupPlan(PlanType.Paid("", ""), true)
+        setupPlan(PlanType.Paid.Plus("", ""), true)
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {

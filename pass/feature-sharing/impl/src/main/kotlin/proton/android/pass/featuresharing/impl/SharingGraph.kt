@@ -105,6 +105,7 @@ object ShareFromItem : NavItem(
 
 sealed interface SharingNavigation {
     object Back : SharingNavigation
+    object BackToHome : SharingNavigation
     object Upgrade : SharingNavigation
 
     @JvmInline
@@ -185,7 +186,7 @@ fun NavGraphBuilder.sharingGraph(
     }
 
     bottomSheet(AcceptInvite) {
-        BackHandler { onNavigateEvent(SharingNavigation.Back) }
+        BackHandler { onNavigateEvent(SharingNavigation.BackToHome) }
         AcceptInviteBottomSheet(onNavigateEvent = onNavigateEvent)
     }
 
@@ -201,7 +202,7 @@ fun NavGraphBuilder.sharingGraph(
     }
 
     bottomSheet(InviteConfirmed) {
-        BackHandler { onNavigateEvent(SharingNavigation.Back) }
+        BackHandler { onNavigateEvent(SharingNavigation.BackToHome) }
         InviteConfirmedBottomSheet(onNavigateEvent = onNavigateEvent)
     }
 

@@ -34,7 +34,8 @@ data class SharingWithUIState(
     val event: SharingWithEvents = SharingWithEvents.Unknown,
     val isLoading: Boolean = false,
     val showEditVault: Boolean = false,
-    val suggestionsUIState: SuggestionsUIState = SuggestionsUIState.Initial
+    val suggestionsUIState: SuggestionsUIState = SuggestionsUIState.Initial,
+    val scrollToBottom: Boolean = false
 )
 
 sealed interface SuggestionsUIState {

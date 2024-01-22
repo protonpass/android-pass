@@ -66,6 +66,7 @@ class SharingWithViewModel @Inject constructor(
     private val showEditVault: Boolean = savedStateHandleProvider.get()
         .require(ShowEditVaultArgId.key)
 
+    private val scrollToBottomFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val showEmailNotValidFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -113,8 +114,10 @@ class SharingWithViewModel @Inject constructor(
         isLoadingState,
         eventState,
         suggestionsUIStateFlow,
-        selectedEmailIndexFlow
-    ) { emails, isEmailNotValid, vault, isLoading, event, suggestionsUiState, selectedEmailIndex ->
+        selectedEmailIndexFlow,
+        scrollToBottomFlow
+    ) { emails, isEmailNotValid, vault, isLoading, event, suggestionsUiState, selectedEmailIndex,
+        scrollToBottom ->
         val vaultValue = vault.value()
         SharingWithUIState(
             enteredEmails = emails.toPersistentList(),
@@ -124,7 +127,8 @@ class SharingWithViewModel @Inject constructor(
             isLoading = isLoading.value() || vaultValue == null,
             event = event,
             showEditVault = showEditVault,
-            suggestionsUIState = suggestionsUiState
+            suggestionsUIState = suggestionsUiState,
+            scrollToBottom = scrollToBottom
         )
     }.stateIn(
         scope = viewModelScope,
@@ -143,6 +147,7 @@ class SharingWithViewModel @Inject constructor(
         if (checkValidEmail()) {
             enteredEmailsState.update {
                 if (!it.contains(editingEmailState)) {
+                    scrollToBottomFlow.update { true }
                     it + editingEmailState
                 } else {
                     it
@@ -191,6 +196,7 @@ class SharingWithViewModel @Inject constructor(
         checkedEmails = if (!checked) {
             enteredEmailsState.update {
                 if (!it.contains(email)) {
+                    scrollToBottomFlow.update { true }
                     it + email
                 } else {
                     it
@@ -209,6 +215,10 @@ class SharingWithViewModel @Inject constructor(
             checkedEmails - email
         }
         checkedEmailFlow.update { checkedEmails }
+    }
+
+    fun onScrolledToBottom() = viewModelScope.launch {
+        scrollToBottomFlow.update { false }
     }
 
     private fun checkValidEmail(): Boolean {

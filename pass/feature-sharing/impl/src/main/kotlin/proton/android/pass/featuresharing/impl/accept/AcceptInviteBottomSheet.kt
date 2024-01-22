@@ -43,7 +43,7 @@ fun AcceptInviteBottomSheet(
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         if (state.event == AcceptInviteEvent.Close) {
-            onNavigateEvent(SharingNavigation.Back)
+            onNavigateEvent(SharingNavigation.BackToHome)
             viewModel.clearEvent()
         }
     }

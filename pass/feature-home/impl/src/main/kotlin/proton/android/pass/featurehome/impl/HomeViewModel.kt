@@ -100,10 +100,12 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.PerformSync
+import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UnpinItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
@@ -181,6 +183,8 @@ class HomeViewModel @Inject constructor(
     private val toastManager: ToastManager,
     private val observeCurrentUser: ObserveCurrentUser,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val pinItem: PinItem,
+    private val unpinItem: UnpinItem,
     private val pinItems: PinItems,
     private val unpinItems: UnpinItems,
     observeVaults: ObserveVaults,
@@ -675,6 +679,32 @@ class HomeViewModel @Inject constructor(
 
             snackbarDispatcher(snackbarMessage)
         }
+    }
+
+    internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        actionStateFlow.update { ActionState.Loading }
+
+        runCatching { pinItem.invoke(shareId, itemId) }
+            .onSuccess { snackbarDispatcher(HomeSnackbarMessage.ItemPinnedSuccess) }
+            .onFailure { error ->
+                PassLogger.w(TAG, error, "An error occurred pinning home item")
+                snackbarDispatcher(HomeSnackbarMessage.ItemPinnedError)
+            }
+
+        actionStateFlow.update { ActionState.Done }
+    }
+
+    internal fun unpinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        actionStateFlow.update { ActionState.Loading }
+
+        runCatching { unpinItem.invoke(shareId, itemId) }
+            .onSuccess { snackbarDispatcher(HomeSnackbarMessage.ItemUnpinnedSuccess) }
+            .onFailure { error ->
+                PassLogger.w(TAG, error, "An error occurred unpinning home item")
+                snackbarDispatcher(HomeSnackbarMessage.ItemUnpinnedError)
+            }
+
+        actionStateFlow.update { ActionState.Done }
     }
 
     fun setItemTypeSelection(searchFilterType: SearchFilterType) {

@@ -324,6 +324,18 @@ fun HomeScreen(
                             homeViewModel.copyToClipboard(it, HomeClipboardType.Note)
                         }
                     },
+                    onPinned = remember {
+                        { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.pinItem(shareId, itemId)
+                        }
+                    },
+                    onUnpinned = remember {
+                        { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.unpinItem(shareId, itemId)
+                        }
+                    },
                     onEdit = remember {
                         { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }

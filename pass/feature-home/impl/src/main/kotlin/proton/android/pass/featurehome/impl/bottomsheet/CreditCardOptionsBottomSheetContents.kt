@@ -21,14 +21,16 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.pin
+import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
-import proton.android.pass.featurehome.impl.R
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featurehome.impl.R
 
 @ExperimentalMaterialApi
 @Composable
@@ -38,6 +40,8 @@ fun CreditCardOptionsBottomSheetContents(
     isRecentSearch: Boolean = false,
     onCopyNumber: (String) -> Unit,
     onCopyCvv: (EncryptedString) -> Unit,
+    onPinned: (ShareId, ItemId) -> Unit,
+    onUnpinned: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
@@ -51,19 +55,29 @@ fun CreditCardOptionsBottomSheetContents(
             },
             leftIcon = { CreditCardIcon() }
         )
-        val list = mutableListOf(
+
+        val bottomSheetItems = mutableListOf(
             copyNumber { onCopyNumber(contents.number) },
             copyCvv { onCopyCvv(contents.cvv.encrypted) },
-        )
-        if (itemUiModel.canModify) {
-            list += edit(itemUiModel, onEdit)
-            list += moveToTrash(itemUiModel, onMoveToTrash)
+        ).apply {
+            if (itemUiModel.isPinned) {
+                add(unpin(onClick = { onUnpinned(itemUiModel.shareId, itemUiModel.id) }))
+            } else {
+                add(pin(onClick = { onPinned(itemUiModel.shareId, itemUiModel.id) }))
+            }
+
+            if (itemUiModel.canModify) {
+                add(edit(itemUiModel, onEdit))
+                add(moveToTrash(itemUiModel, onMoveToTrash))
+            }
+
+            if (isRecentSearch) {
+                add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
+            }
         }
-        if (isRecentSearch) {
-            list.add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
-        }
+
         BottomSheetItemList(
-            items = list.withDividers().toPersistentList()
+            items = bottomSheetItems.withDividers().toPersistentList(),
         )
     }
 }
@@ -80,18 +94,19 @@ private fun copyCvv(onClick: () -> Unit) = copyItem(
     onClick
 )
 
-private fun copyItem(text: String, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = text) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick = onClick
-    override val isDivider = false
-}
+private fun copyItem(text: String, onClick: () -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = text) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick = onClick
+        override val isDivider = false
+    }
 
 
 @Suppress("FunctionMaxLength")
@@ -127,6 +142,8 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                 isRecentSearch = input.second,
                 onCopyNumber = {},
                 onCopyCvv = {},
+                onPinned = { _, _ -> },
+                onUnpinned = { _, _ -> },
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> }

@@ -23,6 +23,8 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
 import me.proton.core.account.data.db.AccountConverters
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountEntity
@@ -88,6 +90,7 @@ import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
+import proton.android.pass.log.api.PassLogger
 
 @Database(
     entities = [
@@ -197,6 +200,7 @@ abstract class AppDatabase :
         const val VERSION = 38
 
         const val DB_NAME = "db-passkey"
+        const val TAG = "AppDatabase"
 
         val migrations: List<Migration> = listOf(
             AppDatabaseMigrations.MIGRATION_1_2,
@@ -217,6 +221,16 @@ abstract class AppDatabase :
 
         fun buildDatabase(context: Context): AppDatabase =
             databaseBuilder<AppDatabase>(context, DB_NAME)
+                .setQueryCallback(
+                    { sqlQuery, _ ->
+                        val threadName = Thread.currentThread().name
+                        val query = sqlQuery.replace("\n", " ")
+                            .replace("\\s+".toRegex(), " ")
+                            .trim()
+                        PassLogger.i(TAG, "Thread: $threadName, Query: $query")
+                    },
+                    Dispatchers.Unconfined.asExecutor()
+                )
                 .apply { migrations.forEach { addMigrations(it) } }
                 .fallbackToDestructiveMigration()
                 .build()

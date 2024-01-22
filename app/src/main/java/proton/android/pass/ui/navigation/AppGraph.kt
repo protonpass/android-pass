@@ -908,7 +908,9 @@ fun NavGraphBuilder.appGraph(
     }
     sharingGraph {
         when (it) {
-            SharingNavigation.Back -> dismissBottomSheet {
+            SharingNavigation.Back -> appNavigator.navigateBack()
+
+            SharingNavigation.BackToHome -> dismissBottomSheet {
                 appNavigator.popUpTo(Home)
             }
 

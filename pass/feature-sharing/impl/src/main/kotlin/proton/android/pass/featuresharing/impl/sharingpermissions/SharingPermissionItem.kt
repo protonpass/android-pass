@@ -60,7 +60,7 @@ fun SharingPermissionItem(
         )
 
         Column(
-            modifier = modifier.weight(1f),
+            modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(

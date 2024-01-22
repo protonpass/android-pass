@@ -144,35 +144,13 @@ fun SharingWithContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     state.enteredEmails.forEachIndexed { idx, email ->
-                        Row(
-                            modifier = Modifier
-                                .padding(
-                                    top = Spacing.small,
-                                    bottom = Spacing.small,
-                                    end = Spacing.small
-                                )
-                                .roundedContainer(
-                                    backgroundColor = PassTheme.colors.interactionNormMinor1,
-                                    borderColor = Color.Transparent,
-                                )
-                                .clickable { onEvent(SharingWithUiEvent.EmailClick(idx)) }
-                                .padding(Spacing.small),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = email,
-                                style = ProtonTheme.typography.defaultNorm,
-                            )
-
-                            if (state.selectedEmailIndex.value() == idx) {
-                                Icon(
-                                    modifier = Modifier.padding(start = Spacing.small),
-                                    painter = painterResource(id = CoreR.drawable.ic_proton_cross_circle),
-                                    tint = PassTheme.colors.textNorm,
-                                    contentDescription = null
-                                )
+                        SharingWithChip(
+                            email = email,
+                            isSelected = state.selectedEmailIndex.value() == idx,
+                            onClick = {
+                                onEvent(SharingWithUiEvent.EmailClick(idx))
                             }
-                        }
+                        )
                     }
                 }
             }
@@ -227,6 +205,44 @@ fun SharingWithContent(
                     Loading()
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun SharingWithChip(
+    modifier: Modifier = Modifier,
+    email: String,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = modifier
+            .padding(
+                top = Spacing.small,
+                bottom = Spacing.small,
+                end = Spacing.small
+            )
+            .roundedContainer(
+                backgroundColor = PassTheme.colors.interactionNormMinor1,
+                borderColor = Color.Transparent,
+            )
+            .clickable { onClick() }
+            .padding(Spacing.small),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = email,
+            style = ProtonTheme.typography.defaultNorm,
+        )
+
+        if (isSelected) {
+            Icon(
+                modifier = Modifier.padding(start = Spacing.small),
+                painter = painterResource(id = CoreR.drawable.ic_proton_cross_circle),
+                tint = PassTheme.colors.textNorm,
+                contentDescription = stringResource(R.string.share_with_remove_email_content_description)
+            )
         }
     }
 }

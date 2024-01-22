@@ -36,6 +36,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -79,11 +80,7 @@ fun SharingWithContent(
     state: SharingWithUIState,
     editingEmail: String,
     onNavigateEvent: (SharingNavigation) -> Unit,
-    onEmailChange: (String) -> Unit,
-    onInviteSuggestionToggle: (String, Boolean) -> Unit,
-    onEmailSubmit: () -> Unit,
-    onContinueClick: () -> Unit,
-    onEmailClick: (Int) -> Unit
+    onEvent: (SharingWithUiEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -95,7 +92,7 @@ fun SharingWithContent(
                     LoadingCircleButton(
                         modifier = Modifier.padding(12.dp, 0.dp),
                         color = PassTheme.colors.interactionNormMajor1,
-                        onClick = onContinueClick,
+                        onClick = { onEvent(SharingWithUiEvent.ContinueClick) },
                         isLoading = state.isLoading,
                         text = {
                             Text(
@@ -108,13 +105,21 @@ fun SharingWithContent(
                 }
             )
         }
-    ) {
+    ) { padding ->
+
+        val scrollState = rememberScrollState()
+        LaunchedEffect(state.scrollToBottom) {
+            if (state.scrollToBottom) {
+                scrollState.animateScrollTo(scrollState.maxValue)
+                onEvent(SharingWithUiEvent.OnScrolledToBottom)
+            }
+        }
 
         var parentHeight: Dp by remember { mutableStateOf(Dp.Unspecified) }
         val density = LocalDensity.current
         Column(
             modifier = Modifier
-                .padding(it)
+                .padding(padding)
                 .padding(Spacing.medium)
                 .onSizeChanged { parentHeight = with(density) { it.height.toDp() } },
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -127,7 +132,7 @@ fun SharingWithContent(
             Box(
                 modifier = Modifier
                     .heightIn(min = 0.dp, max = parentHeight * RATIO_HEIGHT_EMAIL_LIST)
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(scrollState)
             ) {
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
@@ -145,7 +150,7 @@ fun SharingWithContent(
                                     backgroundColor = PassTheme.colors.interactionNormMinor1,
                                     borderColor = Color.Transparent,
                                 )
-                                .clickable { onEmailClick(idx) }
+                                .clickable { onEvent(SharingWithUiEvent.EmailClick(idx)) }
                                 .padding(Spacing.small),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -187,8 +192,8 @@ fun SharingWithContent(
                     autoCorrect = false,
                     keyboardType = KeyboardType.Email
                 ),
-                onChange = onEmailChange,
-                onDoneClick = onEmailSubmit
+                onChange = { onEvent(SharingWithUiEvent.EmailChange(it)) },
+                onDoneClick = { onEvent(SharingWithUiEvent.EmailSubmit) }
             )
             RequestFocusLaunchedEffect(focusRequester)
 
@@ -204,7 +209,9 @@ fun SharingWithContent(
             when (state.suggestionsUIState) {
                 is SuggestionsUIState.Content -> InviteSuggestions(
                     state = state.suggestionsUIState,
-                    onItemClicked = onInviteSuggestionToggle
+                    onItemClicked = { email, state ->
+                        onEvent(SharingWithUiEvent.InviteSuggestionToggle(email, state))
+                    }
                 )
 
                 SuggestionsUIState.Initial -> {}

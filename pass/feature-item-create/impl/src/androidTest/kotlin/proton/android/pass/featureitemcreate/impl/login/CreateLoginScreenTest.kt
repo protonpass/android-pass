@@ -49,6 +49,16 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.domain.AliasSuffix
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
@@ -62,16 +72,6 @@ import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
-import proton.android.pass.domain.AliasSuffix
-import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.Plan
-import proton.android.pass.domain.PlanLimit
-import proton.android.pass.domain.PlanType
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -122,7 +122,7 @@ class CreateLoginScreenTest {
         savedStateHandle.get().apply {
             set(CommonNavArgId.ShareId.key, SHARE_ID)
         }
-        setupPlan(PlanType.Paid("", ""))
+        setupPlan(PlanType.Paid.Plus("", ""))
 
         val vault = VaultWithItemCount(
             vault = Vault(

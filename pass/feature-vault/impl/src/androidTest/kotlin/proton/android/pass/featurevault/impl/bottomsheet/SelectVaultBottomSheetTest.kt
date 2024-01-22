@@ -36,6 +36,13 @@ import proton.android.pass.data.fakes.usecases.TestCanCreateItemInVault
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featurevault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
@@ -44,13 +51,6 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.waitUntilExists
-import proton.android.pass.domain.Plan
-import proton.android.pass.domain.PlanLimit
-import proton.android.pass.domain.PlanType
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -223,7 +223,7 @@ class SelectVaultBottomSheetTest {
 
     @Test
     fun canSelectOtherVaultInPaidPlan() {
-        setupPlan(true, PlanType.Paid("", ""))
+        setupPlan(true, PlanType.Paid.Plus("", ""))
         setupVaults(3, primaryIndex = 1)
 
         val checker = CallChecker<ShareId>()
@@ -251,7 +251,7 @@ class SelectVaultBottomSheetTest {
 
     @Test
     fun cannotSelectReadOnlyVault() {
-        setupPlan(true, PlanType.Paid("", ""))
+        setupPlan(true, PlanType.Paid.Plus("", ""))
         val vaults = listOf(
             VaultWithItemCount(
                 vault = Vault(

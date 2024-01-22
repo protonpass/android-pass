@@ -91,7 +91,12 @@ fun SharingWithContent(
                 actions = {
                     LoadingCircleButton(
                         modifier = Modifier.padding(12.dp, 0.dp),
-                        color = PassTheme.colors.interactionNormMajor1,
+                        buttonEnabled = state.isContinueEnabled,
+                        color = if (state.isContinueEnabled) {
+                            PassTheme.colors.interactionNormMajor1
+                        } else {
+                            PassTheme.colors.interactionNormMinor1
+                        },
                         onClick = { onEvent(SharingWithUiEvent.ContinueClick) },
                         isLoading = state.isLoading,
                         text = {

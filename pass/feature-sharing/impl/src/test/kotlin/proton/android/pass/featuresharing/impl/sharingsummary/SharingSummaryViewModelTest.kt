@@ -157,6 +157,15 @@ class SharingSummaryViewModelTest {
         assertThat(message).isEqualTo(InviteSentError)
     }
 
+    @Test
+    fun `if addresses is empty send back to home`() = runTest {
+        bulkInviteRepository.clear()
+        viewModel.state.test {
+            val state = awaitItem()
+            assertThat(state.event).isEqualTo(SharingSummaryEvent.BackToHome)
+        }
+    }
+
     private fun createVaultWithItemCount() = VaultWithItemCount(
         vault = Vault(
             shareId = ShareId(id = TEST_SHARE_ID),

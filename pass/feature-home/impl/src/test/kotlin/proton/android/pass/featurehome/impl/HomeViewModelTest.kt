@@ -41,6 +41,8 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
+import proton.android.pass.data.fakes.usecases.FakePinItem
+import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestClearTrash
 import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
@@ -276,8 +278,10 @@ internal class HomeViewModelTest {
             observeCurrentUser = observeCurrentUser,
             toastManager = toastManager,
             featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
+            pinItem = FakePinItem(),
+            unpinItem = FakeUnpinItem(),
             pinItems = TestPinItems(),
-            unpinItems = TestUnpinItems()
+            unpinItems = TestUnpinItems(),
         )
     }
 

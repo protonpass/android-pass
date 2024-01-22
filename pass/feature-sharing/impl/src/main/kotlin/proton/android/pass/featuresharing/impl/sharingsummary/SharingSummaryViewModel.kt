@@ -83,7 +83,7 @@ class SharingSummaryViewModel @Inject constructor(
         isLoadingStateFlow,
         eventFlow
     ) { addresses, vaultResult, isLoadingState, event ->
-        val uiEvent = if (event == SharingSummaryEvent.Unknown && addresses.isEmpty()) {
+        var uiEvent = if (event == SharingSummaryEvent.Unknown && addresses.isEmpty()) {
             SharingSummaryEvent.BackToHome
         } else {
             event
@@ -93,6 +93,7 @@ class SharingSummaryViewModel @Inject constructor(
             is LoadingResult.Success -> vaultResult.data
             is LoadingResult.Error -> {
                 snackbarDispatcher(VaultNotFound)
+                uiEvent = SharingSummaryEvent.BackToHome
                 null
             }
 

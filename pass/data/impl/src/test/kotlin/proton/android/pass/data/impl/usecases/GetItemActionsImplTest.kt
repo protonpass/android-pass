@@ -79,12 +79,11 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot share if canShareVault returns so`() = runTest {
-        for (
-        reason in listOf(
+        val reasons = listOf(
             CanShareVaultStatus.CannotShareReason.NotEnoughPermissions,
             CanShareVaultStatus.CannotShareReason.NotEnoughInvites
         )
-        ) {
+        for (reason in reasons) {
             val canShareResult = CanShareVaultStatus.CannotShare(reason)
             canShareVault.setResult(canShareResult)
 

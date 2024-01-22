@@ -32,6 +32,9 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
@@ -47,9 +50,6 @@ import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestPendingInvite
-import proton.android.pass.domain.Plan
-import proton.android.pass.domain.PlanLimit
-import proton.android.pass.domain.PlanType
 
 class OnBoardingTipsViewModelTest {
 
@@ -252,7 +252,7 @@ class OnBoardingTipsViewModelTest {
         }
 
     private fun setupPlan(
-        planType: PlanType = PlanType.Paid("", "")
+        planType: PlanType = PlanType.Paid.Plus("", "")
     ) {
         val plan = Plan(
             planType = planType,

@@ -25,6 +25,9 @@ import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
 import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.inappreview.impl.InAppReviewManagerImpl.Companion.FREE_USER_ITEM_AUTOFILL_TRIGGER
 import proton.android.pass.inappreview.impl.InAppReviewManagerImpl.Companion.FREE_USER_ITEM_CREATED_TRIGGER
@@ -33,9 +36,6 @@ import proton.android.pass.inappreview.impl.InAppReviewManagerImpl.Companion.PAI
 import proton.android.pass.inappreview.impl.InAppReviewManagerImpl.Companion.TIMES_USED
 import proton.android.pass.preferences.AppUsageConfig
 import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.domain.Plan
-import proton.android.pass.domain.PlanLimit
-import proton.android.pass.domain.PlanType
 
 class InAppReviewManagerImplTest {
 
@@ -129,7 +129,7 @@ class InAppReviewManagerImplTest {
         getUserPlan.setResult(
             Result.success(
                 Plan(
-                    planType = PlanType.Paid("", ""),
+                    planType = PlanType.Paid.Plus("", ""),
                     hideUpgrade = false,
                     vaultLimit = PlanLimit.Limited(10),
                     aliasLimit = PlanLimit.Limited(10),

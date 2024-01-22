@@ -142,6 +142,11 @@
     <string name="recent_search_remove_item">Remove from recent searches</string>
 
     <!-- Pinning -->
+    <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+    <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+    <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+    <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
+
     <string name="home_snackbar_items_pinned_success">Items pinned successfully</string>
     <string name="home_snackbar_items_pinned_partial_success">Error pinning some of the items</string>
     <string name="home_snackbar_items_pinned_error">Error pinning the items</string>

@@ -42,11 +42,13 @@ val accountSentryDSN: String? = System.getenv("ACCOUNT_SENTRY_DSN")
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 val testEnvUrl: String = System.getenv("TEST_ENV_URL") ?: "api.proton.black"
 val prodEnvUrl: String = System.getenv("PROD_ENV_URL") ?: "pass-api.proton.me"
-val prodHvUrl: String = if (System.getenv("PROD_ENV_URL").isNullOrBlank()) "verify.proton.me" else "verify.proton.black"
+val prodHvUrl: String =
+    if (System.getenv("PROD_ENV_URL").isNullOrBlank()) "verify.proton.me" else "verify.proton.black"
 val isCustomBuild: Boolean = !System.getenv("PROD_ENV_URL").isNullOrBlank()
 val isApkBuild: Boolean = project.findProperty("apkBuild") == "true"
 
-println("""
+println(
+    """
     ------- BUILD INFO -------
     testEnvUrl: $testEnvUrl
     prodEnvUrl: $prodEnvUrl
@@ -54,7 +56,8 @@ println("""
     isCustomBuild: $isCustomBuild
     isApkBuild: $isApkBuild
     --------------------------
-""".trimIndent())
+""".trimIndent()
+)
 
 val jobId: Int = System.getenv("CI_JOB_ID")?.take(3)?.toInt() ?: 0
 val appVersionName: String = "1.16.4"
@@ -91,6 +94,12 @@ android {
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "ACCOUNT_SENTRY_DSN", accountSentryDSN.toBuildConfigValue())
         buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
+
+        ndk {
+            abiFilters += "armeabi-v7a"
+            abiFilters += "arm64-v8a"
+            abiFilters += "x64-64"
+        }
     }
 
     testOptions {

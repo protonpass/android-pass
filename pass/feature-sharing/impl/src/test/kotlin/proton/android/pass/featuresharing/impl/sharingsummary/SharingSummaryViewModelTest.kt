@@ -126,6 +126,7 @@ class SharingSummaryViewModelTest {
                 ),
                 vaultWithItemCount = null,
                 isLoading = false,
+                event = SharingSummaryEvent.BackToHome
             )
             assertThat(initialState).isEqualTo(expectedState)
         }

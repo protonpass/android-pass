@@ -39,13 +39,15 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.pin
+import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
-import proton.android.pass.featurehome.impl.R
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featurehome.impl.R
 
 @ExperimentalMaterialApi
 @Composable
@@ -56,9 +58,11 @@ fun LoginOptionsBottomSheetContents(
     canLoadExternalImages: Boolean,
     onCopyUsername: (String) -> Unit,
     onCopyPassword: (EncryptedString) -> Unit,
+    onPinned: (ShareId, ItemId) -> Unit,
+    onUnpinned: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
-    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
+    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
     Column(modifier.bottomSheet()) {
@@ -77,21 +81,29 @@ fun LoginOptionsBottomSheetContents(
                 )
             }
         )
-        val list = mutableListOf(
+
+        val bottomSheetItems = mutableListOf(
             copyUsername(contents.username, onCopyUsername),
             copyPassword(contents.password.encrypted, onCopyPassword),
-        )
+        ).apply {
+            if (itemUiModel.isPinned) {
+                add(unpin(onClick = { onUnpinned(itemUiModel.shareId, itemUiModel.id) }))
+            } else {
+                add(pin(onClick = { onPinned(itemUiModel.shareId, itemUiModel.id) }))
+            }
 
-        if (itemUiModel.canModify) {
-            list += edit(itemUiModel, onEdit)
-            list += moveToTrash(itemUiModel, onMoveToTrash)
+            if (itemUiModel.canModify) {
+                add(edit(itemUiModel, onEdit))
+                add(moveToTrash(itemUiModel, onMoveToTrash))
+            }
+
+            if (isRecentSearch) {
+                add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
+            }
         }
 
-        if (isRecentSearch) {
-            list.add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
-        }
         BottomSheetItemList(
-            items = list.withDividers().toPersistentList()
+            items = bottomSheetItems.withDividers().toPersistentList(),
         )
     }
 }
@@ -160,6 +172,8 @@ fun LoginOptionsBottomSheetContentsPreview(
                 isRecentSearch = input.second,
                 onCopyUsername = {},
                 onCopyPassword = {},
+                onPinned = { _, _ -> },
+                onUnpinned = { _, _ -> },
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },

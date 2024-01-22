@@ -50,10 +50,18 @@ fun SharingWithScreen(
         state = state,
         editingEmail = viewModel.editingEmail,
         onNavigateEvent = onNavigateEvent,
-        onEmailChange = viewModel::onEmailChange,
-        onEmailSubmit = viewModel::onEmailSubmit,
-        onInviteSuggestionToggle = viewModel::onItemToggle,
-        onContinueClick = viewModel::onContinueClick,
-        onEmailClick = viewModel::onEmailClick
+        onEvent = {
+            when (it) {
+                SharingWithUiEvent.ContinueClick -> viewModel.onContinueClick()
+                is SharingWithUiEvent.EmailChange -> viewModel.onEmailChange(it.content)
+                is SharingWithUiEvent.EmailClick -> viewModel.onEmailClick(it.index)
+                SharingWithUiEvent.EmailSubmit -> viewModel.onEmailSubmit()
+                is SharingWithUiEvent.InviteSuggestionToggle -> viewModel.onItemToggle(
+                    email = it.email,
+                    checked = it.value
+                )
+                SharingWithUiEvent.OnScrolledToBottom -> viewModel.onScrolledToBottom()
+            }
+        }
     )
 }

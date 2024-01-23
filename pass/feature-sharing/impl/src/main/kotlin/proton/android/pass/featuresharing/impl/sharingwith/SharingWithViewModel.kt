@@ -25,10 +25,15 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -77,9 +82,23 @@ class SharingWithViewModel @Inject constructor(
     private val selectedEmailIndexFlow: MutableStateFlow<Option<Int>> = MutableStateFlow(None)
 
     @OptIn(SavedStateHandleSaveableApi::class)
-    private var editingEmailState by savedStateHandleProvider.get().saveable {
-        mutableStateOf("")
-    }
+    private var editingEmailState by savedStateHandleProvider.get()
+        .saveable { mutableStateOf("") }
+
+    private val editingEmailStateFlow: MutableStateFlow<String> =
+        MutableStateFlow(editingEmailState)
+
+    @OptIn(FlowPreview::class)
+    private val debouncedEditingEmailStateFlow = editingEmailStateFlow
+        .debounce(DEBOUNCE_TIMEOUT)
+        .onStart { emit("") }
+        .distinctUntilChanged()
+
+    private val recommendationsFlow = debouncedEditingEmailStateFlow
+        .flatMapLatest { email ->
+            observeInviteRecommendations(shareId = shareId, startsWith = email)
+                .asLoadingResult()
+        }
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var checkedEmails: Set<String> by savedStateHandleProvider.get()
@@ -88,7 +107,7 @@ class SharingWithViewModel @Inject constructor(
     private val checkedEmailFlow = MutableStateFlow(checkedEmails)
 
     private val suggestionsUIStateFlow = combine(
-        observeInviteRecommendations(shareId = shareId).asLoadingResult(),
+        recommendationsFlow,
         checkedEmailFlow
     ) { result, checkedEmails ->
         when (result) {
@@ -142,6 +161,7 @@ class SharingWithViewModel @Inject constructor(
     fun onEmailChange(value: String) {
         val sanitised = value.replace(" ", "").replace("\n", "")
         editingEmailState = sanitised
+        editingEmailStateFlow.update { sanitised }
         showEmailNotValidFlow.update { false }
         selectedEmailIndexFlow.update { None }
         onChange()
@@ -158,6 +178,7 @@ class SharingWithViewModel @Inject constructor(
                 }
             }
             editingEmailState = ""
+            editingEmailStateFlow.update { "" }
             onChange()
         }
     }
@@ -178,6 +199,7 @@ class SharingWithViewModel @Inject constructor(
             if (checkValidEmail()) {
                 enteredEmailsState.update { it + editingEmailState }
                 editingEmailState = ""
+                editingEmailStateFlow.update { "" }
             } else {
                 return@launch
             }
@@ -243,6 +265,8 @@ class SharingWithViewModel @Inject constructor(
     }
 
     companion object {
+        private const val DEBOUNCE_TIMEOUT = 300L
+
         private const val TAG = "SharingWithViewModel"
     }
 }

@@ -21,8 +21,10 @@ package proton.android.pass.featuresharing.impl.sharingwith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -54,12 +56,13 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
+import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.featuresharing.impl.R
 
 @Composable
 fun InviteSuggestions(
     modifier: Modifier = Modifier,
-    state: SuggestionsUIState.Content,
+    state: SuggestionsUIState,
     onItemClicked: (String, Boolean) -> Unit,
 ) {
     Column(
@@ -70,52 +73,68 @@ fun InviteSuggestions(
             style = ProtonTheme.typography.defaultWeak,
             text = stringResource(id = R.string.share_with_suggestions_title)
         )
-        var selectedIndex by remember { mutableStateOf(0) }
-        TabRow(
-            modifier = Modifier.clip(CircleShape),
-            selectedTabIndex = selectedIndex,
-            backgroundColor = PassTheme.colors.interactionNormMinor1,
-            indicator = { },
-            divider = { }
-        ) {
-            InviteSuggestionTabs.values().forEachIndexed { index, tab ->
-                val selected = selectedIndex == index
-                Tab(
-                    modifier = Modifier
-                        .padding(Spacing.extraSmall)
-                        .clip(CircleShape)
-                        .applyIf(
-                            condition = selected,
-                            ifTrue = { background(PassTheme.colors.interactionNorm) },
-                        ),
-                    content = {
-                        val title = when (tab) {
-                            InviteSuggestionTabs.Recents -> stringResource(id = R.string.share_with_recents_title)
-                            InviteSuggestionTabs.GroupSuggestions -> state.groupDisplayName
-                        }
-                        Text(
-                            modifier = Modifier.padding(Spacing.small),
-                            text = title,
-                            style = PassTheme.typography.body3Norm()
-                        )
-                    },
-                    selected = selected,
-                    onClick = { selectedIndex = index }
-                )
-            }
-        }
-        when (InviteSuggestionTabs.values()[selectedIndex]) {
-            InviteSuggestionTabs.Recents -> InviteSuggestionList(
-                modifier = Modifier.weight(1f),
-                items = state.recentEmails,
-                onItemClicked = onItemClicked
-            )
+        when (state) {
+            is SuggestionsUIState.Content -> {
+                var selectedIndex by remember { mutableStateOf(0) }
+                TabRow(
+                    modifier = Modifier.clip(CircleShape),
+                    selectedTabIndex = selectedIndex,
+                    backgroundColor = PassTheme.colors.interactionNormMinor1,
+                    indicator = { },
+                    divider = { }
+                ) {
+                    InviteSuggestionTabs.values().forEachIndexed { index, tab ->
+                        val selected = selectedIndex == index
+                        Tab(
+                            modifier = Modifier
+                                .padding(Spacing.extraSmall)
+                                .clip(CircleShape)
+                                .applyIf(
+                                    condition = selected,
+                                    ifTrue = { background(PassTheme.colors.interactionNorm) },
+                                ),
+                            content = {
+                                val title = when (tab) {
+                                    InviteSuggestionTabs.Recents ->
+                                        stringResource(id = R.string.share_with_recents_title)
 
-            InviteSuggestionTabs.GroupSuggestions -> InviteSuggestionList(
-                modifier = Modifier.weight(1f),
-                items = state.planEmails,
-                onItemClicked = onItemClicked
-            )
+                                    InviteSuggestionTabs.GroupSuggestions -> state.groupDisplayName
+                                }
+                                Text(
+                                    modifier = Modifier.padding(Spacing.small),
+                                    text = title,
+                                    style = PassTheme.typography.body3Norm()
+                                )
+                            },
+                            selected = selected,
+                            onClick = { selectedIndex = index }
+                        )
+                    }
+                }
+                when (InviteSuggestionTabs.values()[selectedIndex]) {
+                    InviteSuggestionTabs.Recents -> InviteSuggestionList(
+                        modifier = Modifier.weight(1f),
+                        items = state.recentEmails,
+                        onItemClicked = onItemClicked
+                    )
+
+                    InviteSuggestionTabs.GroupSuggestions -> InviteSuggestionList(
+                        modifier = Modifier.weight(1f),
+                        items = state.planEmails,
+                        onItemClicked = onItemClicked
+                    )
+                }
+            }
+
+            SuggestionsUIState.Initial -> {
+            }
+
+            SuggestionsUIState.Loading -> Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Loading()
+            }
         }
     }
 }

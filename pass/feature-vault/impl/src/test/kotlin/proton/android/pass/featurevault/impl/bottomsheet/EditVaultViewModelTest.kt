@@ -26,19 +26,20 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestShare
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 
 class EditVaultViewModelTest {
 
@@ -172,6 +173,18 @@ class EditVaultViewModelTest {
         val message = snackbar.snackbarMessage.first().value()
         assertThat(message).isNotNull()
         assertThat(message!!).isEqualTo(VaultSnackbarMessage.CannotRetrieveVaultError)
+    }
+
+    @Test
+    fun `preserves leading space but not end space`() = runTest {
+        instance.onNameChange(" name ")
+        instance.onEditClick()
+
+        val value = updateVault.getSentValue()
+        assertThat(value).isNotNull()
+
+        val name = TestEncryptionContext.decrypt(value!!.vault.name)
+        assertThat(name).isEqualTo(" name")
     }
 
     companion object {

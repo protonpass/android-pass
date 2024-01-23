@@ -33,9 +33,14 @@ class ObserveInviteRecommendationsImpl @Inject constructor(
     private val inviteRepository: InviteRepository
 ) : ObserveInviteRecommendations {
 
-    override fun invoke(shareId: ShareId): Flow<InviteRecommendations> =
+    override fun invoke(shareId: ShareId, startsWith: String?): Flow<InviteRecommendations> =
         accountManager.getPrimaryUserId()
             .filterNotNull()
-            .flatMapLatest { inviteRepository.observeInviteRecommendations(it, shareId) }
-
+            .flatMapLatest {
+                inviteRepository.observeInviteRecommendations(
+                    userId = it,
+                    shareId = shareId,
+                    startsWith = startsWith
+                )
+            }
 }

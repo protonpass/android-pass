@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.ShareId
@@ -42,5 +43,5 @@ class FakeObserveInviteRecommendations @Inject constructor() : ObserveInviteReco
         invitesFlow.tryEmit(recommendations)
     }
 
-    override fun invoke(shareId: ShareId, startsWith: String?): Flow<InviteRecommendations> = invitesFlow
+    override fun invoke(shareId: ShareId, startsWith: Option<String>): Flow<InviteRecommendations> = invitesFlow
 }

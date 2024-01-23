@@ -60,7 +60,8 @@ fun AliasOptionsBottomSheetContents(
     onUnpinned: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
-    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
+    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
+    isPinningFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
     Column(modifier.bottomSheet()) {
@@ -75,10 +76,12 @@ fun AliasOptionsBottomSheetContents(
         )
 
         val bottomSheetItems = mutableListOf(copyAlias(contents.aliasEmail, onCopyAlias)).apply {
-            if (itemUiModel.isPinned) {
-                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
-            } else {
-                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
+            if (isPinningFeatureEnabled) {
+                if (itemUiModel.isPinned) {
+                    add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
+                } else {
+                    add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
+                }
             }
 
             if (itemUiModel.canModify) {
@@ -142,7 +145,8 @@ fun AliasOptionsBottomSheetContentsPreview(
                 onUnpinned = { _, _ -> },
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
-                onRemoveFromRecentSearch = { _, _ -> }
+                onRemoveFromRecentSearch = { _, _ -> },
+                isPinningFeatureEnabled = true,
             )
         }
     }

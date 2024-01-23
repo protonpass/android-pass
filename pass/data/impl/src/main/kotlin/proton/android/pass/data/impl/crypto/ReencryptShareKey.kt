@@ -23,13 +23,12 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.decryptAndVerifyData
 import me.proton.core.key.domain.getArmored
-import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.data.impl.exception.UserKeyNotActive
-import proton.android.pass.log.api.PassLogger
+import proton.android.pass.data.impl.extensions.tryUseKeys
 import javax.inject.Inject
 
 data class ReencryptShareKeyInput(
@@ -63,14 +62,8 @@ class ReencryptShareKeyImpl @Inject constructor(
 
         val decodedKey = Base64.decodeBase64(input.key)
 
-        val decrypted = runCatching {
-            user.useKeys(cryptoContext) {
-                decryptAndVerifyData(getArmored(decodedKey))
-            }
-        }.getOrElse {
-            PassLogger.w(TAG, "Error using user keys")
-            PassLogger.e(TAG, it)
-            throw it
+        val decrypted = user.tryUseKeys("reencrypt share key", cryptoContext) {
+            decryptAndVerifyData(getArmored(decodedKey))
         }
 
         if (decrypted.status != VerificationStatus.Success) {
@@ -78,9 +71,5 @@ class ReencryptShareKeyImpl @Inject constructor(
         }
 
         return encryptionContext.encrypt(decrypted.data)
-    }
-
-    companion object {
-        private const val TAG = "ReencryptShareKeyImpl"
     }
 }

@@ -33,6 +33,7 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
@@ -54,6 +55,7 @@ fun AliasOptionsBottomSheetContents(
     itemUiModel: ItemUiModel,
     isRecentSearch: Boolean = false,
     onCopyAlias: (String) -> Unit,
+    action: BottomSheetItemAction,
     onPinned: (ShareId, ItemId) -> Unit,
     onUnpinned: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
@@ -72,13 +74,11 @@ fun AliasOptionsBottomSheetContents(
             leftIcon = { AliasIcon() }
         )
 
-        val bottomSheetItems = mutableListOf(
-            copyAlias(contents.aliasEmail, onCopyAlias),
-        ).apply {
+        val bottomSheetItems = mutableListOf(copyAlias(contents.aliasEmail, onCopyAlias)).apply {
             if (itemUiModel.isPinned) {
-                add(unpin(onClick = { onUnpinned(itemUiModel.shareId, itemUiModel.id) }))
+                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
             } else {
-                add(pin(onClick = { onPinned(itemUiModel.shareId, itemUiModel.id) }))
+                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
             if (itemUiModel.canModify) {
@@ -137,6 +137,7 @@ fun AliasOptionsBottomSheetContentsPreview(
                 ),
                 isRecentSearch = input.second,
                 onCopyAlias = {},
+                action = BottomSheetItemAction.None,
                 onPinned = { _, _ -> },
                 onUnpinned = { _, _ -> },
                 onEdit = { _, _ -> },

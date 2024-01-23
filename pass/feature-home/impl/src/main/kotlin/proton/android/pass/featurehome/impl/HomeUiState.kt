@@ -59,6 +59,7 @@ data class HomeUiState(
     val accountType: AccountType,
     val navEvent: HomeNavEvent,
     val action: BottomSheetItemAction,
+    val isPinningFeatureEnabled: Boolean,
 ) {
     fun shouldShowRecentSearchHeader() =
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
@@ -87,6 +88,7 @@ data class HomeUiState(
             accountType = AccountType.Free,
             navEvent = HomeNavEvent.Unknown,
             action = BottomSheetItemAction.None,
+            isPinningFeatureEnabled = true
         )
     }
 }

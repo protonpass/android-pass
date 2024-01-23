@@ -16,6 +16,7 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
@@ -40,6 +41,7 @@ fun CreditCardOptionsBottomSheetContents(
     isRecentSearch: Boolean = false,
     onCopyNumber: (String) -> Unit,
     onCopyCvv: (EncryptedString) -> Unit,
+    action: BottomSheetItemAction,
     onPinned: (ShareId, ItemId) -> Unit,
     onUnpinned: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
@@ -61,9 +63,9 @@ fun CreditCardOptionsBottomSheetContents(
             copyCvv { onCopyCvv(contents.cvv.encrypted) },
         ).apply {
             if (itemUiModel.isPinned) {
-                add(unpin(onClick = { onUnpinned(itemUiModel.shareId, itemUiModel.id) }))
+                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
             } else {
-                add(pin(onClick = { onPinned(itemUiModel.shareId, itemUiModel.id) }))
+                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
             if (itemUiModel.canModify) {
@@ -142,6 +144,7 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                 isRecentSearch = input.second,
                 onCopyNumber = {},
                 onCopyCvv = {},
+                action = BottomSheetItemAction.None,
                 onPinned = { _, _ -> },
                 onUnpinned = { _, _ -> },
                 onEdit = { _, _ -> },

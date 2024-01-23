@@ -593,10 +593,17 @@ class ItemRepositoryImpl @Inject constructor(
                 )
             }
 
-            database.inTransaction("applyEvents") {
-                localItemDataSource.upsertItems(updateAsEntities)
-                events.deletedItemIds.forEach { itemId ->
-                    localItemDataSource.delete(shareId, ItemId(itemId))
+            if (updateAsEntities.isNotEmpty() || events.deletedItemIds.isNotEmpty()) {
+                database.inTransaction("applyEvents") {
+                    if (updateAsEntities.isNotEmpty()) {
+                        localItemDataSource.upsertItems(updateAsEntities)
+                    }
+                    if (events.deletedItemIds.isNotEmpty()) {
+                        localItemDataSource.deleteList(
+                            shareId,
+                            events.deletedItemIds.map(::ItemId)
+                        )
+                    }
                 }
             }
             PassLogger.d(TAG, "Finishing applying events")

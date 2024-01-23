@@ -60,7 +60,8 @@ fun NoteOptionsBottomSheetContents(
     onUnpinned: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
-    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
+    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
+    isPinningFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
     Column(modifier.bottomSheet()) {
@@ -76,10 +77,12 @@ fun NoteOptionsBottomSheetContents(
         )
 
         val bottomSheetItems = mutableListOf(copyNote(contents.note, onCopyNote)).apply {
-            if (itemUiModel.isPinned) {
-                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
-            } else {
-                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
+            if (isPinningFeatureEnabled) {
+                if (itemUiModel.isPinned) {
+                    add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
+                } else {
+                    add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
+                }
             }
 
             if (itemUiModel.canModify) {
@@ -142,7 +145,8 @@ fun NoteOptionsBottomSheetContentsPreview(
                 onUnpinned = { _, _ -> },
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
-                onRemoveFromRecentSearch = { _, _ -> }
+                onRemoveFromRecentSearch = { _, _ -> },
+                isPinningFeatureEnabled = true,
             )
         }
     }

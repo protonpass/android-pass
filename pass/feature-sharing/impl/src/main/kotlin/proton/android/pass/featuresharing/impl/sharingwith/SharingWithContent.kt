@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -67,7 +66,6 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
-import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.SharingNavigation
@@ -189,22 +187,12 @@ fun SharingWithContent(
                 )
             }
             PassDivider()
-            when (state.suggestionsUIState) {
-                is SuggestionsUIState.Content -> InviteSuggestions(
-                    state = state.suggestionsUIState,
-                    onItemClicked = { email, state ->
-                        onEvent(SharingWithUiEvent.InviteSuggestionToggle(email, state))
-                    }
-                )
-
-                SuggestionsUIState.Initial -> {}
-                SuggestionsUIState.Loading -> Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Loading()
+            InviteSuggestions(
+                state = state.suggestionsUIState,
+                onItemClicked = { email, state ->
+                    onEvent(SharingWithUiEvent.InviteSuggestionToggle(email, state))
                 }
-            }
+            )
         }
     }
 }

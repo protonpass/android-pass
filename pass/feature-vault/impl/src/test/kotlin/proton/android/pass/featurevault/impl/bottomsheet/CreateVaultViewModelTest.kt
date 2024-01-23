@@ -28,6 +28,7 @@ import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.repositories.MigrateItemsResult
@@ -357,6 +358,19 @@ class CreateVaultViewModelTest {
                 snackbar.snackbarMessage.first().value()!!
             ).isEqualTo(VaultSnackbarMessage.CreateVaultError)
         }
+
+    @Test
+    fun `preserves leading space but not end space`() = runTest {
+        instance.onNameChange(" name ")
+        instance.onCreateClick()
+
+        val memory = createVault.memory()
+        assertThat(memory.size).isEqualTo(1)
+
+        val item = memory.first()
+        val name = TestEncryptionContext.decrypt(item.vault.name)
+        assertThat(name).isEqualTo(" name")
+    }
 
     private fun setNextShareVault() {
         savedState.get().apply {

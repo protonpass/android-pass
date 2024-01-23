@@ -37,12 +37,14 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -96,8 +98,10 @@ class SharingWithViewModel @Inject constructor(
 
     private val recommendationsFlow = debouncedEditingEmailStateFlow
         .flatMapLatest { email ->
-            observeInviteRecommendations(shareId = shareId, startsWith = email)
-                .asLoadingResult()
+            observeInviteRecommendations(
+                shareId = shareId,
+                startsWith = email.takeIfNotBlank().toOption()
+            ).asLoadingResult()
         }
 
     @OptIn(SavedStateHandleSaveableApi::class)

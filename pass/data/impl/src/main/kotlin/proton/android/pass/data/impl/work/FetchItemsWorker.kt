@@ -49,6 +49,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.impl.R
+import proton.android.pass.data.impl.util.maxParallelAsyncCalls
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.atomic.AtomicBoolean
@@ -70,9 +71,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         val shareIds = inputData.getStringArray(ARG_SHARE_IDS)?.map { ShareId(it) } ?: emptyList()
 
         val hasItems = AtomicBoolean(false)
-        val availableCores = Runtime.getRuntime().availableProcessors()
-        val maxParallelAsyncCalls = (availableCores / 2).coerceAtLeast(1)
-        val semaphore = Semaphore(maxParallelAsyncCalls)
+        val semaphore = Semaphore(maxParallelAsyncCalls())
         itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
         val results = withContext(Dispatchers.IO) {
             shareIds.map { shareId ->

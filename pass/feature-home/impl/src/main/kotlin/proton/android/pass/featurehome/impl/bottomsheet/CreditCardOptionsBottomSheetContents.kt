@@ -46,7 +46,8 @@ fun CreditCardOptionsBottomSheetContents(
     onUnpinned: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
-    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
+    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
+    isPinningFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.CreditCard
     Column(modifier.bottomSheet()) {
@@ -62,10 +63,12 @@ fun CreditCardOptionsBottomSheetContents(
             copyNumber { onCopyNumber(contents.number) },
             copyCvv { onCopyCvv(contents.cvv.encrypted) },
         ).apply {
-            if (itemUiModel.isPinned) {
-                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
-            } else {
-                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
+            if (isPinningFeatureEnabled) {
+                if (itemUiModel.isPinned) {
+                    add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
+                } else {
+                    add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
+                }
             }
 
             if (itemUiModel.canModify) {
@@ -149,7 +152,8 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                 onUnpinned = { _, _ -> },
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
-                onRemoveFromRecentSearch = { _, _ -> }
+                onRemoveFromRecentSearch = { _, _ -> },
+                isPinningFeatureEnabled = true,
             )
         }
     }

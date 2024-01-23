@@ -30,6 +30,7 @@ import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
@@ -57,6 +58,7 @@ data class HomeUiState(
     val pinningUiState: PinningUiState,
     val accountType: AccountType,
     val navEvent: HomeNavEvent,
+    val action: BottomSheetItemAction,
 ) {
     fun shouldShowRecentSearchHeader() =
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
@@ -83,7 +85,8 @@ data class HomeUiState(
             searchUiState = SearchUiState.Initial,
             pinningUiState = PinningUiState.Initial,
             accountType = AccountType.Free,
-            navEvent = HomeNavEvent.Unknown
+            navEvent = HomeNavEvent.Unknown,
+            action = BottomSheetItemAction.None,
         )
     }
 }

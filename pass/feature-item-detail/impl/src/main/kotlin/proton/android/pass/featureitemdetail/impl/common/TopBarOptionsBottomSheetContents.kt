@@ -28,6 +28,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
@@ -52,9 +53,9 @@ fun TopBarOptionsBottomSheetContents(
 
         if (isPinningFeatureEnabled) {
             if (isPinned) {
-                add(unpin(onClick = onUnpinned))
+                add(unpin(BottomSheetItemAction.None) { onUnpinned() })
             } else {
-                add(pin(onClick = onPinned))
+                add(pin(BottomSheetItemAction.None) { onPinned() })
             }
         }
 

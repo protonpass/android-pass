@@ -31,6 +31,7 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.CreateVaultOutput
 import proton.android.pass.crypto.api.usecases.EncryptedCreateVault
+import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
@@ -47,7 +48,13 @@ class CreateVaultImpl @Inject constructor(
         val vaultKey = EncryptionKey.generate()
         val vaultContents = vaultMetadata.toByteArray()
 
-        val encryptedVaultKey = user.useKeys(cryptoContext) { encryptAndSignData(vaultKey.value()) }
+        val encryptedVaultKey = runCatching {
+            user.useKeys(cryptoContext) { encryptAndSignData(vaultKey.value()) }
+        }.getOrElse {
+            PassLogger.w(TAG, "Error using user keys")
+            PassLogger.e(TAG, it)
+            throw it
+        }
         val encryptedVaultContents = encryptionContextProvider.withEncryptionContext(vaultKey.clone()) {
             encrypt(vaultContents, EncryptionTag.VaultContent)
         }
@@ -65,6 +72,7 @@ class CreateVaultImpl @Inject constructor(
     }
 
     companion object {
+        private const val TAG = "CreateVaultImpl"
         const val CONTENT_FORMAT_VERSION = 1
     }
 }

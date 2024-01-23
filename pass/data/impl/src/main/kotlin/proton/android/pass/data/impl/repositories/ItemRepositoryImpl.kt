@@ -593,17 +593,23 @@ class ItemRepositoryImpl @Inject constructor(
                 )
             }
 
-            if (updateAsEntities.isNotEmpty() || events.deletedItemIds.isNotEmpty()) {
+            if (updateAsEntities.isNotEmpty() && events.deletedItemIds.isNotEmpty()) {
                 database.inTransaction("applyEvents") {
-                    if (updateAsEntities.isNotEmpty()) {
-                        localItemDataSource.upsertItems(updateAsEntities)
-                    }
-                    if (events.deletedItemIds.isNotEmpty()) {
-                        localItemDataSource.deleteList(
-                            shareId,
-                            events.deletedItemIds.map(::ItemId)
-                        )
-                    }
+                    localItemDataSource.upsertItems(updateAsEntities)
+                    localItemDataSource.deleteList(
+                        shareId,
+                        events.deletedItemIds.map(::ItemId)
+                    )
+                }
+            } else {
+                if (updateAsEntities.isNotEmpty()) {
+                    localItemDataSource.upsertItems(updateAsEntities)
+                }
+                if (events.deletedItemIds.isNotEmpty()) {
+                    localItemDataSource.deleteList(
+                        shareId,
+                        events.deletedItemIds.map(::ItemId)
+                    )
                 }
             }
             PassLogger.d(TAG, "Finishing applying events")

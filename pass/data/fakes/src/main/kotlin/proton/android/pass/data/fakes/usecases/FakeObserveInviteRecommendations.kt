@@ -42,5 +42,5 @@ class FakeObserveInviteRecommendations @Inject constructor() : ObserveInviteReco
         invitesFlow.tryEmit(recommendations)
     }
 
-    override fun invoke(shareId: ShareId): Flow<InviteRecommendations> = invitesFlow
+    override fun invoke(shareId: ShareId, startsWith: String?): Flow<InviteRecommendations> = invitesFlow
 }

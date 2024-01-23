@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
@@ -48,6 +49,7 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toPendingEvent
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
+import proton.android.pass.data.impl.util.maxParallelAsyncCalls
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -103,9 +105,12 @@ class ApplyPendingEventsImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             val existingShares =
                 refreshSharesResult.allShareIds.subtract(refreshSharesResult.newShareIds)
+            val semaphore = Semaphore(maxParallelAsyncCalls())
             val results = existingShares.map { share ->
                 async {
-                    runCatching {
+                    semaphore.acquire()
+
+                    val result = runCatching {
                         PassLogger.d(TAG, "Applying pending events for share id: $share")
                         applyPendingEvents(addressId, userId, share)
                     }
@@ -116,6 +121,8 @@ class ApplyPendingEventsImpl @Inject constructor(
                                 onShareNotAvailable(userId, share)
                             }
                         }
+                    semaphore.release()
+                    result
                 }
             }.awaitAll()
             val errors = results.filter { it.isFailure }.mapNotNull { it.exceptionOrNull() }

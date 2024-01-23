@@ -18,37 +18,77 @@
 
 package proton.android.pass.composecomponents.impl.bottomsheet
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import proton.android.pass.composecomponents.impl.R
 
-fun pin(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+sealed interface BottomSheetItemAction {
+
+    object None : BottomSheetItemAction
+
+    object Pin : BottomSheetItemAction
+
+    object Unpin : BottomSheetItemAction
+
+}
+
+fun pin(
+    action: BottomSheetItemAction,
+    onClick: () -> Unit,
+): BottomSheetItem = object : BottomSheetItem {
+
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_pin_item)) }
+
     override val subtitle: @Composable (() -> Unit)?
         get() = null
+
     override val leftIcon: @Composable (() -> Unit)
         get() = { BottomSheetItemIcon(iconId = R.drawable.ic_pin_angled) }
-    override val endIcon: @Composable (() -> Unit)?
-        get() = null
+
+    override val endIcon: @Composable (() -> Unit)
+        get() = {
+            if (action is BottomSheetItemAction.Pin) {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+            }
+        }
+
     override val onClick: (() -> Unit)
         get() = { onClick() }
+
     override val isDivider: Boolean
         get() = false
 
 }
 
-fun unpin(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+fun unpin(
+    action: BottomSheetItemAction,
+    onClick: () -> Unit,
+): BottomSheetItem = object : BottomSheetItem {
+
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_unpin_item)) }
+
     override val subtitle: @Composable (() -> Unit)?
         get() = null
+
     override val leftIcon: @Composable (() -> Unit)
         get() = { BottomSheetItemIcon(iconId = R.drawable.ic_unpin_angled) }
-    override val endIcon: @Composable (() -> Unit)?
-        get() = null
+
+    override val endIcon: @Composable (() -> Unit)
+        get() = {
+            if (action is BottomSheetItemAction.Unpin) {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+            }
+        }
+
     override val onClick: (() -> Unit)
         get() = { onClick() }
+
     override val isDivider: Boolean
         get() = false
 

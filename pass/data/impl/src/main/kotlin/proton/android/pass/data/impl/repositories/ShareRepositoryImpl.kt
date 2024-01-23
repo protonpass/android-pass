@@ -100,7 +100,7 @@ class ShareRepositoryImpl @Inject constructor(
             onSuccess = { it },
             onFailure = {
                 PassLogger.w(TAG, "Error in CreateVaultRequest")
-                PassLogger.w(TAG, it)
+                PassLogger.e(TAG, it)
                 throw it
             }
         )

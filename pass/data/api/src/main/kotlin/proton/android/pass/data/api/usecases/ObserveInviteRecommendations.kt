@@ -23,5 +23,5 @@ import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.ShareId
 
 interface ObserveInviteRecommendations {
-    operator fun invoke(shareId: ShareId): Flow<InviteRecommendations>
+    operator fun invoke(shareId: ShareId, startsWith: String? = null): Flow<InviteRecommendations>
 }

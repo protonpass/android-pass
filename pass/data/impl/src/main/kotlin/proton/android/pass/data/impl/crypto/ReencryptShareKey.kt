@@ -29,6 +29,7 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.data.impl.exception.UserKeyNotActive
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 data class ReencryptShareKeyInput(
@@ -61,8 +62,15 @@ class ReencryptShareKeyImpl @Inject constructor(
         }
 
         val decodedKey = Base64.decodeBase64(input.key)
-        val decrypted = user.useKeys(cryptoContext) {
-            decryptAndVerifyData(getArmored(decodedKey))
+
+        val decrypted = runCatching {
+            user.useKeys(cryptoContext) {
+                decryptAndVerifyData(getArmored(decodedKey))
+            }
+        }.getOrElse {
+            PassLogger.w(TAG, "Error using user keys")
+            PassLogger.e(TAG, it)
+            throw it
         }
 
         if (decrypted.status != VerificationStatus.Success) {
@@ -70,5 +78,9 @@ class ReencryptShareKeyImpl @Inject constructor(
         }
 
         return encryptionContext.encrypt(decrypted.data)
+    }
+
+    companion object {
+        private const val TAG = "ReencryptShareKeyImpl"
     }
 }

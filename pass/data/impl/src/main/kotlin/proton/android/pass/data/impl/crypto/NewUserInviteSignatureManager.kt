@@ -33,6 +33,7 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,15 +71,21 @@ class NewUserInviteSignatureManagerImpl @Inject constructor(
             )
         }
 
-        val signedRawData = inviterUserAddress.useKeys(context) {
-            val signature = signData(
-                data = signatureBody,
-                signatureContext = SignatureContext(
-                    value = Constants.SIGNATURE_CONTEXT_NEW_USER,
-                    isCritical = true
+        val signedRawData = runCatching {
+            inviterUserAddress.useKeys(context) {
+                val signature = signData(
+                    data = signatureBody,
+                    signatureContext = SignatureContext(
+                        value = Constants.SIGNATURE_CONTEXT_NEW_USER,
+                        isCritical = true
+                    )
                 )
-            )
-            getUnarmored(signature)
+                getUnarmored(signature)
+            }
+        }.getOrElse {
+            PassLogger.w(TAG, "Error using user keys in create")
+            PassLogger.e(TAG, it)
+            throw it
         }
 
         val asBase64 = Base64.encodeBase64String(signedRawData)
@@ -100,19 +107,25 @@ class NewUserInviteSignatureManagerImpl @Inject constructor(
         }
 
         val decodedSignature = Base64.decodeBase64(signature)
-        val verified = inviterUserAddress.useKeys(context) {
-            val armored = getArmored(
-                data = decodedSignature,
-                header = PGPHeader.Signature
-            )
-            verifyData(
-                data = signatureBody,
-                signature = armored,
-                verificationContext = VerificationContext(
-                    value = Constants.SIGNATURE_CONTEXT_NEW_USER,
-                    required = VerificationContext.ContextRequirement.Required.Always
+        val verified = runCatching {
+            inviterUserAddress.useKeys(context) {
+                val armored = getArmored(
+                    data = decodedSignature,
+                    header = PGPHeader.Signature
                 )
-            )
+                verifyData(
+                    data = signatureBody,
+                    signature = armored,
+                    verificationContext = VerificationContext(
+                        value = Constants.SIGNATURE_CONTEXT_NEW_USER,
+                        required = VerificationContext.ContextRequirement.Required.Always
+                    )
+                )
+            }
+        }.getOrElse {
+            PassLogger.w(TAG, "Error using user keys in validate")
+            PassLogger.e(TAG, it)
+            throw it
         }
 
         return if (verified) {
@@ -120,5 +133,9 @@ class NewUserInviteSignatureManagerImpl @Inject constructor(
         } else {
             Result.failure(IllegalStateException("Signature is invalid"))
         }
+    }
+
+    companion object {
+        private const val TAG = "NewUserInviteSignatureManagerImpl"
     }
 }

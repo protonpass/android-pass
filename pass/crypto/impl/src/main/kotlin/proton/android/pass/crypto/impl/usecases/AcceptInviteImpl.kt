@@ -40,6 +40,7 @@ import proton.android.pass.crypto.api.usecases.AcceptInvite
 import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKey
 import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKeyList
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class AcceptInviteImpl @Inject constructor(
@@ -106,12 +107,22 @@ class AcceptInviteImpl @Inject constructor(
         return EncryptedInviteAcceptKeyList(reencryptedKeys)
     }
 
-    private fun reencryptKey(key: ByteArray, user: User): ByteArray = user.useKeys(cryptoContext) {
-        val res = encryptAndSignData(
-            data = key,
-            encryptKeyRing = publicKeyRing,
-            signatureContext = null
-        )
-        getUnarmored(res)
+    private fun reencryptKey(key: ByteArray, user: User): ByteArray = runCatching {
+        user.useKeys(cryptoContext) {
+            val res = encryptAndSignData(
+                data = key,
+                encryptKeyRing = publicKeyRing,
+                signatureContext = null
+            )
+            getUnarmored(res)
+        }
+    }.getOrElse {
+        PassLogger.w(TAG, "Error using user keys")
+        PassLogger.e(TAG, it)
+        throw it
+    }
+
+    companion object {
+        private const val TAG = "AcceptInviteImpl"
     }
 }

@@ -275,7 +275,8 @@ fun HomeScreen(
                                 homeViewModel.onClearRecentSearch(shareId, itemId)
                             }
                         }
-                    }
+                    },
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
                 )
 
                 AliasOptions -> AliasOptionsBottomSheetContents(
@@ -319,7 +320,8 @@ fun HomeScreen(
                                 homeViewModel.onClearRecentSearch(shareId, itemId)
                             }
                         }
-                    }
+                    },
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
                 )
 
                 NoteOptions -> NoteOptionsBottomSheetContents(
@@ -363,7 +365,8 @@ fun HomeScreen(
                                 homeViewModel.onClearRecentSearch(shareId, itemId)
                             }
                         }
-                    }
+                    },
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
                 )
 
                 CreditCardOptions -> CreditCardOptionsBottomSheetContents(
@@ -413,7 +416,8 @@ fun HomeScreen(
                                 homeViewModel.onClearRecentSearch(shareId, itemId)
                             }
                         }
-                    }
+                    },
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
                 )
 
                 TrashItemOptions -> TrashItemBottomSheetContents(

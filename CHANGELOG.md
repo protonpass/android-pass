@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.16.4 (2024-01-23)
+
+### Other
+
+- Add more logging to investigate deadlock.
+
 ## 1.16.3 (2024-01-19)
 
 ### Other

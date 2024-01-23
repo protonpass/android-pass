@@ -34,6 +34,7 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
@@ -54,6 +55,7 @@ import proton.android.pass.featurehome.impl.R
 fun LoginOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
+    action: BottomSheetItemAction,
     isRecentSearch: Boolean = false,
     canLoadExternalImages: Boolean,
     onCopyUsername: (String) -> Unit,
@@ -87,9 +89,9 @@ fun LoginOptionsBottomSheetContents(
             copyPassword(contents.password.encrypted, onCopyPassword),
         ).apply {
             if (itemUiModel.isPinned) {
-                add(unpin(onClick = { onUnpinned(itemUiModel.shareId, itemUiModel.id) }))
+                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
             } else {
-                add(pin(onClick = { onPinned(itemUiModel.shareId, itemUiModel.id) }))
+                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
             if (itemUiModel.canModify) {
@@ -170,6 +172,7 @@ fun LoginOptionsBottomSheetContentsPreview(
                     isPinned = false,
                 ),
                 isRecentSearch = input.second,
+                action = BottomSheetItemAction.None,
                 onCopyUsername = {},
                 onCopyPassword = {},
                 onPinned = { _, _ -> },

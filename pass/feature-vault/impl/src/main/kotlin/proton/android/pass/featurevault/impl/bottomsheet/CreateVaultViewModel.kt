@@ -93,7 +93,7 @@ class CreateVaultViewModel @Inject constructor(
         val form = formFlow.value
         val body = encryptionContextProvider.withEncryptionContext {
             NewVault(
-                name = encrypt(form.name.trim()),
+                name = encrypt(form.name.trimEnd()),
                 description = encrypt(""),
                 icon = form.icon,
                 color = form.color

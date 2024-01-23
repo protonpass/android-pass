@@ -28,6 +28,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
@@ -60,9 +61,9 @@ fun NoteTopBarOptionsBottomSheetContents(
 
         if (isPinningFeatureEnabled) {
             if (isPinned) {
-                add(unpin(onClick = onUnpinned))
+                add(unpin(BottomSheetItemAction.None) { onUnpinned() })
             } else {
-                add(pin(onClick = onPinned))
+                add(pin(BottomSheetItemAction.None) { onPinned() })
             }
         }
 

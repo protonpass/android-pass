@@ -43,6 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
@@ -191,6 +192,14 @@ fun HomeScreen(
         skipHalfExpanded = true
     )
 
+    LaunchedEffect(homeUiState.action) {
+        when (homeUiState.action) {
+            BottomSheetItemAction.None -> bottomSheetState.hide()
+            BottomSheetItemAction.Pin,
+            BottomSheetItemAction.Unpin -> return@LaunchedEffect
+        }
+    }
+
     ProtonBottomSheetBackHandler(
         bottomSheetState = bottomSheetState,
         coroutineScope = scope,
@@ -222,6 +231,7 @@ fun HomeScreen(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                     canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
+                    action = homeUiState.action,
                     onCopyUsername = remember {
                         {
                             scope.launch { bottomSheetState.hide() }
@@ -236,13 +246,11 @@ fun HomeScreen(
                     },
                     onPinned = remember {
                         { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.pinItem(shareId, itemId)
                         }
                     },
                     onUnpinned = remember {
                         { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.unpinItem(shareId, itemId)
                         }
                     },
@@ -273,6 +281,7 @@ fun HomeScreen(
                 AliasOptions -> AliasOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                    action = homeUiState.action,
                     onCopyAlias = remember {
                         {
                             scope.launch { bottomSheetState.hide() }
@@ -281,13 +290,11 @@ fun HomeScreen(
                     },
                     onPinned = remember {
                         { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.pinItem(shareId, itemId)
                         }
                     },
                     onUnpinned = remember {
                         { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.unpinItem(shareId, itemId)
                         }
                     },
@@ -318,6 +325,7 @@ fun HomeScreen(
                 NoteOptions -> NoteOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                    action = homeUiState.action,
                     onCopyNote = remember {
                         {
                             scope.launch { bottomSheetState.hide() }
@@ -326,13 +334,11 @@ fun HomeScreen(
                     },
                     onPinned = remember {
                         { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.pinItem(shareId, itemId)
                         }
                     },
                     onUnpinned = remember {
                         { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.unpinItem(shareId, itemId)
                         }
                     },
@@ -363,6 +369,7 @@ fun HomeScreen(
                 CreditCardOptions -> CreditCardOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                    action = homeUiState.action,
                     onCopyNumber = remember {
                         {
                             scope.launch { bottomSheetState.hide() }
@@ -377,13 +384,11 @@ fun HomeScreen(
                     },
                     onPinned = remember {
                         { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.pinItem(shareId, itemId)
                         }
                     },
                     onUnpinned = remember {
                         { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.unpinItem(shareId, itemId)
                         }
                     },

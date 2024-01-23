@@ -83,6 +83,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
@@ -470,20 +471,24 @@ class HomeViewModel @Inject constructor(
         }
     }.flowOn(appDispatchers.default)
 
-    val homeUiState: StateFlow<HomeUiState> = combineN(
-        shareListWrapperFlow,
-        searchOptionsFlow,
+    private val homeListUiStateFlow = combineN(
         itemsFlow,
-        searchUiStateFlow,
         refreshingLoadingFlow,
         shouldScrollToTopFlow,
+        searchOptionsFlow,
+        shareListWrapperFlow,
         preferencesRepository.getUseFaviconsPreference(),
-        getUserPlan().asLoadingResult(),
         selectionState,
-        navEventState,
-        pinningUiStateFlow
-    ) { shareListWrapper, searchOptions, itemsResult, searchUiState, refreshingLoading,
-        shouldScrollToTop, useFavicons, userPlan, selection, navEvent, pinningUiState ->
+        pinningUiStateFlow,
+    ) { itemsResult,
+        refreshingLoading,
+        shouldScrollToTop,
+        searchOptions,
+        shareListWrapper,
+        useFavicons,
+        selection,
+        pinningUiState ->
+
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
@@ -496,28 +501,49 @@ class HomeViewModel @Inject constructor(
                 persistentListOf<GroupedItemList>() to IsLoadingState.NotLoading
             }
         }
+
+        HomeListUiState(
+            isLoading = isLoading,
+            isRefreshing = refreshingLoading.refreshing,
+            shouldScrollToTop = shouldScrollToTop,
+            actionState = refreshingLoading.actionState,
+            items = items,
+            selectedShare = shareListWrapper.selectedShare,
+            shares = shareListWrapper.shares,
+            homeVaultSelection = searchOptions.vaultSelectionOption,
+            searchFilterType = searchOptions.filterOption.searchFilterType,
+            sortingType = searchOptions.sortingOption.searchSortingType,
+            canLoadExternalImages = useFavicons.value(),
+            selectionState = selection.toState(
+                isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash,
+                isPinningEnabled = pinningUiState.isPinningEnabled
+            )
+        )
+    }
+
+    private val bottomSheetItemActionFlow: MutableStateFlow<BottomSheetItemAction> =
+        MutableStateFlow(BottomSheetItemAction.None)
+
+    val homeUiState: StateFlow<HomeUiState> = combineN(
+        homeListUiStateFlow,
+        searchUiStateFlow,
+        getUserPlan().asLoadingResult(),
+        navEventState,
+        pinningUiStateFlow,
+        bottomSheetItemActionFlow,
+    ) { homeListUiState,
+        searchUiState,
+        userPlan,
+        navEvent,
+        pinningUiState,
+        bottomSheetItemAction ->
         HomeUiState(
-            homeListUiState = HomeListUiState(
-                isLoading = isLoading,
-                isRefreshing = refreshingLoading.refreshing,
-                shouldScrollToTop = shouldScrollToTop,
-                actionState = refreshingLoading.actionState,
-                items = items,
-                selectedShare = shareListWrapper.selectedShare,
-                shares = shareListWrapper.shares,
-                homeVaultSelection = searchOptions.vaultSelectionOption,
-                searchFilterType = searchOptions.filterOption.searchFilterType,
-                sortingType = searchOptions.sortingOption.searchSortingType,
-                canLoadExternalImages = useFavicons.value(),
-                selectionState = selection.toState(
-                    isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash,
-                    isPinningEnabled = pinningUiState.isPinningEnabled
-                )
-            ),
+            homeListUiState = homeListUiState,
             searchUiState = searchUiState,
             pinningUiState = pinningUiState,
             accountType = AccountType.fromPlan(userPlan),
-            navEvent = navEvent
+            navEvent = navEvent,
+            action = bottomSheetItemAction,
         )
     }
         .stateIn(
@@ -682,7 +708,7 @@ class HomeViewModel @Inject constructor(
     }
 
     internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        actionStateFlow.update { ActionState.Loading }
+        bottomSheetItemActionFlow.update { BottomSheetItemAction.Pin }
 
         runCatching { pinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(HomeSnackbarMessage.ItemPinnedSuccess) }
@@ -691,11 +717,11 @@ class HomeViewModel @Inject constructor(
                 snackbarDispatcher(HomeSnackbarMessage.ItemPinnedError)
             }
 
-        actionStateFlow.update { ActionState.Done }
+        bottomSheetItemActionFlow.update { BottomSheetItemAction.None }
     }
 
     internal fun unpinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        actionStateFlow.update { ActionState.Loading }
+        bottomSheetItemActionFlow.update { BottomSheetItemAction.Unpin }
 
         runCatching { unpinItem.invoke(shareId, itemId) }
             .onSuccess { snackbarDispatcher(HomeSnackbarMessage.ItemUnpinnedSuccess) }
@@ -704,7 +730,7 @@ class HomeViewModel @Inject constructor(
                 snackbarDispatcher(HomeSnackbarMessage.ItemUnpinnedError)
             }
 
-        actionStateFlow.update { ActionState.Done }
+        bottomSheetItemActionFlow.update { BottomSheetItemAction.None }
     }
 
     fun setItemTypeSelection(searchFilterType: SearchFilterType) {

@@ -544,6 +544,7 @@ class HomeViewModel @Inject constructor(
             accountType = AccountType.fromPlan(userPlan),
             navEvent = navEvent,
             action = bottomSheetItemAction,
+            isPinningFeatureEnabled = pinningUiState.isPinningEnabled,
         )
     }
         .stateIn(

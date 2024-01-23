@@ -65,6 +65,7 @@ fun LoginOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
+    isPinningFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
     Column(modifier.bottomSheet()) {
@@ -88,10 +89,12 @@ fun LoginOptionsBottomSheetContents(
             copyUsername(contents.username, onCopyUsername),
             copyPassword(contents.password.encrypted, onCopyPassword),
         ).apply {
-            if (itemUiModel.isPinned) {
-                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
-            } else {
-                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
+            if (isPinningFeatureEnabled) {
+                if (itemUiModel.isPinned) {
+                    add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
+                } else {
+                    add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
+                }
             }
 
             if (itemUiModel.canModify) {
@@ -180,7 +183,8 @@ fun LoginOptionsBottomSheetContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                canLoadExternalImages = false
+                canLoadExternalImages = false,
+                isPinningFeatureEnabled = true,
             )
         }
     }

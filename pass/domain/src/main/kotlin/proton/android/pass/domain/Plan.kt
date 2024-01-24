@@ -25,7 +25,16 @@ data class Plan(
     val aliasLimit: PlanLimit,
     val totpLimit: PlanLimit,
     val updatedAt: Long
-)
+) {
+    val isBusinessPlan: Boolean
+        get() = planType is PlanType.Paid.Business
+
+    val isPaidPlan: Boolean
+        get() = planType is PlanType.Paid
+
+    val isTrialPlan: Boolean
+        get() = planType is PlanType.Trial
+}
 
 sealed interface PlanLimit {
 

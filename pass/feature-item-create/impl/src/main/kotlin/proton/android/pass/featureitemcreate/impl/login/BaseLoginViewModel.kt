@@ -70,7 +70,6 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.PlanType
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
@@ -204,13 +203,13 @@ abstract class BaseLoginViewModel(
         userInteractionFlow
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading,
         totpUiState, upgradeInfoResult, userInteraction ->
-        val planType = upgradeInfoResult.getOrNull()?.plan?.planType
+        val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
             isLoadingState = isLoading,
             isItemSaved = userInteraction.events.itemSavedState,
             openScanState = userInteraction.events.openScanState,
-            canUseCustomFields = planType is PlanType.Paid || planType is PlanType.Trial,
+            canUseCustomFields = userPlan?.isPaidPlan == true || userPlan?.isTrialPlan == true,
             focusLastWebsite = userInteraction.focusLastWebsite,
             canUpdateUsername = userInteraction.canUpdateUsername,
             primaryEmail = primaryEmail,
@@ -634,7 +633,9 @@ abstract class BaseLoginViewModel(
                                     encrypted = encryptedPassword,
                                     clearText = password,
                                 ),
-                                passwordStrength = passwordStrengthCalculator.calculateStrength(password),
+                                passwordStrength = passwordStrengthCalculator.calculateStrength(
+                                    password
+                                ),
                             )
                         }
                 }

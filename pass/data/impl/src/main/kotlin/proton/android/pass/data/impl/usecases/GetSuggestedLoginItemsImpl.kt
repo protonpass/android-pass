@@ -43,21 +43,21 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
     private val suggestionSorter: SuggestionSorter,
     private val observeVaults: ObserveVaults
 ) : GetSuggestedLoginItems {
+
     override fun invoke(
         packageName: Option<String>,
         url: Option<String>
-    ): Flow<List<Item>> = getUserPlan()
-        .flatMapLatest {
-            val flow = when (it.planType) {
-                is PlanType.Paid, is PlanType.Trial -> observeActiveItems(filter = ItemTypeFilter.Logins)
-                else -> {
-                    observeActiveItemsForWriteableVaults()
-                }
-            }
-            flow
-                .map { items -> suggestionItemFilter.filter(items, packageName, url) }
-                .map { suggestions -> suggestionSorter.sort(suggestions, url) }
+    ): Flow<List<Item>> = getUserPlan().flatMapLatest { userPlan ->
+        when (userPlan.planType) {
+            is PlanType.Paid,
+            is PlanType.Trial -> observeActiveItems(filter = ItemTypeFilter.Logins)
+
+            is PlanType.Free,
+            is PlanType.Unknown -> observeActiveItemsForWriteableVaults()
         }
+            .map { items -> suggestionItemFilter.filter(items, packageName, url) }
+            .map { suggestions -> suggestionSorter.sort(suggestions, url) }
+    }
 
     private fun observeActiveItemsForWriteableVaults(): Flow<List<Item>> = observeVaults()
         .flatMapLatest { vaults ->

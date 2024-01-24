@@ -159,9 +159,15 @@ class ManageVaultViewModel @Inject constructor(
             is CanShareVaultStatus.CannotShare -> {
                 when (showShareButton.reason) {
                     CanShareVaultStatus.CannotShareReason.NotEnoughInvites -> {
+                        val subtitle = if (userPlan.isPaidPlan) {
+                            ShareOptions.ShareOptionsSubtitle.None
+                        } else {
+                            ShareOptions.ShareOptionsSubtitle.LimitReached
+                        }
+
                         ShareOptions.Show(
                             enableButton = false,
-                            subtitle = ShareOptions.ShareOptionsSubtitle.LimitReached,
+                            subtitle = subtitle,
                         )
                     }
 

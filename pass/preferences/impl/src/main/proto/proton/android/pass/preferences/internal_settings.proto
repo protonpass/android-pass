@@ -18,4 +18,5 @@ message InternalSettings {
   bool in_app_review_triggered = 10;
   AppUsage app_usage = 11;
   int32 item_autofill_count = 12;
+  int32 home_filtering_option = 13;
 }

@@ -50,25 +50,25 @@ class CanDisplayTotpImpl @Inject constructor(
     ): Flow<Boolean> = flow {
         emit(getUserId(userId))
     }.flatMapLatest { id ->
-        getUserPlan(id)
-            .flatMapLatest { plan ->
-                when (plan.planType) {
-                    is PlanType.Paid, is PlanType.Trial -> flowOf(true)
-                    else -> {
-                        when (val limit = plan.totpLimit) {
-                            PlanLimit.Unlimited -> flowOf(true)
-                            is PlanLimit.Limited -> {
-                                observeCanDisplayTotp(
-                                    userId = id,
-                                    shareId = shareId,
-                                    itemId = itemId,
-                                    limit = limit.limit
-                                )
-                            }
-                        }
+        getUserPlan(id).flatMapLatest { plan ->
+            when (plan.planType) {
+                is PlanType.Paid,
+                is PlanType.Trial -> flowOf(true)
+
+                is PlanType.Free,
+                is PlanType.Unknown -> when (val limit = plan.totpLimit) {
+                    PlanLimit.Unlimited -> flowOf(true)
+                    is PlanLimit.Limited -> {
+                        observeCanDisplayTotp(
+                            userId = id,
+                            shareId = shareId,
+                            itemId = itemId,
+                            limit = limit.limit
+                        )
                     }
                 }
             }
+        }
     }
 
     private fun observeCanDisplayTotp(
@@ -82,10 +82,7 @@ class CanDisplayTotpImpl @Inject constructor(
             allowedItems.any { it.shareId == shareId && it.itemId == itemId }
         }
 
-    private suspend fun getUserId(userId: UserId?): UserId = if (userId == null) {
-        accountManager.getPrimaryUserId().first()
-            ?: throw IllegalStateException("UserId cannot be null")
-    } else {
-        userId
-    }
+    private suspend fun getUserId(userId: UserId?): UserId = userId
+        ?: accountManager.getPrimaryUserId().first()
+        ?: throw IllegalStateException("UserId cannot be null")
 }

@@ -190,7 +190,18 @@ class SharingWithViewModel @Inject constructor(
     fun onEmailClick(index: Int) = viewModelScope.launch {
         if (selectedEmailIndexFlow.value.value() == index) {
             enteredEmailsState.update {
-                it.filterIndexed { idx, _ -> idx != index }
+                if (index < 0 || index >= it.size) {
+                    it
+                } else {
+                    val email = it[index]
+                    checkedEmails = if (checkedEmails.contains(email)) {
+                        checkedEmails - email
+                    } else {
+                        checkedEmails + email
+                    }
+                    checkedEmailFlow.update { checkedEmails }
+                    it.filterIndexed { idx, _ -> idx != index }
+                }
             }
             selectedEmailIndexFlow.update { None }
         } else {

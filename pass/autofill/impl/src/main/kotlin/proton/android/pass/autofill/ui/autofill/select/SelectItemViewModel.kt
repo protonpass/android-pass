@@ -683,8 +683,7 @@ class SelectItemViewModel @Inject constructor(
         is PlanType.Trial -> ShareSelection.AllShares
 
         is PlanType.Free,
-        is PlanType.Unknown -> vaults
-            .filter { vault -> vault.role.toPermissions().canCreate() }
+        is PlanType.Unknown -> vaults.filter { vault -> vault.role.toPermissions().canCreate() }
             .map { writeableVault -> writeableVault.shareId }
             .let { writeableVaults -> ShareSelection.Shares(writeableVaults) }
     }

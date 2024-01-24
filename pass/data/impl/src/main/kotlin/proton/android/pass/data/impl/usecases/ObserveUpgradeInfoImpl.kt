@@ -30,7 +30,6 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.impl.repositories.PlanRepository
-import proton.android.pass.domain.PlanType
 import javax.inject.Inject
 
 class ObserveUpgradeInfoImpl @Inject constructor(
@@ -55,10 +54,9 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                 observeItemCount(itemState = null),
                 observeVaultCount(user.userId)
             ) { plan, mfaCount, itemCount, vaultCount ->
-                val isPaid = plan.planType is PlanType.Paid
                 val displayUpgrade = when {
                     plan.hideUpgrade -> false
-                    else -> isUpgradeAvailable && !isPaid
+                    else -> isUpgradeAvailable && !plan.isPaidPlan
                 }
                 UpgradeInfo(
                     isUpgradeAvailable = displayUpgrade,

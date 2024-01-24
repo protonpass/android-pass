@@ -29,7 +29,6 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.domain.PlanType
 import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -37,7 +36,7 @@ import javax.inject.Inject
 
 class InAppReviewManagerImpl @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
-    private val getUserPlan: GetUserPlan
+    private val getUserPlan: GetUserPlan,
 ) : InAppReviewManager {
 
     override fun shouldRequestReview(): Flow<Boolean> = combine(
@@ -47,18 +46,20 @@ class InAppReviewManagerImpl @Inject constructor(
         internalSettingsRepository.getInAppReviewTriggered(),
         getUserPlan().asLoadingResult()
     ) { itemCreateCount, autofillCount, appUsage, inAppReviewTriggered, plan ->
-        val isPaid = plan.getOrNull()?.planType is PlanType.Paid
         if (inAppReviewTriggered) {
             return@combine false
         }
-        val itemCreateTrigger =
-            if (isPaid) PAID_USER_ITEM_CREATED_TRIGGER else FREE_USER_ITEM_CREATED_TRIGGER
-        val autofillTrigger =
-            if (isPaid) PAID_USER_ITEM_AUTOFILL_TRIGGER else FREE_USER_ITEM_AUTOFILL_TRIGGER
 
-        itemCreateCount >= itemCreateTrigger ||
-            autofillCount >= autofillTrigger ||
-            appUsage.timesUsed >= TIMES_USED
+        (plan.getOrNull()?.isPaidPlan == true).let { isPaidPlan ->
+            val itemCreateTrigger =
+                if (isPaidPlan) PAID_USER_ITEM_CREATED_TRIGGER else FREE_USER_ITEM_CREATED_TRIGGER
+            val autofillTrigger =
+                if (isPaidPlan) PAID_USER_ITEM_AUTOFILL_TRIGGER else FREE_USER_ITEM_AUTOFILL_TRIGGER
+
+            itemCreateCount >= itemCreateTrigger ||
+                autofillCount >= autofillTrigger ||
+                appUsage.timesUsed >= TIMES_USED
+        }
     }
 
     override fun requestReview(activityHolder: ClassHolder<Activity>) {

@@ -677,17 +677,16 @@ class SelectItemViewModel @Inject constructor(
 
     private fun getShareSelection(
         planType: PlanType,
-        vaults: List<Vault>
-    ): ShareSelection {
-        return when (planType) {
-            is PlanType.Paid, is PlanType.Trial -> ShareSelection.AllShares
-            else -> {
-                val writeableVaults = vaults
-                    .filter { it.role.toPermissions().canCreate() }
-                    .map { it.shareId }
-                ShareSelection.Shares(writeableVaults)
-            }
-        }
+        vaults: List<Vault>,
+    ): ShareSelection = when (planType) {
+        is PlanType.Paid,
+        is PlanType.Trial -> ShareSelection.AllShares
+
+        is PlanType.Free,
+        is PlanType.Unknown -> vaults
+            .filter { vault -> vault.role.toPermissions().canCreate() }
+            .map { writeableVault -> writeableVault.shareId }
+            .let { writeableVaults -> ShareSelection.Shares(writeableVaults) }
     }
 
     private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =

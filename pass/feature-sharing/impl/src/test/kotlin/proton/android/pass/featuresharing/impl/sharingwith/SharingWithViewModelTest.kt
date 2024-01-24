@@ -32,6 +32,7 @@ import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.TestObserveVaultById
+import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
@@ -146,6 +147,50 @@ class SharingWithViewModelTest {
         val addresses = bulkInviteRepository.observeAddresses().first()
         assertThat(addresses.size).isEqualTo(1)
         assertThat(addresses[0].address).isEqualTo(invitedEmail)
+    }
+
+    @Test
+    fun `double click on entered email should remove it from the list`() = runTest {
+        val email1 = "test@email.test"
+        val email2 = "another@email.test"
+        val recommendations = InviteRecommendations(
+            recommendedEmails = listOf(email1, email2),
+            planInternalName = "",
+            groupDisplayName = "",
+            planRecommendedEmails = emptyList()
+        )
+        observeInviteRecommendations.emitInvites(recommendations)
+
+        viewModel.onItemToggle(email1, false)
+
+        viewModel.state.test {
+            val state = awaitItem()
+            assertThat(state.enteredEmails).isEqualTo(listOf(email1))
+
+            val suggestionsState = state.suggestionsUIState
+            assertThat(suggestionsState).isInstanceOf(SuggestionsUIState.Content::class.java)
+
+            val content = suggestionsState as SuggestionsUIState.Content
+            assertThat(content.recentEmails.size).isEqualTo(2)
+            assertThat(content.recentEmails).contains(email1 to true)
+            assertThat(content.recentEmails).contains(email2 to false)
+        }
+
+        viewModel.onEmailClick(0)
+        viewModel.onEmailClick(0)
+
+        viewModel.state.test {
+            val state = awaitItem()
+            assertThat(state.enteredEmails).isEmpty()
+
+            val suggestionsState = state.suggestionsUIState
+            assertThat(suggestionsState).isInstanceOf(SuggestionsUIState.Content::class.java)
+
+            val content = suggestionsState as SuggestionsUIState.Content
+            assertThat(content.recentEmails.size).isEqualTo(2)
+            assertThat(content.recentEmails).contains(email1 to false)
+            assertThat(content.recentEmails).contains(email2 to false)
+        }
     }
 
     companion object {

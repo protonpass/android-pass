@@ -66,7 +66,7 @@ fun MainLoginSection(
             is TotpUiState.Limited -> totpUiState.isEdit && isEditAllowed
             TotpUiState.Success -> isEditAllowed
         }
-        if (totpUiState is TotpUiState.Limited) {
+        if (totpUiState is TotpUiState.Limited && !totpUiState.isEdit) {
             TotpLimit(onUpgrade = onUpgrade)
         } else {
             TotpInput(

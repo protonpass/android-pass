@@ -19,6 +19,7 @@
 package proton.android.pass.composecomponents.impl.buttons
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -27,12 +28,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.applyIf
 
 @Composable
 fun CircleIconButton(
@@ -49,6 +53,38 @@ fun CircleIconButton(
     ) { content() }
 }
 
+@Composable
+fun CircleIconButton(
+    iconPainter: Painter,
+    backgroundColor: Color,
+    tintColor: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    size: Int? = null,
+    enabled: Boolean = true,
+    iconContentDescription: String? = null,
+) {
+    IconButton(
+        modifier = modifier
+            .clip(CircleShape)
+            .applyIf(
+                condition = size != null,
+                ifTrue = { size(size!!.dp) }
+            )
+            .background(
+                color = if (enabled) backgroundColor else backgroundColor.copy(alpha = 0.6f)
+            ),
+        enabled = enabled,
+        onClick = onClick,
+    ) {
+        Icon(
+            painter = iconPainter,
+            contentDescription = iconContentDescription,
+            tint = if (enabled) tintColor else tintColor.copy(alpha = 0.2f),
+        )
+    }
+}
+
 @Preview
 @Composable
 fun CircleIconButtonPreview(
@@ -57,15 +93,10 @@ fun CircleIconButtonPreview(
     PassTheme(isDark = isDark) {
         Surface {
             CircleIconButton(
+                iconPainter = painterResource(R.drawable.ic_proton_arrows_rotate),
                 backgroundColor = PassTheme.colors.aliasInteractionNormMajor1,
+                tintColor = PassTheme.colors.loginInteractionNormMajor1,
                 onClick = {},
-                content = {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_proton_arrows_rotate),
-                        contentDescription = null,
-                        tint = PassTheme.colors.loginInteractionNormMajor1
-                    )
-                }
             )
         }
     }

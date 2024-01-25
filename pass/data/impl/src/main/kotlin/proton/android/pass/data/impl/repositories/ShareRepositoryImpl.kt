@@ -39,6 +39,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.UpdateVault
@@ -144,7 +145,9 @@ class ShareRepositoryImpl @Inject constructor(
     override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
         localShareDataSource.observeAllActiveSharesForUser(userId)
             .map { shares ->
-                shares.map { shareEntityToShare(it) }
+                encryptionContextProvider.withEncryptionContext {
+                    shares.map { share -> shareEntityToShare(share, this) }
+                }
             }
 
     @Suppress("LongMethod")
@@ -253,26 +256,23 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
     @Suppress("ReturnCount")
-    override suspend fun getById(userId: UserId, shareId: ShareId): Share =
-        withContext(Dispatchers.IO) {
+    override suspend fun getById(userId: UserId, shareId: ShareId): Share {
+        // Check local
+        var share: ShareEntity? = localShareDataSource.getById(userId, shareId)
+        if (share == null) {
+            // Check remote
+            val fetchedShare = remoteShareDataSource.fetchShareById(userId, shareId)
+            val shareResponse = fetchedShare ?: throw ShareNotAvailableError()
             val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-
-            // Check local
-            var share: ShareEntity? = localShareDataSource.getById(userId, shareId)
-            if (share == null) {
-                // Check remote
-                val fetchedShare = remoteShareDataSource.fetchShareById(userId, shareId)
-                val shareResponse = fetchedShare ?: throw ShareNotAvailableError()
-
-                val storedShares: List<ShareEntity> = storeShares(
-                    userAddress = userAddress,
-                    shares = listOf(shareResponse)
-                )
-                share = storedShares.first()
-            }
-
-            return@withContext shareEntityToShare(share)
+            val storedShares: List<ShareEntity> = storeShares(
+                userAddress = userAddress,
+                shares = listOf(shareResponse)
+            )
+            share = storedShares.first()
         }
+
+        return shareEntityToShare(share)
+    }
 
     override fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>> {
         return localShareDataSource.observeById(userId, shareId)
@@ -471,7 +471,10 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun shareEntityToShare(entity: ShareEntity): Share {
+    private fun shareEntityToShare(
+        entity: ShareEntity,
+        encryptionContext: EncryptionContext? = null
+    ): Share {
         val shareType = ShareType.map[entity.targetType]
         if (shareType == null) {
             val e = IllegalStateException("Unknown ShareType")
@@ -483,10 +486,16 @@ class ShareRepositoryImpl @Inject constructor(
         val (color, icon) = if (entity.encryptedContent == null) {
             ShareColor.Color1 to ShareIcon.Icon1
         } else {
-            encryptionContextProvider.withEncryptionContext {
-                val decrypted = decrypt(entity.encryptedContent)
+            if (encryptionContext != null) {
+                val decrypted = encryptionContext.decrypt(entity.encryptedContent)
                 val asProto = VaultV1.Vault.parseFrom(decrypted)
                 asProto.display.color.toDomain() to asProto.display.icon.toDomain()
+            } else {
+                encryptionContextProvider.withEncryptionContext {
+                    val decrypted = decrypt(entity.encryptedContent)
+                    val asProto = VaultV1.Vault.parseFrom(decrypted)
+                    asProto.display.color.toDomain() to asProto.display.icon.toDomain()
+                }
             }
         }
 

@@ -161,10 +161,6 @@
         comment="Button for sharing this vault"
     >Share this vault</string>
     <string
-        name="sharing_with_customize_vault_action"
-        comment="Button for customizing a vault"
-    >Customize</string>
-    <string
         name="sharing_from_item_move_to_shared_vault_action"
         comment="Button for moving an item to a shared vault"
     >Move to a shared vault</string>

@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
@@ -56,4 +57,9 @@ abstract class FakesAccountModule {
     abstract fun bindPublicAddressRepository(
         impl: TestPublicAddressRepository
     ): PublicAddressRepository
+
+    @Binds
+    abstract fun bindFeatureFlagRepository(
+        impl: TestFeatureFlagRepository
+    ): FeatureFlagRepository
 }

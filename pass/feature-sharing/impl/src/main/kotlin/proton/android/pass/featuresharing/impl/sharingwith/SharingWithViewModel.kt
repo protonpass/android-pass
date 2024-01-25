@@ -204,6 +204,7 @@ class SharingWithViewModel @Inject constructor(
                 }
             }
             selectedEmailIndexFlow.update { None }
+            onChange()
         } else {
             selectedEmailIndexFlow.update { index.some() }
         }

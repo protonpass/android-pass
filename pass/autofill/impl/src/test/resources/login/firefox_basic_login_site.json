@@ -1,0 +1,423 @@
+{
+  "rootContent": {
+    "id": 412921594,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": -660760648,
+        "className": "android.widget.LinearLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": -658079458,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          },
+          {
+            "id": -660701066,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -658049667,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "navigationToolbarStub"
+                ]
+              },
+              {
+                "id": -660641484,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -660611693,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -656440953,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -656470744,
+                            "className": "android.view.ViewGroup",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -656530326,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": -656500535,
+                                    "className": "android.view.ViewGroup",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": -656321789,
+                                        "className": "android.widget.FrameLayout",
+                                        "isImportantForAutofill": true,
+                                        "children": [
+                                          {
+                                            "id": -656349658,
+                                            "className": "android.view.ViewGroup",
+                                            "isImportantForAutofill": true,
+                                            "isFocused": true,
+                                            "children": [
+                                              {
+                                                "id": -656348697,
+                                                "className": "android.view.ViewGroup",
+                                                "isImportantForAutofill": true,
+                                                "children": [
+                                                  {
+                                                    "id": -656347736,
+                                                    "className": "android.widget.EditText",
+                                                    "isImportantForAutofill": true,
+                                                    "htmlAttributes": [
+                                                      {
+                                                        "key": "type",
+                                                        "value": "submit"
+                                                      }
+                                                    ],
+                                                    "url": "https://9d9dbf52-0389-41df-8ed3-713c92676291-00-17djhne8y7pe0.spock.replit.dev"
+                                                  },
+                                                  {
+                                                    "id": -656346775,
+                                                    "expectedAutofill": "password",
+                                                    "className": "android.widget.EditText",
+                                                    "isImportantForAutofill": true,
+                                                    "inputType": 225,
+                                                    "autofillHints": [
+                                                      "password"
+                                                    ],
+                                                    "htmlAttributes": [
+                                                      {
+                                                        "key": "name",
+                                                        "value": "password"
+                                                      },
+                                                      {
+                                                        "key": "id",
+                                                        "value": "password"
+                                                      },
+                                                      {
+                                                        "key": "type",
+                                                        "value": "password"
+                                                      }
+                                                    ],
+                                                    "url": "https://9d9dbf52-0389-41df-8ed3-713c92676291-00-17djhne8y7pe0.spock.replit.dev"
+                                                  },
+                                                  {
+                                                    "id": -656345814,
+                                                    "expectedAutofill": "username",
+                                                    "className": "android.widget.EditText",
+                                                    "isImportantForAutofill": true,
+                                                    "isFocused": true,
+                                                    "inputType": 33,
+                                                    "autofillHints": [
+                                                      "emailAddress"
+                                                    ],
+                                                    "htmlAttributes": [
+                                                      {
+                                                        "key": "name",
+                                                        "value": "email"
+                                                      },
+                                                      {
+                                                        "key": "id",
+                                                        "value": "email"
+                                                      },
+                                                      {
+                                                        "key": "type",
+                                                        "value": "email"
+                                                      }
+                                                    ],
+                                                    "url": "https://9d9dbf52-0389-41df-8ed3-713c92676291-00-17djhne8y7pe0.spock.replit.dev"
+                                                  }
+                                                ],
+                                                "url": "https://9d9dbf52-0389-41df-8ed3-713c92676291-00-17djhne8y7pe0.spock.replit.dev"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "hintKeywordList": [
+                                          "engineView"
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "swipeRefresh"
+                                    ]
+                                  },
+                                  {
+                                    "id": -656291998,
+                                    "className": "android.view.ViewGroup",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "findInPageView"
+                                    ]
+                                  },
+                                  {
+                                    "id": -656262207,
+                                    "className": "android.view.ViewGroup",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "viewDynamicDownloadDialog"
+                                    ]
+                                  },
+                                  {
+                                    "id": -656232416,
+                                    "className": "android.view.ViewGroup",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "crash_reporter_view"
+                                    ]
+                                  },
+                                  {
+                                    "id": -656202625,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "startDownloadDialogContainer"
+                                    ]
+                                  },
+                                  {
+                                    "id": -656172834,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "dynamicSnackbarContainer"
+                                    ]
+                                  },
+                                  {
+                                    "id": -656619699,
+                                    "className": "android.view.ViewGroup",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": -656977191,
+                                        "className": "android.widget.LinearLayout",
+                                        "isImportantForAutofill": true,
+                                        "hintKeywordList": [
+                                          "mozac_browser_toolbar_navigation_actions"
+                                        ]
+                                      },
+                                      {
+                                        "id": -656858027,
+                                        "className": "android.widget.LinearLayout",
+                                        "isImportantForAutofill": true,
+                                        "children": [
+                                          {
+                                            "id": -656143043,
+                                            "className": "android.widget.TextView",
+                                            "isImportantForAutofill": true,
+                                            "text": "",
+                                            "hintKeywordList": [
+                                              "",
+                                              "mozac_browser_toolbar_title_view"
+                                            ]
+                                          },
+                                          {
+                                            "id": -656887818,
+                                            "className": "android.widget.TextView",
+                                            "isImportantForAutofill": true,
+                                            "text": "",
+                                            "hintKeywordList": [
+                                              "",
+                                              "mozac_browser_toolbar_url_view",
+                                              "Search or enter address"
+                                            ]
+                                          }
+                                        ],
+                                        "hintKeywordList": [
+                                          "mozac_browser_toolbar_origin_view"
+                                        ]
+                                      },
+                                      {
+                                        "id": -656113252,
+                                        "className": "android.widget.LinearLayout",
+                                        "isImportantForAutofill": true,
+                                        "hintKeywordList": [
+                                          "mozac_browser_toolbar_page_actions"
+                                        ]
+                                      },
+                                      {
+                                        "id": -656709072,
+                                        "className": "android.widget.LinearLayout",
+                                        "isImportantForAutofill": true,
+                                        "children": [
+                                          {
+                                            "id": -656798445,
+                                            "className": "android.widget.FrameLayout",
+                                            "isImportantForAutofill": true,
+                                            "children": [
+                                              {
+                                                "id": -656768654,
+                                                "className": "android.widget.TextView",
+                                                "isImportantForAutofill": true,
+                                                "text": "",
+                                                "hintKeywordList": [
+                                                  "",
+                                                  "counter_text"
+                                                ]
+                                              }
+                                            ],
+                                            "hintKeywordList": [
+                                              "counter_root"
+                                            ]
+                                          }
+                                        ],
+                                        "hintKeywordList": [
+                                          "mozac_browser_toolbar_browser_actions"
+                                        ]
+                                      },
+                                      {
+                                        "id": -656649490,
+                                        "className": "android.widget.FrameLayout",
+                                        "isImportantForAutofill": true,
+                                        "hintKeywordList": [
+                                          "mozac_browser_toolbar_menu"
+                                        ]
+                                      },
+                                      {
+                                        "id": -656083461,
+                                        "className": "android.widget.ProgressBar",
+                                        "isImportantForAutofill": true,
+                                        "hintKeywordList": [
+                                          "mozac_browser_toolbar_progress"
+                                        ]
+                                      },
+                                      {
+                                        "id": -656560117,
+                                        "className": "android.view.ViewGroup",
+                                        "isImportantForAutofill": true,
+                                        "children": [
+                                          {
+                                            "id": -656053670,
+                                            "className": "android.widget.LinearLayout",
+                                            "isImportantForAutofill": true,
+                                            "hintKeywordList": [
+                                              "mozac_browser_toolbar_edit_actions_start"
+                                            ]
+                                          },
+                                          {
+                                            "id": -657036773,
+                                            "className": "android.widget.EditText",
+                                            "isImportantForAutofill": true,
+                                            "text": "",
+                                            "inputType": 17,
+                                            "hintKeywordList": [
+                                              "",
+                                              "mozac_browser_toolbar_edit_url_view"
+                                            ]
+                                          },
+                                          {
+                                            "id": -656023879,
+                                            "className": "android.widget.LinearLayout",
+                                            "isImportantForAutofill": true,
+                                            "hintKeywordList": [
+                                              "mozac_browser_toolbar_edit_actions_end"
+                                            ]
+                                          }
+                                        ],
+                                        "hintKeywordList": [
+                                          "mozac_browser_toolbar_container"
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "toolbar"
+                                    ]
+                                  },
+                                  {
+                                    "id": -655994088,
+                                    "className": "android.view.ViewGroup",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "readerViewControlsBar"
+                                    ]
+                                  }
+                                ],
+                                "hintKeywordList": [
+                                  "browserLayout"
+                                ]
+                              },
+                              {
+                                "id": -655964297,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "addressSelectBar"
+                                ]
+                              },
+                              {
+                                "id": -655934506,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "creditCardSelectBar"
+                                ]
+                              },
+                              {
+                                "id": -655904715,
+                                "className": "android.view.ViewGroup",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "loginSelectBar"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "browserWindow"
+                            ]
+                          },
+                          {
+                            "id": -655874924,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "tabPreview"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "gestureLayout"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "container"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "container"
+                ]
+              },
+              {
+                "id": -657930503,
+                "className": "androidx.compose.ui.platform.ComposeView",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "debugOverlay"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "rootContainer"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "org.mozilla.firefox"
+}

@@ -22,6 +22,8 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 
 object FlowUtils {
 
@@ -30,4 +32,10 @@ object FlowUtils {
     )
 
     inline fun <T> oneShot(crossinline block: suspend () -> T): Flow<T> = flow { emit(block()) }
+
+    fun <T> Flow<T>.timed(log: (Long, T) -> Unit): Flow<T> {
+        var startTime: Long = 0
+        return onStart { startTime = System.currentTimeMillis() }
+            .onEach { log(System.currentTimeMillis() - startTime, it) }
+    }
 }

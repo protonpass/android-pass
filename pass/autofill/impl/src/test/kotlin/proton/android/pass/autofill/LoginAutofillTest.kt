@@ -145,6 +145,11 @@ class LoginAutofillTest : BaseAutofillTest() {
         runLoginAutofillTest("other/app_autofillsample_autospill_web_focus.json")
     }
 
+    @Test
+    fun `can autofill basic login form in firefox`() {
+        runLoginAutofillTest("login/firefox_basic_login_site.json")
+    }
+
     private fun runLoginAutofillTest(
         file: String,
         flags: List<RequestFlags> = emptyList()

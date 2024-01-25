@@ -32,6 +32,8 @@ enum class FieldType : Parcelable {
     Other,
     Unknown,
 
+    SubmitButton,
+
     // Credit Card
     CardNumber,
     CardholderName,

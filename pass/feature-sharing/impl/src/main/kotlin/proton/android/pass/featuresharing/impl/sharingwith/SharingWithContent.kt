@@ -132,6 +132,15 @@ fun SharingWithContent(
                 style = PassTheme.typography.heroNorm()
             )
 
+            if (state.showEditVault && state.vault != null) {
+                CustomizeVault(
+                    vault = state.vault,
+                    onClick = {
+                        onNavigateEvent(SharingNavigation.EditVault(shareId = state.vault.shareId))
+                    }
+                )
+            }
+
             Box(
                 modifier = Modifier
                     .heightIn(min = 0.dp, max = parentHeight * RATIO_HEIGHT_EMAIL_LIST)
@@ -178,14 +187,6 @@ fun SharingWithContent(
             )
             RequestFocusLaunchedEffect(focusRequester)
 
-            if (state.showEditVault && state.vault != null) {
-                CustomizeVault(
-                    vault = state.vault,
-                    onClick = {
-                        onNavigateEvent(SharingNavigation.EditVault(shareId = state.vault.shareId))
-                    }
-                )
-            }
             PassDivider()
             InviteSuggestions(
                 state = state.suggestionsUIState,

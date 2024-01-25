@@ -42,8 +42,8 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
-import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.data.api.usecases.ItemActions
 import me.proton.core.presentation.R as CoreR
@@ -119,24 +119,18 @@ private fun ItemTopBarActions(
         )
 
         ItemDetailShareButton(
-            actions = actions,
+            isEnabled = actions.canShare.value(),
             iconBackgroundColor = iconBackgroundColor,
             iconColor = iconColor,
             onShareClick = onShareClick
         )
 
-        AnimatedVisibility(visible = !isLoading && shouldShowMenu) {
-            Circle(
-                backgroundColor = iconBackgroundColor,
-                onClick = { onOptionsClick() }
-            ) {
-                Icon(
-                    painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
-                    contentDescription = stringResource(R.string.open_menu_icon_content_description),
-                    tint = iconColor
-                )
-            }
-        }
+        ItemDetailOptionsButton(
+            isVisible = !isLoading && shouldShowMenu,
+            iconBackgroundColor = iconBackgroundColor,
+            iconColor = iconColor,
+            onOptionsClick = onOptionsClick,
+        )
     }
 }
 
@@ -188,34 +182,40 @@ private fun ItemDetailEditButton(
 @Composable
 private fun ItemDetailShareButton(
     modifier: Modifier = Modifier,
-    actions: ItemActions,
+    isEnabled: Boolean,
     iconBackgroundColor: Color,
     iconColor: Color,
-    onShareClick: () -> Unit
+    onShareClick: () -> Unit,
 ) {
-    val (
-        backgroundColor,
-        foregroundColor,
-        enabled
-    ) = remember(actions.canShare) {
-        val enabled = actions.canShare.value()
-        if (enabled) {
-            Triple(iconBackgroundColor, iconColor, true)
-        } else {
-            Triple(iconBackgroundColor.copy(alpha = 0.6f), iconColor.copy(alpha = 0.2f), false)
-        }
-    }
-
-    Circle(
+    CircleIconButton(
         modifier = modifier,
-        backgroundColor = backgroundColor,
-        showClickEffect = enabled,
-        onClick = onShareClick
-    ) {
-        Icon(
-            painter = painterResource(CoreR.drawable.ic_proton_users_plus),
-            contentDescription = stringResource(R.string.share_button_content_description),
-            tint = foregroundColor
+        iconPainter = painterResource(CoreR.drawable.ic_proton_users_plus),
+        size = 40,
+        backgroundColor = iconBackgroundColor,
+        tintColor = iconColor,
+        iconContentDescription = stringResource(id = R.string.share_button_content_description),
+        enabled = isEnabled,
+        onClick = onShareClick,
+    )
+}
+
+@Composable
+private fun ItemDetailOptionsButton(
+    modifier: Modifier = Modifier,
+    isVisible: Boolean,
+    iconBackgroundColor: Color,
+    iconColor: Color,
+    onOptionsClick: () -> Unit,
+) {
+    AnimatedVisibility(visible = isVisible) {
+        CircleIconButton(
+            modifier = modifier,
+            iconPainter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
+            size = 40,
+            backgroundColor = iconBackgroundColor,
+            tintColor = iconColor,
+            iconContentDescription = stringResource(id = R.string.open_menu_icon_content_description),
+            onClick = onOptionsClick,
         )
     }
 }

@@ -59,7 +59,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.startup.runtime)
     implementation(libs.core.accountManager.domain)
-    implementation(libs.core.featureFlag)
+    implementation(libs.core.featureFlag.domain)
     implementation(libs.core.utilKotlin)
     implementation(libs.google.protobuf.kotlin.lite)
     implementation(libs.kotlinx.coroutines.core)

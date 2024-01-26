@@ -46,7 +46,7 @@
   <string name="more_info_title">Подробнее</string>
   <string name="more_info_icon">Иконка \"больше информации\"</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">1 раз</item>
+    <item quantity="one">Один раз</item>
     <item quantity="few">%d раза</item>
     <item quantity="many">%d раз</item>
     <item quantity="other">%d раз</item>

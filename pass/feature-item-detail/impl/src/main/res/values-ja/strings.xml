@@ -84,12 +84,12 @@
     -->
   <string name="date_full_date_format_with_year">yyyy LLLL dd HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Cannot edit</string>
-  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Cannot share</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
-  <string name="password_score_vulnerable">Vulnerable</string>
-  <string name="password_score_weak">Weak</string>
-  <string name="password_score_strong">Strong</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">十分な権限がないため、このアイテムを編集できません。</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">編集できるのは、最も古い保管庫内のアイテムのみです。 このアイテムを編集するには、現在のプランをアップグレードしてください。</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">このアイテムはごみ箱内にあるため編集できません。編集する前にごみ箱から移動してください。</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">共有できません</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">この保管庫を共有するための十分な権限がありません。</string>
+  <string name="password_score_vulnerable">脆弱</string>
+  <string name="password_score_weak">弱い</string>
+  <string name="password_score_strong">強い</string>
 </resources>

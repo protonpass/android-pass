@@ -8,7 +8,7 @@
   <string name="migrate_item_confirm_confirm_button">Taşı</string>
   <string name="migrate_item_success_snackbar">Ögeler taşındı</string>
   <string name="migrate_item_error_snackbar">Ögeler taşınırken sorun çıktı</string>
-  <string name="migrate_item_some_not_migrated_error_snackbar">Ögelerin bazıları taşınırken sorun çıktı</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Bazı ögeler taşınırken sorun çıktı</string>
   <string name="migrate_all_items_success_snackbar">Tüm ögeler taşındı</string>
   <string name="migrate_all_items_error_snackbar">Tüm kasa ögeleri taşınırken sorun çıktı</string>
   <string name="migrate_init_error_snackbar">Aktarım arayüzü hazırlanamadı</string>

@@ -33,7 +33,6 @@
   <string name="share_with_title">공유 대상:</string>
   <string name="share_with_email_hint">이메일 주소</string>
   <string name="share_with_email_error">유효하지 않은 이메일 주소입니다.</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">초대한 사용자 정보를 가져올 수 없습니다</string>
   <string name="share_permissions_title">접근 수준 설정</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s님이 항목 공유를 초대합니다:</string>
   <string name="sharing_join_shared_vault">참가 및 동기화</string>
@@ -58,9 +57,7 @@
   <string name="share_summary_title">검토 및 공유</string>
   <string name="share_summary_vault">%s개 금고</string>
   <string name="share_summary_share_vault">금고 공유</string>
-  <string name="share_summary_email_title">공유 대상:</string>
   <string name="share_summary_vault_title">금고</string>
-  <string name="share_summary_permissions_title">접근 권한</string>
   <string name="share_manage_vault_share_with_more_people">더 많은 사람과 공유</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d개 초대 남음</item>
@@ -107,6 +104,10 @@
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">이 항목이 새 금고로 이동됩니다.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">금고를 더 추가하려면 업그레이드</string>
   <string name="sharing_from_item_vault_limit_reached">금고 제한에 도달하였습니다.</string>
-  <string name="share_with_suggestions_title">Suggestions</string>
-  <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_suggestions_title">제안</string>
+  <string name="share_with_recents_title">최근</string>
+  <string name="share_with_remove_email_content_description">이메일 제거</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">전체 구성원의 접근 수준을 설정하세요.</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">%s님에게 접근 권한 설정</string>
+  <string name="sharing_edit_permissions_remove_user">사용자 제거</string>
 </resources>

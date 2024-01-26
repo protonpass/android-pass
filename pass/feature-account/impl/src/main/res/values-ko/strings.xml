@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">계정 삭제 버튼</string>
   <string name="account_sign_out">로그아웃</string>
   <string name="account_sign_out_icon_content_description">로그아웃 버튼</string>
+  <string name="account_manage_account">계정 관리</string>
+  <string name="account_manage_account_icon_content_description">계정 관리 버튼</string>
   <string name="account_manage_subscription">구독 관리</string>
   <string name="account_get_user_info_error">사용자 정보를 가져올 수 없습니다</string>
   <string name="manage_subscription_icon_content_description">구독 관리 버튼</string>

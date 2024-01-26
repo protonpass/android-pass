@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Botó d\'eliminació del compte</string>
   <string name="account_sign_out">Tanca la sessió</string>
   <string name="account_sign_out_icon_content_description">Botó de tancament de sessió</string>
+  <string name="account_manage_account">Gestiona el compte</string>
+  <string name="account_manage_account_icon_content_description">Manage account button</string>
   <string name="account_manage_subscription">Gestiona la subscripció</string>
   <string name="account_get_user_info_error">No s\'ha pogut recuperar la informació de l\'usuari</string>
   <string name="manage_subscription_icon_content_description">Botó de gestió de la subscripció</string>

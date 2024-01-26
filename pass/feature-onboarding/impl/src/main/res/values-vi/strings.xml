@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Quản lý những gì vào hộp thư đến của bạn</string>
   <string name="on_boarding_last_page_button">Bắt đầu dùng Proton Pass</string>
   <string name="on_boarding_skip">Không phải bây giờ</string>
+  <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Vì lý do bảo mật, truy cập của bạn cần được xác nhận.</string>
   <string name="on_boarding_pending_invite_title">Đang chờ truy cập vào dữ liệu được chia sẻ</string>
   <string name="on_boarding_pending_invite_button">Tìm hiểu thêm về Proton Pass</string>

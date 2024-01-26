@@ -62,8 +62,7 @@
   <string name="most_recent_more_than_1_year">1년 이상</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">아이콘 검색</string>
-  <!-- Setting option -->
-    <!-- Select Vault BottomSheet -->
+  <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="other">%d개 항목</item>
   </plurals>

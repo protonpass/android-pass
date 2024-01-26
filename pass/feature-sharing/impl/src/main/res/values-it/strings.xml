@@ -35,7 +35,6 @@
   <string name="share_with_title">Condividi con</string>
   <string name="share_with_email_hint">Indirizzo email</string>
   <string name="share_with_email_error">Indirizzo email non valido</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Non è stato possibile recuperare le informazioni dell\'utente invitato</string>
   <string name="share_permissions_title">Imposta livello di accesso</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s ti invita ad accedere agli elementi in</string>
   <string name="sharing_join_shared_vault">Unisciti e sincronizza</string>
@@ -60,9 +59,7 @@
   <string name="share_summary_title">Controlla e condividi</string>
   <string name="share_summary_vault">la cassaforte %s</string>
   <string name="share_summary_share_vault">Condividi caveau</string>
-  <string name="share_summary_email_title">Condividi con</string>
   <string name="share_summary_vault_title">Caveau</string>
-  <string name="share_summary_permissions_title">Livello di accesso</string>
   <string name="share_manage_vault_share_with_more_people">Condividi con più persone</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invito rimasto</item>
@@ -113,4 +110,8 @@
   <string name="sharing_from_item_vault_limit_reached">Hai raggiunto il limite di casseforti</string>
   <string name="share_with_suggestions_title">Suggerimenti</string>
   <string name="share_with_recents_title">Recenti</string>
+  <string name="share_with_remove_email_content_description">Rimuovi questo indirizzo email</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Imposta il livello di accesso per tutti i membri</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Imposta il livello di accesso per %s</string>
+  <string name="sharing_edit_permissions_remove_user">Rimuovi questo utente</string>
 </resources>

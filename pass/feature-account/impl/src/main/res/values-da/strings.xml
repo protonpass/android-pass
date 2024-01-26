@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Knap til \"Slet konto\"</string>
   <string name="account_sign_out">Log ud</string>
   <string name="account_sign_out_icon_content_description">Knap til \"Log ud\"</string>
+  <string name="account_manage_account">Administrér konto</string>
+  <string name="account_manage_account_icon_content_description">Administrér konto-knap</string>
   <string name="account_manage_subscription">Administrer abonnement</string>
   <string name="account_get_user_info_error">Kunne ikke hente brugerinformationen</string>
   <string name="manage_subscription_icon_content_description">Knap til \"Administrer abonnement\"</string>

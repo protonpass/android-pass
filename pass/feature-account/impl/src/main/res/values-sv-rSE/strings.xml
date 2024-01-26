@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Knapp för “Ta bort konto“</string>
   <string name="account_sign_out">Logga ut</string>
   <string name="account_sign_out_icon_content_description">Knapp för “Logga ut“</string>
+  <string name="account_manage_account">Hantera konto</string>
+  <string name="account_manage_account_icon_content_description">Knapp för “Hantera konto“</string>
   <string name="account_manage_subscription">Hantera prenumeration</string>
   <string name="account_get_user_info_error">Kunde inte hämta användarinformationen</string>
   <string name="manage_subscription_icon_content_description">Knapp för “Hantera prenumeration“</string>

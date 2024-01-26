@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Buton ștergere cont</string>
   <string name="account_sign_out">Deconectare</string>
   <string name="account_sign_out_icon_content_description">Buton deconectare</string>
+  <string name="account_manage_account">Gestionare cont</string>
+  <string name="account_manage_account_icon_content_description">Buton gestionare cont</string>
   <string name="account_manage_subscription">Gestionare abonament</string>
   <string name="account_get_user_info_error">Nu s-au putut prelua informațiile utilizatorului.</string>
   <string name="manage_subscription_icon_content_description">Buton gestionare abonament</string>

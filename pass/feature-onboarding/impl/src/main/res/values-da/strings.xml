@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Få kontrol over, hvad der lander i din indbakke</string>
   <string name="on_boarding_last_page_button">Begynd at bruge Proton Pass</string>
   <string name="on_boarding_skip">Ikke nu</string>
+  <string name="on_boarding_tutorial">Se en kort video om, hvordan du bruger Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Af sikkerhedsmæssige årsager skal din adgang bekræftes.</string>
   <string name="on_boarding_pending_invite_title">Afventer adgang til de delte data</string>
   <string name="on_boarding_pending_invite_button">Lær mere om Proton Pass</string>

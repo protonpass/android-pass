@@ -7,6 +7,7 @@
   <string name="profile_security">安全</string>
   <string name="profile_option_feedback">意見回饋</string>
   <string name="profile_option_import_export">匯入/匯出</string>
+  <string name="profile_option_tutorial">How to use Proton Pass</string>
   <string name="profile_option_rating">為應用程式評分</string>
   <string name="profile_option_autofill">自動填入</string>
   <string name="profile_option_autofill_subtitle">自動填入使用者名稱和密碼</string>

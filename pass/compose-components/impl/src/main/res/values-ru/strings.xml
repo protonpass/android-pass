@@ -15,14 +15,14 @@
   <string name="item_list_header_credit_cards_type">Кредитные карты</string>
   <plurals name="item_list_header_results">
     <item quantity="one">результат</item>
-    <item quantity="few">результаты</item>
+    <item quantity="few">результата</item>
     <item quantity="many">результаты</item>
     <item quantity="other">результаты</item>
   </plurals>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Подтвердить</string>
   <string name="bottomsheet_cancel_button">Отменить</string>
-  <string name="bottomsheet_move_to_trash">Переместить в корзину</string>
+  <string name="bottomsheet_move_to_trash">Переместить в Корзину</string>
   <string name="bottomsheet_pin_item">Закрепить</string>
   <string name="bottomsheet_unpin_item">Открепить</string>
   <!-- Actions -->
@@ -65,13 +65,12 @@
   <string name="most_recent_more_than_1_year">Более 1 года</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Иконка поиска</string>
-  <!-- Setting option -->
-    <!-- Select Vault BottomSheet -->
+  <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 элемент</item>
     <item quantity="few">%d элемента</item>
     <item quantity="many">%d элементов</item>
-    <item quantity="other">%d элемента</item>
+    <item quantity="other">%d элементов</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Сбросить изменения?</string>

@@ -126,6 +126,10 @@
   <string name="recent_search_clear">Golire</string>
   <string name="recent_search_remove_item">Eliminare din căutări recente</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">Articolele au fost fixate.</string>
   <string name="home_snackbar_items_pinned_partial_success">Eroare la fixarea unor articole.</string>
   <string name="home_snackbar_items_pinned_error">Eroare la fixarea articolelor.</string>

@@ -65,8 +65,7 @@
   <string name="most_recent_more_than_1_year">Больш чым за 1 год</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Значок пошуку</string>
-  <!-- Setting option -->
-    <!-- Select Vault BottomSheet -->
+  <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">%d элемент</item>
     <item quantity="few">%d элементы</item>

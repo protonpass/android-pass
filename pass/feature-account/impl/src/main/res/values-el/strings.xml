@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Κουμπί διαγραφής λογαριασμού</string>
   <string name="account_sign_out">Αποσύνδεση</string>
   <string name="account_sign_out_icon_content_description">Κουμπί αποσύνδεσης</string>
+  <string name="account_manage_account">Διαχείριση λογαριασμού</string>
+  <string name="account_manage_account_icon_content_description">Κουμπί διαχείρισης λογαριασμού</string>
   <string name="account_manage_subscription">Διαχείριση συνδρομής</string>
   <string name="account_get_user_info_error">Δεν ήταν δυνατή η ανάκτηση των πληροφοριών χρήστη</string>
   <string name="manage_subscription_icon_content_description">Κουμπί διαχείρισης συνδρομής</string>

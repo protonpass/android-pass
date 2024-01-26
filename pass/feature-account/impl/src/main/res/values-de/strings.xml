@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Schaltfläche \"Konto löschen\"</string>
   <string name="account_sign_out">Abmelden</string>
   <string name="account_sign_out_icon_content_description">Schaltfläche \"Abmelden\"</string>
+  <string name="account_manage_account">Konto verwalten</string>
+  <string name="account_manage_account_icon_content_description">Schaltfläche \"Konto verwalten\"</string>
   <string name="account_manage_subscription">Abonnement verwalten</string>
   <string name="account_get_user_info_error">Benutzerinformationen konnten nicht abgerufen werden.</string>
   <string name="manage_subscription_icon_content_description">Schaltfläche \"Abonnement verwalten\"</string>

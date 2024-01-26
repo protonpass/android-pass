@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">刪除帳號按鈕</string>
   <string name="account_sign_out">登出</string>
   <string name="account_sign_out_icon_content_description">登出按鈕</string>
+  <string name="account_manage_account">Manage account</string>
+  <string name="account_manage_account_icon_content_description">Manage account button</string>
   <string name="account_manage_subscription">管理訂購授權</string>
   <string name="account_get_user_info_error">無法擷取使用者資訊</string>
   <string name="manage_subscription_icon_content_description">管理訂購授權按鈕</string>

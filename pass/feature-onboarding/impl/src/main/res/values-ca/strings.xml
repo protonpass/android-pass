@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Controleu què aterra a la safata d\'entrada</string>
   <string name="on_boarding_last_page_button">Comenceu a utilitzar Proton Pass</string>
   <string name="on_boarding_skip">Ara no</string>
+  <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">For security reasons, your access needs to be confirmed.</string>
   <string name="on_boarding_pending_invite_title">Accés a les dades compartides pendent</string>
   <string name="on_boarding_pending_invite_button">Saber-ne més sobre Proton Pass</string>

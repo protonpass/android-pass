@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Hesabı sil düğmesi</string>
   <string name="account_sign_out">Oturumu kapat</string>
   <string name="account_sign_out_icon_content_description">Oturumu kapat düğmesi</string>
+  <string name="account_manage_account">Hesap yönetimi</string>
+  <string name="account_manage_account_icon_content_description">Hesap yönetimi düğmesi</string>
   <string name="account_manage_subscription">Abonelik yönetimi</string>
   <string name="account_get_user_info_error">Kullanıcı bilgileri alınamadı</string>
   <string name="manage_subscription_icon_content_description">Abonelik düğmesi yönetimi</string>

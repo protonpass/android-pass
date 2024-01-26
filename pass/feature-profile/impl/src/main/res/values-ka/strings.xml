@@ -7,6 +7,7 @@
   <string name="profile_security">უსაფრთხოება</string>
   <string name="profile_option_feedback">უკუკავშირი</string>
   <string name="profile_option_import_export">შემოტანა/გატანა</string>
+  <string name="profile_option_tutorial">როგორ გამოვიყენო Proton Pass</string>
   <string name="profile_option_rating">შეაფასეთ აპლიკაცია</string>
   <string name="profile_option_autofill">ავტომატური შევსება</string>
   <string name="profile_option_autofill_subtitle">მომხმარებლის სახელებისა და პაროლების ავტომატური შევსება.</string>

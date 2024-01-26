@@ -119,6 +119,10 @@
   <string name="recent_search_clear">Leeren</string>
   <string name="recent_search_remove_item">Aus kürzlichen Suchanfragen entfernen</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Eintrag erfolgreich angeheftet</string>
+  <string name="home_snackbar_item_pinned_error">Fehler beim Anheften dieses Eintrags.</string>
+  <string name="home_snackbar_item_unpinned_success">Eintrag erfolgreich losgelöst</string>
+  <string name="home_snackbar_item_unpinned_error">Fehler beim Loslösen dieses Eintrags.</string>
   <string name="home_snackbar_items_pinned_success">Einträge erfolgreich angeheftet!</string>
   <string name="home_snackbar_items_pinned_partial_success">Fehler beim Anheften einiger Einträge.</string>
   <string name="home_snackbar_items_pinned_error">Fehler beim Anheften des Eintrags.</string>

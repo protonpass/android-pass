@@ -39,7 +39,6 @@
   <string name="share_with_title">Абагуліць з</string>
   <string name="share_with_email_hint">Адрас электроннай пошты</string>
   <string name="share_with_email_error">Памылковы адрас электроннай пошты</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Немагчыма атрымаць інфармацыю аб запрошаным карыстальніку</string>
   <string name="share_permissions_title">Задаць узровень доступу</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрасіў(-ла) вас атрымаць доступ да элементаў у</string>
   <string name="sharing_join_shared_vault">Далучыцца і сінхранізаваць</string>
@@ -64,9 +63,7 @@
   <string name="share_summary_title">Прагляд і абагульненне</string>
   <string name="share_summary_vault">%s сховішча</string>
   <string name="share_summary_share_vault">Абагуліць сховішча</string>
-  <string name="share_summary_email_title">Абагуліць з дапамогай</string>
   <string name="share_summary_vault_title">Сховішча</string>
-  <string name="share_summary_permissions_title">Узровень доступу</string>
   <string name="share_manage_vault_share_with_more_people">Абагуліць з большай колькасцю людзей</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Засталося %d запрашэнне</item>
@@ -121,4 +118,8 @@
   <string name="sharing_from_item_vault_limit_reached">Вы дасягнулі максімальнай колькасці сховішчаў</string>
   <string name="share_with_suggestions_title">Прапановы</string>
   <string name="share_with_recents_title">Нядаўнія</string>
+  <string name="share_with_remove_email_content_description">Выдаленне электроннай пошты</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Прызначэнне ўзроўню доступу для ўсіх удзельнікаў</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Прызначэнне ўзроўню доступу для %s</string>
+  <string name="sharing_edit_permissions_remove_user">Выдаліць карыстальніка</string>
 </resources>

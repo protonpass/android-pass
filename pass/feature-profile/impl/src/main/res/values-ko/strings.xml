@@ -7,6 +7,7 @@
   <string name="profile_security">보안</string>
   <string name="profile_option_feedback">피드백</string>
   <string name="profile_option_import_export">가져오기 및 내보내기</string>
+  <string name="profile_option_tutorial">Proton Pass 사용 안내</string>
   <string name="profile_option_rating">앱 평가하기</string>
   <string name="profile_option_autofill">자동 완성</string>
   <string name="profile_option_autofill_subtitle">사용자 이름 및 비밀번호를 자동으로 채웁니다.</string>

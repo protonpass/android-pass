@@ -27,9 +27,9 @@
   <string name="item_restored_message">Öge geri yüklendi</string>
   <string name="item_restored_message_error">Öge geri yüklenirken sorun çıktı</string>
   <string name="item_pinned_message">Öge sabitlendi</string>
-  <string name="item_pinned_message_error">There was an error pinning this item</string>
+  <string name="item_pinned_message_error">Bu öge sabitllenirken bir sorun çıktı</string>
   <string name="item_unpinned_message">Ögenin sabitlemesi kaldırıldı</string>
-  <string name="item_unpinned_message_error">There was an error unpinning this item</string>
+  <string name="item_unpinned_message_error">Bu ögenin sabitllemesi kaldırılırken bir sorun çıktı</string>
   <string name="login_item_generate_totp_error">İki adımlı doğrulama kodu oluşturulurken sorun çıktı</string>
   <string name="login_item_view_alias_button">Takma adları görüntüle</string>
   <string name="field_username">Kullanıcı adı ya da e-posta adresi</string>

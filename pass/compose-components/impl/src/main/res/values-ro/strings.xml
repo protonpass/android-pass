@@ -64,8 +64,7 @@
   <string name="most_recent_more_than_1_year">Mai mult de un an</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Pictogramă căutare</string>
-  <!-- Setting option -->
-    <!-- Select Vault BottomSheet -->
+  <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">Un articol</item>
     <item quantity="few">%d articole</item>

@@ -35,7 +35,6 @@
   <string name="share_with_title">Partager avec</string>
   <string name="share_with_email_hint">Adresse e-mail</string>
   <string name="share_with_email_error">L\'adresse e-mail n\'est pas valide.</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Les informations concernant l\'utilisateur invité ne peuvent pas être récupérées.</string>
   <string name="share_permissions_title">Définir le niveau d\'accès</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vous invite à accéder à des éléments dans</string>
   <string name="sharing_join_shared_vault">Rejoindre et synchroniser</string>
@@ -60,9 +59,7 @@
   <string name="share_summary_title">Vérifier et partager</string>
   <string name="share_summary_vault">coffre-fort %s</string>
   <string name="share_summary_share_vault">Partager le coffre-fort</string>
-  <string name="share_summary_email_title">Partager avec</string>
   <string name="share_summary_vault_title">Coffre-fort</string>
-  <string name="share_summary_permissions_title">Niveau d\'accès</string>
   <string name="share_manage_vault_share_with_more_people">Partager avec d\'autres personnes</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Il reste %d invitation.</item>
@@ -113,4 +110,8 @@
   <string name="sharing_from_item_vault_limit_reached">Vous avez atteint le nombre maximum de coffres-forts.</string>
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Récents</string>
+  <string name="share_with_remove_email_content_description">Supprimer l\'adresse e-mail</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Définir le niveau d\'accès pour tous les membres</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Définir le niveau d\'accès pour %s</string>
+  <string name="sharing_edit_permissions_remove_user">Supprimer l\'utilisateur </string>
 </resources>

@@ -119,10 +119,14 @@
   <string name="recent_search_clear">Rensa</string>
   <string name="recent_search_remove_item">Ta bort från senaste sökningar</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">Items pinned successfully</string>
   <string name="home_snackbar_items_pinned_partial_success">Det gick inte fästa några av objekten</string>
   <string name="home_snackbar_items_pinned_error">Det gick inte fästa objekten</string>
   <string name="home_snackbar_items_unpinned_success">Objekt lossat</string>
-  <string name="home_snackbar_items_unpinned_partial_success">Error unpinning some of the items</string>
+  <string name="home_snackbar_items_unpinned_partial_success">Det gick inte lossa några av objekten</string>
   <string name="home_snackbar_items_unpinned_error">Det gick inte lossa objekten</string>
 </resources>

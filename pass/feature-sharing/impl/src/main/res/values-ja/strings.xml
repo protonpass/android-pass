@@ -33,7 +33,6 @@
   <string name="share_with_title">と共有する</string>
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレス</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">招待されたユーザー情報を取得できません</string>
   <string name="share_permissions_title">アクセスレベルの設定</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%sがあなたにアイテムへのアクセスを招待しています。</string>
   <string name="sharing_join_shared_vault">参加と同期</string>
@@ -58,9 +57,7 @@
   <string name="share_summary_title">レビューして共有</string>
   <string name="share_summary_vault">%s 保管庫</string>
   <string name="share_summary_share_vault">保管庫を共有する</string>
-  <string name="share_summary_email_title">と共有</string>
   <string name="share_summary_vault_title">保管庫</string>
-  <string name="share_summary_permissions_title">アクセスレベル</string>
   <string name="share_manage_vault_share_with_more_people">より多くの人たちと共有する</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d 件の招待が残っています</item>
@@ -109,4 +106,8 @@
   <string name="sharing_from_item_vault_limit_reached">保管庫の制限に達しました</string>
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
+  <string name="sharing_edit_permissions_remove_user">Remove user</string>
 </resources>

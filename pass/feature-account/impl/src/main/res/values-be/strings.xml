@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Кнопка выдалення ўліковага запісу</string>
   <string name="account_sign_out">Выйсці</string>
   <string name="account_sign_out_icon_content_description">Кнопка выхаду</string>
+  <string name="account_manage_account">Кіраванне ўліковым запісам</string>
+  <string name="account_manage_account_icon_content_description">Кнопка кіравання ўліковым запісам</string>
   <string name="account_manage_subscription">Кіраванне падпіскай</string>
   <string name="account_get_user_info_error">Немагчыма атрымаць інфармацыю аб карыстальніку</string>
   <string name="manage_subscription_icon_content_description">Кнопка кіравання падпіскай</string>

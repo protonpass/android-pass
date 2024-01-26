@@ -5,5 +5,5 @@
   <string name="custom_fields">カスタムフィールド</string>
   <string name="restart_to_complete_the_update">アップデートを完了させるために再起動</string>
   <string name="action_restart">再起動</string>
-  <string name="shortcut_share_logs_title">Share logs</string>
+  <string name="shortcut_share_logs_title">ログを共有する</string>
 </resources>

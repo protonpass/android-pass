@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Контролюйте, що потрапляє до вашої поштової скриньки.</string>
   <string name="on_boarding_last_page_button">Почніть користуватися Proton Pass</string>
   <string name="on_boarding_skip">Не зараз</string>
+  <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">З міркувань безпеки ваш доступ потребує підтвердження.</string>
   <string name="on_boarding_pending_invite_title">Очікування доступу до спільних даних</string>
   <string name="on_boarding_pending_invite_button">Докладніше про Proton Pass</string>

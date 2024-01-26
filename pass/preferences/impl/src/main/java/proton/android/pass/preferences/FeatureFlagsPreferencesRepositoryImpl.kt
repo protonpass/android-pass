@@ -32,7 +32,6 @@ import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
-import proton.android.pass.preferences.FeatureFlag.CREDIT_CARD_AUTOFILL
 import proton.android.pass.preferences.FeatureFlag.PINNING_V1
 import java.io.IOException
 import javax.inject.Inject
@@ -53,11 +52,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
                 defaultValue = featureFlag.isEnabledDefault,
             ) { autofillDebugModeEnabled.value }
 
-            CREDIT_CARD_AUTOFILL -> getFeatureFlag(
-                key = featureFlag.key,
-                defaultValue = featureFlag.isEnabledDefault,
-            ) { creditCardAutofillEnabled.value }
-
             PINNING_V1 -> getFeatureFlag(
                 key = featureFlag.key,
                 defaultValue = featureFlag.isEnabledDefault,
@@ -68,10 +62,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> setFeatureFlag {
                 autofillDebugModeEnabled = boolFlagPrefProto(value)
-            }
-
-            CREDIT_CARD_AUTOFILL -> setFeatureFlag {
-                creditCardAutofillEnabled = boolFlagPrefProto(value)
             }
 
             PINNING_V1 -> setFeatureFlag {

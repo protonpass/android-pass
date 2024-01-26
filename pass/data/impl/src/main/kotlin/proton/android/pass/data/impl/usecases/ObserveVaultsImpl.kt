@@ -38,12 +38,13 @@ class ObserveVaultsImpl @Inject constructor(
 
     override fun invoke(): Flow<List<Vault>> = observeAllShares()
         .map { shares ->
-            shares.map { share ->
-                when (val res = share.toVault(encryptionContextProvider)) {
-                    None -> throw ShareContentNotAvailableError()
-                    is Some -> res.value
-                }
-            }.sorted()
+            encryptionContextProvider.withEncryptionContext {
+                shares.map { share ->
+                    when (val res = share.toVault(this@withEncryptionContext)) {
+                        None -> throw ShareContentNotAvailableError()
+                        is Some -> res.value
+                    }
+                }.sorted()
+            }
         }
-
 }

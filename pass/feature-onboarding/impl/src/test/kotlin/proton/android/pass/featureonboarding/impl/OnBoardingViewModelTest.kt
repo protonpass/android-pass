@@ -34,19 +34,17 @@ import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
+import proton.android.pass.domain.UserAccessData
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.InvitePending
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.domain.UserAccessData
 
 class OnBoardingViewModelTest {
 
@@ -58,7 +56,6 @@ class OnBoardingViewModelTest {
     private lateinit var preferenceRepository: TestPreferenceRepository
     private lateinit var biometryManager: TestBiometryManager
     private lateinit var autofillManager: TestAutofillManager
-    private lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
     private lateinit var observeUserAccessData: TestObserveUserAccessData
 
     @Before
@@ -67,12 +64,12 @@ class OnBoardingViewModelTest {
         preferenceRepository = TestPreferenceRepository()
         biometryManager = TestBiometryManager()
         autofillManager = TestAutofillManager()
-        ffRepo = TestFeatureFlagsPreferenceRepository()
         observeUserAccessData = TestObserveUserAccessData()
     }
 
     @Test
     fun `given no supported features should show last page`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0))
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         viewModel = createViewModel()
@@ -88,6 +85,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given unsupported autofill should show 1 screen`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0))
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
@@ -99,6 +97,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given already enabled autofill should show 1 screen`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0))
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
@@ -111,6 +110,7 @@ class OnBoardingViewModelTest {
     @Test
     fun `given a click on enable autofill when fingerprint is available should select next page`() =
         runTest {
+            observeUserAccessData.sendValue(UserAccessData(0, 0))
             biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
             autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
             viewModel = createViewModel()
@@ -129,6 +129,7 @@ class OnBoardingViewModelTest {
     @Test
     fun `given a click on enable autofill when fingerprint is not available should select next page`() =
         runTest {
+            observeUserAccessData.sendValue(UserAccessData(0, 0))
             biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
             autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
             viewModel = createViewModel()
@@ -147,6 +148,7 @@ class OnBoardingViewModelTest {
     @Test
     fun `given a click on skip autofill when fingerprint is available should select next page`() =
         runTest {
+            observeUserAccessData.sendValue(UserAccessData(0, 0))
             biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
             autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
             viewModel = createViewModel()
@@ -165,6 +167,7 @@ class OnBoardingViewModelTest {
     @Test
     fun `given a click on skip autofill when fingerprint is not available should select next page`() =
         runTest {
+            observeUserAccessData.sendValue(UserAccessData(0, 0))
             biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
             autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
             viewModel = createViewModel()
@@ -182,6 +185,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given unsupported biometric should show 1 screen`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0))
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         viewModel = createViewModel()
@@ -194,6 +198,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on enable fingerprint should select last page`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0))
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
@@ -213,6 +218,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on skip fingerprint should select last page`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0))
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
@@ -230,6 +236,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on get started in last page should complete on boarding`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0))
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
@@ -248,33 +255,13 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `show InvitePending screen when needed`() = runTest {
-        testInvitePending(ffEnabled = true, waitingNewUserInvites = 1, expectedToContainPage = true)
-    }
-
-    @Test
-    fun `do not show InvitePending screen when FF is disabled needed`() = runTest {
-        testInvitePending(
-            ffEnabled = false,
-            waitingNewUserInvites = 1,
-            expectedToContainPage = false
-        )
-    }
-
-    @Test
-    fun `do not show InvitePending screen when FF is enabled but no invites pending`() = runTest {
-        testInvitePending(
-            ffEnabled = true,
-            waitingNewUserInvites = 0,
-            expectedToContainPage = false
-        )
+        testInvitePending(waitingNewUserInvites = 1, expectedToContainPage = true)
     }
 
     private suspend fun testInvitePending(
-        ffEnabled: Boolean,
         waitingNewUserInvites: Int,
         expectedToContainPage: Boolean
     ) {
-        ffRepo.set(FeatureFlag.SHARING_NEW_USERS, ffEnabled)
         val userAccessData = UserAccessData(
             pendingInvites = 0,
             waitingNewUserInvites = waitingNewUserInvites
@@ -293,7 +280,6 @@ class OnBoardingViewModelTest {
             biometryManager = biometryManager,
             userPreferencesRepository = preferenceRepository,
             snackbarDispatcher = snackbarMessageRepository,
-            ffRepo = ffRepo,
             observeUserAccessData = observeUserAccessData,
         )
 }

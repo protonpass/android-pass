@@ -172,7 +172,6 @@ class ManageVaultViewModel @Inject constructor(
                     }
 
                     CanShareVaultStatus.CannotShareReason.NotEnoughPermissions,
-                    CanShareVaultStatus.CannotShareReason.SharingDisabled,
                     CanShareVaultStatus.CannotShareReason.Unknown -> ShareOptions.Hide
                 }
             }

@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
@@ -28,12 +27,9 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class CanShareVaultImpl @Inject constructor(
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val getVaultById: GetVaultById,
     private val getShareById: GetShareById
 ) : CanShareVault {
@@ -49,11 +45,6 @@ class CanShareVaultImpl @Inject constructor(
     }
 
     override suspend fun invoke(vault: Vault): CanShareVaultStatus {
-        val isSharingEnabled = getSharingEnabledFlag()
-        if (!isSharingEnabled) {
-            return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.SharingDisabled)
-        }
-
         val share = runCatching { getShareById(shareId = vault.shareId) }.getOrElse {
             PassLogger.w(TAG, "canShare share not found")
             PassLogger.w(TAG, it)
@@ -75,11 +66,6 @@ class CanShareVaultImpl @Inject constructor(
             }
         }
     }
-
-    private suspend fun getSharingEnabledFlag() = featureFlagsPreferencesRepository
-        .get<Boolean>(FeatureFlag.SHARING_V1)
-        .firstOrNull()
-        ?: false
 
     companion object {
         private const val TAG = "CanShareVaultImpl"

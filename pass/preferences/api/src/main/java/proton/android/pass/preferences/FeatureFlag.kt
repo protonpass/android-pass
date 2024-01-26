@@ -30,18 +30,6 @@ enum class FeatureFlag(
         key = null, // Cannot be activated server-side,
         isEnabledDefault = false,
     ),
-    SHARING_V1(
-        title = "Sharing (v1)",
-        description = "Enable sharing (v1)",
-        key = "PassSharingV1",
-        isEnabledDefault = true,
-    ),
-    SHARING_NEW_USERS(
-        title = "Sharing with new users",
-        description = "Enable sharing with new users",
-        key = "PassSharingNewUsers",
-        isEnabledDefault = true,
-    ),
     CREDIT_CARD_AUTOFILL(
         title = "Credit card autofill",
         description = "Enable credit card autofill",

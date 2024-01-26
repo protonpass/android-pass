@@ -48,8 +48,6 @@ import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INV
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
 import proton.android.pass.notifications.api.NotificationManager
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
@@ -63,7 +61,6 @@ class OnBoardingTipsViewModel @Inject constructor(
     private val appConfig: AppConfig,
     observeInvites: ObserveInvites,
     getUserPlan: GetUserPlan,
-    ffRepo: FeatureFlagsPreferencesRepository,
     notificationManager: NotificationManager
 ) : ViewModel() {
 
@@ -72,9 +69,6 @@ class OnBoardingTipsViewModel @Inject constructor(
 
     private val hasInvitesFlow: Flow<Boolean> = observeInvites()
         .map { invites -> invites.isNotEmpty() }
-        .distinctUntilChanged()
-
-    private val sharingEnabledFlow: Flow<Boolean> = ffRepo.get<Boolean>(FeatureFlag.SHARING_V1)
         .distinctUntilChanged()
 
     private val notificationPermissionFlow: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -88,14 +82,13 @@ class OnBoardingTipsViewModel @Inject constructor(
     )
 
     private val shouldShowNotificationPermissionFlow: Flow<Boolean> = combine(
-        sharingEnabledFlow,
         notificationPermissionFlow,
         preferencesRepository.getHasDismissedNotificationBanner()
-    ) { sharingEnabled, notificationPermissionEnabled, hasDismissedNotificationBanner ->
+    ) { notificationPermissionEnabled, hasDismissedNotificationBanner ->
         when {
             notificationPermissionEnabled -> false
             hasDismissedNotificationBanner is HasDismissedNotificationBanner.Dismissed -> false
-            else -> sharingEnabled && needsNotificationPermissions()
+            else -> needsNotificationPermissions()
         }
     }.distinctUntilChanged()
 
@@ -109,15 +102,10 @@ class OnBoardingTipsViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val shouldShowInvitesFlow: Flow<Boolean> = combine(
-        hasInvitesFlow,
-        sharingEnabledFlow
-    ) { hasInvites, sharingEnabled -> hasInvites && sharingEnabled }
-
     val state: StateFlow<OnBoardingTipsUiState> = combineN(
         shouldShowAutofillFlow,
         shouldShowTrialFlow,
-        shouldShowInvitesFlow,
+        hasInvitesFlow,
         shouldShowNotificationPermissionFlow,
         getUserPlan(),
         eventFlow

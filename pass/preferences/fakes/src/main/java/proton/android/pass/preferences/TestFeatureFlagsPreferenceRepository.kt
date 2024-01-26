@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
-import proton.android.pass.preferences.FeatureFlag.CREDIT_CARD_AUTOFILL
 import proton.android.pass.preferences.FeatureFlag.PINNING_V1
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,7 +36,6 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = state.map {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
-            CREDIT_CARD_AUTOFILL -> it.getOrDefault(CREDIT_CARD_AUTOFILL, false) as T
             PINNING_V1 -> it.getOrDefault(PINNING_V1, false) as T
         }
     }

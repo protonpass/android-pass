@@ -30,12 +30,6 @@ enum class FeatureFlag(
         key = null, // Cannot be activated server-side,
         isEnabledDefault = false,
     ),
-    CREDIT_CARD_AUTOFILL(
-        title = "Credit card autofill",
-        description = "Enable credit card autofill",
-        key = "PassCreditCardAutofill",
-        isEnabledDefault = true,
-    ),
     PINNING_V1(
         title = "Pinning (v1)",
         description = "Enable pinning",

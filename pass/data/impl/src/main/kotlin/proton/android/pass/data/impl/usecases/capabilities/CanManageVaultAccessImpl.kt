@@ -18,36 +18,20 @@
 
 package proton.android.pass.data.impl.usecases.capabilities
 
-import kotlinx.coroutines.flow.firstOrNull
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.domain.SharePermissionFlag
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.hasFlag
 import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 
-class CanManageVaultAccessImpl @Inject constructor(
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
-) : CanManageVaultAccess {
+class CanManageVaultAccessImpl @Inject constructor() : CanManageVaultAccess {
     override suspend fun invoke(vault: Vault): VaultAccessData {
-        val sharingEnabled = featureFlagsPreferencesRepository
-            .get<Boolean>(FeatureFlag.SHARING_V1)
-            .firstOrNull()
-            ?: false
-
-        val (manageAccess, viewMembers) = if (!sharingEnabled) {
-            false to false
-        } else {
-            val value = vault.role.toPermissions().hasFlag(SharePermissionFlag.Admin)
-            value to !value
-        }
-
+        val isAdmin = vault.role.toPermissions().hasFlag(SharePermissionFlag.Admin)
         return VaultAccessData(
-            canManageAccess = manageAccess,
-            canViewMembers = viewMembers
+            canManageAccess = isAdmin,
+            canViewMembers = !isAdmin
         )
     }
 }

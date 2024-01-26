@@ -6,6 +6,24 @@
 
 ### Other
 
+## 1.17.0 (2024-01-26)
+
+### Features :tada:
+
+- Invite multiple addresses during sharing.
+- Email suggestions during sharing.
+
+### Fixes :bug:
+
+- Fix bottomsheet overlay incorrect behaviour.
+- 2FA not being displayed for a free account.
+
+### Other
+
+- Persist user filtering preference.
+- Increase default password length to 20.
+- User can pin from the home screen.
+
 ## 1.16.4 (2024-01-23)
 
 ### Other

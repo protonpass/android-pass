@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Mějte kontrolu nad tím, co skončí ve vaší doručené poště</string>
   <string name="on_boarding_last_page_button">Začněte používat Proton Pass</string>
   <string name="on_boarding_skip">Nyní ne</string>
+  <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Z bezpečnostních důvodů musí být váš přístup potvrzen.</string>
   <string name="on_boarding_pending_invite_title">Čekání na přístup ke sdíleným datům</string>
   <string name="on_boarding_pending_invite_button">Více informací o Proton Pass</string>

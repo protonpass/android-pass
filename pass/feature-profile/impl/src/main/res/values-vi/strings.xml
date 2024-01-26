@@ -7,6 +7,7 @@
   <string name="profile_security">Bảo mật</string>
   <string name="profile_option_feedback">Phản hồi</string>
   <string name="profile_option_import_export">Nhập/Xuất</string>
+  <string name="profile_option_tutorial">How to use Proton Pass</string>
   <string name="profile_option_rating">Đánh giá ứng dụng</string>
   <string name="profile_option_autofill">Tự động điền</string>
   <string name="profile_option_autofill_subtitle">Tự động điền các tên đăng nhập và mật khẩu của bạn.</string>

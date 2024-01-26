@@ -33,7 +33,6 @@
   <string name="share_with_title">與分享</string>
   <string name="share_with_email_hint">電子郵件位址</string>
   <string name="share_with_email_error">無效的電子郵件位址</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">無法擷取邀請使用者資訊</string>
   <string name="share_permissions_title">設定存取層級</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s 邀請您存取項目於</string>
   <string name="sharing_join_shared_vault">加入並同步</string>
@@ -58,9 +57,7 @@
   <string name="share_summary_title">審閱並分享</string>
   <string name="share_summary_vault">%s保管庫</string>
   <string name="share_summary_share_vault">分享保險庫</string>
-  <string name="share_summary_email_title">分享與</string>
   <string name="share_summary_vault_title">保管庫</string>
-  <string name="share_summary_permissions_title">存取層級</string>
   <string name="share_manage_vault_share_with_more_people">分享給更多人</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d invites left</item>
@@ -94,10 +91,10 @@
   <string name="sharing_snackbar_too_many_invites_sent">該位址已被邀請過多次</string>
   <string name="sharing_snackbar_transfer_ownership_success">所有權已轉移</string>
   <string name="sharing_snackbar_transfer_ownership_error">轉移所有權時發生錯誤</string>
-  <string name="sharing_invites_info_dialog_title">Member limit</string>
+  <string name="sharing_invites_info_dialog_title">成員限制</string>
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. You still have %2$d invites left.</string>
   <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
-  <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
+  <string name="sharing_invites_info_upgrade_text">現在升級已邀請更多。</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">共享</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">共享此保管庫</string>
@@ -106,7 +103,11 @@
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">新增一個共享保管庫</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
-  <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
+  <string name="sharing_from_item_vault_limit_reached">您已達到保管庫上限</string>
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
+  <string name="sharing_edit_permissions_remove_user">Remove user</string>
 </resources>

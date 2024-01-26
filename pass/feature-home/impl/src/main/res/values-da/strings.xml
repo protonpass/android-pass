@@ -119,6 +119,10 @@
   <string name="recent_search_clear">Ryd</string>
   <string name="recent_search_remove_item">Fjern fra seneste søgninger</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">Elementer fastgjort</string>
   <string name="home_snackbar_items_pinned_partial_success">Fejl ved fastgørelse af nogle af elementerne</string>
   <string name="home_snackbar_items_pinned_error">Fejl ved fastgørelse af elementer</string>

@@ -31,11 +31,11 @@
   <string name="settings_share_telemetry">Jaa anonyymejä käyttötietoja</string>
   <string name="settings_share_crashes">Jaa anonyymejä virheraportteja</string>
   <string name="settings_preference_updated">Asetuksesi päivitettiin</string>
-  <string name="settings_default_vault_updated">Oletusholvisi on päivitetty</string>
-  <string name="settings_default_vault_update_error">Oletusholvia ei voitu päivittää</string>
+  <string name="settings_default_vault_updated">Oletusholvisi on vaihdettu</string>
+  <string name="settings_default_vault_update_error">Oletusholvin vaihto ei onnistunut</string>
   <string name="settings_default_vault_section_title">Holvit</string>
   <string name="settings_default_vault_vault_selector_title">Oletusholvi</string>
-  <string name="settings_default_vault_section_subtitle">Holvi, johon kohteet luodaan oletusarvoisesti.</string>
+  <string name="settings_default_vault_section_subtitle">Holvi, johon lisäämäsi kohteet oletusarvoisesti luodaan.</string>
   <string name="settings_default_vault_disabled_reason">Et voi tallentaa tähän holviin.</string>
   <string name="view_logs_title">Näytä lokitiedot</string>
   <string name="clipboard_bottomsheet_title">Leikepöytä</string>

@@ -7,6 +7,7 @@
   <string name="profile_security">Güvenlik</string>
   <string name="profile_option_feedback">Geri bildirim</string>
   <string name="profile_option_import_export">İçe/dışa aktarma</string>
+  <string name="profile_option_tutorial">Proton Pass nasıl kullanılır</string>
   <string name="profile_option_rating">Uygulamayı değerlendirin</string>
   <string name="profile_option_autofill">Otomatik doldurma</string>
   <string name="profile_option_autofill_subtitle">Kullanıcı adı ve parolalarınızı otomatik olarak doldurun.</string>

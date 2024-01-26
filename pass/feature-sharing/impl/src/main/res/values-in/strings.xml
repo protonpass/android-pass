@@ -33,8 +33,7 @@
   <string name="share_with_title">Bagikan dengan</string>
   <string name="share_with_email_hint">Alamat surel</string>
   <string name="share_with_email_error">Alamat surel tidak valid</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Gagal memperoleh informasi pengguna yang diundang</string>
-  <string name="share_permissions_title">Tentukan tingkatan akses</string>
+  <string name="share_permissions_title">Tentukan tingkat akses</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mengundang Anda untuk mengakses item pada</string>
   <string name="sharing_join_shared_vault">Gabung dan sinkronkan</string>
   <string name="sharing_reject_invitation">Tolak undangan</string>
@@ -58,9 +57,7 @@
   <string name="share_summary_title">Kaji dan bagikan</string>
   <string name="share_summary_vault">%s brankas</string>
   <string name="share_summary_share_vault">Bagikan brankas</string>
-  <string name="share_summary_email_title">Bagikan dengan</string>
   <string name="share_summary_vault_title">Brankas</string>
-  <string name="share_summary_permissions_title">Tingkat akses</string>
   <string name="share_manage_vault_share_with_more_people">Bagikan dengan lebih banyak orang</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d undangan tersisa</item>
@@ -107,6 +104,10 @@
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Item ini akan dipindahkan ke brankas baru.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Tingkatkan untuk dapat membuat lebih banyak brankas</string>
   <string name="sharing_from_item_vault_limit_reached">Anda telah mencapai batas brankas maksimal</string>
-  <string name="share_with_suggestions_title">Suggestions</string>
-  <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_suggestions_title">Saran</string>
+  <string name="share_with_recents_title">Terkini</string>
+  <string name="share_with_remove_email_content_description">Hapus surel</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Tentukan tingkat akses bagi seluruh anggota</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Tetapkan tingkat akses untuk %s</string>
+  <string name="sharing_edit_permissions_remove_user">Hapus pengguna</string>
 </resources>

@@ -119,6 +119,10 @@
   <string name="recent_search_clear">Borrar</string>
   <string name="recent_search_remove_item">Borrar de las búsquedas recientes</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Elemento anclado con éxito</string>
+  <string name="home_snackbar_item_pinned_error">Ocurrió un error al anclar este elemento</string>
+  <string name="home_snackbar_item_unpinned_success">Elemento desanclado con éxito</string>
+  <string name="home_snackbar_item_unpinned_error">Ocurrió un error al desanclar este elemento</string>
   <string name="home_snackbar_items_pinned_success">Elementos anclados con éxito</string>
   <string name="home_snackbar_items_pinned_partial_success">Error al anclar algunos elementos</string>
   <string name="home_snackbar_items_pinned_error">Error al anclar los elementos</string>

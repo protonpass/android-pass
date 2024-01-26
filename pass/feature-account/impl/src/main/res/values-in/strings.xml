@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Tombol hapus akun</string>
   <string name="account_sign_out">Keluar</string>
   <string name="account_sign_out_icon_content_description">Tombol keluar</string>
+  <string name="account_manage_account">Kelola akun</string>
+  <string name="account_manage_account_icon_content_description">Tombol kelola akun</string>
   <string name="account_manage_subscription">Kelola langganan</string>
   <string name="account_get_user_info_error">Informasi pengguna tidak dapat diperoleh</string>
   <string name="manage_subscription_icon_content_description">Tombol kelola langganan</string>

@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Pulsante elimina account</string>
   <string name="account_sign_out">Disconnetti</string>
   <string name="account_sign_out_icon_content_description">Pulsante disconnessione</string>
+  <string name="account_manage_account">Gestisci l\'account</string>
+  <string name="account_manage_account_icon_content_description">Gestisci l\'account</string>
   <string name="account_manage_subscription">Gestisci abbonamento</string>
   <string name="account_get_user_info_error">Non è stato possibile recuperare le informazioni utente</string>
   <string name="manage_subscription_icon_content_description">Pulsante gestisci abbonamento</string>

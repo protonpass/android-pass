@@ -7,6 +7,7 @@
   <string name="profile_security">セキュリティ</string>
   <string name="profile_option_feedback">フィードバック</string>
   <string name="profile_option_import_export">インポート/エクスポート</string>
+  <string name="profile_option_tutorial">How to use Proton Pass</string>
   <string name="profile_option_rating">アプリを評価</string>
   <string name="profile_option_autofill">自動入力</string>
   <string name="profile_option_autofill_subtitle">ユーザー名とパスワードを自動的に入力します。</string>
@@ -26,7 +27,7 @@
   <string name="app_lock_ten_minutes">10 分後</string>
   <string name="app_lock_one_hour">1 時間後</string>
   <string name="app_lock_four_hours">4 時間後</string>
-  <string name="profile_account_plan_name_trial">Pass Plus trial</string>
+  <string name="profile_account_plan_name_trial">Pass Plus のトライアル</string>
   <string name="app_lock_config_none">なし</string>
   <string name="app_lock_config_biometric">生体認証</string>
   <string name="app_lock_config_pin_code">PIN コード</string>
@@ -45,5 +46,5 @@
   <string name="profile_option_lock_with">でロックする。</string>
   <string name="profile_option_unlock_with">ロック解除</string>
   <string name="profile_option_change_pin_code">PINコードの変更</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung ブラウザがデフォルトのブラウザとして設定されています。このブラウザは、他のパスワードマネージャーによる自動入力をサポートしていません。</string>
 </resources>

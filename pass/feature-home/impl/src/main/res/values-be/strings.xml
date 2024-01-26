@@ -133,6 +133,10 @@
   <string name="recent_search_clear">Ачысціць</string>
   <string name="recent_search_remove_item">Выдаліць са спіса нядаўніх пошукаў</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Элемент паспяхова замацаваны</string>
+  <string name="home_snackbar_item_pinned_error">Памылка замацавання гэтага элемента</string>
+  <string name="home_snackbar_item_unpinned_success">Элемент паспяхова адмацаваны</string>
+  <string name="home_snackbar_item_unpinned_error">Памылка адмацавання гэтага элемента</string>
   <string name="home_snackbar_items_pinned_success">Элементы паспяхова замацаваны</string>
   <string name="home_snackbar_items_pinned_partial_success">Памылка замацавання некаторых элементаў</string>
   <string name="home_snackbar_items_pinned_error">Памылка замацавання элементаў</string>

@@ -111,8 +111,7 @@ object AutoFillHandler {
         val shouldAutofill = shouldAutofill(
             accountManager = accountManager,
             request = request,
-            windowNode = windowNode,
-            autofillServiceManager = autofillServiceManager
+            windowNode = windowNode
         )
         val assistInfo = when (shouldAutofill) {
             is ShouldAutofillResult.No -> {
@@ -200,8 +199,7 @@ object AutoFillHandler {
     private suspend fun shouldAutofill(
         accountManager: AccountManager,
         request: FillRequest,
-        windowNode: AssistStructure.WindowNode,
-        autofillServiceManager: AutofillServiceManager
+        windowNode: AssistStructure.WindowNode
     ): ShouldAutofillResult {
         val currentUser = accountManager.getPrimaryUserId().first()
         if (currentUser == null) {
@@ -224,13 +222,6 @@ object AutoFillHandler {
         if (focusedCluster == NodeCluster.Empty) {
             PassLogger.d(TAG, "No focused cluster found")
             return ShouldAutofillResult.No
-        }
-
-        if (focusedCluster is NodeCluster.CreditCard) {
-            if (!autofillServiceManager.isCreditCardAutofillEnabled()) {
-                PassLogger.d(TAG, "Credit card autofill disabled")
-                return ShouldAutofillResult.No
-            }
         }
 
         val assistInfo = AssistInfo(

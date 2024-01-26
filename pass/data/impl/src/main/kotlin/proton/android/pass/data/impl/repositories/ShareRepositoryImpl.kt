@@ -132,7 +132,9 @@ class ShareRepositoryImpl @Inject constructor(
             shareKeyRepository.saveShareKeys(listOf(shareKeyEntity))
         }
 
-        return@withContext shareEntityToShare(responseAsEntity)
+        return@withContext encryptionContextProvider.withEncryptionContext {
+            shareEntityToShare(responseAsEntity, this)
+        }
     }
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
@@ -271,14 +273,18 @@ class ShareRepositoryImpl @Inject constructor(
             share = storedShares.first()
         }
 
-        return shareEntityToShare(share)
+        return encryptionContextProvider.withEncryptionContext {
+            shareEntityToShare(share, this)
+        }
     }
 
     override fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>> {
         return localShareDataSource.observeById(userId, shareId)
             .map { entity ->
                 entity.toOption().map {
-                    shareEntityToShare(it)
+                    encryptionContextProvider.withEncryptionContext {
+                        shareEntityToShare(it, this)
+                    }
                 }
             }
     }
@@ -314,7 +320,9 @@ class ShareRepositoryImpl @Inject constructor(
         )
         localShareDataSource.upsertShares(listOf(responseAsEntity))
 
-        return@withContext shareEntityToShare(responseAsEntity)
+        return@withContext encryptionContextProvider.withEncryptionContext {
+            shareEntityToShare(responseAsEntity, this)
+        }
     }
 
     override suspend fun deleteSharesForUser(userId: UserId) = withContext(Dispatchers.IO) {
@@ -473,7 +481,7 @@ class ShareRepositoryImpl @Inject constructor(
 
     private fun shareEntityToShare(
         entity: ShareEntity,
-        encryptionContext: EncryptionContext? = null
+        encryptionContext: EncryptionContext
     ): Share {
         val shareType = ShareType.map[entity.targetType]
         if (shareType == null) {
@@ -486,17 +494,9 @@ class ShareRepositoryImpl @Inject constructor(
         val (color, icon) = if (entity.encryptedContent == null) {
             ShareColor.Color1 to ShareIcon.Icon1
         } else {
-            if (encryptionContext != null) {
-                val decrypted = encryptionContext.decrypt(entity.encryptedContent)
-                val asProto = VaultV1.Vault.parseFrom(decrypted)
-                asProto.display.color.toDomain() to asProto.display.icon.toDomain()
-            } else {
-                encryptionContextProvider.withEncryptionContext {
-                    val decrypted = decrypt(entity.encryptedContent)
-                    val asProto = VaultV1.Vault.parseFrom(decrypted)
-                    asProto.display.color.toDomain() to asProto.display.icon.toDomain()
-                }
-            }
+            val decrypted = encryptionContext.decrypt(entity.encryptedContent)
+            val asProto = VaultV1.Vault.parseFrom(decrypted)
+            asProto.display.color.toDomain() to asProto.display.icon.toDomain()
         }
 
         return Share(

@@ -42,11 +42,9 @@ import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRI
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsUiState
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsViewModel
 import proton.android.pass.notifications.fakes.TestNotificationManager
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestPendingInvite
@@ -61,7 +59,6 @@ class OnBoardingTipsViewModelTest {
     private lateinit var autofillManager: TestAutofillManager
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var observeInvites: TestObserveInvites
-    private lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
     private lateinit var notificationManager: TestNotificationManager
     private lateinit var appConfig: TestAppConfig
 
@@ -71,7 +68,6 @@ class OnBoardingTipsViewModelTest {
         autofillManager = TestAutofillManager()
         getUserPlan = TestGetUserPlan()
         observeInvites = TestObserveInvites()
-        ffRepo = TestFeatureFlagsPreferenceRepository()
         notificationManager = TestNotificationManager()
         appConfig = TestAppConfig()
         viewModel = OnBoardingTipsViewModel(
@@ -79,7 +75,6 @@ class OnBoardingTipsViewModelTest {
             preferencesRepository = preferenceRepository,
             observeInvites = observeInvites,
             getUserPlan = getUserPlan,
-            ffRepo = ffRepo,
             notificationManager = notificationManager,
             appConfig = appConfig
         )
@@ -169,7 +164,6 @@ class OnBoardingTipsViewModelTest {
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
         observeInvites.emitInvites(listOf(TestPendingInvite.create()))
-        ffRepo.set(FeatureFlag.SHARING_V1, true)
 
         viewModel.state.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(INVITE)))
@@ -177,24 +171,9 @@ class OnBoardingTipsViewModelTest {
     }
 
     @Test
-    fun `Should not display invite banner if FF is disabled`() = runTest {
-        setupPlan(PlanType.Trial("", "", 1))
-        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
-        preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
-        observeInvites.emitInvites(listOf(TestPendingInvite.create()))
-        ffRepo.set(FeatureFlag.SHARING_V1, false)
-
-        viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(TRIAL)))
-        }
-    }
-
-    @Test
     fun `Should display notification permission banner if not notification permission and banner not dismissed`() =
         runTest {
             setupPlan(PlanType.Trial("", "", 1))
-            ffRepo.set(FeatureFlag.SHARING_V1, true)
             notificationManager.setHasNotificationPermission(false)
             viewModel.onNotificationPermissionChanged(false)
             preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
@@ -210,7 +189,6 @@ class OnBoardingTipsViewModelTest {
     fun `Should not display notification permission if has permission and banner not dismissed`() =
         runTest {
             setupPlan(PlanType.Trial("", "", 1))
-            ffRepo.set(FeatureFlag.SHARING_V1, true)
             notificationManager.setHasNotificationPermission(true)
             viewModel.onNotificationPermissionChanged(true)
             preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
@@ -225,7 +203,6 @@ class OnBoardingTipsViewModelTest {
     fun `Should not display notification permission if not permission and banner dismissed`() =
         runTest {
             setupPlan(PlanType.Trial("", "", 1))
-            ffRepo.set(FeatureFlag.SHARING_V1, true)
             notificationManager.setHasNotificationPermission(false)
             viewModel.onNotificationPermissionChanged(false)
             preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
@@ -240,7 +217,6 @@ class OnBoardingTipsViewModelTest {
     fun `Should not display notification permission if not permission and banner not dismissed but version LT 13`() =
         runTest {
             setupPlan(PlanType.Trial("", "", 1))
-            ffRepo.set(FeatureFlag.SHARING_V1, true)
             notificationManager.setHasNotificationPermission(false)
             viewModel.onNotificationPermissionChanged(false)
             preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)

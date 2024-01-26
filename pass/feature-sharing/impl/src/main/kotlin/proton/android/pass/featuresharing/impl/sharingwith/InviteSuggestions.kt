@@ -76,39 +76,41 @@ fun InviteSuggestions(
         when (state) {
             is SuggestionsUIState.Content -> {
                 var selectedIndex by remember { mutableStateOf(0) }
-                TabRow(
-                    modifier = Modifier.clip(CircleShape),
-                    selectedTabIndex = selectedIndex,
-                    backgroundColor = PassTheme.colors.interactionNormMinor1,
-                    indicator = { },
-                    divider = { }
-                ) {
-                    InviteSuggestionTabs.values().forEachIndexed { index, tab ->
-                        val selected = selectedIndex == index
-                        Tab(
-                            modifier = Modifier
-                                .padding(Spacing.extraSmall)
-                                .clip(CircleShape)
-                                .applyIf(
-                                    condition = selected,
-                                    ifTrue = { background(PassTheme.colors.interactionNorm) },
-                                ),
-                            content = {
-                                val title = when (tab) {
-                                    InviteSuggestionTabs.Recents ->
-                                        stringResource(id = R.string.share_with_recents_title)
+                if (state.planEmails.isNotEmpty()) {
+                    TabRow(
+                        modifier = Modifier.clip(CircleShape),
+                        selectedTabIndex = selectedIndex,
+                        backgroundColor = PassTheme.colors.interactionNormMinor1,
+                        indicator = { },
+                        divider = { }
+                    ) {
+                        InviteSuggestionTabs.values().forEachIndexed { index, tab ->
+                            val selected = selectedIndex == index
+                            Tab(
+                                modifier = Modifier
+                                    .padding(Spacing.extraSmall)
+                                    .clip(CircleShape)
+                                    .applyIf(
+                                        condition = selected,
+                                        ifTrue = { background(PassTheme.colors.interactionNorm) },
+                                    ),
+                                content = {
+                                    val title = when (tab) {
+                                        InviteSuggestionTabs.Recents ->
+                                            stringResource(id = R.string.share_with_recents_title)
 
-                                    InviteSuggestionTabs.GroupSuggestions -> state.groupDisplayName
-                                }
-                                Text(
-                                    modifier = Modifier.padding(Spacing.small),
-                                    text = title,
-                                    style = PassTheme.typography.body3Norm()
-                                )
-                            },
-                            selected = selected,
-                            onClick = { selectedIndex = index }
-                        )
+                                        InviteSuggestionTabs.GroupSuggestions -> state.groupDisplayName
+                                    }
+                                    Text(
+                                        modifier = Modifier.padding(Spacing.small),
+                                        text = title,
+                                        style = PassTheme.typography.body3Norm()
+                                    )
+                                },
+                                selected = selected,
+                                onClick = { selectedIndex = index }
+                            )
+                        }
                     }
                 }
                 when (InviteSuggestionTabs.values()[selectedIndex]) {

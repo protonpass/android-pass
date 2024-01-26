@@ -25,6 +25,7 @@ import proton.android.pass.autofill.Utils
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.CreatedAlias
+import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
@@ -159,7 +160,11 @@ fun NavGraphBuilder.autofillActivityGraph(
             },
             url = autofillAppState.autofillData.assistInfo.url.value(),
             aliasItemFormState = null,
-            packageInfoUi = PackageInfoUi(packageInfo = autofillAppState.autofillData.packageInfo),
+
+            // Only pass PackageInfoUi if the packageName is not a browser
+            packageInfoUi = autofillAppState.autofillData.packageInfo
+                .takeIf { !it.packageName.isBrowser() }
+                ?.let { PackageInfoUi(it) },
         ),
         onNavigate = {
             when (it) {

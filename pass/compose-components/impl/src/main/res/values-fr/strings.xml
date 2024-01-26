@@ -63,8 +63,7 @@
   <string name="most_recent_more_than_1_year">Il y a plus d\'un an</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Icône recherche</string>
-  <!-- Setting option -->
-    <!-- Select Vault BottomSheet -->
+  <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 élément</item>
     <item quantity="other">%d éléments</item>

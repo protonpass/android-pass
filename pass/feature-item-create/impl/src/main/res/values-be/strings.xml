@@ -109,7 +109,7 @@
   <string name="mfa_limit_reached">Дасягнута абмежаванне 2ФА</string>
   <string name="upgrade">Палепшыць</string>
   <string name="mfa_icon_content_description">Значок 2ФА</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Палепшыць тарыфны план, каб выкарыстоўваць карыстальніцкія дамены</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Палепшыце свой тарыфны план, каб выкарыстоўваць карыстальніцкія дамены</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Палепшыць тарыфны план, каб выкарыстоўваць больш паштовых скрынь</string>
   <string name="create_alias_content_limit_banner">Вы дасягнулі абмежавання па колькасці псеўданімаў, якія вы можаце стварыць. Неабмежаваная колькасць псеўданімаў стане даступна пасля паляпшэння вашай падпіскі.</string>
 </resources>

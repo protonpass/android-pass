@@ -133,6 +133,10 @@
   <string name="recent_search_clear">Smazat</string>
   <string name="recent_search_remove_item">Odstranit z posledních vyhledávání</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">Položky byly úspěšně připnuty</string>
   <string name="home_snackbar_items_pinned_partial_success">Chyba při připínání některých položek</string>
   <string name="home_snackbar_items_pinned_error">Chyba při připínání položek</string>

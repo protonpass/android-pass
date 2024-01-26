@@ -7,6 +7,7 @@
   <string name="profile_security">Sikkerhed</string>
   <string name="profile_option_feedback">Feedback</string>
   <string name="profile_option_import_export">Import/eksport</string>
+  <string name="profile_option_tutorial">Sådan bruger du Proton Pass</string>
   <string name="profile_option_rating">Bedøm app</string>
   <string name="profile_option_autofill">Autofyld</string>
   <string name="profile_option_autofill_subtitle">Udfyld automatisk dine brugernavne og adgangskoder.</string>

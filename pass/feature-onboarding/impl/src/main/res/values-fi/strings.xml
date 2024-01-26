@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Hallitse, mitä postilaatikkoosi päätyy</string>
   <string name="on_boarding_last_page_button">Aloita Proton Passin käyttö</string>
   <string name="on_boarding_skip">Ei nyt</string>
+  <string name="on_boarding_tutorial">Katso lyhyt video Proton Pass -sovelluksen käytöstä</string>
   <string name="on_boarding_pending_invite_content">Turvallisuussyistä pääsysi on vahvistettava.</string>
   <string name="on_boarding_pending_invite_title">Odotetaan pääsyä jaettuihin tietoihin</string>
   <string name="on_boarding_pending_invite_button">Lue lisää Proton Passista</string>

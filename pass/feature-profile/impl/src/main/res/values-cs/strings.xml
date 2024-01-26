@@ -7,6 +7,7 @@
   <string name="profile_security">Zabezpečení</string>
   <string name="profile_option_feedback">Zpětná vazba</string>
   <string name="profile_option_import_export">Import/export</string>
+  <string name="profile_option_tutorial">How to use Proton Pass</string>
   <string name="profile_option_rating">Ohodnotit aplikaci</string>
   <string name="profile_option_autofill">Automatické vyplňování</string>
   <string name="profile_option_autofill_subtitle">Automatické vyplňování uživatelských jmen a hesel.</string>

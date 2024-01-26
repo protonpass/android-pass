@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Кнопка удаления аккаунта</string>
   <string name="account_sign_out">Выйти</string>
   <string name="account_sign_out_icon_content_description">Кнопка выхода</string>
+  <string name="account_manage_account">Manage account</string>
+  <string name="account_manage_account_icon_content_description">Manage account button</string>
   <string name="account_manage_subscription">Управление подпиской</string>
   <string name="account_get_user_info_error">Не могу получить информацию о пользователе</string>
   <string name="manage_subscription_icon_content_description">Кнопка управления подпиской</string>

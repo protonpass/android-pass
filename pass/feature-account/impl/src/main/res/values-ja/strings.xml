@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">アカウント削除ボタン</string>
   <string name="account_sign_out">サインアウト</string>
   <string name="account_sign_out_icon_content_description">サインアウトボタン</string>
+  <string name="account_manage_account">Manage account</string>
+  <string name="account_manage_account_icon_content_description">Manage account button</string>
   <string name="account_manage_subscription">サブスクリプションを管理</string>
   <string name="account_get_user_info_error">ユーザー情報を取得できませんでした</string>
   <string name="manage_subscription_icon_content_description">サブスクリプション管理ボタン</string>

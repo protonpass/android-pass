@@ -87,8 +87,8 @@
   <string name="field_card_pin_title">PIN碼</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">到期日</string>
-  <string name="field_card_expiration_date_hint">MM / YY</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YY format</string>
+  <string name="field_card_expiration_date_hint">月份/年分</string>
+  <string name="field_card_expiration_date_error">輸入標準日期 月份/年份 格式</string>
   <string name="create_credit_card_item_creation_error">無法創建信用卡</string>
   <string name="create_credit_card_item_creation_success">信用卡已創建</string>
   <string name="credit_card_init_error">Problem retrieving credit card details</string>

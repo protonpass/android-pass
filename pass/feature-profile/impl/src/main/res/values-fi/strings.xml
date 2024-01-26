@@ -7,6 +7,7 @@
   <string name="profile_security">Suojaus</string>
   <string name="profile_option_feedback">Palaute</string>
   <string name="profile_option_import_export">Tuonti ja vienti</string>
+  <string name="profile_option_tutorial">Proton Pass -sovelluksen käyttö</string>
   <string name="profile_option_rating">Arvioi sovellus</string>
   <string name="profile_option_autofill">Automaattitäyttö</string>
   <string name="profile_option_autofill_subtitle">Täytä käyttäjätunnukset ja salasanat automaattisesti.</string>
@@ -45,5 +46,5 @@
   <string name="profile_option_lock_with">Lukitus</string>
   <string name="profile_option_unlock_with">Avaa lukitus</string>
   <string name="profile_option_change_pin_code">Vaihda PIN-koodi</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser on asetettu oletusselaimeksi. Se ei tue automaattitäyttämistä ulkoisista salasananhallinnoista.</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsungselain on asetettu oletukseksi. Se ei tue ulkoisten salasanojen hallintaohjelmien automaattista täyttöä.</string>
 </resources>

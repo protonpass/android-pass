@@ -133,6 +133,10 @@
   <string name="recent_search_clear">Wyczyść</string>
   <string name="recent_search_remove_item">Usuń z ostatnich wyszukiwań</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Element został przypięty</string>
+  <string name="home_snackbar_item_pinned_error">Wystąpił błąd podczas przypinania elementu</string>
+  <string name="home_snackbar_item_unpinned_success">Element został odpięty</string>
+  <string name="home_snackbar_item_unpinned_error">Wystąpił błąd podczas odpinania elementu</string>
   <string name="home_snackbar_items_pinned_success">Elementy zostały przypięte</string>
   <string name="home_snackbar_items_pinned_partial_success">Wystąpił błąd podczas przypinania niektórych elementów</string>
   <string name="home_snackbar_items_pinned_error">Wystąpił błąd podczas przypinania elementów</string>

@@ -119,10 +119,14 @@
   <string name="recent_search_clear">Effacer</string>
   <string name="recent_search_remove_item">Retirer des recherches récentes</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">L\'élément a été épinglé.</string>
+  <string name="home_snackbar_item_pinned_error">Une erreur est survenue lors de l\'épinglage de cet élément</string>
+  <string name="home_snackbar_item_unpinned_success">L\'élément a été désépinglé.</string>
+  <string name="home_snackbar_item_unpinned_error">Une erreur est survenue lors du retrait de l\'épinglage de cet élément.</string>
   <string name="home_snackbar_items_pinned_success">L\'élément a été épinglé.</string>
   <string name="home_snackbar_items_pinned_partial_success">Une erreur s\'est produite lors de l\'épinglage des éléments.</string>
   <string name="home_snackbar_items_pinned_error">Une erreur s\'est produite pendant l\'épinglage des éléments.</string>
-  <string name="home_snackbar_items_unpinned_success">L\'épingle a été retirée.</string>
-  <string name="home_snackbar_items_unpinned_partial_success">Une erreur s\'est produite lors du retrait de l\'épinglage de l\'élément.</string>
-  <string name="home_snackbar_items_unpinned_error">Une erreur s\'est produite pendant lors du retrait de l\'épingle des éléments.</string>
+  <string name="home_snackbar_items_unpinned_success">L\'épingle a été retirée de l\'élément.</string>
+  <string name="home_snackbar_items_unpinned_partial_success">Une erreur s\'est produite lors du retrait de l\'épinglage de certains éléments.</string>
+  <string name="home_snackbar_items_unpinned_error">Une erreur s\'est produite lors du retrait de l\'épingle des éléments.</string>
 </resources>

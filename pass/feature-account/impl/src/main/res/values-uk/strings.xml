@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Кнопка видалення облікового запису</string>
   <string name="account_sign_out">Вийти</string>
   <string name="account_sign_out_icon_content_description">Кнопка виходу із системи</string>
+  <string name="account_manage_account">Manage account</string>
+  <string name="account_manage_account_icon_content_description">Manage account button</string>
   <string name="account_manage_subscription">Керувати передплатою</string>
   <string name="account_get_user_info_error">Не вдалося отримати інформацію про користувача</string>
   <string name="manage_subscription_icon_content_description">Кнопка керування передплатою</string>

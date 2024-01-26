@@ -17,7 +17,7 @@
   <!-- Create Login -->
   <string name="title_create_login">Criar um início de sessão</string>
   <string name="field_username_title">Nome de utilizador ou endereço de e-mail</string>
-  <string name="field_username_hint">Adicionar um nome de usuário ou endereço de e-mail</string>
+  <string name="field_username_hint">Adicionar um nome de utilizador ou endereço de e-mail</string>
   <string name="field_password_title">Palavra-passe</string>
   <string name="field_password_hint">Adicionar uma palavra-passe</string>
   <string name="field_website_address_title">Sítio web</string>

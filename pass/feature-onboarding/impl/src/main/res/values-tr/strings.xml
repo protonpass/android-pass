@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Gelen kutunuza ulaşacak e-postaları belirleyin</string>
   <string name="on_boarding_last_page_button">Proton Pass kullanmaya başlayın</string>
   <string name="on_boarding_skip">Şimdi değil</string>
+  <string name="on_boarding_tutorial">Proton Pass kullanımı ile ilgili kısa bir videoyu izleyin</string>
   <string name="on_boarding_pending_invite_content">Güvenlik nedeniyle erişiminizin onaylanması gerekiyor.</string>
   <string name="on_boarding_pending_invite_title">Paylaşılmış verilere erişilmesi bekleniyor</string>
   <string name="on_boarding_pending_invite_button">Proton Pass hakkında ayrıntılı bilgi alın</string>

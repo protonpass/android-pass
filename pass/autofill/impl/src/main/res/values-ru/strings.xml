@@ -17,8 +17,8 @@
   <string name="autofill_dialog_just_autofill">Использовать один раз</string>
   <string name="autofill_dialog_cancel">Отменить</string>
   <string name="autofill_notification_copy_to_clipboard">TOTP has been copied to clipboard</string>
-  <string name="autofill_dialog_associate_title">Использовать логин?</string>
-  <string name="snackbar_item_move_to_trash_success">Элемент перемещен в корзину</string>
+  <string name="autofill_dialog_associate_title">Использовать имя пользователя?</string>
+  <string name="snackbar_item_move_to_trash_success">Элемент перемещён в Корзину</string>
   <string name="snackbar_item_move_to_trash_error">Не могу переместить в корзину</string>
   <string name="snackbar_item_copy_username_success">Имя пользователя скопировано в буфер обмена</string>
   <string name="snackbar_item_copy_password_success">Пароль скопирован в буфер обмена</string>

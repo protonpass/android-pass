@@ -8,7 +8,7 @@
   <string name="sort_by_modification_date">Son kullanıma göre</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tümü</string>
-  <string name="item_list_header_pinned_search_results">Pinned</string>
+  <string name="item_list_header_pinned_search_results">Sabitlenmiş</string>
   <string name="item_list_header_logins_type">Oturum açma kayıtları</string>
   <string name="item_list_header_aliases_type">Takma adlar</string>
   <string name="item_list_header_notes_type">Notlar</string>
@@ -21,8 +21,8 @@
   <string name="bottomsheet_confirm_button">Onayla</string>
   <string name="bottomsheet_cancel_button">İptal</string>
   <string name="bottomsheet_move_to_trash">Çöpe at</string>
-  <string name="bottomsheet_pin_item">Pin</string>
-  <string name="bottomsheet_unpin_item">Unpin</string>
+  <string name="bottomsheet_pin_item">Sabitle</string>
+  <string name="bottomsheet_unpin_item">Sabitlemeyi kaldır</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öge işlem menüsünü aç</string>
   <string name="action_upgrade_now">Şimdi yükselt</string>
@@ -63,8 +63,7 @@
   <string name="most_recent_more_than_1_year">1 yıldan uzun süredir</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Arama simgesi</string>
-  <!-- Setting option -->
-    <!-- Select Vault BottomSheet -->
+  <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 öge</item>
     <item quantity="other">%d öge</item>
@@ -83,5 +82,5 @@
   <string name="label_password_strength_vulnerable">Çok zayıf</string>
   <string name="label_password_strength_weak">Zayıf</string>
   <!-- Pinning -->
-  <string name="pinning_carousel_see_all">See all</string>
+  <string name="pinning_carousel_see_all">Tümünü görüntüle</string>
 </resources>

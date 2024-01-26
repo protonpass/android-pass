@@ -4,11 +4,11 @@
   <string name="error_credentials_not_found">適した認証情報が見つかりませんでした</string>
   <string name="error_loading_items">アイテムを読み込むことができませんでした</string>
   <string name="topbar_search_query">すべての保管庫で検索...</string>
-  <string name="topbar_search_pinned_items">Search in Pinned…</string>
+  <string name="topbar_search_pinned_items">ピン留めされたものを検索...</string>
   <string name="topbar_search_query_oldest_vaults">最も古い保管庫を検索してください…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">検索...</string>
   <string name="inline_suggestions_open_app">Proton Pass を開く</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Upgrade to autofill</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">自動入力を更新</string>
   <string name="autofill_only_searching_in_oldest_vaults">あなたのプランでは、自動入力の目的で最も古いフォルダーにあるアイテムのみを使用できます。</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="autofill_suggestions_for_placeholder">%s への提案</string>
@@ -26,9 +26,9 @@
   <string name="autofill_user_logged_out">ログアウト状態です。アプリを開いて再びログインしてください。</string>
   <string name="bottomsheet_copy_password">パスワードをコピー</string>
   <string name="bottomsheet_copy_username">ユーザー名をコピー</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofill card details</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofilling credit card details is a paid feature. If you want Proton Pass to automatically enter your card details for you in apps and websites, please upgrade to a paid plan.</string>
-  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirm your action</string>
-  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">You are about to autofill your credentials into a website that\'s opened by your current app. The app can have access to the credential after autofill - only do it if you trust the app.</string>
-  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Autofill</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">カードの詳細を自動入力</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">カード情報の詳細の自動入力は有料版の機能です。Proton Pass でアプリや Web サイトにカード情報を自動で入力したい場合は、有料プランにアップグレードしてください。</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">アクションを確認する</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">現在のアプリによって開かれた Web サイトに認証情報を自動入力しようとしています。このアプリは自動入力後に認証情報にアクセスできます。つまり、アプリを信頼する場合にのみ実行してください。</string>
+  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">自動入力</string>
 </resources>

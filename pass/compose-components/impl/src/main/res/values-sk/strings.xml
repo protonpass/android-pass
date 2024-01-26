@@ -65,8 +65,7 @@
   <string name="most_recent_more_than_1_year">Viac ako 1 rok</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Ikona vyhľadávania</string>
-  <!-- Setting option -->
-    <!-- Select Vault BottomSheet -->
+  <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 položka</item>
     <item quantity="few">%d položky</item>

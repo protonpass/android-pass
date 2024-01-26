@@ -53,8 +53,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -67,7 +65,6 @@ class OnBoardingViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val ffRepo: FeatureFlagsPreferencesRepository,
     private val observeUserAccessData: ObserveUserAccessData
 ) : ViewModel() {
 
@@ -95,11 +92,6 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     private suspend fun shouldShowInvitePendingAcceptance(): Boolean {
-        val isNewUserInviteEnabled = ffRepo.get<Boolean>(FeatureFlag.SHARING_NEW_USERS).first()
-        if (!isNewUserInviteEnabled) {
-            return false
-        }
-
         val userAccessData = runCatching {
             observeUserAccessData().filterNotNull().first()
         }.getOrElse {

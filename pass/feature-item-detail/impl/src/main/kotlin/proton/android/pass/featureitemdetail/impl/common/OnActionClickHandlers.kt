@@ -86,7 +86,6 @@ fun onShareClick(
                 )
             }
 
-            CanShareVaultStatus.CannotShareReason.SharingDisabled -> {}
             CanShareVaultStatus.CannotShareReason.Unknown -> {}
         }
     }

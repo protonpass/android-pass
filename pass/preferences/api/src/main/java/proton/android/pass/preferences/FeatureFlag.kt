@@ -34,6 +34,6 @@ enum class FeatureFlag(
         title = "Pinning (v1)",
         description = "Enable pinning",
         key = "PassPinningV1",
-        isEnabledDefault = false,
+        isEnabledDefault = true,
     )
 }

@@ -49,6 +49,7 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -177,7 +178,7 @@ class LoginDetailViewModel @Inject constructor(
                 val itemType = details.item.itemType as ItemType.Login
                 val alias = getAliasForItem(itemType)
 
-                val itemUiModel = encryptionContextProvider.withEncryptionContext {
+                val (itemUiModel, passwordScore) = encryptionContextProvider.withEncryptionContext {
                     val model = details.item.toUiModel(this)
                     val contents = model.contents as ItemContents.Login
 
@@ -205,12 +206,19 @@ class LoginDetailViewModel @Inject constructor(
                             }
                         }
 
+                    val decryptedPassword = decrypt(contents.password.encrypted)
+                    val passwordScore = if (decryptedPassword.isBlank()) {
+                        null
+                    } else {
+                        passwordScorer.check(decryptedPassword)
+                    }
+
                     model.copy(
                         contents = contents.copy(
                             password = passwordHiddenState,
                             customFields = customFields
                         )
-                    )
+                    ) to passwordScore
                 }
                 startObservingTotpCustomFields(isPaid, itemUiModel)
 
@@ -225,7 +233,8 @@ class LoginDetailViewModel @Inject constructor(
                     vault = details.vault,
                     hasMoreThanOneVault = details.hasMoreThanOneVault,
                     linkedAlias = alias,
-                    shareClickAction = shareClickAction
+                    shareClickAction = shareClickAction,
+                    passwordScore = passwordScore
                 )
             }
         }
@@ -292,7 +301,8 @@ class LoginDetailViewModel @Inject constructor(
         val vault: Vault,
         val hasMoreThanOneVault: Boolean,
         val linkedAlias: Option<LinkedAliasItem>,
-        val shareClickAction: ShareClickAction
+        val shareClickAction: ShareClickAction,
+        val passwordScore: PasswordScore?
     )
 
     val uiState: StateFlow<LoginDetailUiState> = combineN(
@@ -345,14 +355,10 @@ class LoginDetailViewModel @Inject constructor(
                 val permissions = details.vault.role.toPermissions()
                 val canPerformItemActions = permissions.canUpdate()
                 val contents = details.itemUiModel.contents as ItemContents.Login
-                val passwordScore = encryptionContextProvider.withEncryptionContext {
-                    decrypt(contents.password.encrypted)
-                }.takeIf { it.isNotBlank() }
-                    ?.let { passwordScorer.check(it) }
 
                 LoginDetailUiState.Success(
                     itemUiModel = details.itemUiModel,
-                    passwordScore = passwordScore,
+                    passwordScore = details.passwordScore,
                     vault = vault,
                     linkedAlias = details.linkedAlias,
                     totpUiState = totpUiState,

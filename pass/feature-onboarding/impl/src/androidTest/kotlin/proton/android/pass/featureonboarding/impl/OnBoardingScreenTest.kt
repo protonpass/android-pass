@@ -33,6 +33,8 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.TestBiometryManager
+import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
+import proton.android.pass.domain.UserAccessData
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import javax.inject.Inject
@@ -60,12 +62,17 @@ class OnBoardingScreenTest {
 
     @Inject
     lateinit var autofillManager: TestAutofillManager
+
     @Inject
     lateinit var biometryManager: TestBiometryManager
+
+    @Inject
+    lateinit var observeUserAccessData: TestObserveUserAccessData
 
     @Before
     fun setup() {
         hiltRule.inject()
+        observeUserAccessData.sendValue(UserAccessData(0, 0))
     }
 
     @Test

@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Kontrollera vad som hamnar i din inkorg</string>
   <string name="on_boarding_last_page_button">Börja använda Proton Pass</string>
   <string name="on_boarding_skip">Inte nu</string>
+  <string name="on_boarding_tutorial">Se en kort video om hur man använder Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Av säkerhetsskäl måste din åtkomst bekräftas.</string>
   <string name="on_boarding_pending_invite_title">Väntar på åtkomst till delade data</string>
   <string name="on_boarding_pending_invite_button">Lär dig mer om Proton Pass</string>

@@ -7,11 +7,11 @@
   <string name="migrate_all_items_confirm_title_bottom_sheet">Siirretäänkö kaikki kohteet seuraavaan holviin?</string>
   <string name="migrate_item_confirm_confirm_button">Siirrä</string>
   <string name="migrate_item_success_snackbar">Kohteet siirrettiin</string>
-  <string name="migrate_item_error_snackbar">Virhe kohteiden siirtämisessä</string>
-  <string name="migrate_item_some_not_migrated_error_snackbar">Virhe joidenkin kohteiden siirtämisessä</string>
+  <string name="migrate_item_error_snackbar">Virhe kohteiden siirrossa</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Virhe joidenkin kohteiden siirrossa</string>
   <string name="migrate_all_items_success_snackbar">Kaikki kohteet siirrettiin</string>
   <string name="migrate_all_items_error_snackbar">Virhe siirrettäessä holvin kaikkia kohteita</string>
   <string name="migrate_init_error_snackbar">Siirtymisruutua ei voitu valmistella</string>
-  <string name="migrate_disabled_vault_reason_no_permission">Et voi luoda kohteita tässä holvissa</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Et voi luoda kohteita tähän holviin</string>
   <string name="migrate_disabled_vault_reason_same_vault">Et voi siirtää kohdetta samaan holviin</string>
 </resources>

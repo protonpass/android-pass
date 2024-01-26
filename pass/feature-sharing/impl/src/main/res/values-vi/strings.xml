@@ -33,7 +33,6 @@
   <string name="share_with_title">Chia sẻ với</string>
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Không thể lấy thông tin người dùng được mời</string>
   <string name="share_permissions_title">Thiết lập cấp độ truy cập</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mời bạn truy cập nội dung trong</string>
   <string name="sharing_join_shared_vault">Tham gia và đồng bộ</string>
@@ -58,9 +57,7 @@
   <string name="share_summary_title">Xem lại và chia sẻ</string>
   <string name="share_summary_vault">kho lưu trữ %s</string>
   <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
-  <string name="share_summary_email_title">Chia sẻ với</string>
   <string name="share_summary_vault_title">Kho lưu trữ</string>
-  <string name="share_summary_permissions_title">Cấp độ truy cập</string>
   <string name="share_manage_vault_share_with_more_people">Chia sẽ với nhiều người hơn</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d lời mời còn lại</item>
@@ -109,4 +106,8 @@
   <string name="sharing_from_item_vault_limit_reached">Bạn đã đạt đến giới hạn kho lưu trữ</string>
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
+  <string name="sharing_edit_permissions_remove_user">Remove user</string>
 </resources>

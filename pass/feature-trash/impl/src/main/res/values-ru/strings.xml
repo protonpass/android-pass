@@ -4,7 +4,7 @@
   <string name="bottomsheet_delete_permanently">Удалить безвозвратно</string>
   <string name="alert_confirm_delete_item_dialog_title">Удалить безвозвратно?</string>
   <string name="alert_confirm_delete_item_dialog_message">Это действие необратимо.</string>
-  <string name="alias_dialog_move_to_trash_title">Переместить в корзину?</string>
+  <string name="alias_dialog_move_to_trash_title">Переместить в Корзину?</string>
   <string name="alias_dialog_move_to_trash_content">Если вы переместите псевдоним в корзину, он перестанет пересылать письма на ваш почтовый ящик.</string>
   <string name="alias_dialog_move_to_trash_confirm">Подтвердить</string>
 </resources>

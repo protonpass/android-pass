@@ -35,7 +35,6 @@
   <string name="share_with_title">Teilen mit</string>
   <string name="share_with_email_hint">E‐Mail‐Adresse</string>
   <string name="share_with_email_error">Ungültige E-Mail-Adresse</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Die Informationen zum eingeladenen Benutzer können nicht abgerufen werden.</string>
   <string name="share_permissions_title">Zugriffsstufe festlegen</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s lädt dich zum Zugriff auf Elemente ein im Tresor</string>
   <string name="sharing_join_shared_vault">Beitreten und synchronisieren</string>
@@ -60,9 +59,7 @@
   <string name="share_summary_title">Überprüfen und teilen</string>
   <string name="share_summary_vault">%s Tresor</string>
   <string name="share_summary_share_vault">Tresor teilen</string>
-  <string name="share_summary_email_title">Teilen mit</string>
   <string name="share_summary_vault_title">Tresor</string>
-  <string name="share_summary_permissions_title">Zugriffsstufe</string>
   <string name="share_manage_vault_share_with_more_people">Mit weiteren Personen teilen</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d Einladung verbleibend</item>
@@ -112,5 +109,9 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade um weitere Tresore zu erstellen.</string>
   <string name="sharing_from_item_vault_limit_reached">Du hast das Tresor-Limit erreicht</string>
   <string name="share_with_suggestions_title">Vorschläge</string>
-  <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_recents_title">Neueste</string>
+  <string name="share_with_remove_email_content_description">E-Mail entfernen</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Zugriffsstufe für alle Mitglieder festlegen</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Zugriffsstufe für %s festlegen</string>
+  <string name="sharing_edit_permissions_remove_user">Benutzer entfernen</string>
 </resources>

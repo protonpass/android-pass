@@ -35,7 +35,6 @@
   <string name="share_with_title">Comparteix amb</string>
   <string name="share_with_email_hint">Adreça de correu electrònic</string>
   <string name="share_with_email_error">L\'adreça de correu electrònic no és vàlida.</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Cannot retrieve the invited user information</string>
   <string name="share_permissions_title">Estableix el nivell d`accés</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s us convida a accedir a elements a</string>
   <string name="sharing_join_shared_vault">Uniu-vos i sincronitzeu</string>
@@ -60,9 +59,7 @@
   <string name="share_summary_title">Reviseu i comparteu</string>
   <string name="share_summary_vault">a caixa forta %s</string>
   <string name="share_summary_share_vault">Comparteix la caixa forta</string>
-  <string name="share_summary_email_title">Comparteix amb</string>
   <string name="share_summary_vault_title">Caixa forta</string>
-  <string name="share_summary_permissions_title">Nivell d\'accés</string>
   <string name="share_manage_vault_share_with_more_people">Comparteix amb més gent</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Queda %d invitació</item>
@@ -111,6 +108,10 @@
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
   <string name="sharing_from_item_vault_limit_reached">Heu arribat al límit de caixes fortes.</string>
-  <string name="share_with_suggestions_title">Suggestions</string>
+  <string name="share_with_suggestions_title">Suggeriments</string>
   <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
+  <string name="sharing_edit_permissions_remove_user">Esborra l\'usuari</string>
 </resources>

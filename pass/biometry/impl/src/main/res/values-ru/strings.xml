@@ -3,5 +3,5 @@
   <string name="biometric_prompt_title">Приложение заблокировано</string>
   <string name="biometric_prompt_title_setup">Настройка биометрии</string>
   <string name="biometric_prompt_subtitle">Разблокировать используя защиту устройства</string>
-  <string name="biometric_prompt_cancel">Отмена</string>
+  <string name="biometric_prompt_cancel">Отменить</string>
 </resources>

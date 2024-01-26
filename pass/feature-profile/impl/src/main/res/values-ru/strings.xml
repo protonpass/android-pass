@@ -7,6 +7,7 @@
   <string name="profile_security">Безопасность</string>
   <string name="profile_option_feedback">Обратная связь</string>
   <string name="profile_option_import_export">Импорт и экспорт</string>
+  <string name="profile_option_tutorial">How to use Proton Pass</string>
   <string name="profile_option_rating">Оценить приложение</string>
   <string name="profile_option_autofill">Автозаполнение</string>
   <string name="profile_option_autofill_subtitle">Автоматическое заполнение имен пользователей и паролей.</string>

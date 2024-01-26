@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">管理收件匣內容</string>
   <string name="on_boarding_last_page_button">開始使用 Proton Pass</string>
   <string name="on_boarding_skip">稍後再說</string>
+  <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">For security reasons, your access needs to be confirmed.</string>
   <string name="on_boarding_pending_invite_title">Pending access to the shared data</string>
   <string name="on_boarding_pending_invite_button">Learn more about Proton Pass</string>

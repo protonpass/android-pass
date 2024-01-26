@@ -3,11 +3,11 @@
   <!-- Home -->
   <string name="home_empty_vault_title">保管庫は空っぽです</string>
   <string name="home_empty_vault_subtitle">最初の項目を作成して始めましょう。</string>
-  <string name="home_empty_read_only_vault_title">This vault is empty</string>
-  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
-  <string name="home_empty_vault_create_login">Create a login</string>
+  <string name="home_empty_read_only_vault_title">この保管庫は空です</string>
+  <string name="home_empty_read_only_vault_subtitle">読み取り専用の保管庫にアイテムを追加することはできません。</string>
+  <string name="home_empty_vault_create_login">ログイン情報を作成</string>
   <string name="home_empty_vault_create_alias">Hide-my-emailエイリアスを作成</string>
-  <string name="home_empty_vault_create_note">Create a note</string>
+  <string name="home_empty_vault_create_note">メモを作成</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">アイテムの読み込みに失敗</string>
   <string name="error_refreshing">更新実行中のエラー</string>
   <string name="home_snackbar_login_moved_to_trash">ログイン情報がごみ箱に移動されました</string>
@@ -15,15 +15,15 @@
   <string name="home_snackbar_note_moved_to_trash">ノートがごみ箱に移動されました</string>
   <string name="home_snackbar_credit_card_moved_to_trash">クレジットカード情報がごみ箱に移動されました</string>
   <string name="home_snackbar_move_to_trash_error">アイテムをゴミ箱への移動に失敗</string>
-  <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
-  <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
-  <string name="home_toast_items_selected_read_only">Read-only items cannot be selected</string>
+  <string name="home_snackbar_items_move_to_trash_success">アイテムはごみ箱に移動されました</string>
+  <string name="home_snackbar_items_move_to_trash_error">アイテムのゴミ箱への移動に失敗しました</string>
+  <string name="home_toast_items_selected_read_only">読み取り専用アイテムは選択できません</string>
   <string name="home_autofill_banner_title">自動入力マジックをお楽しみください</string>
   <string name="home_autofill_banner_text">ワンタップでユーザー名とパスワードが即座に入力される。</string>
   <string name="home_autofill_banner_settings">自動入力を有効にする ›</string>
   <string name="home_trial_banner_title">無料トライアルをお楽しみください</string>
   <string name="home_trial_banner_text">期間限定で利用可能なすべての限定機能をチェックする</string>
-  <string name="home_trial_banner_settings">Learn more ›</string>
+  <string name="home_trial_banner_settings">もっと詳しく ›</string>
   <string name="home_notification_permission_banner_title">重要な最新情報を入手する</string>
   <string name="home_notification_permission_banner_text">プッシュ通知を有効にすると、他の人があなたと保管庫を共有したときに通知されます。</string>
   <string name="home_notification_permission_banner_settings">権限を有効にする ›</string>
@@ -33,9 +33,9 @@
   <string name="bottomsheet_copy_password">パスワードをコピー</string>
   <string name="bottomsheet_copy_username">ユーザー名をコピー</string>
   <string name="bottomsheet_copy_alias">メールアドレスをコピー</string>
-  <string name="bottomsheet_copy_number">Copy number</string>
-  <string name="bottomsheet_copy_cvv">Copy security code</string>
-  <string name="bottomsheet_copy_note">Copy note</string>
+  <string name="bottomsheet_copy_number">番号をコピー</string>
+  <string name="bottomsheet_copy_cvv">セキュリティコードをコピー</string>
+  <string name="bottomsheet_copy_note">メモをコピー</string>
   <string name="bottomsheet_edit">編集</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">コピーされたエイリアス</string>
@@ -112,6 +112,10 @@
   <string name="recent_search_clear">Clear</string>
   <string name="recent_search_remove_item">最近の検索から削除</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">Items pinned successfully</string>
   <string name="home_snackbar_items_pinned_partial_success">Error pinning some of the items</string>
   <string name="home_snackbar_items_pinned_error">Error pinning the items</string>

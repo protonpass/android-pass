@@ -8,24 +8,24 @@
   <string name="home_empty_vault_create_login">Luo kirjautumistieto</string>
   <string name="home_empty_vault_create_alias">Luo Hide-my-email -alias</string>
   <string name="home_empty_vault_create_note">Luo muistiinpano</string>
-  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Virhe ladatessa kohteita</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Virhe ladattaessa kohteita</string>
   <string name="error_refreshing">Virhe päivitettäessä</string>
   <string name="home_snackbar_login_moved_to_trash">Kirjautumistieto siirrettiin roskakoriin</string>
   <string name="home_snackbar_alias_moved_to_trash">Alias siirrettiin roskakoriin</string>
   <string name="home_snackbar_note_moved_to_trash">Muistiinpano siirrettiin roskakoriin</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Maksukortti siirrettiin roskakoriin</string>
   <string name="home_snackbar_move_to_trash_error">Kohteen siirto roskakoriin epäonnistui</string>
-  <string name="home_snackbar_items_move_to_trash_success">Kohde siirrettiin roskakoriin</string>
+  <string name="home_snackbar_items_move_to_trash_success">Kohteet siirrettiin roskakoriin</string>
   <string name="home_snackbar_items_move_to_trash_error">Kohteita ei voitu siirtää roskakoriin</string>
-  <string name="home_toast_items_selected_read_only">Vain luku -kohteita ei voi valita</string>
+  <string name="home_toast_items_selected_read_only">Vain luku -kohteita ei voida valita</string>
   <string name="home_autofill_banner_title">Nauti automaattitäytön taiasta</string>
   <string name="home_autofill_banner_text">Vain yksi napautus ja käyttäjätunnuksesi ja salasanasi on täytetty.</string>
   <string name="home_autofill_banner_settings">Ota automaattitäyttö käyttöön ›</string>
   <string name="home_trial_banner_title">Tervetuliaislahjamme sinulle</string>
-  <string name="home_trial_banner_text">7 päivää aikaa kokeilla premium-ominaisuuksia ilmaiseksi. Vain Proton Passin ensimmäisen viikon aikana.</string>
+  <string name="home_trial_banner_text">7 päivää aikaa kokeilla premium-ominaisuuksia ilmaiseksi. Voimassa vain ensimmäisen Proton Pass -viikkosi ajan.</string>
   <string name="home_trial_banner_settings">Lue lisää ›</string>
   <string name="home_notification_permission_banner_title">Vastaanota tärkeitä ilmoituksia</string>
-  <string name="home_notification_permission_banner_text">Ota push-ilmoitukset käyttöön saadaksesi ilmoituksen muiden käyttäjien jakaessa holvejaan sinulle.</string>
+  <string name="home_notification_permission_banner_text">Ota push-ilmoitukset käyttöön saadaksesi tiedon kun muut jakavat holvejaan sinulle.</string>
   <string name="home_notification_permission_banner_settings">Myönnä käyttöoikeus ›</string>
   <string name="home_invite_banner_title">Sinulle on jaettu holvi</string>
   <string name="home_invite_banner_subtitle">Sinut on kutsuttu jaettuun holviin. Näytä tiedot napauttamalla.</string>
@@ -83,11 +83,11 @@
   <string name="trash_error_restoring_items">Virhe palautettaessa kohteita</string>
   <string name="trash_error_deleting_item">Virhe poistettaessa kohdetta</string>
   <string name="trash_success_deleting_item">Kohde poistettiin</string>
-  <string name="trash_deleting_items_error">Virhe kohteiden poistamisessa</string>
+  <string name="trash_deleting_items_error">Virhe poistettaessa kohteita</string>
   <string name="trash_deleting_items_success">Kohteet poistettiin</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Tyhjennetäänkö roskakori?</string>
-  <string name="alert_confirm_clear_trash_message">Haluatko varmasti tyhjentää roskakorin? Kaikki roskakorissa olevat kohteet poistetaan pysyvästi</string>
+  <string name="alert_confirm_clear_trash_message">Haluatko varmasti tyhjentää roskakorin? Kaikki roskakorissa olevat kohteet poistetaan pysyvästi.</string>
   <string name="alert_confirm_restore_all_title">Palautetaanko kaikki kohteet?</string>
   <string name="alert_confirm_restore_all_message">Haluatko varmasti palauttaa kaikki roskakorissa olevat kohteet?</string>
   <plurals name="alert_confirm_restore_items_title">
@@ -111,14 +111,18 @@
     <item quantity="other">Poistetaanko %d kohdetta pysyvästi?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Haluatko varmasti poistaa kohteen? Toimintoa ei voi peruuttaa</item>
-    <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Toimintoa ei voi peruuttaa</item>
+    <item quantity="one">Haluatko varmasti poistaa kohteen? Tätä ei ole mahdollista kumota.</item>
+    <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Tätä ei ole mahdollista kumota.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Viimeisimmät haut</string>
   <string name="recent_search_clear">Tyhjennä</string>
   <string name="recent_search_remove_item">Poista viimeisimmistä hauista</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">Kohteiden kiinnitys onnistui</string>
   <string name="home_snackbar_items_pinned_partial_success">Virhe joidenkin kohteiden kiinnityksessä</string>
   <string name="home_snackbar_items_pinned_error">Virhe kohteiden kiinnityksessä</string>

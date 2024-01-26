@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">ანგარიშის წაშლის ღილაკი</string>
   <string name="account_sign_out">გასვლა</string>
   <string name="account_sign_out_icon_content_description">გასვლის ღილაკი</string>
+  <string name="account_manage_account">ანგარიშის მართვა</string>
+  <string name="account_manage_account_icon_content_description">ანგარიშების მართვის ღილაკი</string>
   <string name="account_manage_subscription">გამოწერის მართვა</string>
   <string name="account_get_user_info_error">მომხმარებლის ინფორმაციის მიღების შეცდომა</string>
   <string name="manage_subscription_icon_content_description">გამოწერის ღილაკის მართვა</string>

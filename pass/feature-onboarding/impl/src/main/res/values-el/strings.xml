@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Ελέγξτε τι προσγειώνεται στα εισερχόμενά σας</string>
   <string name="on_boarding_last_page_button">Ξεκινήστε να χρησιμοποιείτε το Proton Pass</string>
   <string name="on_boarding_skip">Όχι τώρα</string>
+  <string name="on_boarding_tutorial">Παρακολουθήστε ένα σύντομο βίντεο σχετικά με τον τρόπο χρήσης του Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Για λόγους ασφαλείας, η πρόσβασή σας πρέπει να επιβεβαιωθεί.</string>
   <string name="on_boarding_pending_invite_title">Εκκρεμής πρόσβαση στα κοινόχρηστα δεδομένα</string>
   <string name="on_boarding_pending_invite_button">Μάθετε περισσότερα για το Proton Pass</string>

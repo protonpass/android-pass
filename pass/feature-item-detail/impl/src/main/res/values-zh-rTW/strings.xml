@@ -26,9 +26,9 @@
   <string name="item_permanently_deleted_message_error">刪除項目錯誤</string>
   <string name="item_restored_message">項目已還原</string>
   <string name="item_restored_message_error">還原項目錯誤</string>
-  <string name="item_pinned_message">Item successfully pinned</string>
+  <string name="item_pinned_message">項目成功標記</string>
   <string name="item_pinned_message_error">There was an error pinning this item</string>
-  <string name="item_unpinned_message">Item successfully unpinned</string>
+  <string name="item_unpinned_message">項目成功取消標記</string>
   <string name="item_unpinned_message_error">There was an error unpinning this item</string>
   <string name="login_item_generate_totp_error">雙重驗證生成條碼錯誤</string>
   <string name="login_item_view_alias_button">檢視別名</string>
@@ -64,7 +64,7 @@
   <string name="credit_card_expiration_date_field_name">到期日</string>
   <string name="credit_card_cardholder_copied_to_clipboard">卡片資料已複製至剪貼簿</string>
   <string name="credit_card_number_copied_to_clipboard">卡片號碼已複製至剪貼簿</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">安全碼已複製到剪貼簿</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">移至垃圾桶</string>
   <string name="migrate_item_detail_bottom_sheet">移動到另一個保管庫</string>

@@ -7,6 +7,7 @@
   <string name="profile_security">Ασφάλεια</string>
   <string name="profile_option_feedback">Αξιολόγηση</string>
   <string name="profile_option_import_export">Εισαγωγή/εξαγωγή</string>
+  <string name="profile_option_tutorial">Πώς να χρησιμοποιήσετε το Proton Pass</string>
   <string name="profile_option_rating">Βαθμολογήστε την εφαρμογή</string>
   <string name="profile_option_autofill">Αυτόματη συμπλήρωση</string>
   <string name="profile_option_autofill_subtitle">Συμπληρώστε αυτόματα τα ονόματα χρήστη και τους κωδικούς πρόσβασής σας.</string>

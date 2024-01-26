@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Botão de excluir conta</string>
   <string name="account_sign_out">Encerrar sessão</string>
   <string name="account_sign_out_icon_content_description">Botão de encerrar sessão</string>
+  <string name="account_manage_account">Gerenciar conta</string>
+  <string name="account_manage_account_icon_content_description">Botão de gerenciar conta</string>
   <string name="account_manage_subscription">Gerenciar assinatura</string>
   <string name="account_get_user_info_error">Não foi possível recuperar as informações do usuário</string>
   <string name="manage_subscription_icon_content_description">Botão de gerenciar assinatura</string>

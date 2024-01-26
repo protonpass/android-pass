@@ -112,6 +112,10 @@
   <string name="recent_search_clear">Bersihkan</string>
   <string name="recent_search_remove_item">Hapus dari riwayat pencarian terkini</string>
   <!-- Pinning -->
+  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">Item berhasil disematkan</string>
   <string name="home_snackbar_items_pinned_partial_success">Terdapat kesalahan dalam menyematkan sebagian item</string>
   <string name="home_snackbar_items_pinned_error">Terdapat kesalahan dalam menyematkan item</string>

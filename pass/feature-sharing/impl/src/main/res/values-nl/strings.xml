@@ -35,7 +35,6 @@
   <string name="share_with_title">Deel met</string>
   <string name="share_with_email_hint">E-mailadres</string>
   <string name="share_with_email_error">Ongeldig e-mailadres</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Kan de informatie van de uitgenodigde gebruiker niet ophalen</string>
   <string name="share_permissions_title">Stel toegangsniveau in</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s nodigt u uit met toegang tot items in</string>
   <string name="sharing_join_shared_vault">Samenvoegen en synchroniseren.</string>
@@ -60,9 +59,7 @@
   <string name="share_summary_title">Beoordelen en delen</string>
   <string name="share_summary_vault">%s kluis</string>
   <string name="share_summary_share_vault">Kluis delen</string>
-  <string name="share_summary_email_title">Deel met</string>
   <string name="share_summary_vault_title">Kluis</string>
-  <string name="share_summary_permissions_title">Toegangsniveau</string>
   <string name="share_manage_vault_share_with_more_people">Deel met meer mensen</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d uitnodiging over</item>
@@ -113,4 +110,8 @@
   <string name="sharing_from_item_vault_limit_reached">U heeft de kluislimiet bereikt.</string>
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
+  <string name="sharing_edit_permissions_remove_user">Remove user</string>
 </resources>

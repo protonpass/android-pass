@@ -39,7 +39,6 @@
   <string name="share_with_title">Zdieľať s</string>
   <string name="share_with_email_hint">Emailová adresa</string>
   <string name="share_with_email_error">Neplatná emailová adresa</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Nepodarilo sa načítať informácie o pozvanom používateľovi</string>
   <string name="share_permissions_title">Nastavte úroveň prístupu</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vás pozýva na prístup k položkám v</string>
   <string name="sharing_join_shared_vault">Pripojiť a synchronizovať</string>
@@ -64,9 +63,7 @@
   <string name="share_summary_title">Skontrolovať a zdieľať</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Zdielať trezor</string>
-  <string name="share_summary_email_title">Zdieľať s</string>
   <string name="share_summary_vault_title">Trezor</string>
-  <string name="share_summary_permissions_title">Úroveň prístupu</string>
   <string name="share_manage_vault_share_with_more_people">Zdieľať s viacerými ľudmi</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d zostávajúca pozvánka</item>
@@ -121,4 +118,8 @@
   <string name="sharing_from_item_vault_limit_reached">Dosiahli ste limit trezora</string>
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Nastavenie úrovne prístupu pre všetkých členov</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
+  <string name="sharing_edit_permissions_remove_user">Remove user</string>
 </resources>

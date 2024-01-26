@@ -8,6 +8,8 @@
   <string name="account_delete_account_icon_content_description">Knapp for sletting av konto</string>
   <string name="account_sign_out">Logg av</string>
   <string name="account_sign_out_icon_content_description">Logg av knapp</string>
+  <string name="account_manage_account">Administrer konto</string>
+  <string name="account_manage_account_icon_content_description">Knapp for administrering av konto</string>
   <string name="account_manage_subscription">Behandle abonnementet</string>
   <string name="account_get_user_info_error">Kan ikke hente brukerinformasjonen</string>
   <string name="manage_subscription_icon_content_description">Knapp for å behandle abonnement</string>

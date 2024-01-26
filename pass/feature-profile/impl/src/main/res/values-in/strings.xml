@@ -7,13 +7,14 @@
   <string name="profile_security">Keamanan</string>
   <string name="profile_option_feedback">Masukan</string>
   <string name="profile_option_import_export">Impor/ekspor</string>
+  <string name="profile_option_tutorial">Cara menggunakan Proton Pass</string>
   <string name="profile_option_rating">Nilai aplikasi</string>
   <string name="profile_option_autofill">Isi otomatis</string>
   <string name="profile_option_autofill_subtitle">Isi nama pengguna dan kata sandi Anda secara otomatis.</string>
-  <string name="profile_error_biometry_failed_to_start">Proses autentikasi biometrik tidak dapat dimulai</string>
+  <string name="profile_error_biometry_failed_to_start">Autentikasi biometrik tidak dapat dimulai</string>
   <string name="profile_error_biometry_failed_to_authenticate">Gagal mengautentikasi</string>
-  <string name="profile_fingerprint_lock_enabled">Pembukaan kunci dengan sidik jari diaktifkan</string>
-  <string name="profile_fingerprint_lock_disabled">Pembukaan kunci dengan sidik jari dinonaktifkan</string>
+  <string name="profile_fingerprint_lock_enabled">Kunci sidik jari diaktifkan</string>
+  <string name="profile_fingerprint_lock_disabled">Kunci sidik jari dinonaktifkan</string>
   <string name="profile_error_performing_operation">Terjadi kesalahan saat melakukan tindakan</string>
   <string name="profile_app_version_copied_to_clipboard">Versi aplikasi disalin</string>
   <string name="feedback_option_reddit">Kunjungi Proton di Reddit</string>
@@ -31,7 +32,7 @@
   <string name="app_lock_config_biometric">Biometrik</string>
   <string name="app_lock_config_pin_code">Kode PIN</string>
   <string name="app_lock_config_app_lock_time">Penguncian otomatis</string>
-  <string name="app_lock_config_use_system_lock_when_biometric_fails">Gunakan kunci sistem ketika biometrik gagal</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Gunakan kunci sistem ketika verifikasi biometrik gagal</string>
   <string name="configure_pin_set_pin_code">Tetapkan kode PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Buka aplikasi dengan kode ini</string>
   <string name="configure_pin_enter_pin_code">Masukkan kode PIN</string>

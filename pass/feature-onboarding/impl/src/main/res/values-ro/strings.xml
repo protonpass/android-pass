@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">Controlați ce sosește în adresa de e-mail</string>
   <string name="on_boarding_last_page_button">Începeți să utilizați Proton Pass</string>
   <string name="on_boarding_skip">Nu acum</string>
+  <string name="on_boarding_tutorial">Vizionați un videoclip scurt despre cum se folosește Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Din motive de securitate, accesul trebuie să vă fie confirmat.</string>
   <string name="on_boarding_pending_invite_title">În așteptarea accesului la datele partajate</string>
   <string name="on_boarding_pending_invite_button">Aflați mai multe despre Proton Pass</string>

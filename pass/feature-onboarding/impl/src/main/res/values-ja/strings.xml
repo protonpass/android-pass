@@ -10,6 +10,7 @@
   <string name="on_boarding_last_page_title">受信箱の中身を管理する</string>
   <string name="on_boarding_last_page_button">Proton Passの使用開始</string>
   <string name="on_boarding_skip">今はしない</string>
+  <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">セキュリティ上の理由から、アクセスを確認する必要があります。</string>
   <string name="on_boarding_pending_invite_title">共有データへのアクセス待ち</string>
   <string name="on_boarding_pending_invite_button">Proton Pass の詳細</string>

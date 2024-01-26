@@ -35,7 +35,6 @@
   <string name="share_with_title">Şununla paylaş</string>
   <string name="share_with_email_hint">E-posta adresi</string>
   <string name="share_with_email_error">E-posta adresi geçersiz</string>
-  <string name="share_with_email_cannot_get_email_info" comment="error message that will appear when the user tries to share with an email address that cannot be retrieved">Davet edilmiş kullanıcı bilgileri alınamadı</string>
   <string name="share_permissions_title">Erişim düzeyini ayarla</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s sizi şu kasadaki ögelere erişmeye davet ediyor:</string>
   <string name="sharing_join_shared_vault">Katıl ve eşitle</string>
@@ -60,9 +59,7 @@
   <string name="share_summary_title">Gözden geçirip paylaş</string>
   <string name="share_summary_vault">%s kasa</string>
   <string name="share_summary_share_vault">Kasayı paylaş</string>
-  <string name="share_summary_email_title">Şu kişiyle paylaş</string>
   <string name="share_summary_vault_title">Kasa</string>
-  <string name="share_summary_permissions_title">Erişim düzeyi</string>
   <string name="share_manage_vault_share_with_more_people">Başkalarıyla paylaş</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d davet kaldı</item>
@@ -83,8 +80,8 @@
   <string name="share_role_admin">Yönetici</string>
   <string name="share_role_owner">Sahibi</string>
   <string name="sharing_bottomsheet_transfer_ownership">Sahipliği aktar</string>
-  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Sahip olduğunuz son kasanın sahipliğini aktaramazsınız.</string>
-  <string name="sharing_bottomsheet_remove_access">Erişimi geri al</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Sahibi olduğunuz son kasanın sahipliğini aktaramazsınız.</string>
+  <string name="sharing_bottomsheet_remove_access">Erişme iznini geri al</string>
   <string name="sharing_bottomsheet_resend_invite">Daveti yeniden gönder</string>
   <string name="sharing_bottomsheet_cancel_invite">Daveti iptal et</string>
   <string name="sharing_transfer_ownership_confirm_title">Sahipliği aktar</string>
@@ -111,6 +108,10 @@
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Öge yeni kasaya taşınacak.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Daha fazla kasa oluşturabilmek için tarifenizi yükseltin</string>
   <string name="sharing_from_item_vault_limit_reached">Kasa sayısı sınırına ulaştınız</string>
-  <string name="share_with_suggestions_title">Suggestions</string>
-  <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_suggestions_title">Öneriler</string>
+  <string name="share_with_recents_title">Son kullanılanlar</string>
+  <string name="share_with_remove_email_content_description">E-postayı kaldır</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Tüm üyelerin erişim düzeyini ayarla</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">%s erişim düzeyini ayarla</string>
+  <string name="sharing_edit_permissions_remove_user">Kullanıcıyı kaldır</string>
 </resources>

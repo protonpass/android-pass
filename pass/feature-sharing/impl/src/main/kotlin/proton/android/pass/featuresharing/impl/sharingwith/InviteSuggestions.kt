@@ -199,7 +199,9 @@ fun InviteSuggestionsPreview(
                         "test1@proton.me" to true,
                         "test2@proton.me" to false
                     ),
-                    planEmails = persistentListOf()
+                    planEmails = persistentListOf(
+                        "test1@proton.me" to true,
+                    )
                 ),
                 onItemClicked = { _, _ -> },
             )

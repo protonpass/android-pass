@@ -166,12 +166,13 @@ class LoginDetailViewModel @Inject constructor(
     }
 
     private var hasItemBeenFetchedAtLeastOnce = false
+    private val loginItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
+        .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
+        .onEach { hasItemBeenFetchedAtLeastOnce = true }
+        .asLoadingResult()
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
-        getItemByIdWithVault(shareId, itemId)
-            .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
-            .onEach { hasItemBeenFetchedAtLeastOnce = true }
-            .asLoadingResult(),
+        loginItemDetailsResultFlow,
         canPerformPaidActionFlow
     ) { detailsResult, paidActionResult ->
         paidActionResult.flatMap { isPaid ->

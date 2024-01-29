@@ -26,8 +26,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -129,8 +131,13 @@ class NoteDetailViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
+    private var hasItemBeenFetchedAtLeastOnce = false
+
     val state: StateFlow<NoteDetailUiState> = combineN(
-        getItemByIdWithVault(shareId, itemId).asLoadingResult(),
+        getItemByIdWithVault(shareId, itemId)
+            .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
+            .onEach { hasItemBeenFetchedAtLeastOnce = true }
+            .asLoadingResult(),
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,

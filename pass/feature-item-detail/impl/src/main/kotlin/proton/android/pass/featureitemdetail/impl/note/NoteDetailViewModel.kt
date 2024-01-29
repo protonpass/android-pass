@@ -132,12 +132,13 @@ class NoteDetailViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private var hasItemBeenFetchedAtLeastOnce = false
+    private val noteItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
+        .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
+        .onEach { hasItemBeenFetchedAtLeastOnce = true }
+        .asLoadingResult()
 
     val state: StateFlow<NoteDetailUiState> = combineN(
-        getItemByIdWithVault(shareId, itemId)
-            .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
-            .onEach { hasItemBeenFetchedAtLeastOnce = true }
-            .asLoadingResult(),
+        noteItemDetailsResultFlow,
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,

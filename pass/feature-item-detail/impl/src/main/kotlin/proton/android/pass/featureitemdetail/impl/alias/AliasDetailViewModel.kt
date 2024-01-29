@@ -134,12 +134,13 @@ class AliasDetailViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private var hasItemBeenFetchedAtLeastOnce = false
+    private val aliasItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
+        .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
+        .onEach { hasItemBeenFetchedAtLeastOnce = true }
+        .asLoadingResult()
 
     val uiState: StateFlow<AliasDetailUiState> = combineN(
-        getItemByIdWithVault(shareId, itemId)
-            .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
-            .onEach { hasItemBeenFetchedAtLeastOnce = true }
-            .asLoadingResult(),
+        aliasItemDetailsResultFlow,
         getAliasDetails(shareId, itemId).asLoadingResult(),
         isLoadingState,
         isItemSentToTrashState,

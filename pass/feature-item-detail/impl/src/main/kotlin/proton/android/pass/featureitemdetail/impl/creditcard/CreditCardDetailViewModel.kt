@@ -149,12 +149,13 @@ class CreditCardDetailViewModel @Inject constructor(
     )
 
     private var hasItemBeenFetchedAtLeastOnce = false
+    private val creditCardItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
+        .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
+        .onEach { hasItemBeenFetchedAtLeastOnce = true }
+        .asLoadingResult()
 
     private val itemInfoFlow: Flow<LoadingResult<CreditCardItemInfo>> = combine(
-        getItemByIdWithVault(shareId, itemId)
-            .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
-            .onEach { hasItemBeenFetchedAtLeastOnce = true }
-            .asLoadingResult(),
+        creditCardItemDetailsResultFlow,
         fieldVisibilityFlow,
     ) { detailsResult, fieldVisibility ->
         detailsResult.map { details ->

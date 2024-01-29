@@ -47,6 +47,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedS
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
@@ -133,7 +134,7 @@ class NoteDetailViewModel @Inject constructor(
 
     private var hasItemBeenFetchedAtLeastOnce = false
     private val noteItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
-        .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
+        .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 

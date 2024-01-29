@@ -168,11 +168,6 @@ class LoginDetailViewModel @Inject constructor(
     private var hasItemBeenFetchedAtLeastOnce = false
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
-        // REFACTOR: This take(1) is added in order to avoid flow re-emitting of the item in case
-        // we receive a BE event that updates the item. That would cause the jobs that observe the
-        // TOTP custom fields to be rescheduled, but the previous ones would not be cancelled
-        // We should try to keep a reference to the running jobs and cancel them if this flow
-        // re-emits
         getItemByIdWithVault(shareId, itemId)
             .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is NullPointerException)) throw it }
             .onEach { hasItemBeenFetchedAtLeastOnce = true }

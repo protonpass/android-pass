@@ -19,6 +19,8 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.Item
@@ -33,7 +35,10 @@ class ObserveItemByIdImpl @Inject constructor(
     override fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-    ): Flow<Item> = itemRepository.observeById(shareId, itemId)
+    ): Flow<Item> = itemRepository
+        .observeById(shareId, itemId)
+        .catch { error ->
+            throw if (error is NullPointerException) ItemNotFoundError(itemId, shareId) else error
+        }
 
 }
-

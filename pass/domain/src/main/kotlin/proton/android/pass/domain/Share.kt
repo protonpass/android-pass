@@ -50,5 +50,13 @@ data class Share(
     val pendingInvites: Int = 0,
     val newUserInvitesReady: Int = 0
 ) {
-    fun totalMemberCount(): Int = memberCount + pendingInvites + newUserInvitesReady
+
+    private val totalMembers: Int = memberCount
+        .plus(pendingInvites)
+        .plus(newUserInvitesReady)
+
+    val remainingInvites: Int = maxMembers.minus(totalMembers)
+
+    val hasRemainingInvites: Boolean = remainingInvites > 0
+
 }

@@ -64,13 +64,14 @@ fun AliasOptionsBottomSheetContents(
     isPinningFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
+
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
-            subtitle = {
-                BottomSheetItemSubtitle(
-                    text = contents.aliasEmail
-                )
+            subtitle = if (contents.aliasEmail.isEmpty()) {
+                null
+            } else {
+                { BottomSheetItemSubtitle(text = contents.aliasEmail) }
             },
             leftIcon = { AliasIcon() }
         )

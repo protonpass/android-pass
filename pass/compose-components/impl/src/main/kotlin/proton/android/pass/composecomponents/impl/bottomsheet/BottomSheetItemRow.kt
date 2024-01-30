@@ -61,13 +61,9 @@ fun BottomSheetItemRow(
             Spacer(modifier = Modifier.width(Spacing.medium))
         }
 
-        if (subtitle == null) {
+        Column(Modifier.weight(1f)) {
             title()
-        } else {
-            Column {
-                title()
-                subtitle()
-            }
+            subtitle?.invoke()
         }
 
         endIcon?.invoke()

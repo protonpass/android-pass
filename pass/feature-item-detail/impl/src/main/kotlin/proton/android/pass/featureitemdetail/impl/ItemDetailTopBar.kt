@@ -196,6 +196,7 @@ private fun ItemDetailShareButton(
         iconContentDescription = stringResource(id = R.string.share_button_content_description),
         enabled = isEnabled,
         onClick = onShareClick,
+        onDisabledClick = onShareClick,
     )
 }
 

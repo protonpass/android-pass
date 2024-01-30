@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.first
 import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
@@ -31,7 +32,8 @@ import javax.inject.Inject
 
 class CanShareVaultImpl @Inject constructor(
     private val getVaultById: GetVaultById,
-    private val getShareById: GetShareById
+    private val getShareById: GetShareById,
+    private val getUserPlan: GetUserPlan,
 ) : CanShareVault {
 
     override suspend fun invoke(shareId: ShareId): CanShareVaultStatus {
@@ -52,15 +54,22 @@ class CanShareVaultImpl @Inject constructor(
         }
 
         return when {
-            share.totalMemberCount() >= share.maxMembers -> {
+            getUserPlan().first().isBusinessPlan -> {
+                CanShareVaultStatus.CanShare(invitesRemaining = share.remainingInvites)
+            }
+
+            !share.hasRemainingInvites -> {
                 CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughInvites)
             }
+
             vault.isOwned -> {
-                CanShareVaultStatus.CanShare(invitesRemaining = share.maxMembers - share.totalMemberCount())
+                CanShareVaultStatus.CanShare(invitesRemaining = share.remainingInvites)
             }
+
             vault.role == ShareRole.Admin -> {
-                CanShareVaultStatus.CanShare(invitesRemaining = share.maxMembers - share.totalMemberCount())
+                CanShareVaultStatus.CanShare(invitesRemaining = share.remainingInvites)
             }
+
             else -> {
                 CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughPermissions)
             }
@@ -70,4 +79,5 @@ class CanShareVaultImpl @Inject constructor(
     companion object {
         private const val TAG = "CanShareVaultImpl"
     }
+
 }

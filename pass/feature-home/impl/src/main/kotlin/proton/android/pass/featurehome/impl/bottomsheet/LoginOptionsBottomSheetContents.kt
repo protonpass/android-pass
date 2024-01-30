@@ -68,10 +68,15 @@ fun LoginOptionsBottomSheetContents(
     isPinningFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
+
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
-            subtitle = { BottomSheetItemSubtitle(text = contents.username) },
+            subtitle = if (contents.username.isEmpty()) {
+                null
+            } else {
+                { BottomSheetItemSubtitle(text = contents.username) }
+            },
             leftIcon = {
                 val sortedPackages = contents.packageInfoSet.sortedBy { it.packageName.value }
                 val packageName = sortedPackages.firstOrNull()?.packageName?.value

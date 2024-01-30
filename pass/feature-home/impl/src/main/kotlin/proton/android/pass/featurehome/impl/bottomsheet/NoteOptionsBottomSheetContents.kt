@@ -64,14 +64,18 @@ fun NoteOptionsBottomSheetContents(
     isPinningFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
+
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
-            subtitle = {
-                val processedText = contents.note.replace("\n", " ")
-                BottomSheetItemSubtitle(
-                    text = processedText
-                )
+            subtitle = if (contents.note.isEmpty()) {
+                null
+            } else {
+                {
+                    contents.note.replace("\n", " ").let { sanitizedNote ->
+                        BottomSheetItemSubtitle(text = sanitizedNote)
+                    }
+                }
             },
             leftIcon = { NoteIcon() }
         )

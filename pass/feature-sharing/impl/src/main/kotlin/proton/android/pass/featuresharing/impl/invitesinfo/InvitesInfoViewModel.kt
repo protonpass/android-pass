@@ -32,8 +32,8 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.GetShareById
-import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,20 +44,20 @@ class InvitesInfoViewModel @Inject constructor(
 
     private val shareId: ShareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
 
-    val state: StateFlow<LoadingResult<InvitesInfoUiState>> = oneShot { getShareById(shareId = shareId) }
-        .map {
-            val remaining = it.maxMembers - it.totalMemberCount()
-            InvitesInfoUiState(
-                remainingInvites = remaining,
-                maxMembers = it.maxMembers
+    val state: StateFlow<LoadingResult<InvitesInfoUiState>> =
+        oneShot { getShareById(shareId = shareId) }
+            .map { share ->
+                InvitesInfoUiState(
+                    remainingInvites = share.remainingInvites,
+                    maxMembers = share.maxMembers,
+                )
+            }
+            .asLoadingResult()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000L),
+                initialValue = LoadingResult.Loading
             )
-        }
-        .asLoadingResult()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = LoadingResult.Loading
-        )
 
 }
 

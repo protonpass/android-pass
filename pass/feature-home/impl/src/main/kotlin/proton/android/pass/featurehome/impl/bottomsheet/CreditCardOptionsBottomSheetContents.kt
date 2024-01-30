@@ -50,11 +50,14 @@ fun CreditCardOptionsBottomSheetContents(
     isPinningFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.CreditCard
+
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
-            subtitle = {
-                BottomSheetItemSubtitle(text = contents.cardHolder)
+            subtitle = if (contents.cardHolder.isEmpty()) {
+                null
+            } else {
+                { BottomSheetItemSubtitle(text = contents.cardHolder) }
             },
             leftIcon = { CreditCardIcon() }
         )

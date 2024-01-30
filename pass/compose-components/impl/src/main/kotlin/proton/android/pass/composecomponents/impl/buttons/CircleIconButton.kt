@@ -62,6 +62,7 @@ fun CircleIconButton(
     modifier: Modifier = Modifier,
     size: Int? = null,
     enabled: Boolean = true,
+    onDisabledClick: (() -> Unit)? = null,
     iconContentDescription: String? = null,
 ) {
     IconButton(
@@ -74,8 +75,8 @@ fun CircleIconButton(
             .background(
                 color = if (enabled) backgroundColor else backgroundColor.copy(alpha = 0.6f)
             ),
-        enabled = enabled,
-        onClick = onClick,
+        enabled = enabled || onDisabledClick != null,
+        onClick = { if (enabled) onClick() else onDisabledClick?.invoke() },
     ) {
         Icon(
             painter = iconPainter,

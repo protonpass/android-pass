@@ -32,6 +32,7 @@ import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultUnspecified
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.featureitemdetail.impl.R
@@ -39,47 +40,46 @@ import me.proton.core.presentation.compose.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Stable
-sealed interface CannotPerformActionDialogType {
-
-    @StringRes
-    fun title(): Int
-
-    @StringRes
-    fun message(): Int
-
-    fun showUpgrade(): Boolean
+sealed class CannotPerformActionDialogType(
+    @StringRes internal val title: Int,
+    @StringRes internal val message: Int,
+    internal val showUpgrade: Boolean,
+) {
 
     @Stable
-    object CannotEditBecauseNoPermissions : CannotPerformActionDialogType {
-        @StringRes
-        override fun title(): Int = R.string.item_detail_cannot_perform_action_edit_title
-        override fun message(): Int = R.string.item_detail_cannot_perform_action_edit_no_permissions_message
-        override fun showUpgrade() = false
-    }
+    object CannotEditBecauseNoPermissions : CannotPerformActionDialogType(
+        title = R.string.item_detail_cannot_perform_action_edit_title,
+        message = R.string.item_detail_cannot_perform_action_edit_no_permissions_message,
+        showUpgrade = false,
+    )
 
     @Stable
-    object CannotEditBecauseNeedsUpgrade : CannotPerformActionDialogType {
-        @StringRes
-        override fun title(): Int = R.string.item_detail_cannot_perform_action_edit_title
-        override fun message(): Int = R.string.item_detail_cannot_perform_action_edit_needs_upgrade_message
-        override fun showUpgrade() = true
-    }
+    object CannotEditBecauseNeedsUpgrade : CannotPerformActionDialogType(
+        title = R.string.item_detail_cannot_perform_action_edit_title,
+        message = R.string.item_detail_cannot_perform_action_edit_needs_upgrade_message,
+        showUpgrade = true,
+    )
 
     @Stable
-    object CannotEditBecauseItemInTrash : CannotPerformActionDialogType {
-        @StringRes
-        override fun title(): Int = R.string.item_detail_cannot_perform_action_edit_title
-        override fun message(): Int = R.string.item_detail_cannot_perform_action_edit_item_in_trash_message
-        override fun showUpgrade() = false
-    }
+    object CannotEditBecauseItemInTrash : CannotPerformActionDialogType(
+        title = R.string.item_detail_cannot_perform_action_edit_title,
+        message = R.string.item_detail_cannot_perform_action_edit_item_in_trash_message,
+        showUpgrade = false,
+    )
 
     @Stable
-    object CannotShareBecauseNoPermissions : CannotPerformActionDialogType {
-        @StringRes
-        override fun title(): Int = R.string.item_detail_cannot_perform_action_share_no_permissions_title
-        override fun message(): Int = R.string.item_detail_cannot_perform_action_share_no_permissions_message
-        override fun showUpgrade() = false
-    }
+    object CannotShareBecauseLimitReached : CannotPerformActionDialogType(
+        title = R.string.item_detail_cannot_perform_action_share_no_permissions_title,
+        message = R.string.item_detail_cannot_perform_action_share_limit_reached,
+        showUpgrade = true,
+    )
+
+    @Stable
+    object CannotShareBecauseNoPermissions : CannotPerformActionDialogType(
+        title = R.string.item_detail_cannot_perform_action_share_no_permissions_title,
+        message = R.string.item_detail_cannot_perform_action_share_no_permissions_message,
+        showUpgrade = false,
+    )
 }
 
 @Composable
@@ -97,15 +97,16 @@ fun CannotPerformActionDialog(
             modifier = Modifier
                 .padding(horizontal = 24.dp)
                 .padding(top = 24.dp, bottom = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-            ProtonDialogTitle(title = stringResource(type.title()))
+            ProtonDialogTitle(title = stringResource(type.title))
+
             Text(
-                text = stringResource(id = type.message()),
+                text = stringResource(id = type.message),
                 style = ProtonTheme.typography.defaultUnspecified
             )
 
-            val (confirmText, cancelText) = if (type.showUpgrade()) {
+            val (confirmText, cancelText) = if (type.showUpgrade) {
                 stringResource(CompR.string.action_upgrade_now) to
                     stringResource(CoreR.string.presentation_alert_cancel)
             } else {
@@ -118,7 +119,7 @@ fun CannotPerformActionDialog(
                 cancelText = cancelText,
                 onDismiss = onClose,
                 onConfirm = {
-                    if (type.showUpgrade()) {
+                    if (type.showUpgrade) {
                         onUpgrade()
                     } else {
                         onClose()

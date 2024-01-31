@@ -64,12 +64,14 @@ enum class ItemDetailCannotPerformActionType {
     CannotEditBecauseNoPermissions,
     CannotEditBecauseNeedsUpgrade,
     CannotEditBecauseItemInTrash,
+    CannotShareBecauseLimitReached,
     CannotShareBecauseNoPermissions;
 
     fun toType(): CannotPerformActionDialogType = when (this) {
         CannotEditBecauseNoPermissions -> CannotPerformActionDialogType.CannotEditBecauseNoPermissions
         CannotEditBecauseNeedsUpgrade -> CannotPerformActionDialogType.CannotEditBecauseNeedsUpgrade
         CannotEditBecauseItemInTrash -> CannotPerformActionDialogType.CannotEditBecauseItemInTrash
+        CannotShareBecauseLimitReached -> CannotPerformActionDialogType.CannotShareBecauseLimitReached
         CannotShareBecauseNoPermissions -> CannotPerformActionDialogType.CannotShareBecauseNoPermissions
     }
 }

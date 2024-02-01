@@ -378,6 +378,8 @@ dependencies {
     implementation(projects.pass.network.impl)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.notifications.impl)
+    implementation(projects.pass.passkeys.api)
+    implementation(projects.pass.passkeys.impl)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.impl)
     implementation(projects.pass.telemetry.impl)

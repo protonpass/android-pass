@@ -1,7 +1,7 @@
 [versions]
 minSdk = "27" # Minimum SDK for AutofillService
 compileSdk = "34"
-targetSdk = "33"
+targetSdk = "34"
 # Accompanist
 accompanist = "0.30.1"
 # Android

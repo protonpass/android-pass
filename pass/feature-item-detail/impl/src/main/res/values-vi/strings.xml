@@ -89,6 +89,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Không thể chia sẽ</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
   <string name="password_score_vulnerable">Dễ bị bẻ khóa</string>
   <string name="password_score_weak">Yếu</string>
   <string name="password_score_strong">Mạnh</string>

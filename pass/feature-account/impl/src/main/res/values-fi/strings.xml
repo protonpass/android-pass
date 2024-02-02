@@ -9,7 +9,7 @@
   <string name="account_sign_out">Kirjaudu ulos</string>
   <string name="account_sign_out_icon_content_description">Kirjaudu ulos -painike</string>
   <string name="account_manage_account">Hallitse tiliä</string>
-  <string name="account_manage_account_icon_content_description">Hallitse tiliä -nappi</string>
+  <string name="account_manage_account_icon_content_description">Painike tilin hallintaan</string>
   <string name="account_manage_subscription">Hallitse tilausta</string>
   <string name="account_get_user_info_error">Käyttäjätietoja ei voitu noutaa</string>
   <string name="manage_subscription_icon_content_description">Hallitse tilausta -painike</string>

@@ -20,7 +20,7 @@
   <string name="share_continue">Jatka</string>
   <string name="sharing_can_view">Tarkastelu</string>
   <string name="sharing_can_edit">Muokkaus</string>
-  <string name="sharing_can_manage">Hallinta</string>
+  <string name="sharing_can_manage">Ylläpito</string>
   <string name="sharing_can_view_description">Voi tarkastella holvin kohteita.</string>
   <string name="sharing_can_edit_description">Voi luoda, muokata, poistaa ja viedä holvin kohteita.</string>
   <string name="sharing_can_manage_description">Voi myöntää ja mitätöidä holvin käyttöoikeuksia.</string>
@@ -36,18 +36,18 @@
   <string name="share_with_email_hint">Sähköpostiosoite</string>
   <string name="share_with_email_error">Virheellinen sähköpostiosoite</string>
   <string name="share_permissions_title">Aseta käyttöoikeustaso</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s kutsui sinut käyttämään kohteita holvista</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s kutsui sinut käyttämään sisältöä holvista</string>
   <string name="sharing_join_shared_vault">Liity ja synkronoi</string>
-  <string name="sharing_reject_invitation">Hylkää kutsu</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Onnittelut, pääsysi on vahvistettu</string>
+  <string name="sharing_reject_invitation">Kieltäydy kutsusta</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Onnittelut, käyttöoikeutesi on vahvistettu</string>
   <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Näytä jaettu holvi</string>
   <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Sulje</string>
   <string name="sharing_snackbar_get_invite_error">Kutsua ei saatu</string>
   <string name="sharing_snackbar_invite_accepted">Kutsu hyväksytty</string>
   <string name="sharing_snackbar_invite_accept_error">Virhe hyväksyttäessä kutsua</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kutsua ei voitu hyväksyä, koska olet saavuttanut holvien enimmäismäärän</string>
-  <string name="sharing_snackbar_invite_rejected">Kutsu hylätty</string>
-  <string name="sharing_snackbar_invite_reject_error">Virhe kutsun hylkäyksessä</string>
+  <string name="sharing_snackbar_invite_rejected">Kieltäydytty</string>
+  <string name="sharing_snackbar_invite_reject_error">Virhe kieltäydyttäessä</string>
   <string name="sharing_snackbar_vault_not_found">Holvia ei löytynyt</string>
   <string name="sharing_snackbar_invite_sent_success">Kutsu lähetetty</string>
   <string name="sharing_snackbar_invite_sent_error">Kutsua ei voitu lähettää</string>
@@ -69,15 +69,15 @@
     <item quantity="one">%d kohde</item>
     <item quantity="other">%d kohdetta</item>
   </plurals>
-  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Kutsu lähetettiin</string>
-  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Tilin luomista odotetaan</string>
-  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Vahvista pääsy</string>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Kutsu on lähetetty</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Odottaa tilin luontia</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Vahvista käyttöoikeus</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Kutsut</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Jäsenet</string>
   <string name="share_manage_vault_current_user_indicator">Sinä</string>
   <string name="share_role_can_view">Voi tarkastella</string>
   <string name="share_role_can_edit">Voi muokata</string>
-  <string name="share_role_admin">Hallinta</string>
+  <string name="share_role_admin">Ylläpito</string>
   <string name="share_role_owner">Omistaja</string>
   <string name="sharing_bottomsheet_transfer_ownership">Siirrä omistajuus</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Et voi siirtää viimeisen omistamasi holvin omistajuutta.</string>
@@ -85,33 +85,32 @@
   <string name="sharing_bottomsheet_resend_invite">Lähetä kutsu uudelleen</string>
   <string name="sharing_bottomsheet_cancel_invite">Peru kutsu</string>
   <string name="sharing_transfer_ownership_confirm_title">Siirrä omistajuus</string>
-  <string name="sharing_transfer_ownership_confirm_message">Siirretäänkö holvin omistus käyttäjälle %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Siirretäänkö holvin omistajuus tunnukselle %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Kutsu peruttiin</string>
   <string name="sharing_snackbar_cancel_invite_error">Virhe peruttaessa kutsua</string>
   <string name="sharing_snackbar_resend_invite_success">Kutsu lähetettiin uudelleen</string>
   <string name="sharing_snackbar_resend_invite_error">Virhe lähettäessä kutsua uudelleen</string>
-  <string name="sharing_snackbar_confirm_invite_success">Kutsu vahvistettu</string>
-  <string name="sharing_snackbar_confirm_invite_error">Virhe kutsun vahvistamisessa</string>
+  <string name="sharing_snackbar_confirm_invite_success">Kutsu vahvistettiin</string>
+  <string name="sharing_snackbar_confirm_invite_error">Virhe vahvistettaessa kutsua</string>
   <string name="sharing_snackbar_too_many_invites_sent">Osoite on kutsuttu liian monta kertaa</string>
   <string name="sharing_snackbar_transfer_ownership_success">Omistajuus siirrettiin</string>
   <string name="sharing_snackbar_transfer_ownership_error">Virhe siirrettäessä omistajuutta</string>
-  <string name="sharing_invites_info_dialog_title">Jäsenraja</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Tässä holvissa voi olla enintään %1$d jäsentä. Sinulla on vielä %2$d kutsua jäljellä.</string>
-  <string name="sharing_limit_reached">Tämä holvi on saavuttanut jäsen- ja kutsurajan.</string>
-  <string name="sharing_invites_info_upgrade_text">Päivitä nyt kutsuaksesi lisää.</string>
+  <string name="sharing_invites_info_dialog_title">Jäsenrajoitus</string>
+  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Tässä holvissa voi olla enintään %1$d jäsentä. Käytettävissäsi on vielä %2$d kutsua.</string>
+  <string name="sharing_limit_reached">Holvin jäsenien ja kutsujen enimmäismäärä on saavutettu.</string>
+  <string name="sharing_invites_info_upgrade_text">Kutsu lisää päivittämällä tilauksesi</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Jaa</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Jaa kohteita muille holvien avulla</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Jaa tämä holvi</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Mukauta</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Siirrä jaettuun holviin</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Luo uusi jaettava holvi</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Tämä kohde siirretään uuteen holviin.</string>
-  <string name="sharing_from_item_vault_limit_reached_upgrade">Päivitä luodaksesi lisää holveja</string>
-  <string name="sharing_from_item_vault_limit_reached">Olet saavuttanut holvin rajan.</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Luo uusi jaettu holvi</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Tämä kohde siirretään luotavaan holviin.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Luo lisää holveja päivittämällä tilauksesi</string>
+  <string name="sharing_from_item_vault_limit_reached">Holvien enimmäismäärä on saavutettu</string>
   <string name="share_with_suggestions_title">Ehdotukset</string>
   <string name="share_with_recents_title">Viimeisimmät</string>
-  <string name="share_with_remove_email_content_description">Poista sähköposti</string>
+  <string name="share_with_remove_email_content_description">Poista sähköpostiosoite</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Aseta käyttöoikeustaso kaikille jäsenille</string>
-  <string name="sharing_edit_permissions_set_access_level_single_member">Aseta käyttöoikeustaso kohteelle %s</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Aseta käyttöoikeustaso jäsenelle %s</string>
   <string name="sharing_edit_permissions_remove_user">Poista käyttäjä</string>
 </resources>

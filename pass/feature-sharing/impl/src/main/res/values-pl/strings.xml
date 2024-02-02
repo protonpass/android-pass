@@ -110,7 +110,6 @@
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Udostępnij</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Aby udostępnić elementy, udostępnij cały sejf</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Udostępnij sejf</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Dostosuj</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Przenieś do udostępnionego sejfu</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Utwórz nowy sejf do udostępnienia</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Element zostanie przeniesiony do nowego sejfu.</string>
@@ -118,7 +117,7 @@
   <string name="sharing_from_item_vault_limit_reached">Osiągnięto maksymalną liczbę sejfów</string>
   <string name="share_with_suggestions_title">Sugestie</string>
   <string name="share_with_recents_title">Ostatnie</string>
-  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="share_with_remove_email_content_description">Usuń adres</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Ustaw uprawnienia dla wszystkich użytkowników</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Ustaw uprawnienia dla użytkownika %s</string>
   <string name="sharing_edit_permissions_remove_user">Usuń użytkownika</string>

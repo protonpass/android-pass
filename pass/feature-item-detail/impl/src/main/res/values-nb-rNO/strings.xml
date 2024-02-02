@@ -90,6 +90,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan ikke redigere dette elementet fordi det er i papirkurven. Vennligst flytt det ut av papirkurven før du redigerer det.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan ikke dele</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har ikke nok tillatelser til å dele dette hvelvet.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Du har nådd delingsgrensen for hvelv. For å dele flere hvelv, vennligst oppgrader din nåværende plan.</string>
   <string name="password_score_vulnerable">Sårbar</string>
   <string name="password_score_weak">Svak</string>
   <string name="password_score_strong">Sterk</string>

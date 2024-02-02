@@ -102,7 +102,6 @@
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Partage</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Utilisez les coffres-forts pour partager des éléments avec d\'autres personnes.</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Partager ce coffre-fort</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Personnaliser</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Déplacer vers un coffre-fort partagé</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Créer un nouveau coffre-fort à partager</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Cet élément sera transféré dans le nouveau coffre-fort.</string>

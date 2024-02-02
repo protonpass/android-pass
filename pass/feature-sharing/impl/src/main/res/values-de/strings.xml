@@ -102,7 +102,6 @@
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Teilen</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Verwende Tresore, um Einträge mit anderen zu teilen.</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Diesen Tresor teilen</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Anpassen</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">In einen geteilten Tresor verschieben</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Erstelle einen neuen geteilten Tresor</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Dieser Eintrag wird in den neuen Tresor verschoben.</string>

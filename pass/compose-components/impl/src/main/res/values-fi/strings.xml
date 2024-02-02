@@ -25,7 +25,7 @@
   <string name="bottomsheet_unpin_item">Irrota</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Avaa kohteen toimintovalikko</string>
-  <string name="action_upgrade_now">Päivitä nyt</string>
+  <string name="action_upgrade_now">Päivitä tilaus nyt</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
   <string name="empty_search_results_title">Tuloksia ei löytynyt</string>
@@ -79,7 +79,7 @@
   <string name="hide_advanced_options">Piilota lisävalinnat</string>
   <!-- Labels -->
   <string name="label_password_strength_strong">Vahva</string>
-  <string name="label_password_strength_vulnerable">Haavoittuva</string>
+  <string name="label_password_strength_vulnerable">Haavoittuvainen</string>
   <string name="label_password_strength_weak">Heikko</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Näytä kaikki</string>

@@ -92,6 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Вы не можете отредактировать этот элемент, потому что он находится в корзине. Пожалуйста, переместите его из корзины, прежде чем редактировать.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Невозможно поделиться</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостаточно прав для совместного использования этого хранилища.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
   <string name="password_score_vulnerable">Уязвимый</string>
   <string name="password_score_weak">Слабый</string>
   <string name="password_score_strong">Надежный</string>

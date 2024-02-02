@@ -126,6 +126,7 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
             val extras = AutofillIntentExtras.toExtras(data, autofillItem.some())
             val intent = Intent(context, InlineSuggestionsNoUiActivity::class.java)
             intent.putExtras(extras)
+            intent.setPackage(context.packageName)
             return intent
         }
     }

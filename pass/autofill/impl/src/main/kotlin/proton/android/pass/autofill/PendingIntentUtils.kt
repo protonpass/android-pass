@@ -86,7 +86,7 @@ object PendingIntentUtils {
         PendingIntent.getService(
             context,
             0,
-            Intent(),
+            Intent().apply { setPackage(context.packageName) },
             autofillPendingIntentFlags
         )
 }

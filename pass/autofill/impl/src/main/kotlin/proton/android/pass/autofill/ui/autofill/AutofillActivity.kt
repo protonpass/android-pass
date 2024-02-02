@@ -164,6 +164,7 @@ class AutofillActivity : FragmentActivity() {
             val extras = AutofillIntentExtras.toExtras(data, autofillItem)
 
             putExtras(extras)
+            setPackage(context.packageName)
         }
     }
 }

@@ -53,5 +53,6 @@ class AutofillUpgradeActivity : FragmentActivity() {
 
     companion object {
         fun newIntent(context: Context) = Intent(context, AutofillUpgradeActivity::class.java)
+            .apply { setPackage(context.packageName) }
     }
 }

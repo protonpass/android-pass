@@ -90,6 +90,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Bu öge çöp kutusunda olduğundan düzenleyemezsiniz. Lütfen düzenlemeden önce çöp kutusundan çıkarın.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Paylaşılamaz</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bu kasayı paylaşmak için yeterli izniniz yok.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
   <string name="password_score_vulnerable">Çok zayıf</string>
   <string name="password_score_weak">Zayıf</string>
   <string name="password_score_strong">Güçlü</string>

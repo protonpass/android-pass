@@ -90,6 +90,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">No puede editar este elemento porque está en la papelera. Muévalo de la papelera antes de editarlo.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No puede compartir</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">No tiene los permisos suficientes para compartir esta bóveda.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Ha alcanzado el límite de bóvedas compartidas. Mejore su plan actual para compartir más bóvedas.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Débil</string>
   <string name="password_score_strong">Segura</string>

@@ -8,8 +8,8 @@
   <string name="account_delete_account_icon_content_description">Nút xóa tài khoản</string>
   <string name="account_sign_out">Đăng xuất</string>
   <string name="account_sign_out_icon_content_description">Nút đăng xuất</string>
-  <string name="account_manage_account">Manage account</string>
-  <string name="account_manage_account_icon_content_description">Manage account button</string>
+  <string name="account_manage_account">Quản lý tài khoản</string>
+  <string name="account_manage_account_icon_content_description">Nút quản lý tài khoản</string>
   <string name="account_manage_subscription">Quản lý gói đăng ký</string>
   <string name="account_get_user_info_error">Không thể lấy thông tin người dùng</string>
   <string name="manage_subscription_icon_content_description">Nút quản lý gói đăng ký</string>

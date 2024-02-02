@@ -20,8 +20,8 @@
   <string name="website_copied_to_clipboard">Ο ιστότοπος αντιγράφηκε</string>
   <string name="totp_copied_to_clipboard">Αντιγραφή TOTP</string>
   <string name="field_copied_to_clipboard">Το πεδίο αντιγράφηκε</string>
-  <string name="move_item_to_trash_message">Το στοιχείο μετακινήθηκε στον κάδο απορριμμάτων</string>
-  <string name="error_move_item_to_trash_message">Σφάλμα κατά τη μετακίνηση στον κάδο απορριμμάτων</string>
+  <string name="move_item_to_trash_message">Στοιχείο μετακινήθηκε στα διαγραμμένα</string>
+  <string name="error_move_item_to_trash_message">Σφάλμα κατά τη μετακίνηση στα διαγραμμένα</string>
   <string name="item_permanently_deleted_message">Στοιχείο που διαγράφηκε οριστικά</string>
   <string name="item_permanently_deleted_message_error">Σφάλμα κατά τη διαγραφή στοιχείων</string>
   <string name="item_restored_message">Έγινε επαναφορά στοιχείου</string>
@@ -67,7 +67,7 @@
   <string name="credit_card_number_copied_to_clipboard">Ο αριθμός της κάρτας αντιγράφηκε στο πρόχειρο</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Ο κωδικός ασφαλείας αντιγράφηκε στο πρόχειρο</string>
   <!-- Bottomsheet -->
-  <string name="move_to_trash_item_detail_bottom_sheet">Μετακίνηση στον κάδο απορριμμάτων</string>
+  <string name="move_to_trash_item_detail_bottom_sheet">Μετακίνηση στα διαγραμμένα</string>
   <string name="migrate_item_detail_bottom_sheet">Μετακίνηση σε άλλη κρύπτη</string>
   <!-- More info -->
   <string name="date_today">Σήμερα %s</string>
@@ -87,9 +87,10 @@
   <string name="item_detail_cannot_perform_action_edit_title">Δεν είναι δυνατή η επεξεργασία</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Δεν μπορείτε να επεξεργαστείτε αυτό το στοιχείο, επειδή δεν έχετε αρκετά δικαιώματα.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Επιτρέπεται μόνο η επεξεργασία στοιχείων στις παλαιότερες κρύπτες σας. Για να επεξεργαστείτε αυτό το στοιχείο, αναβαθμίστε το τρέχον πλάνο σας.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Δεν μπορείτε να επεξεργαστείτε αυτό το στοιχείο επειδή βρίσκεται στον κάδο απορριμμάτων. Μετακινήστε το από τον κάδο απορριμμάτων πριν το επεξεργαστείτε.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Δεν μπορείτε να επεξεργαστείτε αυτό το στοιχείο επειδή βρίσκεται στα διαγραμμένα. Μετακινήστε το από τα διαγραμμένα πριν το επεξεργαστείτε.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Δεν είναι δυνατή η κοινή χρήση</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Δεν έχετε αρκετά δικαιώματα για να μοιραστείτε αυτήν την κρύπτη</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
   <string name="password_score_vulnerable">Ευάλωτο</string>
   <string name="password_score_weak">Αδύναμο</string>
   <string name="password_score_strong">Δυνατό</string>

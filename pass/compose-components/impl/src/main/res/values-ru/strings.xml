@@ -16,8 +16,8 @@
   <plurals name="item_list_header_results">
     <item quantity="one">результат</item>
     <item quantity="few">результата</item>
-    <item quantity="many">результаты</item>
-    <item quantity="other">результаты</item>
+    <item quantity="many">результатов</item>
+    <item quantity="other">результатов</item>
   </plurals>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Подтвердить</string>

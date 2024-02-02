@@ -112,9 +112,9 @@
   <string name="recent_search_clear">清除</string>
   <string name="recent_search_remove_item">從搜尋中移除</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_success">項目成功標記</string>
   <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
-  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+  <string name="home_snackbar_item_unpinned_success">項目成功取消標記</string>
   <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">項目已成功置頂</string>
   <string name="home_snackbar_items_pinned_partial_success">標註部分項目錯誤</string>

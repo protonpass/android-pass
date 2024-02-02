@@ -90,6 +90,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Vous ne pouvez pas modifier cet élément parce qu\'il se trouve dans la corbeille. Retirez-le de la corbeille avant de le modifier.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Partage impossible</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Vous n\'avez pas les autorisations nécessaires pour partager ce coffre-fort.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Vous avez atteint la limite de partage de coffres-forts. Pour en partager davantage, vous devez passer à un abonnement supérieur.</string>
   <string name="password_score_vulnerable">Vulnérable</string>
   <string name="password_score_weak">Faible</string>
   <string name="password_score_strong">Fort</string>

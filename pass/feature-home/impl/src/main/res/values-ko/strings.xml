@@ -112,10 +112,10 @@
   <string name="recent_search_clear">삭제</string>
   <string name="recent_search_remove_item">최근 검색 기록 삭제</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
-  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
-  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
-  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
+  <string name="home_snackbar_item_pinned_success">항목을 성공적으로 고정했습니다.</string>
+  <string name="home_snackbar_item_pinned_error">이 항목을 고정하는데 오류가 발생했습니다.</string>
+  <string name="home_snackbar_item_unpinned_success">항목을 성공적으로 고정 해제했습니다.</string>
+  <string name="home_snackbar_item_unpinned_error">이 항목을 고정 해제하는데 오류가 발생했습니다.</string>
   <string name="home_snackbar_items_pinned_success">항목을 성공적으로 고정했습니다.</string>
   <string name="home_snackbar_items_pinned_partial_success">이 항목을 고정하는데 실패했습니다.</string>
   <string name="home_snackbar_items_pinned_error">항목 고정 오류</string>

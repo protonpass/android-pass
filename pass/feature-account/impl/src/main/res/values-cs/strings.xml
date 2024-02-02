@@ -9,7 +9,7 @@
   <string name="account_sign_out">Odhlásit se</string>
   <string name="account_sign_out_icon_content_description">Tlačítko odhlášení</string>
   <string name="account_manage_account">Spravovat účet</string>
-  <string name="account_manage_account_icon_content_description">Manage account button</string>
+  <string name="account_manage_account_icon_content_description">Tlačítko Spravovat účet</string>
   <string name="account_manage_subscription">Spravovat předplatné</string>
   <string name="account_get_user_info_error">Nelze načíst informace o uživateli</string>
   <string name="manage_subscription_icon_content_description">Tlačítko správy předplatného</string>

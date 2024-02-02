@@ -23,7 +23,7 @@
   <string name="bottomsheet_confirm_button">Potwierdź</string>
   <string name="bottomsheet_cancel_button">Anuluj</string>
   <string name="bottomsheet_move_to_trash">Przenieś do Kosza</string>
-  <string name="bottomsheet_pin_item">Kod PIN</string>
+  <string name="bottomsheet_pin_item">Przypnij</string>
   <string name="bottomsheet_unpin_item">Odepnij</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otwórz menu akcji elementu</string>

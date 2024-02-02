@@ -102,7 +102,6 @@
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Del</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Brug bokse til at dele elementer med andre</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Del denne boks</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Tilpas</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Flyt til en delt boks</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Opret en ny boks til deling</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Dette element vil blive flyttet til den nye boks.</string>

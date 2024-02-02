@@ -110,7 +110,6 @@
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Sdílet</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Pomocí trezorů můžete položky sdílet s ostatními</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Sdílet tento trezor</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Přizpůsobit</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Přesunout do sdíleného trezoru</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Vytvořit nový trezor ke sdílení</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Tato položka bude přesunuta do nového trezoru.</string>
@@ -119,7 +118,7 @@
   <string name="share_with_suggestions_title">Návrhy</string>
   <string name="share_with_recents_title">Nedávné</string>
   <string name="share_with_remove_email_content_description">Odebrat e-mail</string>
-  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Nastavit přístupovou úroveň pro všechny členy</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
   <string name="sharing_edit_permissions_remove_user">Odebrat uživatele</string>
 </resources>

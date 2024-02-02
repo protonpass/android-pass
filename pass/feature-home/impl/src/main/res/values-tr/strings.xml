@@ -119,10 +119,10 @@
   <string name="recent_search_clear">Temizle</string>
   <string name="recent_search_remove_item">Son aramalar listesinden kaldır</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
-  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
-  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
-  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
+  <string name="home_snackbar_item_pinned_success">Öge sabitlendi</string>
+  <string name="home_snackbar_item_pinned_error">Bu öge sabitllenirken bir sorun çıktı</string>
+  <string name="home_snackbar_item_unpinned_success">Ögenin sabitlemesi kaldırıldı</string>
+  <string name="home_snackbar_item_unpinned_error">Bu ögenin sabitllemesi kaldırılırken bir sorun çıktı</string>
   <string name="home_snackbar_items_pinned_success">Öge sabitlendi</string>
   <string name="home_snackbar_items_pinned_partial_success">Bazı ögeler sabitlenirken sorun çıktı</string>
   <string name="home_snackbar_items_pinned_error">Ögeler sabitlenirken sorun çıktı</string>

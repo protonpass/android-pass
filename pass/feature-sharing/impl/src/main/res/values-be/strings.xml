@@ -110,7 +110,6 @@
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Абагуліць</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Выкарыстанне сховішчаў для абагулення элементаў з іншымі</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Абагуліць гэта сховішча</string>
-  <string name="sharing_with_customize_vault_action" comment="Button for customizing a vault">Наладзіць</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Перамясціць абагуленае сховішча</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Стварыць новае сховішча для абагулення</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Гэты элемент будзе перамешчаны ў новае сховішча.</string>
@@ -118,8 +117,8 @@
   <string name="sharing_from_item_vault_limit_reached">Вы дасягнулі максімальнай колькасці сховішчаў</string>
   <string name="share_with_suggestions_title">Прапановы</string>
   <string name="share_with_recents_title">Нядаўнія</string>
-  <string name="share_with_remove_email_content_description">Выдаленне электроннай пошты</string>
+  <string name="share_with_remove_email_content_description">Выдаліць электронную пошту</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Прызначэнне ўзроўню доступу для ўсіх удзельнікаў</string>
-  <string name="sharing_edit_permissions_set_access_level_single_member">Прызначэнне ўзроўню доступу для %s</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Прызначыць узровень доступу для %s</string>
   <string name="sharing_edit_permissions_remove_user">Выдаліць карыстальніка</string>
 </resources>

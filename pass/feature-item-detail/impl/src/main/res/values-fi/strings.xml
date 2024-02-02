@@ -27,9 +27,9 @@
   <string name="item_restored_message">Kohde palautettiin</string>
   <string name="item_restored_message_error">Virhe palautettaessa kohdetta</string>
   <string name="item_pinned_message">Kohde kiinnitettiin</string>
-  <string name="item_pinned_message_error">Kohteen kiinnityksessä tapahtui virhe</string>
+  <string name="item_pinned_message_error">Virhe kiinnitettäessä kohdetta</string>
   <string name="item_unpinned_message">Kohde irrotettiin</string>
-  <string name="item_unpinned_message_error">Kohteen irrotuksessa tapahtui virhe</string>
+  <string name="item_unpinned_message_error">Virhe irrotettaessa kohdetta</string>
   <string name="login_item_generate_totp_error">Virhe luotaessa 2FA-koodia</string>
   <string name="login_item_view_alias_button">Näytä alias</string>
   <string name="field_username">Käyttäjätunnus tai sähköpostiosoite</string>
@@ -50,19 +50,19 @@
     <item quantity="other">%d kertaa</item>
   </plurals>
   <string name="more_info_last_time_modified">Viimeksi, %s</string>
-  <string name="share_button_content_description">Avaa jakaminen -painike</string>
+  <string name="share_button_content_description">Jaon avauspainike</string>
   <string name="open_menu_icon_content_description">Avaa valikko -painike</string>
   <string name="mfa_limit_reached">2FA-rajoitus on saavutettu</string>
   <string name="mfa_icon_content_description">2FA-kuvake</string>
-  <string name="custom_field_text_icon_description">Oma tekstikenttä</string>
-  <string name="custom_field_hidden_icon_description">Oma piilotettu kenttä</string>
-  <string name="custom_field_totp_icon_description">Oma 2FA-kenttä</string>
+  <string name="custom_field_text_icon_description">Mukautettu tekstikenttä</string>
+  <string name="custom_field_hidden_icon_description">Mukautettu piilotettu kenttä</string>
+  <string name="custom_field_totp_icon_description">Mukautettu 2FA-kenttä</string>
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Kortinhaltijan nimi</string>
   <string name="credit_card_number_field_name">Kortin numero</string>
   <string name="credit_card_cvv_field_name">Turvakoodi</string>
   <string name="credit_card_pin_field_name">PIN-koodi</string>
-  <string name="credit_card_expiration_date_field_name">Erääntymispäivä</string>
+  <string name="credit_card_expiration_date_field_name">Voimassaolo päättyy</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Kortinhaltija kopioitiin leikepöydälle</string>
   <string name="credit_card_number_copied_to_clipboard">Kortin numero kopioitiin leikepöydälle</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Turvakoodi kopioitiin leikepöydälle</string>
@@ -85,12 +85,13 @@
     -->
   <string name="date_full_date_format_with_year">dd. LLLL yyyy HH.mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Muokkaus ei ole mahdollista</string>
-  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Oikeutesi eivät riitä tämän kohteen muokkaukseen.</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Oikeutesi eivät riitä kohteen muokkaukseen.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Voit muokata vain vanhimpien holviesi kohteita. Muokkaa kohdetta päivittämällä nykyinen tilauksesi.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Et voi muokata kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Jakaminen ei ole mahdollista</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Oikeutesi eivät riitä tämän holvin jakamiseen.</string>
-  <string name="password_score_vulnerable">Haavoittuva</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="password_score_vulnerable">Haavoittuvainen</string>
   <string name="password_score_weak">Heikko</string>
   <string name="password_score_strong">Vahva</string>
 </resources>

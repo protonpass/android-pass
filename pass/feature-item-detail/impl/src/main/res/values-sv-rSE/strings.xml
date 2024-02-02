@@ -90,6 +90,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan inte redigera detta objekt eftersom det är i papperskorgen. Flytta det från papperskorgen innan du redigerar det.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan inte dela</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har inte tillräckligt med behörigheter för att dela detta valv.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
   <string name="password_score_vulnerable">Sårbar</string>
   <string name="password_score_weak">Svagt</string>
   <string name="password_score_strong">Starkt</string>

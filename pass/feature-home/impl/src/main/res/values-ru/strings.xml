@@ -133,10 +133,10 @@
   <string name="recent_search_clear">Очистить</string>
   <string name="recent_search_remove_item">Удалить из недавних поисков</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
-  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
-  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
-  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
+  <string name="home_snackbar_item_pinned_success">Элемент закреплен</string>
+  <string name="home_snackbar_item_pinned_error">При закреплении элемента произошла ошибка</string>
+  <string name="home_snackbar_item_unpinned_success">Элемент откреплен</string>
+  <string name="home_snackbar_item_unpinned_error">При откреплении элемента произошла ошибка</string>
   <string name="home_snackbar_items_pinned_success">Элементы успешно закреплены</string>
   <string name="home_snackbar_items_pinned_partial_success">Ошибка при закреплении некоторых элементов</string>
   <string name="home_snackbar_items_pinned_error">Ошибка при закреплении элементов</string>

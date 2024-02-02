@@ -14,6 +14,6 @@
   <string name="account_get_user_info_error">Не могу получить информацию о пользователе</string>
   <string name="manage_subscription_icon_content_description">Кнопка управления подпиской</string>
   <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Выйти из аккаунта?</string>
+  <string name="alert_confirm_sign_out_title">Выйти?</string>
   <string name="alert_confirm_sign_out_message">Вы уверены, что хотите выйти?</string>
 </resources>

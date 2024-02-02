@@ -32,8 +32,7 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.passkeys.api)
 
-    compileOnly(files("../../passkeys/impl/libs/lib-release.aar"))
-    implementation("net.java.dev.jna:jna:5.13.0@aar")
+    implementation(libs.pass.common)
 
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)

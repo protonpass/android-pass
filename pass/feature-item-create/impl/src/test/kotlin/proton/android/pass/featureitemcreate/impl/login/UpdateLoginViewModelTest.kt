@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
@@ -31,13 +32,17 @@ import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStre
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -47,8 +52,6 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemContents
 
 class UpdateLoginViewModelTest {
 
@@ -59,11 +62,15 @@ class UpdateLoginViewModelTest {
 
     private lateinit var getItemById: TestObserveItemById
     private lateinit var totpManager: TestTotpManager
+    private lateinit var updateItem: TestUpdateItem
+    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setup() {
         getItemById = TestObserveItemById()
         totpManager = TestTotpManager()
+        updateItem = TestUpdateItem()
+        snackbarDispatcher = TestSnackbarDispatcher()
 
         instance = UpdateLoginViewModel(
             getItemById = getItemById,
@@ -72,7 +79,7 @@ class UpdateLoginViewModelTest {
             },
             clipboardManager = TestClipboardManager(),
             totpManager = totpManager,
-            snackbarDispatcher = TestSnackbarDispatcher(),
+            snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = TestSavedStateHandleProvider().apply {
                 get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
                 get()[CommonNavArgId.ItemId.key] = ITEM_ID
@@ -83,7 +90,7 @@ class UpdateLoginViewModelTest {
             telemetryManager = TestTelemetryManager(),
             draftRepository = TestDraftRepository(),
             observeUpgradeInfo = TestObserveUpgradeInfo(),
-            updateItem = TestUpdateItem(),
+            updateItem = updateItem,
             createAlias = TestCreateAlias()
         )
     }
@@ -102,7 +109,8 @@ class UpdateLoginViewModelTest {
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,
-                customFields = emptyList()
+                customFields = emptyList(),
+                passkeys = emptyList()
             )
         )
         totpManager.setSanitisedEditResult(Result.success(secret))
@@ -127,13 +135,27 @@ class UpdateLoginViewModelTest {
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,
-                customFields = emptyList()
+                customFields = emptyList(),
+                passkeys = emptyList()
             )
         )
         totpManager.setSanitisedEditResult(Result.success(uri))
         getItemById.emitValue(Result.success(item))
 
         assertThat(instance.loginItemFormState.primaryTotp).isEqualTo(UIHiddenState.from(primaryTotp))
+    }
+
+    @Test
+    fun `if error is InvalidContentFormatVersionError shows right snackbar message`() = runTest {
+        updateItem.setResult(Result.failure(InvalidContentFormatVersionError()))
+
+        val item = TestObserveItems.createLogin(shareId = ShareId(SHARE_ID))
+        getItemById.emitValue(Result.success(item))
+
+        instance.updateItem(ShareId(SHARE_ID))
+
+        val message = snackbarDispatcher.snackbarMessage.first().value()!!
+        assertThat(message).isInstanceOf(LoginSnackbarMessages.UpdateAppToUpdateItemError::class.java)
     }
 
     companion object {

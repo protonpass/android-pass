@@ -18,9 +18,9 @@
 
 package proton.android.pass.test.domain
 
-import proton.android.pass.test.TestUtils
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.test.TestUtils
 
 object TestItemType {
     fun login(
@@ -28,13 +28,13 @@ object TestItemType {
         password: String? = null,
         websites: List<String> = emptyList(),
         packageInfoSet: Set<PackageInfo> = emptySet(),
-    ): ItemType.Login =
-        ItemType.Login(
-            username = username ?: TestUtils.randomString(),
-            password = password ?: TestUtils.randomString(),
-            websites = websites,
-            packageInfoSet = packageInfoSet,
-            primaryTotp = TestUtils.randomString(),
-            customFields = emptyList()
-        )
+    ): ItemType.Login = ItemType.Login(
+        username = username ?: TestUtils.randomString(),
+        password = password ?: TestUtils.randomString(),
+        websites = websites,
+        packageInfoSet = packageInfoSet,
+        primaryTotp = TestUtils.randomString(),
+        customFields = emptyList(),
+        passkeys = emptyList()
+    )
 }

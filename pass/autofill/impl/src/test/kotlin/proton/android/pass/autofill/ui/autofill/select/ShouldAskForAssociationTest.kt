@@ -95,6 +95,7 @@ class ShouldAskForAssociationTest {
             }
         },
         primaryTotp = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+        passkeys = emptyList()
     )
 
     companion object {

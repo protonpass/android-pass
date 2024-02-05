@@ -58,7 +58,8 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
             urls = type.websites,
             packageInfoSet = type.packageInfoSet,
             primaryTotp = concealedOrEmpty(type.primaryTotp, encryptionContext),
-            customFields = type.customFields.mapNotNull { it.toContent(encryptionContext, true) }
+            customFields = type.customFields.mapNotNull { it.toContent(encryptionContext, true) },
+            passkeys = type.passkeys
         )
 
         is ItemType.Note -> ItemContents.Note(

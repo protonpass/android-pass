@@ -26,6 +26,7 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.MigrateItemsResult
@@ -172,6 +173,10 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     ) {
         TODO("Not yet implemented")
     }
+
+    override suspend fun applyPendingEvent(event: ItemPendingEvent) {}
+
+    override suspend fun purgePendingEvent(event: ItemPendingEvent): Boolean = true
 
     override fun observeItemCountSummary(
         userId: UserId,

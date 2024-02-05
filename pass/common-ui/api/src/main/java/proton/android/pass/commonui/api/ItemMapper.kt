@@ -59,7 +59,7 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
             packageInfoSet = type.packageInfoSet,
             primaryTotp = concealedOrEmpty(type.primaryTotp, encryptionContext),
             customFields = type.customFields.mapNotNull { it.toContent(encryptionContext, true) },
-            passkeys = type.passkeys
+            passkeys = type.passkeys,
         )
 
         is ItemType.Note -> ItemContents.Note(

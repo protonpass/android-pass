@@ -47,6 +47,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.UpdateAlias
@@ -61,8 +62,8 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasUpdated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.InitError
-import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemUpdateError
+import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.UpdateAppToUpdateItemError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -89,10 +90,9 @@ class UpdateAliasViewModel @Inject constructor(
 
     private val navShareId: ShareId =
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
-    private val navItemId: ItemId =
-        proton.android.pass.domain.ItemId(
-            savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key)
-        )
+    private val navItemId: ItemId = ItemId(
+        savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key)
+    )
 
     private var itemOption: Option<Item> = None
 
@@ -270,12 +270,17 @@ class UpdateAliasViewModel @Inject constructor(
                 telemetryManager.sendEvent(ItemUpdate(EventItemType.Alias))
             }.onFailure {
                 PassLogger.e(TAG, it, "Update alias error")
-                snackbarDispatcher(ItemUpdateError)
+                val message = if (it is InvalidContentFormatVersionError) {
+                    UpdateAppToUpdateItemError
+                } else {
+                    ItemUpdateError
+                }
+                snackbarDispatcher(message)
                 isLoadingState.update { IsLoadingState.NotLoading }
             }
         } else {
             PassLogger.i(TAG, "Empty User Id")
-            snackbarDispatcher(ItemCreationError)
+            snackbarDispatcher(ItemUpdateError)
             isLoadingState.update { IsLoadingState.NotLoading }
         }
     }

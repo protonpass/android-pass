@@ -31,6 +31,7 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
@@ -131,9 +132,23 @@ class UpdateCreditCardViewModelTest {
 
     @Test
     fun `if there is an error updating item a message is emitted`() = runTest {
+        runTestError(IllegalStateException("Test"))
+
+        val message = snackbarDispatcher.snackbarMessage.first().value()!!
+        assertThat(message).isInstanceOf(CreditCardSnackbarMessage.ItemCreationError::class.java)
+    }
+
+    @Test
+    fun `if error is InvalidContentFormatVersionError shows right snackbar message`() = runTest {
+        runTestError(InvalidContentFormatVersionError())
+        val message = snackbarDispatcher.snackbarMessage.first().value()!!
+        assertThat(message).isInstanceOf(CreditCardSnackbarMessage.UpdateAppToUpdateItemError::class.java)
+    }
+
+    private suspend fun runTestError(exception: Throwable) {
         val item = TestObserveItems.createCreditCard(title = "title")
         getItemById.emitValue(Result.success(item))
-        updateItem.setResult(Result.failure(IllegalStateException("Test")))
+        updateItem.setResult(Result.failure(exception))
 
         instance.update()
         instance.state.test {
@@ -154,9 +169,6 @@ class UpdateCreditCardViewModelTest {
 
         val telemetryMemory = telemetryManager.getMemory()
         assertThat(telemetryMemory).isEmpty()
-
-        val message = snackbarDispatcher.snackbarMessage.first().value()!!
-        assertThat(message).isInstanceOf(CreditCardSnackbarMessage.ItemCreationError::class.java)
     }
 
     companion object {

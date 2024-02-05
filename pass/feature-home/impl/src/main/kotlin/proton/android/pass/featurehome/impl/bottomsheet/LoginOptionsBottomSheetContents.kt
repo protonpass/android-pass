@@ -171,7 +171,8 @@ fun LoginOptionsBottomSheetContentsPreview(
                         urls = emptyList(),
                         packageInfoSet = emptySet(),
                         primaryTotp = HiddenState.Revealed("", ""),
-                        customFields = emptyList()
+                        customFields = emptyList(),
+                        passkeys = emptyList()
                     ),
                     state = 0,
                     createTime = Clock.System.now(),

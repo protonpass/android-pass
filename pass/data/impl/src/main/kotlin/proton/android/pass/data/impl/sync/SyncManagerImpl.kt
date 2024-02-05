@@ -21,13 +21,11 @@ package proton.android.pass.data.impl.sync
 import androidx.lifecycle.coroutineScope
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
@@ -60,32 +58,37 @@ class SyncManagerImpl @Inject constructor(
         appLifecycleProvider.lifecycle.coroutineScope.launch {
             combine(
                 appLifecycleProvider.state,
-                accountManager.getPrimaryUserId().flowOn(Dispatchers.IO)
+                accountManager.getPrimaryUserId(),
             ) { appLifecycle, userId ->
                 SyncState(userId, appLifecycle)
             }
                 .catch { PassLogger.w(TAG, it) }
-                .collectLatest {
-                    if (it.userId != null) {
-                        onUserLoggedInPerformSync(it.userId, it.appLifecycle)
-                    } else {
+                .collectLatest { syncState ->
+                    if (syncState.userId == null) {
                         cancelWorker()
+                        return@collectLatest
                     }
+
+                    onUserLoggedInPerformSync(
+                        userId = syncState.userId,
+                        state = syncState.appLifecycle,
+                    )
                 }
         }
     }
 
     private suspend fun onUserLoggedInPerformSync(
-        userId: UserId?,
-        state: AppLifecycleProvider.State
+        userId: UserId,
+        state: AppLifecycleProvider.State,
     ) {
-        val initialDelay = when (state) {
-            AppLifecycleProvider.State.Background -> eventWorkerManager.getRepeatIntervalBackground()
-            AppLifecycleProvider.State.Foreground -> eventWorkerManager.getRepeatIntervalForeground()
-        }
         when (state) {
+            AppLifecycleProvider.State.Background -> {
+                enqueueWorker(eventWorkerManager.getRepeatIntervalBackground())
+            }
+
             AppLifecycleProvider.State.Foreground -> {
                 cancelWorker()
+
                 while (currentCoroutineContext().isActive) {
                     runCatching { performSync(userId) }
                         .onSuccess { PassLogger.i(TAG, "Sync finished") }
@@ -94,12 +97,8 @@ class SyncManagerImpl @Inject constructor(
                             PassLogger.w(TAG, error)
                         }
 
-                    delay(initialDelay)
+                    delay(eventWorkerManager.getRepeatIntervalForeground())
                 }
-            }
-
-            AppLifecycleProvider.State.Background -> {
-                enqueueWorker(initialDelay)
             }
         }
     }

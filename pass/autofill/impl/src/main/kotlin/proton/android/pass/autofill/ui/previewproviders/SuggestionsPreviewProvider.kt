@@ -54,26 +54,26 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
         }
 
 
-    private fun item(name: String, username: String): ItemUiModel =
-        ItemUiModel(
-            id = ItemId(name),
-            shareId = ShareId(name),
-            contents = ItemContents.Login(
-                title = name,
-                note = "",
-                username = username,
-                password = HiddenState.Concealed(""),
-                urls = emptyList(),
-                packageInfoSet = emptySet(),
-                primaryTotp = HiddenState.Concealed(""),
-                customFields = emptyList()
-            ),
-            state = 0,
-            createTime = Clock.System.now(),
-            modificationTime = Clock.System.now(),
-            lastAutofillTime = Clock.System.now(),
-            isPinned = false,
-        )
+    private fun item(name: String, username: String): ItemUiModel = ItemUiModel(
+        id = ItemId(name),
+        shareId = ShareId(name),
+        contents = ItemContents.Login(
+            title = name,
+            note = "",
+            username = username,
+            password = HiddenState.Concealed(""),
+            urls = emptyList(),
+            packageInfoSet = emptySet(),
+            primaryTotp = HiddenState.Concealed(""),
+            customFields = emptyList(),
+            passkeys = emptyList()
+        ),
+        state = 0,
+        createTime = Clock.System.now(),
+        modificationTime = Clock.System.now(),
+        lastAutofillTime = Clock.System.now(),
+        isPinned = false,
+    )
 }
 
 data class SuggestionsInput(

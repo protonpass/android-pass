@@ -54,7 +54,8 @@ class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                     urls = listOf(),
                     packageInfoSet = setOf(),
                     primaryTotp = HiddenState.Empty(""),
-                    customFields = listOf()
+                    customFields = listOf(),
+                    passkeys = emptyList()
                 ),
                 state = 0,
                 createTime = Clock.System.now(),

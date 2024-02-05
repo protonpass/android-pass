@@ -22,6 +22,8 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
@@ -43,6 +45,18 @@ fun ItemType.Companion.fromParsed(
             primaryTotp = context.encrypt(parsed.content.login.totpUri),
             customFields = parsed.extraFieldsList.map { field ->
                 field.toDomain(context)
+            },
+            passkeys = parsed.content.login.passkeysList.map {
+                Passkey(
+                    id = PasskeyId(it.keyId),
+                    domain = it.domain,
+                    rpId = it.rpId,
+                    rpName = it.rpName,
+                    userName = it.userName,
+                    userDisplayName = it.userDisplayName,
+                    userId = it.userId.toByteArray(),
+                    contents = context.encrypt(it.content.toByteArray())
+                )
             }
         )
         ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)

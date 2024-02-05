@@ -20,8 +20,10 @@ package proton.android.pass.domain
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.serialization.EncryptedByteArraySerializer
 
 @Serializable
 sealed interface CustomFieldContent {
@@ -63,6 +65,23 @@ enum class CreditCardType {
 }
 
 @Serializable
+@JvmInline
+value class PasskeyId(val value: String)
+
+@Serializable
+data class Passkey(
+    val id: PasskeyId,
+    val domain: String,
+    val rpId: String,
+    val rpName: String,
+    val userName: String,
+    val userDisplayName: String,
+    val userId: ByteArray,
+    @Serializable(with = EncryptedByteArraySerializer::class)
+    val contents: EncryptedByteArray
+)
+
+@Serializable
 sealed class ItemContents {
     abstract val title: String
     abstract val note: String
@@ -76,7 +95,8 @@ sealed class ItemContents {
         val urls: List<String>,
         val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: HiddenState,
-        val customFields: List<CustomFieldContent>
+        val customFields: List<CustomFieldContent>,
+        val passkeys: List<Passkey>
     ) : ItemContents() {
         companion object {
             fun create(
@@ -90,7 +110,8 @@ sealed class ItemContents {
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,
                 note = "",
-                customFields = emptyList()
+                customFields = emptyList(),
+                passkeys = emptyList()
             )
         }
     }

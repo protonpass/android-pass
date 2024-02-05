@@ -24,6 +24,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.UpdateItem
+import proton.android.pass.crypto.impl.Constants.ITEM_CONTENT_FORMAT_VERSION
 import proton.android.pass.domain.key.ItemKey
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
@@ -49,12 +50,8 @@ class UpdateItemImpl @Inject constructor(
         return EncryptedUpdateItemRequest(
             keyRotation = itemKey.rotation,
             lastRevision = lastRevision,
-            contentFormatVersion = CONTENT_FORMAT_VERSION,
+            contentFormatVersion = ITEM_CONTENT_FORMAT_VERSION,
             content = Base64.encodeBase64String(encryptedContents.array)
         )
-    }
-
-    companion object {
-        const val CONTENT_FORMAT_VERSION = 1
     }
 }

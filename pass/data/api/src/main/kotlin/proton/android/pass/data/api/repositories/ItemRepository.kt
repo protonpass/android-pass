@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.domain.Item
@@ -115,6 +116,10 @@ interface ItemRepository {
         shareId: ShareId,
         events: PendingEventList
     )
+
+    suspend fun applyPendingEvent(event: ItemPendingEvent)
+
+    suspend fun purgePendingEvent(event: ItemPendingEvent): Boolean
 
     fun observeItemCountSummary(
         userId: UserId,

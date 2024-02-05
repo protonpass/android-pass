@@ -19,22 +19,18 @@
 package proton.android.pass.data.impl.usecases
 
 import androidx.work.WorkManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.sync.Semaphore
-import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -43,13 +39,14 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
+import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toPendingEvent
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
-import proton.android.pass.data.impl.util.maxParallelAsyncCalls
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -58,7 +55,10 @@ import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
+private const val TRANSACTION_NAME_APPLY_PENDING_EVENTS = "ApplyPendingEvents"
+
 class ApplyPendingEventsImpl @Inject constructor(
+    private val database: PassDatabase,
     private val eventRepository: EventRepository,
     private val addressRepository: UserAddressRepository,
     private val itemRepository: ItemRepository,
@@ -72,19 +72,23 @@ class ApplyPendingEventsImpl @Inject constructor(
 
     override suspend fun invoke(userId: UserId?) {
         PassLogger.i(TAG, "Applying pending events started")
+
         val currentUserId = userId ?: accountManager.getPrimaryUserId()
-            .flowOn(Dispatchers.IO)
             .filterNotNull()
             .first()
         PassLogger.i(TAG, "Retrieved current user id")
-        val refreshSharesResult = shareRepository.refreshShares(currentUserId)
-        PassLogger.i(TAG, "Shares refreshed")
-        if (refreshSharesResult.allShareIds.isEmpty()) {
-            handleSharesWhenEmpty(currentUserId)
-        } else {
-            val address = requireNotNull(addressRepository.getAddresses(currentUserId).primary())
-            PassLogger.i(TAG, "Retrieved user address")
-            handleExistingShares(currentUserId, address.addressId, refreshSharesResult)
+
+        shareRepository.refreshShares(currentUserId).let { refreshSharesResult ->
+            PassLogger.i(TAG, "Shares refreshed")
+            if (refreshSharesResult.allShareIds.isEmpty()) {
+                handleSharesWhenEmpty(currentUserId)
+            } else {
+                val address = requireNotNull(
+                    addressRepository.getAddresses(currentUserId).primary()
+                )
+                PassLogger.i(TAG, "Retrieved user address")
+                handleExistingShares(currentUserId, address.addressId, refreshSharesResult)
+            }
         }
     }
 
@@ -98,41 +102,32 @@ class ApplyPendingEventsImpl @Inject constructor(
     private suspend fun handleExistingShares(
         userId: UserId,
         addressId: AddressId,
-        refreshSharesResult: RefreshSharesResult
+        refreshSharesResult: RefreshSharesResult,
     ) {
         PassLogger.i(TAG, "Received a list of shares, applying pending events")
         enqueueRefreshItems(refreshSharesResult.newShareIds)
-        withContext(Dispatchers.IO) {
-            val existingShares =
-                refreshSharesResult.allShareIds.subtract(refreshSharesResult.newShareIds)
-            val semaphore = Semaphore(maxParallelAsyncCalls())
-            val results = existingShares.map { share ->
-                async {
-                    semaphore.acquire()
 
-                    val result = runCatching {
-                        PassLogger.d(TAG, "Applying pending events for share id: $share")
-                        applyPendingEvents(addressId, userId, share)
-                    }
-                        .onFailure {
-                            PassLogger.w(TAG, "Error applying pending events for share id: $share")
-                            PassLogger.w(TAG, it)
-                            if (it is ShareNotAvailableError) {
-                                onShareNotAvailable(userId, share)
-                            }
+        refreshSharesResult.allShareIds
+            .subtract(refreshSharesResult.newShareIds)
+            .let { existingShareIds ->
+                coroutineScope {
+                    existingShareIds.map { shareId ->
+                        async {
+                            runCatching { fetchItemPendingEvent(userId, shareId, addressId) }
+                                .onFailure { error ->
+                                    if (error is ShareNotAvailableError) {
+                                        onShareNotAvailable(userId, shareId)
+                                    }
+                                }
                         }
-                    semaphore.release()
-                    result
+                    }.let { deferredEventResults ->
+                        deferredEventResults.awaitAll()
+                            .filter { eventResult -> eventResult.isSuccess }
+                            .mapNotNull { successEventResult -> successEventResult.getOrNull() }
+                            .let { events -> applyItemPendingEvents(events) }
+                    }
                 }
-            }.awaitAll()
-            val errors = results.filter { it.isFailure }.mapNotNull { it.exceptionOrNull() }
-                .filterNot { it is ShareNotAvailableError }
-            if (errors.isNotEmpty()) {
-                PassLogger.i(TAG, "Error applying pending events")
-            } else {
-                PassLogger.i(TAG, "Applied pending events")
             }
-        }
     }
 
     private suspend fun onShareNotAvailable(
@@ -153,67 +148,89 @@ class ApplyPendingEventsImpl @Inject constructor(
     }
 
     private suspend fun createDefaultVault(userId: UserId) {
-        val vault = encryptionContextProvider.withEncryptionContext {
+        encryptionContextProvider.withEncryptionContext {
             NewVault(
                 name = encrypt("Personal"),
                 description = encrypt("Personal vault"),
                 icon = ShareIcon.Icon1,
                 color = ShareColor.Color1
             )
-        }
-        runCatching {
-            createVault(userId, vault)
-        }.onSuccess {
-            PassLogger.i(TAG, "Default vault created")
-        }.onFailure {
-            PassLogger.w(TAG, "Error creating default vault")
-            PassLogger.w(TAG, it)
+        }.let { vault ->
+            runCatching { createVault(userId, vault) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Error creating default vault")
+                    PassLogger.w(TAG, error)
+                }
+                .onSuccess { PassLogger.i(TAG, "Default vault created") }
         }
     }
 
-    private suspend fun applyPendingEvents(
-        addressId: AddressId,
+    private suspend fun fetchItemPendingEvent(
         userId: UserId,
-        shareId: ShareId
-    ) {
-        while (currentCoroutineContext().isActive) {
-            val events = eventRepository.getEvents(userId, addressId, shareId)
-            if (events.shareResponse != null) {
-                shareRepository.applyUpdateShareEvent(
-                    userId = userId,
-                    shareId = shareId,
-                    event = events.shareResponse.toDomain()
+        shareId: ShareId,
+        addressId: AddressId,
+    ): ItemPendingEvent {
+        val pendingEventLists = mutableSetOf<PendingEventList>()
+        var updateShareEvent: UpdateShareEvent? = null
+        var lastEventId = eventRepository.getLatestEventId(userId, shareId)
+
+        do {
+            val eventList = eventRepository.getEvents(lastEventId, userId, shareId)
+            lastEventId = eventList.latestEventId
+            pendingEventLists.add(eventList.toDomain())
+            eventList.shareResponse?.let { shareResponse ->
+                updateShareEvent = shareResponse.toDomain()
+            }
+        } while (eventList.eventsPending)
+
+        return ItemPendingEvent(
+            userId = userId,
+            shareId = shareId,
+            addressId = addressId,
+            lastEventId = lastEventId,
+            updateShareEvent = updateShareEvent,
+            pendingEventLists = pendingEventLists,
+        )
+    }
+
+    private suspend fun applyItemPendingEvents(events: List<ItemPendingEvent>) {
+        events.forEach { event ->
+            if (event.hasPendingChanges) {
+                database.inTransaction(TRANSACTION_NAME_APPLY_PENDING_EVENTS) {
+                    event.updateShareEvent?.let { updateShareEvent ->
+                        shareRepository.applyPendingShareEvent(event.userId, updateShareEvent)
+                        shareRepository.applyPendingShareEventKeys(event.userId, updateShareEvent)
+                    }
+
+                    itemRepository.applyPendingEvent(event)
+                    itemRepository.purgePendingEvent(event)
+
+                    eventRepository.storeLatestEventId(
+                        userId = event.userId,
+                        addressId = event.addressId,
+                        shareId = event.shareId,
+                        eventId = event.lastEventId,
+                    )
+                }
+            } else {
+                eventRepository.storeLatestEventId(
+                    userId = event.userId,
+                    addressId = event.addressId,
+                    shareId = event.shareId,
+                    eventId = event.lastEventId,
                 )
             }
-
-            PassLogger.d(TAG, "Applying events with share id: $shareId")
-            itemRepository.applyEvents(
-                userId = userId,
-                addressId = addressId,
-                shareId = shareId,
-                events = events.toDomain()
-            )
-            PassLogger.d(
-                TAG,
-                "Applied events with share id: $shareId. Storing latest event ID"
-            )
-            eventRepository.storeLatestEventId(
-                userId = userId,
-                addressId = addressId,
-                shareId = shareId,
-                eventId = events.latestEventId
-            )
-
-            if (!events.eventsPending) break
         }
     }
 
     private fun enqueueRefreshItems(shares: Set<ShareId>) {
-        if (shares.isNotEmpty()) {
-            val request = FetchItemsWorker.getRequestFor(shares.toList())
-            PassLogger.i(TAG, "Enqueuing FetchItemsWorker")
-            workManager.enqueue(request)
-        }
+        if (shares.isEmpty()) return
+
+        FetchItemsWorker.getRequestFor(shares.toList())
+            .let { fetchItemsWorkRequest ->
+                PassLogger.i(TAG, "Enqueuing FetchItemsWorker")
+                workManager.enqueue(fetchItemsWorkRequest)
+            }
     }
 
     private fun EventList.toDomain(): PendingEventList = PendingEventList(

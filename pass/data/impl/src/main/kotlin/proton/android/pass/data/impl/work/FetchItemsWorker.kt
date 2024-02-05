@@ -35,14 +35,13 @@ import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.sync.Semaphore
-import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -73,7 +72,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         val hasItems = AtomicBoolean(false)
         val semaphore = Semaphore(maxParallelAsyncCalls())
         itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
-        val results = withContext(Dispatchers.IO) {
+        val results = coroutineScope {
             shareIds.map { shareId ->
                 async {
                     semaphore.acquire()

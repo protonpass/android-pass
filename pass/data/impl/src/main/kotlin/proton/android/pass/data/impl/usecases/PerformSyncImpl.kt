@@ -18,10 +18,9 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withTimeout
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
@@ -36,39 +35,36 @@ class PerformSyncImpl @Inject constructor(
     private val refreshInvites: RefreshInvites
 ) : PerformSync {
 
-    override suspend fun invoke(userId: UserId?) {
+    override suspend fun invoke(userId: UserId?) = coroutineScope {
         PassLogger.i(TAG, "Performing sync started")
-        val res = withContext(Dispatchers.IO) {
-            val pendingEvents = async { performPendingEvents(userId) }
-            pendingEvents.invokeOnCompletion {
-                if (it != null) {
-                    PassLogger.w(TAG, it)
-                    PassLogger.i(TAG, "Pending events error")
-                }
+
+        val pendingEvents = async { performPendingEvents(userId) }
+        pendingEvents.invokeOnCompletion { error ->
+            if (error == null) {
                 PassLogger.i(TAG, "Pending events finished")
+            } else {
+                PassLogger.w(TAG, error)
+                PassLogger.i(TAG, "Pending events error")
             }
-            val refreshInvites = async { performRefreshInvites(userId) }
-            refreshInvites.invokeOnCompletion {
-                if (it != null) {
-                    PassLogger.w(TAG, it)
-                    PassLogger.i(TAG, "Refresh invites error")
-                } else {
-                    PassLogger.i(TAG, "Refresh invites finished")
-                }
-            }
-            awaitAll(pendingEvents, refreshInvites)
         }
 
-        val exception = res.firstOrNull { it.isFailure }?.exceptionOrNull()
-        if (exception != null) {
-            PassLogger.w(TAG, exception)
-            PassLogger.w(TAG, "Performing sync error")
-            Result.failure(exception)
-        } else {
-            PassLogger.i(TAG, "Performing sync finished")
-            Result.success(Unit)
+        val refreshInvites = async { performRefreshInvites(userId) }
+        refreshInvites.invokeOnCompletion { error ->
+            if (error == null) {
+                PassLogger.i(TAG, "Refresh invites finished")
+            } else {
+                PassLogger.w(TAG, error)
+                PassLogger.i(TAG, "Refresh invites error")
+            }
         }
+
+        awaitAll(pendingEvents, refreshInvites)
     }
+        .firstOrNull { syncResult -> syncResult.isFailure }
+        ?.exceptionOrNull()
+        ?.let { error -> PassLogger.w(TAG, "Performing sync error: ${error.message}") }
+        ?: PassLogger.i(TAG, "Performing sync finished")
+    
 
     private suspend fun performPendingEvents(userId: UserId?): Result<Unit> =
         runCatching { withTimeout(2.minutes) { applyPendingEvents(userId) } }

@@ -48,6 +48,7 @@ import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.MigrateItemsResult
@@ -587,46 +588,64 @@ class ItemRepositoryImpl @Inject constructor(
         shareId: ShareId,
         events: PendingEventList
     ) {
-        withContext(Dispatchers.IO) {
-            PassLogger.d(
-                TAG,
-                "Applying events: [updates=${events.updatedItems.size}] [deletes=${events.deletedItemIds.size}]"
+        val userAddress = requireNotNull(userAddressRepository.getAddress(userId, addressId))
+        val share = shareRepository.getById(userId, shareId)
+        val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
+
+        val updateAsEntities = events.updatedItems.map {
+            itemResponseToEntity(
+                userAddress,
+                it.toItemRevision(),
+                share,
+                shareKeys
             )
+        }
 
-            val userAddress = requireNotNull(userAddressRepository.getAddress(userId, addressId))
-            val share = shareRepository.getById(userId, shareId)
-            val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
-
-            val updateAsEntities = events.updatedItems.map {
-                itemResponseToEntity(
-                    userAddress,
-                    it.toItemRevision(),
-                    share,
-                    shareKeys
+        if (updateAsEntities.isNotEmpty() && events.deletedItemIds.isNotEmpty()) {
+            database.inTransaction("applyEvents") {
+                localItemDataSource.upsertItems(updateAsEntities)
+                localItemDataSource.deleteList(
+                    shareId,
+                    events.deletedItemIds.map(::ItemId)
                 )
             }
-
-            if (updateAsEntities.isNotEmpty() && events.deletedItemIds.isNotEmpty()) {
-                database.inTransaction("applyEvents") {
-                    localItemDataSource.upsertItems(updateAsEntities)
-                    localItemDataSource.deleteList(
-                        shareId,
-                        events.deletedItemIds.map(::ItemId)
-                    )
-                }
-            } else {
-                if (updateAsEntities.isNotEmpty()) {
-                    localItemDataSource.upsertItems(updateAsEntities)
-                }
-                if (events.deletedItemIds.isNotEmpty()) {
-                    localItemDataSource.deleteList(
-                        shareId,
-                        events.deletedItemIds.map(::ItemId)
-                    )
-                }
-            }
-            PassLogger.d(TAG, "Finishing applying events")
+            return
         }
+
+        if (updateAsEntities.isNotEmpty()) {
+            localItemDataSource.upsertItems(updateAsEntities)
+            return
+        }
+
+        if (events.deletedItemIds.isNotEmpty()) {
+            localItemDataSource.deleteList(
+                shareId,
+                events.deletedItemIds.map(::ItemId)
+            )
+        }
+    }
+
+    override suspend fun applyPendingEvent(event: ItemPendingEvent) = with(event) {
+        if (!hasPendingItemRevisions) return
+
+        val userAddress = requireNotNull(userAddressRepository.getAddress(userId, addressId))
+        val share = shareRepository.getById(userId, shareId)
+        val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
+
+        pendingItemRevisions.map { pendingItemRevision ->
+            itemResponseToEntity(
+                userAddress,
+                pendingItemRevision.toItemRevision(),
+                share,
+                shareKeys,
+            )
+        }.let { items -> localItemDataSource.upsertItems(items) }
+    }
+
+    override suspend fun purgePendingEvent(event: ItemPendingEvent) = with(event) {
+        if (!hasDeletedItemIds) return false
+
+        localItemDataSource.deleteList(shareId, deletedItemIds)
     }
 
     override fun observeItemCountSummary(

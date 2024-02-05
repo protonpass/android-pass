@@ -54,6 +54,11 @@ interface ShareRepository {
     suspend fun deleteSharesForUser(userId: UserId)
     suspend fun leaveVault(userId: UserId, shareId: ShareId)
     suspend fun applyUpdateShareEvent(userId: UserId, shareId: ShareId, event: UpdateShareEvent)
+
+    suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent)
+
+    suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent)
+
 }
 
 data class UpdateShareEvent(

@@ -25,6 +25,7 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
+import proton.android.pass.crypto.impl.Constants.ITEM_CONTENT_FORMAT_VERSION
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.key.ShareKey
@@ -57,7 +58,7 @@ class CreateItemImpl @Inject constructor(
 
         val request = EncryptedCreateItem(
             keyRotation = shareKey.rotation,
-            contentFormatVersion = CONTENT_FORMAT_VERSION,
+            contentFormatVersion = ITEM_CONTENT_FORMAT_VERSION,
             content = Base64.encodeBase64String(encryptedContents.array),
             itemKey = Base64.encodeBase64String(encryptedItemKey.array)
         )
@@ -65,10 +66,6 @@ class CreateItemImpl @Inject constructor(
             request = request,
             itemKey = itemKey
         )
-    }
-
-    companion object {
-        const val CONTENT_FORMAT_VERSION = 1
     }
 }
 

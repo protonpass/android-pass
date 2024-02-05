@@ -342,7 +342,8 @@ class SelectItemScreenTest {
                         PackageInfo(PackageName(PACKAGE_NAME), AppName(""))
                     ),
                     primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
-                    customFields = emptyList()
+                    customFields = emptyList(),
+                    passkeys = emptyList()
                 )
             )
         }
@@ -362,7 +363,8 @@ class SelectItemScreenTest {
                         PackageInfo(PackageName(PACKAGE_NAME), AppName(""))
                     ),
                     primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
-                    customFields = emptyList()
+                    customFields = emptyList(),
+                    passkeys = emptyList()
                 )
             )
         }

@@ -36,5 +36,5 @@ abstract class PassEventsDao : BaseDao<PassEventEntity>() {
         """
     )
     abstract fun getLatestEventId(userId: String, shareId: String): Flow<PassEventEntity?>
-    
+
 }

@@ -44,9 +44,9 @@ sealed interface UICustomFieldContent : Parcelable {
         UICustomFieldContent
 
     fun toCustomFieldContent() = when (this) {
-        is Text -> proton.android.pass.domain.CustomFieldContent.Text(label, value)
-        is Hidden -> proton.android.pass.domain.CustomFieldContent.Hidden(label, value.toHiddenState())
-        is Totp -> proton.android.pass.domain.CustomFieldContent.Totp(label, value.toHiddenState())
+        is Text -> CustomFieldContent.Text(label, value)
+        is Hidden -> CustomFieldContent.Hidden(label, value.toHiddenState())
+        is Totp -> CustomFieldContent.Totp(label, value.toHiddenState())
     }
 
     fun compare(other: UICustomFieldContent, encryptionContext: EncryptionContext): Boolean =

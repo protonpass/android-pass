@@ -23,6 +23,7 @@ import org.junit.Test
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils
+import proton.android.pass.crypto.impl.Constants
 import proton.android.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
 import kotlin.test.assertEquals
@@ -43,7 +44,7 @@ class CreateItemImplTest {
         val output = instance.create(shareKey, contents)
         val request = output.request
 
-        assertEquals(request.contentFormatVersion, CreateItemImpl.CONTENT_FORMAT_VERSION)
+        assertEquals(request.contentFormatVersion, Constants.ITEM_CONTENT_FORMAT_VERSION)
         assertEquals(request.keyRotation, shareKey.rotation)
 
         val decryptedContent = encryptionContextProvider.withEncryptionContext(decryptedShareKey) {

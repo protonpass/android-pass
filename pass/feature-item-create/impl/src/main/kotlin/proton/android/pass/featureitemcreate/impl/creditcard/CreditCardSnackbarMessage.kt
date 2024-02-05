@@ -15,4 +15,5 @@ enum class CreditCardSnackbarMessage(
     InitError(R.string.credit_card_init_error, SnackbarType.ERROR),
     ItemUpdated(R.string.changes_saved, SnackbarType.SUCCESS),
     ItemUpdateError(R.string.credit_card_item_update_error, SnackbarType.ERROR),
+    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR),
 }

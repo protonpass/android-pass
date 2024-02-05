@@ -37,4 +37,5 @@ enum class LoginSnackbarMessages(
     EmailNotValidated(R.string.create_alias_email_not_validated_error, SnackbarType.ERROR),
     AliasRateLimited(R.string.alias_rate_limited, SnackbarType.ERROR),
     InvalidTotpError(R.string.create_login_invalid_totp, SnackbarType.ERROR),
+    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR),
 }

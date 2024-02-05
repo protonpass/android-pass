@@ -41,7 +41,8 @@ data class LoginItemFormState(
     val urls: List<String>,
     val packageInfoSet: Set<PackageInfoUi>,
     val primaryTotp: UIHiddenState,
-    val customFields: List<UICustomFieldContent>
+    val customFields: List<UICustomFieldContent>,
+    val passkeys: List<UIPasskeyContent>
 ) : Parcelable {
 
     fun validate(): Set<LoginItemValidationErrors> {
@@ -67,7 +68,8 @@ data class LoginItemFormState(
         urls = urls,
         packageInfoSet = packageInfoSet.map(PackageInfoUi::toPackageInfo).toSet(),
         primaryTotp = primaryTotp.toHiddenState(),
-        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent)
+        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent),
+        passkeys = passkeys.map(UIPasskeyContent::toDomain)
     )
 
     fun compare(other: LoginItemFormState, encryptionContext: EncryptionContext): Boolean =
@@ -95,6 +97,7 @@ data class LoginItemFormState(
             primaryTotp = UIHiddenState.Empty(encryptionContext.encrypt("")),
             packageInfoSet = emptySet(),
             customFields = emptyList(),
+            passkeys = emptyList()
         )
 
     }

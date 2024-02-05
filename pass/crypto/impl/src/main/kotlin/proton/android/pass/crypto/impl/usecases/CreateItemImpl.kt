@@ -25,7 +25,6 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
-import proton.android.pass.crypto.impl.usecases.Utils.generateUuid
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.key.ShareKey
@@ -40,7 +39,7 @@ class CreateItemImpl @Inject constructor(
         itemContents: ItemContents
     ): CreateItemPayload {
         val serializedItem = encryptionContextProvider.withEncryptionContext {
-            itemContents.serializeToProto(itemUuid = generateUuid(), this).toByteArray()
+            itemContents.serializeToProto(encryptionContext = this).toByteArray()
         }
         val itemKey = EncryptionKey.generate()
 

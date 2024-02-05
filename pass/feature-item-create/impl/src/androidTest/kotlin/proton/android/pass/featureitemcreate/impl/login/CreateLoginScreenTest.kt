@@ -244,7 +244,8 @@ class CreateLoginScreenTest {
                 packageInfoSet = emptySet(),
                 primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(totp), totp),
                 password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
-                urls = listOf(website1Full, website2Full)
+                urls = listOf(website1Full, website2Full),
+                passkeys = emptyList()
 
             )
         )
@@ -350,7 +351,8 @@ class CreateLoginScreenTest {
                 packageInfoSet = emptySet(),
                 primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
                 password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-                urls = listOf("")
+                urls = listOf(""),
+                passkeys = emptyList()
             )
         )
         assertThat(memory).isEqualTo(listOf(expected))

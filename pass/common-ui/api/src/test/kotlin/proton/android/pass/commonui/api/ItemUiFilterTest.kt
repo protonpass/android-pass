@@ -144,7 +144,8 @@ class ItemUiFilterTest {
                     urls = listOf("exampleurl.test", "otherurl.test"),
                     packageInfoSet = setOf(),
                     primaryTotp = HiddenState.Concealed(""),
-                    customFields = emptyList()
+                    customFields = emptyList(),
+                    passkeys = emptyList()
                 )
             ),
             TestItemUiModel.create(
@@ -159,7 +160,8 @@ class ItemUiFilterTest {
                     urls = listOf("randomurl.test", "testurl.test"),
                     packageInfoSet = setOf(),
                     primaryTotp = HiddenState.Concealed(""),
-                    customFields = emptyList()
+                    customFields = emptyList(),
+                    passkeys = emptyList()
                 )
             ),
             TestItemUiModel.create(
@@ -174,7 +176,8 @@ class ItemUiFilterTest {
                     urls = listOf("exampleurl.test", "testurl.test"),
                     packageInfoSet = setOf(),
                     primaryTotp = HiddenState.Concealed(""),
-                    customFields = emptyList()
+                    customFields = emptyList(),
+                    passkeys = emptyList()
                 )
             ),
         )
@@ -204,7 +207,8 @@ class ItemUiFilterTest {
                         CustomFieldContent.Hidden(label = "hidden", value = HiddenState.Empty("")),
                         CustomFieldContent.Totp(label = "totp", value = HiddenState.Empty("")),
 
-                    )
+                    ),
+                    passkeys = emptyList()
                 )
             )
         )
@@ -281,7 +285,8 @@ class ItemUiFilterTest {
                 password = HiddenState.Empty(""),
                 packageInfoSet = setOf(),
                 primaryTotp = HiddenState.Empty(""),
-                customFields = listOf()
+                customFields = listOf(),
+                passkeys = emptyList()
             )
         ),
         TestItemUiModel.create(
@@ -293,7 +298,8 @@ class ItemUiFilterTest {
                 password = HiddenState.Empty(""),
                 packageInfoSet = setOf(),
                 primaryTotp = HiddenState.Empty(""),
-                customFields = listOf()
+                customFields = listOf(),
+                passkeys = emptyList()
             )
         )
     )

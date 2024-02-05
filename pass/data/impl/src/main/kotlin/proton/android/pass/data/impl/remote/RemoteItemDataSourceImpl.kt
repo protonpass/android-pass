@@ -26,6 +26,7 @@ import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
+import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
 import proton.android.pass.data.impl.requests.CreateAliasRequest
@@ -43,6 +44,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
+const val CODE_INVALID_CONTENT = 2001
 const val CODE_CANNOT_CREATE_MORE_ALIASES = 300_007
 const val CODE_USER_EMAIL_NOT_VALIDATED = 300_009
 const val ALIAS_RATE_LIMIT = 2028
@@ -111,11 +113,22 @@ class RemoteItemDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         body: UpdateItemRequest
-    ): ItemRevision =
-        api.get<PasswordManagerApi>(userId)
+    ): ItemRevision {
+        val res = api.get<PasswordManagerApi>(userId)
             .invoke { updateItem(shareId.id, itemId.id, body) }
-            .valueOrThrow
-            .item
+        when (res) {
+            is ApiResult.Success -> return res.value.item
+            is ApiResult.Error -> {
+                if (res is ApiResult.Error.Http) {
+                    when (res.proton?.code) {
+                        CODE_INVALID_CONTENT -> throw InvalidContentFormatVersionError()
+                        else -> {}
+                    }
+                }
+                throw res.cause ?: Exception("Update item failed")
+            }
+        }
+    }
 
     override suspend fun getItems(
         userId: UserId,

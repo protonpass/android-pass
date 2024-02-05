@@ -48,10 +48,11 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
-import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.datamodels.api.toContent
@@ -72,6 +73,7 @@ import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.InitError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemUpdateError
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.UpdateAppToUpdateItemError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -310,8 +312,13 @@ class UpdateLoginViewModel @Inject constructor(
             send2FAUpdatedTelemetryEvent(currentItem, item)
             snackbarDispatcher(LoginSnackbarMessages.LoginUpdated)
         }.onFailure {
+            val message = if (it is InvalidContentFormatVersionError) {
+                UpdateAppToUpdateItemError
+            } else {
+                ItemUpdateError
+            }
             PassLogger.e(TAG, it, "Update item error")
-            snackbarDispatcher(ItemUpdateError)
+            snackbarDispatcher(message)
         }
     }
 

@@ -18,6 +18,7 @@
 
 package proton.android.pass.datamodels.api
 
+import com.google.protobuf.ByteString
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomFieldContent
@@ -31,19 +32,18 @@ import java.util.UUID
 
 @Suppress("LongMethod", "ComplexMethod")
 fun ItemContents.serializeToProto(
-    itemUuid: String? = null,
+    itemUuid: String = UUID.randomUUID().toString(),
+    builder: ItemV1.Item.Builder = ItemV1.Item.newBuilder(),
     encryptionContext: EncryptionContext
 ): ItemV1.Item {
-    val uuid = itemUuid ?: UUID.randomUUID().toString()
-    val builder = ItemV1.Item.newBuilder()
-        .setMetadata(
-            ItemV1.Metadata.newBuilder()
-                .setName(title)
-                .setNote(note)
-                .setItemUuid(uuid)
-                .build()
-        )
-    val contentBuilder = ItemV1.Content.newBuilder()
+    builder.setMetadata(
+        builder.metadata.toBuilder()
+            .setName(title)
+            .setNote(note)
+            .setItemUuid(itemUuid)
+            .build()
+    )
+
     val content = when (this) {
         is ItemContents.Login -> {
             if (packageInfoSet.isNotEmpty()) {
@@ -53,9 +53,10 @@ fun ItemContents.serializeToProto(
                         .setAppName(it.appName.value)
                         .build()
                 }
-                builder.platformSpecific = ItemV1.PlatformSpecific.newBuilder()
+                builder.platformSpecific = builder.platformSpecific.toBuilder()
                     .setAndroid(
                         ItemV1.AndroidSpecific.newBuilder()
+                            .clearAllowedApps()
                             .addAllAllowedApps(packageNameList)
                             .build()
                     )
@@ -99,36 +100,62 @@ fun ItemContents.serializeToProto(
                 }
             }
 
-            val itemBuilder = ItemV1.ItemLogin.newBuilder()
-            itemBuilder.username = username
-            itemBuilder.password = encryptionContext.decrypt(password.encrypted)
-            itemBuilder.addAllUrls(urls.filter { it.isNotBlank() })
-            itemBuilder.totpUri = encryptionContext.decrypt(primaryTotp.encrypted)
-            contentBuilder.setLogin(itemBuilder.build())
+            builder.content.toBuilder().setLogin(
+                builder.content.login.toBuilder()
+                    .setUsername(username)
+                    .setPassword(encryptionContext.decrypt(password.encrypted))
+                    .setTotpUri(encryptionContext.decrypt(primaryTotp.encrypted))
+
+                    // URLs
+                    .clearUrls()
+                    .addAllUrls(urls.filter { it.isNotBlank() })
+
+                    // Passkeys
+                    .clearPasskeys()
+                    .addAllPasskeys(
+                        passkeys.map {
+                            ItemV1.Passkey.newBuilder()
+                                .setKeyId(it.id.value)
+                                .setContent(ByteString.copyFrom(encryptionContext.decrypt(it.contents)))
+                                .setDomain(it.domain)
+                                .setRpId(it.rpId)
+                                .setRpName(it.rpName)
+                                .setUserName(it.userName)
+                                .setUserDisplayName(it.userDisplayName)
+                                .setUserId(ByteString.copyFrom(it.userId))
+                                .build()
+                        }
+                    )
+                    .build()
+            )
         }
 
-        is ItemContents.Note -> contentBuilder.setNote(
+        is ItemContents.Note -> builder.content.toBuilder().setNote(
             ItemV1.ItemNote.newBuilder().build()
         )
 
-        is ItemContents.Alias -> contentBuilder.setAlias(
+        is ItemContents.Alias -> builder.content.toBuilder().setAlias(
             ItemV1.ItemAlias.newBuilder().build()
         )
 
         is ItemContents.CreditCard -> {
-            val itemBuilder = ItemV1.ItemCreditCard.newBuilder()
-            itemBuilder.cardholderName = cardHolder
-            itemBuilder.number = number
-            itemBuilder.cardType = when (type) {
-                CreditCardType.Other -> ItemV1.CardType.Other
-                CreditCardType.Visa -> ItemV1.CardType.Visa
-                CreditCardType.MasterCard -> ItemV1.CardType.Mastercard
-                CreditCardType.AmericanExpress -> ItemV1.CardType.AmericanExpress
-            }
-            itemBuilder.verificationNumber = encryptionContext.decrypt(cvv.encrypted)
-            itemBuilder.pin = encryptionContext.decrypt(pin.encrypted)
-            itemBuilder.expirationDate = expirationDate
-            contentBuilder.setCreditCard(itemBuilder.build())
+            builder.content.toBuilder().setCreditCard(
+                builder.content.creditCard.toBuilder()
+                    .setCardholderName(cardHolder)
+                    .setNumber(number)
+                    .setCardType(
+                        when (type) {
+                            CreditCardType.Other -> ItemV1.CardType.Other
+                            CreditCardType.Visa -> ItemV1.CardType.Visa
+                            CreditCardType.MasterCard -> ItemV1.CardType.Mastercard
+                            CreditCardType.AmericanExpress -> ItemV1.CardType.AmericanExpress
+                        }
+                    )
+                    .setVerificationNumber(encryptionContext.decrypt(cvv.encrypted))
+                    .setPin(encryptionContext.decrypt(pin.encrypted))
+                    .setExpirationDate(expirationDate)
+                    .build()
+            )
         }
 
         is ItemContents.Unknown -> throw IllegalStateException("Cannot be unknown")

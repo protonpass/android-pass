@@ -236,8 +236,21 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         contents: ItemContents
     ): Item = withContext(Dispatchers.IO) {
+
+        val localEntity = localItemDataSource.getById(share.id, item.id)
+            ?: throw IllegalStateException("Item not found in local database")
+
+        val decryptedProto = encryptionContextProvider.withEncryptionContext {
+            decrypt(localEntity.encryptedContent)
+        }
+
+        val decodedProto = ItemV1.Item.parseFrom(decryptedProto)
         val itemContents = encryptionContextProvider.withEncryptionContext {
-            contents.serializeToProto(itemUuid = item.itemUuid, this)
+            contents.serializeToProto(
+                itemUuid = item.itemUuid,
+                builder = decodedProto.toBuilder(),
+                encryptionContext = this
+            )
         }
         performUpdate(
             userId,

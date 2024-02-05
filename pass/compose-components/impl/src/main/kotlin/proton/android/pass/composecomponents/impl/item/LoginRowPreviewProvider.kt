@@ -79,7 +79,8 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                         urls = websites,
                         packageInfoSet = emptySet(),
                         primaryTotp = HiddenState.Concealed(""),
-                        customFields = emptyList()
+                        customFields = emptyList(),
+                        passkeys = emptyList()
                     ),
                     state = 0,
                     createTime = Clock.System.now(),

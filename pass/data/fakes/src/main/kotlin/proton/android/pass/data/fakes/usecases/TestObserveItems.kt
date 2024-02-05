@@ -84,7 +84,10 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             itemContents: ItemContents
         ): Item {
             val now = Clock.System.now()
-            val asProto = itemContents.serializeToProto("123", TestEncryptionContext)
+            val asProto = itemContents.serializeToProto(
+                itemUuid = "123",
+                encryptionContext = TestEncryptionContext
+            )
             return TestEncryptionContextProvider().withEncryptionContext {
                 Item(
                     id = itemId,
@@ -124,7 +127,8 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(primaryTotp), primaryTotp),
-                customFields = emptyList()
+                customFields = emptyList(),
+                passkeys = emptyList()
             )
         )
 

@@ -76,7 +76,8 @@ object TestItem {
             websites = emptyList(),
             packageInfoSet = emptySet(),
             primaryTotp = randomString().encrypt(TestKeyStoreCrypto),
-            customFields = emptyList()
+            customFields = emptyList(),
+            passkeys = emptyList()
         )
         val titleParam = title ?: randomString()
         val noteParam = note ?: randomString()

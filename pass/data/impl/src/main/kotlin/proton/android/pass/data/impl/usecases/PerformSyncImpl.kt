@@ -64,7 +64,6 @@ class PerformSyncImpl @Inject constructor(
         ?.exceptionOrNull()
         ?.let { error -> PassLogger.w(TAG, "Performing sync error: ${error.message}") }
         ?: PassLogger.i(TAG, "Performing sync finished")
-    
 
     private suspend fun performPendingEvents(userId: UserId?): Result<Unit> =
         runCatching { withTimeout(2.minutes) { applyPendingEvents(userId) } }

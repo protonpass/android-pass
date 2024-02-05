@@ -130,5 +130,5 @@ class TestShareRepository : ShareRepository {
     override suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent) {}
 
     override suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent) {}
-    
+
 }

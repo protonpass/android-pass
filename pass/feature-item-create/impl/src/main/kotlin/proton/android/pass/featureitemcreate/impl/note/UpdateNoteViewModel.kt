@@ -39,6 +39,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.domain.Item
@@ -49,6 +50,7 @@ import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.InitError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteUpdated
+import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.UpdateAppToUpdateItemError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -149,8 +151,13 @@ class UpdateNoteViewModel @Inject constructor(
                     telemetryManager.sendEvent(ItemUpdate(EventItemType.Note))
                 }
                 .onFailure {
+                    val message = if (it is InvalidContentFormatVersionError) {
+                        UpdateAppToUpdateItemError
+                    } else {
+                        ItemUpdateError
+                    }
                     PassLogger.e(TAG, it, "Update item error")
-                    snackbarDispatcher(ItemUpdateError)
+                    snackbarDispatcher(message)
                 }
         } else {
             PassLogger.i(TAG, "Empty User Id")

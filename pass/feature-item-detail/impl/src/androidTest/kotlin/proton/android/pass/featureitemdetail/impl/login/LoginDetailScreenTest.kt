@@ -258,7 +258,8 @@ class LoginDetailScreenTest {
                     encrypted = TestEncryptionContext.encrypt(primaryTotp),
                     clearText = primaryTotp
                 ),
-                customFields = emptyList()
+                customFields = emptyList(),
+                passkeys = emptyList()
             )
         )
 

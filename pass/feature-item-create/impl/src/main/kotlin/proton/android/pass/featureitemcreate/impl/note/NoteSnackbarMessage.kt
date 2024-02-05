@@ -33,4 +33,5 @@ enum class NoteSnackbarMessage(
     ItemUpdateError(R.string.create_note_item_update_error, SnackbarType.ERROR),
     NoteCreated(R.string.note_created, SnackbarType.SUCCESS),
     NoteUpdated(R.string.changes_saved, SnackbarType.SUCCESS),
+    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR),
 }

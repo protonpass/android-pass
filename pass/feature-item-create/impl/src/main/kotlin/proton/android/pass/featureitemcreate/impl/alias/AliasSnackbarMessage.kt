@@ -36,5 +36,6 @@ enum class AliasSnackbarMessage(
     ItemUpdateError(R.string.create_alias_item_update_error, SnackbarType.ERROR),
     AliasCreated(R.string.alias_created, SnackbarType.SUCCESS),
     AliasUpdated(R.string.changes_saved, SnackbarType.SUCCESS),
-    CannotRetrieveAliasOptions(R.string.cannot_retrieve_alias_options, SnackbarType.ERROR)
+    CannotRetrieveAliasOptions(R.string.cannot_retrieve_alias_options, SnackbarType.ERROR),
+    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR)
 }

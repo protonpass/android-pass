@@ -20,6 +20,7 @@ import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -30,6 +31,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.InitError
+import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.ItemUpdateError
+import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.UpdateAppToUpdateItemError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -131,7 +134,12 @@ class UpdateCreditCardViewModel @Inject constructor(
             telemetryManager.sendEvent(ItemUpdate(EventItemType.CreditCard))
         }.onFailure {
             PassLogger.e(TAG, it, "Update credit card error")
-            snackbarDispatcher(CreditCardSnackbarMessage.ItemUpdateError)
+            val message = if (it is InvalidContentFormatVersionError) {
+                UpdateAppToUpdateItemError
+            } else {
+                ItemUpdateError
+            }
+            snackbarDispatcher(message)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
     }

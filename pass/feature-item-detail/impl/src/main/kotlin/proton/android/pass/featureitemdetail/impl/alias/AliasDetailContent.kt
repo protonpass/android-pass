@@ -46,11 +46,12 @@ fun AliasDetailContent(
     isLoading: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
-    onVaultClick: () -> Unit
+    onVaultClick: () -> Unit,
+    isHistoryFeatureEnabled: Boolean,
 ) {
     Column(
         modifier = modifier.padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         AliasTitle(
             modifier = Modifier.padding(Spacing.none, 12.dp),
@@ -73,15 +74,16 @@ fun AliasDetailContent(
             accentColor = PassTheme.colors.aliasInteractionNorm,
         )
 
-        HistorySection(
-            createdInstant = itemUiModel.createTime,
-            modifiedInstant = itemUiModel.modificationTime,
-            onViewItemHistoryClicked = {},
-            buttonBackgroundColor = PassTheme.colors.aliasInteractionNormMinor2,
-            buttonTextColor = PassTheme.colors.aliasInteractionNormMajor2,
-        )
+        if (isHistoryFeatureEnabled) {
+            HistorySection(
+                createdInstant = itemUiModel.createTime,
+                modifiedInstant = itemUiModel.modificationTime,
+                onViewItemHistoryClicked = {},
+                buttonBackgroundColor = PassTheme.colors.aliasInteractionNormMinor2,
+                buttonTextColor = PassTheme.colors.aliasInteractionNormMajor2,
+            )
+        }
 
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
 }
-

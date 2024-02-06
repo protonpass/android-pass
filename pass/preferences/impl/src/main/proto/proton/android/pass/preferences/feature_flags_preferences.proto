@@ -14,4 +14,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto sharing_new_users_enabled = 6;
   BoolFlagPrefProto credit_card_autofill_enabled = 7;
   BoolFlagPrefProto pinning_v1_enabled = 8;
+  BoolFlagPrefProto history_v1_enabled = 9;
 }

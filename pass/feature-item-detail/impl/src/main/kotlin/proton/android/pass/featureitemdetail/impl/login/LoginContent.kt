@@ -34,6 +34,7 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
+import proton.android.pass.featureitemdetail.impl.common.HistorySection
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
@@ -53,6 +54,7 @@ fun LoginContent(
     onEvent: (LoginDetailEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
+
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -67,6 +69,7 @@ fun LoginContent(
             onVaultClick = { onEvent(LoginDetailEvent.OnVaultClick) },
             isPinned = itemUiModel.isPinned,
         )
+
         MainLoginSection(
             username = contents.username,
             passwordHiddenState = contents.password,
@@ -75,13 +78,23 @@ fun LoginContent(
             showViewAlias = showViewAlias,
             onEvent = onEvent
         )
+
         WebsiteSection(
             websites = contents.urls.toPersistentList(),
             onEvent = onEvent
         )
+
         NoteSection(
             text = itemUiModel.contents.note,
             accentColor = PassTheme.colors.loginInteractionNorm
+        )
+
+        HistorySection(
+            createdInstant = itemUiModel.createTime,
+            modifiedInstant = itemUiModel.modificationTime,
+            onViewItemHistoryClicked = {},
+            buttonBackgroundColor = PassTheme.colors.loginInteractionNormMinor2,
+            buttonTextColor = PassTheme.colors.loginInteractionNormMajor2,
         )
 
         CustomFieldDetails(
@@ -94,6 +107,8 @@ fun LoginContent(
             isEditable = false,
             onLinkedAppDelete = {}
         )
+
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
+
 }

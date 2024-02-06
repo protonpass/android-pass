@@ -33,13 +33,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
+import proton.android.pass.featureitemdetail.impl.common.HistorySection
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
@@ -50,18 +52,19 @@ import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
 @Composable
 fun NoteContent(
     modifier: Modifier = Modifier,
-    name: String,
-    note: String,
+    itemUiModel: ItemUiModel,
     vault: Vault?,
     moreInfoUiState: MoreInfoUiState,
     onVaultClick: () -> Unit,
     isPinned: Boolean,
 ) {
+    val contents = itemUiModel.contents as ItemContents.Note
+
     Column(
-        modifier = modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp)
+        modifier = modifier.padding(Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(Spacing.large),
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Spacing.small),
@@ -76,7 +79,7 @@ fun NoteContent(
                     )
                 }
 
-                ItemTitleText(text = name, maxLines = Int.MAX_VALUE)
+                ItemTitleText(text = contents.title, maxLines = Int.MAX_VALUE)
             }
 
             VaultNameSubtitle(vault = vault, onClick = onVaultClick)
@@ -85,10 +88,18 @@ fun NoteContent(
         SelectionContainer(modifier = Modifier.fillMaxWidth()) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = note,
-                style = ProtonTheme.typography.defaultNorm
+                text = contents.note,
+                style = ProtonTheme.typography.defaultNorm,
             )
         }
+
+        HistorySection(
+            createdInstant = itemUiModel.createTime,
+            modifiedInstant = itemUiModel.modificationTime,
+            onViewItemHistoryClicked = {},
+            buttonBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
+            buttonTextColor = PassTheme.colors.noteInteractionNormMajor2,
+        )
 
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
@@ -104,9 +115,8 @@ fun NoteContentPreview(
     PassTheme(isDark = isDark) {
         Surface {
             NoteContent(
-                name = params.title,
-                note = params.note,
-                vault = input.second.vault,
+                itemUiModel = params.itemUiModel,
+                vault = params.vault,
                 // We don't care about the MoreInfo as we are not showing it
                 moreInfoUiState = MoreInfoUiState.Initial,
                 onVaultClick = {},

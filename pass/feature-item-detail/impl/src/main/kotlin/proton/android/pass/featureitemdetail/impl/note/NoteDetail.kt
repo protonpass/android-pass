@@ -43,7 +43,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
-import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
@@ -184,8 +183,7 @@ fun NoteDetail(
                             .background(PassTheme.colors.itemDetailBackground)
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
-                        name = state.itemUiModel.contents.title,
-                        note = (state.itemUiModel.contents as ItemContents.Note).note,
+                        itemUiModel = state.itemUiModel,
                         vault = state.vault,
                         moreInfoUiState = moreInfoUiState,
                         onVaultClick = {

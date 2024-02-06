@@ -34,17 +34,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.datetime.Instant
 import me.proton.core.compose.component.ProtonButton
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.featureitemdetail.impl.R
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun HistorySection(
@@ -61,8 +63,8 @@ internal fun HistorySection(
     ) {
         HistoryRowItem(
             modifier = Modifier.padding(top = Spacing.medium),
-            iconPainter = painterResource(R.drawable.ic_proton_pencil),
-            title = "Last modified",
+            iconPainter = painterResource(CoreR.drawable.ic_proton_pencil),
+            title = stringResource(id = R.string.item_detail_history_modified_last),
             subtitle = formatMoreInfoInstantText(
                 now = Instant.fromEpochSeconds(0),
                 toFormat = modifiedInstant,
@@ -70,8 +72,8 @@ internal fun HistorySection(
         )
 
         HistoryRowItem(
-            iconPainter = painterResource(R.drawable.ic_proton_bolt),
-            title = "Created",
+            iconPainter = painterResource(CoreR.drawable.ic_proton_bolt),
+            title = stringResource(id = R.string.item_detail_history_created),
             subtitle = formatMoreInfoInstantText(
                 now = Instant.fromEpochSeconds(0),
                 toFormat = createdInstant,
@@ -97,7 +99,7 @@ internal fun HistorySection(
             border = null,
         ) {
             Text(
-                text = "View item history",
+                text = stringResource(id = R.string.item_detail_history_button_view),
                 fontWeight = FontWeight.W400,
                 fontSize = 16.sp,
                 color = buttonTextColor,

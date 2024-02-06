@@ -222,7 +222,8 @@ fun CreditCardDetail(
                                     }
                                 }
                             }
-                        }
+                        },
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                     )
                 }
                 ConfirmDeleteItemDialog(

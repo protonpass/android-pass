@@ -29,6 +29,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
@@ -51,16 +52,17 @@ fun LoginContent(
     showViewAlias: Boolean,
     canLoadExternalImages: Boolean,
     customFields: ImmutableList<CustomFieldUiContent>,
-    onEvent: (LoginDetailEvent) -> Unit
+    onEvent: (LoginDetailEvent) -> Unit,
+    isHistoryFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
 
     Column(
-        modifier = modifier.padding(horizontal = 16.dp),
+        modifier = modifier.padding(horizontal = Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         LoginTitle(
-            modifier = Modifier.padding(0.dp, 12.dp),
+            modifier = Modifier.padding(Spacing.none, 12.dp),
             title = itemUiModel.contents.title,
             vault = vault,
             website = contents.urls.firstOrNull(),
@@ -76,36 +78,40 @@ fun LoginContent(
             passwordScore = passwordScore,
             totpUiState = totpUiState,
             showViewAlias = showViewAlias,
-            onEvent = onEvent
+            onEvent = onEvent,
         )
 
         WebsiteSection(
             websites = contents.urls.toPersistentList(),
-            onEvent = onEvent
+            onEvent = onEvent,
         )
 
         NoteSection(
             text = itemUiModel.contents.note,
-            accentColor = PassTheme.colors.loginInteractionNorm
+            accentColor = PassTheme.colors.loginInteractionNorm,
         )
 
-        HistorySection(
-            createdInstant = itemUiModel.createTime,
-            modifiedInstant = itemUiModel.modificationTime,
-            onViewItemHistoryClicked = {},
-            buttonBackgroundColor = PassTheme.colors.loginInteractionNormMinor2,
-            buttonTextColor = PassTheme.colors.loginInteractionNormMajor2,
-        )
+        if (customFields.isNotEmpty()) {
+            CustomFieldDetails(
+                fields = customFields,
+                onEvent = { onEvent(LoginDetailEvent.OnCustomFieldEvent(it)) },
+            )
+        }
 
-        CustomFieldDetails(
-            fields = customFields,
-            onEvent = { onEvent(LoginDetailEvent.OnCustomFieldEvent(it)) }
-        )
+        if (isHistoryFeatureEnabled) {
+            HistorySection(
+                createdInstant = itemUiModel.createTime,
+                modifiedInstant = itemUiModel.modificationTime,
+                onViewItemHistoryClicked = {},
+                buttonBackgroundColor = PassTheme.colors.loginInteractionNormMinor2,
+                buttonTextColor = PassTheme.colors.loginInteractionNormMajor2,
+            )
+        }
 
         LinkedAppsListSection(
             packageInfoUiSet = contents.packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet(),
             isEditable = false,
-            onLinkedAppDelete = {}
+            onLinkedAppDelete = {},
         )
 
         MoreInfo(moreInfoUiState = moreInfoUiState)

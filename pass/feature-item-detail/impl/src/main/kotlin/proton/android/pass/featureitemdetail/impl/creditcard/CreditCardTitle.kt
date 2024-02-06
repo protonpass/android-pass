@@ -79,13 +79,15 @@ fun CreditCardTitle(
 fun AliasTitlePreview(
     @PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, params) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             CreditCardTitle(
-                title = input.second.title,
-                vault = input.second.vault,
+                title = params.itemUiModel.contents.title,
+                vault = params.vault,
                 onVaultClick = {},
-                isPinned = false,
+                isPinned = params.itemUiModel.isPinned,
             )
         }
     }

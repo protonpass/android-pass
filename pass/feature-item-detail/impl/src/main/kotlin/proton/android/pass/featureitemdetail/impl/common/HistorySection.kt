@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,12 +37,16 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.datetime.Instant
 import me.proton.core.compose.component.ProtonButton
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.SectionTitle
@@ -49,7 +54,7 @@ import proton.android.pass.featureitemdetail.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun HistorySection(
+fun HistorySection(
     createdInstant: Instant,
     modifiedInstant: Instant,
     onViewItemHistoryClicked: () -> Unit,
@@ -59,7 +64,7 @@ internal fun HistorySection(
 ) {
     RoundedCornersColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+        verticalArrangement = Arrangement.spacedBy(Spacing.medium),
     ) {
         HistoryRowItem(
             modifier = Modifier.padding(top = Spacing.medium),
@@ -135,4 +140,21 @@ private fun HistoryRowItem(
         }
     }
 
+}
+
+@[Preview Composable Suppress("MagicNumber")]
+fun HistorySectionPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            HistorySection(
+                createdInstant = Instant.fromEpochMilliseconds(1_697_213_366_026),
+                modifiedInstant = Instant.fromEpochMilliseconds(1_707_213_366_026),
+                onViewItemHistoryClicked = {},
+                buttonBackgroundColor = PassTheme.colors.loginInteractionNormMinor2,
+                buttonTextColor = PassTheme.colors.loginInteractionNormMajor2,
+            )
+        }
+    }
 }

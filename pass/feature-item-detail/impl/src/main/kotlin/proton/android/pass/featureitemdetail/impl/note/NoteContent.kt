@@ -124,7 +124,7 @@ fun NoteContentPreview(
                 moreInfoUiState = MoreInfoUiState.Initial,
                 onVaultClick = {},
                 isPinned = params.isPinned,
-                isHistoryFeatureEnabled = true,
+                isHistoryFeatureEnabled = params.isHistoryFeatureEnabled,
             )
         }
     }

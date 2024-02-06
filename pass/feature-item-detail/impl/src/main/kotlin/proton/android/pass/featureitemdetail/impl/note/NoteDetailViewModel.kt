@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -53,6 +54,7 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
@@ -102,6 +104,7 @@ class NoteDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getItemActions: GetItemActions,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    getUserPlan: GetUserPlan,
 ) : ViewModel() {
 
     private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
@@ -138,6 +141,17 @@ class NoteDetailViewModel @Inject constructor(
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
+    private val featureFlagsFlow = combine(
+        featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
+        getUserPlan(),
+    ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, userPlan ->
+        mapOf(
+            FeatureFlag.PINNING_V1 to isPinningFeatureEnabled,
+            FeatureFlag.HISTORY_V1 to (userPlan.isPaidPlan && isHistoryFeatureFlagEnabled),
+        )
+    }
+
     val state: StateFlow<NoteDetailUiState> = combineN(
         noteItemDetailsResultFlow,
         isLoadingState,
@@ -147,7 +161,7 @@ class NoteDetailViewModel @Inject constructor(
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1)
+        featureFlagsFlow,
     ) { itemLoadingResult,
         isLoading,
         isItemSentToTrash,
@@ -156,7 +170,7 @@ class NoteDetailViewModel @Inject constructor(
         shareAction,
         itemActions,
         event,
-        isPinningFeatureEnabled ->
+        featureFlags ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 if (!isPermanentlyDeleted.value()) {
@@ -189,7 +203,10 @@ class NoteDetailViewModel @Inject constructor(
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,
-                    isPinningFeatureEnabled = isPinningFeatureEnabled,
+                    isPinningFeatureEnabled = featureFlags[FeatureFlag.PINNING_V1]
+                        ?: FeatureFlag.PINNING_V1.isEnabledDefault,
+                    isHistoryFeatureEnabled = featureFlags[FeatureFlag.HISTORY_V1]
+                        ?: FeatureFlag.HISTORY_V1.isEnabledDefault,
                 )
             }
         }

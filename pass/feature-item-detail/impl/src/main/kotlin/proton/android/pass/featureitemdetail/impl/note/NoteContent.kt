@@ -57,6 +57,7 @@ fun NoteContent(
     moreInfoUiState: MoreInfoUiState,
     onVaultClick: () -> Unit,
     isPinned: Boolean,
+    isHistoryFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
 
@@ -93,13 +94,15 @@ fun NoteContent(
             )
         }
 
-        HistorySection(
-            createdInstant = itemUiModel.createTime,
-            modifiedInstant = itemUiModel.modificationTime,
-            onViewItemHistoryClicked = {},
-            buttonBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
-            buttonTextColor = PassTheme.colors.noteInteractionNormMajor2,
-        )
+        if (isHistoryFeatureEnabled) {
+            HistorySection(
+                createdInstant = itemUiModel.createTime,
+                modifiedInstant = itemUiModel.modificationTime,
+                onViewItemHistoryClicked = {},
+                buttonBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
+                buttonTextColor = PassTheme.colors.noteInteractionNormMajor2,
+            )
+        }
 
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
@@ -121,6 +124,7 @@ fun NoteContentPreview(
                 moreInfoUiState = MoreInfoUiState.Initial,
                 onVaultClick = {},
                 isPinned = params.isPinned,
+                isHistoryFeatureEnabled = true,
             )
         }
     }

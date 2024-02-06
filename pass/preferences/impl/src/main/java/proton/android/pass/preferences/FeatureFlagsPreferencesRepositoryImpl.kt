@@ -32,6 +32,7 @@ import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
+import proton.android.pass.preferences.FeatureFlag.HISTORY_V1
 import proton.android.pass.preferences.FeatureFlag.PINNING_V1
 import java.io.IOException
 import javax.inject.Inject
@@ -45,29 +46,36 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<FeatureFlagsPreferences>,
 ) : FeatureFlagsPreferencesRepository {
 
-    override fun <T> get(featureFlag: FeatureFlag): Flow<T> =
-        when (featureFlag) {
-            AUTOFILL_DEBUG_MODE -> getFeatureFlag(
-                key = featureFlag.key,
-                defaultValue = featureFlag.isEnabledDefault,
-            ) { autofillDebugModeEnabled.value }
+    override fun <T> get(featureFlag: FeatureFlag): Flow<T> = when (featureFlag) {
+        AUTOFILL_DEBUG_MODE -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault,
+        ) { autofillDebugModeEnabled.value }
 
-            PINNING_V1 -> getFeatureFlag(
-                key = featureFlag.key,
-                defaultValue = featureFlag.isEnabledDefault,
-            ) { pinningV1Enabled.value }
+        PINNING_V1 -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault,
+        ) { pinningV1Enabled.value }
+
+        HISTORY_V1 -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault,
+        ) { historyV1Enabled.value }
+    }
+
+    override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
+        AUTOFILL_DEBUG_MODE -> setFeatureFlag {
+            autofillDebugModeEnabled = boolFlagPrefProto(value)
         }
 
-    override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =
-        when (featureFlag) {
-            AUTOFILL_DEBUG_MODE -> setFeatureFlag {
-                autofillDebugModeEnabled = boolFlagPrefProto(value)
-            }
-
-            PINNING_V1 -> setFeatureFlag {
-                pinningV1Enabled = boolFlagPrefProto(value)
-            }
+        PINNING_V1 -> setFeatureFlag {
+            pinningV1Enabled = boolFlagPrefProto(value)
         }
+
+        HISTORY_V1 -> setFeatureFlag {
+            historyV1Enabled = boolFlagPrefProto(value)
+        }
+    }
 
     private fun <T> getFeatureFlag(
         key: String?,

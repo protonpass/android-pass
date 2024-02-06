@@ -42,6 +42,7 @@ fun CreditCardDetailContent(
     isDowngradedMode: Boolean,
     onEvent: (CreditCardDetailEvent) -> Unit,
     isPinned: Boolean,
+    isHistoryFeatureEnabled: Boolean,
 ) {
     val model = contents.model.contents as ItemContents.CreditCard
 
@@ -72,13 +73,15 @@ fun CreditCardDetailContent(
             accentColor = PassTheme.colors.cardInteractionNorm,
         )
 
-        HistorySection(
-            createdInstant = contents.model.createTime,
-            modifiedInstant = contents.model.modificationTime,
-            onViewItemHistoryClicked = {},
-            buttonBackgroundColor = PassTheme.colors.cardInteractionNormMinor2,
-            buttonTextColor = PassTheme.colors.cardInteractionNormMajor2,
-        )
+        if (isHistoryFeatureEnabled) {
+            HistorySection(
+                createdInstant = contents.model.createTime,
+                modifiedInstant = contents.model.modificationTime,
+                onViewItemHistoryClicked = {},
+                buttonBackgroundColor = PassTheme.colors.cardInteractionNormMinor2,
+                buttonTextColor = PassTheme.colors.cardInteractionNormMajor2,
+            )
+        }
 
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }

@@ -19,7 +19,11 @@
 package proton.android.pass.featureitemdetail.impl.common
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import kotlinx.datetime.Instant
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
@@ -67,9 +71,21 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
         }
 }
 
+@Suppress("MagicNumber")
 data class ItemTitleInput(
-    val title: String = "A really long title to check if the element is multiline",
-    val note: String = "Note body",
+    val itemUiModel: ItemUiModel = ItemUiModel(
+        id = ItemId("123"),
+        shareId = ShareId("123"),
+        contents = ItemContents.Note(
+            title = "A really long title to check if the element is multiline",
+            note = "Note body",
+        ),
+        state = 0,
+        createTime = Instant.fromEpochMilliseconds(1_697_213_366_026),
+        modificationTime = Instant.fromEpochMilliseconds(1_707_213_366_026),
+        lastAutofillTime = null,
+        isPinned = false,
+    ),
     val vault: Vault?,
     val isPinned: Boolean,
 )

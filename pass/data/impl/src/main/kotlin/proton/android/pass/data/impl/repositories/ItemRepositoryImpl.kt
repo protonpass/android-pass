@@ -753,7 +753,7 @@ class ItemRepositoryImpl @Inject constructor(
             }
 
             // Some succeeded
-            successes.isNotEmpty() && failures.isNotEmpty() -> {
+            successes.isNotEmpty() -> {
                 val firstFailure = failures.first().exceptionOrNull()
                     ?: IllegalStateException("Error migrating items. Could not migrate some")
                 PassLogger.w(TAG, "Error migrating items. Could not migrate some")
@@ -767,7 +767,7 @@ class ItemRepositoryImpl @Inject constructor(
             }
 
             // None succeeded
-            successes.isEmpty() && failures.isNotEmpty() -> {
+            failures.isNotEmpty() -> {
                 val firstFailure = failures.first().exceptionOrNull()
                     ?: IllegalStateException("Error migrating items. Could not migrate any")
                 PassLogger.w(TAG, "Error migrating items. Could not migrate any")
@@ -818,6 +818,10 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun unpinItems(
         items: List<Pair<ShareId, ItemId>>
     ): PinItemsResult = handleItemPinning(items, remoteItemDataSource::unpinItem)
+
+    override suspend fun getItemRevision(shareId: ShareId, itemId: ItemId) {
+
+    }
 
     private suspend fun handleItemPinning(
         items: List<Pair<ShareId, ItemId>>,
@@ -873,7 +877,7 @@ class ItemRepositoryImpl @Inject constructor(
             }
 
             // Some succeeded
-            successes.isNotEmpty() && failures.isNotEmpty() -> {
+            successes.isNotEmpty() -> {
                 val firstFailure = failures.first().exceptionOrNull()
                     ?: IllegalStateException("Error pinning items. Could not pin some")
                 PassLogger.w(TAG, "Error pinning items. Could not pin some")
@@ -898,7 +902,7 @@ class ItemRepositoryImpl @Inject constructor(
             }
 
             // None succeeded
-            successes.isEmpty() && failures.isNotEmpty() -> {
+            failures.isNotEmpty() -> {
                 val firstFailure = failures.first().exceptionOrNull()
                     ?: IllegalStateException("Error pinning items. Could not pin any")
                 PassLogger.w(TAG, "Error pinning items. Could not pin any")

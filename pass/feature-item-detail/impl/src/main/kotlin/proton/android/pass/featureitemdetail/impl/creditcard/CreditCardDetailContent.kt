@@ -25,8 +25,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
+import proton.android.pass.featureitemdetail.impl.common.HistorySection
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
@@ -42,17 +44,19 @@ fun CreditCardDetailContent(
     isPinned: Boolean,
 ) {
     val model = contents.model.contents as ItemContents.CreditCard
+
     Column(
-        modifier = modifier.padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        modifier = modifier.padding(horizontal = Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         CreditCardTitle(
-            modifier = Modifier.padding(0.dp, 12.dp),
+            modifier = Modifier.padding(Spacing.none, 12.dp),
             title = model.title,
             vault = vault,
             onVaultClick = { onEvent(CreditCardDetailEvent.OnVaultClick) },
             isPinned = isPinned,
         )
+
         MainCreditCardSection(
             cardHolder = model.cardHolder,
             number = contents.cardNumber,
@@ -60,11 +64,20 @@ fun CreditCardDetailContent(
             pin = model.pin,
             expirationDate = model.expirationDate,
             isDowngradedMode = isDowngradedMode,
-            onEvent = onEvent
+            onEvent = onEvent,
         )
+
         NoteSection(
             text = model.note,
-            accentColor = PassTheme.colors.cardInteractionNorm
+            accentColor = PassTheme.colors.cardInteractionNorm,
+        )
+
+        HistorySection(
+            createdInstant = contents.model.createTime,
+            modifiedInstant = contents.model.modificationTime,
+            onViewItemHistoryClicked = {},
+            buttonBackgroundColor = PassTheme.colors.cardInteractionNormMinor2,
+            buttonTextColor = PassTheme.colors.cardInteractionNormMajor2,
         )
 
         MoreInfo(moreInfoUiState = moreInfoUiState)

@@ -26,10 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
+import proton.android.pass.featureitemdetail.impl.common.HistorySection
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
@@ -47,27 +49,38 @@ fun AliasDetailContent(
     onVaultClick: () -> Unit
 ) {
     Column(
-        modifier = modifier.padding(horizontal = 16.dp),
+        modifier = modifier.padding(horizontal = Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         AliasTitle(
-            modifier = Modifier.padding(0.dp, 12.dp),
+            modifier = Modifier.padding(Spacing.none, 12.dp),
             title = itemUiModel.contents.title,
             vault = vault,
             onVaultClick = onVaultClick,
             isPinned = itemUiModel.isPinned,
         )
+
         AliasSection(
             alias = (itemUiModel.contents as ItemContents.Alias).aliasEmail,
             mailboxes = mailboxes,
             isLoading = isLoading,
             onCopyAlias = onCopyAlias,
-            onCreateLoginFromAlias = onCreateLoginFromAlias
+            onCreateLoginFromAlias = onCreateLoginFromAlias,
         )
+
         NoteSection(
             text = itemUiModel.contents.note,
-            accentColor = PassTheme.colors.aliasInteractionNorm
+            accentColor = PassTheme.colors.aliasInteractionNorm,
         )
+
+        HistorySection(
+            createdInstant = itemUiModel.createTime,
+            modifiedInstant = itemUiModel.modificationTime,
+            onViewItemHistoryClicked = {},
+            buttonBackgroundColor = PassTheme.colors.aliasInteractionNormMinor2,
+            buttonTextColor = PassTheme.colors.aliasInteractionNormMajor2,
+        )
+
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
 }

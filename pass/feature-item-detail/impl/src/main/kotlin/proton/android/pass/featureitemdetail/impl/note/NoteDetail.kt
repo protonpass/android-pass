@@ -192,6 +192,7 @@ fun NoteDetail(
                             }
                         },
                         isPinned = state.itemUiModel.isPinned,
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                     )
                 }
                 ConfirmDeleteItemDialog(

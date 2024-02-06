@@ -296,7 +296,8 @@ fun LoginDetail(
                                     }
                                 }
                             }
-                        }
+                        },
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                     )
                 }
                 ConfirmDeleteItemDialog(

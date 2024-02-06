@@ -58,6 +58,7 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
@@ -102,6 +103,7 @@ class CreditCardDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandleProvider,
     getItemActions: GetItemActions,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    getUserPlan: GetUserPlan,
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -190,6 +192,17 @@ class CreditCardDetailViewModel @Inject constructor(
 
     }.distinctUntilChanged()
 
+    private val featureFlagsFlow = combine(
+        featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
+        getUserPlan(),
+    ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, userPlan ->
+        mapOf(
+            FeatureFlag.PINNING_V1 to isPinningFeatureEnabled,
+            FeatureFlag.HISTORY_V1 to (userPlan.isPaidPlan && isHistoryFeatureFlagEnabled),
+        )
+    }
+
     val uiState: StateFlow<CreditCardDetailUiState> = combineN(
         itemInfoFlow,
         isLoadingState,
@@ -200,7 +213,7 @@ class CreditCardDetailViewModel @Inject constructor(
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1)
+        featureFlagsFlow,
     ) { itemDetails,
         isLoading,
         isItemSentToTrash,
@@ -210,7 +223,7 @@ class CreditCardDetailViewModel @Inject constructor(
         shareAction,
         itemActions,
         event,
-        isPinningFeatureEnabled ->
+        featureFlags ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 if (!isPermanentlyDeleted.value()) {
@@ -251,7 +264,10 @@ class CreditCardDetailViewModel @Inject constructor(
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,
-                    isPinningFeatureEnabled = isPinningFeatureEnabled,
+                    isPinningFeatureEnabled = featureFlags[FeatureFlag.PINNING_V1]
+                        ?: FeatureFlag.PINNING_V1.isEnabledDefault,
+                    isHistoryFeatureEnabled = featureFlags[FeatureFlag.HISTORY_V1]
+                        ?: FeatureFlag.HISTORY_V1.isEnabledDefault,
                 )
             }
         }

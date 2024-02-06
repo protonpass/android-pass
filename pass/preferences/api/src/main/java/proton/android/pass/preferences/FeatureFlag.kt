@@ -35,5 +35,11 @@ enum class FeatureFlag(
         description = "Enable pinning",
         key = "PassPinningV1",
         isEnabledDefault = true,
-    )
+    ),
+    HISTORY_V1(
+        title = "Item history (v1)",
+        description = "Enable item history",
+        key = "PassItemHistoryV1",
+        isEnabledDefault = true,
+    ),
 }

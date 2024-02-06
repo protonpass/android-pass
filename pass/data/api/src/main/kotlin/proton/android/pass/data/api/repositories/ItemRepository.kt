@@ -161,6 +161,12 @@ interface ItemRepository {
 
     suspend fun pinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult
     suspend fun unpinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult
+
+    suspend fun getItemRevision(
+        shareId: ShareId,
+        itemId: ItemId,
+    )
+
 }
 
 data class VaultProgress(

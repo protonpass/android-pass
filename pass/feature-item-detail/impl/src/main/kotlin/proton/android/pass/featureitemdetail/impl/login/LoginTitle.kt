@@ -90,16 +90,18 @@ fun LoginTitle(
 fun LoginTitlePreview(
     @PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, params) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             LoginTitle(
-                title = input.second.title,
+                title = params.itemUiModel.contents.title,
                 website = null,
                 packageName = null,
-                vault = input.second.vault,
+                vault = params.vault,
                 canLoadExternalImages = false,
                 onVaultClick = {},
-                isPinned = false,
+                isPinned = params.itemUiModel.isPinned,
             )
         }
     }

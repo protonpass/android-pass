@@ -198,7 +198,8 @@ fun AliasDetail(
                             state.vault?.shareId?.let {
                                 onNavigate(ItemDetailNavigation.ManageVault(it))
                             }
-                        }
+                        },
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                     )
                 }
 

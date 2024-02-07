@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
+import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.impl.remote.ItemTotal
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
@@ -31,7 +32,7 @@ import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.responses.CreateItemAliasBundle
-import proton.android.pass.data.impl.responses.ItemRevision
+import proton.android.pass.data.impl.responses.ItemRevisionImpl
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.domain.Item
@@ -160,7 +161,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
     companion object {
         fun createItemRevision(item: Item): ItemRevision {
             val now = TimeUtil.getNowUtc()
-            return ItemRevision(
+            return ItemRevisionImpl(
                 itemId = item.id.id,
                 revision = item.revision,
                 contentFormatVersion = 1,

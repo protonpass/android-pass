@@ -117,6 +117,7 @@ import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
+import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionItemFiltererImpl
 import proton.android.pass.data.impl.autofill.SuggestionSorter
@@ -218,6 +219,7 @@ import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
+import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
 
 @Suppress("TooManyFunctions")
 @Module
@@ -521,5 +523,8 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindUnpinItems(impl: UnpinItemsImpl): UnpinItems
+
+    @Binds
+    abstract fun bindForceSyncItems(impl: ForceSyncItemsImpl): ForceSyncItems
 
 }

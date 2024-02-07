@@ -358,6 +358,14 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress {
+        val entity = localShareDataSource.getById(userId, shareId)
+            ?: throw ShareNotAvailableError()
+        val address = userAddressRepository.getAddress(userId, AddressId(entity.addressId))
+            ?: throw IllegalStateException("Could not find address for share")
+        return address
+    }
+
     private suspend fun onShareResponseEntity(
         userId: UserId,
         event: UpdateShareEvent,
@@ -375,6 +383,8 @@ class ShareRepositoryImpl @Inject constructor(
         userAddress: UserAddress,
         shares: List<ShareResponse>,
     ): List<ShareEntity> = coroutineScope {
+        if (shares.isEmpty()) return@coroutineScope emptyList()
+
         PassLogger.i(TAG, "Fetching ShareKeys for ${shares.size} shares")
         val entities: List<ShareResponseEntity> = shares.map { response ->
             async { createShareResponseEntity(response, userAddress) }

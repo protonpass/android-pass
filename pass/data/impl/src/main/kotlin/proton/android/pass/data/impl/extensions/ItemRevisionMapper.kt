@@ -19,7 +19,8 @@
 package proton.android.pass.data.impl.extensions
 
 import proton.android.pass.data.api.PendingEventItemRevision
-import proton.android.pass.data.impl.responses.ItemRevision
+import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.data.impl.responses.ItemRevisionImpl
 
 fun ItemRevision.toPendingEvent(): PendingEventItemRevision =
     PendingEventItemRevision(
@@ -38,19 +39,18 @@ fun ItemRevision.toPendingEvent(): PendingEventItemRevision =
         isPinned = isPinned,
     )
 
-fun PendingEventItemRevision.toItemRevision(): ItemRevision =
-    ItemRevision(
-        itemId = itemId,
-        revision = revision,
-        contentFormatVersion = contentFormatVersion,
-        keyRotation = keyRotation,
-        content = content,
-        state = state,
-        aliasEmail = aliasEmail,
-        createTime = createTime,
-        modifyTime = modifyTime,
-        lastUseTime = lastUseTime,
-        revisionTime = revisionTime,
-        itemKey = key,
-        isPinned = isPinned,
-    )
+fun PendingEventItemRevision.toItemRevision(): ItemRevision = ItemRevisionImpl(
+    itemId = itemId,
+    revision = revision,
+    contentFormatVersion = contentFormatVersion,
+    keyRotation = keyRotation,
+    content = content,
+    state = state,
+    aliasEmail = aliasEmail,
+    createTime = createTime,
+    modifyTime = modifyTime,
+    lastUseTime = lastUseTime,
+    revisionTime = revisionTime,
+    itemKey = key,
+    isPinned = isPinned,
+)

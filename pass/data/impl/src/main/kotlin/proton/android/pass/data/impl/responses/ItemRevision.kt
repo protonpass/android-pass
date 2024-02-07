@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.responses
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import proton.android.pass.data.api.repositories.ItemRevision
 
 @Serializable
 data class ItemRevisionResponse(
@@ -40,37 +41,37 @@ data class ItemsList(
     @SerialName("Total")
     val total: Long,
     @SerialName("RevisionsData")
-    val revisions: List<ItemRevision>,
+    val revisions: List<ItemRevisionImpl>,
     @SerialName("LastToken")
     val lastToken: String?
 )
 
 @Serializable
-data class ItemRevision(
+data class ItemRevisionImpl(
     @SerialName("ItemID")
-    val itemId: String,
+    override val itemId: String,
     @SerialName("Revision")
-    val revision: Long,
+    override val revision: Long,
     @SerialName("ContentFormatVersion")
-    val contentFormatVersion: Int,
+    override val contentFormatVersion: Int,
     @SerialName("KeyRotation")
-    val keyRotation: Long,
+    override val keyRotation: Long,
     @SerialName("Content")
-    val content: String,
+    override val content: String,
     @SerialName("ItemKey")
-    val itemKey: String?,
+    override val itemKey: String?,
     @SerialName("State")
-    val state: Int,
+    override val state: Int,
     @SerialName("AliasEmail")
-    val aliasEmail: String?,
+    override val aliasEmail: String?,
     @SerialName("CreateTime")
-    val createTime: Long,
+    override val createTime: Long,
     @SerialName("ModifyTime")
-    val modifyTime: Long,
+    override val modifyTime: Long,
     @SerialName("LastUseTime")
-    val lastUseTime: Long?,
+    override val lastUseTime: Long?,
     @SerialName("RevisionTime")
-    val revisionTime: Long,
+    override val revisionTime: Long,
     @SerialName("Pinned")
-    val isPinned: Boolean,
-)
+    override val isPinned: Boolean,
+) : ItemRevision

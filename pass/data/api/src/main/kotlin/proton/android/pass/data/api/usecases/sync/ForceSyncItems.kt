@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,15 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.responses
+package proton.android.pass.data.api.usecases.sync
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.ShareId
 
-@Serializable
-data class MigrateItemsResponse(
-    @SerialName("Code")
-    val code: Int,
-    @SerialName("Items")
-    val items: List<ItemRevisionImpl>
-)
+enum class ForceSyncResult {
+    Success,
+    Error
+}
+
+interface ForceSyncItems {
+    suspend operator fun invoke(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        isBackground: Boolean
+    ): ForceSyncResult
+}

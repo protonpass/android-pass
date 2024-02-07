@@ -35,32 +35,21 @@ import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.sync.Semaphore
 import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.repositories.ItemSyncStatus
-import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.usecases.sync.ForceSyncItems
+import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.impl.R
-import proton.android.pass.data.impl.util.maxParallelAsyncCalls
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
-import java.util.concurrent.atomic.AtomicBoolean
 import me.proton.core.notification.R as CoreR
 
 @HiltWorker
 open class FetchItemsWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted workerParameters: WorkerParameters,
+    private val forceSyncItems: ForceSyncItems,
     private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-    private val itemSyncStatusRepository: ItemSyncStatusRepository
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -68,54 +57,26 @@ open class FetchItemsWorker @AssistedInject constructor(
 
         val userId = accountManager.getPrimaryUserId().first() ?: return Result.failure()
         val shareIds = inputData.getStringArray(ARG_SHARE_IDS)?.map { ShareId(it) } ?: emptyList()
-
-        val hasItems = AtomicBoolean(false)
-        val semaphore = Semaphore(maxParallelAsyncCalls())
-        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
-        val results = coroutineScope {
-            shareIds.map { shareId ->
-                async {
-                    semaphore.acquire()
-                    val result = runCatching {
-                        itemRepository.refreshItemsAndObserveProgress(
-                            userId = userId,
-                            shareId = shareId
-                        ).onEach { progress ->
-                            if (!hasItems.get() && progress.current > 0) {
-                                hasItems.set(true)
-                            }
-                            itemSyncStatusRepository.emit(
-                                ItemSyncStatus.Syncing(
-                                    shareId = shareId,
-                                    current = progress.current,
-                                    total = progress.total
-                                )
-                            )
-                            PassLogger.d(TAG, "ShareId $shareId progress: $progress")
-                        }.collect()
-                    }.onFailure {
-                        PassLogger.w(TAG, "Error refreshing items on share ${shareId.id}")
-                        PassLogger.w(TAG, it)
-                    }
-                    semaphore.release()
-                    result
-                }
-            }.awaitAll()
+        val fetchSource = inputData.getString(ARG_FETCH_SOURCE)?.let { FetchSource.valueOf(it) }
+        if (fetchSource == null) {
+            PassLogger.w(TAG, "Invalid fetch source")
+            return Result.failure()
         }
 
-        val hasErrors = results.any { it.isFailure }
-        val result: Result = if (hasErrors) {
-            itemSyncStatusRepository.emit(ItemSyncStatus.ErrorSyncing)
-            PassLogger.i(TAG, "$TAG finished with errors")
-            Result.retry()
-        } else {
-            itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = hasItems.get()))
-            PassLogger.i(TAG, "$TAG finished successfully")
-            Result.success()
-        }
+        PassLogger.i(TAG, "Fetching items for ${shareIds.size} shares in ${fetchSource.name}")
 
-        itemSyncStatusRepository.setMode(SyncMode.Background)
-        return result
+        val res = forceSyncItems(userId, shareIds, isBackground = !fetchSource.showDialog)
+        return when (res) {
+            ForceSyncResult.Error -> {
+                PassLogger.i(TAG, "$TAG finished with errors")
+                Result.failure()
+                Result.retry()
+            }
+            ForceSyncResult.Success -> {
+                PassLogger.i(TAG, "$TAG finished successfully")
+                Result.success()
+            }
+        }
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo = ForegroundInfo(
@@ -139,16 +100,25 @@ open class FetchItemsWorker @AssistedInject constructor(
             .build()
     }
 
+    enum class FetchSource(val showDialog: Boolean) {
+        ForceSync(true),
+        NewShare(false)
+    }
+
     companion object {
         private const val TAG = "FetchItemsWorker"
         private const val ARG_SHARE_IDS = "share_ids"
+        private const val ARG_FETCH_SOURCE = "fetch_source"
 
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
 
-        fun getRequestFor(shareIds: List<ShareId>): WorkRequest {
+        fun getRequestFor(source: FetchSource, shareIds: List<ShareId>): WorkRequest {
             val shareIdsAsString = shareIds.map { it.id }.toTypedArray()
-            val extras = mutableMapOf(ARG_SHARE_IDS to shareIdsAsString)
+            val extras = mutableMapOf(
+                ARG_SHARE_IDS to shareIdsAsString,
+                ARG_FETCH_SOURCE to source.name
+            )
 
             val data = Data.Builder()
                 .putAll(extras.toMap())

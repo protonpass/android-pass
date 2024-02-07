@@ -36,8 +36,6 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -68,22 +66,23 @@ open class FetchShareItemsWorker @AssistedInject constructor(
             runCatching {
                 itemRepository.refreshItemsAndObserveProgress(
                     userId = userId,
-                    shareId = shareId
-                ).onEach { progress ->
-                    val event = when {
-                        progress.total == 0 -> FetchShareItemsStatus.Done(0)
-                        progress.current == progress.total ->
-                            FetchShareItemsStatus.Done(progress.total)
+                    shareId = shareId,
+                    onProgress = { progress ->
+                        val event = when {
+                            progress.total == 0 -> FetchShareItemsStatus.Done(0)
+                            progress.current == progress.total ->
+                                FetchShareItemsStatus.Done(progress.total)
 
-                        else -> FetchShareItemsStatus.Syncing(
-                            current = progress.current,
-                            total = progress.total
-                        )
+                            else -> FetchShareItemsStatus.Syncing(
+                                current = progress.current,
+                                total = progress.total
+                            )
+                        }
+                        fetchShareItemsStatusRepository.emit(shareId, event)
+
+                        PassLogger.d(TAG, "ShareId $shareId progress: $event")
                     }
-                    fetchShareItemsStatusRepository.emit(shareId, event)
-
-                    PassLogger.d(TAG, "ShareId $shareId progress: $event")
-                }.collect()
+                )
             }
         }
 

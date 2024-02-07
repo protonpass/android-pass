@@ -226,11 +226,13 @@ class ApplyPendingEventsImpl @Inject constructor(
     private fun enqueueRefreshItems(shares: Set<ShareId>) {
         if (shares.isEmpty()) return
 
-        FetchItemsWorker.getRequestFor(shares.toList())
-            .let { fetchItemsWorkRequest ->
-                PassLogger.i(TAG, "Enqueuing FetchItemsWorker")
-                workManager.enqueue(fetchItemsWorkRequest)
-            }
+        val request = FetchItemsWorker.getRequestFor(
+            source = FetchItemsWorker.FetchSource.NewShare,
+            shareIds = shares.toList()
+        )
+
+        PassLogger.i(TAG, "Enqueuing FetchItemsWorker")
+        workManager.enqueue(request)
     }
 
     private fun EventList.toDomain(): PendingEventList = PendingEventList(

@@ -26,6 +26,7 @@ import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
 
 @Immutable
 sealed interface SharingSummaryEvent {
+
     @Immutable
     object Unknown : SharingSummaryEvent
 
@@ -34,6 +35,10 @@ sealed interface SharingSummaryEvent {
 
     @Immutable
     object Shared : SharingSummaryEvent
+
+    @Immutable
+    object Error : SharingSummaryEvent
+
 }
 
 @Immutable

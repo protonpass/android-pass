@@ -30,6 +30,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
 import proton.android.pass.featuresharing.impl.confirmed.InviteConfirmedBottomSheet
+import proton.android.pass.featuresharing.impl.invitesinfo.InvitesErrorDialog
 import proton.android.pass.featuresharing.impl.invitesinfo.InvitesInfoDialog
 import proton.android.pass.featuresharing.impl.manage.ManageVaultScreen
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.memberOptionsBottomSheetGraph
@@ -94,6 +95,11 @@ object InvitesInfoDialog : NavItem(
 ) {
     fun buildRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
 }
+
+object InvitesErrorDialog : NavItem(
+    baseRoute = "sharing/manage/invites/error/dialog",
+    navItemType = NavItemType.Dialog,
+)
 
 object ShareFromItem : NavItem(
     baseRoute = "sharing/fromitem/bottomsheet",
@@ -168,6 +174,8 @@ sealed interface SharingNavigation {
     ) : SharingNavigation
 
     object InviteToVaultEditAllPermissions : SharingNavigation
+
+    object InviteError : SharingNavigation
 }
 
 fun NavGraphBuilder.sharingGraph(
@@ -209,6 +217,10 @@ fun NavGraphBuilder.sharingGraph(
     dialog(InvitesInfoDialog) {
         BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(false)) }
         InvitesInfoDialog(onNavigateEvent = onNavigateEvent)
+    }
+
+    dialog(InvitesErrorDialog) {
+        InvitesErrorDialog(onNavigateEvent = onNavigateEvent)
     }
 
     bottomSheet(ShareFromItem) {

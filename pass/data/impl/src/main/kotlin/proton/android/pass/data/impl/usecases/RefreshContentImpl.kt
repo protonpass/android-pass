@@ -49,7 +49,10 @@ class RefreshContentImpl @Inject constructor(
         }
         PassLogger.i(TAG, "Refreshed shares in ${time.inWholeMilliseconds} ms")
 
-        val request = FetchItemsWorker.getRequestFor(refreshSharesResult.allShareIds.toList())
+        val request = FetchItemsWorker.getRequestFor(
+            source = FetchItemsWorker.FetchSource.ForceSync,
+            shareIds = refreshSharesResult.allShareIds.toList()
+        )
         workManager.enqueue(request)
     }
 

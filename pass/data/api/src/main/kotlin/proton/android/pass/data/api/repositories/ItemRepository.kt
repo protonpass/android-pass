@@ -105,16 +105,22 @@ interface ItemRepository {
         shareId: ShareId
     ): List<Item>
 
-    fun refreshItemsAndObserveProgress(
+    suspend fun refreshItemsAndObserveProgress(
         userId: UserId,
-        shareId: ShareId
-    ): Flow<VaultProgress>
+        shareId: ShareId,
+        onProgress: suspend (VaultProgress) -> Unit
+    ): List<ItemRevision>
 
     suspend fun applyEvents(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
         events: PendingEventList
+    )
+
+    suspend fun setShareItems(
+        userId: UserId,
+        items: Map<ShareId, List<ItemRevision>>
     )
 
     suspend fun applyPendingEvent(event: ItemPendingEvent)
@@ -183,3 +189,21 @@ sealed interface PinItemsResult {
     @JvmInline
     value class NonePinned(val exception: Throwable) : PinItemsResult
 }
+
+interface ItemRevision {
+    val itemId: String
+    val revision: Long
+    val contentFormatVersion: Int
+    val keyRotation: Long
+    val content: String
+    val itemKey: String?
+    val state: Int
+    val aliasEmail: String?
+    val createTime: Long
+    val modifyTime: Long
+    val lastUseTime: Long?
+    val revisionTime: Long
+    val isPinned: Boolean
+}
+
+

@@ -23,10 +23,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -34,7 +31,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -51,6 +47,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
@@ -76,7 +73,6 @@ import proton.android.pass.data.impl.requests.MigrateItemsBody
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
 import proton.android.pass.data.impl.requests.TrashItemsRequest
-import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.Item
@@ -553,34 +549,31 @@ class ItemRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun refreshItems(userId: UserId, share: Share): List<Item> =
-        withContext(Dispatchers.IO) {
-            val address = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-            val items = remoteItemDataSource.getItems(address.userId, share.id)
-            decryptItems(address, share, items)
-        }
+    override suspend fun refreshItems(userId: UserId, share: Share): List<Item> {
+        val address = shareRepository.getAddressForShareId(userId, share.id)
+        val items = remoteItemDataSource.getItems(address.userId, share.id)
+        return decryptItems(address, share, items)
+    }
 
-    override suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item> =
-        withContext(Dispatchers.IO) {
-            val share = shareRepository.getById(userId, shareId)
-            refreshItems(userId, share)
-        }
+    override suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item> {
+        val share = shareRepository.getById(userId, shareId)
+        return refreshItems(userId, share)
+    }
 
-    override fun refreshItemsAndObserveProgress(
+    override suspend fun refreshItemsAndObserveProgress(
         userId: UserId,
-        shareId: ShareId
-    ): Flow<VaultProgress> =
-        combine(
-            flow { emit(shareRepository.getById(userId, shareId)) },
-            flow { emit(requireNotNull(userAddressRepository.getAddresses(userId).primary())) },
-            ::Pair
-        ).flatMapLatest { pair ->
-            remoteItemDataSource.observeItems(pair.second.userId, pair.first.id)
-                .map {
-                    decryptItems(pair.second, pair.first, it.items)
-                    VaultProgress(total = it.total, current = it.created)
-                }
-        }.flowOn(Dispatchers.IO)
+        shareId: ShareId,
+        onProgress: suspend (VaultProgress) -> Unit
+    ): List<ItemRevision> {
+        val items = mutableListOf<ItemRevision>()
+        remoteItemDataSource.observeItems(userId, shareId)
+            .collect {
+                items.addAll(it.items)
+                onProgress(VaultProgress(total = it.total, current = it.created))
+            }
+
+        return items
+    }
 
     override suspend fun applyEvents(
         userId: UserId,
@@ -622,6 +615,58 @@ class ItemRepositoryImpl @Inject constructor(
                 shareId,
                 events.deletedItemIds.map(::ItemId)
             )
+        }
+    }
+
+    override suspend fun setShareItems(userId: UserId, items: Map<ShareId, List<ItemRevision>>) {
+        if (items.isEmpty()) return
+
+        val itemsToUpsert = mutableListOf<ItemEntity>()
+        val itemsToDelete = mutableListOf<Pair<ShareId, List<ItemId>>>()
+
+        items.forEach { (shareId, revisions) ->
+            val share = shareRepository.getById(userId, shareId)
+            val address = shareRepository.getAddressForShareId(userId, shareId)
+            val localItemsForShare = localItemDataSource.observeItemsForShares(
+                userId = userId,
+                shareIds = listOf(shareId),
+                itemState = null,
+                filter = ItemTypeFilter.All
+            ).first()
+
+            val itemsNotPresentInRemote = localItemsForShare
+                // Filter out items that are not present in the remote
+                .filter { localItem -> revisions.none { it.itemId == localItem.id } }
+                // Keep only the ItemIDs
+                .map { ItemId(it.id) }
+
+            itemsToDelete.add(shareId to itemsNotPresentInRemote)
+
+            val shareKeys = shareKeyRepository.getShareKeys(
+                userId = userId,
+                addressId = address.addressId,
+                shareId = shareId
+            ).first()
+            val entities = revisions.map {
+                itemResponseToEntity(
+                    userAddress = address,
+                    itemRevision = it,
+                    share = share,
+                    shareKeys = shareKeys
+                )
+            }
+            itemsToUpsert.addAll(entities)
+        }
+
+        val insertItemCount = itemsToUpsert.size
+        val deleteItemCount = itemsToDelete.flatMap { it.second }.size
+        PassLogger.i(TAG, "Going to insert $insertItemCount items and delete $deleteItemCount items")
+
+        database.inTransaction("setShareItems") {
+            localItemDataSource.upsertItems(itemsToUpsert)
+            itemsToDelete.forEach { (shareId, toDelete) ->
+                localItemDataSource.deleteList(shareId, toDelete)
+            }
         }
     }
 
@@ -919,7 +964,7 @@ class ItemRepositoryImpl @Inject constructor(
         )
 
         val destinationShare = shareRepository.getById(userId, destination)
-        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+        val userAddress = shareRepository.getAddressForShareId(userId, destination)
 
         val res = remoteItemDataSource.migrateItems(userId, source, body)
 
@@ -927,11 +972,10 @@ class ItemRepositoryImpl @Inject constructor(
             itemResponseToEntity(userAddress, it, destinationShare, listOf(destinationKey))
         }
 
+        val itemIdsToDelete = chunk.map { ItemId(it.id) }
         database.inTransaction("migrateChunk") {
             localItemDataSource.upsertItems(resAsEntities)
-            chunk.forEach {
-                localItemDataSource.delete(source, ItemId(it.id))
-            }
+            localItemDataSource.deleteList(source, itemIdsToDelete)
         }
 
         return resAsEntities

@@ -109,21 +109,12 @@ class ForceSyncItemsImpl @Inject constructor(
 
         itemRepository.setShareItems(userId, itemsToInsert)
 
-        val result = when {
-            // Should never happen, but just in case
-            errors.isEmpty() && successes.isEmpty() -> ForceSyncResult.Success
-
-            // If there are no errors, we consider it a success
-            errors.isEmpty() -> {
-                itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = hasItems))
-                ForceSyncResult.Success
-            }
-
-            // There have been errors
-            else -> {
-                itemSyncStatusRepository.emit(ItemSyncStatus.ErrorSyncing)
-                ForceSyncResult.Error
-            }
+        val result = if (errors.isEmpty()) {
+            itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = hasItems))
+            ForceSyncResult.Success
+        } else {
+            itemSyncStatusRepository.emit(ItemSyncStatus.ErrorSyncing)
+            ForceSyncResult.Error
         }
 
         itemSyncStatusRepository.setMode(SyncMode.Background)

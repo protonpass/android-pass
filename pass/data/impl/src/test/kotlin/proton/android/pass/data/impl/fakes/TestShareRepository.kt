@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.RefreshSharesResult
@@ -51,6 +52,9 @@ class TestShareRepository : ShareRepository {
     private var deleteSharesResult: Result<Unit> = Result.success(Unit)
 
     private val observeShareByIdFlow = testFlow<Result<Option<Share>>>()
+
+    private val getAddressForShareIdResult: Result<UserAddress> =
+        Result.failure(IllegalStateException("UserAddress not set"))
 
     private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
@@ -130,5 +134,8 @@ class TestShareRepository : ShareRepository {
     override suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent) {}
 
     override suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent) {}
+
+    override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
+        getAddressForShareIdResult.getOrThrow()
 
 }

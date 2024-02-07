@@ -40,6 +40,8 @@ fun SharingSummaryScreen(
             SharingSummaryEvent.Shared -> state.vaultWithItemCount?.let {
                 onNavigateEvent(SharingNavigation.ManageVault(it.vault.shareId))
             }
+
+            SharingSummaryEvent.Error -> onNavigateEvent(SharingNavigation.InviteError)
             SharingSummaryEvent.Unknown -> {}
         }
 

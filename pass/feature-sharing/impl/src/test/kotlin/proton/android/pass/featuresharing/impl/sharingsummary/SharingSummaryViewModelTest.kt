@@ -30,6 +30,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
+import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
 import proton.android.pass.domain.ShareColor
@@ -75,7 +76,8 @@ class SharingSummaryViewModelTest {
             inviteToVault = inviteToVault,
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = savedStateHandleProvider,
-            bulkInviteRepository = bulkInviteRepository
+            bulkInviteRepository = bulkInviteRepository,
+            getUserPlan = TestGetUserPlan(),
         )
     }
 

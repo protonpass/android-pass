@@ -119,6 +119,7 @@ import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featuresharing.impl.AcceptInvite
 import proton.android.pass.featuresharing.impl.InviteConfirmed
+import proton.android.pass.featuresharing.impl.InvitesErrorDialog
 import proton.android.pass.featuresharing.impl.InvitesInfoDialog
 import proton.android.pass.featuresharing.impl.ManageVault
 import proton.android.pass.featuresharing.impl.REFRESH_MEMBER_LIST_FLAG
@@ -1057,6 +1058,10 @@ fun NavGraphBuilder.appGraph(
             is SharingNavigation.InviteToVaultEditAllPermissions -> appNavigator.navigate(
                 destination = SharingEditPermissions,
                 route = SharingEditPermissions.buildRouteForEditAll()
+            )
+
+            SharingNavigation.InviteError -> appNavigator.navigate(
+                destination = InvitesErrorDialog,
             )
         }
     }

@@ -25,13 +25,13 @@ import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
 import proton.android.pass.crypto.api.usecases.EncryptedMigrateItemBody
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateVaultRequest
+import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.MigrateItemBody
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ItemLatestKeyResponse
-import proton.android.pass.data.impl.responses.ItemRevision
 
 fun EncryptedCreateVault.toRequest(): CreateVaultRequest = CreateVaultRequest(
     addressId = addressId,

@@ -69,12 +69,15 @@ androidComponents.beforeVariants { variant ->
 
 dependencies {
 
+    implementation(libs.accompanist.navigation.material)
+    implementation(libs.accompanist.systemUiController)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.core.accountManager.domain)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.utilKotlin)
@@ -90,13 +93,20 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
+    implementation(projects.pass.account.api)
+    implementation(projects.pass.biometry.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
+    implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.notifications.api)
     implementation(projects.pass.passkeys.api)
+    implementation(projects.pass.preferences.api)
 
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)

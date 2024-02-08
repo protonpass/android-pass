@@ -207,6 +207,24 @@ object AppDatabaseMigrations {
             UserDatabase.MIGRATION_4.migrate(database)
             UserDatabase.MIGRATION_5.migrate(database)
             AccountDatabase.MIGRATION_7.migrate(database)
+    val MIGRATION_42_43 = object : Migration(42, 43) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.addTableColumn(
+                table = ItemEntity.TABLE,
+                column = ItemEntity.Columns.HAS_PASSKEYS,
+                type = "INTEGER",
+                defaultValue = null,
+            )
+            // Set all items that are not login to HAS_PASSKEYS = false
+            database.execSQL(
+                """
+                    UPDATE ${ItemEntity.TABLE}
+                    SET ${ItemEntity.Columns.HAS_PASSKEYS} = 0
+                    WHERE ${ItemEntity.Columns.HAS_PASSKEYS} IS NULL
+                      AND ${ItemEntity.Columns.ITEM_TYPE} != $ITEM_TYPE_LOGIN 
+                    
+                """.trimIndent()
+            )
         }
     }
 }

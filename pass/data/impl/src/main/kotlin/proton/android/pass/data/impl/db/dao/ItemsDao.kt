@@ -37,6 +37,7 @@ data class ShareItemCountRow(
 )
 
 @Dao
+@Suppress("TooManyFunctions")
 abstract class ItemsDao : BaseDao<ItemEntity>() {
     @Query(
         """
@@ -287,12 +288,31 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     @Query(
         """
         SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.HAS_PASSKEYS} IS NULL
+        """
+    )
+    abstract suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.HAS_TOTP} = 1
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
         """
     )
     abstract fun observeAllItemsWithTotp(userId: String): Flow<List<ItemEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.HAS_PASSKEYS} = 1
+          AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
+        """
+    )
+    abstract fun observeAllItemsWithPasskeys(userId: String): Flow<List<ItemEntity>>
 
     @Query(
         """

@@ -23,17 +23,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.commonrust.PasskeyManager as RustPasskeyManager
 import proton.android.pass.passkeys.api.AuthenticateWithPasskey
 import proton.android.pass.passkeys.api.GeneratePasskey
-import proton.android.pass.passkeys.api.PasskeyManager
 import javax.inject.Singleton
+import proton.android.pass.commonrust.PasskeyManager as RustPasskeyManager
 
 @[Module InstallIn(SingletonComponent::class)]
 abstract class PasskeyBindsModule {
-
-    @Binds
-    abstract fun bindPasskeyManager(impl: PasskeyManagerImpl): PasskeyManager
 
     @Binds
     abstract fun bindGeneratePasskey(impl: GeneratePasskeyImpl): GeneratePasskey

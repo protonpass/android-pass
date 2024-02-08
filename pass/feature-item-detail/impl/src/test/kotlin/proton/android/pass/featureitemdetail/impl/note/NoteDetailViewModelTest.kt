@@ -41,6 +41,7 @@ import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
+import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.domain.Item
@@ -109,6 +110,7 @@ class NoteDetailViewModelTest {
             pinItem = FakePinItem(),
             unpinItem = FakeUnpinItem(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
+            getUserPlan = TestGetUserPlan(),
         )
     }
 

@@ -33,7 +33,8 @@ import androidx.credentials.provider.BeginGetCredentialResponse
 import androidx.credentials.provider.CredentialProviderService
 import androidx.credentials.provider.ProviderClearCredentialStateRequest
 import dagger.hilt.android.AndroidEntryPoint
-import proton.android.pass.passkeys.api.PasskeyManager
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,7 +42,10 @@ import javax.inject.Inject
 class PasskeyProviderService : CredentialProviderService() {
 
     @Inject
-    lateinit var passkeyManager: PasskeyManager
+    lateinit var getPasskeysForDomain: GetPasskeysForDomain
+
+    @Inject
+    lateinit var accountManager: AccountManager
 
     override fun onBeginCreateCredentialRequest(
         request: BeginCreateCredentialRequest,
@@ -52,7 +56,8 @@ class PasskeyProviderService : CredentialProviderService() {
             context = applicationContext,
             request = request,
             cancellationSignal = cancellationSignal,
-            callback = callback
+            callback = callback,
+            accountManager = accountManager
         )
     }
 
@@ -66,7 +71,8 @@ class PasskeyProviderService : CredentialProviderService() {
             request = request,
             cancellationSignal = cancellationSignal,
             callback = callback,
-            passkeyManager = passkeyManager
+            getPasskeysForDomain = getPasskeysForDomain,
+            accountManager = accountManager
         )
     }
 

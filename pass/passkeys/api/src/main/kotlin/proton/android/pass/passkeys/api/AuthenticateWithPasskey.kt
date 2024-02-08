@@ -18,10 +18,12 @@
 
 package proton.android.pass.passkeys.api
 
+import proton.android.pass.domain.Passkey
+
 data class PasskeyAuthenticationResponse(
     val response: String
 )
 
 interface AuthenticateWithPasskey {
-    operator fun invoke(origin: String, passkey: ByteArray, request: String): PasskeyAuthenticationResponse
+    operator fun invoke(origin: String, passkey: Passkey, request: String): PasskeyAuthenticationResponse
 }

@@ -103,6 +103,9 @@ import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
+import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
+import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
@@ -818,6 +821,28 @@ fun NavGraphBuilder.appGraph(
                         route = ItemDetailCannotPerformAction.buildRoute(it.type)
                     )
                 }
+
+                is ItemDetailNavigation.OnViewItemHistory -> appNavigator.navigate(
+                    destination = ItemHistoryTimelineNavItem,
+                    route = ItemHistoryTimelineNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId,
+                    )
+                )
+            }
+        }
+    )
+
+    itemHistoryNavGraph(
+        onNavigated = { itemHistoryNavDestination ->
+            when (itemHistoryNavDestination) {
+                is ItemHistoryNavDestination.Timeline -> appNavigator.navigate(
+                    destination = ItemHistoryTimelineNavItem,
+                    route = ItemHistoryTimelineNavItem.createNavRoute(
+                        shareId = itemHistoryNavDestination.shareId,
+                        itemId = itemHistoryNavDestination.itemId,
+                    )
+                )
             }
         }
     )

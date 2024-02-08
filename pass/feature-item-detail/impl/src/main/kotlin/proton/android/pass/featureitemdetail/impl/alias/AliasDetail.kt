@@ -199,6 +199,14 @@ fun AliasDetail(
                                 onNavigate(ItemDetailNavigation.ManageVault(it))
                             }
                         },
+                        onViewItemHistoryClicked = {
+                            onNavigate(
+                                ItemDetailNavigation.OnViewItemHistory(
+                                    shareId = state.itemUiModel.shareId,
+                                    itemId = state.itemUiModel.id,
+                                )
+                            )
+                        },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                     )
                 }

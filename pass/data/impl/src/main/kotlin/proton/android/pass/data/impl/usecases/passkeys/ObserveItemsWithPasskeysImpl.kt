@@ -36,7 +36,6 @@ import javax.inject.Singleton
 class ObserveItemsWithPasskeysImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val localItemDataSource: LocalItemDataSource,
-    private val encryptionContextProvider: EncryptionContextProvider
 ) : ObserveItemsWithPasskeys {
     override fun invoke(shareSelection: ShareSelection): Flow<List<Item>> = accountManager.getPrimaryUserId()
         .filterNotNull()
@@ -52,10 +51,5 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
                 )
                 ShareSelection.AllShares -> localItemDataSource.observeAllItemsWithPasskeys(userId)
             }
-        }
-        .mapLatest { items ->
-            encryptionContextProvider.withEncryptionContext {
-                items.map { it.toDomain(this@withEncryptionContext) }
-            }
-        }
+
 }

@@ -21,7 +21,6 @@ package proton.android.pass.featureitemcreate.impl.login
 import android.os.Parcelable
 import kotlinx.datetime.Instant
 import kotlinx.parcelize.Parcelize
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
 
@@ -29,7 +28,7 @@ import proton.android.pass.domain.PasskeyId
 data class UIPasskeyContent(
     val id: String,
     val domain: String,
-    val rpId: String,
+    val rpId: String?,
     val rpName: String,
     val userName: String,
     val userDisplayName: String,
@@ -82,7 +81,7 @@ data class UIPasskeyContent(
         userName = userName,
         userDisplayName = userDisplayName,
         userId = userId,
-        contents = EncryptedByteArray(contents),
+        contents = contents,
         createTime = Instant.fromEpochSeconds(createTime.toLong()),
         note = note,
         credentialId = credentialId,
@@ -99,7 +98,7 @@ data class UIPasskeyContent(
                 userName = userName,
                 userDisplayName = userDisplayName,
                 userId = userId,
-                contents = contents.array,
+                contents = contents,
                 createTime = createTime.epochSeconds.toInt(),
                 note = note,
                 credentialId = credentialId,

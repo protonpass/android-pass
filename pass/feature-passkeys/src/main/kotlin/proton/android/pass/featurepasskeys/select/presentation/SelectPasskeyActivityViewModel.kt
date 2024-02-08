@@ -31,15 +31,19 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
+import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.PasskeyId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.passkeys.api.AuthenticateWithPasskey
-import proton.android.pass.passkeys.api.PasskeyManager
 import javax.inject.Inject
 
 data class SelectPasskeyRequest(
     val callingAppInfo: CallingAppInfo,
     val callingRequest: GetPublicKeyCredentialOption,
-    val passkeyId: String
+    val passkeyId: PasskeyId
 )
 
 @Immutable
@@ -54,12 +58,16 @@ sealed interface State {
 
     @Immutable
     object NoPasskeyFound : State
+
+    @Immutable
+    object ErrorAuthenticating : State
 }
 
 @HiltViewModel
 class SelectPasskeyActivityViewModel @Inject constructor(
     private val authenticateWithPasskey: AuthenticateWithPasskey,
-    private val passkeyManager: PasskeyManager
+    private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
+    private val getPasskeyById: GetPasskeyById
 ) : ViewModel() {
 
     private var request: Option<SelectPasskeyRequest> = None
@@ -78,20 +86,38 @@ class SelectPasskeyActivityViewModel @Inject constructor(
             _state.update { State.NoPasskeyFound }
             return@launch
         }
-        val passkey = passkeyManager.getPasskeyById(requestValue.passkeyId).value() ?: run {
-            PassLogger.w(TAG, "Passkey with id ${requestValue.passkeyId} was not found")
-            _state.update { State.NoPasskeyFound }
-            return@launch
+        val passkey = runCatching {
+            getPasskeyById(
+                shareId = ShareId("123"),
+                itemId = ItemId("123"),
+                passkeyId = requestValue.passkeyId
+            )
+        }.fold(
+            onSuccess = { passkey ->
+                val passkey = passkey.value() ?: run {
+                    PassLogger.w(TAG, "Passkey with id ${requestValue.passkeyId} was not found")
+                    _state.update { State.NoPasskeyFound }
+                    return@launch
+                }
+                passkey
+            },
+            onFailure = {
+                PassLogger.w(TAG, "Error getting passkey by id")
+                PassLogger.w(TAG, it)
+                return@launch
+            }
+        )
+
+        runCatching {
+            authenticateWithPasskey(origin, passkey, requestValue.callingRequest.requestJson)
+        }.onSuccess { response ->
+            PassLogger.d(TAG, "Generated Passkey authentication response")
+            _state.update { State.SendResponse(response.response) }
+        }.onFailure {
+            PassLogger.w(TAG, "Error authenticating with Passkey")
+            PassLogger.w(TAG, it)
+            _state.update { State.ErrorAuthenticating }
         }
-
-        val response = authenticateWithPasskey(origin, passkey, requestValue.callingRequest.requestJson)
-        PassLogger.d(TAG, "Generated Passkey authentication response")
-
-        _state.update { State.SendResponse(response.response) }
-    }
-
-    fun clearPasskeys() = viewModelScope.launch {
-        passkeyManager.clearPasskeys()
     }
 
     companion object {

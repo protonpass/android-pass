@@ -35,6 +35,7 @@ import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
 
 sealed interface ItemDetailNavigation {
+
     data class OnEdit(val itemUiModel: ItemUiModel) : ItemDetailNavigation
 
     object OnMigrate : ItemDetailNavigation
@@ -43,7 +44,9 @@ sealed interface ItemDetailNavigation {
         val alias: String,
         val shareId: ShareId
     ) : ItemDetailNavigation
+
     data class OnViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
+
     object Back : ItemDetailNavigation
 
     @JvmInline
@@ -57,6 +60,11 @@ sealed interface ItemDetailNavigation {
     @JvmInline
     value class CannotPerformAction(
         val type: ItemDetailCannotPerformActionType
+    ) : ItemDetailNavigation
+
+    data class OnViewItemHistory(
+        val shareId: ShareId,
+        val itemId: ItemId,
     ) : ItemDetailNavigation
 }
 

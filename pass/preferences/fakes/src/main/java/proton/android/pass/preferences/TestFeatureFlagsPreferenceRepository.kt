@@ -51,5 +51,5 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
         }
         return Result.success(Unit)
     }
-    
+
 }

@@ -221,6 +221,13 @@ fun CreditCardDetail(
                                         onNavigate(ItemDetailNavigation.ManageVault(shareId))
                                     }
                                 }
+
+                                CreditCardDetailEvent.OnViewItemHistoryClicked -> onNavigate(
+                                    ItemDetailNavigation.OnViewItemHistory(
+                                        shareId = state.itemContent.model.shareId,
+                                        itemId = state.itemContent.model.id,
+                                    )
+                                )
                             }
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,

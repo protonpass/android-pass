@@ -115,7 +115,7 @@ fun ItemContents.serializeToProto(
                         passkeys.map {
                             ItemV1.Passkey.newBuilder()
                                 .setKeyId(it.id.value)
-                                .setContent(ByteString.copyFrom(encryptionContext.decrypt(it.contents)))
+                                .setContent(ByteString.copyFrom(it.contents))
                                 .setDomain(it.domain)
                                 .setRpId(it.rpId)
                                 .setRpName(it.rpName)

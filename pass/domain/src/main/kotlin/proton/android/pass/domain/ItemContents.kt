@@ -21,10 +21,8 @@ package proton.android.pass.domain
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.domain.entity.PackageInfo
-import proton.android.pass.domain.serialization.EncryptedByteArraySerializer
 
 @Serializable
 sealed interface CustomFieldContent {
@@ -73,15 +71,14 @@ value class PasskeyId(val value: String)
 data class Passkey(
     val id: PasskeyId,
     val domain: String,
-    val rpId: String,
+    val rpId: String?,
     val rpName: String,
     val userName: String,
     val userDisplayName: String,
     val userId: ByteArray,
     val note: String,
     val createTime: Instant,
-    @Serializable(with = EncryptedByteArraySerializer::class)
-    val contents: EncryptedByteArray,
+    val contents: ByteArray,
     val userHandle: ByteArray,
     val credentialId: ByteArray
 )

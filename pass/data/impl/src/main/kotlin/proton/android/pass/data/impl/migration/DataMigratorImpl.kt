@@ -22,6 +22,7 @@ import kotlinx.coroutines.delay
 import proton.android.pass.data.impl.db.AppDatabase
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSource
+import proton.android.pass.data.impl.migration.itemhaspasskey.ItemHasPasskeyMigrator
 import proton.android.pass.data.impl.migration.itemhastotp.ItemHasTotpMigrator
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -32,11 +33,13 @@ class DataMigratorImpl @Inject constructor(
     private val database: PassDatabase,
     private val appDatabase: AppDatabase,
     private val migrationDataSource: LocalDataMigrationDataSource,
-    itemHasTotpMigrator: ItemHasTotpMigrator
+    itemHasTotpMigrator: ItemHasTotpMigrator,
+    itemHasPasskeyMigrator: ItemHasPasskeyMigrator
 ) : DataMigrator {
 
     private val allMigrations: List<Migrator> = listOf(
-        itemHasTotpMigrator
+        itemHasTotpMigrator,
+        itemHasPasskeyMigrator
     )
 
     override suspend fun areMigrationsNeeded(): Boolean {

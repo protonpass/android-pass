@@ -31,6 +31,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
@@ -169,6 +170,7 @@ interface ItemRepository {
         itemId: ItemId,
     ): List<ItemRevision>
 
+    suspend fun addPasskeyToItem(userId: UserId, shareId: ShareId, itemId: ItemId, passkey: Passkey)
 }
 
 data class VaultProgress(

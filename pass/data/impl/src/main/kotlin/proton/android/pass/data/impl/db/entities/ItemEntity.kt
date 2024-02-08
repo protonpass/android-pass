@@ -85,6 +85,8 @@ data class ItemEntity(
     val hasTotp: Boolean?,
     @ColumnInfo(name = Columns.IS_PINNED, defaultValue = "0")
     val isPinned: Boolean,
+    @ColumnInfo(name = Columns.HAS_PASSKEYS)
+    val hasPasskeys: Boolean?,
 
     // Keystore Encrypted contents
     @ColumnInfo(name = Columns.ENCRYPTED_TITLE)
@@ -118,6 +120,7 @@ data class ItemEntity(
         const val ENCRYPTED_KEY = "encrypted_key"
         const val HAS_TOTP = "has_totp"
         const val IS_PINNED = "is_pinned"
+        const val HAS_PASSKEYS = "has_passkeys"
     }
 
     companion object {

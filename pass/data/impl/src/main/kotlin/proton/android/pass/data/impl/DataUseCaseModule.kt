@@ -122,6 +122,10 @@ import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
+import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
+import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
+import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
+import proton.android.pass.data.api.usecases.passkeys.StorePasskey
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -233,6 +237,10 @@ import proton.android.pass.data.impl.usecases.items.OpenItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.RestoreItemRevisionImpl
 import proton.android.pass.data.impl.usecases.organization.ObserveOrganizationSettingsImpl
 import proton.android.pass.data.impl.usecases.organization.RefreshOrganizationSettingsImpl
+import proton.android.pass.data.impl.usecases.passkeys.GetPasskeyByIdImpl
+import proton.android.pass.data.impl.usecases.passkeys.GetPasskeysForDomainImpl
+import proton.android.pass.data.impl.usecases.passkeys.ObserveItemsWithPasskeysImpl
+import proton.android.pass.data.impl.usecases.passkeys.StorePasskeyImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
@@ -573,5 +581,17 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRefreshOrganizationSettings(impl: RefreshOrganizationSettingsImpl): RefreshOrganizationSettings
+
+    @Binds
+    abstract fun bindGetPasskeyById(impl: GetPasskeyByIdImpl): GetPasskeyById
+
+    @Binds
+    abstract fun bindStorePasskey(impl: StorePasskeyImpl): StorePasskey
+
+    @Binds
+    abstract fun bindObserveItemsWithPasskeys(impl: ObserveItemsWithPasskeysImpl): ObserveItemsWithPasskeys
+
+    @Binds
+    abstract fun bindGetPasskeysForDomain(impl: GetPasskeysForDomainImpl): GetPasskeysForDomain
 
 }

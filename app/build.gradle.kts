@@ -368,6 +368,7 @@ dependencies {
     implementation(projects.pass.featureSync.impl)
     implementation(projects.pass.featureTrial.impl)
     implementation(projects.pass.featureVault.impl)
+    implementation(projects.pass.features.itemHistory)
     implementation(projects.pass.log.api)
     implementation(projects.pass.log.impl)
     implementation(projects.pass.navigation.api)

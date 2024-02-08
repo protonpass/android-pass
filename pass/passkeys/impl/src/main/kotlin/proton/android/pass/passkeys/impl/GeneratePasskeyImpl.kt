@@ -19,6 +19,8 @@
 package proton.android.pass.passkeys.impl
 
 import proton.android.pass.commonrust.PasskeyManager
+import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.PasskeyId
 import proton.android.pass.passkeys.api.GeneratePasskey
 import proton.android.pass.passkeys.api.GeneratedPasskey
 import javax.inject.Inject
@@ -32,11 +34,17 @@ class GeneratePasskeyImpl @Inject constructor(
     override fun invoke(url: String, request: String): GeneratedPasskey {
         passkeyManager.generatePasskey(url, request).let {
             return GeneratedPasskey(
-                passkey = it.passkey,
+                passkey = Passkey(
+                    rpName = it.rpName,
+                    userDisplayName = it.userDisplayName,
+                    userName = it.userName,
+                    domain = it.domain,
+                    id = PasskeyId(it.keyId),
+                    rpId = it.rpId,
+                    userId = it.userId,
+                    contents = it.passkey
+                ),
                 response = it.response,
-                rpName = it.rpName,
-                userDisplayName = it.userDisplayName,
-                userName = it.userName
             )
         }
     }

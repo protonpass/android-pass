@@ -217,6 +217,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_35_36,
             AppDatabaseMigrations.MIGRATION_36_37,
             AppDatabaseMigrations.MIGRATION_40_41,
+            AppDatabaseMigrations.MIGRATION_42_43,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

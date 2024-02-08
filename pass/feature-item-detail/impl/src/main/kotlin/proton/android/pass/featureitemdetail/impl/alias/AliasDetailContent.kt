@@ -47,6 +47,7 @@ fun AliasDetailContent(
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
     onVaultClick: () -> Unit,
+    onViewItemHistoryClicked: () -> Unit,
     isHistoryFeatureEnabled: Boolean,
 ) {
     Column(
@@ -78,7 +79,7 @@ fun AliasDetailContent(
             HistorySection(
                 createdInstant = itemUiModel.createTime,
                 modifiedInstant = itemUiModel.modificationTime,
-                onViewItemHistoryClicked = {},
+                onViewItemHistoryClicked = onViewItemHistoryClicked,
                 buttonBackgroundColor = PassTheme.colors.aliasInteractionNormMinor2,
                 buttonTextColor = PassTheme.colors.aliasInteractionNormMajor2,
             )

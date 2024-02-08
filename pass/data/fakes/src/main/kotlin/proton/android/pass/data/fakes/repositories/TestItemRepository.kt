@@ -237,6 +237,10 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getItemRevision(shareId: ShareId, itemId: ItemId) {
+        TODO("Not yet implemented")
+    }
+
     data class MigrateItemPayload(
         val userId: UserId,
         val items: Map<ShareId, List<ItemId>>,

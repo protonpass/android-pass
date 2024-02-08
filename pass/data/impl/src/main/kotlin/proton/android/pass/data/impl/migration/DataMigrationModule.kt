@@ -22,6 +22,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.data.impl.migration.itemhaspasskey.ItemHasPasskeyMigrator
+import proton.android.pass.data.impl.migration.itemhaspasskey.ItemHasPasskeyMigratorImpl
 import proton.android.pass.data.impl.migration.itemhastotp.ItemHasTotpMigrator
 import proton.android.pass.data.impl.migration.itemhastotp.ItemHasTotpMigratorImpl
 
@@ -37,4 +39,7 @@ abstract class DataMigrationModule {
 
     @Binds
     abstract fun bindItemHasTotpMigrator(impl: ItemHasTotpMigratorImpl): ItemHasTotpMigrator
+
+    @Binds
+    abstract fun bindItemHasPasskeyMigrator(impl: ItemHasPasskeyMigratorImpl): ItemHasPasskeyMigrator
 }

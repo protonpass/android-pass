@@ -85,6 +85,8 @@ interface LocalItemDataSource {
     suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity?
 
     suspend fun getItemsPendingForTotpMigration(): List<ItemEntity>
+    suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity>
     fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>>
     fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>>
+    fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>>
 }

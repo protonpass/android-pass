@@ -45,8 +45,8 @@ private const val PROGRESS_COLOR_ANIMATION_LABEL = "TOTP Progress Color Animatio
 private const val PROGRESS_COLOR_ANIMATION_DURATION_MILLIS = 500
 
 private const val PROGRESS_LIMIT_1 = 0f
-private const val PROGRESS_LIMIT_2 = 0.20f
-private const val PROGRESS_LIMIT_3 = 0.33f
+private const val PROGRESS_LIMIT_2 = 0.2f
+private const val PROGRESS_LIMIT_3 = 0.4f
 
 @Composable
 fun TotpProgress(

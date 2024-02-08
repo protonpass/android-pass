@@ -56,7 +56,7 @@ fun ItemType.Companion.fromParsed(
                     userName = it.userName,
                     userDisplayName = it.userDisplayName,
                     userId = it.userId.toByteArray(),
-                    contents = context.encrypt(it.content.toByteArray()),
+                    contents = it.content.toByteArray(),
                     note = it.note,
                     createTime = Instant.fromEpochSeconds(it.createTime.toLong()),
                     credentialId = it.credentialId.toByteArray(),

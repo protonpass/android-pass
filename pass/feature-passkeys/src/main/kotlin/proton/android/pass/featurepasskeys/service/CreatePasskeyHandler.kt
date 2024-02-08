@@ -34,7 +34,9 @@ import androidx.credentials.provider.CreateEntry
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.featurepasskeys.create.ui.CreatePasskeyActivity
 import proton.android.pass.log.api.PassLogger
 
@@ -47,7 +49,8 @@ object CreatePasskeyHandler {
         context: Context,
         request: BeginCreateCredentialRequest,
         cancellationSignal: CancellationSignal,
-        callback: OutcomeReceiver<BeginCreateCredentialResponse, CreateCredentialException>
+        callback: OutcomeReceiver<BeginCreateCredentialResponse, CreateCredentialException>,
+        accountManager: AccountManager
     ) {
         val handler = CoroutineExceptionHandler { _, exception ->
             PassLogger.e(TAG, exception)
@@ -55,7 +58,7 @@ object CreatePasskeyHandler {
         }
 
         val job = CoroutineScope(Dispatchers.IO).launch(handler) {
-            val response = processCreateCredentialRequest(context, request)
+            val response = processCreateCredentialRequest(context, request, accountManager)
             callback.onResult(response)
         }
 
@@ -65,12 +68,21 @@ object CreatePasskeyHandler {
         }
     }
 
-    private fun processCreateCredentialRequest(
+    private suspend fun processCreateCredentialRequest(
         context: Context,
-        request: BeginCreateCredentialRequest
-    ): BeginCreateCredentialResponse? = when (request) {
-        is BeginCreatePublicKeyCredentialRequest -> handleCreatePasskeyQuery(context)
-        else -> null
+        request: BeginCreateCredentialRequest,
+        accountManager: AccountManager
+    ): BeginCreateCredentialResponse? {
+        val currentUser = accountManager.getPrimaryUserId().first()
+        if (currentUser == null) {
+            PassLogger.d(TAG, "No user found")
+            return null
+        }
+
+        return when (request) {
+            is BeginCreatePublicKeyCredentialRequest -> handleCreatePasskeyQuery(context)
+            else -> null
+        }
     }
 
     private fun handleCreatePasskeyQuery(context: Context): BeginCreateCredentialResponse {

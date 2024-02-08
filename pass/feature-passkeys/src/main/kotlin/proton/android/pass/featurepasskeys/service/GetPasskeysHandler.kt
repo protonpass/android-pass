@@ -34,23 +34,28 @@ import androidx.credentials.provider.PublicKeyCredentialEntry
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
+import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.PasskeyId
 import proton.android.pass.featurepasskeys.select.ui.SelectPasskeyActivity
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.passkeys.api.PasskeyManager
-import proton.android.pass.passkeys.api.PasskeySummary
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 object GetPasskeysHandler {
 
     private const val TAG = "GetPasskeysHandler"
 
+    @Suppress("LongParameterList")
     fun handle(
         context: Context,
         request: BeginGetCredentialRequest,
         cancellationSignal: CancellationSignal,
         callback: OutcomeReceiver<BeginGetCredentialResponse, GetCredentialException>,
-        passkeyManager: PasskeyManager
+        getPasskeysForDomain: GetPasskeysForDomain,
+        accountManager: AccountManager
     ) {
         val handler = CoroutineExceptionHandler { _, exception ->
             PassLogger.e(TAG, exception)
@@ -58,7 +63,7 @@ object GetPasskeysHandler {
         }
 
         val job = CoroutineScope(Dispatchers.IO).launch(handler) {
-            val response = getPasskeys(context, request, passkeyManager)
+            val response = getPasskeys(context, request, getPasskeysForDomain, accountManager)
             callback.onResult(response)
         }
 
@@ -71,8 +76,14 @@ object GetPasskeysHandler {
     private suspend fun getPasskeys(
         context: Context,
         request: BeginGetCredentialRequest,
-        passkeyManager: PasskeyManager
-    ): BeginGetCredentialResponse {
+        getPasskeysForDomain: GetPasskeysForDomain,
+        accountManager: AccountManager
+    ): BeginGetCredentialResponse? {
+        val currentUser = accountManager.getPrimaryUserId().first()
+        if (currentUser == null) {
+            PassLogger.d(TAG, "No user found")
+            return null
+        }
 
         val domain = request.callingAppInfo?.origin ?: run {
             PassLogger.d(TAG, "Could not find origin in request")
@@ -82,7 +93,7 @@ object GetPasskeysHandler {
             )
         }
 
-        val passkeys = passkeyManager.getPasskeysForDomain(domain)
+        val passkeys = getPasskeysForDomain(domain)
         PassLogger.d(TAG, "Found ${passkeys.size} passkeys for domain $domain")
 
         val entries = mutableListOf<CredentialEntry>()
@@ -109,20 +120,20 @@ object GetPasskeysHandler {
     private fun addOptionEntries(
         context: Context,
         option: BeginGetPublicKeyCredentialOption,
-        passkeys: List<PasskeySummary>
+        passkeys: List<Passkey>
     ): List<CredentialEntry> = passkeys.map {
         PublicKeyCredentialEntry.Builder(
             context = context,
-            username = it.title,
+            username = it.userName,
             pendingIntent = createPendingIntent(context, it.id),
             beginGetPublicKeyCredentialOption = option
-        ).setAutoSelectAllowed(false).build()
+        ).setDisplayName(it.userDisplayName).setAutoSelectAllowed(false).build()
     }
 
 
     private fun createPendingIntent(
         context: Context,
-        keyId: String
+        keyId: PasskeyId
     ): PendingIntent {
         val intent = SelectPasskeyActivity.createIntent(context, keyId)
 

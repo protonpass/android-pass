@@ -45,6 +45,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.domain.PasskeyId
 import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyActivityViewModel
 import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyRequest
 import proton.android.pass.featurepasskeys.select.presentation.State
@@ -69,6 +70,7 @@ class SelectPasskeyActivity : FragmentActivity() {
                     is State.Idle -> {}
                     is State.NoPasskeyFound -> sendResponse(null)
                     is State.SendResponse -> sendResponse(it.response)
+                    is State.ErrorAuthenticating -> sendResponse(null)
                 }
             }
         }
@@ -85,9 +87,6 @@ class SelectPasskeyActivity : FragmentActivity() {
                         Text("Fill with passkey")
                         Button(onClick = { viewModel.onButtonClick() }) {
                             Text("Fill")
-                        }
-                        Button(onClick = { viewModel.clearPasskeys() }) {
-                            Text("Clear passkeys")
                         }
                     }
                 }
@@ -110,7 +109,7 @@ class SelectPasskeyActivity : FragmentActivity() {
         return SelectPasskeyRequest(
             callingAppInfo = request.callingAppInfo,
             callingRequest = option,
-            passkeyId = passKeyId
+            passkeyId = PasskeyId(passKeyId)
         )
     }
 
@@ -134,12 +133,12 @@ class SelectPasskeyActivity : FragmentActivity() {
         private const val EXTRAS_REQUEST_TYPE_VALUE = "GET_PASSKEYS"
         private const val EXTRAS_PASSKEY_ID = "PASSKEY_ID"
 
-        fun createIntent(context: Context, passkeyId: String): Intent {
+        fun createIntent(context: Context, passkeyId: PasskeyId): Intent {
             val intent = Intent(context, SelectPasskeyActivity::class.java)
                 .setPackage(context.packageName)
 
             intent.putExtra(EXTRAS_REQUEST_TYPE_KEY, EXTRAS_REQUEST_TYPE_VALUE)
-            intent.putExtra(EXTRAS_PASSKEY_ID, passkeyId)
+            intent.putExtra(EXTRAS_PASSKEY_ID, passkeyId.value)
 
             return intent
         }

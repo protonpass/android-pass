@@ -30,6 +30,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
+
 import javax.inject.Inject
 import javax.inject.Singleton
 

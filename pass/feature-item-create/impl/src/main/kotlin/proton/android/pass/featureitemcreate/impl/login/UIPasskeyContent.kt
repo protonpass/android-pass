@@ -97,12 +97,12 @@ data class UIPasskeyContent(
                 rpName = rpName,
                 userName = userName,
                 userDisplayName = userDisplayName,
-                userId = userId,
                 contents = contents,
                 createTime = createTime.epochSeconds.toInt(),
                 note = note,
                 credentialId = credentialId,
-                userHandle = userHandle
+                userHandle = userHandle,
+                userId = userId
             )
         }
     }

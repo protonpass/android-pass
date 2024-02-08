@@ -69,14 +69,12 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.lifecycle.runtime.compose)
-
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
-
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
-
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)
@@ -92,4 +90,7 @@ dependencies {
     androidTestImplementation(libs.androidx.lifecycle.viewmodel.savedstate)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.kotlinTest)
+
+    implementation(projects.pass.domain)
+    implementation(projects.pass.navigation.api)
 }

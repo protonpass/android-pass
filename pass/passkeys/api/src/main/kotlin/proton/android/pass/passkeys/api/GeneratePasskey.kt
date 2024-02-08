@@ -18,12 +18,11 @@
 
 package proton.android.pass.passkeys.api
 
+import proton.android.pass.domain.Passkey
+
 data class GeneratedPasskey(
-    val passkey: ByteArray,
-    val response: String,
-    val rpName: String,
-    val userDisplayName: String,
-    val userName: String
+    val passkey: Passkey,
+    val response: String
 )
 
 interface GeneratePasskey {

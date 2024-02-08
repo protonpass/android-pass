@@ -192,6 +192,14 @@ fun NoteDetail(
                             }
                         },
                         isPinned = state.itemUiModel.isPinned,
+                        onViewItemHistoryClicked = {
+                            onNavigate(
+                                ItemDetailNavigation.OnViewItemHistory(
+                                    shareId = state.itemUiModel.shareId,
+                                    itemId = state.itemUiModel.id,
+                                )
+                            )
+                        },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                     )
                 }

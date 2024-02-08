@@ -19,12 +19,23 @@
 package proton.android.pass.featureitemdetail.impl.creditcard
 
 sealed interface CreditCardDetailEvent {
+
     object OnCardHolderClick : CreditCardDetailEvent
+
     object OnToggleNumberClick : CreditCardDetailEvent
+
     object OnNumberClick : CreditCardDetailEvent
+
     object OnToggleCvvClick : CreditCardDetailEvent
+
     object OnCvvClick : CreditCardDetailEvent
+
     object OnTogglePinClick : CreditCardDetailEvent
+
     object OnUpgradeClick : CreditCardDetailEvent
+
     object OnVaultClick : CreditCardDetailEvent
+
+    object OnViewItemHistoryClicked : CreditCardDetailEvent
+
 }

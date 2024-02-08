@@ -295,6 +295,13 @@ fun LoginDetail(
                                         onNavigate(ItemDetailNavigation.ManageVault(shareId))
                                     }
                                 }
+
+                                LoginDetailEvent.OnViewItemHistoryClicked -> onNavigate(
+                                    ItemDetailNavigation.OnViewItemHistory(
+                                        shareId = state.itemUiModel.shareId,
+                                        itemId = state.itemUiModel.id,
+                                    )
+                                )
                             }
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,

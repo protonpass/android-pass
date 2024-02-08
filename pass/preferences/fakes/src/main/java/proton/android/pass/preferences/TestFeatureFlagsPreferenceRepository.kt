@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
+import proton.android.pass.preferences.FeatureFlag.HISTORY_V1
 import proton.android.pass.preferences.FeatureFlag.PINNING_V1
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,13 +31,16 @@ import javax.inject.Singleton
 @Singleton
 class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     FeatureFlagsPreferencesRepository {
-    private val state: MutableStateFlow<MutableMap<FeatureFlag, Any?>> = MutableStateFlow(mutableMapOf())
+
+    private val state: MutableStateFlow<MutableMap<FeatureFlag, Any?>> =
+        MutableStateFlow(mutableMapOf())
 
     @Suppress("UNCHECKED_CAST")
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = state.map {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
             PINNING_V1 -> it.getOrDefault(PINNING_V1, false) as T
+            HISTORY_V1 -> it.getOrDefault(HISTORY_V1, false) as T
         }
     }
 
@@ -47,4 +51,5 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
         }
         return Result.success(Unit)
     }
+    
 }

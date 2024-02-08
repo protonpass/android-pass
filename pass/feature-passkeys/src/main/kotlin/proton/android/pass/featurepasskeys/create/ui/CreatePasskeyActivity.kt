@@ -25,27 +25,23 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import androidx.credentials.CreatePublicKeyCredentialRequest
 import androidx.credentials.CreatePublicKeyCredentialResponse
 import androidx.credentials.provider.PendingIntentHandler
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyActivityViewModel
+import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyAppState
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyRequest
-import proton.android.pass.featurepasskeys.create.presentation.State
+import proton.android.pass.featurepasskeys.create.ui.app.CreatePasskeyApp
+import proton.android.pass.featurepasskeys.create.ui.app.CreatePasskeyNavigation
+import proton.android.pass.featurepasskeys.create.ui.app.CreatePasskeyResponse
 import proton.android.pass.log.api.PassLogger
 
 @AndroidEntryPoint
@@ -58,41 +54,55 @@ class CreatePasskeyActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
 
         val request = getRequest() ?: run {
-            sendResponse(null)
+            sendResponse(CreatePasskeyResponse.Cancel)
             return
         }
-        viewModel.setRequest(request)
+
+        viewModel.register(this)
 
         lifecycleScope.launch {
-            viewModel.state.collectLatest {
-                when (it) {
-                    is State.Idle -> {}
-                    is State.Close -> sendResponse(null)
-                    is State.SendResponse -> sendResponse(it.response)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collectLatest { state ->
+                    onStateReceived(request, state)
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        viewModel.onStop()
+        super.onStop()
+    }
+
+    private fun onStateReceived(request: CreatePasskeyRequest, state: CreatePasskeyAppState) {
+        when (state) {
+            CreatePasskeyAppState.Close -> sendResponse(CreatePasskeyResponse.Cancel)
+            CreatePasskeyAppState.NotReady -> {}
+            is CreatePasskeyAppState.Ready -> {
+                WindowCompat.setDecorFitsSystemWindows(window, false)
+                setContent {
+                    CreatePasskeyApp(
+                        appState = state,
+                        request = request,
+                        onNavigate = {
+                            when (it) {
+                                CreatePasskeyNavigation.Cancel -> {
+                                    sendResponse(CreatePasskeyResponse.Cancel)
+                                }
+                                CreatePasskeyNavigation.ForceSignOut -> {
+                                    viewModel.signOut()
+                                }
+
+                                is CreatePasskeyNavigation.SendResponse -> {
+                                    sendResponse(CreatePasskeyResponse.Success(it.response))
+                                }
+                            }
+                        }
+                    )
                 }
             }
         }
 
-        setContent {
-            PassTheme {
-                Scaffold(
-                    modifier = Modifier
-                        .background(PassTheme.colors.backgroundStrong)
-                        .systemBarsPadding()
-                        .imePadding()
-                ) {
-                    Column(modifier = Modifier.padding(it)) {
-                        Text("Create Passkey")
-                        Button(onClick = { viewModel.onButtonClick() }) {
-                            Text("Create")
-                        }
-                        Button(onClick = { viewModel.clearPasskeys() }) {
-                            Text("Clear passkeys")
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private fun getRequest(): CreatePasskeyRequest? {
@@ -108,15 +118,17 @@ class CreatePasskeyActivity : FragmentActivity() {
         }
     }
 
-    private fun sendResponse(responseJson: String?) {
-        if (responseJson != null) {
-            val response = CreatePublicKeyCredentialResponse(responseJson)
-
-            val responseIntent = Intent()
-            PendingIntentHandler.setCreateCredentialResponse(responseIntent, response)
-            setResult(Activity.RESULT_OK, responseIntent)
-        } else {
-            setResult(Activity.RESULT_CANCELED)
+    private fun sendResponse(response: CreatePasskeyResponse) {
+        when (response) {
+            CreatePasskeyResponse.Cancel -> {
+                setResult(Activity.RESULT_CANCELED)
+            }
+            is CreatePasskeyResponse.Success -> {
+                val responseIntent = Intent()
+                val responseData = CreatePublicKeyCredentialResponse(response.response)
+                PendingIntentHandler.setCreateCredentialResponse(responseIntent, responseData)
+                setResult(Activity.RESULT_OK, responseIntent)
+            }
         }
 
         finish()

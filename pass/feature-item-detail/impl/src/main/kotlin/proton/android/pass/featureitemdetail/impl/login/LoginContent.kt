@@ -102,7 +102,7 @@ fun LoginContent(
             HistorySection(
                 createdInstant = itemUiModel.createTime,
                 modifiedInstant = itemUiModel.modificationTime,
-                onViewItemHistoryClicked = {},
+                onViewItemHistoryClicked = { onEvent(LoginDetailEvent.OnViewItemHistoryClicked) },
                 buttonBackgroundColor = PassTheme.colors.loginInteractionNormMinor2,
                 buttonTextColor = PassTheme.colors.loginInteractionNormMajor2,
             )

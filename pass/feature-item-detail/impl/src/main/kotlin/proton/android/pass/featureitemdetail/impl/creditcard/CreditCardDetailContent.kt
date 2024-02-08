@@ -77,7 +77,7 @@ fun CreditCardDetailContent(
             HistorySection(
                 createdInstant = contents.model.createTime,
                 modifiedInstant = contents.model.modificationTime,
-                onViewItemHistoryClicked = {},
+                onViewItemHistoryClicked = { onEvent(CreditCardDetailEvent.OnViewItemHistoryClicked) },
                 buttonBackgroundColor = PassTheme.colors.cardInteractionNormMinor2,
                 buttonTextColor = PassTheme.colors.cardInteractionNormMajor2,
             )

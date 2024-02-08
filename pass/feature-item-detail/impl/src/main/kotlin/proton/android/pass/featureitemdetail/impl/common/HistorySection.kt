@@ -36,7 +36,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -97,15 +96,14 @@ fun HistorySection(
             shape = RoundedCornerShape(32.dp),
             colors = ButtonDefaults.buttonColors(buttonBackgroundColor),
             contentPadding = PaddingValues(
-                horizontal = Spacing.medium,
-                vertical = Spacing.medium,
+                horizontal = 12.dp,
+                vertical = 12.dp,
             ),
             elevation = null,
             border = null,
         ) {
             Text(
                 text = stringResource(id = R.string.item_detail_history_button_view),
-                fontWeight = FontWeight.W400,
                 fontSize = 16.sp,
                 color = buttonTextColor,
             )

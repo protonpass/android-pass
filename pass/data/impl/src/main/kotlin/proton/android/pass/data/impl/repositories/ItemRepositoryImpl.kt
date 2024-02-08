@@ -46,6 +46,7 @@ import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
+import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.MigrateItemsResult
@@ -57,6 +58,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasPackageName
+import proton.android.pass.data.impl.extensions.hasPasskeys
 import proton.android.pass.data.impl.extensions.hasTotp
 import proton.android.pass.data.impl.extensions.hasWebsite
 import proton.android.pass.data.impl.extensions.toCrypto
@@ -64,6 +66,7 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toItemRevision
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.extensions.with
+import proton.android.pass.data.impl.extensions.withPasskey
 import proton.android.pass.data.impl.extensions.withUrl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
@@ -80,6 +83,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
@@ -832,6 +836,31 @@ class ItemRepositoryImpl @Inject constructor(
         items: List<Pair<ShareId, ItemId>>
     ): PinItemsResult = handleItemPinning(items, remoteItemDataSource::unpinItem)
 
+    override suspend fun addPasskeyToItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        passkey: Passkey
+    ) {
+        val share = shareRepository.getById(userId, shareId)
+        val itemEntity = localItemDataSource.getById(shareId, itemId)
+            ?: throw ItemNotFoundError(itemId, shareId)
+
+        val (itemContents, item) = encryptionContextProvider.withEncryptionContext {
+            decrypt(itemEntity.encryptedContent) to itemEntity.toDomain(this)
+        }
+
+        val parsed = ItemV1.Item.parseFrom(itemContents)
+        val updatedContents = parsed.withPasskey(passkey)
+
+        performUpdate(
+            userId = userId,
+            share = share,
+            item = item,
+            itemContents = updatedContents
+        )
+    }
+
     private suspend fun handleItemPinning(
         items: List<Pair<ShareId, ItemId>>,
         block: suspend (userId: UserId, shareId: ShareId, itemId: ItemId) -> ItemRevision,
@@ -1111,34 +1140,33 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         item: Item,
         itemContents: ItemV1.Item
-    ): Item {
-        return withUserAddress(userId) { userAddress ->
-            val (shareKey, itemKey) = itemKeyRepository
-                .getLatestItemKey(userId, userAddress.addressId, share.id, item.id)
-                .first()
-            val body = updateItem.createRequest(
-                itemKey,
-                itemContents,
-                item.revision
-            )
-            val itemResponse = remoteItemDataSource.updateItem(
-                userId = userId,
-                shareId = share.id,
-                itemId = item.id,
-                body = body.toRequest()
-            )
-            val entity = itemResponseToEntity(
-                userAddress,
-                itemResponse,
-                share,
-                listOf(shareKey)
-            )
-            localItemDataSource.upsertItem(entity)
-            encryptionContextProvider.withEncryptionContext {
-                entity.toDomain(this@withEncryptionContext)
-            }
+    ): Item = withUserAddress(userId) { userAddress ->
+        val (shareKey, itemKey) = itemKeyRepository
+            .getLatestItemKey(userId, userAddress.addressId, share.id, item.id)
+            .first()
+        val body = updateItem.createRequest(
+            itemKey,
+            itemContents,
+            item.revision
+        )
+        val itemResponse = remoteItemDataSource.updateItem(
+            userId = userId,
+            shareId = share.id,
+            itemId = item.id,
+            body = body.toRequest()
+        )
+        val entity = itemResponseToEntity(
+            userAddress,
+            itemResponse,
+            share,
+            listOf(shareKey)
+        )
+        localItemDataSource.upsertItem(entity)
+        encryptionContextProvider.withEncryptionContext {
+            entity.toDomain(this@withEncryptionContext)
         }
     }
+
 
     private suspend fun decryptItems(
         userAddress: UserAddress,
@@ -1219,6 +1247,7 @@ class ItemRepositoryImpl @Inject constructor(
             encryptedKey = output.itemKey,
             hasTotp = hasTotp,
             isPinned = itemRevision.isPinned,
+            hasPasskeys = output.item.hasPasskeys()
         )
     }
 

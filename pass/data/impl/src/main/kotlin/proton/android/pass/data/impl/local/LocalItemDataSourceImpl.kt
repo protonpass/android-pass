@@ -34,6 +34,7 @@ import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 class LocalItemDataSourceImpl @Inject constructor(
     private val database: PassDatabase
 ) : LocalItemDataSource {
@@ -198,6 +199,9 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun getItemsPendingForTotpMigration(): List<ItemEntity> =
         database.itemsDao().getItemsPendingForTotpMigration()
 
+    override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> =
+        database.itemsDao().getItemsPendingForPasskeyMigration()
+
     override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> =
         database.itemsDao()
             .observeAllItemsWithTotp(userId.id)
@@ -209,6 +213,9 @@ class LocalItemDataSourceImpl @Inject constructor(
     ): Flow<List<ItemWithTotp>> = database.itemsDao()
         .observeItemsWithTotpForShare(userId = userId.id, shareId = shareId.id)
         .map { items -> items.map { it.toItemWithTotp() } }
+
+    override fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>> =
+        database.itemsDao().observeAllItemsWithPasskeys(userId = userId.id)
 
     private fun ItemEntity.toItemWithTotp(): ItemWithTotp = ItemWithTotp(
         shareId = ShareId(shareId),

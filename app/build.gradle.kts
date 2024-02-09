@@ -355,6 +355,7 @@ dependencies {
     implementation(projects.pass.featureSettings.impl)
     implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.featureSearchOptions.impl)
+    implementation(projects.pass.featureSelectItem)
     implementation(projects.pass.featureSharing.impl)
     implementation(projects.pass.featureSync.impl)
     implementation(projects.pass.featureTrial.impl)

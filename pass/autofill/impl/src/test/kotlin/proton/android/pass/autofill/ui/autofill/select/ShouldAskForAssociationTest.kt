@@ -20,6 +20,7 @@ package proton.android.pass.autofill.ui.autofill.select
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import proton.android.pass.autofill.ui.autofill.AutofillAppViewModel.Companion.shouldAskForAssociation
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents

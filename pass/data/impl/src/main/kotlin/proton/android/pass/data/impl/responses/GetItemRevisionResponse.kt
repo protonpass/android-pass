@@ -30,7 +30,7 @@ data class GetItemRevisionResponse(
 data class Revisions(
     @SerialName("RevisionsData") val revisionsData: List<RevisionsData>,
     @SerialName("Total") val total: Int,
-    @SerialName("LastToken") val lastToken: String,
+    @SerialName("LastToken") val lastToken: String? = null,
 )
 
 @Serializable

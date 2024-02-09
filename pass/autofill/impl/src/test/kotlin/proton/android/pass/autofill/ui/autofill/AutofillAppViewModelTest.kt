@@ -19,6 +19,7 @@
 package proton.android.pass.autofill.ui.autofill
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.autofill.entities.AssistInfo
@@ -29,6 +30,7 @@ import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
@@ -57,15 +59,15 @@ class AutofillAppViewModelTest {
             updateAutofillItem = updateAutofillItem,
             preferenceRepository = TestPreferenceRepository(),
             telemetryManager = TestTelemetryManager(),
-            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics()
+            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
+            getItemById = FakeGetItemById()
         )
     }
 
     @Test
-    fun `does not send packageName to updateAutofillItem if is browser`() {
+    fun `does not send packageName to updateAutofillItem if is browser`() = runTest {
         val (item, state) = getInitialData("com.android.chrome")
-
-        instance.getMappings(item, state)
+        instance.sendMappings(item, state, false)
 
         val memory = updateAutofillItem.getMemory()
         assertThat(memory.size).isEqualTo(1)
@@ -75,11 +77,10 @@ class AutofillAppViewModelTest {
     }
 
     @Test
-    fun `sends packageName to updateAutofillItem if is not browser`() {
+    fun `sends packageName to updateAutofillItem if is not browser`() = runTest {
         val packageName = "some.other.app"
         val (item, state) = getInitialData(packageName)
-
-        instance.getMappings(item, state)
+        instance.sendMappings(item, state, false)
 
         val memory = updateAutofillItem.getMemory()
         assertThat(memory.size).isEqualTo(1)

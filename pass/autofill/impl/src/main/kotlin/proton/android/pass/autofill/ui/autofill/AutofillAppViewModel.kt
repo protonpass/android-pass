@@ -108,25 +108,6 @@ class AutofillAppViewModel @Inject constructor(
         hadSelectedAutofillItem = value.some()
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun getMappings(
-        autofillItem: AutofillItem,
-        autofillAppState: AutofillAppState
-    ): AutofillMappings {
-
-        if (autofillItem is AutofillItem.Login) {
-            handleTotpUri(autofillItem.totp)
-        }
-
-        return encryptionContextProvider.withEncryptionContext {
-            ItemFieldMapper.mapFields(
-                encryptionContext = this@withEncryptionContext,
-                autofillItem = autofillItem,
-                cluster = autofillAppState.autofillData.assistInfo.cluster
-            )
-        }
-    }
-
     fun onSelectItemScreenShown(state: AutofillAppState) {
         val event = AutofillDisplayed(
             source = AutofillTriggerSource.App,
@@ -152,7 +133,7 @@ class AutofillAppViewModel @Inject constructor(
                 AutofillAppEvent.ShowAssociateDialog(itemUiModel)
             }
             else -> sendMappings(
-                item = itemUiModel,
+                item = itemUiModel.toAutoFillItem(),
                 state = state,
                 associate = false
             )
@@ -163,7 +144,7 @@ class AutofillAppViewModel @Inject constructor(
         state: AutofillAppState,
         item: ItemUiModel,
         associate: Boolean
-    ) = viewModelScope.launch { sendMappings(item, state, associate) }
+    ) = viewModelScope.launch { sendMappings(item.toAutoFillItem(), state, associate) }
 
     fun onWarningConfirmed(
         state: AutofillAppState,
@@ -172,7 +153,7 @@ class AutofillAppViewModel @Inject constructor(
         if (shouldAskForAssociation(state = state, item = item.contents)) {
             _eventFlow.update { AutofillAppEvent.ShowAssociateDialog(item) }
         } else {
-            sendMappings(item, state, false)
+            sendMappings(item.toAutoFillItem(), state, false)
         }
     }
 
@@ -180,8 +161,27 @@ class AutofillAppViewModel @Inject constructor(
         _eventFlow.update { AutofillAppEvent.Unknown }
     }
 
-    private suspend fun sendMappings(
-        item: ItemUiModel,
+    private fun getMappings(
+        autofillItem: AutofillItem,
+        autofillAppState: AutofillAppState
+    ): AutofillMappings {
+
+        if (autofillItem is AutofillItem.Login) {
+            handleTotpUri(autofillItem.totp)
+        }
+
+        return encryptionContextProvider.withEncryptionContext {
+            ItemFieldMapper.mapFields(
+                encryptionContext = this@withEncryptionContext,
+                autofillItem = autofillItem,
+                cluster = autofillAppState.autofillData.assistInfo.cluster
+            )
+        }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    suspend fun sendMappings(
+        item: AutofillItem,
         state: AutofillAppState,
         associate: Boolean
     ) {
@@ -189,15 +189,15 @@ class AutofillAppViewModel @Inject constructor(
         val (updatePackageInfo, updateUrl) = state.updateAutofillFields()
         updateAutofillItem(
             UpdateAutofillItemData(
-                shareId = item.shareId,
-                itemId = item.id,
+                shareId = item.shareId(),
+                itemId = item.itemId(),
                 packageInfo = updatePackageInfo,
                 url = updateUrl,
                 shouldAssociate = associate
             )
         )
 
-        val mappings = getMappings(item.toAutoFillItem(), state)
+        val mappings = getMappings(item, state)
         if (mappings.mappings.isNotEmpty()) {
             _eventFlow.update { AutofillAppEvent.SendResponse(mappings) }
         } else {
@@ -238,40 +238,41 @@ class AutofillAppViewModel @Inject constructor(
         }
     }
 
-    private fun shouldAskForAssociation(
-        item: ItemContents,
-        state: AutofillAppState
-    ): Boolean = when (item) {
-        is ItemContents.Login -> shouldAskForAssociation(
-            item = item,
-            packageName = state.autofillData.packageInfo.packageName,
-            webDomain = state.autofillData.assistInfo.url.value()
-        )
-        else -> false
-    }
-
-    private fun shouldAskForAssociation(
-        item: ItemContents.Login,
-        packageName: PackageName,
-        webDomain: String?
-    ): Boolean = when {
-        // If the package name is not a browser and the package name is already associated with the item
-        // do not ask for association
-        !packageName.isBrowser() && item.packageInfoSet.map {
-            it.packageName
-        }.contains(packageName) -> false
-
-        // If the package name is not a browser and there is no web domain, ask for association
-        !packageName.isBrowser() && webDomain.isNullOrBlank() -> true
-
-        // From then on we are sure that there is a webDomain
-        // Check if is already there, and if it is, do not ask for association
-        !webDomain.isNullOrBlank() && item.urls.contains(webDomain) -> false
-
-        else -> true
-    }
-
     companion object {
         private const val TAG = "AutofillAppViewModel"
+
+        private fun shouldAskForAssociation(
+            item: ItemContents,
+            state: AutofillAppState
+        ): Boolean = when (item) {
+            is ItemContents.Login -> shouldAskForAssociation(
+                item = item,
+                packageName = state.autofillData.packageInfo.packageName,
+                webDomain = state.autofillData.assistInfo.url.value()
+            )
+            else -> false
+        }
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        fun shouldAskForAssociation(
+            item: ItemContents.Login,
+            packageName: PackageName,
+            webDomain: String?
+        ): Boolean = when {
+            // If the package name is not a browser and the package name is already associated with the item
+            // do not ask for association
+            !packageName.isBrowser() && item.packageInfoSet.map {
+                it.packageName
+            }.contains(packageName) -> false
+
+            // If the package name is not a browser and there is no web domain, ask for association
+            !packageName.isBrowser() && webDomain.isNullOrBlank() -> true
+
+            // From then on we are sure that there is a webDomain
+            // Check if is already there, and if it is, do not ask for association
+            !webDomain.isNullOrBlank() && item.urls.contains(webDomain) -> false
+
+            else -> true
+        }
     }
 }

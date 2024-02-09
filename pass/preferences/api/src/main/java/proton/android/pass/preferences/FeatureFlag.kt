@@ -40,6 +40,6 @@ enum class FeatureFlag(
         title = "Item history (v1)",
         description = "Enable item history",
         key = "PassItemHistoryV1",
-        isEnabledDefault = true,
+        isEnabledDefault = false,
     ),
 }

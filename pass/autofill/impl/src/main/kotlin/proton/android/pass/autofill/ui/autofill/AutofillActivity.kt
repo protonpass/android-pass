@@ -94,7 +94,7 @@ class AutofillActivity : FragmentActivity() {
                         onNavigate = {
                             when (it) {
                                 AutofillNavigation.Cancel -> onAutofillCancel()
-                                is AutofillNavigation.Selected -> onAutofillSuccess(it.autofillMappings)
+                                is AutofillNavigation.SendResponse -> onAutofillSuccess(it.mappings)
                                 AutofillNavigation.Upgrade -> viewModel.upgrade()
                                 AutofillNavigation.ForceSignOut -> {
                                     viewModel.signOut()

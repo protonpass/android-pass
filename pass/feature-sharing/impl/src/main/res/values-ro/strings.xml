@@ -117,4 +117,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Setare nivel de acces pentru toți membrii</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Setare nivel de acces pentru %s</string>
   <string name="sharing_edit_permissions_remove_user">Eliminare utilizator</string>
+  <string name="sharing_error_dialog_title">Unknown error</string>
+  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
 </resources>

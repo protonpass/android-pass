@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Uppgradera för anpassade domäner</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Uppgradera för fler inkorgar</string>
   <string name="create_alias_content_limit_banner">Du har nått gränsen för alias du kan skapa. Skapa ett obegränsat antal alias när du uppgraderar din prenumeration.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen måste uppdateras för att redigera detta objekt</string>
 </resources>

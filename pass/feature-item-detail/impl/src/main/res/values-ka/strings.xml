@@ -90,7 +90,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">ამ ელემენტის ჩასწორება არ შეგიძლიათ, რადგან ის ნაგვის ყუთშია. გამოიტანეთ ის ნაგვის ყუთიდან, სანამ ჩაასწორებთ.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">გაზიარება შეუძლებელია</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">ამ საცავის გაზიარებისთვის საკმარისი წვდომები არ გაგაჩნიათ.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">მიაღწიეთ საცავის გაზიარების ზღვარს. იმისთვის, რომ მეტი საცავი გააზიაროთ, ასწიეთ თქვენი სატარიფო გეგმა.</string>
   <string name="password_score_vulnerable">მოწყვლადი</string>
   <string name="password_score_weak">სუსტი</string>
   <string name="password_score_strong">ძლიერი</string>

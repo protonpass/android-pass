@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Αναβάθμιση για προσαρμοσμένους τομείς</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Αναβάθμιση για περισσότερα εισερχόμενα</string>
   <string name="create_alias_content_limit_banner">Έχετε φτάσει στο όριο των ψευδωνύμων που μπορείτε να δημιουργήσετε. Δημιουργήστε απεριόριστο αριθμό ψευδωνύμων κατά την αναβάθμιση της συνδρομής σας.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Η εφαρμογή πρέπει να ενημερωθεί για να επεξεργαστείτε αυτό το στοιχείο</string>
 </resources>

@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Nâng cấp để dùng tên miền tùy chọn</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Nâng cấp để thêm nhiều hộp thư hơn</string>
   <string name="create_alias_content_limit_banner">Bạn đã đạt giới hạn bí danh bạn có thể tạo. Tạo không giới hạn bí danh khi bạn nâng cấp gói đăng ký của mình.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
 </resources>

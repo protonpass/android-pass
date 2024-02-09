@@ -90,7 +90,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Et voi muokata kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Jakaminen ei ole mahdollista</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Oikeutesi eivät riitä tämän holvin jakamiseen.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Olet saavuttanut holvien jakamisrajan. Jos haluat jakaa lisää holveja, päivitä nykyinen tilauksesi.</string>
   <string name="password_score_vulnerable">Haavoittuvainen</string>
   <string name="password_score_weak">Heikko</string>
   <string name="password_score_strong">Vahva</string>

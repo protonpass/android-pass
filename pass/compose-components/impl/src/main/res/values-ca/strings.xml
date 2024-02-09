@@ -8,7 +8,7 @@
   <string name="sort_by_modification_date">Més recent</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tots</string>
-  <string name="item_list_header_pinned_search_results">Pinned</string>
+  <string name="item_list_header_pinned_search_results">Ancorat</string>
   <string name="item_list_header_logins_type">Inicis de sessió</string>
   <string name="item_list_header_aliases_type">Àlies</string>
   <string name="item_list_header_notes_type">Notes</string>
@@ -22,7 +22,7 @@
   <string name="bottomsheet_cancel_button">Cancel·la</string>
   <string name="bottomsheet_move_to_trash">Mou a la paperera</string>
   <string name="bottomsheet_pin_item">Ancora</string>
-  <string name="bottomsheet_unpin_item">Unpin</string>
+  <string name="bottomsheet_unpin_item">Desancora</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Obre el menú d\'acció de l\'element</string>
   <string name="action_upgrade_now">Millora ara</string>

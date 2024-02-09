@@ -4,7 +4,7 @@
   <string name="action_save">Simpan</string>
   <string name="action_remove">Hapus</string>
   <!-- Create item bottomsheet -->
-  <string name="action_login">Login</string>
+  <string name="action_login">Entri masuk</string>
   <string name="action_alias">Alias</string>
   <string name="action_note">Catatan</string>
   <string name="action_credit_card">Kartu kredit</string>
@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Tingkatkan untuk menggunakan domain khusus</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Tingkatkan untuk mendapatkan lebih banyak kotak masuk</string>
   <string name="create_alias_content_limit_banner">Anda telah mencapai batas jumlah alias yang dapat Anda buat. Dapatkan kemampuan untuk membuat alias tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplikasi perlu diperbarui untuk menyunting item ini</string>
 </resources>

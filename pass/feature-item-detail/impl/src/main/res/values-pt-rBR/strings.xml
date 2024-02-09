@@ -90,7 +90,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Você não pode editar este item porque ele está na lixeira. Retire-o da lixeira antes de editá-lo.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Não pode compartilhar</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Você não tem permissões suficientes para compartilhar este cofre.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Você atingiu o limite de compartilhamento do cofre. Para compartilhar mais cofres, atualize seu plano atual.</string>
   <string name="password_score_vulnerable">Vulnerável</string>
   <string name="password_score_weak">Fraco</string>
   <string name="password_score_strong">Forte</string>

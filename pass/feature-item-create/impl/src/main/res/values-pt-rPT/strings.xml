@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Atualize para obter domínios personalizados.</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Atualize para obter mais caixas de entrada.</string>
   <string name="create_alias_content_limit_banner">Atingiu o limite de aliases que pode criar. Crie um número ilimitado de aliases quando atualizar a sua subscrição.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
 </resources>

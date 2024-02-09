@@ -90,7 +90,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kannst diesen Eintrag nicht bearbeiten, da er sich im Papierkorb befindet. Bitte entferne ihn aus dem Papierkorb, um ihn zu bearbeiten.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Teilen nicht möglich</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Deine Berechtigungen reichen nicht aus, um diesen Tresor freizugeben.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Du hast das Limit für die Tresorfreigabe erreicht. Um mehr Tresore gemeinsam nutzen zu können, aktualisiere bitte deinen aktuellen Tarif.</string>
   <string name="password_score_vulnerable">Verwundbar</string>
   <string name="password_score_weak">Schwach</string>
   <string name="password_score_strong">Stark</string>

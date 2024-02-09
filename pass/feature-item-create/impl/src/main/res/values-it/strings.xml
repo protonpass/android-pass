@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Effettua l\'aggiornamento del piano per poter utilizzare i domini personalizzati</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Effettua l\'aggiornamento del piano per poter utilizzare più caselle di posta</string>
   <string name="create_alias_content_limit_banner">Hai raggiunto il limite di alias da poter creare. Crea un numero illimitato di alias effettuando l\'aggiornamento del piano per il tuo abbonamento.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">L\'app deve essere aggiornata per poter modificare questo elemento</string>
 </resources>

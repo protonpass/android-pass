@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Upgrade für benutzerdefinierte Domains</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade für weitere Postfächer</string>
   <string name="create_alias_content_limit_banner">Du hast das Limit an Aliassen erreicht, die du erstellen kannst. Ein Upgrade deines Abonnements ermöglicht dir das Erstellen von unbegrenzten Aliassen.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Die App muss aktualisiert werden, um dieses Element zu bearbeiten</string>
 </resources>

@@ -87,7 +87,7 @@
   <string name="field_card_pin_title">Codi PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Data de caducitat</string>
-  <string name="field_card_expiration_date_hint">MM / YY</string>
+  <string name="field_card_expiration_date_hint">MM/AA</string>
   <string name="field_card_expiration_date_error">Enter a valid date in MM/YY format</string>
   <string name="create_credit_card_item_creation_error">No s\'ha pogut crear la targeta de crèdit</string>
   <string name="create_credit_card_item_creation_success">S\'ha creat la targeta de crèdit</string>
@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Milloreu per obtenir dominis personalitzats</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Milloreu per obtenir més carpetes d\'entrada</string>
   <string name="create_alias_content_limit_banner">Heu assolit el límit d\'àlies que podeu crear. Creeu un nombre il·limitat d\'àlies en millorar la vostra subscripció.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
 </resources>

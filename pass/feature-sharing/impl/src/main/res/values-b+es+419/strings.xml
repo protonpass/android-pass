@@ -113,4 +113,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Configurar nivel de acceso para todos los miembros</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Configurar nivel de acceso para %s</string>
   <string name="sharing_edit_permissions_remove_user">Quitar usuario</string>
+  <string name="sharing_error_dialog_title">Error desconocido</string>
+  <string name="sharing_error_dialog_message">No se pudo enviar la invitación de esta bóveda. Si el problema persiste, contáctese con el servicio de atención al cliente.</string>
 </resources>

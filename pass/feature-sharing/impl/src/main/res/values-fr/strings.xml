@@ -109,8 +109,10 @@
   <string name="sharing_from_item_vault_limit_reached">Vous avez atteint le nombre maximum de coffres-forts.</string>
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Récents</string>
-  <string name="share_with_remove_email_content_description">Supprimer l\'adresse e-mail</string>
+  <string name="share_with_remove_email_content_description">Retirer cette adresse e-mail</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Définir le niveau d\'accès pour tous les membres</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Définir le niveau d\'accès pour %s</string>
   <string name="sharing_edit_permissions_remove_user">Supprimer l\'utilisateur </string>
+  <string name="sharing_error_dialog_title">Erreur inconnue</string>
+  <string name="sharing_error_dialog_message">Une erreur s\'est produite lors de l\'envoi d\'une invitation à ce coffre-fort. Si le problème persiste, veuillez contacter le service client.</string>
 </resources>

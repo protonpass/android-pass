@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">사용자 지정 도메인을 위해 업그레이드</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">더 많은 받은 편지함을 위해 업그레이드</string>
   <string name="create_alias_content_limit_banner">사용자가 생성할 수 있는 최대 별명 수에 도달했습니다. 구독을 업그레이드하여 무제한 별명을 생성하세요.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">이 항목을 편집하려면 앱 업데이트가 필요합니다.</string>
 </resources>

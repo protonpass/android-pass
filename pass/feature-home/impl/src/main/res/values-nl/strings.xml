@@ -15,7 +15,7 @@
   <string name="home_snackbar_note_moved_to_trash">Notitie verplaatst naar prullenbak</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kredietkaart verplaatst naar prullenbak</string>
   <string name="home_snackbar_move_to_trash_error">Item kon niet verplaatst worden naar prullenbak.</string>
-  <string name="home_snackbar_items_move_to_trash_success">Items moved to trash</string>
+  <string name="home_snackbar_items_move_to_trash_success">Items verplaatst naar de prullenbak</string>
   <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
   <string name="home_toast_items_selected_read_only">Read-only items cannot be selected</string>
   <string name="home_autofill_banner_title">Geniet van de magie van Automatisch aanvullen</string>
@@ -119,9 +119,9 @@
   <string name="recent_search_clear">Clear</string>
   <string name="recent_search_remove_item">Verwijderen uit recente zoekopdrachten</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_success">Item succesvol vastgezet</string>
   <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
-  <string name="home_snackbar_item_unpinned_success">Item successfully unpinned</string>
+  <string name="home_snackbar_item_unpinned_success">Item succesvol losgemaakt</string>
   <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">Items pinned successfully</string>
   <string name="home_snackbar_items_pinned_partial_success">Error pinning some of the items</string>

@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">為自訂網域升級</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">為信箱升級</string>
   <string name="create_alias_content_limit_banner">已用鑿可供創建別名的數量。升級訂購授權即可釋放限制</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
 </resources>

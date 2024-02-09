@@ -92,7 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Túto položku nemôžete upravovať, pretože je v koši. Pred úpravou ju premiestnite z koša, prosím.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nemožno zdieľať</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Na zdieľanie tohto trezora nemáte dostatočné oprávnenia.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Dosiahli ste limit zdieľania trezoru. Ak chcete zdieľať viac trezorov, upgradujte svoj aktuálny plán.</string>
   <string name="password_score_vulnerable">Zraniteľné</string>
   <string name="password_score_weak">Slabé</string>
   <string name="password_score_strong">Silné</string>

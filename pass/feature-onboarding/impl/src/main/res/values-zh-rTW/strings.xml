@@ -11,8 +11,8 @@
   <string name="on_boarding_last_page_button">開始使用 Proton Pass</string>
   <string name="on_boarding_skip">稍後再說</string>
   <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
-  <string name="on_boarding_pending_invite_content">For security reasons, your access needs to be confirmed.</string>
-  <string name="on_boarding_pending_invite_title">Pending access to the shared data</string>
+  <string name="on_boarding_pending_invite_content">基於安全性理由，您的存取需要得到確認.</string>
+  <string name="on_boarding_pending_invite_title">暫緩存取分享的資料</string>
   <string name="on_boarding_pending_invite_button">Learn more about Proton Pass</string>
   <string name="error_biometry_failed_to_start">無法使用生物特徵驗證</string>
   <string name="error_biometry_failed_to_authenticate">驗證失敗</string>

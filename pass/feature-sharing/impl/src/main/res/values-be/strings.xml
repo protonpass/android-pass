@@ -121,4 +121,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Прызначэнне ўзроўню доступу для ўсіх удзельнікаў</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Прызначыць узровень доступу для %s</string>
   <string name="sharing_edit_permissions_remove_user">Выдаліць карыстальніка</string>
+  <string name="sharing_error_dialog_title">Невядомая памылка</string>
+  <string name="sharing_error_dialog_message">Адбылася памылка адпраўкі запрашэння для гэтага сховішча. Калі праблема застанецца, звярніцеся ў службу падтрымкі кліентаў.</string>
 </resources>

@@ -109,4 +109,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Tentukan tingkat akses bagi seluruh anggota</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Tetapkan tingkat akses untuk %s</string>
   <string name="sharing_edit_permissions_remove_user">Hapus pengguna</string>
+  <string name="sharing_error_dialog_title">Kesalahan yang tidak diketahui</string>
+  <string name="sharing_error_dialog_message">Terdapat kesalahan pada saat mengirim undangan untuk brankas ini. Apabila masalah terus berlanjut, silakan hubungi layanan dukungan kami.</string>
 </resources>

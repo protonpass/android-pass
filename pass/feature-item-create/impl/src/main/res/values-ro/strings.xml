@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Pentru domenii personale modificați planul.</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Pentru mai multe adrese modificați planul.</string>
   <string name="create_alias_content_limit_banner">Ați atins limita aliasurilor pe care le puteți crea. Puteți creați un număr nelimitat de aliasuri dacă vă modificați abonamentul.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplicația trebuie actualizată pentru a edita acest articol.</string>
 </resources>

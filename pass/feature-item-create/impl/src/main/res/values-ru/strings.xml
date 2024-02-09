@@ -99,7 +99,7 @@
   <string name="totp_create_login_field_title">Секрет 2ФА (TOTP)</string>
   <string name="totp_create_login_field_invalid">Недействительный секрет 2ФА</string>
   <string name="totp_create_login_field_placeholder">Добавить секрет 2ФА</string>
-  <string name="close_scree_icon_content_description">Close screen button</string>
+  <string name="close_scree_icon_content_description">Кнопка закрытия экрана</string>
   <string name="totp_paste_code_action">Вставить код</string>
   <string name="totp_scan_code_action">Сканировать код</string>
   <string name="field_cannot_be_empty">Это поле не может быть пустым</string>
@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Улучшите для своих доменов</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Улучшите для большего количества почтовых ящиков</string>
   <string name="create_alias_content_limit_banner">Вы достигли лимита на количество псевдонимов, которые можно создать. Создавайте неограниченное количество псевдонимов, улучшив свою подписку.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Для редактирования этого элемента приложение должно быть обновлено</string>
 </resources>

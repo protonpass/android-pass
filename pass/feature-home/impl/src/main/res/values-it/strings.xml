@@ -51,7 +51,7 @@
     <item quantity="one">%d elemento</item>
     <item quantity="other">%d elementi</item>
   </plurals>
-  <string name="vault_drawer_create_vault">Crea cassaforte</string>
+  <string name="vault_drawer_create_vault">Crea una cassaforte</string>
   <string name="vault_drawer_item_trash">Cestino</string>
   <string name="vault_drawer_all_vaults">Tutte le casseforti</string>
   <!-- Vault management -->
@@ -77,7 +77,7 @@
   <string name="bottomsheet_trash_all_items_title">Sposta nel cestino</string>
   <string name="bottomsheet_restore_all_items">Ripristina tutti gli elementi</string>
   <string name="bottomsheet_empty_trash">Svuota il cestino</string>
-  <string name="bottomsheet_select_items">Seleziona gli elementi</string>
+  <string name="bottomsheet_select_items">Seleziona degli elementi</string>
   <string name="trash_error_clearing_trash">Errore nello svuotamento del cestino</string>
   <string name="trash_success_restoring_items">Elementi ripristinati</string>
   <string name="trash_error_restoring_items">Errore nel ripristino degli elementi</string>

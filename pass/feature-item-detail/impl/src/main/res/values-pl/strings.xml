@@ -92,7 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nie można edytować elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nie można udostępnić</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Osiągnięto maksymalną liczbę udostępnionych sejfów. Ulepsz plan, aby udostępnić więcej sejfów.</string>
   <string name="password_score_vulnerable">Bardzo słabe</string>
   <string name="password_score_weak">Słabe</string>
   <string name="password_score_strong">Silne</string>

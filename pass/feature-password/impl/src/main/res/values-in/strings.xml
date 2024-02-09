@@ -3,7 +3,7 @@
   <string name="generate_password_copy">Salin dan tutup</string>
   <string name="password_copied_to_clipboard">Kata sandi disalin</string>
   <string name="bottomsheet_generate_password_title">Hasilkan kata sandi</string>
-  <string name="password_type">Jenis</string>
+  <string name="password_type">Karakter pemisah</string>
   <string name="special_characters">Karakter khusus (!&amp;*)</string>
   <plurals name="character_count">
     <item quantity="other">%s karakter</item>

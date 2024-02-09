@@ -113,4 +113,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Ställ in åtkomstnivå för alla medlemmar</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Ställ in åtkomstnivå för %s</string>
   <string name="sharing_edit_permissions_remove_user">Ta bort användare</string>
+  <string name="sharing_error_dialog_title">Okänt fel</string>
+  <string name="sharing_error_dialog_message">Det uppstod ett fel när en inbjudan skulle skickas till detta valv.. Kontakta kundsupport om problemet kvarstår.</string>
 </resources>

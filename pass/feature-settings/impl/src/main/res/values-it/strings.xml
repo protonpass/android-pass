@@ -17,7 +17,7 @@
   <string name="settings_option_clipboard">Appunti</string>
   <string name="settings_application_section_title">Applicazione</string>
   <string name="settings_option_view_logs">Visualizza i log</string>
-  <string name="settings_option_force_sync">Forza sincronizzazione</string>
+  <string name="settings_option_force_sync">Forza la sincronizzazione</string>
   <string name="settings_about_section_title">Info</string>
   <string name="settings_option_privacy_policy">Informativa sulla privacy</string>
   <string name="settings_option_terms_of_service">Termini di servizio</string>

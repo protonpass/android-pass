@@ -19,12 +19,20 @@
 package proton.android.pass.autofill.entities
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.featureselectitem.navigation.SelectItemState
+import proton.android.pass.log.api.PassLogger
+import java.net.URI
+
+private const val TAG = "AutofillAppState"
 
 @Immutable
 data class AutofillAppState(
@@ -49,3 +57,48 @@ data class AutofillAppState(
 }
 
 fun AutofillAppState.isValid(): Boolean = autofillData.assistInfo.cluster != NodeCluster.Empty
+
+fun AutofillAppState.toSelectItemState(): SelectItemState.Autofill {
+    val suggestionsTitle = getSuggestionsTitle()
+
+    return when (autofillData.assistInfo.cluster) {
+        is NodeCluster.CreditCard -> SelectItemState.Autofill.CreditCard(title = suggestionsTitle)
+
+        is NodeCluster.Login,
+        is NodeCluster.SignUp -> {
+            val (packageName, url) = PackageNameUrlSuggestionAdapter.adapt(
+                packageName = autofillData.packageInfo.packageName,
+                url = autofillData.assistInfo.url
+            )
+
+            SelectItemState.Autofill.Login(
+                title = suggestionsTitle,
+                suggestionsPackageName = packageName,
+                suggestionsUrl = url,
+            )
+        }
+
+        else -> throw IllegalStateException("Unknown cluster type")
+    }
+}
+
+private fun AutofillAppState.getSuggestionsTitle(): String =
+    if (autofillData.assistInfo.url is Some) {
+        getSuggestionsTitleForDomain(autofillData.assistInfo.url.value)
+    } else {
+        autofillData.packageInfo.appName.value
+    }
+
+private fun getSuggestionsTitleForDomain(domain: String): String =
+    UrlSanitizer.sanitize(domain).fold(
+        onSuccess = {
+            runCatching {
+                val parsed = URI(it)
+                parsed.host
+            }.getOrDefault("")
+        },
+        onFailure = {
+            PassLogger.i(TAG, it, "Error sanitizing URL [url=$domain]")
+            ""
+        }
+    )

@@ -101,6 +101,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.Usernam
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.WebsiteCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
+import proton.android.pass.featureitemdetail.impl.common.ItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -310,14 +311,14 @@ class LoginDetailViewModel @Inject constructor(
         val passwordScore: PasswordScore?
     )
 
-    private val featureFlagsFlow = combine(
+    private val itemFeaturesFlow = combine(
         featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
         getUserPlan(),
     ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, userPlan ->
-        mapOf(
-            FeatureFlag.PINNING_V1 to isPinningFeatureEnabled,
-            FeatureFlag.HISTORY_V1 to (userPlan.isPaidPlan && isHistoryFeatureFlagEnabled),
+        ItemFeatures(
+            isHistoryEnabled = isHistoryFeatureFlagEnabled && userPlan.isPaidPlan,
+            isPinningEnabled = isPinningFeatureEnabled,
         )
     }
 
@@ -332,7 +333,7 @@ class LoginDetailViewModel @Inject constructor(
         customFieldsState,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        featureFlagsFlow,
+        itemFeaturesFlow,
     ) { itemDetails,
         totpUiState,
         isLoading,
@@ -343,7 +344,7 @@ class LoginDetailViewModel @Inject constructor(
         customFields,
         itemActions,
         event,
-        featureFlags ->
+        itemFeatures ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 if (!isPermanentlyDeleted.value()) {
@@ -386,10 +387,8 @@ class LoginDetailViewModel @Inject constructor(
                     shareClickAction = details.shareClickAction,
                     itemActions = actions,
                     event = event,
-                    isPinningFeatureEnabled = featureFlags[FeatureFlag.PINNING_V1]
-                        ?: FeatureFlag.PINNING_V1.isEnabledDefault,
-                    isHistoryFeatureEnabled = featureFlags[FeatureFlag.HISTORY_V1]
-                        ?: FeatureFlag.HISTORY_V1.isEnabledDefault,
+                    isPinningFeatureEnabled = itemFeatures.isPinningEnabled,
+                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                 )
             }
         }

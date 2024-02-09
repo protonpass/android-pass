@@ -75,6 +75,7 @@ import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
+import proton.android.pass.featureitemdetail.impl.common.ItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -192,14 +193,14 @@ class CreditCardDetailViewModel @Inject constructor(
 
     }.distinctUntilChanged()
 
-    private val featureFlagsFlow = combine(
+    private val itemFeaturesFlow = combine(
         featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
         getUserPlan(),
     ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, userPlan ->
-        mapOf(
-            FeatureFlag.PINNING_V1 to isPinningFeatureEnabled,
-            FeatureFlag.HISTORY_V1 to (userPlan.isPaidPlan && isHistoryFeatureFlagEnabled),
+        ItemFeatures(
+            isHistoryEnabled = isHistoryFeatureFlagEnabled && userPlan.isPaidPlan,
+            isPinningEnabled = isPinningFeatureEnabled,
         )
     }
 
@@ -213,7 +214,7 @@ class CreditCardDetailViewModel @Inject constructor(
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        featureFlagsFlow,
+        itemFeaturesFlow,
     ) { itemDetails,
         isLoading,
         isItemSentToTrash,
@@ -223,7 +224,7 @@ class CreditCardDetailViewModel @Inject constructor(
         shareAction,
         itemActions,
         event,
-        featureFlags ->
+        itemFeatures ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 if (!isPermanentlyDeleted.value()) {
@@ -264,10 +265,8 @@ class CreditCardDetailViewModel @Inject constructor(
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,
-                    isPinningFeatureEnabled = featureFlags[FeatureFlag.PINNING_V1]
-                        ?: FeatureFlag.PINNING_V1.isEnabledDefault,
-                    isHistoryFeatureEnabled = featureFlags[FeatureFlag.HISTORY_V1]
-                        ?: FeatureFlag.HISTORY_V1.isEnabledDefault,
+                    isPinningFeatureEnabled = itemFeatures.isPinningEnabled,
+                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                 )
             }
         }

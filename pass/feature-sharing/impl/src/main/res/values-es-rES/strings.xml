@@ -113,4 +113,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Establecer el nivel de acceso para todos los usuarios</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Establecer el nivel de acceso para %s</string>
   <string name="sharing_edit_permissions_remove_user">Borrar el usuario</string>
+  <string name="sharing_error_dialog_title">Error desconocido</string>
+  <string name="sharing_error_dialog_message">No se ha podido enviar la invitación de esta caja fuerte. Si el problema persiste, contacta con el servicio de atención al cliente.</string>
 </resources>

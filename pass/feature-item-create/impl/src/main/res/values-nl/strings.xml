@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Upgrade voor aangepaste domeinen</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade voor meer inboxen</string>
   <string name="create_alias_content_limit_banner">U heeft de limiet bereikt van aliassen die u kunt maken. Maak een onbeperkt aantal aliassen aan wanneer u uw abonnement upgradet.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
 </resources>

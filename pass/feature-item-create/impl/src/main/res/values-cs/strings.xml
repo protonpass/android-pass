@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Navyšte tarif pro vlastní domény</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Navyšte tarif pro více schránek</string>
   <string name="create_alias_content_limit_banner">Dosáhli jste limitu aliasů, které můžete vytvořit. Po navýšení předplatného můžete vytvářet neomezený počet aliasů.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
 </resources>

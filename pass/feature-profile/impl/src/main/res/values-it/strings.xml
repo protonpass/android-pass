@@ -20,7 +20,7 @@
   <string name="feedback_option_reddit">Dai un\'occhiata a Proton su Reddit</string>
   <string name="feedback_option_mail">Inviaci un messaggio</string>
   <string name="feedback_option_vote_new_features">Vota per nuove funzionalità</string>
-  <string name="app_lock_immediately">Immediatamente</string>
+  <string name="app_lock_immediately">Immediato</string>
   <string name="app_lock_one_minute">Dopo 1 minuto</string>
   <string name="app_lock_two_minutes">Dopo 2 minuti</string>
   <string name="app_lock_five_minutes">Dopo 5 minuti</string>

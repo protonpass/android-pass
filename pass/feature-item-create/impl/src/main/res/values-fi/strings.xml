@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Käytä omia verkkotunnuksiasi päivittämällä tilauksesi</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Hanki lisää postilaatikoita päivittämällä tilauksesi</string>
   <string name="create_alias_content_limit_banner">Luotujen aliasten enimmäismäärä on saavutettu. Luo aliaksia rajattomasti päivittämällä tilauksesi.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Sovellus on päivitettävä tämän kohteen muokkaamiseksi</string>
 </resources>

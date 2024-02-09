@@ -112,4 +112,5 @@
   <string name="select_suffix_upgrade_for_custom_domains">Oppgrader for egendefinerte domener</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Oppgrader for flere innbokser</string>
   <string name="create_alias_content_limit_banner">Du har nådd grensen for aliaser du kan opprette. Opprett et ubegrenset antall aliaser når du oppgraderer abonnementet.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen må oppdateres for å redigere dette elementet</string>
 </resources>

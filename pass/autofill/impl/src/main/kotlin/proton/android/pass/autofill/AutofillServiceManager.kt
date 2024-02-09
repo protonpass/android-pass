@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.entities.AutofillData
-import proton.android.pass.autofill.extensions.isBrowser
+import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.service.R
@@ -174,28 +174,10 @@ class AutofillServiceManager @Inject constructor(
         }
 
         SuggestionType.Login -> {
-            val autofillDataPackageName = autofillData.packageInfo.packageName
-                .takeIf { !it.isBrowser() }
-                .toOption()
-                .map { it.value }
-
-            val autofillDataUrl = autofillData.assistInfo.url
-
-            val (packageName, url) = when {
-                // App with a webview
-                autofillDataPackageName.isNotEmpty() && autofillDataUrl.isNotEmpty() -> {
-                    None to autofillDataUrl
-                }
-
-                autofillDataPackageName.isNotEmpty() && autofillDataUrl.isEmpty() -> {
-                    autofillDataPackageName to None
-                }
-
-                autofillDataPackageName.isEmpty() -> None to autofillDataUrl
-
-                // Should not happen
-                else -> None to None
-            }
+            val (packageName, url) = PackageNameUrlSuggestionAdapter.adapt(
+                packageName = autofillData.packageInfo.packageName,
+                url = autofillData.assistInfo.url
+            )
 
             val items = getSuggestedLoginItems(
                 packageName = packageName,

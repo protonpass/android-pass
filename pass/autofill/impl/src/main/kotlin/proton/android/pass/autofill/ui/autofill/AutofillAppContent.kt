@@ -23,22 +23,30 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.launch
-import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
+import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
+import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialog
+import proton.android.pass.autofill.ui.autofill.select.AssociateAutofillItemDialog
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.featureauth.impl.AUTH_GRAPH
+import proton.android.pass.featureselectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -53,8 +61,36 @@ fun AutofillAppContent(
     autofillAppState: AutofillAppState,
     selectedAutofillItem: AutofillItem?,
     needsAuth: Boolean,
-    onNavigate: (AutofillNavigation) -> Unit
+    onNavigate: (AutofillNavigation) -> Unit,
+    viewModel: AutofillAppViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.setHadSelectedAutofillItem(selectedAutofillItem != null)
+    }
+
+    var showAssociateDialog: ItemUiModel? by remember { mutableStateOf(null) }
+    var showWarningDialog: ItemUiModel? by remember { mutableStateOf(null) }
+
+    val event by viewModel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(event) {
+        when (val e = event) {
+            AutofillAppEvent.Cancel -> {
+                onNavigate(AutofillNavigation.Cancel)
+            }
+            is AutofillAppEvent.SendResponse -> {
+                onNavigate(AutofillNavigation.SendResponse(e.mappings))
+            }
+            is AutofillAppEvent.ShowAssociateDialog -> {
+                showAssociateDialog = e.item
+            }
+            is AutofillAppEvent.ShowWarningDialog -> {
+                showWarningDialog = e.item
+            }
+            AutofillAppEvent.Unknown -> {}
+        }
+        viewModel.clearEvent()
+    }
+
     val startDestination = remember {
         if (needsAuth) {
             AUTH_GRAPH
@@ -63,7 +99,6 @@ fun AutofillAppContent(
         }
     }
 
-    val viewModel = hiltViewModel<AutofillAppViewModel>()
     val coroutineScope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -79,21 +114,6 @@ fun AutofillAppContent(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )
 
-    val onAutofillItemSelected = {
-        val source = if (selectedAutofillItem == null) {
-            // We didn't have an item selected, so the user must have opened the app
-            AutofillTriggerSource.App
-        } else {
-            // We had an item selected
-            AutofillTriggerSource.Source
-        }
-
-        viewModel.onAutofillItemSelected(
-            source = source,
-            packageInfo = autofillAppState.autofillData.packageInfo
-        )
-    }
-
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
         NavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
@@ -104,23 +124,18 @@ fun AutofillAppContent(
                 appNavigator = appNavigator,
                 autofillAppState = autofillAppState,
                 selectedAutofillItem = selectedAutofillItem,
-                onNavigate = {
+                onNavigate = onNavigate,
+                onEvent = {
                     when (it) {
-                        is AutofillNavigation.Selected -> {
-                            onAutofillItemSelected()
-                            onNavigate(it)
+                        is AutofillEvent.AutofillItemSelected -> {
+                            viewModel.onItemSelected(
+                                state = autofillAppState,
+                                autofillItem = it.item
+                            )
                         }
-
-                        else -> onNavigate(it)
-                    }
-                },
-                onAutofillItemReceived = { autofillItem ->
-                    onAutofillItemSelected()
-                    val mappings = viewModel.getMappings(autofillItem, autofillAppState)
-                    if (mappings.mappings.isNotEmpty()) {
-                        onNavigate(AutofillNavigation.Selected(mappings))
-                    } else {
-                        onNavigate(AutofillNavigation.Cancel)
+                        AutofillEvent.SelectItemScreenShown -> {
+                            viewModel.onSelectItemScreenShown(autofillAppState)
+                        }
                     }
                 },
                 dismissBottomSheet = { callback ->
@@ -129,6 +144,48 @@ fun AutofillAppContent(
                         callback()
                     }
                 },
+            )
+        }
+
+
+        if (showAssociateDialog != null) {
+            AssociateAutofillItemDialog(
+                itemUiModel = showAssociateDialog!!,
+                onAssociateAndAutofill = {
+                    viewModel.onAssociationResult(
+                        state = autofillAppState,
+                        item = it,
+                        associate = true
+                    )
+                    showAssociateDialog = null
+                },
+                onAutofill = {
+                    viewModel.onAssociationResult(
+                        state = autofillAppState,
+                        item = it,
+                        associate = false
+                    )
+                    showAssociateDialog = null
+                },
+                onDismiss = {
+                    showAssociateDialog = null
+                }
+            )
+        }
+
+        if (showWarningDialog != null) {
+            ConfirmAutofillDialog(
+                mode = AutofillConfirmMode.DangerousAutofill,
+                onConfirm = {
+                    viewModel.onWarningConfirmed(
+                        state = autofillAppState,
+                        item = showWarningDialog!!,
+                    )
+                    showWarningDialog = null
+                },
+                onClose = {
+                    showWarningDialog = null
+                }
             )
         }
     }

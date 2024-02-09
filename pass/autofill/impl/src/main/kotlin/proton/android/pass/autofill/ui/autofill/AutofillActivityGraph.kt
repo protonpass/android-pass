@@ -24,14 +24,12 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.Utils
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
+import proton.android.pass.autofill.entities.toSelectItemState
 import proton.android.pass.autofill.extensions.CreatedAlias
 import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
-import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
-import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
-import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsBottomSheet
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsNavigation
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.autofillItemOptionsGraph
@@ -78,10 +76,20 @@ import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
 import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SortingLocation
 import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
+import proton.android.pass.featureselectitem.navigation.SelectItem
+import proton.android.pass.featureselectitem.navigation.SelectItemNavigation
+import proton.android.pass.featureselectitem.navigation.selectItemGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
+
+sealed interface AutofillEvent {
+    object SelectItemScreenShown : AutofillEvent
+
+    @JvmInline
+    value class AutofillItemSelected(val item: AutofillItem) : AutofillEvent
+}
 
 @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
 @ExperimentalMaterialApi
@@ -91,7 +99,7 @@ fun NavGraphBuilder.autofillActivityGraph(
     autofillAppState: AutofillAppState,
     selectedAutofillItem: AutofillItem?,
     onNavigate: (AutofillNavigation) -> Unit,
-    onAutofillItemReceived: (AutofillItem) -> Unit,
+    onEvent: (AutofillEvent) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
     authGraph(
@@ -100,7 +108,7 @@ fun NavGraphBuilder.autofillActivityGraph(
             when (it) {
                 AuthNavigation.Back -> onNavigate(AutofillNavigation.Cancel)
                 AuthNavigation.Success -> if (selectedAutofillItem != null) {
-                    onAutofillItemReceived(selectedAutofillItem)
+                    onEvent(AutofillEvent.AutofillItemSelected(selectedAutofillItem))
                 } else {
                     appNavigator.navigate(SelectItem)
                 }
@@ -114,12 +122,16 @@ fun NavGraphBuilder.autofillActivityGraph(
         }
     )
     selectItemGraph(
-        state = autofillAppState,
+        state = autofillAppState.toSelectItemState(),
+        onScreenShown = { onEvent(AutofillEvent.SelectItemScreenShown) },
         onNavigate = {
             when (it) {
                 SelectItemNavigation.AddItem -> appNavigator.navigate(CreateItemBottomsheet)
                 SelectItemNavigation.Cancel -> onNavigate(AutofillNavigation.Cancel)
-                is SelectItemNavigation.ItemSelected -> onNavigate(AutofillNavigation.Selected(it.autofillMappings))
+                is SelectItemNavigation.ItemSelected -> {
+                    onEvent(AutofillEvent.AutofillItemSelected(it.item.toAutoFillItem()))
+                }
+
                 is SelectItemNavigation.SortingBottomsheet ->
                     appNavigator.navigate(
                         SortingBottomsheet,
@@ -190,7 +202,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
                     is CreateLoginNavigation.LoginCreated -> {
-                        onAutofillItemReceived(event.itemUiModel.toAutoFillItem())
+                        onEvent(AutofillEvent.AutofillItemSelected(event.itemUiModel.toAutoFillItem()))
                     }
 
                     is CreateLoginNavigation.SelectVault -> {
@@ -306,7 +318,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is CreateAliasNavigation.Created -> {
                     val created = CreatedAlias(it.shareId, it.itemId, it.alias)
-                    onAutofillItemReceived(created.toAutofillItem())
+                    onEvent(AutofillEvent.AutofillItemSelected(created.toAutofillItem()))
                 }
 
                 CreateAliasNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
@@ -324,7 +336,7 @@ fun NavGraphBuilder.autofillActivityGraph(
             BaseCreditCardNavigation.Close -> appNavigator.navigateBack()
             is CreateCreditCardNavigation -> when (it) {
                 is CreateCreditCardNavigation.ItemCreated ->
-                    onAutofillItemReceived(it.itemUiModel.toAutoFillItem())
+                    onEvent(AutofillEvent.AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
 
                 is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,

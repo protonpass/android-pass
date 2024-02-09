@@ -63,10 +63,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
 
     implementation(libs.accompanist.navigation.material)
@@ -101,11 +97,23 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
-    implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.featureSearchOptions.impl)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
+
+    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(projects.pass.clipboard.fakes)
+    androidTestImplementation(projects.pass.common.fakes)
+    androidTestImplementation(projects.pass.commonRust.fakes)
+    androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.commonUi.fakes)
+    androidTestImplementation(projects.pass.crypto.fakes)
+    androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.featureSearchOptions.fakes)
+    androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
 }

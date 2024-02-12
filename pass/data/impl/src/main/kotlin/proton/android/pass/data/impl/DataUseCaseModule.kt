@@ -67,6 +67,7 @@ import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
+import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
@@ -167,6 +168,7 @@ import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveActiveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
 import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
+import proton.android.pass.data.impl.usecases.ObserveAppNeedsUpdateImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveHasConfirmedInviteImpl
@@ -526,5 +528,8 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindForceSyncItems(impl: ForceSyncItemsImpl): ForceSyncItems
+
+    @Binds
+    abstract fun bindObserveAppNeedsUpdate(impl: ObserveAppNeedsUpdateImpl): ObserveAppNeedsUpdate
 
 }

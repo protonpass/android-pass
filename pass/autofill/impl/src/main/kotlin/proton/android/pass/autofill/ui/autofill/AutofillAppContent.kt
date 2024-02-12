@@ -134,7 +134,9 @@ fun AutofillAppContent(
                             )
                         }
                         AutofillEvent.SelectItemScreenShown -> {
-                            viewModel.onSelectItemScreenShown(autofillAppState)
+                            viewModel.onSelectItemScreenShown(
+                                packageName = autofillAppState.autofillData.packageInfo.packageName
+                            )
                         }
                     }
                 },

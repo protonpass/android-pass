@@ -21,6 +21,7 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -42,6 +43,12 @@ fun ProtonHistoryItemRow(
     modifier: Modifier = Modifier,
     trailingIcon: Painter? = null,
     onClick: (() -> Unit)? = null,
+    paddingValues: PaddingValues = PaddingValues(
+        start = Spacing.medium,
+        top = Spacing.medium,
+        end = Spacing.medium,
+        bottom = Spacing.medium,
+    )
 ) {
     Row(
         modifier = modifier
@@ -50,7 +57,7 @@ fun ProtonHistoryItemRow(
                 condition = onClick != null,
                 ifTrue = { clickable { onClick?.invoke() } }
             )
-            .padding(Spacing.medium),
+            .padding(paddingValues),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
     ) {

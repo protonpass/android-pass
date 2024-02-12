@@ -18,22 +18,21 @@
 
 package proton.android.pass.features.item.history.timeline.ui
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
-import proton.android.pass.features.item.history.timeline.presentation.ItemHistoryTimelineViewModel
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 
 @Composable
-fun ItemHistoryTimelineScreen(
-    onNavigated: (ItemHistoryNavDestination) -> Unit,
-    viewModel: ItemHistoryTimelineViewModel = hiltViewModel(),
+internal fun ItemHistoryTimelineLoading(
+    modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
-    ItemHistoryTimelineContent(
-        state = state,
-        onNavigated = onNavigated,
-    )
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator()
+    }
 }

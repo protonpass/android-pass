@@ -113,6 +113,12 @@ interface RemoteItemDataSource {
         itemId: ItemId,
     ): ItemRevision
 
+    suspend fun fetchItemRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+    ): List<ItemRevision>
+
 }
 
 data class ItemTotal(

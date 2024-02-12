@@ -836,6 +836,14 @@ fun NavGraphBuilder.appGraph(
     itemHistoryNavGraph(
         onNavigated = { itemHistoryNavDestination ->
             when (itemHistoryNavDestination) {
+                ItemHistoryNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = false,
+                )
+
+                ItemHistoryNavDestination.Restore -> {
+                    // Navigation will be implemented in the following MR
+                }
+
                 is ItemHistoryNavDestination.Timeline -> appNavigator.navigate(
                     destination = ItemHistoryTimelineNavItem,
                     route = ItemHistoryTimelineNavItem.createNavRoute(

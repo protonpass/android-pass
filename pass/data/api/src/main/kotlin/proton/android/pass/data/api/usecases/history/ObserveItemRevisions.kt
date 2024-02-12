@@ -16,17 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.remote
+package proton.android.pass.data.api.usecases.history
 
-import proton.android.pass.data.impl.responses.GetItemRevisionResponse
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-interface RemoteItemRevisionDataSource {
+interface ObserveItemRevisions {
 
-    suspend fun fetchItemRevision(
+    operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-    ): GetItemRevisionResponse
+    ): Flow<List<ItemRevision>>
 
 }

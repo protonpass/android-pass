@@ -193,7 +193,8 @@ internal class PlanRepositoryImplTest {
                     trialEnd = null
                 ),
                 pendingInvites = pendingInvites,
-                waitingNewUserInvites = waitingNewUserInvites
+                waitingNewUserInvites = waitingNewUserInvites,
+                minVersionUpgrade = null
             )
         )
         remote.setResult(Result.success(userAccessResponse))

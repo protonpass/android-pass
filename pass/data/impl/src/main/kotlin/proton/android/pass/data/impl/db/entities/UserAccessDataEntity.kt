@@ -41,12 +41,15 @@ data class UserAccessDataEntity(
     @ColumnInfo(name = Columns.PENDING_INVITES)
     val pendingInvites: Int,
     @ColumnInfo(name = Columns.WAITING_NEW_USER_INVITES)
-    val waitingNewUserInvites: Int
+    val waitingNewUserInvites: Int,
+    @ColumnInfo(name = Columns.MIN_VERSION_UPGRADE)
+    val minVersionUpgrade: String?
 ) {
     object Columns {
         const val USER_ID = "user_id"
         const val PENDING_INVITES = "pending_invites"
         const val WAITING_NEW_USER_INVITES = "waiting_new_user_invites"
+        const val MIN_VERSION_UPGRADE = "min_version_upgrade"
     }
 
     companion object {

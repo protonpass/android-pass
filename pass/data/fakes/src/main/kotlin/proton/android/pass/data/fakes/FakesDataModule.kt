@@ -69,6 +69,7 @@ import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
+import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
@@ -174,6 +175,7 @@ import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
+import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveHasConfirmedInvite
@@ -600,4 +602,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindBulkInviteRepository(impl: TestBulkInviteRepository): BulkInviteRepository
+
+    @Binds
+    abstract fun bindObserveAppNeedsUpdate(impl: TestObserveAppNeedsUpdate): ObserveAppNeedsUpdate
 }

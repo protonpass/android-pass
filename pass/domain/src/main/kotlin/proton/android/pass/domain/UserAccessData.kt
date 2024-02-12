@@ -20,5 +20,6 @@ package proton.android.pass.domain
 
 data class UserAccessData(
     val pendingInvites: Int,
-    val waitingNewUserInvites: Int
+    val waitingNewUserInvites: Int,
+    val needsUpdate: Boolean
 )

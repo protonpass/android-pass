@@ -207,6 +207,9 @@ object AppDatabaseMigrations {
             UserDatabase.MIGRATION_4.migrate(database)
             UserDatabase.MIGRATION_5.migrate(database)
             AccountDatabase.MIGRATION_7.migrate(database)
+        }
+    }
+
     val MIGRATION_42_43 = object : Migration(42, 43) {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.addTableColumn(

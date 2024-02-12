@@ -65,6 +65,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.pass.domain)
+    implementation(projects.pass.navigation.api)
+
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
@@ -90,7 +93,4 @@ dependencies {
     androidTestImplementation(libs.androidx.lifecycle.viewmodel.savedstate)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.kotlinTest)
-
-    implementation(projects.pass.domain)
-    implementation(projects.pass.navigation.api)
 }

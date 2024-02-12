@@ -18,22 +18,16 @@
 
 package proton.android.pass.featureitemdetail.impl.common
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,45 +36,51 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.datetime.Instant
 import me.proton.core.compose.component.ProtonButton
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
-import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.item.ProtonHistoryItemRow
 import proton.android.pass.featureitemdetail.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun HistorySection(
+    modifier: Modifier = Modifier,
     createdInstant: Instant,
     modifiedInstant: Instant,
     onViewItemHistoryClicked: () -> Unit,
     buttonBackgroundColor: Color,
     buttonTextColor: Color,
-    modifier: Modifier = Modifier,
 ) {
     RoundedCornersColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(Spacing.medium),
     ) {
-        HistoryRowItem(
-            modifier = Modifier.padding(top = Spacing.medium),
-            iconPainter = painterResource(CoreR.drawable.ic_proton_pencil),
+        ProtonHistoryItemRow(
+            leadingIcon = painterResource(CoreR.drawable.ic_proton_pencil),
             title = stringResource(id = R.string.item_detail_history_modified_last),
             subtitle = formatMoreInfoInstantText(
                 now = Instant.fromEpochSeconds(0),
                 toFormat = modifiedInstant,
             ),
+            paddingValues = PaddingValues(
+                top = Spacing.medium,
+                start = Spacing.medium,
+                bottom = Spacing.small,
+            ),
         )
 
-        HistoryRowItem(
-            iconPainter = painterResource(CoreR.drawable.ic_proton_bolt),
+        ProtonHistoryItemRow(
+            leadingIcon = painterResource(CoreR.drawable.ic_proton_bolt),
             title = stringResource(id = R.string.item_detail_history_created),
             subtitle = formatMoreInfoInstantText(
                 now = Instant.fromEpochSeconds(0),
                 toFormat = createdInstant,
+            ),
+            paddingValues = PaddingValues(
+                top = Spacing.small,
+                start = Spacing.medium,
+                bottom = Spacing.medium,
             ),
         )
 
@@ -109,35 +109,6 @@ fun HistorySection(
             )
         }
     }
-}
-
-@Composable
-private fun HistoryRowItem(
-    iconPainter: Painter,
-    title: String,
-    subtitle: String,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = Spacing.medium),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
-    ) {
-        Icon(
-            painter = iconPainter,
-            contentDescription = null,
-            tint = ProtonTheme.colors.textWeak,
-        )
-
-        Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
-            SectionSubtitle(text = title.asAnnotatedString())
-
-            SectionTitle(text = subtitle)
-        }
-    }
-
 }
 
 @[Preview Composable Suppress("MagicNumber")]

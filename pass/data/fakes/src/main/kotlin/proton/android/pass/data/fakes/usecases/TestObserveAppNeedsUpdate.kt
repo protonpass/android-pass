@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,25 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.repositories
+package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.FlowUtils.testFlow
-import proton.android.pass.data.api.repositories.UserAccessDataRepository
-import proton.android.pass.domain.UserAccessData
+import kotlinx.coroutines.flow.MutableStateFlow
+import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestUserAccessDataRepository @Inject constructor() : UserAccessDataRepository {
+class TestObserveAppNeedsUpdate @Inject constructor() : ObserveAppNeedsUpdate {
 
-    private val flow: MutableSharedFlow<UserAccessData?> = testFlow()
+    private val flow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    fun sendValue(value: UserAccessData?) {
-        flow.tryEmit(value)
-    }
+    fun emitValue(value: Boolean) = flow.tryEmit(value)
 
-    override fun observe(userId: UserId): Flow<UserAccessData?> = flow
+    override fun invoke() = flow
+
 }

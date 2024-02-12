@@ -36,7 +36,9 @@ data class AccessResponse(
     @SerialName("PendingInvites")
     val pendingInvites: Int,
     @SerialName("WaitingNewUserInvites")
-    val waitingNewUserInvites: Int
+    val waitingNewUserInvites: Int,
+    @SerialName("MinVersionUpgrade")
+    val minVersionUpgrade: String?
 )
 
 @Serializable

@@ -48,7 +48,7 @@ import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
 import proton.android.pass.data.impl.responses.GetAllKeysByAddressResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
 import proton.android.pass.data.impl.responses.GetItemLatestKeyResponse
-import proton.android.pass.data.impl.responses.GetItemRevisionResponse
+import proton.android.pass.data.impl.responses.GetItemRevisionsResponse
 import proton.android.pass.data.impl.responses.GetItemsResponse
 import proton.android.pass.data.impl.responses.GetShareKeysResponse
 import proton.android.pass.data.impl.responses.GetShareMembersResponse
@@ -199,7 +199,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getItemRevision(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
-    ): GetItemRevisionResponse
+    ): GetItemRevisionsResponse
 
     // Alias
     @GET("$PREFIX/share/{shareId}/alias/options")

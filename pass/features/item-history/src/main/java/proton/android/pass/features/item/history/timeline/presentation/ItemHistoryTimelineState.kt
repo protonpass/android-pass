@@ -18,8 +18,9 @@
 
 package proton.android.pass.features.item.history.timeline.presentation
 
-sealed interface ItemHistoryTimelineState {
+import proton.android.pass.data.api.repositories.ItemRevision
 
-    object Loading : ItemHistoryTimelineState
-
-}
+internal data class ItemHistoryTimelineState(
+    internal val isLoading: Boolean = true,
+    internal val itemRevisions: List<ItemRevision> = emptyList(),
+)

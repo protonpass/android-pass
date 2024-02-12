@@ -16,20 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.navigation
+package proton.android.pass.composecomponents.impl.timelines
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import proton.android.pass.commonui.api.Spacing
 
-sealed interface ItemHistoryNavDestination {
-
-    object Back : ItemHistoryNavDestination
-
-    object Restore : ItemHistoryNavDestination
-
-    data class Timeline(
-        val shareId: ShareId,
-        val itemId: ItemId,
-    ) : ItemHistoryNavDestination
-
-}
+data class ProtonTimelineNodeConfig(
+    internal val circleRadius: Dp = 6.dp,
+    internal val circleColor: Color = Color.White,
+    internal val lineWidth: Dp = 1.dp,
+    internal val lineBrush: Brush = SolidColor(Color.White),
+    internal val startOffset: Dp = Spacing.medium,
+    internal val spaceBetweenNodes: Dp = Spacing.medium,
+)

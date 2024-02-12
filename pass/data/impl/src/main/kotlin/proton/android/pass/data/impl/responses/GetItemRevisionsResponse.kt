@@ -16,20 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.navigation
+package proton.android.pass.data.impl.responses
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-sealed interface ItemHistoryNavDestination {
-
-    object Back : ItemHistoryNavDestination
-
-    object Restore : ItemHistoryNavDestination
-
-    data class Timeline(
-        val shareId: ShareId,
-        val itemId: ItemId,
-    ) : ItemHistoryNavDestination
-
-}
+@Serializable
+data class GetItemRevisionsResponse(
+    @SerialName("Code") val code: Int,
+    @SerialName("Revisions") val itemsList: ItemsList,
+)

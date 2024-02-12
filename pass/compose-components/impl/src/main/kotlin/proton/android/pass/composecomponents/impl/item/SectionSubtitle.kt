@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,24 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.ui
+package proton.android.pass.composecomponents.impl.item
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
-import proton.android.pass.features.item.history.timeline.presentation.ItemHistoryTimelineViewModel
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 
 @Composable
-fun ItemHistoryTimelineScreen(
-    onNavigated: (ItemHistoryNavDestination) -> Unit,
-    viewModel: ItemHistoryTimelineViewModel = hiltViewModel(),
+fun SectionSubtitle(
+    modifier: Modifier = Modifier,
+    text: AnnotatedString,
+    textStyle: TextStyle = ProtonTheme.typography.defaultNorm
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
-    ItemHistoryTimelineContent(
-        state = state,
-        onNavigated = onNavigated,
+    Text(
+        modifier = modifier,
+        text = text,
+        style = textStyle
     )
 }

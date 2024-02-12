@@ -83,7 +83,8 @@ class PlanRepositoryImpl @Inject constructor(
                 UserAccessDataEntity(
                     userId = userId.id,
                     pendingInvites = response.accessResponse.pendingInvites,
-                    waitingNewUserInvites = response.accessResponse.waitingNewUserInvites
+                    waitingNewUserInvites = response.accessResponse.waitingNewUserInvites,
+                    minVersionUpgrade = response.accessResponse.minVersionUpgrade
                 )
             )
         }.onSuccess {

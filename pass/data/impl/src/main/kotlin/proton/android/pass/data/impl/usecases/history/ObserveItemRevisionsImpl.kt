@@ -16,33 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.remote
+package proton.android.pass.data.impl.usecases.history
 
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.network.data.ApiProvider
-import proton.android.pass.data.api.errors.UserIdNotAvailableError
-import proton.android.pass.data.impl.api.PasswordManagerApi
-import proton.android.pass.data.impl.responses.GetItemRevisionResponse
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.data.api.usecases.history.ObserveItemRevisions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
-class RemoteItemRevisionDataSourceImpl @Inject constructor(
+class ObserveItemRevisionsImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val api: ApiProvider,
-) : RemoteItemRevisionDataSource {
+    private val itemRepository: ItemRepository,
+) : ObserveItemRevisions {
 
-    override suspend fun fetchItemRevision(
+    override fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-    ): GetItemRevisionResponse = accountManager.getPrimaryUserId()
-        .first()
-        ?.let { userId ->
-            api.get<PasswordManagerApi>(userId)
-                .invoke { getItemRevision(shareId.id, itemId.id) }
-                .valueOrThrow
-        }
-        ?: throw UserIdNotAvailableError()
+    ): Flow<List<ItemRevision>> = accountManager.getPrimaryUserId()
+        .filterNotNull()
+        .map { userId -> itemRepository.getItemRevisions(userId, shareId, itemId) }
 
 }

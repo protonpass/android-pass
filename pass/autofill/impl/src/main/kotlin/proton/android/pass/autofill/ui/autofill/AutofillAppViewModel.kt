@@ -108,10 +108,10 @@ class AutofillAppViewModel @Inject constructor(
         hadSelectedAutofillItem = value.some()
     }
 
-    fun onSelectItemScreenShown(state: AutofillAppState) {
+    fun onSelectItemScreenShown(packageName: PackageName) {
         val event = AutofillDisplayed(
             source = AutofillTriggerSource.App,
-            app = state.autofillData.packageInfo.packageName
+            app = packageName
         )
         telemetryManager.sendEvent(event)
     }

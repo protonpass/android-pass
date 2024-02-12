@@ -23,6 +23,10 @@ import proton.android.pass.domain.ShareId
 
 sealed interface ItemHistoryNavDestination {
 
+    object Back : ItemHistoryNavDestination
+
+    object Restore : ItemHistoryNavDestination
+
     data class Timeline(
         val shareId: ShareId,
         val itemId: ItemId,

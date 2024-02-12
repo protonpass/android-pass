@@ -258,4 +258,12 @@ class RemoteItemDataSourceImpl @Inject constructor(
         .invoke { unpinItem(shareId.id, itemId.id).item }
         .valueOrThrow
 
+    override suspend fun fetchItemRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): List<ItemRevision> = api.get<PasswordManagerApi>(userId)
+        .invoke { getItemRevision(shareId.id, itemId.id).itemsList.revisions }
+        .valueOrThrow
+
 }

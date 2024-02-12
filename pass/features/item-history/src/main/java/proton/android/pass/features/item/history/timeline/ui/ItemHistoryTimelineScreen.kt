@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.item.history.timeline.ui
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,14 +26,14 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.timeline.presentation.ItemHistoryTimelineViewModel
 
 @Composable
-@Suppress("UnusedPrivateMember")
 fun ItemHistoryTimelineScreen(
     onNavigated: (ItemHistoryNavDestination) -> Unit,
     viewModel: ItemHistoryTimelineViewModel = hiltViewModel(),
 ) {
-
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    Text(text = "Hello HISTORY!")
-
+    ItemHistoryTimelineContent(
+        state = state,
+        onNavigated = onNavigated,
+    )
 }

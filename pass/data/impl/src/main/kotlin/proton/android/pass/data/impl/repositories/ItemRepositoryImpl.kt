@@ -660,7 +660,10 @@ class ItemRepositoryImpl @Inject constructor(
 
         val insertItemCount = itemsToUpsert.size
         val deleteItemCount = itemsToDelete.flatMap { it.second }.size
-        PassLogger.i(TAG, "Going to insert $insertItemCount items and delete $deleteItemCount items")
+        PassLogger.i(
+            TAG,
+            "Going to insert $insertItemCount items and delete $deleteItemCount items"
+        )
 
         database.inTransaction("setShareItems") {
             localItemDataSource.upsertItems(itemsToUpsert)
@@ -819,10 +822,6 @@ class ItemRepositoryImpl @Inject constructor(
         items: List<Pair<ShareId, ItemId>>
     ): PinItemsResult = handleItemPinning(items, remoteItemDataSource::unpinItem)
 
-    override suspend fun getItemRevision(shareId: ShareId, itemId: ItemId) {
-
-    }
-
     private suspend fun handleItemPinning(
         items: List<Pair<ShareId, ItemId>>,
         block: suspend (userId: UserId, shareId: ShareId, itemId: ItemId) -> ItemRevision,
@@ -915,6 +914,11 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getItemRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+    ) = remoteItemDataSource.fetchItemRevisions(userId, shareId, itemId)
 
     private suspend fun createItemEntity(
         userId: UserId,

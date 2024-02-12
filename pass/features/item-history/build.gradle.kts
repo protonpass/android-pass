@@ -65,6 +65,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.navigation.api)
 
@@ -73,6 +76,8 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.core.presentation)
+    implementation(libs.core.presentation.compose)
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)

@@ -16,20 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.navigation
+package proton.android.pass.composecomponents.impl.timelines
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-
-sealed interface ItemHistoryNavDestination {
-
-    object Back : ItemHistoryNavDestination
-
-    object Restore : ItemHistoryNavDestination
-
-    data class Timeline(
-        val shareId: ShareId,
-        val itemId: ItemId,
-    ) : ItemHistoryNavDestination
-
+enum class ProtonTimelineNodeType {
+    Child,
+    Leaf,
+    Root,
+    Unique,
 }

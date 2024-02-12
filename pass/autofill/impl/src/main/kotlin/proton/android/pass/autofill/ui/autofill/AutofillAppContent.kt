@@ -41,12 +41,12 @@ import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialog
+import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
 import proton.android.pass.autofill.ui.autofill.select.AssociateAutofillItemDialog
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.featureauth.impl.AUTH_GRAPH
-import proton.android.pass.featureselectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -147,10 +147,9 @@ fun AutofillAppContent(
             )
         }
 
-
-        if (showAssociateDialog != null) {
+        showAssociateDialog?.let { itemUiModel ->
             AssociateAutofillItemDialog(
-                itemUiModel = showAssociateDialog!!,
+                itemUiModel = itemUiModel,
                 onAssociateAndAutofill = {
                     viewModel.onAssociationResult(
                         state = autofillAppState,
@@ -173,13 +172,13 @@ fun AutofillAppContent(
             )
         }
 
-        if (showWarningDialog != null) {
+        showWarningDialog?.let { itemUiModel ->
             ConfirmAutofillDialog(
                 mode = AutofillConfirmMode.DangerousAutofill,
                 onConfirm = {
                     viewModel.onWarningConfirmed(
                         state = autofillAppState,
-                        item = showWarningDialog!!,
+                        item = itemUiModel,
                     )
                     showWarningDialog = null
                 },

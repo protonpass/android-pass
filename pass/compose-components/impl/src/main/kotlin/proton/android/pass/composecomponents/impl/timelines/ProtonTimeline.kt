@@ -16,24 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.ui
+package proton.android.pass.composecomponents.impl.timelines
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
-import proton.android.pass.features.item.history.timeline.presentation.ItemHistoryTimelineViewModel
+import androidx.compose.ui.Modifier
 
 @Composable
-fun ItemHistoryTimelineScreen(
-    onNavigated: (ItemHistoryNavDestination) -> Unit,
-    viewModel: ItemHistoryTimelineViewModel = hiltViewModel(),
+fun ProtonTimeline(
+    modifier: Modifier = Modifier,
+    nodes: List<ProtonTimelineNode>,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
-    ItemHistoryTimelineContent(
-        state = state,
-        onNavigated = onNavigated,
-    )
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+    ) {
+        items(
+            items = nodes,
+            key = { node -> node.id },
+        ) { node ->
+            node.Render()
+        }
+    }
 }

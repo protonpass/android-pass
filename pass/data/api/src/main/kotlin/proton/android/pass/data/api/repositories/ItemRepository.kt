@@ -162,10 +162,11 @@ interface ItemRepository {
     suspend fun pinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult
     suspend fun unpinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult
 
-    suspend fun getItemRevision(
+    suspend fun getItemRevisions(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-    )
+    ): List<ItemRevision>
 
 }
 

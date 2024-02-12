@@ -27,6 +27,7 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.timeline.presentation.ItemHistoryTimelineViewModel
 
 @Composable
+@Suppress("UnusedPrivateMember")
 fun ItemHistoryTimelineScreen(
     onNavigated: (ItemHistoryNavDestination) -> Unit,
     viewModel: ItemHistoryTimelineViewModel = hiltViewModel(),

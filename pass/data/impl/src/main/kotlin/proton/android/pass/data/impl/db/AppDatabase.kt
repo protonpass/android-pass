@@ -197,7 +197,7 @@ abstract class AppDatabase :
     TelemetryDatabase {
 
     companion object {
-        const val VERSION = 42
+        const val VERSION = 43
 
         const val DB_NAME = "db-passkey"
 

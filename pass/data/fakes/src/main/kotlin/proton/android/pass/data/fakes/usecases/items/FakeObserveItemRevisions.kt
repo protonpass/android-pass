@@ -16,14 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.presentation
+package proton.android.pass.data.fakes.usecases.items
 
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import javax.inject.Inject
 
-internal data class ItemHistoryTimelineState(
-    internal val isLoadingState: IsLoadingState = IsLoadingState.Loading,
-    internal val itemRevisions: List<ItemRevision> = emptyList(),
-    internal val itemCategory: ItemCategory = ItemCategory.Unknown,
-)
+class FakeObserveItemRevisions @Inject constructor() : ObserveItemRevisions {
+
+    private var itemRevisions: List<ItemRevision>? = null
+
+    fun setItemRevisions(newItemRevisions: List<ItemRevision>) {
+        itemRevisions = newItemRevisions
+    }
+
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<ItemRevision>> = flow {
+        itemRevisions?.let { revisions -> emit(revisions) }
+    }
+
+}

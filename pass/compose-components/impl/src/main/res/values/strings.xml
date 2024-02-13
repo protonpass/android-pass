@@ -106,8 +106,8 @@
     <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
 
     <!-- Dates -->
-    <string name="date_today">Today %s</string>
-    <string name="date_yesterday">Yesterday %s</string>
+    <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Today %s</string>
+    <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Yesterday %s</string>
     <!--
     Pattern used when displaying a date in the same year as we are.
     It would translate to

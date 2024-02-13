@@ -18,13 +18,11 @@
 
 package proton.android.pass.featurepasskeys.create.ui.app
 
-sealed interface CreatePasskeyNavigation {
+import proton.android.pass.commonuimodels.api.ItemUiModel
 
-    object Cancel : CreatePasskeyNavigation
-    object ForceSignOut : CreatePasskeyNavigation
-    object Upgrade : CreatePasskeyNavigation
+sealed interface CreatePasskeyEvent {
 
     @JvmInline
-    value class SendResponse(val response: String) : CreatePasskeyNavigation
+    value class OnItemSelected(val item: ItemUiModel) : CreatePasskeyEvent
 
 }

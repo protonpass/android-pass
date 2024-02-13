@@ -59,6 +59,7 @@ class CreatePasskeyActivity : FragmentActivity() {
         }
 
         viewModel.register(this)
+        viewModel.setRequest(request)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -91,6 +92,10 @@ class CreatePasskeyActivity : FragmentActivity() {
                                 }
                                 CreatePasskeyNavigation.ForceSignOut -> {
                                     viewModel.signOut()
+                                }
+
+                                CreatePasskeyNavigation.Upgrade -> {
+                                    viewModel.upgrade()
                                 }
 
                                 is CreatePasskeyNavigation.SendResponse -> {

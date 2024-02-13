@@ -25,7 +25,6 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
@@ -35,14 +34,13 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.featureauth.impl.AUTH_GRAPH
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyRequest
-import proton.android.pass.featurepasskeys.create.ui.navigation.TMP_SELECT_ITEM
 import proton.android.pass.featurepasskeys.create.ui.navigation.createPasskeyActivityGraph
+import proton.android.pass.featureselectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
 @OptIn(
     ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class,
     ExperimentalMaterialNavigationApi::class
 )
 @Composable
@@ -50,13 +48,14 @@ fun CreatePasskeyAppContent(
     modifier: Modifier = Modifier,
     needsAuth: Boolean,
     request: CreatePasskeyRequest,
+    onEvent: (CreatePasskeyEvent) -> Unit,
     onNavigate: (CreatePasskeyNavigation) -> Unit,
 ) {
     val startDestination = remember {
         if (needsAuth) {
             AUTH_GRAPH
         } else {
-            TMP_SELECT_ITEM.route
+            SelectItem.route
         }
     }
 
@@ -85,6 +84,7 @@ fun CreatePasskeyAppContent(
                 appNavigator = appNavigator,
                 request = request,
                 onNavigate = onNavigate,
+                onEvent = onEvent,
                 dismissBottomSheet = { callback ->
                     coroutineScope.launch {
                         bottomSheetState.hide()

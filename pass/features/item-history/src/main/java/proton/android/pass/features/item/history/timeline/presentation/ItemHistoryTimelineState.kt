@@ -18,11 +18,12 @@
 
 package proton.android.pass.features.item.history.timeline.presentation
 
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.items.ItemCategory
 
 internal data class ItemHistoryTimelineState(
-    internal val isLoading: Boolean = true,
+    internal val isLoadingState: IsLoadingState = IsLoadingState.Loading,
     internal val itemRevisions: List<ItemRevision> = emptyList(),
     internal val itemCategory: ItemCategory = ItemCategory.Unknown,
 )

@@ -23,51 +23,28 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.PlanType
-import proton.android.pass.domain.ShareSelection
-import proton.android.pass.domain.canCreate
-import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 
 class GetSuggestedLoginItemsImpl @Inject constructor(
-    private val getUserPlan: GetUserPlan,
     private val observeActiveItems: ObserveActiveItems,
     private val suggestionItemFilter: SuggestionItemFilterer,
     private val suggestionSorter: SuggestionSorter,
-    private val observeVaults: ObserveVaults
+    private val observeUsableVaults: ObserveUsableVaults
 ) : GetSuggestedLoginItems {
 
     override fun invoke(
         packageName: Option<String>,
         url: Option<String>
-    ): Flow<List<Item>> = getUserPlan().flatMapLatest { userPlan ->
-        when (userPlan.planType) {
-            is PlanType.Paid,
-            is PlanType.Trial -> observeActiveItems(filter = ItemTypeFilter.Logins)
-
-            is PlanType.Free,
-            is PlanType.Unknown -> observeActiveItemsForWriteableVaults()
-        }
+    ): Flow<List<Item>> = observeUsableVaults().flatMapLatest { usableVaults ->
+        observeActiveItems(filter = ItemTypeFilter.Logins, shareSelection = usableVaults)
             .map { items -> suggestionItemFilter.filter(items, packageName, url) }
             .map { suggestions -> suggestionSorter.sort(suggestions, url) }
     }
-
-    private fun observeActiveItemsForWriteableVaults(): Flow<List<Item>> = observeVaults()
-        .flatMapLatest { vaults ->
-            val writeableVaults = vaults
-                .filter { it.role.toPermissions().canCreate() }
-                .map { it.shareId }
-            observeActiveItems(
-                filter = ItemTypeFilter.Logins,
-                shareSelection = ShareSelection.Shares(writeableVaults)
-            )
-        }
 
 }

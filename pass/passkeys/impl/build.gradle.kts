@@ -33,7 +33,6 @@ dependencies {
     api(projects.pass.passkeys.api)
 
     implementation(libs.pass.common)
-
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
@@ -43,4 +42,5 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.domain)
+    implementation(projects.pass.log.api)
 }

@@ -23,11 +23,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.usecases.history.ObserveItemRevisions
+import proton.android.pass.data.api.usecases.items.GetItemCategory
+import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -35,8 +37,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemHistoryTimelineViewModel @Inject constructor(
-    observeItemRevisions: ObserveItemRevisions,
     savedStateHandleProvider: SavedStateHandleProvider,
+    observeItemRevisions: ObserveItemRevisions,
+    getItemCategory: GetItemCategory,
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -47,17 +50,19 @@ class ItemHistoryTimelineViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let { id -> ItemId(id = id) }
 
-    internal val state: StateFlow<ItemHistoryTimelineState> = observeItemRevisions(shareId, itemId)
-        .map { itemRevisions ->
-            ItemHistoryTimelineState(
-                isLoading = false,
-                itemRevisions = itemRevisions,
-            )
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = ItemHistoryTimelineState(),
+    internal val state: StateFlow<ItemHistoryTimelineState> = combine(
+        observeItemRevisions(shareId, itemId),
+        oneShot { getItemCategory(shareId, itemId) },
+    ) { itemRevisions, itemCategory ->
+        ItemHistoryTimelineState(
+            isLoading = false,
+            itemRevisions = itemRevisions,
+            itemCategory = itemCategory,
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = ItemHistoryTimelineState(),
+    )
 
 }

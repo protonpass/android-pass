@@ -21,13 +21,7 @@ package proton.android.pass.domain
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.domain.entity.PackageInfo
-
-const val ITEM_TYPE_UNKNOWN = -1
-const val ITEM_TYPE_LOGIN = 0
-const val ITEM_TYPE_ALIAS = 1
-const val ITEM_TYPE_NOTE = 2
-const val ITEM_TYPE_PASSWORD = 3
-const val ITEM_TYPE_CREDIT_CARD = 4
+import proton.android.pass.domain.items.ItemCategory
 
 @Serializable
 sealed interface CustomField {
@@ -83,15 +77,15 @@ sealed interface ItemType {
     @Serializable
     object Unknown : ItemType
 
-    @Suppress("MagicNumber")
-    fun toWeightedInt(): Int = when (this) {
-        is Login -> ITEM_TYPE_LOGIN
-        is Alias -> ITEM_TYPE_ALIAS
-        is Note -> ITEM_TYPE_NOTE
-        is Password -> ITEM_TYPE_PASSWORD
-        is Unknown -> ITEM_TYPE_UNKNOWN
-        is CreditCard -> ITEM_TYPE_CREDIT_CARD
-    }
+    val category: ItemCategory
+        get() = when (this) {
+            is Alias -> ItemCategory.Alias
+            is CreditCard -> ItemCategory.Alias
+            is Login -> ItemCategory.Login
+            is Note -> ItemCategory.Note
+            Password -> ItemCategory.Password
+            Unknown -> ItemCategory.Unknown
+        }
 
     companion object // Needed for being able to define static extension functions
 }

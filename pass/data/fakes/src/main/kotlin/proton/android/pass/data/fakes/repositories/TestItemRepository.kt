@@ -39,6 +39,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
@@ -248,6 +249,14 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     ): List<ItemRevision> = itemRevisions ?: throw IllegalStateException(
         "Item revisions cannot be null, did you forget to invoke setItemRevisions()?"
     )
+    override suspend fun addPasskeyToItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        passkey: Passkey
+    ) {
+        TODO("Not yet implemented")
+    }
 
     data class MigrateItemPayload(
         val userId: UserId,

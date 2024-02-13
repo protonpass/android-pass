@@ -50,6 +50,7 @@ import javax.inject.Inject
 class TestItemRepository @Inject constructor() : ItemRepository {
 
     private var item: Item? = null
+    private var itemRevisions: List<ItemRevision>? = null
 
     private var migrateItemResult: Result<MigrateItemsResult> =
         Result.failure(IllegalStateException("TestItemRepository.migrateItemResult not initialized"))
@@ -60,12 +61,12 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     private val migrateItemMemory = mutableListOf<MigrateItemPayload>()
 
-    suspend fun emitItem(newItem: Item) {
-        itemFlow.emit(newItem)
-    }
-
     fun setItem(newItem: Item) {
         item = newItem
+    }
+
+    fun setItemRevisions(newItemRevisions: List<ItemRevision>) {
+        itemRevisions = newItemRevisions
     }
 
     override suspend fun createItem(
@@ -122,9 +123,12 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         itemId: ItemId,
     ): Flow<Item> = itemFlow
 
-    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getById(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): Item = item ?: throw IllegalStateException(
+        "Item cannot be null, did you forget to invoke setItem()?"
+    )
 
     override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         TODO("Not yet implemented")
@@ -237,9 +241,13 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getItemRevision(shareId: ShareId, itemId: ItemId) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getItemRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+    ): List<ItemRevision> = itemRevisions ?: throw IllegalStateException(
+        "Item revisions cannot be null, did you forget to invoke setItemRevisions()?"
+    )
 
     data class MigrateItemPayload(
         val userId: UserId,

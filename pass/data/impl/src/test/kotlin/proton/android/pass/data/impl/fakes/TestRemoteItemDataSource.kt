@@ -39,6 +39,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemStateValues
 import proton.android.pass.domain.ShareId
+import proton.android.pass.test.domain.TestItem
 
 class TestRemoteItemDataSource : RemoteItemDataSource {
 
@@ -151,6 +152,19 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
     override suspend fun unpinItem(userId: UserId, shareId: ShareId, itemId: ItemId): ItemRevision {
         throw IllegalStateException("Not yet implemented")
     }
+
+    override suspend fun fetchItemRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): List<ItemRevision> = listOf(
+        createItemRevision(
+            TestItem.create(
+                shareId = shareId,
+                itemId = itemId,
+            ),
+        ),
+    )
 
     data class CreateItemParams(
         val userId: UserId,

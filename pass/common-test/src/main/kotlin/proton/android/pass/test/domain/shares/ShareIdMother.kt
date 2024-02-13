@@ -16,14 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.presentation
+package proton.android.pass.test.domain.shares
 
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.domain.ShareId
+import proton.android.pass.test.TestUtils
 
-internal data class ItemHistoryTimelineState(
-    internal val isLoadingState: IsLoadingState = IsLoadingState.Loading,
-    internal val itemRevisions: List<ItemRevision> = emptyList(),
-    internal val itemCategory: ItemCategory = ItemCategory.Unknown,
-)
+object ShareIdMother {
+
+    fun create(id: String = TestUtils.randomString()): ShareId = ShareId(id = id)
+
+}

@@ -19,6 +19,8 @@
 package proton.android.pass.data.impl.usecases.passkeys
 
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.domain.ItemType
@@ -28,10 +30,13 @@ import javax.inject.Singleton
 
 @Singleton
 class GetPasskeysForDomainImpl @Inject constructor(
-    private val observeItemsWithPasskeys: ObserveItemsWithPasskeys
+    private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
+    private val observeUsableVaults: ObserveUsableVaults
 ) : GetPasskeysForDomain {
     override suspend fun invoke(domain: String): List<Passkey> {
-        val allItemsWithPasskeys = observeItemsWithPasskeys().first()
+        val allItemsWithPasskeys = observeUsableVaults().flatMapLatest {
+            observeItemsWithPasskeys(it)
+        }.first()
 
         return allItemsWithPasskeys
             .filter { it.itemType is ItemType.Login }

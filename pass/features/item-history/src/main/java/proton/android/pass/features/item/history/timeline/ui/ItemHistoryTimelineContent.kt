@@ -24,8 +24,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.utils.protonItemColors
 import proton.android.pass.features.item.history.R
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.timeline.presentation.ItemHistoryTimelineState
@@ -36,12 +36,15 @@ internal fun ItemHistoryTimelineContent(
     state: ItemHistoryTimelineState,
     onNavigated: (ItemHistoryNavDestination) -> Unit,
 ) = with(state) {
+
+    val itemColors = protonItemColors(itemCategory = itemCategory)
+
     Scaffold(
         modifier = modifier,
         topBar = {
             ItemHistoryTimelineTopBar(
-                iconColor = PassTheme.colors.loginInteractionNormMajor2,
-                iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                iconColor = itemColors.majorSecondary,
+                iconBackgroundColor = itemColors.minorPrimary,
                 onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
             )
         },

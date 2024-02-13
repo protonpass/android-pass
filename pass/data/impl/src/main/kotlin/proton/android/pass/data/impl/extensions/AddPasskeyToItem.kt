@@ -25,7 +25,7 @@ import proton_pass_item_v1.ItemV1.Passkey as ProtoPasskey
 
 fun ItemV1.Item.withPasskey(passkey: Passkey): ItemV1.Item {
     val passkeys = content.login.passkeysList.toMutableList()
-    val protoPasskey = with (passkey) {
+    val protoPasskey = with(passkey) {
         ProtoPasskey.newBuilder()
             .setKeyId(id.value)
             .setDomain(domain)

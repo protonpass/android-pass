@@ -318,6 +318,18 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
         SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.HAS_PASSKEYS} = 1
+          AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
+        """
+    )
+    abstract fun observeItemsWithPasskeys(userId: String, shareIds: List<String>): Flow<List<ItemEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} = :shareId 
           AND ${ItemEntity.Columns.HAS_TOTP} = 1
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC

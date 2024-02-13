@@ -37,6 +37,6 @@ class GetPasskeysForDomainImpl @Inject constructor(
             .filter { it.itemType is ItemType.Login }
             .map { it.itemType as ItemType.Login }
             .flatMap { loginItem -> loginItem.passkeys }
-            .filter {  passkey -> passkey.domain == domain }
+            .filter { passkey -> passkey.domain == domain }
     }
 }

@@ -60,7 +60,7 @@ internal fun ItemHistoryTimelineContent(
                 text = stringResource(id = R.string.item_history_title),
             )
 
-            if (isLoading) {
+            if (isLoadingState.value()) {
                 ItemHistoryTimelineLoading()
             } else {
                 ItemHistoryTimelineNodes(

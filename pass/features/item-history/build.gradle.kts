@@ -95,6 +95,10 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.datetime)
 
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.commonUi.fakes)
+    testImplementation(projects.pass.data.fakes)
+
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.androidx.lifecycle.viewmodel.savedstate)
     androidTestImplementation(libs.androidx.test.espresso.core)

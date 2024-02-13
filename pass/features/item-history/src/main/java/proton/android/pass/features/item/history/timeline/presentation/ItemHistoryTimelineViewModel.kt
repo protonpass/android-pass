@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.domain.ItemId
@@ -55,7 +56,7 @@ class ItemHistoryTimelineViewModel @Inject constructor(
         oneShot { getItemCategory(shareId, itemId) },
     ) { itemRevisions, itemCategory ->
         ItemHistoryTimelineState(
-            isLoading = false,
+            isLoadingState = IsLoadingState.NotLoading,
             itemRevisions = itemRevisions,
             itemCategory = itemCategory,
         )

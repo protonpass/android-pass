@@ -16,14 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.presentation
+package proton.android.pass.data.fakes.usecases.items
 
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.data.api.usecases.items.GetItemCategory
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
+import javax.inject.Inject
 
-internal data class ItemHistoryTimelineState(
-    internal val isLoadingState: IsLoadingState = IsLoadingState.Loading,
-    internal val itemRevisions: List<ItemRevision> = emptyList(),
-    internal val itemCategory: ItemCategory = ItemCategory.Unknown,
-)
+class FakeGetItemCategory @Inject constructor() : GetItemCategory {
+
+    private var itemCategory: ItemCategory = ItemCategory.Unknown
+
+    fun setItemCategory(newItemCategory: ItemCategory) {
+        itemCategory = newItemCategory
+    }
+
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemCategory = itemCategory
+
+}

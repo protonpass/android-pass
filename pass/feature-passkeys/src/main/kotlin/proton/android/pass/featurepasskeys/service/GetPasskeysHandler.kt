@@ -26,6 +26,7 @@ import android.os.OutcomeReceiver
 import androidx.annotation.RequiresApi
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.GetCredentialUnknownException
+import androidx.credentials.provider.Action
 import androidx.credentials.provider.BeginGetCredentialRequest
 import androidx.credentials.provider.BeginGetCredentialResponse
 import androidx.credentials.provider.BeginGetPublicKeyCredentialOption
@@ -38,8 +39,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
-import proton.android.pass.domain.Passkey
-import proton.android.pass.domain.PasskeyId
+import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
+import proton.android.pass.featurepasskeys.R
 import proton.android.pass.featurepasskeys.select.ui.SelectPasskeyActivity
 import proton.android.pass.log.api.PassLogger
 
@@ -73,6 +74,7 @@ object GetPasskeysHandler {
         }
     }
 
+    @Suppress("ReturnCount")
     private suspend fun getPasskeys(
         context: Context,
         request: BeginGetCredentialRequest,
@@ -98,10 +100,19 @@ object GetPasskeysHandler {
 
         val entries = mutableListOf<CredentialEntry>()
 
+        val requestCodes = mutableSetOf<Int>()
+        val firstOption = request.beginGetCredentialOptions
+            .firstOrNull { it is BeginGetPublicKeyCredentialOption }
+            ?.let { it as BeginGetPublicKeyCredentialOption }
+            ?: run {
+                PassLogger.w(TAG, "Could not find any BeginGetPublicKeyCredentialOption")
+                return null
+            }
+
         for (option in request.beginGetCredentialOptions) {
             when (option) {
                 is BeginGetPublicKeyCredentialOption -> {
-                    entries.addAll(addOptionEntries(context, option, passkeys))
+                    entries.addAll(addOptionEntries(context, option, passkeys, requestCodes))
                 }
 
                 else -> {
@@ -113,31 +124,72 @@ object GetPasskeysHandler {
 
         return BeginGetCredentialResponse(
             credentialEntries = entries,
-            actions = emptyList(),
+            actions = listOf(
+                createSelectPasskeyAction(
+                    context = context,
+                    option = firstOption,
+                    origin = domain,
+                    requestCodes = requestCodes
+                )
+            ),
+        )
+    }
+
+    private fun createSelectPasskeyAction(
+        context: Context,
+        option: BeginGetPublicKeyCredentialOption,
+        origin: String,
+        requestCodes: MutableSet<Int>
+    ): Action {
+        val requestCode = generateRequestCode(requestCodes)
+
+        val intent = SelectPasskeyActivity.createIntentForSelectPasskey(
+            context = context,
+            option = option,
+            origin = origin
+        )
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        return Action(
+            title = context.getString(R.string.select_passkey_action_title),
+            pendingIntent = pendingIntent,
+            subtitle = context.getString(R.string.select_passkey_action_subtitle),
         )
     }
 
     private fun addOptionEntries(
         context: Context,
         option: BeginGetPublicKeyCredentialOption,
-        passkeys: List<Passkey>
+        passkeys: List<PasskeyItem>,
+        requestCodes: MutableSet<Int>
     ): List<CredentialEntry> = passkeys.map {
         PublicKeyCredentialEntry.Builder(
             context = context,
-            username = it.userName,
-            pendingIntent = createPendingIntent(context, it.id),
-            beginGetPublicKeyCredentialOption = option
-        ).setDisplayName(it.userDisplayName).setAutoSelectAllowed(false).build()
+            username = it.passkey.userName,
+            pendingIntent = createUsePasskeyPendingIntent(context, it, requestCodes),
+            beginGetPublicKeyCredentialOption = option,
+        ).setDisplayName(it.itemTitle).setAutoSelectAllowed(false).build()
     }
 
 
-    private fun createPendingIntent(
+    private fun createUsePasskeyPendingIntent(
         context: Context,
-        keyId: PasskeyId
+        passkeyItem: PasskeyItem,
+        requestCodes: MutableSet<Int>
     ): PendingIntent {
-        val intent = SelectPasskeyActivity.createIntent(context, keyId)
+        val intent = SelectPasskeyActivity.createIntentForUsePasskey(
+            context = context,
+            shareId = passkeyItem.shareId,
+            itemId = passkeyItem.itemId,
+            passkeyId = passkeyItem.passkey.id
+        )
 
-        val requestCode = (1..9999).random()
+        val requestCode = generateRequestCode(requestCodes)
         return PendingIntent.getActivity(
             context,
             requestCode,
@@ -146,4 +198,13 @@ object GetPasskeysHandler {
         )
     }
 
+    @Suppress("MagicNumber")
+    private fun generateRequestCode(generatedCodes: MutableSet<Int>): Int {
+        var requestCode: Int
+        do {
+            requestCode = (1..9999).random()
+        } while (requestCode in generatedCodes)
+        generatedCodes.add(requestCode)
+        return requestCode
+    }
 }

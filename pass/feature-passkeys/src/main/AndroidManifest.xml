@@ -22,14 +22,14 @@
 
     <application>
         <activity android:name=".create.ui.CreatePasskeyActivity"
-            android:exported="true"
-            android:launchMode="singleInstance"
-            android:theme="@style/ProtonTheme.Splash.Pass"
+            android:launchMode="singleTop"
+            android:clearTaskOnLaunch="true"
+            android:excludeFromRecents="true"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".select.ui.SelectPasskeyActivity"
-            android:exported="true"
-            android:launchMode="singleInstance"
-            android:theme="@style/ProtonTheme.Splash.Pass"
+            android:launchMode="singleTop"
+            android:clearTaskOnLaunch="true"
+            android:excludeFromRecents="true"
             android:windowSoftInputMode="adjustResize" />
 
         <service android:name=".service.PasskeyProviderService"

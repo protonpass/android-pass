@@ -20,6 +20,7 @@ package proton.android.pass.passkeys.impl
 
 import proton.android.pass.commonrust.PasskeyManager
 import proton.android.pass.domain.Passkey
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.passkeys.api.AuthenticateWithPasskey
 import proton.android.pass.passkeys.api.PasskeyAuthenticationResponse
 import javax.inject.Inject
@@ -31,8 +32,13 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
 ) : AuthenticateWithPasskey {
 
     override fun invoke(origin: String, passkey: Passkey, request: String): PasskeyAuthenticationResponse {
+        PassLogger.d(TAG, "Resolving challenge for origin=$origin")
         val response = passkeyManager.resolveChallenge(origin, passkey.contents, request)
         return PasskeyAuthenticationResponse(response)
+    }
+
+    companion object {
+        private const val TAG = "AuthenticateWithPasskeyImpl"
     }
 
 }

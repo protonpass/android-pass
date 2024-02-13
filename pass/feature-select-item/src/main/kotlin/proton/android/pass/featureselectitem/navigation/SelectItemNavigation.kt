@@ -49,6 +49,21 @@ sealed class SelectItemState(
             val title: String,
         ) : Autofill(ItemTypeFilter.CreditCards, title)
     }
+
+    sealed class Passkey(
+        title: String
+    ) : SelectItemState(ItemTypeFilter.Logins, title) {
+
+        data class Register(
+            val title: String,
+            val suggestionsUrl: Option<String>
+        ) : Passkey(title)
+
+        data class Select(
+            val title: String,
+            val suggestionsUrl: Option<String>
+        ) : Passkey(title)
+    }
 }
 
 fun NavGraphBuilder.selectItemGraph(

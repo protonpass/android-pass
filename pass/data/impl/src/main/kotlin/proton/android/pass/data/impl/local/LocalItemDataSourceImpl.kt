@@ -27,13 +27,10 @@ import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton.android.pass.domain.ITEM_TYPE_ALIAS
-import proton.android.pass.domain.ITEM_TYPE_CREDIT_CARD
-import proton.android.pass.domain.ITEM_TYPE_LOGIN
-import proton.android.pass.domain.ITEM_TYPE_NOTE
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -156,11 +153,15 @@ class LocalItemDataSourceImpl @Inject constructor(
         database.itemsDao()
             .itemSummary(userId.id, shareIds.map { it.id }, itemState?.value)
             .map { values ->
-                val logins = values.firstOrNull { it.itemKind == ITEM_TYPE_LOGIN }?.itemCount ?: 0
-                val aliases = values.firstOrNull { it.itemKind == ITEM_TYPE_ALIAS }?.itemCount ?: 0
-                val notes = values.firstOrNull { it.itemKind == ITEM_TYPE_NOTE }?.itemCount ?: 0
+                val logins =
+                    values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
+                val aliases =
+                    values.firstOrNull { it.itemKind == ItemCategory.Alias.value }?.itemCount ?: 0
+                val notes =
+                    values.firstOrNull { it.itemKind == ItemCategory.Note.value }?.itemCount ?: 0
                 val creditCards =
-                    values.firstOrNull { it.itemKind == ITEM_TYPE_CREDIT_CARD }?.itemCount ?: 0
+                    values.firstOrNull { it.itemKind == ItemCategory.CreditCard.value }?.itemCount
+                        ?: 0
                 ItemCountSummary(
                     total = logins + aliases + notes + creditCards,
                     login = logins,
@@ -216,10 +217,10 @@ class LocalItemDataSourceImpl @Inject constructor(
     )
 
     private fun ItemTypeFilter.value(): Int = when (this) {
-        ItemTypeFilter.Logins -> ITEM_TYPE_LOGIN
-        ItemTypeFilter.Aliases -> ITEM_TYPE_ALIAS
-        ItemTypeFilter.Notes -> ITEM_TYPE_NOTE
-        ItemTypeFilter.CreditCards -> ITEM_TYPE_CREDIT_CARD
+        ItemTypeFilter.Logins -> ItemCategory.Login.value
+        ItemTypeFilter.Aliases -> ItemCategory.Alias.value
+        ItemTypeFilter.Notes -> ItemCategory.Note.value
+        ItemTypeFilter.CreditCards -> ItemCategory.CreditCard.value
         ItemTypeFilter.All -> throw IllegalStateException("Cannot call value to ItemTypeFilter.All")
     }
 

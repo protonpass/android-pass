@@ -16,13 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.presentation
+package proton.android.pass.domain.items
 
-import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.domain.items.ItemCategory
+private const val ITEM_CATEGORY_UNKNOWN = -1
+private const val ITEM_CATEGORY_LOGIN = 0
+private const val ITEM_CATEGORY_ALIAS = 1
+private const val ITEM_CATEGORY_NOTE = 2
+private const val ITEM_CATEGORY_PASSWORD = 3
+private const val ITEM_CATEGORY_CREDIT_CARD = 4
 
-internal data class ItemHistoryTimelineState(
-    internal val isLoading: Boolean = true,
-    internal val itemRevisions: List<ItemRevision> = emptyList(),
-    internal val itemCategory: ItemCategory = ItemCategory.Unknown,
-)
+enum class ItemCategory(val value: Int) {
+    Unknown(ITEM_CATEGORY_UNKNOWN),
+    Login(ITEM_CATEGORY_LOGIN),
+    Alias(ITEM_CATEGORY_ALIAS),
+    Note(ITEM_CATEGORY_NOTE),
+    Password(ITEM_CATEGORY_PASSWORD),
+    CreditCard(ITEM_CATEGORY_CREDIT_CARD),
+}

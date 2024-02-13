@@ -217,6 +217,12 @@ class LocalItemDataSourceImpl @Inject constructor(
     override fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>> =
         database.itemsDao().observeAllItemsWithPasskeys(userId = userId.id)
 
+    override fun observeItemsWithPasskeys(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemEntity>> =
+        database.itemsDao().observeItemsWithPasskeys(
+            userId = userId.id,
+            shareIds = shareIds.map(ShareId::id)
+        )
+
     private fun ItemEntity.toItemWithTotp(): ItemWithTotp = ItemWithTotp(
         shareId = ShareId(shareId),
         itemId = ItemId(id),

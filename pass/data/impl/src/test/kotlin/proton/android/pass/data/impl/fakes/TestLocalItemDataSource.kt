@@ -169,4 +169,19 @@ class TestLocalItemDataSource : LocalItemDataSource {
         userId: UserId,
         shareId: ShareId
     ): Flow<List<ItemWithTotp>> = itemsWithTotpFlow.map { it.getOrThrow() }
+
+    override fun observeItemsWithPasskeys(
+        userId: UserId,
+        shareIds: List<ShareId>
+    ): Flow<List<ItemEntity>> {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>> {
+        throw IllegalStateException("Not yet implemented")
+    }
 }

@@ -32,7 +32,6 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
-import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
@@ -66,7 +65,6 @@ sealed interface State {
 @HiltViewModel
 class SelectPasskeyActivityViewModel @Inject constructor(
     private val authenticateWithPasskey: AuthenticateWithPasskey,
-    private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
     private val getPasskeyById: GetPasskeyById
 ) : ViewModel() {
 

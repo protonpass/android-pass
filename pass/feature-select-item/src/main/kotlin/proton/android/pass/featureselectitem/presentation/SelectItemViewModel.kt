@@ -75,10 +75,12 @@ import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
@@ -112,6 +114,7 @@ class SelectItemViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val getSuggestedLoginItems: GetSuggestedLoginItems,
+    private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
     preferenceRepository: UserPreferencesRepository,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeActiveItems: ObserveActiveItems,
@@ -170,7 +173,13 @@ class SelectItemViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val itemFiltersFlow = combine(
+    private data class SelectItemFilters(
+        val filter: ItemTypeFilter,
+        val shareSelection: ShareSelection,
+        val state: SelectItemState
+    )
+
+    private val itemFiltersFlow: Flow<LoadingResult<SelectItemFilters>> = combine(
         planFlow,
         vaultsFlow,
         selectItemStateFlow
@@ -197,12 +206,17 @@ class SelectItemViewModel @Inject constructor(
         }
         val shareSelection = getShareSelection(plan.planType, vaults)
         val state = appStateOption.value() ?: return@combine LoadingResult.Loading
-        LoadingResult.Success(state.itemTypeFilter to shareSelection)
+        val res = SelectItemFilters(
+            filter = state.itemTypeFilter,
+            shareSelection = shareSelection,
+            state = state
+        )
+        LoadingResult.Success(res)
     }
 
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = itemFiltersFlow
         .flatMapLatest {
-            val (filter, selection) = when (it) {
+            val filters = when (it) {
                 is LoadingResult.Error -> {
                     PassLogger.w(TAG, "Error observing plan")
                     PassLogger.w(TAG, it.exception)
@@ -212,10 +226,20 @@ class SelectItemViewModel @Inject constructor(
                 LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
                 is LoadingResult.Success -> it.data
             }
-            observeActiveItems(
-                filter = filter,
-                shareSelection = selection
-            ).asResultWithoutLoading()
+
+            when (filters.state) {
+                is SelectItemState.Autofill,
+                is SelectItemState.Passkey.Register -> observeActiveItems(
+                    filter = filters.filter,
+                    shareSelection = filters.shareSelection
+                ).asResultWithoutLoading()
+
+
+                is SelectItemState.Passkey.Select -> observeItemsWithPasskeys(
+                    shareSelection = filters.shareSelection
+                ).asResultWithoutLoading()
+            }
+
         }
         .map { itemResult ->
             itemResult.map { list ->
@@ -534,6 +558,7 @@ class SelectItemViewModel @Inject constructor(
         state: SelectItemState
     ): Flow<LoadingResult<List<Item>>> = when (state) {
         is SelectItemState.Autofill -> getSuggestionsForAutofill(state)
+        is SelectItemState.Passkey -> getSuggestionsForPasskey(state)
     }
 
     private fun getSuggestionsForAutofill(
@@ -547,6 +572,21 @@ class SelectItemViewModel @Inject constructor(
         }
         is SelectItemState.Autofill.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
     }
+
+    private fun getSuggestionsForPasskey(
+        state: SelectItemState.Passkey
+    ): Flow<LoadingResult<List<Item>>> = when (state) {
+        is SelectItemState.Passkey.Register -> {
+            getSuggestedLoginItems(
+                packageName = None,
+                url = state.suggestionsUrl
+            ).asResultWithoutLoading()
+        }
+
+        // TBD: Implement getSuggestionsForPasskey
+        is SelectItemState.Passkey.Select -> flowOf(LoadingResult.Success(emptyList()))
+    }
+
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

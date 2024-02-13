@@ -18,104 +18,190 @@
 
 package proton.android.pass.featurepasskeys.select.presentation
 
+import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Immutable
-import androidx.credentials.GetPublicKeyCredentialOption
-import androidx.credentials.provider.CallingAppInfo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.account.api.AccountOrchestrators
+import proton.android.pass.account.api.Orchestrator
+import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
-import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featurepasskeys.R
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.passkeys.api.AuthenticateWithPasskey
+import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.HasAuthenticated
+import proton.android.pass.preferences.InternalSettingsRepository
+import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
-data class SelectPasskeyRequest(
-    val callingAppInfo: CallingAppInfo,
-    val callingRequest: GetPublicKeyCredentialOption,
-    val passkeyId: PasskeyId
-)
+sealed class SelectPasskeyRequest(
+    val requestJson: String,
+    val requestOrigin: String
+) {
+    data class SelectPasskey(
+        val request: String,
+        val origin: String
+    ) : SelectPasskeyRequest(request, origin)
+
+    data class UsePasskey(
+        val request: String,
+        val origin: String,
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val passkeyId: PasskeyId,
+    ) : SelectPasskeyRequest(request, origin)
+}
 
 @Immutable
-sealed interface State {
+sealed class SelectPasskeyRequestData(
+    val domain: String,
+    val request: String
+) {
+    data class SelectPasskey(
+        val requestDomain: String,
+        val requestJson: String
+    ) : SelectPasskeyRequestData(requestDomain, requestJson)
+
+    data class UsePasskey(
+        val requestDomain: String,
+        val requestJson: String,
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val passkeyId: PasskeyId
+    ) : SelectPasskeyRequestData(requestDomain, requestJson)
+}
+
+@Immutable
+sealed interface SelectPasskeyAppState {
 
     @Immutable
-    object Idle : State
+    object NotReady : SelectPasskeyAppState
 
     @Immutable
-    @JvmInline
-    value class SendResponse(val response: String) : State
+    object Close : SelectPasskeyAppState
 
     @Immutable
-    object NoPasskeyFound : State
+    data class Ready(
+        val theme: ThemePreference,
+        val needsAuth: Boolean,
+        val data: SelectPasskeyRequestData
+    ) : SelectPasskeyAppState
 
     @Immutable
-    object ErrorAuthenticating : State
+    object ErrorAuthenticating : SelectPasskeyAppState
 }
 
 @HiltViewModel
 class SelectPasskeyActivityViewModel @Inject constructor(
-    private val authenticateWithPasskey: AuthenticateWithPasskey,
-    private val getPasskeyById: GetPasskeyById
+    private val preferenceRepository: UserPreferencesRepository,
+    private val accountOrchestrators: AccountOrchestrators,
+    private val accountManager: AccountManager,
+    private val toastManager: ToastManager,
+    private val internalSettingsRepository: InternalSettingsRepository,
+    needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
-    private var request: Option<SelectPasskeyRequest> = None
+    private val closeScreenFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private val _state: MutableStateFlow<State> = MutableStateFlow(State.Idle)
-    val state: StateFlow<State> = _state
+    private val themePreferenceState: Flow<ThemePreference> = preferenceRepository
+        .getThemePreference()
+        .distinctUntilChanged()
 
-    fun setRequest(request: SelectPasskeyRequest) {
-        this.request = request.some()
+    private val requestFlow: MutableStateFlow<Option<SelectPasskeyRequest>> = MutableStateFlow(None)
+
+    private val requestDataFlow: Flow<Option<SelectPasskeyRequestData>> = requestFlow.map {
+        it.map { request ->
+            when (request) {
+                is SelectPasskeyRequest.SelectPasskey -> SelectPasskeyRequestData.SelectPasskey(
+                    requestDomain = request.origin,
+                    requestJson = request.requestJson
+                )
+                is SelectPasskeyRequest.UsePasskey -> SelectPasskeyRequestData.UsePasskey(
+                    requestDomain = request.origin,
+                    requestJson = request.requestJson,
+                    shareId = request.shareId,
+                    itemId = request.itemId,
+                    passkeyId = request.passkeyId
+                )
+            }
+        }
     }
 
-    fun onButtonClick() = viewModelScope.launch {
-        val requestValue = request.value() ?: return@launch
-        val origin = requestValue.callingAppInfo.origin ?: run {
-            PassLogger.w(TAG, "requestValue.callingRequest.origin was null")
-            _state.update { State.NoPasskeyFound }
-            return@launch
-        }
-        val passkey = runCatching {
-            getPasskeyById(
-                shareId = ShareId("123"),
-                itemId = ItemId("123"),
-                passkeyId = requestValue.passkeyId
-            )
-        }.fold(
-            onSuccess = { passkey ->
-                val passkey = passkey.value() ?: run {
-                    PassLogger.w(TAG, "Passkey with id ${requestValue.passkeyId} was not found")
-                    _state.update { State.NoPasskeyFound }
-                    return@launch
-                }
-                passkey
-            },
-            onFailure = {
-                PassLogger.w(TAG, "Error getting passkey by id")
-                PassLogger.w(TAG, it)
-                return@launch
+    val state: StateFlow<SelectPasskeyAppState> = combine(
+        closeScreenFlow,
+        themePreferenceState,
+        needsBiometricAuth(),
+        requestDataFlow
+    ) { closeScreen, theme, needsAuth, request ->
+        when (request) {
+            None -> return@combine SelectPasskeyAppState.NotReady
+            is Some -> when {
+                closeScreen -> SelectPasskeyAppState.Close
+                else -> SelectPasskeyAppState.Ready(
+                    theme = theme,
+                    needsAuth = needsAuth,
+                    data = request.value
+                )
             }
-        )
-
-        runCatching {
-            authenticateWithPasskey(origin, passkey, requestValue.callingRequest.requestJson)
-        }.onSuccess { response ->
-            PassLogger.d(TAG, "Generated Passkey authentication response")
-            _state.update { State.SendResponse(response.response) }
-        }.onFailure {
-            PassLogger.w(TAG, "Error authenticating with Passkey")
-            PassLogger.w(TAG, it)
-            _state.update { State.ErrorAuthenticating }
         }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = SelectPasskeyAppState.NotReady
+    )
+
+    fun setRequest(request: SelectPasskeyRequest) = viewModelScope.launch {
+        requestFlow.update { request.some() }
+    }
+
+    fun register(context: ComponentActivity) {
+        accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
+    }
+
+    fun upgrade() = viewModelScope.launch {
+        accountOrchestrators.start(Orchestrator.PlansOrchestrator)
+    }
+
+    fun onStop() = viewModelScope.launch {
+        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+    }
+
+    fun signOut() = viewModelScope.launch {
+        val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
+        if (primaryUserId != null) {
+            accountManager.removeAccount(primaryUserId)
+            toastManager.showToast(R.string.passkeys_user_logged_out)
+        }
+        preferenceRepository.clearPreferences()
+            .flatMap { internalSettingsRepository.clearSettings() }
+            .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
+            .onFailure {
+                PassLogger.w(TAG, "Error clearing preferences")
+                PassLogger.w(TAG, it)
+            }
+
+        closeScreenFlow.update { true }
     }
 
     companion object {

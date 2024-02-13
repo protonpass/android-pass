@@ -20,28 +20,76 @@ package proton.android.pass.data.impl.usecases.passkeys
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
+import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class GetPasskeysForDomainImpl @Inject constructor(
     private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
-    private val observeUsableVaults: ObserveUsableVaults
+    private val observeUsableVaults: ObserveUsableVaults,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : GetPasskeysForDomain {
-    override suspend fun invoke(domain: String): List<Passkey> {
+    override suspend fun invoke(domain: String): List<PasskeyItem> {
+        val parsed = UrlSanitizer.getDomain(domain).getOrElse {
+            PassLogger.w(TAG, "Could not get domain from $domain")
+            return emptyList()
+        }
+
         val allItemsWithPasskeys = observeUsableVaults().flatMapLatest {
             observeItemsWithPasskeys(it)
         }.first()
 
-        return allItemsWithPasskeys
-            .filter { it.itemType is ItemType.Login }
-            .map { it.itemType as ItemType.Login }
-            .flatMap { loginItem -> loginItem.passkeys }
-            .filter { passkey -> passkey.domain == domain }
+        val loginItems = encryptionContextProvider.withEncryptionContext {
+            allItemsWithPasskeys
+                .filter { it.itemType is ItemType.Login }
+                .map {
+                    LoginItem(
+                        shareId = it.shareId,
+                        itemId = it.id,
+                        login = it.itemType as ItemType.Login,
+                        itemTitle = decrypt(it.title)
+                    )
+                }
+        }
+
+        return loginItems
+            .filter { it.login.passkeys.isNotEmpty() }
+            .mapNotNull { item ->
+                val domainPasskeys = item.login.passkeys.filter { it.domain == parsed }
+                if (domainPasskeys.isEmpty()) {
+                    null
+                } else {
+                    domainPasskeys.map {
+                        PasskeyItem(
+                            shareId = item.shareId,
+                            itemId = item.itemId,
+                            passkey = it,
+                            itemTitle = item.itemTitle
+                        )
+                    }
+                }
+            }
+            .flatten()
+    }
+
+    private data class LoginItem(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val login: ItemType.Login,
+        val itemTitle: String
+    )
+
+    companion object {
+        private const val TAG = "GetPasskeysForDomainImpl"
     }
 }

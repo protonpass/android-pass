@@ -41,7 +41,7 @@ import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
-import proton.android.pass.domain.ITEM_TYPE_LOGIN
+import proton.android.pass.domain.items.ItemCategory
 
 @Suppress("ClassNaming")
 object AppDatabaseMigrations {
@@ -128,7 +128,7 @@ object AppDatabaseMigrations {
                     UPDATE ${ItemEntity.TABLE}
                     SET ${ItemEntity.Columns.HAS_TOTP} = 0
                     WHERE ${ItemEntity.Columns.HAS_TOTP} IS NULL
-                      AND ${ItemEntity.Columns.ITEM_TYPE} != $ITEM_TYPE_LOGIN 
+                      AND ${ItemEntity.Columns.ITEM_TYPE} != ${ItemCategory.Login.value} 
                     
                 """.trimIndent()
             )

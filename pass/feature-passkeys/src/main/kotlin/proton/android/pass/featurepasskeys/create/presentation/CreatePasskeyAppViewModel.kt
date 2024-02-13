@@ -18,10 +18,80 @@
 
 package proton.android.pass.featurepasskeys.create.presentation
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.passkeys.StorePasskey
+import proton.android.pass.passkeys.api.GeneratePasskey
 import javax.inject.Inject
 
+@Immutable
+sealed interface CreatePasskeyAppEvent {
+    @Immutable
+    object Idle : CreatePasskeyAppEvent
+
+    @Immutable
+    data class AskForConfirmation(
+        val item: ItemUiModel,
+        val isLoadingState: IsLoadingState
+    ) : CreatePasskeyAppEvent
+
+    @Immutable
+    @JvmInline
+    value class SendResponse(val response: String) : CreatePasskeyAppEvent
+}
+
 @HiltViewModel
-class CreatePasskeyAppViewModel @Inject constructor() : ViewModel() {
+class CreatePasskeyAppViewModel @Inject constructor(
+    private val generatePasskey: GeneratePasskey,
+    private val storePasskey: StorePasskey
+) : ViewModel() {
+
+    private val eventFlow: MutableStateFlow<CreatePasskeyAppEvent> =
+        MutableStateFlow(CreatePasskeyAppEvent.Idle)
+
+    val state: StateFlow<CreatePasskeyAppEvent> = eventFlow
+
+    fun onItemSelected(item: ItemUiModel) = viewModelScope.launch {
+        eventFlow.update {
+            CreatePasskeyAppEvent.AskForConfirmation(
+                item = item,
+                isLoadingState = IsLoadingState.NotLoading
+            )
+        }
+    }
+
+    fun onConfirmed(item: ItemUiModel, request: CreatePasskeyRequest) = viewModelScope.launch {
+        eventFlow.update {
+            CreatePasskeyAppEvent.AskForConfirmation(
+                item = item,
+                isLoadingState = IsLoadingState.Loading
+            )
+        }
+
+        val passkey = generatePasskey(
+            url = request.callingAppInfo.origin ?: "",
+            request = request.callingRequest.requestJson
+        )
+
+        storePasskey(
+            shareId = item.shareId,
+            itemId = item.id,
+            passkey = passkey.passkey
+        )
+
+        eventFlow.emit(CreatePasskeyAppEvent.SendResponse(passkey.response))
+    }
+
+    fun clearEvent() = viewModelScope.launch {
+        eventFlow.emit(CreatePasskeyAppEvent.Idle)
+    }
+
 }

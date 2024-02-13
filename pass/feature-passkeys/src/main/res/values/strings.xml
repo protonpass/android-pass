@@ -19,4 +19,12 @@
 
 <resources>
     <string name="passkeys_user_logged_out">You have been logged out. Please log in again by opening the app.</string>
+    <string
+        name="passkey_confirm_item_title"
+        comment="Title of the dialog for confirming the generation of a passkey for an item"
+    >Generate passkey</string>
+    <string
+        name="passkey_confirm_item_body"
+        comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title"
+    >Are you sure you want to generate a passkey for the item \'%s\'?</string>
 </resources>

@@ -24,14 +24,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyAppEvent
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyAppState
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyAppViewModel
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyRequest
+import proton.android.pass.featurepasskeys.create.ui.confirm.ConfirmItemDialog
 
 @Composable
 fun CreatePasskeyApp(
@@ -41,6 +49,26 @@ fun CreatePasskeyApp(
     onNavigate: (CreatePasskeyNavigation) -> Unit,
     viewModel: CreatePasskeyAppViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    var askForConfirmation: CreatePasskeyAppEvent.AskForConfirmation? by remember {
+        mutableStateOf(null)
+    }
+    LaunchedEffect(state) {
+        when (val event = state) {
+            is CreatePasskeyAppEvent.Idle -> {}
+            is CreatePasskeyAppEvent.AskForConfirmation -> {
+                askForConfirmation = event
+            }
+
+            is CreatePasskeyAppEvent.SendResponse -> {
+                askForConfirmation = null
+                onNavigate(CreatePasskeyNavigation.SendResponse(event.response))
+            }
+        }
+        viewModel.clearEvent()
+    }
+
     val isDark = isDark(appState.theme)
     SystemUIEffect(isDark = isDark)
 
@@ -54,9 +82,30 @@ fun CreatePasskeyApp(
             CreatePasskeyAppContent(
                 modifier = Modifier.padding(padding),
                 needsAuth = appState.needsAuth,
+//                initialLoginState = appState.data,
                 request = request,
+                onEvent = {
+                    when (it) {
+                        is CreatePasskeyEvent.OnItemSelected -> {
+                            viewModel.onItemSelected(it.item)
+                        }
+                    }
+                },
                 onNavigate = onNavigate
             )
+
+            askForConfirmation?.let { event ->
+                ConfirmItemDialog(
+                    item = event.item,
+                    isLoading = event.isLoadingState,
+                    onConfirm = {
+                        viewModel.onConfirmed(event.item, request)
+                    },
+                    onDismiss = {
+                        askForConfirmation = null
+                    }
+                )
+            }
         }
     }
 }

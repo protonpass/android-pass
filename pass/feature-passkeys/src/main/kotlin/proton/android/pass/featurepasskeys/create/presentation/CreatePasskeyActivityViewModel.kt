@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,12 +40,15 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.flatMap
-import proton.android.pass.data.api.usecases.passkeys.StorePasskey
+import proton.android.pass.common.api.some
 import proton.android.pass.featurepasskeys.R
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.passkeys.api.GeneratePasskey
+import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
@@ -71,6 +75,13 @@ sealed interface State {
 }
 
 @Immutable
+data class CreatePasskeyRequestData(
+    val domain: String,
+    val username: String,
+    val request: String
+)
+
+@Immutable
 sealed interface CreatePasskeyAppState {
 
     @Immutable
@@ -82,7 +93,8 @@ sealed interface CreatePasskeyAppState {
     @Immutable
     data class Ready(
         val theme: ThemePreference,
-        val needsAuth: Boolean
+        val needsAuth: Boolean,
+        val data: CreatePasskeyRequestData
     ) : CreatePasskeyAppState
 }
 
@@ -90,8 +102,7 @@ sealed interface CreatePasskeyAppState {
 class CreatePasskeyActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
-    private val storePasskey: StorePasskey,
-    private val generatePasskey: GeneratePasskey,
+    private val parseCreatePasskeyRequest: ParseCreatePasskeyRequest,
     private val preferenceRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val toastManager: ToastManager,
@@ -104,17 +115,36 @@ class CreatePasskeyActivityViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
+    private val requestFlow: MutableStateFlow<Option<CreatePasskeyRequest>> = MutableStateFlow(None)
+
+    private val requestDataFlow: Flow<Option<CreatePasskeyRequestData>> = requestFlow.map {
+        it.map { request ->
+            val domain = request.callingRequest.origin ?: ""
+            val parsed = parseCreatePasskeyRequest(request.callingRequest.requestJson)
+            CreatePasskeyRequestData(
+                domain = domain,
+                username = parsed.userName,
+                request = request.callingRequest.requestJson
+            )
+        }
+    }
+
     val state: StateFlow<CreatePasskeyAppState> = combine(
         closeScreenFlow,
         themePreferenceState,
-        needsBiometricAuth()
-    ) { closeScreen, theme, needsAuth ->
-        when {
-            closeScreen -> CreatePasskeyAppState.Close
-            else -> CreatePasskeyAppState.Ready(
-                theme = theme,
-                needsAuth = needsAuth
-            )
+        needsBiometricAuth(),
+        requestDataFlow
+    ) { closeScreen, theme, needsAuth, request ->
+        when (request) {
+            None -> return@combine CreatePasskeyAppState.NotReady
+            is Some -> when {
+                closeScreen -> CreatePasskeyAppState.Close
+                else -> CreatePasskeyAppState.Ready(
+                    theme = theme,
+                    needsAuth = needsAuth,
+                    data = request.value
+                )
+            }
         }
     }.stateIn(
         scope = viewModelScope,
@@ -122,60 +152,17 @@ class CreatePasskeyActivityViewModel @Inject constructor(
         initialValue = CreatePasskeyAppState.NotReady
     )
 
-
-//    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = itemFiltersFlow
-//        .flatMapLatest {
-//            val (filter, selection) = when (it) {
-//                is LoadingResult.Error -> {
-//                    PassLogger.w(TAG, "Error observing plan")
-//                    PassLogger.w(TAG, it.exception)
-//                    return@flatMapLatest flowOf(LoadingResult.Error(it.exception))
-//                }
-//
-//                LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
-//                is LoadingResult.Success -> it.data
-//            }
-//            observeActiveItems(
-//                filter = filter,
-//                shareSelection = selection
-//            ).asResultWithoutLoading()
-//        }
-//        .map { itemResult ->
-//            itemResult.map { list ->
-//                encryptionContextProvider.withEncryptionContext {
-//                    list.map { it.toUiModel(this@withEncryptionContext) }
-//                }
-//            }
-//        }
-//        .distinctUntilChanged()
+    fun setRequest(request: CreatePasskeyRequest) {
+        requestFlow.update { request.some() }
+    }
 
     fun register(context: ComponentActivity) {
         accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
     }
 
-
-//    fun onButtonClick() = viewModelScope.launch {
-//        val requestValue = request.value() ?: return@launch
-//        val origin = requestValue.callingRequest.origin ?: run {
-//            PassLogger.w(TAG, "requestValue.callingRequest.origin was null")
-//            _state.update { State.Close }
-//            return@launch
-//        }
-//
-//        val created = generatePasskey(origin, requestValue.callingRequest.requestJson)
-//        val passkey = created.passkey
-//        PassLogger.i(TAG, "Created passkey")
-//        PassLogger.d(
-//            TAG,
-//            "rpname=${passkey.rpName} userDisplayName=${passkey.userDisplayName} username=${passkey.userName}"
-//        )
-//        storePasskey(
-//            shareId = ShareId("123"),
-//            itemId = ItemId("123"),
-//            passkey = passkey
-//        )
-//        _state.update { State.SendResponse(created.response) }
-//    }
+    fun upgrade() = viewModelScope.launch {
+        accountOrchestrators.start(Orchestrator.PlansOrchestrator)
+    }
 
     fun onStop() = viewModelScope.launch {
         preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)

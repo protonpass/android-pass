@@ -16,29 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.history
+package proton.android.pass.data.api.usecases.items
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.data.api.usecases.history.ObserveItemRevisions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import javax.inject.Inject
 
-class ObserveItemRevisionsImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-) : ObserveItemRevisions {
+interface ObserveItemRevisions {
 
-    override fun invoke(
+    operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-    ): Flow<List<ItemRevision>> = accountManager.getPrimaryUserId()
-        .filterNotNull()
-        .map { userId -> itemRepository.getItemRevisions(userId, shareId, itemId) }
+    ): Flow<List<ItemRevision>>
 
 }

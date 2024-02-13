@@ -114,6 +114,8 @@ import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
+import proton.android.pass.data.api.usecases.items.GetItemCategory
+import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -214,6 +216,8 @@ import proton.android.pass.data.fakes.usecases.TestUpdateAlias
 import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
+import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
+import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -610,6 +614,13 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveVaultWithItemCountById(
-        impl: TestObserveVaultWithItemCountById
+        impl: TestObserveVaultWithItemCountById,
     ): ObserveVaultWithItemCountById
+
+    @Binds
+    abstract fun bindObserveItemRevisions(impl: FakeObserveItemRevisions): ObserveItemRevisions
+
+    @Binds
+    abstract fun bindGetItemCategory(impl: FakeGetItemCategory): GetItemCategory
+    
 }

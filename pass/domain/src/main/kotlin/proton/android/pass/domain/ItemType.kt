@@ -80,7 +80,7 @@ sealed interface ItemType {
     val category: ItemCategory
         get() = when (this) {
             is Alias -> ItemCategory.Alias
-            is CreditCard -> ItemCategory.Alias
+            is CreditCard -> ItemCategory.CreditCard
             is Login -> ItemCategory.Login
             is Note -> ItemCategory.Note
             Password -> ItemCategory.Password

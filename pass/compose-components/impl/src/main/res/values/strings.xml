@@ -27,10 +27,7 @@
     <string name="bottomsheet_unpin_item">Unpin</string>
 
     <!-- Actions -->
-    <string
-        name="action_content_description_menu"
-        comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu"
-    >Open item action menu</string>
+    <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Open item action menu</string>
     <string name="action_upgrade_now">Upgrade now</string>
 
     <!-- Empty list -->
@@ -106,9 +103,23 @@
     <!-- Pinning -->
     <string name="pinning_carousel_see_all">See all</string>
 
-    <string
-        name="home_app_needs_update_message"
-        comment="Message displayed when the app needs to be updated"
-    >The app version is not supported anymore, please update your app.</string>
+    <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+
+    <!-- Dates -->
+    <string name="date_today">Today %s</string>
+    <string name="date_yesterday">Yesterday %s</string>
+    <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+    <string name="date_full_date_format">dd LLLL HH:mm</string>
+
+    <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+    <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
 
 </resources>

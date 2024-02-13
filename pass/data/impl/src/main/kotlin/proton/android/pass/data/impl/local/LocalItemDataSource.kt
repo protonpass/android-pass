@@ -89,4 +89,5 @@ interface LocalItemDataSource {
     fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>>
     fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>>
     fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>>
+    fun observeItemsWithPasskeys(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemEntity>>
 }

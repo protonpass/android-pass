@@ -28,6 +28,7 @@ import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,10 +38,20 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
     private val localItemDataSource: LocalItemDataSource,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ObserveItemsWithPasskeys {
-    override fun invoke(): Flow<List<Item>> = accountManager.getPrimaryUserId()
+    override fun invoke(shareSelection: ShareSelection): Flow<List<Item>> = accountManager.getPrimaryUserId()
         .filterNotNull()
-        .flatMapLatest {
-            localItemDataSource.observeAllItemsWithPasskeys(it)
+        .flatMapLatest { userId ->
+            when (shareSelection) {
+                is ShareSelection.Share -> localItemDataSource.observeItemsWithPasskeys(
+                    userId = userId,
+                    shareIds = listOf(shareSelection.shareId)
+                )
+                is ShareSelection.Shares -> localItemDataSource.observeItemsWithPasskeys(
+                    userId = userId,
+                    shareIds = shareSelection.shareIds
+                )
+                ShareSelection.AllShares -> localItemDataSource.observeAllItemsWithPasskeys(userId)
+            }
         }
         .mapLatest { items ->
             encryptionContextProvider.withEncryptionContext {

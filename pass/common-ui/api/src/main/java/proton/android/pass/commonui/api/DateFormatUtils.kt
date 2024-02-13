@@ -59,6 +59,12 @@ object DateFormatUtils {
         }
     }
 
+    fun getTime(instant: LocalDateTime): String {
+        val hour = instant.hour.toString().padStart(2, '0')
+        val minute = instant.minute.toString().padStart(2, '0')
+        return "$hour:$minute"
+    }
+
     private fun isMoreThan1Year(
         acceptedFormats: List<Format>,
         nowMinus1Year: LocalDateTime,

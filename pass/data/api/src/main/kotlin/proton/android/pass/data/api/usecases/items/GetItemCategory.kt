@@ -16,13 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.presentation
+package proton.android.pass.data.api.usecases.items
 
-import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
 
-internal data class ItemHistoryTimelineState(
-    internal val isLoading: Boolean = true,
-    internal val itemRevisions: List<ItemRevision> = emptyList(),
-    internal val itemCategory: ItemCategory = ItemCategory.Unknown,
-)
+interface GetItemCategory {
+
+    suspend operator fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+    ): ItemCategory
+
+}

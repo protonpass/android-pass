@@ -1196,7 +1196,7 @@ class ItemRepositoryImpl @Inject constructor(
             contentFormatVersion = itemRevision.contentFormatVersion,
             content = itemRevision.content,
             state = itemRevision.state,
-            itemType = output.item.itemType.toWeightedInt(),
+            itemType = output.item.itemType.category.value,
             createTime = itemRevision.createTime,
             modifyTime = itemRevision.modifyTime,
             lastUsedTime = itemRevision.lastUseTime,

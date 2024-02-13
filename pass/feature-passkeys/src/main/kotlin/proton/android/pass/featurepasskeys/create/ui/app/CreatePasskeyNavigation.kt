@@ -22,6 +22,7 @@ sealed interface CreatePasskeyNavigation {
 
     object Cancel : CreatePasskeyNavigation
     object ForceSignOut : CreatePasskeyNavigation
+    object Upgrade : CreatePasskeyNavigation
 
     @JvmInline
     value class SendResponse(val response: String) : CreatePasskeyNavigation

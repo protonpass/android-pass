@@ -353,7 +353,7 @@ class ItemRepositoryImpl @Inject constructor(
     ): Item =
         withContext(Dispatchers.IO) {
             val item = localItemDataSource.getById(shareId, itemId)
-            requireNotNull(item)
+            requireNotNull(item) { "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]" }
             encryptionContextProvider.withEncryptionContext {
                 item.toDomain(this@withEncryptionContext)
             }

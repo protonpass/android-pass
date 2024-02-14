@@ -38,10 +38,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
 import proton.android.pass.featurepasskeys.R
 import proton.android.pass.featurepasskeys.select.ui.SelectPasskeyActivity
+import proton.android.pass.featurepasskeys.select.ui.UsePasskeyNoUiActivity
 import proton.android.pass.log.api.PassLogger
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -56,7 +58,8 @@ object GetPasskeysHandler {
         cancellationSignal: CancellationSignal,
         callback: OutcomeReceiver<BeginGetCredentialResponse, GetCredentialException>,
         getPasskeysForDomain: GetPasskeysForDomain,
-        accountManager: AccountManager
+        accountManager: AccountManager,
+        needsBiometricAuth: NeedsBiometricAuth
     ) {
         val handler = CoroutineExceptionHandler { _, exception ->
             PassLogger.e(TAG, exception)
@@ -64,7 +67,13 @@ object GetPasskeysHandler {
         }
 
         val job = CoroutineScope(Dispatchers.IO).launch(handler) {
-            val response = getPasskeys(context, request, getPasskeysForDomain, accountManager)
+            val response = getPasskeys(
+                context = context,
+                request = request,
+                getPasskeysForDomain = getPasskeysForDomain,
+                accountManager = accountManager,
+                needsBiometricAuth = needsBiometricAuth
+            )
             callback.onResult(response)
         }
 
@@ -79,7 +88,8 @@ object GetPasskeysHandler {
         context: Context,
         request: BeginGetCredentialRequest,
         getPasskeysForDomain: GetPasskeysForDomain,
-        accountManager: AccountManager
+        accountManager: AccountManager,
+        needsBiometricAuth: NeedsBiometricAuth
     ): BeginGetCredentialResponse? {
         val currentUser = accountManager.getPrimaryUserId().first()
         if (currentUser == null) {
@@ -98,6 +108,7 @@ object GetPasskeysHandler {
         val passkeys = getPasskeysForDomain(domain)
         PassLogger.d(TAG, "Found ${passkeys.size} passkeys for domain $domain")
 
+        val needsToAuthenticate = needsBiometricAuth().first()
         val entries = mutableListOf<CredentialEntry>()
 
         val requestCodes = mutableSetOf<Int>()
@@ -112,7 +123,14 @@ object GetPasskeysHandler {
         for (option in request.beginGetCredentialOptions) {
             when (option) {
                 is BeginGetPublicKeyCredentialOption -> {
-                    entries.addAll(addOptionEntries(context, option, passkeys, requestCodes))
+                    val entriesForOption = addOptionEntries(
+                        context = context,
+                        option = option,
+                        passkeys = passkeys,
+                        requestCodes = requestCodes,
+                        needsToAuthenticate = needsToAuthenticate
+                    )
+                    entries.addAll(entriesForOption)
                 }
 
                 else -> {
@@ -166,12 +184,18 @@ object GetPasskeysHandler {
         context: Context,
         option: BeginGetPublicKeyCredentialOption,
         passkeys: List<PasskeyItem>,
-        requestCodes: MutableSet<Int>
+        requestCodes: MutableSet<Int>,
+        needsToAuthenticate: Boolean
     ): List<CredentialEntry> = passkeys.map {
         PublicKeyCredentialEntry.Builder(
             context = context,
             username = it.passkey.userName,
-            pendingIntent = createUsePasskeyPendingIntent(context, it, requestCodes),
+            pendingIntent = createUsePasskeyPendingIntent(
+                context = context,
+                passkeyItem = it,
+                requestCodes = requestCodes,
+                needsToAuthenticate = needsToAuthenticate
+            ),
             beginGetPublicKeyCredentialOption = option,
         ).setDisplayName(it.itemTitle).setAutoSelectAllowed(false).build()
     }
@@ -180,14 +204,24 @@ object GetPasskeysHandler {
     private fun createUsePasskeyPendingIntent(
         context: Context,
         passkeyItem: PasskeyItem,
-        requestCodes: MutableSet<Int>
+        requestCodes: MutableSet<Int>,
+        needsToAuthenticate: Boolean
     ): PendingIntent {
-        val intent = SelectPasskeyActivity.createIntentForUsePasskey(
-            context = context,
-            shareId = passkeyItem.shareId,
-            itemId = passkeyItem.itemId,
-            passkeyId = passkeyItem.passkey.id
-        )
+        val intent = if (needsToAuthenticate) {
+            SelectPasskeyActivity.createIntentForUsePasskey(
+                context = context,
+                shareId = passkeyItem.shareId,
+                itemId = passkeyItem.itemId,
+                passkeyId = passkeyItem.passkey.id
+            )
+        } else {
+            UsePasskeyNoUiActivity.newIntent(
+                context = context,
+                shareId = passkeyItem.shareId,
+                itemId = passkeyItem.itemId,
+                passkeyId = passkeyItem.passkey.id
+            )
+        }
 
         val requestCode = generateRequestCode(requestCodes)
         return PendingIntent.getActivity(

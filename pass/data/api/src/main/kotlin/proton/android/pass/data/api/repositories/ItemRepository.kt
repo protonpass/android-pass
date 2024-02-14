@@ -19,6 +19,7 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.Option
@@ -197,20 +198,19 @@ sealed interface PinItemsResult {
     value class NonePinned(val exception: Throwable) : PinItemsResult
 }
 
-interface ItemRevision {
-    val itemId: String
-    val revision: Long
-    val contentFormatVersion: Int
-    val keyRotation: Long
-    val content: String
-    val itemKey: String?
-    val state: Int
-    val aliasEmail: String?
-    val createTime: Long
-    val modifyTime: Long
-    val lastUseTime: Long?
-    val revisionTime: Long
-    val isPinned: Boolean
-}
-
-
+@Serializable
+data class ItemRevision(
+    val itemId: String,
+    val revision: Long,
+    val contentFormatVersion: Int,
+    val keyRotation: Long,
+    val content: String,
+    val itemKey: String?,
+    val state: Int,
+    val aliasEmail: String?,
+    val createTime: Long,
+    val modifyTime: Long,
+    val lastUseTime: Long?,
+    val revisionTime: Long,
+    val isPinned: Boolean,
+)

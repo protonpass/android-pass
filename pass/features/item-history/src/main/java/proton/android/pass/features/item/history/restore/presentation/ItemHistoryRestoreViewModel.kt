@@ -16,31 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.presentation
+package proton.android.pass.features.item.history.restore.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
-import proton.android.pass.common.api.FlowUtils.oneShot
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.items.GetItemCategory
-import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
+import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.item.history.navigation.ItemHistoryRevisionNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @HiltViewModel
-class ItemHistoryTimelineViewModel @Inject constructor(
+class ItemHistoryRestoreViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    observeItemRevisions: ObserveItemRevisions,
-    getItemCategory: GetItemCategory,
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -51,24 +45,9 @@ class ItemHistoryTimelineViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let { id -> ItemId(id = id) }
 
-    internal val state: StateFlow<ItemHistoryTimelineState> = combine(
-        observeItemRevisions(shareId, itemId),
-        oneShot { getItemCategory(shareId, itemId) },
-    ) { itemRevisions, itemCategory ->
-        ItemHistoryTimelineState(
-            shareId = shareId,
-            itemId = itemId,
-            isLoadingState = IsLoadingState.NotLoading,
-            itemRevisions = itemRevisions,
-            itemCategory = itemCategory,
-        )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Eagerly,
-        initialValue = ItemHistoryTimelineState(
-            shareId = shareId,
-            itemId = itemId,
-        ),
-    )
+    private val itemRevision: ItemRevision = savedStateHandleProvider.get()
+        .require<String>(ItemHistoryRevisionNavArgId.key)
+        .let { encodedRevision -> Json.decodeFromString(NavParamEncoder.decode(encodedRevision)) }
+
 
 }

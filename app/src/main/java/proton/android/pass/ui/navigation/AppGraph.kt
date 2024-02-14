@@ -105,6 +105,7 @@ import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
+import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
@@ -840,9 +841,14 @@ fun NavGraphBuilder.appGraph(
                     comesFromBottomsheet = false,
                 )
 
-                ItemHistoryNavDestination.Restore -> {
-                    // Navigation will be implemented in the following MR
-                }
+                is ItemHistoryNavDestination.Restore -> appNavigator.navigate(
+                    destination = ItemHistoryRestoreNavItem,
+                    route = ItemHistoryRestoreNavItem.createNavRoute(
+                        shareId = itemHistoryNavDestination.shareId,
+                        itemId = itemHistoryNavDestination.itemId,
+                        itemRevision = itemHistoryNavDestination.itemRevision,
+                    )
+                )
 
                 is ItemHistoryNavDestination.Timeline -> appNavigator.navigate(
                     destination = ItemHistoryTimelineNavItem,

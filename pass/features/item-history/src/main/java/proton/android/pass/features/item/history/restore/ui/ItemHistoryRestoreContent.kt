@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,23 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.responses
+package proton.android.pass.features.item.history.restore.ui
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 
-@Serializable
-data class CreateItemAliasResponse(
-    @SerialName("Code")
-    val code: Int,
-    @SerialName("Bundle")
-    val bundle: CreateItemAliasBundle
-)
-
-@Serializable
-data class CreateItemAliasBundle(
-    @SerialName("Alias")
-    val alias: ItemRevision,
-    @SerialName("Item")
-    val item: ItemRevision
-)
+@Composable
+internal fun ItemHistoryRestoreContent(
+    modifier: Modifier = Modifier,
+    onNavigated: (ItemHistoryNavDestination) -> Unit,
+) {
+    Text(text = "Hello Restore!")
+}

@@ -56,6 +56,8 @@ class ItemHistoryTimelineViewModel @Inject constructor(
         oneShot { getItemCategory(shareId, itemId) },
     ) { itemRevisions, itemCategory ->
         ItemHistoryTimelineState(
+            shareId = shareId,
+            itemId = itemId,
             isLoadingState = IsLoadingState.NotLoading,
             itemRevisions = itemRevisions,
             itemCategory = itemCategory,
@@ -63,7 +65,10 @@ class ItemHistoryTimelineViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
-        initialValue = ItemHistoryTimelineState(),
+        initialValue = ItemHistoryTimelineState(
+            shareId = shareId,
+            itemId = itemId,
+        ),
     )
 
 }

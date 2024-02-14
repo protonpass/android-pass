@@ -26,5 +26,5 @@ data class MigrateItemsResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Items")
-    val items: List<ItemRevisionImpl>
+    val items: List<ItemRevision>
 )

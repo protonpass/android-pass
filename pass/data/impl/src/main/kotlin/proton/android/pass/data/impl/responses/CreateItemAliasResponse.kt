@@ -32,7 +32,7 @@ data class CreateItemAliasResponse(
 @Serializable
 data class CreateItemAliasBundle(
     @SerialName("Alias")
-    val alias: ItemRevisionImpl,
+    val alias: ItemRevision,
     @SerialName("Item")
-    val item: ItemRevisionImpl
+    val item: ItemRevision
 )

@@ -47,6 +47,7 @@ import kotlinx.datetime.Instant
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.combineN
@@ -277,15 +278,29 @@ class SelectItemViewModel @Inject constructor(
         }
     }.flowOn(Dispatchers.Default)
 
-    private val pinnedItemsFlow = itemFiltersFlow
-        .flatMapLatest {
-            val (filter, shareSelection) = when (it) {
-                is LoadingResult.Error -> return@flatMapLatest flowOf(LoadingResult.Error(it.exception))
-                LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
-                is LoadingResult.Success -> it.data
+    private val pinnedItemsFlow: Flow<LoadingResult<List<Item>>> = combine(
+        itemFiltersFlow,
+        selectItemStateFlow
+    ) { items, selectItemState ->
+        items to selectItemState
+    }.flatMapLatest { (items, selectItemState) ->
+        when (selectItemState) {
+            None -> flowOf(LoadingResult.Loading)
+            is Some -> if (selectItemState.value.showPinnedItems) {
+                when (items) {
+                    is LoadingResult.Error -> flowOf(LoadingResult.Error(items.exception))
+                    LoadingResult.Loading -> flowOf(LoadingResult.Loading)
+                    is LoadingResult.Success -> observePinnedItems(
+                        filter = items.data.filter,
+                        shareSelection = items.data.shareSelection
+                    ).asLoadingResult()
+                }
+            } else {
+                // Do not show pinned items
+                flowOf(LoadingResult.Success(emptyList()))
             }
-            observePinnedItems(filter = filter, shareSelection = shareSelection).asLoadingResult()
         }
+    }
 
     private val pinningUiStateFlow = combine(
         pinnedItemsFlow,
@@ -383,6 +398,7 @@ class SelectItemViewModel @Inject constructor(
         preferenceRepository.getUseFaviconsPreference(),
         planFlow,
         observeUpgradeInfo().asLoadingResult(),
+        selectItemStateFlow
     ) { itemsResult,
         isRefreshing,
         itemClicked,
@@ -391,7 +407,8 @@ class SelectItemViewModel @Inject constructor(
         shouldScrollToTop,
         useFavicons,
         planRes,
-        upgradeInfo ->
+        upgradeInfo,
+        selectItemState ->
         val isLoading =
             IsLoadingState.from(itemsResult is LoadingResult.Loading || planRes is LoadingResult.Loading)
         val items = when (itemsResult) {
@@ -420,6 +437,7 @@ class SelectItemViewModel @Inject constructor(
         } ?: false
 
         val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
+        val showCreateButton = selectItemState.map { it.showCreateButton }.value() ?: false
 
         SelectItemListUiState(
             isLoading = isLoading,
@@ -431,7 +449,8 @@ class SelectItemViewModel @Inject constructor(
             shouldScrollToTop = shouldScrollToTop,
             canLoadExternalImages = useFavicons.value(),
             displayOnlyPrimaryVaultMessage = displayOnlyPrimaryVaultMessage,
-            canUpgrade = canUpgrade
+            canUpgrade = canUpgrade,
+            displayCreateButton = showCreateButton
         )
     }
 
@@ -570,6 +589,7 @@ class SelectItemViewModel @Inject constructor(
                 url = state.suggestionsUrl
             ).asResultWithoutLoading()
         }
+
         is SelectItemState.Autofill.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
     }
 

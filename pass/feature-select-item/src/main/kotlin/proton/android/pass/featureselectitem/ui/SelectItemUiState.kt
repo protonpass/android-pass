@@ -70,7 +70,8 @@ data class SelectItemListUiState(
     val shouldScrollToTop: Boolean,
     val canLoadExternalImages: Boolean,
     val displayOnlyPrimaryVaultMessage: Boolean,
-    val canUpgrade: Boolean
+    val canUpgrade: Boolean,
+    val displayCreateButton: Boolean
 ) {
 
     val itemCount: Int =
@@ -87,7 +88,8 @@ data class SelectItemListUiState(
             shouldScrollToTop = false,
             canLoadExternalImages = false,
             displayOnlyPrimaryVaultMessage = false,
-            canUpgrade = true
+            canUpgrade = true,
+            displayCreateButton = false
         )
     }
 }

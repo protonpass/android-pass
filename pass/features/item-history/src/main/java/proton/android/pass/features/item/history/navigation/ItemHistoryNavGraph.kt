@@ -19,6 +19,8 @@
 package proton.android.pass.features.item.history.navigation
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
+import proton.android.pass.features.item.history.restore.ui.ItemHistoryRestoreScreen
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.item.history.timeline.ui.ItemHistoryTimelineScreen
 import proton.android.pass.navigation.api.composable
@@ -29,6 +31,10 @@ fun NavGraphBuilder.itemHistoryNavGraph(
 
     composable(navItem = ItemHistoryTimelineNavItem) {
         ItemHistoryTimelineScreen(onNavigated = onNavigated)
+    }
+
+    composable(navItem = ItemHistoryRestoreNavItem) {
+        ItemHistoryRestoreScreen(onNavigated = onNavigated)
     }
 
 }

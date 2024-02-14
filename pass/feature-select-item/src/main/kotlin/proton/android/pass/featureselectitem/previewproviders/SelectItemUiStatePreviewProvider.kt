@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.Clock
-import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -64,7 +63,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     shouldScrollToTop = false,
                     canLoadExternalImages = false,
                     displayOnlyPrimaryVaultMessage = false,
-                    canUpgrade = false
+                    canUpgrade = false,
+                    displayCreateButton = true
                 ),
                 SearchUiState.Initial,
                 PinningUiState.Initial,
@@ -92,7 +92,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     shouldScrollToTop = false,
                     canLoadExternalImages = false,
                     displayOnlyPrimaryVaultMessage = true,
-                    canUpgrade = false
+                    canUpgrade = false,
+                    displayCreateButton = true
                 ),
                 SearchUiState.Initial,
                 PinningUiState.Initial,
@@ -108,7 +109,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     shouldScrollToTop = false,
                     canLoadExternalImages = false,
                     displayOnlyPrimaryVaultMessage = false,
-                    canUpgrade = false
+                    canUpgrade = false,
+                    displayCreateButton = true
                 ),
                 SearchUiState(
                     searchQuery = "query",

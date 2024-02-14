@@ -29,6 +29,7 @@ import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
@@ -57,11 +58,11 @@ class RemoteItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: CreateItemRequest
-    ): ItemRevision =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { createItem(shareId.id, body) }
-            .valueOrThrow
-            .item
+    ): ItemRevision = api.get<PasswordManagerApi>(userId)
+        .invoke { createItem(shareId.id, body) }
+        .valueOrThrow
+        .item
+        .toDomain()
 
     override suspend fun createAlias(
         userId: UserId,
@@ -71,7 +72,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { createAlias(shareId.id, body) }
         when (res) {
-            is ApiResult.Success -> return res.value.item
+            is ApiResult.Success -> return res.value.item.toDomain()
             is ApiResult.Error -> {
                 if (res is ApiResult.Error.Http) {
                     when (res.proton?.code) {
@@ -117,7 +118,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { updateItem(shareId.id, itemId.id, body) }
         when (res) {
-            is ApiResult.Success -> return res.value.item
+            is ApiResult.Success -> return res.value.item.toDomain()
             is ApiResult.Error -> {
                 if (res is ApiResult.Error.Http) {
                     when (res.proton?.code) {
@@ -145,7 +146,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
                         pageSize = PAGE_SIZE
                     )
 
-                    val pageItems = response.items.revisions
+                    val pageItems = response.items.revisions.toDomain()
                     items.addAll(pageItems)
                     if (pageItems.size < PAGE_SIZE || response.items.lastToken == null) {
                         break
@@ -172,7 +173,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
                     )
 
                     val total = response.items.total
-                    val pageItems = response.items.revisions
+                    val pageItems = response.items.revisions.toDomain()
                     itemsRetrieved += pageItems.size
                     emit(ItemTotal(total.toInt(), itemsRetrieved, pageItems))
 
@@ -232,6 +233,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
         api.get<PasswordManagerApi>(userId)
             .invoke { migrateItem(shareId.id, itemId.id, body).item }
             .valueOrThrow
+            .toDomain()
 
     override suspend fun migrateItems(
         userId: UserId,
@@ -241,6 +243,8 @@ class RemoteItemDataSourceImpl @Inject constructor(
         api.get<PasswordManagerApi>(userId)
             .invoke { migrateItems(shareId.id, body).items }
             .valueOrThrow
+            .toDomain()
+
 
     override suspend fun pinItem(
         userId: UserId,
@@ -249,6 +253,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
     ): ItemRevision = api.get<PasswordManagerApi>(userId)
         .invoke { pinItem(shareId.id, itemId.id).item }
         .valueOrThrow
+        .toDomain()
 
     override suspend fun unpinItem(
         userId: UserId,
@@ -257,6 +262,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
     ): ItemRevision = api.get<PasswordManagerApi>(userId)
         .invoke { unpinItem(shareId.id, itemId.id).item }
         .valueOrThrow
+        .toDomain()
 
     override suspend fun fetchItemRevisions(
         userId: UserId,
@@ -265,5 +271,6 @@ class RemoteItemDataSourceImpl @Inject constructor(
     ): List<ItemRevision> = api.get<PasswordManagerApi>(userId)
         .invoke { getItemRevision(shareId.id, itemId.id).itemsList.revisions }
         .valueOrThrow
+        .toDomain()
 
 }

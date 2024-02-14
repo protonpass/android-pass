@@ -26,5 +26,5 @@ data class UpdateLastUsedTimeResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Revision")
-    val revision: ItemRevisionImpl
+    val revision: ItemRevision
 )

@@ -33,12 +33,14 @@ object SelectItem : NavItem(baseRoute = "select/item", isTopLevel = true)
 
 sealed class SelectItemState(
     val itemTypeFilter: ItemTypeFilter,
-    val suggestionsTitle: String
+    val suggestionsTitle: String,
+    val showPinnedItems: Boolean,
+    val showCreateButton: Boolean
 ) {
     sealed class Autofill(
         filter: ItemTypeFilter,
         title: String,
-    ) : SelectItemState(filter, title) {
+    ) : SelectItemState(filter, title, showPinnedItems = true, showCreateButton = true) {
         data class Login(
             val title: String,
             val suggestionsPackageName: Option<String>,
@@ -51,18 +53,25 @@ sealed class SelectItemState(
     }
 
     sealed class Passkey(
-        title: String
-    ) : SelectItemState(ItemTypeFilter.Logins, title) {
+        title: String,
+        showPinnedItems: Boolean,
+        showCreateButton: Boolean
+    ) : SelectItemState(
+        itemTypeFilter = ItemTypeFilter.Logins,
+        suggestionsTitle = title,
+        showPinnedItems = showPinnedItems,
+        showCreateButton = showCreateButton
+    ) {
 
         data class Register(
             val title: String,
             val suggestionsUrl: Option<String>
-        ) : Passkey(title)
+        ) : Passkey(title, showPinnedItems = true, showCreateButton = true)
 
         data class Select(
             val title: String,
             val suggestionsUrl: Option<String>
-        ) : Passkey(title)
+        ) : Passkey(title, showPinnedItems = false, showCreateButton = false)
     }
 }
 

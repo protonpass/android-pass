@@ -34,7 +34,7 @@ data class EventList(
     @SerialName("UpdatedShare")
     val shareResponse: ShareResponse?,
     @SerialName("UpdatedItems")
-    val updatedItems: List<ItemRevisionImpl>,
+    val updatedItems: List<ItemRevision>,
     @SerialName("DeletedItemIDs")
     val deletedItemIds: List<String>,
     @SerialName("NewKeyRotation")

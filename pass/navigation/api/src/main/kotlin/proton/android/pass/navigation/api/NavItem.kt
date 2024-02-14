@@ -29,18 +29,16 @@ open class NavItem(
     val isTopLevel: Boolean = false,
     val navItemType: NavItemType = NavItemType.Screen,
 ) {
-    val route: String = run {
-        buildString {
-            val argKeys = navArgIds.map { "{${it.key}}" }
-            append(listOf(baseRoute).plus(argKeys).joinToString("/"))
-            if (optionalArgIds.isNotEmpty()) {
-                val optionalArgKeys = optionalArgIds.joinToString(
-                    prefix = "?",
-                    separator = "&",
-                    transform = { "${it.key}={${it.key}}" }
-                )
-                append(optionalArgKeys)
-            }
+    val route: String = buildString {
+        val argKeys = navArgIds.map { "{${it.key}}" }
+        append(listOf(baseRoute).plus(argKeys).joinToString("/"))
+        if (optionalArgIds.isNotEmpty()) {
+            val optionalArgKeys = optionalArgIds.joinToString(
+                prefix = "?",
+                separator = "&",
+                transform = { "${it.key}={${it.key}}" }
+            )
+            append(optionalArgKeys)
         }
     }
 

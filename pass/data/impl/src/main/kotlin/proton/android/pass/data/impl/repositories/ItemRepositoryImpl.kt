@@ -213,9 +213,19 @@ class ItemRepositoryImpl @Inject constructor(
 
             val itemResponse = remoteItemDataSource.createItemAndAlias(userId, shareId, request)
             val itemEntity =
-                itemResponseToEntity(userAddress, itemResponse.item, share, listOf(shareKey))
+                itemResponseToEntity(
+                    userAddress,
+                    itemResponse.item.toDomain(),
+                    share,
+                    listOf(shareKey)
+                )
             val aliasEntity =
-                itemResponseToEntity(userAddress, itemResponse.alias, share, listOf(shareKey))
+                itemResponseToEntity(
+                    userAddress,
+                    itemResponse.alias.toDomain(),
+                    share,
+                    listOf(shareKey)
+                )
             database.inTransaction("createItemAndAlias") {
                 localItemDataSource.upsertItem(itemEntity)
                 localItemDataSource.upsertItem(aliasEntity)
@@ -588,7 +598,7 @@ class ItemRepositoryImpl @Inject constructor(
         val updateAsEntities = events.updatedItems.map {
             itemResponseToEntity(
                 userAddress,
-                it.toItemRevision(),
+                it.toItemRevision().toDomain(),
                 share,
                 shareKeys
             )
@@ -683,7 +693,7 @@ class ItemRepositoryImpl @Inject constructor(
         pendingItemRevisions.map { pendingItemRevision ->
             itemResponseToEntity(
                 userAddress,
-                pendingItemRevision.toItemRevision(),
+                pendingItemRevision.toItemRevision().toDomain(),
                 share,
                 shareKeys,
             )

@@ -19,27 +19,46 @@
 package proton.android.pass.data.impl.extensions
 
 import proton.android.pass.data.api.PendingEventItemRevision
-import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.data.impl.responses.ItemRevisionImpl
+import proton.android.pass.data.api.repositories.ItemRevision as ItemRevisionApi
+import proton.android.pass.data.impl.responses.ItemRevision as ItemRevisionImpl
 
-fun ItemRevision.toPendingEvent(): PendingEventItemRevision =
-    PendingEventItemRevision(
-        itemId = itemId,
-        revision = revision,
-        contentFormatVersion = contentFormatVersion,
-        keyRotation = keyRotation,
-        content = content,
-        state = state,
-        aliasEmail = aliasEmail,
-        createTime = createTime,
-        modifyTime = modifyTime,
-        lastUseTime = lastUseTime,
-        revisionTime = revisionTime,
-        key = itemKey,
-        isPinned = isPinned,
-    )
+fun ItemRevisionImpl.toDomain(): ItemRevisionApi = ItemRevisionApi(
+    itemId = itemId,
+    revision = revision,
+    contentFormatVersion = contentFormatVersion,
+    keyRotation = keyRotation,
+    content = content,
+    state = state,
+    aliasEmail = aliasEmail,
+    createTime = createTime,
+    modifyTime = modifyTime,
+    lastUseTime = lastUseTime,
+    revisionTime = revisionTime,
+    itemKey = itemKey,
+    isPinned = isPinned,
+)
 
-fun PendingEventItemRevision.toItemRevision(): ItemRevision = ItemRevisionImpl(
+fun List<ItemRevisionImpl>.toDomain(): List<ItemRevisionApi> = map { itemRevision ->
+    itemRevision.toDomain()
+}
+
+fun ItemRevisionImpl.toPendingEvent(): PendingEventItemRevision = PendingEventItemRevision(
+    itemId = itemId,
+    revision = revision,
+    contentFormatVersion = contentFormatVersion,
+    keyRotation = keyRotation,
+    content = content,
+    state = state,
+    aliasEmail = aliasEmail,
+    createTime = createTime,
+    modifyTime = modifyTime,
+    lastUseTime = lastUseTime,
+    revisionTime = revisionTime,
+    key = itemKey,
+    isPinned = isPinned,
+)
+
+fun PendingEventItemRevision.toItemRevision(): ItemRevisionImpl = ItemRevisionImpl(
     itemId = itemId,
     revision = revision,
     contentFormatVersion = contentFormatVersion,

@@ -65,6 +65,8 @@ internal fun ItemHistoryTimelineContent(
             } else {
                 ItemHistoryTimelineNodes(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
+                    shareId = shareId,
+                    itemId = itemId,
                     itemRevisions = itemRevisions,
                     onNavigated = onNavigated,
                 )

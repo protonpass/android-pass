@@ -37,6 +37,8 @@ import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNodeCo
 import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNodeType
 import proton.android.pass.composecomponents.impl.utils.protonFormattedDateText
 import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.item.history.R
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import me.proton.core.presentation.R as CoreR
@@ -44,6 +46,8 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 internal fun ItemHistoryTimelineNodes(
     modifier: Modifier = Modifier,
+    shareId: ShareId,
+    itemId: ItemId,
     itemRevisions: List<ItemRevision>,
     onNavigated: (ItemHistoryNavDestination) -> Unit,
 ) {
@@ -72,9 +76,15 @@ internal fun ItemHistoryTimelineNodes(
                     trailingIcon = timelineNodeVariant.trailingIconId?.let { id ->
                         painterResource(id = id)
                     },
-                    onClick = { onNavigated(ItemHistoryNavDestination.Restore) }.takeIf {
-                        timelineNodeVariant.isClickable
-                    },
+                    onClick = {
+                        onNavigated(
+                            ItemHistoryNavDestination.Restore(
+                                shareId = shareId,
+                                itemId = itemId,
+                                itemRevision = itemRevision,
+                            )
+                        )
+                    }.takeIf { timelineNodeVariant.isClickable },
                 )
             }
         }

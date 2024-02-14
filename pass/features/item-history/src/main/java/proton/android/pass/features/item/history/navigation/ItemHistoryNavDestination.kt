@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.history.navigation
 
+import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -25,7 +26,11 @@ sealed interface ItemHistoryNavDestination {
 
     object Back : ItemHistoryNavDestination
 
-    object Restore : ItemHistoryNavDestination
+    data class Restore(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val itemRevision: ItemRevision,
+    ) : ItemHistoryNavDestination
 
     data class Timeline(
         val shareId: ShareId,

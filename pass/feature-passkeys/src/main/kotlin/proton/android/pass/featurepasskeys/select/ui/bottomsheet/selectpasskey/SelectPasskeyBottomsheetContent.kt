@@ -21,13 +21,17 @@ package proton.android.pass.featurepasskeys.select.ui.bottomsheet.selectpasskey
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -37,6 +41,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.PasskeyId
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -48,7 +53,11 @@ fun SelectPasskeyBottomsheetContent(
 ) {
     if (isLoading.value()) {
         Box(modifier = modifier.size(120.dp)) {
-            CircularProgressIndicator(modifier = Modifier.size(48.dp).align(Alignment.Center))
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(48.dp)
+                    .align(Alignment.Center)
+            )
         }
     } else {
 
@@ -75,8 +84,9 @@ internal fun passkeyItem(
             }
         override val subtitle: (@Composable () -> Unit)
             get() = {
+                val text = "${item.domain} • ${item.id.value.take(6).uppercase()}"
                 BottomSheetItemSubtitle(
-                    text = item.id.value,
+                    text = text,
                     color = PassTheme.colors.textWeak
                 )
             }
@@ -90,4 +100,38 @@ internal fun passkeyItem(
             get() = onClick
         override val isDivider = false
     }
+
+@Preview
+@Composable
+fun SelectPasskeyBottomsheetContentPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    val createPasskey = { id: String, domain: String, username: String ->
+        Passkey(
+            id = PasskeyId(id),
+            domain = domain,
+            rpId = null,
+            rpName = domain,
+            userName = username,
+            userDisplayName = "",
+            userId = byteArrayOf(),
+            contents = byteArrayOf()
+        )
+
+    }
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            SelectPasskeyBottomsheetContent(
+                isLoading = IsLoadingState.NotLoading,
+                passkeys = listOf(
+                    createPasskey("A1B2C3D4E5F6G7H8I9J0", "example.com", "user1"),
+                    createPasskey("789ABC123DEF987DBC3A", "other.test", "user2"),
+                    createPasskey("C1D2E5A9B4C5D6E4F80A", "some.local", "user3"),
+                ).toPersistentList(),
+                onPasskeySelected = {},
+            )
+        }
+    }
+}
 

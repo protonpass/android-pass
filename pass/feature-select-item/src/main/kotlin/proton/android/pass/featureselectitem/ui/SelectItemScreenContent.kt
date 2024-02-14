@@ -78,10 +78,12 @@ internal fun SelectItemScreenContent(
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
-            PassFloatingActionButton(
-                visible = showFab,
-                onClick = { onNavigate(SelectItemNavigation.AddItem) }
-            )
+            if (uiState.listUiState.displayCreateButton) {
+                PassFloatingActionButton(
+                    visible = showFab,
+                    onClick = { onNavigate(SelectItemNavigation.AddItem) }
+                )
+            }
         },
         topBar = {
             val placeholder = if (!uiState.pinningUiState.inPinningMode) {

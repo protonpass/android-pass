@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import kotlinx.datetime.Instant
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.ProtonHistoryItemRow
@@ -35,6 +34,7 @@ import proton.android.pass.composecomponents.impl.timelines.ProtonTimeline
 import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNode
 import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNodeConfig
 import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNodeType
+import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 import proton.android.pass.composecomponents.impl.utils.protonFormattedDateText
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.ItemId
@@ -49,6 +49,7 @@ internal fun ItemHistoryTimelineNodes(
     shareId: ShareId,
     itemId: ItemId,
     itemRevisions: List<ItemRevision>,
+    colors: ProtonItemColors,
     onNavigated: (ItemHistoryNavDestination) -> Unit,
 ) {
     itemRevisions.mapIndexed { index, itemRevision ->
@@ -58,9 +59,9 @@ internal fun ItemHistoryTimelineNodes(
             id = itemRevision.revisionTime.toString(),
             type = timelineNodeVariant.type,
             config = ProtonTimelineNodeConfig(
-                circleColor = PassTheme.colors.textWeak,
+                circleColor = colors.norm,
                 lineBrush = SolidColor(
-                    value = PassTheme.colors.textWeak,
+                    value = colors.norm,
                 ),
             ),
         ) { modifier ->

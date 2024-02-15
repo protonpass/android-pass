@@ -18,15 +18,35 @@
 
 package proton.android.pass.features.item.history.restore.ui
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
+import proton.android.pass.composecomponents.impl.utils.protonItemColors
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
+import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreState
 
 @Composable
 internal fun ItemHistoryRestoreContent(
     modifier: Modifier = Modifier,
     onNavigated: (ItemHistoryNavDestination) -> Unit,
+    state: ItemHistoryRestoreState,
 ) {
-    Text(text = "Hello Restore!")
+    val itemUiModel = state.itemUiModel ?: return
+
+    val itemColors = protonItemColors(itemCategory = itemUiModel.category)
+
+    PassItemDetailsContent(
+        modifier = modifier,
+        itemColors = itemColors,
+        itemUiModel = itemUiModel,
+        topBar = {
+            ItemHistoryRestoreTopBar(
+                colors = itemColors,
+                onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
+                onRestoreClick = {
+                    // this will be implemented in the following MR
+                },
+            )
+        }
+    )
 }

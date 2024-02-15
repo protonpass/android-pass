@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,30 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonuimodels.api
+package proton.android.pass.data.api.usecases.items
 
-import androidx.compose.runtime.Stable
-import kotlinx.datetime.Instant
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemState
+import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.items.ItemCategory
 
-@Stable
-data class ItemUiModel(
-    val id: ItemId,
-    val shareId: ShareId,
-    val contents: ItemContents,
-    val state: Int,
-    val createTime: Instant,
-    val modificationTime: Instant,
-    val lastAutofillTime: Instant?,
-    val isPinned: Boolean,
-    val canModify: Boolean = true,
-    val category: ItemCategory = ItemCategory.Unknown,
-) {
+interface OpenItemRevision {
 
-    fun isInTrash() = state == ItemState.Trashed.value
+    suspend operator fun invoke(
+        shareId: ShareId,
+        itemRevision: ItemRevision,
+    ): Item
 
 }

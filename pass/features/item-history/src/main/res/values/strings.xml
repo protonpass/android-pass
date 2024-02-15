@@ -19,6 +19,8 @@
 <resources>
     <string name="item_history_title">History</string>
 
+    <string name="item_history_action_restore">Restore</string>
+
     <string name="item_history_timeline_node_child_title">Modified</string>
     <string name="item_history_timeline_node_leaf_title">Created</string>
     <string name="item_history_timeline_node_root_title">Current version</string>

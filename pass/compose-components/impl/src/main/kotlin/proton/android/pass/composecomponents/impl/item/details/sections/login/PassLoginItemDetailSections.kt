@@ -16,36 +16,40 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.ui
+package proton.android.pass.composecomponents.impl.item.details.sections.login
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.domain.ItemContents
 
 @Composable
-internal fun ItemHistoryTimelineTopBar(
+internal fun PassLoginItemDetailSections(
     modifier: Modifier = Modifier,
-    colors: ProtonItemColors,
-    onUpClick: () -> Unit,
-) {
-    ProtonTopAppBar(
+    contents: ItemContents.Login,
+    itemColors: ProtonItemColors,
+) = with(contents) {
+    PassLoginItemDetailMainSection(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.itemDetailBackground,
-        title = {},
-        navigationIcon = {
-            BackArrowCircleIconButton(
-                modifier = Modifier.padding(12.dp, Spacing.small),
-                color = colors.majorSecondary,
-                backgroundColor = colors.minorPrimary,
-                onUpClick = onUpClick,
-            )
-        },
-        actions = {},
+        username = username,
+        itemColors = itemColors,
     )
+
+    if (urls.isNotEmpty()) {
+        PassLoginItemDetailWebsitesSection(
+            modifier = modifier,
+            urls = urls.toPersistentList(),
+            itemColors = itemColors,
+        )
+    }
+
+    if (note.isNotBlank()) {
+        PassSharedItemDetailNoteSection(
+            modifier = modifier,
+            note = note,
+            itemColors = itemColors,
+        )
+    }
 }

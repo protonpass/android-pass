@@ -43,8 +43,7 @@ internal fun ItemHistoryTimelineContent(
         modifier = modifier,
         topBar = {
             ItemHistoryTimelineTopBar(
-                iconColor = itemColors.majorSecondary,
-                iconBackgroundColor = itemColors.minorPrimary,
+                colors = itemColors,
                 onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
             )
         },
@@ -68,6 +67,7 @@ internal fun ItemHistoryTimelineContent(
                     shareId = shareId,
                     itemId = itemId,
                     itemRevisions = itemRevisions,
+                    colors = itemColors,
                     onNavigated = onNavigated,
                 )
             }

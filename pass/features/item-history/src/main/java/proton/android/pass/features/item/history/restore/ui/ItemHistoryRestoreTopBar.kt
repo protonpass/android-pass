@@ -16,23 +16,35 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.ui
+package proton.android.pass.features.item.history.restore.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.features.item.history.R
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun ItemHistoryTimelineTopBar(
+fun ItemHistoryRestoreTopBar(
     modifier: Modifier = Modifier,
     colors: ProtonItemColors,
     onUpClick: () -> Unit,
+    onRestoreClick: () -> Unit,
 ) {
     ProtonTopAppBar(
         modifier = modifier,
@@ -46,6 +58,30 @@ internal fun ItemHistoryTimelineTopBar(
                 onUpClick = onUpClick,
             )
         },
-        actions = {},
+        actions = {
+            LoadingCircleButton(
+                modifier = Modifier.padding(12.dp, Spacing.small),
+                isLoading = false,
+                color = colors.majorPrimary,
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(CoreR.drawable.ic_proton_clock_rotate_left),
+                        contentDescription = null,
+                        tint = PassTheme.colors.textInvert,
+                    )
+                },
+                text = {
+                    Text(
+                        text = stringResource(id = R.string.item_history_action_restore),
+                        fontWeight = FontWeight.W400,
+                        fontSize = 14.sp,
+                        color = PassTheme.colors.textInvert,
+                        style = ProtonTheme.typography.defaultSmallNorm,
+                        maxLines = 1,
+                    )
+                },
+                onClick = onRestoreClick,
+            )
+        },
     )
 }

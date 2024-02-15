@@ -16,36 +16,37 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.ui
+package proton.android.pass.composecomponents.impl.item.details.sections.alias
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import kotlinx.collections.immutable.ImmutableList
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.ItemContents
 
 @Composable
-internal fun ItemHistoryTimelineTopBar(
+internal fun PassAliasItemDetailSections(
     modifier: Modifier = Modifier,
-    colors: ProtonItemColors,
-    onUpClick: () -> Unit,
-) {
-    ProtonTopAppBar(
+    contents: ItemContents.Alias,
+    itemColors: ProtonItemColors,
+    mailboxes: ImmutableList<AliasMailbox>,
+) = with(contents) {
+    PassAliasItemDetailMainSection(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.itemDetailBackground,
-        title = {},
-        navigationIcon = {
-            BackArrowCircleIconButton(
-                modifier = Modifier.padding(12.dp, Spacing.small),
-                color = colors.majorSecondary,
-                backgroundColor = colors.minorPrimary,
-                onUpClick = onUpClick,
-            )
-        },
-        actions = {},
+        alias = aliasEmail,
+        itemColors = itemColors,
+        mailboxes = mailboxes,
     )
+
+    if (note.isNotBlank()) {
+        PassSharedItemDetailNoteSection(
+            modifier = modifier,
+            note = note,
+            itemColors = itemColors,
+        )
+    }
 }
+
+

@@ -16,36 +16,32 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.ui
+package proton.android.pass.composecomponents.impl.item.details.sections.login
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun ItemHistoryTimelineTopBar(
+internal fun PassLoginItemDetailMainSection(
     modifier: Modifier = Modifier,
-    colors: ProtonItemColors,
-    onUpClick: () -> Unit,
+    username: String,
+    itemColors: ProtonItemColors,
 ) {
-    ProtonTopAppBar(
-        modifier = modifier,
-        backgroundColor = PassTheme.colors.itemDetailBackground,
-        title = {},
-        navigationIcon = {
-            BackArrowCircleIconButton(
-                modifier = Modifier.padding(12.dp, Spacing.small),
-                color = colors.majorSecondary,
-                backgroundColor = colors.minorPrimary,
-                onUpClick = onUpClick,
+    RoundedCornersColumn(modifier = modifier) {
+        if (username.isNotBlank()) {
+            PassItemDetailFieldRow(
+                icon = painterResource(CoreR.drawable.ic_proton_user),
+                title = stringResource(R.string.item_details_login_section_username_title),
+                subtitle = username,
+                itemColors = itemColors,
             )
-        },
-        actions = {},
-    )
+        }
+    }
 }

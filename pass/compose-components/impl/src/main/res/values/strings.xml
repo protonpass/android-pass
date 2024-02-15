@@ -122,4 +122,20 @@
     -->
     <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
 
+    <!-- Items -->
+    <string name="item_details_alias_section_alias_title">Alias address</string>
+    <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
+    <string name="item_details_alias_section_create_login_link">Create login</string>
+
+    <string name="item_details_credit_card_section_cardholder_title">Name on card</string>
+    <string name="item_details_credit_card_section_card_number_title">Card number</string>
+    <string name="item_details_credit_card_section_expiration_date_title">Expiration date</string>
+    <string name="item_details_credit_card_section_cvv_title">Security code</string>
+    <string name="item_details_credit_card_section_pin_title">PIN code</string>
+
+    <string name="item_details_login_section_username_title">Username or email address</string>
+    <string name="item_details_login_section_websites_title">Websites</string>
+
+    <string name="item_details_shared_section_note_title">Note</string>
+
 </resources>

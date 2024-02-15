@@ -21,18 +21,17 @@ package proton.android.pass.features.item.history.timeline.ui
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 
 @Composable
 internal fun ItemHistoryTimelineTopBar(
     modifier: Modifier = Modifier,
-    iconColor: Color,
-    iconBackgroundColor: Color,
+    colors: ProtonItemColors,
     onUpClick: () -> Unit,
 ) {
     ProtonTopAppBar(
@@ -42,8 +41,8 @@ internal fun ItemHistoryTimelineTopBar(
         navigationIcon = {
             BackArrowCircleIconButton(
                 modifier = Modifier.padding(12.dp, Spacing.small),
-                color = iconColor,
-                backgroundColor = iconBackgroundColor,
+                color = colors.majorSecondary,
+                backgroundColor = colors.minorPrimary,
                 onUpClick = onUpClick,
             )
         },

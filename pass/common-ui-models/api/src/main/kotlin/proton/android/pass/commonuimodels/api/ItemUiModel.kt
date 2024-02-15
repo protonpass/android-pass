@@ -24,6 +24,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.items.ItemCategory
 
 @Stable
 data class ItemUiModel(
@@ -35,7 +36,10 @@ data class ItemUiModel(
     val modificationTime: Instant,
     val lastAutofillTime: Instant?,
     val isPinned: Boolean,
-    val canModify: Boolean = true
+    val canModify: Boolean = true,
+    val category: ItemCategory = ItemCategory.Unknown,
 ) {
+
     fun isInTrash() = state == ItemState.Trashed.value
+
 }

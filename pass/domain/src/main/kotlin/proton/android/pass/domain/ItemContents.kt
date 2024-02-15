@@ -88,6 +88,7 @@ data class Passkey(
 
 @Serializable
 sealed class ItemContents {
+
     abstract val title: String
     abstract val note: String
 
@@ -101,12 +102,21 @@ sealed class ItemContents {
         val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: HiddenState,
         val customFields: List<CustomFieldContent>,
-        val passkeys: List<Passkey>
+        val passkeys: List<Passkey>,
     ) : ItemContents() {
+
+        val websiteUrl: String? = urls.firstOrNull()
+
+        val packageName: String? = packageInfoSet
+            .minByOrNull { packageInfo -> packageInfo.packageName.value }
+            ?.packageName
+            ?.value
+
         companion object {
+
             fun create(
                 password: HiddenState,
-                primaryTotp: HiddenState
+                primaryTotp: HiddenState,
             ) = Login(
                 title = "",
                 username = "",
@@ -116,7 +126,7 @@ sealed class ItemContents {
                 primaryTotp = primaryTotp,
                 note = "",
                 customFields = emptyList(),
-                passkeys = emptyList()
+                passkeys = emptyList(),
             )
         }
     }

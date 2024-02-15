@@ -27,17 +27,17 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemType
 
-fun Item.toUiModel(context: EncryptionContext): ItemUiModel =
-    ItemUiModel(
-        id = id,
-        shareId = shareId,
-        contents = toItemContents(context),
-        state = state,
-        createTime = createTime,
-        modificationTime = modificationTime,
-        lastAutofillTime = lastAutofillTime.value(),
-        isPinned = isPinned,
-    )
+fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
+    id = id,
+    shareId = shareId,
+    contents = toItemContents(context),
+    state = state,
+    createTime = createTime,
+    modificationTime = modificationTime,
+    lastAutofillTime = lastAutofillTime.value(),
+    isPinned = isPinned,
+    category = itemType.category,
+)
 
 fun Item.itemName(context: EncryptionContext): String =
     context.decrypt(title)

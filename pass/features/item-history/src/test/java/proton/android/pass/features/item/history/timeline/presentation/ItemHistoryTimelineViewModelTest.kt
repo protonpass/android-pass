@@ -40,6 +40,9 @@ internal class ItemHistoryTimelineViewModelTest {
     @get:Rule
     internal val dispatcherRule = MainDispatcherRule()
 
+    private val shareId = ShareIdMother.create()
+    private val itemId = ItemIdMother.create()
+
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var observeItemRevisions: FakeObserveItemRevisions
     private lateinit var getItemCategory: FakeGetItemCategory
@@ -51,14 +54,17 @@ internal class ItemHistoryTimelineViewModelTest {
         getItemCategory = FakeGetItemCategory()
 
         savedStateHandleProvider.get().apply {
-            set(CommonNavArgId.ShareId.key, ShareIdMother.create().id)
-            set(CommonNavArgId.ItemId.key, ItemIdMother.create().id)
+            set(CommonNavArgId.ShareId.key, shareId.id)
+            set(CommonNavArgId.ItemId.key, itemId.id)
         }
     }
 
     @Test
     internal fun `WHEN view model is initialized THEN emit initial state`() = runTest {
-        val expectedInitialState = ItemHistoryTimelineStateMother.create()
+        val expectedInitialState = ItemHistoryTimelineStateMother.create(
+            shareId = shareId,
+            itemId = itemId,
+        )
 
         val viewModel = createViewModel()
 
@@ -74,6 +80,8 @@ internal class ItemHistoryTimelineViewModelTest {
         val itemRevisions = emptyList<ItemRevision>()
         val itemCategory = ItemCategoryMother.random()
         val expectedUpdatedState = ItemHistoryTimelineStateMother.create(
+            shareId = shareId,
+            itemId = itemId,
             isLoadingState = IsLoadingState.NotLoading,
             itemRevisions = itemRevisions,
             itemCategory = itemCategory,

@@ -19,17 +19,21 @@
 package proton.android.pass.features.item.history.restore.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreViewModel
 
-@[Composable Suppress("EmptyFunctionBlock")]
+@Composable
 fun ItemHistoryRestoreScreen(
     onNavigated: (ItemHistoryNavDestination) -> Unit,
     viewModel: ItemHistoryRestoreViewModel = hiltViewModel(),
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     ItemHistoryRestoreContent(
         onNavigated = onNavigated,
+        state = state,
     )
 }

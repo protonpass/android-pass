@@ -16,36 +16,33 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.ui
+package proton.android.pass.composecomponents.impl.item.details.sections.shared
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun ItemHistoryTimelineTopBar(
+internal fun PassSharedItemDetailNoteSection(
     modifier: Modifier = Modifier,
-    colors: ProtonItemColors,
-    onUpClick: () -> Unit,
+    note: String,
+    itemColors: ProtonItemColors,
 ) {
-    ProtonTopAppBar(
+    RoundedCornersColumn(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.itemDetailBackground,
-        title = {},
-        navigationIcon = {
-            BackArrowCircleIconButton(
-                modifier = Modifier.padding(12.dp, Spacing.small),
-                color = colors.majorSecondary,
-                backgroundColor = colors.minorPrimary,
-                onUpClick = onUpClick,
-            )
-        },
-        actions = {},
-    )
+    ) {
+        PassItemDetailFieldRow(
+            icon = painterResource(CoreR.drawable.ic_proton_note),
+            title = stringResource(R.string.item_details_shared_section_note_title),
+            subtitle = note,
+            itemColors = itemColors,
+            isSelectable = true,
+        )
+    }
 }

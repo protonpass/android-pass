@@ -16,36 +16,35 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.timeline.ui
+package proton.android.pass.composecomponents.impl.item.details.sections.cards
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.domain.ItemContents
 
 @Composable
-internal fun ItemHistoryTimelineTopBar(
+internal fun PassCreditCardItemDetailsSections(
     modifier: Modifier = Modifier,
-    colors: ProtonItemColors,
-    onUpClick: () -> Unit,
-) {
-    ProtonTopAppBar(
+    contents: ItemContents.CreditCard,
+    itemColors: ProtonItemColors,
+) = with(contents) {
+    PassCreditCardItemDetailMainSection(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.itemDetailBackground,
-        title = {},
-        navigationIcon = {
-            BackArrowCircleIconButton(
-                modifier = Modifier.padding(12.dp, Spacing.small),
-                color = colors.majorSecondary,
-                backgroundColor = colors.minorPrimary,
-                onUpClick = onUpClick,
-            )
-        },
-        actions = {},
+        cardholder = cardHolder,
+        cardNumber = number,
+        expirationDate = expirationDate,
+        cvv = "123",
+        pin = "1234",
+        itemColors = itemColors,
     )
+
+    if (note.isNotBlank()) {
+        PassSharedItemDetailNoteSection(
+            modifier = modifier,
+            note = note,
+            itemColors = itemColors,
+        )
+    }
 }

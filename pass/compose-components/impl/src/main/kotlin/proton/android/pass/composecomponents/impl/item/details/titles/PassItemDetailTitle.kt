@@ -16,24 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.restore.ui
+package proton.android.pass.composecomponents.impl.item.details.titles
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
-import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreViewModel
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 
 @Composable
-fun ItemHistoryRestoreScreen(
-    onNavigated: (ItemHistoryNavDestination) -> Unit,
-    viewModel: ItemHistoryRestoreViewModel = hiltViewModel(),
+internal fun PassItemDetailTitleRow(
+    modifier: Modifier = Modifier,
+    text: String,
+    maxLines: Int = 2,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
-    ItemHistoryRestoreContent(
-        onNavigated = onNavigated,
-        state = state,
+    Text(
+        modifier = modifier,
+        text = text,
+        fontSize = 28.sp,
+        fontWeight = FontWeight.W700,
+        letterSpacing = 0.03.sp,
+        lineHeight = 34.sp,
+        maxLines = maxLines,
+        overflow = TextOverflow.Ellipsis,
     )
 }

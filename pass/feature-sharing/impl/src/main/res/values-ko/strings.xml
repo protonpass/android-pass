@@ -109,6 +109,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">전체 구성원의 접근 수준을 설정하세요.</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">%s님에게 접근 권한 설정</string>
   <string name="sharing_edit_permissions_remove_user">사용자 제거</string>
-  <string name="sharing_error_dialog_title">Unknown error</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_error_dialog_title">알 수 없는 오류</string>
+  <string name="sharing_error_dialog_message">이 금고의 초대 전송 중 오류 발생. 만일 재발한다면, 고객 센터에 연락해 주십시오.</string>
 </resources>

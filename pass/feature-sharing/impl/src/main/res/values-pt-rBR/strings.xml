@@ -114,5 +114,5 @@
   <string name="sharing_edit_permissions_set_access_level_single_member">Definir nível de acesso para %s</string>
   <string name="sharing_edit_permissions_remove_user">Remover usuário</string>
   <string name="sharing_error_dialog_title">Erro desconhecido</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_error_dialog_message">Ocorreu um erro ao enviar um convite para este cofre. Se o problema persistir, entre em contato com o serviço de suporte ao cliente.</string>
 </resources>

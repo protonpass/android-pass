@@ -7,11 +7,11 @@
   <string name="action_login">Login</string>
   <string name="action_alias">Alias</string>
   <string name="action_note">Nota</string>
-  <string name="action_credit_card">Carta di credito</string>
+  <string name="action_credit_card">Carta</string>
   <string name="action_password">Password</string>
-  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Aggiungi i dettagli di accesso per un\'app o un sito</string>
+  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Aggiungi le credenziali per un\'app o un sito</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Ottieni un alias email da utilizzare nelle nuove applicazioni</string>
-  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Appuntati un PIN, un codice o una nota personale</string>
+  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Appunta un PIN, un codice o una nota personale</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Memorizza in modo sicuro le informazioni di pagamento</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genera una password sicura</string>
   <!-- Create Login -->
@@ -29,8 +29,8 @@
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Usa %s</string>
   <string name="create_login_item_creation_error">Impossibile creare il login</string>
   <string name="create_login_item_update_error">Impossibile aggiornare il login</string>
-  <string name="create_login_init_error">Problema nel recupero dei dettagli del login</string>
-  <string name="create_login_invalid_totp">Il contenuto 2FA non è valido</string>
+  <string name="create_login_init_error">Problema nel caricamento dei dettagli del login</string>
+  <string name="create_login_invalid_totp">Chiave segreta 2FA non valida</string>
   <string name="login_created">Login creato</string>
   <string name="bottomsheet_modify_alias_title">Modifica l\'alias</string>
   <string name="bottomsheet_custom_field_type_text">Testo</string>
@@ -38,25 +38,25 @@
   <string name="bottomsheet_custom_field_type_hidden">Nascosto</string>
   <string name="bottomsheet_custom_field_type_totp">Chiave segreta 2FA (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Modifica il nome</string>
-  <string name="bottomsheet_custom_field_option_remove">Rimuovi campo</string>
+  <string name="bottomsheet_custom_field_option_remove">Rimuovi il campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Rimuovi il campo personalizzato</string>
   <string name="create_login_add_custom_field_button">Aggiungi un altro campo</string>
   <string name="custom_field_hidden_placeholder">Aggiungi testo nascosto</string>
   <string name="custom_field_hidden_icon_content_description">Icona campo personalizzato nascosto</string>
   <string name="custom_field_text_placeholder">Aggiungi testo</string>
-  <string name="custom_field_dialog_title">Nome campo personalizzato</string>
-  <string name="custom_field_dialog_body">Dai un nome al tuo campo personalizzato</string>
+  <string name="custom_field_dialog_title">Nome del campo personalizzato</string>
+  <string name="custom_field_dialog_body">Aggiungi un nome al campo personalizzato</string>
   <string name="custom_field_dialog_placeholder">Es. ID utente o PIN</string>
   <string name="custom_field_options_content_description">Opzioni campo personalizzato</string>
   <!-- Create Note -->
   <string name="title_create_note">Crea la nota</string>
   <string name="create_note_item_creation_error">Impossibile creare la nota</string>
   <string name="create_note_item_update_error">Impossibile aggiornare la nota</string>
-  <string name="create_note_init_error">Problema nel recupero dei dettagli della nota</string>
+  <string name="create_note_init_error">Problema nel caricamento dei dettagli della nota</string>
   <string name="note_created">Nota creata</string>
   <!-- Create Alias -->
   <string name="title_create_alias">Crea l\'alias</string>
-  <string name="field_alias_title">Indirizzi alias</string>
+  <string name="field_alias_title">Indirizzo dell\'alias</string>
   <string name="field_alias_hint">Nome utente alias</string>
   <string name="field_mailboxes_creation_title">Inoltra a</string>
   <string name="field_mailboxes_edit_title">Inoltra a</string>
@@ -66,18 +66,18 @@
   <string name="alias_bottomsheet_alias_title">Alias</string>
   <string name="alias_bottomsheet_suffix_title">Suffisso</string>
   <string name="create_alias_item_creation_error">Impossibile creare l\'alias</string>
-  <string name="create_alias_cannot_create_more_aliases_error">Non puoi creare altri alias</string>
-  <string name="create_alias_email_not_validated_error">Non puoi creare alias senza aver prima verificato il tuo indirizzo email</string>
-  <string name="alias_rate_limited">Troppi alias testati recentemente</string>
+  <string name="create_alias_cannot_create_more_aliases_error">Impossibile creare altri alias</string>
+  <string name="create_alias_email_not_validated_error">Impossibile creare degli alias senza aver prima verificato l\'indirizzo email</string>
+  <string name="alias_rate_limited">Troppi alias creati recentemente</string>
   <string name="create_alias_item_update_error">Impossibile aggiornare l\'alias</string>
-  <string name="create_alias_init_error">Problema nel recupero dei dettagli dell\'alias</string>
+  <string name="create_alias_init_error">Problema nel caricamento dei dettagli dell\'alias</string>
   <string name="alias_created">Alias creato</string>
-  <string name="cannot_retrieve_alias_options">Impossibile recuperare le opzioni degli alias</string>
+  <string name="cannot_retrieve_alias_options">Impossibile caricare le opzioni dell\'alias</string>
   <string name="alias_mailbox_dialog_title">Inoltra a</string>
   <!-- Create note -->
   <string name="note_hint">Nota</string>
   <!-- Create Credit Card -->
-  <string name="title_create_credit_card">Crea carta di credito</string>
+  <string name="title_create_credit_card">Crea la carta</string>
   <string name="field_cardholder_name_title">Nome sulla carta</string>
   <string name="field_cardholder_name_hint">Nome completo</string>
   <string name="field_card_number_title">Numero della carta</string>
@@ -89,28 +89,28 @@
   <string name="field_card_expiration_date_title">Data di scadenza</string>
   <string name="field_card_expiration_date_hint">MM / AA</string>
   <string name="field_card_expiration_date_error">Inserisci una data valida nel formato MM/AA</string>
-  <string name="create_credit_card_item_creation_error">Impossibile creare la carta di credito</string>
-  <string name="create_credit_card_item_creation_success">Carta di credito creata</string>
-  <string name="credit_card_init_error">Problema nel recupero dei dettagli della carta di credito</string>
-  <string name="credit_card_item_update_error">Impossibile aggiornare la carta di credito</string>
+  <string name="create_credit_card_item_creation_error">Impossibile creare la carta</string>
+  <string name="create_credit_card_item_creation_success">Carta creata</string>
+  <string name="credit_card_init_error">Problema nel caricamento dei dettagli della carta</string>
+  <string name="credit_card_item_update_error">Impossibile aggiornare la carta</string>
   <!--  Common create items  -->
   <string name="changes_saved">Modifiche salvate</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Chiave segreta 2FA (TOTP)</string>
   <string name="totp_create_login_field_invalid">Chiave segreta 2FA non valida</string>
-  <string name="totp_create_login_field_placeholder">Aggiungi chiave 2FA segreta</string>
+  <string name="totp_create_login_field_placeholder">Aggiungi chiave segreta 2FA</string>
   <string name="close_scree_icon_content_description">Pulsante chiudi schermata</string>
   <string name="totp_paste_code_action">Incolla il codice</string>
   <string name="totp_scan_code_action">Scansiona un codice</string>
-  <string name="field_cannot_be_empty">Questo campo non può rimanere vuoto</string>
-  <string name="camera_permission_explanation">Autorizzazione alla fotocamera richiesta per rendere disponibile questa funzionalità.</string>
-  <string name="camera_permission_open_settings">Apri impostazioni</string>
+  <string name="field_cannot_be_empty">Campo necessario</string>
+  <string name="camera_permission_explanation">Autorizzazione all\'accesso alla fotocamera necessaria per rendere disponibile questa funzionalità.</string>
+  <string name="camera_permission_open_settings">Apri le impostazioni</string>
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">Limite 2FA raggiunto</string>
   <string name="upgrade">Effettua l\'upgrade</string>
   <string name="mfa_icon_content_description">Icona 2FA</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Effettua l\'aggiornamento del piano per poter utilizzare i domini personalizzati</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Effettua l\'aggiornamento del piano per poter utilizzare più caselle di posta</string>
-  <string name="create_alias_content_limit_banner">Hai raggiunto il limite di alias da poter creare. Crea un numero illimitato di alias effettuando l\'aggiornamento del piano per il tuo abbonamento.</string>
-  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">L\'app deve essere aggiornata per poter modificare questo elemento</string>
+  <string name="select_suffix_upgrade_for_custom_domains">Effettua l\'upgrade per usare i domini personalizzati</string>
+  <string name="select_mailbox_upgrade_for_more_inboxes">Effettua l\'upgrade per avere più caselle di posta</string>
+  <string name="create_alias_content_limit_banner">Hai raggiunto il limite di alias che puoi creare. Effettua l\'upgrade per creare un numero illimitato di alias.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aggiorna l\'app per modificare questo elemento</string>
 </resources>

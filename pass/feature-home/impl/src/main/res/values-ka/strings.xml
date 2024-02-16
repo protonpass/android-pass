@@ -124,7 +124,7 @@
   <string name="home_snackbar_item_unpinned_success">ელემენტის მოხსნა წარმატებულია</string>
   <string name="home_snackbar_item_unpinned_error">ელემენტის მოხსნის შეცდომა</string>
   <string name="home_snackbar_items_pinned_success">ელემენტების მიმაგრება წარმატებულია</string>
-  <string name="home_snackbar_items_pinned_partial_success">ზოგიერთი ელემენტის მიმავრების შეცდომა</string>
+  <string name="home_snackbar_items_pinned_partial_success">ზოგიერთი ელემენტის მიმაგრების შეცდომა</string>
   <string name="home_snackbar_items_pinned_error">ელემენტების მიმაგრების შეცდომა</string>
   <string name="home_snackbar_items_unpinned_success">ელემენტების მოხსნა წარმატებულია</string>
   <string name="home_snackbar_items_unpinned_partial_success">ზოგიერთი ელემენტის მოხსნის შეცდომა</string>

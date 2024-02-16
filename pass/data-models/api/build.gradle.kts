@@ -9,6 +9,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 dependencies {
+    implementation(libs.kotlinx.datetime)
+
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.protos)

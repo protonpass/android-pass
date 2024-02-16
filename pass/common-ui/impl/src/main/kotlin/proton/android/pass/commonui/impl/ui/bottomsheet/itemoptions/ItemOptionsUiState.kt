@@ -16,26 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-sealed interface AutofillItemOptionsEvent {
-    object Unknown : AutofillItemOptionsEvent
-    object Close : AutofillItemOptionsEvent
+sealed interface ItemOptionsEvent {
+    object Unknown : ItemOptionsEvent
+    object Close : ItemOptionsEvent
 }
 
 @Stable
-data class AutofillItemOptionsUiState(
+data class ItemOptionsUiState(
     val isLoading: IsLoadingState,
-    val event: AutofillItemOptionsEvent,
+    val event: ItemOptionsEvent,
     val canModify: Boolean
 ) {
     companion object {
-        val Initial = AutofillItemOptionsUiState(
+        val Initial = ItemOptionsUiState(
             isLoading = IsLoadingState.NotLoading,
-            event = AutofillItemOptionsEvent.Unknown,
+            event = ItemOptionsEvent.Unknown,
             canModify = false
         )
     }

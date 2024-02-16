@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import android.os.Parcelable
+import kotlinx.datetime.Instant
 import kotlinx.parcelize.Parcelize
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.domain.Passkey
@@ -33,7 +34,9 @@ data class UIPasskeyContent(
     val userName: String,
     val userDisplayName: String,
     val userId: ByteArray,
-    val contents: ByteArray
+    val contents: ByteArray,
+    val createTime: Int,
+    val note: String
 ) : Parcelable {
 
     @Suppress("ReturnCount")
@@ -50,6 +53,8 @@ data class UIPasskeyContent(
         if (userName != other.userName) return false
         if (userDisplayName != other.userDisplayName) return false
         if (!userId.contentEquals(other.userId)) return false
+        if (createTime != other.createTime) return false
+        if (note != other.note) return false
         return contents.contentEquals(other.contents)
     }
 
@@ -62,6 +67,8 @@ data class UIPasskeyContent(
         result = 31 * result + userDisplayName.hashCode()
         result = 31 * result + userId.contentHashCode()
         result = 31 * result + contents.contentHashCode()
+        result = 31 * result + createTime.hashCode()
+        result = 31 * result + note.hashCode()
         return result
     }
 
@@ -73,7 +80,9 @@ data class UIPasskeyContent(
         userName = userName,
         userDisplayName = userDisplayName,
         userId = userId,
-        contents = EncryptedByteArray(contents)
+        contents = EncryptedByteArray(contents),
+        createTime = Instant.fromEpochSeconds(createTime.toLong()),
+        note = note
     )
 
     companion object {
@@ -86,7 +95,9 @@ data class UIPasskeyContent(
                 userName = userName,
                 userDisplayName = userDisplayName,
                 userId = userId,
-                contents = contents.array
+                contents = contents.array,
+                createTime = createTime.epochSeconds.toInt(),
+                note = note
             )
         }
     }

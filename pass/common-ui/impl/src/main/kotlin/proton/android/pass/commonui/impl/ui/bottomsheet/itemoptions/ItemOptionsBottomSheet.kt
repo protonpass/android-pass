@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,20 +26,20 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun AutofillItemOptionsBottomSheet(
+fun ItemOptionsBottomSheet(
     modifier: Modifier = Modifier,
-    onNavigate: (AutofillItemOptionsNavigation) -> Unit,
-    viewModel: AutofillItemOptionsViewModel = hiltViewModel()
+    onNavigate: (ItemOptionsNavigation) -> Unit,
+    viewModel: ItemOptionsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        if (state.event == AutofillItemOptionsEvent.Close) {
-            onNavigate(AutofillItemOptionsNavigation.Close)
+        if (state.event == ItemOptionsEvent.Close) {
+            onNavigate(ItemOptionsNavigation.Close)
         }
     }
 
-    AutofillItemOptionsBottomSheetContent(
+    ItemOptionsBottomSheetContent(
         modifier = modifier,
         isLoading = state.isLoading.value(),
         canModify = state.canModify,

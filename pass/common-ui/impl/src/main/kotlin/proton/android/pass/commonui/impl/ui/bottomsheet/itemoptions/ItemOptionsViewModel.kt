@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -37,8 +37,8 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -51,7 +51,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
-class AutofillItemOptionsViewModel @Inject constructor(
+class ItemOptionsViewModel @Inject constructor(
     private val trashItem: TrashItems,
     private val savedStateHandle: SavedStateHandle,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -64,8 +64,8 @@ class AutofillItemOptionsViewModel @Inject constructor(
     private val shareId = ShareId(getNavArg(CommonNavArgId.ShareId.key))
     private val itemId = ItemId(getNavArg(CommonNavArgId.ItemId.key))
 
-    private val eventFlow: MutableStateFlow<AutofillItemOptionsEvent> =
-        MutableStateFlow(AutofillItemOptionsEvent.Unknown)
+    private val eventFlow: MutableStateFlow<ItemOptionsEvent> =
+        MutableStateFlow(ItemOptionsEvent.Unknown)
     private val loadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
@@ -73,28 +73,28 @@ class AutofillItemOptionsViewModel @Inject constructor(
         .map { vault -> vault.role.toPermissions().canUpdate() }
         .distinctUntilChanged()
 
-    val state: StateFlow<AutofillItemOptionsUiState> = combine(
+    val state: StateFlow<ItemOptionsUiState> = combine(
         loadingFlow,
         eventFlow,
         canModifyFlow,
-        ::AutofillItemOptionsUiState
+        ::ItemOptionsUiState
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = AutofillItemOptionsUiState.Initial
+        initialValue = ItemOptionsUiState.Initial
     )
 
     fun onTrash() = viewModelScope.launch {
         loadingFlow.update { IsLoadingState.Loading }
         runCatching { trashItem(items = mapOf(shareId to listOf(itemId))) }
             .onSuccess {
-                eventFlow.update { AutofillItemOptionsEvent.Close }
-                snackbarDispatcher(AutofillItemOptionsSnackbarMessage.SentToTrashSuccess)
+                eventFlow.update { ItemOptionsEvent.Close }
+                snackbarDispatcher(ItemOptionsSnackbarMessage.SentToTrashSuccess)
             }
             .onFailure {
                 PassLogger.w(TAG, "Error sending item to trash")
                 PassLogger.w(TAG, it)
-                snackbarDispatcher(AutofillItemOptionsSnackbarMessage.SentToTrashError)
+                snackbarDispatcher(ItemOptionsSnackbarMessage.SentToTrashError)
             }
         loadingFlow.update { IsLoadingState.NotLoading }
     }
@@ -102,10 +102,10 @@ class AutofillItemOptionsViewModel @Inject constructor(
     fun onCopyUsername() = viewModelScope.launch {
         getLoginItem().onSuccess {
             clipboardManager.copyToClipboard(it.username)
-            eventFlow.update { AutofillItemOptionsEvent.Close }
-            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.UsernameCopiedToClipboard)
+            eventFlow.update { ItemOptionsEvent.Close }
+            snackbarDispatcher(ItemOptionsSnackbarMessage.UsernameCopiedToClipboard)
         }.onFailure {
-            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.CopyToClipboardError)
+            snackbarDispatcher(ItemOptionsSnackbarMessage.CopyToClipboardError)
         }
     }
 
@@ -115,10 +115,10 @@ class AutofillItemOptionsViewModel @Inject constructor(
                 decrypt(it.password)
             }
             clipboardManager.copyToClipboard(password, isSecure = true)
-            eventFlow.update { AutofillItemOptionsEvent.Close }
-            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.PasswordCopiedToClipboard)
+            eventFlow.update { ItemOptionsEvent.Close }
+            snackbarDispatcher(ItemOptionsSnackbarMessage.PasswordCopiedToClipboard)
         }.onFailure {
-            snackbarDispatcher(AutofillItemOptionsSnackbarMessage.CopyToClipboardError)
+            snackbarDispatcher(ItemOptionsSnackbarMessage.CopyToClipboardError)
         }
     }
 

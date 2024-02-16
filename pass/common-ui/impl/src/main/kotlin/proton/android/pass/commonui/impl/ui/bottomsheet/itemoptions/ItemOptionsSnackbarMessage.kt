@@ -16,14 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
 
 import androidx.annotation.StringRes
-import proton.android.pass.autofill.service.R
+import proton.android.pass.commonui.impl.R
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
 
-enum class AutofillItemOptionsSnackbarMessage(
+enum class ItemOptionsSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false

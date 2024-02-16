@@ -22,7 +22,7 @@
     <item quantity="other">%d elementi</item>
   </plurals>
   <string name="sync_progress_item_count">%1$d di %2$d elementi</string>
-  <string name="sync_dialog_title">Sincronizzazione elementi…</string>
+  <string name="sync_dialog_title">Sincronizzazione degli elementi in corso</string>
   <string name="sync_dialog_subtitle">Stiamo scaricando e decrittografando i tuoi elementi. Questo potrebbe richiedere qualche minuto.</string>
   <string name="sync_dialog_confirm_button">Continua</string>
   <string name="sync_item_not_started">Non iniziato</string>

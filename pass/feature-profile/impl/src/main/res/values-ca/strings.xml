@@ -7,7 +7,7 @@
   <string name="profile_security">Seguretat</string>
   <string name="profile_option_feedback">Comentaris</string>
   <string name="profile_option_import_export">Importa/exporta</string>
-  <string name="profile_option_tutorial">How to use Proton Pass</string>
+  <string name="profile_option_tutorial">Com utilitzar Proton Pass</string>
   <string name="profile_option_rating">Valora l\'aplicació</string>
   <string name="profile_option_autofill">Emplenament automàtic</string>
   <string name="profile_option_autofill_subtitle">Ompliu automàticament els vostres noms d\'usuari i contrasenyes.</string>

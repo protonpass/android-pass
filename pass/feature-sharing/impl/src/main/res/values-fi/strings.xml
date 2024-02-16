@@ -113,6 +113,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Aseta käyttöoikeustaso kaikille jäsenille</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Aseta käyttöoikeustaso jäsenelle %s</string>
   <string name="sharing_edit_permissions_remove_user">Poista käyttäjä</string>
-  <string name="sharing_error_dialog_title">Unknown error</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_error_dialog_title">Tuntematon virhe</string>
+  <string name="sharing_error_dialog_message">Tämän holvin kutsun lähettämisessä tapahtui virhe. Jos ongelma jatkuu, ota yhteyttä asiakaspalveluun.</string>
 </resources>

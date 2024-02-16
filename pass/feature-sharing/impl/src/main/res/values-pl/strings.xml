@@ -121,6 +121,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Ustaw uprawnienia dla wszystkich użytkowników</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Ustaw uprawnienia dla użytkownika %s</string>
   <string name="sharing_edit_permissions_remove_user">Usuń użytkownika</string>
-  <string name="sharing_error_dialog_title">Unknown error</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_error_dialog_title">Wystąpił nieznany błąd</string>
+  <string name="sharing_error_dialog_message">Wystąpił problem podczas wysyłania zaproszenia do sejfu. Jeśli problem będzie się powtarzał, skontaktuj się ze wsparciem klienta.</string>
 </resources>

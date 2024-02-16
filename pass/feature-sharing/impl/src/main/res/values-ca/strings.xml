@@ -113,6 +113,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
   <string name="sharing_edit_permissions_remove_user">Esborra l\'usuari</string>
-  <string name="sharing_error_dialog_title">Unknown error</string>
+  <string name="sharing_error_dialog_title">Error desconegut</string>
   <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
 </resources>

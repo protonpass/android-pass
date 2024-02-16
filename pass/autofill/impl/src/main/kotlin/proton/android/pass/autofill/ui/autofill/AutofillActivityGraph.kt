@@ -30,10 +30,10 @@ import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
-import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsBottomSheet
-import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsNavigation
-import proton.android.pass.autofill.ui.bottomsheet.itemoptions.autofillItemOptionsGraph
 import proton.android.pass.common.api.some
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsBottomSheet
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsNavigation
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.itemOptionsGraph
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
@@ -141,8 +141,8 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
 
                 is SelectItemNavigation.ItemOptions -> appNavigator.navigate(
-                    destination = AutofillItemOptionsBottomSheet,
-                    route = AutofillItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
+                    destination = ItemOptionsBottomSheet,
+                    route = ItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
                 )
 
                 SelectItemNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
@@ -413,9 +413,9 @@ fun NavGraphBuilder.autofillActivityGraph(
         }
     )
 
-    autofillItemOptionsGraph {
+    itemOptionsGraph {
         when (it) {
-            AutofillItemOptionsNavigation.Close -> dismissBottomSheet {
+            ItemOptionsNavigation.Close -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
             }
         }

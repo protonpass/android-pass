@@ -21,6 +21,14 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
+    }
 }
 
 androidComponents.beforeVariants { variant ->
@@ -30,7 +38,26 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.commonUi.api)
 
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.lifecycle.process)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.core.presentation)
+    implementation(libs.core.presentation.compose)
+    implementation(libs.core.utilKotlin)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.collections)
+
+    implementation(projects.pass.clipboard.api)
+    implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.crypto.api)
+    implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
+    implementation(projects.pass.log.api)
+    implementation(projects.pass.navigation.api)
+    implementation(projects.pass.notifications.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

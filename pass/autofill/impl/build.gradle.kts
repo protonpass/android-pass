@@ -97,6 +97,7 @@ dependencies {
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.crypto.api)

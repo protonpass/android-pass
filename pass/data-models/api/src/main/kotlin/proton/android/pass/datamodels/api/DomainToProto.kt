@@ -123,6 +123,8 @@ fun ItemContents.serializeToProto(
                                 .setUserName(it.userName)
                                 .setUserDisplayName(it.userDisplayName)
                                 .setUserId(ByteString.copyFrom(it.userId))
+                                .setNote(it.note)
+                                .setCreateTime(it.createTime.epochSeconds.toInt())
                                 .build()
                         }
                     )

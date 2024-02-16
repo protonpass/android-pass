@@ -18,6 +18,7 @@
 
 package proton.android.pass.datamodels.api
 
+import kotlinx.datetime.Instant
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomField
@@ -55,7 +56,9 @@ fun ItemType.Companion.fromParsed(
                     userName = it.userName,
                     userDisplayName = it.userDisplayName,
                     userId = it.userId.toByteArray(),
-                    contents = context.encrypt(it.content.toByteArray())
+                    contents = context.encrypt(it.content.toByteArray()),
+                    note = it.note,
+                    createTime = Instant.fromEpochSeconds(it.createTime.toLong())
                 )
             }
         )

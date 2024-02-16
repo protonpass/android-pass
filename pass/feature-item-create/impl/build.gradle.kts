@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.userSettings.domain)

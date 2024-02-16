@@ -18,6 +18,7 @@
 
 package proton.android.pass.domain
 
+import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -77,6 +78,8 @@ data class Passkey(
     val userName: String,
     val userDisplayName: String,
     val userId: ByteArray,
+    val note: String,
+    val createTime: Instant,
     @Serializable(with = EncryptedByteArraySerializer::class)
     val contents: EncryptedByteArray
 )

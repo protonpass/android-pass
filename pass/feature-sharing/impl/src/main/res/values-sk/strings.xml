@@ -121,6 +121,6 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Nastavenie úrovne prístupu pre všetkých členov</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Nastaviť úroveň prístupu pre %s</string>
   <string name="sharing_edit_permissions_remove_user">Odstrániť používateľa</string>
-  <string name="sharing_error_dialog_title">Unknown error</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_error_dialog_title">Neznáma chyba</string>
+  <string name="sharing_error_dialog_message">Pri odosielaní pozvánky do tohto trezora sa vyskytla chyba. Ak problém pretrváva, obráťte sa na zákaznícku podporu.</string>
 </resources>

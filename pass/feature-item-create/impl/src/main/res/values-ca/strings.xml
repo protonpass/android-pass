@@ -46,7 +46,7 @@
   <string name="custom_field_text_placeholder">Afegeix text</string>
   <string name="custom_field_dialog_title">Nom del camp personalitzat</string>
   <string name="custom_field_dialog_body">Give your custom field a name</string>
-  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
+  <string name="custom_field_dialog_placeholder">Per exemple, l\'ID d\'usuari, el PIN</string>
   <string name="custom_field_options_content_description">Opcions del camp personalitzat</string>
   <!-- Create Note -->
   <string name="title_create_note">Crea una nota</string>

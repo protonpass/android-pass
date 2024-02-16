@@ -81,7 +81,7 @@
   <string name="bottomsheet_empty_trash">Ачысціць сметніцу</string>
   <string name="bottomsheet_select_items">Выбраць элементы</string>
   <string name="trash_error_clearing_trash">Памылка ачышчэння сметніцы</string>
-  <string name="trash_success_restoring_items">Элементаў адноўлена</string>
+  <string name="trash_success_restoring_items">Элементы адноўлены</string>
   <string name="trash_error_restoring_items">Памылка аднаўлення элементаў</string>
   <string name="trash_error_deleting_item">Памылка выдалення элемента</string>
   <string name="trash_success_deleting_item">Элемент выдалены</string>

@@ -36,7 +36,7 @@
   <string name="settings_default_vault_section_title">Brankas</string>
   <string name="settings_default_vault_vault_selector_title">Brankas bawaan</string>
   <string name="settings_default_vault_section_subtitle">Brankas di mana berkas Anda dibuat secara bawaan</string>
-  <string name="settings_default_vault_disabled_reason">Anda tidak bisa mengisi brankas ini.</string>
+  <string name="settings_default_vault_disabled_reason">Anda tidak dapat mengisi brankas ini.</string>
   <string name="view_logs_title">Lihat log</string>
   <string name="clipboard_bottomsheet_title">Papan klip</string>
   <string name="clipboard_option_clear_clipboard_label">Bersihkan papan klip</string>

@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_channel">Sincronizza</string>
-  <string name="sync_channel_description">Canale di notifica per la sincronizzazione degli elementi</string>
-  <string name="syncing_vaults">Sincronizzazione di casseforti ed elementi</string>
+  <string name="sync_channel">Sincronizzazione</string>
+  <string name="sync_channel_description">Notifiche per la sincronizzazione degli elementi</string>
+  <string name="syncing_vaults">Sincronizzazione di casseforti ed elementi in corso</string>
 </resources>

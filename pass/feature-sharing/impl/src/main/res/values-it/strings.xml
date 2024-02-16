@@ -25,8 +25,8 @@
   <string name="sharing_can_edit_description">Può creare, modificare, eliminare ed esportare gli elementi in questa cassaforte.</string>
   <string name="sharing_can_manage_description">Può concedere e revocare l\'accesso a questa cassaforte.</string>
   <plurals name="sharing_item_count">
-    <item quantity="one">%d membro</item>
-    <item quantity="other">%d membri</item>
+    <item quantity="one">%d elemento</item>
+    <item quantity="other">%d elementi</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d membro</item>
@@ -35,32 +35,32 @@
   <string name="share_with_title">Condividi con</string>
   <string name="share_with_email_hint">Indirizzo email</string>
   <string name="share_with_email_error">Indirizzo email non valido</string>
-  <string name="share_permissions_title">Imposta livello di accesso</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s ti invita ad accedere agli elementi in</string>
-  <string name="sharing_join_shared_vault">Unisciti e sincronizza</string>
+  <string name="share_permissions_title">Imposta il livello di accesso</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s ti ha invitato ad accedere agli elementi della cassaforte:</string>
+  <string name="sharing_join_shared_vault">Accetta e sincronizza</string>
   <string name="sharing_reject_invitation">Rifiuta l\'invito</string>
   <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulazioni, il tuo accesso è stato confermato</string>
   <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Visualizza la cassaforte condivisa</string>
   <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Chiudi</string>
   <string name="sharing_snackbar_get_invite_error">Impossibile ottenere l\'invito</string>
   <string name="sharing_snackbar_invite_accepted">Invito accettato</string>
-  <string name="sharing_snackbar_invite_accept_error">Errore durante l\'accettazione dell\'invito</string>
+  <string name="sharing_snackbar_invite_accept_error">Errore nell\'accettazione dell\'invito</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Impossibile accettare l\'invito poiché hai raggiunto il limite di casseforti</string>
   <string name="sharing_snackbar_invite_rejected">Invito rifiutato</string>
   <string name="sharing_snackbar_invite_reject_error">Errore nel rifiuto dell\'invito</string>
   <string name="sharing_snackbar_vault_not_found">Impossibile trovare la cassaforte</string>
   <string name="sharing_snackbar_invite_sent_success">Invito spedito</string>
-  <string name="sharing_snackbar_invite_sent_error">Impossibile inviare l\'invito</string>
+  <string name="sharing_snackbar_invite_sent_error">Impossibile spedire l\'invito</string>
   <string name="sharing_snackbar_get_vault_members_error">Impossibile ottenere i membri della cassaforte</string>
   <string name="sharing_snackbar_change_permission_success">Autorizzazioni cambiate</string>
   <string name="sharing_snackbar_change_permission_error">Impossibile cambiare le autorizzazioni</string>
   <string name="sharing_snackbar_remove_member_success">Membro rimosso dalla cassaforte</string>
-  <string name="sharing_snackbar_remove_member_error">Impossibile rimuovere dalla cassaforte</string>
+  <string name="sharing_snackbar_remove_member_error">Impossibile rimuovere il membro dalla cassaforte</string>
   <string name="share_summary_title">Controlla e condividi</string>
   <string name="share_summary_vault">la cassaforte %s</string>
-  <string name="share_summary_share_vault">Condividi caveau</string>
-  <string name="share_summary_vault_title">Caveau</string>
-  <string name="share_manage_vault_share_with_more_people">Condividi con più persone</string>
+  <string name="share_summary_share_vault">Condividi la cassaforte</string>
+  <string name="share_summary_vault_title">Cassaforte</string>
+  <string name="share_manage_vault_share_with_more_people">Condividi con altre persone</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invito rimasto</item>
     <item quantity="other">%d inviti rimasti</item>
@@ -71,48 +71,48 @@
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invito spedito</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">In attesa della creazione dell\'account</string>
-  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Conferma accesso</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Conferma l\'accesso</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Inviti</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membri</string>
   <string name="share_manage_vault_current_user_indicator">Tu</string>
-  <string name="share_role_can_view">Può vedere</string>
-  <string name="share_role_can_edit">Può modificare</string>
+  <string name="share_role_can_view">Visualizzatore</string>
+  <string name="share_role_can_edit">Editor</string>
   <string name="share_role_admin">Amministratore</string>
   <string name="share_role_owner">Proprietario</string>
-  <string name="sharing_bottomsheet_transfer_ownership">Trasferisci proprietà</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Trasferisci la proprietà</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Non puoi trasferire la tua unica cassaforte.</string>
-  <string name="sharing_bottomsheet_remove_access">Revoca accesso</string>
-  <string name="sharing_bottomsheet_resend_invite">Invia nuovamente l\'invito</string>
-  <string name="sharing_bottomsheet_cancel_invite">Annulla invito</string>
-  <string name="sharing_transfer_ownership_confirm_title">Trasferimento della proprietà</string>
-  <string name="sharing_transfer_ownership_confirm_message">Trasferire la proprietà di questa cassaforte a %s?</string>
+  <string name="sharing_bottomsheet_remove_access">Revoca l\'accesso</string>
+  <string name="sharing_bottomsheet_resend_invite">Spedisci nuovamente l\'invito</string>
+  <string name="sharing_bottomsheet_cancel_invite">Annulla l\'invito</string>
+  <string name="sharing_transfer_ownership_confirm_title">Trasferisci la proprietà</string>
+  <string name="sharing_transfer_ownership_confirm_message">Vuoi trasferire la proprietà di questa cassaforte a %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Invito annullato</string>
-  <string name="sharing_snackbar_cancel_invite_error">Errore durante l\'annullamento dell\'invito</string>
-  <string name="sharing_snackbar_resend_invite_success">Invito rispedito</string>
-  <string name="sharing_snackbar_resend_invite_error">Errore durante il reinvio dell\'invito</string>
+  <string name="sharing_snackbar_cancel_invite_error">Errore nell\'annullamento dell\'invito</string>
+  <string name="sharing_snackbar_resend_invite_success">Invito spedito di nuovo</string>
+  <string name="sharing_snackbar_resend_invite_error">Errore nella nuova spedizione dell\'invito</string>
   <string name="sharing_snackbar_confirm_invite_success">Invito confermato</string>
-  <string name="sharing_snackbar_confirm_invite_error">Errore durante la conferma dell\'invito</string>
-  <string name="sharing_snackbar_too_many_invites_sent">L\'indirizzo è stato invitato troppe volte</string>
+  <string name="sharing_snackbar_confirm_invite_error">Errore nella conferma dell\'invito</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Indirizzo invitato troppe volte</string>
   <string name="sharing_snackbar_transfer_ownership_success">Proprietà trasferita</string>
   <string name="sharing_snackbar_transfer_ownership_error">Errore nel trasferimento della proprietà</string>
   <string name="sharing_invites_info_dialog_title">Limite di membri</string>
   <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Questa cassaforte può avere fino a %1$d membri. Hai ancora %2$d inviti rimasti.</string>
   <string name="sharing_limit_reached">Questa cassaforte ha raggiunto il limite di membri e inviti.</string>
-  <string name="sharing_invites_info_upgrade_text">Effettua l\'upgrade ora per invitare più persone.</string>
+  <string name="sharing_invites_info_upgrade_text">Effettua l\'upgrade per invitare più persone.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Condividi</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Usa le casseforti per poter condividere elementi con altri</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Usa le casseforti per condividere gli elementi</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Condividi questa cassaforte</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Sposta in una cassaforte condivisa</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Crea una nuova cassaforte da condividere</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Questo elemento verrà spostato nella nuova cassaforte.</string>
-  <string name="sharing_from_item_vault_limit_reached_upgrade">Effettua l\'upgrade per creare più casseforti</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Effettua l\'upgrade per creare altre casseforti</string>
   <string name="sharing_from_item_vault_limit_reached">Hai raggiunto il limite di casseforti</string>
   <string name="share_with_suggestions_title">Suggerimenti</string>
   <string name="share_with_recents_title">Recenti</string>
   <string name="share_with_remove_email_content_description">Rimuovi questo indirizzo email</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Imposta il livello di accesso per tutti i membri</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Imposta il livello di accesso per %s</string>
-  <string name="sharing_edit_permissions_remove_user">Rimuovi questo utente</string>
+  <string name="sharing_edit_permissions_remove_user">Rimuovi l\'utente</string>
   <string name="sharing_error_dialog_title">Errore sconosciuto</string>
   <string name="sharing_error_dialog_message">Si è verificato un errore nella spedizione di un invito per questa cassaforte. Se il problema persiste, contatta il servizio di assistenza clienti.</string>
 </resources>

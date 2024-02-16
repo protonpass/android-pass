@@ -106,9 +106,9 @@
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Recents</string>
   <string name="share_with_remove_email_content_description">Remove email</string>
-  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
-  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
-  <string name="sharing_edit_permissions_remove_user">Remove user</string>
-  <string name="sharing_error_dialog_title">Unknown error</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">すべてのメンバーのアクセス レベルを設定する</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">%s のアクセス レベルを設定します</string>
+  <string name="sharing_edit_permissions_remove_user">ユーザーを削除する</string>
+  <string name="sharing_error_dialog_title">不明なエラー</string>
+  <string name="sharing_error_dialog_message">この保管庫への招待の送信中にエラーが発生しました。 問題が解決しない場合は、カスタマー サポート サービスにお問い合わせください。</string>
 </resources>

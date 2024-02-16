@@ -11,9 +11,9 @@
   <string name="account_manage_account">Gestisci l\'account</string>
   <string name="account_manage_account_icon_content_description">Pulsante gestisci account</string>
   <string name="account_manage_subscription">Gestisci l\'abbonamento</string>
-  <string name="account_get_user_info_error">Non è stato possibile recuperare le informazioni utente</string>
+  <string name="account_get_user_info_error">Impossibile caricare le informazioni dell\'utente</string>
   <string name="manage_subscription_icon_content_description">Pulsante gestisci abbonamento</string>
   <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Disconnettere?</string>
-  <string name="alert_confirm_sign_out_message">Sei sicuro di voler uscire?</string>
+  <string name="alert_confirm_sign_out_title">Vuoi disconnettere l\'account?</string>
+  <string name="alert_confirm_sign_out_message">Sei sicuro di voler disconnettere l\'account?</string>
 </resources>

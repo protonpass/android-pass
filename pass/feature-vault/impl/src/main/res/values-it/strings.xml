@@ -12,12 +12,12 @@
   <string name="snackbar_retrieve_vault_error">Cassaforte non trovata</string>
   <string name="snackbar_find_vault_error">Impossibile trovare la cassaforte selezionata</string>
   <string name="snackbar_get_vault_list_error">Impossibile caricare la lista delle casseforti</string>
-  <string name="vault_delete_dialog_title">Elimina cassaforte</string>
+  <string name="vault_delete_dialog_title">Elimina la cassaforte</string>
   <string name="vault_delete_dialog_body">Questo eliminerà definitivamente la cassaforte __VAULT_NAME__ e tutti i suoi contenuti. Inserisci il nome della cassaforte per confermare l\'eliminazione.</string>
   <string name="vault_delete_dialog_placeholder">Nome cassaforte</string>
   <string name="vault_delete_dialog_cancel_action">Annulla</string>
   <string name="vault_delete_dialog_delete_action">Elimina</string>
-  <string name="vault_leave_dialog_title">Abbandona cassaforte</string>
+  <string name="vault_leave_dialog_title">Abbandona la cassaforte</string>
   <string name="vault_leave_dialog_body">Questo rimuoverà il tuo accesso alla cassaforte __VAULT_NAME__ e a tutti i suoi contenuti. Sei sicuro di volerla abbandonare?</string>
   <string name="vault_leave_dialog_cancel_action">Annulla</string>
   <string name="vault_leave_dialog_leave_action">Abbandona</string>
@@ -28,13 +28,13 @@
   <string name="bottomsheet_cannot_select_not_primary_vault">Per interagire con le altre casseforti, devi effettuare l\'upgrade del tuo account.</string>
   <string name="bottomsheet_upgrade_now">Effettua l\'upgrade ora</string>
   <string name="bottomsheet_edit">Modifica</string>
-  <string name="bottomsheet_migrate">Sposta tutti gli elementi su un\'altra cassaforte.</string>
-  <string name="bottomsheet_delete_vault">Elimina cassaforte</string>
+  <string name="bottomsheet_migrate">Sposta tutti gli elementi in un\'altra cassaforte</string>
+  <string name="bottomsheet_delete_vault">Elimina la cassaforte</string>
   <string name="bottomsheet_share_vault">Condividi</string>
-  <string name="bottomsheet_leave_vault">Abbandona cassaforte</string>
-  <string name="bottomsheet_view_members">Visualizza membri</string>
-  <string name="bottomsheet_manage_access">Gestisci accesso</string>
-  <string name="bottomsheet_select_vault_read_only">Puoi solo leggere</string>
+  <string name="bottomsheet_leave_vault">Abbandona la cassaforte</string>
+  <string name="bottomsheet_view_members">Visualizza i membri</string>
+  <string name="bottomsheet_manage_access">Gestisci l\'accesso</string>
+  <string name="bottomsheet_select_vault_read_only">Puoi solo visualizzare</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Puoi creare elementi solamente nelle tue casseforti più vecchie</string>
   <string name="vault_title">Cassaforte</string>
 </resources>

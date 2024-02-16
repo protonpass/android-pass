@@ -16,37 +16,37 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
 
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 
-sealed interface AutofillItemOptionsNavigation {
-    object Close : AutofillItemOptionsNavigation
+sealed interface ItemOptionsNavigation {
+    object Close : ItemOptionsNavigation
 }
 
-object AutofillItemOptionsBottomSheet : NavItem(
-    baseRoute = "autofill/itemoptions/bottomsheet",
+object ItemOptionsBottomSheet : NavItem(
+    baseRoute = "itemoptions/bottomsheet",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
     navItemType = NavItemType.Bottomsheet
 ) {
     fun createRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
-fun NavGraphBuilder.autofillItemOptionsGraph(
-    onNavigate: (AutofillItemOptionsNavigation) -> Unit
+fun NavGraphBuilder.itemOptionsGraph(
+    onNavigate: (ItemOptionsNavigation) -> Unit
 ) {
-    bottomSheet(AutofillItemOptionsBottomSheet) {
+    bottomSheet(ItemOptionsBottomSheet) {
         BackHandler {
-            onNavigate(AutofillItemOptionsNavigation.Close)
+            onNavigate(ItemOptionsNavigation.Close)
         }
-        AutofillItemOptionsBottomSheet(
+        ItemOptionsBottomSheet(
             onNavigate = onNavigate
         )
     }

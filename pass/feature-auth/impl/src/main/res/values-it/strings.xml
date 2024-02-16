@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="enter_your_pin_code">Inserisci il tuo PIN</string>
+  <string name="enter_your_pin_code">Inserisci il codice PIN</string>
   <string name="unlock">Sblocca</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">PIN errato, %d tentativo rimasto.</item>
@@ -28,12 +28,12 @@
   <string name="auth_master_password_label">Password principale</string>
   <string name="auth_action_reveal_password">Mostra la password principale</string>
   <string name="auth_action_conceal_password">Nascondi la password principale</string>
-  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Inserisci invece il PIN</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Inserisci invece l\'impronta digitale</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Usa invece il PIN</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Usa invece l\'impronta digitale</string>
   <string name="auth_unlock_button">Sblocca</string>
-  <string name="auth_error_verifying_password">Errore durante la verifica della password</string>
-  <string name="auth_error_empty_password">La password non può essere vuota</string>
-  <string name="auth_error_pin_cannot_be_empty">Il PIN non può essere vuoto</string>
+  <string name="auth_error_verifying_password">Errore nella verifica della password</string>
+  <string name="auth_error_empty_password">Password necessaria</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN necessario</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Password errata. %d tentativo rimasto</item>
     <item quantity="other">Password errata. %d tentativi rimasti</item>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Permetti a Proton Pass di inserire i dati di accesso per te. Scriverli o fare copia-incolla manualmente non sarà più necessario.</string>
+  <string name="on_boarding_autofill_content">Consenti a Proton Pass di inserire le credenziali al posto tuo. Scriverle o fare copia-incolla manualmente non sarà più necessario.</string>
   <string name="on_boarding_autofill_title">Accedi immediatamente alle app</string>
   <string name="on_boarding_autofill_button">Compilazione automatica con Proton Pass</string>
-  <string name="on_boarding_fingerprint_content">Imposta lo sblocco tramite impronta, in questo modo solo tu avrai accesso a Proton Pass.</string>
+  <string name="on_boarding_fingerprint_content">Imposta lo sblocco con l\'impronta, in questo modo solo tu avrai accesso a Proton Pass.</string>
   <string name="on_boarding_fingerprint_title">Proteggi i tuoi dati più sensibili</string>
-  <string name="on_boarding_fingerprint_button">Abilita lo sblocco tramite impronta</string>
-  <string name="on_boarding_last_page_content">Non condividere più il tuo vero indirizzo email. Nascondilo invece con un alias email - un\'esclusiva di Proton Pass.</string>
+  <string name="on_boarding_fingerprint_button">Abilita lo sblocco con l\'impronta</string>
+  <string name="on_boarding_last_page_content">Non condividere più il tuo vero indirizzo email. Nascondilo invece con gli alias email - un\'esclusiva di Proton Pass.</string>
   <string name="on_boarding_last_page_title">Controlla quello che ricevi nella tua casella di posta</string>
   <string name="on_boarding_last_page_button">Inizia a usare Proton Pass</string>
   <string name="on_boarding_skip">Non adesso</string>
   <string name="on_boarding_tutorial">Guarda un breve video su come utilizzare Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Per motivi di sicurezza, il tuo accesso deve essere confermato.</string>
-  <string name="on_boarding_pending_invite_title">Accesso ai dati condivisi in attesa</string>
+  <string name="on_boarding_pending_invite_title">In attesa dell\'accesso ai dati condivisi</string>
   <string name="on_boarding_pending_invite_button">Scopri di più su Proton Pass</string>
   <string name="error_biometry_failed_to_start">Impossibile usare l\'autenticazione biometrica</string>
   <string name="error_biometry_failed_to_authenticate">Autenticazione non riuscita</string>
-  <string name="settings_fingerprint_lock_enabled">Sblocco tramite impronta abilitato</string>
-  <string name="error_performing_operation">Errore durante l\'esecuzione dell\'operazione</string>
+  <string name="settings_fingerprint_lock_enabled">Sblocco con l\'impronta abilitato</string>
+  <string name="error_performing_operation">Errore nell\'esecuzione dell\'operazione</string>
 </resources>

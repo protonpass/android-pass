@@ -6,6 +6,23 @@
 
 ### Other
 
+## 1.18.0 (2024-02-19)
+
+### Features :tada:
+
+- Improved sync resiliency.
+- Smooth UI animations for TOTP codes.
+
+### Fixes :bug:
+
+- Forced sync not removing old items.
+- Incorrect warning when moving an item between vaults.
+- Some UI issues.
+
+### Other
+
+- Updated translations.
+
 ## 1.17.0 (2024-01-26)
 
 ### Features :tada:

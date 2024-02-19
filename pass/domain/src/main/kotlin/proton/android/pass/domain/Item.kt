@@ -42,4 +42,10 @@ data class Item(
     val modificationTime: Instant,
     val lastAutofillTime: Option<Instant>,
     val isPinned: Boolean,
-)
+) {
+    val hasPasskeys: Boolean = when (val type = itemType) {
+        is ItemType.Login -> type.passkeys.isNotEmpty()
+        else -> false
+    }
+
+}

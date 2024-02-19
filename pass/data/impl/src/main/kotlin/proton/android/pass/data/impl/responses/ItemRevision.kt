@@ -24,7 +24,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ItemRevisionResponse(
     @SerialName("Code") val code: Int,
-    @SerialName("Item") val item: ItemRevisionImpl,
+    @SerialName("Item") val item: ItemRevision,
 )
 
 @Serializable

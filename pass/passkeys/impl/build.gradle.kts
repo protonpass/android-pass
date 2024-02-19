@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.pass.common)
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.dagger.hilt.android)

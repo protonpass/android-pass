@@ -18,6 +18,7 @@
 
 package proton.android.pass.passkeys.impl
 
+import kotlinx.datetime.Clock
 import proton.android.pass.commonrust.PasskeyManager
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
@@ -28,7 +29,8 @@ import javax.inject.Singleton
 
 @Singleton
 class GeneratePasskeyImpl @Inject constructor(
-    private val passkeyManager: PasskeyManager
+    private val passkeyManager: PasskeyManager,
+    private val clock: Clock
 ) : GeneratePasskey {
 
     override fun invoke(url: String, request: String): GeneratedPasskey {
@@ -42,7 +44,9 @@ class GeneratePasskeyImpl @Inject constructor(
                     id = PasskeyId(it.keyId),
                     rpId = it.rpId,
                     userId = it.userId,
-                    contents = it.passkey
+                    contents = it.passkey,
+                    note = "",
+                    createTime = clock.now()
                 ),
                 response = it.response,
             )

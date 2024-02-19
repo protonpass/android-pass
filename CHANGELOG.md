@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.18.1 (2024-02-19)
+
+### Fixes :bug:
+
+- Autofill item selection crash.
+
 ## 1.18.0 (2024-02-19)
 
 ### Features :tada:

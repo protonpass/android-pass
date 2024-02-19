@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.datetime.Instant
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -103,6 +104,7 @@ internal fun passkeyItem(
 
 @Preview
 @Composable
+@Suppress("MagicNumber")
 fun SelectPasskeyBottomsheetContentPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
@@ -115,7 +117,9 @@ fun SelectPasskeyBottomsheetContentPreview(
             userName = username,
             userDisplayName = "",
             userId = byteArrayOf(),
-            contents = byteArrayOf()
+            contents = byteArrayOf(),
+            note = "",
+            createTime = Instant.fromEpochSeconds(1_708_327_525)
         )
 
     }

@@ -51,7 +51,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         .let { id -> ShareId(id = id) }
 
     // This will be uncommented and used in the following MR
-    
+
 //    private val itemId: ItemId = savedStateHandleProvider.get()
 //        .require<String>(CommonNavArgId.ItemId.key)
 //        .let { id -> ItemId(id = id) }

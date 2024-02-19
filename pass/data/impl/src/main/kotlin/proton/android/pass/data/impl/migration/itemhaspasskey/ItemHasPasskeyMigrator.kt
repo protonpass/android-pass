@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.migration.itemhaspasskey
 
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton.android.pass.data.impl.extensions.hasPasskeys
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.migration.Migrator
@@ -55,8 +54,7 @@ class ItemHasPasskeyMigratorImpl @Inject constructor(
         val updated = encryptionContextProvider.withEncryptionContext {
             items.map { entity ->
                 val asItem = entity.toDomain(this@withEncryptionContext)
-                val hasPasskeys = asItem.hasPasskeys()
-                entity.copy(hasPasskeys = hasPasskeys)
+                entity.copy(hasPasskeys = asItem.hasPasskeys)
             }
         }
 

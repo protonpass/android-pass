@@ -58,7 +58,6 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasPackageName
-import proton.android.pass.data.impl.extensions.hasPasskeys
 import proton.android.pass.data.impl.extensions.hasTotp
 import proton.android.pass.data.impl.extensions.hasWebsite
 import proton.android.pass.data.impl.extensions.toCrypto
@@ -1247,7 +1246,7 @@ class ItemRepositoryImpl @Inject constructor(
             encryptedKey = output.itemKey,
             hasTotp = hasTotp,
             isPinned = itemRevision.isPinned,
-            hasPasskeys = output.item.hasPasskeys()
+            hasPasskeys = output.item.hasPasskeys
         )
     }
 

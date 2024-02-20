@@ -44,6 +44,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -84,6 +85,7 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.passkeys.api.GeneratePasskey
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -99,6 +101,7 @@ class CreateLoginViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val draftRepository: DraftRepository,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    private val generatePasskey: GeneratePasskey,
     passwordStrengthCalculator: PasswordStrengthCalculator,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
@@ -127,6 +130,12 @@ class CreateLoginViewModel @Inject constructor(
     private val initialUsername: Option<String> = savedStateHandleProvider.get()
         .get<String>(CreateLoginDefaultUsernameArg.key)
         .toOption()
+
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var _generatePasskeyData: Option<GeneratePasskeyData> by savedStateHandleProvider.get()
+        .saveable(stateSaver = GeneratePasskeyDataStateSaver) { mutableStateOf(None) }
+
+    private val generatePasskeyData: Option<GeneratePasskeyData> get() = _generatePasskeyData
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -226,6 +235,13 @@ class CreateLoginViewModel @Inject constructor(
             currentValue = currentValue
         )
 
+        initialContents.passkeyOrigin?.let { origin ->
+            initialContents.passkeyRequest?.let { request ->
+                _generatePasskeyData = GeneratePasskeyData(origin, request).some()
+            }
+        }
+
+
         loginItemFormMutableState = loginItemFormState.copy(
             title = initialContents.title ?: currentValue.title,
             username = username,
@@ -234,7 +250,8 @@ class CreateLoginViewModel @Inject constructor(
             urls = websites,
             packageInfoSet = packageInfoSet,
             primaryTotp = primaryTotp,
-            customFields = customFields
+            customFields = customFields,
+            passkeys = emptyList()
         )
     }
 
@@ -251,12 +268,32 @@ class CreateLoginViewModel @Inject constructor(
         }
         val userId = accountManager.getPrimaryUserId()
             .firstOrNull { userId -> userId != null }
+
+        val generatedPasskey = generatePasskeyData.map {
+            PassLogger.i(TAG, "Generating passkey")
+            val generatedPasskey = generatePasskey(it.origin, it.request)
+            loginItemFormMutableState = loginItemFormMutableState.copy(
+                passkeys = listOf(UIPasskeyContent.from(generatedPasskey.passkey))
+            )
+
+            generatedPasskey
+        }
+
         if (userId != null && vault != null) {
             val aliasItemOption = aliasLocalItemState.value
             if (aliasItemOption is Some) {
-                performCreateItemAndAlias(userId, vault.vault.shareId, aliasItemOption.value)
+                performCreateItemAndAlias(
+                    userId = userId,
+                    shareId = vault.vault.shareId,
+                    aliasItemFormState = aliasItemOption.value,
+                    passkeyResponse = generatedPasskey.map { it.response }
+                )
             } else {
-                performCreateItem(userId, vault.vault.shareId)
+                performCreateItem(
+                    userId = userId,
+                    shareId = vault.vault.shareId,
+                    passkeyResponse = generatedPasskey.map { it.response }
+                )
             }
         } else {
             snackbarDispatcher(ItemCreationError)
@@ -267,7 +304,8 @@ class CreateLoginViewModel @Inject constructor(
     private suspend fun performCreateItemAndAlias(
         userId: UserId,
         shareId: ShareId,
-        aliasItemFormState: AliasItemFormState
+        aliasItemFormState: AliasItemFormState,
+        passkeyResponse: Option<String>
     ) {
         val selectedSuffix = aliasItemFormState.selectedSuffix
         if (selectedSuffix == null) {
@@ -295,12 +333,22 @@ class CreateLoginViewModel @Inject constructor(
             )
         }.onSuccess { item ->
             inAppReviewTriggerMetrics.incrementItemCreatedCount()
-            isItemSavedState.update {
-                encryptionContextProvider.withEncryptionContext {
-                    ItemSavedState.Success(
-                        item.id,
-                        item.toUiModel(this@withEncryptionContext)
-                    )
+            when (passkeyResponse) {
+                None -> {
+                    isItemSavedState.update {
+                        encryptionContextProvider.withEncryptionContext {
+                            ItemSavedState.Success(
+                                item.id,
+                                item.toUiModel(this@withEncryptionContext)
+                            )
+                        }
+                    }
+                }
+
+                is Some -> {
+                    isItemSavedState.update {
+                        ItemSavedState.SuccessWithPasskeyResponse(passkeyResponse.value)
+                    }
                 }
             }
 
@@ -323,7 +371,8 @@ class CreateLoginViewModel @Inject constructor(
 
     private suspend fun performCreateItem(
         userId: UserId,
-        shareId: ShareId
+        shareId: ShareId,
+        passkeyResponse: Option<String>
     ) {
         runCatching {
             createItem(
@@ -333,12 +382,23 @@ class CreateLoginViewModel @Inject constructor(
             )
         }.onSuccess { item ->
             inAppReviewTriggerMetrics.incrementItemCreatedCount()
-            isItemSavedState.update {
-                encryptionContextProvider.withEncryptionContext {
-                    ItemSavedState.Success(
-                        item.id,
-                        item.toUiModel(this@withEncryptionContext)
-                    )
+
+            when (passkeyResponse) {
+                None -> {
+                    isItemSavedState.update {
+                        encryptionContextProvider.withEncryptionContext {
+                            ItemSavedState.Success(
+                                item.id,
+                                item.toUiModel(this@withEncryptionContext)
+                            )
+                        }
+                    }
+                }
+
+                is Some -> {
+                    isItemSavedState.update {
+                        ItemSavedState.SuccessWithPasskeyResponse(passkeyResponse.value)
+                    }
                 }
             }
             telemetryManager.sendEvent(ItemCreate(EventItemType.Login))

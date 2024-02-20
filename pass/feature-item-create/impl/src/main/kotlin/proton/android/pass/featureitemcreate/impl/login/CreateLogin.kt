@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.OneTimeLaunchedEffect
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
@@ -48,6 +49,7 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAva
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
+import proton.android.pass.featureitemcreate.impl.login.passkey.PasskeyEditRow
 
 private enum class CLActionAfterHideKeyboard {
     SelectVault
@@ -190,6 +192,15 @@ fun CreateLoginScreen(
                         keyboardController?.hide()
                     }
                 )
+
+                (uiState.passkeyState as? Some<CreatePasskeyState>)?.let {
+                    PasskeyEditRow(
+                        domain = it.value.domain,
+                        username = it.value.username,
+                        canDelete = false,
+                        onDeleteClick = {}
+                    )
+                }
             }
         )
 

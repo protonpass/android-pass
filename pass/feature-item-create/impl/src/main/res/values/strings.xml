@@ -132,4 +132,13 @@
     <string name="create_alias_content_limit_banner">You have reached the limit of aliases you can create. Create unlimited number of aliases when you upgrade your subscription.</string>
 
     <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
+    <string
+        name="snackbar_update_app_to_update_item"
+        comment="This message will appear to users that try to update an item that needs a newer version of the app to do so"
+    >The app needs to be updated to edit this item</string>
+
+    <string
+        name="passkey_field_label"
+        comment="Label of the passkey field in the edit item screen"
+    >Passkey</string>
 </resources>

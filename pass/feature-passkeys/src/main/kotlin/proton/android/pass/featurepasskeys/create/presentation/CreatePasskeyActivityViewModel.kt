@@ -45,6 +45,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
+import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.featurepasskeys.R
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -95,10 +96,11 @@ class CreatePasskeyActivityViewModel @Inject constructor(
 
     private val requestDataFlow: Flow<Option<CreatePasskeyRequestData>> = requestFlow.map {
         it.map { request ->
-            val domain = request.callingRequest.origin ?: ""
+            val domain = UrlSanitizer.getDomain(request.callingRequest.origin ?: "").getOrElse { "" }
             val parsed = parseCreatePasskeyRequest(request.callingRequest.requestJson)
             CreatePasskeyRequestData(
                 domain = domain,
+                origin = request.callingRequest.origin ?: "",
                 username = parsed.userName,
                 request = request.callingRequest.requestJson,
                 rpName = parsed.rpName

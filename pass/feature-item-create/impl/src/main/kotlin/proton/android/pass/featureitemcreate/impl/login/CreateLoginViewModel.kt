@@ -27,6 +27,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -135,6 +136,9 @@ class CreateLoginViewModel @Inject constructor(
     private var _generatePasskeyData: Option<GeneratePasskeyData> by savedStateHandleProvider.get()
         .saveable(stateSaver = GeneratePasskeyDataStateSaver) { mutableStateOf(None) }
 
+    private val createPasskeyStateFlow: MutableStateFlow<Option<CreatePasskeyState>> =
+        MutableStateFlow(None)
+
     private val generatePasskeyData: Option<GeneratePasskeyData> get() = _generatePasskeyData
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -168,6 +172,7 @@ class CreateLoginViewModel @Inject constructor(
     val createLoginUiState: StateFlow<CreateLoginUiState> = combine(
         shareUiState,
         baseLoginUiState,
+        createPasskeyStateFlow,
         ::CreateLoginUiState
     ).stateIn(
         scope = viewModelScope,
@@ -235,9 +240,16 @@ class CreateLoginViewModel @Inject constructor(
             currentValue = currentValue
         )
 
-        initialContents.passkeyOrigin?.let { origin ->
-            initialContents.passkeyRequest?.let { request ->
-                _generatePasskeyData = GeneratePasskeyData(origin, request).some()
+        initialContents.passkeyData?.let { passkeyData ->
+            _generatePasskeyData = GeneratePasskeyData(
+                origin = passkeyData.origin,
+                request = passkeyData.request
+            ).some()
+            createPasskeyStateFlow.update {
+                CreatePasskeyState(
+                    domain = passkeyData.domain,
+                    username = initialContents.username ?: ""
+                ).some()
             }
         }
 

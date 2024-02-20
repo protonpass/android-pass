@@ -205,6 +205,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                         onEvent(AutofillEvent.AutofillItemSelected(event.itemUiModel.toAutoFillItem()))
                     }
 
+                    is CreateLoginNavigation.LoginCreatedWithPasskey -> {
+                        throw IllegalStateException("Cannot create login with passkey from autofill")
+                    }
+
                     is CreateLoginNavigation.SelectVault -> {
                         appNavigator.navigate(
                             destination = SelectVaultBottomsheet,

@@ -32,9 +32,43 @@ data class InitialCreateLoginUiState(
     val aliasItemFormState: AliasItemFormState? = null,
     val navTotpUri: String? = null,
     val navTotpIndex: Int = -1,
+    val passkeyDomain: String? = null,
     val passkeyOrigin: String? = null,
     val passkeyRequest: String? = null
-)
+) {
+
+    val passkeyData: PasskeyData? =
+        if (passkeyDomain != null && passkeyOrigin != null && passkeyRequest != null) {
+            PasskeyData(passkeyDomain, passkeyOrigin, passkeyRequest)
+        } else {
+            null
+        }
+
+    data class PasskeyData(
+        val domain: String,
+        val origin: String,
+        val request: String
+    ) {
+        companion object {
+            fun from(
+                values: Map<String, Any?>,
+                domainKey: String,
+                originKey: String,
+                requestKey: String
+            ): PasskeyData? {
+                val passkeyDomain = values[domainKey] as? String
+                val passkeyOrigin = values[originKey] as? String
+                val passkeyRequest = values[requestKey] as? String
+                return if (passkeyDomain != null && passkeyOrigin != null && passkeyRequest != null) {
+                    PasskeyData(passkeyDomain, passkeyOrigin, passkeyRequest)
+                } else {
+                    null
+                }
+            }
+        }
+    }
+
+}
 
 val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run {
     val title = "title"
@@ -45,6 +79,7 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
     val appName = "appName"
     val aliasItem = "aliasItem"
     val primaryTotp = "primaryTotp"
+    val passkeyDomain = "passkeyDomain"
     val passkeyOrigin = "passkeyOrigin"
     val passkeyRequest = "passkeyRequest"
     mapSaver(
@@ -75,13 +110,12 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
                 } else {
                     null
                 }
-
-                val (passkeyOriginValue, passkeyRequestValue) =
-                    if (values[passkeyOrigin] != null && values[passkeyRequest] != null) {
-                        values[passkeyOrigin] as String to values[passkeyRequest] as String
-                    } else {
-                        null to null
-                    }
+                val passkeyData = InitialCreateLoginUiState.PasskeyData.from(
+                    values = values,
+                    domainKey = passkeyDomain,
+                    originKey = passkeyOrigin,
+                    requestKey = passkeyRequest
+                )
 
                 InitialCreateLoginUiState(
                     title = values[title] as? String,
@@ -91,9 +125,9 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
                     packageInfoUi = packageInfoUi,
                     aliasItemFormState = values[aliasItem] as? AliasItemFormState,
                     navTotpUri = values[primaryTotp] as? String,
-                    passkeyOrigin = passkeyOriginValue,
-                    passkeyRequest = passkeyRequestValue
-
+                    passkeyOrigin = passkeyData?.origin,
+                    passkeyRequest = passkeyData?.request,
+                    passkeyDomain = passkeyData?.domain
                 )
             } else {
                 null

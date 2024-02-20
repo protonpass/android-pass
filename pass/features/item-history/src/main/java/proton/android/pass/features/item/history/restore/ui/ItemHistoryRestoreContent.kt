@@ -19,10 +19,17 @@
 package proton.android.pass.features.item.history.restore.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
 import proton.android.pass.composecomponents.impl.utils.protonItemColors
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
+import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreState
 
 @Composable
@@ -30,8 +37,43 @@ internal fun ItemHistoryRestoreContent(
     modifier: Modifier = Modifier,
     onNavigated: (ItemHistoryNavDestination) -> Unit,
     state: ItemHistoryRestoreState,
-) {
-    val itemUiModel = state.itemUiModel ?: return
+    onEventConsumed: (ItemHistoryRestoreEvent) -> Unit,
+    onRestoreClick: () -> Unit,
+    onRestoreConfirmClick: (ItemContents) -> Unit,
+    onRestoreCancelClick: () -> Unit,
+) = with(state) {
+    if (itemUiModel == null) return
+
+    var isDialogVisible by remember { mutableStateOf(false) }
+    var isDialogLoading by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = event) {
+        when (event) {
+            ItemHistoryRestoreEvent.Idle -> {
+
+            }
+
+            ItemHistoryRestoreEvent.OnItemRestored -> {
+                isDialogVisible = false
+                isDialogLoading = false
+                onNavigated(ItemHistoryNavDestination.Detail)
+            }
+
+            ItemHistoryRestoreEvent.OnRestoreItem -> {
+                isDialogVisible = true
+            }
+
+            ItemHistoryRestoreEvent.OnRestoreItemCanceled -> {
+                isDialogVisible = false
+                isDialogLoading = false
+            }
+
+            ItemHistoryRestoreEvent.OnRestoreItemConfirmed -> {
+                isDialogLoading = true
+            }
+        }
+        onEventConsumed(event)
+    }
 
     val itemColors = protonItemColors(itemCategory = itemUiModel.category)
 
@@ -43,10 +85,16 @@ internal fun ItemHistoryRestoreContent(
             ItemHistoryRestoreTopBar(
                 colors = itemColors,
                 onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
-                onRestoreClick = {
-                    // this will be implemented in the following MR
-                },
+                onRestoreClick = onRestoreClick,
             )
         }
+    )
+
+    ItemHistoryRestoreConfirmationDialog(
+        isVisible = isDialogVisible,
+        isLoading = isDialogLoading,
+        onConfirm = { onRestoreConfirmClick(itemUiModel.contents) },
+        onDismiss = onRestoreCancelClick,
+        revisionTime = itemRevision.revisionTime,
     )
 }

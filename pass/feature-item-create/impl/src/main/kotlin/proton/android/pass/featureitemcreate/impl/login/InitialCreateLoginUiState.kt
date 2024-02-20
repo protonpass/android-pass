@@ -31,7 +31,9 @@ data class InitialCreateLoginUiState(
     val packageInfoUi: PackageInfoUi? = null,
     val aliasItemFormState: AliasItemFormState? = null,
     val navTotpUri: String? = null,
-    val navTotpIndex: Int = -1
+    val navTotpIndex: Int = -1,
+    val passkeyOrigin: String? = null,
+    val passkeyRequest: String? = null
 )
 
 val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run {
@@ -43,6 +45,8 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
     val appName = "appName"
     val aliasItem = "aliasItem"
     val primaryTotp = "primaryTotp"
+    val passkeyOrigin = "passkeyOrigin"
+    val passkeyRequest = "passkeyRequest"
     mapSaver(
         save = {
             if (it != null) {
@@ -55,6 +59,8 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
                     appName to it.packageInfoUi?.appName,
                     aliasItem to it.aliasItemFormState,
                     primaryTotp to it.navTotpUri,
+                    passkeyOrigin to it.passkeyOrigin,
+                    passkeyRequest to it.passkeyRequest
                 )
             } else {
                 emptyMap()
@@ -69,6 +75,14 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
                 } else {
                     null
                 }
+
+                val (passkeyOriginValue, passkeyRequestValue) =
+                    if (values[passkeyOrigin] != null && values[passkeyRequest] != null) {
+                        values[passkeyOrigin] as String to values[passkeyRequest] as String
+                    } else {
+                        null to null
+                    }
+
                 InitialCreateLoginUiState(
                     title = values[title] as? String,
                     username = values[username] as? String,
@@ -76,7 +90,10 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
                     url = values[url] as? String,
                     packageInfoUi = packageInfoUi,
                     aliasItemFormState = values[aliasItem] as? AliasItemFormState,
-                    navTotpUri = values[primaryTotp] as? String
+                    navTotpUri = values[primaryTotp] as? String,
+                    passkeyOrigin = passkeyOriginValue,
+                    passkeyRequest = passkeyRequestValue
+
                 )
             } else {
                 null

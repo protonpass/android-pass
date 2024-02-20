@@ -19,12 +19,12 @@
 package proton.android.pass.featurepasskeys.create.presentation
 
 import androidx.compose.runtime.Immutable
-import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.preferences.ThemePreference
 
 @Immutable
 data class CreatePasskeyRequestData(
     val domain: String,
+    val origin: String,
     val username: String,
     val request: String,
     val rpName: String
@@ -46,10 +46,3 @@ sealed interface CreatePasskeyAppState {
         val data: CreatePasskeyRequestData
     ) : CreatePasskeyAppState
 }
-
-fun CreatePasskeyAppState.Ready.toCreateLoginState() = InitialCreateLoginUiState(
-    title = data.domain,
-    username = data.username,
-    url = data.domain,
-
-)

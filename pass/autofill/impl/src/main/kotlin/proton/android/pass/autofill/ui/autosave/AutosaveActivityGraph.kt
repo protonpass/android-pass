@@ -97,6 +97,10 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
                     is CreateLoginNavigation.LoginCreated -> onNavigate(AutosaveNavigation.Success)
 
+                    is CreateLoginNavigation.LoginCreatedWithPasskey -> {
+                        throw IllegalStateException("Cannot create login with passkey from autosave")
+                    }
+
                     is CreateLoginNavigation.SelectVault -> {
                         appNavigator.navigate(
                             destination = SelectVaultBottomsheet,

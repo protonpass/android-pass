@@ -536,6 +536,9 @@ fun NavGraphBuilder.appGraph(
 
                 is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
                     is CreateLoginNavigation.LoginCreated -> appNavigator.navigateBack()
+                    is CreateLoginNavigation.LoginCreatedWithPasskey -> {
+                        throw IllegalStateException("Cannot create login with passkey from main app")
+                    }
                     is CreateLoginNavigation.SelectVault -> {
                         appNavigator.navigate(
                             destination = SelectVaultBottomsheet,

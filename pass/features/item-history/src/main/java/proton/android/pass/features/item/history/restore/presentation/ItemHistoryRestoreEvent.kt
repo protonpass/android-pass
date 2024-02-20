@@ -18,13 +18,24 @@
 
 package proton.android.pass.features.item.history.restore.presentation
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.data.api.repositories.ItemRevision
+import androidx.compose.runtime.Immutable
 
-@Stable
-internal data class ItemHistoryRestoreState(
-    internal val itemRevision: ItemRevision,
-    internal val itemUiModel: ItemUiModel? = null,
-    internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle,
-)
+@Immutable
+internal sealed interface ItemHistoryRestoreEvent {
+
+    @Immutable
+    object Idle : ItemHistoryRestoreEvent
+
+    @Immutable
+    object OnRestoreItem : ItemHistoryRestoreEvent
+
+    @Immutable
+    object OnRestoreItemCanceled : ItemHistoryRestoreEvent
+
+    @Immutable
+    object OnRestoreItemConfirmed : ItemHistoryRestoreEvent
+
+    @Immutable
+    object OnItemRestored : ItemHistoryRestoreEvent
+
+}

@@ -74,30 +74,6 @@ sealed interface State {
     value class SendResponse(val response: String) : State
 }
 
-@Immutable
-data class CreatePasskeyRequestData(
-    val domain: String,
-    val username: String,
-    val request: String
-)
-
-@Immutable
-sealed interface CreatePasskeyAppState {
-
-    @Immutable
-    object NotReady : CreatePasskeyAppState
-
-    @Immutable
-    object Close : CreatePasskeyAppState
-
-    @Immutable
-    data class Ready(
-        val theme: ThemePreference,
-        val needsAuth: Boolean,
-        val data: CreatePasskeyRequestData
-    ) : CreatePasskeyAppState
-}
-
 @HiltViewModel
 class CreatePasskeyActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
@@ -124,7 +100,8 @@ class CreatePasskeyActivityViewModel @Inject constructor(
             CreatePasskeyRequestData(
                 domain = domain,
                 username = parsed.userName,
-                request = request.callingRequest.requestJson
+                request = request.callingRequest.requestJson,
+                rpName = parsed.rpName
             )
         }
     }

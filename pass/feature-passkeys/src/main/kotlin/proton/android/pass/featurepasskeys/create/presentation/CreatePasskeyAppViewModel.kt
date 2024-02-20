@@ -22,13 +22,28 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.passkeys.StorePasskey
+import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
+import proton.android.pass.featurepasskeys.create.CreatePasskeySnackbarMessage
+import proton.android.pass.featureselectitem.navigation.SelectItemState
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.GeneratePasskey
 import javax.inject.Inject
 
@@ -48,16 +63,92 @@ sealed interface CreatePasskeyAppEvent {
     value class SendResponse(val response: String) : CreatePasskeyAppEvent
 }
 
+@Immutable
+sealed interface CreatePasskeyNavState {
+    @Immutable
+    object Loading : CreatePasskeyNavState
+
+    @Immutable
+    data class Ready(
+        val selectItemState: SelectItemState,
+        val createLoginUiState: InitialCreateLoginUiState
+    ) : CreatePasskeyNavState
+}
+
+@Immutable
+data class CreatePasskeyAppUiState(
+    val event: CreatePasskeyAppEvent,
+    val navState: CreatePasskeyNavState
+)
+
 @HiltViewModel
 class CreatePasskeyAppViewModel @Inject constructor(
     private val generatePasskey: GeneratePasskey,
-    private val storePasskey: StorePasskey
+    private val storePasskey: StorePasskey,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<CreatePasskeyAppEvent> =
         MutableStateFlow(CreatePasskeyAppEvent.Idle)
 
-    val state: StateFlow<CreatePasskeyAppEvent> = eventFlow
+    private val requestStateFlow: MutableStateFlow<Option<AppStateRequest>> =
+        MutableStateFlow(None)
+
+    private val selectItemStateFlow: Flow<Option<SelectItemState>> = requestStateFlow
+        .mapLatest { value ->
+            value.map { stateRequest ->
+                SelectItemState.Passkey.Register(
+                    title = stateRequest.appState.data.domain,
+                    suggestionsUrl = stateRequest.request.callingRequest.origin.toOption()
+                )
+            }
+        }
+
+    private val createLoginUiStateFlow: Flow<Option<InitialCreateLoginUiState>> = requestStateFlow
+        .mapLatest { value ->
+            value.map { stateRequest ->
+                InitialCreateLoginUiState(
+                    title = stateRequest.appState.data.rpName,
+                    username = stateRequest.appState.data.username,
+                    url = stateRequest.request.callingRequest.origin,
+                    passkeyOrigin = stateRequest.request.callingRequest.origin,
+                    passkeyRequest = stateRequest.request.callingRequest.requestJson
+                )
+            }
+        }
+
+    val state: StateFlow<CreatePasskeyAppUiState> = combine(
+        eventFlow,
+        selectItemStateFlow,
+        createLoginUiStateFlow
+    ) { event, selectItem, createLogin ->
+        val navState = when (selectItem) {
+            None -> CreatePasskeyNavState.Loading
+            is Some -> when (createLogin) {
+                None -> CreatePasskeyNavState.Loading
+                is Some -> CreatePasskeyNavState.Ready(
+                    selectItemState = selectItem.value,
+                    createLoginUiState = createLogin.value
+                )
+            }
+        }
+
+        CreatePasskeyAppUiState(
+            event = event,
+            navState = navState
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = CreatePasskeyAppUiState(
+            event = CreatePasskeyAppEvent.Idle,
+            navState = CreatePasskeyNavState.Loading
+        )
+    )
+
+    fun setInitialData(request: CreatePasskeyRequest, appState: CreatePasskeyAppState.Ready) {
+        requestStateFlow.update { AppStateRequest(request, appState).some() }
+    }
 
     fun onItemSelected(item: ItemUiModel) = viewModelScope.launch {
         eventFlow.update {
@@ -76,22 +167,39 @@ class CreatePasskeyAppViewModel @Inject constructor(
             )
         }
 
-        val passkey = generatePasskey(
-            url = request.callingAppInfo.origin ?: "",
-            request = request.callingRequest.requestJson
-        )
+        runCatching {
+            val passkey = generatePasskey(
+                url = request.callingAppInfo.origin ?: "",
+                request = request.callingRequest.requestJson
+            )
+            storePasskey(
+                shareId = item.shareId,
+                itemId = item.id,
+                passkey = passkey.passkey
+            )
+            passkey
+        }.onSuccess { passkey ->
+            eventFlow.emit(CreatePasskeyAppEvent.SendResponse(passkey.response))
+        }.onFailure {
+            PassLogger.w(TAG, "Error generating passkey")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(CreatePasskeySnackbarMessage.ErrorGeneratingPasskey)
 
-        storePasskey(
-            shareId = item.shareId,
-            itemId = item.id,
-            passkey = passkey.passkey
-        )
-
-        eventFlow.emit(CreatePasskeyAppEvent.SendResponse(passkey.response))
+            eventFlow.update { CreatePasskeyAppEvent.Idle }
+        }
     }
 
     fun clearEvent() = viewModelScope.launch {
         eventFlow.emit(CreatePasskeyAppEvent.Idle)
+    }
+
+    private data class AppStateRequest(
+        val request: CreatePasskeyRequest,
+        val appState: CreatePasskeyAppState.Ready
+    )
+
+    companion object {
+        private const val TAG = "CreatePasskeyAppViewModel"
     }
 
 }

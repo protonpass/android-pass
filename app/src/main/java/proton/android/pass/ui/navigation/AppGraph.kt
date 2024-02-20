@@ -841,6 +841,11 @@ fun NavGraphBuilder.appGraph(
                     comesFromBottomsheet = false,
                 )
 
+                is ItemHistoryNavDestination.Detail -> appNavigator.popUpTo(
+                    destination = ViewItem,
+                    comesFromBottomsheet = false,
+                )
+
                 is ItemHistoryNavDestination.Restore -> appNavigator.navigate(
                     destination = ItemHistoryRestoreNavItem,
                     route = ItemHistoryRestoreNavItem.createNavRoute(

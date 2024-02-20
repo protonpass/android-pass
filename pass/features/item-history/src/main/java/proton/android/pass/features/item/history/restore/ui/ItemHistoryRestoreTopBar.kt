@@ -72,7 +72,7 @@ fun ItemHistoryRestoreTopBar(
                 },
                 text = {
                     Text(
-                        text = stringResource(id = R.string.item_history_action_restore),
+                        text = stringResource(id = R.string.item_history_restore_action),
                         fontWeight = FontWeight.W400,
                         fontSize = 14.sp,
                         color = PassTheme.colors.textInvert,

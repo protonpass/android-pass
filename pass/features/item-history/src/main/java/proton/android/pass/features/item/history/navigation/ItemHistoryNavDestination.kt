@@ -26,6 +26,8 @@ sealed interface ItemHistoryNavDestination {
 
     object Back : ItemHistoryNavDestination
 
+    object Detail : ItemHistoryNavDestination
+
     data class Restore(
         val shareId: ShareId,
         val itemId: ItemId,

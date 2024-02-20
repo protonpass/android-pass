@@ -21,12 +21,14 @@ package proton.android.pass.featureitemcreate.impl.login
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
-import proton.android.pass.domain.ShareId
 
 @Immutable
 data class BaseLoginUiState(
@@ -66,15 +68,22 @@ data class BaseLoginUiState(
 @Immutable
 data class CreateLoginUiState(
     val shareUiState: ShareUiState,
-    val baseLoginUiState: BaseLoginUiState
+    val baseLoginUiState: BaseLoginUiState,
+    val passkeyState: Option<CreatePasskeyState> = None
 ) {
     companion object {
         val Initial = CreateLoginUiState(
             shareUiState = ShareUiState.NotInitialised,
-            baseLoginUiState = BaseLoginUiState.Initial
+            baseLoginUiState = BaseLoginUiState.Initial,
         )
     }
 }
+
+@Immutable
+data class CreatePasskeyState(
+    val domain: String,
+    val username: String
+)
 
 @Immutable
 data class UpdateLoginUiState(

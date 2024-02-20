@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.featureauth.impl.AUTH_GRAPH
-import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyRequest
+import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyNavState
 import proton.android.pass.featurepasskeys.create.ui.navigation.createPasskeyActivityGraph
 import proton.android.pass.featureselectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
@@ -47,7 +47,7 @@ import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 fun CreatePasskeyAppContent(
     modifier: Modifier = Modifier,
     needsAuth: Boolean,
-    request: CreatePasskeyRequest,
+    navState: CreatePasskeyNavState.Ready,
     onEvent: (CreatePasskeyEvent) -> Unit,
     onNavigate: (CreatePasskeyNavigation) -> Unit,
 ) {
@@ -82,7 +82,7 @@ fun CreatePasskeyAppContent(
         ) {
             createPasskeyActivityGraph(
                 appNavigator = appNavigator,
-                request = request,
+                navState = navState,
                 onNavigate = onNavigate,
                 onEvent = onEvent,
                 dismissBottomSheet = { callback ->

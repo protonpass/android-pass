@@ -21,6 +21,7 @@ package proton.android.pass.composecomponents.impl.form
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
@@ -30,16 +31,13 @@ import proton.android.pass.commonui.api.body3Norm
 fun ProtonTextFieldLabel(
     modifier: Modifier = Modifier,
     text: String,
-    isError: Boolean = false
+    isError: Boolean = false,
+    color: Color = PassTheme.colors.signalDanger.takeIf { isError } ?: PassTheme.colors.textWeak
 ) {
     Text(
         modifier = modifier,
         text = text,
-        color = if (isError) {
-            PassTheme.colors.signalDanger
-        } else {
-            PassTheme.colors.textWeak
-        },
+        color = color,
         style = if (isError) {
             ProtonTheme.typography.defaultSmallWeak
         } else {

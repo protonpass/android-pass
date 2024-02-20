@@ -36,4 +36,6 @@
         name="passkey_confirm_item_body"
         comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title"
     >Are you sure you want to generate a passkey for the item \'%s\'?</string>
+
+    <string name="passkey_error_generating_passkey">Could not generate passkey</string>
 </resources>

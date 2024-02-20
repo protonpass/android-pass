@@ -38,6 +38,7 @@ import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyAppEvent
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyAppState
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyAppViewModel
+import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyNavState
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyRequest
 import proton.android.pass.featurepasskeys.create.ui.confirm.ConfirmItemDialog
 
@@ -51,11 +52,15 @@ fun CreatePasskeyApp(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewModel.setInitialData(request, appState)
+    }
+
     var askForConfirmation: CreatePasskeyAppEvent.AskForConfirmation? by remember {
         mutableStateOf(null)
     }
-    LaunchedEffect(state) {
-        when (val event = state) {
+    LaunchedEffect(state.event) {
+        when (val event = state.event) {
             is CreatePasskeyAppEvent.Idle -> {}
             is CreatePasskeyAppEvent.AskForConfirmation -> {
                 askForConfirmation = event
@@ -72,39 +77,43 @@ fun CreatePasskeyApp(
     val isDark = isDark(appState.theme)
     SystemUIEffect(isDark = isDark)
 
-    PassTheme(isDark = isDark) {
-        Scaffold(
-            modifier = modifier
-                .background(PassTheme.colors.backgroundStrong)
-                .systemBarsPadding()
-                .imePadding()
-        ) { padding ->
-            CreatePasskeyAppContent(
-                modifier = Modifier.padding(padding),
-                needsAuth = appState.needsAuth,
-//                initialLoginState = appState.data,
-                request = request,
-                onEvent = {
-                    when (it) {
-                        is CreatePasskeyEvent.OnItemSelected -> {
-                            viewModel.onItemSelected(it.item)
-                        }
-                    }
-                },
-                onNavigate = onNavigate
-            )
+    when (val navState = state.navState) {
+        CreatePasskeyNavState.Loading -> {}
+        is CreatePasskeyNavState.Ready -> {
+            PassTheme(isDark = isDark) {
+                Scaffold(
+                    modifier = modifier
+                        .background(PassTheme.colors.backgroundStrong)
+                        .systemBarsPadding()
+                        .imePadding()
+                ) { padding ->
+                    CreatePasskeyAppContent(
+                        modifier = Modifier.padding(padding),
+                        needsAuth = appState.needsAuth,
+                        navState = navState,
+                        onEvent = {
+                            when (it) {
+                                is CreatePasskeyEvent.OnItemSelected -> {
+                                    viewModel.onItemSelected(it.item)
+                                }
+                            }
+                        },
+                        onNavigate = onNavigate
+                    )
 
-            askForConfirmation?.let { event ->
-                ConfirmItemDialog(
-                    item = event.item,
-                    isLoading = event.isLoadingState,
-                    onConfirm = {
-                        viewModel.onConfirmed(event.item, request)
-                    },
-                    onDismiss = {
-                        askForConfirmation = null
+                    askForConfirmation?.let { event ->
+                        ConfirmItemDialog(
+                            item = event.item,
+                            isLoading = event.isLoadingState,
+                            onConfirm = {
+                                viewModel.onConfirmed(event.item, request)
+                            },
+                            onDismiss = {
+                                askForConfirmation = null
+                            }
+                        )
                     }
-                )
+                }
             }
         }
     }

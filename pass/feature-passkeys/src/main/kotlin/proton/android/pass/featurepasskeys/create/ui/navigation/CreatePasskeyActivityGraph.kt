@@ -19,14 +19,33 @@
 package proton.android.pass.featurepasskeys.create.ui.navigation
 
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsBottomSheet
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsNavigation
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.itemOptionsGraph
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
+import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
-import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyRequest
+import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
+import proton.android.pass.featureitemcreate.impl.login.CreateLogin
+import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
+import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
+import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
+import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
+import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyNavState
 import proton.android.pass.featurepasskeys.create.ui.app.CreatePasskeyEvent
 import proton.android.pass.featurepasskeys.create.ui.app.CreatePasskeyNavigation
+import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheet
+import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
@@ -37,16 +56,16 @@ import proton.android.pass.featuresearchoptions.impl.SortingLocation
 import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.featureselectitem.navigation.SelectItem
 import proton.android.pass.featureselectitem.navigation.SelectItemNavigation
-import proton.android.pass.featureselectitem.navigation.SelectItemState
 import proton.android.pass.featureselectitem.navigation.selectItemGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
+import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 
-@Suppress("LongMethod", "CyclomaticComplexMethod", "ComplexMethod")
+@Suppress("LongMethod", "CyclomaticComplexMethod", "ComplexMethod", "ThrowsCount")
 fun NavGraphBuilder.createPasskeyActivityGraph(
     appNavigator: AppNavigator,
-    request: CreatePasskeyRequest,
+    navState: CreatePasskeyNavState.Ready,
     onEvent: (CreatePasskeyEvent) -> Unit,
     onNavigate: (CreatePasskeyNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
@@ -67,34 +86,36 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
     )
 
     selectItemGraph(
-        state = SelectItemState.Passkey.Register(
-            title = request.callingRequest.origin ?: "",
-            suggestionsUrl = request.callingRequest.origin.toOption()
-        ),
+        state = navState.selectItemState,
         onScreenShown = {},
         onNavigate = {
             when (it) {
-                SelectItemNavigation.AddItem -> {}
+                SelectItemNavigation.AddItem -> {
+                    appNavigator.navigate(
+                        destination = CreateLogin,
+                        route = CreateLogin.createNavRoute()
+                    )
+                }
                 SelectItemNavigation.Cancel -> {
                     onNavigate(CreatePasskeyNavigation.Cancel)
                 }
+
                 is SelectItemNavigation.ItemSelected -> {
                     onEvent(CreatePasskeyEvent.OnItemSelected(it.item))
                 }
-                is SelectItemNavigation.SortingBottomsheet ->
-                    appNavigator.navigate(
-                        SortingBottomsheet,
-                        SortingBottomsheet.createNavRoute(
-                            location = SortingLocation.Autofill
-                        )
-                    )
 
-                is SelectItemNavigation.ItemOptions -> {
-//                    appNavigator.navigate(
-//                        destination = AutofillItemOptionsBottomSheet,
-//                        route = AutofillItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
-//                    )
-                }
+                is SelectItemNavigation.SortingBottomsheet -> appNavigator.navigate(
+                    SortingBottomsheet,
+                    SortingBottomsheet.createNavRoute(
+                        location = SortingLocation.Autofill
+                    )
+                )
+
+                is SelectItemNavigation.ItemOptions -> appNavigator.navigate(
+                    destination = ItemOptionsBottomSheet,
+                    route = ItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
+                )
+
                 SelectItemNavigation.Upgrade -> {
                     onNavigate(CreatePasskeyNavigation.Upgrade)
                 }
@@ -102,127 +123,118 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         }
     )
 
-//    createUpdateLoginGraph(
-//        initialCreateLoginUiState = InitialCreateLoginUiState(
-//            title = run {
-//                val url = autofillAppState.autofillData.assistInfo.url
-//                val appName = autofillAppState.autofillData.packageInfo.appName.value
-//                Utils.getTitle(url, appName.some())
-//            },
-//            url = autofillAppState.autofillData.assistInfo.url.value(),
-//            aliasItemFormState = null,
-//
-//            // Only pass PackageInfoUi if the packageName is not a browser
-//            packageInfoUi = autofillAppState.autofillData.packageInfo
-//                .takeIf { !it.packageName.isBrowser() }
-//                ?.let { PackageInfoUi(it) },
-//        ),
-//        onNavigate = {
-//            when (it) {
-//                BaseLoginNavigation.Close -> dismissBottomSheet {
-//                    appNavigator.navigateBack(comesFromBottomsheet = true)
-//                }
-//
-//                is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
-//                    destination = CreateAliasBottomSheet,
-//                    route = CreateAliasBottomSheet.createNavRoute(
-//                        it.shareId,
-//                        it.showUpgrade,
-//                        it.title
-//                    )
-//                )
-//
-//                BaseLoginNavigation.GeneratePassword -> appNavigator.navigate(
-//                    destination = GeneratePasswordBottomsheet,
-//                    route = GeneratePasswordBottomsheet.buildRoute(
-//                        mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
-//                    )
-//                )
-//
-//                is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
-//                    is CreateLoginNavigation.LoginCreated -> {
-//                        onEvent(AutofillEvent.AutofillItemSelected(event.itemUiModel.toAutoFillItem()))
-//                    }
-//
-//                    is CreateLoginNavigation.SelectVault -> {
-//                        appNavigator.navigate(
-//                            destination = SelectVaultBottomsheet,
-//                            route = SelectVaultBottomsheet.createNavRoute(event.shareId)
-//                        )
-//                    }
-//                }
-//
-//                is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-//                    destination = CameraTotp,
-//                    route = CameraTotp.createNavRoute(it.index)
-//                )
-//
-//                BaseLoginNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
-//
-//                is BaseLoginNavigation.AliasOptions -> appNavigator.navigate(
-//                    destination = AliasOptionsBottomSheet,
-//                    route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
-//                )
-//
-//                BaseLoginNavigation.DeleteAlias -> appNavigator.navigateBackWithResult(
-//                    key = CLEAR_ALIAS_NAV_PARAMETER_KEY,
-//                    value = true
-//                )
-//
-//                is BaseLoginNavigation.EditAlias -> {
-//                    appNavigator.navigate(
-//                        destination = CreateAliasBottomSheet,
-//                        route = CreateAliasBottomSheet.createNavRoute(
-//                            it.shareId,
-//                            it.showUpgrade,
-//                            isEdit = true
-//                        )
-//                    )
-//                }
-//
-//                BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
-//                    destination = AddCustomFieldBottomSheet
-//                )
-//
-//                is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
-//                    appNavigator.navigate(
-//                        destination = CustomFieldNameDialog,
-//                        route = CustomFieldNameDialog.buildRoute(it.type),
-//                        backDestination = CreateLogin
-//                    )
-//                }
-//
-//                is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
-//                    destination = CustomFieldOptionsBottomSheet,
-//                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.currentValue)
-//                )
-//
-//                is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
-//                    appNavigator.navigate(
-//                        destination = EditCustomFieldNameDialog,
-//                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.currentValue),
-//                        backDestination = CreateLogin
-//                    )
-//                }
-//
-//                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
-//                    appNavigator.navigateBack(comesFromBottomsheet = true)
-//                }
-//
-//                // Updates cannot happen
-//                is BaseLoginNavigation.OnUpdateLoginEvent -> {}
-//                is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
-//                    destination = PhotoPickerTotp,
-//                    route = PhotoPickerTotp.createNavRoute(it.index),
-//                    backDestination = CreateLogin
-//                )
-//
-//                BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
-//                is BaseLoginNavigation.TotpSuccess ->
-//                    appNavigator.navigateBackWithResult(it.results)
-//            }
-//        }
-//    )
+    createUpdateLoginGraph(
+        initialCreateLoginUiState = navState.createLoginUiState,
+        onNavigate = {
+            when (it) {
+                BaseLoginNavigation.Close -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+
+                is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
+                    destination = CreateAliasBottomSheet,
+                    route = CreateAliasBottomSheet.createNavRoute(
+                        it.shareId,
+                        it.showUpgrade,
+                        it.title
+                    )
+                )
+
+                BaseLoginNavigation.GeneratePassword -> appNavigator.navigate(
+                    destination = GeneratePasswordBottomsheet,
+                    route = GeneratePasswordBottomsheet.buildRoute(
+                        mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
+                    )
+                )
+
+                is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
+                    is CreateLoginNavigation.LoginCreated -> {
+                        throw IllegalStateException("Should not invoke this on CreatePasskey")
+                    }
+
+                    is CreateLoginNavigation.LoginCreatedWithPasskey -> {
+                        onNavigate(CreatePasskeyNavigation.SendResponse(event.createPasskeyResponse))
+                    }
+
+                    is CreateLoginNavigation.SelectVault -> {
+                        appNavigator.navigate(
+                            destination = SelectVaultBottomsheet,
+                            route = SelectVaultBottomsheet.createNavRoute(event.shareId)
+                        )
+                    }
+                }
+
+                is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotp,
+                    route = CameraTotp.createNavRoute(it.index)
+                )
+
+                BaseLoginNavigation.Upgrade -> onNavigate(CreatePasskeyNavigation.Upgrade)
+
+                is BaseLoginNavigation.AliasOptions -> appNavigator.navigate(
+                    destination = AliasOptionsBottomSheet,
+                    route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
+                )
+
+                BaseLoginNavigation.DeleteAlias -> appNavigator.navigateBackWithResult(
+                    key = CLEAR_ALIAS_NAV_PARAMETER_KEY,
+                    value = true
+                )
+
+                is BaseLoginNavigation.EditAlias -> {
+                    appNavigator.navigate(
+                        destination = CreateAliasBottomSheet,
+                        route = CreateAliasBottomSheet.createNavRoute(
+                            it.shareId,
+                            it.showUpgrade,
+                            isEdit = true
+                        )
+                    )
+                }
+
+                BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
+                    destination = AddCustomFieldBottomSheet
+                )
+
+                is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialog,
+                        route = CustomFieldNameDialog.buildRoute(it.type),
+                        backDestination = CreateLogin
+                    )
+                }
+
+                is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheet,
+                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.currentValue)
+                )
+
+                is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialog,
+                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.currentValue),
+                        backDestination = CreateLogin
+                    )
+                }
+
+                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+
+                // Updates cannot happen
+                is BaseLoginNavigation.OnUpdateLoginEvent -> {}
+                is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
+                    destination = PhotoPickerTotp,
+                    route = PhotoPickerTotp.createNavRoute(it.index),
+                    backDestination = CreateLogin
+                )
+
+                BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseLoginNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(it.results)
+            }
+        }
+    )
 
     generatePasswordBottomsheetGraph(
         onNavigate = {
@@ -243,34 +255,33 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         }
     )
 
-//    createAliasGraph(
-//        onNavigate = {
-//            when (it) {
-//                CreateAliasNavigation.Close -> appNavigator.navigateBack()
-//                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
-//                    appNavigator.navigateBack(comesFromBottomsheet = true)
-//                }
-//
-//                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {
-//                    appNavigator.navigateBack(comesFromBottomsheet = true)
-//                }
-//
-//
-//                is CreateAliasNavigation.Created -> {
-//                    val created = CreatedAlias(it.shareId, it.itemId, it.alias)
-//                    onEvent(AutofillEvent.AutofillItemSelected(created.toAutofillItem()))
-//                }
-//
-//                CreateAliasNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
-//                is CreateAliasNavigation.SelectVault -> {
-//                    appNavigator.navigate(
-//                        destination = SelectVaultBottomsheet,
-//                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
-//                    )
-//                }
-//            }
-//        }
-//    )
+    createAliasGraph(
+        onNavigate = {
+            when (it) {
+                CreateAliasNavigation.Close -> appNavigator.navigateBack()
+                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+
+                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+
+
+                is CreateAliasNavigation.Created -> {
+                    throw IllegalStateException("Cannot create alias from CreatePasskey")
+                }
+
+                CreateAliasNavigation.Upgrade -> onNavigate(CreatePasskeyNavigation.Upgrade)
+                is CreateAliasNavigation.SelectVault -> {
+                    appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                    )
+                }
+            }
+        }
+    )
 
     vaultGraph(
         onNavigate = {
@@ -307,14 +318,24 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 SearchOptionsNavigation.Filter -> {
                     throw IllegalStateException("Cannot Filter on CreatePasskey")
                 }
+
                 SearchOptionsNavigation.Sorting -> {
                     throw IllegalStateException("Cannot change Sorting on CreatePasskey")
                 }
+
                 SearchOptionsNavigation.BulkActions -> {
                     throw IllegalStateException("Cannot perform bulk actions on CreatePasskey")
                 }
             }
         }
     )
+
+    itemOptionsGraph {
+        when (it) {
+            ItemOptionsNavigation.Close -> dismissBottomSheet {
+                appNavigator.navigateBack(comesFromBottomsheet = true)
+            }
+        }
+    }
 
 }

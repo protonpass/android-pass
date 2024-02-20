@@ -21,19 +21,32 @@ package proton.android.pass.featureitemcreate.impl.common
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 
 @Composable
 fun ItemSavedLaunchedEffect(
     isItemSaved: ItemSavedState,
     selectedShareId: ShareId?,
-    onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit
+    onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit,
+    onPasskeyResponse: (String) -> Unit = {}
 ) {
-    if (isItemSaved !is ItemSavedState.Success) return
     selectedShareId ?: return
-    LaunchedEffect(Unit) {
-        onSuccess(selectedShareId, isItemSaved.itemId, isItemSaved.item)
+
+    when (isItemSaved) {
+        is ItemSavedState.Unknown -> {}
+        is ItemSavedState.Success -> {
+            LaunchedEffect(Unit) {
+                onSuccess(selectedShareId, isItemSaved.itemId, isItemSaved.item)
+            }
+        }
+        is ItemSavedState.SuccessWithPasskeyResponse -> {
+            LaunchedEffect(Unit) {
+                onPasskeyResponse(isItemSaved.response)
+            }
+        }
     }
+
+
 }

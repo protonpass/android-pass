@@ -29,4 +29,7 @@ sealed interface ItemSavedState {
         val itemId: ItemId,
         val item: ItemUiModel
     ) : ItemSavedState
+
+    @JvmInline
+    value class SuccessWithPasskeyResponse(val response: String) : ItemSavedState
 }

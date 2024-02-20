@@ -20,13 +20,19 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 
 sealed interface CreateLoginNavigation {
-    data class LoginCreated(val itemUiModel: ItemUiModel) : CreateLoginNavigation
-    data class SelectVault(val shareId: ShareId) : CreateLoginNavigation
+    @JvmInline
+    value class LoginCreated(val itemUiModel: ItemUiModel) : CreateLoginNavigation
+
+    @JvmInline
+    value class SelectVault(val shareId: ShareId) : CreateLoginNavigation
+
+    @JvmInline
+    value class LoginCreatedWithPasskey(val createPasskeyResponse: String) : CreateLoginNavigation
 }
 
 sealed interface UpdateLoginNavigation {

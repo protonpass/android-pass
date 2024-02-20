@@ -119,6 +119,7 @@ import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -190,6 +191,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.TestObserveItemsWithPasskeys
 import proton.android.pass.data.fakes.usecases.TestObserveMFACount
 import proton.android.pass.data.fakes.usecases.TestObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
@@ -637,4 +639,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveUsableVaults(impl: TestObserveUsableVaults): ObserveUsableVaults
+
+    @Binds
+    abstract fun bindObserveItemsWithPasskeys(impl: TestObserveItemsWithPasskeys): ObserveItemsWithPasskeys
 }

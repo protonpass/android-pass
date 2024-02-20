@@ -20,8 +20,11 @@ package proton.android.pass.features.item.history.restore.presentation
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.data.api.repositories.ItemRevision
 
 @Stable
 internal data class ItemHistoryRestoreState(
+    internal val itemRevision: ItemRevision,
     internal val itemUiModel: ItemUiModel? = null,
+    internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle,
 )

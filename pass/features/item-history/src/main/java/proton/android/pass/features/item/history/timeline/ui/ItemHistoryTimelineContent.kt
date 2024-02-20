@@ -56,7 +56,7 @@ internal fun ItemHistoryTimelineContent(
                     horizontal = Spacing.medium,
                     vertical = Spacing.large,
                 ),
-                text = stringResource(id = R.string.item_history_title),
+                text = stringResource(id = R.string.item_history_timeline_title),
             )
 
             if (isLoadingState.value()) {

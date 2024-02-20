@@ -29,11 +29,15 @@ import proton.android.pass.features.item.history.restore.presentation.ItemHistor
 fun ItemHistoryRestoreScreen(
     onNavigated: (ItemHistoryNavDestination) -> Unit,
     viewModel: ItemHistoryRestoreViewModel = hiltViewModel(),
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
 
     ItemHistoryRestoreContent(
         onNavigated = onNavigated,
         state = state,
+        onEventConsumed = ::onEventConsumed,
+        onRestoreClick = ::onRestoreItem,
+        onRestoreConfirmClick = ::onRestoreItemConfirmed,
+        onRestoreCancelClick = ::onRestoreItemCanceled,
     )
 }

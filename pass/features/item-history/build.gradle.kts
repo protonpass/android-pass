@@ -71,7 +71,9 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.notifications.api)
 
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)

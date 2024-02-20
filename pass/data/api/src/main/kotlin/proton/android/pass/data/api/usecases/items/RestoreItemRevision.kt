@@ -16,15 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.restore.presentation
+package proton.android.pass.data.api.usecases.items
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
-@Stable
-internal data class ItemHistoryRestoreState(
-    internal val itemRevision: ItemRevision,
-    internal val itemUiModel: ItemUiModel? = null,
-    internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle,
-)
+interface RestoreItemRevision {
+
+    suspend operator fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+        itemContents: ItemContents,
+    )
+
+}

@@ -18,13 +18,25 @@
 
 package proton.android.pass.features.item.history.restore.presentation
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.data.api.repositories.ItemRevision
+import androidx.annotation.StringRes
+import proton.android.pass.features.item.history.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-@Stable
-internal data class ItemHistoryRestoreState(
-    internal val itemRevision: ItemRevision,
-    internal val itemUiModel: ItemUiModel? = null,
-    internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle,
-)
+internal enum class ItemHistoryRestoreSnackbarMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false,
+) : SnackbarMessage {
+
+    RestoreItemRevisionError(
+        id = R.string.item_history_restore_snackbar_message_error,
+        type = SnackbarType.ERROR,
+    ),
+
+    RestoreItemRevisionSuccess(
+        id = R.string.item_history_restore_snackbar_message_success,
+        type = SnackbarType.SUCCESS,
+    ),
+
+}

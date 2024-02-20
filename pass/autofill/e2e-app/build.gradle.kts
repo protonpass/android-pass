@@ -103,6 +103,7 @@ dependencies {
     implementation(projects.pass.notifications.fakes)
     implementation(projects.pass.telemetry.fakes)
     implementation(projects.pass.totp.fakes)
+    implementation(projects.pass.passkeys.fakes)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.impl)
 

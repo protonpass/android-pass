@@ -109,6 +109,6 @@
     <string
         name="home_app_needs_update_message"
         comment="Message displayed when the app needs to be updated"
-    >You are using a version of the app that is too old. In order to use the latest features, please update your app.</string>
+    >The app version is not supported anymore, please update your app.</string>
 
 </resources>

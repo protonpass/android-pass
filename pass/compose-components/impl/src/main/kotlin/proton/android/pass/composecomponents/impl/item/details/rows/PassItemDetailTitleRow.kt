@@ -32,6 +32,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailSubtitle
+import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailTitle
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
@@ -49,7 +50,7 @@ internal fun PassItemDetailTitleRow(
 ) = with(itemUiModel) {
     when (contents) {
         is ItemContents.Alias -> with(contents as ItemContents.Alias) {
-            PassItemDetailTitleRow(
+            ItemDetailTitleRow(
                 modifier = modifier,
                 title = title,
                 isPinned = isPinned,
@@ -64,7 +65,7 @@ internal fun PassItemDetailTitleRow(
         }
 
         is ItemContents.CreditCard -> with(contents as ItemContents.CreditCard) {
-            PassItemDetailTitleRow(
+            ItemDetailTitleRow(
                 modifier = modifier,
                 title = title,
                 isPinned = isPinned,
@@ -79,7 +80,7 @@ internal fun PassItemDetailTitleRow(
         }
 
         is ItemContents.Login -> with(contents as ItemContents.Login) {
-            PassItemDetailTitleRow(
+            ItemDetailTitleRow(
                 modifier = modifier,
                 title = title,
                 isPinned = isPinned,
@@ -117,7 +118,7 @@ internal fun PassItemDetailTitleRow(
                             )
                         }
 
-                        proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailTitleRow(
+                        PassItemDetailTitle(
                             text = title,
                             maxLines = Int.MAX_VALUE,
                         )
@@ -135,7 +136,7 @@ internal fun PassItemDetailTitleRow(
         }
 
         is ItemContents.Unknown -> with(contents as ItemContents.Unknown) {
-            PassItemDetailTitleRow(
+            ItemDetailTitleRow(
                 modifier = modifier,
                 title = title,
                 isPinned = false,
@@ -147,7 +148,7 @@ internal fun PassItemDetailTitleRow(
 }
 
 @Composable
-private fun PassItemDetailTitleRow(
+private fun ItemDetailTitleRow(
     modifier: Modifier = Modifier,
     title: String,
     isPinned: Boolean,
@@ -174,7 +175,7 @@ private fun PassItemDetailTitleRow(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(Spacing.small),
         ) {
-            proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailTitleRow(
+            PassItemDetailTitle(
                 text = title,
             )
 

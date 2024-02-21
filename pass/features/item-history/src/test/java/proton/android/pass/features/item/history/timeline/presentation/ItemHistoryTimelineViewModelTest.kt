@@ -20,6 +20,7 @@ package proton.android.pass.features.item.history.timeline.presentation
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -77,7 +78,7 @@ internal class ItemHistoryTimelineViewModelTest {
 
     @Test
     internal fun `WHEN item revisions AND item category are emitted THEN update state`() = runTest {
-        val itemRevisions = emptyList<ItemRevision>()
+        val itemRevisions = persistentListOf<ItemRevision>()
         val itemCategory = ItemCategoryMother.random()
         val expectedUpdatedState = ItemHistoryTimelineStateMother.create(
             shareId = shareId,

@@ -142,7 +142,8 @@ data class HomeListUiState(
     val homeVaultSelection: VaultSelectionOption = VaultSelectionOption.AllVaults,
     val searchFilterType: SearchFilterType = SearchFilterType.All,
     val sortingType: SearchSortingType = SearchSortingType.MostRecent,
-    val selectionState: HomeSelectionState
+    val selectionState: HomeSelectionState,
+    val showNeedsUpdate: Boolean,
 ) {
     companion object {
         val Loading = HomeListUiState(
@@ -152,7 +153,8 @@ data class HomeListUiState(
             canLoadExternalImages = false,
             items = persistentListOf(),
             shares = persistentMapOf(),
-            selectionState = HomeSelectionState.Initial
+            selectionState = HomeSelectionState.Initial,
+            showNeedsUpdate = false
         )
     }
 }

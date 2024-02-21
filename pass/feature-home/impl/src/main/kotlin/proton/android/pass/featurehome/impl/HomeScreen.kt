@@ -20,6 +20,9 @@ package proton.android.pass.featurehome.impl
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.DrawerValue
@@ -38,11 +41,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
@@ -64,6 +70,7 @@ import proton.android.pass.featurehome.impl.bottomsheet.CreditCardOptionsBottomS
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetContents
+import proton.android.pass.featurehome.impl.needsupdate.AppNeedsUpdateBanner
 import proton.android.pass.featurehome.impl.onboardingtips.NotificationPermissionLaunchedEffect
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsEvent
@@ -535,6 +542,19 @@ fun HomeScreen(
                 scrollableState = scrollableState,
                 shouldScrollToTop = homeUiState.homeListUiState.shouldScrollToTop,
                 header = {
+                    if (homeUiState.homeListUiState.showNeedsUpdate) {
+                        item("needsUpdate") {
+                            val context = LocalContext.current
+                            Column {
+                                AppNeedsUpdateBanner(
+                                    onClick = {
+                                        homeViewModel.openUpdateApp(context.toClassHolder())
+                                    }
+                                )
+                                Spacer(modifier = Modifier.height(Spacing.small))
+                            }
+                        }
+                    }
                     item("header") {
                         OnBoardingTips(
                             onClick = onBoardingTipsViewModel::onClick,

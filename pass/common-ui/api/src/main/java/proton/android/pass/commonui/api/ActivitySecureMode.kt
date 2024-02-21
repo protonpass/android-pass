@@ -21,18 +21,25 @@ package proton.android.pass.commonui.api
 import android.app.Activity
 import android.os.Build
 import android.view.WindowManager
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.value
 
+private const val TAG = "ActivitySecureMode"
+
 fun Activity.setSecureMode(preference: AllowScreenshotsPreference) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        PassLogger.i(TAG, "setRecentsScreenshotEnabled = false")
         setRecentsScreenshotEnabled(false)
     }
 
     if (!preference.value()) {
+        PassLogger.i(TAG, "Setting FLAG_SECURE. Screenshots prevented")
         window.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
         )
+    } else {
+        PassLogger.i(TAG, "Not setting FLAG_SECURE. Screenshots allowed")
     }
 }

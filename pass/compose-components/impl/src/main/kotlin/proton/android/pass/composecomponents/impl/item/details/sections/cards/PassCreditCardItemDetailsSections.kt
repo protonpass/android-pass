@@ -18,8 +18,11 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.cards
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 import proton.android.pass.domain.ItemContents
@@ -30,21 +33,24 @@ internal fun PassCreditCardItemDetailsSections(
     contents: ItemContents.CreditCard,
     itemColors: ProtonItemColors,
 ) = with(contents) {
-    PassCreditCardItemDetailMainSection(
+    Column(
         modifier = modifier,
-        cardholder = cardHolder,
-        cardNumber = number,
-        expirationDate = expirationDate,
-        cvv = "123",
-        pin = "1234",
-        itemColors = itemColors,
-    )
-
-    if (note.isNotBlank()) {
-        PassSharedItemDetailNoteSection(
-            modifier = modifier,
-            note = note,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        PassCreditCardItemDetailMainSection(
+            cardholder = cardHolder,
+            cardNumber = number,
+            expirationDate = expirationDate,
+            cvv = "123",
+            pin = "1234",
             itemColors = itemColors,
         )
+
+        if (note.isNotBlank()) {
+            PassSharedItemDetailNoteSection(
+                note = note,
+                itemColors = itemColors,
+            )
+        }
     }
 }

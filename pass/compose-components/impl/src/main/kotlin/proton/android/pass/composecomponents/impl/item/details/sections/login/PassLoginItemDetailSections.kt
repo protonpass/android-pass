@@ -18,8 +18,11 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.login
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
@@ -31,25 +34,27 @@ internal fun PassLoginItemDetailSections(
     contents: ItemContents.Login,
     itemColors: ProtonItemColors,
 ) = with(contents) {
-    PassLoginItemDetailMainSection(
+    Column(
         modifier = modifier,
-        username = username,
-        itemColors = itemColors,
-    )
-
-    if (urls.isNotEmpty()) {
-        PassLoginItemDetailWebsitesSection(
-            modifier = modifier,
-            urls = urls.toPersistentList(),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        PassLoginItemDetailMainSection(
+            username = username,
             itemColors = itemColors,
         )
-    }
 
-    if (note.isNotBlank()) {
-        PassSharedItemDetailNoteSection(
-            modifier = modifier,
-            note = note,
-            itemColors = itemColors,
-        )
+        if (urls.isNotEmpty()) {
+            PassLoginItemDetailWebsitesSection(
+                urls = urls.toPersistentList(),
+                itemColors = itemColors,
+            )
+        }
+
+        if (note.isNotBlank()) {
+            PassSharedItemDetailNoteSection(
+                note = note,
+                itemColors = itemColors,
+            )
+        }
     }
 }

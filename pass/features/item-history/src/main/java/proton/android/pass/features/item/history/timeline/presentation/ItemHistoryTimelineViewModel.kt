@@ -21,6 +21,7 @@ package proton.android.pass.features.item.history.timeline.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -59,7 +60,7 @@ class ItemHistoryTimelineViewModel @Inject constructor(
             shareId = shareId,
             itemId = itemId,
             isLoadingState = IsLoadingState.NotLoading,
-            itemRevisions = itemRevisions,
+            itemRevisions = itemRevisions.toPersistentList(),
             itemCategory = itemCategory,
         )
     }.stateIn(

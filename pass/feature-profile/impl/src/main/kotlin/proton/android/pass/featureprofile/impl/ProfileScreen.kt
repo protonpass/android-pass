@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.AppUrls.PASS_STORE
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 
 @Suppress("CyclomaticComplexMethod", "ComplexMethod")
@@ -96,9 +97,6 @@ object ProfileScreenTestTag {
 
 @VisibleForTesting
 const val PASS_IMPORT = "https://proton.me/support/pass-import"
-
-@VisibleForTesting
-const val PASS_STORE = "https://play.google.com/store/apps/details?id=proton.android.pass"
 
 @VisibleForTesting
 const val PASS_TUTORIAL = "https://www.youtube.com/watch?v=Nm4DCAjePOM"

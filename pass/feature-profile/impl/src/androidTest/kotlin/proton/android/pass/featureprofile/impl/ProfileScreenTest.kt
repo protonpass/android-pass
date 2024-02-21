@@ -36,6 +36,7 @@ import org.junit.Test
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
+import proton.android.pass.commonui.api.AppUrls.PASS_STORE
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.UpgradeInfo

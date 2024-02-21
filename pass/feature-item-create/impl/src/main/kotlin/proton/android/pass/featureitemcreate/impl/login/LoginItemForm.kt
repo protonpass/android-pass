@@ -51,6 +51,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsCo
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.None
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldsContent
+import proton.android.pass.featureitemcreate.impl.login.passkey.PasskeysSection
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Suppress("UnusedPrivateMember")
@@ -102,6 +103,10 @@ internal fun LoginItemForm(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             titleSection()
+            PasskeysSection(
+                passkeys = loginItemFormState.passkeys.toImmutableList(),
+                onEvent = onEvent
+            )
             MainLoginSection(
                 loginItemFormState = loginItemFormState,
                 canUpdateUsername = canUpdateUsername,

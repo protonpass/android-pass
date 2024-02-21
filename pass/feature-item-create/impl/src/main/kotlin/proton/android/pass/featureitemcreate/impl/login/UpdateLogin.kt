@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -43,6 +44,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
+import proton.android.pass.featureitemcreate.impl.login.dialog.ConfirmDeletePasskeyDialog
 
 @Suppress("ComplexMethod")
 @Composable
@@ -57,6 +59,7 @@ fun UpdateLogin(
     val uiState by viewModel.updateLoginUiState.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    var confirmDeletePasskey: UpdateUiEvent.ConfirmDeletePasskey? by remember { mutableStateOf(null) }
     val onExit = {
         if (uiState.baseLoginUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
@@ -65,9 +68,7 @@ fun UpdateLogin(
             onNavigate(BaseLoginNavigation.Close)
         }
     }
-    BackHandler {
-        onExit()
-    }
+    BackHandler { onExit() }
 
     LaunchedEffect(draftAlias) {
         draftAlias ?: return@LaunchedEffect
@@ -76,6 +77,15 @@ fun UpdateLogin(
     LaunchedEffect(navTotpUri) {
         navTotpUri ?: return@LaunchedEffect
         viewModel.setTotp(navTotpUri, navTotpIndex)
+    }
+
+    LaunchedEffect(uiState.uiEvent) {
+        when (val event = uiState.uiEvent) {
+            UpdateUiEvent.Idle -> {}
+            is UpdateUiEvent.ConfirmDeletePasskey -> confirmDeletePasskey = event
+        }
+
+        viewModel.clearEvent()
     }
 
     Box(
@@ -135,6 +145,10 @@ fun UpdateLogin(
                                 viewModel.onFocusChange(event.loginCustomField, event.isFocused)
                         }
                     }
+
+                    is LoginContentEvent.OnDeletePasskey -> {
+                        viewModel.onDeletePasskey(it.idx, it.passkey)
+                    }
                 }
             },
             onNavigate = { onNavigate(it) },
@@ -165,6 +179,19 @@ fun UpdateLogin(
                 onNavigate(BaseLoginNavigation.Close)
             }
         )
+
+        confirmDeletePasskey?.let { event ->
+            ConfirmDeletePasskeyDialog(
+                passkey = event.passkey,
+                onCancel = {
+                    confirmDeletePasskey = null
+                },
+                onConfirm = {
+                    viewModel.onDeletePasskeyConfirmed(event.index, event.passkey)
+                    confirmDeletePasskey = null
+                }
+            )
+        }
     }
 
     ItemSavedLaunchedEffect(

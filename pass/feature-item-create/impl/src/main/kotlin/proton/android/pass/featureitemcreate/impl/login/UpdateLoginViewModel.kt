@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -115,6 +116,9 @@ class UpdateLoginViewModel @Inject constructor(
     private val navItemId: ItemId =
         ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
 
+    private val updateEventFlow: MutableStateFlow<UpdateUiEvent> =
+        MutableStateFlow(UpdateUiEvent.Idle)
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
@@ -143,6 +147,7 @@ class UpdateLoginViewModel @Inject constructor(
     val updateLoginUiState: StateFlow<UpdateLoginUiState> = combine(
         flowOf(navShareId),
         baseLoginUiState,
+        updateEventFlow,
         ::UpdateLoginUiState
     ).stateIn(
         scope = viewModelScope,
@@ -194,6 +199,25 @@ class UpdateLoginViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
+    fun onDeletePasskey(idx: Int, passkey: UIPasskeyContent) = viewModelScope.launch {
+        updateEventFlow.update { UpdateUiEvent.ConfirmDeletePasskey(idx, passkey) }
+    }
+
+    fun onDeletePasskeyConfirmed(idx: Int, passkey: UIPasskeyContent) = viewModelScope.launch {
+        val newPasskeyList = loginItemFormMutableState.passkeys.toMutableList()
+        if (idx >= 0 && idx < newPasskeyList.size) {
+            val removed = newPasskeyList.removeAt(idx)
+            if (removed.id == passkey.id) {
+                loginItemFormMutableState = loginItemFormState.copy(passkeys = newPasskeyList)
+            }
+        }
+    }
+
+    fun clearEvent() = viewModelScope.launch {
+        updateEventFlow.update { UpdateUiEvent.Idle }
+    }
+
+    @Suppress("LongMethod")
     private fun onItemReceived(item: Item) {
         encryptionContextProvider.withEncryptionContext {
             val default = LoginItemFormState.default(this)
@@ -253,7 +277,8 @@ class UpdateLoginViewModel @Inject constructor(
                     note = decrypt(item.note),
                     packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),
                     primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
-                    customFields = sanitisedToEditCustomField
+                    customFields = sanitisedToEditCustomField,
+                    passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) }
                 )
             }
         }

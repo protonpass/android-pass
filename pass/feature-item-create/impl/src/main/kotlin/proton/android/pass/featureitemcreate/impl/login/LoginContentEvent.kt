@@ -19,8 +19,8 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 
 sealed interface LoginContentEvent {
     object Up : LoginContentEvent
@@ -34,4 +34,5 @@ sealed interface LoginContentEvent {
     data class OnLinkedAppDelete(val app: PackageInfoUi) : LoginContentEvent
     data class OnCustomFieldEvent(val event: CustomFieldEvent) : LoginContentEvent
     data class OnFocusChange(val field: LoginField, val isFocused: Boolean) : LoginContentEvent
+    data class OnDeletePasskey(val idx: Int, val passkey: UIPasskeyContent) : LoginContentEvent
 }

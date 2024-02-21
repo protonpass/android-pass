@@ -59,6 +59,7 @@ fun HelpCenterProfileSection(
             PassDivider()
             SettingOption(
                 text = stringResource(R.string.profile_option_import_export),
+                isLink = true,
                 onClick = onImportExportClick
             )
             PassDivider()

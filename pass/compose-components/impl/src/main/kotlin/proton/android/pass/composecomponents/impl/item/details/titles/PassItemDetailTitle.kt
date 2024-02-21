@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 
 @Composable
-internal fun PassItemDetailTitleRow(
+internal fun PassItemDetailTitle(
     modifier: Modifier = Modifier,
     text: String,
     maxLines: Int = 2,

@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.item.history.timeline.presentation
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.ItemId
@@ -32,7 +34,7 @@ internal object ItemHistoryTimelineStateMother {
         shareId: ShareId = ShareIdMother.create(),
         itemId: ItemId = ItemIdMother.create(),
         isLoadingState: IsLoadingState = IsLoadingState.Loading,
-        itemRevisions: List<ItemRevision> = emptyList(),
+        itemRevisions: ImmutableList<ItemRevision> = persistentListOf(),
         itemCategory: ItemCategory = ItemCategory.Unknown,
     ): ItemHistoryTimelineState = ItemHistoryTimelineState(
         shareId = shareId,

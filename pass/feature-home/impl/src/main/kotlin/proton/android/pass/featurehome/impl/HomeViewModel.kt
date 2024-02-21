@@ -18,6 +18,7 @@
 
 package proton.android.pass.featurehome.impl
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -65,6 +66,9 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.AppUrls
+import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys.NoGrouping
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationAsc
@@ -96,6 +100,7 @@ import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
@@ -194,6 +199,7 @@ class HomeViewModel @Inject constructor(
     observePinnedItems: ObservePinnedItems,
     preferencesRepository: UserPreferencesRepository,
     getUserPlan: GetUserPlan,
+    observeAppNeedsUpdate: ObserveAppNeedsUpdate,
     appDispatchers: AppDispatchers,
     savedState: SavedStateHandleProvider
 ) : ViewModel() {
@@ -471,6 +477,10 @@ class HomeViewModel @Inject constructor(
         }
     }.flowOn(appDispatchers.default)
 
+    private val appNeedsUpdateFlow: Flow<LoadingResult<Boolean>> = observeAppNeedsUpdate()
+        .asLoadingResult()
+        .distinctUntilChanged()
+
     private val homeListUiStateFlow = combineN(
         itemsFlow,
         refreshingLoadingFlow,
@@ -480,6 +490,7 @@ class HomeViewModel @Inject constructor(
         preferencesRepository.getUseFaviconsPreference(),
         selectionState,
         pinningUiStateFlow,
+        appNeedsUpdateFlow
     ) { itemsResult,
         refreshingLoading,
         shouldScrollToTop,
@@ -487,7 +498,8 @@ class HomeViewModel @Inject constructor(
         shareListWrapper,
         useFavicons,
         selection,
-        pinningUiState ->
+        pinningUiState,
+        appNeedsUpdate ->
 
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
@@ -517,7 +529,8 @@ class HomeViewModel @Inject constructor(
             selectionState = selection.toState(
                 isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash,
                 isPinningEnabled = pinningUiState.isPinningEnabled
-            )
+            ),
+            showNeedsUpdate = appNeedsUpdate.getOrNull() ?: false
         )
     }
 
@@ -996,6 +1009,12 @@ class HomeViewModel @Inject constructor(
                     else -> {}
                 }
             }
+        }
+    }
+
+    fun openUpdateApp(context: ClassHolder<Context>) {
+        context.get().map {
+            BrowserUtils.openWebsite(it, AppUrls.PASS_STORE)
         }
     }
 

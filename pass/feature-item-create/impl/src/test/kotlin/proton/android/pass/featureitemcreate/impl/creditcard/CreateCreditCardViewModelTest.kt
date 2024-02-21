@@ -43,6 +43,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
@@ -171,6 +172,7 @@ class CreateCreditCardViewModelTest {
                             modificationTime = item.modificationTime,
                             lastAutofillTime = item.lastAutofillTime.value(),
                             isPinned = false,
+                            category = ItemCategory.CreditCard,
                         )
                     )
                 )

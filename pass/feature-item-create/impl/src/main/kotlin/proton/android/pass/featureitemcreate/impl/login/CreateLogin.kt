@@ -172,6 +172,9 @@ fun CreateLoginScreen(
                                 viewModel.onFocusChange(event.loginCustomField, event.isFocused)
                         }
                     }
+
+                    // Cannot delete passkey from Create Login
+                    is LoginContentEvent.OnDeletePasskey -> {}
                 }
             },
             onNavigate = onNavigate,

@@ -86,9 +86,16 @@ data class CreatePasskeyState(
 )
 
 @Immutable
+sealed interface UpdateUiEvent {
+    object Idle : UpdateUiEvent
+    data class ConfirmDeletePasskey(val index: Int, val passkey: UIPasskeyContent) : UpdateUiEvent
+}
+
+@Immutable
 data class UpdateLoginUiState(
     val selectedShareId: ShareId?,
-    val baseLoginUiState: BaseLoginUiState
+    val baseLoginUiState: BaseLoginUiState,
+    val uiEvent: UpdateUiEvent = UpdateUiEvent.Idle
 ) {
     companion object {
         val Initial = UpdateLoginUiState(

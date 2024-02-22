@@ -32,12 +32,17 @@ fun ProtonTextFieldLabel(
     modifier: Modifier = Modifier,
     text: String,
     isError: Boolean = false,
-    color: Color = PassTheme.colors.signalDanger.takeIf { isError } ?: PassTheme.colors.textWeak
+    color: Color? = null
 ) {
+    val textColor = color ?: if (isError) {
+        PassTheme.colors.signalDanger
+    } else {
+        PassTheme.colors.textWeak
+    }
     Text(
         modifier = modifier,
         text = text,
-        color = color,
+        color = textColor,
         style = if (isError) {
             ProtonTheme.typography.defaultSmallWeak
         } else {

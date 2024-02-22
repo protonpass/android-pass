@@ -37,12 +37,11 @@ data class InitialCreateLoginUiState(
     val passkeyRequest: String? = null
 ) {
 
-    val passkeyData: PasskeyData? =
-        if (passkeyDomain != null && passkeyOrigin != null && passkeyRequest != null) {
-            PasskeyData(passkeyDomain, passkeyOrigin, passkeyRequest)
-        } else {
-            null
-        }
+    val passkeyData: PasskeyData? = PasskeyData.buildIfNoneNull(
+        domain = passkeyDomain,
+        origin = passkeyOrigin,
+        request = passkeyRequest
+    )
 
     data class PasskeyData(
         val domain: String,
@@ -59,8 +58,16 @@ data class InitialCreateLoginUiState(
                 val passkeyDomain = values[domainKey] as? String
                 val passkeyOrigin = values[originKey] as? String
                 val passkeyRequest = values[requestKey] as? String
-                return if (passkeyDomain != null && passkeyOrigin != null && passkeyRequest != null) {
-                    PasskeyData(passkeyDomain, passkeyOrigin, passkeyRequest)
+                return buildIfNoneNull(domain = passkeyDomain, origin = passkeyOrigin, request = passkeyRequest)
+            }
+
+            fun buildIfNoneNull(
+                domain: String?,
+                origin: String?,
+                request: String?
+            ): PasskeyData? {
+                return if (domain != null && origin != null && request != null) {
+                    PasskeyData(domain = domain, origin = origin, request = request)
                 } else {
                     null
                 }

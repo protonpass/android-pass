@@ -19,6 +19,7 @@
 package proton.android.pass.commonui.api
 
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.datamodels.api.toContent
@@ -38,6 +39,39 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     isPinned = isPinned,
     category = itemType.category,
 )
+
+fun Item.toItemDetailState(context: EncryptionContext): ItemDetailState = when (this.itemType) {
+    is ItemType.Alias -> ItemDetailState.Alias(
+        contents = toItemContents(context) as ItemContents.Alias,
+        isPinned = isPinned,
+        vault = null,
+    )
+
+    is ItemType.CreditCard -> ItemDetailState.CreditCard(
+        contents = toItemContents(context) as ItemContents.CreditCard,
+        isPinned = isPinned,
+        vault = null,
+    )
+
+    is ItemType.Login -> ItemDetailState.Login(
+        contents = toItemContents(context) as ItemContents.Login,
+        isPinned = isPinned,
+        vault = null,
+    )
+
+    is ItemType.Note -> ItemDetailState.Note(
+        contents = toItemContents(context) as ItemContents.Note,
+        isPinned = isPinned,
+        vault = null,
+    )
+
+    is ItemType.Password,
+    is ItemType.Unknown -> ItemDetailState.Unknown(
+        contents = toItemContents(context) as ItemContents.Unknown,
+        vault = null,
+    )
+}
+
 
 fun Item.itemName(context: EncryptionContext): String =
     context.decrypt(title)

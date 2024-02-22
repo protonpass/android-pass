@@ -98,22 +98,21 @@ class SelectPasskeyAppViewModel @Inject constructor(
             return@launch
         }
 
-        when (itemContents.passkeys.size) {
-            0 -> {
+        when {
+            itemContents.passkeys.isEmpty() -> {
                 PassLogger.w(TAG, "Received ItemContents with no passkeys")
                 eventFlow.update { SelectPasskeyAppEvent.Cancel }
-                return@launch
             }
 
-            1 -> {
+            itemContents.hasSinglePasskey -> {
                 onPasskeySelected(
                     passkey = itemContents.passkeys.first(),
                     request = request,
                     origin = origin
                 )
-                return@launch
             }
 
+            // Has more than one passkey
             else -> {
                 eventFlow.update {
                     SelectPasskeyAppEvent.SelectPasskeyFromItem(

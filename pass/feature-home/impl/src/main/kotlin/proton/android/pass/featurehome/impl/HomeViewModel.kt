@@ -1012,8 +1012,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun openUpdateApp(context: ClassHolder<Context>) {
-        context.get().map {
+    fun openUpdateApp(contextHolder: ClassHolder<Context>) {
+        contextHolder.get().map {
             BrowserUtils.openWebsite(it, AppUrls.PASS_STORE)
         }
     }

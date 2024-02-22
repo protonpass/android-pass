@@ -205,7 +205,7 @@ class UpdateLoginViewModel @Inject constructor(
 
     fun onDeletePasskeyConfirmed(idx: Int, passkey: UIPasskeyContent) = viewModelScope.launch {
         val newPasskeyList = loginItemFormMutableState.passkeys.toMutableList()
-        if (idx >= 0 && idx < newPasskeyList.size) {
+        if (idx in 0 until newPasskeyList.size) {
             val removed = newPasskeyList.removeAt(idx)
             if (removed.id == passkey.id) {
                 loginItemFormMutableState = loginItemFormState.copy(passkeys = newPasskeyList)

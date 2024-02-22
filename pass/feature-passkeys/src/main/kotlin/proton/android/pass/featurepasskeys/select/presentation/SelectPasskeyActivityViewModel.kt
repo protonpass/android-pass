@@ -60,13 +60,13 @@ sealed class SelectPasskeyRequest(
     val requestOrigin: String
 ) {
     data class SelectPasskey(
-        val request: String,
-        val origin: String
+        private val request: String,
+        private val origin: String
     ) : SelectPasskeyRequest(request, origin)
 
     data class UsePasskey(
-        val request: String,
-        val origin: String,
+        private val request: String,
+        private val origin: String,
         val shareId: ShareId,
         val itemId: ItemId,
         val passkeyId: PasskeyId,
@@ -79,13 +79,13 @@ sealed class SelectPasskeyRequestData(
     val request: String
 ) {
     data class SelectPasskey(
-        val requestDomain: String,
-        val requestJson: String
+        private val requestDomain: String,
+        private val requestJson: String
     ) : SelectPasskeyRequestData(requestDomain, requestJson)
 
     data class UsePasskey(
-        val requestDomain: String,
-        val requestJson: String,
+        private val requestDomain: String,
+        private val requestJson: String,
         val shareId: ShareId,
         val itemId: ItemId,
         val passkeyId: PasskeyId
@@ -134,11 +134,11 @@ class SelectPasskeyActivityViewModel @Inject constructor(
         it.map { request ->
             when (request) {
                 is SelectPasskeyRequest.SelectPasskey -> SelectPasskeyRequestData.SelectPasskey(
-                    requestDomain = request.origin,
+                    requestDomain = request.requestOrigin,
                     requestJson = request.requestJson
                 )
                 is SelectPasskeyRequest.UsePasskey -> SelectPasskeyRequestData.UsePasskey(
-                    requestDomain = request.origin,
+                    requestDomain = request.requestOrigin,
                     requestJson = request.requestJson,
                     shareId = request.shareId,
                     itemId = request.itemId,

@@ -44,17 +44,14 @@ val GeneratePasskeyDataStateSaver: Saver<Option<GeneratePasskeyData>, Any> = run
             }
         },
         restore = { values ->
-            if (values.isNotEmpty()) {
-                if (values[origin] != null && values[request] != null) {
-                    GeneratePasskeyData(
-                        origin = values[origin] as String,
-                        request = values[request] as String
-                    ).some()
-                } else {
-                    None
-                }
-            } else {
-                None
+            when {
+                values.isEmpty() -> None
+                values[origin] == null -> None
+                values[request] == null -> None
+                else -> GeneratePasskeyData(
+                    origin = values[origin] as String,
+                    request = values[request] as String
+                ).some()
             }
         }
     )

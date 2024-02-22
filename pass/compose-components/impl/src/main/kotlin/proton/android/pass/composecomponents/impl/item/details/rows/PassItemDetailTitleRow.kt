@@ -30,7 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailSubtitle
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailTitle
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
@@ -39,23 +39,22 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.pinning.BoxedPin
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
-import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
 
 @Composable
 internal fun PassItemDetailTitleRow(
     modifier: Modifier = Modifier,
-    itemUiModel: ItemUiModel,
+    itemDetailState: ItemDetailState,
     itemColors: ProtonItemColors,
-) = with(itemUiModel) {
-    when (contents) {
-        is ItemContents.Alias -> with(contents as ItemContents.Alias) {
+) = with(itemDetailState) {
+    when (this) {
+        is ItemDetailState.Alias -> {
             ItemDetailTitleRow(
                 modifier = modifier,
-                title = title,
-                isPinned = isPinned,
+                title = contents.title,
+                isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = null,
+                vault = itemVault,
             ) {
                 AliasIcon(
                     size = 60,
@@ -64,13 +63,13 @@ internal fun PassItemDetailTitleRow(
             }
         }
 
-        is ItemContents.CreditCard -> with(contents as ItemContents.CreditCard) {
+        is ItemDetailState.CreditCard -> {
             ItemDetailTitleRow(
                 modifier = modifier,
-                title = title,
-                isPinned = isPinned,
+                title = contents.title,
+                isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = null,
+                vault = itemVault,
             ) {
                 CreditCardIcon(
                     size = 60,
@@ -79,26 +78,26 @@ internal fun PassItemDetailTitleRow(
             }
         }
 
-        is ItemContents.Login -> with(contents as ItemContents.Login) {
+        is ItemDetailState.Login -> {
             ItemDetailTitleRow(
                 modifier = modifier,
-                title = title,
-                isPinned = isPinned,
+                title = contents.title,
+                isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = null,
+                vault = itemVault,
             ) {
                 LoginIcon(
                     size = 60,
                     shape = PassTheme.shapes.squircleMediumLargeShape,
-                    text = title,
-                    website = websiteUrl,
-                    packageName = packageName,
+                    text = contents.title,
+                    website = contents.websiteUrl,
+                    packageName = contents.packageName,
                     canLoadExternalImages = false,
                 )
             }
         }
 
-        is ItemContents.Note -> with(contents as ItemContents.Note) {
+        is ItemDetailState.Note -> {
             Column(
                 modifier = modifier,
                 verticalArrangement = Arrangement.spacedBy(Spacing.large),
@@ -109,7 +108,7 @@ internal fun PassItemDetailTitleRow(
                         horizontalArrangement = Arrangement.spacedBy(Spacing.small),
                     ) {
                         AnimatedVisibility(
-                            visible = isPinned,
+                            visible = isItemPinned,
                             enter = expandHorizontally(),
                         ) {
                             CircledPin(
@@ -119,29 +118,28 @@ internal fun PassItemDetailTitleRow(
                         }
 
                         PassItemDetailTitle(
-                            text = title,
+                            text = contents.title,
                             maxLines = Int.MAX_VALUE,
                         )
                     }
 
-                    // Uncomment this block once with pass vault param
-//                    vault?.let { itemVault ->
-//                        PassItemDetailSubtitle(
-//                            vault = itemVault,
-//                            onClick = {},
-//                        )
-//                    }
+                    itemVault?.let { vault ->
+                        PassItemDetailSubtitle(
+                            vault = vault,
+                            onClick = {},
+                        )
+                    }
                 }
             }
         }
 
-        is ItemContents.Unknown -> with(contents as ItemContents.Unknown) {
+        is ItemDetailState.Unknown -> {
             ItemDetailTitleRow(
                 modifier = modifier,
-                title = title,
+                title = contents.title,
                 isPinned = false,
                 itemColors = itemColors,
-                vault = null,
+                vault = itemVault,
             ) {}
         }
     }

@@ -18,12 +18,16 @@
 
 package proton.android.pass.features.item.history.restore.ui
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
 import proton.android.pass.composecomponents.impl.utils.protonItemColors
@@ -36,14 +40,53 @@ import proton.android.pass.features.item.history.restore.presentation.ItemHistor
 internal fun ItemHistoryRestoreContent(
     modifier: Modifier = Modifier,
     onNavigated: (ItemHistoryNavDestination) -> Unit,
-    state: ItemHistoryRestoreState,
     onEventConsumed: (ItemHistoryRestoreEvent) -> Unit,
     onRestoreClick: () -> Unit,
     onRestoreConfirmClick: (ItemContents) -> Unit,
     onRestoreCancelClick: () -> Unit,
-) = with(state) {
-    if (itemUiModel == null) return
+    state: ItemHistoryRestoreState,
+) {
+    when (state) {
+        ItemHistoryRestoreState.Initial -> {
+            ItemHistoryRestoreLoading()
+        }
 
+        is ItemHistoryRestoreState.ItemDetails -> {
+            ItemHistoryRestoreDetails(
+                modifier = modifier,
+                onNavigated = onNavigated,
+                onEventConsumed = onEventConsumed,
+                onRestoreClick = onRestoreClick,
+                onRestoreConfirmClick = onRestoreConfirmClick,
+                onRestoreCancelClick = onRestoreCancelClick,
+                state = state,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ItemHistoryRestoreLoading(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+private fun ItemHistoryRestoreDetails(
+    modifier: Modifier = Modifier,
+    onNavigated: (ItemHistoryNavDestination) -> Unit,
+    onEventConsumed: (ItemHistoryRestoreEvent) -> Unit,
+    onRestoreClick: () -> Unit,
+    onRestoreConfirmClick: (ItemContents) -> Unit,
+    onRestoreCancelClick: () -> Unit,
+    state: ItemHistoryRestoreState.ItemDetails,
+) = with(state) {
     var isDialogVisible by remember { mutableStateOf(false) }
     var isDialogLoading by remember { mutableStateOf(false) }
 
@@ -75,12 +118,12 @@ internal fun ItemHistoryRestoreContent(
         onEventConsumed(event)
     }
 
-    val itemColors = protonItemColors(itemCategory = itemUiModel.category)
+    val itemColors = protonItemColors(itemCategory = itemDetailState.itemCategory)
 
     PassItemDetailsContent(
         modifier = modifier,
+        itemDetailState = itemDetailState,
         itemColors = itemColors,
-        itemUiModel = itemUiModel,
         topBar = {
             ItemHistoryRestoreTopBar(
                 colors = itemColors,
@@ -93,7 +136,7 @@ internal fun ItemHistoryRestoreContent(
     ItemHistoryRestoreConfirmationDialog(
         isVisible = isDialogVisible,
         isLoading = isDialogLoading,
-        onConfirm = { onRestoreConfirmClick(itemUiModel.contents) },
+        onConfirm = { onRestoreConfirmClick(itemDetailState.itemContents) },
         onDismiss = onRestoreCancelClick,
         revisionTime = itemRevision.revisionTime,
     )

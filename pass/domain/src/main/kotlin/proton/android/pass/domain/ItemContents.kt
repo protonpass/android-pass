@@ -108,6 +108,7 @@ sealed class ItemContents {
             .minByOrNull { packageInfo -> packageInfo.packageName.value }
             ?.packageName
             ?.value
+        val hasSinglePasskey: Boolean = passkeys.size == 1
 
         companion object {
 

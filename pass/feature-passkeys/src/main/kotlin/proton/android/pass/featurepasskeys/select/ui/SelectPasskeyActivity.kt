@@ -69,7 +69,7 @@ class SelectPasskeyActivity : FragmentActivity() {
     private fun onStateReceived(state: SelectPasskeyAppState) {
         when (state) {
             is SelectPasskeyAppState.NotReady -> {}
-            is SelectPasskeyAppState.ErrorAuthenticating -> sendResponse(null)
+            is SelectPasskeyAppState.ErrorAuthenticating,
             is SelectPasskeyAppState.Close -> sendResponse(null)
             is SelectPasskeyAppState.Ready -> {
                 WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -176,14 +176,14 @@ class SelectPasskeyActivity : FragmentActivity() {
     }
 
     private fun sendResponse(responseJson: String?) {
-        if (responseJson != null) {
+        if (responseJson == null) {
+            setResult(Activity.RESULT_CANCELED)
+        } else {
             val response = GetCredentialResponse(PublicKeyCredential(responseJson))
 
             val responseIntent = Intent()
             PendingIntentHandler.setGetCredentialResponse(responseIntent, response)
             setResult(Activity.RESULT_OK, responseIntent)
-        } else {
-            setResult(Activity.RESULT_CANCELED)
         }
 
         finish()

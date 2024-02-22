@@ -27,16 +27,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.item.details.sections.PassItemDetailSections
+import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailTitleRow
+import proton.android.pass.composecomponents.impl.item.details.sections.PassItemDetailSections
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 
 @Composable
 fun PassItemDetailsContent(
     modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit,
-    itemUiModel: ItemUiModel,
+    itemDetailState: ItemDetailState,
     itemColors: ProtonItemColors,
 ) {
     Scaffold(
@@ -54,7 +54,7 @@ fun PassItemDetailsContent(
                         horizontal = Spacing.medium,
                         vertical = Spacing.small,
                     ),
-                itemUiModel = itemUiModel,
+                itemDetailState = itemDetailState,
                 itemColors = itemColors,
             )
 
@@ -62,7 +62,7 @@ fun PassItemDetailsContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Spacing.medium),
-                itemUiModel = itemUiModel,
+                itemDetailState = itemDetailState,
                 itemColors = itemColors,
             )
         }

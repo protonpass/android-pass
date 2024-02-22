@@ -32,7 +32,7 @@ import kotlinx.serialization.json.Json
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonui.api.toItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
@@ -76,19 +76,17 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         oneShot { openItemRevision(shareId, itemRevision) },
         eventFlow,
     ) { item, event ->
-        ItemHistoryRestoreState(
+        ItemHistoryRestoreState.ItemDetails(
             itemRevision = itemRevision,
-            itemUiModel = encryptionContextProvider.withEncryptionContext {
-                item.toUiModel(this@withEncryptionContext)
+            itemDetailState = encryptionContextProvider.withEncryptionContext {
+                item.toItemDetailState(this@withEncryptionContext)
             },
             event = event,
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
-        initialValue = ItemHistoryRestoreState(
-            itemRevision = itemRevision,
-        ),
+        initialValue = ItemHistoryRestoreState.Initial,
     )
 
     internal fun onEventConsumed(event: ItemHistoryRestoreEvent) {

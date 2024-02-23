@@ -334,6 +334,8 @@ dependencies {
     implementation(projects.pass.clipboard.impl)
     implementation(projects.pass.common.api)
     implementation(projects.pass.common.impl)
+    implementation(projects.pass.commonPresentation.api)
+    implementation(projects.pass.commonPresentation.impl)
     implementation(projects.pass.commonRust.api)
     implementation(projects.pass.commonRust.impl)
     implementation(projects.pass.commonUi.api)

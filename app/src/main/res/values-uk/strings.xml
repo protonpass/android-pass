@@ -5,5 +5,5 @@
   <string name="custom_fields">Власні поля</string>
   <string name="restart_to_complete_the_update">Перезапустіть, щоб завершити оновлення</string>
   <string name="action_restart">Перезапустити</string>
-  <string name="shortcut_share_logs_title">Share logs</string>
+  <string name="shortcut_share_logs_title">Поділитися журналом</string>
 </resources>

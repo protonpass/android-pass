@@ -48,6 +48,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetB
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.PasskeyId
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
@@ -227,6 +228,7 @@ fun LoginDetail(
                         moreInfoUiState = moreInfoUiState,
                         canLoadExternalImages = canLoadExternalImages,
                         customFields = state.customFields,
+                        passkeys = state.passkeys,
                         onEvent = {
                             when (it) {
                                 LoginDetailEvent.OnCopyPasswordClick -> {
@@ -302,6 +304,15 @@ fun LoginDetail(
                                         itemId = state.itemUiModel.id,
                                     )
                                 )
+                                is LoginDetailEvent.OnSelectPasskey -> {
+                                    onNavigate(
+                                        ItemDetailNavigation.ViewPasskeyDetails(
+                                            shareId = state.itemUiModel.shareId,
+                                            itemId = state.itemUiModel.id,
+                                            passkeyId = PasskeyId(it.passkey.id)
+                                        )
+                                    )
+                                }
                             }
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,

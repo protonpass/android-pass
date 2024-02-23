@@ -16,8 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.login.passkey
+package proton.android.pass.featureitemdetail.impl.login.passkey
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -33,35 +34,32 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.container.roundedContainerStrong
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
-import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
-import proton.android.pass.composecomponents.impl.R as CompR
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun PasskeyEditRow(
+fun PasskeyRow(
     modifier: Modifier = Modifier,
     domain: String,
     username: String,
-    canDelete: Boolean,
-    onDeleteClick: () -> Unit
+    onClick: () -> Unit
 ) {
-    val labelTitle = stringResource(id = CompR.string.passkey_field_label)
+    val labelTitle = stringResource(id = R.string.passkey_field_label)
     val label = remember {
         "$labelTitle • $domain"
     }
 
-    Column(modifier = modifier.roundedContainerNorm()) {
+    Column(
+        modifier = modifier
+            .roundedContainerStrong()
+            .clickable(onClick = onClick)
+    ) {
         ProtonTextField(
-            modifier = Modifier.padding(
-                start = 0.dp,
-                top = Spacing.medium,
-                end = Spacing.extraSmall,
-                bottom = Spacing.medium
-            ),
+            modifier = Modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
             value = username,
             editable = false,
             onChange = {},
@@ -75,15 +73,17 @@ fun PasskeyEditRow(
             },
             leadingIcon = {
                 Icon(
-                    painter = painterResource(CompR.drawable.ic_passkey),
+                    painter = painterResource(R.drawable.ic_passkey),
                     contentDescription = null,
-                    tint = ProtonTheme.colors.iconWeak
+                    tint = PassTheme.colors.loginInteractionNormMajor2
                 )
             },
             trailingIcon = {
-                if (canDelete) {
-                    SmallCrossIconButton(onClick = onDeleteClick)
-                }
+                Icon(
+                    painter = painterResource(CoreR.drawable.ic_proton_chevron_right),
+                    contentDescription = null,
+                    tint = ProtonTheme.colors.iconWeak
+                )
             }
         )
     }
@@ -91,16 +91,15 @@ fun PasskeyEditRow(
 
 @Preview
 @Composable
-fun PasskeyEditRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+fun PasskeyRowPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    PassTheme(isDark = input.first) {
+    PassTheme(isDark = isDark) {
         Surface {
-            PasskeyEditRow(
-                domain = "domain.local",
-                username = "some@user.name",
-                canDelete = input.second,
-                onDeleteClick = {}
+            PasskeyRow(
+                domain = "test.domain",
+                username = "test.username",
+                onClick = {}
             )
         }
     }

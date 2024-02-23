@@ -32,7 +32,7 @@
     <item quantity="one">%d membro</item>
     <item quantity="other">%d membri</item>
   </plurals>
-  <string name="share_with_title">Condividi con</string>
+  <string name="share_with_title">Membri della condivisione</string>
   <string name="share_with_email_hint">Indirizzo email</string>
   <string name="share_with_email_error">Indirizzo email non valido</string>
   <string name="share_permissions_title">Imposta il livello di accesso</string>

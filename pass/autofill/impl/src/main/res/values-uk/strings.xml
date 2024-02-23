@@ -3,7 +3,7 @@
   <string name="autofill_authenticate_prompt">Отримати з Proton Pass</string>
   <string name="error_loading_items">Не вдалося завантажити елементи</string>
   <string name="inline_suggestions_open_app">Відкрити Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Upgrade to autofill</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Покращте тариф, щоби використовувати автозаповнення</string>
   <string name="autofill_associate_web_app_name_dialog_title">Використовуйте дані для входу з \"%s\" в цій програмі або на вебсайті.</string>
   <string name="autofill_dialog_associate_and_autofill">Використовувати завжди</string>
   <string name="autofill_dialog_just_autofill">Використати один раз</string>
@@ -18,9 +18,9 @@
   <string name="autofill_user_logged_out">Ви вийшли з системи. Увійдіть знову, відкривши програму.</string>
   <string name="bottomsheet_copy_password">Копіювати пароль</string>
   <string name="bottomsheet_copy_username">Копіювати ім\'я користувача</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofill card details</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofilling credit card details is a paid feature. If you want Proton Pass to automatically enter your card details for you in apps and websites, please upgrade to a paid plan.</string>
-  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirm your action</string>
-  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">You are about to autofill your credentials into a website that\'s opened by your current app. The app can have access to the credential after autofill - only do it if you trust the app.</string>
-  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Autofill</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Автозаповнення даних картки</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Автозаповнення реквізитів кредитної картки – це платна функція. Якщо ви хочете, щоб Proton Pass автоматично вводив дані вашої картки в застосунках і на вебсайтах, перейдіть на платний тарифний план.</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Підтвердіть дію</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Ви збираєтеся автоматично заповнити свої облікові дані на вебсайті, який відкриває ваш поточний застосунок. Він може мати доступ до облікових даних після автозаповнення – робіть це, лише якщо ви довіряєте йому.</string>
+  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Автозаповнення</string>
 </resources>

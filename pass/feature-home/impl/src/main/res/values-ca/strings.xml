@@ -119,7 +119,7 @@
   <string name="recent_search_clear">Esborra</string>
   <string name="recent_search_remove_item">Esborra de les cerques recents</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
   <string name="home_snackbar_item_unpinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>

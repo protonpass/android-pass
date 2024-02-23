@@ -82,6 +82,7 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailCannotPerformAction
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
+import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
 import proton.android.pass.featuremigrate.impl.MigrateConfirmVault
 import proton.android.pass.featuremigrate.impl.MigrateNavigation
 import proton.android.pass.featuremigrate.impl.MigrateSelectVault
@@ -731,6 +732,10 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigateBack()
                 }
 
+                ItemDetailNavigation.CloseBottomSheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+
                 is ItemDetailNavigation.OnCreateLoginFromAlias -> {
                     appNavigator.navigate(
                         destination = CreateLogin,
@@ -823,6 +828,17 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = ItemDetailCannotPerformAction,
                         route = ItemDetailCannotPerformAction.buildRoute(it.type)
+                    )
+                }
+
+                is ItemDetailNavigation.ViewPasskeyDetails -> {
+                    appNavigator.navigate(
+                        destination = ViewPasskeyDetailsBottomSheet,
+                        route = ViewPasskeyDetailsBottomSheet.buildRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId,
+                            passkeyId = it.passkeyId
+                        )
                     )
                 }
 

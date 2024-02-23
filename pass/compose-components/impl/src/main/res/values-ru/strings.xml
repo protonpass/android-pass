@@ -87,4 +87,5 @@
   <string name="label_password_strength_weak">Слабый</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Увидеть все</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
 </resources>

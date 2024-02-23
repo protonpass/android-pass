@@ -23,7 +23,7 @@
   <string name="select_item_suggestions_for_placeholder">Пропозиції для %s</string>
   <string name="error_loading_items">Не вдалося завантажити елементи</string>
   <string name="topbar_search_query">Пошук у всіх сховищах…</string>
-  <string name="topbar_search_pinned_items">Search in Pinned…</string>
+  <string name="topbar_search_pinned_items">Пошук в прикріплених…</string>
   <string name="topbar_search_query_oldest_vaults">Пошук у ваших найстаріших сховищах…</string>
-  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Search…</string>
+  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Пошук…</string>
 </resources>

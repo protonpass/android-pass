@@ -15,7 +15,7 @@
   </plurals>
   <string name="word_separator">Separatore delle parole</string>
   <string name="bottomsheet_option_capital_letters">Lettere maiuscole (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Lettere maiuscole (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Iniziali maiuscole (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Include numeri (0–9)</string>
   <string name="bottomsheet_option_word_separator_hyphens">Trattino ( - )</string>
   <string name="bottomsheet_option_word_separator_spaces">Spazio</string>
@@ -23,7 +23,7 @@
   <string name="bottomsheet_option_word_separator_commas">Virgola ( , )</string>
   <string name="bottomsheet_option_word_separator_underscores">Trattino basso ( _ )</string>
   <string name="bottomsheet_option_word_separator_numbers">Numero (0–9)</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numero (0–9) e carattere speciale (!&amp;*)</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numero (0–9) o simbolo (!&amp;*)</string>
   <string name="regenerate_password_icon_content_description">Pulsante rigenera password</string>
   <string name="password_mode_memorable">Password facile da ricordare</string>
   <string name="password_mode_random">Password casuale</string>

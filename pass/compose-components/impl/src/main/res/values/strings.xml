@@ -134,6 +134,7 @@
     <string name="item_details_credit_card_section_pin_title">PIN code</string>
 
     <string name="item_details_login_section_username_title">Username or email address</string>
+    <string name="item_details_login_section_password_title">Password</string>
     <string name="item_details_login_section_websites_title">Websites</string>
 
     <string name="item_details_shared_section_note_title">Note</string>

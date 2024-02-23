@@ -19,6 +19,7 @@
 package proton.android.pass.commonuimodels.api.items
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
@@ -33,6 +34,7 @@ sealed class ItemDetailState(
     @Stable
     data class Alias(
         val contents: ItemContents.Alias,
+        val mailboxes: List<AliasMailbox>,
         private val isPinned: Boolean,
         private val vault: Vault?,
     ) : ItemDetailState(

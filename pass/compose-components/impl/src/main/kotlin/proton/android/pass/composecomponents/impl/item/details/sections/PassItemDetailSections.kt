@@ -28,7 +28,6 @@ import proton.android.pass.composecomponents.impl.item.details.sections.login.Pa
 import proton.android.pass.composecomponents.impl.item.details.sections.notes.PassNoteItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
-import proton.android.pass.domain.AliasMailbox
 
 @Composable
 internal fun PassItemDetailSections(
@@ -41,7 +40,7 @@ internal fun PassItemDetailSections(
             modifier = modifier,
             contents = contents,
             itemColors = itemColors,
-            mailboxes = emptyList<AliasMailbox>().toImmutableList(),
+            mailboxes = mailboxes.toImmutableList(),
         )
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(

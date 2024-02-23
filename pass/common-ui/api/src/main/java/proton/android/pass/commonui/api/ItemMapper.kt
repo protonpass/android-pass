@@ -27,6 +27,7 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.Vault
 
 fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     id = id,
@@ -40,35 +41,38 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     category = itemType.category,
 )
 
-fun Item.toItemDetailState(context: EncryptionContext): ItemDetailState = when (this.itemType) {
+fun Item.toItemDetailState(
+    context: EncryptionContext,
+    vault: Vault,
+): ItemDetailState = when (this.itemType) {
     is ItemType.Alias -> ItemDetailState.Alias(
         contents = toItemContents(context) as ItemContents.Alias,
         isPinned = isPinned,
-        vault = null,
+        vault = vault,
     )
 
     is ItemType.CreditCard -> ItemDetailState.CreditCard(
         contents = toItemContents(context) as ItemContents.CreditCard,
         isPinned = isPinned,
-        vault = null,
+        vault = vault,
     )
 
     is ItemType.Login -> ItemDetailState.Login(
         contents = toItemContents(context) as ItemContents.Login,
         isPinned = isPinned,
-        vault = null,
+        vault = vault,
     )
 
     is ItemType.Note -> ItemDetailState.Note(
         contents = toItemContents(context) as ItemContents.Note,
         isPinned = isPinned,
-        vault = null,
+        vault = vault,
     )
 
     is ItemType.Password,
     is ItemType.Unknown -> ItemDetailState.Unknown(
         contents = toItemContents(context) as ItemContents.Unknown,
-        vault = null,
+        vault = vault,
     )
 }
 

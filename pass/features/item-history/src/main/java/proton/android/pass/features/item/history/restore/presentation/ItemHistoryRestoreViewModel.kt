@@ -25,19 +25,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonui.api.toItemDetailState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.domain.ItemContents
@@ -56,10 +55,9 @@ private const val TAG = "ItemHistoryRestoreViewModel"
 class ItemHistoryRestoreViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     openItemRevision: OpenItemRevision,
-    getVaultById: GetVaultById,
-    encryptionContextProvider: EncryptionContextProvider,
     private val restoreItemRevision: RestoreItemRevision,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val itemDetailsHandler: ItemDetailsHandler,
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -76,17 +74,9 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ItemHistoryRestoreEvent>(ItemHistoryRestoreEvent.Idle)
 
-    private val itemDetailsStateFlow: Flow<ItemDetailState> = combine(
-        oneShot { openItemRevision(shareId, itemRevision) },
-        getVaultById(shareId = shareId),
-    ) { item, vault ->
-        encryptionContextProvider.withEncryptionContext {
-            item.toItemDetailState(
-                context = this@withEncryptionContext,
-                vault = vault,
-            )
-        }
-    }
+    private val itemDetailsStateFlow: Flow<ItemDetailState> =
+        oneShot { openItemRevision(shareId, itemRevision) }
+            .flatMapLatest { item -> itemDetailsHandler.observeItemDetails(item) }
 
     internal val state = combine(
         itemDetailsStateFlow,

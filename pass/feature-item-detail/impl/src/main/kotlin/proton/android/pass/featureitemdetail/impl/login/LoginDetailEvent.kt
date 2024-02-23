@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemdetail.impl.login
 
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldEvent
 
 sealed interface LoginDetailEvent {
@@ -48,4 +49,6 @@ sealed interface LoginDetailEvent {
 
     object OnViewItemHistoryClicked : LoginDetailEvent
 
+    @JvmInline
+    value class OnSelectPasskey(val passkey: UIPasskeyContent) : LoginDetailEvent
 }

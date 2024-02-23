@@ -39,7 +39,6 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
-import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -50,7 +49,7 @@ fun PasskeyEditRow(
     canDelete: Boolean,
     onDeleteClick: () -> Unit
 ) {
-    val labelTitle = stringResource(id = R.string.passkey_field_label)
+    val labelTitle = stringResource(id = CompR.string.passkey_field_label)
     val label = remember {
         "$labelTitle • $domain"
     }

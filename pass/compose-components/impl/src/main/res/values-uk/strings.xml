@@ -8,7 +8,7 @@
   <string name="sort_by_modification_date">Останні</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Всі</string>
-  <string name="item_list_header_pinned_search_results">Pinned</string>
+  <string name="item_list_header_pinned_search_results">Прикріплено</string>
   <string name="item_list_header_logins_type">Записи входу</string>
   <string name="item_list_header_aliases_type">Псевдоніми</string>
   <string name="item_list_header_notes_type">Нотатки</string>
@@ -23,8 +23,8 @@
   <string name="bottomsheet_confirm_button">Підтвердити</string>
   <string name="bottomsheet_cancel_button">Скасувати</string>
   <string name="bottomsheet_move_to_trash">Перемістити до смітника</string>
-  <string name="bottomsheet_pin_item">Pin</string>
-  <string name="bottomsheet_unpin_item">Unpin</string>
+  <string name="bottomsheet_pin_item">Прикріпити</string>
+  <string name="bottomsheet_unpin_item">Відкріпити</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Відкрити меню дій елемента</string>
   <string name="action_upgrade_now">Покращити</string>
@@ -82,9 +82,10 @@
   <string name="show_advanced_options">Додаткові параметри</string>
   <string name="hide_advanced_options">Приховати додаткові параметри</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">Надійний</string>
+  <string name="label_password_strength_vulnerable">Вразливий</string>
+  <string name="label_password_strength_weak">Простий</string>
   <!-- Pinning -->
-  <string name="pinning_carousel_see_all">See all</string>
+  <string name="pinning_carousel_see_all">Переглянути все</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
 </resources>

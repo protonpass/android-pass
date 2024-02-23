@@ -83,4 +83,5 @@
   <string name="label_password_strength_weak">Fraco</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Ver tudo</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">A versão do aplicativo não é mais suportada. Por favor, atualize seu aplicativo.</string>
 </resources>

@@ -35,6 +35,8 @@ fun ItemV1.Item.withPasskey(passkey: Passkey): ItemV1.Item {
             .setUserDisplayName(userDisplayName)
             .setUserId(ByteString.copyFrom(userId))
             .setContent(ByteString.copyFrom(contents))
+            .setCreateTime(createTime.epochSeconds.toInt())
+            .setNote(note)
             .build()
     }
 

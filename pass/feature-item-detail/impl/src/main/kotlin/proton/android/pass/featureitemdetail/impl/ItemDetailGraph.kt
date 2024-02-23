@@ -24,9 +24,11 @@ import androidx.navigation.NavType
 import me.proton.core.compose.navigation.requireArguments
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemdetail.impl.common.CannotPerformActionDialog
 import proton.android.pass.featureitemdetail.impl.common.CannotPerformActionDialogType
+import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.navigation.passkeyDetailBottomSheetGraph
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -48,6 +50,7 @@ sealed interface ItemDetailNavigation {
     data class OnViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 
     object Back : ItemDetailNavigation
+    object CloseBottomSheet : ItemDetailNavigation
 
     @JvmInline
     value class Upgrade(val popBefore: Boolean = false) : ItemDetailNavigation
@@ -65,6 +68,12 @@ sealed interface ItemDetailNavigation {
     data class OnViewItemHistory(
         val shareId: ShareId,
         val itemId: ItemId,
+    ) : ItemDetailNavigation
+
+    data class ViewPasskeyDetails(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val passkeyId: PasskeyId
     ) : ItemDetailNavigation
 }
 
@@ -133,4 +142,8 @@ fun NavGraphBuilder.itemDetailGraph(
             onUpgrade = { onNavigate(ItemDetailNavigation.Upgrade(true)) }
         )
     }
+
+    passkeyDetailBottomSheetGraph(
+        onDismiss = { onNavigate(ItemDetailNavigation.CloseBottomSheet) }
+    )
 }

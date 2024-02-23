@@ -41,8 +41,8 @@ internal fun PassCreditCardItemDetailsSections(
             cardholder = cardHolder,
             cardNumber = number,
             expirationDate = expirationDate,
-            cvv = "123",
-            pin = "1234",
+            cvv = cvv,
+            pin = pin,
             itemColors = itemColors,
         )
 

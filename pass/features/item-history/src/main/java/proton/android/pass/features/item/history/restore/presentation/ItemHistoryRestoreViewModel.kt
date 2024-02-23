@@ -21,6 +21,7 @@ package proton.android.pass.features.item.history.restore.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -33,8 +34,10 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toItemDetailState
+import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.domain.ItemContents
@@ -53,6 +56,7 @@ private const val TAG = "ItemHistoryRestoreViewModel"
 class ItemHistoryRestoreViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     openItemRevision: OpenItemRevision,
+    getVaultById: GetVaultById,
     encryptionContextProvider: EncryptionContextProvider,
     private val restoreItemRevision: RestoreItemRevision,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -72,15 +76,25 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ItemHistoryRestoreEvent>(ItemHistoryRestoreEvent.Idle)
 
-    internal val state = combine(
+    private val itemDetailsStateFlow: Flow<ItemDetailState> = combine(
         oneShot { openItemRevision(shareId, itemRevision) },
+        getVaultById(shareId = shareId),
+    ) { item, vault ->
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemDetailState(
+                context = this@withEncryptionContext,
+                vault = vault,
+            )
+        }
+    }
+
+    internal val state = combine(
+        itemDetailsStateFlow,
         eventFlow,
-    ) { item, event ->
+    ) { itemDetailState, event ->
         ItemHistoryRestoreState.ItemDetails(
             itemRevision = itemRevision,
-            itemDetailState = encryptionContextProvider.withEncryptionContext {
-                item.toItemDetailState(this@withEncryptionContext)
-            },
+            itemDetailState = itemDetailState,
             event = event,
         )
     }.stateIn(

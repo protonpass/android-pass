@@ -22,16 +22,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.domain.HiddenState
 import me.proton.core.presentation.R as CoreR
+
+private const val HIDDEN_PASSWORD_TEXT_LENGTH = 12
 
 @Composable
 internal fun PassLoginItemDetailMainSection(
     modifier: Modifier = Modifier,
     username: String,
+    password: HiddenState,
     itemColors: ProtonItemColors,
 ) {
     RoundedCornersColumn(modifier = modifier) {
@@ -41,6 +50,20 @@ internal fun PassLoginItemDetailMainSection(
                 title = stringResource(R.string.item_details_login_section_username_title),
                 subtitle = username,
                 itemColors = itemColors,
+            )
+        }
+
+        if (password !is HiddenState.Empty) {
+            PassDivider()
+
+            PassItemDetailsHiddenFieldRow(
+                icon = painterResource(CoreR.drawable.ic_proton_key),
+                title = stringResource(R.string.item_details_login_section_password_title),
+                hiddenState = password,
+                hiddenTextLength = HIDDEN_PASSWORD_TEXT_LENGTH,
+                itemColors = itemColors,
+                hiddenTextStyle = ProtonTheme.typography.defaultNorm
+                    .copy(fontFamily = FontFamily.Monospace),
             )
         }
     }

@@ -27,9 +27,14 @@ import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailSecureFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.domain.HiddenState
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
+
+private const val HIDDEN_CVV_TEXT_LENGTH = 4
+private const val HIDDEN_PIN_TEXT_LENGTH = 4
 
 @Composable
 internal fun PassCreditCardItemDetailMainSection(
@@ -37,8 +42,8 @@ internal fun PassCreditCardItemDetailMainSection(
     cardholder: String,
     cardNumber: String,
     expirationDate: String,
-    cvv: String,
-    pin: String,
+    cvv: HiddenState,
+    pin: HiddenState,
     itemColors: ProtonItemColors,
 ) {
     RoundedCornersColumn(modifier = modifier) {
@@ -73,24 +78,26 @@ internal fun PassCreditCardItemDetailMainSection(
             )
         }
 
-        if (cvv.isNotBlank()) {
+        if (cvv !is HiddenState.Empty) {
             PassDivider()
 
-            PassItemDetailSecureFieldRow(
+            PassItemDetailsHiddenFieldRow(
                 icon = painterResource(CompR.drawable.ic_verified),
                 title = stringResource(R.string.item_details_credit_card_section_cvv_title),
-                subtitle = cvv,
+                hiddenState = cvv,
+                hiddenTextLength = HIDDEN_CVV_TEXT_LENGTH,
                 itemColors = itemColors,
             )
         }
 
-        if (pin.isNotBlank()) {
+        if (pin !is HiddenState.Empty) {
             PassDivider()
 
-            PassItemDetailSecureFieldRow(
+            PassItemDetailsHiddenFieldRow(
                 icon = painterResource(CoreR.drawable.ic_proton_grid_3),
                 title = stringResource(R.string.item_details_credit_card_section_pin_title),
-                subtitle = pin,
+                hiddenState = pin,
+                hiddenTextLength = HIDDEN_PIN_TEXT_LENGTH,
                 itemColors = itemColors,
             )
         }

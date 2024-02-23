@@ -40,6 +40,7 @@ internal fun PassLoginItemDetailSections(
     ) {
         PassLoginItemDetailMainSection(
             username = username,
+            password = password,
             itemColors = itemColors,
         )
 

@@ -3,7 +3,7 @@
   <string name="action_open">Відкрити</string>
   <string name="action_copy">Копіювати</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problem retrieving item details</string>
+  <string name="detail_init_error">Проблема з отриманням деталей елемента</string>
   <string name="top_bar_edit_button_text">Редагувати</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адреса псевдоніма</string>
@@ -26,10 +26,10 @@
   <string name="item_permanently_deleted_message_error">Помилка під час видалення елемента</string>
   <string name="item_restored_message">Елемент відновлено</string>
   <string name="item_restored_message_error">Помилка під час відновлення елемента</string>
-  <string name="item_pinned_message">Item successfully pinned</string>
-  <string name="item_pinned_message_error">There was an error pinning this item</string>
-  <string name="item_unpinned_message">Item successfully unpinned</string>
-  <string name="item_unpinned_message_error">There was an error unpinning this item</string>
+  <string name="item_pinned_message">Елемент успішно прикріплено</string>
+  <string name="item_pinned_message_error">Помилка закріплення цього елемента</string>
+  <string name="item_unpinned_message">Елемент успішно відкріплено</string>
+  <string name="item_unpinned_message_error">Помилка відкріплення цього елемента</string>
   <string name="login_item_generate_totp_error">Помилка під час генерування коду 2FA</string>
   <string name="login_item_view_alias_button">Переглянути псевдонім</string>
   <string name="field_username">Ім\'я користувача або адреса е-пошти</string>
@@ -52,7 +52,7 @@
     <item quantity="other">%d разів</item>
   </plurals>
   <string name="more_info_last_time_modified">Востаннє, %s</string>
-  <string name="share_button_content_description">Open share button</string>
+  <string name="share_button_content_description">Відкрити кнопку «Поділитися»</string>
   <string name="open_menu_icon_content_description">Кнопка відкриття меню</string>
   <string name="mfa_limit_reached">Досягнуто обмеження 2FA</string>
   <string name="mfa_icon_content_description">Піктограма 2FA</string>
@@ -67,7 +67,7 @@
   <string name="credit_card_expiration_date_field_name">Термін дії</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Власника картки скопійовано до буфера обміну</string>
   <string name="credit_card_number_copied_to_clipboard">Номер картки скопійовано до буфера обміну</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Код безпеки скопійовано в буфер обміну</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Перемістити до смітника</string>
   <string name="migrate_item_detail_bottom_sheet">Перемістити в інше сховище</string>
@@ -94,6 +94,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
-  <string name="password_score_weak">Weak</string>
-  <string name="password_score_strong">Strong</string>
+  <string name="password_score_weak">Простий</string>
+  <string name="password_score_strong">Надійний</string>
 </resources>

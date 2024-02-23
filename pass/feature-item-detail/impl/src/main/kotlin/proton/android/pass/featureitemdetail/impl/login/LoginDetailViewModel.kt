@@ -56,6 +56,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
@@ -384,6 +385,7 @@ class LoginDetailViewModel @Inject constructor(
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canPerformItemActions = canPerformItemActions,
                     customFields = customFieldsList.toPersistentList(),
+                    passkeys = contents.passkeys.map { UIPasskeyContent.from(it) }.toPersistentList(),
                     shareClickAction = details.shareClickAction,
                     itemActions = actions,
                     event = event,

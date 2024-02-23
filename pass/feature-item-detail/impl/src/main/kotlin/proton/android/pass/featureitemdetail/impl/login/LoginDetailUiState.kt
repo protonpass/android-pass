@@ -23,6 +23,7 @@ import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemId
@@ -55,6 +56,7 @@ sealed interface LoginDetailUiState {
         val isRestoredFromTrash: Boolean,
         val canPerformItemActions: Boolean,
         val customFields: ImmutableList<CustomFieldUiContent>,
+        val passkeys: ImmutableList<UIPasskeyContent>,
         val shareClickAction: ShareClickAction,
         val itemActions: ItemActions,
         val event: ItemDetailEvent,

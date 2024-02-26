@@ -29,6 +29,7 @@ import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
@@ -61,6 +62,7 @@ object TestUtils {
             name = "test name",
             displayName = "Display name",
             currency = "EUR",
+            type = Type.Proton,
             credit = 0,
             createdAtUtc = 0,
             usedSpace = 0,

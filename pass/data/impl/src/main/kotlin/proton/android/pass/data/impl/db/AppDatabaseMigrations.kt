@@ -35,6 +35,7 @@ import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.telemetry.data.db.TelemetryDatabase
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserDatabase
+import me.proton.core.user.data.db.UserKeyDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -199,4 +200,13 @@ object AppDatabaseMigrations {
     @DeleteTable.Entries(value = [DeleteTable(tableName = "ProtonFeatureFlagEntity")])
     class MIGRATION_38_39 : AutoMigrationSpec
 
+    val MIGRATION_40_41 = object : Migration(40, 41) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            UserSettingsDatabase.MIGRATION_5.migrate(database)
+            UserKeyDatabase.MIGRATION_0.migrate(database)
+            UserDatabase.MIGRATION_4.migrate(database)
+            UserDatabase.MIGRATION_5.migrate(database)
+            AccountDatabase.MIGRATION_7.migrate(database)
+        }
+    }
 }

@@ -52,7 +52,12 @@ class GetPasskeysForDomainImpl @Inject constructor(
 
         val loginItems = encryptionContextProvider.withEncryptionContext {
             allItemsWithPasskeys
-                .filter { it.itemType is ItemType.Login }
+                .filter {
+                    when (val itemType = it.itemType) {
+                        is ItemType.Login -> itemType.passkeys.isNotEmpty()
+                        else -> false
+                    }
+                }
                 .map {
                     LoginItem(
                         shareId = it.shareId,
@@ -63,24 +68,21 @@ class GetPasskeysForDomainImpl @Inject constructor(
                 }
         }
 
-        return loginItems
-            .filter { it.login.passkeys.isNotEmpty() }
-            .mapNotNull { item ->
-                val domainPasskeys = item.login.passkeys.filter { it.domain == parsed }
-                if (domainPasskeys.isEmpty()) {
-                    null
-                } else {
-                    domainPasskeys.map {
-                        PasskeyItem(
-                            shareId = item.shareId,
-                            itemId = item.itemId,
-                            passkey = it,
-                            itemTitle = item.itemTitle
-                        )
-                    }
+        return loginItems.mapNotNull { item ->
+            val domainPasskeys = item.login.passkeys.filter { it.domain == parsed }
+            if (domainPasskeys.isEmpty()) {
+                null
+            } else {
+                domainPasskeys.map {
+                    PasskeyItem(
+                        shareId = item.shareId,
+                        itemId = item.itemId,
+                        passkey = it,
+                        itemTitle = item.itemTitle
+                    )
                 }
             }
-            .flatten()
+        }.flatten()
     }
 
     private data class LoginItem(

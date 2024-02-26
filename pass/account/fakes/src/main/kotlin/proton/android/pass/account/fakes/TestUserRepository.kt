@@ -122,4 +122,12 @@ class TestUserRepository : UserRepository {
     override suspend fun updateUserUsedSpace(userId: UserId, usedSpace: Long) {
         throw IllegalStateException("Not implemented")
     }
+
+    override suspend fun updateUserUsedBaseSpace(userId: UserId, usedBaseSpace: Long) {
+        throw IllegalStateException("Not implemented")
+    }
+
+    override suspend fun updateUserUsedDriveSpace(userId: UserId, usedDriveSpace: Long) {
+        throw IllegalStateException("Not implemented")
+    }
 }

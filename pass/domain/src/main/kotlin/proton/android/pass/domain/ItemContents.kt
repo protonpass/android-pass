@@ -81,7 +81,9 @@ data class Passkey(
     val note: String,
     val createTime: Instant,
     @Serializable(with = EncryptedByteArraySerializer::class)
-    val contents: EncryptedByteArray
+    val contents: EncryptedByteArray,
+    val userHandle: ByteArray,
+    val credentialId: ByteArray
 )
 
 @Serializable

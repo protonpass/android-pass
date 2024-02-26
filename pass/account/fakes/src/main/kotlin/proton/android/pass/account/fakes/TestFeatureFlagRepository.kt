@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -42,6 +43,7 @@ class TestFeatureFlagRepository @Inject constructor() : FeatureFlagRepository {
     ): FeatureFlag? = null
 
     override suspend fun getAll(userId: UserId?): List<FeatureFlag> = emptyList()
+    override suspend fun awaitNotEmptyScope(userId: UserId?, scope: Scope) = Unit
 
     override fun getValue(userId: UserId?, featureId: FeatureId): Boolean? = null
 

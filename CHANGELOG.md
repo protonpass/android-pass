@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.18.2 (2024-02-26)
+
+### Fixes :bug:
+
+- Bug in custom fields that duplicated them when editing.
+
 ## 1.18.1 (2024-02-19)
 
 ### Fixes :bug:

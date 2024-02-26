@@ -63,6 +63,7 @@ fun ItemContents.serializeToProto(
                     .build()
             }
 
+            builder.clearExtraFields()
             for (customField in customFields) {
                 when (customField) {
                     is CustomFieldContent.Text -> {

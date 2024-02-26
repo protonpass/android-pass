@@ -19,5 +19,5 @@
 package proton.android.pass.crypto.impl
 
 object Constants {
-    const val ITEM_CONTENT_FORMAT_VERSION = 2
+    const val ITEM_CONTENT_FORMAT_VERSION = 3
 }

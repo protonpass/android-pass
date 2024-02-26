@@ -126,6 +126,8 @@ fun ItemContents.serializeToProto(
                                 .setUserId(ByteString.copyFrom(it.userId))
                                 .setNote(it.note)
                                 .setCreateTime(it.createTime.epochSeconds.toInt())
+                                .setUserHandle(ByteString.copyFrom(it.userHandle))
+                                .setCredentialId(ByteString.copyFrom(it.credentialId))
                                 .build()
                         }
                     )

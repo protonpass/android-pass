@@ -20,6 +20,7 @@ package proton.android.pass.test.domain
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.entity.Type
 
 object TestUser {
 
@@ -33,6 +34,7 @@ object TestUser {
         name = name,
         displayName = null,
         currency = "",
+        type = Type.Proton,
         credit = 0,
         createdAtUtc = 0,
         usedSpace = 0,

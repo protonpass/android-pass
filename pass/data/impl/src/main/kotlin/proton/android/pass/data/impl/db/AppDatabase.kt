@@ -194,7 +194,7 @@ abstract class AppDatabase :
     TelemetryDatabase {
 
     companion object {
-        const val VERSION = 40
+        const val VERSION = 41
 
         const val DB_NAME = "db-passkey"
 
@@ -213,6 +213,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_27_28,
             AppDatabaseMigrations.MIGRATION_35_36,
             AppDatabaseMigrations.MIGRATION_36_37,
+            AppDatabaseMigrations.MIGRATION_40_41,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

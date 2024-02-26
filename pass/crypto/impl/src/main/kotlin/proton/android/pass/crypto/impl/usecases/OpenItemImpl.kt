@@ -29,6 +29,7 @@ import proton.android.pass.crypto.api.error.KeyNotFound
 import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
+import proton.android.pass.crypto.impl.Constants.ITEM_CONTENT_FORMAT_VERSION
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
@@ -40,6 +41,7 @@ import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.log.api.PassLogger
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
@@ -89,6 +91,10 @@ class OpenItemImpl @Inject constructor(
         val decodedItemContents = Base64.decodeBase64(response.content)
         val decryptedContents = encryptionContextProvider.withEncryptionContext(decryptedItemKey) {
             decrypt(EncryptedByteArray(decodedItemContents), EncryptionTag.ItemContent)
+        }
+
+        if (response.contentFormatVersion > ITEM_CONTENT_FORMAT_VERSION) {
+            PassLogger.w(TAG, "Unknown Item ContentFormatVersion: ${response.contentFormatVersion}")
         }
 
         val decoded = ItemV1.Item.parseFrom(decryptedContents)
@@ -150,6 +156,10 @@ class OpenItemImpl @Inject constructor(
             lastAutofillTime = response.lastUseTime.toOption().map(Instant::fromEpochSeconds),
             isPinned = response.isPinned,
         )
+    }
+
+    companion object {
+        private const val TAG = "OpenItemImpl"
     }
 }
 

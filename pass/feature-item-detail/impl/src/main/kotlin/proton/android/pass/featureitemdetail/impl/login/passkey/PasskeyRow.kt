@@ -30,10 +30,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainerStrong
@@ -59,7 +59,11 @@ fun PasskeyRow(
             .clickable(onClick = onClick)
     ) {
         ProtonTextField(
-            modifier = Modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+            modifier = Modifier.padding(
+                top = Spacing.medium,
+                end = Spacing.extraSmall,
+                bottom = Spacing.medium
+            ),
             value = username,
             editable = false,
             onChange = {},

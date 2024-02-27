@@ -48,5 +48,6 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
 }

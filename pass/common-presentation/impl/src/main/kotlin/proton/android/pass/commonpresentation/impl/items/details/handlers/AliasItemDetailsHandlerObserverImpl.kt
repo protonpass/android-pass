@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -70,7 +71,10 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         .onEach { newItemDetailsState -> itemDetailsFlow.update { newItemDetailsState } }
         .distinctUntilChanged()
 
-    override fun updateHiddenState(hiddenState: HiddenState) {
+    override fun updateHiddenState(
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState,
+    ) {
         // Implemented this
     }
 

@@ -42,29 +42,45 @@ internal fun PassLoginItemDetailMainSection(
     username: String,
     password: HiddenState,
     itemColors: ProtonItemColors,
+    onSectionClick: (String) -> Unit,
+    onHiddenSectionClick: (HiddenState) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState) -> Unit,
 ) {
+    val sections = mutableListOf<@Composable (() -> Unit)?>()
+
+    sections.add {
+        PassItemDetailFieldRow(
+            icon = painterResource(CoreR.drawable.ic_proton_user),
+            title = stringResource(R.string.item_details_login_section_username_title),
+            subtitle = username,
+            itemColors = itemColors,
+            onClick = { onSectionClick(username) },
+        ).takeIf { username.isNotBlank() }
+    }
+
+    sections.add {
+        PassItemDetailsHiddenFieldRow(
+            icon = painterResource(CoreR.drawable.ic_proton_key),
+            title = stringResource(R.string.item_details_login_section_password_title),
+            hiddenState = password,
+            hiddenTextLength = HIDDEN_PASSWORD_TEXT_LENGTH,
+            itemColors = itemColors,
+            hiddenTextStyle = ProtonTheme.typography.defaultNorm
+                .copy(fontFamily = FontFamily.Monospace),
+            onClick = { onHiddenSectionClick(password) },
+            onToggle = { checked -> onHiddenSectionToggle(checked, password) },
+        ).takeIf { password !is HiddenState.Empty }
+    }
+
     RoundedCornersColumn(modifier = modifier) {
-        if (username.isNotBlank()) {
-            PassItemDetailFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_user),
-                title = stringResource(R.string.item_details_login_section_username_title),
-                subtitle = username,
-                itemColors = itemColors,
-            )
-        }
+        sections
+            .filterNotNull()
+            .forEachIndexed { index, block ->
+                block()
 
-        if (password !is HiddenState.Empty) {
-            PassDivider()
-
-            PassItemDetailsHiddenFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_key),
-                title = stringResource(R.string.item_details_login_section_password_title),
-                hiddenState = password,
-                hiddenTextLength = HIDDEN_PASSWORD_TEXT_LENGTH,
-                itemColors = itemColors,
-                hiddenTextStyle = ProtonTheme.typography.defaultNorm
-                    .copy(fontFamily = FontFamily.Monospace),
-            )
-        }
+                if (index < sections.lastIndex) {
+                    PassDivider()
+                }
+            }
     }
 }

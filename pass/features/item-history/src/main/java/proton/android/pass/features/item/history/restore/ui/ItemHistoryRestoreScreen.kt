@@ -39,5 +39,8 @@ fun ItemHistoryRestoreScreen(
         onRestoreClick = ::onRestoreItem,
         onRestoreConfirmClick = ::onRestoreItemConfirmed,
         onRestoreCancelClick = ::onRestoreItemCanceled,
+        onSectionClick = ::onItemFieldClicked,
+        onHiddenSectionClick = ::onItemHiddenFieldClicked,
+        onHiddenSectionToggle = ::onItemHiddenFieldToggled,
     )
 }

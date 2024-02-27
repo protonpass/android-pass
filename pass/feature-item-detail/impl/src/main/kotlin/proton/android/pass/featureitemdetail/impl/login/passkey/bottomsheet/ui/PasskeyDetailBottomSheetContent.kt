@@ -158,7 +158,9 @@ fun PasskeyDetailBottomSheetContentPreview(
                     userId = byteArrayOf(),
                     note = "Note",
                     createTime = now,
-                    contents = byteArrayOf()
+                    contents = byteArrayOf(),
+                    userHandle = null,
+                    credentialId = byteArrayOf()
                 ),
                 now = now
             )

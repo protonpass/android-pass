@@ -46,7 +46,9 @@ class GeneratePasskeyImpl @Inject constructor(
                     userId = it.userId,
                     contents = it.passkey,
                     note = "",
-                    createTime = clock.now()
+                    createTime = clock.now(),
+                    credentialId = it.credentialId,
+                    userHandle = it.userHandle
                 ),
                 response = it.response,
             )

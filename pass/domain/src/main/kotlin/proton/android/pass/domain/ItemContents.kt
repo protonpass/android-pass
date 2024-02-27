@@ -85,7 +85,7 @@ data class Passkey(
     val note: String,
     val createTime: Instant,
     val contents: ByteArray,
-    val userHandle: ByteArray,
+    val userHandle: ByteArray?,
     val credentialId: ByteArray
 )
 

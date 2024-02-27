@@ -27,7 +27,10 @@ import dagger.multibindings.IntoMap
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonpresentation.impl.items.details.handlers.AliasItemDetailsHandlerObserverImpl
+import proton.android.pass.commonpresentation.impl.items.details.handlers.CreditCardItemDetailsHandlerObserverImpl
 import proton.android.pass.commonpresentation.impl.items.details.handlers.ItemDetailsHandlerImpl
+import proton.android.pass.commonpresentation.impl.items.details.handlers.LoginItemDetailsHandlerObserverImpl
+import proton.android.pass.commonpresentation.impl.items.details.handlers.NoteItemDetailsHandlerObserverImpl
 import proton.android.pass.domain.items.ItemCategory
 
 @[Module InstallIn(ViewModelComponent::class)]
@@ -41,6 +44,21 @@ internal abstract class CommonPresentationItemsModule {
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Alias)]
     internal abstract fun bindAliasItemDetailsHandlerObserver(
         impl: AliasItemDetailsHandlerObserverImpl,
+    ): ItemDetailsHandlerObserver
+
+    @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.CreditCard)]
+    internal abstract fun bindCreditCardItemDetailsHandlerObserver(
+        impl: CreditCardItemDetailsHandlerObserverImpl,
+    ): ItemDetailsHandlerObserver
+
+    @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Login)]
+    internal abstract fun bindLoginItemDetailsHandlerObserver(
+        impl: LoginItemDetailsHandlerObserverImpl,
+    ): ItemDetailsHandlerObserver
+
+    @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Note)]
+    internal abstract fun bindNoteItemDetailsHandlerObserver(
+        impl: NoteItemDetailsHandlerObserverImpl,
     ): ItemDetailsHandlerObserver
 
 }

@@ -31,6 +31,7 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailTitleRow
 import proton.android.pass.composecomponents.impl.item.details.sections.PassItemDetailSections
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.domain.HiddenState
 
 @Composable
 fun PassItemDetailsContent(
@@ -38,6 +39,9 @@ fun PassItemDetailsContent(
     topBar: @Composable () -> Unit,
     itemDetailState: ItemDetailState,
     itemColors: ProtonItemColors,
+    onSectionClick: (String) -> Unit,
+    onHiddenSectionClick: (HiddenState) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState) -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
@@ -64,6 +68,9 @@ fun PassItemDetailsContent(
                     .padding(horizontal = Spacing.medium),
                 itemDetailState = itemDetailState,
                 itemColors = itemColors,
+                onSectionClick = onSectionClick,
+                onHiddenSectionClick = onHiddenSectionClick,
+                onHiddenSectionToggle = onHiddenSectionToggle,
             )
         }
     }

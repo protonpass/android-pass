@@ -19,10 +19,12 @@
 package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import me.proton.core.accountmanager.domain.AccountManager
+import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -30,35 +32,46 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.domain.AliasDetails
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import javax.inject.Inject
 
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val getVaultById: GetVaultById,
     private val getAliasDetails: GetAliasDetails,
     private val encryptionContextProvider: EncryptionContextProvider,
 ) : ItemDetailsHandlerObserver {
 
-    override fun observe(item: Item): Flow<ItemDetailState> = accountManager.getPrimaryUserId()
-        .flatMapLatest { userId ->
-            combine(
-                getVaultById(userId, item.shareId),
-                getAliasDetails(item.shareId, item.id)
-                    .onStart { emit(AliasDetails("", emptyList(), emptyList())) },
-            ) { vault, aliasDetails ->
-                encryptionContextProvider.withEncryptionContext {
-                    item.toItemContents(this@withEncryptionContext)
-                }.let { itemContents ->
-                    ItemDetailState.Alias(
-                        contents = itemContents as ItemContents.Alias,
-                        isPinned = item.isPinned,
-                        vault = vault,
-                        mailboxes = aliasDetails.mailboxes,
-                    )
-                }
-            }
+    private val itemDetailsFlow = MutableStateFlow<ItemDetailState.Alias?>(null)
+
+    override fun observe(item: Item): Flow<ItemDetailState> = combine(
+        itemDetailsFlow,
+        getVaultById(shareId = item.shareId),
+        getAliasDetails(item.shareId, item.id)
+            .onStart { emit(AliasDetails("", emptyList(), emptyList())) },
+    ) { itemDetails, vault, aliasDetails ->
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(this@withEncryptionContext)
         }
+            .let { itemContents ->
+                itemDetails?.copy(
+                    isPinned = item.isPinned,
+                    vault = vault,
+                    mailboxes = aliasDetails.mailboxes,
+                ) ?: ItemDetailState.Alias(
+                    contents = itemContents as ItemContents.Alias,
+                    isPinned = item.isPinned,
+                    vault = vault,
+                    mailboxes = aliasDetails.mailboxes,
+                )
+            }
+    }
+        .onEach { newItemDetailsState -> itemDetailsFlow.update { newItemDetailsState } }
+        .distinctUntilChanged()
+
+    override fun updateHiddenState(hiddenState: HiddenState) {
+        // Implemented this
+    }
 
 }

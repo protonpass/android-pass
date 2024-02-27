@@ -57,6 +57,7 @@ internal fun PassItemDetailsHiddenFieldRow(
     hiddenTextLength: Int,
     itemColors: ProtonItemColors,
     onClick: (() -> Unit)? = null,
+    onToggle: ((Boolean) -> Unit)? = null,
     hiddenTextStyle: TextStyle = ProtonTheme.typography.defaultNorm,
 ) {
     val subtitle = when (hiddenState) {
@@ -103,7 +104,7 @@ internal fun PassItemDetailsHiddenFieldRow(
             )
         }
 
-        val checked = remember(hiddenState) {
+        val isVisible = remember(hiddenState) {
             when (hiddenState) {
                 is HiddenState.Revealed -> true
                 is HiddenState.Concealed,
@@ -113,10 +114,10 @@ internal fun PassItemDetailsHiddenFieldRow(
 
         Circle(
             backgroundColor = itemColors.minorPrimary,
-            onClick = { }
+            onClick = { onToggle?.invoke(!isVisible) }
         ) {
             Icon(
-                painter = if (checked) {
+                painter = if (isVisible) {
                     painterResource(R.drawable.ic_proton_eye_slash)
                 } else {
                     painterResource(R.drawable.ic_proton_eye)

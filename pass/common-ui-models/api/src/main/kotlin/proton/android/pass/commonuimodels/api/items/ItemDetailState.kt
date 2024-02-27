@@ -59,6 +59,7 @@ sealed class ItemDetailState(
     @Stable
     data class Login(
         val contents: ItemContents.Login,
+        val canLoadExternalImages: Boolean,
         private val isPinned: Boolean,
         private val vault: Vault?,
     ) : ItemDetailState(

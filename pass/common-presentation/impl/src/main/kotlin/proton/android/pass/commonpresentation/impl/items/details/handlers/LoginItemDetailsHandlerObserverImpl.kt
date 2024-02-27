@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -70,13 +71,21 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         }
         .flatMapLatest { itemDetailsFlow.filterNotNull() }
 
-    override fun updateHiddenState(hiddenState: HiddenState) {
+    override fun updateHiddenState(
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState,
+    ) {
         itemDetailsFlow.update { itemDetailsState ->
-            itemDetailsState?.copy(
-                contents = itemDetailsState.contents.copy(
-                    password = hiddenState,
+            when (hiddenFieldType) {
+                ItemDetailsFieldType.Hidden.Password -> itemDetailsState?.copy(
+                    contents = itemDetailsState.contents.copy(
+                        password = hiddenState,
+                    )
                 )
-            )
+
+                ItemDetailsFieldType.Hidden.Cvv,
+                ItemDetailsFieldType.Hidden.Pin -> itemDetailsState
+            }
         }
     }
 

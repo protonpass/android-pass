@@ -92,7 +92,7 @@ internal fun PassItemDetailTitleRow(
                     text = contents.title,
                     website = contents.websiteUrl,
                     packageName = contents.packageName,
-                    canLoadExternalImages = false,
+                    canLoadExternalImages = canLoadExternalImages,
                 )
             }
         }

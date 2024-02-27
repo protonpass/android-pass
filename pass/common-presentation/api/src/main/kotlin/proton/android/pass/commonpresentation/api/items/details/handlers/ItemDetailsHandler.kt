@@ -20,10 +20,22 @@ package proton.android.pass.commonpresentation.api.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.items.ItemCategory
 
 interface ItemDetailsHandler {
 
     fun observeItemDetails(item: Item): Flow<ItemDetailState>
+
+    fun onItemDetailsFieldClicked(text: String)
+
+    fun onItemDetailsHiddenFieldClicked(hiddenState: HiddenState)
+
+    fun onItemDetailsHiddenFieldToggled(
+        isVisible: Boolean,
+        hiddenState: HiddenState,
+        itemCategory: ItemCategory,
+    )
 
 }

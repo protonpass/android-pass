@@ -46,60 +46,65 @@ internal fun PassCreditCardItemDetailMainSection(
     pin: HiddenState,
     itemColors: ProtonItemColors,
 ) {
+
+    val sections = mutableListOf<@Composable (() -> Unit)?>()
+
+    sections.add {
+        PassItemDetailFieldRow(
+            icon = painterResource(CoreR.drawable.ic_proton_user),
+            title = stringResource(R.string.item_details_credit_card_section_cardholder_title),
+            subtitle = cardholder,
+            itemColors = itemColors,
+        ).takeIf { cardholder.isNotBlank() }
+    }
+
+    sections.add {
+        PassItemDetailSecureFieldRow(
+            icon = painterResource(CoreR.drawable.ic_proton_credit_card),
+            title = stringResource(R.string.item_details_credit_card_section_card_number_title),
+            subtitle = cardNumber,
+            itemColors = itemColors,
+        ).takeIf { cardNumber.isNotBlank() }
+    }
+
+    sections.add {
+        PassItemDetailFieldRow(
+            icon = painterResource(CoreR.drawable.ic_proton_calendar_day),
+            title = stringResource(R.string.item_details_credit_card_section_expiration_date_title),
+            subtitle = expirationDate,
+            itemColors = itemColors,
+        ).takeIf { expirationDate.isNotBlank() }
+    }
+
+    sections.add {
+        PassItemDetailsHiddenFieldRow(
+            icon = painterResource(CompR.drawable.ic_verified),
+            title = stringResource(R.string.item_details_credit_card_section_cvv_title),
+            hiddenState = cvv,
+            hiddenTextLength = HIDDEN_CVV_TEXT_LENGTH,
+            itemColors = itemColors,
+        ).takeIf { cvv !is HiddenState.Empty }
+    }
+
+    sections.add {
+        PassItemDetailsHiddenFieldRow(
+            icon = painterResource(CoreR.drawable.ic_proton_grid_3),
+            title = stringResource(R.string.item_details_credit_card_section_pin_title),
+            hiddenState = pin,
+            hiddenTextLength = HIDDEN_PIN_TEXT_LENGTH,
+            itemColors = itemColors,
+        ).takeIf { pin !is HiddenState.Empty }
+    }
+
     RoundedCornersColumn(modifier = modifier) {
-        if (cardholder.isNotBlank()) {
-            PassItemDetailFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_user),
-                title = stringResource(R.string.item_details_credit_card_section_cardholder_title),
-                subtitle = cardholder,
-                itemColors = itemColors,
-            )
-        }
+        sections
+            .filterNotNull()
+            .forEachIndexed { index, block ->
+                block()
 
-        if (cardNumber.isNotBlank()) {
-            PassDivider()
-
-            PassItemDetailSecureFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_credit_card),
-                title = stringResource(R.string.item_details_credit_card_section_card_number_title),
-                subtitle = cardNumber,
-                itemColors = itemColors,
-            )
-        }
-
-        if (expirationDate.isNotBlank()) {
-            PassDivider()
-
-            PassItemDetailFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_calendar_day),
-                title = stringResource(R.string.item_details_credit_card_section_expiration_date_title),
-                subtitle = expirationDate,
-                itemColors = itemColors,
-            )
-        }
-
-        if (cvv !is HiddenState.Empty) {
-            PassDivider()
-
-            PassItemDetailsHiddenFieldRow(
-                icon = painterResource(CompR.drawable.ic_verified),
-                title = stringResource(R.string.item_details_credit_card_section_cvv_title),
-                hiddenState = cvv,
-                hiddenTextLength = HIDDEN_CVV_TEXT_LENGTH,
-                itemColors = itemColors,
-            )
-        }
-
-        if (pin !is HiddenState.Empty) {
-            PassDivider()
-
-            PassItemDetailsHiddenFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_grid_3),
-                title = stringResource(R.string.item_details_credit_card_section_pin_title),
-                hiddenState = pin,
-                hiddenTextLength = HIDDEN_PIN_TEXT_LENGTH,
-                itemColors = itemColors,
-            )
-        }
+                if (index < sections.lastIndex) {
+                    PassDivider()
+                }
+            }
     }
 }

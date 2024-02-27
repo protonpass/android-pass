@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -39,6 +40,7 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -62,11 +64,11 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     private val shareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)
-        .let { id -> ShareId(id = id) }
+        .let(::ShareId)
 
     private val itemId: ItemId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ItemId.key)
-        .let { id -> ItemId(id = id) }
+        .let(::ItemId)
 
     private val itemRevision: ItemRevision = savedStateHandleProvider.get()
         .require<String>(ItemHistoryRevisionNavArgId.key)
@@ -76,7 +78,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     private val itemDetailsStateFlow: Flow<ItemDetailState> =
         oneShot { openItemRevision(shareId, itemRevision) }
-            .flatMapLatest { item -> itemDetailsHandler.observeItemDetails(item) }
+            .flatMapLatest(itemDetailsHandler::observeItemDetails)
 
     internal val state = combine(
         itemDetailsStateFlow,
@@ -95,6 +97,25 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     internal fun onEventConsumed(event: ItemHistoryRestoreEvent) {
         eventFlow.compareAndSet(event, ItemHistoryRestoreEvent.Idle)
+    }
+
+    internal fun onItemFieldClicked(text: String) {
+        itemDetailsHandler.onItemDetailsFieldClicked(text)
+    }
+
+    internal fun onItemHiddenFieldClicked(hiddenState: HiddenState) {
+        itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState)
+    }
+
+    internal fun onItemHiddenFieldToggled(
+        isVisible: Boolean,
+        hiddenState: HiddenState,
+    ) = viewModelScope.launch {
+        itemDetailsHandler.onItemDetailsHiddenFieldToggled(
+            isVisible = isVisible,
+            hiddenState = hiddenState,
+            itemCategory = itemDetailsStateFlow.first().itemCategory,
+        )
     }
 
     internal fun onRestoreItem() {

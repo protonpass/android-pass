@@ -37,7 +37,7 @@ data class UIPasskeyContent(
     val createTime: Int,
     val note: String,
     val credentialId: ByteArray,
-    val userHandle: ByteArray
+    val userHandle: ByteArray?
 ) : Parcelable {
 
     @Suppress("ReturnCount")

@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 import proton.android.pass.domain.HiddenState
@@ -36,7 +37,7 @@ internal fun PassLoginItemDetailSections(
     itemColors: ProtonItemColors,
     onSectionClick: (String) -> Unit,
     onHiddenSectionClick: (HiddenState) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
 ) = with(contents) {
     Column(
         modifier = modifier,

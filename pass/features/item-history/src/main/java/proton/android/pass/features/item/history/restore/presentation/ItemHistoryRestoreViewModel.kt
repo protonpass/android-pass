@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -110,10 +111,12 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     internal fun onItemHiddenFieldToggled(
         isVisible: Boolean,
         hiddenState: HiddenState,
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
     ) = viewModelScope.launch {
         itemDetailsHandler.onItemDetailsHiddenFieldToggled(
             isVisible = isVisible,
             hiddenState = hiddenState,
+            hiddenFieldType = hiddenFieldType,
             itemCategory = itemDetailsStateFlow.first().itemCategory,
         )
     }

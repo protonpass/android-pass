@@ -20,6 +20,7 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -28,12 +29,14 @@ import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 class ItemDetailsHandlerImpl @Inject constructor(
     private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver>,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val snackbarDispatcher: SnackbarDispatcher,
 ) : ItemDetailsHandler {
 
     override fun observeItemDetails(
@@ -60,6 +63,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
     override fun onItemDetailsHiddenFieldToggled(
         isVisible: Boolean,
         hiddenState: HiddenState,
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
         itemCategory: ItemCategory,
     ) {
         encryptionContextProvider.withEncryptionContext {
@@ -76,10 +80,12 @@ class ItemDetailsHandlerImpl @Inject constructor(
                 else -> HiddenState.Concealed(encrypted = hiddenState.encrypted)
             }
         }.let { toggledHiddenState ->
-            getItemDetailsObserver(itemCategory).updateHiddenState(toggledHiddenState)
+            getItemDetailsObserver(itemCategory)
+                .updateHiddenState(hiddenFieldType, toggledHiddenState)
         }
     }
 
     private fun getItemDetailsObserver(itemCategory: ItemCategory) = observers[itemCategory]
         ?: throw IllegalStateException("Unsupported item category: $itemCategory")
+
 }

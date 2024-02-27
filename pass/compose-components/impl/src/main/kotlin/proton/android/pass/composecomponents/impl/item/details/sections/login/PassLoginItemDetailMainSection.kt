@@ -65,6 +65,7 @@ internal fun PassLoginItemDetailMainSection(
             title = stringResource(R.string.item_details_login_section_password_title),
             hiddenState = password,
             hiddenTextLength = HIDDEN_PASSWORD_TEXT_LENGTH,
+            needsRevealedColors = true,
             itemColors = itemColors,
             hiddenTextStyle = ProtonTheme.typography.defaultNorm
                 .copy(fontFamily = FontFamily.Monospace),

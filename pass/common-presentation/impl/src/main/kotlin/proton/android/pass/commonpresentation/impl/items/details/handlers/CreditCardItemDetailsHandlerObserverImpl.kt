@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -65,7 +66,10 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         }
         .flatMapLatest { itemDetailsFlow.filterNotNull() }
 
-    override fun updateHiddenState(hiddenState: HiddenState) {
+    override fun updateHiddenState(
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState,
+    ) {
         // Implemented this
     }
 

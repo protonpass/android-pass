@@ -16,18 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.api.items.details.handlers
+package proton.android.pass.commonpresentation.api.items.details.domain
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
-import proton.android.pass.commonuimodels.api.items.ItemDetailState
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.Item
+sealed interface ItemDetailsFieldType {
 
-interface ItemDetailsHandlerObserver {
+    sealed interface Plain : ItemDetailsFieldType {
 
-    fun observe(item: Item): Flow<ItemDetailState>
+        object Username : Plain
 
-    fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState)
+    }
+
+    sealed interface Hidden : ItemDetailsFieldType {
+
+        object Cvv : Hidden
+
+        object Password : Hidden
+
+        object Pin : Hidden
+
+    }
 
 }

@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
 import proton.android.pass.composecomponents.impl.utils.protonItemColors
 import proton.android.pass.domain.HiddenState
@@ -47,7 +48,7 @@ internal fun ItemHistoryRestoreContent(
     onRestoreCancelClick: () -> Unit,
     onSectionClick: (String) -> Unit,
     onHiddenSectionClick: (HiddenState) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     state: ItemHistoryRestoreState,
 ) {
     when (state) {
@@ -94,7 +95,7 @@ private fun ItemHistoryRestoreDetails(
     onRestoreCancelClick: () -> Unit,
     onSectionClick: (String) -> Unit,
     onHiddenSectionClick: (HiddenState) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     state: ItemHistoryRestoreState.ItemDetails,
 ) = with(state) {
     var isDialogVisible by remember { mutableStateOf(false) }

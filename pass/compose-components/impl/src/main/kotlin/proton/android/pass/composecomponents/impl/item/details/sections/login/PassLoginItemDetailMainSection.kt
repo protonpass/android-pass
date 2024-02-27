@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
@@ -44,7 +45,7 @@ internal fun PassLoginItemDetailMainSection(
     itemColors: ProtonItemColors,
     onSectionClick: (String) -> Unit,
     onHiddenSectionClick: (HiddenState) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
 ) {
     val sections = mutableListOf<@Composable (() -> Unit)?>()
 
@@ -68,7 +69,9 @@ internal fun PassLoginItemDetailMainSection(
             hiddenTextStyle = ProtonTheme.typography.defaultNorm
                 .copy(fontFamily = FontFamily.Monospace),
             onClick = { onHiddenSectionClick(password) },
-            onToggle = { checked -> onHiddenSectionToggle(checked, password) },
+            onToggle = { isVisible ->
+                onHiddenSectionToggle(isVisible, password, ItemDetailsFieldType.Hidden.Password)
+            },
         ).takeIf { password !is HiddenState.Empty }
     }
 

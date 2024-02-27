@@ -20,13 +20,10 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -39,38 +36,50 @@ import proton.android.pass.domain.ItemContents
 import javax.inject.Inject
 
 class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val getVaultById: GetVaultById,
     private val encryptionContextProvider: EncryptionContextProvider,
 ) : ItemDetailsHandlerObserver {
 
     private val itemDetailsFlow = MutableStateFlow<ItemDetailState.CreditCard?>(null)
 
-    override fun observe(item: Item): Flow<ItemDetailState> = itemDetailsFlow
-        .onStart {
-            accountManager.getPrimaryUserId()
-                .flatMapLatest { userId -> getVaultById(userId, item.shareId) }
-                .map { vault ->
-                    encryptionContextProvider.withEncryptionContext {
-                        item.toItemContents(this@withEncryptionContext)
-                    }.let { itemContents ->
-                        ItemDetailState.CreditCard(
-                            contents = itemContents as ItemContents.CreditCard,
-                            isPinned = item.isPinned,
-                            vault = vault,
-                        )
-                    }
-                }
-                .first()
-                .let { initialItemDetailState -> itemDetailsFlow.update { initialItemDetailState } }
+    override fun observe(item: Item): Flow<ItemDetailState> = combine(
+        itemDetailsFlow,
+        getVaultById(shareId = item.shareId),
+    ) { itemDetails, vault ->
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(this@withEncryptionContext)
+        }.let { itemContents ->
+            itemDetails ?: ItemDetailState.CreditCard(
+                contents = itemContents as ItemContents.CreditCard,
+                isPinned = item.isPinned,
+                vault = vault,
+            )
         }
-        .flatMapLatest { itemDetailsFlow.filterNotNull() }
+    }
+        .distinctUntilChanged()
+        .onEach { newItemDetailsState -> itemDetailsFlow.update { newItemDetailsState } }
 
     override fun updateHiddenState(
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenState: HiddenState,
     ) {
-        // Implemented this
+        itemDetailsFlow.update { itemDetailsState ->
+            when (hiddenFieldType) {
+                ItemDetailsFieldType.Hidden.Cvv -> itemDetailsState?.copy(
+                    contents = itemDetailsState.contents.copy(
+                        cvv = hiddenState,
+                    ),
+                )
+
+                ItemDetailsFieldType.Hidden.Pin -> itemDetailsState?.copy(
+                    contents = itemDetailsState.contents.copy(
+                        pin = hiddenState,
+                    ),
+                )
+
+                ItemDetailsFieldType.Hidden.Password -> itemDetailsState
+            }
+        }
     }
 
 }

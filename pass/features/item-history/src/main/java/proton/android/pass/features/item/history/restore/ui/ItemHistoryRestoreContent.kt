@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
 import proton.android.pass.composecomponents.impl.utils.protonItemColors
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreEvent
@@ -44,6 +45,9 @@ internal fun ItemHistoryRestoreContent(
     onRestoreClick: () -> Unit,
     onRestoreConfirmClick: (ItemContents) -> Unit,
     onRestoreCancelClick: () -> Unit,
+    onSectionClick: (String) -> Unit,
+    onHiddenSectionClick: (HiddenState) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState) -> Unit,
     state: ItemHistoryRestoreState,
 ) {
     when (state) {
@@ -59,6 +63,9 @@ internal fun ItemHistoryRestoreContent(
                 onRestoreClick = onRestoreClick,
                 onRestoreConfirmClick = onRestoreConfirmClick,
                 onRestoreCancelClick = onRestoreCancelClick,
+                onSectionClick = onSectionClick,
+                onHiddenSectionClick = onHiddenSectionClick,
+                onHiddenSectionToggle = onHiddenSectionToggle,
                 state = state,
             )
         }
@@ -85,6 +92,9 @@ private fun ItemHistoryRestoreDetails(
     onRestoreClick: () -> Unit,
     onRestoreConfirmClick: (ItemContents) -> Unit,
     onRestoreCancelClick: () -> Unit,
+    onSectionClick: (String) -> Unit,
+    onHiddenSectionClick: (HiddenState) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState) -> Unit,
     state: ItemHistoryRestoreState.ItemDetails,
 ) = with(state) {
     var isDialogVisible by remember { mutableStateOf(false) }
@@ -130,7 +140,10 @@ private fun ItemHistoryRestoreDetails(
                 onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
                 onRestoreClick = onRestoreClick,
             )
-        }
+        },
+        onSectionClick = onSectionClick,
+        onHiddenSectionClick = onHiddenSectionClick,
+        onHiddenSectionToggle = onHiddenSectionToggle,
     )
 
     ItemHistoryRestoreConfirmationDialog(

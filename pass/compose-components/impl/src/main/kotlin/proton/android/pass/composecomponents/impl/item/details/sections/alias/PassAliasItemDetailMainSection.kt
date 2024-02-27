@@ -58,18 +58,30 @@ internal fun PassAliasItemDetailMainSection(
     itemColors: ProtonItemColors,
     mailboxes: ImmutableList<AliasMailbox>,
 ) {
-    RoundedCornersColumn(modifier = modifier) {
+    val sections = mutableListOf<@Composable () -> Unit>()
+
+    sections.add {
         PassAliasItemDetailAddressRow(
             alias = alias,
             itemColors = itemColors,
         )
+    }
 
-        PassDivider()
-
+    sections.add {
         PassAliasItemDetailMailboxesRow(
             mailboxes = mailboxes,
             itemColors = itemColors,
         )
+    }
+
+    RoundedCornersColumn(modifier = modifier) {
+        sections.forEachIndexed { index, block ->
+            block()
+
+            if (index < sections.lastIndex) {
+                PassDivider()
+            }
+        }
     }
 }
 

@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
@@ -45,6 +46,7 @@ internal fun PassCreditCardItemDetailMainSection(
     cvv: HiddenState,
     pin: HiddenState,
     itemColors: ProtonItemColors,
+    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
 ) {
 
     val sections = mutableListOf<@Composable (() -> Unit)?>()
@@ -83,6 +85,9 @@ internal fun PassCreditCardItemDetailMainSection(
             hiddenState = cvv,
             hiddenTextLength = HIDDEN_CVV_TEXT_LENGTH,
             itemColors = itemColors,
+            onToggle = { isVisible ->
+                onHiddenSectionToggle(isVisible, cvv, ItemDetailsFieldType.Hidden.Cvv)
+            },
         ).takeIf { cvv !is HiddenState.Empty }
     }
 
@@ -93,6 +98,9 @@ internal fun PassCreditCardItemDetailMainSection(
             hiddenState = pin,
             hiddenTextLength = HIDDEN_PIN_TEXT_LENGTH,
             itemColors = itemColors,
+            onToggle = { isVisible ->
+                onHiddenSectionToggle(isVisible, pin, ItemDetailsFieldType.Hidden.Pin)
+            },
         ).takeIf { pin !is HiddenState.Empty }
     }
 

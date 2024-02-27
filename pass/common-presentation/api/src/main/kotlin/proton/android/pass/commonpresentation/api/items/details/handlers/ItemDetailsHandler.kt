@@ -19,6 +19,7 @@
 package proton.android.pass.commonpresentation.api.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -35,6 +36,7 @@ interface ItemDetailsHandler {
     fun onItemDetailsHiddenFieldToggled(
         isVisible: Boolean,
         hiddenState: HiddenState,
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
         itemCategory: ItemCategory,
     )
 

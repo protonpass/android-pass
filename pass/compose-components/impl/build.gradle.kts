@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonPresentation.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.domain)

@@ -46,11 +46,11 @@ class ItemHistoryTimelineViewModel @Inject constructor(
 
     private val shareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)
-        .let { id -> ShareId(id = id) }
+        .let(::ShareId)
 
     private val itemId: ItemId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ItemId.key)
-        .let { id -> ItemId(id = id) }
+        .let(::ItemId)
 
     internal val state: StateFlow<ItemHistoryTimelineState> = combine(
         observeItemRevisions(shareId, itemId),

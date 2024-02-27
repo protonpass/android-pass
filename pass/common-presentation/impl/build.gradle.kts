@@ -41,10 +41,12 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
+    implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.preferences.api)
 }

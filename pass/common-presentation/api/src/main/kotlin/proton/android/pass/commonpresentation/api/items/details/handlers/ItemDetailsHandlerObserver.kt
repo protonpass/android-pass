@@ -20,10 +20,13 @@ package proton.android.pass.commonpresentation.api.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 
 interface ItemDetailsHandlerObserver {
 
     fun observe(item: Item): Flow<ItemDetailState>
+
+    fun updateHiddenState(hiddenState: HiddenState)
 
 }

@@ -35,7 +35,9 @@ data class UIPasskeyContent(
     val userId: ByteArray,
     val contents: ByteArray,
     val createTime: Int,
-    val note: String
+    val note: String,
+    val userHandle: ByteArray?,
+    val credentialId: ByteArray
 ) : Parcelable {
 
     @Suppress("ReturnCount")
@@ -81,7 +83,9 @@ data class UIPasskeyContent(
         userId = userId,
         contents = contents,
         createTime = Instant.fromEpochSeconds(createTime.toLong()),
-        note = note
+        note = note,
+        credentialId = credentialId,
+        userHandle = userHandle
     )
 
     companion object {
@@ -96,7 +100,9 @@ data class UIPasskeyContent(
                 contents = contents,
                 createTime = createTime.epochSeconds.toInt(),
                 note = note,
-                userId = userId
+                userId = userId,
+                credentialId = credentialId,
+                userHandle = userHandle
             )
         }
     }

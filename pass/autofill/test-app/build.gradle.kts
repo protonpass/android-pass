@@ -32,12 +32,23 @@ android {
         getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("keystore/testapp.keystore")
+            storePassword = "passtestapp"
+            keyAlias = "passtestapp"
+            keyPassword = "passtestapp"
+        }
+    }
+
     buildTypes {
         debug {
             isMinifyEnabled = false
             isDebuggable = true
             enableUnitTestCoverage = false
             enableAndroidTestCoverage = false
+
+            signingConfig = signingConfigs.getByName("release")
         }
         release {
             isMinifyEnabled = true
@@ -46,6 +57,8 @@ android {
                 getDefaultProguardFile("proguard-android.txt"),
                 "proguard-rules.pro"
             )
+
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -82,6 +95,7 @@ dependencies {
     implementation(libs.androidx.compose.foundationLayout)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.credentials)
     implementation(libs.core.presentation.compose)
     implementation(libs.material)
 }

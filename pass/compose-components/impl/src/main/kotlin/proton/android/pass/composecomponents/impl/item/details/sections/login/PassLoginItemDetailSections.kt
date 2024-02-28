@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
@@ -34,6 +35,7 @@ import proton.android.pass.domain.ItemContents
 internal fun PassLoginItemDetailSections(
     modifier: Modifier = Modifier,
     contents: ItemContents.Login,
+    passwordStrength: PasswordStrength,
     itemColors: ProtonItemColors,
     onSectionClick: (String) -> Unit,
     onHiddenSectionClick: (HiddenState) -> Unit,
@@ -46,6 +48,7 @@ internal fun PassLoginItemDetailSections(
         PassLoginItemDetailMainSection(
             username = username,
             password = password,
+            passwordStrength = passwordStrength,
             itemColors = itemColors,
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,

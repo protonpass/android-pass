@@ -29,12 +29,19 @@ import javax.inject.Inject
 class FakeObserveItemRevisions @Inject constructor() : ObserveItemRevisions {
 
     private var itemRevisions: List<ItemRevision>? = null
+    private var itemRevisionsError: Throwable? = null
 
     fun setItemRevisions(newItemRevisions: List<ItemRevision>) {
         itemRevisions = newItemRevisions
     }
 
+    fun setItemRevisionsError(newItemRevisionsError: Throwable) {
+        itemRevisionsError = newItemRevisionsError
+    }
+
     override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<ItemRevision>> = flow {
+        itemRevisionsError?.let { error -> throw error }
+
         itemRevisions?.let { revisions -> emit(revisions) }
     }
 

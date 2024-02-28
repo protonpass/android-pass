@@ -48,6 +48,7 @@ internal fun PassItemDetailFieldRow(
     itemColors: ProtonItemColors,
     isSelectable: Boolean = false,
     onClick: (() -> Unit)? = null,
+    contentInBetween: (@Composable () -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
@@ -66,7 +67,9 @@ internal fun PassItemDetailFieldRow(
             tint = itemColors.norm,
         )
 
-        Column {
+        Column(
+            modifier = Modifier.weight(weight = 1f),
+        ) {
             SectionTitle(
                 modifier = Modifier.padding(start = Spacing.small),
                 text = title,
@@ -88,6 +91,8 @@ internal fun PassItemDetailFieldRow(
                 )
             }
         }
+
+        contentInBetween?.invoke()
     }
 
 }

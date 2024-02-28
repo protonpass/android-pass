@@ -21,17 +21,21 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CancelInvite
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class CancelInviteImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val apiProvider: ApiProvider
+    private val apiProvider: ApiProvider,
+    private val shareRepository: ShareRepository
 ) : CancelInvite {
     override suspend fun invoke(shareId: ShareId, inviteId: InviteId) {
         val userId = accountManager.getPrimaryUserId().filterNotNull().first()
@@ -43,6 +47,8 @@ class CancelInviteImpl @Inject constructor(
                 )
             }
             .valueOrThrow
+
+        refreshShare(userId, shareId)
     }
 
     override suspend fun invoke(shareId: ShareId, inviteId: NewUserInviteId) {
@@ -55,5 +61,22 @@ class CancelInviteImpl @Inject constructor(
                 )
             }
             .valueOrThrow
+
+        refreshShare(userId, shareId)
+    }
+
+    private suspend fun refreshShare(userId: UserId, shareId: ShareId) {
+        runCatching {
+            shareRepository.refreshShare(userId, shareId)
+        }.onSuccess {
+            PassLogger.i(TAG, "Share refreshed successfully")
+        }.onFailure {
+            PassLogger.w(TAG, "Error refreshing share")
+            PassLogger.w(TAG, it)
+        }
+    }
+
+    companion object {
+        private const val TAG = "CancelInviteImpl"
     }
 }

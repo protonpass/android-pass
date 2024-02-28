@@ -30,7 +30,7 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.composecomponents.impl.item.ProtonPasswordStrengthItem
+import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
@@ -77,7 +77,7 @@ internal fun PassLoginItemDetailMainSection(
                 onHiddenSectionToggle(isVisible, password, ItemDetailsFieldType.Hidden.Password)
             },
             contentInBetween = {
-                ProtonPasswordStrengthItem(passwordStrength = passwordStrength)
+                PassPasswordStrengthItem(passwordStrength = passwordStrength)
             },
         ).takeIf { password !is HiddenState.Empty }
     }

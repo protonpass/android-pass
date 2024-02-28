@@ -29,8 +29,8 @@ import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun ProtonPasswordStrengthLabel(
-    passwordStrength: PasswordStrength,
     modifier: Modifier = Modifier,
+    passwordStrength: PasswordStrength,
     labelPrefix: String? = null,
 ) {
     val (labelResId, labelColor) = when (passwordStrength) {

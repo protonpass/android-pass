@@ -34,6 +34,8 @@ internal fun PassCreditCardItemDetailsSections(
     modifier: Modifier = Modifier,
     contents: ItemContents.CreditCard,
     itemColors: ProtonItemColors,
+    onSectionClick: (String) -> Unit,
+    onHiddenSectionClick: (HiddenState) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
 ) = with(contents) {
     Column(
@@ -47,6 +49,8 @@ internal fun PassCreditCardItemDetailsSections(
             cvv = cvv,
             pin = pin,
             itemColors = itemColors,
+            onSectionClick = onSectionClick,
+            onHiddenSectionClick = onHiddenSectionClick,
             onHiddenSectionToggle = onHiddenSectionToggle,
         )
 

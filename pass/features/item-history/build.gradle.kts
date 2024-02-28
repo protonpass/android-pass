@@ -105,6 +105,7 @@ dependencies {
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.androidx.lifecycle.viewmodel.savedstate)

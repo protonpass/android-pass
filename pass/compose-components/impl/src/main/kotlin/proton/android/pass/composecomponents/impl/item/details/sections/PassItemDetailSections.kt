@@ -58,6 +58,7 @@ internal fun PassItemDetailSections(
         is ItemDetailState.Login -> PassLoginItemDetailSections(
             modifier = modifier,
             contents = contents,
+            passwordStrength = passwordStrength,
             itemColors = itemColors,
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,

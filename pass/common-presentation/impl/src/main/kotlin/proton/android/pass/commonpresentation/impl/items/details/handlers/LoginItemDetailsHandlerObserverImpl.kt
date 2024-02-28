@@ -21,14 +21,12 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -41,35 +39,36 @@ import proton.android.pass.preferences.value
 import javax.inject.Inject
 
 class LoginItemDetailsHandlerObserverImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val getVaultById: GetVaultById,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val passwordStrengthCalculator: PasswordStrengthCalculator,
 ) : ItemDetailsHandlerObserver {
 
     private val itemDetailsFlow = MutableStateFlow<ItemDetailState.Login?>(null)
 
-    override fun observe(item: Item): Flow<ItemDetailState> = itemDetailsFlow
-        .onStart {
-            combine(
-                getVaultById(accountManager.getPrimaryUserId().first(), item.shareId),
-                userPreferencesRepository.getUseFaviconsPreference(),
-            ) { vault, useFaviconsPreference ->
-                encryptionContextProvider.withEncryptionContext {
-                    item.toItemContents(this@withEncryptionContext)
-                }.let { itemContents ->
-                    ItemDetailState.Login(
-                        contents = itemContents as ItemContents.Login,
-                        isPinned = item.isPinned,
-                        vault = vault,
-                        canLoadExternalImages = useFaviconsPreference.value(),
-                    )
-                }
-            }
-                .first()
-                .let { initialItemDetailState -> itemDetailsFlow.update { initialItemDetailState } }
+    override fun observe(item: Item): Flow<ItemDetailState> = combine(
+        itemDetailsFlow,
+        getVaultById(shareId = item.shareId),
+        userPreferencesRepository.getUseFaviconsPreference(),
+    ) { itemDetails, vault, useFaviconsPreference ->
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(this@withEncryptionContext)
+        }.let { itemContents ->
+            itemDetails ?: ItemDetailState.Login(
+                contents = itemContents as ItemContents.Login,
+                isPinned = item.isPinned,
+                vault = vault,
+                canLoadExternalImages = useFaviconsPreference.value(),
+                passwordStrength = encryptionContextProvider.withEncryptionContext {
+                    decrypt(itemContents.password.encrypted)
+                        .let(passwordStrengthCalculator::calculateStrength)
+                },
+            )
         }
-        .flatMapLatest { itemDetailsFlow.filterNotNull() }
+    }
+        .distinctUntilChanged()
+        .onEach { newItemDetailsState -> itemDetailsFlow.update { newItemDetailsState } }
 
     override fun updateHiddenState(
         hiddenFieldType: ItemDetailsFieldType.Hidden,

@@ -19,6 +19,7 @@
 package proton.android.pass.commonuimodels.api.items
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
@@ -60,6 +61,7 @@ sealed class ItemDetailState(
     data class Login(
         val contents: ItemContents.Login,
         val canLoadExternalImages: Boolean,
+        val passwordStrength: PasswordStrength,
         private val isPinned: Boolean,
         private val vault: Vault?,
     ) : ItemDetailState(

@@ -24,17 +24,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,6 +43,7 @@ class ItemHistoryTimelineViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeItemRevisions: ObserveItemRevisions,
     getItemCategory: GetItemCategory,
+    snackbarDispatcher: SnackbarDispatcher,
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -56,20 +58,21 @@ class ItemHistoryTimelineViewModel @Inject constructor(
         observeItemRevisions(shareId, itemId),
         oneShot { getItemCategory(shareId, itemId) },
     ) { itemRevisions, itemCategory ->
-        ItemHistoryTimelineState(
+        ItemHistoryTimelineState.Success(
             shareId = shareId,
             itemId = itemId,
-            isLoadingState = IsLoadingState.NotLoading,
             itemRevisions = itemRevisions.toPersistentList(),
-            itemCategory = itemCategory,
+            itemRevisionCategory = itemCategory,
         )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Eagerly,
-        initialValue = ItemHistoryTimelineState(
-            shareId = shareId,
-            itemId = itemId,
-        ),
-    )
+    }
+        .catch<ItemHistoryTimelineState> {
+            emit(ItemHistoryTimelineState.Error)
+            snackbarDispatcher(ItemHistoryTimelineSnackbarMessage.FetchItemRevisionsError)
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = ItemHistoryTimelineState.Loading,
+        )
 
 }

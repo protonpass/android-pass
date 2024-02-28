@@ -20,7 +20,6 @@ package proton.android.pass.features.item.history.timeline.presentation
 
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -30,18 +29,31 @@ import proton.android.pass.test.domain.shares.ShareIdMother
 
 internal object ItemHistoryTimelineStateMother {
 
-    internal fun create(
-        shareId: ShareId = ShareIdMother.create(),
-        itemId: ItemId = ItemIdMother.create(),
-        isLoadingState: IsLoadingState = IsLoadingState.Loading,
-        itemRevisions: ImmutableList<ItemRevision> = persistentListOf(),
-        itemCategory: ItemCategory = ItemCategory.Unknown,
-    ): ItemHistoryTimelineState = ItemHistoryTimelineState(
-        shareId = shareId,
-        itemId = itemId,
-        isLoadingState = isLoadingState,
-        itemRevisions = itemRevisions,
-        itemCategory = itemCategory,
-    )
+    internal object Error {
+
+        internal fun create(): ItemHistoryTimelineState.Error = ItemHistoryTimelineState.Error
+
+    }
+
+    internal object Loading {
+
+        internal fun create(): ItemHistoryTimelineState.Loading = ItemHistoryTimelineState.Loading
+
+    }
+
+    internal object Success {
+
+        internal fun create(
+            shareId: ShareId = ShareIdMother.create(),
+            itemId: ItemId = ItemIdMother.create(),
+            itemRevisions: ImmutableList<ItemRevision> = persistentListOf(),
+            itemRevisionCategory: ItemCategory = ItemCategory.Unknown,
+        ): ItemHistoryTimelineState.Success = ItemHistoryTimelineState.Success(
+            shareId = shareId,
+            itemId = itemId,
+            itemRevisions = itemRevisions,
+            itemRevisionCategory = itemRevisionCategory,
+        )
+    }
 
 }

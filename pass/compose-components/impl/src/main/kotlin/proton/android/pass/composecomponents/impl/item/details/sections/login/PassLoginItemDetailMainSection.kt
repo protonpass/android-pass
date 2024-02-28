@@ -25,10 +25,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.item.ProtonPasswordStrengthItem
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
@@ -42,6 +44,7 @@ internal fun PassLoginItemDetailMainSection(
     modifier: Modifier = Modifier,
     username: String,
     password: HiddenState,
+    passwordStrength: PasswordStrength,
     itemColors: ProtonItemColors,
     onSectionClick: (String) -> Unit,
     onHiddenSectionClick: (HiddenState) -> Unit,
@@ -72,6 +75,9 @@ internal fun PassLoginItemDetailMainSection(
             onClick = { onHiddenSectionClick(password) },
             onToggle = { isVisible ->
                 onHiddenSectionToggle(isVisible, password, ItemDetailsFieldType.Hidden.Password)
+            },
+            contentInBetween = {
+                ProtonPasswordStrengthItem(passwordStrength = passwordStrength)
             },
         ).takeIf { password !is HiddenState.Empty }
     }

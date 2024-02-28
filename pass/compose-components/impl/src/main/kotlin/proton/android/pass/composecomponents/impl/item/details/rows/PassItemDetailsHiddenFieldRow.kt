@@ -60,6 +60,7 @@ internal fun PassItemDetailsHiddenFieldRow(
     onToggle: ((Boolean) -> Unit)? = null,
     hiddenTextStyle: TextStyle = ProtonTheme.typography.defaultNorm,
     needsRevealedColors: Boolean = false,
+    contentInBetween: (@Composable () -> Unit)? = null,
 ) {
     val subtitle = when (hiddenState) {
         is HiddenState.Empty -> AnnotatedString("")
@@ -108,6 +109,8 @@ internal fun PassItemDetailsHiddenFieldRow(
                 textStyle = hiddenTextStyle,
             )
         }
+
+        contentInBetween?.invoke()
 
         val isVisible = remember(hiddenState) {
             when (hiddenState) {

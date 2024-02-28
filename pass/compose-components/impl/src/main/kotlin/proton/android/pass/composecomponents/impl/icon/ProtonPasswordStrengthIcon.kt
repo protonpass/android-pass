@@ -27,7 +27,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun ProtonPasswordStrengthIcon(
+fun PassPasswordStrengthIcon(
     passwordStrength: PasswordStrength,
     modifier: Modifier = Modifier,
 ) {

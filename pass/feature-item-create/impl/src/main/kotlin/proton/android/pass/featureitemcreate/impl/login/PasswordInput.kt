@@ -42,8 +42,8 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
-import proton.android.pass.composecomponents.impl.icon.ProtonPasswordStrengthIcon
-import proton.android.pass.composecomponents.impl.labels.ProtonPasswordStrengthLabel
+import proton.android.pass.composecomponents.impl.icon.PassPasswordStrengthIcon
+import proton.android.pass.composecomponents.impl.labels.PassPasswordStrengthLabel
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 
@@ -72,7 +72,8 @@ internal fun PasswordInput(
             autoCorrect = false,
             keyboardType = KeyboardType.Password
         ),
-        textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed).copy(fontFamily = FontFamily.Monospace),
+        textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed)
+            .copy(fontFamily = FontFamily.Monospace),
         onChange = onChange,
         label = { PasswordInputLabel(passwordStrength) },
         placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },
@@ -102,7 +103,7 @@ private fun PasswordInputLabel(
 
         PasswordStrength.Strong,
         PasswordStrength.Vulnerable,
-        PasswordStrength.Weak -> ProtonPasswordStrengthLabel(
+        PasswordStrength.Weak -> PassPasswordStrengthLabel(
             passwordStrength = passwordStrength,
             modifier = modifier,
             labelPrefix = text,
@@ -125,7 +126,7 @@ private fun PasswordInputLeadingIcon(
 
         PasswordStrength.Strong,
         PasswordStrength.Vulnerable,
-        PasswordStrength.Weak -> ProtonPasswordStrengthIcon(
+        PasswordStrength.Weak -> PassPasswordStrengthIcon(
             passwordStrength = passwordStrength,
             modifier = modifier,
         )

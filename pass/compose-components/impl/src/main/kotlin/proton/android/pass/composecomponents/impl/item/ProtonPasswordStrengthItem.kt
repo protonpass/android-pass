@@ -32,11 +32,11 @@ import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.composecomponents.impl.icon.ProtonPasswordStrengthIcon
-import proton.android.pass.composecomponents.impl.labels.ProtonPasswordStrengthLabel
+import proton.android.pass.composecomponents.impl.icon.PassPasswordStrengthIcon
+import proton.android.pass.composecomponents.impl.labels.PassPasswordStrengthLabel
 
 @Composable
-fun ProtonPasswordStrengthItem(
+fun PassPasswordStrengthItem(
     passwordStrength: PasswordStrength,
     modifier: Modifier = Modifier,
 ) {
@@ -45,9 +45,9 @@ fun ProtonPasswordStrengthItem(
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        ProtonPasswordStrengthIcon(passwordStrength = passwordStrength)
+        PassPasswordStrengthIcon(passwordStrength = passwordStrength)
 
-        ProtonPasswordStrengthLabel(passwordStrength = passwordStrength)
+        PassPasswordStrengthLabel(passwordStrength = passwordStrength)
     }
 }
 
@@ -60,7 +60,7 @@ fun ProtonPasswordStrengthItemPreview(
 
     PassTheme(isDark = isDark) {
         Surface {
-            ProtonPasswordStrengthItem(passwordStrength = passwordStrength)
+            PassPasswordStrengthItem(passwordStrength = passwordStrength)
         }
     }
 }

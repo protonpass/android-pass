@@ -28,7 +28,7 @@ import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun ProtonPasswordStrengthLabel(
+fun PassPasswordStrengthLabel(
     modifier: Modifier = Modifier,
     passwordStrength: PasswordStrength,
     labelPrefix: String? = null,

@@ -27,4 +27,5 @@
     <string name="item_history_timeline_node_child_title">Modified</string>
     <string name="item_history_timeline_node_leaf_title">Created</string>
     <string name="item_history_timeline_node_root_title">Current version</string>
+    <string name="item_history_timeline_snackbar_message_error">There was an error fetching item revisions</string>
 </resources>

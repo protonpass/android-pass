@@ -26,6 +26,7 @@ import proton.android.pass.autofill.sample.autofillmanageractivity.AutofillManag
 import proton.android.pass.autofill.sample.creditcardactivity.CreditCardActivity
 import proton.android.pass.autofill.sample.databinding.ActivitySampleSelectionBinding
 import proton.android.pass.autofill.sample.multistep.MultiStepFirstLoginActivity
+import proton.android.pass.autofill.sample.passkeys.PasskeysActivity
 import proton.android.pass.autofill.sample.personalinfoactivity.PersonalInfoActivity
 import proton.android.pass.autofill.sample.simpleactivity.SimpleLoginActivity
 import proton.android.pass.autofill.sample.simplecompose.SimpleComposeLoginActivity
@@ -69,6 +70,10 @@ class SampleSelectionActivity : AppCompatActivity() {
 
         binding.webviewLoginButton.setOnClickListener {
             openActivity(WebViewLoginActivity::class.java)
+        }
+
+        binding.passkeysLoginButton.setOnClickListener {
+            openActivity(PasskeysActivity::class.java)
         }
 
         setContentView(binding.root)

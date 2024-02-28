@@ -38,7 +38,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.toPasswordAnnotatedString
-import proton.android.pass.composecomponents.impl.item.ProtonPasswordStrengthItem
+import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
 import proton.android.pass.featurepassword.impl.bottomsheet.random.GeneratePasswordRandomContent
 import proton.android.pass.featurepassword.impl.bottomsheet.words.GeneratePasswordWordsContent
 
@@ -69,7 +69,7 @@ fun GeneratePasswordViewContent(
                 style = ProtonTheme.typography.subheadlineNorm.copy(fontFamily = FontFamily.Monospace),
             )
 
-            ProtonPasswordStrengthItem(passwordStrength = state.passwordStrength)
+            PassPasswordStrengthItem(passwordStrength = state.passwordStrength)
         }
 
         when (state.content) {

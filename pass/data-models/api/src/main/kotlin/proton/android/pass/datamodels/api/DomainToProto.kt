@@ -46,22 +46,20 @@ fun ItemContents.serializeToProto(
 
     val content = when (this) {
         is ItemContents.Login -> {
-            if (packageInfoSet.isNotEmpty()) {
-                val packageNameList = packageInfoSet.map {
-                    ItemV1.AllowedAndroidApp.newBuilder()
-                        .setPackageName(it.packageName.value)
-                        .setAppName(it.appName.value)
-                        .build()
-                }
-                builder.platformSpecific = builder.platformSpecific.toBuilder()
-                    .setAndroid(
-                        ItemV1.AndroidSpecific.newBuilder()
-                            .clearAllowedApps()
-                            .addAllAllowedApps(packageNameList)
-                            .build()
-                    )
+            val packageNameList = packageInfoSet.map {
+                ItemV1.AllowedAndroidApp.newBuilder()
+                    .setPackageName(it.packageName.value)
+                    .setAppName(it.appName.value)
                     .build()
             }
+            builder.platformSpecific = builder.platformSpecific.toBuilder()
+                .setAndroid(
+                    ItemV1.AndroidSpecific.newBuilder()
+                        .clearAllowedApps()
+                        .addAllAllowedApps(packageNameList)
+                        .build()
+                )
+                .build()
 
             builder.clearExtraFields()
             for (customField in customFields) {

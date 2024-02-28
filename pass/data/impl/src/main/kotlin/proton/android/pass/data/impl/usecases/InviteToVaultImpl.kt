@@ -26,15 +26,14 @@ import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
-import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.CreateInviteKey
@@ -48,12 +47,11 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class InviteToVaultImpl @Inject constructor(
-    private val userAddressRepository: UserAddressRepository,
     private val accountManager: AccountManager,
     private val encryptShareKeysForUser: EncryptShareKeysForUser,
     private val shareKeyRepository: ShareKeyRepository,
     private val remoteInviteDataSource: RemoteInviteDataSource,
-    private val localShareDataSource: LocalShareDataSource,
+    private val shareRepository: ShareRepository,
     private val newUserInviteSignatureManager: NewUserInviteSignatureManager,
     private val getInviteUserMode: GetInviteUserMode
 ) : InviteToVault {
@@ -73,21 +71,13 @@ class InviteToVaultImpl @Inject constructor(
             primaryUserId
         }
 
-        val share = localShareDataSource.getById(id, shareId)
-            ?: return@withContext Result.failure(IllegalStateException("No share with id $shareId"))
-
-        val inviterUserAddresses = runCatching { userAddressRepository.getAddresses(id) }
-            .getOrElse {
-                PassLogger.w(TAG, "Failed to get current user addresses")
-                PassLogger.w(TAG, it)
-                return@withContext Result.failure(it)
-            }
-
-        val inviterUserAddress = inviterUserAddresses.firstOrNull {
-            it.addressId.id == share.addressId
-        } ?: return@withContext Result.failure(
-            exception = IllegalStateException("No primary address for inviter user")
-        )
+        val inviterUserAddress = runCatching {
+            shareRepository.getAddressForShareId(id, shareId)
+        }.getOrElse {
+            PassLogger.w(TAG, "Error obtaining inviterUserAddress")
+            PassLogger.w(TAG, it)
+            return@withContext Result.failure(it)
+        }
 
         generateInvites(
             userId = id,
@@ -105,6 +95,17 @@ class InviteToVaultImpl @Inject constructor(
                 existingUserRequests = existingUserInvites,
                 newUserRequests = newUserInvites
             )
+
+        }.onSuccess {
+            PassLogger.i(TAG, "Invites sent successfully. Refreshing share")
+            runCatching {
+                shareRepository.refreshShare(id, shareId)
+            }.onSuccess {
+                PassLogger.d(TAG, "Share refreshed successfully")
+            }.onFailure {
+                PassLogger.w(TAG, "Error refreshing shares")
+                PassLogger.w(TAG, it)
+            }
         }
     }
 

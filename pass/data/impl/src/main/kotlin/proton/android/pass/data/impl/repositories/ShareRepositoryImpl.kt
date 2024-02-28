@@ -198,19 +198,7 @@ class ShareRepositoryImpl @Inject constructor(
             } else {
                 null
             }
-        }.map { (localShare, remoteShare) ->
-            localShare.copy(
-                owner = remoteShare.owner,
-                shareRoleId = remoteShare.shareRoleId,
-                targetMembers = remoteShare.targetMembers,
-                shared = remoteShare.shared,
-                permission = remoteShare.permission,
-                targetMaxMembers = remoteShare.targetMaxMembers,
-                expirationTime = remoteShare.expirationTime,
-                newUserInvitesReady = remoteShare.newUserInvitesReady,
-                pendingInvites = remoteShare.pendingInvites
-            )
-        }
+        }.map { (localShare, remoteShare) -> updateEntityWithResponse(localShare, remoteShare) }
 
         // Delete from the local data source the shares that are not in remote response
         val toDelete = localSharesMap.keys.subtract(remoteShareMap.keys)
@@ -252,6 +240,16 @@ class ShareRepositoryImpl @Inject constructor(
             allShareIds = allShareIds,
             newShareIds = newShares.map { ShareId(it.id) }.toSet()
         )
+    }
+
+    override suspend fun refreshShare(userId: UserId, shareId: ShareId) {
+        val shareResponse = remoteShareDataSource.fetchShareById(userId, shareId)
+            ?: throw ShareNotAvailableError()
+        val localShare = localShareDataSource.getById(userId, shareId)
+            ?: throw ShareNotAvailableError()
+
+        val updated = updateEntityWithResponse(localShare, shareResponse)
+        localShareDataSource.upsertShares(listOf(updated))
     }
 
     @Suppress("ReturnCount")
@@ -595,6 +593,22 @@ class ShareRepositoryImpl @Inject constructor(
 
         else -> false
     }
+
+    private fun updateEntityWithResponse(
+        entity: ShareEntity,
+        response: ShareResponse
+    ): ShareEntity = entity.copy(
+        owner = response.owner,
+        shareRoleId = response.shareRoleId,
+        targetMembers = response.targetMembers,
+        shared = response.shared,
+        permission = response.permission,
+        targetMaxMembers = response.targetMaxMembers,
+        expirationTime = response.expirationTime,
+        newUserInvitesReady = response.newUserInvitesReady,
+        pendingInvites = response.pendingInvites
+    )
+
 
     internal data class ShareResponseEntity(
         val response: ShareResponse,

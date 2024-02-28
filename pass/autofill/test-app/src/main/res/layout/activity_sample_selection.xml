@@ -70,7 +70,14 @@
                 android:id="@+id/webviewLoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:text="WebView Login" />
+
+            <Button
+                android:id="@+id/passkeysLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Passkeys" />
 
         </LinearLayout>
 

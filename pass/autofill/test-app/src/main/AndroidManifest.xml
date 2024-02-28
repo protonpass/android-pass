@@ -10,6 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
+
+        <meta-data android:name="asset_statements" android:resource="@string/asset_statements" />
+
         <activity
             android:name="proton.android.pass.autofill.sample.simplefragment.SimpleFragmentLoginActivity"
             android:exported="true"
@@ -40,6 +43,9 @@
             android:exported="true" />
         <activity
             android:name="proton.android.pass.autofill.sample.personalinfoactivity.PersonalInfoActivity"
+            android:exported="true" />
+        <activity
+            android:name="proton.android.pass.autofill.sample.passkeys.PasskeysActivity"
             android:exported="true" />
         <activity
             android:name="proton.android.pass.autofill.sample.SampleSelectionActivity"

@@ -107,11 +107,14 @@ class CreatePasskeyAppViewModel @Inject constructor(
     private val createLoginUiStateFlow: Flow<Option<InitialCreateLoginUiState>> = requestStateFlow
         .mapLatest { value ->
             value.map { stateRequest ->
+                val passkeyOrigin = stateRequest.request.callingRequest.origin
+                    ?: stateRequest.appState.data.origin
+
                 InitialCreateLoginUiState(
                     title = stateRequest.appState.data.rpName,
                     username = stateRequest.appState.data.username,
                     url = stateRequest.request.callingRequest.origin,
-                    passkeyOrigin = stateRequest.request.callingRequest.origin,
+                    passkeyOrigin = passkeyOrigin,
                     passkeyRequest = stateRequest.request.callingRequest.requestJson,
                     passkeyDomain = stateRequest.appState.data.domain
                 )

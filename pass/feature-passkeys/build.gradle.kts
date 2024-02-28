@@ -83,6 +83,7 @@ dependencies {
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.serialization.json)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)

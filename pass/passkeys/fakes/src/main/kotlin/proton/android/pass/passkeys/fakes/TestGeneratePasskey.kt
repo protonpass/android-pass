@@ -41,7 +41,9 @@ class TestGeneratePasskey @Inject constructor() : GeneratePasskey {
                 userDisplayName = "userDisplayName",
                 userId = byteArrayOf(1, 2, 3),
                 note = "note",
-                createTime = Clock.System.now()
+                createTime = Clock.System.now(),
+                credentialId = byteArrayOf(4, 5, 6),
+                userHandle = byteArrayOf(10, 11, 12),
             ),
             response = ""
         )

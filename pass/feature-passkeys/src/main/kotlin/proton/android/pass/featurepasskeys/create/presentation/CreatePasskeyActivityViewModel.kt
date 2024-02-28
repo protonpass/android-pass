@@ -96,10 +96,10 @@ class CreatePasskeyActivityViewModel @Inject constructor(
 
     private val requestDataFlow: Flow<Option<CreatePasskeyRequestData>> = requestFlow.map {
         it.map { request ->
-            val requestOrigin = request.callingRequest.origin ?: ""
-
-            val domain = UrlSanitizer.getDomain(requestOrigin).getOrElse { "" }
             val parsed = parseCreatePasskeyRequest(request.callingRequest.requestJson)
+            val requestOrigin = request.callingRequest.origin ?: parsed.rpId ?: ""
+            val domain = UrlSanitizer.getDomain(requestOrigin).getOrElse { parsed.rpId } ?: ""
+
             CreatePasskeyRequestData(
                 domain = domain,
                 origin = requestOrigin,

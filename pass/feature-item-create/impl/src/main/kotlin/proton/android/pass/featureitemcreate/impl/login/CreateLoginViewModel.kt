@@ -285,7 +285,7 @@ class CreateLoginViewModel @Inject constructor(
             PassLogger.i(TAG, "Generating passkey")
             val generatedPasskey = generatePasskey(it.origin, it.request)
             loginItemFormMutableState = loginItemFormMutableState.copy(
-                passkeys = listOf(UIPasskeyContent.from(generatedPasskey.passkey))
+                passkeyToBeGenerated = UIPasskeyContent.from(generatedPasskey.passkey),
             )
 
             generatedPasskey

@@ -42,6 +42,7 @@ import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
 import proton.android.pass.featurepasskeys.R
+import proton.android.pass.featurepasskeys.select.SelectPasskeyUtils
 import proton.android.pass.featurepasskeys.select.ui.SelectPasskeyActivity
 import proton.android.pass.featurepasskeys.select.ui.UsePasskeyNoUiActivity
 import proton.android.pass.log.api.PassLogger
@@ -97,8 +98,8 @@ object GetPasskeysHandler {
             return null
         }
 
-        val domain = request.callingAppInfo?.origin ?: run {
-            PassLogger.d(TAG, "Could not find origin in request")
+        val domain = SelectPasskeyUtils.getDomainFromRequest(request) ?: run {
+            PassLogger.d(TAG, "Could not find domain for request")
             return BeginGetCredentialResponse(
                 credentialEntries = emptyList(),
                 actions = emptyList(),

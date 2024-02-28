@@ -23,11 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
-import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailSecureFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 import proton.android.pass.domain.HiddenState
@@ -64,20 +65,21 @@ internal fun PassCreditCardItemDetailMainSection(
     }
 
     sections.add {
-        PassItemDetailSecureFieldRow(
+        PassItemDetailMaskedFieldRow(
             icon = painterResource(CoreR.drawable.ic_proton_credit_card),
             title = stringResource(R.string.item_details_credit_card_section_card_number_title),
-            subtitle = cardNumber,
+            maskedSubtitle = TextMask.CardNumber(cardNumber),
             itemColors = itemColors,
+            isToggleable = true,
             onClick = { onSectionClick(cardNumber) }
         ).takeIf { cardNumber.isNotBlank() }
     }
 
     sections.add {
-        PassItemDetailFieldRow(
+        PassItemDetailMaskedFieldRow(
             icon = painterResource(CoreR.drawable.ic_proton_calendar_day),
             title = stringResource(R.string.item_details_credit_card_section_expiration_date_title),
-            subtitle = expirationDate,
+            maskedSubtitle = TextMask.ExpirationDate(expirationDate),
             itemColors = itemColors,
         ).takeIf { expirationDate.isNotBlank() }
     }

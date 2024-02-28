@@ -26,11 +26,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.items.ItemCategoryMother
 import proton.android.pass.test.domain.items.ItemIdMother
@@ -47,12 +47,14 @@ internal class ItemHistoryTimelineViewModelTest {
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var observeItemRevisions: FakeObserveItemRevisions
     private lateinit var getItemCategory: FakeGetItemCategory
+    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     internal fun setUp() {
         savedStateHandleProvider = TestSavedStateHandleProvider()
         observeItemRevisions = FakeObserveItemRevisions()
         getItemCategory = FakeGetItemCategory()
+        snackbarDispatcher = TestSnackbarDispatcher()
 
         savedStateHandleProvider.get().apply {
             set(CommonNavArgId.ShareId.key, shareId.id)
@@ -61,11 +63,8 @@ internal class ItemHistoryTimelineViewModelTest {
     }
 
     @Test
-    internal fun `WHEN view model is initialized THEN emit initial state`() = runTest {
-        val expectedInitialState = ItemHistoryTimelineStateMother.create(
-            shareId = shareId,
-            itemId = itemId,
-        )
+    internal fun `WHEN view model is initialized THEN emit initial state Loading`() = runTest {
+        val expectedInitialState = ItemHistoryTimelineStateMother.Loading.create()
 
         val viewModel = createViewModel()
 
@@ -77,32 +76,49 @@ internal class ItemHistoryTimelineViewModelTest {
     }
 
     @Test
-    internal fun `WHEN item revisions AND item category are emitted THEN update state`() = runTest {
-        val itemRevisions = persistentListOf<ItemRevision>()
-        val itemCategory = ItemCategoryMother.random()
-        val expectedUpdatedState = ItemHistoryTimelineStateMother.create(
-            shareId = shareId,
-            itemId = itemId,
-            isLoadingState = IsLoadingState.NotLoading,
-            itemRevisions = itemRevisions,
-            itemCategory = itemCategory,
-        )
-        observeItemRevisions.setItemRevisions(itemRevisions)
-        getItemCategory.setItemCategory(itemCategory)
+    internal fun `WHEN item revisions successfully fetched THEN update state to Success`() =
+        runTest {
+            val itemRevisions = persistentListOf<ItemRevision>()
+            val itemCategory = ItemCategoryMother.random()
+            val expectedUpdatedState = ItemHistoryTimelineStateMother.Success.create(
+                shareId = shareId,
+                itemId = itemId,
+                itemRevisions = itemRevisions,
+                itemRevisionCategory = itemCategory,
+            )
+            observeItemRevisions.setItemRevisions(itemRevisions)
+            getItemCategory.setItemCategory(itemCategory)
 
-        val viewModel = createViewModel()
+            val viewModel = createViewModel()
 
-        viewModel.state.test {
-            val updatedState = awaitItem()
+            viewModel.state.test {
+                val updatedState = awaitItem()
 
-            assertThat(updatedState).isEqualTo(expectedUpdatedState)
+                assertThat(updatedState).isEqualTo(expectedUpdatedState)
+            }
         }
-    }
+
+    @Test
+    internal fun `WHEN an error occurred fetching item revisions THEN update state to Error`() =
+        runTest {
+            val error = Throwable()
+            val expectedUpdatedState = ItemHistoryTimelineStateMother.Error.create()
+            observeItemRevisions.setItemRevisionsError(error)
+
+            val viewModel = createViewModel()
+
+            viewModel.state.test {
+                val updatedState = awaitItem()
+
+                assertThat(updatedState).isEqualTo(expectedUpdatedState)
+            }
+        }
 
     private fun createViewModel() = ItemHistoryTimelineViewModel(
         savedStateHandleProvider = savedStateHandleProvider,
         observeItemRevisions = observeItemRevisions,
         getItemCategory = getItemCategory,
+        snackbarDispatcher = snackbarDispatcher,
     )
 
 }

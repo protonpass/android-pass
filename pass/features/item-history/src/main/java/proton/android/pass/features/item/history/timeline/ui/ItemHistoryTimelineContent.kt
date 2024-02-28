@@ -59,17 +59,25 @@ internal fun ItemHistoryTimelineContent(
                 text = stringResource(id = R.string.item_history_timeline_title),
             )
 
-            if (isLoadingState.value()) {
-                ItemHistoryTimelineLoading()
-            } else {
-                ItemHistoryTimelineNodes(
-                    modifier = Modifier.padding(horizontal = Spacing.medium),
-                    shareId = shareId,
-                    itemId = itemId,
-                    itemRevisions = itemRevisions,
-                    colors = itemColors,
-                    onNavigated = onNavigated,
-                )
+            when (this@with) {
+                ItemHistoryTimelineState.Error -> {
+                    onNavigated(ItemHistoryNavDestination.Back)
+                }
+
+                ItemHistoryTimelineState.Loading -> {
+                    ItemHistoryTimelineLoading()
+                }
+
+                is ItemHistoryTimelineState.Success -> {
+                    ItemHistoryTimelineNodes(
+                        modifier = Modifier.padding(horizontal = Spacing.medium),
+                        shareId = shareId,
+                        itemId = itemId,
+                        itemRevisions = itemRevisions,
+                        colors = itemColors,
+                        onNavigated = onNavigated,
+                    )
+                }
             }
         }
     }

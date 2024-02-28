@@ -18,23 +18,20 @@
 
 package proton.android.pass.features.item.history.timeline.presentation
 
-import kotlinx.collections.immutable.ImmutableList
-import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.items.ItemCategory
+import androidx.annotation.StringRes
+import proton.android.pass.features.item.history.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-internal sealed class ItemHistoryTimelineState(internal val itemCategory: ItemCategory) {
+internal enum class ItemHistoryTimelineSnackbarMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false,
+) : SnackbarMessage {
 
-    object Error : ItemHistoryTimelineState(ItemCategory.Unknown)
-
-    object Loading : ItemHistoryTimelineState(ItemCategory.Unknown)
-
-    data class Success(
-        internal val shareId: ShareId,
-        internal val itemId: ItemId,
-        internal val itemRevisions: ImmutableList<ItemRevision>,
-        private val itemRevisionCategory: ItemCategory,
-    ) : ItemHistoryTimelineState(itemRevisionCategory)
+    FetchItemRevisionsError(
+        id = R.string.item_history_timeline_snackbar_message_error,
+        type = SnackbarType.ERROR,
+    ),
 
 }

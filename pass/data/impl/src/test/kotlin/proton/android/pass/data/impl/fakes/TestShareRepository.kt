@@ -38,6 +38,7 @@ class TestShareRepository : ShareRepository {
         Result.failure(IllegalStateException("CreateVaultResult not set"))
     private var refreshSharesResult: RefreshSharesResult =
         RefreshSharesResult(emptySet(), emptySet())
+    private var refreshShareResult: Result<Unit> = Result.success(Unit)
     private val observeSharesFlow = testFlow<Result<List<Share>>>()
     private val observeVaultCountFlow = testFlow<Result<Int>>()
 
@@ -53,11 +54,14 @@ class TestShareRepository : ShareRepository {
 
     private val observeShareByIdFlow = testFlow<Result<Option<Share>>>()
 
-    private val getAddressForShareIdResult: Result<UserAddress> =
+    private var getAddressForShareIdResult: Result<UserAddress> =
         Result.failure(IllegalStateException("UserAddress not set"))
 
     private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
+    private val refreshShareMemory: MutableList<RefreshSharePayload> = mutableListOf()
+
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
+    fun refreshShareMemory(): List<RefreshSharePayload> = refreshShareMemory
 
     fun setCreateVaultResult(result: Result<Share>) {
         createVaultResult = result
@@ -65,6 +69,10 @@ class TestShareRepository : ShareRepository {
 
     fun setRefreshSharesResult(result: RefreshSharesResult) {
         refreshSharesResult = result
+    }
+
+    fun setRefreshShareResult(result: Result<Unit>) {
+        refreshShareResult = result
     }
 
     fun setDeleteVaultResult(result: Result<Unit>) {
@@ -91,6 +99,10 @@ class TestShareRepository : ShareRepository {
         deleteSharesResult = value
     }
 
+    fun setGetAddressForShareIdResult(value: Result<UserAddress>) {
+        getAddressForShareIdResult = value
+    }
+
     override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
         createVaultResult.getOrThrow()
 
@@ -101,6 +113,11 @@ class TestShareRepository : ShareRepository {
 
     override suspend fun refreshShares(userId: UserId): RefreshSharesResult =
         refreshSharesResult
+
+    override suspend fun refreshShare(userId: UserId, shareId: ShareId) {
+        refreshShareMemory.add(RefreshSharePayload(userId, shareId))
+        refreshShareResult.getOrThrow()
+    }
 
     override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
         observeSharesFlow.map { it.getOrThrow() }
@@ -137,5 +154,11 @@ class TestShareRepository : ShareRepository {
 
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
+
+
+    data class RefreshSharePayload(
+        val userId: UserId,
+        val shareId: ShareId
+    )
 
 }

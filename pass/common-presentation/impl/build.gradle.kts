@@ -43,6 +43,7 @@ dependencies {
 
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.crypto.api)

@@ -52,6 +52,8 @@ internal fun PassItemDetailSections(
             modifier = modifier,
             contents = contents,
             itemColors = itemColors,
+            onSectionClick = onSectionClick,
+            onHiddenSectionClick = onHiddenSectionClick,
             onHiddenSectionToggle = onHiddenSectionToggle,
         )
 

@@ -36,6 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -56,6 +57,7 @@ class PasskeyProviderService : CredentialProviderService() {
         cancellationSignal: CancellationSignal,
         callback: OutcomeReceiver<BeginCreateCredentialResponse, CreateCredentialException>
     ) {
+        PassLogger.i(TAG, "Received onBeginCreateCredentialRequest")
         CreatePasskeyHandler.handle(
             context = applicationContext,
             request = request,
@@ -70,6 +72,7 @@ class PasskeyProviderService : CredentialProviderService() {
         cancellationSignal: CancellationSignal,
         callback: OutcomeReceiver<BeginGetCredentialResponse, GetCredentialException>
     ) {
+        PassLogger.i(TAG, "Received onBeginGetCredentialRequest")
         GetPasskeysHandler.handle(
             context = applicationContext,
             request = request,
@@ -86,6 +89,11 @@ class PasskeyProviderService : CredentialProviderService() {
         cancellationSignal: CancellationSignal,
         callback: OutcomeReceiver<Void?, ClearCredentialException>
     ) {
+        PassLogger.i(TAG, "Received onClearCredentialStateRequest")
         callback.onError(ClearCredentialUnknownException())
+    }
+
+    companion object {
+        private const val TAG = "PasskeyProviderService"
     }
 }

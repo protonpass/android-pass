@@ -40,6 +40,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featurepasskeys.select.SelectPasskeyUtils
 import proton.android.pass.featurepasskeys.select.navigation.SelectPasskeyNavigation
 import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyActivityViewModel
 import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyAppState
@@ -139,7 +140,7 @@ class SelectPasskeyActivity : FragmentActivity() {
                         return null
                     }
 
-                val origin = request.callingAppInfo.origin ?: run {
+                val origin = SelectPasskeyUtils.getDomainFromRequest(request) ?: run {
                     PassLogger.w(TAG, "Request does not contain origin")
                     return null
                 }

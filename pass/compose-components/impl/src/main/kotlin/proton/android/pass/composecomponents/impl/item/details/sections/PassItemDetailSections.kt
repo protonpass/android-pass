@@ -39,6 +39,7 @@ internal fun PassItemDetailSections(
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
+    onLinkClick: (String) -> Unit,
 ) = with(itemDetailState) {
     when (this) {
         is ItemDetailState.Alias -> PassAliasItemDetailSections(
@@ -66,6 +67,7 @@ internal fun PassItemDetailSections(
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,
             onHiddenSectionToggle = onHiddenSectionToggle,
+            onLinkClick = onLinkClick,
         )
 
         is ItemDetailState.Note -> PassNoteItemDetailSections(

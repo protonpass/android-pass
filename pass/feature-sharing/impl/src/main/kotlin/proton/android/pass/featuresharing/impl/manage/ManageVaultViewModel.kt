@@ -46,7 +46,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultMembers
-import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.ObserveVaultWithItemCountById
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
@@ -66,7 +66,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ManageVaultViewModel @Inject constructor(
     getVaultMembers: GetVaultMembers,
-    getVaultById: GetVaultWithItemCountById,
+    observeVaultById: ObserveVaultWithItemCountById,
     getUserPlan: GetUserPlan,
     savedStateHandleProvider: SavedStateHandleProvider,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -90,7 +90,7 @@ class ManageVaultViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<ManageVaultEvent> =
         MutableStateFlow(ManageVaultEvent.Unknown)
 
-    private val vaultFlow: Flow<VaultWithItemCount> = getVaultById(shareId = navShareId)
+    private val vaultFlow: Flow<VaultWithItemCount> = observeVaultById(shareId = navShareId)
         .catch {
             snackbarDispatcher(SharingSnackbarMessage.GetMembersInfoError)
             eventFlow.update { ManageVaultEvent.Close }

@@ -77,7 +77,6 @@ import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
-import proton.android.pass.data.api.usecases.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -121,6 +120,8 @@ import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -186,7 +187,6 @@ import proton.android.pass.data.impl.usecases.ObserveItemByIdImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
-import proton.android.pass.data.impl.usecases.ObserveOrganizationSettingsImpl
 import proton.android.pass.data.impl.usecases.ObservePinnedItemsImpl
 import proton.android.pass.data.impl.usecases.ObservePrimaryUserEmailImpl
 import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
@@ -231,6 +231,8 @@ import proton.android.pass.data.impl.usecases.items.GetItemCategoryImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
 import proton.android.pass.data.impl.usecases.items.OpenItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.RestoreItemRevisionImpl
+import proton.android.pass.data.impl.usecases.organization.ObserveOrganizationSettingsImpl
+import proton.android.pass.data.impl.usecases.organization.RefreshOrganizationSettingsImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
@@ -566,5 +568,8 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRestoreItemRevision(impl: RestoreItemRevisionImpl): RestoreItemRevision
+
+    @Binds
+    abstract fun bindRefreshOrganizationSettings(impl: RefreshOrganizationSettingsImpl): RefreshOrganizationSettings
 
 }

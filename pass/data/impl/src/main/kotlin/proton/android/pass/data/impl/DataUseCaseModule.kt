@@ -28,6 +28,7 @@ import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CancelInvite
+import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.CheckPin
 import proton.android.pass.data.api.usecases.ClearPin
@@ -76,6 +77,7 @@ import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -134,6 +136,7 @@ import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
 import proton.android.pass.data.impl.usecases.CancelInviteImpl
+import proton.android.pass.data.impl.usecases.CheckCanAddressesBeInvitedImpl
 import proton.android.pass.data.impl.usecases.CheckMasterPasswordImpl
 import proton.android.pass.data.impl.usecases.CheckPinImpl
 import proton.android.pass.data.impl.usecases.ClearPinImpl
@@ -183,6 +186,7 @@ import proton.android.pass.data.impl.usecases.ObserveItemByIdImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
+import proton.android.pass.data.impl.usecases.ObserveOrganizationSettingsImpl
 import proton.android.pass.data.impl.usecases.ObservePinnedItemsImpl
 import proton.android.pass.data.impl.usecases.ObservePrimaryUserEmailImpl
 import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
@@ -546,6 +550,10 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveVaultWithItemCountById(
         impl: ObserveVaultWithItemCountByIdImpl,
     ): ObserveVaultWithItemCountById
+    abstract fun bindObserveOrganizationSettings(impl: ObserveOrganizationSettingsImpl): ObserveOrganizationSettings
+
+    @Binds
+    abstract fun bindCheckCanAddressesBeInvited(impl: CheckCanAddressesBeInvitedImpl): CheckCanAddressesBeInvited
 
     @Binds
     abstract fun bindObserveItemRevisions(impl: ObserveItemRevisionsImpl): ObserveItemRevisions

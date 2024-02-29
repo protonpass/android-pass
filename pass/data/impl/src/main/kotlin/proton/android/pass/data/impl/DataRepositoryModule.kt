@@ -29,6 +29,7 @@ import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
@@ -46,6 +47,7 @@ import proton.android.pass.data.impl.repositories.ItemKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemSyncStatusRepositoryImpl
 import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
+import proton.android.pass.data.impl.repositories.OrganizationSettingsRepositoryImpl
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
 import proton.android.pass.data.impl.repositories.SearchEntryRepositoryImpl
@@ -114,4 +116,9 @@ abstract class DataRepositoryModule {
     abstract fun bindBulkInviteRepository(
         impl: BulkInviteRepositoryImpl
     ): BulkInviteRepository
+
+    @Binds
+    abstract fun bindOrganizationSettingsRepository(
+        impl: OrganizationSettingsRepositoryImpl
+    ): OrganizationSettingsRepository
 }

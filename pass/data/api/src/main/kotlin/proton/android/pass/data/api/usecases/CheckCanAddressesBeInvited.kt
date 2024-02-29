@@ -22,12 +22,12 @@ import proton.android.pass.domain.ShareId
 
 sealed interface CanAddressesBeInvitedResult {
     @JvmInline
-    value class All(val addresses: List<String>): CanAddressesBeInvitedResult
+    value class All(val addresses: List<String>) : CanAddressesBeInvitedResult
 
     data class Some(
         val canBe: List<String>,
         val cannotBe: List<String>
-    ): CanAddressesBeInvitedResult
+    ) : CanAddressesBeInvitedResult
 
     object None : CanAddressesBeInvitedResult
 }

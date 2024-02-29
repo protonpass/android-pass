@@ -25,7 +25,7 @@ import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.PassOrganizationSettingsEntity
 
 @Dao
-abstract class PassOrganizationSettingsDao: BaseDao<PassOrganizationSettingsEntity>() {
+abstract class PassOrganizationSettingsDao : BaseDao<PassOrganizationSettingsEntity>() {
 
     @Query(
         """

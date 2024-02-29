@@ -46,8 +46,8 @@ internal fun PassLoginItemDetailMainSection(
     password: HiddenState,
     passwordStrength: PasswordStrength,
     itemColors: ProtonItemColors,
-    onSectionClick: (String) -> Unit,
-    onHiddenSectionClick: (HiddenState) -> Unit,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
+    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
 ) {
     val sections = mutableListOf<@Composable (() -> Unit)?>()
@@ -58,7 +58,7 @@ internal fun PassLoginItemDetailMainSection(
             title = stringResource(R.string.item_details_login_section_username_title),
             subtitle = username,
             itemColors = itemColors,
-            onClick = { onSectionClick(username) },
+            onClick = { onSectionClick(username, ItemDetailsFieldType.Plain.Username) },
         ).takeIf { username.isNotBlank() }
     }
 
@@ -72,13 +72,11 @@ internal fun PassLoginItemDetailMainSection(
             itemColors = itemColors,
             hiddenTextStyle = ProtonTheme.typography.defaultNorm
                 .copy(fontFamily = FontFamily.Monospace),
-            onClick = { onHiddenSectionClick(password) },
+            onClick = { onHiddenSectionClick(password, ItemDetailsFieldType.Hidden.Password) },
             onToggle = { isVisible ->
                 onHiddenSectionToggle(isVisible, password, ItemDetailsFieldType.Hidden.Password)
             },
-            contentInBetween = {
-                PassPasswordStrengthItem(passwordStrength = passwordStrength)
-            },
+            contentInBetween = { PassPasswordStrengthItem(passwordStrength = passwordStrength) },
         ).takeIf { password !is HiddenState.Empty }
     }
 

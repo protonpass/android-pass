@@ -33,6 +33,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -51,6 +52,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
@@ -59,6 +62,7 @@ import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
@@ -163,19 +167,33 @@ fun SharingWithContent(
             }
 
             val focusRequester = remember { FocusRequester() }
+
+            val (isError, errorMessage) = when (state.errorMessage) {
+                ErrorMessage.NoAddressesCanBeInvited -> {
+                    true to stringResource(R.string.sharing_with_no_addresses_can_be_invited)
+                }
+                ErrorMessage.SomeAddressesCannotBeInvited -> {
+                    true to stringResource(R.string.sharing_with_some_addresses_cannot_be_invited)
+                }
+                ErrorMessage.EmailNotValid -> {
+                    true to stringResource(R.string.share_with_email_error)
+                }
+                else -> false to ""
+            }
+
             ProtonTextField(
                 modifier = Modifier.focusRequester(focusRequester),
                 value = editingEmail,
                 placeholder = {
                     ProtonTextFieldPlaceHolder(
                         text = stringResource(R.string.share_with_email_hint),
-                        textStyle = ProtonTheme.typography.subheadlineNorm.copy(color = ProtonTheme.colors.textHint)
+                        textStyle = ProtonTheme.typography.subheadlineNorm.copy(
+                            color = ProtonTheme.colors.textHint
+                        )
                     )
                 },
-                isError = state.showEmailNotValidError,
-                errorMessage = if (state.showEmailNotValidError) {
-                    stringResource(R.string.share_with_email_error)
-                } else "",
+                isError = isError,
+                errorMessage = errorMessage,
                 textStyle = ProtonTheme.typography.subheadlineNorm,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     capitalization = KeyboardCapitalization.None,
@@ -183,8 +201,13 @@ fun SharingWithContent(
                     keyboardType = KeyboardType.Email
                 ),
                 onChange = { onEvent(SharingWithUiEvent.EmailChange(it)) },
-                onDoneClick = { onEvent(SharingWithUiEvent.EmailSubmit) }
+                onDoneClick = if (state.canOnlyPickFromSelection) {
+                    null
+                } else {
+                    { onEvent(SharingWithUiEvent.EmailSubmit) }
+                }
             )
+
             RequestFocusLaunchedEffect(focusRequester)
 
             PassDivider()
@@ -201,7 +224,7 @@ fun SharingWithContent(
 @Composable
 private fun SharingWithChip(
     modifier: Modifier = Modifier,
-    email: String,
+    email: EnteredEmailState,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
@@ -214,14 +237,16 @@ private fun SharingWithChip(
             )
             .roundedContainer(
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
-                borderColor = Color.Transparent,
+                borderColor = if (email.isError) {
+                    PassTheme.colors.signalDanger
+                } else Color.Transparent,
             )
             .clickable { onClick() }
             .padding(Spacing.small),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = email,
+            text = email.email,
             style = ProtonTheme.typography.defaultNorm,
         )
 
@@ -231,6 +256,22 @@ private fun SharingWithChip(
                 painter = painterResource(id = CoreR.drawable.ic_proton_cross_circle),
                 tint = PassTheme.colors.textNorm,
                 contentDescription = stringResource(R.string.share_with_remove_email_content_description)
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun SharingWithChipPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            SharingWithChip(
+                email = EnteredEmailState("some@email.test", isError = input.second),
+                isSelected = input.second,
+                onClick = {}
             )
         }
     }

@@ -22,6 +22,10 @@ sealed interface ItemDetailsFieldType {
 
     sealed interface Plain : ItemDetailsFieldType {
 
+        object Alias : Plain
+
+        object CardNumber : Plain
+
         object Username : Plain
 
     }

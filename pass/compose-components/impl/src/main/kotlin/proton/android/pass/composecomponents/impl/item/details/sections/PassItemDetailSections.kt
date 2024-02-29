@@ -36,8 +36,8 @@ internal fun PassItemDetailSections(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
     itemColors: ProtonItemColors,
-    onSectionClick: (String) -> Unit,
-    onHiddenSectionClick: (HiddenState) -> Unit,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
+    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
 ) = with(itemDetailState) {
     when (this) {
@@ -46,6 +46,7 @@ internal fun PassItemDetailSections(
             contents = contents,
             itemColors = itemColors,
             mailboxes = mailboxes.toImmutableList(),
+            onSectionClick = onSectionClick,
         )
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(

@@ -83,6 +83,7 @@ import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
+import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -107,6 +108,7 @@ class LauncherViewModel @Inject constructor(
     private val clearUserData: ClearUserData,
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
+    private val refreshOrganizationSettings: RefreshOrganizationSettings,
     commonLibraryVersionChecker: CommonLibraryVersionChecker
 ) : ViewModel() {
 
@@ -120,6 +122,7 @@ class LauncherViewModel @Inject constructor(
         }
 
         viewModelScope.launch { refreshPlan() }
+        viewModelScope.launch { refreshOrganizationSettings() }
     }
 
     val state: StateFlow<State> = accountManager.getAccounts()
@@ -160,9 +163,10 @@ class LauncherViewModel @Inject constructor(
                 }
 
                 if (result != null) {
-                    PassLogger.i(TAG, "Sending User Access")
                     itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
                     itemSyncStatusRepository.emit(ItemSyncStatus.Started)
+
+                    refreshOrganizationSettings()
                 }
             }
         }

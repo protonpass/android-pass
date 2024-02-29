@@ -26,17 +26,32 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Vault
 
 @Stable
+data class EnteredEmailState(
+    val email: String,
+    val isError: Boolean
+)
+
+@Stable
+enum class ErrorMessage {
+    NoAddressesCanBeInvited,
+    SomeAddressesCannotBeInvited,
+    EmailNotValid,
+    None
+}
+
+@Stable
 data class SharingWithUIState(
-    val enteredEmails: ImmutableList<String> = persistentListOf(),
+    val enteredEmails: ImmutableList<EnteredEmailState> = persistentListOf(),
     val selectedEmailIndex: Option<Int> = None,
     val vault: Vault? = null,
-    val showEmailNotValidError: Boolean = false,
     val event: SharingWithEvents = SharingWithEvents.Unknown,
     val isLoading: Boolean = false,
     val showEditVault: Boolean = false,
     val suggestionsUIState: SuggestionsUIState = SuggestionsUIState.Initial,
     val scrollToBottom: Boolean = false,
-    val isContinueEnabled: Boolean = false
+    val isContinueEnabled: Boolean = false,
+    val canOnlyPickFromSelection: Boolean = false,
+    val errorMessage: ErrorMessage = ErrorMessage.None
 )
 
 sealed interface SuggestionsUIState {

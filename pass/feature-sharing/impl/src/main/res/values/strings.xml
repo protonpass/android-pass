@@ -186,4 +186,7 @@
     <string name="sharing_error_dialog_title">Unknown error</string>
     <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
 
+    <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
+    <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
+
 </resources>

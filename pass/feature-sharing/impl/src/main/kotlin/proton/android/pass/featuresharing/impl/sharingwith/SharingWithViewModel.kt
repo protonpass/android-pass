@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -43,6 +44,8 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.map
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.EmailValidator
@@ -50,8 +53,13 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.BulkInviteRepository
+import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
+import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveVaultById
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.log.api.PassLogger
@@ -62,8 +70,10 @@ import javax.inject.Inject
 class SharingWithViewModel @Inject constructor(
     private val emailValidator: EmailValidator,
     private val bulkInviteRepository: BulkInviteRepository,
+    private val checkCanAddressesBeInvited: CheckCanAddressesBeInvited,
     observeVaultById: ObserveVaultById,
     observeInviteRecommendations: ObserveInviteRecommendations,
+    observeOrganizationSettings: ObserveOrganizationSettings,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -75,13 +85,17 @@ class SharingWithViewModel @Inject constructor(
 
     private val continueEnabledFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val scrollToBottomFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val showEmailNotValidFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     private val eventState: MutableStateFlow<SharingWithEvents> =
         MutableStateFlow(SharingWithEvents.Unknown)
-    private val enteredEmailsState: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    private val enteredEmailsState: MutableStateFlow<List<EnteredEmailState>> =
+        MutableStateFlow(emptyList())
     private val selectedEmailIndexFlow: MutableStateFlow<Option<Int>> = MutableStateFlow(None)
+    private val organizationSettingsFlow: Flow<LoadingResult<OrganizationSettings>> =
+        observeOrganizationSettings().asLoadingResult().distinctUntilChanged()
+    private val errorMessageFlow: MutableStateFlow<ErrorMessage> =
+        MutableStateFlow(ErrorMessage.None)
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var editingEmailState by savedStateHandleProvider.get()
@@ -133,28 +147,41 @@ class SharingWithViewModel @Inject constructor(
 
     val state: StateFlow<SharingWithUIState> = combineN(
         enteredEmailsState,
-        showEmailNotValidFlow,
         observeVaultById(shareId = shareId),
         isLoadingState,
         eventState,
         suggestionsUIStateFlow,
         selectedEmailIndexFlow,
         scrollToBottomFlow,
-        continueEnabledFlow
-    ) { emails, isEmailNotValid, vault, isLoading, event, suggestionsUiState, selectedEmailIndex,
-        scrollToBottom, continueEnabled ->
+        continueEnabledFlow,
+        organizationSettingsFlow,
+        errorMessageFlow
+    ) { emails, vault, isLoading, event, suggestionsUiState, selectedEmailIndex,
+        scrollToBottom, continueEnabled, organizationSettings, errorMessage ->
         val vaultValue = vault.value()
+
+        val canOnlyPickFromSelection = organizationSettings.map { settings ->
+            when (settings) {
+                OrganizationSettings.NotAnOrganization -> false
+                is OrganizationSettings.Organization -> when (settings.shareMode) {
+                    OrganizationShareMode.Unrestricted -> false
+                    OrganizationShareMode.OrganizationOnly -> true
+                }
+            }
+        }.getOrNull() ?: true
+
         SharingWithUIState(
             enteredEmails = emails.toPersistentList(),
             selectedEmailIndex = selectedEmailIndex,
             vault = vaultValue,
-            showEmailNotValidError = isEmailNotValid,
             isLoading = isLoading.value() || vaultValue == null,
             event = event,
             showEditVault = showEditVault,
             suggestionsUIState = suggestionsUiState,
             scrollToBottom = scrollToBottom,
-            isContinueEnabled = continueEnabled
+            isContinueEnabled = continueEnabled,
+            canOnlyPickFromSelection = canOnlyPickFromSelection,
+            errorMessage = errorMessage
         )
     }.stateIn(
         scope = viewModelScope,
@@ -166,7 +193,7 @@ class SharingWithViewModel @Inject constructor(
         val sanitised = value.replace(" ", "").replace("\n", "")
         editingEmailState = sanitised
         editingEmailStateFlow.update { sanitised }
-        showEmailNotValidFlow.update { false }
+        errorMessageFlow.update { ErrorMessage.None }
         selectedEmailIndexFlow.update { None }
         onChange()
     }
@@ -176,7 +203,7 @@ class SharingWithViewModel @Inject constructor(
             enteredEmailsState.update {
                 if (!it.contains(editingEmailState)) {
                     scrollToBottomFlow.update { true }
-                    it + editingEmailState
+                    it + EnteredEmailState(editingEmailState, false)
                 } else {
                     it
                 }
@@ -194,10 +221,10 @@ class SharingWithViewModel @Inject constructor(
                     it
                 } else {
                     val email = it[index]
-                    checkedEmails = if (checkedEmails.contains(email)) {
-                        checkedEmails - email
+                    checkedEmails = if (checkedEmails.contains(email.email)) {
+                        checkedEmails - email.email
                     } else {
-                        checkedEmails + email
+                        checkedEmails + email.email
                     }
                     checkedEmailFlow.update { checkedEmails }
                     it.filterIndexed { idx, _ -> idx != index }
@@ -211,23 +238,61 @@ class SharingWithViewModel @Inject constructor(
     }
 
     fun onContinueClick() = viewModelScope.launch {
-        if (editingEmailState.isNotBlank()) {
-            if (checkValidEmail()) {
-                enteredEmailsState.update { it + editingEmailState }
-                editingEmailState = ""
-                editingEmailStateFlow.update { "" }
-            } else {
-                return@launch
+        if (!state.value.canOnlyPickFromSelection) {
+            if (editingEmailState.isNotBlank()) {
+                if (checkValidEmail()) {
+                    enteredEmailsState.update { it + EnteredEmailState(editingEmailState, false) }
+                    editingEmailState = ""
+                    editingEmailStateFlow.update { "" }
+                } else {
+                    return@launch
+                }
             }
         }
 
         isLoadingState.update { IsLoadingState.Loading }
 
-        val emails = enteredEmailsState.value
-        bulkInviteRepository.storeAddresses(emails)
-        eventState.update {
-            SharingWithEvents.NavigateToPermissions(shareId = shareId)
+        // Check to see if all addresses can be invited
+        val canInviteResult = checkCanAddressesBeInvited(
+            shareId = shareId,
+            addresses = enteredEmailsState.value.map { it.email }
+        )
+
+        when (canInviteResult) {
+            // If all can be invited, proceed
+            is CanAddressesBeInvitedResult.All -> {
+                bulkInviteRepository.storeAddresses(canInviteResult.addresses)
+                eventState.update {
+                    SharingWithEvents.NavigateToPermissions(shareId = shareId)
+                }
+            }
+
+            // If none can be invited, show an error
+            CanAddressesBeInvitedResult.None -> {
+                errorMessageFlow.update { ErrorMessage.NoAddressesCanBeInvited }
+            }
+
+            // If some can be invited, show an error and highlight the ones that can't be invited
+            is CanAddressesBeInvitedResult.Some -> {
+                val cannotBeInvited = canInviteResult.cannotBe
+                enteredEmailsState.update { currentEmails ->
+                    val newList = mutableListOf<EnteredEmailState>()
+
+                    for (email in currentEmails) {
+                        if (email.email in cannotBeInvited) {
+                            newList.add(email.copy(isError = true))
+                        } else {
+                            newList.add(email)
+                        }
+                    }
+
+                    newList
+                }
+
+                errorMessageFlow.update { ErrorMessage.SomeAddressesCannotBeInvited }
+            }
         }
+
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
@@ -240,7 +305,7 @@ class SharingWithViewModel @Inject constructor(
             enteredEmailsState.update {
                 if (!it.contains(email)) {
                     scrollToBottomFlow.update { true }
-                    it + email
+                    it + EnteredEmailState(email, false)
                 } else {
                     it
                 }
@@ -250,7 +315,7 @@ class SharingWithViewModel @Inject constructor(
         } else {
             enteredEmailsState.update {
                 if (it.contains(email)) {
-                    it - email
+                    it - EnteredEmailState(email, false)
                 } else {
                     it
                 }
@@ -274,11 +339,13 @@ class SharingWithViewModel @Inject constructor(
     private fun checkValidEmail(): Boolean {
         if (editingEmailState.isBlank() || !emailValidator.isValid(editingEmailState)) {
             PassLogger.i(TAG, "Email not valid")
-            showEmailNotValidFlow.update { true }
+            errorMessageFlow.update { ErrorMessage.EmailNotValid }
             return false
         }
         return true
     }
+
+    private fun List<EnteredEmailState>.contains(email: String) = any { it.email == email }
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

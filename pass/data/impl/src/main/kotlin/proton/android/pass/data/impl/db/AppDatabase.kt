@@ -81,6 +81,7 @@ import proton.android.pass.data.impl.db.entities.InviteKeyEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.PassDataMigrationEntity
 import proton.android.pass.data.impl.db.entities.PassEventEntity
+import proton.android.pass.data.impl.db.entities.PassOrganizationSettingsEntity
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.db.entities.SearchEntryEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
@@ -127,7 +128,8 @@ import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
         PassDataMigrationEntity::class,
         InviteEntity::class,
         InviteKeyEntity::class,
-        UserAccessDataEntity::class
+        UserAccessDataEntity::class,
+        PassOrganizationSettingsEntity::class
     ],
     autoMigrations = [
         AutoMigration(from = 2, to = 3, spec = AppDatabaseMigrations.MIGRATION_2_3::class),
@@ -155,6 +157,7 @@ import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
         AutoMigration(from = 37, to = 38),
         AutoMigration(from = 38, to = 39, spec = AppDatabaseMigrations.MIGRATION_38_39::class),
         AutoMigration(from = 39, to = 40),
+        AutoMigration(from = 40, to = 41)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true

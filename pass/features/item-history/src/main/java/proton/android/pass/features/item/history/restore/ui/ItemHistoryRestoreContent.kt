@@ -29,7 +29,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
 import proton.android.pass.composecomponents.impl.utils.protonItemColors
 import proton.android.pass.domain.HiddenState
@@ -130,6 +132,7 @@ private fun ItemHistoryRestoreDetails(
     }
 
     val itemColors = protonItemColors(itemCategory = itemDetailState.itemCategory)
+    val context = LocalContext.current
 
     PassItemDetailsContent(
         modifier = modifier,
@@ -145,6 +148,7 @@ private fun ItemHistoryRestoreDetails(
         onSectionClick = onSectionClick,
         onHiddenSectionClick = onHiddenSectionClick,
         onHiddenSectionToggle = onHiddenSectionToggle,
+        onLinkClick = { link -> BrowserUtils.openWebsite(context, link) },
     )
 
     ItemHistoryRestoreConfirmationDialog(

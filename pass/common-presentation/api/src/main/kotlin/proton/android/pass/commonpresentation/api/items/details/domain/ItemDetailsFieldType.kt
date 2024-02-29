@@ -28,6 +28,8 @@ sealed interface ItemDetailsFieldType {
 
         object Username : Plain
 
+        object Website : Plain
+
     }
 
     sealed interface Hidden : ItemDetailsFieldType {

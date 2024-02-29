@@ -50,7 +50,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         plainFieldType: ItemDetailsFieldType.Plain,
     ) {
         clipboardManager.copyToClipboard(text = text, isSecure = false)
-        displaySnackbarMessage(plainFieldType)
+        displayFieldCopiedSnackbarMessage(plainFieldType)
     }
 
     override suspend fun onItemDetailsHiddenFieldClicked(
@@ -66,17 +66,19 @@ class ItemDetailsHandlerImpl @Inject constructor(
         }
 
         clipboardManager.copyToClipboard(text = text, isSecure = true)
-        displaySnackbarMessage(hiddenFieldType)
+        displayFieldCopiedSnackbarMessage(hiddenFieldType)
     }
 
-    private suspend fun displaySnackbarMessage(fieldType: ItemDetailsFieldType) = when (fieldType) {
-        ItemDetailsFieldType.Hidden.Cvv -> ItemDetailsSnackbarMessage.CvvCopied
-        ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
-        ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
-        ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
-        ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
-        ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
-    }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
+    private suspend fun displayFieldCopiedSnackbarMessage(fieldType: ItemDetailsFieldType) =
+        when (fieldType) {
+            ItemDetailsFieldType.Hidden.Cvv -> ItemDetailsSnackbarMessage.CvvCopied
+            ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
+            ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
+            ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
+            ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
+            ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
+            ItemDetailsFieldType.Plain.Website -> ItemDetailsSnackbarMessage.WebsiteCopied
+        }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
 
     override fun onItemDetailsHiddenFieldToggled(
         isVisible: Boolean,

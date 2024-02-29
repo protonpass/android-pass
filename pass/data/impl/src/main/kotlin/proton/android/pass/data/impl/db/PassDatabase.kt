@@ -24,6 +24,7 @@ import proton.android.pass.data.impl.db.dao.InviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
+import proton.android.pass.data.impl.db.dao.PassOrganizationSettingsDao
 import proton.android.pass.data.impl.db.dao.PlanDao
 import proton.android.pass.data.impl.db.dao.SearchEntryDao
 import proton.android.pass.data.impl.db.dao.ShareKeysDao
@@ -45,6 +46,7 @@ interface PassDatabase : Database {
     fun inviteDao(): InviteDao
     fun inviteKeyDao(): InviteKeyDao
     fun userAccessDataDao(): UserAccessDataDao
+    fun organizationSettingsDao(): PassOrganizationSettingsDao
 
 
     suspend fun <R> inTransaction(name: String, block: suspend () -> R): R {

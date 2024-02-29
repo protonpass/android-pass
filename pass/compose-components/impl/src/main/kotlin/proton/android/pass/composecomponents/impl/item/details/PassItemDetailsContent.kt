@@ -40,8 +40,8 @@ fun PassItemDetailsContent(
     topBar: @Composable () -> Unit,
     itemDetailState: ItemDetailState,
     itemColors: ProtonItemColors,
-    onSectionClick: (String) -> Unit,
-    onHiddenSectionClick: (HiddenState) -> Unit,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
+    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
 ) {
     Scaffold(

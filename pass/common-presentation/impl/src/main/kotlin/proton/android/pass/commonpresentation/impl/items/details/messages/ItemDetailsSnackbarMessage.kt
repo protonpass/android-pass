@@ -59,4 +59,9 @@ internal enum class ItemDetailsSnackbarMessage(
         type = SnackbarType.NORM,
     ),
 
+    WebsiteCopied(
+        id = R.string.item_details_snackbar_message_website_copied,
+        type = SnackbarType.NORM,
+    ),
+
 }

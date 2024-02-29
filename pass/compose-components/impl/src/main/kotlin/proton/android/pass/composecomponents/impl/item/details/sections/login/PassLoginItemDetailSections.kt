@@ -40,6 +40,7 @@ internal fun PassLoginItemDetailSections(
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
+    onLinkClick: (String) -> Unit,
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -57,8 +58,10 @@ internal fun PassLoginItemDetailSections(
 
         if (urls.isNotEmpty()) {
             PassLoginItemDetailWebsitesSection(
-                urls = urls.toPersistentList(),
+                websiteUrls = urls.toPersistentList(),
                 itemColors = itemColors,
+                onSectionClick = onSectionClick,
+                onLinkClick = onLinkClick,
             )
         }
 

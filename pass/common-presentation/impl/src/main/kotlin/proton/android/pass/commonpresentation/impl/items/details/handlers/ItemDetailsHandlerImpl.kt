@@ -23,6 +23,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonpresentation.impl.items.details.messages.ItemDetailsSnackbarMessage
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
@@ -44,11 +45,18 @@ class ItemDetailsHandlerImpl @Inject constructor(
     ): Flow<ItemDetailState> = getItemDetailsObserver(item.itemType.category)
         .observe(item)
 
-    override fun onItemDetailsFieldClicked(text: String) {
+    override suspend fun onItemDetailsFieldClicked(
+        text: String,
+        plainFieldType: ItemDetailsFieldType.Plain,
+    ) {
         clipboardManager.copyToClipboard(text = text, isSecure = false)
+        displaySnackbarMessage(plainFieldType)
     }
 
-    override fun onItemDetailsHiddenFieldClicked(hiddenState: HiddenState) {
+    override suspend fun onItemDetailsHiddenFieldClicked(
+        hiddenState: HiddenState,
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+    ) {
         val text = when (hiddenState) {
             is HiddenState.Empty -> ""
             is HiddenState.Revealed -> hiddenState.clearText
@@ -58,7 +66,17 @@ class ItemDetailsHandlerImpl @Inject constructor(
         }
 
         clipboardManager.copyToClipboard(text = text, isSecure = true)
+        displaySnackbarMessage(hiddenFieldType)
     }
+
+    private suspend fun displaySnackbarMessage(fieldType: ItemDetailsFieldType) = when (fieldType) {
+        ItemDetailsFieldType.Hidden.Cvv -> ItemDetailsSnackbarMessage.CvvCopied
+        ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
+        ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
+        ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
+        ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
+        ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
+    }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
 
     override fun onItemDetailsHiddenFieldToggled(
         isVisible: Boolean,

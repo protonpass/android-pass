@@ -46,8 +46,8 @@ internal fun ItemHistoryRestoreContent(
     onRestoreClick: () -> Unit,
     onRestoreConfirmClick: (ItemContents) -> Unit,
     onRestoreCancelClick: () -> Unit,
-    onSectionClick: (String) -> Unit,
-    onHiddenSectionClick: (HiddenState) -> Unit,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
+    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     state: ItemHistoryRestoreState,
 ) {
@@ -93,8 +93,8 @@ private fun ItemHistoryRestoreDetails(
     onRestoreClick: () -> Unit,
     onRestoreConfirmClick: (ItemContents) -> Unit,
     onRestoreCancelClick: () -> Unit,
-    onSectionClick: (String) -> Unit,
-    onHiddenSectionClick: (HiddenState) -> Unit,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
+    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     state: ItemHistoryRestoreState.ItemDetails,
 ) = with(state) {

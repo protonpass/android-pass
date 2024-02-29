@@ -38,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import kotlinx.collections.immutable.ImmutableList
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.R
@@ -57,6 +58,7 @@ internal fun PassAliasItemDetailMainSection(
     alias: String,
     itemColors: ProtonItemColors,
     mailboxes: ImmutableList<AliasMailbox>,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
 ) {
     val sections = mutableListOf<@Composable () -> Unit>()
 
@@ -64,6 +66,7 @@ internal fun PassAliasItemDetailMainSection(
         PassAliasItemDetailAddressRow(
             alias = alias,
             itemColors = itemColors,
+            onSectionClick = onSectionClick,
         )
     }
 
@@ -90,11 +93,12 @@ private fun PassAliasItemDetailAddressRow(
     modifier: Modifier = Modifier,
     alias: String,
     itemColors: ProtonItemColors,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable { onSectionClick(alias, ItemDetailsFieldType.Plain.Alias) }
             .padding(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small),

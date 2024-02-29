@@ -43,6 +43,7 @@ fun PassItemDetailsContent(
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
+    onLinkClick: (String) -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
@@ -72,6 +73,7 @@ fun PassItemDetailsContent(
                 onSectionClick = onSectionClick,
                 onHiddenSectionClick = onHiddenSectionClick,
                 onHiddenSectionToggle = onHiddenSectionToggle,
+                onLinkClick = onLinkClick,
             )
         }
     }

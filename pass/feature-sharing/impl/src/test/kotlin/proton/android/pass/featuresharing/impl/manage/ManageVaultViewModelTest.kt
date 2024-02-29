@@ -28,7 +28,7 @@ import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestConfirmNewUserInvite
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultMembers
-import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.TestObserveVaultWithItemCountById
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
@@ -46,7 +46,7 @@ internal class ManageVaultViewModelTest {
     fun setup() {
         confirmNewUserInvite = TestConfirmNewUserInvite()
         instance = ManageVaultViewModel(
-            getVaultById = TestGetVaultWithItemCountById(),
+            observeVaultById = TestObserveVaultWithItemCountById(),
             getVaultMembers = TestGetVaultMembers(),
             canShareVault = TestCanShareVault(),
             savedStateHandleProvider = TestSavedStateHandleProvider().apply {

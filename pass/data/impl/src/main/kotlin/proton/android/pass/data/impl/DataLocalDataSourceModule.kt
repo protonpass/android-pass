@@ -30,6 +30,8 @@ import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.local.LocalInviteDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
+import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSource
+import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSourceImpl
 import proton.android.pass.data.impl.local.LocalPlanDataSource
 import proton.android.pass.data.impl.local.LocalPlanDataSourceImpl
 import proton.android.pass.data.impl.local.LocalSearchEntryDataSource
@@ -78,4 +80,9 @@ abstract class DataLocalDataSourceModule {
     abstract fun bindLocalUserAccessDataDataSource(
         impl: LocalUserAccessDataDataSourceImpl
     ): LocalUserAccessDataDataSource
+
+    @Binds
+    abstract fun bindLocalOrganizationSettingsDataSource(
+        impl: LocalOrganizationSettingsDataSourceImpl
+    ): LocalOrganizationSettingsDataSource
 }

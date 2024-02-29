@@ -16,11 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.domain.OrganizationSettings
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface ObserveOrganizationSettings {
-    operator fun invoke(): Flow<OrganizationSettings>
+@Singleton
+class TestObserveOrganizationSettings @Inject constructor() : ObserveOrganizationSettings {
+
+    private val flow: MutableStateFlow<OrganizationSettings> =
+        MutableStateFlow(OrganizationSettings.NotAnOrganization)
+
+    fun emitValue(value: OrganizationSettings) {
+        flow.update { value }
+    }
+
+    override fun invoke(): Flow<OrganizationSettings> = flow
 }

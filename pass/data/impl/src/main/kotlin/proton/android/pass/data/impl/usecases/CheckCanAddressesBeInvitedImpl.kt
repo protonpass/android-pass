@@ -31,7 +31,7 @@ import me.proton.core.network.domain.ApiResult
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
-import proton.android.pass.data.api.usecases.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
 import proton.android.pass.domain.OrganizationSettings
@@ -52,6 +52,10 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
     ): CanAddressesBeInvitedResult {
         val settings = observeOrganizationSettings().firstOrNull() ?: run {
             PassLogger.w(TAG, "Organization settings not available")
+            return CanAddressesBeInvitedResult.None
+        }
+
+        if (addresses.isEmpty()) {
             return CanAddressesBeInvitedResult.None
         }
 

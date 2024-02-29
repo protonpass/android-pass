@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 import proton.android.pass.domain.AliasMailbox
@@ -35,6 +36,7 @@ internal fun PassAliasItemDetailSections(
     contents: ItemContents.Alias,
     itemColors: ProtonItemColors,
     mailboxes: ImmutableList<AliasMailbox>,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -44,6 +46,7 @@ internal fun PassAliasItemDetailSections(
             alias = aliasEmail,
             itemColors = itemColors,
             mailboxes = mailboxes,
+            onSectionClick = onSectionClick,
         )
 
         if (note.isNotBlank()) {

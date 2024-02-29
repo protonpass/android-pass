@@ -47,8 +47,8 @@ internal fun PassCreditCardItemDetailMainSection(
     cvv: HiddenState,
     pin: HiddenState,
     itemColors: ProtonItemColors,
-    onSectionClick: (String) -> Unit,
-    onHiddenSectionClick: (HiddenState) -> Unit,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
+    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
 ) {
 
@@ -60,7 +60,7 @@ internal fun PassCreditCardItemDetailMainSection(
             title = stringResource(R.string.item_details_credit_card_section_cardholder_title),
             subtitle = cardholder,
             itemColors = itemColors,
-            onClick = { onSectionClick(cardholder) },
+            onClick = { onSectionClick(cardholder, ItemDetailsFieldType.Plain.Username) },
         ).takeIf { cardholder.isNotBlank() }
     }
 
@@ -71,7 +71,7 @@ internal fun PassCreditCardItemDetailMainSection(
             maskedSubtitle = TextMask.CardNumber(cardNumber),
             itemColors = itemColors,
             isToggleable = true,
-            onClick = { onSectionClick(cardNumber) }
+            onClick = { onSectionClick(cardNumber, ItemDetailsFieldType.Plain.CardNumber) }
         ).takeIf { cardNumber.isNotBlank() }
     }
 
@@ -91,7 +91,7 @@ internal fun PassCreditCardItemDetailMainSection(
             hiddenState = cvv,
             hiddenTextLength = HIDDEN_CVV_TEXT_LENGTH,
             itemColors = itemColors,
-            onClick = { onHiddenSectionClick(cvv) },
+            onClick = { onHiddenSectionClick(cvv, ItemDetailsFieldType.Hidden.Cvv) },
             onToggle = { isVisible ->
                 onHiddenSectionToggle(isVisible, cvv, ItemDetailsFieldType.Hidden.Cvv)
             },

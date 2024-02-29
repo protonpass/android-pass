@@ -16,25 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.api.usecases.organization
 
-import proton.android.pass.domain.ShareId
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.OrganizationSettings
 
-sealed interface CanAddressesBeInvitedResult {
-    @JvmInline
-    value class All(val addresses: List<String>) : CanAddressesBeInvitedResult
-
-    data class Some(
-        val canBe: List<String>,
-        val cannotBe: List<String>
-    ) : CanAddressesBeInvitedResult
-
-    object None : CanAddressesBeInvitedResult
-}
-
-interface CheckCanAddressesBeInvited {
-    suspend operator fun invoke(
-        shareId: ShareId,
-        addresses: List<String>
-    ): CanAddressesBeInvitedResult
+interface ObserveOrganizationSettings {
+    operator fun invoke(): Flow<OrganizationSettings>
 }

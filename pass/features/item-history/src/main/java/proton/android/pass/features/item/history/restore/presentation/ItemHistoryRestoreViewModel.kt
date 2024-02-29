@@ -59,8 +59,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     openItemRevision: OpenItemRevision,
     private val restoreItemRevision: RestoreItemRevision,
-    private val snackbarDispatcher: SnackbarDispatcher,
     private val itemDetailsHandler: ItemDetailsHandler,
+    private val snackbarDispatcher: SnackbarDispatcher,
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -100,12 +100,18 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         eventFlow.compareAndSet(event, ItemHistoryRestoreEvent.Idle)
     }
 
-    internal fun onItemFieldClicked(text: String) {
-        itemDetailsHandler.onItemDetailsFieldClicked(text)
+    internal fun onItemFieldClicked(
+        text: String,
+        plainFieldType: ItemDetailsFieldType.Plain,
+    ) = viewModelScope.launch {
+        itemDetailsHandler.onItemDetailsFieldClicked(text, plainFieldType)
     }
 
-    internal fun onItemHiddenFieldClicked(hiddenState: HiddenState) {
-        itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState)
+    internal fun onItemHiddenFieldClicked(
+        hiddenState: HiddenState,
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+    ) = viewModelScope.launch {
+        itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState, hiddenFieldType)
     }
 
     internal fun onItemHiddenFieldToggled(
@@ -135,11 +141,11 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         runCatching { restoreItemRevision(shareId, itemId, itemContents) }
             .onSuccess {
                 eventFlow.update { ItemHistoryRestoreEvent.OnItemRestored }
-                snackbarDispatcher.invoke(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionSuccess)
+                snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionSuccess)
             }
             .onFailure { error ->
                 PassLogger.w(TAG, "Error restoring item revision: $error")
-                snackbarDispatcher.invoke(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionError)
+                snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionError)
             }
     }
 

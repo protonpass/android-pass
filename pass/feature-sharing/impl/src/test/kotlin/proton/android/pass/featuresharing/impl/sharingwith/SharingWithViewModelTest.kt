@@ -31,6 +31,8 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
+import proton.android.pass.data.fakes.usecases.TestCheckAddressesCanBeInvited
+import proton.android.pass.data.fakes.usecases.TestObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.TestObserveVaultById
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.ShareId
@@ -68,7 +70,9 @@ class SharingWithViewModelTest {
             savedStateHandleProvider = savedStateHandleProvider,
             emailValidator = emailValidator,
             observeInviteRecommendations = observeInviteRecommendations,
-            bulkInviteRepository = bulkInviteRepository
+            bulkInviteRepository = bulkInviteRepository,
+            observeOrganizationSettings = TestObserveOrganizationSettings(),
+            checkCanAddressesBeInvited = TestCheckAddressesCanBeInvited()
         )
     }
 

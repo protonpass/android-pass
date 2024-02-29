@@ -16,25 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.fakes.usecases
 
+import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
+import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-sealed interface CanAddressesBeInvitedResult {
-    @JvmInline
-    value class All(val addresses: List<String>) : CanAddressesBeInvitedResult
+@Singleton
+class TestCheckAddressesCanBeInvited @Inject constructor() : CheckCanAddressesBeInvited {
 
-    data class Some(
-        val canBe: List<String>,
-        val cannotBe: List<String>
-    ) : CanAddressesBeInvitedResult
+    private var result: Result<CanAddressesBeInvitedResult> = Result.success(CanAddressesBeInvitedResult.None)
 
-    object None : CanAddressesBeInvitedResult
-}
+    fun setResult(value: Result<CanAddressesBeInvitedResult>) {
+        result = value
+    }
 
-interface CheckCanAddressesBeInvited {
-    suspend operator fun invoke(
+    override suspend fun invoke(
         shareId: ShareId,
         addresses: List<String>
-    ): CanAddressesBeInvitedResult
+    ): CanAddressesBeInvitedResult = result.getOrThrow()
 }

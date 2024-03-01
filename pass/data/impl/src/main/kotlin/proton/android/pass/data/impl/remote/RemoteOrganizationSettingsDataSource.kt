@@ -19,8 +19,21 @@
 package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.data.ApiProvider
+import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.responses.OrganizationGetOrganization
+import javax.inject.Inject
 
 interface RemoteOrganizationSettingsDataSource {
-    fun request(userId: UserId): OrganizationGetOrganization?
+    suspend fun request(userId: UserId): OrganizationGetOrganization?
+}
+
+class RemoteOrganizationSettingsDataSourceImpl @Inject constructor(
+    private val api: ApiProvider
+) : RemoteOrganizationSettingsDataSource {
+    override suspend fun request(userId: UserId): OrganizationGetOrganization? =
+        api.get<PasswordManagerApi>(userId).invoke {
+            getOrganization()
+        }.valueOrThrow.organization
+
 }

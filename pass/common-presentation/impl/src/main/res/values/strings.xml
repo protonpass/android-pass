@@ -22,6 +22,7 @@
     <string name="item_details_snackbar_message_cvv_copied">Security code copied</string>
     <string name="item_details_snackbar_message_password_copied">Password copied</string>
     <string name="item_details_snackbar_message_pin_copied">PIN code copied</string>
+    <string name="item_details_snackbar_message_totp_copied">TOTP copied</string>
     <string name="item_details_snackbar_message_username_copied">Username copied</string>
     <string name="item_details_snackbar_message_website_copied">Website URL copied</string>
 </resources>

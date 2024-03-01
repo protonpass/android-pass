@@ -83,5 +83,5 @@
   <string name="label_password_strength_weak">სუსტი</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">ყველას ნახვა</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">აპის ვერსია მხარდაჭერილი აღარაა. განაახლეთ თქვენი აპი.</string>
 </resources>

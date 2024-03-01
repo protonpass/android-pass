@@ -17,7 +17,7 @@
   <string name="home_snackbar_move_to_trash_error">項目已移動到垃圾桶</string>
   <string name="home_snackbar_items_move_to_trash_success">項目丟進垃圾桶</string>
   <string name="home_snackbar_items_move_to_trash_error">無法將項目丟進垃圾桶</string>
-  <string name="home_toast_items_selected_read_only">Read-only items cannot be selected</string>
+  <string name="home_toast_items_selected_read_only">僅供讀取的項目無法被選取</string>
   <string name="home_autofill_banner_title">享受自動填入的神奇魔力</string>
   <string name="home_autofill_banner_text">輕輕一按，大功告成！您的使用者名稱和密碼就馬上填好。</string>
   <string name="home_autofill_banner_settings">啟用自動填滿＞</string>
@@ -113,9 +113,9 @@
   <string name="recent_search_remove_item">從搜尋中移除</string>
   <!-- Pinning -->
   <string name="home_snackbar_item_pinned_success">項目成功標記</string>
-  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_pinned_error">釘選此項目發生錯誤</string>
   <string name="home_snackbar_item_unpinned_success">項目成功取消標記</string>
-  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
+  <string name="home_snackbar_item_unpinned_error">取消釘選此項目發生錯誤</string>
   <string name="home_snackbar_items_pinned_success">項目已成功置頂</string>
   <string name="home_snackbar_items_pinned_partial_success">標註部分項目錯誤</string>
   <string name="home_snackbar_items_pinned_error">標註項目錯誤</string>

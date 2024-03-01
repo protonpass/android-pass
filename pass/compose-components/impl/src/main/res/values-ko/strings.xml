@@ -81,5 +81,5 @@
   <string name="label_password_strength_weak">약함</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">모두 보기</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">더 이상 지원하지 않는 앱 버전입니다. 앱을 업데이트하십시오.</string>
 </resources>

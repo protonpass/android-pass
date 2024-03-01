@@ -60,7 +60,7 @@
   <string name="share_summary_vault_title">保管庫</string>
   <string name="share_manage_vault_share_with_more_people">分享給更多人</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
-    <item quantity="other">%d invites left</item>
+    <item quantity="other">剩下邀請%d</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="other">%d 個項目</item>
@@ -103,12 +103,12 @@
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
   <string name="sharing_from_item_vault_limit_reached">您已達到保管庫上限</string>
-  <string name="share_with_suggestions_title">Suggestions</string>
-  <string name="share_with_recents_title">Recents</string>
-  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="share_with_suggestions_title">建議</string>
+  <string name="share_with_recents_title">最近</string>
+  <string name="share_with_remove_email_content_description">移除電子郵件</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
-  <string name="sharing_edit_permissions_remove_user">Remove user</string>
+  <string name="sharing_edit_permissions_remove_user">刪除使用者</string>
   <string name="sharing_error_dialog_title">Unknown error</string>
   <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
 </resources>

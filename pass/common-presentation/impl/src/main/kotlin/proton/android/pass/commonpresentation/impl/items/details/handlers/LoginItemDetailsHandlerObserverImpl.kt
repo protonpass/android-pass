@@ -64,30 +64,29 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 loginItemContentsFlow.update { loginItemContents }
             }
 
-    private fun observeTotp(item: Item): Flow<Totp?> =
-        observeLoginItemContents(item)
-            .map { loginItemContents ->
-                when (val totpHiddenState = loginItemContents.primaryTotp) {
-                    is HiddenState.Empty -> ""
-                    is HiddenState.Revealed -> totpHiddenState.clearText
-                    is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
-                        decrypt(totpHiddenState.encrypted)
-                    }
+    private fun observeTotp(item: Item): Flow<Totp?> = observeLoginItemContents(item)
+        .map { loginItemContents ->
+            when (val totpHiddenState = loginItemContents.primaryTotp) {
+                is HiddenState.Empty -> ""
+                is HiddenState.Revealed -> totpHiddenState.clearText
+                is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
+                    decrypt(totpHiddenState.encrypted)
                 }
             }
-            .flatMapLatest { totpUri ->
-                if (totpUri.isEmpty()) {
-                    flowOf(null)
-                } else {
-                    totpManager.observeCode(totpUri).map { totpWrapper ->
-                        Totp(
-                            code = totpWrapper.code,
-                            remainingSeconds = totpWrapper.remainingSeconds,
-                            totalSeconds = totpWrapper.totalSeconds,
-                        )
-                    }
+        }
+        .flatMapLatest { totpUri ->
+            if (totpUri.isEmpty()) {
+                flowOf(null)
+            } else {
+                totpManager.observeCode(totpUri).map { totpWrapper ->
+                    Totp(
+                        code = totpWrapper.code,
+                        remainingSeconds = totpWrapper.remainingSeconds,
+                        totalSeconds = totpWrapper.totalSeconds,
+                    )
                 }
             }
+        }
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeLoginItemContents(item),

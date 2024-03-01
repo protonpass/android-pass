@@ -18,7 +18,7 @@
   <string name="profile_error_performing_operation">작업 처리 오류</string>
   <string name="profile_app_version_copied_to_clipboard">앱 버전 복사됨</string>
   <string name="feedback_option_reddit">Reddit에서 Proton 살펴보기</string>
-  <string name="feedback_option_mail">메세지 보내기</string>
+  <string name="feedback_option_mail">메시지 보내기</string>
   <string name="feedback_option_vote_new_features">새 기능 투표</string>
   <string name="app_lock_immediately">즉시</string>
   <string name="app_lock_one_minute">1분 후</string>

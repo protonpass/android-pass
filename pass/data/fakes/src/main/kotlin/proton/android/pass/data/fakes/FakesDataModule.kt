@@ -119,6 +119,7 @@ import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
@@ -169,6 +170,7 @@ import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetItemByAliasEmail
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
+import proton.android.pass.data.fakes.usecases.TestGetPasskeyById
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
@@ -642,4 +644,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveItemsWithPasskeys(impl: TestObserveItemsWithPasskeys): ObserveItemsWithPasskeys
+
+    @Binds
+    abstract fun bindGetPasskeyById(impl: TestGetPasskeyById): GetPasskeyById
 }

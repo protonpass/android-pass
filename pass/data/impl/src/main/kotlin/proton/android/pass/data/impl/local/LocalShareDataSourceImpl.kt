@@ -25,6 +25,7 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class LocalShareDataSourceImpl @Inject constructor(
@@ -49,13 +50,16 @@ class LocalShareDataSourceImpl @Inject constructor(
     override fun getAllSharesForAddress(addressId: AddressId): Flow<List<ShareEntity>> =
         database.sharesDao().observeAllForAddress(addressId.id)
 
-    override suspend fun deleteShares(shareIds: Set<ShareId>): Boolean =
-        database.sharesDao().delete(shareIds.map { it.id }.toTypedArray()) > 0
+    override suspend fun deleteShares(shareIds: Set<ShareId>): Boolean {
+        PassLogger.i(TAG, "Deleting shares: ${shareIds.map { it.id }}")
+        return database.sharesDao().delete(shareIds.map { it.id }.toTypedArray()) > 0
+    }
 
     override suspend fun hasShares(userId: UserId): Boolean =
         database.sharesDao().countShares(userId.id) > 0
 
     override suspend fun deleteSharesForUser(userId: UserId) {
+        PassLogger.i(TAG, "Deleting all shares for user")
         database.sharesDao().deleteSharesForUser(userId.id)
     }
 
@@ -69,4 +73,8 @@ class LocalShareDataSourceImpl @Inject constructor(
             isOwner =
             isOwner
         )
+
+    companion object {
+        private const val TAG = "LocalShareDataSourceImpl"
+    }
 }

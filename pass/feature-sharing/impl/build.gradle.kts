@@ -73,6 +73,7 @@ dependencies {
     implementation(projects.pass.preferences.api)
 
     testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.clipboard.fakes)
     testImplementation(projects.pass.commonRust.fakes)
     testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.commonTest)
@@ -87,6 +88,7 @@ dependencies {
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(projects.pass.clipboard.fakes)
     androidTestImplementation(projects.pass.commonRust.fakes)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)

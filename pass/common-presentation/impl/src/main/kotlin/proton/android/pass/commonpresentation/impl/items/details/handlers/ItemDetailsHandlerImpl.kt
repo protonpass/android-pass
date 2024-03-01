@@ -19,6 +19,7 @@
 package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
@@ -44,6 +45,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         item: Item,
     ): Flow<ItemDetailState> = getItemDetailsObserver(item.itemType.category)
         .observe(item)
+        .distinctUntilChanged()
 
     override suspend fun onItemDetailsFieldClicked(
         text: String,
@@ -76,6 +78,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
             ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
             ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
             ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
+            ItemDetailsFieldType.Plain.TotpCode -> ItemDetailsSnackbarMessage.TotpCodeCopied
             ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
             ItemDetailsFieldType.Plain.Website -> ItemDetailsSnackbarMessage.WebsiteCopied
         }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }

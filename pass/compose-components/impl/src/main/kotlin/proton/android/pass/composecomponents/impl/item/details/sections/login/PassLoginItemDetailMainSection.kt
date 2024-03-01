@@ -27,14 +27,17 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.Totp
 import me.proton.core.presentation.R as CoreR
 
 private const val HIDDEN_PASSWORD_TEXT_LENGTH = 12
@@ -45,6 +48,7 @@ internal fun PassLoginItemDetailMainSection(
     username: String,
     password: HiddenState,
     passwordStrength: PasswordStrength,
+    primaryTotp: Totp?,
     itemColors: ProtonItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
@@ -78,6 +82,20 @@ internal fun PassLoginItemDetailMainSection(
             },
             contentInBetween = { PassPasswordStrengthItem(passwordStrength = passwordStrength) },
         ).takeIf { password !is HiddenState.Empty }
+    }
+
+    primaryTotp?.let { totp ->
+        sections.add {
+            with(totp) {
+                PassItemDetailMaskedFieldRow(
+                    icon = painterResource(CoreR.drawable.ic_proton_lock),
+                    title = stringResource(R.string.item_details_login_section_primary_totp_title),
+                    maskedSubtitle = TextMask.TotpCode(code),
+                    itemColors = itemColors,
+                    onClick = { onSectionClick(code, ItemDetailsFieldType.Plain.TotpCode) },
+                )
+            }
+        }
     }
 
     RoundedCornersColumn(modifier = modifier) {

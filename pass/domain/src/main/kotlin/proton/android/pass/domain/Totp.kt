@@ -16,32 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.api.items.details.domain
+package proton.android.pass.domain
 
-sealed interface ItemDetailsFieldType {
+import androidx.compose.runtime.Stable
 
-    sealed interface Plain : ItemDetailsFieldType {
-
-        object Alias : Plain
-
-        object CardNumber : Plain
-
-        object TotpCode : Plain
-
-        object Username : Plain
-
-        object Website : Plain
-
-    }
-
-    sealed interface Hidden : ItemDetailsFieldType {
-
-        object Cvv : Hidden
-
-        object Password : Hidden
-
-        object Pin : Hidden
-
-    }
-
-}
+@Stable
+data class Totp(
+    val code: String,
+    val remainingSeconds: Int,
+    val totalSeconds: Int,
+)

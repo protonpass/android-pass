@@ -22,8 +22,11 @@ import proton.android.pass.commonui.api.itemName
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
+import proton.android.pass.log.api.PassLogger
 
 object ItemDisplayBuilder {
+
+    private const val TAG = "ItemDisplayBuilder"
 
     fun createTitle(
         item: Item,
@@ -31,7 +34,10 @@ object ItemDisplayBuilder {
     ): String = when (item.itemType) {
         is ItemType.CreditCard -> item.itemName(encryptionContext)
         is ItemType.Login -> item.itemName(encryptionContext)
-        else -> throw IllegalStateException("Unsupported item type")
+        else -> {
+            PassLogger.w(TAG, "Unsupported item type: ${item.itemType::class.java}")
+            throw IllegalStateException("Unsupported item type")
+        }
     }
 
     fun createSubtitle(
@@ -40,7 +46,10 @@ object ItemDisplayBuilder {
     ): String = when (val itemType = item.itemType) {
         is ItemType.CreditCard -> createCreditCardSubtitle(encryptionContext, itemType)
         is ItemType.Login -> itemType.username.takeIf { it.isNotBlank() } ?: "---"
-        else -> throw IllegalStateException("Unsupported item type")
+        else -> {
+            PassLogger.w(TAG, "Unsupported item type: ${item.itemType::class.java}")
+            throw IllegalStateException("Unsupported item type")
+        }
     }
 
     private fun createCreditCardSubtitle(

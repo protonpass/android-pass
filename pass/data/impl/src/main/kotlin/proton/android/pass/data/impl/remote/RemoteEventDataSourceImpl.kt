@@ -27,6 +27,7 @@ import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.responses.EventList
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RemoteEventDataSourceImpl @Inject constructor(
@@ -45,12 +46,14 @@ class RemoteEventDataSourceImpl @Inject constructor(
                 getEvents(shareId.id, since)
             }
             if (apiResult is ApiResult.Error.Http && apiResult.proton?.code == DELETED_SHARE_CODE) {
+                PassLogger.w(TAG, "Received DELETED_SHARE_CODE for ShareId: ${shareId.id}")
                 throw ShareNotAvailableError()
             }
             emit(apiResult.valueOrThrow.events)
         }
 
     companion object {
+        private const val TAG = "RemoteEventDataSourceImpl"
         private const val DELETED_SHARE_CODE = 300_004
     }
 }

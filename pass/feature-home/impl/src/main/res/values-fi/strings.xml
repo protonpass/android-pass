@@ -74,7 +74,7 @@
   <!-- Trash -->
   <string name="trash_empty_list_title">Roskakori on tyhjä</string>
   <string name="trash_empty_list_message">Roskakoriin siirretyt kohteet näkyvät tässä.</string>
-  <string name="bottomsheet_trash_all_items_title">Siirrä roskakoriin</string>
+  <string name="bottomsheet_trash_all_items_title">Poista</string>
   <string name="bottomsheet_restore_all_items">Palauta kaikki kohteet</string>
   <string name="bottomsheet_empty_trash">Tyhjennä roskakori</string>
   <string name="bottomsheet_select_items">Valitse kohteita</string>

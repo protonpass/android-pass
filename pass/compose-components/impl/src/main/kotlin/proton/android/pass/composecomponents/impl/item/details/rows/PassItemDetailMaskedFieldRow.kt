@@ -18,7 +18,6 @@
 
 package proton.android.pass.composecomponents.impl.item.details.rows
 
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,10 +25,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
-import me.proton.core.presentation.R
 import proton.android.pass.commonuimodels.api.masks.TextMask
-import proton.android.pass.composecomponents.impl.container.Circle
+import proton.android.pass.composecomponents.impl.toggles.PassVisibilityToggle
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 
 @Composable
@@ -58,20 +55,11 @@ internal fun PassItemDetailMaskedFieldRow(
         contentInBetween?.invoke()
 
         if (isToggleable) {
-            Circle(
-                backgroundColor = itemColors.minorPrimary,
-                onClick = { isMasked = !isMasked },
-            ) {
-                Icon(
-                    painter = if (isMasked) {
-                        painterResource(R.drawable.ic_proton_eye)
-                    } else {
-                        painterResource(R.drawable.ic_proton_eye_slash)
-                    },
-                    contentDescription = null,
-                    tint = itemColors.majorSecondary,
-                )
-            }
+            PassVisibilityToggle(
+                isVisible = !isMasked,
+                onToggle = { isVisible -> isMasked = !isVisible },
+                itemColors = itemColors,
+            )
         }
     }
 }

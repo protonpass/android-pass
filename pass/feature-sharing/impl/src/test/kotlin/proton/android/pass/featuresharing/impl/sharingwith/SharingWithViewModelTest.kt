@@ -20,6 +20,7 @@ package proton.android.pass.featuresharing.impl.sharingwith
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -209,6 +210,42 @@ class SharingWithViewModelTest {
             assertThat(content.recentEmails).contains(email1 to false)
             assertThat(content.recentEmails).contains(email2 to false)
         }
+    }
+
+    @Test
+    fun `does not send request if some address cannot be invited`() = runTest {
+        val email1 = "test1@email.test"
+        val email2 = "test2@email.test"
+        val canResult = CanAddressesBeInvitedResult.Some(
+            canBe = listOf(email1),
+            cannotBe = listOf(email2)
+        )
+        checkAddressesCanBeInvited.setResult(Result.success(canResult))
+
+        // Setup email1
+        viewModel.onEmailChange(email1)
+        viewModel.onEmailSubmit()
+
+        // Setup email2
+        viewModel.onEmailChange(email2)
+        viewModel.onEmailSubmit()
+
+        // Click on continue
+        viewModel.onContinueClick()
+        viewModel.state.test {
+            val item = awaitItem()
+            assertThat(item.errorMessage).isEqualTo(ErrorMessage.SomeAddressesCannotBeInvited)
+
+            val expectedEmails = persistentListOf(
+                EnteredEmailState(email = email1, isError = false),
+                EnteredEmailState(email = email2, isError = true)
+            )
+            assertThat(item.enteredEmails).isEqualTo(expectedEmails)
+        }
+
+        // Assert it has not gone through
+        val addresses = bulkInviteRepository.observeAddresses().first()
+        assertThat(addresses).isEmpty()
     }
 
     companion object {

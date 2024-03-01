@@ -554,12 +554,9 @@ abstract class DataUseCaseModule {
     abstract fun bindGetItemCategory(impl: GetItemCategoryImpl): GetItemCategory
 
     @Binds
-    abstract fun bindOpenItemRevisionImpl(impl: OpenItemRevisionImpl): OpenItemRevision
-
-    @Binds
     abstract fun bindOpenItemRevision(impl: OpenItemRevisionImpl): OpenItemRevision
 
     @Binds
     abstract fun bindRestoreItemRevision(impl: RestoreItemRevisionImpl): RestoreItemRevision
-    
+
 }

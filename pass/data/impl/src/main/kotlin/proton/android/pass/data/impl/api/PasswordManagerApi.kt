@@ -61,6 +61,7 @@ import proton.android.pass.data.impl.responses.InviteRecommendationsResponse
 import proton.android.pass.data.impl.responses.ItemRevisionResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.MigrateItemsResponse
+import proton.android.pass.data.impl.responses.OrganizationGetResponse
 import proton.android.pass.data.impl.responses.PendingInvitesResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
@@ -354,6 +355,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Body request: CheckAddressesCanBeInvitedRequest
     ): CheckAddressesCanBeInvitedResponse
+
+    // Organization
+    @GET("$PREFIX/organization")
+    suspend fun getOrganization(): OrganizationGetResponse
 
     // Core
     @GET("core/v4/keys/all")

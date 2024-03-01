@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RefreshOrganizationSettingsImpl @Inject constructor(
@@ -30,10 +31,22 @@ class RefreshOrganizationSettingsImpl @Inject constructor(
 ) : RefreshOrganizationSettings {
 
     override suspend fun invoke() {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
-        if (userId != null) {
-            organizationSettingsRepository.refresh(userId)
+        runCatching {
+            val userId = accountManager.getPrimaryUserId().firstOrNull()
+            if (userId != null) {
+                organizationSettingsRepository.refresh(userId)
+            }
+        }.onSuccess {
+            PassLogger.i(TAG, "Organization settings refreshed")
+        }.onFailure {
+            PassLogger.w(TAG, "Could not refresh organization settings")
+            PassLogger.w(TAG, it)
         }
+
+    }
+
+    companion object {
+        private const val TAG = "RefreshOrganizationSettingsImpl"
     }
 
 }

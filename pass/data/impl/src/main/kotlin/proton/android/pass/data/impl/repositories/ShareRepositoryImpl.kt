@@ -244,9 +244,15 @@ class ShareRepositoryImpl @Inject constructor(
 
     override suspend fun refreshShare(userId: UserId, shareId: ShareId) {
         val shareResponse = remoteShareDataSource.fetchShareById(userId, shareId)
-            ?: throw ShareNotAvailableError()
+            ?: run {
+                PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
+                throw ShareNotAvailableError()
+            }
         val localShare = localShareDataSource.getById(userId, shareId)
-            ?: throw ShareNotAvailableError()
+            ?: run {
+                PassLogger.w(TAG, "Error fetching share from local [shareId=${shareId.id}]")
+                throw ShareNotAvailableError()
+            }
 
         val updated = updateEntityWithResponse(localShare, shareResponse)
         localShareDataSource.upsertShares(listOf(updated))
@@ -259,7 +265,10 @@ class ShareRepositoryImpl @Inject constructor(
         if (share == null) {
             // Check remote
             val fetchedShare = remoteShareDataSource.fetchShareById(userId, shareId)
-            val shareResponse = fetchedShare ?: throw ShareNotAvailableError()
+            val shareResponse = fetchedShare ?: run {
+                PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
+                throw ShareNotAvailableError()
+            }
             val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
             val storedShares: List<ShareEntity> = storeShares(
                 userAddress = userAddress,

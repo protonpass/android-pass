@@ -34,6 +34,7 @@ import proton.android.pass.domain.ITEM_TYPE_NOTE
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class LocalItemDataSourceImpl @Inject constructor(
@@ -121,17 +122,28 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState) =
         database.itemsDao().setItemState(shareId.id, itemId.id, itemState.value)
 
-    override suspend fun setItemStates(shareId: ShareId, itemIds: List<ItemId>, itemState: ItemState) =
+    override suspend fun setItemStates(
+        shareId: ShareId,
+        itemIds: List<ItemId>,
+        itemState: ItemState
+    ) =
         database.itemsDao().setItemStates(shareId.id, itemIds.map(ItemId::id), itemState.value)
 
     override suspend fun getTrashedItems(userId: UserId): List<ItemEntity> =
         database.itemsDao().getItemsWithState(userId.id, ItemState.Trashed.value)
 
-    override suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean =
-        database.itemsDao().delete(shareId.id, itemId.id) > 0
+    override suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean {
+        PassLogger.i(TAG, "Deleting item [shareId=${shareId.id}] [itemId=${itemId.id}]")
+        return database.itemsDao().delete(shareId.id, itemId.id) > 0
+    }
 
-    override suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean =
-        database.itemsDao().deleteList(shareId.id, itemIds.map(ItemId::id)) > 0
+    override suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean {
+        PassLogger.i(
+            TAG,
+            "Deleting items [shareId=${shareId.id}] [itemIds=${itemIds.map { it.id }}]"
+        )
+        return database.itemsDao().deleteList(shareId.id, itemIds.map(ItemId::id)) > 0
+    }
 
     override suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean =
         database.itemsDao().countItems(userId.id, shareId.id) > 0
@@ -209,6 +221,10 @@ class LocalItemDataSourceImpl @Inject constructor(
         ItemTypeFilter.Notes -> ITEM_TYPE_NOTE
         ItemTypeFilter.CreditCards -> ITEM_TYPE_CREDIT_CARD
         ItemTypeFilter.All -> throw IllegalStateException("Cannot call value to ItemTypeFilter.All")
+    }
+
+    companion object {
+        private const val TAG = "LocalItemDataSourceImpl"
     }
 
 }

@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.sync
 import androidx.lifecycle.coroutineScope
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
@@ -55,7 +56,11 @@ class SyncManagerImpl @Inject constructor(
 
     override fun start() {
         PassLogger.i(TAG, "SyncManager start")
-        appLifecycleProvider.lifecycle.coroutineScope.launch {
+        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            PassLogger.w(TAG, "Error in SyncManager coroutine")
+            PassLogger.e(TAG, throwable)
+        }
+        appLifecycleProvider.lifecycle.coroutineScope.launch(exceptionHandler) {
             combine(
                 appLifecycleProvider.state,
                 accountManager.getPrimaryUserId(),

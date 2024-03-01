@@ -622,5 +622,5 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetItemCategory(impl: FakeGetItemCategory): GetItemCategory
-    
+
 }

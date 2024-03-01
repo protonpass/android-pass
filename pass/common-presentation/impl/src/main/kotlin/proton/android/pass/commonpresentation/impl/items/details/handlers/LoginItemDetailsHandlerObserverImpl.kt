@@ -83,7 +83,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                         Totp(
                             code = totpWrapper.code,
                             remainingSeconds = totpWrapper.remainingSeconds,
-                            totalSeconds = totpWrapper.remainingSeconds,
+                            totalSeconds = totpWrapper.totalSeconds,
                         )
                     }
                 }

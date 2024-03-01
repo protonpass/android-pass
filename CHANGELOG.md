@@ -6,6 +6,18 @@
 
 ### Other
 
+## 1.18.3 (2024-03-01)
+
+### Fixes :bug:
+
+- Bug in edit login that did not allow to remove a linked app.
+- Remaining invite count sometimes didn't reflect the updated number.
+
+### Other
+
+- Add better support for future item attributes.
+- Updated translations.
+
 ## 1.18.2 (2024-02-26)
 
 ### Fixes :bug:

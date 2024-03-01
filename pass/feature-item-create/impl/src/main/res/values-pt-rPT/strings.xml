@@ -43,7 +43,7 @@
   <string name="create_login_add_custom_field_button">Add another field</string>
   <string name="custom_field_hidden_placeholder">Adicionar texto oculto</string>
   <string name="custom_field_hidden_icon_content_description">Ícone de campo personalizado oculto</string>
-  <string name="custom_field_text_placeholder">Add text</string>
+  <string name="custom_field_text_placeholder">Adicionar texto</string>
   <string name="custom_field_dialog_title">Nome do campo personalizado</string>
   <string name="custom_field_dialog_body">Give your custom field a name</string>
   <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
@@ -84,10 +84,10 @@
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
   <string name="field_card_cvv_title">Security code</string>
   <string name="field_card_cvv_hint">123</string>
-  <string name="field_card_pin_title">PIN</string>
+  <string name="field_card_pin_title">Código PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Data de expiração</string>
-  <string name="field_card_expiration_date_hint">MM / YY</string>
+  <string name="field_card_expiration_date_hint">MM / AA</string>
   <string name="field_card_expiration_date_error">Enter a valid date in MM/YY format</string>
   <string name="create_credit_card_item_creation_error">Não foi possível criar o cartão de crédito.</string>
   <string name="create_credit_card_item_creation_success">O cartão de crédito foi criado.</string>

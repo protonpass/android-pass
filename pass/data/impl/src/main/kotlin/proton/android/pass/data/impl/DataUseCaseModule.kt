@@ -552,6 +552,8 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveVaultWithItemCountById(
         impl: ObserveVaultWithItemCountByIdImpl,
     ): ObserveVaultWithItemCountById
+
+    @Binds
     abstract fun bindObserveOrganizationSettings(impl: ObserveOrganizationSettingsImpl): ObserveOrganizationSettings
 
     @Binds

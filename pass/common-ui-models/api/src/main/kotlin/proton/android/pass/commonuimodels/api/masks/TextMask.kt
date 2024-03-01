@@ -67,4 +67,14 @@ sealed interface TextMask {
 
     }
 
+    data class TotpCode(private val input: String) : TextMask {
+
+        override val masked: String = input.length
+            .div(2)
+            .let { half -> "${input.take(half)} • ${input.takeLast(half)}" }
+
+        override val unmasked: String = input
+
+    }
+
 }

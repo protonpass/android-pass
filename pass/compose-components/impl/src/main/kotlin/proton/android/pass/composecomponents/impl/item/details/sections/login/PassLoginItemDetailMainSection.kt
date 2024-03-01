@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
+import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Totp
@@ -86,15 +87,19 @@ internal fun PassLoginItemDetailMainSection(
 
     primaryTotp?.let { totp ->
         sections.add {
-            with(totp) {
-                PassItemDetailMaskedFieldRow(
-                    icon = painterResource(CoreR.drawable.ic_proton_lock),
-                    title = stringResource(R.string.item_details_login_section_primary_totp_title),
-                    maskedSubtitle = TextMask.TotpCode(code),
-                    itemColors = itemColors,
-                    onClick = { onSectionClick(code, ItemDetailsFieldType.Plain.TotpCode) },
-                )
-            }
+            PassItemDetailMaskedFieldRow(
+                icon = painterResource(CoreR.drawable.ic_proton_lock),
+                title = stringResource(R.string.item_details_login_section_primary_totp_title),
+                maskedSubtitle = TextMask.TotpCode(totp.code),
+                itemColors = itemColors,
+                onClick = { onSectionClick(totp.code, ItemDetailsFieldType.Plain.TotpCode) },
+                contentInBetween = {
+                    PassTotpProgress(
+                        remainingSeconds = totp.remainingSeconds,
+                        totalSeconds = totp.totalSeconds,
+                    )
+                },
+            )
         }
     }
 

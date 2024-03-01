@@ -42,33 +42,31 @@ internal fun PassItemDetailMaskedFieldRow(
     isSelectable: Boolean = false,
     isToggleable: Boolean = false,
     onClick: (() -> Unit)? = null,
+    contentInBetween: (@Composable () -> Unit)? = null,
 ) {
-
-    var subtitle by remember { mutableStateOf(maskedSubtitle.masked) }
+    var isMasked by remember { mutableStateOf(true) }
 
     PassItemDetailFieldRow(
         modifier = modifier,
         icon = icon,
         title = title,
-        subtitle = subtitle,
+        subtitle = if (isMasked) maskedSubtitle.masked else maskedSubtitle.unmasked,
         itemColors = itemColors,
         isSelectable = isSelectable,
         onClick = onClick,
     ) {
+        contentInBetween?.invoke()
+
         if (isToggleable) {
-            var isVisible by remember { mutableStateOf(false) }
-
-            subtitle = if (isVisible) maskedSubtitle.unmasked else maskedSubtitle.masked
-
             Circle(
                 backgroundColor = itemColors.minorPrimary,
-                onClick = { isVisible = !isVisible },
+                onClick = { isMasked = !isMasked },
             ) {
                 Icon(
-                    painter = if (isVisible) {
-                        painterResource(R.drawable.ic_proton_eye_slash)
-                    } else {
+                    painter = if (isMasked) {
                         painterResource(R.drawable.ic_proton_eye)
+                    } else {
+                        painterResource(R.drawable.ic_proton_eye_slash)
                     },
                     contentDescription = null,
                     tint = itemColors.majorSecondary,
@@ -76,5 +74,4 @@ internal fun PassItemDetailMaskedFieldRow(
             }
         }
     }
-
 }

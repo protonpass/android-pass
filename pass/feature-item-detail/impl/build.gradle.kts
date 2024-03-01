@@ -100,6 +100,7 @@ dependencies {
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.passkeys.fakes)
     testImplementation(projects.pass.preferences.fakes)
     testImplementation(projects.pass.telemetry.fakes)
 
@@ -115,6 +116,7 @@ dependencies {
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.passkeys.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
     androidTestImplementation(projects.pass.totp.fakes)

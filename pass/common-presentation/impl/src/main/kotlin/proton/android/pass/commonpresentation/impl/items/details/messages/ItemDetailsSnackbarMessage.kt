@@ -54,6 +54,11 @@ internal enum class ItemDetailsSnackbarMessage(
         type = SnackbarType.NORM,
     ),
 
+    TotpCodeCopied(
+        id = R.string.item_details_snackbar_message_totp_copied,
+        type = SnackbarType.NORM,
+    ),
+
     UsernameCopied(
         id = R.string.item_details_snackbar_message_username_copied,
         type = SnackbarType.NORM,

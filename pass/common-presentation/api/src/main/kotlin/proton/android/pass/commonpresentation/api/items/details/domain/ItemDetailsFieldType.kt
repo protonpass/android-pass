@@ -26,6 +26,8 @@ sealed interface ItemDetailsFieldType {
 
         object CardNumber : Plain
 
+        object TotpCode : Plain
+
         object Username : Plain
 
         object Website : Plain

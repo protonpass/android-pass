@@ -30,12 +30,14 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Totp
 
 @Composable
 internal fun PassLoginItemDetailSections(
     modifier: Modifier = Modifier,
     contents: ItemContents.Login,
     passwordStrength: PasswordStrength,
+    primaryTotp: Totp?,
     itemColors: ProtonItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
@@ -50,6 +52,7 @@ internal fun PassLoginItemDetailSections(
             username = username,
             password = password,
             passwordStrength = passwordStrength,
+            primaryTotp = primaryTotp,
             itemColors = itemColors,
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,

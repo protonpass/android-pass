@@ -87,5 +87,5 @@
   <string name="label_password_strength_weak">Slabé</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Zobraziť všetko</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Verzia aplikácie už nie je podporovaná, aktualizujte ju.</string>
 </resources>

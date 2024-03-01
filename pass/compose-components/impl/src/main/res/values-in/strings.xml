@@ -81,5 +81,5 @@
   <string name="label_password_strength_weak">Lemah</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Lihat semua</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Versi aplikasi ini sudah tidak lagi didukung. Silakan perbarui aplikasi Anda.</string>
 </resources>

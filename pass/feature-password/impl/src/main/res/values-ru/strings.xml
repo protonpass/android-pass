@@ -25,7 +25,7 @@
   <string name="bottomsheet_option_word_separator_spaces">Пробелы</string>
   <string name="bottomsheet_option_word_separator_periods">Точки ( . )</string>
   <string name="bottomsheet_option_word_separator_commas">Запятые ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Подчеркивания ( _ )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Подчёркивания ( _ )</string>
   <string name="bottomsheet_option_word_separator_numbers">Цифры</string>
   <string name="bottomsheet_option_word_separator_numbers_and_symbols">Цифры и символы</string>
   <string name="regenerate_password_icon_content_description">Кнопка для повторного создания пароля</string>

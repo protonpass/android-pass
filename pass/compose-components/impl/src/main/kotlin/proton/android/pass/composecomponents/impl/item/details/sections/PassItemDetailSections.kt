@@ -63,6 +63,7 @@ internal fun PassItemDetailSections(
             modifier = modifier,
             contents = contents,
             passwordStrength = passwordStrength,
+            primaryTotp = primaryTotp,
             itemColors = itemColors,
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,

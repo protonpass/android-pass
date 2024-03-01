@@ -22,6 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
@@ -34,8 +37,10 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Totp
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class LoginItemDetailsHandlerObserverImpl @Inject constructor(
@@ -43,47 +48,78 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
+    private val totpManager: TotpManager,
 ) : ItemDetailsHandlerObserver {
 
-    private val itemDetailsFlow = MutableStateFlow<ItemDetailState.Login?>(null)
+    private val loginItemContentsFlow = MutableStateFlow<ItemContents.Login?>(null)
+
+    private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> =
+        loginItemContentsFlow.map { loginItemContents ->
+            loginItemContents ?: encryptionContextProvider.withEncryptionContext {
+                item.toItemContents(this@withEncryptionContext) as ItemContents.Login
+            }
+        }
+            .distinctUntilChanged()
+            .onEach { loginItemContents ->
+                loginItemContentsFlow.update { loginItemContents }
+            }
+
+    private fun observeTotp(item: Item): Flow<Totp?> =
+        observeLoginItemContents(item)
+            .map { loginItemContents ->
+                when (val totpHiddenState = loginItemContents.primaryTotp) {
+                    is HiddenState.Empty -> ""
+                    is HiddenState.Revealed -> totpHiddenState.clearText
+                    is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
+                        decrypt(totpHiddenState.encrypted)
+                    }
+                }
+            }
+            .flatMapLatest { totpUri ->
+                if (totpUri.isEmpty()) {
+                    flowOf(null)
+                } else {
+                    totpManager.observeCode(totpUri).map { totpWrapper ->
+                        Totp(
+                            code = totpWrapper.code,
+                            remainingSeconds = totpWrapper.remainingSeconds,
+                            totalSeconds = totpWrapper.remainingSeconds,
+                        )
+                    }
+                }
+            }
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
-        itemDetailsFlow,
+        observeLoginItemContents(item),
+        observeTotp(item),
         getVaultById(shareId = item.shareId),
         userPreferencesRepository.getUseFaviconsPreference(),
-    ) { itemDetails, vault, useFaviconsPreference ->
-        encryptionContextProvider.withEncryptionContext {
-            item.toItemContents(this@withEncryptionContext)
-        }.let { itemContents ->
-            itemDetails ?: ItemDetailState.Login(
-                contents = itemContents as ItemContents.Login,
-                isPinned = item.isPinned,
-                vault = vault,
-                canLoadExternalImages = useFaviconsPreference.value(),
-                passwordStrength = encryptionContextProvider.withEncryptionContext {
-                    decrypt(itemContents.password.encrypted)
-                        .let(passwordStrengthCalculator::calculateStrength)
-                },
-            )
-        }
+    ) { loginItemContents, totp, vault, useFaviconsPreference ->
+        ItemDetailState.Login(
+            contents = loginItemContents,
+            isPinned = item.isPinned,
+            vault = vault,
+            canLoadExternalImages = useFaviconsPreference.value(),
+            passwordStrength = encryptionContextProvider.withEncryptionContext {
+                decrypt(loginItemContents.password.encrypted)
+                    .let(passwordStrengthCalculator::calculateStrength)
+            },
+            primaryTotp = totp,
+        )
     }
-        .distinctUntilChanged()
-        .onEach { newItemDetailsState -> itemDetailsFlow.update { newItemDetailsState } }
 
     override fun updateHiddenState(
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenState: HiddenState,
     ) {
-        itemDetailsFlow.update { itemDetailsState ->
+        loginItemContentsFlow.update { loginItemContents ->
             when (hiddenFieldType) {
-                ItemDetailsFieldType.Hidden.Password -> itemDetailsState?.copy(
-                    contents = itemDetailsState.contents.copy(
-                        password = hiddenState,
-                    )
+                ItemDetailsFieldType.Hidden.Password -> loginItemContents?.copy(
+                    password = hiddenState,
                 )
 
                 ItemDetailsFieldType.Hidden.Cvv,
-                ItemDetailsFieldType.Hidden.Pin -> itemDetailsState
+                ItemDetailsFieldType.Hidden.Pin -> loginItemContents
             }
         }
     }

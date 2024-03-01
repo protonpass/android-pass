@@ -32,19 +32,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.commonui.api.toPasswordAnnotatedString
-import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.toggles.PassVisibilityToggle
 import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
 import proton.android.pass.domain.HiddenState
 
@@ -120,19 +118,10 @@ internal fun PassItemDetailsHiddenFieldRow(
             }
         }
 
-        Circle(
-            backgroundColor = itemColors.minorPrimary,
-            onClick = { onToggle?.invoke(!isVisible) }
-        ) {
-            Icon(
-                painter = if (isVisible) {
-                    painterResource(R.drawable.ic_proton_eye_slash)
-                } else {
-                    painterResource(R.drawable.ic_proton_eye)
-                },
-                contentDescription = null,
-                tint = itemColors.majorSecondary,
-            )
-        }
+        PassVisibilityToggle(
+            isVisible = isVisible,
+            onToggle = { onToggle?.invoke(!isVisible) },
+            itemColors = itemColors,
+        )
     }
 }

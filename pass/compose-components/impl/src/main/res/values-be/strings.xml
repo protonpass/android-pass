@@ -87,5 +87,5 @@
   <string name="label_password_strength_weak">Ненадзейны</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Прагледзець усе</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Дадзеная версія праграмы больш не падтрымліваецца. Абнавіце праграму да апошняй версіі.</string>
 </resources>

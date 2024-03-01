@@ -7,7 +7,7 @@
   <string name="profile_security">安全</string>
   <string name="profile_option_feedback">意見回饋</string>
   <string name="profile_option_import_export">匯入/匯出</string>
-  <string name="profile_option_tutorial">How to use Proton Pass</string>
+  <string name="profile_option_tutorial">如何使用Proton Pass</string>
   <string name="profile_option_rating">為應用程式評分</string>
   <string name="profile_option_autofill">自動填入</string>
   <string name="profile_option_autofill_subtitle">自動填入使用者名稱和密碼</string>
@@ -46,5 +46,5 @@
   <string name="profile_option_lock_with">鎖定透過</string>
   <string name="profile_option_unlock_with">解鎖透過</string>
   <string name="profile_option_change_pin_code">變更 Pin 碼</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">三星瀏覽器為預設。它不支援外部密碼管理器自動填入。</string>
 </resources>

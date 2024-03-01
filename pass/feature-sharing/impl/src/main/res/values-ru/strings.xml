@@ -58,7 +58,7 @@
   <string name="sharing_snackbar_get_vault_members_error">Не могу получить участников хранилища</string>
   <string name="sharing_snackbar_change_permission_success">Разрешения изменены</string>
   <string name="sharing_snackbar_change_permission_error">Не могу изменить разрешения</string>
-  <string name="sharing_snackbar_remove_member_success">Участник удален из хранилища</string>
+  <string name="sharing_snackbar_remove_member_success">Участник удалён из хранилища</string>
   <string name="sharing_snackbar_remove_member_error">Не могу удалить из хранилища</string>
   <string name="share_summary_title">Review and share</string>
   <string name="share_summary_vault">%s хранилище</string>
@@ -78,7 +78,7 @@
     <item quantity="other">%d элементов</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Приглашение отправлено</string>
-  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Pending account creation</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Ожидание создания аккаунта</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Подтвердите доступ</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Приглашения</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Участники</string>
@@ -117,10 +117,10 @@
   <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
   <string name="share_with_suggestions_title">Рекомендации</string>
   <string name="share_with_recents_title">Недавние</string>
-  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="share_with_remove_email_content_description">Удалить адрес эл. почты</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Установить уровень доступа для всех участников</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
-  <string name="sharing_edit_permissions_remove_user">Remove user</string>
-  <string name="sharing_error_dialog_title">Unknown error</string>
+  <string name="sharing_edit_permissions_remove_user">Удалить пользователя</string>
+  <string name="sharing_error_dialog_title">Неизвестная ошибка</string>
   <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
 </resources>

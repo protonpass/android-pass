@@ -125,7 +125,7 @@
   <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
   <string name="home_snackbar_items_pinned_success">Items pinned successfully</string>
   <string name="home_snackbar_items_pinned_partial_success">Error pinning some of the items</string>
-  <string name="home_snackbar_items_pinned_error">Error pinning the items</string>
+  <string name="home_snackbar_items_pinned_error">S\'ha produït un error en ancorar els elements.</string>
   <string name="home_snackbar_items_unpinned_success">Items unpinned successfully</string>
   <string name="home_snackbar_items_unpinned_partial_success">Error unpinning some of the items</string>
   <string name="home_snackbar_items_unpinned_error">Error unpinning the items</string>

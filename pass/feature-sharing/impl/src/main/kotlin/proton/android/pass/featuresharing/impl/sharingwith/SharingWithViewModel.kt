@@ -238,15 +238,13 @@ class SharingWithViewModel @Inject constructor(
     }
 
     fun onContinueClick() = viewModelScope.launch {
-        if (!state.value.canOnlyPickFromSelection) {
-            if (editingEmailState.isNotBlank()) {
-                if (checkValidEmail()) {
-                    enteredEmailsState.update { it + EnteredEmailState(editingEmailState, false) }
-                    editingEmailState = ""
-                    editingEmailStateFlow.update { "" }
-                } else {
-                    return@launch
-                }
+        if (editingEmailState.isNotBlank()) {
+            if (checkValidEmail()) {
+                enteredEmailsState.update { it + EnteredEmailState(editingEmailState, false) }
+                editingEmailState = ""
+                editingEmailStateFlow.update { "" }
+            } else {
+                return@launch
             }
         }
 
@@ -269,6 +267,9 @@ class SharingWithViewModel @Inject constructor(
 
             // If none can be invited, show an error
             CanAddressesBeInvitedResult.None -> {
+                enteredEmailsState.update { currentEmails ->
+                    currentEmails.map { it.copy(isError = true) }
+                }
                 errorMessageFlow.update { ErrorMessage.NoAddressesCanBeInvited }
             }
 

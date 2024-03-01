@@ -29,6 +29,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.TestCheckAddressesCanBeInvited
@@ -50,6 +51,7 @@ class SharingWithViewModelTest {
     private lateinit var observeInviteRecommendations: FakeObserveInviteRecommendations
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var bulkInviteRepository: TestBulkInviteRepository
+    private lateinit var checkAddressesCanBeInvited: TestCheckAddressesCanBeInvited
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
@@ -61,6 +63,7 @@ class SharingWithViewModelTest {
         emailValidator = TestEmailValidator()
         observeInviteRecommendations = FakeObserveInviteRecommendations()
         bulkInviteRepository = TestBulkInviteRepository()
+        checkAddressesCanBeInvited = TestCheckAddressesCanBeInvited()
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID
             get()[ShowEditVaultArgId.key] = false
@@ -72,7 +75,7 @@ class SharingWithViewModelTest {
             observeInviteRecommendations = observeInviteRecommendations,
             bulkInviteRepository = bulkInviteRepository,
             observeOrganizationSettings = TestObserveOrganizationSettings(),
-            checkCanAddressesBeInvited = TestCheckAddressesCanBeInvited()
+            checkCanAddressesBeInvited = checkAddressesCanBeInvited
         )
     }
 
@@ -88,17 +91,21 @@ class SharingWithViewModelTest {
         viewModel.onEmailChange("test@example.com")
         viewModel.onEmailSubmit()
         viewModel.state.test {
-            assertThat(awaitItem().showEmailNotValidError).isFalse()
+            assertThat(awaitItem().errorMessage == ErrorMessage.EmailNotValid).isFalse()
         }
     }
 
     @Test
     fun `onEmailSubmit with valid email should add the email to the list`() = runTest {
         val email = "test@example.com"
+        checkAddressesCanBeInvited.setAddressCanBeInvited(email)
+
         viewModel.onEmailChange(email)
         viewModel.onEmailSubmit()
         viewModel.state.test {
-            assertThat(awaitItem().enteredEmails).isEqualTo(listOf(email))
+            val stateEmails = awaitItem().enteredEmails
+            val expected = EnteredEmailState(email = email, isError = false)
+            assertThat(stateEmails).isEqualTo(listOf(expected))
         }
         assertThat(viewModel.editingEmail).isEmpty()
     }
@@ -106,6 +113,8 @@ class SharingWithViewModelTest {
     @Test
     fun `onContinueClick with valid email should send it to repository`() = runTest {
         val email = "test@example.com"
+        checkAddressesCanBeInvited.setAddressCanBeInvited(email)
+
         viewModel.onEmailChange(email)
         viewModel.onEmailSubmit()
         viewModel.onContinueClick()
@@ -122,13 +131,14 @@ class SharingWithViewModelTest {
             viewModel.state.test {
                 skipItems(1)
                 viewModel.onEmailSubmit()
-                assertThat(awaitItem().showEmailNotValidError).isTrue()
+                assertThat(awaitItem().errorMessage == ErrorMessage.EmailNotValid).isTrue()
             }
         }
 
     @Test
     fun `state should be updated correctly after combining flows`() = runTest {
         val invitedEmail = "myemail@proton.me"
+        checkAddressesCanBeInvited.setAddressCanBeInvited(invitedEmail)
 
         val testVault = Vault(
             shareId = ShareId(id = SHARE_ID),
@@ -142,7 +152,7 @@ class SharingWithViewModelTest {
         viewModel.state.test {
             val currentState = awaitItem()
             assertThat(currentState.vault).isEqualTo(testVault)
-            assertThat(currentState.showEmailNotValidError).isFalse()
+            assertThat(currentState.errorMessage == ErrorMessage.EmailNotValid).isFalse()
             assertThat(currentState.event).isEqualTo(
                 SharingWithEvents.NavigateToPermissions(shareId = ShareId(SHARE_ID))
             )
@@ -163,19 +173,23 @@ class SharingWithViewModelTest {
             groupDisplayName = "",
             planRecommendedEmails = emptyList()
         )
+        val result = CanAddressesBeInvitedResult.All(recommendations.recommendedEmails)
+        checkAddressesCanBeInvited.setResult(Result.success(result))
         observeInviteRecommendations.emitInvites(recommendations)
 
         viewModel.onItemToggle(email1, false)
 
         viewModel.state.test {
             val state = awaitItem()
-            assertThat(state.enteredEmails).isEqualTo(listOf(email1))
+            val expectedEnteredEmails = listOf(EnteredEmailState(email = email1, isError = false))
+            assertThat(state.enteredEmails).isEqualTo(expectedEnteredEmails)
 
             val suggestionsState = state.suggestionsUIState
             assertThat(suggestionsState).isInstanceOf(SuggestionsUIState.Content::class.java)
 
             val content = suggestionsState as SuggestionsUIState.Content
             assertThat(content.recentEmails.size).isEqualTo(2)
+
             assertThat(content.recentEmails).contains(email1 to true)
             assertThat(content.recentEmails).contains(email2 to false)
         }

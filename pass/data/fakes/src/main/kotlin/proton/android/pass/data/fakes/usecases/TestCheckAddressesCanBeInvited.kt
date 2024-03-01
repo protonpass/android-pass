@@ -33,6 +33,10 @@ class TestCheckAddressesCanBeInvited @Inject constructor() : CheckCanAddressesBe
         result = value
     }
 
+    fun setAddressCanBeInvited(address: String) {
+        setResult(Result.success(CanAddressesBeInvitedResult.All(listOf(address))))
+    }
+
     override suspend fun invoke(
         shareId: ShareId,
         addresses: List<String>

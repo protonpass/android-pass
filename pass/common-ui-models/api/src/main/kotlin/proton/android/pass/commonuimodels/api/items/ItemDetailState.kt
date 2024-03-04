@@ -25,6 +25,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.domain.items.ItemCustomField
 
 sealed class ItemDetailState(
     val itemContents: ItemContents,
@@ -64,6 +65,7 @@ sealed class ItemDetailState(
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
+        val customFields: List<ItemCustomField>,
         private val isPinned: Boolean,
         private val vault: Vault?,
     ) : ItemDetailState(

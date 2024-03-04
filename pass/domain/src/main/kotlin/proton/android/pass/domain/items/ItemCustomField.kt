@@ -16,37 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.api.items.details.domain
+package proton.android.pass.domain.items
 
-sealed interface ItemDetailsFieldType {
+import proton.android.pass.domain.HiddenState
 
-    sealed interface Plain : ItemDetailsFieldType {
+sealed interface ItemCustomField {
 
-        data object Alias : Plain
+    val title: String
 
-        data object CardNumber : Plain
+    data class Plain(
+        override val title: String,
+        val content: String,
+    ) : ItemCustomField
 
-        data object CustomField : Plain
+    data class Hidden(
+        override val title: String,
+        val hiddenState: HiddenState,
+    ) : ItemCustomField
 
-        data object TotpCode : Plain
-
-        data object Username : Plain
-
-        data object Website : Plain
-
-    }
-
-    sealed interface Hidden : ItemDetailsFieldType {
-
-        @JvmInline
-        value class CustomField(val index: Int) : Hidden
-
-        data object Cvv : Hidden
-
-        data object Password : Hidden
-
-        data object Pin : Hidden
-
-    }
+    data class Totp(
+        override val title: String,
+        val totp: proton.android.pass.domain.Totp?,
+    ) : ItemCustomField
 
 }

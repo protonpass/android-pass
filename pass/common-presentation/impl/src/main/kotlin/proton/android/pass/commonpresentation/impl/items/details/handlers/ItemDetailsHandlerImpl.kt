@@ -73,11 +73,13 @@ class ItemDetailsHandlerImpl @Inject constructor(
 
     private suspend fun displayFieldCopiedSnackbarMessage(fieldType: ItemDetailsFieldType) =
         when (fieldType) {
+            is ItemDetailsFieldType.Hidden.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
             ItemDetailsFieldType.Hidden.Cvv -> ItemDetailsSnackbarMessage.CvvCopied
             ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
             ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
             ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
             ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
+            ItemDetailsFieldType.Plain.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
             ItemDetailsFieldType.Plain.TotpCode -> ItemDetailsSnackbarMessage.TotpCodeCopied
             ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
             ItemDetailsFieldType.Plain.Website -> ItemDetailsSnackbarMessage.WebsiteCopied

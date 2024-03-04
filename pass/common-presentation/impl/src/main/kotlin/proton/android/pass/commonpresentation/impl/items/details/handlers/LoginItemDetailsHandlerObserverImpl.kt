@@ -34,10 +34,12 @@ import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.items.ItemCustomField
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.totp.api.TotpManager
@@ -52,6 +54,27 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 ) : ItemDetailsHandlerObserver {
 
     private val loginItemContentsFlow = MutableStateFlow<ItemContents.Login?>(null)
+
+    override fun observe(item: Item): Flow<ItemDetailState> = combine(
+        observeLoginItemContents(item),
+        observeTotp(item),
+        observeCustomFields(item),
+        getVaultById(shareId = item.shareId),
+        userPreferencesRepository.getUseFaviconsPreference(),
+    ) { loginItemContents, totp, customFields, vault, useFaviconsPreference ->
+        ItemDetailState.Login(
+            contents = loginItemContents,
+            isPinned = item.isPinned,
+            vault = vault,
+            canLoadExternalImages = useFaviconsPreference.value(),
+            passwordStrength = encryptionContextProvider.withEncryptionContext {
+                decrypt(loginItemContents.password.encrypted)
+                    .let(passwordStrengthCalculator::calculateStrength)
+            },
+            primaryTotp = totp,
+            customFields = customFields,
+        )
+    }
 
     private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> =
         loginItemContentsFlow.map { loginItemContents ->
@@ -88,24 +111,29 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             }
         }
 
-    override fun observe(item: Item): Flow<ItemDetailState> = combine(
-        observeLoginItemContents(item),
-        observeTotp(item),
-        getVaultById(shareId = item.shareId),
-        userPreferencesRepository.getUseFaviconsPreference(),
-    ) { loginItemContents, totp, vault, useFaviconsPreference ->
-        ItemDetailState.Login(
-            contents = loginItemContents,
-            isPinned = item.isPinned,
-            vault = vault,
-            canLoadExternalImages = useFaviconsPreference.value(),
-            passwordStrength = encryptionContextProvider.withEncryptionContext {
-                decrypt(loginItemContents.password.encrypted)
-                    .let(passwordStrengthCalculator::calculateStrength)
-            },
-            primaryTotp = totp,
-        )
-    }
+    private fun observeCustomFields(item: Item): Flow<List<ItemCustomField>> =
+        observeLoginItemContents(item).map { loginItemContents ->
+            loginItemContents.customFields.map { customFieldContent ->
+                when (customFieldContent) {
+                    is CustomFieldContent.Hidden -> ItemCustomField.Hidden(
+                        title = customFieldContent.label,
+                        hiddenState = customFieldContent.value,
+                    )
+
+                    is CustomFieldContent.Text -> ItemCustomField.Plain(
+                        title = customFieldContent.label,
+                        content = customFieldContent.value,
+                    )
+
+                    is CustomFieldContent.Totp -> ItemCustomField.Totp(
+                        title = customFieldContent.label,
+                        totp = null,
+//                        totp = customFieldContent.value,
+                    )
+                }
+            }
+        }
+
 
     override fun updateHiddenState(
         hiddenFieldType: ItemDetailsFieldType.Hidden,
@@ -113,12 +141,24 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     ) {
         loginItemContentsFlow.update { loginItemContents ->
             when (hiddenFieldType) {
+                is ItemDetailsFieldType.Hidden.CustomField -> loginItemContents?.copy(
+                    customFields = loginItemContents.customFields
+                        .mapIndexed { index, customFieldContent ->
+                            if (index == hiddenFieldType.index && customFieldContent is CustomFieldContent.Hidden) {
+                                customFieldContent.copy(value = hiddenState)
+                            } else {
+                                customFieldContent
+                            }
+                        }
+                )
+
                 ItemDetailsFieldType.Hidden.Password -> loginItemContents?.copy(
                     password = hiddenState,
                 )
 
                 ItemDetailsFieldType.Hidden.Cvv,
                 ItemDetailsFieldType.Hidden.Pin -> loginItemContents
+
             }
         }
     }

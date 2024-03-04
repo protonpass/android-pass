@@ -39,6 +39,11 @@ internal enum class ItemDetailsSnackbarMessage(
         type = SnackbarType.NORM,
     ),
 
+    CustomFieldCopied(
+        id = R.string.item_details_snackbar_message_custom_field_copied,
+        type = SnackbarType.NORM,
+    ),
+
     CvvCopied(
         id = R.string.item_details_snackbar_message_cvv_copied,
         type = SnackbarType.NORM,

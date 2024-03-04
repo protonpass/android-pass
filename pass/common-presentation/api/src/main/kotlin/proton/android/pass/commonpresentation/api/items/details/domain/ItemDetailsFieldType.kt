@@ -22,25 +22,30 @@ sealed interface ItemDetailsFieldType {
 
     sealed interface Plain : ItemDetailsFieldType {
 
-        object Alias : Plain
+        data object Alias : Plain
 
-        object CardNumber : Plain
+        data object CardNumber : Plain
 
-        object TotpCode : Plain
+        data object CustomField : Plain
 
-        object Username : Plain
+        data object TotpCode : Plain
 
-        object Website : Plain
+        data object Username : Plain
+
+        data object Website : Plain
 
     }
 
     sealed interface Hidden : ItemDetailsFieldType {
 
-        object Cvv : Hidden
+        @JvmInline
+        value class CustomField(val index: Int) : Hidden
 
-        object Password : Hidden
+        data object Cvv : Hidden
 
-        object Pin : Hidden
+        data object Password : Hidden
+
+        data object Pin : Hidden
 
     }
 

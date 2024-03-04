@@ -64,6 +64,7 @@ internal fun PassItemDetailSections(
             contents = contents,
             passwordStrength = passwordStrength,
             primaryTotp = primaryTotp,
+            customFields = customFields.toImmutableList(),
             itemColors = itemColors,
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,

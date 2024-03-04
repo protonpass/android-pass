@@ -57,11 +57,11 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeLoginItemContents(item),
-        observeTotp(item),
+        observePrimaryTotp(item),
         observeCustomFields(item),
         getVaultById(shareId = item.shareId),
         userPreferencesRepository.getUseFaviconsPreference(),
-    ) { loginItemContents, totp, customFields, vault, useFaviconsPreference ->
+    ) { loginItemContents, primaryTotp, customFields, vault, useFaviconsPreference ->
         ItemDetailState.Login(
             contents = loginItemContents,
             isPinned = item.isPinned,
@@ -71,7 +71,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 decrypt(loginItemContents.password.encrypted)
                     .let(passwordStrengthCalculator::calculateStrength)
             },
-            primaryTotp = totp,
+            primaryTotp = primaryTotp,
             customFields = customFields,
         )
     }
@@ -87,53 +87,63 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 loginItemContentsFlow.update { loginItemContents }
             }
 
-    private fun observeTotp(item: Item): Flow<Totp?> = observeLoginItemContents(item)
-        .map { loginItemContents ->
-            when (val totpHiddenState = loginItemContents.primaryTotp) {
-                is HiddenState.Empty -> ""
-                is HiddenState.Revealed -> totpHiddenState.clearText
-                is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
-                    decrypt(totpHiddenState.encrypted)
-                }
-            }
-        }
-        .flatMapLatest { totpUri ->
-            if (totpUri.isEmpty()) {
-                flowOf(null)
-            } else {
-                totpManager.observeCode(totpUri).map { totpWrapper ->
-                    Totp(
-                        code = totpWrapper.code,
-                        remainingSeconds = totpWrapper.remainingSeconds,
-                        totalSeconds = totpWrapper.totalSeconds,
-                    )
-                }
-            }
+    private fun observePrimaryTotp(item: Item): Flow<Totp?> = observeLoginItemContents(item)
+        .flatMapLatest { loginItemContents ->
+            observeTotp(loginItemContents.primaryTotp)
         }
 
     private fun observeCustomFields(item: Item): Flow<List<ItemCustomField>> =
-        observeLoginItemContents(item).map { loginItemContents ->
-            loginItemContents.customFields.map { customFieldContent ->
-                when (customFieldContent) {
-                    is CustomFieldContent.Hidden -> ItemCustomField.Hidden(
-                        title = customFieldContent.label,
-                        hiddenState = customFieldContent.value,
-                    )
+        observeLoginItemContents(item).flatMapLatest { loginItemContents ->
+            combine(
+                loginItemContents.customFields.map { customFieldContent ->
+                    when (customFieldContent) {
+                        is CustomFieldContent.Hidden -> flowOf(
+                            ItemCustomField.Hidden(
+                                title = customFieldContent.label,
+                                hiddenState = customFieldContent.value,
+                            )
+                        )
 
-                    is CustomFieldContent.Text -> ItemCustomField.Plain(
-                        title = customFieldContent.label,
-                        content = customFieldContent.value,
-                    )
+                        is CustomFieldContent.Text -> flowOf(
+                            ItemCustomField.Plain(
+                                title = customFieldContent.label,
+                                content = customFieldContent.value,
+                            )
+                        )
 
-                    is CustomFieldContent.Totp -> ItemCustomField.Totp(
-                        title = customFieldContent.label,
-                        totp = null,
-//                        totp = customFieldContent.value,
-                    )
+                        is CustomFieldContent.Totp -> observeTotp(customFieldContent.value)
+                            .map { customFieldTotp ->
+                                ItemCustomField.Totp(
+                                    title = customFieldContent.label,
+                                    totp = customFieldTotp,
+                                )
+                            }
+                    }
                 }
+            ) { itemCustomFields ->
+                itemCustomFields.asList()
             }
         }
 
+    private fun observeTotp(hiddenTotpState: HiddenState): Flow<Totp?> = when (hiddenTotpState) {
+        is HiddenState.Empty -> ""
+        is HiddenState.Revealed -> hiddenTotpState.clearText
+        is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
+            decrypt(hiddenTotpState.encrypted)
+        }
+    }.let { totpUri ->
+        if (totpUri.isEmpty()) {
+            flowOf(null)
+        } else {
+            totpManager.observeCode(totpUri).map { totpWrapper ->
+                Totp(
+                    code = totpWrapper.code,
+                    remainingSeconds = totpWrapper.remainingSeconds,
+                    totalSeconds = totpWrapper.totalSeconds,
+                )
+            }
+        }
+    }
 
     override fun updateHiddenState(
         hiddenFieldType: ItemDetailsFieldType.Hidden,

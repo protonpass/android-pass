@@ -18,15 +18,20 @@
 
 package proton.android.pass.composecomponents.impl.item.details
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailTitleRow
@@ -48,9 +53,13 @@ fun PassItemDetailsContent(
     Scaffold(
         modifier = modifier,
         topBar = { topBar() },
-    ) { innerPadding ->
+    ) { innerPaddingValues ->
         Column(
-            modifier = Modifier.padding(paddingValues = innerPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = PassTheme.colors.itemDetailBackground)
+                .padding(paddingValues = innerPaddingValues)
+                .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             PassItemDetailTitleRow(

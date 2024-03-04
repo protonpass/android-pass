@@ -77,6 +77,7 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
                     ),
                 )
 
+                is ItemDetailsFieldType.Hidden.CustomField,
                 ItemDetailsFieldType.Hidden.Password -> itemDetailsState
             }
         }

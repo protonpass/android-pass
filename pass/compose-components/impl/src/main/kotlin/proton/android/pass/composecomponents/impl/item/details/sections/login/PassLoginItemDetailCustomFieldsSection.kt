@@ -64,7 +64,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         itemColors = itemColors,
                         onClick = {
                             onSectionClick(
-                                customField.title,
+                                customField.content,
                                 ItemDetailsFieldType.Plain.CustomField,
                             )
                         },

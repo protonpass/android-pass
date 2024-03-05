@@ -32,46 +32,55 @@ internal enum class ItemDetailsSnackbarMessage(
     AliasCopied(
         id = R.string.item_details_snackbar_message_alias_copied,
         type = SnackbarType.NORM,
+        isClipboard = true,
     ),
 
     CardNumberCopied(
         id = R.string.item_details_snackbar_message_card_number_copied,
         type = SnackbarType.NORM,
+        isClipboard = true,
     ),
 
     CustomFieldCopied(
         id = R.string.item_details_snackbar_message_custom_field_copied,
         type = SnackbarType.NORM,
+        isClipboard = true,
     ),
 
     CvvCopied(
         id = R.string.item_details_snackbar_message_cvv_copied,
         type = SnackbarType.NORM,
+        isClipboard = true,
     ),
 
     PasswordCopied(
         id = R.string.item_details_snackbar_message_password_copied,
         type = SnackbarType.NORM,
+        isClipboard = true,
     ),
 
     PinCopied(
         id = R.string.item_details_snackbar_message_pin_copied,
         type = SnackbarType.NORM,
+        isClipboard = true,
     ),
 
     TotpCodeCopied(
         id = R.string.item_details_snackbar_message_totp_copied,
         type = SnackbarType.NORM,
+        isClipboard = true,
     ),
 
     UsernameCopied(
         id = R.string.item_details_snackbar_message_username_copied,
         type = SnackbarType.NORM,
+        isClipboard = true,
     ),
 
     WebsiteCopied(
         id = R.string.item_details_snackbar_message_website_copied,
         type = SnackbarType.NORM,
+        isClipboard = true,
     ),
 
 }

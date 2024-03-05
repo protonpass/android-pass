@@ -94,36 +94,42 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 
     private fun observeCustomFields(item: Item): Flow<List<ItemCustomField>> =
         observeLoginItemContents(item).flatMapLatest { loginItemContents ->
-            combine(
-                loginItemContents.customFields.map { customFieldContent ->
-                    when (customFieldContent) {
-                        is CustomFieldContent.Hidden -> flowOf(
-                            ItemCustomField.Hidden(
-                                title = customFieldContent.label,
-                                hiddenState = customFieldContent.value,
-                            )
-                        )
-
-                        is CustomFieldContent.Text -> flowOf(
-                            ItemCustomField.Plain(
-                                title = customFieldContent.label,
-                                content = customFieldContent.value,
-                            )
-                        )
-
-                        is CustomFieldContent.Totp -> observeTotp(customFieldContent.value)
-                            .map { customFieldTotp ->
-                                ItemCustomField.Totp(
-                                    title = customFieldContent.label,
-                                    totp = customFieldTotp,
-                                )
-                            }
-                    }
+            if (loginItemContents.customFields.isEmpty()) {
+                flowOf(emptyList())
+            } else {
+                combine(getCustomFieldsFlows(loginItemContents.customFields)) { itemCustomFields ->
+                    itemCustomFields.asList()
                 }
-            ) { itemCustomFields ->
-                itemCustomFields.asList()
             }
         }
+
+    private fun getCustomFieldsFlows(
+        customFieldsContents: List<CustomFieldContent>,
+    ): List<Flow<ItemCustomField>> = customFieldsContents.map { customFieldContent ->
+        when (customFieldContent) {
+            is CustomFieldContent.Hidden -> flowOf(
+                ItemCustomField.Hidden(
+                    title = customFieldContent.label,
+                    hiddenState = customFieldContent.value,
+                )
+            )
+
+            is CustomFieldContent.Text -> flowOf(
+                ItemCustomField.Plain(
+                    title = customFieldContent.label,
+                    content = customFieldContent.value,
+                )
+            )
+
+            is CustomFieldContent.Totp -> observeTotp(customFieldContent.value)
+                .map { customFieldTotp ->
+                    ItemCustomField.Totp(
+                        title = customFieldContent.label,
+                        totp = customFieldTotp,
+                    )
+                }
+        }
+    }
 
     private fun observeTotp(hiddenTotpState: HiddenState): Flow<Totp?> = when (hiddenTotpState) {
         is HiddenState.Empty -> ""

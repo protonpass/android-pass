@@ -18,7 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.timelines
 
-enum class ProtonTimelineNodeType {
+enum class PassTimelineNodeType {
     Child,
     Leaf,
     Root,

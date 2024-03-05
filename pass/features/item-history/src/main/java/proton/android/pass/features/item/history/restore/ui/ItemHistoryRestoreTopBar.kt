@@ -35,14 +35,14 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.features.item.history.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun ItemHistoryRestoreTopBar(
     modifier: Modifier = Modifier,
-    colors: ProtonItemColors,
+    colors: PassItemColors,
     onUpClick: () -> Unit,
     onRestoreClick: () -> Unit,
 ) {

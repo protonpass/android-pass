@@ -24,8 +24,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.domain.items.ItemCategory
 
 @Composable
-fun protonItemColors(itemCategory: ItemCategory): ProtonItemColors = when (itemCategory) {
-    ItemCategory.Unknown -> ProtonItemColors(
+fun passItemColors(itemCategory: ItemCategory): PassItemColors = when (itemCategory) {
+    ItemCategory.Unknown -> PassItemColors(
         norm = PassTheme.colors.interactionNorm,
         majorPrimary = PassTheme.colors.interactionNormMajor1,
         majorSecondary = PassTheme.colors.interactionNormMajor2,
@@ -33,7 +33,7 @@ fun protonItemColors(itemCategory: ItemCategory): ProtonItemColors = when (itemC
         minorSecondary = PassTheme.colors.interactionNormMinor2,
     )
 
-    ItemCategory.Login -> ProtonItemColors(
+    ItemCategory.Login -> PassItemColors(
         norm = PassTheme.colors.loginInteractionNorm,
         majorPrimary = PassTheme.colors.loginInteractionNormMajor1,
         majorSecondary = PassTheme.colors.loginInteractionNormMajor2,
@@ -41,7 +41,7 @@ fun protonItemColors(itemCategory: ItemCategory): ProtonItemColors = when (itemC
         minorSecondary = PassTheme.colors.loginInteractionNormMinor2,
     )
 
-    ItemCategory.Alias -> ProtonItemColors(
+    ItemCategory.Alias -> PassItemColors(
         norm = PassTheme.colors.aliasInteractionNorm,
         majorPrimary = PassTheme.colors.aliasInteractionNormMajor1,
         majorSecondary = PassTheme.colors.aliasInteractionNormMajor2,
@@ -49,7 +49,7 @@ fun protonItemColors(itemCategory: ItemCategory): ProtonItemColors = when (itemC
         minorSecondary = PassTheme.colors.aliasInteractionNormMinor2,
     )
 
-    ItemCategory.Note -> ProtonItemColors(
+    ItemCategory.Note -> PassItemColors(
         norm = PassTheme.colors.noteInteractionNorm,
         majorPrimary = PassTheme.colors.noteInteractionNormMajor1,
         majorSecondary = PassTheme.colors.noteInteractionNormMajor2,
@@ -57,7 +57,7 @@ fun protonItemColors(itemCategory: ItemCategory): ProtonItemColors = when (itemC
         minorSecondary = PassTheme.colors.noteInteractionNormMinor2,
     )
 
-    ItemCategory.Password -> ProtonItemColors(
+    ItemCategory.Password -> PassItemColors(
         norm = PassTheme.colors.passwordInteractionNorm,
         majorPrimary = PassTheme.colors.passwordInteractionNormMajor1,
         majorSecondary = PassTheme.colors.passwordInteractionNormMajor2,
@@ -65,7 +65,7 @@ fun protonItemColors(itemCategory: ItemCategory): ProtonItemColors = when (itemC
         minorSecondary = PassTheme.colors.passwordInteractionNormMinor2,
     )
 
-    ItemCategory.CreditCard -> ProtonItemColors(
+    ItemCategory.CreditCard -> PassItemColors(
         norm = PassTheme.colors.cardInteractionNorm,
         majorPrimary = PassTheme.colors.cardInteractionNormMajor1,
         majorSecondary = PassTheme.colors.cardInteractionNormMajor2,
@@ -74,7 +74,7 @@ fun protonItemColors(itemCategory: ItemCategory): ProtonItemColors = when (itemC
     )
 }
 
-data class ProtonItemColors(
+data class PassItemColors(
     val norm: Color,
     val majorPrimary: Color,
     val majorSecondary: Color,

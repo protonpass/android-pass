@@ -34,7 +34,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.items.ItemCustomField
 import me.proton.core.presentation.R as CoreR
@@ -45,7 +45,7 @@ private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 internal fun PassLoginItemDetailCustomFieldsSection(
     modifier: Modifier = Modifier,
     customFields: ImmutableList<ItemCustomField>,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,

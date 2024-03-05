@@ -37,7 +37,7 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 
 @Composable
 internal fun PassItemDetailFieldRow(
@@ -45,7 +45,7 @@ internal fun PassItemDetailFieldRow(
     icon: Painter,
     title: String,
     subtitle: String,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
     isSelectable: Boolean = false,
     onClick: (() -> Unit)? = null,
     contentInBetween: (@Composable () -> Unit)? = null,

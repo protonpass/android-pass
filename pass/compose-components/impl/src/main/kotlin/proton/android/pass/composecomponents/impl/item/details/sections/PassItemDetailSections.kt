@@ -28,14 +28,14 @@ import proton.android.pass.composecomponents.impl.item.details.sections.cards.Pa
 import proton.android.pass.composecomponents.impl.item.details.sections.login.PassLoginItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.notes.PassNoteItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
 
 @Composable
 internal fun PassItemDetailSections(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,

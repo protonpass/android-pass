@@ -25,14 +25,14 @@ import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun PassSharedItemDetailNoteSection(
     modifier: Modifier = Modifier,
     note: String,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
 ) {
     RoundedCornersColumn(
         modifier = modifier,

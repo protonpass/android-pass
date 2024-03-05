@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
@@ -40,45 +41,47 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
 ) : ItemDetailsHandlerObserver {
 
-    private val itemDetailsFlow = MutableStateFlow<ItemDetailState.CreditCard?>(null)
+    private val creditCardItemContentsFlow = MutableStateFlow<ItemContents.CreditCard?>(null)
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
-        itemDetailsFlow,
+        observeCreditCardItemContents(item),
         getVaultById(shareId = item.shareId),
-    ) { itemDetails, vault ->
-        encryptionContextProvider.withEncryptionContext {
-            item.toItemContents(this@withEncryptionContext)
-        }.let { itemContents ->
-            itemDetails ?: ItemDetailState.CreditCard(
-                contents = itemContents as ItemContents.CreditCard,
-                isPinned = item.isPinned,
-                vault = vault,
-            )
-        }
+    ) { creditCardItemContents, vault ->
+        ItemDetailState.CreditCard(
+            contents = creditCardItemContents,
+            isPinned = item.isPinned,
+            vault = vault,
+        )
     }
-        .distinctUntilChanged()
-        .onEach { newItemDetailsState -> itemDetailsFlow.update { newItemDetailsState } }
+
+    private fun observeCreditCardItemContents(item: Item): Flow<ItemContents.CreditCard> =
+        creditCardItemContentsFlow.map { creditCardItemContents ->
+            creditCardItemContents ?: encryptionContextProvider.withEncryptionContext {
+                item.toItemContents(this@withEncryptionContext) as ItemContents.CreditCard
+            }
+        }
+            .distinctUntilChanged()
+            .onEach { creditCardItemContents ->
+                creditCardItemContentsFlow.update { creditCardItemContents }
+            }
+
 
     override fun updateHiddenState(
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenState: HiddenState,
     ) {
-        itemDetailsFlow.update { itemDetailsState ->
+        creditCardItemContentsFlow.update { creditCardItemContents ->
             when (hiddenFieldType) {
-                ItemDetailsFieldType.Hidden.Cvv -> itemDetailsState?.copy(
-                    contents = itemDetailsState.contents.copy(
-                        cvv = hiddenState,
-                    ),
+                ItemDetailsFieldType.Hidden.Cvv -> creditCardItemContents?.copy(
+                    cvv = hiddenState,
                 )
 
-                ItemDetailsFieldType.Hidden.Pin -> itemDetailsState?.copy(
-                    contents = itemDetailsState.contents.copy(
-                        pin = hiddenState,
-                    ),
+                ItemDetailsFieldType.Hidden.Pin -> creditCardItemContents?.copy(
+                    pin = hiddenState,
                 )
 
                 is ItemDetailsFieldType.Hidden.CustomField,
-                ItemDetailsFieldType.Hidden.Password -> itemDetailsState
+                ItemDetailsFieldType.Hidden.Password -> creditCardItemContents
             }
         }
     }

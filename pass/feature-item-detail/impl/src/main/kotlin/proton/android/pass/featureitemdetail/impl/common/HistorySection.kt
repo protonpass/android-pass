@@ -40,7 +40,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
-import proton.android.pass.composecomponents.impl.item.ProtonHistoryItemRow
+import proton.android.pass.composecomponents.impl.item.PassHistoryItemRow
 import proton.android.pass.featureitemdetail.impl.R
 import me.proton.core.presentation.R as CoreR
 
@@ -56,7 +56,7 @@ fun HistorySection(
     RoundedCornersColumn(
         modifier = modifier,
     ) {
-        ProtonHistoryItemRow(
+        PassHistoryItemRow(
             leadingIcon = painterResource(CoreR.drawable.ic_proton_pencil),
             title = stringResource(id = R.string.item_detail_history_modified_last),
             subtitle = formatMoreInfoInstantText(
@@ -70,7 +70,7 @@ fun HistorySection(
             ),
         )
 
-        ProtonHistoryItemRow(
+        PassHistoryItemRow(
             leadingIcon = painterResource(CoreR.drawable.ic_proton_bolt),
             title = stringResource(id = R.string.item_detail_history_created),
             subtitle = formatMoreInfoInstantText(

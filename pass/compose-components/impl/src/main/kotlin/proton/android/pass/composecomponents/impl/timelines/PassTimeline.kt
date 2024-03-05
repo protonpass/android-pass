@@ -25,9 +25,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ProtonTimeline(
+fun PassTimeline(
     modifier: Modifier = Modifier,
-    nodes: List<ProtonTimelineNode>,
+    nodes: List<PassTimelineNode>,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),

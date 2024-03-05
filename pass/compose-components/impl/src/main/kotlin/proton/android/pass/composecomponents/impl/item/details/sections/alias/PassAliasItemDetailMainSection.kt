@@ -26,17 +26,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.style.TextDecoration
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.Spacing
@@ -119,16 +115,6 @@ private fun PassAliasItemDetailAddressRow(
             SectionSubtitle(
                 modifier = Modifier.padding(start = Spacing.small),
                 text = alias.asAnnotatedString(),
-            )
-
-            Text(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(Spacing.small))
-                    .clickable { }
-                    .padding(Spacing.small),
-                text = stringResource(R.string.item_details_alias_section_create_login_link),
-                color = itemColors.norm,
-                textDecoration = TextDecoration.Underline,
             )
         }
     }

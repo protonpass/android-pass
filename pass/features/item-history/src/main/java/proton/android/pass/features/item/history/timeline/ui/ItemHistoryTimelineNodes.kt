@@ -29,11 +29,11 @@ import androidx.compose.ui.res.stringResource
 import kotlinx.datetime.Instant
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
-import proton.android.pass.composecomponents.impl.item.ProtonHistoryItemRow
-import proton.android.pass.composecomponents.impl.timelines.ProtonTimeline
-import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNode
-import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNodeConfig
-import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNodeType
+import proton.android.pass.composecomponents.impl.item.PassHistoryItemRow
+import proton.android.pass.composecomponents.impl.timelines.PassTimeline
+import proton.android.pass.composecomponents.impl.timelines.PassTimelineNode
+import proton.android.pass.composecomponents.impl.timelines.PassTimelineNodeConfig
+import proton.android.pass.composecomponents.impl.timelines.PassTimelineNodeType
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.protonFormattedDateText
 import proton.android.pass.data.api.repositories.ItemRevision
@@ -55,10 +55,10 @@ internal fun ItemHistoryTimelineNodes(
     itemRevisions.mapIndexed { index, itemRevision ->
         val timelineNodeVariant = createTimelineNodeVariant(index, itemRevisions.size)
 
-        ProtonTimelineNode(
+        PassTimelineNode(
             id = itemRevision.revisionTime.toString(),
             type = timelineNodeVariant.type,
-            config = ProtonTimelineNodeConfig(
+            config = PassTimelineNodeConfig(
                 circleColor = colors.norm,
                 lineBrush = SolidColor(
                     value = colors.norm,
@@ -68,7 +68,7 @@ internal fun ItemHistoryTimelineNodes(
             RoundedCornersColumn(
                 modifier = modifier.padding(start = Spacing.small),
             ) {
-                ProtonHistoryItemRow(
+                PassHistoryItemRow(
                     leadingIcon = painterResource(id = timelineNodeVariant.leadingIconId),
                     title = stringResource(id = timelineNodeVariant.titleId),
                     subtitle = protonFormattedDateText(
@@ -90,7 +90,7 @@ internal fun ItemHistoryTimelineNodes(
             }
         }
     }.let { nodes ->
-        ProtonTimeline(
+        PassTimeline(
             modifier = modifier,
             nodes = nodes,
         )
@@ -100,7 +100,7 @@ internal fun ItemHistoryTimelineNodes(
 private data class TimelineNodeVariant(
     @DrawableRes val leadingIconId: Int,
     @StringRes val titleId: Int,
-    val type: ProtonTimelineNodeType,
+    val type: PassTimelineNodeType,
     val isClickable: Boolean,
     @DrawableRes val trailingIconId: Int?,
 )
@@ -113,7 +113,7 @@ private fun createTimelineNodeVariant(
         return TimelineNodeVariant(
             leadingIconId = CoreR.drawable.ic_proton_clock,
             titleId = R.string.item_history_timeline_node_root_title,
-            type = ProtonTimelineNodeType.Unique,
+            type = PassTimelineNodeType.Unique,
             isClickable = false,
             trailingIconId = null,
         )
@@ -123,7 +123,7 @@ private fun createTimelineNodeVariant(
         0 -> TimelineNodeVariant(
             leadingIconId = CoreR.drawable.ic_proton_clock,
             titleId = R.string.item_history_timeline_node_root_title,
-            type = ProtonTimelineNodeType.Root,
+            type = PassTimelineNodeType.Root,
             isClickable = false,
             trailingIconId = null,
         )
@@ -131,7 +131,7 @@ private fun createTimelineNodeVariant(
         itemRevisionCount - 1 -> TimelineNodeVariant(
             leadingIconId = CoreR.drawable.ic_proton_bolt,
             titleId = R.string.item_history_timeline_node_leaf_title,
-            type = ProtonTimelineNodeType.Leaf,
+            type = PassTimelineNodeType.Leaf,
             isClickable = true,
             trailingIconId = CoreR.drawable.ic_proton_chevron_tiny_right,
         )
@@ -139,7 +139,7 @@ private fun createTimelineNodeVariant(
         else -> TimelineNodeVariant(
             leadingIconId = CoreR.drawable.ic_proton_pencil,
             titleId = R.string.item_history_timeline_node_child_title,
-            type = ProtonTimelineNodeType.Child,
+            type = PassTimelineNodeType.Child,
             isClickable = true,
             trailingIconId = CoreR.drawable.ic_proton_chevron_tiny_right,
         )

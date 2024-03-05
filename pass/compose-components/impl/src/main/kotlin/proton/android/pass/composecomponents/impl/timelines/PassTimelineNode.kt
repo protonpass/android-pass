@@ -30,10 +30,10 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.inset
 
-data class ProtonTimelineNode(
+data class PassTimelineNode(
     internal val id: String,
-    internal val type: ProtonTimelineNodeType,
-    internal val config: ProtonTimelineNodeConfig,
+    internal val type: PassTimelineNodeType,
+    internal val config: PassTimelineNodeConfig,
     internal val content: @Composable BoxScope.(modifier: Modifier) -> Unit,
 ) {
 
@@ -54,17 +54,17 @@ data class ProtonTimelineNode(
                             radius = circleRadius,
                             center = Offset(circleRadius, circleRadius),
                             style = when (type) {
-                                ProtonTimelineNodeType.Child,
-                                ProtonTimelineNodeType.Leaf -> Fill
+                                PassTimelineNodeType.Child,
+                                PassTimelineNodeType.Leaf -> Fill
 
-                                ProtonTimelineNodeType.Root,
-                                ProtonTimelineNodeType.Unique -> Stroke(width = lineWidth)
+                                PassTimelineNodeType.Root,
+                                PassTimelineNodeType.Unique -> Stroke(width = lineWidth)
                             },
                         )
 
                         when (type) {
-                            ProtonTimelineNodeType.Child,
-                            ProtonTimelineNodeType.Root -> {
+                            PassTimelineNodeType.Child,
+                            PassTimelineNodeType.Root -> {
                                 drawLine(
                                     brush = config.lineBrush,
                                     strokeWidth = config.lineWidth.toPx(),
@@ -79,8 +79,8 @@ data class ProtonTimelineNode(
                                 )
                             }
 
-                            ProtonTimelineNodeType.Leaf,
-                            ProtonTimelineNodeType.Unique -> {
+                            PassTimelineNodeType.Leaf,
+                            PassTimelineNodeType.Unique -> {
                                 // this node types do not required a line to be drawn
                             }
 

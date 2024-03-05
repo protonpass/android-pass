@@ -101,7 +101,8 @@ private fun PassWebsiteLinkText(
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick,
-            ),
+            )
+            .padding(vertical = Spacing.small),
         text = websiteUrl,
         color = itemColors.majorSecondary,
         fontSize = 16.sp,

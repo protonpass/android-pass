@@ -34,7 +34,7 @@ import proton.android.pass.composecomponents.impl.timelines.ProtonTimeline
 import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNode
 import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNodeConfig
 import proton.android.pass.composecomponents.impl.timelines.ProtonTimelineNodeType
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.protonFormattedDateText
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.ItemId
@@ -49,7 +49,7 @@ internal fun ItemHistoryTimelineNodes(
     shareId: ShareId,
     itemId: ItemId,
     itemRevisions: List<ItemRevision>,
-    colors: ProtonItemColors,
+    colors: PassItemColors,
     onNavigated: (ItemHistoryNavDestination) -> Unit,
 ) {
     itemRevisions.mapIndexed { index, itemRevision ->

@@ -24,14 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import me.proton.core.presentation.R
 import proton.android.pass.composecomponents.impl.container.Circle
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 
 @Composable
 fun PassVisibilityToggle(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
     onToggle: (Boolean) -> Unit,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
 ) {
     Circle(
         modifier = modifier,

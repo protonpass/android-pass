@@ -38,14 +38,14 @@ import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.pinning.BoxedPin
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.Vault
 
 @Composable
 internal fun PassItemDetailTitleRow(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
 ) = with(itemDetailState) {
     when (this) {
         is ItemDetailState.Alias -> {
@@ -150,7 +150,7 @@ private fun ItemDetailTitleRow(
     modifier: Modifier = Modifier,
     title: String,
     isPinned: Boolean,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
     vault: Vault?,
     iconContent: @Composable RowScope.() -> Unit,
 ) {

@@ -33,7 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
-import proton.android.pass.composecomponents.impl.utils.protonItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
@@ -131,7 +131,7 @@ private fun ItemHistoryRestoreDetails(
         onEventConsumed(event)
     }
 
-    val itemColors = protonItemColors(itemCategory = itemDetailState.itemCategory)
+    val itemColors = passItemColors(itemCategory = itemDetailState.itemCategory)
     val context = LocalContext.current
 
     PassItemDetailsContent(

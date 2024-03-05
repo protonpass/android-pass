@@ -26,12 +26,12 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 
 @Composable
 internal fun ItemHistoryTimelineTopBar(
     modifier: Modifier = Modifier,
-    colors: ProtonItemColors,
+    colors: PassItemColors,
     onUpClick: () -> Unit,
 ) {
     ProtonTopAppBar(

@@ -53,8 +53,8 @@ fun PassPasswordStrengthItem(
 
 @Preview
 @Composable
-fun ProtonPasswordStrengthItemPreview(
-    @PreviewParameter(ThemeProtonPasswordStrengthItemPreview::class) input: Pair<Boolean, PasswordStrength>,
+fun PassPasswordStrengthItemPreview(
+    @PreviewParameter(ThemePassPasswordStrengthItemPreview::class) input: Pair<Boolean, PasswordStrength>,
 ) {
     val (isDark, passwordStrength) = input
 
@@ -65,12 +65,12 @@ fun ProtonPasswordStrengthItemPreview(
     }
 }
 
-class ThemeProtonPasswordStrengthItemPreview :
-    ThemePairPreviewProvider<PasswordStrength>(ProtonPasswordStrengthItemPreviewProvider())
+class ThemePassPasswordStrengthItemPreview :
+    ThemePairPreviewProvider<PasswordStrength>(PassPasswordStrengthItemPreviewProvider())
 
-private class ProtonPasswordStrengthItemPreviewProvider :
+private class PassPasswordStrengthItemPreviewProvider :
     PreviewParameterProvider<PasswordStrength> {
 
-    override val values: Sequence<PasswordStrength> = PasswordStrength.values().asSequence()
+    override val values: Sequence<PasswordStrength> = PasswordStrength.entries.asSequence()
 
 }

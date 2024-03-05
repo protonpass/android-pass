@@ -36,7 +36,7 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.asAnnotatedString
 
 @Composable
-fun ProtonHistoryItemRow(
+fun PassHistoryItemRow(
     leadingIcon: Painter,
     title: String,
     subtitle: String,

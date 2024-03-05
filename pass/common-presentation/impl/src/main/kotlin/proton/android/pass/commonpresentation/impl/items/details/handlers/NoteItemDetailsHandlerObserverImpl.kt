@@ -19,9 +19,12 @@
 package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import me.proton.core.accountmanager.domain.AccountManager
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -34,30 +37,46 @@ import proton.android.pass.domain.ItemContents
 import javax.inject.Inject
 
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val getVaultById: GetVaultById,
     private val encryptionContextProvider: EncryptionContextProvider,
 ) : ItemDetailsHandlerObserver {
 
-    override fun observe(item: Item): Flow<ItemDetailState> = accountManager.getPrimaryUserId()
-        .flatMapLatest { userId -> getVaultById(userId, item.shareId) }
-        .map { vault ->
-            encryptionContextProvider.withEncryptionContext {
-                item.toItemContents(this@withEncryptionContext)
-            }.let { itemContents ->
-                ItemDetailState.Note(
-                    contents = itemContents as ItemContents.Note,
-                    isPinned = item.isPinned,
-                    vault = vault,
-                )
+    private val noteItemContentsFlow = MutableStateFlow<ItemContents.Note?>(null)
+
+    override fun observe(item: Item): Flow<ItemDetailState> = combine(
+        observeNoteItemContents(item),
+        getVaultById(shareId = item.shareId),
+    ) { noteItemContents, vault ->
+        ItemDetailState.Note(
+            contents = noteItemContents,
+            isPinned = item.isPinned,
+            vault = vault,
+        )
+    }
+
+    private fun observeNoteItemContents(item: Item): Flow<ItemContents.Note> =
+        noteItemContentsFlow.map { noteItemContents ->
+            noteItemContents ?: encryptionContextProvider.withEncryptionContext {
+                item.toItemContents(this@withEncryptionContext) as ItemContents.Note
             }
         }
+            .distinctUntilChanged()
+            .onEach { noteItemContents ->
+                noteItemContentsFlow.update { noteItemContents }
+            }
 
     override fun updateHiddenState(
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenState: HiddenState,
     ) {
-        // Implemented this
+        noteItemContentsFlow.update { noteItemContents ->
+            when (hiddenFieldType) {
+                is ItemDetailsFieldType.Hidden.CustomField,
+                ItemDetailsFieldType.Hidden.Cvv,
+                ItemDetailsFieldType.Hidden.Password,
+                ItemDetailsFieldType.Hidden.Pin -> noteItemContents
+            }
+        }
     }
 
 }

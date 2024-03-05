@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
@@ -145,6 +144,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
             }
             .onFailure { error ->
                 PassLogger.w(TAG, "Error restoring item revision: $error")
+                eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemCanceled }
                 snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionError)
             }
     }

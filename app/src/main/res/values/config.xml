@@ -7,4 +7,5 @@
     <bool name="core_feature_notifications_permission_request_enabled">true</bool>
 
     <bool name="leak_canary_add_dynamic_shortcut">false</bool>
+    <bool name="pass_passkeys_enabled">true</bool>
 </resources>

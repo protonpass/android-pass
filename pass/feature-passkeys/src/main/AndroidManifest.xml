@@ -40,7 +40,7 @@
             android:excludeFromRecents="true"/>
 
         <service android:name=".service.PasskeyProviderService"
-            android:enabled="true"
+            android:enabled="@bool/pass_passkeys_enabled"
             android:exported="true"
             android:label="Proton Pass"
             android:permission="android.permission.BIND_CREDENTIAL_PROVIDER_SERVICE">

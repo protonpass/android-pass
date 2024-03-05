@@ -25,7 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.utils.protonItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.features.item.history.R
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.timeline.presentation.ItemHistoryTimelineState
@@ -37,7 +37,7 @@ internal fun ItemHistoryTimelineContent(
     onNavigated: (ItemHistoryNavDestination) -> Unit,
 ) = with(state) {
 
-    val itemColors = protonItemColors(itemCategory = itemCategory)
+    val itemColors = passItemColors(itemCategory = itemCategory)
 
     Scaffold(
         modifier = modifier,

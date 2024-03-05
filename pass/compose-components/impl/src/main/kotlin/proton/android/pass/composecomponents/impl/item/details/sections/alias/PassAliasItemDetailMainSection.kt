@@ -44,7 +44,7 @@ import proton.android.pass.composecomponents.impl.icon.ForwardIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.placeholder
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AliasMailbox
 import me.proton.core.presentation.R as CoreR
 
@@ -52,7 +52,7 @@ import me.proton.core.presentation.R as CoreR
 internal fun PassAliasItemDetailMainSection(
     modifier: Modifier = Modifier,
     alias: String,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
     mailboxes: ImmutableList<AliasMailbox>,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
 ) {
@@ -88,7 +88,7 @@ internal fun PassAliasItemDetailMainSection(
 private fun PassAliasItemDetailAddressRow(
     modifier: Modifier = Modifier,
     alias: String,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
 ) {
     Row(
@@ -124,7 +124,7 @@ private fun PassAliasItemDetailAddressRow(
 private fun PassAliasItemDetailMailboxesRow(
     modifier: Modifier = Modifier,
     mailboxes: ImmutableList<AliasMailbox>,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
 ) {
     Row(
         modifier = modifier

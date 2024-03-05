@@ -28,7 +28,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Totp
@@ -41,7 +41,7 @@ internal fun PassLoginItemDetailSections(
     passwordStrength: PasswordStrength,
     primaryTotp: Totp?,
     customFields: ImmutableList<ItemCustomField>,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,

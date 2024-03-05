@@ -41,14 +41,14 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.SectionTitle
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun PassLoginItemDetailWebsitesSection(
     modifier: Modifier = Modifier,
     websiteUrls: ImmutableList<String>,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onLinkClick: (String) -> Unit,
 ) {
@@ -93,7 +93,7 @@ private fun PassWebsiteLinkText(
     websiteUrl: String,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
 ) {
     Text(
         modifier = modifier

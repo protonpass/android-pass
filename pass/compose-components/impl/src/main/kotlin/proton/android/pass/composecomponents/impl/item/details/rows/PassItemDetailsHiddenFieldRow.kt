@@ -43,7 +43,7 @@ import proton.android.pass.commonui.api.toPasswordAnnotatedString
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.toggles.PassVisibilityToggle
-import proton.android.pass.composecomponents.impl.utils.ProtonItemColors
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
 
 @Composable
@@ -53,7 +53,7 @@ internal fun PassItemDetailsHiddenFieldRow(
     title: String,
     hiddenState: HiddenState,
     hiddenTextLength: Int,
-    itemColors: ProtonItemColors,
+    itemColors: PassItemColors,
     onClick: (() -> Unit)? = null,
     onToggle: ((Boolean) -> Unit)? = null,
     hiddenTextStyle: TextStyle = ProtonTheme.typography.defaultNorm,

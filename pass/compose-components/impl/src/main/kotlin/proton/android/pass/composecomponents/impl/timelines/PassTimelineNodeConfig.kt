@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.Spacing
 
-data class ProtonTimelineNodeConfig(
+data class PassTimelineNodeConfig(
     internal val circleRadius: Dp = 6.dp,
     internal val circleColor: Color = Color.White,
     internal val lineWidth: Dp = 1.dp,

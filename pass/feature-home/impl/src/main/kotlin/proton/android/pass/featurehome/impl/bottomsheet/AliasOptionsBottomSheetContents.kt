@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSub
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
+import proton.android.pass.composecomponents.impl.bottomsheet.viewHistory
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.domain.ItemContents
@@ -58,10 +59,12 @@ fun AliasOptionsBottomSheetContents(
     action: BottomSheetItemAction,
     onPinned: (ShareId, ItemId) -> Unit,
     onUnpinned: (ShareId, ItemId) -> Unit,
+    onViewHistory: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isPinningFeatureEnabled: Boolean
+    isPinningFeatureEnabled: Boolean,
+    isHistoryFeatureEnabled: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
 
@@ -85,6 +88,10 @@ fun AliasOptionsBottomSheetContents(
                 }
             }
 
+            if (isHistoryFeatureEnabled) {
+                add(viewHistory { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            }
+
             if (itemUiModel.canModify) {
                 add(edit(itemUiModel, onEdit))
                 add(moveToTrash(itemUiModel, onMoveToTrash))
@@ -101,19 +108,20 @@ fun AliasOptionsBottomSheetContents(
     }
 }
 
-private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = { onCopyAlias(aliasEmail) }
-    override val isDivider = false
-}
+private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onCopyAlias(aliasEmail) }
+        override val isDivider = false
+    }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
@@ -143,12 +151,13 @@ fun AliasOptionsBottomSheetContentsPreview(
                 action = BottomSheetItemAction.None,
                 onPinned = { _, _ -> },
                 onUnpinned = { _, _ -> },
+                onViewHistory = { _, _ -> },
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isPinningFeatureEnabled = true
+                isPinningFeatureEnabled = true,
+                isHistoryFeatureEnabled = true,
             )
         }
     }
 }
-

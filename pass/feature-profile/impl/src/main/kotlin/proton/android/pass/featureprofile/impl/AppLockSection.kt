@@ -56,7 +56,7 @@ fun AppLockSection(
             style = ProtonTheme.typography.defaultSmallWeak
         )
         Column(
-            modifier = Modifier.roundedContainerNorm(),
+            modifier = Modifier.roundedContainerNorm()
         ) {
             val label = if (appLockSectionState is AppLockSectionState.None) {
                 stringResource(R.string.profile_option_lock_with)
@@ -128,16 +128,15 @@ fun AppLockSection(
 }
 
 @Composable
-private fun getAppLockTimePreferenceText(appLockTimePreference: AppLockTimePreference) =
-    when (appLockTimePreference) {
-        AppLockTimePreference.Immediately -> stringResource(R.string.app_lock_immediately)
-        AppLockTimePreference.InOneMinute -> stringResource(R.string.app_lock_one_minute)
-        AppLockTimePreference.InTwoMinutes -> stringResource(R.string.app_lock_two_minutes)
-        AppLockTimePreference.InFiveMinutes -> stringResource(R.string.app_lock_five_minutes)
-        AppLockTimePreference.InTenMinutes -> stringResource(R.string.app_lock_ten_minutes)
-        AppLockTimePreference.InOneHour -> stringResource(R.string.app_lock_one_hour)
-        AppLockTimePreference.InFourHours -> stringResource(R.string.app_lock_four_hours)
-    }
+private fun getAppLockTimePreferenceText(appLockTimePreference: AppLockTimePreference) = when (appLockTimePreference) {
+    AppLockTimePreference.Immediately -> stringResource(R.string.app_lock_immediately)
+    AppLockTimePreference.InOneMinute -> stringResource(R.string.app_lock_one_minute)
+    AppLockTimePreference.InTwoMinutes -> stringResource(R.string.app_lock_two_minutes)
+    AppLockTimePreference.InFiveMinutes -> stringResource(R.string.app_lock_five_minutes)
+    AppLockTimePreference.InTenMinutes -> stringResource(R.string.app_lock_ten_minutes)
+    AppLockTimePreference.InOneHour -> stringResource(R.string.app_lock_one_hour)
+    AppLockTimePreference.InFourHours -> stringResource(R.string.app_lock_four_hours)
+}
 
 
 class ThemeAndAppLockSectionPreviewProvider :

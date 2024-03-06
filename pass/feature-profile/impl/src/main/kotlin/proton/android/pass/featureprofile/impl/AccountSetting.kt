@@ -75,9 +75,7 @@ fun AccountSetting(
 
 @Preview
 @Composable
-fun AccountSettingPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun AccountSettingPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     val info = if (input.second) {
         PlanInfo.Trial
     } else {

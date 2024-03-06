@@ -95,9 +95,7 @@ fun ColorSelector(
 
 @Preview
 @Composable
-fun ColorSelectionSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ColorSelectionSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ColorSelectionSection(

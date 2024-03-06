@@ -141,10 +141,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun tryToReencryptLocalKeys(
-        userId: UserId,
-        keys: List<ShareKeyEntity>
-    ): List<ShareKeyEntity> {
+    private suspend fun tryToReencryptLocalKeys(userId: UserId, keys: List<ShareKeyEntity>): List<ShareKeyEntity> {
 
         // Separate active keys from inactive keys
         val activeKeys = keys.filter { it.isActive }
@@ -209,15 +206,14 @@ class ShareKeyRepositoryImpl @Inject constructor(
         }
     )
 
-    private fun entityToDomain(entity: ShareKeyEntity): ShareKey =
-        ShareKey(
-            rotation = entity.rotation,
-            key = entity.symmetricallyEncryptedKey,
-            responseKey = entity.key,
-            createTime = entity.createTime,
-            isActive = entity.isActive,
-            userKeyId = entity.userKeyId
-        )
+    private fun entityToDomain(entity: ShareKeyEntity): ShareKey = ShareKey(
+        rotation = entity.rotation,
+        key = entity.symmetricallyEncryptedKey,
+        responseKey = entity.key,
+        createTime = entity.createTime,
+        isActive = entity.isActive,
+        userKeyId = entity.userKeyId
+    )
 
     private data class ReencryptedKeyData(
         val encryptedKey: EncryptedByteArray,

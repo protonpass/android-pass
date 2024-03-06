@@ -122,7 +122,7 @@ class CreateLoginViewModel @Inject constructor(
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
     passwordStrengthCalculator = passwordStrengthCalculator,
-    savedStateHandleProvider = savedStateHandleProvider,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> =
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
@@ -285,7 +285,7 @@ class CreateLoginViewModel @Inject constructor(
             PassLogger.i(TAG, "Generating passkey")
             val generatedPasskey = generatePasskey(it.origin, it.request)
             loginItemFormMutableState = loginItemFormMutableState.copy(
-                passkeyToBeGenerated = UIPasskeyContent.from(generatedPasskey.passkey),
+                passkeyToBeGenerated = UIPasskeyContent.from(generatedPasskey.passkey)
             )
 
             generatedPasskey

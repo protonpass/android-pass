@@ -33,9 +33,7 @@ import me.proton.core.crypto.android.keystore.AndroidKeyStoreCrypto
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 
 @Composable
-fun rememberNavController(
-    vararg navigators: Navigator<out NavDestination>
-): NavHostController {
+fun rememberNavController(vararg navigators: Navigator<out NavDestination>): NavHostController {
     val context = LocalContext.current
     return rememberSaveable(
         inputs = navigators,
@@ -48,19 +46,15 @@ fun rememberNavController(
         }
 }
 
-fun createNavController(context: Context) =
-    NavHostController(context).apply {
-        navigatorProvider.addNavigator(ComposeNavigator())
-        navigatorProvider.addNavigator(DialogNavigator())
-    }
+fun createNavController(context: Context) = NavHostController(context).apply {
+    navigatorProvider.addNavigator(ComposeNavigator())
+    navigatorProvider.addNavigator(DialogNavigator())
+}
 
 /**
  * Saver to save and restore the NavController across config change and process death.
  */
-private fun NavControllerSaver(
-    context: Context,
-    keyStoreCrypto: KeyStoreCrypto
-): Saver<NavHostController, *> = Saver(
+private fun NavControllerSaver(context: Context, keyStoreCrypto: KeyStoreCrypto): Saver<NavHostController, *> = Saver(
     save = { keyStoreCrypto.encrypt(it.saveState()) },
     restore = { createNavController(context).apply { restoreState(keyStoreCrypto.decrypt(it)) } }
 )

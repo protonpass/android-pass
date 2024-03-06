@@ -104,7 +104,7 @@ class CreditCardDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandleProvider,
     getItemActions: GetItemActions,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    getUserPlan: GetUserPlan,
+    getUserPlan: GetUserPlan
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -142,7 +142,7 @@ class CreditCardDetailViewModel @Inject constructor(
     private data class FieldVisibility(
         val cardNumber: Boolean = false,
         val cvv: Boolean = false,
-        val pin: Boolean = false,
+        val pin: Boolean = false
     )
 
     private data class CreditCardItemInfo(
@@ -160,7 +160,7 @@ class CreditCardDetailViewModel @Inject constructor(
 
     private val itemInfoFlow: Flow<LoadingResult<CreditCardItemInfo>> = combine(
         creditCardItemDetailsResultFlow,
-        fieldVisibilityFlow,
+        fieldVisibilityFlow
     ) { detailsResult, fieldVisibility ->
         detailsResult.map { details ->
             val (itemUiModel, cardNumber) = encryptionContextProvider.withEncryptionContext {
@@ -196,11 +196,11 @@ class CreditCardDetailViewModel @Inject constructor(
     private val itemFeaturesFlow = combine(
         featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
-        getUserPlan(),
+        getUserPlan()
     ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, userPlan ->
         ItemFeatures(
             isHistoryEnabled = isHistoryFeatureFlagEnabled && userPlan.isPaidPlan,
-            isPinningEnabled = isPinningFeatureEnabled,
+            isPinningEnabled = isPinningFeatureEnabled
         )
     }
 
@@ -214,7 +214,7 @@ class CreditCardDetailViewModel @Inject constructor(
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        itemFeaturesFlow,
+        itemFeaturesFlow
     ) { itemDetails,
         isLoading,
         isItemSentToTrash,
@@ -253,7 +253,7 @@ class CreditCardDetailViewModel @Inject constructor(
                 CreditCardDetailUiState.Success(
                     itemContent = CreditCardDetailUiState.ItemContent(
                         model = details.itemUiModel,
-                        cardNumber = details.cardNumberState,
+                        cardNumber = details.cardNumberState
                     ),
                     vault = vault,
                     isLoading = isLoading.value(),
@@ -266,7 +266,7 @@ class CreditCardDetailViewModel @Inject constructor(
                     itemActions = actions,
                     event = event,
                     isPinningFeatureEnabled = itemFeatures.isPinningEnabled,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
+                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled
                 )
             }
         }
@@ -290,22 +290,21 @@ class CreditCardDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun onPermanentlyDelete(itemUiModel: ItemUiModel) =
-        viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
-            runCatching {
-                deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
-            }.onSuccess {
-                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
-                isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
-                snackbarDispatcher(DetailSnackbarMessages.ItemPermanentlyDeleted)
-                PassLogger.i(TAG, "Item deleted successfully")
-            }.onFailure {
-                snackbarDispatcher(DetailSnackbarMessages.ItemNotPermanentlyDeleted)
-                PassLogger.i(TAG, it, "Could not delete item")
-            }
-            isLoadingState.update { IsLoadingState.NotLoading }
+    fun onPermanentlyDelete(itemUiModel: ItemUiModel) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+        runCatching {
+            deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
+        }.onSuccess {
+            telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
+            isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
+            snackbarDispatcher(DetailSnackbarMessages.ItemPermanentlyDeleted)
+            PassLogger.i(TAG, "Item deleted successfully")
+        }.onFailure {
+            snackbarDispatcher(DetailSnackbarMessages.ItemNotPermanentlyDeleted)
+            PassLogger.i(TAG, it, "Could not delete item")
         }
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
 
     fun onItemRestore(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }

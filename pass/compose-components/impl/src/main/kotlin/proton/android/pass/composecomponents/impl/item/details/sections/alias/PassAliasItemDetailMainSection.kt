@@ -54,7 +54,7 @@ internal fun PassAliasItemDetailMainSection(
     alias: String,
     itemColors: PassItemColors,
     mailboxes: ImmutableList<AliasMailbox>,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit
 ) {
     val sections = mutableListOf<@Composable () -> Unit>()
 
@@ -62,14 +62,14 @@ internal fun PassAliasItemDetailMainSection(
         PassAliasItemDetailAddressRow(
             alias = alias,
             itemColors = itemColors,
-            onSectionClick = onSectionClick,
+            onSectionClick = onSectionClick
         )
     }
 
     sections.add {
         PassAliasItemDetailMailboxesRow(
             mailboxes = mailboxes,
-            itemColors = itemColors,
+            itemColors = itemColors
         )
     }
 
@@ -89,7 +89,7 @@ private fun PassAliasItemDetailAddressRow(
     modifier: Modifier = Modifier,
     alias: String,
     itemColors: PassItemColors,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -97,24 +97,24 @@ private fun PassAliasItemDetailAddressRow(
             .clickable { onSectionClick(alias, ItemDetailsFieldType.Plain.Alias) }
             .padding(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.small),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_alias),
             contentDescription = null,
-            tint = itemColors.norm,
+            tint = itemColors.norm
         )
         Column {
             SectionTitle(
                 modifier = Modifier.padding(start = Spacing.small),
-                text = stringResource(R.string.item_details_alias_section_alias_title),
+                text = stringResource(R.string.item_details_alias_section_alias_title)
             )
 
             Spacer(modifier = Modifier.height(Spacing.small))
 
             SectionSubtitle(
                 modifier = Modifier.padding(start = Spacing.small),
-                text = alias.asAnnotatedString(),
+                text = alias.asAnnotatedString()
             )
         }
     }
@@ -124,19 +124,19 @@ private fun PassAliasItemDetailAddressRow(
 private fun PassAliasItemDetailMailboxesRow(
     modifier: Modifier = Modifier,
     mailboxes: ImmutableList<AliasMailbox>,
-    itemColors: PassItemColors,
+    itemColors: PassItemColors
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         ForwardIcon(tint = itemColors.norm)
 
         Column(
-            verticalArrangement = Arrangement.spacedBy(Spacing.small),
+            verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             SectionTitle(text = stringResource(R.string.item_details_alias_section_mailboxes_title))
 
@@ -145,12 +145,12 @@ private fun PassAliasItemDetailMailboxesRow(
                     modifier = Modifier
                         .fillMaxWidth()
                         .placeholder(),
-                    text = AnnotatedString(text = ""),
+                    text = AnnotatedString(text = "")
                 )
             } else {
                 mailboxes.forEach { mailbox ->
                     SectionSubtitle(
-                        text = mailbox.email.asAnnotatedString(),
+                        text = mailbox.email.asAnnotatedString()
                     )
                 }
             }

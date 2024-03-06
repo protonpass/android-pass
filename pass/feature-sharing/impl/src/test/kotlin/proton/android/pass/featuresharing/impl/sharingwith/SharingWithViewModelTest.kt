@@ -125,16 +125,15 @@ class SharingWithViewModelTest {
     }
 
     @Test
-    fun `onEmailSubmit with invalid email should update emailNotValidReason to NotValid`() =
-        runTest {
-            viewModel.onEmailChange("invalid-email")
-            emailValidator.setResult(false)
-            viewModel.state.test {
-                skipItems(1)
-                viewModel.onEmailSubmit()
-                assertThat(awaitItem().errorMessage == ErrorMessage.EmailNotValid).isTrue()
-            }
+    fun `onEmailSubmit with invalid email should update emailNotValidReason to NotValid`() = runTest {
+        viewModel.onEmailChange("invalid-email")
+        emailValidator.setResult(false)
+        viewModel.state.test {
+            skipItems(1)
+            viewModel.onEmailSubmit()
+            assertThat(awaitItem().errorMessage == ErrorMessage.EmailNotValid).isTrue()
         }
+    }
 
     @Test
     fun `state should be updated correctly after combining flows`() = runTest {
@@ -143,7 +142,7 @@ class SharingWithViewModelTest {
 
         val testVault = Vault(
             shareId = ShareId(id = SHARE_ID),
-            name = "vault name",
+            name = "vault name"
         )
         observeVaultById.emitValue(testVault.some())
         viewModel.onEmailChange(invitedEmail)

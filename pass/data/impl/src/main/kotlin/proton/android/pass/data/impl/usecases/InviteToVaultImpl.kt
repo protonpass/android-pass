@@ -114,56 +114,55 @@ class InviteToVaultImpl @Inject constructor(
         shareId: ShareId,
         inviterUserAddress: UserAddress,
         inviteAddresses: List<AddressPermission>
-    ): Result<Pair<CreateInvitesRequest, CreateNewUserInvitesRequest>> =
-        withContext(Dispatchers.IO) {
-            val inviteUserModes: Map<String, InviteUserMode> = inviteAddresses.map {
-                async { getInviteUserMode(userId, it.address).map { mode -> it.address to mode } }
-            }.awaitAll().transpose().getOrElse {
-                PassLogger.w(TAG, "Error obtaining inviteUserModes")
-                PassLogger.w(TAG, it)
-                return@withContext Result.failure(it)
-            }.toMap()
+    ): Result<Pair<CreateInvitesRequest, CreateNewUserInvitesRequest>> = withContext(Dispatchers.IO) {
+        val inviteUserModes: Map<String, InviteUserMode> = inviteAddresses.map {
+            async { getInviteUserMode(userId, it.address).map { mode -> it.address to mode } }
+        }.awaitAll().transpose().getOrElse {
+            PassLogger.w(TAG, "Error obtaining inviteUserModes")
+            PassLogger.w(TAG, it)
+            return@withContext Result.failure(it)
+        }.toMap()
 
-            val (newUserInvites, existingUserInvites) = inviteAddresses.partition {
-                inviteUserModes[it.address] == InviteUserMode.NewUser
-            }
-
-            val newUserInvitesRequests = newUserInvites.map {
-                async {
-                    buildNewUserRequest(
-                        userId,
-                        shareId,
-                        inviterUserAddress,
-                        it.address,
-                        it.shareRole
-                    )
-                }
-            }.awaitAll().transpose().getOrElse {
-                PassLogger.w(TAG, "Error creating newUserInvites")
-                PassLogger.w(TAG, it)
-                return@withContext Result.failure(it)
-            }
-
-            val existingUserInvitesRequests = existingUserInvites.map {
-                async {
-                    buildExistingUserRequest(
-                        shareId,
-                        inviterUserAddress,
-                        it.address,
-                        it.shareRole
-                    )
-                }
-            }.awaitAll().transpose().getOrElse {
-                PassLogger.w(TAG, "Error creating existingUserInvites")
-                PassLogger.w(TAG, it)
-                return@withContext Result.failure(it)
-            }
-
-            val existing = CreateInvitesRequest(existingUserInvitesRequests)
-            val new = CreateNewUserInvitesRequest(newUserInvitesRequests)
-
-            return@withContext Result.success(existing to new)
+        val (newUserInvites, existingUserInvites) = inviteAddresses.partition {
+            inviteUserModes[it.address] == InviteUserMode.NewUser
         }
+
+        val newUserInvitesRequests = newUserInvites.map {
+            async {
+                buildNewUserRequest(
+                    userId,
+                    shareId,
+                    inviterUserAddress,
+                    it.address,
+                    it.shareRole
+                )
+            }
+        }.awaitAll().transpose().getOrElse {
+            PassLogger.w(TAG, "Error creating newUserInvites")
+            PassLogger.w(TAG, it)
+            return@withContext Result.failure(it)
+        }
+
+        val existingUserInvitesRequests = existingUserInvites.map {
+            async {
+                buildExistingUserRequest(
+                    shareId,
+                    inviterUserAddress,
+                    it.address,
+                    it.shareRole
+                )
+            }
+        }.awaitAll().transpose().getOrElse {
+            PassLogger.w(TAG, "Error creating existingUserInvites")
+            PassLogger.w(TAG, it)
+            return@withContext Result.failure(it)
+        }
+
+        val existing = CreateInvitesRequest(existingUserInvitesRequests)
+        val new = CreateNewUserInvitesRequest(newUserInvitesRequests)
+
+        return@withContext Result.success(existing to new)
+    }
 
     @Suppress("ReturnCount")
     private suspend fun buildExistingUserRequest(
@@ -175,7 +174,7 @@ class InviteToVaultImpl @Inject constructor(
         val encryptedKeys = encryptShareKeysForUser(
             userAddress = address,
             shareId = shareId,
-            targetEmail = targetEmail,
+            targetEmail = targetEmail
         ).getOrElse {
             return Result.failure(it)
         }

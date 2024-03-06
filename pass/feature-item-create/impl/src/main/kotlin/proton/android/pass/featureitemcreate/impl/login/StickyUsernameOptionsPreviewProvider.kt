@@ -28,7 +28,7 @@ class StickyUsernameOptionsPreviewProvider : PreviewParameterProvider<StickyUser
         get() = sequenceOf(
             StickyUsernameInput("myemail@proton.me".toOption(), true),
             StickyUsernameInput("myemail@proton.me".toOption(), false),
-            StickyUsernameInput(None, true),
+            StickyUsernameInput(None, true)
         )
 }
 

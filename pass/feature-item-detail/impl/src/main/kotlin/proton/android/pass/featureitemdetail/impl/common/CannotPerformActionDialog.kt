@@ -43,42 +43,42 @@ import proton.android.pass.composecomponents.impl.R as CompR
 sealed class CannotPerformActionDialogType(
     @StringRes internal val title: Int,
     @StringRes internal val message: Int,
-    internal val showUpgrade: Boolean,
+    internal val showUpgrade: Boolean
 ) {
 
     @Stable
     object CannotEditBecauseNoPermissions : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_edit_title,
         message = R.string.item_detail_cannot_perform_action_edit_no_permissions_message,
-        showUpgrade = false,
+        showUpgrade = false
     )
 
     @Stable
     object CannotEditBecauseNeedsUpgrade : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_edit_title,
         message = R.string.item_detail_cannot_perform_action_edit_needs_upgrade_message,
-        showUpgrade = true,
+        showUpgrade = true
     )
 
     @Stable
     object CannotEditBecauseItemInTrash : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_edit_title,
         message = R.string.item_detail_cannot_perform_action_edit_item_in_trash_message,
-        showUpgrade = false,
+        showUpgrade = false
     )
 
     @Stable
     object CannotShareBecauseLimitReached : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_share_no_permissions_title,
         message = R.string.item_detail_cannot_perform_action_share_limit_reached,
-        showUpgrade = true,
+        showUpgrade = true
     )
 
     @Stable
     object CannotShareBecauseNoPermissions : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_share_no_permissions_title,
         message = R.string.item_detail_cannot_perform_action_share_no_permissions_message,
-        showUpgrade = false,
+        showUpgrade = false
     )
 }
 

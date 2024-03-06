@@ -44,10 +44,7 @@ data class ProfileUiState(
     val userBrowser: DefaultBrowser
 ) {
     companion object {
-        fun getInitialState(
-            appVersion: String,
-            appLockSectionState: AppLockSectionState
-        ) = ProfileUiState(
+        fun getInitialState(appVersion: String, appLockSectionState: AppLockSectionState) = ProfileUiState(
             appLockSectionState = appLockSectionState,
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
             itemSummaryUiState = ItemSummaryUiState(),

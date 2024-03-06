@@ -23,14 +23,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetItemRevisionResponse(
-    @SerialName("Revisions") val revisions: Revisions,
+    @SerialName("Revisions") val revisions: Revisions
 )
 
 @Serializable
 data class Revisions(
     @SerialName("RevisionsData") val revisionsData: List<RevisionsData>,
     @SerialName("Total") val total: Int,
-    @SerialName("LastToken") val lastToken: String? = null,
+    @SerialName("LastToken") val lastToken: String? = null
 )
 
 @Serializable
@@ -47,5 +47,5 @@ data class RevisionsData(
     @SerialName("CreateTime") val createTime: Int,
     @SerialName("ModifyTime") val modifyTime: Int,
     @SerialName("LastUseTime") val lastUseTime: Int? = null,
-    @SerialName("RevisionTime") val revisionTime: Int,
+    @SerialName("RevisionTime") val revisionTime: Int
 )

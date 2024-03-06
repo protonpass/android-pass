@@ -102,7 +102,7 @@ class ItemDetailViewModelTest {
             ItemTypeUiState.Login to EventItemType.Login,
             ItemTypeUiState.Note to EventItemType.Note,
             ItemTypeUiState.Alias to EventItemType.Alias,
-            ItemTypeUiState.Password to EventItemType.Password,
+            ItemTypeUiState.Password to EventItemType.Password
         )
         itemTypes.forEach { (itemType, eventItemType) ->
             instance.sendItemReadEvent(itemType)

@@ -26,12 +26,9 @@ import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class GetItemByIdImpl @Inject constructor(
-    private val itemRepository: ItemRepository,
+    private val itemRepository: ItemRepository
 ) : GetItemById {
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = itemRepository.getById(shareId, itemId)
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item = itemRepository.getById(shareId, itemId)
 }
 

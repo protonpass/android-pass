@@ -80,7 +80,7 @@ fun AuthScreenContent(
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp)
         ) {
             Column(
                 modifier = Modifier

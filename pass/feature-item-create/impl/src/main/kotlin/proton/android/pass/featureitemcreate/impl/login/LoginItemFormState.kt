@@ -77,18 +77,17 @@ data class LoginItemFormState(
         }
     )
 
-    fun compare(other: LoginItemFormState, encryptionContext: EncryptionContext): Boolean =
-        title == other.title &&
-            note == other.note &&
-            username == other.username &&
-            encryptionContext.decrypt(password.encrypted.toEncryptedByteArray())
-                .contentEquals(encryptionContext.decrypt(other.password.encrypted.toEncryptedByteArray())) &&
-            urls == other.urls &&
-            packageInfoSet == other.packageInfoSet &&
-            encryptionContext.decrypt(primaryTotp.encrypted.toEncryptedByteArray())
-                .contentEquals(encryptionContext.decrypt(other.primaryTotp.encrypted.toEncryptedByteArray())) &&
-            customFields.size == other.customFields.size &&
-            customFields.zip(other.customFields).all { (a, b) -> a.compare(b, encryptionContext) }
+    fun compare(other: LoginItemFormState, encryptionContext: EncryptionContext): Boolean = title == other.title &&
+        note == other.note &&
+        username == other.username &&
+        encryptionContext.decrypt(password.encrypted.toEncryptedByteArray())
+            .contentEquals(encryptionContext.decrypt(other.password.encrypted.toEncryptedByteArray())) &&
+        urls == other.urls &&
+        packageInfoSet == other.packageInfoSet &&
+        encryptionContext.decrypt(primaryTotp.encrypted.toEncryptedByteArray())
+            .contentEquals(encryptionContext.decrypt(other.primaryTotp.encrypted.toEncryptedByteArray())) &&
+        customFields.size == other.customFields.size &&
+        customFields.zip(other.customFields).all { (a, b) -> a.compare(b, encryptionContext) }
 
     companion object {
 

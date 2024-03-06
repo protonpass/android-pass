@@ -53,7 +53,7 @@ class VaultOptionsViewModel @Inject constructor(
     canShareVault: CanShareVault,
     canMigrateVault: CanMigrateVault,
     canManageVaultAccess: CanManageVaultAccess,
-    savedStateHandle: SavedStateHandleProvider,
+    savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val navShareId: ShareId =
@@ -117,10 +117,7 @@ class VaultOptionsViewModel @Inject constructor(
         initialValue = VaultOptionsUiState.Uninitialised
     )
 
-    private fun canDeleteVault(
-        allVaults: List<Vault>,
-        selectedVault: Vault
-    ): Boolean {
+    private fun canDeleteVault(allVaults: List<Vault>, selectedVault: Vault): Boolean {
         val ownedVaultsCount = allVaults.count { it.isOwned }
         return when {
             !selectedVault.isOwned -> false // Cannot remove vault if is not owned

@@ -27,7 +27,7 @@ import javax.inject.Singleton
 
 @Singleton
 class CanPerformPaidActionImpl @Inject constructor(
-    private val getUserPlan: GetUserPlan,
+    private val getUserPlan: GetUserPlan
 ) : CanPerformPaidAction {
 
     override fun invoke(): Flow<Boolean> = getUserPlan()

@@ -57,16 +57,13 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             )
     }
 
-    private suspend fun run(inputData: InputData): Result =
-        if (inputData.shouldAssociate) {
-            updateItemWithPackageNameOrUrl(inputData)
-        } else {
-            updateLastUsed(inputData)
-        }
+    private suspend fun run(inputData: InputData): Result = if (inputData.shouldAssociate) {
+        updateItemWithPackageNameOrUrl(inputData)
+    } else {
+        updateLastUsed(inputData)
+    }
 
-    private suspend fun updateItemWithPackageNameOrUrl(
-        inputData: InputData
-    ): Result {
+    private suspend fun updateItemWithPackageNameOrUrl(inputData: InputData): Result {
         val message = "Adding package and url to item [itemId=${inputData.itemId}]" +
             " [packageInfo=${inputData.packageInfo}] " +
             " [url=${inputData.url}]"
@@ -169,7 +166,7 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             val extras = mutableMapOf(
                 ARG_SHARE_ID to data.shareId.id,
                 ARG_ITEM_ID to data.itemId.id,
-                ARG_SHOULD_ASSOCIATE to data.shouldAssociate,
+                ARG_SHOULD_ASSOCIATE to data.shouldAssociate
             )
 
             val packageInfoOption = data.packageInfo

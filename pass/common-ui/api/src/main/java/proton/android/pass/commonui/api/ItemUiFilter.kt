@@ -26,19 +26,16 @@ import proton.android.pass.domain.ItemContents
 
 object ItemUiFilter {
 
-    fun List<ItemUiModel>.filterByQuery(
-        query: String
-    ): List<ItemUiModel> =
-        if (query.isNotEmpty()) {
-            if (query.isNotBlank()) {
-                val cleanQuery = query.preprocess()
-                filter { it.matchesQuery(cleanQuery) }
-            } else {
-                emptyList()
-            }
+    fun List<ItemUiModel>.filterByQuery(query: String): List<ItemUiModel> = if (query.isNotEmpty()) {
+        if (query.isNotBlank()) {
+            val cleanQuery = query.preprocess()
+            filter { it.matchesQuery(cleanQuery) }
         } else {
-            this
+            emptyList()
         }
+    } else {
+        this
+    }
 
     private fun isItemMatch(item: ItemUiModel, query: String): Boolean {
         if (item.contents.title.preprocess().contains(query)) return true
@@ -90,7 +87,6 @@ object ItemUiFilter {
         return queryParts.all { isItemMatch(this, it) }
     }
 
-    private fun String.preprocess(): String =
-        this.lowercase().removeAccents()
+    private fun String.preprocess(): String = this.lowercase().removeAccents()
 
 }

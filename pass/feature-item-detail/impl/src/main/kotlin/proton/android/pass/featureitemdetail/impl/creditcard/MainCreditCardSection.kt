@@ -79,7 +79,7 @@ fun MainCreditCardSection(
         sections += {
             CardPinRow(
                 pin = pin,
-                onToggle = { onEvent(CreditCardDetailEvent.OnTogglePinClick) },
+                onToggle = { onEvent(CreditCardDetailEvent.OnTogglePinClick) }
             )
         }
     }

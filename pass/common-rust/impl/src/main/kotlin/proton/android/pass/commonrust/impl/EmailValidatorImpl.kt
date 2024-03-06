@@ -23,6 +23,5 @@ import proton.android.pass.commonrust.EmailValidator as RustEmailValidator
 import javax.inject.Inject
 
 class EmailValidatorImpl @Inject constructor() : EmailValidator {
-    override fun isValid(email: String): Boolean =
-        RustEmailValidator().isEmailValid(email)
+    override fun isValid(email: String): Boolean = RustEmailValidator().isEmailValid(email)
 }

@@ -53,7 +53,7 @@ fun CameraPreviewContent(
                         scaleType = PreviewView.ScaleType.FILL_CENTER
                         layoutParams = ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT
                         )
                         implementationMode = PreviewView.ImplementationMode.COMPATIBLE
                     }
@@ -67,10 +67,7 @@ fun CameraPreviewContent(
 }
 
 @Composable
-private fun CameraPreviewBindingDisposableEffect(
-    preview: Preview,
-    onSuccess: (String) -> Unit
-) {
+private fun CameraPreviewBindingDisposableEffect(preview: Preview, onSuccess: (String) -> Unit) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val processCameraProvider = remember(context) {

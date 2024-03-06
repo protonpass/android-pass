@@ -56,8 +56,7 @@ object SharingWith : NavItem(
     baseRoute = "sharing/with/screen",
     navArgIds = listOf(CommonNavArgId.ShareId, ShowEditVaultArgId)
 ) {
-    fun createRoute(shareId: ShareId, showEditVault: Boolean) =
-        "$baseRoute/${shareId.id}/$showEditVault"
+    fun createRoute(shareId: ShareId, showEditVault: Boolean) = "$baseRoute/${shareId.id}/$showEditVault"
 }
 
 object SharingPermissions : NavItem(
@@ -98,7 +97,7 @@ object InvitesInfoDialog : NavItem(
 
 object InvitesErrorDialog : NavItem(
     baseRoute = "sharing/manage/invites/error/dialog",
-    navItemType = NavItemType.Dialog,
+    navItemType = NavItemType.Dialog
 )
 
 object ShareFromItem : NavItem(
@@ -178,9 +177,7 @@ sealed interface SharingNavigation {
     object InviteError : SharingNavigation
 }
 
-fun NavGraphBuilder.sharingGraph(
-    onNavigateEvent: (SharingNavigation) -> Unit
-) {
+fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
     composable(SharingWith) {
         SharingWithScreen(onNavigateEvent = onNavigateEvent)
     }

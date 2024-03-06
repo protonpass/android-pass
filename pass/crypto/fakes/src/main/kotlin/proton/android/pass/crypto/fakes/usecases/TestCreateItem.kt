@@ -35,10 +35,8 @@ class TestCreateItem : CreateItem {
         payload = value
     }
 
-    override fun create(
-        shareKey: ShareKey,
-        itemContents: ItemContents
-    ): CreateItemPayload = payload ?: throw IllegalStateException("payload is not set")
+    override fun create(shareKey: ShareKey, itemContents: ItemContents): CreateItemPayload =
+        payload ?: throw IllegalStateException("payload is not set")
 
     companion object {
         fun createPayload(): CreateItemPayload {

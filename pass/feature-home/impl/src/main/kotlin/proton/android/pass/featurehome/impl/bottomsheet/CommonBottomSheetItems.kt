@@ -30,10 +30,7 @@ import proton.android.pass.domain.ShareId
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as ComponentR
 
-internal fun edit(
-    itemUiModel: ItemUiModel,
-    onEdit: (ShareId, ItemId) -> Unit
-): BottomSheetItem =
+internal fun edit(itemUiModel: ItemUiModel, onEdit: (ShareId, ItemId) -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
             get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_edit)) }
@@ -48,10 +45,7 @@ internal fun edit(
         override val isDivider = false
     }
 
-internal fun moveToTrash(
-    itemUiModel: ItemUiModel,
-    onMoveToTrash: (ItemUiModel) -> Unit
-): BottomSheetItem =
+internal fun moveToTrash(itemUiModel: ItemUiModel, onMoveToTrash: (ItemUiModel) -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
             get() = {
@@ -75,22 +69,21 @@ internal fun moveToTrash(
 internal fun removeFromRecentSearch(
     itemUiModel: ItemUiModel,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(text = stringResource(R.string.recent_search_remove_item))
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_cross_small)
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onRemoveFromRecentSearch(itemUiModel.shareId, itemUiModel.id) }
-        override val isDivider = false
-    }
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(text = stringResource(R.string.recent_search_remove_item))
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_cross_small)
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onRemoveFromRecentSearch(itemUiModel.shareId, itemUiModel.id) }
+    override val isDivider = false
+}
 

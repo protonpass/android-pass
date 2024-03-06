@@ -25,22 +25,19 @@ import proton.android.pass.domain.ShareId
 
 interface EventRepository {
 
-    suspend fun getLatestEventId(
-        userId: UserId,
-        shareId: ShareId,
-    ): String
+    suspend fun getLatestEventId(userId: UserId, shareId: ShareId): String
 
     suspend fun getEvents(
         lastEventId: String,
         userId: UserId,
-        shareId: ShareId,
+        shareId: ShareId
     ): EventList
 
     suspend fun storeLatestEventId(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
-        eventId: String,
+        eventId: String
     )
 
 }

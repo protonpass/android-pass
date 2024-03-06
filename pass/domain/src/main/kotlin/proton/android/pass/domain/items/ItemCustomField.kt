@@ -26,17 +26,17 @@ sealed interface ItemCustomField {
 
     data class Plain(
         override val title: String,
-        val content: String,
+        val content: String
     ) : ItemCustomField
 
     data class Hidden(
         override val title: String,
-        val hiddenState: HiddenState,
+        val hiddenState: HiddenState
     ) : ItemCustomField
 
     data class Totp(
         override val title: String,
-        val totp: proton.android.pass.domain.Totp?,
+        val totp: proton.android.pass.domain.Totp?
     ) : ItemCustomField
 
 }

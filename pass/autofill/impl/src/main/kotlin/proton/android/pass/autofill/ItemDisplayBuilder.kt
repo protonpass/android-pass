@@ -28,10 +28,7 @@ object ItemDisplayBuilder {
 
     private const val TAG = "ItemDisplayBuilder"
 
-    fun createTitle(
-        item: Item,
-        encryptionContext: EncryptionContext
-    ): String = when (item.itemType) {
+    fun createTitle(item: Item, encryptionContext: EncryptionContext): String = when (item.itemType) {
         is ItemType.CreditCard -> item.itemName(encryptionContext)
         is ItemType.Login -> item.itemName(encryptionContext)
         else -> {
@@ -40,10 +37,7 @@ object ItemDisplayBuilder {
         }
     }
 
-    fun createSubtitle(
-        item: Item,
-        encryptionContext: EncryptionContext
-    ): String = when (val itemType = item.itemType) {
+    fun createSubtitle(item: Item, encryptionContext: EncryptionContext): String = when (val itemType = item.itemType) {
         is ItemType.CreditCard -> createCreditCardSubtitle(encryptionContext, itemType)
         is ItemType.Login -> itemType.username.takeIf { it.isNotBlank() } ?: "---"
         else -> {
@@ -52,10 +46,7 @@ object ItemDisplayBuilder {
         }
     }
 
-    private fun createCreditCardSubtitle(
-        encryptionContext: EncryptionContext,
-        itemType: ItemType.CreditCard
-    ): String {
+    private fun createCreditCardSubtitle(encryptionContext: EncryptionContext, itemType: ItemType.CreditCard): String {
         val decryptedNumber = encryptionContext.decrypt(itemType.number)
         val cleanNumber = decryptedNumber.replace(" ", "")
         val formattedNumber = when {

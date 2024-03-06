@@ -94,9 +94,7 @@ fun AliasAddressRow(
 
 @Preview
 @Composable
-fun AliasAddressRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AliasAddressRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AliasAddressRow(

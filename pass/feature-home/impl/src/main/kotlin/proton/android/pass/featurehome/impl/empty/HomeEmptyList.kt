@@ -59,7 +59,7 @@ fun HomeEmptyList(
                 backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
                 textColor = PassTheme.colors.loginInteractionNormMajor2,
                 icon = CoreR.drawable.ic_proton_user,
-                onClick = onCreateLoginClick,
+                onClick = onCreateLoginClick
             )
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
@@ -67,7 +67,7 @@ fun HomeEmptyList(
                 backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                 textColor = PassTheme.colors.aliasInteractionNormMajor2,
                 icon = CoreR.drawable.ic_proton_alias,
-                onClick = onCreateAliasClick,
+                onClick = onCreateAliasClick
             )
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
@@ -75,7 +75,7 @@ fun HomeEmptyList(
                 backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
                 textColor = PassTheme.colors.noteInteractionNormMajor2,
                 icon = CoreR.drawable.ic_proton_notepad_checklist,
-                onClick = onCreateNoteClick,
+                onClick = onCreateNoteClick
             )
         }
     }
@@ -83,9 +83,7 @@ fun HomeEmptyList(
 
 @Preview
 @Composable
-fun HomeEmptyListPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun HomeEmptyListPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             HomeEmptyList(

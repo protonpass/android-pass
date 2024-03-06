@@ -69,7 +69,7 @@ fun SelectDefaultVaultContents(
             )
         }
             .withDividers()
-            .toImmutableList(),
+            .toImmutableList()
     )
 
 }

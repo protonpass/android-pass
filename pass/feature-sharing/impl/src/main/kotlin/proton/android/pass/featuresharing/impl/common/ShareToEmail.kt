@@ -64,9 +64,7 @@ fun ShareToEmail(modifier: Modifier = Modifier, email: String) {
 
 @Preview
 @Composable
-fun ShareToEmailPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ShareToEmailPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ShareToEmail(email = "myemail@proton.me")

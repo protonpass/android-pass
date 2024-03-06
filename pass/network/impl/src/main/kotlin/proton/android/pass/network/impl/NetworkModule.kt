@@ -46,17 +46,15 @@ object NetworkModule {
 
     @Provides
     @BaseProtonApiUrl
-    fun provideProtonApiUrl(appConfig: AppConfig): HttpUrl =
-        "https://${appConfig.host}".toHttpUrl()
+    fun provideProtonApiUrl(appConfig: AppConfig): HttpUrl = "https://${appConfig.host}".toHttpUrl()
 
     @Provides
     @Singleton
-    fun provideExtraHeaderProvider(appConfig: AppConfig): ExtraHeaderProvider =
-        ExtraHeaderProviderImpl().apply {
-            appConfig.proxyToken
-                ?.takeIfNotBlank()
-                ?.let { addHeaders("X-atlas-secret" to it) }
-        }
+    fun provideExtraHeaderProvider(appConfig: AppConfig): ExtraHeaderProvider = ExtraHeaderProviderImpl().apply {
+        appConfig.proxyToken
+            ?.takeIfNotBlank()
+            ?.let { addHeaders("X-atlas-secret" to it) }
+    }
 
     @DohProviderUrls
     @Provides

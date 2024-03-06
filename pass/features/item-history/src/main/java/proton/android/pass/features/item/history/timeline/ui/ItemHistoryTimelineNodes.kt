@@ -50,7 +50,7 @@ internal fun ItemHistoryTimelineNodes(
     itemId: ItemId,
     itemRevisions: List<ItemRevision>,
     colors: PassItemColors,
-    onNavigated: (ItemHistoryNavDestination) -> Unit,
+    onNavigated: (ItemHistoryNavDestination) -> Unit
 ) {
     itemRevisions.mapIndexed { index, itemRevision ->
         val timelineNodeVariant = createTimelineNodeVariant(index, itemRevisions.size)
@@ -61,18 +61,18 @@ internal fun ItemHistoryTimelineNodes(
             config = PassTimelineNodeConfig(
                 circleColor = colors.norm,
                 lineBrush = SolidColor(
-                    value = colors.norm,
-                ),
-            ),
+                    value = colors.norm
+                )
+            )
         ) { modifier ->
             RoundedCornersColumn(
-                modifier = modifier.padding(start = Spacing.small),
+                modifier = modifier.padding(start = Spacing.small)
             ) {
                 PassHistoryItemRow(
                     leadingIcon = painterResource(id = timelineNodeVariant.leadingIconId),
                     title = stringResource(id = timelineNodeVariant.titleId),
                     subtitle = protonFormattedDateText(
-                        endInstant = Instant.fromEpochSeconds(itemRevision.revisionTime),
+                        endInstant = Instant.fromEpochSeconds(itemRevision.revisionTime)
                     ),
                     trailingIcon = timelineNodeVariant.trailingIconId?.let { id ->
                         painterResource(id = id)
@@ -82,17 +82,17 @@ internal fun ItemHistoryTimelineNodes(
                             ItemHistoryNavDestination.Restore(
                                 shareId = shareId,
                                 itemId = itemId,
-                                itemRevision = itemRevision,
+                                itemRevision = itemRevision
                             )
                         )
-                    }.takeIf { timelineNodeVariant.isClickable },
+                    }.takeIf { timelineNodeVariant.isClickable }
                 )
             }
         }
     }.let { nodes ->
         PassTimeline(
             modifier = modifier,
-            nodes = nodes,
+            nodes = nodes
         )
     }
 }
@@ -102,20 +102,17 @@ private data class TimelineNodeVariant(
     @StringRes val titleId: Int,
     val type: PassTimelineNodeType,
     val isClickable: Boolean,
-    @DrawableRes val trailingIconId: Int?,
+    @DrawableRes val trailingIconId: Int?
 )
 
-private fun createTimelineNodeVariant(
-    index: Int,
-    itemRevisionCount: Int,
-): TimelineNodeVariant {
+private fun createTimelineNodeVariant(index: Int, itemRevisionCount: Int): TimelineNodeVariant {
     if (itemRevisionCount == 1) {
         return TimelineNodeVariant(
             leadingIconId = CoreR.drawable.ic_proton_clock,
             titleId = R.string.item_history_timeline_node_root_title,
             type = PassTimelineNodeType.Unique,
             isClickable = false,
-            trailingIconId = null,
+            trailingIconId = null
         )
     }
 
@@ -125,7 +122,7 @@ private fun createTimelineNodeVariant(
             titleId = R.string.item_history_timeline_node_root_title,
             type = PassTimelineNodeType.Root,
             isClickable = false,
-            trailingIconId = null,
+            trailingIconId = null
         )
 
         itemRevisionCount - 1 -> TimelineNodeVariant(
@@ -133,7 +130,7 @@ private fun createTimelineNodeVariant(
             titleId = R.string.item_history_timeline_node_leaf_title,
             type = PassTimelineNodeType.Leaf,
             isClickable = true,
-            trailingIconId = CoreR.drawable.ic_proton_chevron_tiny_right,
+            trailingIconId = CoreR.drawable.ic_proton_chevron_tiny_right
         )
 
         else -> TimelineNodeVariant(
@@ -141,7 +138,7 @@ private fun createTimelineNodeVariant(
             titleId = R.string.item_history_timeline_node_child_title,
             type = PassTimelineNodeType.Child,
             isClickable = true,
-            trailingIconId = CoreR.drawable.ic_proton_chevron_tiny_right,
+            trailingIconId = CoreR.drawable.ic_proton_chevron_tiny_right
         )
     }
 }

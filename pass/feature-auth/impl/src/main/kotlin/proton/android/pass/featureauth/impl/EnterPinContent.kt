@@ -124,9 +124,7 @@ fun EnterPinContent(
 
 @Preview
 @Composable
-fun EnterPinContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun EnterPinContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             EnterPinContent(

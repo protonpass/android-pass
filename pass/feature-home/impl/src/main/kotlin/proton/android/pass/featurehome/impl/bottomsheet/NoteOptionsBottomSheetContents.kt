@@ -61,7 +61,7 @@ fun NoteOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isPinningFeatureEnabled: Boolean,
+    isPinningFeatureEnabled: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
 
@@ -100,25 +100,24 @@ fun NoteOptionsBottomSheetContents(
         }
 
         BottomSheetItemList(
-            items = bottomSheetItems.withDividers().toPersistentList(),
+            items = bottomSheetItems.withDividers().toPersistentList()
         )
     }
 }
 
-private fun copyNote(text: String, onCopyNote: (String) -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onCopyNote(text) }
-        override val isDivider = false
-    }
+private fun copyNote(text: String, onCopyNote: (String) -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onCopyNote(text) }
+    override val isDivider = false
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
@@ -140,7 +139,7 @@ fun NoteOptionsBottomSheetContentsPreview(
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now(),
-                    isPinned = false,
+                    isPinned = false
                 ),
                 isRecentSearch = input.second,
                 onCopyNote = {},
@@ -150,7 +149,7 @@ fun NoteOptionsBottomSheetContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isPinningFeatureEnabled = true,
+                isPinningFeatureEnabled = true
             )
         }
     }

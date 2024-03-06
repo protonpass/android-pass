@@ -84,9 +84,7 @@ class UsePasskeyNoUiViewModel @Inject constructor(
         requestFlow.update { request.some() }
     }
 
-    private suspend fun resolveChallenge(
-        request: UsePasskeyNoUiRequest
-    ): Result<String> = runCatching {
+    private suspend fun resolveChallenge(request: UsePasskeyNoUiRequest): Result<String> = runCatching {
         val passkey = getPasskeyById(
             shareId = request.shareId,
             itemId = request.itemId,

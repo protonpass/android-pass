@@ -66,30 +66,29 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
             note: String = "Note content",
             websites: List<String> = emptyList(),
             highlight: String = ""
-        ): LoginRowParameter =
-            LoginRowParameter(
-                model = ItemUiModel(
-                    id = ItemId("123"),
-                    shareId = ShareId("345"),
-                    contents = ItemContents.Login(
-                        title = title,
-                        note = note,
-                        username = username,
-                        password = HiddenState.Concealed(""),
-                        urls = websites,
-                        packageInfoSet = emptySet(),
-                        primaryTotp = HiddenState.Concealed(""),
-                        customFields = emptyList(),
-                        passkeys = emptyList()
-                    ),
-                    state = 0,
-                    createTime = Clock.System.now(),
-                    modificationTime = Clock.System.now(),
-                    lastAutofillTime = Clock.System.now(),
-                    isPinned = false,
+        ): LoginRowParameter = LoginRowParameter(
+            model = ItemUiModel(
+                id = ItemId("123"),
+                shareId = ShareId("345"),
+                contents = ItemContents.Login(
+                    title = title,
+                    note = note,
+                    username = username,
+                    password = HiddenState.Concealed(""),
+                    urls = websites,
+                    packageInfoSet = emptySet(),
+                    primaryTotp = HiddenState.Concealed(""),
+                    customFields = emptyList(),
+                    passkeys = emptyList()
                 ),
-                highlight = highlight
-            )
+                state = 0,
+                createTime = Clock.System.now(),
+                modificationTime = Clock.System.now(),
+                lastAutofillTime = Clock.System.now(),
+                isPinned = false
+            ),
+            highlight = highlight
+        )
 
     }
 }

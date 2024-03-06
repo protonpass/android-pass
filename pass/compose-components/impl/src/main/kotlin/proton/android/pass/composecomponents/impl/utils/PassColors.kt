@@ -30,7 +30,7 @@ fun passItemColors(itemCategory: ItemCategory): PassItemColors = when (itemCateg
         majorPrimary = PassTheme.colors.interactionNormMajor1,
         majorSecondary = PassTheme.colors.interactionNormMajor2,
         minorPrimary = PassTheme.colors.interactionNormMinor1,
-        minorSecondary = PassTheme.colors.interactionNormMinor2,
+        minorSecondary = PassTheme.colors.interactionNormMinor2
     )
 
     ItemCategory.Login -> PassItemColors(
@@ -38,7 +38,7 @@ fun passItemColors(itemCategory: ItemCategory): PassItemColors = when (itemCateg
         majorPrimary = PassTheme.colors.loginInteractionNormMajor1,
         majorSecondary = PassTheme.colors.loginInteractionNormMajor2,
         minorPrimary = PassTheme.colors.loginInteractionNormMinor1,
-        minorSecondary = PassTheme.colors.loginInteractionNormMinor2,
+        minorSecondary = PassTheme.colors.loginInteractionNormMinor2
     )
 
     ItemCategory.Alias -> PassItemColors(
@@ -46,7 +46,7 @@ fun passItemColors(itemCategory: ItemCategory): PassItemColors = when (itemCateg
         majorPrimary = PassTheme.colors.aliasInteractionNormMajor1,
         majorSecondary = PassTheme.colors.aliasInteractionNormMajor2,
         minorPrimary = PassTheme.colors.aliasInteractionNormMinor1,
-        minorSecondary = PassTheme.colors.aliasInteractionNormMinor2,
+        minorSecondary = PassTheme.colors.aliasInteractionNormMinor2
     )
 
     ItemCategory.Note -> PassItemColors(
@@ -54,7 +54,7 @@ fun passItemColors(itemCategory: ItemCategory): PassItemColors = when (itemCateg
         majorPrimary = PassTheme.colors.noteInteractionNormMajor1,
         majorSecondary = PassTheme.colors.noteInteractionNormMajor2,
         minorPrimary = PassTheme.colors.noteInteractionNormMinor1,
-        minorSecondary = PassTheme.colors.noteInteractionNormMinor2,
+        minorSecondary = PassTheme.colors.noteInteractionNormMinor2
     )
 
     ItemCategory.Password -> PassItemColors(
@@ -62,7 +62,7 @@ fun passItemColors(itemCategory: ItemCategory): PassItemColors = when (itemCateg
         majorPrimary = PassTheme.colors.passwordInteractionNormMajor1,
         majorSecondary = PassTheme.colors.passwordInteractionNormMajor2,
         minorPrimary = PassTheme.colors.passwordInteractionNormMinor1,
-        minorSecondary = PassTheme.colors.passwordInteractionNormMinor2,
+        minorSecondary = PassTheme.colors.passwordInteractionNormMinor2
     )
 
     ItemCategory.CreditCard -> PassItemColors(
@@ -70,7 +70,7 @@ fun passItemColors(itemCategory: ItemCategory): PassItemColors = when (itemCateg
         majorPrimary = PassTheme.colors.cardInteractionNormMajor1,
         majorSecondary = PassTheme.colors.cardInteractionNormMajor2,
         minorPrimary = PassTheme.colors.cardInteractionNormMinor1,
-        minorSecondary = PassTheme.colors.cardInteractionNormMinor2,
+        minorSecondary = PassTheme.colors.cardInteractionNormMinor2
     )
 }
 
@@ -79,5 +79,5 @@ data class PassItemColors(
     val majorPrimary: Color,
     val majorSecondary: Color,
     val minorPrimary: Color,
-    val minorSecondary: Color,
+    val minorSecondary: Color
 )

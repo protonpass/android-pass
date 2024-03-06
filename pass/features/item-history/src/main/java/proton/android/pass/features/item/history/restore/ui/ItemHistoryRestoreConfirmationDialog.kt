@@ -34,7 +34,7 @@ internal fun ItemHistoryRestoreConfirmationDialog(
     onDismiss: () -> Unit,
     isVisible: Boolean,
     isLoading: Boolean,
-    revisionTime: Long,
+    revisionTime: Long
 ) {
     ConfirmWithLoadingDialog(
         modifier = modifier,
@@ -44,12 +44,12 @@ internal fun ItemHistoryRestoreConfirmationDialog(
         title = stringResource(R.string.item_history_restore_confirmation_dialog_title),
         message = stringResource(
             id = R.string.item_history_restore_confirmation_dialog_message,
-            protonFormattedDateText(endInstant = Instant.fromEpochSeconds(revisionTime)),
+            protonFormattedDateText(endInstant = Instant.fromEpochSeconds(revisionTime))
         ),
         confirmText = stringResource(id = R.string.item_history_restore_action),
         cancelText = stringResource(id = CoreR.string.presentation_alert_cancel),
         onDismiss = onDismiss,
         onCancel = onDismiss,
-        onConfirm = onConfirm,
+        onConfirm = onConfirm
     )
 }

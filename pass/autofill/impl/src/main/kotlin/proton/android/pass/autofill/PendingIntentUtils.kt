@@ -40,7 +40,7 @@ object PendingIntentUtils {
     internal fun getOpenAppPendingIntent(
         context: Context,
         autofillData: AutofillData,
-        intentRequestCode: Int,
+        intentRequestCode: Int
     ): PendingIntent = PendingIntent.getActivity(
         context,
         intentRequestCode,
@@ -48,22 +48,20 @@ object PendingIntentUtils {
         autofillPendingIntentFlags
     )
 
-    internal fun getUpgradePendingIntent(
-        context: Context,
-        intentRequestCode: Int,
-    ): PendingIntent = PendingIntent.getActivity(
-        context,
-        intentRequestCode,
-        AutofillUpgradeActivity.newIntent(context),
-        autofillPendingIntentFlags
-    )
+    internal fun getUpgradePendingIntent(context: Context, intentRequestCode: Int): PendingIntent =
+        PendingIntent.getActivity(
+            context,
+            intentRequestCode,
+            AutofillUpgradeActivity.newIntent(context),
+            autofillPendingIntentFlags
+        )
 
     internal fun getSuggestionPendingIntent(
         context: Context,
         autofillData: AutofillData,
         autofillItem: AutofillItem,
         shouldAuthenticate: Boolean,
-        intentRequestCode: Int,
+        intentRequestCode: Int
     ): PendingIntent = PendingIntent.getActivity(
         context,
         intentRequestCode,
@@ -82,11 +80,10 @@ object PendingIntentUtils {
         InlineSuggestionsNoUiActivity.newIntent(context, autofillData, autofillItem)
     }
 
-    internal fun getLongPressInlinePendingIntent(context: Context) =
-        PendingIntent.getService(
-            context,
-            0,
-            Intent().apply { setPackage(context.packageName) },
-            autofillPendingIntentFlags
-        )
+    internal fun getLongPressInlinePendingIntent(context: Context) = PendingIntent.getService(
+        context,
+        0,
+        Intent().apply { setPackage(context.packageName) },
+        autofillPendingIntentFlags
+    )
 }

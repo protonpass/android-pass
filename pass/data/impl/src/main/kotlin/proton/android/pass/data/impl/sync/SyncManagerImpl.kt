@@ -63,7 +63,7 @@ class SyncManagerImpl @Inject constructor(
         appLifecycleProvider.lifecycle.coroutineScope.launch(exceptionHandler) {
             combine(
                 appLifecycleProvider.state,
-                accountManager.getPrimaryUserId(),
+                accountManager.getPrimaryUserId()
             ) { appLifecycle, userId ->
                 SyncState(userId, appLifecycle)
             }
@@ -76,16 +76,13 @@ class SyncManagerImpl @Inject constructor(
 
                     onUserLoggedInPerformSync(
                         userId = syncState.userId,
-                        state = syncState.appLifecycle,
+                        state = syncState.appLifecycle
                     )
                 }
         }
     }
 
-    private suspend fun onUserLoggedInPerformSync(
-        userId: UserId,
-        state: AppLifecycleProvider.State,
-    ) {
+    private suspend fun onUserLoggedInPerformSync(userId: UserId, state: AppLifecycleProvider.State) {
         when (state) {
             AppLifecycleProvider.State.Background -> {
                 enqueueWorker(eventWorkerManager.getRepeatIntervalBackground())

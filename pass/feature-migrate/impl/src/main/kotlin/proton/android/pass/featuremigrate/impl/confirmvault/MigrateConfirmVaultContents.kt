@@ -77,7 +77,7 @@ fun MigrateConfirmVaultContents(
                         onVaultClick = null
                     ),
                     bottomSheetDivider()
-                ),
+                )
             )
         }
 

@@ -35,7 +35,7 @@ interface EncryptShareKeysForUser {
     suspend operator fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
-        targetEmail: String,
+        targetEmail: String
     ): Result<EncryptedInviteShareKeyList>
 
     suspend operator fun invoke(
@@ -50,14 +50,14 @@ interface EncryptShareKeysForUser {
 class EncryptShareKeysForUserImpl @Inject constructor(
     private val shareKeyRepository: ShareKeyRepository,
     private val getAllKeysByAddress: GetAllKeysByAddress,
-    private val encryptInviteKeys: EncryptInviteKeys,
+    private val encryptInviteKeys: EncryptInviteKeys
 ) : EncryptShareKeysForUser {
 
     @Suppress("ReturnCount")
     override suspend fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
-        targetEmail: String,
+        targetEmail: String
     ): Result<EncryptedInviteShareKeyList> {
         val shareKeys = shareKeyRepository.getShareKeys(
             userId = userAddress.userId,

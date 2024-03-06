@@ -36,7 +36,7 @@ import javax.inject.Inject
 
 class InAppReviewManagerImpl @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
-    private val getUserPlan: GetUserPlan,
+    private val getUserPlan: GetUserPlan
 ) : InAppReviewManager {
 
     override fun shouldRequestReview(): Flow<Boolean> = combine(

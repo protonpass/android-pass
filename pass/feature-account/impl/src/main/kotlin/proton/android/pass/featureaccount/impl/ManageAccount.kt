@@ -52,9 +52,7 @@ fun ManageAccount(modifier: Modifier = Modifier, onManageAccountClick: () -> Uni
 
 @Preview
 @Composable
-fun ManageAccountPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ManageAccountPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ManageAccount {}

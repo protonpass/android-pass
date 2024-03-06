@@ -46,9 +46,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun OfflineIndicator(
-    modifier: Modifier = Modifier
-) {
+fun OfflineIndicator(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -72,9 +70,7 @@ fun OfflineIndicator(
 
 @Preview
 @Composable
-fun OfflineIndicatorPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun OfflineIndicatorPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             OfflineIndicator()

@@ -32,11 +32,10 @@ object ZxingWrapper {
             setHints(mapOf(DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE)))
         }
 
-    fun tryReadingQrCode(source: LuminanceSource): Result<String> =
-        try {
-            val binaryBitmap = BinaryBitmap(HybridBinarizer(source))
-            Result.success(reader.decodeWithState(binaryBitmap).text)
-        } catch (e: NotFoundException) {
-            Result.failure(e)
-        }
+    fun tryReadingQrCode(source: LuminanceSource): Result<String> = try {
+        val binaryBitmap = BinaryBitmap(HybridBinarizer(source))
+        Result.success(reader.decodeWithState(binaryBitmap).text)
+    } catch (e: NotFoundException) {
+        Result.failure(e)
+    }
 }

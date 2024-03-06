@@ -92,8 +92,7 @@ abstract class BaseNoteViewModel(
         hasUserEditedContentFlow.update { true }
     }
 
-    fun onEmitSnackbarMessage(snackbarMessage: NoteSnackbarMessage) =
-        viewModelScope.launch {
-            snackbarDispatcher(snackbarMessage)
-        }
+    fun onEmitSnackbarMessage(snackbarMessage: NoteSnackbarMessage) = viewModelScope.launch {
+        snackbarDispatcher(snackbarMessage)
+    }
 }

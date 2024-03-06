@@ -105,7 +105,7 @@ class NoteDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getItemActions: GetItemActions,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    getUserPlan: GetUserPlan,
+    getUserPlan: GetUserPlan
 ) : ViewModel() {
 
     private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
@@ -145,11 +145,11 @@ class NoteDetailViewModel @Inject constructor(
     private val itemFeaturesFlow = combine(
         featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
-        getUserPlan(),
+        getUserPlan()
     ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, userPlan ->
         ItemFeatures(
             isHistoryEnabled = isHistoryFeatureFlagEnabled && userPlan.isPaidPlan,
-            isPinningEnabled = isPinningFeatureEnabled,
+            isPinningEnabled = isPinningFeatureEnabled
         )
     }
 
@@ -162,7 +162,7 @@ class NoteDetailViewModel @Inject constructor(
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        itemFeaturesFlow,
+        itemFeaturesFlow
     ) { itemLoadingResult,
         isLoading,
         isItemSentToTrash,
@@ -205,7 +205,7 @@ class NoteDetailViewModel @Inject constructor(
                     itemActions = actions,
                     event = event,
                     isPinningFeatureEnabled = itemFeatures.isPinningEnabled,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
+                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled
                 )
             }
         }
@@ -230,22 +230,21 @@ class NoteDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun onPermanentlyDelete(itemUiModel: ItemUiModel) =
-        viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
-            runCatching {
-                deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
-            }.onSuccess {
-                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
-                isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
-                snackbarDispatcher(ItemPermanentlyDeleted)
-                PassLogger.i(TAG, "Item deleted successfully")
-            }.onFailure {
-                snackbarDispatcher(DetailSnackbarMessages.ItemNotPermanentlyDeleted)
-                PassLogger.i(TAG, it, "Could not delete item")
-            }
-            isLoadingState.update { IsLoadingState.NotLoading }
+    fun onPermanentlyDelete(itemUiModel: ItemUiModel) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+        runCatching {
+            deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
+        }.onSuccess {
+            telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
+            isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
+            snackbarDispatcher(ItemPermanentlyDeleted)
+            PassLogger.i(TAG, "Item deleted successfully")
+        }.onFailure {
+            snackbarDispatcher(DetailSnackbarMessages.ItemNotPermanentlyDeleted)
+            PassLogger.i(TAG, it, "Could not delete item")
         }
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
 
     fun onItemRestore(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }

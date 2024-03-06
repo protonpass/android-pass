@@ -91,20 +91,19 @@ class TelemetryRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun buildRequest(planName: String, events: List<TelemetryEntity>): TelemetryRequest =
-        TelemetryRequest(
-            eventInfo = events.map { event ->
-                val dimensions = DimensionsSerializer.deserialize(event.dimensions).toMutableMap()
-                dimensions[PLAN_NAME_KEY] = JsonPrimitive(planName)
+    private fun buildRequest(planName: String, events: List<TelemetryEntity>): TelemetryRequest = TelemetryRequest(
+        eventInfo = events.map { event ->
+            val dimensions = DimensionsSerializer.deserialize(event.dimensions).toMutableMap()
+            dimensions[PLAN_NAME_KEY] = JsonPrimitive(planName)
 
-                EventInfo(
-                    measurementGroup = MEASUREMENT_GROUP,
-                    event = event.event,
-                    values = emptyMap(),
-                    dimensions = dimensions
-                )
-            }
-        )
+            EventInfo(
+                measurementGroup = MEASUREMENT_GROUP,
+                event = event.event,
+                values = emptyMap(),
+                dimensions = dimensions
+            )
+        }
+    )
 
     private suspend fun shouldSendTelemetry(): Boolean {
         val settings = deviceSettingsRepository.getDeviceSettings()

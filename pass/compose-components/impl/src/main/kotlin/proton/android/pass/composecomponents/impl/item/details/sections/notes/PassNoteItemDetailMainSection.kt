@@ -27,15 +27,12 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 
 @Composable
-internal fun PassNoteItemDetailMainSection(
-    modifier: Modifier = Modifier,
-    note: String,
-) {
+internal fun PassNoteItemDetailMainSection(modifier: Modifier = Modifier, note: String) {
     SelectionContainer(modifier = modifier) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = note,
-            style = ProtonTheme.typography.defaultNorm,
+            style = ProtonTheme.typography.defaultNorm
         )
     }
 }

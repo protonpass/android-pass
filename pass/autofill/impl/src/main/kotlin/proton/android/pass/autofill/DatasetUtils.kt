@@ -158,7 +158,7 @@ object DatasetUtils {
     @Suppress("DEPRECATION")
     private fun Dataset.Builder.fillWithMappings(
         autofillMappings: AutofillMappings,
-        remoteView: RemoteViews,
+        remoteView: RemoteViews
     ): Dataset.Builder {
         autofillMappings.mappings
             .forEach { mapping ->

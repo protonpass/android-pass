@@ -22,5 +22,9 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 
 interface SetVaultMemberPermission {
-    suspend operator fun invoke(shareId: ShareId, memberShareId: ShareId, role: ShareRole)
+    suspend operator fun invoke(
+        shareId: ShareId,
+        memberShareId: ShareId,
+        role: ShareRole
+    )
 }

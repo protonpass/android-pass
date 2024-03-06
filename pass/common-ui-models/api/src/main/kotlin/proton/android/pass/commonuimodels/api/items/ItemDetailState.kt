@@ -31,7 +31,7 @@ sealed class ItemDetailState(
     val itemContents: ItemContents,
     val isItemPinned: Boolean,
     val itemVault: Vault?,
-    val itemCategory: ItemCategory,
+    val itemCategory: ItemCategory
 ) {
 
     @Stable
@@ -39,24 +39,24 @@ sealed class ItemDetailState(
         val contents: ItemContents.Alias,
         val mailboxes: List<AliasMailbox>,
         private val isPinned: Boolean,
-        private val vault: Vault?,
+        private val vault: Vault?
     ) : ItemDetailState(
         itemContents = contents,
         isItemPinned = isPinned,
         itemVault = vault,
-        itemCategory = ItemCategory.Alias,
+        itemCategory = ItemCategory.Alias
     )
 
     @Stable
     data class CreditCard(
         val contents: ItemContents.CreditCard,
         private val isPinned: Boolean,
-        private val vault: Vault?,
+        private val vault: Vault?
     ) : ItemDetailState(
         itemContents = contents,
         isItemPinned = isPinned,
         itemVault = vault,
-        itemCategory = ItemCategory.CreditCard,
+        itemCategory = ItemCategory.CreditCard
     )
 
     @Stable
@@ -67,35 +67,35 @@ sealed class ItemDetailState(
         val primaryTotp: Totp?,
         val customFields: List<ItemCustomField>,
         private val isPinned: Boolean,
-        private val vault: Vault?,
+        private val vault: Vault?
     ) : ItemDetailState(
         itemContents = contents,
         isItemPinned = isPinned,
         itemVault = vault,
-        itemCategory = ItemCategory.Login,
+        itemCategory = ItemCategory.Login
     )
 
     @Stable
     data class Note(
         val contents: ItemContents.Note,
         private val isPinned: Boolean,
-        private val vault: Vault?,
+        private val vault: Vault?
     ) : ItemDetailState(
         itemContents = contents,
         isItemPinned = isPinned,
         itemVault = vault,
-        itemCategory = ItemCategory.Note,
+        itemCategory = ItemCategory.Note
     )
 
     @Stable
     data class Unknown(
         val contents: ItemContents.Unknown,
-        private val vault: Vault?,
+        private val vault: Vault?
     ) : ItemDetailState(
         itemContents = contents,
         isItemPinned = false,
         itemVault = vault,
-        itemCategory = ItemCategory.Unknown,
+        itemCategory = ItemCategory.Unknown
     )
 
 }

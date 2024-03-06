@@ -74,13 +74,13 @@ data class AuthContent(
 @Stable
 data class AuthState(
     val event: Option<AuthEvent>,
-    val content: AuthContent,
+    val content: AuthContent
 ) {
 
     companion object {
         val Initial = AuthState(
             event = None,
-            content = AuthContent.default(None),
+            content = AuthContent.default(None)
         )
     }
 

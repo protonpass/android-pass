@@ -186,32 +186,30 @@ class OnBoardingTipsViewModelTest {
         }
 
     @Test
-    fun `Should not display notification permission if has permission and banner not dismissed`() =
-        runTest {
-            setupPlan(PlanType.Trial("", "", 1))
-            notificationManager.setHasNotificationPermission(true)
-            viewModel.onNotificationPermissionChanged(true)
-            preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
-            appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
+    fun `Should not display notification permission if has permission and banner not dismissed`() = runTest {
+        setupPlan(PlanType.Trial("", "", 1))
+        notificationManager.setHasNotificationPermission(true)
+        viewModel.onNotificationPermissionChanged(true)
+        preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
+        appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
 
-            viewModel.state.test {
-                assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
-            }
+        viewModel.state.test {
+            assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
         }
+    }
 
     @Test
-    fun `Should not display notification permission if not permission and banner dismissed`() =
-        runTest {
-            setupPlan(PlanType.Trial("", "", 1))
-            notificationManager.setHasNotificationPermission(false)
-            viewModel.onNotificationPermissionChanged(false)
-            preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
-            appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
+    fun `Should not display notification permission if not permission and banner dismissed`() = runTest {
+        setupPlan(PlanType.Trial("", "", 1))
+        notificationManager.setHasNotificationPermission(false)
+        viewModel.onNotificationPermissionChanged(false)
+        preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
+        appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
 
-            viewModel.state.test {
-                assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
-            }
+        viewModel.state.test {
+            assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
         }
+    }
 
     @Test
     fun `Should not display notification permission if not permission and banner not dismissed but version LT 13`() =
@@ -227,9 +225,7 @@ class OnBoardingTipsViewModelTest {
             }
         }
 
-    private fun setupPlan(
-        planType: PlanType = PlanType.Paid.Plus("", "")
-    ) {
+    private fun setupPlan(planType: PlanType = PlanType.Paid.Plus("", "")) {
         val plan = Plan(
             planType = planType,
             hideUpgrade = false,

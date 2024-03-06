@@ -27,20 +27,18 @@ import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class PinItemImpl @Inject constructor(
-    private val pinItems: PinItems,
+    private val pinItems: PinItems
 ) : PinItem {
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = when (val result = pinItems(listOf(shareId to itemId))) {
-        is PinItemsResult.NonePinned -> throw result.exception
-        is PinItemsResult.SomePinned -> {
-            throw IllegalStateException("Cannot return SomePinned if there is only 1 item")
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item =
+        when (val result = pinItems(listOf(shareId to itemId))) {
+            is PinItemsResult.NonePinned -> throw result.exception
+            is PinItemsResult.SomePinned -> {
+                throw IllegalStateException("Cannot return SomePinned if there is only 1 item")
+            }
+            is PinItemsResult.AllPinned -> {
+                result.items.first()
+            }
         }
-        is PinItemsResult.AllPinned -> {
-            result.items.first()
-        }
-    }
 
 }

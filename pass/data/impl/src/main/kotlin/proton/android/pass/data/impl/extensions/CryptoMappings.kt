@@ -51,7 +51,7 @@ fun EncryptedUpdateItemRequest.toRequest(): UpdateItemRequest = UpdateItemReques
     keyRotation = keyRotation,
     lastRevision = lastRevision,
     contentFormatVersion = contentFormatVersion,
-    content = content,
+    content = content
 )
 
 fun ItemRevision.toCrypto(): EncryptedItemRevision = EncryptedItemRevision(
@@ -67,7 +67,7 @@ fun ItemRevision.toCrypto(): EncryptedItemRevision = EncryptedItemRevision(
     lastUseTime = lastUseTime,
     revisionTime = revisionTime,
     key = itemKey,
-    isPinned = isPinned,
+    isPinned = isPinned
 )
 
 fun ItemLatestKeyResponse.toCrypto(): EncryptedItemKey = EncryptedItemKey(

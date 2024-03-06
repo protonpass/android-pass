@@ -40,9 +40,7 @@ object SelectVaultBottomsheet : NavItem(
     fun createNavRoute(selectedVault: ShareId) = "$baseRoute/${selectedVault.id}"
 }
 
-fun NavGraphBuilder.selectVaultBottomsheetGraph(
-    onNavigate: (VaultNavigation) -> Unit
-) {
+fun NavGraphBuilder.selectVaultBottomsheetGraph(onNavigate: (VaultNavigation) -> Unit) {
     bottomSheet(SelectVaultBottomsheet) {
         SelectVaultBottomsheet(
             onNavigate = onNavigate

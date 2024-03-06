@@ -39,9 +39,7 @@ class ObserveOrganizationSettingsImpl @Inject constructor(
         .flatMapLatest(::observeSettings)
         .filterNotNull()
 
-    private fun observeSettings(
-        userId: UserId
-    ): Flow<OrganizationSettings?> = repository.observe(userId)
+    private fun observeSettings(userId: UserId): Flow<OrganizationSettings?> = repository.observe(userId)
         .onEach { if (it == null) repository.refresh(userId) }
 
 }

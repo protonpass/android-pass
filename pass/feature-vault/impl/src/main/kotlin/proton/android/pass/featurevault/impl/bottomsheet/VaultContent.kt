@@ -74,7 +74,7 @@ fun VaultContent(
                 Column {
                     InfoBanner(
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
-                        text = stringResource(R.string.bottomsheet_cannot_create_more_vaults),
+                        text = stringResource(R.string.bottomsheet_cannot_create_more_vaults)
                     )
                 }
             }

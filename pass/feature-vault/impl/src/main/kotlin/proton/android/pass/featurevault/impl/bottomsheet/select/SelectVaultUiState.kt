@@ -40,7 +40,7 @@ sealed interface VaultStatus {
 @Stable
 data class VaultWithStatus(
     val vault: VaultWithItemCount,
-    val status: VaultStatus,
+    val status: VaultStatus
 )
 
 sealed interface SelectVaultUiState {
@@ -52,6 +52,6 @@ sealed interface SelectVaultUiState {
     data class Success(
         val vaults: ImmutableList<VaultWithStatus>,
         val selected: VaultWithItemCount,
-        val showUpgradeMessage: Boolean,
+        val showUpgradeMessage: Boolean
     ) : SelectVaultUiState
 }

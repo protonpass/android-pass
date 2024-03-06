@@ -40,10 +40,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featureitemcreate.impl.R
 
 @Composable
-fun StickyGeneratePassword(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
+fun StickyGeneratePassword(modifier: Modifier = Modifier, onClick: () -> Unit) {
     val focusManager = LocalFocusManager.current
     StickyImeRow(
         modifier = modifier.clickable {
@@ -69,9 +66,7 @@ fun StickyGeneratePassword(
 
 @Preview
 @Composable
-fun StickyGeneratePasswordPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun StickyGeneratePasswordPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             StickyGeneratePassword {}

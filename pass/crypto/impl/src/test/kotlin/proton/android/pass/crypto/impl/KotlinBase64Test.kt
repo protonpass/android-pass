@@ -69,7 +69,7 @@ class KotlinBase64Test {
         private val Cases = mapOf(
             "Kotlin is awesome" to "S290bGluIGlzIGF3ZXNvbWU=",
             "This! is_:@ t3st {with} rÁndÖm chªrÂcters%&/()" to
-                "VGhpcyEgaXNfOkAgdDNzdCB7d2l0aH0gcsOBbmTDlm0gY2jCqnLDgmN0ZXJzJSYvKCk=",
+                "VGhpcyEgaXNfOkAgdDNzdCB7d2l0aH0gcsOBbmTDlm0gY2jCqnLDgmN0ZXJzJSYvKCk="
         )
     }
 }

@@ -77,7 +77,7 @@ class SharingSummaryViewModelTest {
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = savedStateHandleProvider,
             bulkInviteRepository = bulkInviteRepository,
-            getUserPlan = TestGetUserPlan(),
+            getUserPlan = TestGetUserPlan()
         )
     }
 
@@ -106,7 +106,7 @@ class SharingSummaryViewModelTest {
             val expectedState = SharingSummaryUIState(
                 addresses = addresses.toPersistentList(),
                 vaultWithItemCount = vaultData,
-                isLoading = false,
+                isLoading = false
             )
             assertThat(initialState).isEqualTo(expectedState)
         }
@@ -174,7 +174,7 @@ class SharingSummaryViewModelTest {
             shareId = ShareId(id = TEST_SHARE_ID),
             name = "Evangeline Potter",
             color = ShareColor.Color1,
-            icon = ShareIcon.Icon1,
+            icon = ShareIcon.Icon1
         ),
         activeItemCount = 5521, trashedItemCount = 6902
     )

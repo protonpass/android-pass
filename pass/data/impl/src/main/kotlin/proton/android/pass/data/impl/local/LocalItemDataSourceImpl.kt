@@ -49,41 +49,37 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         filter: ItemTypeFilter
-    ): Flow<List<ItemEntity>> =
-        if (filter == ItemTypeFilter.All) {
-            database.itemsDao().observeAllForShares(
-                userId = userId.id,
-                shareIds = shareIds.map { it.id },
-                itemState = itemState?.value
-            )
-        } else {
-            database.itemsDao().observeAllForShare(
-                userId = userId.id,
-                shareIds = shareIds.map { it.id },
-                itemState = itemState?.value,
-                itemType = filter.value()
-            )
-        }
+    ): Flow<List<ItemEntity>> = if (filter == ItemTypeFilter.All) {
+        database.itemsDao().observeAllForShares(
+            userId = userId.id,
+            shareIds = shareIds.map { it.id },
+            itemState = itemState?.value
+        )
+    } else {
+        database.itemsDao().observeAllForShare(
+            userId = userId.id,
+            shareIds = shareIds.map { it.id },
+            itemState = itemState?.value,
+            itemType = filter.value()
+        )
+    }
 
     override fun observeItems(
         userId: UserId,
         itemState: ItemState?,
         filter: ItemTypeFilter
-    ): Flow<List<ItemEntity>> =
-        if (filter == ItemTypeFilter.All) {
-            database.itemsDao().observeAllForAddress(userId.id, itemState?.value)
-        } else {
-            database.itemsDao().observeAllForAddress(userId.id, itemState?.value, filter.value())
-        }
-
-    override fun observePinnedItems(
-        userId: UserId,
-        filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> = if (filter == ItemTypeFilter.All) {
-        database.itemsDao().observeAllPinnedItems(userId.id)
+        database.itemsDao().observeAllForAddress(userId.id, itemState?.value)
     } else {
-        database.itemsDao().observeAllPinnedItems(userId.id, filter.value())
+        database.itemsDao().observeAllForAddress(userId.id, itemState?.value, filter.value())
     }
+
+    override fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>> =
+        if (filter == ItemTypeFilter.All) {
+            database.itemsDao().observeAllPinnedItems(userId.id)
+        } else {
+            database.itemsDao().observeAllPinnedItems(userId.id, filter.value())
+        }
 
     override fun observeAllPinnedItemsForShares(
         userId: UserId,
@@ -102,13 +98,10 @@ class LocalItemDataSourceImpl @Inject constructor(
         )
     }
 
-    override fun observeItem(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Flow<ItemEntity> = database.itemsDao()
+    override fun observeItem(shareId: ShareId, itemId: ItemId): Flow<ItemEntity> = database.itemsDao()
         .observeById(
             shareId = shareId.id,
-            itemId = itemId.id,
+            itemId = itemId.id
         )
 
     override suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity? =
@@ -117,15 +110,17 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun getByIdList(shareId: ShareId, itemIds: List<ItemId>): List<ItemEntity> =
         database.itemsDao().getByIdList(shareId.id, itemIds.map { it.id })
 
-    override suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState) =
-        database.itemsDao().setItemState(shareId.id, itemId.id, itemState.value)
+    override suspend fun setItemState(
+        shareId: ShareId,
+        itemId: ItemId,
+        itemState: ItemState
+    ) = database.itemsDao().setItemState(shareId.id, itemId.id, itemState.value)
 
     override suspend fun setItemStates(
         shareId: ShareId,
         itemIds: List<ItemId>,
         itemState: ItemState
-    ) =
-        database.itemsDao().setItemStates(shareId.id, itemIds.map(ItemId::id), itemState.value)
+    ) = database.itemsDao().setItemStates(shareId.id, itemIds.map(ItemId::id), itemState.value)
 
     override suspend fun getTrashedItems(userId: UserId): List<ItemEntity> =
         database.itemsDao().getItemsWithState(userId.id, ItemState.Trashed.value)
@@ -149,49 +144,51 @@ class LocalItemDataSourceImpl @Inject constructor(
     override fun observeItemCountSummary(
         userId: UserId,
         shareIds: List<ShareId>,
-        itemState: ItemState?,
-    ): Flow<ItemCountSummary> =
-        database.itemsDao()
-            .itemSummary(userId.id, shareIds.map { it.id }, itemState?.value)
-            .map { values ->
-                val logins =
-                    values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
-                val aliases =
-                    values.firstOrNull { it.itemKind == ItemCategory.Alias.value }?.itemCount ?: 0
-                val notes =
-                    values.firstOrNull { it.itemKind == ItemCategory.Note.value }?.itemCount ?: 0
-                val creditCards =
-                    values.firstOrNull { it.itemKind == ItemCategory.CreditCard.value }?.itemCount
-                        ?: 0
-                ItemCountSummary(
-                    total = logins + aliases + notes + creditCards,
-                    login = logins,
-                    alias = aliases,
-                    note = notes,
-                    creditCard = creditCards
-                )
-            }
+        itemState: ItemState?
+    ): Flow<ItemCountSummary> = database.itemsDao()
+        .itemSummary(userId.id, shareIds.map { it.id }, itemState?.value)
+        .map { values ->
+            val logins =
+                values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
+            val aliases =
+                values.firstOrNull { it.itemKind == ItemCategory.Alias.value }?.itemCount ?: 0
+            val notes =
+                values.firstOrNull { it.itemKind == ItemCategory.Note.value }?.itemCount ?: 0
+            val creditCards =
+                values.firstOrNull { it.itemKind == ItemCategory.CreditCard.value }?.itemCount
+                    ?: 0
+            ItemCountSummary(
+                total = logins + aliases + notes + creditCards,
+                login = logins,
+                alias = aliases,
+                note = notes,
+                creditCard = creditCards
+            )
+        }
 
-    override suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long) {
+    override suspend fun updateLastUsedTime(
+        shareId: ShareId,
+        itemId: ItemId,
+        now: Long
+    ) {
         database.itemsDao().updateLastUsedTime(shareId.id, itemId.id, now)
     }
 
-    override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> =
-        database.itemsDao()
-            .countItemsForShares(shareIds.map { it.id })
-            .map { values ->
-                shareIds.associate { shareId ->
-                    val rowForShare = values.firstOrNull { it.shareId == shareId.id }
-                    if (rowForShare == null) {
-                        shareId to ShareItemCount(0, 0)
-                    } else {
-                        shareId to ShareItemCount(
-                            activeItems = rowForShare.activeItemCount,
-                            trashedItems = rowForShare.trashedItemCount
-                        )
-                    }
+    override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> = database.itemsDao()
+        .countItemsForShares(shareIds.map { it.id })
+        .map { values ->
+            shareIds.associate { shareId ->
+                val rowForShare = values.firstOrNull { it.shareId == shareId.id }
+                if (rowForShare == null) {
+                    shareId to ShareItemCount(0, 0)
+                } else {
+                    shareId to ShareItemCount(
+                        activeItems = rowForShare.activeItemCount,
+                        trashedItems = rowForShare.trashedItemCount
+                    )
                 }
             }
+        }
 
     override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity? =
         database.itemsDao().getItemByAliasEmail(userId.id, aliasEmail)
@@ -202,17 +199,14 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> =
         database.itemsDao().getItemsPendingForPasskeyMigration()
 
-    override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> =
-        database.itemsDao()
-            .observeAllItemsWithTotp(userId.id)
-            .map { items -> items.map { it.toItemWithTotp() } }
-
-    override fun observeItemsWithTotpForShare(
-        userId: UserId,
-        shareId: ShareId
-    ): Flow<List<ItemWithTotp>> = database.itemsDao()
-        .observeItemsWithTotpForShare(userId = userId.id, shareId = shareId.id)
+    override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> = database.itemsDao()
+        .observeAllItemsWithTotp(userId.id)
         .map { items -> items.map { it.toItemWithTotp() } }
+
+    override fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>> =
+        database.itemsDao()
+            .observeItemsWithTotpForShare(userId = userId.id, shareId = shareId.id)
+            .map { items -> items.map { it.toItemWithTotp() } }
 
     override fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>> =
         database.itemsDao().observeAllItemsWithPasskeys(userId = userId.id)
@@ -226,7 +220,7 @@ class LocalItemDataSourceImpl @Inject constructor(
     private fun ItemEntity.toItemWithTotp(): ItemWithTotp = ItemWithTotp(
         shareId = ShareId(shareId),
         itemId = ItemId(id),
-        createTime = Instant.fromEpochSeconds(createTime),
+        createTime = Instant.fromEpochSeconds(createTime)
     )
 
     private fun ItemTypeFilter.value(): Int = when (this) {

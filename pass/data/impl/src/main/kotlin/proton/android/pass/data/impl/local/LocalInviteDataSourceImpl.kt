@@ -34,10 +34,7 @@ class LocalInviteDataSourceImpl @Inject constructor(
     override fun observeAllInvites(userId: UserId): Flow<List<InviteEntity>> =
         database.inviteDao().observeAllForUser(userId.id)
 
-    override suspend fun getInviteWithKeys(
-        userId: UserId,
-        inviteToken: InviteToken
-    ): Option<InviteAndKeysEntity> {
+    override suspend fun getInviteWithKeys(userId: UserId, inviteToken: InviteToken): Option<InviteAndKeysEntity> {
         val invite = database.inviteDao().getByToken(userId = userId.id, token = inviteToken.value)
             ?: return None
 

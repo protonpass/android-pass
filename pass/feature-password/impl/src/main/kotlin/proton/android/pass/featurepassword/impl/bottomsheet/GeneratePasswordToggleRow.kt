@@ -55,7 +55,7 @@ fun GeneratePasswordToggleRow(
         Switch(
             checked = value,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = PassTheme.colors.loginInteractionNormMajor1,
+                checkedThumbColor = PassTheme.colors.loginInteractionNormMajor1
             ),
             onCheckedChange = onChange
         )

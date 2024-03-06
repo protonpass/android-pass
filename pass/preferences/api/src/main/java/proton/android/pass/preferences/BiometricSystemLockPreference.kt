@@ -31,8 +31,7 @@ sealed interface BiometricSystemLockPreference {
     }
 }
 
-fun BiometricSystemLockPreference.value(): Boolean =
-    when (this) {
-        BiometricSystemLockPreference.Enabled -> true
-        BiometricSystemLockPreference.NotEnabled -> false
-    }
+fun BiometricSystemLockPreference.value(): Boolean = when (this) {
+    BiometricSystemLockPreference.Enabled -> true
+    BiometricSystemLockPreference.NotEnabled -> false
+}

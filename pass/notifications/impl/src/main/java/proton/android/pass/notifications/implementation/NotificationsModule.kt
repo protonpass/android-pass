@@ -36,12 +36,8 @@ abstract class NotificationsModule {
     ): SnackbarDispatcher
 
     @Binds
-    abstract fun bindNotificationManager(
-        notificationManagerImpl: NotificationManagerImpl
-    ): NotificationManager
+    abstract fun bindNotificationManager(notificationManagerImpl: NotificationManagerImpl): NotificationManager
 
     @Binds
-    abstract fun bindToastManager(
-        toastManagerImpl: ToastManagerImpl
-    ): ToastManager
+    abstract fun bindToastManager(toastManagerImpl: ToastManagerImpl): ToastManager
 }

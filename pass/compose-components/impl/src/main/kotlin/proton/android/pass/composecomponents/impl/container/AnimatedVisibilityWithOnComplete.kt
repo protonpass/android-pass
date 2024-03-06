@@ -41,12 +41,11 @@ class AnimatedVisibilityState(initialState: Boolean) {
 }
 
 @Composable
-fun rememberAnimatedVisibilityState(initialState: Boolean): AnimatedVisibilityState =
-    remember {
-        AnimatedVisibilityState(
-            initialState = initialState,
-        )
-    }
+fun rememberAnimatedVisibilityState(initialState: Boolean): AnimatedVisibilityState = remember {
+    AnimatedVisibilityState(
+        initialState = initialState
+    )
+}
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -62,7 +61,7 @@ fun AnimatedVisibilityWithOnComplete(
     AnimatedVisibility(
         modifier = modifier,
         exit = fadeOut() + shrinkVertically(),
-        visibleState = visibilityState.state,
+        visibleState = visibilityState.state
     ) {
         if (!this.transition.isRunning && !visibilityState.state.targetState) {
             LaunchedEffect(Unit) {

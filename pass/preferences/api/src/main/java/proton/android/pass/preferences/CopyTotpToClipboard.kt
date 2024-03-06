@@ -31,8 +31,7 @@ sealed interface CopyTotpToClipboard {
     }
 }
 
-fun CopyTotpToClipboard.value(): Boolean =
-    when (this) {
-        CopyTotpToClipboard.Enabled -> true
-        CopyTotpToClipboard.NotEnabled -> false
-    }
+fun CopyTotpToClipboard.value(): Boolean = when (this) {
+    CopyTotpToClipboard.Enabled -> true
+    CopyTotpToClipboard.NotEnabled -> false
+}

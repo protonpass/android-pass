@@ -35,7 +35,7 @@ interface EncryptInviteKeys {
     operator fun invoke(
         inviterAddressKey: PrivateKey,
         shareKeys: List<ShareKey>,
-        targetAddressKey: PublicKey,
+        targetAddressKey: PublicKey
     ): EncryptedInviteShareKeyList
 
 }

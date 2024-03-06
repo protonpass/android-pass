@@ -55,9 +55,7 @@ sealed interface VaultNavigation {
     value class VaultAccess(val shareId: ShareId) : VaultNavigation
 }
 
-fun NavGraphBuilder.vaultGraph(
-    onNavigate: (VaultNavigation) -> Unit,
-) {
+fun NavGraphBuilder.vaultGraph(onNavigate: (VaultNavigation) -> Unit) {
     createVaultGraph(onNavigate)
     editVaultGraph(onNavigate)
     deleteVaultDialogGraph(onNavigate)

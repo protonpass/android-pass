@@ -99,20 +99,19 @@ class AutofillManagerImpl @Inject constructor(
         }
     }
 
-    private fun canOpenAutofillSelector(): Boolean =
-        runCatching {
-            val hasEnabledAutofillServices = runBlocking {
-                withTimeout(UPDATE_TIME.inWholeMilliseconds) {
-                    getHasEnabledAutofillServices()
-                }
+    private fun canOpenAutofillSelector(): Boolean = runCatching {
+        val hasEnabledAutofillServices = runBlocking {
+            withTimeout(UPDATE_TIME.inWholeMilliseconds) {
+                getHasEnabledAutofillServices()
             }
-            val isAutofillSupported = autofillManager?.isAutofillSupported ?: false
-            !hasEnabledAutofillServices && isAutofillSupported
-        }.getOrElse {
-            PassLogger.w(TAG, "Error while checking if autofill selector can be opened")
-            PassLogger.w(TAG, it)
-            false
         }
+        val isAutofillSupported = autofillManager?.isAutofillSupported ?: false
+        !hasEnabledAutofillServices && isAutofillSupported
+    }.getOrElse {
+        PassLogger.w(TAG, "Error while checking if autofill selector can be opened")
+        PassLogger.w(TAG, it)
+        false
+    }
 
     override fun disableAutofill() {
         runCatching {

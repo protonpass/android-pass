@@ -51,7 +51,7 @@ class InviteConfirmedViewModel @Inject constructor(
     private val acceptInvite: AcceptInvite,
     private val rejectInvite: RejectInvite,
     private val snackbarDispatcher: SnackbarDispatcher,
-    observeInvites: ObserveInvites,
+    observeInvites: ObserveInvites
 ) : ViewModel() {
 
     private val buttonsFlow: MutableStateFlow<InviteConfirmedButtonsState> =

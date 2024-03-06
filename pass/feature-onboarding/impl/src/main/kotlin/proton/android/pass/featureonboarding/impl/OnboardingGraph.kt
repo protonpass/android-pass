@@ -25,14 +25,11 @@ import proton.android.pass.navigation.api.composable
 
 object OnBoarding : NavItem(baseRoute = "onboarding", isTopLevel = true)
 
-fun NavGraphBuilder.onBoardingGraph(
-    onOnBoardingFinished: () -> Unit,
-    onNavigateBack: () -> Unit
-) {
+fun NavGraphBuilder.onBoardingGraph(onOnBoardingFinished: () -> Unit, onNavigateBack: () -> Unit) {
     composable(OnBoarding) {
         BackHandler { onNavigateBack() }
         OnBoardingScreen(
-            onBoardingShown = onOnBoardingFinished,
+            onBoardingShown = onOnBoardingFinished
         )
     }
 }

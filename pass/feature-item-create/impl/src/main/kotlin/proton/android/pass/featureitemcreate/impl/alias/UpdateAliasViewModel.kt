@@ -163,7 +163,11 @@ class UpdateAliasViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    private suspend fun fetchInitialData(userId: UserId, shareId: ShareId, itemId: ItemId) {
+    private suspend fun fetchInitialData(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ) {
         runCatching {
             itemRepository.getById(shareId, itemId)
         }.onSuccess { item ->
@@ -204,7 +208,7 @@ class UpdateAliasViewModel @Inject constructor(
                         aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
                         selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                         mailboxes = mailboxes,
-                        aliasToBeCreated = email,
+                        aliasToBeCreated = email
                     )
                 } else {
                     aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
@@ -215,7 +219,7 @@ class UpdateAliasViewModel @Inject constructor(
                             aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
                             selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                             mailboxes = mailboxes,
-                            aliasToBeCreated = email,
+                            aliasToBeCreated = email
                         )
                     }
                 }

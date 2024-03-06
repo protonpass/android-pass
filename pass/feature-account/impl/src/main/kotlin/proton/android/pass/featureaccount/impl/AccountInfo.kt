@@ -57,9 +57,7 @@ fun AccountInfo(modifier: Modifier = Modifier, state: AccountUiState) {
 
 @Preview
 @Composable
-fun AccountInfoPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AccountInfo(

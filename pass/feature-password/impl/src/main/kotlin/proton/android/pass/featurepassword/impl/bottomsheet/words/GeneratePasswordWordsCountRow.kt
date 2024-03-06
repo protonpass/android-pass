@@ -83,9 +83,7 @@ fun GeneratePasswordWordsCountRow(
 
 @Preview
 @Composable
-fun GeneratePasswordWordsCountRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun GeneratePasswordWordsCountRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordWordsCountRow(

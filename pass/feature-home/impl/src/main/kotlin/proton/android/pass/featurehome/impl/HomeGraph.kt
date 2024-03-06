@@ -52,9 +52,7 @@ object Home : NavItem(
     }
 }
 
-fun NavGraphBuilder.homeGraph(
-    onNavigateEvent: (HomeNavigation) -> Unit,
-) {
+fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
     composable(Home) { navBackStack ->
         val goToVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(HOME_GO_TO_VAULT_KEY, null)

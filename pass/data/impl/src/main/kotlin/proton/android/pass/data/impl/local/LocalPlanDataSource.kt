@@ -25,8 +25,5 @@ import proton.android.pass.data.impl.responses.PlanResponse
 
 interface LocalPlanDataSource {
     fun observePlan(userId: UserId): Flow<PlanEntity?>
-    suspend fun storePlan(
-        userId: UserId,
-        planResponse: PlanResponse
-    )
+    suspend fun storePlan(userId: UserId, planResponse: PlanResponse)
 }

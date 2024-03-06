@@ -329,35 +329,34 @@ class CreateVaultViewModelTest {
     }
 
     @Test
-    fun `on next ShareVault if item migration fails and deletevault fails it does not crash`() =
-        runTest {
-            setNextShareVault()
-            createViewModel()
+    fun `on next ShareVault if item migration fails and deletevault fails it does not crash`() = runTest {
+        setNextShareVault()
+        createViewModel()
 
-            createVault.setResult(Result.success(TestShare.create(shareId = ShareId(NEW_SHARE_ID))))
-            migrateItem.setResult(Result.failure(IllegalStateException("test")))
-            deleteVault.setResult(Result.failure(IllegalStateException("test")))
+        createVault.setResult(Result.success(TestShare.create(shareId = ShareId(NEW_SHARE_ID))))
+        migrateItem.setResult(Result.failure(IllegalStateException("test")))
+        deleteVault.setResult(Result.failure(IllegalStateException("test")))
 
-            instance.onNameChange("name")
-            instance.onCreateClick()
+        instance.onNameChange("name")
+        instance.onCreateClick()
 
-            val createVaultMemory = createVault.memory()
-            assertThat(createVaultMemory.size).isEqualTo(1)
+        val createVaultMemory = createVault.memory()
+        assertThat(createVaultMemory.size).isEqualTo(1)
 
-            val migrateItemMemory = migrateItem.memory()
-            val expectedMigrateItem = TestMigrateItems.Payload(
-                items = mapOf(ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))),
-                destinationShare = ShareId(NEW_SHARE_ID)
-            )
-            assertThat(migrateItemMemory).isEqualTo(listOf(expectedMigrateItem))
+        val migrateItemMemory = migrateItem.memory()
+        val expectedMigrateItem = TestMigrateItems.Payload(
+            items = mapOf(ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))),
+            destinationShare = ShareId(NEW_SHARE_ID)
+        )
+        assertThat(migrateItemMemory).isEqualTo(listOf(expectedMigrateItem))
 
-            val deleteVaultMemory = deleteVault.memory()
-            assertThat(deleteVaultMemory).isEqualTo(listOf(ShareId(NEW_SHARE_ID)))
+        val deleteVaultMemory = deleteVault.memory()
+        assertThat(deleteVaultMemory).isEqualTo(listOf(ShareId(NEW_SHARE_ID)))
 
-            assertThat(
-                snackbar.snackbarMessage.first().value()!!
-            ).isEqualTo(VaultSnackbarMessage.CreateVaultError)
-        }
+        assertThat(
+            snackbar.snackbarMessage.first().value()!!
+        ).isEqualTo(VaultSnackbarMessage.CreateVaultError)
+    }
 
     @Test
     fun `preserves leading space but not end space`() = runTest {
@@ -388,7 +387,7 @@ class CreateVaultViewModelTest {
             encryptionContextProvider = TestEncryptionContextProvider(),
             savedStateHandleProvider = savedState,
             migrateItems = migrateItem,
-            observeUpgradeInfo = getUpgradeInfo,
+            observeUpgradeInfo = getUpgradeInfo
         )
     }
 

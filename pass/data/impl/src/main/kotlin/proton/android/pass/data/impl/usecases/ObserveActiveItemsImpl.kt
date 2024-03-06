@@ -39,22 +39,20 @@ class ObserveActiveItemsImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : ObserveActiveItems {
 
-    override operator fun invoke(
-        filter: ItemTypeFilter,
-        shareSelection: ShareSelection
-    ): Flow<List<Item>> = observeCurrentUser()
-        .filterNotNull()
-        .combine(observeAllShares()) { user, shares ->
-            user to shares.map { share -> share.id }
-        }
-        .distinctUntilChanged()
-        .flatMapLatest { pair ->
-            itemRepository.observeItems(
-                userId = pair.first.userId,
-                shareSelection = shareSelection,
-                itemState = ItemState.Active,
-                itemTypeFilter = filter
-            )
-        }
-        .distinctUntilChanged()
+    override operator fun invoke(filter: ItemTypeFilter, shareSelection: ShareSelection): Flow<List<Item>> =
+        observeCurrentUser()
+            .filterNotNull()
+            .combine(observeAllShares()) { user, shares ->
+                user to shares.map { share -> share.id }
+            }
+            .distinctUntilChanged()
+            .flatMapLatest { pair ->
+                itemRepository.observeItems(
+                    userId = pair.first.userId,
+                    shareSelection = shareSelection,
+                    itemState = ItemState.Active,
+                    itemTypeFilter = filter
+                )
+            }
+            .distinctUntilChanged()
 }

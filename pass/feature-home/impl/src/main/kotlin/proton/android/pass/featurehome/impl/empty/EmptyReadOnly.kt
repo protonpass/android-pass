@@ -66,9 +66,7 @@ fun EmptyReadOnly(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun EmptyReadOnlyPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun EmptyReadOnlyPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             EmptyReadOnly()

@@ -119,15 +119,9 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override fun observeById(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Flow<Item> = itemFlow
+    override fun observeById(shareId: ShareId, itemId: ItemId): Flow<Item> = itemFlow
 
-    override suspend fun getById(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = item ?: throw IllegalStateException(
+    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item = item ?: throw IllegalStateException(
         "Item cannot be null, did you forget to invoke setItem()?"
     )
 
@@ -205,10 +199,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteItems(
-        userId: UserId,
-        items: Map<ShareId, List<ItemId>>
-    ) {
+    override suspend fun deleteItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         TODO("Not yet implemented")
     }
 
@@ -245,7 +236,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     override suspend fun getItemRevisions(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
+        itemId: ItemId
     ): List<ItemRevision> = itemRevisions ?: throw IllegalStateException(
         "Item revisions cannot be null, did you forget to invoke setItemRevisions()?"
     )

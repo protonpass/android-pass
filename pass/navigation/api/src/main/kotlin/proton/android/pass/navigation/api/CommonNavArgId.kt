@@ -69,5 +69,5 @@ enum class AliasOptionalNavArgId : OptionalNavArgId {
     Title {
         override val key: String = "aliasTitle"
         override val navType: NavType<*> = NavType.StringType
-    },
+    }
 }

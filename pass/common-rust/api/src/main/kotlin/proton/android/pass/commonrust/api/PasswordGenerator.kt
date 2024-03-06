@@ -44,5 +44,5 @@ data class PassphraseConfig(
     val separator: WordSeparator,
     val capitalise: Boolean,
     val numbers: Boolean,
-    val count: UInt,
+    val count: UInt
 )

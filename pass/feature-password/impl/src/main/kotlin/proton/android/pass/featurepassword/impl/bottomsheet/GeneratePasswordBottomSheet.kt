@@ -38,10 +38,7 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 
 @Suppress("CyclomaticComplexMethod", "ComplexMethod")
 @Composable
-fun GeneratePasswordBottomSheet(
-    modifier: Modifier = Modifier,
-    onNavigate: (GeneratePasswordNavigation) -> Unit,
-) {
+fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (GeneratePasswordNavigation) -> Unit) {
     val viewModel = hiltViewModel<GeneratePasswordViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
 

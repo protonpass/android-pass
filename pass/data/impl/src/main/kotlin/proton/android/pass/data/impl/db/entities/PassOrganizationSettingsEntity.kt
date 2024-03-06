@@ -26,7 +26,7 @@ import me.proton.core.user.data.entity.UserEntity
 @Entity(
     tableName = PassOrganizationSettingsEntity.TABLE,
     primaryKeys = [
-        PassOrganizationSettingsEntity.Columns.USER_ID,
+        PassOrganizationSettingsEntity.Columns.USER_ID
     ],
     foreignKeys = [
         ForeignKey(

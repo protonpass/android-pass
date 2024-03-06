@@ -27,8 +27,7 @@ sealed interface HasDismissedTrialBanner {
     }
 }
 
-fun HasDismissedTrialBanner.value(): Boolean =
-    when (this) {
-        HasDismissedTrialBanner.Dismissed -> true
-        HasDismissedTrialBanner.NotDismissed -> false
-    }
+fun HasDismissedTrialBanner.value(): Boolean = when (this) {
+    HasDismissedTrialBanner.Dismissed -> true
+    HasDismissedTrialBanner.NotDismissed -> false
+}

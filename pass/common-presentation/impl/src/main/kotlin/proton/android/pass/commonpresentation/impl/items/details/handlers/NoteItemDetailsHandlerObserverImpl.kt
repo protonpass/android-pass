@@ -38,19 +38,19 @@ import javax.inject.Inject
 
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultById: GetVaultById,
-    private val encryptionContextProvider: EncryptionContextProvider,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver {
 
     private val noteItemContentsFlow = MutableStateFlow<ItemContents.Note?>(null)
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeNoteItemContents(item),
-        getVaultById(shareId = item.shareId),
+        getVaultById(shareId = item.shareId)
     ) { noteItemContents, vault ->
         ItemDetailState.Note(
             contents = noteItemContents,
             isPinned = item.isPinned,
-            vault = vault,
+            vault = vault
         )
     }
 
@@ -65,10 +65,7 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
                 noteItemContentsFlow.update { noteItemContents }
             }
 
-    override fun updateHiddenState(
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenState: HiddenState,
-    ) {
+    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
         noteItemContentsFlow.update { noteItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField,

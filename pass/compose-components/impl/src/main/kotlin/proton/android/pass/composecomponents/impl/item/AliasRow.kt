@@ -147,9 +147,7 @@ class ThemedAliasItemPreviewProvider :
 
 @Preview
 @Composable
-fun AliasRowPreview(
-    @PreviewParameter(ThemedAliasItemPreviewProvider::class) input: Pair<Boolean, AliasRowParameter>
-) {
+fun AliasRowPreview(@PreviewParameter(ThemedAliasItemPreviewProvider::class) input: Pair<Boolean, AliasRowParameter>) {
     PassTheme(isDark = input.first) {
         Surface {
             AliasRow(

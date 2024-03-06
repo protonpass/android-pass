@@ -68,7 +68,7 @@ fun LeaveVaultDialogContent(
         content = {
             Text(
                 text = bodyText,
-                style = ProtonTheme.typography.defaultWeak,
+                style = ProtonTheme.typography.defaultWeak
             )
         },
         confirmText = stringResource(R.string.vault_leave_dialog_leave_action),

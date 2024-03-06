@@ -22,7 +22,7 @@ data class CreatePasskeyRequestData(
     val rpId: String?,
     val rpName: String,
     val userName: String,
-    val userDisplayName: String,
+    val userDisplayName: String
 )
 
 interface ParseCreatePasskeyRequest {

@@ -68,7 +68,7 @@ fun UpdateNote(
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
             vaultSelect = {},
-            noteItemFormState = viewModel.noteItemFormState,
+            noteItemFormState = viewModel.noteItemFormState
         )
 
         ConfirmCloseDialog(
@@ -90,6 +90,6 @@ fun UpdateNote(
         }
     )
     InAppReviewTriggerLaunchedEffect(
-        triggerCondition = noteUiState.baseNoteUiState.itemSavedState is ItemSavedState.Success,
+        triggerCondition = noteUiState.baseNoteUiState.itemSavedState is ItemSavedState.Success
     )
 }

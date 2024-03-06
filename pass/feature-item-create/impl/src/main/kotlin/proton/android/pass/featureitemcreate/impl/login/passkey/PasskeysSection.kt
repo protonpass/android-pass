@@ -31,7 +31,7 @@ import proton.android.pass.featureitemcreate.impl.login.UIPasskeyContent
 fun PasskeysSection(
     modifier: Modifier = Modifier,
     passkeys: ImmutableList<UIPasskeyContent>,
-    onEvent: (LoginContentEvent) -> Unit,
+    onEvent: (LoginContentEvent) -> Unit
 ) {
     if (passkeys.isEmpty()) return
 

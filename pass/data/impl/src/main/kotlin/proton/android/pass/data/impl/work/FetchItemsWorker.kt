@@ -49,7 +49,7 @@ open class FetchItemsWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val forceSyncItems: ForceSyncItems,
-    private val accountManager: AccountManager,
+    private val accountManager: AccountManager
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -88,7 +88,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         val channel = NotificationChannel(
             SYNC_NOTIFICATION_CHANNEL_ID,
             getString(R.string.sync_channel),
-            NotificationManager.IMPORTANCE_DEFAULT,
+            NotificationManager.IMPORTANCE_DEFAULT
         ).apply { description = getString(R.string.sync_channel_description) }
         (getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager)
             ?.createNotificationChannel(channel)

@@ -34,9 +34,7 @@ object CreateItemBottomsheet : NavItem(
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRoute(
-        shareId: Option<ShareId> = None,
-    ) = buildString {
+    fun createNavRoute(shareId: Option<ShareId> = None) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
@@ -57,7 +55,7 @@ sealed interface CreateItemBottomsheetNavigation {
 
 fun NavGraphBuilder.bottomsheetCreateItemGraph(
     mode: CreateItemBottomSheetMode,
-    onNavigate: (CreateItemBottomsheetNavigation) -> Unit,
+    onNavigate: (CreateItemBottomsheetNavigation) -> Unit
 ) {
     bottomSheet(CreateItemBottomsheet) {
         CreateItemBottomSheet(

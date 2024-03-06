@@ -63,7 +63,7 @@ class ProtonPassAutofillService : AutofillService() {
     override fun onFillRequest(
         request: FillRequest,
         cancellationSignal: CancellationSignal,
-        callback: FillCallback,
+        callback: FillCallback
     ) {
         val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
         if (requestFlags.isNotEmpty()) {

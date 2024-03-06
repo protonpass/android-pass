@@ -71,7 +71,7 @@ fun MemberOptionsContent(
         ) {
             onEvent(MemberOptionsUiEvent.SetPermission(MemberPermissionLevel.Read))
         },
-        bottomSheetDivider(),
+        bottomSheetDivider()
     )
 
     when (state.transferOwnership) {
@@ -155,123 +155,120 @@ private fun permissionRow(
     checked: Boolean,
     loading: Boolean,
     onClick: () -> Unit
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                val color = if (enabled) {
-                    PassTheme.colors.textNorm
-                } else {
-                    PassTheme.colors.textWeak
-                }
-                BottomSheetItemTitle(
-                    text = stringResource(id = title),
-                    color = color
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemSubtitle(
-                    text = stringResource(id = subtitle),
-                    maxLines = 1
-                )
-            }
-        override val leftIcon: (@Composable () -> Unit)?
-            get() = null
-        override val endIcon: (@Composable () -> Unit)?
-            get() = if (loading) {
-                { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
-            } else if (checked) {
-                { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark) }
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            val color = if (enabled) {
+                PassTheme.colors.textNorm
             } else {
-                null
+                PassTheme.colors.textWeak
             }
-        override val onClick: (() -> Unit)?
-            get() = if (enabled && !checked) {
-                onClick
-            } else {
-                null
-            }
-        override val isDivider = false
-    }
+            BottomSheetItemTitle(
+                text = stringResource(id = title),
+                color = color
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemSubtitle(
+                text = stringResource(id = subtitle),
+                maxLines = 1
+            )
+        }
+    override val leftIcon: (@Composable () -> Unit)?
+        get() = null
+    override val endIcon: (@Composable () -> Unit)?
+        get() = if (loading) {
+            { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
+        } else if (checked) {
+            { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark) }
+        } else {
+            null
+        }
+    override val onClick: (() -> Unit)?
+        get() = if (enabled && !checked) {
+            onClick
+        } else {
+            null
+        }
+    override val isDivider = false
+}
 
 private fun transferOwnership(
     enabled: Boolean,
     subtitle: String? = null,
     onClick: (() -> Unit)? = null
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                val color = if (enabled) {
-                    PassTheme.colors.textNorm
-                } else {
-                    PassTheme.colors.textWeak
-                }
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.sharing_bottomsheet_transfer_ownership),
-                    color = color
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            val color = if (enabled) {
+                PassTheme.colors.textNorm
+            } else {
+                PassTheme.colors.textWeak
+            }
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.sharing_bottomsheet_transfer_ownership),
+                color = color
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = if (subtitle != null) {
+            {
+                BottomSheetItemSubtitle(
+                    text = subtitle,
+                    maxLines = 1
                 )
             }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = if (subtitle != null) {
-                {
-                    BottomSheetItemSubtitle(
-                        text = subtitle,
-                        maxLines = 1
-                    )
-                }
-            } else null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_shield_half_filled) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: (() -> Unit)?
-            get() = if (enabled) {
-                onClick
-            } else {
-                null
-            }
-        override val isDivider = false
-    }
+        } else null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_shield_half_filled) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: (() -> Unit)?
+        get() = if (enabled) {
+            onClick
+        } else {
+            null
+        }
+    override val isDivider = false
+}
 
 
 private fun removeAccess(
     enabled: Boolean,
     loading: Boolean,
     onClick: () -> Unit
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                val color = if (enabled) {
-                    PassTheme.colors.textNorm
-                } else {
-                    PassTheme.colors.textWeak
-                }
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.sharing_bottomsheet_remove_access),
-                    color = color
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_circle_slash) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = if (loading) {
-                { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            val color = if (enabled) {
+                PassTheme.colors.textNorm
             } else {
-                null
+                PassTheme.colors.textWeak
             }
-        override val onClick: (() -> Unit)?
-            get() = if (enabled) {
-                onClick
-            } else {
-                null
-            }
-        override val isDivider = false
-    }
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.sharing_bottomsheet_remove_access),
+                color = color
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_circle_slash) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = if (loading) {
+            { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
+        } else {
+            null
+        }
+    override val onClick: (() -> Unit)?
+        get() = if (enabled) {
+            onClick
+        } else {
+            null
+        }
+    override val isDivider = false
+}
 
 @Preview
 @Composable

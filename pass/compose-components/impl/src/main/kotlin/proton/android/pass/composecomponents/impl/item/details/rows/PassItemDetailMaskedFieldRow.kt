@@ -39,7 +39,7 @@ internal fun PassItemDetailMaskedFieldRow(
     isSelectable: Boolean = false,
     isToggleable: Boolean = false,
     onClick: (() -> Unit)? = null,
-    contentInBetween: (@Composable () -> Unit)? = null,
+    contentInBetween: (@Composable () -> Unit)? = null
 ) {
     var isMasked by remember { mutableStateOf(true) }
 
@@ -50,7 +50,7 @@ internal fun PassItemDetailMaskedFieldRow(
         subtitle = if (isMasked) maskedSubtitle.masked else maskedSubtitle.unmasked,
         itemColors = itemColors,
         isSelectable = isSelectable,
-        onClick = onClick,
+        onClick = onClick
     ) {
         contentInBetween?.invoke()
 
@@ -58,7 +58,7 @@ internal fun PassItemDetailMaskedFieldRow(
             PassVisibilityToggle(
                 isVisible = !isMasked,
                 onToggle = { isVisible -> isMasked = !isVisible },
-                itemColors = itemColors,
+                itemColors = itemColors
             )
         }
     }

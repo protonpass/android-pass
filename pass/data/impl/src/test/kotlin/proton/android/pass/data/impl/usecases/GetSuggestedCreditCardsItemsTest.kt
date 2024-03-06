@@ -44,7 +44,7 @@ internal class GetSuggestedCreditCardsItemsTest {
         observeActiveItems = TestObserveActiveItems()
         instance = GetSuggestedCreditCardItemsImpl(
             getUserPlan = getUserPlan,
-            observeActiveItems = observeActiveItems,
+            observeActiveItems = observeActiveItems
         )
     }
 

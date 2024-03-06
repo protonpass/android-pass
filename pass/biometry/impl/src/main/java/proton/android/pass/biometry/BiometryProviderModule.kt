@@ -33,7 +33,5 @@ object BiometryProviderModule {
 
     @Provides
     @Singleton
-    fun provideBiometricManager(
-        @ApplicationContext context: Context
-    ): BiometricManager = BiometricManager.from(context)
+    fun provideBiometricManager(@ApplicationContext context: Context): BiometricManager = BiometricManager.from(context)
 }

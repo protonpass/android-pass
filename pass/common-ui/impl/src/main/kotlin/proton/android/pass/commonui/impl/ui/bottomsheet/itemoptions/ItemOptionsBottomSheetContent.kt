@@ -61,53 +61,48 @@ fun ItemOptionsBottomSheetContent(
 }
 
 
-internal fun moveToTrash(
-    isLoading: Boolean,
-    onMoveToTrash: () -> Unit
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                val color = if (isLoading) {
-                    PassTheme.colors.textHint
-                } else {
-                    PassTheme.colors.textNorm
-                }
-                BottomSheetItemTitle(
-                    text = stringResource(id = CompR.string.bottomsheet_move_to_trash),
-                    color = color
-                )
+internal fun moveToTrash(isLoading: Boolean, onMoveToTrash: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            val color = if (isLoading) {
+                PassTheme.colors.textHint
+            } else {
+                PassTheme.colors.textNorm
             }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_trash)
+            BottomSheetItemTitle(
+                text = stringResource(id = CompR.string.bottomsheet_move_to_trash),
+                color = color
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_trash)
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = if (isLoading) {
+            {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp))
             }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = if (isLoading) {
-                {
-                    CircularProgressIndicator(modifier = Modifier.size(20.dp))
-                }
-            } else null
-        override val onClick: (() -> Unit)?
-            get() = if (!isLoading) {
-                { onMoveToTrash() }
-            } else null
-        override val isDivider = false
-    }
+        } else null
+    override val onClick: (() -> Unit)?
+        get() = if (!isLoading) {
+            { onMoveToTrash() }
+        } else null
+    override val isDivider = false
+}
 
-private fun copyToClipboard(text: String, onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = text) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_squares) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: (() -> Unit)
-            get() = onClick
-        override val isDivider = false
-    }
+private fun copyToClipboard(text: String, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = text) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_squares) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: (() -> Unit)
+        get() = onClick
+    override val isDivider = false
+}

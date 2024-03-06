@@ -29,26 +29,24 @@ import javax.inject.Inject
 
 class EventRepositoryImpl @Inject constructor(
     private val localEventDataSource: LocalEventDataSource,
-    private val remoteEventDataSource: RemoteEventDataSource,
+    private val remoteEventDataSource: RemoteEventDataSource
 ) : EventRepository {
 
-    override suspend fun getLatestEventId(
-        userId: UserId,
-        shareId: ShareId,
-    ): String = localEventDataSource.getLatestEventId(userId, shareId).first()
-        ?: remoteEventDataSource.getLatestEventId(userId, shareId).first()
+    override suspend fun getLatestEventId(userId: UserId, shareId: ShareId): String =
+        localEventDataSource.getLatestEventId(userId, shareId).first()
+            ?: remoteEventDataSource.getLatestEventId(userId, shareId).first()
 
     override suspend fun getEvents(
         lastEventId: String,
         userId: UserId,
-        shareId: ShareId,
+        shareId: ShareId
     ): EventList = remoteEventDataSource.getEvents(userId, shareId, lastEventId).first()
 
     override suspend fun storeLatestEventId(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
-        eventId: String,
+        eventId: String
     ) {
         if (localEventDataSource.getLatestEventId(userId, shareId).first() == eventId) return
 

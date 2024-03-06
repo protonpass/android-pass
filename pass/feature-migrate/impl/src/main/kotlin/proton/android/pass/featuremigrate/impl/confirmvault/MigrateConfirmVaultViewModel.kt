@@ -118,15 +118,12 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             )
 
             is Mode.MigrateSelectedItems -> performItemMigration(
-                destShareId = mode.destShareId,
+                destShareId = mode.destShareId
             )
         }
     }
 
-    private suspend fun performAllItemsMigration(
-        sourceShareId: ShareId,
-        destShareId: ShareId,
-    ) {
+    private suspend fun performAllItemsMigration(sourceShareId: ShareId, destShareId: ShareId) {
         isLoadingFlow.update { IsLoadingState.Loading }
         runCatching {
             migrateVault(
@@ -219,7 +216,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         val destShareId = ShareId(savedStateHandle.require(DestinationShareNavArgId.key))
         return when (getNavMode()) {
             MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
-                destShareId = destShareId,
+                destShareId = destShareId
             )
 
             MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
@@ -233,7 +230,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         val destShareId: ShareId
 
         data class MigrateSelectedItems(
-            override val destShareId: ShareId,
+            override val destShareId: ShareId
         ) : Mode
 
         data class MigrateAllItems(

@@ -63,7 +63,7 @@ internal class GeneratePasswordViewModelTest {
             clipboardManager = TestClipboardManager(),
             draftRepository = TestDraftRepository(),
             encryptionContextProvider = TestEncryptionContextProvider(),
-            passwordGenerator = TestPasswordGenerator(),
+            passwordGenerator = TestPasswordGenerator()
         )
     }
 

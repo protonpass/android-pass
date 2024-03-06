@@ -353,7 +353,7 @@ fun NavGraphBuilder.appGraph(
                         )
                 }
             }
-        },
+        }
     )
     vaultGraph(
         onNavigate = {
@@ -709,7 +709,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
             }
-        },
+        }
     )
     updateAliasGraph(
         onNavigate = {
@@ -846,7 +846,7 @@ fun NavGraphBuilder.appGraph(
                     destination = ItemHistoryTimelineNavItem,
                     route = ItemHistoryTimelineNavItem.createNavRoute(
                         shareId = it.shareId,
-                        itemId = it.itemId,
+                        itemId = it.itemId
                     )
                 )
             }
@@ -857,12 +857,12 @@ fun NavGraphBuilder.appGraph(
         onNavigated = { itemHistoryNavDestination ->
             when (itemHistoryNavDestination) {
                 ItemHistoryNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false,
+                    comesFromBottomsheet = false
                 )
 
                 is ItemHistoryNavDestination.Detail -> appNavigator.popUpTo(
                     destination = ViewItem,
-                    comesFromBottomsheet = false,
+                    comesFromBottomsheet = false
                 )
 
                 is ItemHistoryNavDestination.Restore -> appNavigator.navigate(
@@ -870,7 +870,7 @@ fun NavGraphBuilder.appGraph(
                     route = ItemHistoryRestoreNavItem.createNavRoute(
                         shareId = itemHistoryNavDestination.shareId,
                         itemId = itemHistoryNavDestination.itemId,
-                        itemRevision = itemHistoryNavDestination.itemRevision,
+                        itemRevision = itemHistoryNavDestination.itemRevision
                     )
                 )
 
@@ -878,7 +878,7 @@ fun NavGraphBuilder.appGraph(
                     destination = ItemHistoryTimelineNavItem,
                     route = ItemHistoryTimelineNavItem.createNavRoute(
                         shareId = itemHistoryNavDestination.shareId,
-                        itemId = itemHistoryNavDestination.itemId,
+                        itemId = itemHistoryNavDestination.itemId
                     )
                 )
             }
@@ -1124,7 +1124,7 @@ fun NavGraphBuilder.appGraph(
             )
 
             SharingNavigation.InviteError -> appNavigator.navigate(
-                destination = InvitesErrorDialog,
+                destination = InvitesErrorDialog
             )
         }
     }

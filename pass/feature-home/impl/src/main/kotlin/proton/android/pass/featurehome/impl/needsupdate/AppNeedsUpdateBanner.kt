@@ -32,10 +32,7 @@ import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 
 @Composable
-fun AppNeedsUpdateBanner(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
+fun AppNeedsUpdateBanner(modifier: Modifier = Modifier, onClick: () -> Unit) {
     val text = stringResource(R.string.home_app_needs_update_message)
 
     InfoBanner(
@@ -48,9 +45,7 @@ fun AppNeedsUpdateBanner(
 
 @Preview
 @Composable
-fun AppNeedsUpdateBannerPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AppNeedsUpdateBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AppNeedsUpdateBanner(

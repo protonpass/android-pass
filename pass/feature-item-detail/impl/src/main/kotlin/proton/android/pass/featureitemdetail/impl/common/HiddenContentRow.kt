@@ -104,9 +104,7 @@ fun HiddenContentRow(
 
 @Preview
 @Composable
-fun HiddenContentRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun HiddenContentRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     val text = if (input.second) "Content" else "****"
     PassTheme(isDark = input.first) {
         Surface {

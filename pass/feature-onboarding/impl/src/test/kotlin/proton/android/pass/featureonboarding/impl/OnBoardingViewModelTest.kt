@@ -108,80 +108,76 @@ class OnBoardingViewModelTest {
     }
 
     @Test
-    fun `given a click on enable autofill when fingerprint is available should select next page`() =
-        runTest {
-            observeUserAccessData.sendValue(UserAccessData(0, 0, false))
-            biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
-            autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
-            viewModel = createViewModel()
-            viewModel.onBoardingUiState.test {
-                skipItems(1)
-                viewModel.onMainButtonClick(Autofill, ClassHolder(None))
-                assertThat(awaitItem()).isEqualTo(
-                    OnBoardingUiState.Initial.copy(
-                        enabledPages = persistentListOf(Autofill, Fingerprint, Last),
-                        selectedPage = 1
-                    )
+    fun `given a click on enable autofill when fingerprint is available should select next page`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0, false))
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
+        viewModel = createViewModel()
+        viewModel.onBoardingUiState.test {
+            skipItems(1)
+            viewModel.onMainButtonClick(Autofill, ClassHolder(None))
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(
+                    enabledPages = persistentListOf(Autofill, Fingerprint, Last),
+                    selectedPage = 1
                 )
-            }
+            )
         }
+    }
 
     @Test
-    fun `given a click on enable autofill when fingerprint is not available should select next page`() =
-        runTest {
-            observeUserAccessData.sendValue(UserAccessData(0, 0, false))
-            biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
-            autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
-            viewModel = createViewModel()
-            viewModel.onBoardingUiState.test {
-                skipItems(1)
-                viewModel.onMainButtonClick(Autofill, ClassHolder(None))
-                assertThat(awaitItem()).isEqualTo(
-                    OnBoardingUiState.Initial.copy(
-                        selectedPage = 1,
-                        enabledPages = persistentListOf(Autofill, Last)
-                    )
+    fun `given a click on enable autofill when fingerprint is not available should select next page`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0, false))
+        biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
+        viewModel = createViewModel()
+        viewModel.onBoardingUiState.test {
+            skipItems(1)
+            viewModel.onMainButtonClick(Autofill, ClassHolder(None))
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(
+                    selectedPage = 1,
+                    enabledPages = persistentListOf(Autofill, Last)
                 )
-            }
+            )
         }
+    }
 
     @Test
-    fun `given a click on skip autofill when fingerprint is available should select next page`() =
-        runTest {
-            observeUserAccessData.sendValue(UserAccessData(0, 0, false))
-            biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
-            autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
-            viewModel = createViewModel()
-            viewModel.onBoardingUiState.test {
-                skipItems(1)
-                viewModel.onSkipButtonClick(Autofill)
-                assertThat(awaitItem()).isEqualTo(
-                    OnBoardingUiState.Initial.copy(
-                        enabledPages = persistentListOf(Autofill, Fingerprint, Last),
-                        selectedPage = 1
-                    )
+    fun `given a click on skip autofill when fingerprint is available should select next page`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0, false))
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
+        viewModel = createViewModel()
+        viewModel.onBoardingUiState.test {
+            skipItems(1)
+            viewModel.onSkipButtonClick(Autofill)
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(
+                    enabledPages = persistentListOf(Autofill, Fingerprint, Last),
+                    selectedPage = 1
                 )
-            }
+            )
         }
+    }
 
     @Test
-    fun `given a click on skip autofill when fingerprint is not available should select next page`() =
-        runTest {
-            observeUserAccessData.sendValue(UserAccessData(0, 0, false))
-            biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
-            autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
-            viewModel = createViewModel()
-            viewModel.onBoardingUiState.test {
-                skipItems(1)
-                viewModel.onSkipButtonClick(Autofill)
-                assertThat(awaitItem()).isEqualTo(
-                    OnBoardingUiState.Initial.copy(
-                        selectedPage = 1,
-                        enabledPages = persistentListOf(Autofill, Last)
-                    )
+    fun `given a click on skip autofill when fingerprint is not available should select next page`() = runTest {
+        observeUserAccessData.sendValue(UserAccessData(0, 0, false))
+        biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
+        viewModel = createViewModel()
+        viewModel.onBoardingUiState.test {
+            skipItems(1)
+            viewModel.onSkipButtonClick(Autofill)
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(
+                    selectedPage = 1,
+                    enabledPages = persistentListOf(Autofill, Last)
                 )
-            }
+            )
         }
+    }
 
     @Test
     fun `given unsupported biometric should show 1 screen`() = runTest {
@@ -258,10 +254,7 @@ class OnBoardingViewModelTest {
         testInvitePending(waitingNewUserInvites = 1, expectedToContainPage = true)
     }
 
-    private suspend fun testInvitePending(
-        waitingNewUserInvites: Int,
-        expectedToContainPage: Boolean
-    ) {
+    private suspend fun testInvitePending(waitingNewUserInvites: Int, expectedToContainPage: Boolean) {
         val userAccessData = UserAccessData(
             pendingInvites = 0,
             waitingNewUserInvites = waitingNewUserInvites,
@@ -275,12 +268,11 @@ class OnBoardingViewModelTest {
         }
     }
 
-    private fun createViewModel() =
-        OnBoardingViewModel(
-            autofillManager = autofillManager,
-            biometryManager = biometryManager,
-            userPreferencesRepository = preferenceRepository,
-            snackbarDispatcher = snackbarMessageRepository,
-            observeUserAccessData = observeUserAccessData,
-        )
+    private fun createViewModel() = OnBoardingViewModel(
+        autofillManager = autofillManager,
+        biometryManager = biometryManager,
+        userPreferencesRepository = preferenceRepository,
+        snackbarDispatcher = snackbarMessageRepository,
+        observeUserAccessData = observeUserAccessData
+    )
 }

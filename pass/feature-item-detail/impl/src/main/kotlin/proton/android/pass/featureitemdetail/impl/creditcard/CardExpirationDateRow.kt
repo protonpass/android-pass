@@ -34,10 +34,7 @@ import proton.android.pass.featureitemdetail.impl.common.IconLabelTextRow
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun CardExpirationDateRow(
-    modifier: Modifier = Modifier,
-    expirationDate: String
-) {
+fun CardExpirationDateRow(modifier: Modifier = Modifier, expirationDate: String) {
     IconLabelTextRow(
         modifier = modifier,
         icon = {
@@ -55,9 +52,7 @@ fun CardExpirationDateRow(
 
 @Preview
 @Composable
-fun CardExpirationDateRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CardExpirationDateRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CardExpirationDateRow(

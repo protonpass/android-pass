@@ -65,8 +65,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     var visitedNodes = 0
         private set
 
-    fun extract(node: AssistStructure.ViewNode): ExtractionResult =
-        extract(node.toAutofillNode())
+    fun extract(node: AssistStructure.ViewNode): ExtractionResult = extract(node.toAutofillNode())
 
     fun extract(node: AutofillNode): ExtractionResult {
         visitedNodes = 0
@@ -88,7 +87,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
 
         return ExtractionResult(
-            fields = autoFillNodes,
+            fields = autoFillNodes
         )
     }
 
@@ -241,7 +240,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     private fun debugNode(
         node: AutofillNode,
         isImportant: Boolean,
-        hasAutofillInfo: HasAutofillInfoResult,
+        hasAutofillInfo: HasAutofillInfoResult
     ) {
         if (node.id == null) return
         val nodeId = node.id.value()
@@ -262,9 +261,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     }
 
     @Suppress("LongMethod")
-    private fun getAutofillNodeFromContext(
-        autofillContext: AutofillTraversalContext
-    ): Option<AssistField> {
+    private fun getAutofillNodeFromContext(autofillContext: AutofillTraversalContext): Option<AssistField> {
         // Invariant: node must be an EditText
         if (!autofillContext.node.isEditText()) return None
 

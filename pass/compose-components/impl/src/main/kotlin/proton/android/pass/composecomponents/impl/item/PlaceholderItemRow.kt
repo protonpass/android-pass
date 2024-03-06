@@ -72,9 +72,7 @@ fun PlaceholderItemRow(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun PlaceholderRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun PlaceholderRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PlaceholderItemRow()

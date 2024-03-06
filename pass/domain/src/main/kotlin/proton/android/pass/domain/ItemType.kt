@@ -68,7 +68,7 @@ sealed interface ItemType {
         val cvv: EncryptedString,
         val pin: EncryptedString,
         val creditCardType: CreditCardType,
-        val expirationDate: String,
+        val expirationDate: String
     ) : ItemType
 
     @Serializable

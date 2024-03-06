@@ -30,14 +30,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailTitleRow
 import proton.android.pass.composecomponents.impl.item.details.sections.PassItemDetailSections
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.domain.HiddenState
 
 @Composable
 fun PassItemDetailsContent(
@@ -45,10 +43,7 @@ fun PassItemDetailsContent(
     topBar: @Composable () -> Unit,
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onLinkClick: (String) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -79,10 +74,7 @@ fun PassItemDetailsContent(
                     .padding(horizontal = Spacing.medium),
                 itemDetailState = itemDetailState,
                 itemColors = itemColors,
-                onSectionClick = onSectionClick,
-                onHiddenSectionClick = onHiddenSectionClick,
-                onHiddenSectionToggle = onHiddenSectionToggle,
-                onLinkClick = onLinkClick
+                onEvent = onEvent
             )
         }
     }

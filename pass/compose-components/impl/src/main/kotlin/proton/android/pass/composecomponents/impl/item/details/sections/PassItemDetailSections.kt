@@ -21,25 +21,21 @@ package proton.android.pass.composecomponents.impl.item.details.sections
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toImmutableList
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.alias.PassAliasItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.cards.PassCreditCardItemDetailsSections
 import proton.android.pass.composecomponents.impl.item.details.sections.login.PassLoginItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.notes.PassNoteItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.domain.HiddenState
 
 @Composable
 internal fun PassItemDetailSections(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onLinkClick: (String) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(itemDetailState) {
     when (this) {
         is ItemDetailState.Alias -> PassAliasItemDetailSections(
@@ -47,16 +43,14 @@ internal fun PassItemDetailSections(
             contents = contents,
             itemColors = itemColors,
             mailboxes = mailboxes.toImmutableList(),
-            onSectionClick = onSectionClick
+            onEvent = onEvent
         )
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(
             modifier = modifier,
             contents = contents,
             itemColors = itemColors,
-            onSectionClick = onSectionClick,
-            onHiddenSectionClick = onHiddenSectionClick,
-            onHiddenSectionToggle = onHiddenSectionToggle
+            onEvent = onEvent
         )
 
         is ItemDetailState.Login -> PassLoginItemDetailSections(
@@ -65,11 +59,9 @@ internal fun PassItemDetailSections(
             passwordStrength = passwordStrength,
             primaryTotp = primaryTotp,
             customFields = customFields.toImmutableList(),
+            passkeys = passkeys.toImmutableList(),
             itemColors = itemColors,
-            onSectionClick = onSectionClick,
-            onHiddenSectionClick = onHiddenSectionClick,
-            onHiddenSectionToggle = onHiddenSectionToggle,
-            onLinkClick = onLinkClick
+            onEvent = onEvent
         )
 
         is ItemDetailState.Note -> PassNoteItemDetailSections(

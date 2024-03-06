@@ -237,6 +237,7 @@ class LoginDetailViewModel @Inject constructor(
 
                 LoginItemInfo(
                     itemUiModel = itemUiModel,
+                    itemContents = itemUiModel.contents as ItemContents.Login,
                     vault = details.vault,
                     hasMoreThanOneVault = details.hasMoreThanOneVault,
                     linkedAlias = alias,
@@ -305,6 +306,7 @@ class LoginDetailViewModel @Inject constructor(
 
     private data class LoginItemInfo(
         val itemUiModel: ItemUiModel,
+        val itemContents: ItemContents.Login,
         val vault: Vault,
         val hasMoreThanOneVault: Boolean,
         val linkedAlias: Option<LinkedAliasItem>,
@@ -372,6 +374,7 @@ class LoginDetailViewModel @Inject constructor(
 
                 val permissions = details.vault.role.toPermissions()
                 val canPerformItemActions = permissions.canUpdate()
+                val passkeys = details.itemContents.passkeys.map { UIPasskeyContent.from(it) }
 
                 LoginDetailUiState.Success(
                     itemUiModel = details.itemUiModel,
@@ -385,7 +388,7 @@ class LoginDetailViewModel @Inject constructor(
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canPerformItemActions = canPerformItemActions,
                     customFields = customFieldsList.toPersistentList(),
-                    passkeys = contents.passkeys.map { UIPasskeyContent.from(it) }.toPersistentList(),
+                    passkeys = passkeys.toPersistentList(),
                     shareClickAction = details.shareClickAction,
                     itemActions = actions,
                     event = event,

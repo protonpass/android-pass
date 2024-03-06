@@ -224,7 +224,7 @@ object AppDatabaseMigrations {
                     UPDATE ${ItemEntity.TABLE}
                     SET ${ItemEntity.Columns.HAS_PASSKEYS} = 0
                     WHERE ${ItemEntity.Columns.HAS_PASSKEYS} IS NULL
-                      AND ${ItemEntity.Columns.ITEM_TYPE} != $ITEM_TYPE_LOGIN 
+                      AND ${ItemEntity.Columns.ITEM_TYPE} != ${ItemCategory.Login.value} 
                     
                 """.trimIndent()
             )

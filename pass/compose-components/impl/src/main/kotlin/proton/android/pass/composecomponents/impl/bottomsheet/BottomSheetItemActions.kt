@@ -25,14 +25,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.composecomponents.impl.R
+import me.proton.core.presentation.R as CoreR
 
 sealed interface BottomSheetItemAction {
 
-    object None : BottomSheetItemAction
+    data object None : BottomSheetItemAction
 
-    object Pin : BottomSheetItemAction
+    data object Pin : BottomSheetItemAction
 
-    object Unpin : BottomSheetItemAction
+    data object Unpin : BottomSheetItemAction
+
+    data object History : BottomSheetItemAction
 
 }
 
@@ -79,6 +82,28 @@ fun unpin(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem =
                 CircularProgressIndicator(modifier = Modifier.size(20.dp))
             }
         }
+
+    override val onClick: (() -> Unit)
+        get() = { onClick() }
+
+    override val isDivider: Boolean
+        get() = false
+
+}
+
+fun viewHistory(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_view_item_history)) }
+
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_clock_rotate_left) }
+
+    override val endIcon: @Composable (() -> Unit)
+        get() = {}
 
     override val onClick: (() -> Unit)
         get() = { onClick() }

@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreViewModel
 
 @Composable
@@ -35,12 +36,31 @@ fun ItemHistoryRestoreScreen(
     ItemHistoryRestoreContent(
         onNavigated = onNavigated,
         state = state,
-        onEventConsumed = ::onEventConsumed,
-        onRestoreClick = ::onRestoreItem,
-        onRestoreConfirmClick = ::onRestoreItemConfirmed,
-        onRestoreCancelClick = ::onRestoreItemCanceled,
-        onSectionClick = ::onItemFieldClicked,
-        onHiddenSectionClick = ::onItemHiddenFieldClicked,
-        onHiddenSectionToggle = ::onItemHiddenFieldToggled
+        onEvent = {
+            when (it) {
+                is ItemHistoryRestoreUiEvent.OnEventConsumed -> onEventConsumed(it.event)
+                is ItemHistoryRestoreUiEvent.OnHiddenSectionClick -> {
+                    onItemHiddenFieldClicked(it.state, it.field)
+                }
+                is ItemHistoryRestoreUiEvent.OnHiddenSectionToggle -> {
+                    onItemHiddenFieldToggled(it.state, it.hiddenState, it.field)
+                }
+                is ItemHistoryRestoreUiEvent.OnPasskeyClick -> {
+                    onNavigated(ItemHistoryNavDestination.PasskeyDetail(it.passkey))
+                }
+                ItemHistoryRestoreUiEvent.OnRestoreCancelClick -> {
+                    onRestoreItemCanceled()
+                }
+                ItemHistoryRestoreUiEvent.OnRestoreClick -> {
+                    onRestoreItem()
+                }
+                is ItemHistoryRestoreUiEvent.OnRestoreConfirmClick -> {
+                    onRestoreItemConfirmed(it.contents)
+                }
+                is ItemHistoryRestoreUiEvent.OnSectionClick -> {
+                    onItemFieldClicked(it.section, it.field)
+                }
+            }
+        }
     )
 }

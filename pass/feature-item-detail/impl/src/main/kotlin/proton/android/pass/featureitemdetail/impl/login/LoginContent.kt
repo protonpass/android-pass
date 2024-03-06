@@ -34,6 +34,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
+import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.common.HistorySection
@@ -41,7 +42,6 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldDetails
-import proton.android.pass.featureitemdetail.impl.login.passkey.PasskeysSection
 
 @Composable
 fun LoginContent(
@@ -75,10 +75,15 @@ fun LoginContent(
             isPinned = itemUiModel.isPinned
         )
 
-        PasskeysSection(
-            passkeys = passkeys,
-            onEvent = onEvent
-        )
+        if (passkeys.isNotEmpty()) {
+            PasskeysSection(
+                passkeys = passkeys,
+                onSelected = {
+                    onEvent(LoginDetailEvent.OnSelectPasskey(it))
+                }
+            )
+        }
+
         MainLoginSection(
             username = contents.username,
             passwordHiddenState = contents.password,

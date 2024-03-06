@@ -30,12 +30,12 @@ import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.items.ItemCustomField
 import me.proton.core.presentation.R as CoreR
 
@@ -46,9 +46,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
     modifier: Modifier = Modifier,
     customFields: ImmutableList<ItemCustomField>,
     itemColors: PassItemColors,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -63,9 +61,11 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         subtitle = customField.content,
                         itemColors = itemColors,
                         onClick = {
-                            onSectionClick(
-                                customField.content,
-                                ItemDetailsFieldType.Plain.CustomField
+                            onEvent(
+                                PassItemDetailsUiEvent.OnSectionClick(
+                                    section = customField.content,
+                                    field = ItemDetailsFieldType.Plain.CustomField
+                                )
                             )
                         }
                     )
@@ -78,16 +78,20 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         itemColors = itemColors,
                         hiddenTextStyle = ProtonTheme.typography.defaultNorm,
                         onClick = {
-                            onHiddenSectionClick(
-                                customField.hiddenState,
-                                ItemDetailsFieldType.Hidden.CustomField(index)
+                            onEvent(
+                                PassItemDetailsUiEvent.OnHiddenSectionClick(
+                                    state = customField.hiddenState,
+                                    field = ItemDetailsFieldType.Hidden.CustomField(index)
+                                )
                             )
                         },
                         onToggle = { isVisible ->
-                            onHiddenSectionToggle(
-                                isVisible,
-                                customField.hiddenState,
-                                ItemDetailsFieldType.Hidden.CustomField(index)
+                            onEvent(
+                                PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                                    state = isVisible,
+                                    hiddenState = customField.hiddenState,
+                                    field = ItemDetailsFieldType.Hidden.CustomField(index)
+                                )
                             )
                         }
                     )
@@ -99,9 +103,11 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                             maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
                             itemColors = itemColors,
                             onClick = {
-                                onSectionClick(
-                                    customFieldTotp.code,
-                                    ItemDetailsFieldType.Plain.TotpCode
+                                onEvent(
+                                    PassItemDetailsUiEvent.OnSectionClick(
+                                        section = customFieldTotp.code,
+                                        field = ItemDetailsFieldType.Plain.TotpCode
+                                    )
                                 )
                             },
                             contentInBetween = {

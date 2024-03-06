@@ -111,13 +111,20 @@ fun HomeScreen(
 
     LaunchedEffect(homeUiState.navEvent) {
         when (homeUiState.navEvent) {
+            is HomeNavEvent.ShowItemHistory -> {
+                (homeUiState.navEvent as HomeNavEvent.ShowItemHistory)
+                    .let { event -> HomeNavigation.ItemHistory(event.shareId, event.itemId) }
+                    .also(onNavigateEvent)
+            }
+
             HomeNavEvent.ShowBulkMoveToVault -> {
                 onNavigateEvent(HomeNavigation.MoveToVault)
             }
 
             HomeNavEvent.Unknown -> {}
         }
-        homeViewModel.clearNavEvent()
+
+        homeViewModel.onNavEventConsumed(homeUiState.navEvent)
     }
 
     LaunchedEffect(Unit) {
@@ -204,7 +211,8 @@ fun HomeScreen(
         when (homeUiState.action) {
             BottomSheetItemAction.None -> bottomSheetState.hide()
             BottomSheetItemAction.Pin,
-            BottomSheetItemAction.Unpin -> return@LaunchedEffect
+            BottomSheetItemAction.Unpin,
+            BottomSheetItemAction.History -> return@LaunchedEffect
         }
     }
 
@@ -262,6 +270,11 @@ fun HomeScreen(
                             homeViewModel.unpinItem(shareId, itemId)
                         }
                     },
+                    onViewHistory = remember {
+                        { shareId, itemId ->
+                            homeViewModel.viewItemHistory(shareId, itemId)
+                        }
+                    },
                     onEdit = remember {
                         { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
@@ -284,7 +297,8 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
+                    isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
                 )
 
                 AliasOptions -> AliasOptionsBottomSheetContents(

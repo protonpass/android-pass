@@ -23,7 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.preferences.FeatureFlag
@@ -36,11 +36,22 @@ class FeatureFlagsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val state: StateFlow<Map<FeatureFlag, Boolean>> =
-        ffRepository.get<Boolean>(FeatureFlag.PINNING_V1)
-            .map { mapOf(FeatureFlag.PINNING_V1 to it) }
-            .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+        combine(
+            ffRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
+            ffRepository.get<Boolean>(FeatureFlag.PINNING_V1),
+        ) { isHistoryEnabled, isPinningEnabled ->
+            mapOf(
+                FeatureFlag.HISTORY_V1 to isHistoryEnabled,
+                FeatureFlag.PINNING_V1 to isPinningEnabled,
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = emptyMap(),
+        )
 
     fun <T> override(featureFlag: FeatureFlag, value: T) = viewModelScope.launch {
         ffRepository.set(featureFlag = featureFlag, value = value)
     }
+
 }
